@@ -75,8 +75,7 @@ class RestClient
      */
     public function create($path = null, array $params = array())
     {
-        list($path, $params) = $this->pathOrParams($path, $params);
-        return $this->request('POST', $path, $params);
+        return $this->post($path, $params);
     }
 
     /**
@@ -109,6 +108,20 @@ class RestClient
         }
 
         return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * POST:s a body to a resource
+     *
+     * @param string|array $path   The subpath of the resource or if no subpath the parameters
+     * @param array        $params The parameters of the request body
+     * @return mixed       Returns the body of a successful request or false if not found
+     * @throws Exception   Whenever the request fails
+     */
+    public function post($path = null, array $params = array())
+    {
+        list($path, $params) = $this->pathOrParams($path, $params);
+        return $this->request('POST', $path, $params);
     }
 
     /**
