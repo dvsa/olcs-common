@@ -9,6 +9,8 @@
 
 namespace OlcsCommon\Controller;
 
+use \Zend\Http\Headers;
+use \Zend\Http\Header\ContentType;
 use \Mockery as m;
 
 class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
@@ -57,5 +59,41 @@ class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\Abstr
         $expectation = $this->clientMock[$service]->shouldReceive($method)->andReturn($response);
 
         return $expectation;
+    }
+
+    /**
+     * Dispatch the MVC with an URL and a body
+     *
+     * @param  string       $url
+     * @param  string       $method      HTTP Method to use
+     * @param  string|array $body        The body or, if JSON, an array to encode as JSON
+     * @param  string       $contentType The Content-Type HTTP header to set
+     * @throws \Exception
+     */
+    public function dispatchBody($url, $method, $body, $contentType = 'application/json')
+    {
+        if (!is_string($body) && $contentType == 'application/json') {
+            $body = json_encode($body);
+        }
+
+        $this->url($url, $method);
+
+        $request = $this->getRequest();
+        $request->setContent($body);
+
+        $headers = new Headers();
+        $headers->addHeader(ContentType::fromString('Content-Type: ' . $contentType));
+        $request->setHeaders($headers);
+
+        $this->getApplication()->run();
+
+        if (true !== $this->traceError) {
+            return;
+        }
+
+        $exception = $this->getApplication()->getMvcEvent()->getParam('exception');
+        if ($exception instanceof \Exception) {
+            throw $exception;
+        }
     }
 }
