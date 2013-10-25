@@ -14,7 +14,7 @@ use \Mockery as m;
 class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     protected $resolverMock;
-    protected $clientMocks = array();
+    protected $clientMock = array();
 
     public function setUp()
     {
