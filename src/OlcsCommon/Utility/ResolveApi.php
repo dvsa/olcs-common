@@ -3,7 +3,7 @@
  * Resolves API names to API URL:s
  * 
  * @package     olcscommon
- * @subpackage  view
+ * @subpackage  utility
  * @author      Pelle Wessman <pelle.wessman@valtech.se>
  */
 

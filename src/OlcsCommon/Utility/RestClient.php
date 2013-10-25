@@ -3,7 +3,7 @@
  * A client for Restful API:s over HTTP
  * 
  * @package     olcscommon
- * @subpackage  view
+ * @subpackage  utility
  * @author      Pelle Wessman <pelle.wessman@valtech.se>
  */
 
