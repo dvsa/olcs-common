@@ -9,7 +9,7 @@
 
 namespace OlcsCommon\Controller;
 
-class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulController
+abstract class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRestfulController
 {
     use \OlcsCommon\Utility\ResolveApiTrait;
 

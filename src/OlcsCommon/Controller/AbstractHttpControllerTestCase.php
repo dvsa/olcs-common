@@ -13,7 +13,7 @@ use \Zend\Http\Headers;
 use \Zend\Http\Header\ContentType;
 use \Mockery as m;
 
-class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
+abstract class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 {
     protected $resolverMock;
     protected $clientMock = array();
