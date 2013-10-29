@@ -1,7 +1,8 @@
 {
     "name": "olcs/common",
+    "description": "Contains common code shared by all OLCS-related projects",
     "type": "library",
-    "licence": "proprietary",
+    "license": "proprietary",
     "require": {
         "php": ">=5.5.1",
         "zendframework/zendframework": "2.2.4"
