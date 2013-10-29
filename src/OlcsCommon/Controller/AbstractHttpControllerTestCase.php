@@ -44,11 +44,11 @@ abstract class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Control
      *
      * @param  string $service    The name of the service to mock
      * @param  string $method     The name of the service request to mock
-     * @param  mixed  $response   The response of the mocked service
+     * @param  mixed  $response   The response of the mocked service or null of no response
      * @param  mixed  $parameters The expected request parameters for the mocked service, can eg. be \Mockery::any()
      * @return \Mockery\Expectation The configured Mockery expectation for the request
      */
-    protected function mockService($service, $method, $response)
+    protected function mockService($service, $method, $response = null)
     {
         if (!isset($this->clientMock[$service])) {
             $this->clientMock[$service] =  m::mock('Olcs\Utility\RestClient');
@@ -58,7 +58,10 @@ abstract class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Control
                 ->andReturn($this->clientMock[$service]);
         }
 
-        $expectation = $this->clientMock[$service]->shouldReceive($method)->andReturn($response);
+        $expectation = $this->clientMock[$service]->shouldReceive($method);
+        if ($response !== null) {
+            $expectation->andReturn($response);
+        }
 
         return $expectation;
     }
