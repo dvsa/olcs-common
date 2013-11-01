@@ -18,11 +18,13 @@ class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Controller\Abstr
     protected $resolverMock;
     protected $clientMock = array();
 
-    public function setUp()
+    public function setUp($noConfig = false)
     {
-        $this->setApplicationConfig(
-            include __DIR__ . '/../../../../../config/test/application.config.php'
-        );
+        if (!$noConfig) {
+            $this->setApplicationConfig(
+                include __DIR__ . '/../../../../../config/test/application.config.php'
+            );
+        }
         parent::setUp();
 
         $this->resolverMock = m::mock('OlcsCommon\Utility\ResolveApi');
