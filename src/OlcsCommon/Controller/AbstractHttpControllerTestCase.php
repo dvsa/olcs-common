@@ -42,6 +42,8 @@ abstract class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Control
     /**
      * Mocks a specific service response
      *
+     * Sets the service to be expected to be called at leats once
+     *
      * @param  string $service    The name of the service to mock
      * @param  string $method     The name of the service request to mock
      * @param  mixed  $response   The response of the mocked service or null of no response
@@ -58,7 +60,7 @@ abstract class AbstractHttpControllerTestCase extends \Zend\Test\PHPUnit\Control
                 ->andReturn($this->clientMock[$service]);
         }
 
-        $expectation = $this->clientMock[$service]->shouldReceive($method);
+        $expectation = $this->clientMock[$service]->shouldReceive($method)->once();
         if ($response !== null) {
             $expectation->andReturn($response);
         }
