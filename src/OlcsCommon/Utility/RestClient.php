@@ -95,9 +95,11 @@ class RestClient
 
         $this->prepareRequest('PATCH', $path, $params);
 
-        $this->client->getRequest()->getQuery()->fromArray(array(
-            'version' => $version,
-        ));
+        if ($version) {
+            $this->client->getRequest()->getQuery()->fromArray(array(
+                'version' => $version,
+            ));
+        }
 
         $response = $this->client->send();
 
