@@ -18,6 +18,8 @@ abstract class AbstractRestfulController extends \Zend\Mvc\Controller\AbstractRe
     const ERROR_MISSING_PARAMETERS = 103;
     const ERROR_INVALID_PARAMETER = 104;
     const ERROR_UNKNOWN = 105;
+    const ERROR_NOT_FOUND = 106;
+    const ERROR_NOT_IMPLEMENTED = 107;
 
     /**
      * Return only specified valid keys from supplied array
