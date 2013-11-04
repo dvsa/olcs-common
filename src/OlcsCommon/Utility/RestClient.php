@@ -41,13 +41,13 @@ class RestClient
     }
 
     /**
-     * Returns the URL for the resource of the client
+     * Returns the URL for a resource
      *
-     * @return HttpUri
+     * @return string
      */
-    public function getUrl()
+    public function url($path = null)
     {
-        return $this->url;
+        return $this->url->toString() . ($path ? $path : '');
     }
 
     /**
