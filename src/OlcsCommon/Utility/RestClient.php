@@ -15,6 +15,7 @@ use Zend\Http\Response;
 use Zend\Uri\Http as HttpUri;
 use Zend\Http\Header\Accept;
 use Zend\Stdlib\ParametersInterface;
+use OlcsCommon\Utility\RestClient\Exception;
 
 /**
  * A client for Restful API:s over HTTP
@@ -103,8 +104,7 @@ class RestClient
         if ($response->isNotFound()) {
             return false;
         } else if (!$response->isSuccess()) {
-            //TODO: Add custom exception
-            throw new \Exception('Error in HTTP response');
+            throw new Exception('Error in HTTP response', $response->getStatusCode());
         }
 
         return json_decode($response->getBody(), true);
@@ -158,8 +158,7 @@ class RestClient
         if ($response->isNotFound()) {
             return false;
         } else if (!$response->isSuccess()) {
-            //TODO: Add custom exception
-            throw new \Exception('Error in HTTP response');
+            throw new Exception('Error in HTTP response', $response->getStatusCode());
         }
 
         return json_decode($response->getBody(), true);
