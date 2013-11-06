@@ -47,7 +47,8 @@ class RestClient
      */
     public function url($path = null)
     {
-        return $this->url->toString() . ($path ? $path : '');
+        list($path) = $this->pathOrParams($path);
+        return $this->url->toString() . $path;
     }
 
     /**
@@ -200,7 +201,7 @@ class RestClient
      * @param  array        $params The parameters of the request body
      * @return array                First key is the path parameter, second is the params parameter
      */
-    protected function pathOrParams($path, array $params)
+    protected function pathOrParams($path, array $params = null)
     {
         $args = func_get_args();
         if (is_array($args[0])) {
