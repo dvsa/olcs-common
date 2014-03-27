@@ -7,6 +7,8 @@ return array(
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
+            'htmlTable'     => 'Common\View\Helper\HtmlTable',
+            'crudHtmlTable' => 'Common\View\Helper\CrudHtmlTable',
         )
     ),
     'view_manager' => array(
