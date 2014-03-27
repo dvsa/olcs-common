@@ -1,4 +1,5 @@
 <?php
+
 return [
     'search' => [
         'name' => 'search',
@@ -7,43 +8,82 @@ return [
         ],
         'fieldsets' => [
             [
-                'name' => 'textelements',
+                'name' => 'search',
                 'options' => [
-                    'label' => 'Fieldset 1'
+                    'label' => 'Search'
                 ],
                 'elements' => [
-                    'lic' => [
+                    'licenceNumber' => [
                         'type' => 'text',
                         'label' => 'Lic #',
                         'placeholder' => 'Licence number'
                     ],
-                    'tradingName' => [
+                    'operatorName' => [
                         'type' => 'text',
                         'label' => 'Operator / trading name',
                         'placeholder' => 'Trading name'
                     ],
-                    'select 1' => [
-                        'type' => 'select',
-                        'label' => 'Select 1',
-                        'value_options' => 'bus_trc_status'
-                    ],
-                    /*'dateselect 1' => [
-                        'type' => 'dateSelect',
-                        'label' => 'Date of Birth',
-                    ],*/
                     'postcode' => [
                         'type' => 'text',
                         'label' => 'Postcode',
                         'placeholder' => 'Postcode'
                     ],
-                    'firstname' => [
+                    'firstName' => [
                         'type' => 'personName',
                         'label' => 'First name'
                     ],
-                    'lastname' => [
+                    'lastName' => [
                         'type' => 'personName',
                         'label' => 'Last name'
                     ],
+                    'dob' => [
+                        'type' => 'dateSelect',
+                        'label' => 'Date of birth'
+                    ]
+                ]
+            ],
+            [
+                'name' => 'advanced',
+                'options' => [
+                    'label' => 'Advanced Search'
+                ],
+                'elements' => [
+                    'address' => [
+                        'type' => 'textarea',
+                        'label' => 'Address'
+                    ],
+                    'town' => [
+                        'type' => 'text',
+                        'label' => 'Town'
+                    ],
+                    'caseNumber' => [
+                        'type' => 'text',
+                        'label' => 'Case Number'
+                    ],
+                    'transportManagerId' => [
+                        'type' => 'text',
+                        'label' => 'Transport Manager ID'
+                    ],
+                    'operatorId' => [
+                        'type' => 'text',
+                        'label' => 'Operator ID'
+                    ],
+                    'vehicleRegMark' => [
+                        'type' => 'text',
+                        'label' => 'Vehicle Registration Mark'
+                    ],
+                    'diskSerialNumber' => [
+                        'type' => 'text',
+                        'label' => 'Disk Serial Number'
+                    ],
+                    'fabsRef' => [
+                        'type' => 'text',
+                        'label' => 'Fabs Ref'
+                    ],
+                    'companyNo' => [
+                        'type' => 'text',
+                        'label' => 'Company No'
+                    ]
                 ]
             ]
         ],
@@ -53,7 +93,7 @@ return [
             ],
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Submit'
+                'label' => 'Search'
             ]
         ]
     ]
