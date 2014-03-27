@@ -1,0 +1,34 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('OLCS')); ?>
+
+        <?php echo $this->headMeta() ->appendName('viewport', 'width=device-width, initial-scale=1.0') ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <?php /* echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico')); */
+                echo $this->headLink()->appendStylesheet($this->basePath() . '/stylesheets/main.css') ?>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="/js/styleguide.js"></script>
+        <?php /* $this->headScript()
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); */
+        isset($route) ? $this->includeFlowJs($route, 'selfserve') : ''; ?>
+
+    </head>
+    <body>
+    <?php echo $this->render('layout/partials/header.phtml'); ?>
+
+	<div class="page-wrapper">
+        <?php echo $this->render('layout/partials/breadcrumbs.phtml'); ?>
+        <div id="main" role="main">
+            <?php echo $this->content; ?>
+        </div>
+    </div><!-- .page-wrapper-->
+    <?php echo $this->render('layout/partials/footer.phtml'); ?>
+    <?php echo $this->inlineScript() ?>
+    </body>
+</html>
