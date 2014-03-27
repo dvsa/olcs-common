@@ -63,18 +63,24 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * Method to process posted form data and validate it and process a callback
      * @param type $form
      * @param type $callback
-     * @return type
+     * @return \Zend\Form
      */
-    protected function formPost($form, $callback)
+    protected function formPost($form, $callback, $additionalParams = array())
     {
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
                 $validatedData = $form->getData();
-                $params = ['validData' => $validatedData];
+                $params =  [
+                            'validData' => $validatedData, 
+                            'form' => $form, 
+                            'journeyData' => $this->getJourneyData(), 
+                            'params' => $additionalParams
+                           ];
                 if (is_callable($callback)) {
-                    $callback(array('validData' => $params));
+                    $callback($params);
                 }
+                
                 call_user_func_array(array($this, $callback), $params);
             }
         }
@@ -131,5 +137,19 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $return = $this->makeRestCall($service, 'GET', array('id' => $id));
 
         return $this->generateFormWithData($name, $callback, $return);
+    }
+    
+    /**
+     * Method to gather any info relevent to the journey. This is passed 
+     * to the processForm method and any call back used.
+     * 
+     * @return array
+     */
+    private function getJourneyData()
+    {
+        return [
+                'section' =>$this->getCurrentSection(),
+                'step' => $this->getCurrentStep()
+               ];
     }
 }

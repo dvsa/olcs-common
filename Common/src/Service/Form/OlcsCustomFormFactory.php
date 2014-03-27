@@ -75,8 +75,22 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['options']['label'] = $element['label'];
         if (isset($element['placeholder'])) 
             $newElement['spec']['attributes']['placeholder'] = $element['placeholder'];
-        if ($element['type'] == 'select' && isset($element['value_options'])) 
-            $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
+        if (isset($element['type']) && in_array($element['type'], array('select', 'radio')))
+        {
+            if (isset($element['value_options']))
+            {
+                if (is_array($element['value_options']))
+                {
+                    // use array as options
+                    $newElement['spec']['options']['value_options'] = $element['value_options'];            
+                }
+                if (is_string($element['value_options']))
+                {
+                    // use string to look up in static-list-data
+                    $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];            
+                }
+            }
+        }
         return $newElement;
     }
     
@@ -92,4 +106,38 @@ class OlcsCustomFormFactory extends Factory
         return $thisFieldsets;
     }
     
+    /**
+     * Method to add a fieldset to an existing form config file.
+     * @param array $formConfig
+     * @param string $fieldset
+     * @return array new config with fieldset merged in
+     */
+    public function addFieldset($formConfig, $fieldset)
+    {
+        $fieldsetConfig = $this->getFieldsetConfig($fieldset);
+        if (isset($formConfig['fieldsets'])) {
+            array_push($formConfig['fieldsets'], $fieldsetConfig);
+        }
+        else 
+        {
+            $formConfig['fieldsets'][] = $fieldsetConfig;
+        }
+        
+        return $formConfig;
+    }
+    
+    /**
+     * Returns the fieldset config for a given fieldset 
+     * 
+     * @param string $fieldset
+     * @return array
+     * @throws \Exception if fieldset not found.
+     */
+    protected function getFieldsetConfig($fieldset) {
+        if (!file_exists(__DIR__ . "/../../../../../config/form/fieldsets/$fieldset.fieldset.php")) {
+            throw new \Exception("Fieldset $fieldset has no specification config!");
+        }
+        $fieldsetConfig = include __DIR__ . "/../../../../../config/form/fieldsets/$fieldset.fieldset.php";
+        return $fieldsetConfig;
+    }
 }
