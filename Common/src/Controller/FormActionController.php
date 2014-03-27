@@ -8,7 +8,7 @@
  * @author      Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
 
-namespace SelfServe\Controller;
+namespace Common\Controller;
 use Common\Controller\AbstractActionController;
 
 use Zend\Session\Container;
@@ -138,7 +138,7 @@ abstract class FormActionController extends AbstractActionController
      * 
      * @return \Zend\Form
      */
-    public function generateForm()
+    public function generateSectionForm()
     {
         $formGenerator = $this->getFormGenerator();
         
