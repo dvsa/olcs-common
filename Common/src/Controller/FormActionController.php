@@ -10,42 +10,8 @@
 
 namespace Common\Controller;
 
-abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
+abstract class FormActionController extends AbstractActionController
 {
-
-    use \Common\Util\ResolveApiTrait;
-    use \Common\Util\LoggerTrait;
-    use \Common\Util\FlashMessengerTrait;
-    use \Common\Util\RestCallTrait;
-
-    /**
-     * Set navigation for breadcrumb
-     * @param type $label
-     * @param type $params
-     */
-    protected function setBreadcrumb($route, $params)
-    {
-        $navigation = $this->getServiceLocator()->get('navigation');
-        $page = $navigation->findBy('route', $route);
-        $page->setParams($params);
-    }
-
-    /**
-     * Get all request params from the query string and route and send back the required ones
-     * @param type $keys
-     * @return type
-     */
-    protected function getParams($keys)
-    {
-        $params = [];
-        $getParams = array_merge($this->getEvent()->getRouteMatch()->getParams(), $this->getRequest()->getQuery()->toArray());
-        foreach ($getParams as $key => $value) {
-            if (in_array($key, $keys)) {
-                $params[$key] = $value;
-            }
-        }
-        return $params;
-    }
 
     /**
      * Gets a from from either a built or custom form config.
@@ -78,9 +44,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 $params = [
                     'validData' => $validatedData,
                     'form' => $form,
-                    'journeyData' => $this->getJourneyData(),
                     'params' => $additionalParams
                 ];
+
+                $params = array_merge($params, $this->getCallbackData());
+
                 if (is_callable($callback)) {
                     $callback($params);
                 }
@@ -89,6 +57,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             }
         }
         return $form;
+    }
+
+    /**
+     * Adds data to the array passed to the formPost callback
+     *
+     * @return array
+     */
+    protected function getCallbackData()
+    {
+        return array();
     }
 
     /**
@@ -141,20 +119,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $return = $this->makeRestCall($service, 'GET', array('id' => $id));
 
         return $this->generateFormWithData($name, $callback, $return);
-    }
-
-    /**
-     * Method to gather any info relevent to the journey. This is passed
-     * to the processForm method and any call back used.
-     *
-     * @return array
-     */
-    private function getJourneyData()
-    {
-        return [
-            'section' => $this->getCurrentSection(),
-            'step' => $this->getCurrentStep()
-        ];
     }
 
 }

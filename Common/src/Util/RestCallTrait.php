@@ -119,20 +119,28 @@ trait RestCallTrait
 
         $list = array();
 
-        $count = $response['Count'];
         $responseList = $response['Results'];
 
-        $bundledHydrator = $this->getBundleHydrator();
+        if (!isset($response['Type']) || $response['Type'] === 'Entities') {
 
-        // Convert the response into entities
-        $entities = $bundledHydrator->getNestedEntityFromEntities($responseList);
+            $count = $response['Count'];
 
-        for ($i = 0; $i < $count; $i++) {
-            // Get the first user entity
-            $list[] = $entities[$service . '/' . $i];
+            $entities = $responseList;
+
+            $bundledHydrator = $this->getBundleHydrator();
+
+            // Convert the response into entities
+            $entities = $bundledHydrator->getNestedEntityFromEntities($responseList);
+
+            for ($i = 0; $i < $count; $i++) {
+                // Get the first user entity
+                $list[] = $entities[$service . '/' . $i];
+            }
+
+            return $list;
         }
 
-        return $list;
+        return $response;
     }
 
     /**
