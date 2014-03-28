@@ -46,7 +46,7 @@ return [
                     'label' => 'Info'
                 ],
                 'elements' => [
-                    'summary' => [
+                    'description' => [
                         'type' => 'textarea',
                         'label' => 'Case summary'
                     ],

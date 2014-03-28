@@ -10,6 +10,8 @@
 
 namespace Common\Controller;
 
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+
 abstract class FormActionController extends AbstractActionController
 {
 
@@ -121,4 +123,33 @@ abstract class FormActionController extends AbstractActionController
         return $this->generateFormWithData($name, $callback, $return);
     }
 
+    protected function processAdd($data, $entityName)
+    {
+        $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
+
+        $hydrator = new Hydrator();
+
+        $entityClassName = '\OlcsEntities\Entity\\' . $entityName;
+        $entity = new $entityClassName();
+
+        $hydrator->hydrate($data, $entity);
+
+        $result = $this->makeRestCall($entityName, 'POST', $entity);
+
+        print '<pre>';
+        print_r($result);
+        print '</pre>';
+        exit;
+    }
+
+    protected function trimFields($data = array(), $unwantedFields = array())
+    {
+        foreach ($unwantedFields as $field) {
+            if (isset($data[$field])) {
+                unset($data[$field]);
+            }
+        }
+
+        return $data;
+    }
 }

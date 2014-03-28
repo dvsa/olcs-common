@@ -40,6 +40,6 @@ return array(
     'fieldsets_path' => '/../../Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
-        'elements' =>  include __DIR__ . '/../src/Form/Elements/getElements.php',
+        'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php',
     )
 );
