@@ -3,6 +3,15 @@ namespace Common;
 
 class Module
 {
+    public function onBootstrap(\Zend\Mvc\MvcEvent $e)
+    {
+        $translator = $e->getApplication()->getServiceManager()->get('translator');
+        $translator
+          ->setLocale($this->getLanguageLocalePreference())
+          ->setFallbackLocale('en_GB');
+        $translator->addTranslationFilePattern('phparray', __DIR__.'/config/language/', '%s.php');
+    }
+    
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -47,4 +56,36 @@ class Module
             ),
         );
     }
+    
+    /**
+     * Method to extract the language preference for a user.
+     * At the moment this is taken from a cookie, with a key of lang.
+     *
+     * @return string locale string (default en_GB)
+     */
+    protected function getLanguageLocalePreference()
+    {
+        if (isset($_COOKIE['lang']))
+        {
+            $lang = $_COOKIE['lang'];
+            if (!empty($lang) && array_key_exists($lang, $this->getSupportedLanguages()))
+            {
+                return $lang;
+            }
+        }
+        return 'en_GB';
+    }
+
+    /**
+     * Method to return a list of supported languages, ensures the language cannot be set to one for which
+     * we have no translations for
+     *
+     * @return Array of locales
+     */
+    protected function getsupportedLanguages()
+    {
+        return array('en_GB' => 'English',
+                     'cy_GB' => 'Welsh');
+    }
+    
 }
