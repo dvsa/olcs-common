@@ -10,6 +10,29 @@ return  array(
         'bus_trc_status.valid' => 'Valid',
         'bus_trc_status.revoked' => 'Revoked',
         'bus_trc_status.refused' => 'Refused'
-    )
+    ),
+    'operator_locations' =>     
+    [
+        'uk' => 'Mainland UK',
+        'ni' => 'Northern Ireland'
+    ],
+    'operator_types' =>
+    [
+        'goods' => 'Goods',
+        'psv' => 'PSV'
+    ],
+    'licence_types' =>
+    [
+        'restricted' => 'Restricted',
+        'standard-national' => 'Standard National',
+        'standard-international' => 'Standard International',
+    ],
+    'licence_types_psv' =>
+    [
+        'restricted' => 'Restricted',
+        'standard-national' => 'Standard National',
+        'standard-international' => 'Standard International',
+        'special-restricted' => 'Special Restricted',
+    ]
 );
 
