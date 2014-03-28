@@ -115,14 +115,14 @@ class ResponseHelper
     private function checkForValidResponseBody($body)
     {
         if (!is_string($body)) {
-            throw new \Exception('Invalid response body, expected string');
+            throw new \Exception('Invalid response body, expected string' . print_r($body, true));
         }
 
         $data = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !isset($data['Response'])) {
 
-            throw new \Exception('Invalid response body, expected json');
+            throw new \Exception('Invalid response body, expected json: ' . print_r($body, true));
         }
 
         $this->responseData = $data['Response'];

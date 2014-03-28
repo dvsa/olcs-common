@@ -13,7 +13,7 @@
             "Common\\": "Common/src/"
         },
         "classmap": [
-            "./Module.php"
+            "./Common/Module.php"
         ]
     }
 }
