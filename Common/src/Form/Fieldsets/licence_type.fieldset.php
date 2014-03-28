@@ -3,9 +3,6 @@
 return 
 [    
     'name' => 'licence_type',
-    'options' => [
-        'label' => 'Licence Type',
-    ],
     'elements' => [
         'licence_type' => [
             'type' => 'radio',
@@ -20,5 +17,16 @@ return
                 ]
             ],
         ]
-    ]
+    ],
+    'options' => 
+    [
+        'label' => 'Licence Type',
+        'next_step' => 
+        [
+            'restricted' => 'complete',
+            'standard-national' => 'complete',
+            'standard-international' => 'complete',
+            'special-restricted' => 'complete',
+        ]
+    ],
 ];

@@ -10,7 +10,7 @@ return [
         'elements' => [
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Submit'
+                'label' => 'Next'
             ]
         ]
     ]

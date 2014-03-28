@@ -28,7 +28,8 @@ return
             'standard-national' => 'complete',
             'standard-international' => 'complete',
             'special-restricted' => 'complete',
-        ]
+        ], 
+        'final_step' => true
     ],
 ];
 
