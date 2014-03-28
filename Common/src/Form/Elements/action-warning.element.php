@@ -10,7 +10,7 @@ return ['submit' =>
             ],
             'attributes' => [
                 'type' => 'submit',
-                'class' => 'action--primary'
+                'class' => 'action--warning'
             ]
         ]
     ];
