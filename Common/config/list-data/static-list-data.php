@@ -48,6 +48,25 @@ return  array(
         'case_category.26' => 'Repute fitness of director',
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'Proposal to revoke'
-    )
+    ),
+    'operator_locations' => [
+        'uk' => 'Mainland UK',
+        'ni' => 'Northern Ireland'
+    ],
+    'operator_types' => [
+        'goods' => 'Goods',
+        'psv' => 'PSV'
+    ],
+    'licence_types' => [
+        'restricted' => 'Restricted',
+        'standard-national' => 'Standard National',
+        'standard-international' => 'Standard International',
+    ],
+    'licence_types_psv' => [
+        'restricted' => 'Restricted',
+        'standard-national' => 'Standard National',
+        'standard-international' => 'Standard International',
+        'special-restricted' => 'Special Restricted',
+    ]
 );
 
