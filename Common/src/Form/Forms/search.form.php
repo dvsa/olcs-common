@@ -35,11 +35,11 @@ return [
                     'lastName' => [
                         'type' => 'personName',
                         'label' => 'Last name'
-                    ],
-                    'dob' => [
+                    ]/*,
+                    'dateOfBirth' => [
                         'type' => 'dateSelect',
                         'label' => 'Date of birth'
-                    ]
+                    ]*/
                 ]
             ],
             [
