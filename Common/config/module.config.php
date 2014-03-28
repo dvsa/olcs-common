@@ -36,8 +36,8 @@ return array(
             ),
         ),
     ),
-    'forms_path' => '/../../Common/Form/Forms/',
-    'fieldsets_path' => '/../../Common/Form/Fieldsets/',
+    'forms_path' => '/../../Form/Forms/',
+    'fieldsets_path' => '/../../Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php',
