@@ -58,6 +58,9 @@ return [
             ]
         ],
         'elements' => [
+            'licence' => [
+                'type' => 'hidden'
+            ],
             'crsf' => [
                 'type' => 'crsf',
             ],

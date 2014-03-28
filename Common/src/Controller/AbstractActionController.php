@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
  *
@@ -11,6 +12,7 @@ namespace Common\Controller;
 
 abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 {
+
     use \Common\Util\ResolveApiTrait;
     use \Common\Util\LoggerTrait;
     use \Common\Util\FlashMessengerTrait;
@@ -50,12 +52,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param type $type
      * @return type
      */
-    protected function getForm($type) {
+    protected function getForm($type)
+    {
         $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
         return $form;
     }
 
-    protected function getFormGenerator() {
+    protected function getFormGenerator()
+    {
         return $this->getServiceLocator()->get('OlcsCustomForm');
     }
 
@@ -71,16 +75,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
                 $validatedData = $form->getData();
-                $params =  [
-                            'validData' => $validatedData, 
-                            'form' => $form, 
-                            'journeyData' => $this->getJourneyData(), 
-                            'params' => $additionalParams
-                           ];
+                $params = [
+                    'validData' => $validatedData,
+                    'form' => $form,
+                    'journeyData' => $this->getJourneyData(),
+                    'params' => $additionalParams
+                ];
                 if (is_callable($callback)) {
                     $callback($params);
                 }
-                
+
                 call_user_func_array(array($this, $callback), $params);
             }
         }
@@ -138,18 +142,19 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $this->generateFormWithData($name, $callback, $return);
     }
-    
+
     /**
-     * Method to gather any info relevent to the journey. This is passed 
+     * Method to gather any info relevent to the journey. This is passed
      * to the processForm method and any call back used.
-     * 
+     *
      * @return array
      */
     private function getJourneyData()
     {
         return [
-                'section' =>$this->getCurrentSection(),
-                'step' => $this->getCurrentStep()
-               ];
+            'section' => $this->getCurrentSection(),
+            'step' => $this->getCurrentStep()
+        ];
     }
+
 }
