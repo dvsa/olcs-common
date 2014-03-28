@@ -13,11 +13,13 @@ class OlcsCustomFormFactory extends Factory
     private $config;
     public $baseFormConfig;
     public $formsPath;
+    public $fieldsetPath;
 
     public function __construct($config)
     {
         $this->config = $config;
         $this->formsPath = $this->config['forms_path'];
+        $this->fieldsetsPath = $this->config['fieldsets_path'];
         parent::__construct();
     }
 
@@ -134,10 +136,11 @@ class OlcsCustomFormFactory extends Factory
      * @throws \Exception if fieldset not found.
      */
     protected function getFieldsetConfig($fieldset) {
-        if (!file_exists(__DIR__ . "/../../../../../config/form/fieldsets/$fieldset.fieldset.php")) {
+        $path =  __DIR__ . "$this->fieldsetsPath$fieldset.fieldset.php";
+        if (!file_exists($path)) {
             throw new \Exception("Fieldset $fieldset has no specification config!");
         }
-        $fieldsetConfig = include __DIR__ . "/../../../../../config/form/fieldsets/$fieldset.fieldset.php";
+        $fieldsetConfig = include $path;
         return $fieldsetConfig;
     }
 }

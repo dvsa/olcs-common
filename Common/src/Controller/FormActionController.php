@@ -77,12 +77,15 @@ abstract class FormActionController extends AbstractActionController
      * Loads the form config file NOT USED
      * @param string $section
      * @return array
-     */
+     *
     private function loadFormConfig($section)
     {
-        require_once(__DIR__.'/../../../config/forms/'.$section.'.form.php'); 
+        if (!file_exists(__DIR__.'/../Form/Forms/'.$section.'.form.php')) {
+            throw new \Exception("Form $section has no specification config!");
+        }
+        $formConfig = include __DIR__.'/../Form/Forms/'.$section.'.form.php';
         return $formConfig;
-    }
+    }*/
     
     /**
      * Method to return the current step
@@ -145,7 +148,7 @@ abstract class FormActionController extends AbstractActionController
         $section = $this->getCurrentSection();
         
         // get initial form
-        $stepFormConfig = $this->getFormConfig($section);
+        $stepFormConfig = $formGenerator->getFormConfig($section);
 
         // manipulate it
         $stepFormConfig = $this->configureForm($formGenerator, $stepFormConfig);
