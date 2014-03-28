@@ -127,19 +127,7 @@ abstract class FormActionController extends AbstractActionController
     {
         $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
 
-        $hydrator = new Hydrator();
-
-        $entityClassName = '\OlcsEntities\Entity\\' . $entityName;
-        $entity = new $entityClassName();
-
-        $hydrator->hydrate($data, $entity);
-
-        $result = $this->makeRestCall($entityName, 'POST', $entity);
-
-        print '<pre>';
-        print_r($result);
-        print '</pre>';
-        exit;
+        return $this->makeRestCall($entityName, 'POST', $data);
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())

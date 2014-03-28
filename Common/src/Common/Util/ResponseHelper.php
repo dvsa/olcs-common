@@ -70,9 +70,9 @@ class ResponseHelper
 
         $this->checkForValidResponseBody($this->body);
 
-        $this->checkForInternalServerError();
+        $this->checkForInternalServerError($this->body);
 
-        $this->checkForUnexpectedResponseCode();
+        $this->checkForUnexpectedResponseCode($this->body);
 
         switch($this->method) {
             case 'GET':
@@ -115,32 +115,32 @@ class ResponseHelper
     private function checkForValidResponseBody($body)
     {
         if (!is_string($body)) {
-            throw new \Exception('Invalid response body, expected string' . print_r($body, true));
+            throw new \Exception('Invalid response body, expected string' . $body);
         }
 
         $data = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !isset($data['Response'])) {
 
-            throw new \Exception('Invalid response body, expected json: ' . print_r($body, true));
+            throw new \Exception('Invalid response body, expected json: ' . $body);
         }
 
         $this->responseData = $data['Response'];
     }
 
-    private function checkForInternalServerError()
+    private function checkForInternalServerError($body)
     {
         if ($this->response->getStatusCode() == Response::STATUS_CODE_500) {
             // TODO: Replace with a different exception
-            throw new \Exception('Internal server error');
+            throw new \Exception('Internal server error: ' . $body);
         }
     }
 
-    private function checkForUnexpectedResponseCode()
+    private function checkForUnexpectedResponseCode($body)
     {
         if (!in_array($this->response->getStatusCode(), $this->expectedCodes[$this->method])) {
             // TODO: Replace with a different exception
-            throw new \Exception('Unexpected status code');
+            throw new \Exception('Unexpected status code: ' . $body);
         }
     }
 }
