@@ -55,17 +55,17 @@ trait RestCallTrait
                 // Currently we only handle updating 1 entity at a time
                 $handleResponseMethod = 'handlePutResponse';
 
-                // Get data from entity
-                $bundleHydrator = $this->getBundleHydrator();
-
                 $path = '/' . $data['id'];
-                $data = array('data' => json_encode($data['details']));
+
+                unset($data['id']);
+
+                $data = array('data' => json_encode($data));
 
                 break;
             case 'DELETE':
                 $handleResponseMethod = 'handleDeleteResponse';
                 break;
-            // @todo implement other methods
+            // @todo implement other methods if/when necessary
             default:
                 return null;
         }
@@ -107,29 +107,6 @@ trait RestCallTrait
         // If we have a 404
         if ($response === false) {
             throw new ResourceNotFoundException();
-        }
-
-        $list = array();
-
-        $responseList = $response['Results'];
-
-        if (!isset($response['Type']) || $response['Type'] === 'Entities') {
-
-            $count = $response['Count'];
-
-            $entities = $responseList;
-
-            $bundledHydrator = $this->getBundleHydrator();
-
-            // Convert the response into entities
-            $entities = $bundledHydrator->getNestedEntityFromEntities($responseList);
-
-            for ($i = 0; $i < $count; $i++) {
-                // Get the first user entity
-                $list[] = $entities[$service . '/' . $i];
-            }
-
-            return $list;
         }
 
         return $response;
