@@ -26,6 +26,7 @@ class Module
                 return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
             },
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
+                'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
                 'Zend\Log' => function ($sm) {
                 $log = new \Zend\Log\Logger();
 
