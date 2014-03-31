@@ -41,5 +41,12 @@ return array(
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php',
-    )
+    ),
+    //-------- Start navigation -----------------
+    'navigation' => array(
+        'default' => array(
+            include __DIR__ . '/navigation.config.php'
+        )
+    ),
+    //-------- End navigation -----------------
 );

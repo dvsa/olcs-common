@@ -1,13 +1,19 @@
 <?php
 return array(
     'label' => 'Home',
-    'route' => 'home',
+    'route' => 'olcsHome',
     'pages' => array(
         array(
             'label' => 'Search',
-            'route' => 'lookup',
+            'route' => 'search',
             'action' => 'index',
-            'pages' => array()
+            'pages' => array(
+                array(
+                    'label' => 'Operators',
+                    'route' => 'operators',
+                    'action' => 'operator'
+                )
+            )
         )     
     )
 )
