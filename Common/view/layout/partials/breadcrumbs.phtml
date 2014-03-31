@@ -1,9 +1,9 @@
-<?php
-/**
- * We need to implement zend navigation breadcrumb helper here...
- */
-?>
-	<ol class="global-breadcrumbs">
-        <li class="global-breadcrumbs__item"><a href="/">Home</a></li>
-        <li class="global-breadcrumbs__item current"><a href=""><?php echo $this->translate("search"); ?></a></li>
-    </ol><!-- end .global-breadcrumbs -->
+<ol class="global-breadcrumbs">
+    <?php foreach ($this->pages as $key => $page): ?>
+        <?php if ($key < count($this->pages) - 1): ?>
+            <li class="global-breadcrumbs__item"><a href="<?php echo $page->getHref(); ?>"><?php echo $this->translate($page->getLabel()); ?></a></li>
+        <?php else: ?>
+            <li class="global-breadcrumbs__item current"><?php echo $this->translate($page->getLabel()); ?></li>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</ol>
