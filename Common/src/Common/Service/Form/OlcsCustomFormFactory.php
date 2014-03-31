@@ -136,6 +136,15 @@ class OlcsCustomFormFactory extends Factory
     public function addFieldset($formConfig, $fieldset)
     {
         $fieldsetConfig = $this->getFieldsetConfig($fieldset);
+
+        if (isset($fieldsetConfig['options']['final_step']) && $fieldsetConfig['options']['final_step'])
+        {
+            // rename next button
+            if (isset($formConfig['elements']['submit']))
+            {
+                $formConfig['elements']['submit']['label'] = 'Save & Next';
+            }
+        }
         if (isset($formConfig['fieldsets'])) {
             array_push($formConfig['fieldsets'], $fieldsetConfig);
         }
