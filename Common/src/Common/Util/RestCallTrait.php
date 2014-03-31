@@ -46,9 +46,7 @@ trait RestCallTrait
 
                 $handleResponseMethod = 'handlePostResponse';
 
-                // Get data from entity
-                $bundleHydrator = $this->getBundleHydrator();
-                $data = array('data' => json_encode($bundleHydrator->getTopLevelEntitiesFromNestedEntity($data)));
+                $data = array('data' => json_encode($data));
 
                 break;
             case 'PUT':
@@ -93,13 +91,7 @@ trait RestCallTrait
             throw new ResourceNotFoundException();
         }
 
-        $bundledHydrator = $this->getBundleHydrator();
-
-        // Convert the response into entities
-        $entities = $bundledHydrator->getNestedEntityFromEntities($response);
-
-        // Get the first user entity
-        return $entities[$service . '/0'];
+        return $response;
     }
 
     /**
