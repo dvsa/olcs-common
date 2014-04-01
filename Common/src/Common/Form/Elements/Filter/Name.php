@@ -4,7 +4,7 @@ use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
-class PersonName extends ZendElement implements InputProviderInterface
+class Name extends ZendElement implements InputProviderInterface
 {
     public function __construct($name = null, $options = array())
     {
