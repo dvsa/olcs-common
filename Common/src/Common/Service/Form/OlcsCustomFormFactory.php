@@ -59,8 +59,9 @@ class OlcsCustomFormFactory extends Factory
         if (isset($formConfig['fieldsets'])) {
             $formConfig['fieldsets'] = $this->getFieldsets($formConfig['fieldsets']);
         }
-
+        
         if (isset($formConfig['elements'])) {
+            $formConfig['elements']['crsf'] = array('type' => 'crsf'); 
             $formConfig['elements'] = $this->getElements($formConfig['elements']);
         }
 
