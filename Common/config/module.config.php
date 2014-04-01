@@ -41,5 +41,35 @@ return array(
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php',
+    ),
+    //-------- Start navigation -----------------
+    'navigation' => array(
+        'default' => array(
+            include __DIR__ . '/navigation.config.php'
+        )
+    ),
+    //-------- End navigation -----------------
+    
+    //-------- Start service API mappings -----------------
+    'service_api_mapping' => array(
+        array(
+            'endpoint' => 'http://olcspayment.dev/api/',
+            'apis' => array(
+                'Vosa\Payment\Token' => 'token',
+                'Vosa\Payment\Db' => 'paymentdb',
+                'Vosa\Payment\Card' => 'cardpayment',
+            ),
+        ),
+        array(
+            'endpoint' => 'http://olcs-backend/',
+            'apis' => array(
+                'User' => 'user',
+                'Person' => 'person',
+                'PersonSearch' => 'person-search',
+                'OperatorSearch' => 'operator-search',
+                'VosaCase' => 'vosa-case',
+            )
+        )
     )
+     //-------- End service API mappings -----------------
 );

@@ -126,7 +126,6 @@ abstract class FormActionController extends AbstractActionController
     protected function processAdd($data, $entityName)
     {
         $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
-
         return $this->makeRestCall($entityName, 'POST', $data);
     }
 

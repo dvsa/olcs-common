@@ -23,7 +23,11 @@
     <?php echo $this->render('layout/partials/header.phtml'); ?>
 
 	<div class="page-wrapper">
-        <?php echo $this->render('layout/partials/breadcrumbs.phtml'); ?>
+        <?php  echo $this->navigation('navigation') // <-- Update this!!
+                            ->breadcrumbs()
+                            ->setMinDepth(0)
+                            ->setPartial(array('layout/partials/breadcrumbs.phtml', 'Olcs'));
+                        ?>
         <div id="main" role="main">
             <?php echo $this->content; ?>
         </div>
