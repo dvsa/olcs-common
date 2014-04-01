@@ -30,11 +30,13 @@ return [
                     ],
                     'firstName' => [
                         'type' => 'personName',
-                        'label' => 'First name'
+                        'label' => 'First name',
+                        'placeholder' => 'First name'
                     ],
                     'lastName' => [
                         'type' => 'personName',
-                        'label' => 'Last name'
+                        'label' => 'Last name',
+                        'placeholder' => 'Last name'
                     ]/*,
                     'dateOfBirth' => [
                         'type' => 'dateSelect',
@@ -88,9 +90,6 @@ return [
             ]
         ],
         'elements' => [
-            'crsf' => [
-                'type' => 'crsf',
-            ],
             'submit' => [
                 'type' => 'submit',
                 'label' => 'Search'

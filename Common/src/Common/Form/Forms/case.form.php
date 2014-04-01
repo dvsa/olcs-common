@@ -16,27 +16,32 @@ return [
                     'compliance' => [
                         'type' => 'multicheckbox',
                         'label' => 'Compliance',
-                        'value_options' => 'case_categories_compliance'
+                        'value_options' => 'case_categories_compliance',
+                        'required' => false
                     ],
                     /*'bus' => [
                         'type' => 'multicheckbox',
                         'label' => 'Bus registration',
-                        'value_options' => 'case_categories_bus'
+                        'value_options' => 'case_categories_bus',
+                        'required' => false
                     ],*/
                     'tm' => [
                         'type' => 'multicheckbox',
                         'label' => 'TM',
-                        'value_options' => 'case_categories_tm'
+                        'value_options' => 'case_categories_tm',
+                        'required' => false
                     ],
                     'app' => [
                         'type' => 'multicheckbox',
                         'label' => 'Licensing application',
-                        'value_options' => 'case_categories_app'
+                        'value_options' => 'case_categories_app',
+                        'required' => false
                     ],
                     'referral' => [
                         'type' => 'multicheckbox',
                         'label' => 'Licence referral',
-                        'value_options' => 'case_categories_referral'
+                        'value_options' => 'case_categories_referral',
+                        'required' => false
                     ]
                 ]
             ],
@@ -59,6 +64,12 @@ return [
         ],
         'elements' => [
             'licence' => [
+                'type' => 'hidden'
+            ],
+            'id' => [
+                'type' => 'hidden'
+            ],
+            'version' => [
                 'type' => 'hidden'
             ],
             'crsf' => [

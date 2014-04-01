@@ -41,7 +41,7 @@ class OlcsCustomFormFactory extends Factory
 
     public function getFormConfig($type)
     {
-        $path = __DIR__ . "$this->formsPath$type.form.php";
+        $path = __DIR__ . $this->formsPath . $type . '.form.php';
         if (!file_exists($path)) {
             throw new \Exception("Form $type has no specification config!");
         }
@@ -59,8 +59,9 @@ class OlcsCustomFormFactory extends Factory
         if (isset($formConfig['fieldsets'])) {
             $formConfig['fieldsets'] = $this->getFieldsets($formConfig['fieldsets']);
         }
-
+        
         if (isset($formConfig['elements'])) {
+            $formConfig['elements']['crsf'] = array('type' => 'crsf'); 
             $formConfig['elements'] = $this->getElements($formConfig['elements']);
         }
 
@@ -71,7 +72,8 @@ class OlcsCustomFormFactory extends Factory
     {
         $thisElements = [];
         foreach ($elements as $key => $element) {
-            $element['name'] = $key;
+
+            $element['name'] = isset($element['name']) ? $element['name'] : $key;
             $thisElements[] = $this->getElement($element);
         }
         return $thisElements;
