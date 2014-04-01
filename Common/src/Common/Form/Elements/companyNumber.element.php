@@ -1,7 +1,7 @@
 <?php
 return ['companyNumber' =>
             [
-            'type' => 'text',
+            'type' => '\Common\Form\Elements\InputFilters\CompanyNumber',
             'name' => 'company_number',
                 'options' => 
                     [

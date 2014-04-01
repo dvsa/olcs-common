@@ -1,7 +1,7 @@
 <?php
 return ['addAnotherButton' =>
             [
-            'type' => 'button',
+            'type' => 'submit',
             'name' => 'add_another',
             'options' => [
                 'label' => 'Add another'

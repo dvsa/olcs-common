@@ -1,7 +1,7 @@
 <?php
 return ['tradingNames' =>
             [
-            'type' => 'text',
+            'type' => '\Common\Form\Elements\InputFilters\Name',
             'name' => 'trading_names[]',
             'options' => [
                 'label' => 'Trading names',
