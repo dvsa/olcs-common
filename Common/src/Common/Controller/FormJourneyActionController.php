@@ -125,12 +125,13 @@ abstract class FormJourneyActionController extends FormActionController
         foreach ($form->getFieldsets() as $fieldset) {
             $next_step_options = $fieldset->getOption('next_step');
             foreach ($fieldset->getElements() as $element) {
-                if (isset($next_step_options)) {
+                $element_value = $element->getValue();
+                if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
                     return $next_step_options[$element->getValue()];
                 }
             }
         }
-        throw new \RuntimeException('Next step not defined');
+        throw new \RuntimeException('Next step not defined, based on element value chosen: '.$element_value);
     }
 
     /**
