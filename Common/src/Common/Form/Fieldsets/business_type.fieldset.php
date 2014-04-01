@@ -22,8 +22,11 @@ return
         'label' => 'Business Type',
         'next_step' => 
         [
-            'goods' => 'licence_type',
-            'psv' => 'licence_type_psv'
+            'org_type.rc' => 'registered_company',
+            'org_type.st' => 'sole_trader',
+            'org_type.p' => 'partnership',
+            'org_type.llp' => 'llp',
+            'org_type.pa' => 'public_authority'
         ]
     ],
 ];
