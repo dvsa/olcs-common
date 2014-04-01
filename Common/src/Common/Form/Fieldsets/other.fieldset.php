@@ -1,9 +1,19 @@
 <?php
 return
 [    
-    'name' => 'sole_trader',
+    'name' => 'other',
     'elements' => 
     [
+        'company_name' => 
+        [
+            'name' => 'company_name',
+            'label' => 'Organisation name',
+            'type' => 'text',
+            'attributes' => array(
+                'id' => 'company_name',
+                'class' => '',
+            )              
+        ],
         'trading_names' => 
         [
             'name' => 'trading_names[]',
@@ -39,8 +49,8 @@ return
     ],
     'options' => 
     [
-        'label' => 'Business Type',
         'final_step' => 1,
+        'label' => 'Business Type',
         'next_step' => 
         [
             'org_type.rc' => 'registered_company',

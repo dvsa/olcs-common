@@ -7,7 +7,7 @@ return
         'company_number' => 
         [
             'name' => 'company_number',
-            'label' => 'Company number',
+            'label' => 'Registered company number',
             'type' => 'text',
             'attributes' => array(
                 'id' => 'company_number',
@@ -27,7 +27,7 @@ return
         'company_name' => 
         [
             'name' => 'company_name',
-            'label' => 'Company name',
+            'label' => 'Registered company name',
             'type' => 'text',
             'attributes' => array(
                 'id' => 'company_name',

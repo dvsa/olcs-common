@@ -1,13 +1,13 @@
 <?php
 return
 [    
-    'name' => 'registered_company',
+    'name' => 'llp',
     'elements' => 
     [
         'company_number' => 
         [
             'name' => 'company_number',
-            'label' => 'Company number:',
+            'label' => 'LLP number:',
             'type' => 'text',
             'attributes' => array(
                 'id' => 'company_number',

@@ -1,13 +1,13 @@
 <?php
 return
 [    
-    'name' => 'registered_company',
+    'name' => 'public_authority',
     'elements' => 
     [
         'company_name' => 
         [
             'name' => 'company_name',
-            'label' => 'Company name',
+            'label' => 'Public authority name',
             'type' => 'text',
             'attributes' => array(
                 'id' => 'company_name',
