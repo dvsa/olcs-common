@@ -39,8 +39,10 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function formPost($form, $callback, $additionalParams = array())
     {
+
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
+
             if ($form->isValid()) {
                 $validatedData = $form->getData();
                 $params = [

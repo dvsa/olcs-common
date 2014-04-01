@@ -209,4 +209,31 @@ abstract class FormJourneyActionController extends FormActionController
         ];
     }
 
+    /**
+     * Method to determine the form that was posted. Searches all posted items
+     * and if any start with 'submit_' then the remaining string is returned
+     * to signify the submitted button pressed.
+     * 
+     * @param \Zend\Http\Request $request
+     * @return string
+     */
+    protected function determineSubmitButtonPressed(\Zend\Http\Request $request)
+    {
+        $form_posted = '';
+        if ($request->isPost()) 
+        {
+            $posted_data = $request->getPost($this->getCurrentStep());
+            if (is_array($posted_data))
+            {
+                foreach($posted_data as $key => $value)
+                {
+                    if (substr($key, 0, 7) == 'submit_')
+                    {
+                        return substr($key, 7);
+                    }
+                }
+            }
+        }            
+        return $form_posted;
+    }
 }

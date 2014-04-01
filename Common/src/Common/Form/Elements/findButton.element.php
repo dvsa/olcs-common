@@ -1,7 +1,7 @@
 <?php
 return ['findButton' =>
             [
-            'type' => 'button',
+            'type' => 'submit',
             'name' => 'find_button',
             'options' => [
                 'label' => 'Find'

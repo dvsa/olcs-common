@@ -11,6 +11,8 @@ return
         ],
         'submit_lookup_company' => 
         [
+            'name' => 'submit_lookup_company',
+            'value' => 'lookup_company',
             'type' => 'findButton'
         ],
         'company_name' => 
