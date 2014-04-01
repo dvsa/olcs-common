@@ -1,7 +1,7 @@
 <?php
 return ['personName' =>
             [
-            'type' => '\Common\Form\Elements\Filter\Name',
+            'type' => '\Common\Form\Elements\InputFilters\Name',
             'name' => '',
             'options' => [
                 'label' => '',
