@@ -6,23 +6,12 @@ return
     [
         'company_number' => 
         [
-            'name' => 'company_number',
-            'label' => 'LLP number:',
-            'type' => 'text',
-            'attributes' => array(
-                'id' => 'company_number',
-                'class' => '',
-            )              
+            'label' => 'Registered company number',
+            'type' => 'companyNumber',
         ],
         'submit_lookup_company' => 
         [
-            'name' => 'submit_lookup_company',
-            'type' => 'submit',
-            'label' => 'Find',
-            'attributes' => array(
-                'id' => 'submit_lookup_company',
-                'class' => '',
-            )              
+            'type' => 'findButton'
         ],
     ],
     'options' => 
