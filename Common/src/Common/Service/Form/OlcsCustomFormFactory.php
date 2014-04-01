@@ -103,18 +103,8 @@ class OlcsCustomFormFactory extends Factory
             }
             if (is_string($element['value_options']))
             {
-                if ($element['value_options'] == 'sic_codes')
-                {
-                    // exception to any string is the value 'sic_codes' which 
-                    // loads them in here to prevent them being part of any 
-                    // config file unneccessarily
-                    $newElement['spec']['options']['value_options'] = include __DIR__.$this->config['sic_codes_path'].'/sicCodes_en_GB.php';
-                }
-                else
-                {
-                    // use string to look up in static-list-data
-                    $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
-                }    
+                // use string to look up in static-list-data
+                $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];   
             }
         }
 

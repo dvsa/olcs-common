@@ -13,10 +13,8 @@ return
             'name' => 'submit_add_trading_name',
             'type' => 'addAnotherButton',
         ],
-        'type_of_business' => 
         [
-            'type' => 'businessType',
-            'value_options' => 'sic_codes',             
+            'type' => 'businessType'
         ],
     ],
     'options' => 
