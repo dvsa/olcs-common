@@ -26,6 +26,7 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
             ],
             'validators' => [
                 new ZendValidator\StringLength(8),
+                new ZendValidator\Digits(),
             ]
         ];
 
