@@ -4,6 +4,7 @@ return array(
     'settings' => array(
         'title' => 'Table',
         'view' => 'crud',
+        'paginate' => true,
         'action' => '/',
         'actions' => array(
             'add' => array('class' => 'primary'),
@@ -16,12 +17,14 @@ return array(
     ),
     'columns' => array(
         array(
-            'title' => 'Select',
+            'title' => '',
+            'width' => 'checkbox',
             'format' => '{{[elements/radio]}}'
         ),
         array(
             'title' => 'Name',
-            'format' => '{{name}}'
+            'name' => 'name',
+            'sort' => 'operatorName'
         )
     )
 );

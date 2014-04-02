@@ -34,6 +34,10 @@ class TableBuilder
 
     private $partials = array();
 
+    private $widths = array(
+        'checkbox' => '16px'
+    );
+
     /**
      * Pass in the application config
      *
@@ -48,10 +52,13 @@ class TableBuilder
      * Build a table from a config file
      *
      * @param array $config
+     * @return string
      */
     public function buildTable($name, $data = array())
     {
         $this->loadConfig($name);
+
+        $this->loadData($data);
 
         return $this->renderPartial($this->getSetting('view'));
     }
@@ -95,16 +102,7 @@ class TableBuilder
      */
     public function getRows()
     {
-        return array(
-            array(
-                'id' => 1,
-                'name' => 'Bob'
-            ),
-            array(
-                'id' => 2,
-                'name' => 'Fred'
-            )
-        );
+        return $this->rows;
     }
 
     /**
@@ -118,6 +116,33 @@ class TableBuilder
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
     {
+        if (isset($column['sort'])) {
+
+            $column['class'] = 'sortable';
+
+            $column['order'] = 'ASC';
+
+            if ($column['sort'] === filter_input(INPUT_GET, 'sort')) {
+
+                if (filter_input(INPUT_GET, 'order') === 'ASC') {
+
+                    $column['order'] = 'DESC';
+
+                    $column['class'] .= ' ascending';
+                } else {
+
+                    $column['class'] .= ' descending';
+                }
+            }
+
+            $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
+        }
+
+        if (isset($column['width']) && isset($this->widths[$column['width']])) {
+
+            $column['width'] = $this->widths[$column['width']];
+        }
+
         return $this->replaceContent($wrapper, $column);
     }
 
@@ -127,6 +152,7 @@ class TableBuilder
      * @param array $row
      * @param array $column
      * @param string $wrapper
+     * @return string
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
@@ -162,6 +188,7 @@ class TableBuilder
     /**
      * Render header
      *
+     * @param string $wrapper
      * @return string
      */
     public function renderHeader($wrapper = '{{[elements/title]}}')
@@ -172,6 +199,7 @@ class TableBuilder
     /**
      * Render actions
      *
+     * @param string $wrapper
      * @return string
      */
     public function renderActions($wrapper = '')
@@ -202,6 +230,7 @@ class TableBuilder
      * Render partial
      *
      * @param string $name
+     * @return string
      */
     public function renderPartial($name)
     {
@@ -227,13 +256,15 @@ class TableBuilder
      * @param array $vars
      * @return string
      */
-    private function replaceContent($content, $vars)
+    private function replaceContent($content, $vars = array())
     {
         $content = $this->replacePartials($content);
 
         foreach ($vars as $key => $val) {
             $content = str_replace('{{' . $key . '}}', $val, $content);
         }
+
+        $content = preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
 
         return $content;
     }
@@ -310,5 +341,16 @@ class TableBuilder
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
+    }
+
+    /**
+     * Load data, set the rows and the total count for pagination
+     *
+     * @param array $data
+     */
+    private function loadData($data = array())
+    {
+        $this->rows = isset($data['Results']) ? $data['Results'] : $data;
+        $this->total = isset($data['Count']) ? $data['Count'] : count($this->rows);
     }
 }
