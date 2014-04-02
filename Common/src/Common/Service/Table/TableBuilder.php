@@ -38,6 +38,10 @@ class TableBuilder
         'checkbox' => '16px'
     );
 
+    private $formatters = array(
+        '_date' => 'formatterDate'
+    );
+
     /**
      * Pass in the application config
      *
@@ -156,13 +160,41 @@ class TableBuilder
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
+        if (isset($column['formatter'])) {
+
+            if (is_callable($column['formatter'])) {
+
+                $column['callback'] = $column['formatter'];
+
+            } elseif (is_string($column['formatter']) && isset($this->formatters[$column['formatter']])) {
+
+                $column['callback'] = array($this, $this->formatters[$column['formatter']]);
+            }
+        }
+
+        if (isset($column['callback'])) {
+            $return = call_user_func($column['callback'], $row, $column);
+
+            if (is_array($return)) {
+
+                $row = array_merge($row, $return);
+
+            } else {
+
+                $content = $return;
+                $row['content'] = $content;
+            }
+        }
+
         if (isset($column['format'])) {
 
             $content = $this->replaceContent($column['format'], $row);
 
-        } else {
+        }
 
-            $content = isset($row[$column['name']]) ? $row[$column['name']] : '';
+        if (!isset($content) || empty($content)) {
+
+            $content = isset($column['name']) && isset($row[$column['name']]) ? $row[$column['name']] : '';
         }
 
         return $this->replaceContent($wrapper, array('content' => $content));
@@ -242,7 +274,7 @@ class TableBuilder
         }
 
         ob_start();
-            include($partialFile);
+            require($partialFile);
             $content = ob_get_contents();
         ob_end_clean();
 
@@ -261,7 +293,9 @@ class TableBuilder
         $content = $this->replacePartials($content);
 
         foreach ($vars as $key => $val) {
-            $content = str_replace('{{' . $key . '}}', $val, $content);
+            if (is_string($val)) {
+                $content = str_replace('{{' . $key . '}}', $val, $content);
+            }
         }
 
         $content = preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
@@ -352,5 +386,21 @@ class TableBuilder
     {
         $this->rows = isset($data['Results']) ? $data['Results'] : $data;
         $this->total = isset($data['Count']) ? $data['Count'] : count($this->rows);
+    }
+
+    /**
+     * Format dates
+     *
+     * @param array $data
+     * @param array $column
+     * @return string
+     */
+    public function formatterDate($data, $column)
+    {
+        if (!isset($column['dateformat'])) {
+            $column['dateformat'] = 'd/m/Y';
+        }
+
+        return date($column['dateformat'], strtotime($data[$column['name']]));
     }
 }
