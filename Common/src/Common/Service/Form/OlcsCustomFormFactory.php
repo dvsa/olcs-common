@@ -89,7 +89,7 @@ class OlcsCustomFormFactory extends Factory
         }
 
         if (isset($element['class'])) {
-            $newElement['spec']['attributes']['id'] = $element;
+            $newElement['spec']['attributes']['class'] = $element['class'];
         }
 
         if (isset($element['label'])) {
