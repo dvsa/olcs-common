@@ -61,6 +61,7 @@ class OlcsCustomFormFactory extends Factory
         }
 
         if (isset($formConfig['elements'])) {
+            $formConfig['elements']['crsf'] = array('type' => 'crsf');
             $formConfig['elements'] = $this->getElements($formConfig['elements']);
         }
 
@@ -85,6 +86,10 @@ class OlcsCustomFormFactory extends Factory
 
         if (isset($element['name'])) {
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
+        }
+
+        if (isset($element['class'])) {
+            $newElement['spec']['attributes']['class'] = $element['class'];
         }
 
         if (isset($element['label'])) {

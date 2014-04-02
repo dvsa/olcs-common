@@ -91,9 +91,6 @@ return [
             ]
         ],
         'elements' => [
-            'crsf' => [
-                'type' => 'crsf',
-            ],
             'submit' => [
                 'type' => 'submit',
                 'label' => 'Search',
