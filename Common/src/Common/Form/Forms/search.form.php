@@ -10,12 +10,13 @@ return [
             [
                 'name' => 'search',
                 'options' => [
-                    'label' => 'Search'
+                    0
                 ],
                 'elements' => [
                     'licenceNumber' => [
                         'type' => 'text',
                         'label' => 'Lic #',
+                        'attributes' => ['class'=>'long'],
                         'placeholder' => 'Licence number'
                     ],
                     'operatorName' => [
@@ -95,7 +96,7 @@ return [
             ],
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Search'
+                'label' => 'Search',
             ]
         ]
     ]
