@@ -131,7 +131,7 @@ abstract class FormJourneyActionController extends FormActionController
                 }
             }
         }
-        throw new \RuntimeException('Next step not defined, based on element value chosen: '.$element_value);
+        throw new \RuntimeException('Next step not defined, for any elements');
     }
 
     /**
@@ -178,6 +178,7 @@ abstract class FormJourneyActionController extends FormActionController
         $this->persistFormData($form);
 
         $next_step = $this->evaluateNextStep($form);
+
         if ($next_step == 'complete') {
             return $this->forward()->dispatch('SelfServe\LicenceType\Index', array('action' => 'complete'));
         } else {
