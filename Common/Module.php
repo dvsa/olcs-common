@@ -4,15 +4,16 @@ namespace Common;
 
 class Module
 {
+
     public function onBootstrap(\Zend\Mvc\MvcEvent $e)
     {
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator
-          ->setLocale($this->getLanguageLocalePreference())
-          ->setFallbackLocale('en_GB');
-        $translator->addTranslationFilePattern('phparray', __DIR__.'/config/language/', '%s.php');
+            ->setLocale($this->getLanguageLocalePreference())
+            ->setFallbackLocale('en_GB');
+        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
     }
-    
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -23,8 +24,9 @@ class Module
         return array(
             'factories' => array(
                 'OlcsCustomForm' => function ($sm) {
-                return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-            },
+                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
+                },
+                'Table' => '\Common\Service\Table\TableFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
                 'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
                 'Zend\Log' => function ($sm) {
@@ -58,7 +60,7 @@ class Module
             ),
         );
     }
-    
+
     /**
      * Method to extract the language preference for a user.
      * At the moment this is taken from a cookie, with a key of lang.
@@ -67,11 +69,9 @@ class Module
      */
     protected function getLanguageLocalePreference()
     {
-        if (isset($_COOKIE['lang']))
-        {
+        if (isset($_COOKIE['lang'])) {
             $lang = $_COOKIE['lang'];
-            if (!empty($lang) && array_key_exists($lang, $this->getSupportedLanguages()))
-            {
+            if (!empty($lang) && array_key_exists($lang, $this->getSupportedLanguages())) {
                 return $lang;
             }
         }
@@ -87,7 +87,7 @@ class Module
     protected function getsupportedLanguages()
     {
         return array('en_GB' => 'English',
-                     'cy_GB' => 'Welsh');
+            'cy_GB' => 'Welsh');
     }
-    
+
 }
