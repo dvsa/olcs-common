@@ -49,7 +49,7 @@ return array(
         )
     ),
     //-------- End navigation -----------------
-    
+
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
         array(
@@ -68,6 +68,7 @@ return array(
                 'PersonSearch' => 'person-search',
                 'OperatorSearch' => 'operator-search',
                 'VosaCase' => 'vosa-case',
+                'Licence' => 'licence',
             )
         )
     )
