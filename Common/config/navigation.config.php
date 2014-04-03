@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'label' => 'Home',
     'route' => 'olcsHome',
@@ -14,7 +15,6 @@ return array(
                     'action' => 'operator'
                 )
             )
-        )     
+        )
     )
-)
-?>
+);
