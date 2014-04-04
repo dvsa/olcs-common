@@ -7,15 +7,7 @@ return array(
     'settings' => array(
         'paginate' => array(
             'limit' => array(
-                'default' => 10,
                 'options' => array(10, 25, 50)
-            )
-        ),
-        'crud' => array(
-            'actions' => array(
-                'add' => array(
-                    'class'
-                )
             )
         )
     ),
@@ -35,8 +27,8 @@ return array(
         array(
             'title' => 'Op/trading name',
             'formatter' => function($data) {
-                return $data['trading_as'] ?: $data['name'];
-            },
+            return $data['trading_as'] ? : $data['name'];
+        },
             'sort' => 'operatorName'
         ),
         array(
@@ -52,26 +44,26 @@ return array(
         array(
             'title' => 'Correspondence address',
             'formatter' => function($data) {
-                $parts = array();
-                foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
-                    if (!empty($data[$item])) {
-                        $parts[] = $data[$item];
-                    }
+            $parts = array();
+            foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
+                if (!empty($data[$item])) {
+                    $parts[] = $data[$item];
                 }
+            }
 
-                return implode(', ', $parts);
-            },
+            return implode(', ', $parts);
+        },
             'sort' => 'correspondenceAddress'
         ),
         array(
             'title' => 'Cases',
             'formatter' => function($data) {
-                if (isset($data['caseCount']) && (int)$data['caseCount'] > 0) {
-                    return '<a href="/case/' . $data['licenceId'] . '">' . $data['caseCount'] . '</a>';
-                } else {
-                    return '<a href="/case/' . $data['licenceId'] . '/add">[Add Case]</a>';
-                }
+            if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
+                return '<a href="/case/' . $data['licenceId'] . '">' . $data['caseCount'] . '</a>';
+            } else {
+                return '<a href="/case/' . $data['licenceId'] . '/add">[Add Case]</a>';
             }
+        }
         ),
         array(
             'title' => 'MLH',

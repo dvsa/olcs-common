@@ -20,10 +20,11 @@ namespace Common\Service\Table;
 class TableBuilder
 {
     const TYPE_DEFAULT = 1;
-
     const TYPE_PAGINATE = 2;
-
     const TYPE_CRUD = 3;
+
+    const DEFAULT_LIMIT = 10;
+    const DEFAULT_PAGE = 1;
 
     /**
      * Inject the application config from Zend
@@ -107,6 +108,34 @@ class TableBuilder
     private $type = self::TYPE_DEFAULT;
 
     /**
+     * Current limit
+     *
+     * @var int
+     */
+    private $limit = self::DEFAULT_LIMIT;
+
+    /**
+     * Current page
+     *
+     * @var int
+     */
+    private $page = 1;
+
+    /**
+     * Current page deviation
+     *
+     * @var int
+     */
+    private $pageDeviation = 2;
+
+    /**
+     * Url plugin
+     *
+     * @var object
+     */
+    private $url;
+
+    /**
      * Inject the application config
      *
      * @param array $applicationConfig
@@ -122,11 +151,13 @@ class TableBuilder
      * @param array $config
      * @return string
      */
-    public function buildTable($name, $data = array())
+    public function buildTable($name, $data = array(), $params = array())
     {
         $this->loadConfig($name);
 
         $this->loadData($data);
+
+        $this->loadParams($params);
 
         return $this->replaceContent($this->renderTable(), $this->variables);
     }
@@ -189,7 +220,7 @@ class TableBuilder
 
         $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
 
-        return $this->replaceContent(' {{[elements/]}}', array('total' => $total));
+        return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
     }
 
     /**
@@ -222,7 +253,7 @@ class TableBuilder
         foreach ($actions as $name => $details) {
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
-            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
+            $class = isset($details['class']) ? $details['class'] : 'secondary';
 
             $newActions[] = array(
                 'name' => $name,
@@ -231,11 +262,13 @@ class TableBuilder
             );
         }
 
-        if (count($actions) > 3) {
-            return $this->renderDropdownActions($actions);
+        if (count($newActions) > 3) {
+            $content = $this->renderDropdownActions($newActions);
+        } else {
+            $content = $this->renderButtonActions($newActions);
         }
 
-        return $this->renderButtonActions($actions);
+        return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
     }
 
     /**
@@ -266,6 +299,7 @@ class TableBuilder
         $content = '';
 
         foreach ($actions as $details) {
+
             $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
         }
 
@@ -283,11 +317,16 @@ class TableBuilder
             return '';
         }
 
+        if (!in_array($this->limit, $this->settings['paginate']['limit']['options'])) {
+            $this->settings['paginate']['limit']['options'][] = $this->limit;
+            sort($this->settings['paginate']['limit']['options']);
+        }
+
         if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
             return '';
         }
 
-        return $this->renderPartial('pagination');
+        return $this->renderLayout('pagination');
     }
 
     /**
@@ -301,25 +340,147 @@ class TableBuilder
             return '';
         }
 
-        $content .= '';
+        $content = '';
 
         foreach ($this->settings['paginate']['limit']['options'] as $option) {
 
-            $currentOption = filter_input(INPUT_GET, 'limit');
-
-            if (empty($currentOption)) {
-                $currentOption = $this->settings['paginate']['limit']['default'];
-            }
-
             $class = '';
 
-            if ($option == $currentOption) {
+            $option = (string)$option;
+
+            if ($option == $this->limit) {
                 $class = 'current';
             } else {
-                $option = $this->replaceContent('{{[elements/limitLink]}}', array('option' => $option));
+                $details = array(
+                    'option' => $option,
+                    'link' => $this->generateUrl(array('page' => 1, 'limit' => $option))
+                );
+                $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
             }
 
             $content .= $this->replaceContent('{{[elements/limitOption]}}', array('class' => $class, 'option' => $option));
+        }
+
+        return $content;
+    }
+
+    /**
+     * Render pagination options
+     *
+     * @return string
+     */
+    public function renderPageOptions()
+    {
+        $options = array();
+
+        $totalPages = ceil($this->total / $this->limit);
+
+        // Show previous
+        if ($this->page > 1) {
+
+            $options[] = array(
+                'page' => (string)($this->page - 1),
+                'label' => 'Previous'
+            );
+        }
+
+        // We will always have a page 1
+        $options[] = array(
+            'page' => '1',
+            'label' => '1',
+            'class' => ($this->page == 1 ? 'current' : null)
+        );
+
+        // If we have more than 1 page
+        if ($totalPages > 1) {
+
+            // Total pages that will be displayed e.g. 1 ... 34567 ... 9
+            $totalPagesToDisplay = ($this->pageDeviation * 2) + 3;
+
+            // If we don't have too many pages, just show them all
+            if ($totalPages <= $totalPagesToDisplay) {
+
+                for ($i = 2; $i <= $totalPages; $i++) {
+                    $options[] = array(
+                        'page' => (string)$i,
+                        'label' => (string)$i,
+                        'class' => ($this->page == $i ? 'current' : null)
+                    );
+                }
+            } else {
+
+                $lowerRange = max(
+                    array(
+                        2,
+                        ($this->page - $this->pageDeviation) - ($this->page >= ($totalPages - 2) ? (2 - ($totalPages - $this->page)) : 0)
+                    )
+                );
+
+                $upperRange  = min(
+                    array(
+                        ($totalPages - 1),
+                        ($this->page + $this->pageDeviation) + ($this->page <= 2 ? (3 - $this->page) : 0)
+                    )
+                );
+
+                if ($lowerRange > 2) {
+
+                    $options[] = array(
+                        'page' => null,
+                        'label' => '...'
+                    );
+                }
+
+                $i = $lowerRange;
+
+                while ($i <= $upperRange) {
+
+                    $options[] = array(
+                        'page' => (string)$i,
+                        'label' => (string)$i,
+                        'class' => ($this->page == $i ? 'current' : null)
+                    );
+                    $i++;
+                }
+
+                if ($upperRange <= ($totalPages - 2)) {
+
+                    $options[] = array(
+                        'page' => null,
+                        'label' => '...'
+                    );
+                }
+
+                $options[] = array(
+                    'page' => (string)$totalPages,
+                    'label' => (string)$totalPages,
+                    'class' => ($this->page == (string)$totalPages ? 'current' : null)
+                );
+            }
+
+            if ($this->page < $totalPages) {
+
+                $options[] = array(
+                    'page' => (string)($this->page + 1),
+                    'label' => 'Next'
+                );
+            }
+        }
+
+        $content = '';
+
+        foreach ($options as $details) {
+
+            if (is_null($details['page']) || (string)$this->page == $details['page']) {
+                $details['option'] = $details['label'];
+            } else {
+                $details['link'] = $this->generateUrl(array('page' => $details['page']));
+                $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
+            }
+
+            $details = array_merge(array('class' => ''), $details);
+
+            $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
         }
 
         return $content;
@@ -406,6 +567,8 @@ class TableBuilder
                     $column['class'] .= ' descending';
                 }
             }
+
+            $column['link'] = $this->generateUrl(array('sort' => $column['sort'], 'order' => $column['order']));
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
@@ -497,17 +660,6 @@ class TableBuilder
     }
 
     /**
-     * Render header
-     *
-     * @param string $wrapper
-     * @return string
-     */
-    /**public function renderHeader($wrapper = '{{[elements/title]}}')
-    {
-        return $this->replaceContent($wrapper, array('title' => $this->getSetting('title', '')));
-    }*/
-
-    /**
      * Replace vars into content
      *
      * @param string $content
@@ -524,9 +676,7 @@ class TableBuilder
             }
         }
 
-        $content = preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
-
-        return $content;
+        return preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
     }
 
     /**
@@ -595,7 +745,6 @@ class TableBuilder
         $config = include($configFile);
 
         $this->settings = isset($config['settings']) ? $config['settings'] : array();
-
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
@@ -610,6 +759,40 @@ class TableBuilder
     {
         $this->rows = isset($data['Results']) ? $data['Results'] : $data;
         $this->total = isset($data['Count']) ? $data['Count'] : count($this->rows);
+    }
+
+    /**
+     * Load params
+     *
+     * @param array $array
+     */
+    private function loadParams($array = array())
+    {
+        if (isset($array['limit'])) {
+            $this->limit = $array['limit'];
+        } elseif(isset($this->settings['paginate']['limit']['default'])) {
+            $this->limit = (int)$this->settings['paginate']['limit']['default'];
+        }
+
+        $this->page = isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE;
+
+        if (!isset($array['url'])) {
+
+            throw new \Exception('Table helper requires the URL helper');
+        }
+
+        $this->url = $array['url'];
+    }
+
+    /**
+     * Generate url
+     *
+     * @param array $data
+     * @return string
+     */
+    private function generateUrl($data)
+    {
+        return $this->url->fromRoute(null, $data, array(), true);
     }
 
     /**
