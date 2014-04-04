@@ -113,7 +113,13 @@ class OlcsCustomFormFactory extends Factory
                 $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
             }
         }
-
+        
+        // input for hidden values
+        if (isset($element['attributes']['value'])) {
+            
+            $newElement['spec']['attributes']['value'] = $element['attributes']['value'];
+        }
+        
         return $newElement;
     }
 
