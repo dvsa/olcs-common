@@ -136,6 +136,20 @@ class TableBuilder
     private $url;
 
     /**
+     * Current sort column
+     *
+     * @var string
+     */
+    private $sort;
+
+    /**
+     * Current sort order
+     *
+     * @var string
+     */
+    private $order = 'ASC';
+
+    /**
      * Inject the application config
      *
      * @param array $applicationConfig
@@ -158,6 +172,8 @@ class TableBuilder
         $this->loadData($data);
 
         $this->loadParams($params);
+
+        $this->variables['action'] = isset($this->variables['action']) ? $this->variables['action'] : $this->generateUrl();
 
         return $this->replaceContent($this->renderTable(), $this->variables);
     }
@@ -282,6 +298,7 @@ class TableBuilder
         $options = '';
 
         foreach ($actions as $details) {
+
             $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
         }
 
@@ -337,6 +354,7 @@ class TableBuilder
     public function renderLimitOptions()
     {
         if (empty($this->settings['paginate']['limit']['options'])) {
+
             return '';
         }
 
@@ -555,9 +573,9 @@ class TableBuilder
 
             $column['order'] = 'ASC';
 
-            if ($column['sort'] === filter_input(INPUT_GET, 'sort')) {
+            if ($column['sort'] === $this->sort) {
 
-                if (filter_input(INPUT_GET, 'order') === 'ASC') {
+                if ($this->order === 'ASC') {
 
                     $column['order'] = 'DESC';
 
@@ -631,6 +649,11 @@ class TableBuilder
         return $this->replaceContent($wrapper, array('content' => $content));
     }
 
+    /**
+     * Render pagination
+     *
+     * @return string
+     */
     public function renderPagination()
     {
         if ($this->getSetting('paginate', false) !== false) {
@@ -653,6 +676,7 @@ class TableBuilder
         $attributes = array();
 
         foreach ($attrs as $name => $value) {
+
             $attributes[] = $name .= '"' . $value . '"';
         }
 
@@ -671,8 +695,10 @@ class TableBuilder
         $content = $this->replacePartials($content);
 
         foreach ($vars as $key => $val) {
-            if (is_string($val)) {
-                $content = str_replace('{{' . $key . '}}', $val, $content);
+
+            if (is_string($val) || is_numeric($val)) {
+
+                $content = str_replace('{{' . $key . '}}', (string)$val, $content);
             }
         }
 
@@ -720,6 +746,7 @@ class TableBuilder
             $filename = $this->applicationConfig['tables']['partials'] . $partial . '.phtml';
 
             if (file_exists($this->applicationConfig['tables']['partials'] . $partial . '.phtml')) {
+
                 $this->partials[$partial] = file_get_contents($filename);
             }
         }
@@ -769,8 +796,11 @@ class TableBuilder
     private function loadParams($array = array())
     {
         if (isset($array['limit'])) {
+
             $this->limit = $array['limit'];
+
         } elseif(isset($this->settings['paginate']['limit']['default'])) {
+
             $this->limit = (int)$this->settings['paginate']['limit']['default'];
         }
 
@@ -782,6 +812,10 @@ class TableBuilder
         }
 
         $this->url = $array['url'];
+
+        $this->sort = isset($array['sort']) ? $array['sort'] : '';
+
+        $this->order = isset($array['order']) ? $array['order'] : 'ASC';
     }
 
     /**
@@ -790,7 +824,7 @@ class TableBuilder
      * @param array $data
      * @return string
      */
-    private function generateUrl($data)
+    private function generateUrl($data = array())
     {
         return $this->url->fromRoute(null, $data, array(), true);
     }
