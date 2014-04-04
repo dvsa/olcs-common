@@ -211,7 +211,7 @@ class TableBuilder
         $attributes = array();
 
         foreach ($attrs as $name => $value) {
-            $attributes[] = $name .= '"' . $value . '"';
+            $attributes[] = "$name=\"$value\"";
         }
 
         return implode(' ', $attributes);
