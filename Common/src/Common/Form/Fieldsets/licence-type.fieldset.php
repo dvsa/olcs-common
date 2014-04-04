@@ -2,7 +2,7 @@
 
 return 
 [    
-    'name' => 'licence_type',
+    'name' => 'licence-type',
     'elements' => [
         'licence_type' => [
             'type' => 'radio',
@@ -12,8 +12,8 @@ return
                 'label' => 'Licence Type',
                 'next_step' => 
                 [
-                    'goods' => 'licence_type',
-                    'psv' => 'licence_type_psv'
+                    'goods' => 'licence-type',
+                    'psv' => 'licence-type-psv'
                 ]
             ],
         ]

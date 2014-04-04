@@ -59,9 +59,9 @@ class OlcsCustomFormFactory extends Factory
         if (isset($formConfig['fieldsets'])) {
             $formConfig['fieldsets'] = $this->getFieldsets($formConfig['fieldsets']);
         }
-        
+
         if (isset($formConfig['elements'])) {
-            $formConfig['elements']['crsf'] = array('type' => 'crsf'); 
+            $formConfig['elements']['crsf'] = array('type' => 'crsf');
             $formConfig['elements'] = $this->getElements($formConfig['elements']);
         }
 
@@ -88,6 +88,10 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
         }
 
+        if (isset($element['class'])) {
+            $newElement['spec']['attributes']['class'] = $element['class'];
+        }
+
         if (isset($element['label'])) {
             $newElement['spec']['options']['label'] = $element['label'];
         }
@@ -109,7 +113,13 @@ class OlcsCustomFormFactory extends Factory
                 $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];   
             }
         }
-
+        
+        // input for hidden values
+        if (isset($element['attributes']['value'])) {
+            
+            $newElement['spec']['attributes']['value'] = $element['attributes']['value'];
+        }
+        
         return $newElement;
     }
 

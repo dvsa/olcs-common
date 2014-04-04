@@ -17,6 +17,9 @@ use Zend\Session\Container;
 abstract class FormJourneyActionController extends FormActionController
 {
 
+    protected $currentStep;
+    protected $currentSection;
+    
     /**
      * Method that is called at the end of a journey.
      */
@@ -30,7 +33,7 @@ abstract class FormJourneyActionController extends FormActionController
      */
     public function persistFormData($form)
     {
-        $step = $this->getCurrentStep();
+        /*$step = $this->getCurrentStep();
 
         $formName = $form->getName();
 
@@ -38,6 +41,8 @@ abstract class FormJourneyActionController extends FormActionController
 
         $data = $form->getData();
         $session->$step = $data;
+         */
+         
     }
 
     /**
@@ -50,12 +55,12 @@ abstract class FormJourneyActionController extends FormActionController
      */
     public function getPersistedFormData($form)
     {
-        $step = $this->getCurrentStep();
+       /* $step = $this->getCurrentStep();
         $formName = $form->getName();
 
         $session = new Container($formName);
 
-        return $session->$step;
+        return $session->$step;*/
     }
 
     /**
@@ -96,9 +101,20 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function getCurrentStep()
     {
-        return $this->getEvent()->getRouteMatch()->getParam('step');
-    }
+        return $this->currentStep;        
+   }
 
+    /**
+     * Method to set the current step
+     *
+     * @return object
+     */
+    protected function setCurrentStep($step)
+    {
+        $this->currentStep = $step;
+        return $this;
+    }
+    
     /**
      * Returns the section of the application where this form resides.
      * Set in the controller that processes the form
@@ -107,9 +123,20 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function getCurrentSection()
     {
-        return $this->section;
+        return $this->currentSection;
     }
 
+    /**
+     * Method to set the current section
+     *
+     * @return object
+     */
+    protected function setCurrentSection($section)
+    {
+        $this->currentSection = $section;
+        return $this;
+    }
+    
     /**
      * Determines the next step. The next step is used to redirect to a url
      * This needs to work from the config file for the form and look at
@@ -236,5 +263,16 @@ abstract class FormJourneyActionController extends FormActionController
             }
         }            
         return $form_posted;
+    }
+    
+    protected function getStepProcessMethod($step)
+    {
+        // convert step to camelcase method
+        $return = 'process';
+        
+        $step = str_replace('-', ' ', $step);
+        $step = ucwords($step);
+        $step = str_replace(' ', '', $step);
+        return 'process'.$step;
     }
 }

@@ -8,7 +8,7 @@ return array(
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'htmlTable'     => 'Common\View\Helper\HtmlTable',
-            'crudHtmlTable' => 'Common\View\Helper\CrudHtmlTable',
+            'crudHtmlTable' => 'Common\View\Helper\CrudHtmlTable'
         )
     ),
     'view_manager' => array(
@@ -20,10 +20,10 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml'
         ),
         'template_path_stack' => array(
-           'partials/view' => __DIR__ . '/../view',
+           'partials/view' => __DIR__ . '/../view'
         )
     ),
     'translator' => array(
@@ -32,16 +32,20 @@ return array(
             array(
                 'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
+                'pattern'  => '%s.mo'
+            )
+        )
             ),
-        ),
-    ),
     'forms_path' => '/../../Form/Forms/',
+    'tables' => array(
+        'config' => __DIR__ . '/../src/Common/Table/Tables/',
+        'partials' => __DIR__ . '/../view/table/'
+    ),
     'fieldsets_path' => '/../../Form/Fieldsets/',
     'sic_codes_path' => '/../../../../../Common/config/sic-codes',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
-        'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php',
+        'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
     //-------- Start navigation -----------------
     'navigation' => array(
@@ -50,7 +54,7 @@ return array(
         )
     ),
     //-------- End navigation -----------------
-    
+
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
         array(
@@ -58,8 +62,8 @@ return array(
             'apis' => array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
-                'Vosa\Payment\Card' => 'cardpayment',
-            ),
+                'Vosa\Payment\Card' => 'cardpayment'
+            )
         ),
         array(
             'endpoint' => 'http://olcs-backend/',
@@ -69,6 +73,9 @@ return array(
                 'PersonSearch' => 'person-search',
                 'OperatorSearch' => 'operator-search',
                 'VosaCase' => 'vosa-case',
+                'Licence' => 'licence',
+                'TrafficArea' => 'traffic-area',
+                'Organisation' => 'organisation'
             )
         )
     )

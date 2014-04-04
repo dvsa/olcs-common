@@ -2,18 +2,18 @@
 
 return 
 [    
-    'name' => 'licence_type_psv',
+    'name' => 'licence-type-psv',
     'elements' => 
     [
-        'licence_type_psv' => 
+        'licence-type-psv' => 
         [
-            'name' => 'licence_type_psv',
+            'name' => 'licence-type-psv',
             'type' => 'radio',
             'label' => 'What type of licence do you want to apply for?',
             'value_options' => 'licence_types_psv',
             'attributes' => 
             [
-                'id' => 'operator_location',
+                'id' => 'licence-type-psv',
                 'class' => '',
             ],
             'value_options' => 'licence_types_psv',
