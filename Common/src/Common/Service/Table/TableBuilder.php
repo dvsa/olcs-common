@@ -19,31 +19,95 @@ namespace Common\Service\Table;
  */
 class TableBuilder
 {
+    const TYPE_DEFAULT = 1;
 
+    const TYPE_PAGINATE = 2;
+
+    const TYPE_CRUD = 3;
+
+    /**
+     * Inject the application config from Zend
+     *
+     * @var array
+     */
     private $applicationConfig = array();
 
-    private $defaultSettings = array(
-        'view' => 'default'
-    );
-
+    /**
+     * Table settings
+     *
+     * @var array
+     */
     private $settings = array();
 
+    /**
+     * Table variables
+     *
+     * @var array
+     */
+    private $variables = array();
+
+    /**
+     * Table attributes
+     *
+     * @var array
+     */
     private $attributes = array();
 
+    /**
+     * Table column settings
+     *
+     * @var array
+     */
     private $columns = array();
 
+    /**
+     * Cached partials
+     *
+     * @var array
+     */
     private $partials = array();
 
+    /**
+     * Pre-defined widths
+     *
+     * @var array
+     */
     private $widths = array(
         'checkbox' => '16px'
     );
 
+    /**
+     * Pre-defined formatters
+     *
+     * @var array
+     */
     private $formatters = array(
         '_date' => 'formatterDate'
     );
 
     /**
-     * Pass in the application config
+     * Total count of results
+     *
+     * @var int
+     */
+    private $total;
+
+    /**
+     * Data rows
+     *
+     * @var array
+     */
+    private $rows = array();
+
+    /**
+     * Table type
+     *
+     * @var int
+     */
+    private $type = self::TYPE_DEFAULT;
+
+    /**
+     * Inject the application config
      *
      * @param array $applicationConfig
      */
@@ -64,7 +128,201 @@ class TableBuilder
 
         $this->loadData($data);
 
-        return $this->renderPartial($this->getSetting('view'));
+        return $this->replaceContent($this->renderTable(), $this->variables);
+    }
+
+    /**
+     * Decide the view and begin the render
+     *
+     * @return string
+     */
+    public function renderTable()
+    {
+        if (isset($this->settings['crud'])) {
+
+            $this->type = self::TYPE_CRUD;
+            return $this->renderLayout('crud');
+        }
+
+        if (isset($this->settings['paginate'])) {
+
+            $this->type = self::TYPE_PAGINATE;
+        }
+
+        return $this->renderLayout('default');
+    }
+
+    /**
+     * Render partial
+     *
+     * @param string $name
+     * @return string
+     */
+    public function renderLayout($name)
+    {
+        $partialFile = $this->applicationConfig['tables']['partials'] . 'layouts/' . $name . '.phtml';
+
+        if (!file_exists($partialFile)) {
+
+            throw new \Exception('Table partial not found');
+        }
+
+        ob_start();
+            require($partialFile);
+            $content = ob_get_contents();
+        ob_end_clean();
+
+        return $content;
+    }
+
+    /**
+     * Render the total if we have a paginated table
+     *
+     * @return string
+     */
+    public function renderTotal()
+    {
+        if ($this->type !== self::TYPE_PAGINATE) {
+
+            return '';
+        }
+
+        $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
+
+        return $this->replaceContent(' {{[elements/]}}', array('total' => $total));
+    }
+
+    /**
+     * Render actions
+     *
+     * @return string
+     */
+    public function renderActions()
+    {
+        if ($this->type !== self::TYPE_CRUD) {
+            return '';
+        }
+
+        $actions = isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array();
+
+        if (count($this->rows) === 0) {
+            foreach ($actions as $key => $details) {
+                if (isset($details['requireRows']) && $details['requireRows']) {
+                    unset($actions[$key]);
+                }
+            }
+        }
+
+        if (empty($actions)) {
+            return '';
+        }
+
+        $newActions = array();
+
+        foreach ($actions as $name => $details) {
+            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+
+            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
+
+            $newActions[] = array(
+                'name' => $name,
+                'label' => $value,
+                'class' => $class
+            );
+        }
+
+        if (count($actions) > 3) {
+            return $this->renderDropdownActions($actions);
+        }
+
+        return $this->renderButtonActions($actions);
+    }
+
+    /**
+     * Render the dropdown version of the actions
+     *
+     * @param array $actions
+     * @return string
+     */
+    public function renderDropdownActions($actions = array())
+    {
+        $options = '';
+
+        foreach ($actions as $details) {
+            $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
+        }
+
+        return $this->replaceContent('{{[elements/actionSelect]}}', array('option' => $options));
+    }
+
+    /**
+     * Render the button version of the actions
+     *
+     * @param array $actions
+     * @return string
+     */
+    public function renderButtonActions($actions = array())
+    {
+        $content = '';
+
+        foreach ($actions as $details) {
+            $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    /**
+     * Render footer
+     *
+     * @return string
+     */
+    public function renderFooter()
+    {
+        if ($this->type !== self::TYPE_PAGINATE) {
+            return '';
+        }
+
+        if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
+            return '';
+        }
+
+        return $this->renderPartial('pagination');
+    }
+
+    /**
+     * Render the limit options
+     *
+     * @string
+     */
+    public function renderLimitOptions()
+    {
+        if (empty($this->settings['paginate']['limit']['options'])) {
+            return '';
+        }
+
+        $content .= '';
+
+        foreach ($this->settings['paginate']['limit']['options'] as $option) {
+
+            $currentOption = filter_input(INPUT_GET, 'limit');
+
+            if (empty($currentOption)) {
+                $currentOption = $this->settings['paginate']['limit']['default'];
+            }
+
+            $class = '';
+
+            if ($option == $currentOption) {
+                $class = 'current';
+            } else {
+                $option = $this->replaceContent('{{[elements/limitLink]}}', array('option' => $option));
+            }
+
+            $content .= $this->replaceContent('{{[elements/limitOption]}}', array('class' => $class, 'option' => $option));
+        }
+
+        return $content;
     }
 
     /**
@@ -107,6 +365,16 @@ class TableBuilder
     public function getRows()
     {
         return $this->rows;
+    }
+
+    /**
+     * Get total
+     *
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->total;
     }
 
     /**
@@ -200,6 +468,17 @@ class TableBuilder
         return $this->replaceContent($wrapper, array('content' => $content));
     }
 
+    public function renderPagination()
+    {
+        if ($this->getSetting('paginate', false) !== false) {
+
+            return '';
+        } else {
+
+            return $this->renderLayout('pagination');
+        }
+    }
+
     /**
      * Render an attribute string
      *
@@ -223,63 +502,10 @@ class TableBuilder
      * @param string $wrapper
      * @return string
      */
-    public function renderHeader($wrapper = '{{[elements/title]}}')
+    /**public function renderHeader($wrapper = '{{[elements/title]}}')
     {
         return $this->replaceContent($wrapper, array('title' => $this->getSetting('title', '')));
-    }
-
-    /**
-     * Render actions
-     *
-     * @param string $wrapper
-     * @return string
-     */
-    public function renderActions($wrapper = '')
-    {
-        $actions = $this->getSetting('actions', array());
-
-        $content = '';
-
-        foreach ($actions as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
-
-            $class = isset($details['class']) ? $details['class'] : 'action--secondary';
-
-            $content .= $this->replaceContent(
-                $wrapper,
-                array(
-                    'action_class' => $class,
-                    'action_name' => $name,
-                    'action_value' => $value
-                )
-            );
-        }
-
-        return $content;
-    }
-
-    /**
-     * Render partial
-     *
-     * @param string $name
-     * @return string
-     */
-    public function renderPartial($name)
-    {
-        $partialFile = $this->applicationConfig['tables']['partials'] . $name . '.phtml';
-
-        if (!file_exists($partialFile)) {
-
-            throw new \Exception('Table partial not found');
-        }
-
-        ob_start();
-            require($partialFile);
-            $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
-    }
+    }*/
 
     /**
      * Replace vars into content
@@ -368,13 +594,11 @@ class TableBuilder
 
         $config = include($configFile);
 
-        $this->settings = array_merge(
-            $this->defaultSettings,
-            isset($config['settings']) ? $config['settings'] : array()
-        );
+        $this->settings = isset($config['settings']) ? $config['settings'] : array();
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
+        $this->variables = isset($config['variables']) ? $config['variables'] : array();
     }
 
     /**

@@ -1,9 +1,23 @@
 <?php
 
 return array(
+    'variables' => array(
+        'title' => 'Result list'
+    ),
     'settings' => array(
-        'title' => 'Result list',
-        'paginate' => true
+        'paginate' => array(
+            'limit' => array(
+                'default' => 10,
+                'options' => array(10, 25, 50)
+            )
+        ),
+        'crud' => array(
+            'actions' => array(
+                'add' => array(
+                    'class'
+                )
+            )
+        )
     ),
     'attributes' => array(
     ),
