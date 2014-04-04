@@ -652,6 +652,8 @@ class TableBuilder
     /**
      * Render pagination
      *
+     * Render actions
+     *
      * @return string
      */
     public function renderPagination()
@@ -677,7 +679,7 @@ class TableBuilder
 
         foreach ($attrs as $name => $value) {
 
-            $attributes[] = $name .= '"' . $value . '"';
+            $attributes[] = $name .= '="' . $value . '"';
         }
 
         return implode(' ', $attributes);
