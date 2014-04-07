@@ -22,9 +22,22 @@ class TableBuilder
     const TYPE_DEFAULT = 1;
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
-
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
+
+    /**
+     * Hold the pagination helper
+     *
+     * @var object
+     */
+    private $paginationHelper;
+
+    /**
+     * Hold the contentHelper
+     *
+     * @var object
+     */
+    private $contentHelper;
 
     /**
      * Inject the application config from Zend
@@ -62,29 +75,11 @@ class TableBuilder
     private $columns = array();
 
     /**
-     * Cached partials
-     *
-     * @var array
-     */
-    private $partials = array();
-
-    /**
      * Pre-defined widths
      *
      * @var array
      */
-    private $widths = array(
-        'checkbox' => '16px'
-    );
-
-    /**
-     * Pre-defined formatters
-     *
-     * @var array
-     */
-    private $formatters = array(
-        '_date' => 'formatterDate'
-    );
+    private $widths = array('checkbox' => '16px');
 
     /**
      * Total count of results
@@ -122,13 +117,6 @@ class TableBuilder
     private $page = 1;
 
     /**
-     * Current page deviation
-     *
-     * @var int
-     */
-    private $pageDeviation = 2;
-
-    /**
      * Url plugin
      *
      * @var object
@@ -160,6 +148,93 @@ class TableBuilder
     }
 
     /**
+     * Get the content helper
+     *
+     * @return object
+     * @throws \Exception
+     */
+    public function getContentHelper()
+    {
+        if (empty($this->contentHelper)) {
+
+            if (!isset($this->applicationConfig['tables']['partials'])) {
+
+                throw new \Exception('Table partial location not defined in config');
+            }
+
+            $this->contentHelper = new ContentHelper($this->applicationConfig['tables']['partials'], $this);
+        }
+
+        return $this->contentHelper;
+    }
+
+    /**
+     * Get pagination helper
+     *
+     * @return PaginationHelper
+     */
+    public function getPaginationHelper()
+    {
+        if (empty($this->paginationHelper)) {
+            $this->paginationHelper = new PaginationHelper($this->page, $this->total, $this->limit);
+        }
+
+        return $this->paginationHelper;
+    }
+
+    /**
+     * Return a setting or the default
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getSetting($name, $default = null)
+    {
+        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Get the columns
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Get the data rows
+     *
+     * @return array
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
+     * Get total
+     *
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
      * Build a table from a config file
      *
      * @param array $config
@@ -173,7 +248,14 @@ class TableBuilder
 
         $this->loadParams($params);
 
-        $this->variables['action'] = isset($this->variables['action']) ? $this->variables['action'] : $this->generateUrl();
+        if (isset($this->variables['action'])) {
+
+            $this->variables['action'] = $this->variables['action'];
+
+        } else {
+
+            $this->variables['action'] = $this->generateUrl();
+        }
 
         return $this->replaceContent($this->renderTable(), $this->variables);
     }
@@ -200,26 +282,14 @@ class TableBuilder
     }
 
     /**
-     * Render partial
+     * Wrapper for Content Helper renderLayout
      *
      * @param string $name
      * @return string
      */
     public function renderLayout($name)
     {
-        $partialFile = $this->applicationConfig['tables']['partials'] . 'layouts/' . $name . '.phtml';
-
-        if (!file_exists($partialFile)) {
-
-            throw new \Exception('Table partial not found');
-        }
-
-        ob_start();
-            require($partialFile);
-            $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
+        return $this->getContentHelper()->renderLayout($name);
     }
 
     /**
@@ -250,39 +320,17 @@ class TableBuilder
             return '';
         }
 
-        $actions = isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array();
-
-        if (count($this->rows) === 0) {
-            foreach ($actions as $key => $details) {
-                if (isset($details['requireRows']) && $details['requireRows']) {
-                    unset($actions[$key]);
-                }
-            }
-        }
+        $actions = $this->trimActions(
+            isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array()
+        );
 
         if (empty($actions)) {
             return '';
         }
 
-        $newActions = array();
+        $newActions = $this->formatActions($actions);
 
-        foreach ($actions as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
-
-            $class = isset($details['class']) ? $details['class'] : 'secondary';
-
-            $newActions[] = array(
-                'name' => $name,
-                'label' => $value,
-                'class' => $class
-            );
-        }
-
-        if (count($newActions) > 3) {
-            $content = $this->renderDropdownActions($newActions);
-        } else {
-            $content = $this->renderButtonActions($newActions);
-        }
+        $content = $this->formatActionContent($newActions);
 
         return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
     }
@@ -376,7 +424,9 @@ class TableBuilder
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
             }
 
-            $content .= $this->replaceContent('{{[elements/limitOption]}}', array('class' => $class, 'option' => $option));
+            $limitDetails = array('class' => $class, 'option' => $option);
+
+            $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
         }
 
         return $content;
@@ -389,101 +439,7 @@ class TableBuilder
      */
     public function renderPageOptions()
     {
-        $options = array();
-
-        $totalPages = ceil($this->total / $this->limit);
-
-        // Show previous
-        if ($this->page > 1) {
-
-            $options[] = array(
-                'page' => (string)($this->page - 1),
-                'label' => 'Previous'
-            );
-        }
-
-        // We will always have a page 1
-        $options[] = array(
-            'page' => '1',
-            'label' => '1',
-            'class' => ($this->page == 1 ? 'current' : null)
-        );
-
-        // If we have more than 1 page
-        if ($totalPages > 1) {
-
-            // Total pages that will be displayed e.g. 1 ... 34567 ... 9
-            $totalPagesToDisplay = ($this->pageDeviation * 2) + 3;
-
-            // If we don't have too many pages, just show them all
-            if ($totalPages <= $totalPagesToDisplay) {
-
-                for ($i = 2; $i <= $totalPages; $i++) {
-                    $options[] = array(
-                        'page' => (string)$i,
-                        'label' => (string)$i,
-                        'class' => ($this->page == $i ? 'current' : null)
-                    );
-                }
-            } else {
-
-                $lowerRange = max(
-                    array(
-                        2,
-                        ($this->page - $this->pageDeviation) - ($this->page >= ($totalPages - 2) ? (2 - ($totalPages - $this->page)) : 0)
-                    )
-                );
-
-                $upperRange  = min(
-                    array(
-                        ($totalPages - 1),
-                        ($this->page + $this->pageDeviation) + ($this->page <= 2 ? (3 - $this->page) : 0)
-                    )
-                );
-
-                if ($lowerRange > 2) {
-
-                    $options[] = array(
-                        'page' => null,
-                        'label' => '...'
-                    );
-                }
-
-                $i = $lowerRange;
-
-                while ($i <= $upperRange) {
-
-                    $options[] = array(
-                        'page' => (string)$i,
-                        'label' => (string)$i,
-                        'class' => ($this->page == $i ? 'current' : null)
-                    );
-                    $i++;
-                }
-
-                if ($upperRange <= ($totalPages - 2)) {
-
-                    $options[] = array(
-                        'page' => null,
-                        'label' => '...'
-                    );
-                }
-
-                $options[] = array(
-                    'page' => (string)$totalPages,
-                    'label' => (string)$totalPages,
-                    'class' => ($this->page == (string)$totalPages ? 'current' : null)
-                );
-            }
-
-            if ($this->page < $totalPages) {
-
-                $options[] = array(
-                    'page' => (string)($this->page + 1),
-                    'label' => 'Next'
-                );
-            }
-        }
+        $options = $this->getPaginationHelper()->getOptions();
 
         $content = '';
 
@@ -502,58 +458,6 @@ class TableBuilder
         }
 
         return $content;
-    }
-
-    /**
-     * Return a setting or the default
-     *
-     * @param string $name
-     * @param mixed $default
-     * @return mixed
-     */
-    public function getSetting($name, $default = null)
-    {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
-    }
-
-    /**
-     * Get attributes
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * Get the columns
-     *
-     * @return array
-     */
-    public function getColumns()
-    {
-        return $this->columns;
-    }
-
-    /**
-     * Get the data rows
-     *
-     * @return array
-     */
-    public function getRows()
-    {
-        return $this->rows;
-    }
-
-    /**
-     * Get total
-     *
-     * @return int
-     */
-    public function getTotal()
-    {
-        return $this->total;
     }
 
     /**
@@ -611,13 +515,16 @@ class TableBuilder
     {
         if (isset($column['formatter'])) {
 
+            if (is_string($column['formatter']) && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
+
+                $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
+
+                $column['formatter'] = $className;
+            }
+
             if (is_callable($column['formatter'])) {
 
                 $column['callback'] = $column['formatter'];
-
-            } elseif (is_string($column['formatter']) && isset($this->formatters[$column['formatter']])) {
-
-                $column['callback'] = array($this, $this->formatters[$column['formatter']]);
             }
         }
 
@@ -675,14 +582,7 @@ class TableBuilder
      */
     public function renderAttributes($attrs = array())
     {
-        $attributes = array();
-
-        foreach ($attrs as $name => $value) {
-
-            $attributes[] = $name .= '="' . $value . '"';
-        }
-
-        return implode(' ', $attributes);
+        return $this->getContentHelper()->renderAttributes($attrs);
     }
 
     /**
@@ -694,66 +594,7 @@ class TableBuilder
      */
     private function replaceContent($content, $vars = array())
     {
-        $content = $this->replacePartials($content);
-
-        foreach ($vars as $key => $val) {
-
-            if (is_string($val) || is_numeric($val)) {
-
-                $content = str_replace('{{' . $key . '}}', (string)$val, $content);
-            }
-        }
-
-        return preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
-    }
-
-    /**
-     * Replace partials in the content
-     *
-     * @param string $content
-     * @return string
-     */
-    private function replacePartials($content)
-    {
-        if (preg_match_all('/(\{\{\[([a-zA-Z\/]+)\]\}\})/', $content, $matches)) {
-
-            $partials = array();
-
-            foreach ($matches[2] as $match) {
-
-                $partials[$match] = $match;
-            }
-
-            foreach ($partials as $partial) {
-
-                $content = str_replace('{{[' . $partial .']}}', $this->getPartial($partial), $content);
-            }
-        }
-
-        return $content;
-    }
-
-    /**
-     * Get a partials content
-     *
-     * @param string $partial
-     * @return string
-     */
-    private function getPartial($partial)
-    {
-        if (!isset($this->partials[$partial])) {
-
-            $this->partials[$partial] = '';
-
-            $filename = $this->applicationConfig['tables']['partials'] . $partial . '.phtml';
-
-            if (file_exists($this->applicationConfig['tables']['partials'] . $partial . '.phtml')) {
-
-                $this->partials[$partial] = file_get_contents($filename);
-            }
-        }
-
-        return $this->partials[$partial];
+        return $this->getContentHelper()->replaceContent($content, $vars);
     }
 
     /**
@@ -814,9 +655,7 @@ class TableBuilder
         }
 
         $this->url = $array['url'];
-
         $this->sort = isset($array['sort']) ? $array['sort'] : '';
-
         $this->order = isset($array['order']) ? $array['order'] : 'ASC';
     }
 
@@ -832,18 +671,57 @@ class TableBuilder
     }
 
     /**
-     * Format dates
+     * Format action content
      *
-     * @param array $data
-     * @param array $column
+     * @param array $actions
      * @return string
      */
-    public function formatterDate($data, $column)
+    private function formatActionContent($actions)
     {
-        if (!isset($column['dateformat'])) {
-            $column['dateformat'] = 'd/m/Y';
+        if (count($actions) > 3) {
+            return $this->renderDropdownActions($actions);
         }
 
-        return date($column['dateformat'], strtotime($data[$column['name']]));
+        return $this->renderButtonActions($actions);
+    }
+
+    /**
+     * Format actions
+     *
+     * @param array $actions
+     * @return array
+     */
+    private function formatActions($actions)
+    {
+        $newActions = array();
+
+        foreach ($actions as $name => $details) {
+            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+
+            $class = isset($details['class']) ? $details['class'] : 'secondary';
+
+            $newActions[] = array('name' => $name, 'label' => $value, 'class' => $class);
+        }
+
+        return $newActions;
+    }
+
+    /**
+     * Trim actions
+     *
+     * @param array $actions
+     * @return array
+     */
+    private function trimActions($actions)
+    {
+        if (count($this->rows) === 0) {
+            foreach ($actions as $key => $details) {
+                if (isset($details['requireRows']) && $details['requireRows']) {
+                    unset($actions[$key]);
+                }
+            }
+        }
+
+        return $actions;
     }
 }

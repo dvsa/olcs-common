@@ -1,6 +1,6 @@
 <div class="table__header">
-    <h3>{{title}}<?php echo $this->renderTotal(); ?></h3>
-    <?php echo $this->renderActions(); ?>
+    <h3>{{title}}<?php echo $this->object->renderTotal(); ?></h3>
+    <?php echo $this->object->renderActions(); ?>
 </div>
-<?php echo $this->renderLayout('table'); ?>
-<?php echo $this->renderFooter();
+<?php echo $this->object->renderLayout('table'); ?>
+<?php echo $this->object->renderFooter();

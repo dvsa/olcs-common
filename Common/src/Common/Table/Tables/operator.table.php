@@ -38,7 +38,7 @@ return array(
         array(
             'title' => 'Last act CN/Date',
             'name' => 'last_updated_on',
-            'formatter' => '_date',
+            'formatter' => 'Date',
             'sort' => 'lastActionDate'
         ),
         array(
