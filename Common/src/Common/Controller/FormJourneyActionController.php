@@ -47,14 +47,12 @@ abstract class FormJourneyActionController extends FormActionController
 
     /**
      * Gets the persisted form data for current step
-     *
-     * @param type $section
+  
      * @throws \Common\Exception\Exception
-     * @return array | null
+     * @return array
      */
-    public function getPersistedFormData($form)
-    {
-        
+    public function getPersistedFormData()
+    { 
         $stepCamelCase = str_replace('-', ' ', $this->getCurrentStep());
         $stepCamelCase = ucwords($stepCamelCase);
         $stepCamelCase = str_replace(' ', '', $stepCamelCase);
@@ -63,15 +61,14 @@ abstract class FormJourneyActionController extends FormActionController
         $callback = array($this, $methodName);
         
         if (is_callable($callback) && method_exists($callback[0], $callback[1])){
-        
             $persistedData = call_user_func($callback);
-            if (!is_array($persistedData) && $persistedData != null){
-            	throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
+            if (!is_array($persistedData)){
+                throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
             }
             return $persistedData;
         }
         
-        return null;
+        return array();
     }
 
     /**
