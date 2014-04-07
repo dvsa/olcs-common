@@ -1,7 +1,7 @@
 <?php
 return
 [    
-    'name' => 'registered_company',
+    'name' => 'registered-company',
     'elements' => 
     [
         'company_number' => 
@@ -33,18 +33,5 @@ return
             'type' => 'businessType',
             'value_options' => 'sic_codes',             
         ],
-    ],
-    'options' => 
-    [
-        'final_step' => 1,
-        'label' => 'Business Type',
-        'next_step' => 
-        [
-            'org_type.rc' => 'registered_company',
-            'org_type.st' => 'sole_trader',
-            'org_type.p' => 'partnership',
-            'org_type.llp' => 'llp',
-            'org_type.pa' => 'public_authority'
-        ]
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 return [
-    'business' => [
-        'name' => 'business_type',
+    'business-type' => [
+        'name' => 'business-type',
         'attributes' => [
             'method' => 'post',
         ],

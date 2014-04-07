@@ -21,17 +21,4 @@ return
             'type' => 'businessType'
         ],
     ],
-    'options' => 
-    [
-        'final_step' => 1,
-        'label' => 'Business Type',
-        'next_step' => 
-        [
-            'org_type.rc' => 'registered_company',
-            'org_type.st' => 'sole_trader',
-            'org_type.p' => 'partnership',
-            'org_type.llp' => 'llp',
-            'org_type.pa' => 'public_authority'
-        ]
-    ],
 ];

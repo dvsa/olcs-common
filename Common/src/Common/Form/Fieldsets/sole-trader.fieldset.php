@@ -1,13 +1,9 @@
 <?php
 return
 [    
-    'name' => 'partnership',
+    'name' => 'sole-trader',
     'elements' => 
     [
-        'company_name' => 
-        [
-            'type' => 'companyName',
-        ],
         'trading_names' => 
         [
             'type' => 'tradingNames',              

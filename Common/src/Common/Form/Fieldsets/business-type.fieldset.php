@@ -1,16 +1,16 @@
 <?php
 return
 [    
-    'name' => 'business_type',
+    'name' => 'business-type',
     'elements' => 
     [
-        'business_type' => 
+        'business-type' => 
         [
-            'name' => 'business_type',
+            'name' => 'business-type',
             'label' => 'What type of business are you?',
             'type' => 'select',
             'attributes' => array(
-                'id' => 'business_type',
+                'id' => 'business-type',
                 'class' => '',
             ),
             'value_options' => 'business_types',
@@ -22,11 +22,11 @@ return
         'label' => 'Business Type',
         'next_step' => 
         [
-            'org_type.rc' => 'registered_company',
-            'org_type.st' => 'sole_trader',
+            'org_type.rc' => 'registered-company',
+            'org_type.st' => 'sole-trader',
             'org_type.p' => 'partnership',
             'org_type.llp' => 'llp',
-            'org_type.pa' => 'public_authority'
+            'org_type.pa' => 'public-authority'
         ]
     ],
 ];
