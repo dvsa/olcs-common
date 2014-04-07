@@ -67,6 +67,14 @@ return  array(
         'standard-national' => 'Standard National',
         'standard-international' => 'Standard International',
         'special-restricted' => 'Special Restricted',
+    ],
+    'business_types' => 
+    [
+        'org_type.rc' => 'Registered Company',
+        'org_type.st' => 'Sole Trader',
+        'org_type.p' => 'Partnership',
+        'org_type.llp' => 'LLP',
+        'org_type.pa' => 'Public authority'
     ]
 );
 

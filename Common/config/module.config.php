@@ -42,6 +42,7 @@ return array(
         'partials' => __DIR__ . '/../view/table/'
     ),
     'fieldsets_path' => '/../../Form/Fieldsets/',
+    'sic_codes_path' => '/../../../../../Common/config/sic-codes',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'

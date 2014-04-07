@@ -162,12 +162,13 @@ abstract class FormJourneyActionController extends FormActionController
         foreach ($form->getFieldsets() as $fieldset) {
             $next_step_options = $fieldset->getOption('next_step');
             foreach ($fieldset->getElements() as $element) {
-                if (isset($next_step_options)) {
+                $element_value = $element->getValue();
+                if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
                     return $next_step_options[$element->getValue()];
                 }
             }
         }
-        throw new \RuntimeException('Next step not defined');
+        throw new \RuntimeException('Next step not defined, for any elements');
     }
 
     /**
@@ -214,6 +215,7 @@ abstract class FormJourneyActionController extends FormActionController
         $this->persistFormData($form);
 
         $next_step = $this->evaluateNextStep($form);
+
         if ($next_step == 'complete') {
             return $this->forward()->dispatch('SelfServe\LicenceType\Index', array('action' => 'complete'));
         } else {
@@ -245,6 +247,34 @@ abstract class FormJourneyActionController extends FormActionController
         ];
     }
 
+    /**
+     * Method to determine the form that was posted. Searches all posted items
+     * and if any start with 'submit_' then the remaining string is returned
+     * to signify the submitted button pressed.
+     * 
+     * @param \Zend\Http\Request $request
+     * @return string
+     */
+    protected function determineSubmitButtonPressed(\Zend\Http\Request $request)
+    {
+        $form_posted = '';
+        if ($request->isPost()) 
+        {
+            $posted_data = $request->getPost($this->getCurrentStep());
+            if (is_array($posted_data))
+            {
+                foreach($posted_data as $key => $value)
+                {
+                    if (substr($key, 0, 7) == 'submit_')
+                    {
+                        return substr($key, 7);
+                    }
+                }
+            }
+        }            
+        return $form_posted;
+    }
+    
     protected function getStepProcessMethod($step)
     {
         // convert step to camelcase method
