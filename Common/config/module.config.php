@@ -35,8 +35,8 @@ return array(
                 'pattern'  => '%s.mo'
             )
         )
-    ),
-    'forms_path' => '/../../Form/Forms/',
+            ),
+    'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'tables' => array(
         'config' => __DIR__ . '/../src/Common/Table/Tables/',
         'partials' => __DIR__ . '/../view/table/'
@@ -71,7 +71,10 @@ return array(
                 'Person' => 'person',
                 'PersonSearch' => 'person-search',
                 'OperatorSearch' => 'operator-search',
-                'VosaCase' => 'vosa-case'
+                'VosaCase' => 'vosa-case',
+                'Licence' => 'licence',
+                'TrafficArea' => 'traffic-area',
+                'Organisation' => 'organisation'
             )
         )
     )

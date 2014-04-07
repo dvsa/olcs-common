@@ -19,13 +19,16 @@ class OlcsCustomFormFactory extends Factory
 
     public $baseFormConfig;
 
-    public $formsPath;
+    public $formsPaths;
     public $fieldsetPath;
 
     public function __construct($config)
     {
         $this->config = $config;
-        $this->formsPath = $this->config['forms_path'];
+        if (isset($this->config['local_forms_path'])) {
+            $this->formsPaths[] = $this->config['local_forms_path'];
+        }
+        $this->formsPaths[] = $this->config['forms_path'];
         $this->fieldsetsPath = $this->config['fieldsets_path'];
         parent::__construct();
     }
@@ -41,12 +44,14 @@ class OlcsCustomFormFactory extends Factory
 
     public function getFormConfig($type)
     {
-        $path = __DIR__ . $this->formsPath . $type . '.form.php';
-        if (!file_exists($path)) {
-            throw new \Exception("Form $type has no specification config!");
+        foreach($this->formsPaths as $formsPath) {
+            $path = $formsPath . $type . '.form.php';
+            if (file_exists($path)) {
+                $formConfig = include $path;
+                return $formConfig;
+            }
         }
-        $formConfig = include $path;
-        return $formConfig;
+        throw new \Exception("Form $type has no specification config!");
     }
 
     public function setFormConfig(array $config)
@@ -113,7 +118,13 @@ class OlcsCustomFormFactory extends Factory
                 $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
             }
         }
-
+        
+        // input for hidden values
+        if (isset($element['attributes']['value'])) {
+            
+            $newElement['spec']['attributes']['value'] = $element['attributes']['value'];
+        }
+        
         return $newElement;
     }
 
