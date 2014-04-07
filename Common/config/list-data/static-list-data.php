@@ -54,8 +54,8 @@ return  array(
         'ni' => 'Northern Ireland'
     ],
     'operator_types' => [
-        'goods' => 'Goods',
-        'psv' => 'PSV'
+        'Goods' => 'Goods',
+        'PSV' => 'PSV'
     ],
     'licence_types' => [
         'restricted' => 'Restricted',

@@ -62,7 +62,8 @@ abstract class FormJourneyActionController extends FormActionController
         $methodName = sprintf("get%sFormData", $stepCamelCase);
         $callback = array($this, $methodName);
         
-        if (is_callable($callback)){
+        if (is_callable($callback) && method_exists($callback[0], $callback[1])){
+        
             $persistedData = call_user_func($callback);
             if (!is_array($persistedData) && $persistedData != null){
             	throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
