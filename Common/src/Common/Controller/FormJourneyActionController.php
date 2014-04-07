@@ -46,21 +46,31 @@ abstract class FormJourneyActionController extends FormActionController
     }
 
     /**
-     * Gets the current persisted form data for the form within the passed
-     * section.
+     * Gets the persisted form data for current step
      *
      * @param type $section
-     * @param type $form
-     * @return array
+     * @throws \Common\Exception\Exception
+     * @return array | null
      */
     public function getPersistedFormData($form)
     {
-       /* $step = $this->getCurrentStep();
-        $formName = $form->getName();
-
-        $session = new Container($formName);
-
-        return $session->$step;*/
+        
+        $stepCamelCase = str_replace('-', ' ', $this->getCurrentStep());
+        $stepCamelCase = ucwords($stepCamelCase);
+        $stepCamelCase = str_replace(' ', '', $stepCamelCase);
+        
+        $methodName = sprintf("get%sFormData", $stepCamelCase);
+        $callback = array($this, $methodName);
+        
+        if (is_callable($callback)){
+            $persistedData = call_user_func($callback);
+            if (!is_array($persistedData) && $persistedData != null){
+            	throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
+            }
+            return $persistedData;
+        }
+        
+        return null;
     }
 
     /**
