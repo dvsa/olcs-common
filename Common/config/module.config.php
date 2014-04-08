@@ -56,17 +56,13 @@ return array(
 
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
-        array(
-            'endpoint' => 'http://olcspayment.dev/api/',
-            'apis' => array(
+        'apis' => array(
+            'payments' => array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
-            )
-        ),
-        array(
-            'endpoint' => 'http://olcs-backend/',
-            'apis' => array(
+            ),
+            'backend' => array(
                 'User' => 'user',
                 'Person' => 'person',
                 'PersonSearch' => 'person-search',
