@@ -41,7 +41,7 @@ return array(
         'config' => __DIR__ . '/../src/Common/Table/Tables/',
         'partials' => __DIR__ . '/../view/table/'
     ),
-    'fieldsets_path' => '/../../Form/Fieldsets/',
+    'fieldsets_path' => __DIR__ .'/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
