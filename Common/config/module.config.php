@@ -65,7 +65,7 @@ return array(
             )
         ),
         array(
-            'endpoint' => 'http://olcs-backend/',
+            'endpoint' => 'http://dvsa-backend.olcsdv-ap01.olcs.npm',
             'apis' => array(
                 'User' => 'user',
                 'Person' => 'person',
