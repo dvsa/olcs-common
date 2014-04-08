@@ -78,6 +78,24 @@ class ContentHelper
     }
 
     /**
+     * Render an attribute string from an array
+     *
+     * @param array $attrs
+     * @return string
+     */
+    public function renderAttributes($attrs)
+    {
+        $attributes = array();
+
+        foreach ($attrs as $name => $value) {
+
+            $attributes[] = $name .= '="' . $value . '"';
+        }
+
+        return implode(' ', $attributes);
+    }
+
+    /**
      * Replace vars into content
      *
      * @param string $content
@@ -97,24 +115,6 @@ class ContentHelper
         }
 
         return preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
-    }
-
-    /**
-     * Render an attribute string from an array
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function renderAttributes($attrs)
-    {
-        $attributes = array();
-
-        foreach ($attrs as $name => $value) {
-
-            $attributes[] = $name .= '="' . $value . '"';
-        }
-
-        return implode(' ', $attributes);
     }
 
     /**

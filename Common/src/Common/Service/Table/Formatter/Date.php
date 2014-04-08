@@ -28,7 +28,7 @@ class Date implements FormatterInterface
             $column['dateformat'] = 'd/m/Y';
         }
 
-        if (!is_null($data[$column['name']])) {
+        if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {
             return date($column['dateformat'], strtotime($data[$column['name']]));
         }
 

@@ -605,6 +605,10 @@ class TableBuilder
      */
     private function loadConfig($name)
     {
+        if (!isset($this->applicationConfig['tables']['config'])) {
+            throw new \Exception('Table config location not defined');
+        }
+
         $configFile = $this->applicationConfig['tables']['config'] . $name . '.table.php';
 
         if (!file_exists($configFile)) {
@@ -612,12 +616,23 @@ class TableBuilder
             throw new \Exception('Table configuration not found');
         }
 
-        $config = include($configFile);
+        $config = $this->getConfigFromFile($configFile);
 
         $this->settings = isset($config['settings']) ? $config['settings'] : array();
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
+    }
+
+    /**
+     * Get config from file
+     *
+     * @param string $file
+     * @return array
+     */
+    public function getConfigFromFile($file)
+    {
+        return include($file);
     }
 
     /**
