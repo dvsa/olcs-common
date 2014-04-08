@@ -9,27 +9,23 @@ use Common\Util\ResolveApi;
 /**
  * Description of ServiceApiResolver
  *
- * @author Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Michael Cooper
  */
 class ServiceApiResolver implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
-
-        $serviceApiConfig = empty($config['service_api_mapping']) ? array() : $config['service_api_mapping'];
-        $serviceApiMapping = array();
-
-        foreach ($serviceApiConfig as $endpoint) {
-            $apis = empty($endpoint['apis']) ? array() : $endpoint['apis'];
-            foreach ($apis as $api => $path) {
-                $serviceApiMapping[$api] = array(
-                    'baseUrl' => $endpoint['endpoint'],
-                    'path' => $path,
-                );
+        foreach ($config['service_api_mapping']['endpoints'] as $key => $endpoint) {
+            if (isset($config['service_api_mapping']['apis'][$key])) {
+                foreach($config['service_api_mapping']['apis'][$key] as $api => $path) {
+                    $serviceApiMapping[$api] = array(
+                        'baseUrl' => $endpoint,
+                        'path' => $path,
+                    );
+                }
             }
         }
-
         return new ResolveApi($serviceApiMapping);
     }
 }

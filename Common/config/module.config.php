@@ -41,7 +41,7 @@ return array(
         'config' => __DIR__ . '/../src/Common/Table/Tables/',
         'partials' => __DIR__ . '/../view/table/'
     ),
-    'fieldsets_path' => '/../../Form/Fieldsets/',
+    'fieldsets_path' => __DIR__ .'/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
@@ -56,17 +56,13 @@ return array(
 
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
-        array(
-            'endpoint' => 'http://olcspayment.dev/api/',
-            'apis' => array(
+        'apis' => array(
+            'payments' => array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
-            )
-        ),
-        array(
-            'endpoint' => 'http://olcs-backend/',
-            'apis' => array(
+            ),
+            'backend' => array(
                 'User' => 'user',
                 'Person' => 'person',
                 'PersonSearch' => 'person-search',

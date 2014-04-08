@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Creates a form from a form config file store in
+ * Creates a form from a form config file stored in the OlcsCommon module.config.php 'forms_path' or in
+ * your local project module.config.php
  */
 
 namespace Common\Service\Form;
@@ -37,6 +38,9 @@ class OlcsCustomFormFactory extends Factory
     {
         if (empty($this->baseFormConfig)) {
             $this->baseFormConfig = $this->getFormConfig($type);
+        }
+        if (!isset($this->baseFormConfig[$type])) {
+            throw new \Exception("Form $type has no specification config!");
         }
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
         return parent::createForm($formConfig);
@@ -182,7 +186,7 @@ class OlcsCustomFormFactory extends Factory
      */
     protected function getFieldsetConfig($fieldset)
     {
-        $path =  __DIR__ . "$this->fieldsetsPath$fieldset.fieldset.php";
+        $path =  "$this->fieldsetsPath$fieldset.fieldset.php";
         if (!file_exists($path)) {
             throw new \Exception("Fieldset $fieldset has no specification config!");
         }
