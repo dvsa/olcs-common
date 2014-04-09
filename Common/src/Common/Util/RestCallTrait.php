@@ -71,7 +71,7 @@ trait RestCallTrait
         }
 
         $response = $this->service($service)->$serviceMethod($path, $data);
-
+        
         return $this->$handleResponseMethod($service, $response);
     }
 

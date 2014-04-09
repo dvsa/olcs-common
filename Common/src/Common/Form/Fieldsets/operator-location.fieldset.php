@@ -21,8 +21,11 @@ return
          'label' => 'Operator Location',
          'next_step' => 
          [
-             'uk' => 'operator-type',
-             'ni' => 'licence-type-ni'
+             'values' => [
+                 'uk' => 'operator-type',
+                 'ni' => 'licence-type-ni',
+             ],
+             'default' => 'complete',
          ]
     ]
 ];

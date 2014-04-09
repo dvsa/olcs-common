@@ -22,8 +22,11 @@ return
         'label' => 'Operator Type',
         'next_step' => 
         [
-            'goods' => 'licence-type',
-            'psv' => 'licence-type-psv'
+            'values' => [
+                'goods' => 'licence-type',
+                'psv' => 'licence-type-psv',
+            ],
+            'default' => 'complete',
         ]
     ],
 ];

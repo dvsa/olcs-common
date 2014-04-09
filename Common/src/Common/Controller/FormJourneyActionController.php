@@ -148,7 +148,7 @@ abstract class FormJourneyActionController extends FormActionController
     /**
      * Determines the next step. The next step is used to redirect to a url
      * This needs to work from the config file for the form and look at
-     * What data is required against what we have persisted.
+     * What data is required against what we have persisted. If not found, default step is returned
      *
      * @param \Zend\Form $form
      * @throws \RuntimeException
@@ -158,13 +158,16 @@ abstract class FormJourneyActionController extends FormActionController
     {
         $formData = $form->getData($this->getCurrentStep());
         foreach ($form->getFieldsets() as $fieldset) {
-            $next_step_options = $fieldset->getOption('next_step');
+            $next_step_options = $fieldset->getOption('next_step')['values'];
+            
             foreach ($fieldset->getElements() as $element) {
                 $element_value = $element->getValue();
                 if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
                     return $next_step_options[$element->getValue()];
                 }
             }
+            if (isset($fieldset->getOption('next_step')['default']))
+                return $fieldset->getOption('next_step')['default'];
         }
         throw new \RuntimeException('Next step not defined, for any elements');
     }
