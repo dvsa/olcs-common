@@ -38,7 +38,7 @@ return array(
         array(
             'title' => 'Last act CN/Date',
             'name' => 'last_updated_on',
-            'formatter' => '_date',
+            'formatter' => 'Date',
             'sort' => 'lastActionDate'
         ),
         array(
@@ -59,9 +59,9 @@ return array(
             'title' => 'Cases',
             'formatter' => function($data) {
             if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
-                return '<a href="/case/' . $data['licenceId'] . '">' . $data['caseCount'] . '</a>';
+                return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId']), 'licence_case_list/pagination', false) . '">' . $data['caseCount'] . '</a>';
             } else {
-                return '<a href="/case/' . $data['licenceId'] . '/add">[Add Case]</a>';
+                return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId'], 'action' => 'add'), 'licence_case_action') . '">[Add Case]</a>';
             }
         }
         ),

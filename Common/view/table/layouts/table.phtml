@@ -1,22 +1,22 @@
 <div class="table__wrapper">
-    <table <?php echo $this->renderAttributes($this->getAttributes()); ?>>
+    <table <?php echo $this->object->renderAttributes($this->object->getAttributes()); ?>>
         <thead>
             <tr>
                 <?php
-                foreach ($this->getColumns() as $column) {
-                    echo $this->renderHeaderColumn($column, '{{[elements/th]}}');
+                foreach ($this->object->getColumns() as $column) {
+                    echo $this->object->renderHeaderColumn($column, '{{[elements/th]}}');
                 }
                 ?>
             </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($this->getRows() as $row) {
+            foreach ($this->object->getRows() as $row) {
                 ?>
             <tr>
                 <?php
-                foreach ($this->getColumns() as $column) {
-                    echo $this->renderBodyColumn($row, $column, '{{[elements/td]}}');
+                foreach ($this->object->getColumns() as $column) {
+                    echo $this->object->renderBodyColumn($row, $column, '{{[elements/td]}}');
                 }
                 ?>
             </tr>
