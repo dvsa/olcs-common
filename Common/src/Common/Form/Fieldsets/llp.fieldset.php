@@ -11,7 +11,10 @@ return
         ],
         'submit_lookup_company' => 
         [
-            'type' => 'findButton'
+            'name' => 'submit_lookup_company',
+            'value' => 'lookup_company',
+            'type' => 'submit',
+            'label' => 'Find',
         ],
     ],
 ];
