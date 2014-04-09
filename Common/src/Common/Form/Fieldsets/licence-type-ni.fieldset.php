@@ -26,5 +26,11 @@ return
             ],
         ],
     ],
+    'options' => [
+        'next_step' => 
+        [
+            'default' => 'complete'
+        ]
+    ],
 ];
 
