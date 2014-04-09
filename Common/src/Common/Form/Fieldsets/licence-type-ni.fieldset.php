@@ -2,8 +2,9 @@
 
 return 
 [    
-    'name' => 'licence_type',
-    'elements' => [
+    'name' => 'licence-type-ni',
+    'elements' => 
+    [
         'licence_type' => [
             'type' => 'radio',
             'label' => 'What type of licence do you want to apply for?',
@@ -12,21 +13,24 @@ return
                 'label' => 'Licence Type',
                 'next_step' => 
                 [
-                    'goods' => 'licence_type',
-                    'psv' => 'licence_type_psv'
+                    'goods' => 'licence-type',
+                    'psv' => 'licence-type-psv'
                 ]
             ],
-        ]
+        ],
+        'ni_flag' => [
+            'name' => 'ni_flag',
+            'type' => 'hidden',
+            'attributes' => [
+                'value' => '1',
+            ],
+        ],
     ],
-    'options' => 
-    [
-        'label' => 'Licence Type',
+    'options' => [
         'next_step' => 
         [
-            'restricted' => 'complete',
-            'standard-national' => 'complete',
-            'standard-international' => 'complete',
-            'special-restricted' => 'complete',
+            'default' => 'complete'
         ]
     ],
 ];
+

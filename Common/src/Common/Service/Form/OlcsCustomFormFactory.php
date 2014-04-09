@@ -119,7 +119,7 @@ class OlcsCustomFormFactory extends Factory
             if (is_string($element['value_options']))
             {
                 // use string to look up in static-list-data
-                $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
+                $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];   
             }
         }
         

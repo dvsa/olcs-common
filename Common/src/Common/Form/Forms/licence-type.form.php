@@ -1,7 +1,7 @@
 <?php
 return [
-    'licence_type' => [
-        'name' => 'licence_type',
+    'licence-type' => [
+        'name' => 'licence-type',
         'attributes' => [
             'method' => 'post',
         ],
@@ -11,6 +11,9 @@ return [
             'submit' => [
                 'type' => 'submit',
                 'label' => 'Next'
+            ],
+            'version' => [
+	           'type' => 'hidden',
             ]
         ]
     ]

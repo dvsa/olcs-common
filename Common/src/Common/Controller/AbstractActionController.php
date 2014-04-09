@@ -80,7 +80,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 $params = [
                     'validData' => $validatedData,
                     'form' => $form,
-                    'journeyData' => $this->getJourneyData(),
                     'params' => $additionalParams
                 ];
                 if (is_callable($callback)) {

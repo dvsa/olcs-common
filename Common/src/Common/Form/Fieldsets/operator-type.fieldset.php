@@ -1,16 +1,16 @@
 <?php
 return
 [    
-    'name' => 'operator_type',
+    'name' => 'operator-type',
     'elements' => 
     [
-        'operator_type' => 
+        'operator-type' => 
         [
-            'name' => 'operator_type',
+            'name' => 'operator-type',
             'label' => 'What type of operator are you?',
             'type' => 'radio',
             'attributes' => array(
-                'id' => 'operator_location',
+                'id' => 'operator-location',
                 'class' => '',
             ),
             'value_options' => 'operator_types',
@@ -22,8 +22,11 @@ return
         'label' => 'Operator Type',
         'next_step' => 
         [
-            'goods' => 'licence_type',
-            'psv' => 'licence_type_psv'
+            'values' => [
+                'goods' => 'licence-type',
+                'psv' => 'licence-type-psv',
+            ],
+            'default' => 'complete',
         ]
     ],
 ];

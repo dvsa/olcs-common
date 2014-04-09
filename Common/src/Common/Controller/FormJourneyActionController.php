@@ -17,6 +17,9 @@ use Zend\Session\Container;
 abstract class FormJourneyActionController extends FormActionController
 {
 
+    protected $currentStep;
+    protected $currentSection;
+    
     /**
      * Method that is called at the end of a journey.
      */
@@ -30,7 +33,7 @@ abstract class FormJourneyActionController extends FormActionController
      */
     public function persistFormData($form)
     {
-        $step = $this->getCurrentStep();
+        /*$step = $this->getCurrentStep();
 
         $formName = $form->getName();
 
@@ -38,24 +41,34 @@ abstract class FormJourneyActionController extends FormActionController
 
         $data = $form->getData();
         $session->$step = $data;
+         */
+         
     }
 
     /**
-     * Gets the current persisted form data for the form within the passed
-     * section.
-     *
-     * @param type $section
-     * @param type $form
+     * Gets the persisted form data for current step
+  
+     * @throws \Common\Exception\Exception
      * @return array
      */
-    public function getPersistedFormData($form)
-    {
-        $step = $this->getCurrentStep();
-        $formName = $form->getName();
-
-        $session = new Container($formName);
-
-        return $session->$step;
+    public function getPersistedFormData()
+    { 
+        $stepCamelCase = str_replace('-', ' ', $this->getCurrentStep());
+        $stepCamelCase = ucwords($stepCamelCase);
+        $stepCamelCase = str_replace(' ', '', $stepCamelCase);
+        
+        $methodName = sprintf("get%sFormData", $stepCamelCase);
+        $callback = array($this, $methodName);
+        
+        if (is_callable($callback) && method_exists($callback[0], $callback[1])){
+            $persistedData = call_user_func($callback);
+            if (!is_array($persistedData)){
+                throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
+            }
+            return $persistedData;
+        }
+        
+        return array();
     }
 
     /**
@@ -96,9 +109,20 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function getCurrentStep()
     {
-        return $this->getEvent()->getRouteMatch()->getParam('step');
-    }
+        return $this->currentStep;        
+   }
 
+    /**
+     * Method to set the current step
+     *
+     * @return object
+     */
+    protected function setCurrentStep($step)
+    {
+        $this->currentStep = $step;
+        return $this;
+    }
+    
     /**
      * Returns the section of the application where this form resides.
      * Set in the controller that processes the form
@@ -107,13 +131,24 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function getCurrentSection()
     {
-        return $this->section;
+        return $this->currentSection;
     }
 
     /**
+     * Method to set the current section
+     *
+     * @return object
+     */
+    protected function setCurrentSection($section)
+    {
+        $this->currentSection = $section;
+        return $this;
+    }
+    
+    /**
      * Determines the next step. The next step is used to redirect to a url
      * This needs to work from the config file for the form and look at
-     * What data is required against what we have persisted.
+     * What data is required against what we have persisted. If not found, default step is returned
      *
      * @param \Zend\Form $form
      * @throws \RuntimeException
@@ -123,14 +158,18 @@ abstract class FormJourneyActionController extends FormActionController
     {
         $formData = $form->getData($this->getCurrentStep());
         foreach ($form->getFieldsets() as $fieldset) {
-            $next_step_options = $fieldset->getOption('next_step');
+            $next_step_options = $fieldset->getOption('next_step')['values'];
+            
             foreach ($fieldset->getElements() as $element) {
-                if (isset($next_step_options)) {
+                $element_value = $element->getValue();
+                if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
                     return $next_step_options[$element->getValue()];
                 }
             }
+            if (isset($fieldset->getOption('next_step')['default']))
+                return $fieldset->getOption('next_step')['default'];
         }
-        throw new \RuntimeException('Next step not defined');
+        throw new \RuntimeException('Next step not defined, for any elements');
     }
 
     /**
@@ -177,6 +216,7 @@ abstract class FormJourneyActionController extends FormActionController
         $this->persistFormData($form);
 
         $next_step = $this->evaluateNextStep($form);
+
         if ($next_step == 'complete') {
             return $this->forward()->dispatch('SelfServe\LicenceType\Index', array('action' => 'complete'));
         } else {
@@ -208,4 +248,42 @@ abstract class FormJourneyActionController extends FormActionController
         ];
     }
 
+    /**
+     * Method to determine the form that was posted. Searches all posted items
+     * and if any start with 'submit_' then the remaining string is returned
+     * to signify the submitted button pressed.
+     * 
+     * @param \Zend\Http\Request $request
+     * @return string
+     */
+    protected function determineSubmitButtonPressed(\Zend\Http\Request $request)
+    {
+        $form_posted = '';
+        if ($request->isPost()) 
+        {
+            $posted_data = $request->getPost($this->getCurrentStep());
+            if (is_array($posted_data))
+            {
+                foreach($posted_data as $key => $value)
+                {
+                    if (substr($key, 0, 7) == 'submit_')
+                    {
+                        return substr($key, 7);
+                    }
+                }
+            }
+        }            
+        return $form_posted;
+    }
+    
+    protected function getStepProcessMethod($step)
+    {
+        // convert step to camelcase method
+        $return = 'process';
+        
+        $step = str_replace('-', ' ', $step);
+        $step = ucwords($step);
+        $step = str_replace(' ', '', $step);
+        return 'process'.$step;
+    }
 }
