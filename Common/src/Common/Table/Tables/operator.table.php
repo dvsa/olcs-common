@@ -76,14 +76,11 @@ return array(
     ),
     'footer' => array(
         array(
-            'content' => 'Total'
-        ),
-        array(
             'formatter' => function($data) {
                 $count = 0;
 
                 foreach ($data as $row) {
-                    if ($row['status'] == 'valid') {
+                    if (strtolower($row['status']) == 'valid') {
                         $count++;
                     }
                 }
@@ -92,7 +89,16 @@ return array(
             }
         ),
         array(
-            'colspan' => 8
+            'type' => 'th',
+            'format' => 'Cases',
+            'colspan' => 5
+        ),
+        array(
+            'formatter' => 'Sum',
+            'name' => 'caseCount'
+        ),
+        array(
+            'colspan' => 2
         )
     )
 );

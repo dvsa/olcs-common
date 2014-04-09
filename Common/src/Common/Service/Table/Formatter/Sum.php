@@ -28,7 +28,7 @@ class Sum implements FormatterInterface
 
         if (isset($column['name'])) {
             foreach ($data as $row) {
-                if (isset($row[$column['name']])) {
+                if (isset($row[$column['name']]) && is_numeric($row[$column['name']])) {
                     $sum += (int)$row[$column['name']];
                 }
             }

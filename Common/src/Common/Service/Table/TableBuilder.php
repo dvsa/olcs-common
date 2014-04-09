@@ -171,21 +171,22 @@ class TableBuilder
         foreach ($this->footer as $column) {
 
             $details = array(
-                'content' => ''
+                'content' => '',
+                'type' => (isset($column['type']) && $column['type'] == 'th' ? 'th' : 'td')
             );
 
-            $details['colspan'] = isset($column['colspan']) ? $column['colspan'] : null;
+            $details['colspan'] = isset($column['colspan']) ? $column['colspan'] : '';
 
             if (isset($column['formatter'])) {
 
                 $return = $this->callFormatter($column, $this->getRows());
 
-                $column['content'] = is_string($return) ? $return : '';
+                $column['format'] = is_string($return) ? $return : '';
             }
 
-            if (isset($column['content'])) {
+            if (isset($column['format'])) {
 
-                $details['content'] = $this->replaceContent($column['content'], $this->variables);
+                $details['content'] = $this->replaceContent($column['format'], $this->variables);
             }
 
             $columns[] = $details;
@@ -194,6 +195,23 @@ class TableBuilder
         $content = $this->renderTableFooterColumns($columns);
 
         return $this->replaceContent('{{[elements/tableFooter]}}', array('content' => $content));
+    }
+
+    /**
+     * Render table footer columns
+     *
+     * @param array $columns
+     * @return string
+     */
+    public function renderTableFooterColumns($columns)
+    {
+        $content = '';
+
+        foreach ($columns as $details) {
+            $content .= $this->replaceContent('{{[elements/footerColumn]}}', $details);
+        }
+
+        return $content;
     }
 
     /**
