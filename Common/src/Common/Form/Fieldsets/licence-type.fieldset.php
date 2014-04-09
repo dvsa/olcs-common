@@ -23,10 +23,13 @@ return
         'label' => 'Licence Type',
         'next_step' => 
         [
-            'restricted' => 'complete',
-            'standard-national' => 'complete',
-            'standard-international' => 'complete',
-            'special-restricted' => 'complete',
+            'values' => [
+                'restricted' => 'complete',
+                'standard-national' => 'complete',
+                'standard-international' => 'complete',
+                'special-restricted' => 'complete',
+            ],
+            'default' => 'complete',
         ]
     ],
 ];

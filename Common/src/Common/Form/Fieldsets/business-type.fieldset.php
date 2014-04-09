@@ -22,11 +22,14 @@ return
         'label' => 'Business Type',
         'next_step' => 
         [
-            'org_type.rc' => 'registered-company',
-            'org_type.st' => 'sole-trader',
-            'org_type.p' => 'partnership',
-            'org_type.llp' => 'llp',
-            'org_type.pa' => 'public-authority'
+            'values' => [   
+                'org_type.rc' => 'registered-company',
+                'org_type.st' => 'sole-trader',
+                'org_type.p' => 'partnership',
+                'org_type.llp' => 'llp',
+                'org_type.pa' => 'public-authority',
+            ],
+            'default' => 'complete',
         ]
     ],
 ];

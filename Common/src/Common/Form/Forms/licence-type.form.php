@@ -11,6 +11,9 @@ return [
             'submit' => [
                 'type' => 'submit',
                 'label' => 'Next'
+            ],
+            'version' => [
+	           'type' => 'hidden',
             ]
         ]
     ]
