@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Creates a form from a form config file store in
+ * Creates a form from a form config file stored in the OlcsCommon module.config.php 'forms_path' or in
+ * your local project module.config.php
  */
 
 namespace Common\Service\Form;
@@ -19,13 +20,16 @@ class OlcsCustomFormFactory extends Factory
 
     public $baseFormConfig;
 
-    public $formsPath;
+    public $formsPaths;
     public $fieldsetPath;
 
     public function __construct($config)
     {
         $this->config = $config;
-        $this->formsPath = $this->config['forms_path'];
+        if (isset($this->config['local_forms_path'])) {
+            $this->formsPaths[] = $this->config['local_forms_path'];
+        }
+        $this->formsPaths[] = $this->config['forms_path'];
         $this->fieldsetsPath = $this->config['fieldsets_path'];
         parent::__construct();
     }
@@ -35,18 +39,23 @@ class OlcsCustomFormFactory extends Factory
         if (empty($this->baseFormConfig)) {
             $this->baseFormConfig = $this->getFormConfig($type);
         }
+        if (!isset($this->baseFormConfig[$type])) {
+            throw new \Exception("Form $type has no specification config!");
+        }
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
         return parent::createForm($formConfig);
     }
 
     public function getFormConfig($type)
     {
-        $path = __DIR__ . $this->formsPath . $type . '.form.php';
-        if (!file_exists($path)) {
-            throw new \Exception("Form $type has no specification config!");
+        foreach($this->formsPaths as $formsPath) {
+            $path = $formsPath . $type . '.form.php';
+            if (file_exists($path)) {
+                $formConfig = include $path;
+                return $formConfig;
+            }
         }
-        $formConfig = include $path;
-        return $formConfig;
+        throw new \Exception("Form $type has no specification config!");
     }
 
     public function setFormConfig(array $config)
@@ -177,7 +186,7 @@ class OlcsCustomFormFactory extends Factory
      */
     protected function getFieldsetConfig($fieldset)
     {
-        $path =  __DIR__ . "$this->fieldsetsPath$fieldset.fieldset.php";
+        $path =  "$this->fieldsetsPath$fieldset.fieldset.php";
         if (!file_exists($path)) {
             throw new \Exception("Fieldset $fieldset has no specification config!");
         }
