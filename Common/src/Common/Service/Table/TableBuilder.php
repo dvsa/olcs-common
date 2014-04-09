@@ -55,6 +55,13 @@ class TableBuilder
     private $settings = array();
 
     /**
+     * Footer settings
+     *
+     * @var array
+     */
+    private $footer = array();
+
+    /**
      * Table variables
      *
      * @var array
@@ -146,6 +153,47 @@ class TableBuilder
     public function __construct($applicationConfig = array())
     {
         $this->applicationConfig = $applicationConfig;
+    }
+
+    /**
+     * Render table footer
+     *
+     * return string
+     */
+    public function renderTableFooter()
+    {
+        if (empty($this->footer)) {
+            return '';
+        }
+
+        $columns = array();
+
+        foreach ($this->footer as $column) {
+
+            $details = array(
+                'content' => ''
+            );
+
+            $details['colspan'] = isset($column['colspan']) ? $column['colspan'] : null;
+
+            if (isset($column['formatter'])) {
+
+                $return = $this->callFormatter($column, $this->getRows());
+
+                $column['content'] = is_string($return) ? $return : '';
+            }
+
+            if (isset($column['content'])) {
+
+                $details['content'] = $this->replaceContent($column['content'], $this->variables);
+            }
+
+            $columns[] = $details;
+        }
+
+        $content = $this->renderTableFooterColumns($columns);
+
+        return $this->replaceContent('{{[elements/tableFooter]}}', array('content' => $content));
     }
 
     /**
@@ -522,21 +570,7 @@ class TableBuilder
     {
         if (isset($column['formatter'])) {
 
-            if (is_string($column['formatter']) && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
-
-                $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
-
-                $column['formatter'] = $className;
-            }
-
-            if (is_callable($column['formatter'])) {
-
-                $column['callback'] = $column['formatter'];
-            }
-        }
-
-        if (isset($column['callback'])) {
-            $return = call_user_func($column['callback'], $row, $column);
+            $return = $this->callFormatter($column, $row);
 
             if (is_array($return)) {
 
@@ -563,6 +597,31 @@ class TableBuilder
         return $this->replaceContent($wrapper, array('content' => $content));
     }
 
+    /**
+     * Process the formatter
+     *
+     * @param array $column
+     * @param array $data
+     *
+     * @return mixed
+     */
+    private function callFormatter($column, $data)
+    {
+        if (is_string($column['formatter'])
+                && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
+
+            $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
+
+            $column['formatter'] = $className;
+        }
+
+        if (is_callable($column['formatter'])) {
+
+            return call_user_func($column['formatter'], $data, $column);
+        }
+
+        return '';
+    }
     /**
      * Render pagination
      *
@@ -635,6 +694,7 @@ class TableBuilder
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
+        $this->footer = isset($config['footer']) ? $config['footer'] : array();
     }
 
     /**
@@ -685,6 +745,8 @@ class TableBuilder
         $this->url = $array['url'];
         $this->sort = isset($array['sort']) ? $array['sort'] : '';
         $this->order = isset($array['order']) ? $array['order'] : 'ASC';
+
+        $this->variables = array_merge($this->variables, $array);
     }
 
     /**
