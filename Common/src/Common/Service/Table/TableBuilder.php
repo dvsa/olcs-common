@@ -22,6 +22,7 @@ class TableBuilder
     const TYPE_DEFAULT = 1;
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
+    const TYPE_HYBRID = 4;
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
 
@@ -267,6 +268,12 @@ class TableBuilder
      */
     public function renderTable()
     {
+        if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
+
+            $this->type = self::TYPE_HYBRID;
+            return $this->renderLayout('crud');
+        }
+
         if (isset($this->settings['crud'])) {
 
             $this->type = self::TYPE_CRUD;
@@ -299,7 +306,7 @@ class TableBuilder
      */
     public function renderTotal()
     {
-        if ($this->type !== self::TYPE_PAGINATE) {
+        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
 
             return '';
         }
@@ -316,7 +323,7 @@ class TableBuilder
      */
     public function renderActions()
     {
-        if ($this->type !== self::TYPE_CRUD) {
+        if ($this->type !== self::TYPE_CRUD && $this->type !== self::TYPE_HYBRID) {
             return '';
         }
 
@@ -378,7 +385,7 @@ class TableBuilder
      */
     public function renderFooter()
     {
-        if ($this->type !== self::TYPE_PAGINATE) {
+        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
             return '';
         }
 
@@ -559,8 +566,6 @@ class TableBuilder
     /**
      * Render pagination
      *
-     * Render actions
-     *
      * @return string
      */
     public function renderPagination()
@@ -619,6 +624,14 @@ class TableBuilder
         $config = $this->getConfigFromFile($configFile);
 
         $this->settings = isset($config['settings']) ? $config['settings'] : array();
+
+        if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
+            $this->settings['paginate']['limit'] = array(
+                'default' => 10,
+                'options' => array(10, 25, 50)
+            );
+        }
+
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
@@ -680,9 +693,9 @@ class TableBuilder
      * @param array $data
      * @return string
      */
-    private function generateUrl($data = array())
+    private function generateUrl($data = array(), $route = null, $extendParams = true)
     {
-        return $this->url->fromRoute(null, $data, array(), true);
+        return $this->url->fromRoute($route, $data, array(), $extendParams);
     }
 
     /**
