@@ -4,14 +4,14 @@ return
     'name' => 'operator_location',
     'elements' => 
     [
-        'operator_location' => 
+        'operator-location' => 
         [
             'name' => 'operator_location',
             'label' => 'Where do you operate from?',
             'type' => 'radio',
             'attributes' => 
             [
-                'id' => 'operator_location',
+                'id' => 'operator-location',
                 'class' => '',
             ],
             'value_options' => 'operator_locations',
@@ -21,8 +21,11 @@ return
          'label' => 'Operator Location',
          'next_step' => 
          [
-             'uk' => 'operator_type',
-             'ni' => 'licence_type'
+             'values' => [
+                 'uk' => 'operator-type',
+                 'ni' => 'licence-type-ni',
+             ],
+             'default' => 'complete',
          ]
     ]
 ];
