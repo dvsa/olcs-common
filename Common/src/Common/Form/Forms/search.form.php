@@ -17,32 +17,27 @@ return [
                     'licenceNumber' => [
                         'type' => 'text',
                         'label' => 'Lic #',
-                        'class' => 'medium',
-                        'placeholder' => 'Licence number'
+                        'class' => 'medium'
                     ],
                     'operatorName' => [
                         'type' => 'text',
                         'label' => 'Operator / trading name',
-                        'class' => 'medium',
-                        'placeholder' => 'Trading name'
+                        'class' => 'medium'
                     ],
                     'postcode' => [
                         'type' => 'text',
                         'label' => 'Postcode',
-                        'class' => 'short',
-                        'placeholder' => 'Postcode'
+                        'class' => 'short'
                     ],
                     'firstName' => [
                         'type' => 'personName',
                         'label' => 'First name',
-                         'class' => 'long',
-                        'placeholder' => 'First name'
+                         'class' => 'long'
                     ],
                     'lastName' => [
                         'type' => 'personName',
                         'label' => 'Last name',
-                        'class' => 'long',
-                        'placeholder' => 'Last name'
+                        'class' => 'long'
                     ]
                     // 'dateOfBirth' => [
                     //     'type' => 'dateSelect',
