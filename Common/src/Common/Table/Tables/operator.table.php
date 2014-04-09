@@ -73,32 +73,5 @@ return array(
             'title' => 'Info',
             'format' => '[Info]'
         )
-    ),
-    'footer' => array(
-        array(
-            'formatter' => function($data) {
-                $count = 0;
-
-                foreach ($data as $row) {
-                    if (strtolower($row['status']) == 'valid') {
-                        $count++;
-                    }
-                }
-
-                return 'Valid: ' . $count;
-            }
-        ),
-        array(
-            'type' => 'th',
-            'format' => 'Cases',
-            'colspan' => 5
-        ),
-        array(
-            'formatter' => 'Sum',
-            'name' => 'caseCount'
-        ),
-        array(
-            'colspan' => 2
-        )
     )
 );
