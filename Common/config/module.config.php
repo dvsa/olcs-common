@@ -71,7 +71,9 @@ return array(
                 'VosaCase' => 'vosa-case',
                 'Licence' => 'licence',
                 'TrafficArea' => 'traffic-area',
-                'Organisation' => 'organisation'
+                'Organisation' => 'organisation',
+                'LicenceVehicle' => 'licence-vehicle'
+
             )
         )
     )
