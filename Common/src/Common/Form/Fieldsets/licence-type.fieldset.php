@@ -1,5 +1,4 @@
 <?php
-
 return 
 [    
     'name' => 'licence-type',
@@ -20,7 +19,7 @@ return
     ],
     'options' => 
     [
-        'label' => 'Licence Type',
+        'label' => 'Licence type',
         'next_step' => 
         [
             'values' => [

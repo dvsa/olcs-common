@@ -19,7 +19,7 @@ return
     ],
     'options' => 
     [
-        'label' => 'Business Type',
+        'label' => 'Business type',
         'next_step' => 
         [
             'values' => [   
