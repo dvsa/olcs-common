@@ -7,11 +7,8 @@ return [
         'name' => '',
         'options' => [
             'label' => 'Date of Birth',
-            'label_attributes' => ['class' => 'col-sm-2'],
-            'column-size' => 'sm-6',
-            'create_empty_option' => true,
+            'create_empty_option' => false,
             'render_delimiters' => false,
-            'help-block' => 'Your date of birth',
         ],
         'attributes' => [
             'id' => 'dob',
