@@ -60,7 +60,6 @@ trait RestCallTrait
                 unset($data['id']);
 
                 $data = array('data' => json_encode($data));
-
                 break;
             case 'DELETE':
                 $handleResponseMethod = 'handleDeleteResponse';
@@ -69,7 +68,7 @@ trait RestCallTrait
             default:
                 return null;
         }
-
+        
         $response = $this->service($service)->$serviceMethod($path, $data);
         
         return $this->$handleResponseMethod($service, $response);
