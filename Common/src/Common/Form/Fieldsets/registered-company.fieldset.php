@@ -13,7 +13,8 @@ return
         [
             'name' => 'submit_lookup_company',
             'value' => 'lookup_company',
-            'type' => 'findButton'
+            'type' => 'submit',
+            'label' => 'Find'
         ],
         'company_name' => 
         [
@@ -26,7 +27,9 @@ return
         'submit_add_trading_name' => 
         [
             'name' => 'submit_add_trading_name',
-            'type' => 'addAnotherButton',
+            'value' => 'add_trading_name',
+            'type' => 'submit',
+            'label' => 'Add another'
         ],
         'type_of_business' => 
         [
