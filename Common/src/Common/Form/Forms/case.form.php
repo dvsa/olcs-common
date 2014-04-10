@@ -53,11 +53,13 @@ return [
                 'elements' => [
                     'description' => [
                         'type' => 'textarea',
-                        'label' => 'Case summary'
+                        'label' => 'Case summary',
+                        'class' => 'extra-long'
                     ],
                     'ecms' => [
                         'type' => 'text',
-                        'label' => 'ECMS #'
+                        'label' => 'ECMS #',
+                        'class' => 'medium'
                     ]
                 ]
             ]
@@ -77,7 +79,8 @@ return [
             ],
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Save'
+                'label' => 'Save',
+                'class' => 'action--primary large'
             ]
         ]
     ]
