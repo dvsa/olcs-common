@@ -14,4 +14,11 @@ return
             'type' => 'findButton'
         ],
     ],
+    'options' =>
+    [
+        'next_step' =>
+        [
+            'default' => 'complete',
+        ]
+    ],
 ];

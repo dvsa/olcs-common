@@ -21,4 +21,11 @@ return
             'type' => 'businessType'
         ],
     ],
+    'options' =>
+    [
+        'next_step' =>
+        [
+            'default' => 'complete',
+        ]
+    ],
 ];
