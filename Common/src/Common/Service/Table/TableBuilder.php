@@ -22,9 +22,23 @@ class TableBuilder
     const TYPE_DEFAULT = 1;
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
-
+    const TYPE_HYBRID = 4;
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
+
+    /**
+     * Hold the pagination helper
+     *
+     * @var object
+     */
+    private $paginationHelper;
+
+    /**
+     * Hold the contentHelper
+     *
+     * @var object
+     */
+    private $contentHelper;
 
     /**
      * Inject the application config from Zend
@@ -39,6 +53,13 @@ class TableBuilder
      * @var array
      */
     private $settings = array();
+
+    /**
+     * Footer settings
+     *
+     * @var array
+     */
+    private $footer = array();
 
     /**
      * Table variables
@@ -62,29 +83,11 @@ class TableBuilder
     private $columns = array();
 
     /**
-     * Cached partials
-     *
-     * @var array
-     */
-    private $partials = array();
-
-    /**
      * Pre-defined widths
      *
      * @var array
      */
-    private $widths = array(
-        'checkbox' => '16px'
-    );
-
-    /**
-     * Pre-defined formatters
-     *
-     * @var array
-     */
-    private $formatters = array(
-        '_date' => 'formatterDate'
-    );
+    private $widths = array('checkbox' => '16px');
 
     /**
      * Total count of results
@@ -122,13 +125,6 @@ class TableBuilder
     private $page = 1;
 
     /**
-     * Current page deviation
-     *
-     * @var int
-     */
-    private $pageDeviation = 2;
-
-    /**
      * Url plugin
      *
      * @var object
@@ -160,348 +156,97 @@ class TableBuilder
     }
 
     /**
-     * Build a table from a config file
+     * Render table footer
      *
-     * @param array $config
-     * @return string
+     * return string
      */
-    public function buildTable($name, $data = array(), $params = array())
+    public function renderTableFooter()
     {
-        $this->loadConfig($name);
-
-        $this->loadData($data);
-
-        $this->loadParams($params);
-
-        $this->variables['action'] = isset($this->variables['action']) ? $this->variables['action'] : $this->generateUrl();
-
-        return $this->replaceContent($this->renderTable(), $this->variables);
-    }
-
-    /**
-     * Decide the view and begin the render
-     *
-     * @return string
-     */
-    public function renderTable()
-    {
-        if (isset($this->settings['crud'])) {
-
-            $this->type = self::TYPE_CRUD;
-            return $this->renderLayout('crud');
-        }
-
-        if (isset($this->settings['paginate'])) {
-
-            $this->type = self::TYPE_PAGINATE;
-        }
-
-        return $this->renderLayout('default');
-    }
-
-    /**
-     * Render partial
-     *
-     * @param string $name
-     * @return string
-     */
-    public function renderLayout($name)
-    {
-        $partialFile = $this->applicationConfig['tables']['partials'] . 'layouts/' . $name . '.phtml';
-
-        if (!file_exists($partialFile)) {
-
-            throw new \Exception('Table partial not found');
-        }
-
-        ob_start();
-            require($partialFile);
-            $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
-    }
-
-    /**
-     * Render the total if we have a paginated table
-     *
-     * @return string
-     */
-    public function renderTotal()
-    {
-        if ($this->type !== self::TYPE_PAGINATE) {
-
+        if (empty($this->footer)) {
             return '';
         }
 
-        $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
+        $columns = array();
 
-        return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
-    }
+        foreach ($this->footer as $column) {
 
-    /**
-     * Render actions
-     *
-     * @return string
-     */
-    public function renderActions()
-    {
-        if ($this->type !== self::TYPE_CRUD) {
-            return '';
-        }
-
-        $actions = isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array();
-
-        if (count($this->rows) === 0) {
-            foreach ($actions as $key => $details) {
-                if (isset($details['requireRows']) && $details['requireRows']) {
-                    unset($actions[$key]);
-                }
-            }
-        }
-
-        if (empty($actions)) {
-            return '';
-        }
-
-        $newActions = array();
-
-        foreach ($actions as $name => $details) {
-            $value = isset($details['value']) ? $details['value'] : ucwords($name);
-
-            $class = isset($details['class']) ? $details['class'] : 'secondary';
-
-            $newActions[] = array(
-                'name' => $name,
-                'label' => $value,
-                'class' => $class
+            $details = array(
+                'content' => '',
+                'type' => (isset($column['type']) && $column['type'] == 'th' ? 'th' : 'td')
             );
+
+            $details['colspan'] = isset($column['colspan']) ? $column['colspan'] : '';
+
+            if (isset($column['formatter'])) {
+
+                $return = $this->callFormatter($column, $this->getRows());
+
+                $column['format'] = is_string($return) ? $return : '';
+            }
+
+            if (isset($column['format'])) {
+
+                $details['content'] = $this->replaceContent($column['format'], $this->variables);
+            }
+
+            $columns[] = $details;
         }
 
-        if (count($newActions) > 3) {
-            $content = $this->renderDropdownActions($newActions);
-        } else {
-            $content = $this->renderButtonActions($newActions);
-        }
+        $content = $this->renderTableFooterColumns($columns);
 
-        return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
+        return $this->replaceContent('{{[elements/tableFooter]}}', array('content' => $content));
     }
 
     /**
-     * Render the dropdown version of the actions
+     * Render table footer columns
      *
-     * @param array $actions
+     * @param array $columns
      * @return string
      */
-    public function renderDropdownActions($actions = array())
-    {
-        $options = '';
-
-        foreach ($actions as $details) {
-
-            $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
-        }
-
-        return $this->replaceContent('{{[elements/actionSelect]}}', array('option' => $options));
-    }
-
-    /**
-     * Render the button version of the actions
-     *
-     * @param array $actions
-     * @return string
-     */
-    public function renderButtonActions($actions = array())
+    public function renderTableFooterColumns($columns)
     {
         $content = '';
 
-        foreach ($actions as $details) {
-
-            $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        foreach ($columns as $details) {
+            $content .= $this->replaceContent('{{[elements/footerColumn]}}', $details);
         }
 
         return $content;
     }
 
     /**
-     * Render footer
+     * Get the content helper
      *
-     * @return string
+     * @return object
+     * @throws \Exception
      */
-    public function renderFooter()
+    public function getContentHelper()
     {
-        if ($this->type !== self::TYPE_PAGINATE) {
-            return '';
+        if (empty($this->contentHelper)) {
+
+            if (!isset($this->applicationConfig['tables']['partials'])) {
+
+                throw new \Exception('Table partial location not defined in config');
+            }
+
+            $this->contentHelper = new ContentHelper($this->applicationConfig['tables']['partials'], $this);
         }
 
-        if (!in_array($this->limit, $this->settings['paginate']['limit']['options'])) {
-            $this->settings['paginate']['limit']['options'][] = $this->limit;
-            sort($this->settings['paginate']['limit']['options']);
-        }
-
-        if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
-            return '';
-        }
-
-        return $this->renderLayout('pagination');
+        return $this->contentHelper;
     }
 
     /**
-     * Render the limit options
+     * Get pagination helper
      *
-     * @string
+     * @return PaginationHelper
      */
-    public function renderLimitOptions()
+    public function getPaginationHelper()
     {
-        if (empty($this->settings['paginate']['limit']['options'])) {
-
-            return '';
+        if (empty($this->paginationHelper)) {
+            $this->paginationHelper = new PaginationHelper($this->page, $this->total, $this->limit);
         }
 
-        $content = '';
-
-        foreach ($this->settings['paginate']['limit']['options'] as $option) {
-
-            $class = '';
-
-            $option = (string)$option;
-
-            if ($option == $this->limit) {
-                $class = 'current';
-            } else {
-                $details = array(
-                    'option' => $option,
-                    'link' => $this->generateUrl(array('page' => 1, 'limit' => $option))
-                );
-                $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
-            }
-
-            $content .= $this->replaceContent('{{[elements/limitOption]}}', array('class' => $class, 'option' => $option));
-        }
-
-        return $content;
-    }
-
-    /**
-     * Render pagination options
-     *
-     * @return string
-     */
-    public function renderPageOptions()
-    {
-        $options = array();
-
-        $totalPages = ceil($this->total / $this->limit);
-
-        // Show previous
-        if ($this->page > 1) {
-
-            $options[] = array(
-                'page' => (string)($this->page - 1),
-                'label' => 'Previous'
-            );
-        }
-
-        // We will always have a page 1
-        $options[] = array(
-            'page' => '1',
-            'label' => '1',
-            'class' => ($this->page == 1 ? 'current' : null)
-        );
-
-        // If we have more than 1 page
-        if ($totalPages > 1) {
-
-            // Total pages that will be displayed e.g. 1 ... 34567 ... 9
-            $totalPagesToDisplay = ($this->pageDeviation * 2) + 3;
-
-            // If we don't have too many pages, just show them all
-            if ($totalPages <= $totalPagesToDisplay) {
-
-                for ($i = 2; $i <= $totalPages; $i++) {
-                    $options[] = array(
-                        'page' => (string)$i,
-                        'label' => (string)$i,
-                        'class' => ($this->page == $i ? 'current' : null)
-                    );
-                }
-            } else {
-
-                $lowerRange = max(
-                    array(
-                        2,
-                        ($this->page - $this->pageDeviation) - ($this->page >= ($totalPages - 2) ? (2 - ($totalPages - $this->page)) : 0)
-                    )
-                );
-
-                $upperRange  = min(
-                    array(
-                        ($totalPages - 1),
-                        ($this->page + $this->pageDeviation) + ($this->page <= 2 ? (3 - $this->page) : 0)
-                    )
-                );
-
-                if ($lowerRange > 2) {
-
-                    $options[] = array(
-                        'page' => null,
-                        'label' => '...'
-                    );
-                }
-
-                $i = $lowerRange;
-
-                while ($i <= $upperRange) {
-
-                    $options[] = array(
-                        'page' => (string)$i,
-                        'label' => (string)$i,
-                        'class' => ($this->page == $i ? 'current' : null)
-                    );
-                    $i++;
-                }
-
-                if ($upperRange <= ($totalPages - 2)) {
-
-                    $options[] = array(
-                        'page' => null,
-                        'label' => '...'
-                    );
-                }
-
-                $options[] = array(
-                    'page' => (string)$totalPages,
-                    'label' => (string)$totalPages,
-                    'class' => ($this->page == (string)$totalPages ? 'current' : null)
-                );
-            }
-
-            if ($this->page < $totalPages) {
-
-                $options[] = array(
-                    'page' => (string)($this->page + 1),
-                    'label' => 'Next'
-                );
-            }
-        }
-
-        $content = '';
-
-        foreach ($options as $details) {
-
-            if (is_null($details['page']) || (string)$this->page == $details['page']) {
-                $details['option'] = $details['label'];
-            } else {
-                $details['link'] = $this->generateUrl(array('page' => $details['page']));
-                $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
-            }
-
-            $details = array_merge(array('class' => ''), $details);
-
-            $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
-        }
-
-        return $content;
+        return $this->paginationHelper;
     }
 
     /**
@@ -554,6 +299,238 @@ class TableBuilder
     public function getTotal()
     {
         return $this->total;
+    }
+
+    /**
+     * Build a table from a config file
+     *
+     * @param array $config
+     * @return string
+     */
+    public function buildTable($name, $data = array(), $params = array())
+    {
+        $this->loadConfig($name);
+
+        $this->loadData($data);
+
+        $this->loadParams($params);
+
+        if (isset($this->variables['action'])) {
+
+            $this->variables['action'] = $this->variables['action'];
+
+        } else {
+
+            $this->variables['action'] = $this->generateUrl();
+        }
+
+        return $this->replaceContent($this->renderTable(), $this->variables);
+    }
+
+    /**
+     * Decide the view and begin the render
+     *
+     * @return string
+     */
+    public function renderTable()
+    {
+        if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
+
+            $this->type = self::TYPE_HYBRID;
+            return $this->renderLayout('crud');
+        }
+
+        if (isset($this->settings['crud'])) {
+
+            $this->type = self::TYPE_CRUD;
+            return $this->renderLayout('crud');
+        }
+
+        if (isset($this->settings['paginate'])) {
+
+            $this->type = self::TYPE_PAGINATE;
+        }
+
+        return $this->renderLayout('default');
+    }
+
+    /**
+     * Wrapper for Content Helper renderLayout
+     *
+     * @param string $name
+     * @return string
+     */
+    public function renderLayout($name)
+    {
+        return $this->getContentHelper()->renderLayout($name);
+    }
+
+    /**
+     * Render the total if we have a paginated table
+     *
+     * @return string
+     */
+    public function renderTotal()
+    {
+        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
+
+            return '';
+        }
+
+        $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
+
+        return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
+    }
+
+    /**
+     * Render actions
+     *
+     * @return string
+     */
+    public function renderActions()
+    {
+        if ($this->type !== self::TYPE_CRUD && $this->type !== self::TYPE_HYBRID) {
+            return '';
+        }
+
+        $actions = $this->trimActions(
+            isset($this->settings['crud']['actions']) ? $this->settings['crud']['actions'] : array()
+        );
+
+        if (empty($actions)) {
+            return '';
+        }
+
+        $newActions = $this->formatActions($actions);
+
+        $content = $this->formatActionContent($newActions);
+
+        return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
+    }
+
+    /**
+     * Render the dropdown version of the actions
+     *
+     * @param array $actions
+     * @return string
+     */
+    public function renderDropdownActions($actions = array())
+    {
+        $options = '';
+
+        foreach ($actions as $details) {
+
+            $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
+        }
+
+        return $this->replaceContent('{{[elements/actionSelect]}}', array('option' => $options));
+    }
+
+    /**
+     * Render the button version of the actions
+     *
+     * @param array $actions
+     * @return string
+     */
+    public function renderButtonActions($actions = array())
+    {
+        $content = '';
+
+        foreach ($actions as $details) {
+
+            $content .= $this->replaceContent('{{[elements/actionButton]}}', $details);
+        }
+
+        return $content;
+    }
+
+    /**
+     * Render footer
+     *
+     * @return string
+     */
+    public function renderFooter()
+    {
+        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
+            return '';
+        }
+
+        if (!in_array($this->limit, $this->settings['paginate']['limit']['options'])) {
+            $this->settings['paginate']['limit']['options'][] = $this->limit;
+            sort($this->settings['paginate']['limit']['options']);
+        }
+
+        if ($this->total <= min($this->settings['paginate']['limit']['options'])) {
+            return '';
+        }
+
+        return $this->renderLayout('pagination');
+    }
+
+    /**
+     * Render the limit options
+     *
+     * @string
+     */
+    public function renderLimitOptions()
+    {
+        if (empty($this->settings['paginate']['limit']['options'])) {
+
+            return '';
+        }
+
+        $content = '';
+
+        foreach ($this->settings['paginate']['limit']['options'] as $option) {
+
+            $class = '';
+
+            $option = (string)$option;
+
+            if ($option == $this->limit) {
+                $class = 'current';
+            } else {
+                $details = array(
+                    'option' => $option,
+                    'link' => $this->generateUrl(array('page' => 1, 'limit' => $option))
+                );
+                $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
+            }
+
+            $limitDetails = array('class' => $class, 'option' => $option);
+
+            $content .= $this->replaceContent('{{[elements/limitOption]}}', $limitDetails);
+        }
+
+        return $content;
+    }
+
+    /**
+     * Render pagination options
+     *
+     * @return string
+     */
+    public function renderPageOptions()
+    {
+        $options = $this->getPaginationHelper()->getOptions();
+
+        $content = '';
+
+        foreach ($options as $details) {
+
+            if (is_null($details['page']) || (string)$this->page == $details['page']) {
+                $details['option'] = $details['label'];
+            } else {
+                $details['link'] = $this->generateUrl(array('page' => $details['page']));
+                $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
+            }
+
+            $details = array_merge(array('class' => ''), $details);
+
+            $content .= $this->replaceContent('{{[elements/paginationItem]}}', $details);
+        }
+
+        return $content;
     }
 
     /**
@@ -611,18 +588,7 @@ class TableBuilder
     {
         if (isset($column['formatter'])) {
 
-            if (is_callable($column['formatter'])) {
-
-                $column['callback'] = $column['formatter'];
-
-            } elseif (is_string($column['formatter']) && isset($this->formatters[$column['formatter']])) {
-
-                $column['callback'] = array($this, $this->formatters[$column['formatter']]);
-            }
-        }
-
-        if (isset($column['callback'])) {
-            $return = call_user_func($column['callback'], $row, $column);
+            $return = $this->callFormatter($column, $row);
 
             if (is_array($return)) {
 
@@ -650,9 +616,32 @@ class TableBuilder
     }
 
     /**
-     * Render pagination
+     * Process the formatter
      *
-     * Render actions
+     * @param array $column
+     * @param array $data
+     *
+     * @return mixed
+     */
+    private function callFormatter($column, $data)
+    {
+        if (is_string($column['formatter'])
+                && class_exists(__NAMESPACE__ . '\\Formatter\\' . $column['formatter'])) {
+
+            $className =  '\\' . __NAMESPACE__ . '\\Formatter\\' . $column['formatter'] . '::format';
+
+            $column['formatter'] = $className;
+        }
+
+        if (is_callable($column['formatter'])) {
+
+            return call_user_func($column['formatter'], $data, $column);
+        }
+
+        return '';
+    }
+    /**
+     * Render pagination
      *
      * @return string
      */
@@ -675,14 +664,7 @@ class TableBuilder
      */
     public function renderAttributes($attrs = array())
     {
-        $attributes = array();
-
-        foreach ($attrs as $name => $value) {
-
-            $attributes[] = $name .= '="' . $value . '"';
-        }
-
-        return implode(' ', $attributes);
+        return $this->getContentHelper()->renderAttributes($attrs);
     }
 
     /**
@@ -694,66 +676,7 @@ class TableBuilder
      */
     private function replaceContent($content, $vars = array())
     {
-        $content = $this->replacePartials($content);
-
-        foreach ($vars as $key => $val) {
-
-            if (is_string($val) || is_numeric($val)) {
-
-                $content = str_replace('{{' . $key . '}}', (string)$val, $content);
-            }
-        }
-
-        return preg_replace('/(\{\{[a-zA-Z0-9\/\[\]]+\}\})/', '', $content);
-    }
-
-    /**
-     * Replace partials in the content
-     *
-     * @param string $content
-     * @return string
-     */
-    private function replacePartials($content)
-    {
-        if (preg_match_all('/(\{\{\[([a-zA-Z\/]+)\]\}\})/', $content, $matches)) {
-
-            $partials = array();
-
-            foreach ($matches[2] as $match) {
-
-                $partials[$match] = $match;
-            }
-
-            foreach ($partials as $partial) {
-
-                $content = str_replace('{{[' . $partial .']}}', $this->getPartial($partial), $content);
-            }
-        }
-
-        return $content;
-    }
-
-    /**
-     * Get a partials content
-     *
-     * @param string $partial
-     * @return string
-     */
-    private function getPartial($partial)
-    {
-        if (!isset($this->partials[$partial])) {
-
-            $this->partials[$partial] = '';
-
-            $filename = $this->applicationConfig['tables']['partials'] . $partial . '.phtml';
-
-            if (file_exists($this->applicationConfig['tables']['partials'] . $partial . '.phtml')) {
-
-                $this->partials[$partial] = file_get_contents($filename);
-            }
-        }
-
-        return $this->partials[$partial];
+        return $this->getContentHelper()->replaceContent($content, $vars);
     }
 
     /**
@@ -764,6 +687,10 @@ class TableBuilder
      */
     private function loadConfig($name)
     {
+        if (!isset($this->applicationConfig['tables']['config'])) {
+            throw new \Exception('Table config location not defined');
+        }
+
         $configFile = $this->applicationConfig['tables']['config'] . $name . '.table.php';
 
         if (!file_exists($configFile)) {
@@ -771,12 +698,32 @@ class TableBuilder
             throw new \Exception('Table configuration not found');
         }
 
-        $config = include($configFile);
+        $config = $this->getConfigFromFile($configFile);
 
         $this->settings = isset($config['settings']) ? $config['settings'] : array();
+
+        if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
+            $this->settings['paginate']['limit'] = array(
+                'default' => 10,
+                'options' => array(10, 25, 50)
+            );
+        }
+
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
+        $this->footer = isset($config['footer']) ? $config['footer'] : array();
+    }
+
+    /**
+     * Get config from file
+     *
+     * @param string $file
+     * @return array
+     */
+    public function getConfigFromFile($file)
+    {
+        return include($file);
     }
 
     /**
@@ -814,10 +761,10 @@ class TableBuilder
         }
 
         $this->url = $array['url'];
-
         $this->sort = isset($array['sort']) ? $array['sort'] : '';
-
         $this->order = isset($array['order']) ? $array['order'] : 'ASC';
+
+        $this->variables = array_merge($this->variables, $array);
     }
 
     /**
@@ -826,24 +773,63 @@ class TableBuilder
      * @param array $data
      * @return string
      */
-    private function generateUrl($data = array())
+    private function generateUrl($data = array(), $route = null, $extendParams = true)
     {
-        return $this->url->fromRoute(null, $data, array(), true);
+        return $this->url->fromRoute($route, $data, array(), $extendParams);
     }
 
     /**
-     * Format dates
+     * Format action content
      *
-     * @param array $data
-     * @param array $column
+     * @param array $actions
      * @return string
      */
-    public function formatterDate($data, $column)
+    private function formatActionContent($actions)
     {
-        if (!isset($column['dateformat'])) {
-            $column['dateformat'] = 'd/m/Y';
+        if (count($actions) > 3) {
+            return $this->renderDropdownActions($actions);
         }
 
-        return date($column['dateformat'], strtotime($data[$column['name']]));
+        return $this->renderButtonActions($actions);
+    }
+
+    /**
+     * Format actions
+     *
+     * @param array $actions
+     * @return array
+     */
+    private function formatActions($actions)
+    {
+        $newActions = array();
+
+        foreach ($actions as $name => $details) {
+            $value = isset($details['value']) ? $details['value'] : ucwords($name);
+
+            $class = isset($details['class']) ? $details['class'] : 'secondary';
+
+            $newActions[] = array('name' => $name, 'label' => $value, 'class' => $class);
+        }
+
+        return $newActions;
+    }
+
+    /**
+     * Trim actions
+     *
+     * @param array $actions
+     * @return array
+     */
+    private function trimActions($actions)
+    {
+        if (count($this->rows) === 0) {
+            foreach ($actions as $key => $details) {
+                if (isset($details['requireRows']) && $details['requireRows']) {
+                    unset($actions[$key]);
+                }
+            }
+        }
+
+        return $actions;
     }
 }

@@ -2,12 +2,12 @@
     <div class="results-settings">
         <p>Showing:</p>
         <ul class="results-settings__list">
-            <?php echo $this->renderLimitOptions(); ?>
+            <?php echo $this->object->renderLimitOptions(); ?>
         </ul><!-- end .results-settings__list -->
         <p>results per page</p>
     </div><!-- end .results-settings -->
 
     <ul class="pagination right-aligned" role="navigation">
-        <?php echo $this->renderPageOptions(); ?>
+        <?php echo $this->object->renderPageOptions(); ?>
     </ul><!-- end .pagination.right-aligned -->
 </div>

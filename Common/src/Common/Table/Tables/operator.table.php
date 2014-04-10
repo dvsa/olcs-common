@@ -27,8 +27,8 @@ return array(
         array(
             'title' => 'Op/trading name',
             'formatter' => function($data) {
-            return $data['trading_as'] ? : $data['name'];
-        },
+                return $data['trading_as'] ? : $data['name'];
+            },
             'sort' => 'operatorName'
         ),
         array(
@@ -38,32 +38,32 @@ return array(
         array(
             'title' => 'Last act CN/Date',
             'name' => 'last_updated_on',
-            'formatter' => '_date',
+            'formatter' => 'Date',
             'sort' => 'lastActionDate'
         ),
         array(
             'title' => 'Correspondence address',
             'formatter' => function($data) {
-            $parts = array();
-            foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
-                if (!empty($data[$item])) {
-                    $parts[] = $data[$item];
+                $parts = array();
+                foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
+                    if (!empty($data[$item])) {
+                        $parts[] = $data[$item];
+                    }
                 }
-            }
 
-            return implode(', ', $parts);
-        },
+                return implode(', ', $parts);
+            },
             'sort' => 'correspondenceAddress'
         ),
         array(
             'title' => 'Cases',
             'formatter' => function($data) {
-            if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
-                return '<a href="/case/' . $data['licenceId'] . '">' . $data['caseCount'] . '</a>';
-            } else {
-                return '<a href="/case/' . $data['licenceId'] . '/add">[Add Case]</a>';
+                if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
+                    return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId']), 'licence_case_list/pagination', false) . '">' . $data['caseCount'] . '</a>';
+                } else {
+                    return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId'], 'action' => 'add'), 'licence_case_action') . '">[Add Case]</a>';
+                }
             }
-        }
         ),
         array(
             'title' => 'MLH',

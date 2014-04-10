@@ -8,8 +8,14 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
-                'edit' => array(),
-                'delete' => array('class' => 'warning')
+                'edit' => array('requireRows' => true),
+                'delete' => array('class' => 'warning', 'requireRows' => true)
+            )
+        ),
+        'paginate' => array(
+            'limit' => array(
+                'default' => 10,
+                'options' => array(10, 25, 50)
             )
         )
     ),
@@ -17,13 +23,14 @@ return array(
     ),
     'columns' => array(
         array(
-            'title' => 'Select',
+            'title' => '',
+            'width' => 'checkbox',
             'format' => '{{[elements/radio]}}'
         ),
         array(
             'title' => 'Case Number',
             'formatter' => function($row) {
-                return '<a href="' . $this->url->fromRoute('case_manage', array('case' => $row['id'], 'action' => 'overview')) . '">' . $row['caseNumber'] . '</a>';
+                return '<a href="' . $this->generateUrl(array('case' => $row['id'], 'tab' => 'overview'), 'case_manage') . '">' . $row['caseNumber'] . '</a>';
             }
         ),
         array(
