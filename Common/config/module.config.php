@@ -72,7 +72,9 @@ return array(
                 'Licence' => 'licence',
                 'LicenceOrganisation' => 'licence-organisation',
                 'TrafficArea' => 'traffic-area',
-                'Organisation' => 'organisation'
+                'Organisation' => 'organisation',
+                'Application' => 'application',
+                'ApplicationOperatingCentre' => 'application-operating-centre',
             )
         )
     )
