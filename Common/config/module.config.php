@@ -70,6 +70,7 @@ return array(
                 'OperatorSearch' => 'operator-search',
                 'VosaCase' => 'vosa-case',
                 'Licence' => 'licence',
+                'LicenceOrganisation' => 'licence-organisation',
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
                 'Submission' => 'submission',

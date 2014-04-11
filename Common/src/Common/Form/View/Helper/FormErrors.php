@@ -62,7 +62,13 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
                         $form->get($fieldName)->getLabel() . ': ' . $message
                     );
                 } else {
-                    $messagesArray[] = $form->get($fieldName)->getLabel() . ': ' . $message;
+                    if (is_array($message)) {
+                        foreach($message as $value) {
+                            $messagesArray[] = $form->get($fieldName)->getLabel() . ': ' . $value;
+                        }
+                    } else {
+                        $messagesArray[] = $form->get($fieldName)->getLabel() . ': ' . $message;
+                    }
                 }
             }
         }
