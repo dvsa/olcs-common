@@ -69,9 +69,22 @@ trait RestCallTrait
                 return null;
         }
         
-        $response = $this->service($service)->$serviceMethod($path, $data);
+        // Gets instance of RestClient to make HTTP method call to API
+        $response = $this->getRestClient($service)->$serviceMethod($path, $data);
         
+        //Handle response and return data
         return $this->$handleResponseMethod($service, $response);
+    }
+    
+    /**
+     * Gets instance of RestClient() to make api call
+     * 
+     * @param string $service
+     */
+    protected function getRestClient($service)
+    {
+        $resolveApi = $this->getServiceLocator()->get('ServiceApiResolver');
+        return $resolveApi->getClient($service);
     }
 
     /**
