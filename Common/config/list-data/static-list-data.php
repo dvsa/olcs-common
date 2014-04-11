@@ -75,6 +75,20 @@ return  array(
         'org_type.p' => 'Partnership',
         'org_type.llp' => 'LLP',
         'org_type.pa' => 'Public authority'
+    ],
+    'defendant_types' => 
+    [
+        'defendant_type.operator' => 'Operator',
+        'defendant_type.owner' => 'Owner',
+        'defendant_type.partner' => 'Partner',
+        'defendant_type.director' => 'Director',
+        'defendant_type.driver' => 'Driver',
+        'defendant_type.transman' => 'Transport Manager',
+        'defendant_type.other' => 'Other'
+    ],
+    'yes_no' => [
+        'Y' => 'Yes',
+        'N' => 'No'
     ]
 );
 
