@@ -17,4 +17,11 @@ return
             'label' => 'Find',
         ],
     ],
+    'options' =>
+    [
+        'next_step' =>
+        [
+            'default' => 'complete',
+        ]
+    ],
 ];
