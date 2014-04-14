@@ -74,6 +74,7 @@ return array(
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
                 'Submission' => 'submission',
+                'Conviction' => 'conviction'
             )
         )
     )
