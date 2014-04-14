@@ -38,4 +38,11 @@ return
             'value_options' => 'sic_codes',             
         ],
     ],
+    'options' =>
+    [
+        'next_step' =>
+        [
+            'default' => 'complete',
+        ]
+    ],
 ];

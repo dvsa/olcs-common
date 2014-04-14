@@ -12,6 +12,9 @@ return [
                 'type' => 'submit',
                 'label' => 'Next',
                 'class' => 'action--primary large'
+            ],
+            'version' => [
+                'type' => 'hidden',
             ]
         ]
     ]
