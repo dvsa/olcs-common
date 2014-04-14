@@ -74,7 +74,9 @@ return array(
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
                 'Submission' => 'submission',
-                'SubmissionAction' => 'submission-action'
+                'SubmissionAction' => 'submission-action',
+                'SubmissionActionStatus' => 'submission-action-status',
+                'SubmissionActionStatusType' => 'submission-action-status-type'
             )
         )
     )

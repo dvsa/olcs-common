@@ -30,20 +30,26 @@ return array(
         array(
             'title' => 'Submission #',
             'formatter' => function($row) {
-                return '<a href="' . $this->generateUrl(array('case' => $row['id'], 'tab' => 'overview'), 'case_manage') . '">' . $row['submissionNumber'] . '</a>';
+                return '<a href="' . $this->generateUrl(array('case' => $row['id'], 'tab' => 'overview'), 'case_manage') . '">' . $row['id'] . '</a>';
             }
         ),
         array(
+            'title' => 'Type',
+            'name' => 'type',
+        ),
+        array(
             'title' => 'Sub status',
-            'name' => 'createdOn'
+            'name' => 'status'
         ),
         array(
             'title' => 'Date created',
-            'name' => 'lastUpdatedOn'
+            'formatter' => function($row) {
+                return date('d/m/Y', strtotime($row['createdOn']));
+            }
         ),
         array(
             'title' => 'Currently with',
-            'name' => 'with'
+            'name' => 'currentlyWith'
         ),
         array(
             'title' => 'Urgent',
