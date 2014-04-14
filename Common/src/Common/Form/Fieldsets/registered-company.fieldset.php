@@ -29,7 +29,8 @@ return
             'name' => 'submit_add_trading_name',
             'value' => 'add_trading_name',
             'type' => 'submit',
-            'label' => 'Add another'
+            'label' => 'Add another',
+            // 'class' => 'field inline',
         ],
         'type_of_business' => 
         [

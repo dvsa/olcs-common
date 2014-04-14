@@ -2,9 +2,9 @@
 return
 [    
     'name' => 'business-type',
-    'elements' => 
+    'elements' =>
     [
-        'business-type' => 
+        'business-type' =>
         [
             'name' => 'business-type',
             'label' => 'What type of business are you?',
@@ -14,7 +14,6 @@ return
                 'class' => '',
             ),
             'value_options' => 'business_types',
-              
         ]
     ],
     'options' => 
@@ -22,7 +21,7 @@ return
         'label' => 'Business type',
         'next_step' => 
         [
-            'values' => [   
+            'values' => [
                 'org_type.rc' => 'registered-company',
                 'org_type.st' => 'sole-trader',
                 'org_type.p' => 'partnership',
