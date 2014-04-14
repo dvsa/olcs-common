@@ -29,7 +29,16 @@ class Date implements FormatterInterface
         }
 
         if (isset($data[$column['name']]) && !is_null($data[$column['name']])) {
-            return date($column['dateformat'], strtotime($data[$column['name']]));
+
+            $date = $data[$column['name']];
+
+            if (is_array($date) && isset($date['date'])) {
+
+                $date = $date['date'];
+
+            }
+
+            return date($column['dateformat'], strtotime($date));
         }
 
         return '';

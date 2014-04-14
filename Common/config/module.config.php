@@ -76,7 +76,9 @@ return array(
                 'Submission' => 'submission',
                 'SubmissionAction' => 'submission-action',
                 'SubmissionActionStatus' => 'submission-action-status',
-                'SubmissionActionStatusType' => 'submission-action-status-type'
+                'SubmissionActionStatusType' => 'submission-action-status-type',
+                'Statement' => 'statement',
+                'Conviction' => 'conviction',
             )
         )
     )
