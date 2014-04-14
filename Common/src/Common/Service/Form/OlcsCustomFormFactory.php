@@ -129,6 +129,17 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['value'] = $element['attributes']['value'];
         }
         
+        //allow fast validation for checkboxes
+        if ($element['type'] == 'checkbox'){
+            if (isset($element['options']['must_be_checked'])){
+                $newElement['spec']['options']['must_be_checked'] = $element['options']['must_be_checked'];
+                
+                if (isset($element['options']['not_checked_message'])){
+                    $newElement['spec']['options']['not_checked_message'] = $element['options']['not_checked_message'];
+                }
+            }
+        }
+        
         return $newElement;
     }
 

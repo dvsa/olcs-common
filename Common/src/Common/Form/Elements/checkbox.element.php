@@ -1,7 +1,7 @@
 <?php
 return ['checkbox' =>
         [
-            'type' => 'Checkbox',
+            'type' => '\Common\Form\Elements\InputFilters\Checkbox',
             'name' => '',
             'options' => [
                 'label' => '',

@@ -21,20 +21,28 @@ return [
                 ],
                 'elements' => [
                     'no-of-vehicles' => [
-	                    'type' => 'text',
+	                    'type' => 'vehiclesNumber',
 	                    'label' => 'Total no. of vehicles',   
                     ],
                     'no-of-trailers' => [
-                        'type' => 'text',
+                        'type' => 'vehiclesNumber',
                         'label' => 'Total no. of trailers',
                     ],
                     'parking-spaces-confirmation' => [
 	                    'type' => 'checkbox',
 	                    'label' => 'Parking spaces confirmation',
+	                    'options' => [
+	                        'must_be_checked' => true,
+	                        'not_checked_message' => 'You must confirm that you have enough parking spaces',   
+                        ],
                     ],
                     'permission-confirmation' => [
                         'type' => 'checkbox',
                         'label' => 'Permission confirmation',
+                        'options' => [
+                            'must_be_checked' => true,
+                            'not_checked_message' => 'You must confirm that you have permission to use the premisses to park the number of vehicles & trailers stated',
+                        ],
                     ],
                 ]
             ],
