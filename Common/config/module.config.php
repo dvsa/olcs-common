@@ -75,6 +75,8 @@ return array(
                 'Organisation' => 'organisation',
                 'LicenceVehicle' => 'licence-vehicle',
                 'Submission' => 'submission',
+                'Statement' => 'statement',
+                'Conviction' => 'conviction',
             )
         )
     )
