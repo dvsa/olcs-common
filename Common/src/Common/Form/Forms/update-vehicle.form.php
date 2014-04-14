@@ -25,29 +25,13 @@ return [
                     'label' => 'Body type:',
                 ],
             ],
-            'is_tipper' => [
-                'type' => 'checkbox',
-                'label' => 'Tipper',
-                'value' => 1,
-                'required' => false
-            ],
-            'is_refrigerated' => [
-                'type' => 'checkbox',
-                'label' => 'Refrigerated',
-                'value' => 1,
-                'required' => false
-            ],
-            'is_articulated' => [
-                'type' => 'checkbox',
-                'label' => 'Articulated',
-                'value' => 1,
-                'required' => false
-            ],
-            'save-and-add-another' => [
+            'submit_add_another' => [
+                'name' => 'submit_add_another',
                 'type' => 'submit',
                 'label' => 'Save and add another'
             ],
             'submit' => [
+                'name' => 'submit',
                 'type' => 'submit',
                 'label' => 'Save'
             ],
