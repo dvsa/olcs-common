@@ -83,8 +83,10 @@ abstract class FormJourneyActionController extends FormActionController
     {
         $step = $this->getCurrentStep();
         $section = $this->getCurrentSection();
-        $formConfig[$section] = $formGenerator->addFieldset($formConfig[$section], $step);
-
+        if (isset($formConfig[$section]['fieldsets'])) 
+        {
+            $formConfig[$section] = $formGenerator->addFieldset($formConfig[$section], $step);
+        }
         return $formConfig;
     }
 

@@ -5,9 +5,11 @@ return [
         'attributes' => [
             'method' => 'post',
         ],
-        'fieldsets' => [],
         
         'elements' => [
+            'vehicle_id' => [
+	           'type' => 'hidden',
+            ],
             'vrm' => [
                 'label' => 'Vehicle Registration Number (VRM)',
                 'type' => 'vehicleVrm',
@@ -25,21 +27,29 @@ return [
             ],
             'is_tipper' => [
                 'type' => 'checkbox',
+                'label' => 'Tipper',
+                'value' => 1,
+                'required' => false
             ],
             'is_refrigerated' => [
                 'type' => 'checkbox',
-                
+                'label' => 'Refrigerated',
+                'value' => 1,
+                'required' => false
             ],
             'is_articulated' => [
                 'type' => 'checkbox',
-                
+                'label' => 'Articulated',
+                'value' => 1,
+                'required' => false
             ],
-            
-            
-            
+            'save-and-add-another' => [
+                'type' => 'submit',
+                'label' => 'Save and add another'
+            ],
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Next'
+                'label' => 'Save'
             ],
             'version' => [
 	           'type' => 'hidden',
