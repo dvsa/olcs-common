@@ -40,7 +40,7 @@ class OlcsCustomFormFactory extends Factory
             $this->baseFormConfig = $this->getFormConfig($type);
         }
         if (!isset($this->baseFormConfig[$type])) {
-            throw new \Exception("Form $type has no specification config!");
+            throw new \Exception("Form $type has no specification config");
         }
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
         return parent::createForm($formConfig);
@@ -55,7 +55,7 @@ class OlcsCustomFormFactory extends Factory
                 return $formConfig;
             }
         }
-        throw new \Exception("Form $type has no specification config!");
+        throw new \Exception("Form $type config file cannot be found");
     }
 
     public function setFormConfig(array $config)

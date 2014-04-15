@@ -75,6 +75,12 @@ return array(
                 'Organisation' => 'organisation',
                 'Application' => 'application',
                 'ApplicationOperatingCentre' => 'application-operating-centre',
+                'Submission' => 'submission',
+                'SubmissionAction' => 'submission-action',
+                'SubmissionActionStatus' => 'submission-action-status',
+                'SubmissionActionStatusType' => 'submission-action-status-type',
+                'Statement' => 'statement',
+                'Conviction' => 'conviction',
             )
         )
     )

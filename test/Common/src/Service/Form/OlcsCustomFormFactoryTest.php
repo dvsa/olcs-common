@@ -85,7 +85,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Add a fieldset to a form config
      */
-    public function testAddFieldsetForm()
+    /*public function testAddFieldsetForm()
     {
         
         $formConfig = $this->customFormGenerator->getFormConfig('licence_type');
@@ -94,7 +94,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
         $form = $this->customFormGenerator->createForm('licence_type');
         $this->assertTrue(get_class($form) === 'Zend\Form\Form');
         $this->assertTrue($form->getName() === 'blankForm');
-    }
+    }*/
     
     /**
      * Test for a form config that does not exist

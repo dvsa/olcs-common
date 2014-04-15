@@ -13,7 +13,6 @@ namespace Common\Controller;
 abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 {
 
-    use \Common\Util\ResolveApiTrait;
     use \Common\Util\LoggerTrait;
     use \Common\Util\FlashMessengerTrait;
     use \Common\Util\RestCallTrait;

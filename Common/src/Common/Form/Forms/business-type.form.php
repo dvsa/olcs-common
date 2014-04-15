@@ -10,7 +10,8 @@ return [
         'elements' => [
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Next'
+                'label' => 'Next',
+                'class' => 'action--primary large'
             ],
             'version' => [
                 'type' => 'hidden',

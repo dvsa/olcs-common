@@ -14,12 +14,11 @@ return
                 'class' => '',
             ),
             'value_options' => 'operator_types',
-              
         ]
     ],
     'options' => 
     [
-        'label' => 'Operator Type',
+        'label' => 'Operator details',
         'next_step' => 
         [
             'values' => [
