@@ -6,12 +6,14 @@ return [
         'postcode' => [
             'type' => 'text',
             'label' => 'Postcode',
-            'name' => 'postcode'
+            'name' => 'postcode',
+            'required' => true
         ],
         'line_1' => [
             'type' => 'text',
             'label' => 'Address line 1',
-            'name' => 'line_1'
+            'name' => 'line_1',
+            'required' => true
         ],
         'line_2' => [
             'type' => 'text',
@@ -31,12 +33,14 @@ return [
         'town' => [
             'type' => 'text',
             'label' => 'Town/City',
-            'name' => 'town'
+            'name' => 'town',
+            'required' => true
         ],
         'country' => [
             'type' => 'select',
             'label' => 'Country',
             'name' => 'country',
+            'required' => true,
             'options' => [
             ]
         ]

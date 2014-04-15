@@ -170,6 +170,7 @@ class OlcsCustomFormFactory extends Factory
     private function getElement($element, $fieldset = false)
     {
         $newElement = null;
+
         $newElement['spec'] = $this->config['form']['elements'][$element['type']];
 
         if (isset($element['name'])) {
