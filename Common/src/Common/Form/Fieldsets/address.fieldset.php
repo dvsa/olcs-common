@@ -7,13 +7,13 @@ return [
             'type' => 'text',
             'label' => 'Postcode',
             'name' => 'postcode',
-            'required' => true
+            'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'line_1' => [
             'type' => 'text',
             'label' => 'Address line 1',
             'name' => 'line_1',
-            'required' => true
+            'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'line_2' => [
             'type' => 'text',
@@ -34,15 +34,14 @@ return [
             'type' => 'text',
             'label' => 'Town/City',
             'name' => 'town',
-            'required' => true
+            'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'country' => [
             'type' => 'select',
             'label' => 'Country',
             'name' => 'country',
             'required' => true,
-            'options' => [
-            ]
+            'value_options' => 'countries'
         ]
     ]
 ];
