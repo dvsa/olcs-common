@@ -5,7 +5,7 @@ return [
         'name' => '',
         'type' => 'Text',
         'options' => [
-            'label' => '',
+            'label' => ''
         ],
         'required' => false,
         'attributes' => [

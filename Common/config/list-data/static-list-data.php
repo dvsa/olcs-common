@@ -83,7 +83,7 @@ return  array(
         'defendant_type.partner' => 'Partner',
         'defendant_type.director' => 'Director',
         'defendant_type.driver' => 'Driver',
-        'defendant_type.transman' => 'Transport Manager',
+        'defendant_type.transport_manager' => 'Transport Manager',
         'defendant_type.other' => 'Other'
     ],
     'yes_no' => [

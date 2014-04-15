@@ -37,7 +37,7 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback, $additionalParams = array())
+    protected function formPost($form, $callback=null, $additionalParams = array())
     {
 
         if ($this->getRequest()->isPost()) {
@@ -52,12 +52,12 @@ abstract class FormActionController extends AbstractActionController
                 ];
 
                 $params = array_merge($params, $this->getCallbackData());
-
-                if (is_callable($callback)) {
-                    $callback($params);
+                if (!empty($callback)) {
+                    if (is_callable($callback)) {
+                        $callback($params);
+                    }
+                    call_user_func_array(array($this, $callback), $params);
                 }
-
-                call_user_func_array(array($this, $callback), $params);
             }
         }
         return $form;

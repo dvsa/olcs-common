@@ -24,7 +24,7 @@ class OlcsCustomFormFactory extends Factory
      *
      * @var array
      */
-    private $elementsWithValueOptions = array('select', 'multicheckbox', 'radio');
+    private $elementsWithValueOptions = array('select', 'selectDisabled', 'multicheckbox', 'radio');
 
     /**
      * Holds for form config
@@ -172,6 +172,11 @@ class OlcsCustomFormFactory extends Factory
         $newElement = null;
 
         $newElement['spec'] = $this->config['form']['elements'][$element['type']];
+
+        // Sets the type to a filter class for filtering and validation
+        if (isset($element['filters'])) {
+            $newElement['spec']['type'] = $element['filters'];
+        }
 
         if (isset($element['name'])) {
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
