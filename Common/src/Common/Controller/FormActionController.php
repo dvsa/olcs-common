@@ -98,7 +98,7 @@ abstract class FormActionController extends AbstractActionController
     protected function generateFormWithData($name, $callback, $data = null)
     {
         $form = $this->generateForm($name, $callback);
-
+        
         if (is_array($data)) {
             $form->setData($data);
         }
