@@ -16,7 +16,7 @@ class OlcsCustomFormFactory extends Factory
 
     private $config;
 
-    private $elementsWithValueOptions = array('select', 'multicheckbox', 'radio');
+    private $elementsWithValueOptions = array('select', 'selectDisabled', 'multicheckbox', 'radio');
 
     public $baseFormConfig;
 
