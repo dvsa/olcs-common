@@ -18,7 +18,7 @@ return
         ]
     ],
     'options' => [
-         'label' => 'Operator Location',
+         'label' => 'Operator details',
          'next_step' => 
          [
              'values' => [

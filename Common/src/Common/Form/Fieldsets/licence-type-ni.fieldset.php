@@ -1,5 +1,4 @@
 <?php
-
 return 
 [    
     'name' => 'licence-type-ni',
@@ -27,6 +26,7 @@ return
         ],
     ],
     'options' => [
+        'label' => 'Licence type',
         'next_step' => 
         [
             'default' => 'complete'
