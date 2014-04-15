@@ -14,17 +14,19 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 {
 
     use \Common\Util\LoggerTrait;
-    use \Common\Util\FlashMessengerTrait;
-    use \Common\Util\RestCallTrait;
+
+use \Common\Util\FlashMessengerTrait;
+
+use \Common\Util\RestCallTrait;
 
     /**
      * Set navigation for breadcrumb
      * @param type $label
      * @param type $params
      */
-    protected function setBreadcrumb($navRoutes=array())
+    protected function setBreadcrumb($navRoutes = array())
     {
-        foreach($navRoutes as $route => $routeParams) {
+        foreach ($navRoutes as $route => $routeParams) {
             $navigation = $this->getServiceLocator()->get('navigation');
             $page = $navigation->findBy('route', $route);
             $page->setParams($routeParams);
@@ -155,6 +157,54 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             'section' => $this->getCurrentSection(),
             'step' => $this->getCurrentStep()
         ];
+    }
+
+    /**
+     * Check for crud actions
+     *
+     * @param string $route
+     * @param array $params
+     * @param string $itemIdParam
+     *
+     * @return boolean
+     */
+    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    {
+        $action = $this->params()->fromPost('action');
+
+        if (empty($action)) {
+            return false;
+        }
+
+        $action = strtolower($action);
+
+        $params = array_merge($params, array('action' => $action));
+
+        if ($action !== 'add') {
+
+            $id = $this->params()->fromPost('id');
+
+            if (empty($id)) {
+
+                $this->crudActionMissingId();
+                return false;
+
+            }
+
+            $params[$itemIdParam] = $id;
+        }
+
+        $this->redirect()->toRoute($route, $params);
+    }
+
+    /**
+     * Called when a crud action is missing a required ID
+     *
+     * @todo Decide how to handle missing id from crud action
+     */
+    protected function crudActionMissingId()
+    {
+        die('Missing id');
     }
 
 }
