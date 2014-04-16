@@ -73,12 +73,16 @@ return array(
                 'LicenceOrganisation' => 'licence-organisation',
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
+                'LicenceVehicle' => 'licence-vehicle',
                 'Submission' => 'submission',
                 'SubmissionAction' => 'submission-action',
                 'SubmissionActionStatus' => 'submission-action-status',
                 'SubmissionActionStatusType' => 'submission-action-status-type',
                 'Statement' => 'statement',
                 'Conviction' => 'conviction',
+                'Application' => 'application',
+                'Vehicle' => 'vehicle'
+
             )
         )
     )
