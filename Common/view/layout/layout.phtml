@@ -31,6 +31,7 @@
         ->setPartial(array('layout/partials/breadcrumbs.phtml', 'Olcs'));
         ?>
         <div id="main" role="main">
+            <?php echo $this->flashMessenger()->render(); ?>
             <?php echo $this->content; ?>
         </div>
     </div><!-- .page-wrapper-->
