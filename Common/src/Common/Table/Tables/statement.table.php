@@ -45,7 +45,7 @@ return array(
         array(
             'title' => 'Date issued',
             'formatter' => 'Date',
-            'name' => 'dateIssued'
+            'name' => 'issuedDate'
         ),
         array(
             'title' => 'VRM',
