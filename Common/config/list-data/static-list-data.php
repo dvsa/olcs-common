@@ -54,7 +54,7 @@ return  array(
         'stay_status_refused' => 'Refused'
     ],
     'operator_locations' => [
-        'uk' => 'Mainland UK',
+        'uk' => 'Great Britain',
         'ni' => 'Northern Ireland'
     ],
     'operator_types' => [
