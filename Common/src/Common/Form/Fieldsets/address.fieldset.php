@@ -6,6 +6,9 @@ return [
         'id' => [
             'type' => 'hidden'
         ],
+        'version' => [
+            'type' => 'hidden'
+        ],
         'postcode' => [
             'type' => 'text',
             'label' => 'Postcode',
