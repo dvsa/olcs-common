@@ -1,32 +1,31 @@
 <?php
-return
-[    
+
+return [
     'name' => 'sole-trader',
-    'elements' => 
+    'elements' =>
     [
-        'trading_names' => 
+        'trading_names' =>
         [
-            'type' => 'tradingNames',              
+            'type' => 'tradingNames'
         ],
-        'submit_add_trading_name' => 
+        'submit_add_trading_name' =>
         [
             'name' => 'submit_add_trading_name',
             'value' => 'add_trading_name',
             'type' => 'submit',
-            'label' => 'Add another',
+            'label' => 'Add another'
         ],
-        'type_of_business' => 
+        'type_of_business' =>
         [
             'type' => 'businessType',
-            'value_options' => 'sic_codes',             
-        ],
-
+            'value_options' => 'sic_codes'
+        ]
     ],
     'options' =>
     [
         'next_step' =>
         [
-            'default' => 'complete',
+            'default' => 'complete'
         ]
-    ],
+    ]
 ];

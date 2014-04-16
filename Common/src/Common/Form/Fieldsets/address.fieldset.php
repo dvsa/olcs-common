@@ -3,46 +3,41 @@
 return [
     'name' => 'address',
     'elements' => [
+        'id' => [
+            'type' => 'hidden'
+        ],
         'postcode' => [
             'type' => 'text',
             'label' => 'Postcode',
-            'name' => 'postcode',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
-        'line_1' => [
+        'addressLine1' => [
             'type' => 'text',
             'label' => 'Address line 1',
-            'name' => 'line_1',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
-        'line_2' => [
+        'addressLine2' => [
             'type' => 'text',
-            'label' => 'Address line 2',
-            'name' => 'line_2'
+            'label' => 'Address line 2'
         ],
-        'line_3' => [
+        'addressLine3' => [
             'type' => 'text',
-            'label' => 'Address line 3',
-            'name' => 'line_3'
+            'label' => 'Address line 3'
         ],
-        'line_4' => [
+        'addressLine4' => [
             'type' => 'text',
-            'label' => 'Address line 4',
-            'name' => 'line_4'
+            'label' => 'Address line 4'
         ],
-        'town' => [
+        'city' => [
             'type' => 'text',
             'label' => 'Town/City',
-            'name' => 'town',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'country' => [
             'type' => 'select',
             'label' => 'Country',
-            'name' => 'country',
             'required' => true,
             'value_options' => 'countries'
         ]
     ]
 ];
-

@@ -93,19 +93,19 @@ return array(
     ],
     'statement_types' =>
     [
-        'statement_type.43' => 'Section 43',
-        'statement_type.9' => 'Section 9',
-        'statement_type.43NI' => 'NI Section 43',
-        'statement_type.9NI' => 'NI Section 9',
-        'statement_type.36NI' => 'NI Section 36',
-        'statement_type.38NI' => 'NI Section 38'
+        'statement_type.1' => 'Section 43',
+        'statement_type.2' => 'Section 9',
+        'statement_type.3' => 'NI Section 43',
+        'statement_type.4' => 'NI Section 9',
+        'statement_type.5' => 'NI Section 36',
+        'statement_type.6' => 'NI Section 38'
     ],
-    'request_modes' =>
+    'contact_type' =>
     [
-        'request_mode.email' => 'Email',
-        'request_mode.fax' => 'Fax',
-        'request_mode.letter' => 'Letter',
-        'request_mode.telephone' => 'Telephone'
+        'contact_type.1' => 'Email',
+        'contact_type.2' => 'Fax',
+        'contact_type.3' => 'Letter',
+        'contact_type.4' => 'Telephone'
     ],
     'countries' =>
     [
@@ -356,4 +356,3 @@ return array(
         'country.ZW' => 'Zimbabwe'
     ]
 );
-

@@ -130,15 +130,21 @@ abstract class FormActionController extends AbstractActionController
 
     protected function processAdd($data, $entityName)
     {
-        $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        $data = $this->trimFormFields($data);
+
         return $this->makeRestCall($entityName, 'POST', $data);
     }
 
     protected function processEdit($data, $entityName)
     {
-        $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        $data = $this->trimFormFields($data);
 
         return $this->makeRestCall($entityName, 'PUT', $data);
+    }
+
+    protected function trimFormFields($data)
+    {
+        return $this->trimFields($data, array('crsf', 'submit', 'fields'));
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())
@@ -148,6 +154,27 @@ abstract class FormActionController extends AbstractActionController
                 unset($data[$field]);
             }
         }
+
+        return $data;
+    }
+
+    /**
+     * Find the address fields and process them accordingly
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function processAddressData($data, $addressName = 'address')
+    {
+        if (!isset($data['addresses'])) {
+            $data['addresses'] = array();
+        }
+
+        $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
+
+        $data['addresses'][$addressName] = $data[$addressName];
+
+        unset($data[$addressName]);
 
         return $data;
     }

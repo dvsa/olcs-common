@@ -3,12 +3,20 @@
 /**
  * Creates a form from a form config file stored in the OlcsCommon module.config.php 'forms_path' or in
  * your local project module.config.php
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
 
 namespace Common\Service\Form;
 
 use Zend\Form\Factory;
 
+/**
+ * Creates a form from a form config file stored in the OlcsCommon module.config.php 'forms_path' or in
+ * your local project module.config.php
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 class OlcsCustomFormFactory extends Factory
 {
 
@@ -164,10 +172,9 @@ class OlcsCustomFormFactory extends Factory
      * Get element
      *
      * @param array $element
-     * @param boolean $fieldset
      * @return array
      */
-    private function getElement($element, $fieldset = false)
+    private function getElement($element)
     {
         $newElement = null;
 
@@ -246,7 +253,7 @@ class OlcsCustomFormFactory extends Factory
                 $thisFieldset['options'] = $fieldset['options'];
             }
 
-            $thisFieldset['elements'] = $this->getElements($fieldset['elements'], true);
+            $thisFieldset['elements'] = $this->getElements($fieldset['elements']);
             $thisFieldsets[]['spec'] = $thisFieldset;
         }
         return $thisFieldsets;
@@ -295,5 +302,4 @@ class OlcsCustomFormFactory extends Factory
         $fieldsetConfig = include $path;
         return $fieldsetConfig;
     }
-
 }
