@@ -25,9 +25,9 @@ return array(
             'title' => 'Operating Centre Address',
             'formatter' => function($data) {
                 $parts = array();
-                foreach (array('addressLine1', 'addressLine2', 'addressLine3', 'postcode') as $item) {
-                    if (!empty($data['address'][$item])) {
-                        $parts[] = $data['address'][$item];
+                foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
+                    if (!empty($data[$item])) {
+                        $parts[] = $data[$item];
                     }
                 }
 
@@ -38,26 +38,26 @@ return array(
         ),
         array(
             'title' => 'Vehicles',
-            'format' => '{{vehicleAuth}}',
-            'sort' => 'vehicleAuth'
+            'format' => '{{no_of_vehicles_required}}'
         ),
         array(
             'title' => 'Trailers',
-            'format' => '{{trailerAuth}}',
-            'sort' => 'trailerAuth'
+            'format' => '{{no_of_trailers_required}}'
         ),
         array(
             'title' => 'Permission',
-            'name' => 'permission'
+            'name' => 'permission',
+            'formatter' => function($data) {
+                            return ($data['permission']==1?'Y':'N');
+            }
         ),
         array(
             'title' => 'Advertising',
-            'name' => 'advertising'
-        ),
-        array(
-            'title' => 'Proof',
-            'name' => 'proof'
-        ),
+            'name' => 'advertising',
+            'formatter' => function($data) {
+                            return ($data['ad_placed']==1?'Y':'N');
+            }
+        )
     ),
     // Footer configuration
     'footer' => array(
@@ -68,14 +68,14 @@ return array(
         ),
         array(
             'formatter' => 'Sum',
-            'name' => 'vehicleAuth'
+            'name' => 'no_of_vehicles_required'
         ),
         array(
             'formatter' => 'Sum',
-            'name' => 'trailerAuth'
+            'name' => 'no_of_trailers_required'
         ),
         array(
-            'colspan' => 3
+            'colspan' => 2
         )
     )
 );
