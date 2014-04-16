@@ -3,21 +3,27 @@
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
  *
- * @package     olcscommon
- * @subpackage  controller
- * @author      Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Michael Cooperr <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 
 namespace Common\Controller;
 
+use Common\Util;
+
+/**
+ * An abstract controller that all ordinary OLCS controllers inherit from
+ *
+ * @author Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Michael Cooperr <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 {
-
-    use \Common\Util\LoggerTrait;
-
-use \Common\Util\FlashMessengerTrait;
-
-use \Common\Util\RestCallTrait;
+    use Util\LoggerTrait,
+        Util\FlashMessengerTrait,
+        Util\RestCallTrait;
 
     /**
      * Set navigation for breadcrumb
@@ -41,7 +47,10 @@ use \Common\Util\RestCallTrait;
     protected function getParams($keys)
     {
         $params = [];
-        $getParams = array_merge($this->getEvent()->getRouteMatch()->getParams(), $this->getRequest()->getQuery()->toArray());
+        $getParams = array_merge(
+            $this->getEvent()->getRouteMatch()->getParams(),
+            $this->getRequest()->getQuery()->toArray()
+        );
         foreach ($getParams as $key => $value) {
             if (in_array($key, $keys)) {
                 $params[$key] = $value;
@@ -146,20 +155,6 @@ use \Common\Util\RestCallTrait;
     }
 
     /**
-     * Method to gather any info relevent to the journey. This is passed
-     * to the processForm method and any call back used.
-     *
-     * @return array
-     */
-    private function getJourneyData()
-    {
-        return [
-            'section' => $this->getCurrentSection(),
-            'step' => $this->getCurrentStep()
-        ];
-    }
-
-    /**
      * Check for crud actions
      *
      * @param string $route
@@ -188,7 +183,6 @@ use \Common\Util\RestCallTrait;
 
                 $this->crudActionMissingId();
                 return false;
-
             }
 
             $params[$itemIdParam] = $id;
@@ -207,4 +201,20 @@ use \Common\Util\RestCallTrait;
         die('Missing id');
     }
 
+    /*
+     * Build a table from config and results
+     *
+     * @param string $table
+     * @param array $results
+     * @param array $data
+     * @return string
+     */
+    public function buildTable($table, $results, $data = array())
+    {
+        if (!isset($data['url'])) {
+            $data['url'] = $this->getPluginManager()->get('url');
+        }
+
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
+    }
 }

@@ -1,17 +1,20 @@
 <?php
 
 /**
- * An abstract controller that all ordinary OLCS controllers inherit from
+ * An abstract form controller that all ordinary OLCS controllers inherit from
  *
- * @package     olcscommon
- * @subpackage  controller
- * @author      Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Shaun <shaun.lizzio@valtech.co.uk>
  */
 
 namespace Common\Controller;
 
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-
+/**
+ * An abstract form controller that all ordinary OLCS controllers inherit from
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Shaun <shaun.lizzio@valtech.co.uk>
+ */
 abstract class FormActionController extends AbstractActionController
 {
 
@@ -109,7 +112,7 @@ abstract class FormActionController extends AbstractActionController
     /**
      * Generate form from GET call
      *
-     * @todo Need to do something with $return to format the data
+     * @todo Maybe need to do something with $return to format the data
      *
      * @param string $name
      * @param callable $callback

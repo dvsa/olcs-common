@@ -51,7 +51,7 @@ return array(
         'case_category.28' => 'Proposal to revoke'
     ),
     'operator_locations' => [
-        'uk' => 'Mainland UK',
+        'uk' => 'Great Britain',
         'ni' => 'Northern Ireland'
     ],
     'operator_types' => [
