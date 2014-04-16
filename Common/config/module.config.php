@@ -76,6 +76,7 @@ return array(
                 'Submission' => 'submission',
                 'Statement' => 'statement',
                 'Conviction' => 'conviction',
+                'Stay' => 'stay',
             )
         )
     )
