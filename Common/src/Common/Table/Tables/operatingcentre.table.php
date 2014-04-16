@@ -33,7 +33,6 @@ return array(
 
                 return "<a href='#'>".implode(', ', $parts)."</a>";
             },
-            'sort' => 'address',
             'name' => 'address'
         ),
         array(
