@@ -71,6 +71,7 @@ return array(
                 'VosaCase' => 'vosa-case',
                 'Licence' => 'licence',
                 'LicenceOrganisation' => 'licence-organisation',
+                'LicenceOperatingCentre' => 'licence-operating-centre',
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
                 'Submission' => 'submission',
