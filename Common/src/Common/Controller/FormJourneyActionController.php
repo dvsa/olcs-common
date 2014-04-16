@@ -286,4 +286,16 @@ abstract class FormJourneyActionController extends FormActionController
         $step = str_replace(' ', '', $step);
         return 'process'.$step;
     }
+    
+    /**
+     * Get licence entity based on route id value
+     *
+     * @return array|object
+     */
+    protected function _getLicenceEntity()
+    {
+        $licenceId = (int) $this->params()->fromRoute('licenceId');
+        return $this->makeRestCall('Licence', 'GET', array('id' => $licenceId));
+    }
+    
 }
