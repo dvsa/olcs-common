@@ -45,7 +45,8 @@ class Bootstrap
 
     protected static function initAutoloader()
     {
-        require('vendor/autoload.php');
+        //var_dump(getcwd());exit;
+        require('../../autoload.php');
     }
 }
 
