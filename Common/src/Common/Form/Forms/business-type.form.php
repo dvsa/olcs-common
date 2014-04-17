@@ -1,4 +1,5 @@
 <?php
+
 return [
     'business-type' => [
         'name' => 'business-type',
@@ -6,7 +7,6 @@ return [
             'method' => 'post',
         ],
         'fieldsets' => [],
-        
         'elements' => [
             'submit' => [
                 'type' => 'submit',

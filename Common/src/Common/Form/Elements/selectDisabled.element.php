@@ -1,17 +1,18 @@
 <?php
 
 return [
-    'radio' => [
-        'type' => '\Zend\Form\Element\Radio',
+    'selectDisabled' => [
+        'type' => '\Zend\Form\Element\Select',
         'name' => '',
         'options' => [
             'label' => '',
             'value_options' => [],
-            'help-block' => 'Please choose'
+            'value' => 'defendant_type.operator',
+            'disable_inarray_validator' => false
         ],
         'attributes' => [
             'id' => '',
-            'placeholder' => ''
+        //'disabled' => true
         ]
     ]
 ];

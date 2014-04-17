@@ -1,6 +1,6 @@
 <?php
-return 
-[    
+
+return [
     'name' => 'licence-type',
     'elements' => [
         'licence_type' => [
@@ -9,7 +9,7 @@ return
             'value_options' => 'licence_types',
             'options' => [
                 'label' => 'Licence Type',
-                'next_step' => 
+                'next_step' =>
                 [
                     'goods' => 'licence-type',
                     'psv' => 'licence-type-psv'
@@ -17,10 +17,10 @@ return
             ],
         ]
     ],
-    'options' => 
+    'options' =>
     [
         'label' => 'Licence type',
-        'next_step' => 
+        'next_step' =>
         [
             'values' => [
                 'restricted' => 'complete',
@@ -30,5 +30,5 @@ return
             ],
             'default' => 'complete',
         ]
-    ],
+    ]
 ];
