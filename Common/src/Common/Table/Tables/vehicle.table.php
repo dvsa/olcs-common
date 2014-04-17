@@ -30,7 +30,7 @@ return array(
         array(
             'title' => 'VRM',
             'formatter' => function($row) {
-                return '<a href="' . $this->generateUrl(array('vehicleId' => $row['id'], 'tab' => 'overview'), 'selfserve/vehicle-action/vehicle-edit') . '">' . $row['vrm'] . '</a>';
+                return '<a href="' . $this->generateUrl(array('vehicleId' => $row['id'], 'tab' => 'overview'), 'selfserve/vehicle-safety/vehicle-action/vehicle-edit') . '">' . $row['vrm'] . '</a>';
             }
         ),
         array(
