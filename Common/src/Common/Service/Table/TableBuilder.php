@@ -748,7 +748,7 @@ class TableBuilder
 
             $this->limit = $array['limit'];
 
-        } elseif(isset($this->settings['paginate']['limit']['default'])) {
+        } elseif (isset($this->settings['paginate']['limit']['default'])) {
 
             $this->limit = (int)$this->settings['paginate']['limit']['default'];
         }
