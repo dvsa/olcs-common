@@ -98,7 +98,7 @@ abstract class FormActionController extends AbstractActionController
      * @param mixed $data
      * @return object
      */
-    protected function generateFormWithData($name, $callback, $data = null)
+    public function generateFormWithData($name, $callback, $data = null)
     {
         $form = $this->generateForm($name, $callback);
 

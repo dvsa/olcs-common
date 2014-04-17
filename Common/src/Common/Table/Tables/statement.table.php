@@ -41,7 +41,7 @@ return array(
             'name' => 'dateStopped'
         ),
         array(
-            'title' => 'Requested body',
+            'title' => 'Requestor body',
             'name' => 'requestorsBody'
         ),
         array(
