@@ -40,7 +40,7 @@ return array(
         ),
         array(
             'title' => 'Requested body',
-            'name' => 'requestorBody'
+            'name' => 'requestorsBody'
         ),
         array(
             'title' => 'Date issued',

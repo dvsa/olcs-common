@@ -21,7 +21,6 @@ use Common\Util;
  */
 abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 {
-
     use Util\LoggerTrait,
         Util\FlashMessengerTrait,
         Util\RestCallTrait;
@@ -194,15 +193,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Called when a crud action is missing a required ID
-     *
-     * @todo Decide how to handle missing id from crud action
      */
     protected function crudActionMissingId()
     {
-        die('Missing id');
+        $this->addErrorMessage('Please select a row first');
+        $this->redirect()->toRoute(null, array(), array(), true);
     }
 
-    /**
+    /*
      * Build a table from config and results
      *
      * @param string $table
