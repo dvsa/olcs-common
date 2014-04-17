@@ -1,4 +1,5 @@
 <?php
+
 return [
     'licence-type' => [
         'name' => 'licence-type',
@@ -6,7 +7,6 @@ return [
             'method' => 'post',
         ],
         'fieldsets' => [],
-        
         'elements' => [
             'submit' => [
                 'type' => 'submit',
@@ -14,9 +14,8 @@ return [
                 'class' => 'action--primary large'
             ],
             'version' => [
-	           'type' => 'hidden',
+                'type' => 'hidden',
             ]
         ]
     ]
 ];
-

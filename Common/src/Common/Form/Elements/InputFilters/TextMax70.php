@@ -4,7 +4,7 @@ use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
-class Name extends ZendElement implements InputProviderInterface
+class TextMax70 extends ZendElement implements InputProviderInterface
 {
     public function __construct($name = null, $options = array())
     {
@@ -26,7 +26,7 @@ class Name extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringToLower'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 45]),
+                new ZendValidator\StringLength(['min' => 2, 'max' => 70]),
             ]
         ];
 

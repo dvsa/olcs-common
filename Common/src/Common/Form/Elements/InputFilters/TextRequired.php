@@ -1,10 +1,11 @@
 <?php
+
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element as ZendElement;
-use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
-class Name extends ZendElement implements InputProviderInterface
+class TextRequired extends ZendElement implements InputProviderInterface
 {
     public function __construct($name = null, $options = array())
     {
@@ -20,13 +21,12 @@ class Name extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => false,
+            'required' => true,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
-                ['name' => 'Zend\Filter\StringToLower'],
+                ['name' => 'Zend\Filter\StringTrim']
             ],
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 45]),
+
             ]
         ];
 
