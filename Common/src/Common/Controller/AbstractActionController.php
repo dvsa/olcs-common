@@ -30,7 +30,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param type $label
      * @param type $params
      */
-    protected function setBreadcrumb($navRoutes = array())
+    public function setBreadcrumb($navRoutes = array())
     {
         foreach ($navRoutes as $route => $routeParams) {
             $navigation = $this->getServiceLocator()->get('navigation');

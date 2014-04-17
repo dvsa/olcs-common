@@ -98,11 +98,16 @@ abstract class FormActionController extends AbstractActionController
      * @param mixed $data
      * @return object
      */
-    public function generateFormWithData($name, $callback, $data = null)
+    public function generateFormWithData($name, $callback, $data = null, $edit = false)
     {
         $form = $this->generateForm($name, $callback);
 
-        if (is_array($data)) {
+        if ($edit && $this->getRequest()->isPost()) {
+
+            $form->setData($this->getRequest()->getPost());
+
+        } elseif (is_array($data)) {
+
             $form->setData($data);
         }
 
