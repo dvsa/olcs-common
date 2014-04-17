@@ -20,7 +20,7 @@ return [
                     ],
                     'outcome' => [
                         'type' => 'select',
-                        'label' => 'Outcome:',
+                        'label' => 'Outcome*:',
                         'value_options' => 'case_stay_outcome'
                     ],
                     'notes' => [
@@ -33,6 +33,9 @@ return [
         ],
         'elements' => [
             'case' => [
+                'type' => 'hidden'
+            ],
+            'stayType' => [
                 'type' => 'hidden'
             ],
             'id' => [
