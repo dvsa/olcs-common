@@ -27,6 +27,7 @@ return [
                 'org_type.p' => 'partnership',
                 'org_type.llp' => 'llp',
                 'org_type.pa' => 'public-authority',
+                'org_type.o' => 'other',
             ],
             'default' => 'complete',
         ]
