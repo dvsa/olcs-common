@@ -419,4 +419,34 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $table->setupAction();
     }
+
+    /**
+     * Test render
+     */
+    public function testRender()
+    {
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('HTML', array())
+            ->will($this->returnValue('MORE HTML'));
+
+        $table = $this->getMockTableBuilder(array('renderTable', 'getVariables', 'getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('renderTable')
+            ->will($this->returnValue('HTML'));
+
+        $table->expects($this->once())
+            ->method('getVariables')
+            ->will($this->returnValue(array()));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $this->assertEquals('MORE HTML', $table->render());
+    }
 }
