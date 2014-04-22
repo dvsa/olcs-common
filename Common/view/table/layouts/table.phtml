@@ -1,0 +1,31 @@
+<div class="table__wrapper">
+    <table <?php echo $this->object->renderAttributes($this->object->getAttributes()); ?>>
+        <thead>
+            <tr>
+                <?php
+                foreach ($this->object->getColumns() as $column) {
+                    echo $this->object->renderHeaderColumn($column, '{{[elements/th]}}');
+                }
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->object->getRows() as $row) {
+                ?>
+            <tr>
+                <?php
+                foreach ($this->object->getColumns() as $column) {
+                    echo $this->object->renderBodyColumn($row, $column, '{{[elements/td]}}');
+                }
+                ?>
+            </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+        <?php
+        echo $this->object->renderTableFooter();
+        ?>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+<form method="POST" action="<?php echo $this->action;?>">
+
+    <div class="table__header">
+        <h3>Table title</h3>
+        <div class="actions-container">
+            <input class="action--primary" type="submit" name="action" value="Add" />
+            <input class="action--secondary" type="submit" name="action" value="Edit" />
+            <input class="action--warning" type="submit" name="action" value="Delete" />
+        </div>
+    </div>
+
+    <div class="table__wrapper">
+        <table>
+            <?php $headerNames = array_keys($this->records[0]); ?>
+            <thead>
+                <tr>
+                    <?php foreach ($headerNames as $headerName): ?>
+                    <?php if (strtolower($headerName) == 'id'): ?>
+                    <th>&nbsp;</th>
+                    <?php endif; ?>
+                    <th class="<?php echo strtolower($headerName); ?>"><?php echo $this->translate($headerName); ?></th>
+                    <?php endforeach; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($this->records as $record):
+                ?>
+                <tr>
+                    <?php foreach ($record as $key => $value): ?>
+                    <?php if (strtolower($key) == 'id'): ?>
+                    <td><input type="radio" name="selection" value="<?php echo $value; ?>" /></td>
+                    <?php endif; ?>
+                    <td class="<?php echo strtolower($key); ?>"><?php echo $this->translate($value); ?></td>
+                    <?php endforeach; ?>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</form>

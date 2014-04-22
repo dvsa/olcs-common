@@ -1,0 +1,40 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('')); ?>
+
+        <?php echo $this->headMeta() ->appendName('viewport', 'width=device-width, initial-scale=1.0') ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <?php /* echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico')); */
+                echo $this->headLink()->appendStylesheet($this->basePath() . '/static/stylesheets/main.css') ?>
+
+        <script src="/static/js/jquery.1.11.0.js"></script>
+        <script src="/js/jquery.validate.js"></script>
+        <script src="/js/styleguide.js"></script>
+        <?php 
+            echo $this->headScript();
+            isset($route) ? $this->includeFlowJs($route, 'selfserve') : ''; 
+        ?>
+
+    </head>
+    <body>
+    <?php echo $this->render('layout/partials/header.phtml'); ?>
+
+	<div class="page-wrapper">
+        <?php  echo $this->navigation('navigation') // <-- Update this!!
+        ->breadcrumbs()
+        ->setMinDepth(0)
+        ->setPartial(array('layout/partials/breadcrumbs.phtml', 'Olcs'));
+        ?>
+        <div id="main" role="main">
+            <?php echo $this->flashMessenger()->render(); ?>
+            <?php echo $this->content; ?>
+        </div>
+    </div><!-- .page-wrapper-->
+    <?php echo $this->render('layout/partials/footer.phtml'); ?>
+    <?php echo $this->inlineScript() ?>
+    </body>
+</html>

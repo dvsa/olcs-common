@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "olcs/common",
     "description": "Contains common code shared by all OLCS-related projects",
     "type": "library",
@@ -24,3 +25,23 @@
         }
     }
 }
+=======
+    "name": "olcs/OlcsCommon",
+    "description": "Common library for the OLCS Project",
+    "type": "library",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.2.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Common\\": "Common/src/"
+        },
+        "classmap": [
+            "./Common/Module.php"
+        ]
+    }
+}
+>>>>>>> d691642e4ae63935ba4d05954d66c870f931a9a9
