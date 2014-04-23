@@ -1,23 +1,19 @@
 {
-    "name": "olcs/common",
-    "description": "Contains common code shared by all OLCS-related projects",
+    "name": "olcs/OlcsCommon",
+    "description": "Common library for the OLCS Project",
     "type": "library",
-    "license": "proprietary",
     "require": {
-        "php": ">=5.3",
-        "zendframework/zendframework": "2.2.4"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~3.7"
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.2.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
-            "OlcsCommon\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "0.1.x-dev"
-        }
+            "Common\\": "Common/src/"
+        },
+        "classmap": [
+            "./Common/Module.php"
+        ]
     }
 }
