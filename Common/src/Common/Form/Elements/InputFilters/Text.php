@@ -1,25 +1,26 @@
 <?php
 
 /**
- * Vrm Element
+ * Text
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element as ZendElement;
+use Zend\Form\Element\Text as ZendElement;
+use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Validator\StringLength;
-use Zend\I18n\Validator\Alnum;
 
 /**
- * Vrm Element
+ * Text
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Vrm extends ZendElement implements InputProviderInterface
+class Text extends ZendElement implements InputProviderInterface
 {
+    protected $required = false;
+    protected $max = null;
 
     public function __construct($name = null, $options = array())
     {
@@ -35,23 +36,17 @@ class Vrm extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => true,
+            'required' => $this->required ?: false,
             'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
-                ['name' => 'Zend\Filter\StringToUpper'],
-                [
-                    'name' => 'Zend\Filter\PregReplace',
-                    'options' => [
-                        'pattern' => '/\ /',
-                        'replacement' => ''
-                    ]
-                ]
+                ['name' => 'Zend\Filter\StringTrim']
             ],
             'validators' => [
-                new StringLength(['min' => 2, 'max' => 7]),
-                new Alnum()
             ]
         ];
+
+        if (!empty($this->max)) {
+            $specification['validators'][] = new ZendValidator\StringLength(['min' => 2, 'max' => $this->max]);
+        }
 
         return $specification;
     }

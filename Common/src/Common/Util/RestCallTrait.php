@@ -63,6 +63,7 @@ trait RestCallTrait
                 unset($data['id']);
 
                 $data = array('data' => json_encode($data));
+
                 break;
             case 'DELETE':
                 $handleResponseMethod = 'handleDeleteResponse';

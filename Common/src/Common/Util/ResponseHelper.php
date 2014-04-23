@@ -1,17 +1,32 @@
 <?php
 
+/**
+ * Response Helper
+ *
+ * Handle responses from the rest service
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+
 namespace Common\Util;
 
 use Zend\Http\Response;
 
+/**
+ * Response Helper
+ *
+ * Handle responses from the rest service
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class ResponseHelper
 {
+
     private $response;
     private $responseData;
     private $method;
     private $params;
     private $data;
-
     private $expectedCodes = array(
         'GET' => array(
             Response::STATUS_CODE_200,
@@ -74,7 +89,7 @@ class ResponseHelper
 
         $this->checkForUnexpectedResponseCode($this->body);
 
-        switch($this->method) {
+        switch ($this->method) {
             case 'GET':
 
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {

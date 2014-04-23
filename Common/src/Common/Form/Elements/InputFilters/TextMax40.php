@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Text Max 4000
+ * Text Max 40
  */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Text Max 4000
+ * Text Max 40
  */
-class TextMax4000 extends Textarea implements InputProviderInterface
+class TextMax40 extends Text implements InputProviderInterface
 {
-    protected $max = 4000;
+    protected $max = 40;
 }
