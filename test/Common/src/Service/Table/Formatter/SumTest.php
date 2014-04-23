@@ -44,8 +44,24 @@ class SumTest extends \PHPUnit_Framework_TestCase
             array(array(array('subTotal' => 'A'), array('subTotal' => 'B')), array('name' => 'subTotal'), '0'),
             array(array(array('subTotal' => 5)), array('name' => 'subTotal'), '5'),
             array(array(array('subTotal' => 5), array('subTotal' => 7)), array('name' => 'subTotal'), '12'),
-            array(array(array('subTotal' => 5), array('subTotal' => 7), array('subTotal' => 'A')), array('name' => 'subTotal'), '12'),
-            array(array(array('subTotal' => 5), array('subTotal' => 7), array('subTotal' => 95)), array('name' => 'subTotal'), '107')
+            array(
+                array(
+                    array('subTotal' => 5),
+                    array('subTotal' => 7),
+                    array('subTotal' => 'A')
+                ),
+                array('name' => 'subTotal'),
+                '12'
+            ),
+            array(
+                array(
+                    array('subTotal' => 5),
+                    array('subTotal' => 7),
+                    array('subTotal' => 95)
+                ),
+                array('name' => 'subTotal'),
+                '107'
+            )
         );
     }
 }
