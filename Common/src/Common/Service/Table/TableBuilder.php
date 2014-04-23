@@ -303,6 +303,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for limit
+     *
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
+
+    /**
      * Getter for limit
      *
      * @return int
@@ -310,6 +320,16 @@ class TableBuilder
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * Setter for page
+     *
+     * @param int $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
     }
 
     /**
@@ -333,6 +353,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for sort
+     *
+     * @param string $sort
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    }
+
+    /**
      * Getter for sort
      *
      * @return string
@@ -340,6 +370,16 @@ class TableBuilder
     public function getSort()
     {
         return $this->sort;
+    }
+
+    /**
+     * Setter for order
+     *
+     * @param string $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
     }
 
     /**
@@ -422,14 +462,14 @@ class TableBuilder
     {
         if (isset($array['limit'])) {
 
-            $this->limit = $array['limit'];
+            $this->setLimit($array['limit']);
 
         } elseif (isset($this->settings['paginate']['limit']['default'])) {
 
-            $this->limit = (int)$this->settings['paginate']['limit']['default'];
+            $this->setLimit((int)$this->settings['paginate']['limit']['default']);
         }
 
-        $this->page = isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE;
+        $this->setPage(isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE);
 
         if (!isset($array['url'])) {
 
@@ -437,8 +477,8 @@ class TableBuilder
         }
 
         $this->url = $array['url'];
-        $this->sort = isset($array['sort']) ? $array['sort'] : '';
-        $this->order = isset($array['order']) ? $array['order'] : 'ASC';
+        $this->setSort(isset($array['sort']) ? $array['sort'] : '');
+        $this->setOrder(isset($array['order']) ? $array['order'] : 'ASC');
 
         $this->variables = array_merge($this->getVariables(), $array);
     }
@@ -827,7 +867,6 @@ class TableBuilder
         if (isset($column['format'])) {
 
             $content = $this->replaceContent($column['format'], $row);
-
         }
 
         if (!isset($content) || empty($content)) {
