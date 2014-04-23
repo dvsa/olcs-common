@@ -48,6 +48,12 @@ return array(
             }
         ),
         array(
+            'title' => 'Date closed',
+            'formatter' => function($row) {
+                return $row['dateClosed']!='' ? date('d/m/Y', strtotime($row['dateClosed'])) : '-';
+            }
+        ),
+        array(
             'title' => 'Currently with',
             'name' => 'currentlyWith'
         ),

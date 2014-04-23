@@ -1,27 +1,27 @@
 <?php
-return
-[    
+
+return [
     'name' => 'llp',
-    'elements' => 
+    'elements' =>
     [
-        'company_number' => 
+        'company_number' =>
         [
             'label' => 'Registered company number',
-            'type' => 'companyNumber',
+            'type' => 'companyNumber'
         ],
-        'submit_lookup_company' => 
+        'submit_lookup_company' =>
         [
             'name' => 'submit_lookup_company',
             'value' => 'lookup_company',
             'type' => 'submit',
-            'label' => 'Find',
+            'label' => 'Find'
         ],
     ],
     'options' =>
     [
         'next_step' =>
         [
-            'default' => 'complete',
+            'default' => 'complete'
         ]
-    ],
+    ]
 ];
