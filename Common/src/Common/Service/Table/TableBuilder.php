@@ -156,6 +156,68 @@ class TableBuilder
     }
 
     /**
+     * Setter for type
+     *
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Set settings
+     *
+     * @param array $settings
+     */
+    public function setSettings($settings = array())
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * Setter for total
+     *
+     * @param int $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * Setter for rows
+     *
+     * @param array $rows
+     */
+    public function setRows($rows)
+    {
+        $this->rows = $rows;
+    }
+
+    /**
+     * Return a setting or the default
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getSetting($name, $default = null)
+    {
+        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
+    }
+
+    /**
+     * Setter for footer
+     *
+     * @param array $footer
+     */
+    public function setFooter($footer = array())
+    {
+        $this->footer = $footer;
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -188,18 +250,6 @@ class TableBuilder
         }
 
         return $this->paginationHelper;
-    }
-
-    /**
-     * Return a setting or the default
-     *
-     * @param string $name
-     * @param mixed $default
-     * @return mixed
-     */
-    public function getSetting($name, $default = null)
-    {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
     }
 
     /**
@@ -253,6 +303,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for limit
+     *
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
+
+    /**
      * Getter for limit
      *
      * @return int
@@ -260,6 +320,16 @@ class TableBuilder
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * Setter for page
+     *
+     * @param int $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
     }
 
     /**
@@ -283,6 +353,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for sort
+     *
+     * @param string $sort
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    }
+
+    /**
      * Getter for sort
      *
      * @return string
@@ -290,6 +370,16 @@ class TableBuilder
     public function getSort()
     {
         return $this->sort;
+    }
+
+    /**
+     * Setter for order
+     *
+     * @param string $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
     }
 
     /**
@@ -329,13 +419,14 @@ class TableBuilder
      */
     public function loadConfig($name)
     {
-        if (!isset($this->applicationConfig['tables']['config'])) {
+        if (!isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])) {
             throw new \Exception('Table config location not defined');
         }
 
         $config = $this->getConfigFromFile($name);
 
-        $this->settings = isset($config['settings']) ? $config['settings'] : array();
+        $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
 
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
             $this->settings['paginate']['limit'] = array(
@@ -347,7 +438,7 @@ class TableBuilder
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
-        $this->footer = isset($config['footer']) ? $config['footer'] : array();
+        $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
         return true;
     }
@@ -359,8 +450,8 @@ class TableBuilder
      */
     public function loadData($data = array())
     {
-        $this->rows = isset($data['Results']) ? $data['Results'] : $data;
-        $this->total = isset($data['Count']) ? $data['Count'] : count($this->rows);
+        $this->setRows(isset($data['Results']) ? $data['Results'] : $data);
+        $this->setTotal(isset($data['Count']) ? $data['Count'] : count($this->rows));
     }
 
     /**
@@ -372,14 +463,14 @@ class TableBuilder
     {
         if (isset($array['limit'])) {
 
-            $this->limit = $array['limit'];
+            $this->setLimit($array['limit']);
 
         } elseif (isset($this->settings['paginate']['limit']['default'])) {
 
-            $this->limit = (int)$this->settings['paginate']['limit']['default'];
+            $this->setLimit((int)$this->settings['paginate']['limit']['default']);
         }
 
-        $this->page = isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE;
+        $this->setPage(isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE);
 
         if (!isset($array['url'])) {
 
@@ -387,8 +478,8 @@ class TableBuilder
         }
 
         $this->url = $array['url'];
-        $this->sort = isset($array['sort']) ? $array['sort'] : '';
-        $this->order = isset($array['order']) ? $array['order'] : 'ASC';
+        $this->setSort(isset($array['sort']) ? $array['sort'] : '');
+        $this->setOrder(isset($array['order']) ? $array['order'] : 'ASC');
 
         $this->variables = array_merge($this->getVariables(), $array);
     }
@@ -423,9 +514,20 @@ class TableBuilder
      */
     public function getConfigFromFile($name)
     {
-        $configFile = $this->applicationConfig['tables']['config'] . $name . '.table.php';
+        $found = false;
 
-        if (!file_exists($configFile)) {
+        foreach ($this->applicationConfig['tables']['config'] as $location) {
+
+            $configFile = $location . $name . '.table.php';
+
+            if (file_exists($configFile)) {
+
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
 
             throw new \Exception('Table configuration not found');
         }
@@ -489,7 +591,7 @@ class TableBuilder
      * @param array $columns
      * @return string
      */
-    public function renderTableFooterColumns($columns)
+    private function renderTableFooterColumns($columns)
     {
         $content = '';
 
@@ -509,19 +611,19 @@ class TableBuilder
     {
         if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
 
-            $this->type = self::TYPE_HYBRID;
+            $this->setType(self::TYPE_HYBRID);
             return $this->renderLayout('crud');
         }
 
         if (isset($this->settings['crud'])) {
 
-            $this->type = self::TYPE_CRUD;
+            $this->setType(self::TYPE_CRUD);
             return $this->renderLayout('crud');
         }
 
         if (isset($this->settings['paginate'])) {
 
-            $this->type = self::TYPE_PAGINATE;
+            $this->setType(self::TYPE_PAGINATE);
         }
 
         return $this->renderLayout('default');
@@ -709,8 +811,6 @@ class TableBuilder
     /**
      * Render a header column
      *
-     * @todo Add checks for sorting
-     *
      * @param array $column
      * @param string $wrapper
      * @return string
@@ -777,7 +877,6 @@ class TableBuilder
         if (isset($column['format'])) {
 
             $content = $this->replaceContent($column['format'], $row);
-
         }
 
         if (!isset($content) || empty($content)) {
@@ -812,21 +911,6 @@ class TableBuilder
         }
 
         return '';
-    }
-    /**
-     * Render pagination
-     *
-     * @return string
-     */
-    public function renderPagination()
-    {
-        if ($this->getSetting('paginate', false) !== false) {
-
-            return '';
-        } else {
-
-            return $this->renderLayout('pagination');
-        }
     }
 
     /**

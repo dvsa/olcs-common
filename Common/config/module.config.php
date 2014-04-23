@@ -38,7 +38,9 @@ return array(
             ),
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'tables' => array(
-        'config' => __DIR__ . '/../src/Common/Table/Tables/',
+        'config' => array(
+            __DIR__ . '/../src/Common/Table/Tables/'
+        ),
         'partials' => __DIR__ . '/../view/table/'
     ),
     'sic_codes_path' => __DIR__ .'/../../Common/config/sic-codes',
@@ -79,6 +81,7 @@ return array(
                 'SubmissionActionStatus' => 'submission-action-status',
                 'SubmissionActionStatusType' => 'submission-action-status-type',
                 'Statement' => 'statement',
+                'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
                 'ApplicationOperatingCentre' => 'application-operating-centre',
                 'Address' => 'address'
