@@ -75,7 +75,8 @@ return array(
         'org_type.st' => 'Sole Trader',
         'org_type.p' => 'Partnership',
         'org_type.llp' => 'LLP',
-        'org_type.pa' => 'Public authority'
+        'org_type.pa' => 'Public authority',
+        'org_type.o' => 'Other/Charity/Trust & University',
     ],
     'defendant_types' =>
     [
