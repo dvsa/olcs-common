@@ -65,26 +65,6 @@ return array(
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
             ),
-            'backend' => array(
-                'User' => 'user',
-                'Person' => 'person',
-                'PersonSearch' => 'person-search',
-                'OperatorSearch' => 'operator-search',
-                'VosaCase' => 'vosa-case',
-                'Licence' => 'licence',
-                'LicenceOrganisation' => 'licence-organisation',
-                'TrafficArea' => 'traffic-area',
-                'Organisation' => 'organisation',
-                'LicenceVehicle' => 'licence-vehicle',
-                'Submission' => 'submission',
-                'SubmissionAction' => 'submission-action',
-                'SubmissionActionStatus' => 'submission-action-status',
-                'SubmissionActionStatusType' => 'submission-action-status-type',
-                'Statement' => 'statement',
-                'Appeal' => 'appeal',
-                'Conviction' => 'conviction',
-                'Address' => 'address'
-            )
         )
     )
      //-------- End service API mappings -----------------
