@@ -1,9 +1,11 @@
 <?php
+
 /**
  * Make rest calls and handle the response
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 namespace Common\Util;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
@@ -19,6 +21,7 @@ use Common\Exception\ResourceConflictException;
  */
 trait RestCallTrait
 {
+
     private $doctrineHydrator;
 
     /**
@@ -49,8 +52,8 @@ trait RestCallTrait
                 $data = array('data' => json_encode($data));
 
                 break;
-            case 'PUT':
             // At the moment PATCH is the same as PUT
+            case 'PUT':
             case 'PATCH':
                 // Currently we only handle updating 1 entity at a time
                 $handleResponseMethod = 'handlePutResponse';
@@ -60,6 +63,7 @@ trait RestCallTrait
                 unset($data['id']);
 
                 $data = array('data' => json_encode($data));
+
                 break;
             case 'DELETE':
                 $handleResponseMethod = 'handleDeleteResponse';
@@ -68,17 +72,17 @@ trait RestCallTrait
             default:
                 return null;
         }
-        
+
         // Gets instance of RestClient to make HTTP method call to API
         $response = $this->getRestClient($service)->$serviceMethod($path, $data);
-        
+
         //Handle response and return data
         return $this->$handleResponseMethod($service, $response);
     }
-    
+
     /**
      * Gets instance of RestClient() to make api call
-     * 
+     *
      * @param string $service
      */
     protected function getRestClient($service)
@@ -97,12 +101,6 @@ trait RestCallTrait
      */
     private function handleGetResponse($service, $response)
     {
-        // If we have a 404
-        if ($response === false) {
-            // Throw a not found exception
-            throw new ResourceNotFoundException();
-        }
-
         return $response;
     }
 

@@ -79,10 +79,11 @@ return array(
                 'SubmissionActionStatus' => 'submission-action-status',
                 'SubmissionActionStatusType' => 'submission-action-status-type',
                 'Statement' => 'statement',
+                'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
                 'Application' => 'application',
                 'Vehicle' => 'vehicle'
-
+                'Address' => 'address'
             )
         )
     )
