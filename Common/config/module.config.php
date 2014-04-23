@@ -38,6 +38,7 @@ return array(
             ),
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'tables' => array(
+        'shared' => __DIR__ . '/../src/Common/Table/Tables/',
         'config' => __DIR__ . '/../src/Common/Table/Tables/',
         'partials' => __DIR__ . '/../view/table/'
     ),
