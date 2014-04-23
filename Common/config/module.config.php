@@ -83,6 +83,8 @@ return array(
                 'Statement' => 'statement',
                 'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
+                'Application' => 'application',
+                'Vehicle' => 'vehicle',
                 'Address' => 'address'
             )
         )
