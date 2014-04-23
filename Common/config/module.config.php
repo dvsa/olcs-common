@@ -82,7 +82,7 @@ return array(
                 'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
                 'Application' => 'application',
-                'Vehicle' => 'vehicle'
+                'Vehicle' => 'vehicle',
                 'Address' => 'address'
             )
         )
