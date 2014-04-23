@@ -30,19 +30,21 @@ return array(
         ),
         array(
             'title' => 'Date of conviction',
-            'formatter' => function ($data) {
+            'formatter' => function ($data, $column) {
+
+                $column['formatter'] = 'Date';
                 return '<a href="' . $this->generateUrl(
                     array('case' => $data['id'], 'action' => 'edit'),
                     'conviction',
                     true
-                ) . '">' . date('d/m/Y', strtotime($data['dateOfConviction'])) . '</a>';
-            }
+                ) . '">' . $this->callFormatter($column, $data) . '</a>';
+            },
+            'name' => 'dateOfConviction'
         ),
         array(
             'title' => 'Date of offence',
-            'formatter' => function ($data) {
-                return date('d/m/Y', strtotime($data['dateOfOffence']));
-            }
+            'formatter' => 'Date',
+            'name' => 'dateOfOffence'
         ),
         array(
             'title' => 'Name / defendant type',
