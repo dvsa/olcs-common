@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-/vendor
-/composer.lock
-=======
 nbproject
 ._*
 .~lock.*
@@ -16,4 +12,3 @@ test/coverage-report
 config/autoload/local.php
 .sublime-project
 .sass-cache/
->>>>>>> d691642e4ae63935ba4d05954d66c870f931a9a9
