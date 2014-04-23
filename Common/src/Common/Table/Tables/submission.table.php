@@ -29,8 +29,11 @@ return array(
         ),
         array(
             'title' => 'Submission #',
-            'formatter' => function($row) {
-                return '<a href="' . $this->generateUrl(array('case' => $row['id'], 'tab' => 'overview'), 'case_manage') . '">' . $row['id'] . '</a>';
+            'formatter' => function ($row) {
+                return '<a href="' . $this->generateUrl(
+                    array('case' => $row['id'], 'tab' => 'overview'),
+                    'case_manage'
+                ) . '">' . $row['id'] . '</a>';
             }
         ),
         array(
@@ -43,13 +46,13 @@ return array(
         ),
         array(
             'title' => 'Date created',
-            'formatter' => function($row) {
+            'formatter' => function ($row) {
                 return date('d/m/Y', strtotime($row['createdOn']));
             }
         ),
         array(
             'title' => 'Date closed',
-            'formatter' => function($row) {
+            'formatter' => function ($row) {
                 return $row['dateClosed']!='' ? date('d/m/Y', strtotime($row['dateClosed'])) : '-';
             }
         ),

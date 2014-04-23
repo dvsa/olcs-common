@@ -29,8 +29,11 @@ return array(
         ),
         array(
             'title' => 'Case Number',
-            'formatter' => function($row) {
-                return '<a href="' . $this->generateUrl(array('case' => $row['id'], 'tab' => 'overview'), 'case_manage') . '">' . $row['caseNumber'] . '</a>';
+            'formatter' => function ($row) {
+                return '<a href="' . $this->generateUrl(
+                    array('case' => $row['id'], 'tab' => 'overview'),
+                    'case_manage'
+                ) . '">' . $row['caseNumber'] . '</a>';
             }
         ),
         array(
