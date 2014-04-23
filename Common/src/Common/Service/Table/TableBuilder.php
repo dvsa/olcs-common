@@ -799,8 +799,6 @@ class TableBuilder
     /**
      * Render a header column
      *
-     * @todo Add checks for sorting
-     *
      * @param array $column
      * @param string $wrapper
      * @return string

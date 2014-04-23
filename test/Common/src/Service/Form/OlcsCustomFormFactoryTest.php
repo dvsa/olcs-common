@@ -1,22 +1,24 @@
 <?php
+
 /**
  * Test custom form generator
- * Author: Michael Cooper
- * 
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
 
 namespace CommonTest\Controller;
+
 /**
  * @group form
  */
 class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     public function setUp()
     {
         $this->serviceManager = \OlcsTest\Bootstrap::getServiceManager();
         $this->customFormGenerator = $this->serviceManager->get('OlcsCustomForm');
-        
+
         $this->formConfig = [
             'testConfig' => [
                 'name' => 'testForm',
@@ -25,20 +27,20 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
                 ],
                 'fieldsets' => [
                     [
-                    'name' => 'search',
-                    'options' => [
-                        0
-                    ],
-                    'elements' => [
+                        'name' => 'search',
+                        'options' => [
+                            0
+                        ],
+                        'elements' => [
                             'compliance' => [
-                            'type' => 'multicheckbox',
-                            'label' => 'Compliance',
-                            'value_options' => 'case_categories_compliance',
-                            'required' => false,
-                            'class' => 'blah',
-                            'placeholder' => 'test text',
-                            'attributes' => [
-                                'value' => '10000'
+                                'type' => 'multicheckbox',
+                                'label' => 'Compliance',
+                                'value_options' => 'case_categories_compliance',
+                                'required' => false,
+                                'class' => 'blah',
+                                'placeholder' => 'test text',
+                                'attributes' => [
+                                    'value' => '10000'
                                 ]
                             ]
                         ]
@@ -52,7 +54,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        
+
         $this->blankFormConfig = [
             'testBlankForm' => [
                 'name' => 'blankForm',
@@ -60,7 +62,6 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
                     'method' => 'post',
                 ],
                 'fieldsets' => [],
-
                 'elements' => [
                     'submit' => [
                         'type' => 'submit',
@@ -70,7 +71,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ];
     }
-    
+
     /**
      * Generate a valid form
      */
@@ -81,21 +82,20 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(get_class($form) === 'Zend\Form\Form');
         $this->assertTrue($form->getName() === 'testForm');
     }
-    
     /**
      * Add a fieldset to a form config
      */
-    /*public function testAddFieldsetForm()
-    {
-        
-        $formConfig = $this->customFormGenerator->getFormConfig('licence_type');
-        $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'operator_type');
-        $this->customFormGenerator->setFormConfig(array('licence_type' => $formConfig));
-        $form = $this->customFormGenerator->createForm('licence_type');
-        $this->assertTrue(get_class($form) === 'Zend\Form\Form');
-        $this->assertTrue($form->getName() === 'blankForm');
-    }*/
-    
+    /* public function testAddFieldsetForm()
+      {
+
+      $formConfig = $this->customFormGenerator->getFormConfig('licence_type');
+      $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'operator_type');
+      $this->customFormGenerator->setFormConfig(array('licence_type' => $formConfig));
+      $form = $this->customFormGenerator->createForm('licence_type');
+      $this->assertTrue(get_class($form) === 'Zend\Form\Form');
+      $this->assertTrue($form->getName() === 'blankForm');
+      } */
+
     /**
      * Test for a form config that does not exist
      * @expectedException Exception
@@ -104,13 +104,13 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $form = $this->customFormGenerator->createForm('blahConfig');
     }
-    
-     /**
+
+    /**
      * Add a fieldset to a form config
-     ** @expectedException Exception
+     * * @expectedException Exception
      */
     public function testAddFieldsetException()
     {
-         $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'blahblah');
+        $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'blahblah');
     }
 }

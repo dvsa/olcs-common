@@ -30,19 +30,23 @@ return array(
         ),
         array(
             'title' => 'Date of conviction',
-            'formatter' => function($data) {
-                return '<a href="' . $this->generateUrl(array('case' => $data['id'], 'action' => 'edit'), 'conviction', true) . '">' . date('d/m/Y', strtotime($data['dateOfConviction'])) . '</a>';
+            'formatter' => function ($data) {
+                return '<a href="' . $this->generateUrl(
+                    array('case' => $data['id'], 'action' => 'edit'),
+                    'conviction',
+                    true
+                ) . '">' . date('d/m/Y', strtotime($data['dateOfConviction'])) . '</a>';
             }
         ),
         array(
             'title' => 'Date of offence',
-            'formatter' => function($data) {
+            'formatter' => function ($data) {
                 return date('d/m/Y', strtotime($data['dateOfOffence']));
             }
         ),
         array(
             'title' => 'Name / defendant type',
-            'formatter' => function($data) {
+            'formatter' => function ($data) {
                 $person = $data['personFirstname'] . ' ' . $data['personLastname'];
                 $organisationName = $data['operatorName'];
                 return ($organisationName == '') ? $person : $organisationName;

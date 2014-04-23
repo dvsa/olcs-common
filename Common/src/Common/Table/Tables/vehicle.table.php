@@ -29,16 +29,18 @@ return array(
         ),
         array(
             'title' => 'VRM',
-            'formatter' => function($row) {
-                return '<a href="' . $this->generateUrl(array('vehicleId' => $row['id'], 'tab' => 'overview'), 'selfserve/vehicle-edit') . '">' . $row['vrm'] . '</a>';
+            'formatter' => function ($row) {
+                return '<a href="' . $this->generateUrl(
+                    array('vehicleId' => $row['id'], 'tab' => 'overview'),
+                    'selfserve/vehicle-edit'
+                ) . '">' . $row['vrm'] . '</a>';
             }
         ),
         array(
             'title' => 'Gross plated weight (kg)',
-            'formatter' => function($row) {
+            'formatter' => function ($row) {
                 return $row['platedWeight'].' Kg';
             }
-            
         )
     )
 );

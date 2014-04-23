@@ -35,5 +35,4 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($table instanceof \Common\Service\Table\TableBuilder);
     }
-
 }
