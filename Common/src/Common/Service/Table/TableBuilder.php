@@ -419,7 +419,8 @@ class TableBuilder
      */
     public function loadConfig($name)
     {
-        if (!isset($this->applicationConfig['tables']['config'])) {
+        if (!isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])) {
             throw new \Exception('Table config location not defined');
         }
 
@@ -513,9 +514,20 @@ class TableBuilder
      */
     public function getConfigFromFile($name)
     {
-        $configFile = $this->applicationConfig['tables']['config'] . $name . '.table.php';
+        $found = false;
 
-        if (!file_exists($configFile)) {
+        foreach ($this->applicationConfig['tables']['config'] as $location) {
+
+            $configFile = $location . $name . '.table.php';
+
+            if (file_exists($configFile)) {
+
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
 
             throw new \Exception('Table configuration not found');
         }
