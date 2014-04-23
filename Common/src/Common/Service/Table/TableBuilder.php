@@ -156,6 +156,68 @@ class TableBuilder
     }
 
     /**
+     * Setter for type
+     *
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Set settings
+     *
+     * @param array $settings
+     */
+    public function setSettings($settings = array())
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * Setter for total
+     *
+     * @param int $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * Setter for rows
+     *
+     * @param array $rows
+     */
+    public function setRows($rows)
+    {
+        $this->rows = $rows;
+    }
+
+    /**
+     * Return a setting or the default
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getSetting($name, $default = null)
+    {
+        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
+    }
+
+    /**
+     * Setter for footer
+     *
+     * @param array $footer
+     */
+    public function setFooter($footer = array())
+    {
+        $this->footer = $footer;
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -188,18 +250,6 @@ class TableBuilder
         }
 
         return $this->paginationHelper;
-    }
-
-    /**
-     * Return a setting or the default
-     *
-     * @param string $name
-     * @param mixed $default
-     * @return mixed
-     */
-    public function getSetting($name, $default = null)
-    {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
     }
 
     /**
@@ -335,7 +385,7 @@ class TableBuilder
 
         $config = $this->getConfigFromFile($name);
 
-        $this->settings = isset($config['settings']) ? $config['settings'] : array();
+        $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
 
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
             $this->settings['paginate']['limit'] = array(
@@ -347,7 +397,7 @@ class TableBuilder
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->variables = isset($config['variables']) ? $config['variables'] : array();
-        $this->footer = isset($config['footer']) ? $config['footer'] : array();
+        $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
         return true;
     }
@@ -359,8 +409,8 @@ class TableBuilder
      */
     public function loadData($data = array())
     {
-        $this->rows = isset($data['Results']) ? $data['Results'] : $data;
-        $this->total = isset($data['Count']) ? $data['Count'] : count($this->rows);
+        $this->setRows(isset($data['Results']) ? $data['Results'] : $data);
+        $this->setTotal(isset($data['Count']) ? $data['Count'] : count($this->rows));
     }
 
     /**
@@ -489,7 +539,7 @@ class TableBuilder
      * @param array $columns
      * @return string
      */
-    public function renderTableFooterColumns($columns)
+    private function renderTableFooterColumns($columns)
     {
         $content = '';
 
@@ -509,19 +559,19 @@ class TableBuilder
     {
         if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
 
-            $this->type = self::TYPE_HYBRID;
+            $this->setType(self::TYPE_HYBRID);
             return $this->renderLayout('crud');
         }
 
         if (isset($this->settings['crud'])) {
 
-            $this->type = self::TYPE_CRUD;
+            $this->setType(self::TYPE_CRUD);
             return $this->renderLayout('crud');
         }
 
         if (isset($this->settings['paginate'])) {
 
-            $this->type = self::TYPE_PAGINATE;
+            $this->setType(self::TYPE_PAGINATE);
         }
 
         return $this->renderLayout('default');
@@ -812,21 +862,6 @@ class TableBuilder
         }
 
         return '';
-    }
-    /**
-     * Render pagination
-     *
-     * @return string
-     */
-    public function renderPagination()
-    {
-        if ($this->getSetting('paginate', false) !== false) {
-
-            return '';
-        } else {
-
-            return $this->renderLayout('pagination');
-        }
     }
 
     /**

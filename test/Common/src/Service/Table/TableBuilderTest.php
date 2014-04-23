@@ -17,6 +17,7 @@ use Common\Service\Table\TableBuilder;
  */
 class TableBuilderTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * Get Mock Table Builder
      */
@@ -103,13 +104,12 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testBuildTable()
     {
         $table = $this->getMock(
-            '\Common\Service\Table\TableBuilder',
-            array(
-                'loadConfig',
-                'loadData',
-                'loadParams',
-                'setupAction',
-                'render'
+            '\Common\Service\Table\TableBuilder', array(
+            'loadConfig',
+            'loadData',
+            'loadParams',
+            'setupAction',
+            'render'
             )
         );
 
@@ -150,7 +150,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testLoadConfigWithEmptyArray()
     {
         $tableConfig = array(
-
         );
 
         $table = $this->getMockTableBuilder(array('getConfigFromFile'));
@@ -299,7 +298,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testLoadParamsWithoutUrl()
     {
         $params = array(
-
         );
 
         $table = new TableBuilder();
@@ -448,5 +446,481 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockContentHelper));
 
         $this->assertEquals('MORE HTML', $table->render());
+    }
+
+    /**
+     * Test renderTableFooter without footer
+     */
+    public function testRenderTableFooterWithoutFooter()
+    {
+        $table = new TableBuilder();
+
+        $this->assertEquals('', $table->renderTableFooter());
+    }
+
+    /**
+     * Test renderTableFooter
+     */
+    public function testRenderTableFooter()
+    {
+        $footer = array(
+            array(
+                'type' => 'th',
+                'colspan' => 2,
+                'formatter' => function ($data) {
+                    return 'ABC';
+                }
+            ),
+            array(
+                'format' => 'HTML'
+            )
+        );
+
+        $table = $this->getMock(
+            '\Common\Service\Table\TableBuilder',
+            array('getContentHelper'),
+            array(array('tables' => array('partials' => __DIR__ . '/TestResources/')))
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->will(
+                $this->returnCallback(
+                    function ($string, $vars) {
+                        return $string;
+                    }
+                )
+            );
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setFooter($footer);
+
+        $this->assertEquals('{{[elements/tableFooter]}}', $table->renderTableFooter());
+    }
+
+    /**
+     * Test renderTable For Hybrid
+     */
+    public function testRenderTableForHybrid()
+    {
+        $settings = array(
+            'crud' => 'foo',
+            'paginate' => 'bar'
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_HYBRID);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('crud');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
+     * Test renderTable For Crud
+     */
+    public function testRenderTableForCrud()
+    {
+        $settings = array(
+            'crud' => 'foo'
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_CRUD);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('crud');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
+     * Test renderTable For pagination
+     */
+    public function testRenderTableForPagination()
+    {
+        $settings = array(
+            'paginate' => 'foo'
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_PAGINATE);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('default');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
+     * Test renderLayout
+     */
+    public function testRenderLayout()
+    {
+        $name = 'foo';
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $mockContentHelper = $this->getMock('\stdClass', array('renderLayout'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('renderLayout')
+            ->with($name)
+            ->will($this->returnValue($name));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $this->assertEquals($name, $table->renderLayout($name));
+    }
+
+    /**
+     * Test renderTotal Without pagination
+     */
+    public function testRenderTotalWithoutPagination()
+    {
+        $table = new TableBuilder();
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $this->assertEquals('', $table->renderTotal());
+    }
+
+    /**
+     * Test renderTotal With pagination
+     */
+    public function testRenderTotalWithPagination()
+    {
+        $total = 10;
+
+        $expectedTotal = $total . ' results';
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
+            ->will($this->returnValue($expectedTotal));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_PAGINATE);
+
+        $table->setTotal($total);
+
+        $this->assertEquals($expectedTotal, $table->renderTotal());
+    }
+
+    /**
+     * Test renderTotal With pagination With 1 result
+     */
+    public function testRenderTotalWithPaginationWith1()
+    {
+        $total = 1;
+
+        $expectedTotal = $total . ' result';
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
+            ->will($this->returnValue($expectedTotal));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_PAGINATE);
+
+        $table->setTotal($total);
+
+        $this->assertEquals($expectedTotal, $table->renderTotal());
+    }
+
+    /**
+     * Test renderActions With Pagination
+     */
+    public function testRenderActionsWithoutCrud()
+    {
+        $table = new TableBuilder();
+
+        $table->setType(TableBuilder::TYPE_PAGINATE);
+
+        $this->assertEquals('', $table->renderActions());
+    }
+
+    /**
+     * Test renderActions without actions
+     */
+    public function testRenderActionsWithoutActions()
+    {
+        $settings = array(
+            'crud' => array(
+            )
+        );
+
+        $table = new TableBuilder();
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals('', $table->renderActions());
+    }
+
+    /**
+     * Test renderActions with trimmed actions
+     */
+    public function testRenderActionsWithTrimmedActions()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'add' => array('requireRows' => true)
+                )
+            )
+        );
+
+        $table = new TableBuilder();
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals('', $table->renderActions());
+    }
+
+    /**
+     * Test renderActions
+     */
+    public function testRenderActions()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'add' => array(),
+                    'edit' => array()
+                )
+            )
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderButtonActions'));
+
+        $table->expects($this->once())
+            ->method('renderButtonActions')
+            ->will($this->returnValue('BUTTONS'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'BUTTONS'), $table->renderActions());
+    }
+
+    /**
+     * Test renderActions With Dropdown
+     */
+    public function testRenderActionsWithDropdown()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'add' => array(),
+                    'edit' => array(),
+                    'foo' => array(),
+                    'bar' => array()
+                )
+            )
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderDropdownActions'));
+
+        $table->expects($this->once())
+            ->method('renderDropdownActions')
+            ->will($this->returnValue('BUTTONS'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'BUTTONS'), $table->renderActions());
+    }
+
+    /**
+     * Test renderAttributes
+     */
+    public function testRenderAttributes()
+    {
+        $attributes = array();
+
+        $mockContentHelper = $this->getMock('\stdClass', array('renderAttributes'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('renderAttributes')
+            ->with($attributes);
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderAttributes($attributes);
+    }
+
+    /**
+     * Test renderAttributes without attributes
+     */
+    public function testRenderAttributesWithoutAttributes()
+    {
+        $mockContentHelper = $this->getMock('\stdClass', array('renderAttributes'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('renderAttributes')
+            ->with(array());
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderAttributes();
+    }
+
+    /**
+     * Test renderDropdownActions
+     */
+    public function testRenderDropdownActions()
+    {
+        $actions = array(
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'foo' => 'bar'
+            )
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/actionOption]}}');
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/actionOption]}}');
+
+        $mockContentHelper->expects($this->at(2))
+            ->method('replaceContent')
+            ->with('{{[elements/actionSelect]}}');
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderDropdownActions($actions);
+    }
+
+    /**
+     * Test renderButtonActions
+     */
+    public function testRenderButtonActions()
+    {
+        $actions = array(
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'foo' => 'bar'
+            )
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}');
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/actionButton]}}');
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderButtonActions($actions);
     }
 }
