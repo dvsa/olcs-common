@@ -1,8 +1,8 @@
 <?php
-return 
-[    
+
+return [
     'name' => 'licence-type-ni',
-    'elements' => 
+    'elements' =>
     [
         'licence_type' => [
             'type' => 'radio',
@@ -10,7 +10,7 @@ return
             'value_options' => 'licence_types',
             'options' => [
                 'label' => 'Licence Type',
-                'next_step' => 
+                'next_step' =>
                 [
                     'goods' => 'licence-type',
                     'psv' => 'licence-type-psv'
@@ -27,10 +27,9 @@ return
     ],
     'options' => [
         'label' => 'Licence type',
-        'next_step' => 
+        'next_step' =>
         [
             'default' => 'complete'
         ]
-    ],
+    ]
 ];
-

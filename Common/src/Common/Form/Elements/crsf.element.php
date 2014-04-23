@@ -1,8 +1,8 @@
 <?php
-return ['crsf' =>
-    [
+
+return [
+    'crsf' => [
         'type' => 'Zend\Form\Element\Csrf',
-        'name' => 'security',
+        'name' => 'security'
     ]
 ];
-
