@@ -24,7 +24,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     private function getMockTableBuilder($methods = array())
     {
         $applicationConfig = array(
-            'tables' => array('config' => __DIR__ . '/TestResources/')
+            'tables' => array('config' => array(__DIR__ . '/TestResources/'))
         );
 
         return $this->getMock('\Common\Service\Table\TableBuilder', $methods, array($applicationConfig));
@@ -79,7 +79,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfigFromFile()
     {
-        $table = new TableBuilder(array('tables' => array('config' => __DIR__ . '/TestResources/')));
+        $table = new TableBuilder(array('tables' => array('config' => array(__DIR__ . '/TestResources/'))));
 
         $config = $table->getConfigFromFile('sample');
 
@@ -93,7 +93,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfigFromFileWithMissingFile()
     {
-        $table = new TableBuilder(array('tables' => array('config' => __DIR__ . '/TestResources/')));
+        $table = new TableBuilder(array('tables' => array('config' => array(__DIR__ . '/TestResources/'))));
 
         $table->getConfigFromFile('DoesntExist');
     }
