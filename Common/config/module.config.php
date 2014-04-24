@@ -75,6 +75,8 @@ return array(
                 'LicenceOrganisation' => 'licence-organisation',
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
+                'Application' => 'application',
+                'ApplicationOperatingCentre' => 'application-operating-centre',
                 'LicenceVehicle' => 'licence-vehicle',
                 'Submission' => 'submission',
                 'SubmissionAction' => 'submission-action',
