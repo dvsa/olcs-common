@@ -32,6 +32,9 @@ return [
             ]
         ],
         'elements' => [
+            'licence' => [
+                'type' => 'hidden'
+            ],
             'case' => [
                 'type' => 'hidden'
             ],
