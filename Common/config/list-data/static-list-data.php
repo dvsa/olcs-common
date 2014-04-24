@@ -92,6 +92,13 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
+    'vehicle_body_types' => 
+    [
+        'vhl_body_type.flat' => 'Flat sided or skeletal',
+        'vhl_body_type.box' => 'Box body, or van, or curtain side',
+        'vhl_body_type.tanker' => 'Tanker',
+        'vhl_body_type.other' => 'Other type (such as cement mixer, livestock carrier)'
+    ],
     'statement_types' =>
     [
         'statement_type.1' => 'Section 43',
