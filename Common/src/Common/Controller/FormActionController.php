@@ -1,17 +1,20 @@
 <?php
 
 /**
- * An abstract controller that all ordinary OLCS controllers inherit from
+ * An abstract form controller that all ordinary OLCS controllers inherit from
  *
- * @package     olcscommon
- * @subpackage  controller
- * @author      Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Shaun <shaun.lizzio@valtech.co.uk>
  */
 
 namespace Common\Controller;
 
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-
+/**
+ * An abstract form controller that all ordinary OLCS controllers inherit from
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Shaun <shaun.lizzio@valtech.co.uk>
+ */
 abstract class FormActionController extends AbstractActionController
 {
 
@@ -37,7 +40,7 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback, $additionalParams = array())
+    protected function formPost($form, $callback=null, $additionalParams = array())
     {
 
         if ($this->getRequest()->isPost()) {
@@ -52,12 +55,12 @@ abstract class FormActionController extends AbstractActionController
                 ];
 
                 $params = array_merge($params, $this->getCallbackData());
-
-                if (is_callable($callback)) {
-                    $callback($params);
+                if (!empty($callback)) {
+                    if (is_callable($callback)) {
+                        $callback($params);
+                    }
+                    call_user_func_array(array($this, $callback), $params);
                 }
-
-                call_user_func_array(array($this, $callback), $params);
             }
         }
         return $form;
@@ -95,11 +98,16 @@ abstract class FormActionController extends AbstractActionController
      * @param mixed $data
      * @return object
      */
-    protected function generateFormWithData($name, $callback, $data = null)
+    public function generateFormWithData($name, $callback, $data = null, $edit = false)
     {
         $form = $this->generateForm($name, $callback);
 
-        if (is_array($data)) {
+        if ($edit && $this->getRequest()->isPost()) {
+
+            $form->setData($this->getRequest()->getPost());
+
+        } elseif (is_array($data)) {
+
             $form->setData($data);
         }
 
@@ -109,7 +117,7 @@ abstract class FormActionController extends AbstractActionController
     /**
      * Generate form from GET call
      *
-     * @todo Need to do something with $return to format the data
+     * @todo Maybe need to do something with $return to format the data
      *
      * @param string $name
      * @param callable $callback
@@ -127,15 +135,21 @@ abstract class FormActionController extends AbstractActionController
 
     protected function processAdd($data, $entityName)
     {
-        $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        $data = $this->trimFormFields($data);
+
         return $this->makeRestCall($entityName, 'POST', $data);
     }
 
     protected function processEdit($data, $entityName)
     {
-        $data = $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        $data = $this->trimFormFields($data);
 
         return $this->makeRestCall($entityName, 'PUT', $data);
+    }
+
+    protected function trimFormFields($data)
+    {
+        return $this->trimFields($data, array('crsf', 'submit', 'fields'));
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())
@@ -145,6 +159,27 @@ abstract class FormActionController extends AbstractActionController
                 unset($data[$field]);
             }
         }
+
+        return $data;
+    }
+
+    /**
+     * Find the address fields and process them accordingly
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function processAddressData($data, $addressName = 'address')
+    {
+        if (!isset($data['addresses'])) {
+            $data['addresses'] = array();
+        }
+
+        $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
+
+        $data['addresses'][$addressName] = $data[$addressName];
+
+        unset($data[$addressName]);
 
         return $data;
     }

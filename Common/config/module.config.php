@@ -38,7 +38,9 @@ return array(
             ),
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'tables' => array(
-        'config' => __DIR__ . '/../src/Common/Table/Tables/',
+        'config' => array(
+            __DIR__ . '/../src/Common/Table/Tables/'
+        ),
         'partials' => __DIR__ . '/../view/table/'
     ),
     'sic_codes_path' => __DIR__ .'/../../Common/config/sic-codes',
@@ -73,9 +75,20 @@ return array(
                 'LicenceOrganisation' => 'licence-organisation',
                 'TrafficArea' => 'traffic-area',
                 'Organisation' => 'organisation',
+                'Application' => 'application',
+                'ApplicationOperatingCentre' => 'application-operating-centre',
+                'LicenceVehicle' => 'licence-vehicle',
                 'Submission' => 'submission',
+                'SubmissionAction' => 'submission-action',
+                'SubmissionActionStatus' => 'submission-action-status',
+                'SubmissionActionStatusType' => 'submission-action-status-type',
                 'Statement' => 'statement',
+                'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
+                'ApplicationOperatingCentre' => 'application-operating-centre',
+                'Application' => 'application',
+                'Vehicle' => 'vehicle',
+                'Address' => 'address'
             )
         )
     )

@@ -9,6 +9,12 @@
     <filter>
         <whitelist>
             <directory suffix=".php">../Common/src</directory>
+            <exclude>
+                <directory>../Common/src/Common/Form/Forms/</directory>
+                <directory>../Common/src/Common/Form/Fieldsets/*.fieldset.php</directory>
+                <directory>../Common/src/Common/Form/Elements/*.element.php</directory>
+                <directory>../Common/src/Common/Table/Tables/</directory>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
