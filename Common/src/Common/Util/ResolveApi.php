@@ -43,7 +43,6 @@ class ResolveApi
      * @return RestClient
      * @throws Exception
      */
-    
     public function getClient($api)
     {
         if (isset($this->mapping[$api])) {
@@ -60,7 +59,6 @@ class ResolveApi
             $apiPath = $this->camelCaseApiPath($apiPath);
             $url = $this->getFullApiPath($baseUrl, $apiPath);
         }
-
         return new RestClient($url);
     }
     
