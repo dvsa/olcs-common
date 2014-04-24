@@ -88,6 +88,7 @@ return array(
                 'ApplicationOperatingCentre' => 'application-operating-centre',
                 'Application' => 'application',
                 'Vehicle' => 'vehicle',
+                'Stay' => 'stay',
                 'Address' => 'address'
             )
         )
