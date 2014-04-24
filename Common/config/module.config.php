@@ -85,6 +85,7 @@ return array(
                 'Statement' => 'statement',
                 'Appeal' => 'appeal',
                 'Conviction' => 'conviction',
+                'ApplicationOperatingCentre' => 'application-operating-centre',
                 'Application' => 'application',
                 'Vehicle' => 'vehicle',
                 'Address' => 'address'
