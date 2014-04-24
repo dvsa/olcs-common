@@ -43,6 +43,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
             array(array('date' => '2013-12-31'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '31/12/2013'),
             array(array('date' => '2013-12-31'), array('dateformat' => 'Y', 'name' => 'date'), '2013'),
             array(array('date' => '2013-12-31'), array('name' => 'date'), '31/12/2013'),
+            array(array('someDate' => array('date' => '2013-12-31')), array('name' => 'someDate'), '31/12/2013'),
             array(array('date' => null), array('name' => 'date'), ''),
             array(array(), array('name' => 'date'), '')
         );

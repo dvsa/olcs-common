@@ -96,6 +96,13 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
+    'vehicle_body_types' => 
+    [
+        'vhl_body_type.flat' => 'Flat sided or skeletal',
+        'vhl_body_type.box' => 'Box body, or van, or curtain side',
+        'vhl_body_type.tanker' => 'Tanker',
+        'vhl_body_type.other' => 'Other type (such as cement mixer, livestock carrier)'
+    ],
     'statement_types' =>
     [
         'statement_type.1' => 'Section 43',
@@ -359,5 +366,17 @@ return array(
         'country.YE' => 'Yemen',
         'country.ZM' => 'Zambia',
         'country.ZW' => 'Zimbabwe'
+    ],
+    'appeal_reasons' => [
+        'appeal_reason.1' => 'Application',
+        'appeal_reason.2' => 'Disciplinary PI',
+        'appeal_reason.3' => 'Disciplinary Non PI',
+        'appeal_reason.4' => 'Impounding'
+    ],
+    'appeal_outcomes' => [
+        'appeal_outcome.1' => 'Successful',
+        'appeal_outcome.2' => 'Partially Successful',
+        'appeal_outcome.3' => 'Dismissed',
+        'appeal_outcome.4' => 'Refer back to TC'
     ]
 );
