@@ -65,9 +65,6 @@ return array(
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
             ),
-            'backend' => array(
-                'VosaCase' => 'vosa-case',
-            )
         )
     )
      //-------- End service API mappings -----------------
