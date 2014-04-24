@@ -27,5 +27,4 @@ class TableFactory implements FactoryInterface
     {
         return new TableBuilder($serviceLocator->get('Config'));
     }
-
 }

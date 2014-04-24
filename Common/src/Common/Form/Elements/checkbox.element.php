@@ -1,15 +1,16 @@
 <?php
 return ['checkbox' =>
         [
-            'type' => '\Common\Form\Elements\InputFilters\Checkbox',
+            'type' => '\Zend\Form\Element\Checkbox',
             'name' => '',
             'options' => [
                 'label' => '',
                 'value_options' => [],
-                'help-block' => 'Please tick',
+                'help-block' => 'Please choose',
             ],
             'attributes' => [
+                'id' => '',
+                'placeholder' => '',
             ]
         ]
     ];
-

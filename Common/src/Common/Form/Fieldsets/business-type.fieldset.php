@@ -1,6 +1,6 @@
 <?php
-return
-[    
+
+return [
     'name' => 'business-type',
     'elements' =>
     [
@@ -16,10 +16,10 @@ return
             'value_options' => 'business_types',
         ]
     ],
-    'options' => 
+    'options' =>
     [
         'label' => 'Business type',
-        'next_step' => 
+        'next_step' =>
         [
             'values' => [
                 'org_type.rc' => 'registered-company',
@@ -27,8 +27,9 @@ return
                 'org_type.p' => 'partnership',
                 'org_type.llp' => 'llp',
                 'org_type.pa' => 'public-authority',
+                'org_type.o' => 'other',
             ],
             'default' => 'complete',
         ]
-    ],
+    ]
 ];

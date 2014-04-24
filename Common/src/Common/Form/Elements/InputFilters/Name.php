@@ -20,13 +20,13 @@ class Name extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => true,
+            'required' => false,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim'],
                 ['name' => 'Zend\Filter\StringToLower'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 100]),
+                new ZendValidator\StringLength(['min' => 2, 'max' => 45]),
             ]
         ];
 
