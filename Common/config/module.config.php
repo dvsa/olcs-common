@@ -64,7 +64,7 @@ return array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
-            ),
+            )
         )
     )
      //-------- End service API mappings -----------------

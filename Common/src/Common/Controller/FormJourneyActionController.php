@@ -83,8 +83,10 @@ abstract class FormJourneyActionController extends FormActionController
     {
         $step = $this->getCurrentStep();
         $section = $this->getCurrentSection();
-        $formConfig[$section] = $formGenerator->addFieldset($formConfig[$section], $step);
-
+        if (isset($formConfig[$section]['fieldsets'])) 
+        {
+            $formConfig[$section] = $formGenerator->addFieldset($formConfig[$section], $step);
+        }
         return $formConfig;
     }
 
@@ -294,8 +296,9 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function _getLicenceEntity()
     {
-        $licenceId = (int) $this->params()->fromRoute('licenceId');
-        return $this->makeRestCall('Licence', 'GET', array('id' => $licenceId));
+        $applicationId = (int) $this->params()->fromRoute('applicationId');
+        $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId));
+        return $this->makeRestCall('Licence', 'GET', array('id' => $application['licence']));
     }
     
 }
