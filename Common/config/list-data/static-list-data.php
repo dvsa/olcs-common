@@ -96,7 +96,7 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
-    'vehicle_body_types' => 
+    'vehicle_body_types' =>
     [
         'vhl_body_type.flat' => 'Flat sided or skeletal',
         'vhl_body_type.box' => 'Box body, or van, or curtain side',
@@ -378,5 +378,41 @@ return array(
         'appeal_outcome.2' => 'Partially Successful',
         'appeal_outcome.3' => 'Dismissed',
         'appeal_outcome.4' => 'Refer back to TC'
+    ],
+    'inspection_interval_vehicle' => [
+        'inspection_interval_vehicle.1' => '1 {Week}',
+        'inspection_interval_vehicle.2' => '2 {Weeks}',
+        'inspection_interval_vehicle.3' => '3 {Weeks}',
+        'inspection_interval_vehicle.4' => '4 {Weeks}',
+        'inspection_interval_vehicle.5' => '5 {Weeks}',
+        'inspection_interval_vehicle.6' => '6 {Weeks}',
+        'inspection_interval_vehicle.7' => '7 {Weeks}',
+        'inspection_interval_vehicle.8' => '8 {Weeks}',
+        'inspection_interval_vehicle.9' => '9 {Weeks}',
+        'inspection_interval_vehicle.10' => '10 {Weeks}',
+        'inspection_interval_vehicle.11' => '11 {Weeks}',
+        'inspection_interval_vehicle.12' => '12 {Weeks}',
+        'inspection_interval_vehicle.13' => '13 {Weeks}'
+    ],
+    'inspection_interval_trailer' => [
+        'inspection_interval_trailer.1' => '1 {Week}',
+        'inspection_interval_trailer.2' => '2 {Weeks}',
+        'inspection_interval_trailer.3' => '3 {Weeks}',
+        'inspection_interval_trailer.4' => '4 {Weeks}',
+        'inspection_interval_trailer.5' => '5 {Weeks}',
+        'inspection_interval_trailer.6' => '6 {Weeks}',
+        'inspection_interval_trailer.7' => '7 {Weeks}',
+        'inspection_interval_trailer.8' => '8 {Weeks}',
+        'inspection_interval_trailer.9' => '9 {Weeks}',
+        'inspection_interval_trailer.10' => '10 {Weeks}',
+        'inspection_interval_trailer.11' => '11 {Weeks}',
+        'inspection_interval_trailer.12' => '12 {Weeks}',
+        'inspection_interval_trailer.13' => '13 {Weeks}',
+        'inspection_interval_trailer.0' => 'N/A'
+    ],
+    'tachograph_analyser' => [
+        'tachograph_analyser.1' => 'tachographAnalyser-yourself',
+        'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
+        'tachograph_analyser.3' => 'N/A',
     ]
 );

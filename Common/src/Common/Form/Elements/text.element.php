@@ -11,6 +11,8 @@ return [
         'attributes' => [
             'class' => '',
             'id' => ''
+        ],
+        'validators' => [
         ]
     ]
 ];

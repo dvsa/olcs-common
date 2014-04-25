@@ -26,16 +26,6 @@ return array(
            'partials/view' => __DIR__ . '/../view'
         )
     ),
-    'translator' => array(
-        'locale' => 'en_US',
-        'translation_file_patterns' => array(
-            array(
-                'type'     => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo'
-            )
-        )
-            ),
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'tables' => array(
         'config' => array(

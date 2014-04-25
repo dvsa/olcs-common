@@ -32,7 +32,7 @@ class OlcsCustomFormFactory extends Factory
      *
      * @var array
      */
-    private $elementsWithValueOptions = array('select', 'selectDisabled', 'multicheckbox', 'radio');
+    private $elementsWithValueOptions = array('select', 'selectDisabled', 'multicheckbox', 'radio', 'yesNoRadio');
 
     /**
      * Holds for form config
@@ -193,6 +193,17 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['class'] = $element['class'];
         }
 
+        if (isset($element['validators'])) {
+            $newElement['spec']['options']['validators'] = $element['validators'];
+        }
+
+        if (isset($element['additional_validators'])) {
+            if (!is_array($newElement['spec']['validators'])) {
+                $newElement['spec']['options']['validators'] = array();
+            }
+            $newElement['spec']['options']['validators'][] = $element['additional_validators'];
+        }
+
         if (isset($element['label'])) {
             $newElement['spec']['options']['label'] = $element['label'];
         }
@@ -201,7 +212,9 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['placeholder'] = $element['placeholder'];
         }
 
-        if (isset($element['type']) && in_array($element['type'], $this->elementsWithValueOptions) && isset($element['value_options'])) {
+        if (isset($element['type'])
+            && in_array($element['type'], $this->elementsWithValueOptions)
+            && isset($element['value_options'])) {
 
             if (is_array($element['value_options'])) {
                 // use array as options
@@ -209,8 +222,16 @@ class OlcsCustomFormFactory extends Factory
             }
             if (is_string($element['value_options'])) {
                 // use string to look up in static-list-data
-                $newElement['spec']['options']['value_options'] = $this->config['static-list-data'][$element['value_options']];
+                $newElement['spec']['options']['value_options'] = $this->getListValues($element['value_options']);
             }
+        }
+
+        if (isset($newElement['spec']['options']['value_options'])
+            && is_string($newElement['spec']['options']['value_options'])) {
+
+            $newElement['spec']['options']['value_options'] = $this->getListValues(
+                $newElement['spec']['options']['value_options']
+            );
         }
 
         // input for hidden values
@@ -220,6 +241,17 @@ class OlcsCustomFormFactory extends Factory
         }
 
         return $newElement;
+    }
+
+    /**
+     * Return the list values
+     *
+     * @param string $name
+     * @return array
+     */
+    private function getListValues($name)
+    {
+        return isset($this->config['static-list-data'][$name]) ? $this->config['static-list-data'][$name] : array();
     }
 
     /**
