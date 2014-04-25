@@ -17,6 +17,15 @@ use Zend\Validator\AbstractValidator;
 class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidator
 {
     /**
+     * Message templates
+     *
+     * @var array
+     */
+    protected $messageTemplates = array(
+        'required' => 'Value is required and can\'t be empty'
+    );
+
+    /**
      * Custom validation for tachograph analyser
      *
      * @param mixed $value
@@ -24,10 +33,14 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      */
     public function isValid($value, $context = null)
     {
-        $this->error($value);
-        print '<pre>';
-        print_r($context);
-        print '</pre>';
-        return false;
+        if ($context['tachographAnalyser'] === 'tachograph_analyser.2'
+            && trim($context['tachographAnalyserContractor']) === '') {
+
+            $this->error('required');
+
+            return false;
+        }
+
+        return true;
     }
 }

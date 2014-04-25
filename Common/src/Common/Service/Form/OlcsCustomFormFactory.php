@@ -193,17 +193,6 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['class'] = $element['class'];
         }
 
-        if (isset($element['validators'])) {
-            $newElement['spec']['options']['validators'] = $element['validators'];
-        }
-
-        if (isset($element['additional_validators'])) {
-            if (!is_array($newElement['spec']['validators'])) {
-                $newElement['spec']['options']['validators'] = array();
-            }
-            $newElement['spec']['options']['validators'][] = $element['additional_validators'];
-        }
-
         if (isset($element['label'])) {
             $newElement['spec']['options']['label'] = $element['label'];
         }
