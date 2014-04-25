@@ -31,11 +31,15 @@ trait RestCallTrait
      * @param string $method
      * @param mixed $data
      */
-    protected function makeRestCall($service, $method, $data)
+    protected function makeRestCall($service, $method, array $data, array $bundle = null)
     {
         $method = strtoupper($method);
         $serviceMethod = strtolower($method);
         $path = '';
+
+        if (!empty($bundle)) {
+            $data['bundle'] = json_encode($bundle);
+        }
 
         switch ($method) {
             case 'GET':
