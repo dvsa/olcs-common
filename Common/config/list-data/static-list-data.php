@@ -50,6 +50,10 @@ return array(
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'Proposal to revoke'
     ),
+    'case_stay_outcome' => [
+        'stay_status_granted' => 'Granted',
+        'stay_status_refused' => 'Refused'
+    ],
     'operator_locations' => [
         'uk' => 'Great Britain',
         'ni' => 'Northern Ireland'
