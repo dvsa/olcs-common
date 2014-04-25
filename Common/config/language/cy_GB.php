@@ -1,6 +1,5 @@
 <?php
-return 
-array(
+return array(
     'testProperty' => "W the test",
     'testPropertyPlaceHolder' => "W test @placeHolder is @here",
     'licence-number' => "W Licence #",
@@ -23,7 +22,7 @@ array(
     'layout-footer' => "W All rights Reserved.",
     'lookup-basic-search-submit' => "W Search",
     'lookup-advance-search-submit' => "W Search",
-    'new-case-header' => "W New case associated with %s, licence #%s", 
+    'new-case-header' => "W New case associated with %s, licence #%s",
     'new-case-categories-header' => "W Select one or more categories",
     'case-summary' => "W Case summary",
     'ecms-number' => "W ECMS #",
@@ -305,6 +304,24 @@ array(
     'driver' => "W Driver",
     'transport-manager' => "W Transport Manager",
     'please-select' => "W Please select",
-   
+    
+     // Submissions text
+    'objections' => 'W Objections',
+    'previous-history' => 'W Previous history',
+    'operating-centre' => 'W Operating centre',
+    'representations' => 'W Representations',
+    'environmental' => 'W Environmental',
+    'annual-test-history' => 'W Annual test history',
+    'prohibition-history' => 'W Prohibition history',
+    'bus-services-registered' => 'W Bus services registered',
+    'bus-compliance-issues' => 'W Bus compliance issues',
+    'current-submission' => 'W Current submission',
+    'conditions' => 'W Conditions',
+    'undertakings' => 'W Undertakings',
+    'outstanding-applications' => 'W Outstanding applications',
+    'persons' => 'W Person Information',
+    'transport-managers' => "W Transport Managers",
+    'case-summary-info' => 'W Case summary information',
+    'case-submission' => 'W Case submission',
+    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
 );
-?>
