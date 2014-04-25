@@ -888,6 +888,30 @@ class TableBuilder
     }
 
     /**
+     * Render extra rows
+     */
+    public function renderExtraRows()
+    {
+        $content = '';
+
+        if (count($this->getRows()) === 0) {
+
+            $columns = $this->getColumns();
+
+            $vars = array(
+                'colspan' => count($columns),
+                'message' => isset($this->variables['empty_message'])
+                    ? $this->variables['empty_message']
+                    : 'The table is empty'
+            );
+
+            $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
+        }
+
+        return $content;
+    }
+
+    /**
      * Process the formatter
      *
      * @param array $column
