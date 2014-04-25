@@ -425,7 +425,7 @@ class TableBuilder
         }
 
         $config = $this->getConfigFromFile($name);
-
+//print_r($config);
         $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
 
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
@@ -490,7 +490,7 @@ class TableBuilder
     public function setupAction()
     {
         if (!isset($this->getVariables()['action'])) {
-
+            $this->variables['hidden'] = isset($this->settings['crud']['formName']) ? $this->settings['crud']['formName'] : 'default';
             $this->variables['action'] = $this->generateUrl();
         }
     }
