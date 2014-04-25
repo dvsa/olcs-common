@@ -305,6 +305,9 @@ array(
     'driver' => "W Driver",
     'transport-manager' => "W Transport Manager",
     'please-select' => "W Please select",
+    
+    'case-submission' => 'W Case submission',
+    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
    
 );
 ?>

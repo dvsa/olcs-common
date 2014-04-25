@@ -315,6 +315,9 @@ array(
     // Other Entity Type new application
     'other-details-header' => 'Other Details',
     'other-form-label-operator-name' => 'Operator name',
+    
+    'case-submission' => 'Case submission',
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
 
 );
 ?>
