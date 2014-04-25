@@ -44,14 +44,14 @@ return [
                             'not_checked_message' => 'You must confirm that you have permission to use the premisses to park the number of vehicles & trailers stated',
                         ],
                     ],
-                    'ad-placed' => [
-                        'type' => 'checkbox',
-                        'label' => 'Advertised',
-                    ],
                 ]
             ],
         ],
         'elements' => [
+            'ad-placed' => [
+                'type' => 'checkbox',
+                'label' => 'Advertised',
+            ],
             'version' => [
                 'type' => 'hidden',
             ],
