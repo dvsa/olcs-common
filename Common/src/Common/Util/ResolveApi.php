@@ -1,7 +1,7 @@
 <?php
 /**
  * Resolves API names to API URL:s
- * @notes   If a mapping exists in the module.config.php the base url 
+ * If a mapping exists in the module.config.php the base url 
  * and api path will be taken from that.
  * If no mapping exists and the api ref. is in the format [baseurl]\[path] then the
  * [baseurl] will be used to get the end point and the path will be camel cased to dashes
