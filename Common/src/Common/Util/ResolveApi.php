@@ -8,7 +8,7 @@
  * eg. LicenceVehicle to licence-vehicle.
  * If there is a path only eg. LicenceVehicle then the baseurl will default to backend
  *
- * @package     olcscommon
+ * @package     OlcsCommon
  * @subpackage  Util
  * @author      Mike Cooper
  */
@@ -48,7 +48,7 @@ class ResolveApi
         if (isset($this->mapping[$api])) {
             $url = $this->getFullApiPath($this->mapping[$api]['baseUrl'], $this->mapping[$api]['path']);
         } else {
-            if(preg_match('%.+\\\.+%', $api)) {
+            if (preg_match('%.+\\\.+%', $api)) {
                 $service = explode('\\', $api);
                 $apiPath = $service[1];
                 $baseUrl = $this->getBaseUrl($service[0]);
@@ -68,7 +68,7 @@ class ResolveApi
      * @return type
      * @throws \Exception
      */
-    private function getBaseUrl($endpoint) 
+    private function getBaseUrl($endpoint)
     {
         if (!isset($this->mapping['endpoints'][$endpoint])) {
             throw new \Exception('Invalid API enpoint');
