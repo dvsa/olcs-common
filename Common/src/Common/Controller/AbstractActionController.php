@@ -223,7 +223,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return \Zend\View\Model\ViewModel
      */
-    protected function getViewModel($params)
+    public function getViewModel($params = array())
     {
         return new ViewModel($params);
     }
