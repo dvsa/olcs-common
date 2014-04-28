@@ -20,6 +20,8 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 class Text extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
+    protected $continueIfEmpty = false;
+    protected $allowEmpty = true;
     protected $max = null;
 
     public function __construct($name = null, $options = array())
@@ -46,7 +48,9 @@ class Text extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => $this->required ?: false,
+            'required' => $this->required,
+            'continue_if_empty' => $this->continueIfEmpty,
+            'allow_empty' => $this->allowEmpty,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],

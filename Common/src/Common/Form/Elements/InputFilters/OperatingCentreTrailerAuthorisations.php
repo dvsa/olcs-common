@@ -1,17 +1,17 @@
 <?php
 
 /**
- * VehicleSafetyTachographAnalyserContractor
+ * OperatingCentreTrailerAuthorisations
  */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorValidator;
+use Common\Form\Elements\Validators\OperatingCentreTrailerAuthorisationsValidator;
 
 /**
- * VehicleSafetyTachographAnalyserContractor
+ * OperatingCentreTrailerAuthorisations
  */
-class VehicleSafetyTachographAnalyserContractor extends Text implements InputProviderInterface
+class OperatingCentreTrailerAuthorisations extends Text implements InputProviderInterface
 {
     protected $continueIfEmpty = true;
     protected $allowEmpty = false;
@@ -24,7 +24,7 @@ class VehicleSafetyTachographAnalyserContractor extends Text implements InputPro
     protected function getValidators()
     {
         return array(
-            new VehicleSafetyTachographAnalyserContractorValidator()
+            new OperatingCentreTrailerAuthorisationsValidator()
         );
     }
 }
