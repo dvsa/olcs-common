@@ -1,7 +1,7 @@
 <?php
 return ['vehicleVrm' =>
             [
-            'type' => '\Common\Form\Elements\InputFilters\Name',
+            'type' => '\Common\Form\Elements\InputFilters\Vrm',
             'name' => 'vrm',
             'options' => [
                 'label' => 'Vehicle Registration Mark (VRM)',
