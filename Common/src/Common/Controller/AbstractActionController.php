@@ -139,8 +139,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Generate form from GET call
      *
-     * @todo Need to do something with $return to format the data
-     *
      * @param string $name
      * @param callable $callback
      * @param string $service
