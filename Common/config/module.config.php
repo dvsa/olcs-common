@@ -54,32 +54,6 @@ return array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
-            ),
-            'backend' => array(
-                'User' => 'user',
-                'Person' => 'person',
-                'PersonSearch' => 'person-search',
-                'OperatorSearch' => 'operator-search',
-                'VosaCase' => 'vosa-case',
-                'Licence' => 'licence',
-                'LicenceOrganisation' => 'licence-organisation',
-                'TrafficArea' => 'traffic-area',
-                'Organisation' => 'organisation',
-                'Application' => 'application',
-                'ApplicationOperatingCentre' => 'application-operating-centre',
-                'LicenceVehicle' => 'licence-vehicle',
-                'Submission' => 'submission',
-                'SubmissionAction' => 'submission-action',
-                'SubmissionActionStatus' => 'submission-action-status',
-                'SubmissionActionStatusType' => 'submission-action-status-type',
-                'Statement' => 'statement',
-                'Appeal' => 'appeal',
-                'Conviction' => 'conviction',
-                'ApplicationOperatingCentre' => 'application-operating-centre',
-                'Application' => 'application',
-                'Vehicle' => 'vehicle',
-                'Stay' => 'stay',
-                'Address' => 'address'
             )
         )
     )

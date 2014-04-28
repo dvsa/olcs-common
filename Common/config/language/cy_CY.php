@@ -73,7 +73,8 @@ return
         'from' => "W From",
         'date-prepared' => "W Date prepared",
         'submission-view-title' => "W OTC case submission - %s",
-        'submission-notice' => "W This document is RESTRICTED and not for disclosure to any third parties without the specific consent of the Traffic Commissioner",
+        'submission-notice' => 'W This document is RESTRICTED and not for disclosure to any third parties without the
+            specific consent of the Traffic Commissioner',
         'business-type' => "W Business type",
         'submission-vehicle-trailer' => "W V-auth / T-auth",
         'submission-vehicle-possession' => "W Veh in pos",
@@ -256,7 +257,8 @@ return
         'correspondence-address-form-label-town-city' => "W Town / City",
         'correspondence-address-form-label-country' => "W Country",
         'correspondence-address-form-label-establishment-address' => "W Is this also the establishment address?",
-        'card-declined' => "W Please check that the details you entered were correct and try again.<br>Otherwise, contact the cardholder.",
+        'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise,
+            contact the cardholder.',
         'payment-declined' => "W Payment declined",
         'payment-successful' => "W Payment successful",
         'payment-for' => "W Payment for",
@@ -305,6 +307,26 @@ return
         'driver' => "W Driver",
         'transport-manager' => "W Transport Manager",
         'please-select' => "W Please select",
+        // Submissions text
+        'objections' => 'W Objections',
+        'previous-history' => 'W Previous history',
+        'operating-centre' => 'W Operating centre',
+        'representations' => 'W Representations',
+        'environmental' => 'W Environmental',
+        'annual-test-history' => 'W Annual test history',
+        'prohibition-history' => 'W Prohibition history',
+        'bus-services-registered' => 'W Bus services registered',
+        'bus-compliance-issues' => 'W Bus compliance issues',
+        'current-submission' => 'W Current submission',
+        'conditions' => 'W Conditions',
+        'undertakings' => 'W Undertakings',
+        'outstanding-applications' => 'W Outstanding applications',
+        'persons' => 'W Person Information',
+        'transport-managers' => "W Transport Managers",
+        'case-summary-info' => 'W Case summary information',
+        'case-submission' => 'W Case submission',
+        'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
+            specific consent of the Traffic Commissioner',
         // Vehicle safety form
         'selfserve-app-vehicle-safety-safety-vehicleInspectionInterval' => 'W Maximum time between vehicle safety
             inspections',
@@ -316,10 +338,11 @@ return
         'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'W Please provide the company or full name
             of the external contractor who analyses your tachograph records (if applicable)',
         // Options
-        'tachographAnalyser-yourself' => 'W Yourself or another employee of the business holding the operator\'s licence',
+        'tachographAnalyser-yourself' => 'W Yourself or another employee of the business holding the operator\'s
+            licence',
         'tachographAnalyser-external-contractor' => 'W An external contractor',
-        'selfserve-app-vehicle-safety-safety-safetyConfirmation' => 'W Please confirm that you have suitable arrangements in place to keep the vehicles you wish
-                                to use in a fit and serviceable condition at all times',
+        'selfserve-app-vehicle-safety-safety-safetyConfirmation' => 'W Please confirm that you have suitable
+            arrangements in place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
         // Generic
         'N/A' => 'W Not applicable',
         'Yes' => 'W Yes',
