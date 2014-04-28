@@ -10,7 +10,7 @@ return [
             [
 	            'name' => 'address',
 	            'options' => [
-	                'label' => 'Operating centre address',   
+	                'label' => 'Operating centre address',
                 ],
                 'elements' => [],
             ],
