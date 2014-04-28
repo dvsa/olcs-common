@@ -32,14 +32,30 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::TOO_SHORT => "You selected 'yes' in one of above questions, so the input has to be at least 200 characters long",
+        self::TOO_SHORT => "You selected 'yes' in one of above questions, so the input has to be at least %min% characters long",
         self::IS_EMPTY => "You selected 'yes' in one of above questions, so value is required and can't be empty",
+    );
+
+    /**
+     * @var array
+     */
+    protected $options = array(
+        'min'      => 200,
+    );
+
+    /**
+     * @var array
+     */
+    protected $messageVariables = array(
+        'min' => array('options' => 'min'),
     );
 
     private $validationContextFields = ['bankrupt', 'liquidation', 'receivership', 'administration', 'disqualified'];
 
     public function isValid($value, $context = null)
     {
+        $this->setValue($value);
+
         $foundYes = false;
         $elementsToCheck = array_intersect_key($context, array_flip($this->validationContextFields));
 
@@ -55,14 +71,14 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
         if (!$foundYes)
             return true;
 
-        //check if values is not empty
+        //check if value is not empty
         $notEmptyValidator = new ZendValidator\NotEmpty();
         if (!$notEmptyValidator->isValid($value)){
             $this->error(self::IS_EMPTY);
             return false;
         }
 
-        //check if values length is at least 200
+        //check if value length is at least 200
         $strLenValidator = new ZendValidator\StringLength(array('min' => 200));
         if (!$strLenValidator->isValid($value)){
             $this->error(self::TOO_SHORT);
