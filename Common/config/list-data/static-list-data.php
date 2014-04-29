@@ -379,7 +379,7 @@ return array(
         'appeal_outcome.3' => 'Dismissed',
         'appeal_outcome.4' => 'Refer back to TC'
     ],
-    'submission_recommendations' => [
+    'submission_recommendation' => [
         'sr.other' => 'Other',
         'sr.propose-to-revoke' => 'Propose to revoke',
         'sr.warning-letter' => 'Warning letter',
@@ -387,7 +387,7 @@ return array(
         'sr.undertakings-conditions' => 'Undertakings & conditions',
         'sr.public-inquiry' => 'Public Enquiry'
     ],
-     'submission_decisions' => [
+     'submission_decision' => [
         'sd.agree' => 'Agree',
         'sd.partially-agree' => 'Partially agree',
         'sd.disagree' => 'Disagree',
