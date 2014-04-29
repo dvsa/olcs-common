@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'testProperty' => "the test",
     'testPropertyPlaceHolder' => "test @placeHolder is @here",
@@ -71,7 +72,8 @@ return array(
     'from' => "From",
     'date-prepared' => "Date prepared",
     'submission-view-title' => "OTC case submission - %s",
-    'submission-notice' => "This document is RESTRICTED and not for disclosure to any third parties without the specific consent of the Traffic Commissioner",
+    'submission-notice' => "This document is RESTRICTED and not for disclosure to any third parties without the specific
+        consent of the Traffic Commissioner",
     'business-type' => "Business type",
     'submission-vehicle-trailer' => "V-auth / T-auth",
     'submission-vehicle-possession' => "Veh in pos",
@@ -255,7 +257,8 @@ return array(
     'correspondence-address-form-label-town-city' => "Town / City",
     'correspondence-address-form-label-country' => "Country",
     'correspondence-address-form-label-establishment-address' => "Is this also the establishment address?",
-    'card-declined' => "Please check that the details you entered were correct and try again.<br>Otherwise, contact the cardholder.",
+    'card-declined' => "Please check that the details you entered were correct and try again.<br>Otherwise, contact the
+        cardholder.",
     'payment-declined' => "Payment declined",
     'payment-successful' => "Payment successful",
     'payment-for' => "Payment for",
@@ -290,14 +293,13 @@ return array(
     'notes-associated-with' => 'Notes associated with %s #%s and licence #%s',
     'note-type' => 'Note type',
     'note' => 'Comment',
-    'user-name' =>'Username',
-    'created-on'=>'Created on',
-    'licence'=>'Licence',
-    'priority'=>'Priority',
+    'user-name' => 'Username',
+    'created-on' => 'Created on',
+    'licence' => 'Licence',
+    'priority' => 'Priority',
     'select' => 'Select',
-    'add-note'=>'Add note',
-    'delete'=>'Delete',
-
+    'add-note' => 'Add note',
+    'delete' => 'Delete',
     // Defendant Types
     'operator' => "Operator",
     'owner' => "Owner",
@@ -306,15 +308,12 @@ return array(
     'driver' => "Driver",
     'transport-manager' => "Transport Manager",
     'please-select' => "Please select",
-
     // Public Authority new application
     'publicauthority-details-header' => 'Public Authority Details',
     'publicauthority-form-label-operator-name' => 'Public authority name',
-
     // Other Entity Type new application
     'other-details-header' => 'Other Details',
     'other-form-label-operator-name' => 'Operator name',
-
     // Submissions text
     'objections' => 'Objections',
     'previous-history' => 'Previous history',
@@ -333,7 +332,42 @@ return array(
     'transport-managers' => "Transport Managers",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
+        specific consent of the Traffic Commissioner',
+    // Vehicle safety form
+    'selfserve-app-vehicle-safety-safety-vehicleInspectionInterval' => 'Maximum time between vehicle safety
+        inspections',
+    'selfserve-app-vehicle-safety-safety-trailerInspectionInterval' => 'Maximum time between trailer safety
+        inspections',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
+        inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
+    'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'Please provide the company or full name
+        of the external contractor who analyses your tachograph records (if applicable)',
+    // Options
+    'tachographAnalyser-yourself' => 'Yourself or another employee of the business holding the operator\'s licence',
+    'tachographAnalyser-external-contractor' => 'An external contractor',
+    'selfserve-app-vehicle-safety-safety-safetyConfirmation' => 'Please confirm that you have suitable arrangements in
+        place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
+    // Operating Centre Authorisations
+    'selfserve-app-operating-centre-auth-totAuthVehicles' => 'Total number of vehicles',
+    'selfserve-app-operating-centre-auth-totAuthTrailers' => 'Total number of trailers',
+    // Operating Centre Subsections
+    'selfserve-app-subSection-operating-centre-oc' => 'Operating centres &amp; authorisation',
+    'selfserve-app-subSection-operating-centre-fe' => 'Financial evidence',
+    // Operating Centre
+    'selfserve-app-subSection-operating-centre-oc-info' => 'Enter the total amount of vehicles &amp; trailers that you
+        want authorised on the licence you are applying for.',
+    'Authorisation' => 'Authorisation',
+    // Generic
+    'N/A' => 'Not applicable',
+    'Yes' => 'Yes',
+    'No' => 'No',
+    'Please Select' => 'Please Select',
+    'Week' => 'Week',
+    'Weeks' => 'Weeks',
+    'Continue' => 'Continue',
+    'Confirm' => 'Confirm',
 
     // Complaints
     'add-complaint' => 'Add complaint',

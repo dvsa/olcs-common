@@ -4,15 +4,15 @@ return [
         'name' => 'authorised-vehicles',
         'attributes' => [
             'method' => 'post',
-            
         ],
         'fieldsets' => [
             [
-	            'name' => 'address',
-	            'options' => [
-	                'label' => 'Operating centre address',
+                'options' => [
+                    'label' => 'Address',
                 ],
-                'elements' => [],
+                // this will ensure the common address fieldset is pulled in
+                // to avoid having to redeclare it here
+                'type' => 'address',
             ],
             [
                 'name' => 'authorised-vehicles',
@@ -21,19 +21,19 @@ return [
                 ],
                 'elements' => [
                     'no-of-vehicles' => [
-	                    'type' => 'vehiclesNumber',
-	                    'label' => 'Total no. of vehicles',   
+                        'type' => 'vehiclesNumber',
+                        'label' => 'Total no. of vehicles',
                     ],
                     'no-of-trailers' => [
                         'type' => 'vehiclesNumber',
                         'label' => 'Total no. of trailers',
                     ],
                     'parking-spaces-confirmation' => [
-	                    'type' => 'checkbox',
-	                    'label' => 'Parking spaces confirmation',
-	                    'options' => [
-	                        'must_be_checked' => true,
-	                        'not_checked_message' => 'You must confirm that you have enough parking spaces',   
+                        'type' => 'checkbox',
+                        'label' => 'Parking spaces confirmation',
+                        'options' => [
+                            'must_be_checked' => true,
+                            'not_checked_message' => 'You must confirm that you have enough parking spaces',
                         ],
                     ],
                     'permission-confirmation' => [

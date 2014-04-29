@@ -9,31 +9,40 @@ return [
         'version' => [
             'type' => 'hidden'
         ],
-        'postcode' => [
-            'type' => 'text',
-            'label' => 'Postcode',
-            'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
-        ],
         'addressLine1' => [
             'type' => 'text',
-            'label' => 'Address line 1',
+            'label' => 'Street',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'addressLine2' => [
             'type' => 'text',
-            'label' => 'Address line 2'
+            'label' => 'Address line 2',
+            'label_attributes' => [
+                'class' => 'visually-hidden',
+            ],
         ],
         'addressLine3' => [
             'type' => 'text',
-            'label' => 'Address line 3'
+            'label' => 'Address line 3',
+            'label_attributes' => [
+                'class' => 'visually-hidden',
+            ],
         ],
         'addressLine4' => [
             'type' => 'text',
-            'label' => 'Address line 4'
+            'label' => 'Address line 4',
+            'label_attributes' => [
+                'class' => 'visually-hidden',
+            ],
         ],
         'city' => [
             'type' => 'text',
             'label' => 'Town/City',
+            'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
+        ],
+        'postcode' => [
+            'type' => 'text',
+            'label' => 'Postcode',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'country' => [
