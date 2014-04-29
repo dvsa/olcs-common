@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'testProperty' => "the test",
     'testPropertyPlaceHolder' => "test @placeHolder is @here",
@@ -71,7 +72,8 @@ return array(
     'from' => "From",
     'date-prepared' => "Date prepared",
     'submission-view-title' => "OTC case submission - %s",
-    'submission-notice' => "This document is RESTRICTED and not for disclosure to any third parties without the specific consent of the Traffic Commissioner",
+    'submission-notice' => "This document is RESTRICTED and not for disclosure to any third parties without the specific
+        consent of the Traffic Commissioner",
     'business-type' => "Business type",
     'submission-vehicle-trailer' => "V-auth / T-auth",
     'submission-vehicle-possession' => "Veh in pos",
@@ -255,7 +257,8 @@ return array(
     'correspondence-address-form-label-town-city' => "Town / City",
     'correspondence-address-form-label-country' => "Country",
     'correspondence-address-form-label-establishment-address' => "Is this also the establishment address?",
-    'card-declined' => "Please check that the details you entered were correct and try again.<br>Otherwise, contact the cardholder.",
+    'card-declined' => "Please check that the details you entered were correct and try again.<br>Otherwise, contact the
+        cardholder.",
     'payment-declined' => "Payment declined",
     'payment-successful' => "Payment successful",
     'payment-for' => "Payment for",
@@ -290,14 +293,13 @@ return array(
     'notes-associated-with' => 'Notes associated with %s #%s and licence #%s',
     'note-type' => 'Note type',
     'note' => 'Comment',
-    'user-name' =>'Username',
-    'created-on'=>'Created on',
-    'licence'=>'Licence',
-    'priority'=>'Priority',
+    'user-name' => 'Username',
+    'created-on' => 'Created on',
+    'licence' => 'Licence',
+    'priority' => 'Priority',
     'select' => 'Select',
-    'add-note'=>'Add note',
-    'delete'=>'Delete',
-
+    'add-note' => 'Add note',
+    'delete' => 'Delete',
     // Defendant Types
     'operator' => "Operator",
     'owner' => "Owner",
@@ -306,15 +308,12 @@ return array(
     'driver' => "Driver",
     'transport-manager' => "Transport Manager",
     'please-select' => "Please select",
-
     // Public Authority new application
     'publicauthority-details-header' => 'Public Authority Details',
     'publicauthority-form-label-operator-name' => 'Public authority name',
-
     // Other Entity Type new application
     'other-details-header' => 'Other Details',
     'other-form-label-operator-name' => 'Operator name',
-
     // Submissions text
     'objections' => 'Objections',
     'previous-history' => 'Previous history',
@@ -334,11 +333,9 @@ return array(
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
     'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
-
-    // Stay types
+    //Stay types
     'stay_status_granted' => 'Granted',
     'stay_status_refused' => 'Refused',
-
     //Appeals
     'appeal_reason.1' => 'Application',
     'appeal_reason.2' => 'Disciplinary PI',

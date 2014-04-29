@@ -1,0 +1,6 @@
+    <!-- Horizontal navigation -->
+    <ul class="mega-menu" role="navigation">
+        <?php foreach($items as $item): ?>
+           <?php echo $this->render('partials/mega-menu/mega-menu__item', ['item' => $item, 'current' => $current]); ?>
+        <?php endforeach; ?>
+    </ul><!-- end .horizontal-navigation -->
