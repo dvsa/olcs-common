@@ -96,7 +96,7 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
-    'vehicle_body_types' => 
+    'vehicle_body_types' =>
     [
         'vhl_body_type.flat' => 'Flat sided or skeletal',
         'vhl_body_type.box' => 'Box body, or van, or curtain side',
@@ -378,5 +378,19 @@ return array(
         'appeal_outcome.2' => 'Partially Successful',
         'appeal_outcome.3' => 'Dismissed',
         'appeal_outcome.4' => 'Refer back to TC'
+    ],
+    'submission_recommendations' => [
+        'sr.other' => 'Other',
+        'sr.propose-to-revoke' => 'Propose to revoke',
+        'sr.warning-letter' => 'Warning letter',
+        'sr.nfa' => 'NFA',
+        'sr.undertakings-conditions' => 'Undertakings & conditions',
+        'sr.public-inquiry' => 'Public Enquiry'
+    ],
+     'submission_decisions' => [
+        'sd.agree' => 'Agree',
+        'sd.partially-agree' => 'Partially agree',
+        'sd.disagree' => 'Disagree',
+        'sr.further-info' => 'Further information required',
     ]
 );

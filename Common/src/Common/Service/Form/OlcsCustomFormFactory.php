@@ -115,6 +115,7 @@ class OlcsCustomFormFactory extends Factory
     public function setFormConfig(array $config)
     {
         $this->baseFormConfig = $config;
+        return $this;
     }
 
     /**
