@@ -24,9 +24,26 @@ class Address implements FormatterInterface
      */
     public static function format($data, $column)
     {
+        if (isset($column['addressFields'])) {
+
+            $fields = $column['addressFields'];
+        } else {
+            $fields = array(
+                'addressLine1',
+                'addressLine2',
+                'addressLine3',
+                'city',
+                'country',
+                'postcode'
+            );
+        }
+
         $parts = array();
-        foreach (array('addressLine1', 'addressLine2', 'addressLine3', 'city', 'country', 'postcode') as $item) {
-            if (!empty($data[$item])) {
+
+        foreach ($fields as $item) {
+
+            if (isset($data[$item]) && !empty($data[$item])) {
+
                 $parts[] = $data[$item];
             }
         }

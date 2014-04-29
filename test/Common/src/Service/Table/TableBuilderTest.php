@@ -1601,4 +1601,78 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $table->renderBodyColumn($row, $column);
     }
+
+    /**
+     * Test renderExtraRows with rows
+     */
+    public function testRenderExtraRowsWithRows()
+    {
+        $table = $this->getMockTableBuilder(array('getRows'));
+
+        $table->expects($this->once())
+            ->method('getRows')
+            ->will($this->returnValue(array('foo' => 'bar')));
+
+        $this->assertEquals('', $table->renderExtraRows());
+    }
+
+    /**
+     * Test renderExtraRows without rows with custom message
+     */
+    public function testRenderExtraRowsWithoutRowsCustomMessage()
+    {
+        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper'));
+
+        $table->setVariables(array('empty_message' => 'Empty'));
+
+        $table->expects($this->once())
+            ->method('getRows')
+            ->will($this->returnValue(array()));
+
+        $table->expects($this->once())
+            ->method('getColumns')
+            ->will($this->returnValue(array('foo')));
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/emptyRow]}}', array('colspan' => 1, 'message' => 'Empty'))
+            ->will($this->returnValue('CONTENT'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $this->assertEquals('CONTENT', $table->renderExtraRows());
+    }
+
+    /**
+     * Test renderExtraRows without rows
+     */
+    public function testRenderExtraRowsWithoutRows()
+    {
+        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper'));
+
+        $table->expects($this->once())
+            ->method('getRows')
+            ->will($this->returnValue(array()));
+
+        $table->expects($this->once())
+            ->method('getColumns')
+            ->will($this->returnValue(array('foo')));
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with('{{[elements/emptyRow]}}', array('colspan' => 1, 'message' => 'The table is empty'))
+            ->will($this->returnValue('CONTENT'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $this->assertEquals('CONTENT', $table->renderExtraRows());
+    }
 }
