@@ -21,19 +21,19 @@ return [
                 ],
                 'elements' => [
                     'no-of-vehicles' => [
-	                    'type' => 'vehiclesNumber',
-	                    'label' => 'Total no. of vehicles',
+                        'type' => 'vehiclesNumber',
+                        'label' => 'Total no. of vehicles',
                     ],
                     'no-of-trailers' => [
                         'type' => 'vehiclesNumber',
                         'label' => 'Total no. of trailers',
                     ],
                     'parking-spaces-confirmation' => [
-	                    'type' => 'checkbox',
-	                    'label' => 'Parking spaces confirmation',
-	                    'options' => [
-	                        'must_be_checked' => true,
-	                        'not_checked_message' => 'You must confirm that you have enough parking spaces',
+                        'type' => 'checkbox',
+                        'label' => 'Parking spaces confirmation',
+                        'options' => [
+                            'must_be_checked' => true,
+                            'not_checked_message' => 'You must confirm that you have enough parking spaces',
                         ],
                     ],
                     'permission-confirmation' => [
@@ -48,10 +48,6 @@ return [
             ],
         ],
         'elements' => [
-            'ad-placed' => [
-                'type' => 'checkbox',
-                'label' => 'Advertised',
-            ],
             'version' => [
                 'type' => 'hidden',
             ],
