@@ -29,8 +29,7 @@ trait LoggerTrait
             $logger = $this->getServiceLocator()->get('Zend\Log');
 
             if (($logger instanceof \Zend\Log\Logger) !== true) {
-                throw new \LogicException(
-                    "Incorrect object. Expecting '\Zend\Log\Logger', found " . get_class($logger));
+                throw new \LogicException("Incorrect object. Expecting '\Zend\Log\Logger', found " . get_class($logger));
             }
 
             $this->setLogger($logger);
