@@ -197,6 +197,10 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['options']['label'] = $element['label'];
         }
 
+        if (isset($element['label_attributes'])) {
+            $newElement['spec']['options']['label_attributes'] = $element['label_attributes'];
+        }
+
         if (isset($element['placeholder'])) {
             $newElement['spec']['attributes']['placeholder'] = $element['placeholder'];
         }
