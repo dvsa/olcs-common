@@ -29,7 +29,7 @@ return [
             'value_options' => 'yes_no',
         ],
         'insolvencyDetails' => [
-            'type' => 'textarea',
+            'type' => 'financialHistoryTextarea',
             'label' => 'Additional information',
             'description' => 'Please provide additional information relating to any prior insolvency proceedings. You may also upload evidence such as legal documents.',
             'placeholder' => 'Min 200 characters',
@@ -47,12 +47,6 @@ return [
     [
         'next_step' =>
         [
-            'values' => [
-                'restricted' => 'complete',
-                'standard-national' => 'complete',
-                'standard-international' => 'complete',
-                'special-restricted' => 'complete',
-            ],
             'default' => 'licence',
         ],
         'label' => 'Financial history',
