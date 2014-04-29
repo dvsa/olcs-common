@@ -4,6 +4,7 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use Common\Form\Elements\Types\Html;
 
 class FormElement extends ZendFormElement
 {
@@ -28,6 +29,10 @@ class FormElement extends ZendFormElement
     public function render(ZendElementInterface $element)
     {
         $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
+
+        if ($element instanceof Html) {
+            return $element->getValue();
+        }
 
         $markup = parent::render($element);
 
