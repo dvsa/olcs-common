@@ -18,13 +18,14 @@ return [
                 'label' => 'Gross Plated Weight (Kg)',
                 'type' => 'vehicleGPW',  
             ],
-            'body_type' => [
+            //NOT PART OF THE STORY (2057)
+            /*'body_type' => [
                 'type' => 'radio',
                 'value_options' => 'vehicle_body_types',
                 'options' => [
                     'label' => 'Body type:',
                 ],
-            ],
+            ],*/
             'submit_add_another' => [
                 'name' => 'submit_add_another',
                 'type' => 'submit',
