@@ -5,49 +5,18 @@
             <a href="<?php echo $this->record['editHref']; ?>" class="action--primary" />Edit</a>
             <a href="<?php echo $this->record['deleteHref']; ?>" class="action--warning" />Delete</a>
         </div>
-        <p>
-            <strong>Appeal deadline:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['deadlineDate'])); ?>
-        </p>
-        <p>
-            <strong>Date of appeal:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['appealDate'])); ?>
-        </p>
-        <p>
-            <strong>Appeal number:</strong><br />
-            <?php echo $this->appeal['appealNumber']; ?>
-        </p>
-        <p>
-            <strong>Reason:</strong><br />
-            <?php echo $this->record['reason']; ?>
-        </p>
-        <p>
-            <strong>Outline ground:</strong><br />
-            <?php echo $this->record['outlineGround']; ?>
-        </p>
-        <p>
-            <strong>Date set for appeal hearing:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['hearingDate'])); ?>
-        </p>
-        <p>
-            <strong>Date of decision:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['decisionDate'])); ?>
-        </p>
-        <p>
-            <strong>Papers due at tribunal:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['papersDue'])); ?>
-        </p>
-        <p>
-            <strong>Papers sent:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->record['papersSent'])); ?>
-        </p>
-        <p>
-            <strong>Outcome:</strong><br />
-            <?php echo $this->record['outcome']; ?>
-        </p>
-        <p>
-            <strong>Comments:</strong><br />
-            <?php echo $this->record['comment']; ?>
-        </p>
+        <?php
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Appeal deadline:', 'content' => $this->record['deadlineDate']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of appeal:', 'content' => $this->record['appealDate']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Appeal number:', 'content' => $this->record['appealNumber']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Reason:', 'content' => $this->record['reason']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outline ground:', 'content' => $this->record['outlineGround']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date set for appeal hearing:', 'content' => $this->record['hearingDate']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of decision:', 'content' => $this->record['decisionDate']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Papers due at tribunal:', 'content' => $this->record['papersDue']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Papers sent:', 'content' => $this->record['papersSent']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome:', 'content' => $this->record['outcome']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Comments:', 'content' => $this->record['comment']));
+        ?>
     </div>
 </form>

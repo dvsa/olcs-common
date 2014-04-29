@@ -96,7 +96,7 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
-    'vehicle_body_types' => 
+    'vehicle_body_types' =>
     [
         'vhl_body_type.flat' => 'Flat sided or skeletal',
         'vhl_body_type.box' => 'Box body, or van, or curtain side',

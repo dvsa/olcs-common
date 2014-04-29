@@ -6,21 +6,11 @@
             <a href="<?php echo $this->stay['editHref']; ?>" class="action--primary" />Edit</a>
             <a href="<?php echo $this->stay['deleteHref']; ?>" class="action--warning" />Delete</a>
         </div>
-        <p>
-            <strong>Date of decision:</strong><br />
-            <?php echo 'dd/mm/yy'; ?>
-        </p>
-        <p>
-            <strong>Date of request:</strong><br />
-            <?php echo date('d/m/y', strtotime($this->stay['requestDate'])); ?>
-        </p>
-        <p>
-            <strong>Outcome:</strong><br />
-            <?php echo $this->stay['outcome']; ?>
-        </p>
-        <p>
-            <strong>Notes:</strong><br />
-            <?php echo $this->stay['notes']; ?>
-        </p>
+        <?php
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of decision:', 'content' => 'dd/mm/yyyy'));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of request:', 'content' => $this->stay['requestDate']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome:', 'content' => $this->stay['outcome']));
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Notes:', 'content' => $this->stay['notes']));
+        ?>
     </div>
 </form>
