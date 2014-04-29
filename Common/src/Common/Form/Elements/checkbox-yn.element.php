@@ -10,9 +10,5 @@ return ['checkbox-yn' =>
                 'checked_value' => 'Y',
                 'unchecked_value' => 'N'
             ],
-            'attributes' => [
-                'id' => '',
-                'placeholder' => '',
-            ]
         ]
     ];

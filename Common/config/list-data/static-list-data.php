@@ -380,17 +380,53 @@ return array(
         'appeal_outcome.4' => 'Refer back to TC'
     ],
     'submission_recommendation' => [
-        'sr.other' => 'Other',
-        'sr.propose-to-revoke' => 'Propose to revoke',
-        'sr.warning-letter' => 'Warning letter',
-        'sr.nfa' => 'NFA',
-        'sr.undertakings-conditions' => 'Undertakings & conditions',
-        'sr.public-inquiry' => 'Public Enquiry'
+        'submission_recommendation.other' => 'Other',
+        'submission_recommendation.propose-to-revoke' => 'Propose to revoke',
+        'submission_recommendation.warning-letter' => 'Warning letter',
+        'submission_recommendation.nfa' => 'NFA',
+        'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
+        'submission_recommendation.public-inquiry' => 'Public Enquiry'
     ],
      'submission_decision' => [
-        'sd.agree' => 'Agree',
-        'sd.partially-agree' => 'Partially agree',
-        'sd.disagree' => 'Disagree',
-        'sr.further-info' => 'Further information required',
+        'submission_decision.agree' => 'Agree',
+        'submission_decision.partially-agree' => 'Partially agree',
+        'submission_decision.disagree' => 'Disagree',
+        'submission_decision.further-info' => 'Further information required',
+    ],
+    'inspection_interval_vehicle' => [
+        'inspection_interval_vehicle.1' => '1 {Week}',
+        'inspection_interval_vehicle.2' => '2 {Weeks}',
+        'inspection_interval_vehicle.3' => '3 {Weeks}',
+        'inspection_interval_vehicle.4' => '4 {Weeks}',
+        'inspection_interval_vehicle.5' => '5 {Weeks}',
+        'inspection_interval_vehicle.6' => '6 {Weeks}',
+        'inspection_interval_vehicle.7' => '7 {Weeks}',
+        'inspection_interval_vehicle.8' => '8 {Weeks}',
+        'inspection_interval_vehicle.9' => '9 {Weeks}',
+        'inspection_interval_vehicle.10' => '10 {Weeks}',
+        'inspection_interval_vehicle.11' => '11 {Weeks}',
+        'inspection_interval_vehicle.12' => '12 {Weeks}',
+        'inspection_interval_vehicle.13' => '13 {Weeks}'
+    ],
+    'inspection_interval_trailer' => [
+        'inspection_interval_trailer.1' => '1 {Week}',
+        'inspection_interval_trailer.2' => '2 {Weeks}',
+        'inspection_interval_trailer.3' => '3 {Weeks}',
+        'inspection_interval_trailer.4' => '4 {Weeks}',
+        'inspection_interval_trailer.5' => '5 {Weeks}',
+        'inspection_interval_trailer.6' => '6 {Weeks}',
+        'inspection_interval_trailer.7' => '7 {Weeks}',
+        'inspection_interval_trailer.8' => '8 {Weeks}',
+        'inspection_interval_trailer.9' => '9 {Weeks}',
+        'inspection_interval_trailer.10' => '10 {Weeks}',
+        'inspection_interval_trailer.11' => '11 {Weeks}',
+        'inspection_interval_trailer.12' => '12 {Weeks}',
+        'inspection_interval_trailer.13' => '13 {Weeks}',
+        'inspection_interval_trailer.0' => 'N/A'
+    ],
+    'tachograph_analyser' => [
+        'tachograph_analyser.1' => 'tachographAnalyser-yourself',
+        'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
+        'tachograph_analyser.3' => 'N/A',
     ]
 );
