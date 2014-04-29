@@ -12,7 +12,7 @@ return [
                 'elements' => [
                     'requestDate' => [
                         'type' => 'dateSelect',
-                        'label' => 'Date of request:',
+                        'label' => 'Date of request',
                         'class' => 'extra-long',
                         'options' => array(
                             'min_year' => 2005
@@ -20,12 +20,12 @@ return [
                     ],
                     'outcome' => [
                         'type' => 'select',
-                        'label' => 'Outcome:',
+                        'label' => 'Outcome',
                         'value_options' => 'case_stay_outcome'
                     ],
                     'notes' => [
                         'type' => 'textarea',
-                        'label' => 'Notes:',
+                        'label' => 'Notes',
                         'class' => 'extra-long'
                     ],
                 ]
