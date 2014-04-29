@@ -14,7 +14,7 @@ return [
                 ],
                 'elements' => [],
             ],
-            [
+            'authorised-vehicles' => [
                 'name' => 'authorised-vehicles',
                 'options' => [
                     'label' => 'Authorised vehicles',
