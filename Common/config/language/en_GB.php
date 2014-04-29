@@ -314,7 +314,7 @@ return array(
     // Other Entity Type new application
     'other-details-header' => 'Other Details',
     'other-form-label-operator-name' => 'Operator name',
-    
+
     // Submissions text
     'objections' => 'Objections',
     'previous-history' => 'Previous history',
@@ -333,5 +333,19 @@ return array(
     'transport-managers' => "Transport Managers",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+
+    // Stay types
+    'stay_status_granted' => 'Granted',
+    'stay_status_refused' => 'Refused',
+
+    //Appeals
+    'appeal_reason.1' => 'Application',
+    'appeal_reason.2' => 'Disciplinary PI',
+    'appeal_reason.3' => 'Disciplinary Non PI',
+    'appeal_reason.4' => 'Impounding',
+    'appeal_outcome.1' => 'Successful',
+    'appeal_outcome.2' => 'Partially Successful',
+    'appeal_outcome.3' => 'Dismissed',
+    'appeal_outcome.4' => 'Refer back to TC'
 );

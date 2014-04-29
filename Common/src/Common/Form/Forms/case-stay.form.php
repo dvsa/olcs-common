@@ -26,6 +26,7 @@ return [
                     'notes' => [
                         'type' => 'textarea',
                         'label' => 'Notes',
+                        'filters' => '\Common\Form\Elements\InputFilters\TextMax4000Required',
                         'class' => 'extra-long'
                     ],
                 ]

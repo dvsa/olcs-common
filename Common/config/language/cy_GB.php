@@ -304,7 +304,7 @@ return array(
     'driver' => "W Driver",
     'transport-manager' => "W Transport Manager",
     'please-select' => "W Please select",
-    
+
      // Submissions text
     'objections' => 'W Objections',
     'previous-history' => 'W Previous history',
@@ -323,5 +323,19 @@ return array(
     'transport-managers' => "W Transport Managers",
     'case-summary-info' => 'W Case summary information',
     'case-submission' => 'W Case submission',
-    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
+    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+
+    // Stay types
+    'stay_status_granted' => 'Granted',
+    'stay_status_refused' => 'Refused',
+
+    //Appeals
+    'appeal_reason.1' => 'Application',
+    'appeal_reason.2' => 'Disciplinary PI',
+    'appeal_reason.3' => 'Disciplinary Non PI',
+    'appeal_reason.4' => 'Impounding',
+    'appeal_outcome.1' => 'Successful',
+    'appeal_outcome.2' => 'Partially Successful',
+    'appeal_outcome.3' => 'Dismissed',
+    'appeal_outcome.4' => 'Refer back to TC'
 );
