@@ -314,7 +314,7 @@ return array(
     // Other Entity Type new application
     'other-details-header' => 'Other Details',
     'other-form-label-operator-name' => 'Operator name',
-    
+
     // Submissions text
     'objections' => 'Objections',
     'previous-history' => 'Previous history',
@@ -333,5 +333,13 @@ return array(
     'transport-managers' => "Transport Managers",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+
+    // Complaints
+    'add-complaint' => 'Add complaint',
+    'edit-complaint' => 'Edit complaint',
+    'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'
+
+
 );

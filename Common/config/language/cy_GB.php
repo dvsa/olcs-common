@@ -304,7 +304,7 @@ return array(
     'driver' => "W Driver",
     'transport-manager' => "W Transport Manager",
     'please-select' => "W Please select",
-    
+
      // Submissions text
     'objections' => 'W Objections',
     'previous-history' => 'W Previous history',
@@ -323,5 +323,11 @@ return array(
     'transport-managers' => "W Transport Managers",
     'case-summary-info' => 'W Case summary information',
     'case-submission' => 'W Case submission',
-    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner'
+    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+
+    // Complaints
+    'add-complaint' => 'W Add complaint',
+    'edit-complaint' => 'W Edit complaint',
+    'subtitle-complaint-text' => 'W Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'
 );
