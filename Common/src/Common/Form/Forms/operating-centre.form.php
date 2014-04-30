@@ -14,10 +14,10 @@ return [
                 // to avoid having to redeclare it here
                 'type' => 'address',
             ],
-            [
+            'authorised-vehicles' => [
                 'name' => 'authorised-vehicles',
                 'options' => [
-                    'label' => 'Authorised vehicles',
+                    'label' => 'Vehicles & trailers',
                 ],
                 'elements' => [
                     'no-of-vehicles' => [
@@ -30,7 +30,10 @@ return [
                     ],
                     'parking-spaces-confirmation' => [
                         'type' => 'checkbox',
-                        'label' => 'Parking spaces confirmation',
+                        'label' =>
+                            'I have enough parking spaces available for the '.
+                            'total number of vehicles and trailers that I want '.
+                            'to keep at this address',
                         'options' => [
                             'must_be_checked' => true,
                             'not_checked_message' => 'You must confirm that you have enough parking spaces',
@@ -38,7 +41,10 @@ return [
                     ],
                     'permission-confirmation' => [
                         'type' => 'checkbox',
-                        'label' => 'Permission confirmation',
+                        'label' =>
+                            'I am either the site owner or have permission from '.
+                            'the site owner to use the premises to park the number '.
+                            'of vehicles and trailers stated',
                         'options' => [
                             'must_be_checked' => true,
                             'not_checked_message' => 'You must confirm that you have permission to use the premisses to park the number of vehicles & trailers stated',
