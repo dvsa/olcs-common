@@ -332,40 +332,17 @@ return array(
     'transport-managers' => "Transport Managers",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
-        specific consent of the Traffic Commissioner',
-    // Vehicle safety form
-    'selfserve-app-vehicle-safety-safety-vehicleInspectionInterval' => 'Maximum time between vehicle safety
-        inspections',
-    'selfserve-app-vehicle-safety-safety-trailerInspectionInterval' => 'Maximum time between trailer safety
-        inspections',
-    'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
-        inspected more frequently than the interval stated above?',
-    'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
-    'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'Please provide the company or full name
-        of the external contractor who analyses your tachograph records (if applicable)',
-    // Options
-    'tachographAnalyser-yourself' => 'Yourself or another employee of the business holding the operator\'s licence',
-    'tachographAnalyser-external-contractor' => 'An external contractor',
-    'selfserve-app-vehicle-safety-safety-safetyConfirmation' => 'Please confirm that you have suitable arrangements in
-        place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
-    // Operating Centre Authorisations
-    'selfserve-app-operating-centre-auth-totAuthVehicles' => 'Total number of vehicles',
-    'selfserve-app-operating-centre-auth-totAuthTrailers' => 'Total number of trailers',
-    // Operating Centre Subsections
-    'selfserve-app-subSection-operating-centre-oc' => 'Operating centres &amp; authorisation',
-    'selfserve-app-subSection-operating-centre-fe' => 'Financial evidence',
-    // Operating Centre
-    'selfserve-app-subSection-operating-centre-oc-info' => 'Enter the total amount of vehicles &amp; trailers that you
-        want authorised on the licence you are applying for.',
-    'Authorisation' => 'Authorisation',
-    // Generic
-    'N/A' => 'Not applicable',
-    'Yes' => 'Yes',
-    'No' => 'No',
-    'Please Select' => 'Please Select',
-    'Week' => 'Week',
-    'Weeks' => 'Weeks',
-    'Continue' => 'Continue',
-    'Confirm' => 'Confirm'
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+    //Stay types
+    'stay_status_granted' => 'Granted',
+    'stay_status_refused' => 'Refused',
+    //Appeals
+    'appeal_reason.1' => 'Application',
+    'appeal_reason.2' => 'Disciplinary PI',
+    'appeal_reason.3' => 'Disciplinary Non PI',
+    'appeal_reason.4' => 'Impounding',
+    'appeal_outcome.1' => 'Successful',
+    'appeal_outcome.2' => 'Partially Successful',
+    'appeal_outcome.3' => 'Dismissed',
+    'appeal_outcome.4' => 'Refer back to TC'
 );
