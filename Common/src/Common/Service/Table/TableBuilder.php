@@ -146,6 +146,13 @@ class TableBuilder
     private $order = 'ASC';
 
     /**
+     * Service Locator
+     *
+     * @var ServiceLocatorInterface
+     */
+    private $serviceLocator;
+    
+    /**
      * Inject the application config
      *
      * @param array $applicationConfig
@@ -1034,5 +1041,25 @@ class TableBuilder
         }
 
         return $actions;
+    }
+    
+	/**
+	 * Sets server locator
+	 *
+	 * @return Zend\ServiceManager\ServiceLocatorInterface
+	 */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
+    
+	/**
+	 * Sets server locator
+	 *
+	 * @param Zend\ServiceManager\ServiceLocatorInterface
+	 */
+    public function setServiceLocator($serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
     }
 }
