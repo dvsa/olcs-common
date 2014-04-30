@@ -373,7 +373,18 @@ return array(
     'add-complaint' => 'Add complaint',
     'edit-complaint' => 'Edit complaint',
     'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'
-
-
+nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the specific consent of the Traffic Commissioner',
+    //Stay types
+    'stay_status_granted' => 'Granted',
+    'stay_status_refused' => 'Refused',
+    //Appeals
+    'appeal_reason.1' => 'Application',
+    'appeal_reason.2' => 'Disciplinary PI',
+    'appeal_reason.3' => 'Disciplinary Non PI',
+    'appeal_reason.4' => 'Impounding',
+    'appeal_outcome.1' => 'Successful',
+    'appeal_outcome.2' => 'Partially Successful',
+    'appeal_outcome.3' => 'Dismissed',
+    'appeal_outcome.4' => 'Refer back to TC'
 );
