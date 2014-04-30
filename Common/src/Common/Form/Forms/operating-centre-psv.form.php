@@ -8,5 +8,4 @@ unset($operatingCentreForm['operating-centre']);
 unset($operatingCentreForm['operating-centre-psv']['fieldsets']['authorised-vehicles']['elements']['no-of-trailers']);
 $operatingCentreForm['operating-centre-psv']['fieldsets']['authorised-vehicles']['elements']['no-of-vehicles']['type'] = 'vehiclesNumberPsv';
 
-//\Zend\Debug\Debug::dump($operatingCentreForm);exit;
 return $operatingCentreForm;
