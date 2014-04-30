@@ -14,7 +14,7 @@ return [
                 // to avoid having to redeclare it here
                 'type' => 'address',
             ],
-            [
+            'authorised-vehicles' => [
                 'name' => 'authorised-vehicles',
                 'options' => [
                     'label' => 'Authorised vehicles',

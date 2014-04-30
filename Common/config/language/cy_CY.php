@@ -352,6 +352,8 @@ return
         // Operating Centre
         'selfserve-app-subSection-operating-centre-oc-info' => 'W Enter the total amount of vehicles &amp; trailers
             that you want authorised on the licence you are applying for.',
+        'selfserve-app-subSection-operating-centre-oc-info-psv' => 'W Enter the total amount of vehicles that you
+        want authorised on the licence you are applying for.',
         'Authorisation' => 'W Authorisation',
         // Generic
         'N/A' => 'W Not applicable',
