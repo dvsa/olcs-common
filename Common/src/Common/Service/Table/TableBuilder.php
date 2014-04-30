@@ -263,6 +263,16 @@ class TableBuilder
     }
 
     /**
+     * Set variables
+     *
+     * @param array $variables
+     */
+    public function setVariables($variables = array())
+    {
+        $this->variables = $variables;
+    }
+
+    /**
      * Get variables
      *
      * @return array
@@ -437,7 +447,7 @@ class TableBuilder
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
-        $this->variables = isset($config['variables']) ? $config['variables'] : array();
+        $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
         $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
         return true;
@@ -481,7 +491,7 @@ class TableBuilder
         $this->setSort(isset($array['sort']) ? $array['sort'] : '');
         $this->setOrder(isset($array['order']) ? $array['order'] : 'ASC');
 
-        $this->variables = array_merge($this->getVariables(), $array);
+        $this->setVariables(array_merge($this->getVariables(), $array));
     }
 
     /**
