@@ -29,6 +29,7 @@ class Form extends \Zend\Form\View\Helper\Form
         $fieldsets = $elements = array();
 
         foreach ($form as $element) {
+
             if ($element instanceof FieldsetInterface) {
                 $fieldsets[] = $this->getView()->formCollection($element);
             } else {

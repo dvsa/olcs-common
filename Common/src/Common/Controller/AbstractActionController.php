@@ -209,11 +209,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function buildTable($table, $results, $data = array())
     {
+        return $this->getTable($table, $results, $data = array(), true);
+    }
+
+    /*
+     * Build a table from config and results, and return the table object
+     *
+     * @param string $table
+     * @param array $results
+     * @param array $data
+     * @param boolean $render
+     * @return string
+     */
+    public function getTable($table, $results, $data = array(), $render = false)
+    {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, $render);
     }
 
     /**

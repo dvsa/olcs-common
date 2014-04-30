@@ -5,6 +5,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Html;
+use Common\Form\Elements\Types\Table;
 
 class FormElement extends ZendFormElement
 {
@@ -32,6 +33,10 @@ class FormElement extends ZendFormElement
 
         if ($element instanceof Html) {
             return $element->getValue();
+        }
+
+        if ($element instanceof Table) {
+            return $element->render();
         }
 
         $markup = parent::render($element);

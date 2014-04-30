@@ -577,6 +577,29 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderTable default
+     */
+    public function testRenderTableDefault()
+    {
+        $settings = array(
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_DEFAULT);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('default');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
      * Test renderLayout
      */
     public function testRenderLayout()

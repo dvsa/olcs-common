@@ -4,6 +4,9 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use \Common\Form\Elements\Types\Table;
+use \Common\Form\Elements\InputFilters\NoRender;
+use \Common\Form\Elements\InputFilters\ActionButton;
 
 class FormRow extends ZendFormRow
 {
@@ -39,7 +42,19 @@ class FormRow extends ZendFormRow
             $elementErrors = $this->getElementErrorsHelper()->render($element);
         }
 
-        $markup = parent::render($element);
+        if ($element instanceof ActionButton) {
+            return parent::render($element);
+        }
+
+        if ($element instanceof NoRender) {
+            return '';
+        }
+
+        if ($element instanceof Table) {
+            $markup = $element->render();
+        } else {
+            $markup = parent::render($element);
+        }
 
         $type = $element->getAttribute('type');
         if ($type === 'multi_checkbox' && $type === 'radio') {
