@@ -139,8 +139,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Generate form from GET call
      *
-     * @todo Need to do something with $return to format the data
-     *
      * @param string $name
      * @param callable $callback
      * @param string $service
@@ -217,13 +215,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
     }
-    
+
     /**
-     * General getter for views
-     * @param array $params
-     * @return \Common\Controller\ViewModel
+     * Return a new view model
+     *
+     * @return \Zend\View\Model\ViewModel
      */
-    public function getView(array $params = null)
+    public function getViewModel($params = array())
     {
         return new ViewModel($params);
     }
