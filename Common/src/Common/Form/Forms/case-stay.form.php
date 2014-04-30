@@ -21,12 +21,13 @@ return [
                     'outcome' => [
                         'type' => 'select',
                         'label' => 'Outcome',
-                        'value_options' => 'case_stay_outcome'
+                        'value_options' => 'case_stay_outcome',
+                        'filters' => '\Common\Form\Elements\InputFilters\SelectEmpty'
                     ],
                     'notes' => [
                         'type' => 'textarea',
                         'label' => 'Notes',
-                        'filters' => '\Common\Form\Elements\InputFilters\TextMax4000Required',
+                        'filters' => '\Common\Form\Elements\InputFilters\TextMax4000',
                         'class' => 'extra-long'
                     ],
                 ]
