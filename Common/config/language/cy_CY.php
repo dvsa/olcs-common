@@ -354,6 +354,8 @@ return
         // Operating Centre
         'selfserve-app-subSection-operating-centre-oc-info' => 'W Enter the total amount of vehicles &amp; trailers
             that you want authorised on the licence you are applying for.',
+        'selfserve-app-subSection-operating-centre-oc-info-psv' => 'W Enter the total amount of vehicles that you
+        want authorised on the licence you are applying for.',
         'Authorisation' => 'W Authorisation',
         // Generic
         'N/A' => 'W Not applicable',
@@ -363,5 +365,17 @@ return
         'Week' => 'W Week',
         'Weeks' => 'W Weeks',
         'Continue' => 'W Continue',
-        'Confirm' => 'W Confirm'
+        'Confirm' => 'W Confirm',
+        //Stay types
+        'stay_status_granted' => 'Granted',
+        'stay_status_refused' => 'Refused',
+        //Appeals
+        'appeal_reason.1' => 'Application',
+        'appeal_reason.2' => 'Disciplinary PI',
+        'appeal_reason.3' => 'Disciplinary Non PI',
+        'appeal_reason.4' => 'Impounding',
+        'appeal_outcome.1' => 'Successful',
+        'appeal_outcome.2' => 'Partially Successful',
+        'appeal_outcome.3' => 'Dismissed',
+        'appeal_outcome.4' => 'Refer back to TC'
 );
