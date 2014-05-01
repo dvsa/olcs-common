@@ -37,6 +37,11 @@ return array(
         )
             ),
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
+    'form_elements' => [
+        'invokables' => [
+            'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
+        ]
+    ],
     'tables' => array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
