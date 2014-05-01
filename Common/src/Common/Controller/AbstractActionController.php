@@ -215,7 +215,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
     }
-    
+
     /**
      * Return a new view model
      *
