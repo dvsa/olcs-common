@@ -4,26 +4,29 @@
  * An abstract controller that all ordinary OLCS controllers inherit from.
  * Provides a user journey form flow for generating pages.
  *
- * @package     olcscommon
- * @subpackage  controller
- * @author      Shaun Lizzio <shaun.lizzio@valtech.co.uk>
+ * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
 
 namespace Common\Controller;
 
 use Common\Controller\FormActionController;
-use Zend\Session\Container;
 
+/**
+ * An abstract controller that all ordinary OLCS controllers inherit from.
+ * Provides a user journey form flow for generating pages.
+ *
+ * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
+ */
 abstract class FormJourneyActionController extends FormActionController
 {
 
     protected $currentStep;
     protected $currentSection;
-    
+
     /**
      * Method that is called at the end of a journey.
      */
-    abstract function completeAction(); // must return \Zend\ViewModel
+    abstract protected function completeAction();
 
     /**
      * Persists the form data for a section.
@@ -33,41 +36,40 @@ abstract class FormJourneyActionController extends FormActionController
      */
     public function persistFormData($form)
     {
-        /*$step = $this->getCurrentStep();
+        /* $step = $this->getCurrentStep();
 
-        $formName = $form->getName();
+          $formName = $form->getName();
 
-        $session = new Container($formName);
+          $session = new Container($formName);
 
-        $data = $form->getData();
-        $session->$step = $data;
+          $data = $form->getData();
+          $session->$step = $data;
          */
-         
     }
 
     /**
      * Gets the persisted form data for current step
-  
+
      * @throws \Common\Exception\Exception
      * @return array
      */
     public function getPersistedFormData()
-    { 
+    {
         $stepCamelCase = str_replace('-', ' ', $this->getCurrentStep());
         $stepCamelCase = ucwords($stepCamelCase);
         $stepCamelCase = str_replace(' ', '', $stepCamelCase);
-        
+
         $methodName = sprintf("get%sFormData", $stepCamelCase);
         $callback = array($this, $methodName);
-        
-        if (is_callable($callback) && method_exists($callback[0], $callback[1])){
+
+        if (is_callable($callback) && method_exists($callback[0], $callback[1])) {
             $persistedData = call_user_func($callback);
-            if (!is_array($persistedData)){
+            if (!is_array($persistedData)) {
                 throw new \Common\Exception\Exception('Invalid data returned from method: ' . $methodName);
             }
             return $persistedData;
         }
-        
+
         return array();
     }
 
@@ -83,26 +85,11 @@ abstract class FormJourneyActionController extends FormActionController
     {
         $step = $this->getCurrentStep();
         $section = $this->getCurrentSection();
-        if (isset($formConfig[$section]['fieldsets'])) 
-        {
+        if (isset($formConfig[$section]['fieldsets'])) {
             $formConfig[$section] = $formGenerator->addFieldset($formConfig[$section], $step);
         }
         return $formConfig;
     }
-
-    /**
-     * Loads the form config file NOT USED
-     * @param string $section
-     * @return array
-     *
-      private function loadFormConfig($section)
-      {
-      if (!file_exists(__DIR__.'/../Form/Forms/'.$section.'.form.php')) {
-      throw new \Exception("Form $section has no specification config!");
-      }
-      $formConfig = include __DIR__.'/../Form/Forms/'.$section.'.form.php';
-      return $formConfig;
-      } */
 
     /**
      * Method to return the current step
@@ -111,8 +98,8 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function getCurrentStep()
     {
-        return $this->currentStep;        
-   }
+        return $this->currentStep;
+    }
 
     /**
      * Method to set the current step
@@ -124,7 +111,7 @@ abstract class FormJourneyActionController extends FormActionController
         $this->currentStep = $step;
         return $this;
     }
-    
+
     /**
      * Returns the section of the application where this form resides.
      * Set in the controller that processes the form
@@ -146,7 +133,7 @@ abstract class FormJourneyActionController extends FormActionController
         $this->currentSection = $section;
         return $this;
     }
-    
+
     /**
      * Determines the next step. The next step is used to redirect to a url
      * This needs to work from the config file for the form and look at
@@ -161,15 +148,16 @@ abstract class FormJourneyActionController extends FormActionController
         $formData = $form->getData($this->getCurrentStep());
         foreach ($form->getFieldsets() as $fieldset) {
             $next_step_options = $fieldset->getOption('next_step')['values'];
-            
+
             foreach ($fieldset->getElements() as $element) {
                 $element_value = $element->getValue();
                 if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
                     return $next_step_options[$element->getValue()];
                 }
             }
-            if (isset($fieldset->getOption('next_step')['default']))
+            if (isset($fieldset->getOption('next_step')['default'])) {
                 return $fieldset->getOption('next_step')['default'];
+            }
         }
         throw new \RuntimeException('Next step not defined, for any elements');
     }
@@ -254,51 +242,54 @@ abstract class FormJourneyActionController extends FormActionController
      * Method to determine the form that was posted. Searches all posted items
      * and if any start with 'submit_' then the remaining string is returned
      * to signify the submitted button pressed.
-     * 
+     *
      * @param \Zend\Http\Request $request
      * @return string
      */
     protected function determineSubmitButtonPressed(\Zend\Http\Request $request)
     {
         $form_posted = '';
-        if ($request->isPost()) 
-        {
+        if ($request->isPost()) {
             $posted_data = $request->getPost($this->getCurrentStep());
-            if (is_array($posted_data))
-            {
-                foreach($posted_data as $key => $value)
-                {
-                    if (substr($key, 0, 7) == 'submit_')
-                    {
+            if (is_array($posted_data)) {
+                foreach ($posted_data as $key => $value) {
+                    if (substr($key, 0, 7) == 'submit_') {
                         return substr($key, 7);
                     }
                 }
             }
-        }            
+        }
         return $form_posted;
     }
-    
+
     protected function getStepProcessMethod($step)
     {
         // convert step to camelcase method
         $return = 'process';
-        
+
         $step = str_replace('-', ' ', $step);
         $step = ucwords($step);
         $step = str_replace(' ', '', $step);
-        return 'process'.$step;
+        return 'process' . $step;
     }
-    
+
     /**
      * Get licence entity based on route id value
      *
      * @return array|object
      */
-    protected function _getLicenceEntity()
+    protected function getLicenceEntity()
     {
         $applicationId = (int) $this->params()->fromRoute('applicationId');
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId));
-        return $this->makeRestCall('Licence', 'GET', array('id' => $application['licence']));
-    }
+
+        $bundle = array(
+            'children' => array(
+                'licence',
+            ),
+        );
+
+        $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
+        return $application['licence'];
+     }
     
 }

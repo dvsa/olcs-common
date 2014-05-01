@@ -11,6 +11,7 @@
 namespace Common\Controller;
 
 use Common\Util;
+use Zend\View\Model\ViewModel;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
@@ -138,8 +139,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Generate form from GET call
      *
-     * @todo Need to do something with $return to format the data
-     *
      * @param string $name
      * @param callable $callback
      * @param string $service
@@ -188,7 +187,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $params[$itemIdParam] = $id;
         }
 
-        $this->redirect()->toRoute($route, $params);
+        $this->redirect()->toRoute($route, $params, [], true);
     }
 
     /**
@@ -215,5 +214,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
+    }
+
+    /**
+     * Return a new view model
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function getViewModel($params = array())
+    {
+        return new ViewModel($params);
     }
 }

@@ -263,6 +263,16 @@ class TableBuilder
     }
 
     /**
+     * Set variables
+     *
+     * @param array $variables
+     */
+    public function setVariables($variables = array())
+    {
+        $this->variables = $variables;
+    }
+
+    /**
      * Get variables
      *
      * @return array
@@ -425,7 +435,7 @@ class TableBuilder
         }
 
         $config = $this->getConfigFromFile($name);
-
+//print_r($config);
         $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
 
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
@@ -437,7 +447,7 @@ class TableBuilder
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
-        $this->variables = isset($config['variables']) ? $config['variables'] : array();
+        $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
         $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
         return true;
@@ -481,7 +491,7 @@ class TableBuilder
         $this->setSort(isset($array['sort']) ? $array['sort'] : '');
         $this->setOrder(isset($array['order']) ? $array['order'] : 'ASC');
 
-        $this->variables = array_merge($this->getVariables(), $array);
+        $this->setVariables(array_merge($this->getVariables(), $array));
     }
 
     /**
@@ -490,7 +500,7 @@ class TableBuilder
     public function setupAction()
     {
         if (!isset($this->getVariables()['action'])) {
-
+            $this->variables['hidden'] = isset($this->settings['crud']['formName']) ? $this->settings['crud']['formName'] : 'default';
             $this->variables['action'] = $this->generateUrl();
         }
     }
@@ -885,6 +895,30 @@ class TableBuilder
         }
 
         return $this->replaceContent($wrapper, array('content' => $content));
+    }
+
+    /**
+     * Render extra rows
+     */
+    public function renderExtraRows()
+    {
+        $content = '';
+
+        if (count($this->getRows()) === 0) {
+
+            $columns = $this->getColumns();
+
+            $vars = array(
+                'colspan' => count($columns),
+                'message' => isset($this->variables['empty_message'])
+                    ? $this->variables['empty_message']
+                    : 'The table is empty'
+            );
+
+            $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
+        }
+
+        return $content;
     }
 
     /**

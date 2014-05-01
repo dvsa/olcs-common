@@ -50,6 +50,10 @@ return array(
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'Proposal to revoke'
     ),
+    'case_stay_outcome' => [
+        'stay_status_granted' => 'Granted',
+        'stay_status_refused' => 'Refused'
+    ],
     'operator_locations' => [
         'uk' => 'Great Britain',
         'ni' => 'Northern Ireland'
@@ -92,7 +96,7 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
-    'vehicle_body_types' => 
+    'vehicle_body_types' =>
     [
         'vhl_body_type.flat' => 'Flat sided or skeletal',
         'vhl_body_type.box' => 'Box body, or van, or curtain side',
@@ -374,5 +378,86 @@ return array(
         'appeal_outcome.2' => 'Partially Successful',
         'appeal_outcome.3' => 'Dismissed',
         'appeal_outcome.4' => 'Refer back to TC'
+    ],
+    'submission_recommendation' => [
+        'submission_recommendation.other' => 'Other',
+        'submission_recommendation.propose-to-revoke' => 'Propose to revoke',
+        'submission_recommendation.warning-letter' => 'Warning letter',
+        'submission_recommendation.nfa' => 'NFA',
+        'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
+        'submission_recommendation.public-inquiry' => 'Public Enquiry'
+    ],
+     'submission_decision' => [
+        'submission_decision.agree' => 'Agree',
+        'submission_decision.partially-agree' => 'Partially agree',
+        'submission_decision.disagree' => 'Disagree',
+        'submission_decision.further-info' => 'Further information required'
+    ],
+    'complaint_types' =>
+    [
+        'complaint_type.cor' => 'Continuing to operate after revocation',
+        'complaint_type.cov' => 'Condition of vehicles',
+        'complaint_type.dgm' => 'Driving in a dangerous manner',
+        'complaint_type.dsk' => 'Driver smoking',
+        'complaint_type.fls' => 'Failure to operate local service',
+        'complaint_type.lvu' => 'Leaving vehicle unattended with engine running',
+        'complaint_type.ndl' => 'Not having correct category of drivers licence',
+        'complaint_type.nol' => 'No operators licence',
+        'complaint_type.olr' => 'Operating local service off route',
+        'complaint_type.ovb' => 'Obstructing other vehicles at bus station/bus stop',
+        'complaint_type.pvo' => 'Parking vehicle out with operating centre',
+        'complaint_type.rds' => 'Registration of duplicate services',
+        'complaint_type.rta' => 'Registered times not being adhered to',
+        'complaint_type.sln' => 'Speed limiters non-operative',
+        'complaint_type.spe' => 'Speeding',
+        'complaint_type.tgo' => 'Tachograph offences',
+        'complaint_type.ufl' => 'Unsafe roads',
+        'complaint_type.ump' => 'Use of mobile phones while driving',
+        'complaint_type.urd' => 'Using red diesel',
+        'complaint_type.vpo' => 'Vehicles parked and causing an obstruction',
+    ],
+    'complaint_status_types' =>
+    [
+        'complaint_status.ack' => 'Acknowledged',
+        'complaint_status.pin' => 'PI Notififed',
+        'complaint_status.rfs' => 'Review Form Sent',
+        'complaint_status.vfr' => 'Valid For Review',
+        'complaint_status.yst' => 'Are you still there'
+    ],
+    'inspection_interval_vehicle' => [
+        'inspection_interval_vehicle.1' => '1 {Week}',
+        'inspection_interval_vehicle.2' => '2 {Weeks}',
+        'inspection_interval_vehicle.3' => '3 {Weeks}',
+        'inspection_interval_vehicle.4' => '4 {Weeks}',
+        'inspection_interval_vehicle.5' => '5 {Weeks}',
+        'inspection_interval_vehicle.6' => '6 {Weeks}',
+        'inspection_interval_vehicle.7' => '7 {Weeks}',
+        'inspection_interval_vehicle.8' => '8 {Weeks}',
+        'inspection_interval_vehicle.9' => '9 {Weeks}',
+        'inspection_interval_vehicle.10' => '10 {Weeks}',
+        'inspection_interval_vehicle.11' => '11 {Weeks}',
+        'inspection_interval_vehicle.12' => '12 {Weeks}',
+        'inspection_interval_vehicle.13' => '13 {Weeks}'
+    ],
+    'inspection_interval_trailer' => [
+        'inspection_interval_trailer.1' => '1 {Week}',
+        'inspection_interval_trailer.2' => '2 {Weeks}',
+        'inspection_interval_trailer.3' => '3 {Weeks}',
+        'inspection_interval_trailer.4' => '4 {Weeks}',
+        'inspection_interval_trailer.5' => '5 {Weeks}',
+        'inspection_interval_trailer.6' => '6 {Weeks}',
+        'inspection_interval_trailer.7' => '7 {Weeks}',
+        'inspection_interval_trailer.8' => '8 {Weeks}',
+        'inspection_interval_trailer.9' => '9 {Weeks}',
+        'inspection_interval_trailer.10' => '10 {Weeks}',
+        'inspection_interval_trailer.11' => '11 {Weeks}',
+        'inspection_interval_trailer.12' => '12 {Weeks}',
+        'inspection_interval_trailer.13' => '13 {Weeks}',
+        'inspection_interval_trailer.0' => 'N/A'
+    ],
+    'tachograph_analyser' => [
+        'tachograph_analyser.1' => 'tachographAnalyser-yourself',
+        'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
+        'tachograph_analyser.3' => 'N/A',
     ]
 );

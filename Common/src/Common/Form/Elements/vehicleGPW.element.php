@@ -1,7 +1,7 @@
 <?php
 return ['vehicleGPW' =>
             [
-            'type' => '\Common\Form\Elements\InputFilters\Name',
+            'type' => '\Common\Form\Elements\InputFilters\Gpw',
             'name' => 'gross_plated_weight',
             'options' => [
                 'label' => 'Gross Plated Weight',
