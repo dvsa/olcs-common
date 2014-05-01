@@ -12,7 +12,7 @@ return [
                 'elements' => [
                     'requestDate' => [
                         'type' => 'dateSelect',
-                        'label' => 'Date of request*:',
+                        'label' => 'Date of request',
                         'class' => 'extra-long',
                         'options' => array(
                             'min_year' => 2005
@@ -20,12 +20,14 @@ return [
                     ],
                     'outcome' => [
                         'type' => 'select',
-                        'label' => 'Outcome*:',
-                        'value_options' => 'case_stay_outcome'
+                        'label' => 'Outcome',
+                        'value_options' => 'case_stay_outcome',
+                        'filters' => '\Common\Form\Elements\InputFilters\SelectEmpty'
                     ],
                     'notes' => [
                         'type' => 'textarea',
-                        'label' => 'Notes:',
+                        'label' => 'Notes',
+                        'filters' => '\Common\Form\Elements\InputFilters\TextMax4000',
                         'class' => 'extra-long'
                     ],
                 ]
@@ -58,4 +60,3 @@ return [
         ]
     ]
 ];
-

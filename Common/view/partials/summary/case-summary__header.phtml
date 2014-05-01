@@ -1,3 +1,9 @@
         <div class="case-summary__header">
             <h5><?php echo $this->translate($title); ?></h5>
+            <a href="<?php echo $this->url(
+                    'licence_case_action',
+                    array('action' => 'edit'),
+                    array(),
+                    true
+                );?>" class="right-aligned">Edit</a>
         </div>

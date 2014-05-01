@@ -1,28 +1,27 @@
 <?php
 
 /**
- * Text
+ * Select with empty allowed
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Text as ZendElement;
+use Zend\Form\Element\Select as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Text
+ * Select with empty allowed
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class Text extends ZendElement implements InputProviderInterface
+class SelectEmpty extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
-    protected $continueIfEmpty = false;
+    protected $continueIfEmpty = true;
     protected $allowEmpty = true;
-    protected $max = null;
 
     public function __construct($name = null, $options = array())
     {
@@ -47,19 +46,11 @@ class Text extends ZendElement implements InputProviderInterface
     public function getInputSpecification()
     {
         $specification = [
-            'name' => $this->getName(),
             'required' => $this->required,
             'continue_if_empty' => $this->continueIfEmpty,
             'allow_empty' => $this->allowEmpty,
-            'filters' => [
-                ['name' => 'Zend\Filter\StringTrim']
-            ],
             'validators' => $this->getValidators()
         ];
-
-        if (!empty($this->max)) {
-            $specification['validators'][] = new ZendValidator\StringLength(['min' => 2, 'max' => $this->max]);
-        }
 
         return $specification;
     }
