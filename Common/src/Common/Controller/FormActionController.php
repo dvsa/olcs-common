@@ -112,7 +112,11 @@ abstract class FormActionController extends AbstractActionController
 
         foreach ($tables as $fieldsetName => $details) {
 
-            $table = $this->getTable($details['config'], $details['data']);
+            $table = $this->getTable(
+                $details['config'],
+                $details['data'],
+                (isset($details['variables']) ? $details['variables'] : array())
+            );
             $form->get($fieldsetName)->get('table')->setTable($table);
             $form->get($fieldsetName)->get('rows')->setValue(count($table->getRows()));
         }

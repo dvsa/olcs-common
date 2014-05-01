@@ -973,7 +973,7 @@ class TableBuilder
             $vars = array(
                 'colspan' => count($columns),
                 'message' => isset($this->variables['empty_message'])
-                    ? $this->variables['empty_message']
+                    ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
                     : 'The table is empty'
             );
 
