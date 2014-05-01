@@ -391,7 +391,38 @@ return array(
         'submission_decision.agree' => 'Agree',
         'submission_decision.partially-agree' => 'Partially agree',
         'submission_decision.disagree' => 'Disagree',
-        'submission_decision.further-info' => 'Further information required',
+        'submission_decision.further-info' => 'Further information required'
+    ],
+    'complaint_types' =>
+    [
+        'complaint_type.cor' => 'Continuing to operate after revocation',
+        'complaint_type.cov' => 'Condition of vehicles',
+        'complaint_type.dgm' => 'Driving in a dangerous manner',
+        'complaint_type.dsk' => 'Driver smoking',
+        'complaint_type.fls' => 'Failure to operate local service',
+        'complaint_type.lvu' => 'Leaving vehicle unattended with engine running',
+        'complaint_type.ndl' => 'Not having correct category of drivers licence',
+        'complaint_type.nol' => 'No operators licence',
+        'complaint_type.olr' => 'Operating local service off route',
+        'complaint_type.ovb' => 'Obstructing other vehicles at bus station/bus stop',
+        'complaint_type.pvo' => 'Parking vehicle out with operating centre',
+        'complaint_type.rds' => 'Registration of duplicate services',
+        'complaint_type.rta' => 'Registered times not being adhered to',
+        'complaint_type.sln' => 'Speed limiters non-operative',
+        'complaint_type.spe' => 'Speeding',
+        'complaint_type.tgo' => 'Tachograph offences',
+        'complaint_type.ufl' => 'Unsafe roads',
+        'complaint_type.ump' => 'Use of mobile phones while driving',
+        'complaint_type.urd' => 'Using red diesel',
+        'complaint_type.vpo' => 'Vehicles parked and causing an obstruction',
+    ],
+    'complaint_status_types' =>
+    [
+        'complaint_status.ack' => 'Acknowledged',
+        'complaint_status.pin' => 'PI Notififed',
+        'complaint_status.rfs' => 'Review Form Sent',
+        'complaint_status.vfr' => 'Valid For Review',
+        'complaint_status.yst' => 'Are you still there'
     ],
     'inspection_interval_vehicle' => [
         'inspection_interval_vehicle.1' => '1 {Week}',

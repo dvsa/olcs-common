@@ -157,11 +157,11 @@ trait RestCallTrait
         if (is_numeric($response)) {
             switch ($response) {
                 case 400:
-                    throw new BadRequestException();
+                    throw new BadRequestException('400 Bad request');
                 case 404:
-                    throw new ResourceNotFoundException();
+                    throw new ResourceNotFoundException('Resource not found');
                 case 409:
-                    throw new ResourceConflictException();
+                    throw new ResourceConflictException('Version conflict');
             }
         }
 
