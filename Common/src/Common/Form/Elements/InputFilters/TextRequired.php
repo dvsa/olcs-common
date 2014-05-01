@@ -18,4 +18,5 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 class TextRequired extends Text implements InputProviderInterface
 {
     protected $required = true;
+    protected $allowEmpty = false;
 }

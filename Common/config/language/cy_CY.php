@@ -327,6 +327,7 @@ return
         'case-submission' => 'W Case submission',
         'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
             specific consent of the Traffic Commissioner',
+        'submission-actions' => 'Submission Actions',
         // Vehicle safety form
         'selfserve-app-vehicle-safety-safety-vehicleInspectionInterval' => 'W Maximum time between vehicle safety
             inspections',
@@ -352,6 +353,8 @@ return
         // Operating Centre
         'selfserve-app-subSection-operating-centre-oc-info' => 'W Enter the total amount of vehicles &amp; trailers
             that you want authorised on the licence you are applying for.',
+        'selfserve-app-subSection-operating-centre-oc-info-psv' => 'W Enter the total amount of vehicles that you
+        want authorised on the licence you are applying for.',
         'Authorisation' => 'W Authorisation',
         // Generic
         'N/A' => 'W Not applicable',
