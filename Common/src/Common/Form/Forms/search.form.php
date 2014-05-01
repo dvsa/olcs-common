@@ -78,7 +78,7 @@ return [
                     ],
                     'vehicleRegMark' => [
                         'type' => 'text',
-                        'label' => 'Vehicle registration mark',
+                        'label' => 'Vehicle registration mark ',
                         'class' => 'medium'
                     ],
                     'diskSerialNumber' => [
