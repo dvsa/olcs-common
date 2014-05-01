@@ -154,6 +154,13 @@ class TableBuilder
     private $actionFieldName = 'action';
 
     /**
+     * Holds the fieldset name
+     *
+     * @var null
+     */
+    private $fieldset = null;
+
+    /**
      * Setter for actionFieldName
      *
      * @param string $name
@@ -161,6 +168,26 @@ class TableBuilder
     public function setActionFieldName($name)
     {
         $this->actionFieldName = $name;
+    }
+
+    /**
+     * Setter for Fieldset
+     *
+     * @param string $name
+     */
+    public function setFieldset($name)
+    {
+        $this->fieldset = $name;
+    }
+
+    /**
+     * Getter for fieldset
+     *
+     * @return string
+     */
+    public function getFieldset()
+    {
+        return $this->fieldset;
     }
 
     /**
@@ -770,6 +797,10 @@ class TableBuilder
      */
     private function getActionFieldName()
     {
+        if (!empty($this->fieldset)) {
+            return $this->fieldset . '[' . $this->actionFieldName . ']';
+        }
+
         return $this->actionFieldName;
     }
 
@@ -931,6 +962,13 @@ class TableBuilder
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
+        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
+
+            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
+            $type = new $typeClass($this);
+            $content = $type->render($row, $column);
+        }
+
         if (isset($column['formatter'])) {
 
             $return = $this->callFormatter($column, $row);

@@ -15,6 +15,10 @@ return array(
         ),
         'rows' => array(
             'type' => 'hidden'
+        ),
+        'id' => array(
+            'type' => 'hidden',
+            'filters' => '\Common\Form\Elements\InputFilters\NoRender'
         )
     )
 );

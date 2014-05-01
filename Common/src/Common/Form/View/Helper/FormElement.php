@@ -6,6 +6,7 @@ use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\InputFilters\ActionLink;
 
 class FormElement extends ZendFormElement
 {
@@ -30,6 +31,11 @@ class FormElement extends ZendFormElement
     public function render(ZendElementInterface $element)
     {
         $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
+
+        if ($element instanceof ActionLink) {
+
+            return '<a href="' . $element->getValue() . '">' . $element->getLabel() . '</a>';
+        }
 
         if ($element instanceof Html) {
             return $element->getValue();

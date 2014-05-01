@@ -4,9 +4,10 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
-use \Common\Form\Elements\Types\Table;
-use \Common\Form\Elements\InputFilters\NoRender;
-use \Common\Form\Elements\InputFilters\ActionButton;
+use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\InputFilters\NoRender;
+use Common\Form\Elements\InputFilters\ActionButton;
+use Common\Form\Elements\InputFilters\ActionLink;
 
 class FormRow extends ZendFormRow
 {
@@ -42,7 +43,7 @@ class FormRow extends ZendFormRow
             $elementErrors = $this->getElementErrorsHelper()->render($element);
         }
 
-        if ($element instanceof ActionButton) {
+        if ($element instanceof ActionButton || $element instanceof ActionLink) {
             return parent::render($element);
         }
 

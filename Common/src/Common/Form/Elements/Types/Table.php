@@ -32,7 +32,7 @@ class Table extends Element
     {
         $this->table = $table;
 
-        $table->setActionFieldName($this->getName() . '[action]');
+        $table->setFieldset($this->getName());
     }
 
     /**
