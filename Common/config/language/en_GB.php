@@ -374,8 +374,11 @@ return array(
     // Complaints
     'add-complaint' => 'Add complaint',
     'edit-complaint' => 'Edit complaint',
-    'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'case-submission-text' => 'This document is restricted and not for
+        disclosure to any third parties without the specific consent of
+        the Traffic Commissioner',
 
     //Stay types
     'stay_status_granted' => 'Granted',
