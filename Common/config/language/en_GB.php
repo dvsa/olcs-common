@@ -376,6 +376,11 @@ return array(
     'Weeks' => 'Weeks',
     'Continue' => 'Continue',
     'Confirm' => 'Confirm',
+    'payment-details' => 'Payment details',
+    'declarations' => 'Declarations',
+    'vehicle-and-safety' => 'Vehicle & safety',
+    'operating-centres' => 'Operating centres',
+    'your-business' => 'Your business',
 
     // Complaints
     'add-complaint' => 'Add complaint',
