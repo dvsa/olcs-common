@@ -5,7 +5,7 @@ use Zend\Validator\AbstractValidator as AbstractValidator;
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
 
-class StringLessThan extends AbstractValidator
+class DateLessThan extends AbstractValidator
 {
     /**
      * Error codes
@@ -92,13 +92,16 @@ class StringLessThan extends AbstractValidator
      */
     public function isValid($value, array $context = null)
     {
-        $thisValue = implode('-', [$value['year'], $value['month'], $value['day']]);
+        //die(print_r(func_get_args(), 1));
+        //$thisValue = implode('-', [$value['year'], $value['month'], $value['day']]);
+
+        $thisValue = $value;
 
         $c = $context[$this->getToken()];
         $compareValue = implode('-', [$c['year'], $c['month'], $c['day']]);
 
         if ($thisValue > $compareValue) {
-            $this->error(sprintf(self::NOT_LESS_THAN, ucfirst($this->getToken())));
+            $this->error(self::NOT_LESS_THAN);
             return false;
         }
 
