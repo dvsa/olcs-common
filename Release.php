@@ -190,7 +190,7 @@ class Runner
     private function getRepos()
     {
         return array(
-            new Repo(__DIR__, $this),
+            //new Repo(__DIR__, $this),
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
@@ -219,7 +219,7 @@ class Runner
                     break;
             }
 
-            $this->nextRelease = array($newMajor, $newMinor);
+            $this->nextRelease = array((string)$newMajor, (string)$newMinor);
         }
 
         return $this->nextRelease;
@@ -326,7 +326,7 @@ class Repo
     public function setVersion($version)
     {
         if (empty($version)) {
-            throw new Exception('Version number is empty');
+            throw new Exception($this->getName() . ': Version number is empty');
         }
         $this->version = 'v' . $version;
     }
@@ -338,6 +338,9 @@ class Repo
      */
     public function getVersion()
     {
+        if (empty($this->version)) {
+            throw new Exception($this->getName() . ': Version number is empty');
+        }
         return $this->version;
     }
 
@@ -446,6 +449,8 @@ class Repo
     public function createRelease()
     {
         $this->output('Creating release ' . $this->getVersion());
+        echo 'git flow release start ' . $this->getVersion();
+        exit;
         shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $this->getVersion());
         $this->loadStatus();
     }
