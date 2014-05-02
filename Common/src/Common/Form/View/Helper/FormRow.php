@@ -8,6 +8,7 @@ use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Zend\Form\Element\Hidden;
 
 class FormRow extends ZendFormRow
 {
@@ -66,7 +67,7 @@ class FormRow extends ZendFormRow
             $markup = $elementErrors . $markup;
         }
 
-        if (!isset($noWrap)) {
+        if (! ($element instanceof Hidden) && !isset($noWrap)) {
             $markup = sprintf(self::$format, $markup);
         }
 

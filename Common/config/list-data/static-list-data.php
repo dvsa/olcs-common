@@ -379,6 +379,20 @@ return array(
         'appeal_outcome.3' => 'Dismissed',
         'appeal_outcome.4' => 'Refer back to TC'
     ],
+    'submission_recommendation' => [
+        'submission_recommendation.other' => 'Other',
+        'submission_recommendation.propose-to-revoke' => 'Propose to revoke',
+        'submission_recommendation.warning-letter' => 'Warning letter',
+        'submission_recommendation.nfa' => 'NFA',
+        'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
+        'submission_recommendation.public-inquiry' => 'Public Inquiry'
+    ],
+     'submission_decision' => [
+        'submission_decision.agree' => 'Agree',
+        'submission_decision.partially-agree' => 'Partially agree',
+        'submission_decision.disagree' => 'Disagree',
+        'submission_decision.further-info' => 'Further information required'
+    ],
     'complaint_types' =>
     [
         'complaint_type.cor' => 'Continuing to operate after revocation',

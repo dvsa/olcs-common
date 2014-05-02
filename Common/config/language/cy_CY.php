@@ -327,6 +327,7 @@ return
         'case-submission' => 'W Case submission',
         'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
             specific consent of the Traffic Commissioner',
+        'submission-actions' => 'Submission Actions',
         // Vehicle safety form
         'selfserve-app-vehicle-safety-safety-vehicleInspectionInterval' => 'W Maximum time between vehicle safety
             inspections',
