@@ -194,8 +194,7 @@ class Runner
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
-            new Repo(__DIR__ . '/../olcs-selfserve', $this),
-            new Repo(__DIR__ . '/../olcs-frontend-styleguide', $this)
+            new Repo(__DIR__ . '/../olcs-selfserve', $this)
         );
     }
 
@@ -236,9 +235,21 @@ class Runner
     {
         $tag = shell_exec('git tag');
 
+        $tag = trim($tag, "\n");
+
+        if (empty($tag)) {
+            throw new Exception('No current tag found');
+        }
+
         $tags = explode("\n", $tag);
 
-        $lastTag = array_pop($tags);
+        if (count($tags) === 1) {
+
+            $lastTag = $tags[0];
+
+        } else {
+            $lastTag = array_pop($tags);
+        }
 
         $lastTag = str_replace('v', '', $lastTag);
 
@@ -314,6 +325,9 @@ class Repo
      */
     public function setVersion($version)
     {
+        if (empty($version)) {
+            throw new Exception('Version number is empty');
+        }
         $this->version = 'v' . $version;
     }
 
