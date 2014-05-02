@@ -99,7 +99,9 @@ class Runner
 
         $version = $version[0] . '.' . $version[1];
 
-        foreach ($this->getRepos() as $repo) {
+        $repos = $this->getRepos();
+
+        foreach ($repos as &$repo) {
 
             $repo->setVersion($version);
 
@@ -125,19 +127,19 @@ class Runner
         }
 
         $this->output('Creating release branches', self::MESSAGE_INFO);
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             $repo->createRelease();
         }
 
         $this->updateReleaseVersion();
 
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             $repo->updateComposerJson();
         }
 
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             if ($repo->hasUncommittedChanges()) {
 
@@ -339,6 +341,7 @@ class Repo
     public function getVersion()
     {
         if (empty($this->version)) {
+
             throw new Exception($this->getName() . ': Version number is empty');
         }
 
