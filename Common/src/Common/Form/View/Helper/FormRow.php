@@ -40,10 +40,6 @@ class FormRow extends ZendFormRow
             $elementErrors = $this->getElementErrorsHelper()->render($element);
         }
 
-        if ($element instanceof Hidden) {
-            return parent::render($element);
-        }
-
         $markup = parent::render($element);
 
         $type = $element->getAttribute('type');
@@ -55,7 +51,7 @@ class FormRow extends ZendFormRow
             $markup = $elementErrors . $markup;
         }
 
-        if (!isset($noWrap)) {
+        if (! ($element instanceof Hidden) && !isset($noWrap)) {
             $markup = sprintf(self::$format, $markup);
         }
 
