@@ -240,6 +240,8 @@ class Runner
 
         $lastTag = array_pop($tags);
 
+        $lastTag = str_replace('v', '', $lastTag);
+
         return explode('.', $lastTag, 2);
     }
 }
@@ -312,7 +314,7 @@ class Repo
      */
     public function setVersion($version)
     {
-        $this->version = $version;
+        $this->version = 'v' . $version;
     }
 
     /**
