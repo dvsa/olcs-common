@@ -1,5 +1,9 @@
 <?php
+
+$release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
+
 return array(
+    'version' => (isset($release['version']) ? $release['version'] : ''),
     'view_helpers' => array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
@@ -7,8 +11,7 @@ return array(
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
-            'htmlTable'     => 'Common\View\Helper\HtmlTable',
-            'crudHtmlTable' => 'Common\View\Helper\CrudHtmlTable'
+            'version' => 'Common\View\Helper\Version'
         )
     ),
     'view_manager' => array(
