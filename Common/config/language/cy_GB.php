@@ -326,7 +326,7 @@ return array(
     'case-submission' => 'W Case submission',
     'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
-    'submission-actions' => 'W Submission Action(s)',
+    'submission-actions' => 'W Submission Actions',
     'submission-recommend' => 'W Submission recommendation',
     'submission-recommend-text' => 'W Add a recommendation to this submission',
     'submission-decision' => 'W Submission decision',
