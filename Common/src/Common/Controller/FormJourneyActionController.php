@@ -278,10 +278,12 @@ abstract class FormJourneyActionController extends FormActionController
      *
      * @return array|object
      */
-    protected function getLicenceEntity()
+    protected function getLicenceEntity($applicationId=false)
     {
-        $applicationId = (int) $this->params()->fromRoute('applicationId');
-
+        if ( ! $applicationId ) {
+            $applicationId = (int) $this->params()->fromRoute('applicationId');
+        }
+        
         $bundle = array(
             'children' => array(
                 'licence',
@@ -291,5 +293,5 @@ abstract class FormJourneyActionController extends FormActionController
         $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
         return $application['licence'];
      }
-    
+
 }
