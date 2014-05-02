@@ -166,7 +166,7 @@ class Runner
 
             $release['version'] = $version[0] . '.' . $version[1];
 
-            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release))) {
+            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
                 throw new Exception('Unable to write to release.json');
             }
         } else {
@@ -523,7 +523,7 @@ class Repo
                 }
             }
 
-            if (!file_put_contents($composerFile, json_encode($composer))) {
+            if (!file_put_contents($composerFile, json_encode($composer, JSON_UNESCAPED_SLASHES))) {
 
                 throw new Exception($this->getName() . ': Could not write to ' . $composerFile);
             }
