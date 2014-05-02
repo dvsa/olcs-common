@@ -99,7 +99,9 @@ class Runner
 
         $version = $version[0] . '.' . $version[1];
 
-        foreach ($this->getRepos() as $repo) {
+        $repos = $this->getRepos();
+
+        foreach ($repos as &$repo) {
 
             $repo->setVersion($version);
 
@@ -125,19 +127,19 @@ class Runner
         }
 
         $this->output('Creating release branches', self::MESSAGE_INFO);
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             $repo->createRelease();
         }
 
         $this->updateReleaseVersion();
 
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             $repo->updateComposerJson();
         }
 
-        foreach ($this->getRepos() as $repo) {
+        foreach ($repos as &$repo) {
 
             if ($repo->hasUncommittedChanges()) {
 
@@ -164,7 +166,7 @@ class Runner
 
             $release['version'] = $version[0] . '.' . $version[1];
 
-            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release))) {
+            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
                 throw new Exception('Unable to write to release.json');
             }
         } else {
@@ -190,7 +192,7 @@ class Runner
     private function getRepos()
     {
         return array(
-            //new Repo(__DIR__, $this),
+            new Repo(__DIR__, $this),
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
@@ -328,7 +330,7 @@ class Repo
         if (empty($version)) {
             throw new Exception($this->getName() . ': Version number is empty');
         }
-        $this->version = 'v' . $version;
+        $this->version = 'v' . (string)$version;
     }
 
     /**
@@ -339,8 +341,14 @@ class Repo
     public function getVersion()
     {
         if (empty($this->version)) {
+
             throw new Exception($this->getName() . ': Version number is empty');
         }
+
+        if (!preg_match('/^v[0-9]+\.[0-9]+$/', $this->version)) {
+            throw new Exception($this->getName() . ' Invalid version number ' . $this->version);
+        }
+
         return $this->version;
     }
 
@@ -449,8 +457,6 @@ class Repo
     public function createRelease()
     {
         $this->output('Creating release ' . $this->getVersion());
-        echo 'git flow release start ' . $this->getVersion();
-        exit;
         shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $this->getVersion());
         $this->loadStatus();
     }
@@ -509,7 +515,7 @@ class Repo
 
                     if (isset($dependency['package'])) {
 
-                        $dependency['package']['version'] = 'release-' . $this->getVersion();
+                        $dependency['package']['version'] = 'dev-release-' . $this->getVersion();
                         $dependency['package']['source']['reference'] = 'origin/release/' . $this->getVersion();
 
                         $this->output('Updating dependency: ' . $dependency['package']['name']);
@@ -517,7 +523,7 @@ class Repo
                 }
             }
 
-            if (!file_put_contents($composerFile, json_encode($composer))) {
+            if (!file_put_contents($composerFile, json_encode($composer, JSON_UNESCAPED_SLASHES))) {
 
                 throw new Exception($this->getName() . ': Could not write to ' . $composerFile);
             }
