@@ -4,6 +4,7 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use Zend\Form\Element\Hidden;
 
 class FormRow extends ZendFormRow
 {
@@ -50,7 +51,7 @@ class FormRow extends ZendFormRow
             $markup = $elementErrors . $markup;
         }
 
-        if (!isset($noWrap)) {
+        if (! ($element instanceof Hidden) && !isset($noWrap)) {
             $markup = sprintf(self::$format, $markup);
         }
 
