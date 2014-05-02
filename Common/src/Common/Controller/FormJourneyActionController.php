@@ -26,7 +26,9 @@ abstract class FormJourneyActionController extends FormActionController
     /**
      * Method that is called at the end of a journey.
      */
-    abstract protected function completeAction();
+    protected function completeAction()
+    {
+    }
 
     /**
      * Persists the form data for a section.
