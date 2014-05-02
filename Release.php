@@ -341,6 +341,11 @@ class Repo
         if (empty($this->version)) {
             throw new Exception($this->getName() . ': Version number is empty');
         }
+
+        if (!preg_match('/^v[0-9]+\.[0-9]+$/', $this->version)) {
+            throw new Exception($this->getName() . ' Invalid version number ' . $this->version);
+        }
+
         return $this->version;
     }
 
@@ -449,8 +454,6 @@ class Repo
     public function createRelease()
     {
         $this->output('Creating release ' . $this->getVersion());
-        echo 'git flow release start ' . $this->getVersion();
-        exit;
         shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $this->getVersion());
         $this->loadStatus();
     }
