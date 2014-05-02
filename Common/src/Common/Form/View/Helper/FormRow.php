@@ -4,6 +4,7 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use Zend\Form\Element\Hidden;
 
 class FormRow extends ZendFormRow
 {
@@ -37,6 +38,10 @@ class FormRow extends ZendFormRow
              */
             $this->setRenderErrors(false);
             $elementErrors = $this->getElementErrorsHelper()->render($element);
+        }
+
+        if ($element instanceof Hidden) {
+            return parent::render($element);
         }
 
         $markup = parent::render($element);
