@@ -9,18 +9,66 @@
  */
 class Runner
 {
+    /**
+     * Release types
+     */
     const TYPE_MINOR = 1;
     const TYPE_MAJOR = 2;
 
+    /**
+     * Message types
+     */
     const MESSAGE_DEFAULT = "\e[39m";
     const MESSAGE_OK = "\e[34m";
     const MESSAGE_ERROR = "\e[31m";
     const MESSAGE_SUCCESS = "\e[32m";
     const MESSAGE_INFO = "\e[33m";
 
+    /**
+     * Release type
+     *
+     * @var int
+     */
+    private $type = self::TYPE_MINOR;
+
+    /**
+     * Holds the nextRelease
+     *
+     * @var array
+     */
+    private $nextRelease = array();
+
+    /**
+     * Format any command line arguments (In the future)
+     */
     public function __construct()
     {
+        $options = getopt('t:');
 
+        if (isset($options['t']) && defined('self::TYPE_' . strtoupper($options['t']))) {
+
+            $this->setType(constant('self::TYPE_' . strtoupper($options['t'])));
+        }
+    }
+
+    /**
+     * Setter for type
+     *
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Determine what release type we are wanting
+     *
+     * @return int
+     */
+    private function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -29,8 +77,11 @@ class Runner
     public function run()
     {
         try {
+
             $this->runCommand();
+
         } catch (Exception $ex) {
+
             $this->output($ex->getMessage(), self::MESSAGE_ERROR);
         }
     }
@@ -43,7 +94,14 @@ class Runner
     private function runCommand()
     {
         $this->output('Checking repositories', self::MESSAGE_INFO);
+
+        $version = $this->getNextRelease();
+
+        $version = $version[0] . '.' . $version[1];
+
         foreach ($this->getRepos() as $repo) {
+
+            $repo->setVersion($version);
 
             $checkAgain = false;
 
@@ -69,7 +127,48 @@ class Runner
         $this->output('Creating release branches', self::MESSAGE_INFO);
         foreach ($this->getRepos() as $repo) {
 
-            $repo->createRelease($this->getNextRelease());
+            $repo->createRelease();
+        }
+
+        $this->updateReleaseVersion();
+
+        foreach ($this->getRepos() as $repo) {
+
+            $repo->updateComposerJson();
+        }
+
+        foreach ($this->getRepos() as $repo) {
+
+            if ($repo->hasUncommittedChanges()) {
+
+                $repo->commitChanges(
+                    'Updated composer dependencies and release number: ' . $version
+                );
+            }
+
+            $repo->publish();
+        }
+    }
+
+    /**
+     * Update release version
+     */
+    private function updateReleaseVersion()
+    {
+        $this->output('Updating release number in config');
+
+        if (file_exists(__DIR__ . '/Common/config/release.json')) {
+            $version = $this->getNextRelease();
+
+            $release = json_decode(file_get_contents(__DIR__ . '/Common/config/release.json'), true);
+
+            $release['version'] = $version[0] . '.' . $version[1];
+
+            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release))) {
+                throw new Exception('Unable to write to release.json');
+            }
+        } else {
+            throw new Exception('No release.json found');
         }
     }
 
@@ -91,7 +190,7 @@ class Runner
     private function getRepos()
     {
         return array(
-            //new Repo(__DIR__, $this),
+            new Repo(__DIR__, $this),
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
@@ -107,20 +206,24 @@ class Runner
      */
     private function getNextRelease()
     {
-        list($lastMajor, $lastMinor) = $this->getLastTag();
+        if (empty($this->nextRelease)) {
+            list($lastMajor, $lastMinor) = $this->getLastTag();
 
-        switch($this->getReleaseType()) {
-            case self::TYPE_MINOR:
-                $newMajor = $lastMajor;
-                $newMinor = ($lastMinor + 1);
-                break;
-            case self::TYPE_MAJOR:
-                $newMajor = $lastMajor;
-                $newMinor = ($lastMinor + 1);
-                break;
+            switch($this->getType()) {
+                case self::TYPE_MINOR:
+                    $newMajor = $lastMajor;
+                    $newMinor = ($lastMinor + 1);
+                    break;
+                case self::TYPE_MAJOR:
+                    $newMajor = ($lastMajor + 1);
+                    $newMinor = 0;
+                    break;
+            }
+
+            $this->nextRelease = array($newMajor, $newMinor);
         }
 
-        return array($newMajor, $newMinor);
+        return $this->nextRelease;
     }
 
     /**
@@ -131,18 +234,13 @@ class Runner
      */
     private function getLastTag()
     {
-        return array(0, 1);
-    }
+        $tag = shell_exec('git tag');
 
-    /**
-     * Determine what release type we are wanting
-     *
-     * @todo implement this
-     * @return int
-     */
-    private function getReleaseType()
-    {
-        return self::TYPE_MINOR;
+        $tags = explode("\n", $tag);
+
+        $lastTag = array_pop($tags);
+
+        return explode('.', $lastTag, 2);
     }
 }
 
@@ -153,14 +251,47 @@ class Runner
  */
 class Repo
 {
+    /**
+     * The release version number
+     *
+     * @var string
+     */
+    private $version;
+
+    /**
+     * The script runner
+     *
+     * @var object
+     */
     private $runner;
 
+    /**
+     * The repo location
+     *
+     * @var string
+     */
     private $location;
 
+    /**
+     * The repo name
+     *
+     * @var string
+     */
     private $name;
 
+    /**
+     * The git status
+     *
+     * @var string
+     */
     private $status;
 
+    /**
+     * Pass in the location and runner
+     *
+     * @param string $location
+     * @param object $runner
+     */
     public function __construct($location, $runner)
     {
         $this->runner = $runner;
@@ -175,25 +306,23 @@ class Repo
     }
 
     /**
-     * Create release branch
+     * Setter for version
      *
-     * @param array $release
+     * @param string $version
      */
-    public function createRelease($release)
+    public function setVersion($version)
     {
-        $releaseName = $release[0] . '.' . $release[1];
-
-        $this->output('Creating release ' . $releaseName);
-        shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $releaseName);
-        $this->loadStatus();
+        $this->version = $version;
     }
 
     /**
-     * Set the current status
+     * Getter for version
+     *
+     * @return string
      */
-    private function loadStatus()
+    public function getVersion()
     {
-        $this->status = shell_exec('cd ' . $this->getLocation() . ' && git status');
+        return $this->version;
     }
 
     /**
@@ -224,6 +353,14 @@ class Repo
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set the current status
+     */
+    private function loadStatus()
+    {
+        $this->status = shell_exec('cd ' . $this->getLocation() . ' && git status');
     }
 
     /**
@@ -288,6 +425,16 @@ class Repo
     }
 
     /**
+     * Create release branch
+     */
+    public function createRelease()
+    {
+        $this->output('Creating release ' . $this->getVersion());
+        shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $this->getVersion());
+        $this->loadStatus();
+    }
+
+    /**
      * Check if we have uncommited changes
      *
      * @return boolean
@@ -298,11 +445,74 @@ class Repo
     }
 
     /**
+     * Commit changes
+     *
+     * @param string $message
+     */
+    public function commitChanges($message)
+    {
+        $this->output('Committing changes');
+
+        shell_exec('cd ' . $this->getLocation() . ' && git add . && git commit -m "' . $message . '"');
+    }
+
+    /**
+     * Publish repo
+     */
+    public function publish()
+    {
+        $this->output('Publishing release branch');
+
+        shell_exec('cd ' . $this->getLocation() . ' && git flow release publish ' . $this->getVersion());
+    }
+
+    /**
+     * Update the dependency versions in composer
+     *
+     * @param array $version
+     */
+    public function updateComposerJson()
+    {
+        $this->output('Looking for composer.json');
+
+        $composerFile = $this->getLocation() . '/composer.json';
+        if (file_exists($composerFile)) {
+
+            $this->output('Updating composer.json');
+
+            $composer = json_decode(file_get_contents($composerFile), true);
+
+            if (isset($composer['repositories'])) {
+
+                foreach ($composer['repositories'] as &$dependency) {
+
+                    if (isset($dependency['package'])) {
+
+                        $dependency['package']['version'] = 'release-' . $this->getVersion();
+                        $dependency['package']['source']['reference'] = 'origin/release/' . $this->getVersion();
+
+                        $this->output('Updating dependency: ' . $dependency['package']['name']);
+                    }
+                }
+            }
+
+            if (!file_put_contents($composerFile, json_encode($composer))) {
+
+                throw new Exception($this->getName() . ': Could not write to ' . $composerFile);
+            }
+
+            $this->output('Composer updated', Runner::MESSAGE_SUCCESS);
+        }
+
+        $this->loadStatus();
+    }
+
+    /**
      * Output a message
      *
      * @param string $message
      */
-    public function output($message, $type = Runner::MESSAGE_OK)
+    private function output($message, $type = Runner::MESSAGE_OK)
     {
         $this->runner->output($this->getName() . ': ' . $message, $type);
     }
@@ -311,4 +521,3 @@ class Repo
 $release = new Runner();
 
 $release->run();
-
