@@ -184,8 +184,8 @@ class Repo
         $releaseName = $release[0] . '.' . $release[1];
 
         $this->output('Creating release ' . $releaseName);
-        //shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $releaseName);
-        //$this->loadStatus();
+        shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $releaseName);
+        $this->loadStatus();
     }
 
     /**
