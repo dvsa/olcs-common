@@ -309,7 +309,7 @@ return array(
     'objections' => 'W Objection(s)',
     'complaints' => 'W Complaints',
     'previous-history' => 'W Previous history',
-    'operating-centre' => 'W Operating centre',
+    'operating-centre' => 'W Operating centre(s)',
     'representations' => 'W Representation(s)',
     'environmental' => 'W Environmental',
     'annual-test-history' => 'W Annual test history',

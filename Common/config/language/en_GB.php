@@ -318,7 +318,7 @@ return array(
     'objections' => 'Objection(s)',
     'complaints' => 'Complaints',
     'previous-history' => 'Previous history',
-    'operating-centre' => 'Operating centre',
+    'operating-centre' => 'Operating centre(s)',
     'representations' => 'Representation(s)',
     'environmental' => 'Environmental',
     'annual-test-history' => 'Annual test history',
