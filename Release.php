@@ -190,7 +190,7 @@ class Runner
     private function getRepos()
     {
         return array(
-            //new Repo(__DIR__, $this),
+            new Repo(__DIR__, $this),
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
@@ -328,7 +328,7 @@ class Repo
         if (empty($version)) {
             throw new Exception($this->getName() . ': Version number is empty');
         }
-        $this->version = 'v' . $version;
+        $this->version = 'v' . (string)$version;
     }
 
     /**
