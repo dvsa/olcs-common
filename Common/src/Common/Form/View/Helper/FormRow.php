@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Render form row
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
@@ -10,8 +17,15 @@ use Common\Form\Elements\InputFilters\ActionButton;
 use Common\Form\Elements\InputFilters\ActionLink;
 use Zend\Form\Element\Hidden;
 
+/**
+ * Render form row
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class FormRow extends ZendFormRow
 {
+
     use AlphaGovTraits\Logger;
 
     /**
@@ -67,7 +81,7 @@ class FormRow extends ZendFormRow
             $markup = $elementErrors . $markup;
         }
 
-        if (! ($element instanceof Hidden) && !isset($noWrap)) {
+        if (!($element instanceof Hidden) && !isset($noWrap)) {
             $markup = sprintf(self::$format, $markup);
         }
 

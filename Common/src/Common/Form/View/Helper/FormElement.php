@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Render form
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
@@ -8,8 +16,15 @@ use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\InputFilters\ActionLink;
 
+/**
+ * Render form
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class FormElement extends ZendFormElement
 {
+
     use AlphaGovTraits\Logger;
 
     /**

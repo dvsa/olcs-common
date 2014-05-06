@@ -20,7 +20,7 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
     {
         if (!isset($this->getOptions()['must_be_checked']) || $this->getOptions()['must_be_checked'] == false)
             return array();
-        
+
         $specification = [
             'name' => $this->getName(),
             'required' => true,
@@ -30,7 +30,7 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
                     'options' => array(
                         'token' => '1',
                         'messages' => array(
-                             ZendValidator\Identical::NOT_SAME => 
+                             ZendValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
                                     : 'You must agree',
