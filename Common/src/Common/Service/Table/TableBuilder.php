@@ -553,7 +553,9 @@ class TableBuilder
     public function setupAction()
     {
         if (!isset($this->getVariables()['action'])) {
-            $this->variables['hidden'] = isset($this->settings['crud']['formName']) ? $this->settings['crud']['formName'] : 'default';
+            $this->variables['hidden'] = isset($this->settings['crud']['formName'])
+                ? $this->settings['crud']['formName']
+                : 'default';
             $this->variables['action'] = $this->generateUrl();
         }
     }

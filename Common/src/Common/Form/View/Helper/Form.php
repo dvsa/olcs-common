@@ -1,10 +1,21 @@
 <?php
+
+/**
+ * Checkbox element
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 namespace Common\Form\View\Helper;
 
 use Zend\Form\FormInterface as ZendFormInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Zend\Form\FieldsetInterface;
 
+/**
+ * Checkbox element
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 class Form extends \Zend\Form\View\Helper\Form
 {
     use AlphaGovTraits\Logger;

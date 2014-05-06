@@ -1,9 +1,21 @@
 <?php
+
+/**
+ * Checkbox element
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
+/**
+ * Checkbox element
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
 {
     public function __construct($name = null, $options = array())
@@ -18,8 +30,9 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
      */
     public function getInputSpecification()
     {
-        if (!isset($this->getOptions()['must_be_checked']) || $this->getOptions()['must_be_checked'] == false)
+        if (!isset($this->getOptions()['must_be_checked']) || $this->getOptions()['must_be_checked'] == false) {
             return array();
+        }
 
         $specification = [
             'name' => $this->getName(),

@@ -40,7 +40,7 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback=null, $additionalParams = array())
+    protected function formPost($form, $callback = null, $additionalParams = array())
     {
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -130,7 +130,11 @@ abstract class FormActionController extends AbstractActionController
 
         foreach ($tables as $fieldsetName => $details) {
 
-            if (!is_null($postData) && isset($postData[$fieldsetName]['action']) && !empty($postData[$fieldsetName]['action'])) {
+            if (
+                !is_null($postData)
+                && isset($postData[$fieldsetName]['action'])
+                && !empty($postData[$fieldsetName]['action'])
+            ) {
 
                 $form = $this->disableEmptyValidation($form);
                 $callback = $callbacks['crud_action'];
@@ -165,25 +169,6 @@ abstract class FormActionController extends AbstractActionController
         }
 
         return $form;
-    }
-
-    /**
-     * Generate form from GET call
-     *
-     * @todo Maybe need to do something with $return to format the data
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param string $service
-     * @param int $id
-     *
-     * @return object
-     */
-    protected function generateFormFromGet($name, $callback, $service, $id)
-    {
-        $return = $this->makeRestCall($service, 'GET', array('id' => $id));
-
-        return $this->generateFormWithData($name, $callback, $return);
     }
 
     /**

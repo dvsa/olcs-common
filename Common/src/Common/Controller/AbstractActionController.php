@@ -137,23 +137,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Generate form from GET call
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param string $service
-     * @param int $id
-     *
-     * @return object
-     */
-    protected function generateFormFromGet($name, $callback, $service, $id)
-    {
-        $return = $this->makeRestCall($service, 'GET', array('id' => $id));
-
-        return $this->generateFormWithData($name, $callback, $return);
-    }
-
-    /**
      * Check for crud actions
      *
      * @param string $route
