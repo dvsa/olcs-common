@@ -8,6 +8,7 @@
 namespace CommonTest\Form\Elements\InputFilters;
 
 use Common\Form\Elements\InputFilters;
+use \Zend\Validator\StringLength;
 
 /**
  * Test Text InputFilter
@@ -99,5 +100,29 @@ class TextTest extends \PHPUnit_Framework_TestCase
             [['name' => 'Zend\Filter\StringTrim']],
             $this->getSpecificationElement('filters')
         );
+    }
+
+    /**
+     * Test set allow empty
+     *
+     * @return void
+     */
+    public function testSetAllowEmpty()
+    {
+        $this->filter->setAllowEmpty(false);
+
+        $this->assertFalse($this->getSpecificationElement('allow_empty'));
+    }
+
+    /**
+     * Test set max
+     *
+     * @return void
+     */
+    public function testSetMax()
+    {
+        $this->filter->setMax(10);
+
+        $this->assertTrue($this->getSpecificationElement('validators')[0] instanceof StringLength);
     }
 }

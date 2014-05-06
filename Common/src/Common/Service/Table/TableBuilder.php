@@ -171,6 +171,20 @@ class TableBuilder
     }
 
     /**
+     * Return the actionFieldName
+     *
+     * @return string
+     */
+    public function getActionFieldName()
+    {
+        if (!empty($this->fieldset)) {
+            return $this->fieldset . '[' . $this->actionFieldName . ']';
+        }
+
+        return $this->actionFieldName;
+    }
+
+    /**
      * Setter for Fieldset
      *
      * @param string $name
@@ -498,6 +512,12 @@ class TableBuilder
             $this->setActionFieldName($this->settings['crud']['action_field_name']);
         }
 
+        if (isset($this->settings['crud']['formName'])) {
+            $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
+                ? $this->settings['crud']['formName']
+                : 'default';
+        }
+
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
         $this->columns = isset($config['columns']) ? $config['columns'] : array();
         $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
@@ -553,9 +573,6 @@ class TableBuilder
     public function setupAction()
     {
         if (!isset($this->getVariables()['action'])) {
-            $this->variables['hidden'] = isset($this->settings['crud']['formName'])
-                ? $this->settings['crud']['formName']
-                : 'default';
             $this->variables['action'] = $this->generateUrl();
         }
     }
@@ -692,7 +709,7 @@ class TableBuilder
      */
     private function whichType()
     {
-        if (!isset($this->variables['within_form']) || $this->variables['within_form'] == false) {
+        if (isset($this->variables['within_form']) && $this->variables['within_form'] == true) {
 
             return self::TYPE_FORM_TABLE;
         }
@@ -790,20 +807,6 @@ class TableBuilder
             '{{[elements/actionSelect]}}',
             array('option' => $options, 'action_field_name' => $this->getActionFieldName())
         );
-    }
-
-    /**
-     * Return the actionFieldName
-     *
-     * @return string
-     */
-    private function getActionFieldName()
-    {
-        if (!empty($this->fieldset)) {
-            return $this->fieldset . '[' . $this->actionFieldName . ']';
-        }
-
-        return $this->actionFieldName;
     }
 
     /**
