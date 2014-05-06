@@ -196,7 +196,8 @@ class Runner
             new Repo(__DIR__ . '/../olcs-backend', $this),
             new Repo(__DIR__ . '/../olcs-entities', $this),
             new Repo(__DIR__ . '/../olcs-internal', $this),
-            new Repo(__DIR__ . '/../olcs-selfserve', $this)
+            new Repo(__DIR__ . '/../olcs-selfserve', $this),
+            new Repo(__DIR__ . '/../olcs-config', $this)
         );
     }
 

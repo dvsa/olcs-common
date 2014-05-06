@@ -318,7 +318,7 @@ return array(
     'objections' => 'Objection(s)',
     'complaints' => 'Complaints',
     'previous-history' => 'Previous history',
-    'operating-centre' => 'Operating centre',
+    'operating-centre' => 'Operating centre(s)',
     'representations' => 'Representation(s)',
     'environmental' => 'Environmental',
     'annual-test-history' => 'Annual test history',
@@ -335,7 +335,7 @@ return array(
     'case-submission' => 'Case submission',
     'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
-    'submission-actions' => 'Submission Action(s)',
+    'submission-actions' => 'Submission Actions',
     'submission-recommend' => 'Submission recommendation',
     'submission-recommend-text' => 'Add a recommendation to this submission',
     'submission-decision' => 'Submission decision',
@@ -376,6 +376,11 @@ return array(
     'Weeks' => 'Weeks',
     'Continue' => 'Continue',
     'Confirm' => 'Confirm',
+    'payment-details' => 'Payment details',
+    'declarations' => 'Declarations',
+    'vehicle-and-safety' => 'Vehicle & safety',
+    'operating-centres' => 'Operating centres',
+    'your-business' => 'Your business',
 
     // Complaints
     'add-complaint' => 'Add complaint',
