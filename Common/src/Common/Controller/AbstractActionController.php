@@ -61,82 +61,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Gets a from from either a built or custom form config.
-     * @param type $type
-     * @return type
-     */
-    protected function getForm($type)
-    {
-        $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
-        return $form;
-    }
-
-    protected function getFormGenerator()
-    {
-        return $this->getServiceLocator()->get('OlcsCustomForm');
-    }
-
-    /**
-     * Method to process posted form data and validate it and process a callback
-     * @param type $form
-     * @param type $callback
-     * @return \Zend\Form
-     */
-    protected function formPost($form, $callback, $additionalParams = array())
-    {
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-                $validatedData = $form->getData();
-                $params = [
-                    'validData' => $validatedData,
-                    'form' => $form,
-                    'params' => $additionalParams
-                ];
-                if (is_callable($callback)) {
-                    $callback($params);
-                }
-
-                call_user_func_array(array($this, $callback), $params);
-            }
-        }
-        return $form;
-    }
-
-    /**
-     * Generate a form with a callback
-     *
-     * @param string $name
-     * @param callable $callback
-     * @return object
-     */
-    protected function generateForm($name, $callback)
-    {
-        $form = $this->getForm($name);
-
-        return $this->formPost($form, $callback);
-    }
-
-    /**
-     * Generate a form with data
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param mixed $data
-     * @return object
-     */
-    protected function generateFormWithData($name, $callback, $data = null)
-    {
-        $form = $this->generateForm($name, $callback);
-
-        if (is_array($data)) {
-            $form->setData($data);
-        }
-
-        return $form;
-    }
-
-    /**
      * Check for crud actions
      *
      * @param string $route
@@ -221,5 +145,41 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function getViewModel($params = array())
     {
         return new ViewModel($params);
+    }
+
+    /**
+     * Get url from route
+     *
+     * @param string $route
+     * @return string
+     */
+    public function getUrlFromRoute($route)
+    {
+        return $this->url()->fromRoute($route);
+    }
+
+    /**
+     * Wraps the redirect()->toRoute to help with unit testing
+     *
+     * @param string $route
+     * @param array $params
+     * @param array $options
+     * @param bool $reuse
+     * @return \Zend\Http\Response
+     */
+    public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
+    {
+        return $this->redirect()->toRoute($route, $params, $options, $reuse);
+    }
+
+    /**
+     * Get param from route
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getFromRoute($name)
+    {
+        return $this->params()->fromRoute($name);
     }
 }

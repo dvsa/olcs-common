@@ -283,13 +283,13 @@ abstract class FormJourneyActionController extends FormActionController
     protected function getLicenceEntity($applicationId = false)
     {
         if ( ! $applicationId ) {
-            $applicationId = (int) $this->params()->fromRoute('applicationId');
+            $applicationId = (int) $this->getApplicationId('applicationId');
         }
 
         $bundle = array(
             'children' => array(
-                'licence',
-            ),
+                'licence'
+            )
         );
 
         $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
