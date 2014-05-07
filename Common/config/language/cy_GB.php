@@ -335,5 +335,12 @@ return array(
     'add-complaint' => 'W Add complaint',
     'edit-complaint' => 'W Edit complaint',
     'subtitle-complaint-text' => 'W Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'
+nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
+        // footer
+    'helpdesk' => 'W Helpdesk',
+    'privacy-and-cookies' => 'W Privacy &amp; Cookies',
+    'built-by' => 'W Built by',
+    'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
+    'crown-copyright' => 'W Crown Copyright',
 );

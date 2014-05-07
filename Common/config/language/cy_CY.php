@@ -378,5 +378,13 @@ return
         'appeal_outcome.1' => 'Successful',
         'appeal_outcome.2' => 'Partially Successful',
         'appeal_outcome.3' => 'Dismissed',
-        'appeal_outcome.4' => 'Refer back to TC'
+        'appeal_outcome.4' => 'Refer back to TC',
+
+        // footer
+        'helpdesk' => 'W Helpdesk',
+        'privacy-and-cookies' => 'W Privacy &amp; Cookies',
+        'built-by' => 'W Built by',
+        'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
+        'crown-copyright' => 'W Crown Copyright',
+
 );
