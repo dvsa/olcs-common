@@ -6,17 +6,16 @@ return [
         'attributes' => [
             'method' => 'post',
         ],
+        'type' => 'Common\Form\Form',
         'fieldsets' => [
             [
                 'name' => 'fields',
                 'elements' => [
                     'requestDate' => [
-                        'type' => 'dateSelect',
+                        'type' => 'dateSelectWithEmpty',
                         'label' => 'Date of request',
                         'class' => 'extra-long',
-                        'options' => array(
-                            'min_year' => 2005
-                        )
+                        'filters' => '\Common\Form\Elements\InputFilters\DateRequired',
                     ],
                     'outcome' => [
                         'type' => 'select',
