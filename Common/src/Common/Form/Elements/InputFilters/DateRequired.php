@@ -19,6 +19,8 @@ use Zend\Validator\Date as DateValidator;
  */
 class DateRequired extends ZendDateSelect implements InputProviderInterface
 {
+    protected $required = true;
+
     /**
      * Provide default input rules for this element.
      *
@@ -28,7 +30,7 @@ class DateRequired extends ZendDateSelect implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => true,
+            'required' => $this->required,
             'filters' => array(
                 array(
                     'name'    => 'Callback',
@@ -45,11 +47,16 @@ class DateRequired extends ZendDateSelect implements InputProviderInterface
                     )
                 )
             ),
-            'validators' => [
-                new DateValidator(array('format' => 'Y-m-d'))
-            ]
+            'validators' => $this->getValidators()
         ];
 
         return $specification;
+    }
+
+    public function getValidators()
+    {
+        return array(
+            new DateValidator(array('format' => 'Y-m-d'))
+        );
     }
 }

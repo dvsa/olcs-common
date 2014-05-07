@@ -6,11 +6,15 @@
  */
 
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element\DateSelect as ZendDateSelect;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\Validator\Date as DateValidator;
 
+/**
+ * Checks conviction offence date is before the conviction date
+ */
 class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputProviderInterface
 {
     /**
@@ -40,7 +44,8 @@ class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputPro
                 )
             ),
             'validators' => [
-                new \Common\Form\Elements\Validators\DateLessThan('dateOfConviction'),
+                new \Common\Form\Elements\Validators\DateNotInFuture(),
+                new \Common\Form\Elements\Validators\DateLessThanOrEqual('dateOfConviction'),
                 new DateValidator(array('format' => 'Y-m-d'))
             ]
         ];
