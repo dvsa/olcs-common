@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  *
  */
 
@@ -13,10 +13,14 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\Validator\Date as DateValidator;
 
 /**
- * Checks conviction offence date is before the conviction date
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ *
  */
-class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputProviderInterface
+class DateRequired extends ZendDateSelect implements InputProviderInterface
 {
+    protected $required = true;
+
     /**
      * Provide default input rules for this element.
      *
@@ -26,7 +30,7 @@ class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputPro
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => false,
+            'required' => $this->required,
             'filters' => array(
                 array(
                     'name'    => 'Callback',
@@ -43,13 +47,16 @@ class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputPro
                     )
                 )
             ),
-            'validators' => [
-                new \Common\Form\Elements\Validators\DateNotInFuture(),
-                new \Common\Form\Elements\Validators\DateLessThanOrEqual('dateOfConviction'),
-                new DateValidator(array('format' => 'Y-m-d'))
-            ]
+            'validators' => $this->getValidators()
         ];
 
         return $specification;
+    }
+
+    public function getValidators()
+    {
+        return array(
+            new DateValidator(array('format' => 'Y-m-d'))
+        );
     }
 }
