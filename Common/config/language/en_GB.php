@@ -361,6 +361,8 @@ return array(
     // Operating Centre Subsections
     'selfserve-app-subSection-operating-centre-oc' => 'Operating centres &amp; authorisation',
     'selfserve-app-subSection-operating-centre-fe' => 'Financial evidence',
+    'selfserve-app-subSection-vehicle-safety-vehicle' => 'Vehicles',
+    'selfserve-app-subSection-vehicle-safety-safety' => 'Safety inspections',
     // Operating Centre
     'selfserve-app-subSection-operating-centre-oc-info' => 'Enter the total amount of vehicles &amp; trailers that you
         want authorised on the licence you are applying for.',

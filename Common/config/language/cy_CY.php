@@ -350,6 +350,8 @@ return
         // Operating Centre Subsections
         'selfserve-app-subSection-operating-centre-oc' => 'W Operating centres &amp; authorisation',
         'selfserve-app-subSection-operating-centre-fe' => 'W Financial evidence',
+        'selfserve-app-subSection-vehicle-safety-vehicle' => 'W Vehicles',
+    'selfserve-app-subSection-vehicle-safety-safety' => 'W Safety inspections',
         // Operating Centre
         'selfserve-app-subSection-operating-centre-oc-info' => 'W Enter the total amount of vehicles &amp; trailers
             that you want authorised on the licence you are applying for.',

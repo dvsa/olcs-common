@@ -8,7 +8,7 @@
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\Text as ZendElement;
+use Zend\Form\Element\Hidden as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
@@ -17,7 +17,7 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Text extends ZendElement implements InputProviderInterface
+class Hidden extends ZendElement implements InputProviderInterface
 {
     protected $required = false;
     protected $continueIfEmpty = false;
@@ -37,26 +37,6 @@ class Text extends ZendElement implements InputProviderInterface
     protected function getValidators()
     {
         return array();
-    }
-
-    /**
-     * Setter for allow empty
-     *
-     * @param boolean $allowEmpty
-     */
-    public function setAllowEmpty($allowEmpty)
-    {
-        $this->allowEmpty = $allowEmpty;
-    }
-
-    /**
-     * Setter for max
-     *
-     * @param int $max
-     */
-    public function setMax($max)
-    {
-        $this->max = $max;
     }
 
     /**
