@@ -26,6 +26,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         Util\FlashMessengerTrait,
         Util\RestCallTrait;
 
+    private $loggedInUser;
+    
+    public function onDispatch(\Zend\Mvc\MvcEvent $e)
+    {
+        $this->setLoggedInUser(1);
+        parent::onDispatch($e);
+    }
+    
     /**
      * Set navigation for breadcrumb
      * @param type $label
@@ -224,5 +232,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function getViewModel($params = array())
     {
         return new ViewModel($params);
+    }
+    
+    
+    public function getLoggedInUser()
+    {
+        return $this->loggedInUser;
+    }
+    
+    
+    public function setLoggedInUser($id)
+    {
+        $this->loggedInUser = $id;
     }
 }
