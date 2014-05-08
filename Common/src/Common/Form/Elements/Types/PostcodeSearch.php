@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Types;
 
-use Zend\Form\Element;
+use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 
@@ -16,21 +16,8 @@ use Zend\Form\Element\Button;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PostcodeSearch extends Element
+class PostcodeSearch extends Fieldset
 {
-    /**
-     * Holds the postcode element
-     *
-     * @var Text
-     */
-    protected $postcodeElement;
-
-    /**
-     * Holds the search button
-     *
-     * @var Button
-     */
-    protected $searchButton;
 
     /**
      * Setup the elements
@@ -42,30 +29,15 @@ class PostcodeSearch extends Element
     {
         parent::__construct($name, $options);
 
-        $this->postcodeElement = new Text($this->getName() . 'postcode', array('label' => ''));
-        $this->postcodeElement->setAttribute('class', 'short');
+        $postcodeSearch = new Text('postcode');
+        $postcodeSearch->setAttribute('class', 'short');
+        $postcodeSearch->setAttribute('data-container-class', 'inline');
+        $this->add($postcodeSearch);
 
-        $this->searchButton = new Button($name . '[search]', array('label' => 'Find address'));
-        $this->searchButton->setAttribute('class', 'action--primary');
-    }
+        $searchButton = new Button('search', array('label' => 'Find address'));
+        $searchButton->setAttribute('class', 'action--secondary large');
+        $searchButton->setAttribute('data-container-class', 'inline');
 
-    /**
-     * Getter Postcode Element
-     *
-     * @return \Zend\Form\Element\Text
-     */
-    public function getPostcodeElement()
-    {
-        return $this->postcodeElement;
-    }
-
-    /**
-     * Getter for search button
-     *
-     * @return Button
-     */
-    public function getSearchButton()
-    {
-        return $this->searchButton;
+        $this->add($searchButton);
     }
 }

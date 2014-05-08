@@ -15,7 +15,7 @@ class FormRow extends ZendFormRow
      *
      * @var string
      */
-    private static $format = '<div class="field">%s</div>';
+    private static $format = '<div class="field %s">%s</div>';
     private static $errorClass = '<div class="validation-wrapper">%s</div>';
 
     /**
@@ -52,7 +52,12 @@ class FormRow extends ZendFormRow
         }
 
         if (! ($element instanceof Hidden) && !isset($noWrap)) {
-            $markup = sprintf(self::$format, $markup);
+
+            $class = '';
+
+            $class = $element->getAttribute('data-container-class');
+
+            $markup = sprintf(self::$format, $class, $markup);
         }
 
         if ($oldRenderErrors && $elementErrors != '') {

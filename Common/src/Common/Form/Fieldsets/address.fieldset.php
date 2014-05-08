@@ -9,17 +9,20 @@ return [
         'version' => [
             'type' => 'hidden'
         ],
-        'postcodeSearch' => [
-            'type' => 'postcode-search'
+        'searchPostcode' => [
+            'type' => 'postcode-search',
+            'label' => 'Postcode search'
         ],
         'addressLine1' => [
             'type' => 'text',
             'label' => 'Street',
+            'class' => 'long',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'addressLine2' => [
             'type' => 'text',
             'label' => 'Address line 2',
+            'class' => 'long',
             'label_attributes' => [
                 'class' => 'visually-hidden',
             ],
@@ -27,6 +30,7 @@ return [
         'addressLine3' => [
             'type' => 'text',
             'label' => 'Address line 3',
+            'class' => 'long',
             'label_attributes' => [
                 'class' => 'visually-hidden',
             ],
@@ -34,6 +38,7 @@ return [
         'addressLine4' => [
             'type' => 'text',
             'label' => 'Address line 4',
+            'class' => 'long',
             'label_attributes' => [
                 'class' => 'visually-hidden',
             ],
@@ -41,11 +46,13 @@ return [
         'city' => [
             'type' => 'text',
             'label' => 'Town/City',
+            'class' => 'long',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'postcode' => [
             'type' => 'text',
             'label' => 'Postcode',
+            'class' => 'long',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
         'country' => [
