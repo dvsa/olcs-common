@@ -376,8 +376,8 @@ return array(
     'Weeks' => 'Weeks',
     'Continue' => 'Continue',
     'Confirm' => 'Confirm',
-    'payment-details' => 'Payment details',
-    'declarations' => 'Declarations',
+    'payment-submission' => 'Payment & submission',
+    'declarations' => 'Review & declarations',
     'vehicle-and-safety' => 'Vehicle & safety',
     'operating-centres' => 'Operating centres',
     'your-business' => 'Your business',
@@ -402,5 +402,12 @@ return array(
     'appeal_outcome.1' => 'Successful',
     'appeal_outcome.2' => 'Partially Successful',
     'appeal_outcome.3' => 'Dismissed',
-    'appeal_outcome.4' => 'Refer back to TC'
+    'appeal_outcome.4' => 'Refer back to TC',
+
+    // footer
+    'helpdesk' => 'Helpdesk',
+    'privacy-and-cookies' => 'Privacy &amp; Cookies',
+    'built-by' => 'Built by',
+    'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
+    'crown-copyright' => 'Crown Copyright',
 );

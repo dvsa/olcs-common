@@ -48,8 +48,7 @@ return [
             [
                 'name' => 'advanced',
                 'options' => [
-                    'label' => 'Advanced Search',
-                    'class' => 'extra-long'
+                    'label' => 'Advanced search',
                 ],
                 'elements' => [
                     'address' => [
@@ -64,12 +63,12 @@ return [
                     ],
                     'caseNumber' => [
                         'type' => 'text',
-                        'label' => 'Case Number',
+                        'label' => 'Case number',
                         'class' => 'medium'
                     ],
                     'transportManagerId' => [
                         'type' => 'text',
-                        'label' => 'Transport Manager ID',
+                        'label' => 'Transport manager ID',
                         'class' => 'medium'
                     ],
                     'operatorId' => [
@@ -79,22 +78,22 @@ return [
                     ],
                     'vehicleRegMark' => [
                         'type' => 'text',
-                        'label' => 'Vehicle Registration Mark',
+                        'label' => 'Vehicle registration mark ',
                         'class' => 'medium'
                     ],
                     'diskSerialNumber' => [
                         'type' => 'text',
-                        'label' => 'Disk Serial Number',
+                        'label' => 'Disk serial number',
                         'class' => 'medium'
                     ],
                     'fabsRef' => [
                         'type' => 'text',
-                        'label' => 'Fabs Ref',
+                        'label' => 'Fabs ref',
                         'class' => 'medium'
                     ],
                     'companyNo' => [
                         'type' => 'text',
-                        'label' => 'Company No',
+                        'label' => 'Company number',
                         'class' => 'medium'
                     ]
                 ]
