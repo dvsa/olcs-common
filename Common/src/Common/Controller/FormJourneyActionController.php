@@ -274,25 +274,4 @@ abstract class FormJourneyActionController extends FormActionController
         $step = str_replace(' ', '', $step);
         return 'process' . $step;
     }
-
-    /**
-     * Get licence entity based on route id value
-     *
-     * @return array|object
-     */
-    protected function getLicenceEntity($applicationId = false)
-    {
-        if ( ! $applicationId ) {
-            $applicationId = (int) $this->getApplicationId('applicationId');
-        }
-
-        $bundle = array(
-            'children' => array(
-                'licence'
-            )
-        );
-
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
-        return $application['licence'];
-    }
 }
