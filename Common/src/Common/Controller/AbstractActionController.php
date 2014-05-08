@@ -26,6 +26,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         Util\FlashMessengerTrait,
         Util\RestCallTrait;
 
+    private $loggedInUser;
+
+    public function onDispatch(\Zend\Mvc\MvcEvent $e)
+    {
+        $this->setLoggedInUser(1);
+        parent::onDispatch($e);
+    }
+
     /**
      * Set navigation for breadcrumb
      * @param type $label
@@ -58,99 +66,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             }
         }
         return $params;
-    }
-
-    /**
-     * Gets a from from either a built or custom form config.
-     * @param type $type
-     * @return type
-     */
-    protected function getForm($type)
-    {
-        $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
-        return $form;
-    }
-
-    protected function getFormGenerator()
-    {
-        return $this->getServiceLocator()->get('OlcsCustomForm');
-    }
-
-    /**
-     * Method to process posted form data and validate it and process a callback
-     * @param type $form
-     * @param type $callback
-     * @return \Zend\Form
-     */
-    protected function formPost($form, $callback, $additionalParams = array())
-    {
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
-            if ($form->isValid()) {
-                $validatedData = $form->getData();
-                $params = [
-                    'validData' => $validatedData,
-                    'form' => $form,
-                    'params' => $additionalParams
-                ];
-                if (is_callable($callback)) {
-                    $callback($params);
-                }
-
-                call_user_func_array(array($this, $callback), $params);
-            }
-        }
-        return $form;
-    }
-
-    /**
-     * Generate a form with a callback
-     *
-     * @param string $name
-     * @param callable $callback
-     * @return object
-     */
-    protected function generateForm($name, $callback)
-    {
-        $form = $this->getForm($name);
-
-        return $this->formPost($form, $callback);
-    }
-
-    /**
-     * Generate a form with data
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param mixed $data
-     * @return object
-     */
-    protected function generateFormWithData($name, $callback, $data = null)
-    {
-        $form = $this->generateForm($name, $callback);
-
-        if (is_array($data)) {
-            $form->setData($data);
-        }
-
-        return $form;
-    }
-
-    /**
-     * Generate form from GET call
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param string $service
-     * @param int $id
-     *
-     * @return object
-     */
-    protected function generateFormFromGet($name, $callback, $service, $id)
-    {
-        $return = $this->makeRestCall($service, 'GET', array('id' => $id));
-
-        return $this->generateFormWithData($name, $callback, $return);
     }
 
     /**
@@ -208,11 +123,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function buildTable($table, $results, $data = array())
     {
+        return $this->getTable($table, $results, $data = array(), true);
+    }
+
+    /*
+     * Build a table from config and results, and return the table object
+     *
+     * @param string $table
+     * @param array $results
+     * @param array $data
+     * @param boolean $render
+     * @return string
+     */
+    public function getTable($table, $results, $data = array(), $render = false)
+    {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data);
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, $render);
     }
 
     /**
@@ -223,5 +152,51 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function getViewModel($params = array())
     {
         return new ViewModel($params);
+    }
+
+    /**
+     * Get url from route
+     *
+     * @param string $route
+     * @return string
+     */
+    public function getUrlFromRoute($route)
+    {
+        return $this->url()->fromRoute($route);
+    }
+
+    /**
+     * Wraps the redirect()->toRoute to help with unit testing
+     *
+     * @param string $route
+     * @param array $params
+     * @param array $options
+     * @param bool $reuse
+     * @return \Zend\Http\Response
+     */
+    public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
+    {
+        return $this->redirect()->toRoute($route, $params, $options, $reuse);
+    }
+
+    /**
+     * Get param from route
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getFromRoute($name)
+    {
+        return $this->params()->fromRoute($name);
+    }
+
+    public function getLoggedInUser()
+    {
+        return $this->loggedInUser;
+    }
+
+    public function setLoggedInUser($id)
+    {
+        $this->loggedInUser = $id;
     }
 }

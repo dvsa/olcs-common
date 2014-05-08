@@ -1,12 +1,30 @@
 <?php
+
+/**
+ * Render form
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use Common\Form\Elements\Types\Html;
+use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\InputFilters\ActionLink;
 
+/**
+ * Render form
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class FormElement extends ZendFormElement
 {
+
     use AlphaGovTraits\Logger;
 
     /**
@@ -28,6 +46,19 @@ class FormElement extends ZendFormElement
     public function render(ZendElementInterface $element)
     {
         $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
+
+        if ($element instanceof ActionLink) {
+
+            return '<a href="' . $element->getValue() . '">' . $element->getLabel() . '</a>';
+        }
+
+        if ($element instanceof Html) {
+            return $element->getValue();
+        }
+
+        if ($element instanceof Table) {
+            return $element->render();
+        }
 
         $markup = parent::render($element);
 
