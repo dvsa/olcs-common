@@ -42,10 +42,10 @@ class PostcodeSearch extends Element
     {
         parent::__construct($name, $options);
 
-        $this->postcodeElement = new Text('postcode', array('label' => ''));
+        $this->postcodeElement = new Text($this->getName() . 'postcode', array('label' => ''));
         $this->postcodeElement->setAttribute('class', 'short');
 
-        $this->searchButton = new Button('search', array('label' => 'Find address'));
+        $this->searchButton = new Button($name . '[search]', array('label' => 'Find address'));
         $this->searchButton->setAttribute('class', 'action--primary');
     }
 

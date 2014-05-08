@@ -9,7 +9,7 @@ return [
         'version' => [
             'type' => 'hidden'
         ],
-        'postcodeLookup' => [
+        'postcodeSearch' => [
             'type' => 'postcode-search'
         ],
         'addressLine1' => [
