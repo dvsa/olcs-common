@@ -2,6 +2,7 @@
 
 return [
     'name' => 'address',
+    'type' => '\Common\Form\Elements\Types\Address',
     'elements' => [
         'id' => [
             'type' => 'hidden'

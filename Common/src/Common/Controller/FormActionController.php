@@ -9,6 +9,8 @@
 
 namespace Common\Controller;
 
+use Common\Form\Elements\Types\Address;
+
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
  *
@@ -17,6 +19,7 @@ namespace Common\Controller;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    private $persist = true;
 
     /**
      * Gets a from from either a built or custom form config.
@@ -26,7 +29,91 @@ abstract class FormActionController extends AbstractActionController
     protected function getForm($type)
     {
         $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
+
+        $form = $this->processPostcodeLookup($form);
+
         return $form;
+    }
+
+    protected function processPostcodeLookup($form)
+    {
+        $request = $this->getRequest();
+
+        $post = array();
+
+        if ($request->isPost()) {
+
+            $post = (array)$request->getPost();
+        }
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+
+            if ($fieldset instanceof Address) {
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
+
+                    $this->persist = false;
+
+                    $addressList = $this->getAddressesForPostcode($post[$name]['searchPostcode']['postcode']);
+
+                    if (empty($addressList)) {
+
+                        $fieldset->get('searchPostcode')->remove('addresses');
+                        $fieldset->get('searchPostcode')->remove('select');
+                        $fieldset->get('searchPostcode')->setMessages(
+                            array('No addresses found for postcode')
+                        );
+
+                        var_dump($fieldset->get('searchPostcode')->getMessages());
+
+                    } else {
+
+                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions($this->formatAddressesForSelect($addressList));
+                    }
+
+                } else {
+
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    protected function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\simple-address', array('postcode' => $postcode));
+    }
+
+    protected function formatAddressesForSelect($list)
+    {
+        $options  = array();
+        foreach ($list as $item) {
+
+            $uprn = $item['uprn'];
+
+            unset($item['uprn']);
+
+            $options[$uprn] = str_replace(
+                '  ',
+                ' ',
+                trim(
+                    ucwords(
+                        strtolower($item['saon'] . ' ' . $item['paon'] . ' ' . $item['street_description'])
+                    )
+                )
+            );
+        }
+
+        return $options;
     }
 
     protected function getFormGenerator()
@@ -45,7 +132,7 @@ abstract class FormActionController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
 
-            if ($form->isValid()) {
+            if ($this->persist && $form->isValid()) {
                 $validatedData = $form->getData();
                 $params = [
                     'validData' => $validatedData,

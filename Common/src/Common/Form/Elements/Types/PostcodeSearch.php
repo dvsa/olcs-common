@@ -10,6 +10,7 @@ namespace Common\Form\Elements\Types;
 use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
+use Zend\Form\Element\Select;
 
 /**
  * PostcodeSearch fieldset
@@ -30,14 +31,44 @@ class PostcodeSearch extends Fieldset
         parent::__construct($name, $options);
 
         $postcodeSearch = new Text('postcode');
-        $postcodeSearch->setAttribute('class', 'short');
-        $postcodeSearch->setAttribute('data-container-class', 'inline');
+        $postcodeSearch->setAttributes(
+            array(
+                'class' => 'short',
+                'data-container-class' => 'inline'
+            )
+        );
+
         $this->add($postcodeSearch);
 
         $searchButton = new Button('search', array('label' => 'Find address'));
-        $searchButton->setAttribute('class', 'action--secondary large');
-        $searchButton->setAttribute('data-container-class', 'inline');
+        $searchButton->setAttributes(
+            array(
+                'type' => 'submit',
+                'class' => 'action--secondary large'
+            )
+        );
+        $searchButton->setValue('search');
 
         $this->add($searchButton);
+
+        $selectAddress = new Select('addresses', array('label' => ''));
+        $selectAddress->setAttributes(
+            array(
+                'data-container-class' => 'inline'
+            )
+        );
+
+        $this->add($selectAddress);
+
+        $selectButton = new Button('select', array('label' => 'Select'));
+        $selectButton->setAttributes(
+            array(
+                'type' => 'submit',
+                'class' => 'action--primary'
+            )
+        );
+        $selectButton->setValue('select');
+
+        $this->add($selectButton);
     }
 }
