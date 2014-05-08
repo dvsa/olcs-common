@@ -7,6 +7,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
+            'form_input' => 'Common\Form\View\Helper\FormInput',
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',

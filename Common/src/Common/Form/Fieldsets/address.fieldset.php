@@ -9,6 +9,9 @@ return [
         'version' => [
             'type' => 'hidden'
         ],
+        'postcodeLookup' => [
+            'type' => 'postcode-search'
+        ],
         'addressLine1' => [
             'type' => 'text',
             'label' => 'Street',
