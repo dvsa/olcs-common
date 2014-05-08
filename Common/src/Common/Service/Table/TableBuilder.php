@@ -846,7 +846,7 @@ class TableBuilder
                 }
             }
 
-            $column['link'] = $this->generateUrl(array('sort' => $column['sort'], 'order' => $column['order']));
+            $column['link'] = $this->generatePaginationUrl(array('sort' => $column['sort'], 'order' => $column['order']));
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
