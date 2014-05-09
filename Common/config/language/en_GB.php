@@ -80,6 +80,8 @@ return array(
     'business-type' => "Business type",
     'submission-vehicle-trailer' => "V-auth / T-auth",
     'submission-vehicle-possession' => "Veh in pos",
+    'add-submission-note' => 'Add a submission note',
+    'add-submission-note-text' => 'Add a note to section - ',
     'start-date' => "Start date",
     'review-date' => "Review date",
     'end-date' => "End date",

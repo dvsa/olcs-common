@@ -79,6 +79,8 @@ return array(
     'business-type' => "W Business type",
     'submission-vehicle-trailer' => "W V-auth / T-auth",
     'submission-vehicle-possession' => "W Veh in pos",
+    'add-submission-note' => 'W Add a submission note',
+    'add-submission-note-text' => 'W Add a note to section - ',
     'start-date' => "W Start date",
     'review-date' => "W Review date",
     'end-date' => "W End date",
