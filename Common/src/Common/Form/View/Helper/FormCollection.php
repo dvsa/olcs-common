@@ -9,6 +9,7 @@ namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Zend\Form\ElementInterface;
+use Common\Form\Elements\Types\PostcodeSearch;
 
 /**
  * Form Collection wrapper
@@ -26,6 +27,11 @@ class FormCollection extends ZendFormCollection
     public function render(ElementInterface $element)
     {
         $markup = parent::render($element);
+
+        if (! ($element instanceof PostcodeSearch)) {
+
+            return $markup;
+        }
 
         $messages = $element->getMessages();
 

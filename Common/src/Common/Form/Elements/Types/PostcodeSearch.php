@@ -51,7 +51,7 @@ class PostcodeSearch extends Fieldset
 
         $this->add($searchButton);
 
-        $selectAddress = new Select('addresses', array('label' => ''));
+        $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(
                 'data-container-class' => 'inline'
@@ -70,5 +70,15 @@ class PostcodeSearch extends Fieldset
         $selectButton->setValue('select');
 
         $this->add($selectButton);
+    }
+
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+    }
+
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
