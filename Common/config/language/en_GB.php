@@ -1,9 +1,9 @@
 <?php
-
 return array(
     'testProperty' => "the test",
     'testPropertyPlaceHolder' => "test @placeHolder is @here",
     'licence-number' => "Licence #",
+    'licence-number-full' => 'Licence number',
     'lookup-operator-trading-name' => "Operator / trading name",
     'lookup-postcode' => "Postcode",
     'lookup-name' => "Name",
@@ -27,6 +27,9 @@ return array(
     'new-case-categories-header' => "Select one or more categories",
     'case-summary' => "Case summary",
     'ecms-number' => "ECMS #",
+    'ecms' => 'ECMS',
+    'v-auth-t-auth' =>  'V-auth/T-auth',
+    'vehicles-in-posession' => 'Vehicles in posession',
     'new-case-additional-licence' => "Add additional licences",
     'new-case-next' => "Next",
     'lookup-search-results' => "You searched for",

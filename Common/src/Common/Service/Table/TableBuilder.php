@@ -907,7 +907,7 @@ class TableBuilder
             } else {
                 $details = array(
                     'option' => $option,
-                    'link' => $this->generateUrl(array('page' => 1, 'limit' => $option))
+                    'link' => $this->generatePaginationUrl(array('page' => 1, 'limit' => $option))
                 );
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
             }
@@ -936,7 +936,7 @@ class TableBuilder
             if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
                 $details['option'] = $details['label'];
             } else {
-                $details['link'] = $this->generateUrl(array('page' => $details['page']));
+                $details['link'] = $this->generatePaginationUrl(array('page' => $details['page']));
                 $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
             }
 
@@ -976,7 +976,7 @@ class TableBuilder
                 }
             }
 
-            $column['link'] = $this->generateUrl(array('sort' => $column['sort'], 'order' => $column['order']));
+            $column['link'] = $this->generatePaginationUrl(array('sort' => $column['sort'], 'order' => $column['order']));
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
@@ -1121,6 +1121,25 @@ class TableBuilder
     private function generateUrl($data = array(), $route = null, $extendParams = true)
     {
         return $this->getUrl()->fromRoute($route, $data, array(), $extendParams);
+    }
+
+    /**
+     * Generate pagination url. Strips the controller and action params from
+     * the URL
+     *
+     * @param array $data
+     * @param string $route
+     * @param array $extendParams
+     * @return string
+     */
+    private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
+    {
+        $returnUrl = $this->generateUrl($data, $route, $extendParams);
+
+        // strip out controller and action params
+        $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
+
+        return $returnUrl;
     }
 
     /**

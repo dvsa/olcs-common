@@ -23,10 +23,12 @@ class Module
             ->setFallbackLocale('en_GB');
 
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
+        $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
 
         $events = new EventManager();
         $events->attach(
-            'missingTranslation', '\Common\Service\Translator\MissingTranslationProcessor::processEvent'
+            'missingTranslation',
+            '\Common\Service\Translator\MissingTranslationProcessor::processEvent'
         );
 
         $translator->enableEventManager();
