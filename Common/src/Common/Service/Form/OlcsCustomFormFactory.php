@@ -205,7 +205,7 @@ class OlcsCustomFormFactory extends Factory
             }
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {
