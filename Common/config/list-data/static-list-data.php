@@ -459,5 +459,24 @@ return array(
         'tachograph_analyser.1' => 'tachographAnalyser-yourself',
         'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
         'tachograph_analyser.3' => 'N/A',
+    ],
+    'impounding_type' => [
+        'impounding_type.1' => 'Hearing',
+        'impounding_type.2' => 'Paperwork only'
+    ],
+    'impounding_outcome' => [
+        'impounding_outcome.1' => 'Vehicle(s) returned',
+        'impounding_outcome.2' => 'Vehicle(s) not returned',
+    ],
+    'hearing_location' => [
+        'hearing_location.1' => 'Hearing location 1',
+        'hearing_location.2' => 'Hearing location 2',
+        'hearing_location.3' => 'Hearing location 3',
+    ],
+    'presiding_tc' => [
+        'presiding_tc.1' => 'Presiding TC 1',
+        'presiding_tc.2' => 'Presiding TC 2',
+        'presiding_tc.3' => 'Presiding TC 3',
     ]
+
 );
