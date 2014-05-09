@@ -55,9 +55,9 @@ class AddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test formatPostalAddressFromBS7666 with simple parts
+     * Test formatPostalAddressFromBs7666 with simple parts
      */
-    public function testFormatPostalAddressFromBS7666WithSimpleParts()
+    public function testFormatPostalAddressFromBs7666WithSimpleParts()
     {
         $address = array(
             'organisation_name' => 'My Company Ltd',
@@ -78,15 +78,15 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'postcode' => 'AB1 1AB'
         );
 
-        $addressDetails = $this->service->formatPostalAddressFromBS7666($address);
+        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
 
         $this->assertEquals($expectedAddress, $addressDetails);
     }
 
     /**
-     * Test formatPostalAddressFromBS7666
+     * Test formatPostalAddressFromBs7666
      */
-    public function testFormatPostalAddressFromBS7666()
+    public function testFormatPostalAddressFromBs7666()
     {
         $address = array(
             'sao_start_number' => '1',
@@ -115,15 +115,15 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'postcode' => 'AB1 1AB'
         );
 
-        $addressDetails = $this->service->formatPostalAddressFromBS7666($address);
+        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
 
         $this->assertEquals($expectedAddress, $addressDetails);
     }
 
     /**
-     * Test formatPostalAddressFromBS7666 With admin area same as town_name
+     * Test formatPostalAddressFromBs7666 With admin area same as town_name
      */
-    public function testFormatPostalAddressFromBS7666WithSameAdminAndTown()
+    public function testFormatPostalAddressFromBs7666WithSameAdminAndTown()
     {
         $address = array(
             'sao_start_number' => '1',
@@ -152,15 +152,15 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'postcode' => 'AB1 1AB'
         );
 
-        $addressDetails = $this->service->formatPostalAddressFromBS7666($address);
+        $addressDetails = $this->service->formatPostalAddressFromBs7666($address);
 
         $this->assertEquals($expectedAddress, $addressDetails);
     }
 
     /**
-     * Test formatPostalAddressFromBS7666 With pre-defined address
+     * Test formatPostalAddressFromBs7666 With pre-defined address
      */
-    public function testFormatPostalAddressFromBS7666WithPreDefinedAddress()
+    public function testFormatPostalAddressFromBs7666WithPreDefinedAddress()
     {
         $address = array(
             'sao_start_number' => '1',
@@ -191,7 +191,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
 
         $this->service->setAddress($address);
 
-        $addressDetails = $this->service->formatPostalAddressFromBS7666();
+        $addressDetails = $this->service->formatPostalAddressFromBs7666();
 
         $this->assertEquals($expectedAddress, $addressDetails);
     }

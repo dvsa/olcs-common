@@ -75,7 +75,9 @@ abstract class FormActionController extends AbstractActionController
 
                     } else {
 
-                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions($this->getAddressService()->formatAddressesForSelect($addressList));
+                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                            $this->getAddressService()->formatAddressesForSelect($addressList)
+                        );
                     }
                 } elseif (isset($post[$name]['searchPostcode']['select'])
                     && !empty($post[$name]['searchPostcode']['select'])) {
@@ -87,7 +89,7 @@ abstract class FormActionController extends AbstractActionController
                     $fieldset->get('searchPostcode')->remove('addresses');
                     $fieldset->get('searchPostcode')->remove('select');
 
-                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBS7666($address);
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
 
                     $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
 

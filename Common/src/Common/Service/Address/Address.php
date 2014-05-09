@@ -68,7 +68,7 @@ class Address
      * @param array $address
      * @return array
      */
-    public function formatPostalAddressFromBS7666($address = null)
+    public function formatPostalAddressFromBs7666($address = null)
     {
         if (is_null($address)) {
             $address = $this->getAddress();
@@ -184,10 +184,15 @@ class Address
         } else {
             $string .= $this->getAddressPart($prefix . '_start_number')
                 . $this->getAddressPart($prefix . '_start_prefix')
-                . ($this->getAddressPart($prefix . '_end_number') !== '' ? ('-' . $this->getAddressPart($prefix . '_end_number')) : '')
+                . (
+                    $this->getAddressPart($prefix . '_end_number') !== ''
+                    ? ('-' . $this->getAddressPart($prefix . '_end_number'))
+                    : ''
+                )
                 . $this->getAddressPart($prefix . '_end_suffix');
 
-            if ($this->getAddressPart($prefix . '_start_number') !== '' && $this->getAddressPart($prefix . '_text') !== '') {
+            if ($this->getAddressPart($prefix . '_start_number') !== ''
+                && $this->getAddressPart($prefix . '_text') !== '') {
                 $string .= ' ' . $this->getAddressPart($prefix . '_text');
             }
         }
