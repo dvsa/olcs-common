@@ -17,7 +17,8 @@ return array(
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
-            'version' => 'Common\View\Helper\Version'
+            'version' => 'Common\View\Helper\Version',
+            'applicationName' => 'Common\View\Helper\ApplicationName'
         )
     ),
     'view_manager' => array(
