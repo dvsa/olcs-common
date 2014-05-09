@@ -23,11 +23,34 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function getMockTableBuilder($methods = array())
     {
-        $applicationConfig = array(
-            'tables' => array('config' => array(__DIR__ . '/TestResources/'))
-        );
+        return $this->getMock('\Common\Service\Table\TableBuilder', $methods, array($this->getMockServiceLocator()));
+    }
 
-        return $this->getMock('\Common\Service\Table\TableBuilder', $methods, array($applicationConfig));
+    private function getMockServiceLocator($config = true)
+    {
+
+        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+        $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+
+        $servicesMap = [
+            ['Config', true, ($config
+                ? array(
+                    'tables' => array(
+                        'config' => array(__DIR__ . '/TestResources/'),
+                        'partials' => ''
+                    ),
+                )
+                : array())
+            ],
+            ['translator', true, $mockTranslator],
+        ];
+
+        $mockSm
+            ->expects($this->any())
+            ->method('get')
+            ->will($this->returnValueMap($servicesMap));
+
+        return $mockSm;
     }
 
     /**
@@ -35,7 +58,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetContentHelper()
     {
-        $table = new TableBuilder(array('tables' => array('partials' => '')));
+
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $contentHelper = $table->getContentHelper();
 
@@ -53,7 +77,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetContentHelperWithoutConfig()
     {
-        $table = new TableBuilder(array());
+        $table = new TableBuilder($this->getMockServiceLocator(false));
 
         $table->getContentHelper();
     }
@@ -63,7 +87,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPaginationHelper()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $paginationHelper = $table->getPaginationHelper();
 
@@ -79,7 +103,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfigFromFile()
     {
-        $table = new TableBuilder(array('tables' => array('config' => array(__DIR__ . '/TestResources/'))));
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $config = $table->getConfigFromFile('sample');
 
@@ -93,7 +117,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfigFromFileWithMissingFile()
     {
-        $table = new TableBuilder(array('tables' => array('config' => array(__DIR__ . '/TestResources/'))));
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->getConfigFromFile('DoesntExist');
     }
@@ -110,7 +134,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             'loadParams',
             'setupAction',
             'render'
-            )
+            ), array($this->getMockServiceLocator())
         );
 
         $table->expects($this->at(0))
@@ -143,7 +167,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             'loadData',
             'loadParams',
             'setupAction'
-            )
+            ), array($this->getMockServiceLocator())
         );
 
         $table->expects($this->at(0))
@@ -168,7 +192,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadConfigWithoutTableConfig()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator(false));
 
         $table->loadConfig('test');
     }
@@ -302,7 +326,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $data = array();
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadData($data);
 
@@ -321,7 +345,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             array('foo' => 'bar')
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadData($data);
 
@@ -345,7 +369,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             'Count' => 10
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadData($data);
 
@@ -364,7 +388,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $params = array(
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadParams($params);
     }
@@ -381,7 +405,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             'limit' => 10
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadParams($params);
 
@@ -406,7 +430,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $tableConfig = array(
             'variables' => array(
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'title' => 'Test',
             ),
             'settings' => array(
                 'paginate' => array()
@@ -416,6 +441,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $expectedVariables = $params;
 
         $expectedVariables['foo'] = 'bar';
+        $expectedVariables['title'] = null;
 
         $table = $this->getMockTableBuilder(array('getConfigFromFile'));
 
@@ -517,7 +543,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderTableFooterWithoutFooter()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $this->assertEquals('', $table->renderTableFooter());
     }
@@ -543,7 +569,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table = $this->getMock(
             '\Common\Service\Table\TableBuilder',
             array('getContentHelper'),
-            array(array('tables' => array('partials' => __DIR__ . '/TestResources/')))
+            array($this->getMockServiceLocator())
         );
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
@@ -721,7 +747,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderTotalWithoutPagination()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -791,7 +817,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderActionsWithoutCrud()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_PAGINATE);
 
@@ -808,7 +834,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -830,7 +856,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -1046,7 +1072,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderFooterWithoutPagination()
     {
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setType(TableBuilder::TYPE_CRUD);
 
@@ -1066,7 +1092,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setSettings($settings);
 
@@ -1092,7 +1118,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setSettings($settings);
 
@@ -1148,7 +1174,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setSettings($settings);
 
@@ -1497,14 +1523,16 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Test renderHeaderColumn With pre-set width
      */
-    public function testRenderHeaderColumnWithWidth()
+    public function testRenderHeaderColumnWithWidthAndTitle()
     {
         $column = array(
-            'width' => 'checkbox'
+            'width' => 'checkbox',
+            'title' => 'Title',
         );
 
         $expectedColumn = array(
-            'width' => '16px'
+            'width' => '16px',
+            'title' => null,
         );
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
@@ -1865,7 +1893,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $fieldset = 'table';
 
-        $table = new TableBuilder();
+        $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->setActionFieldName($actionName);
 
