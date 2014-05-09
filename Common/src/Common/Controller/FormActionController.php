@@ -54,6 +54,8 @@ abstract class FormActionController extends AbstractActionController
 
             if ($fieldset instanceof Address) {
 
+                $removeSelectFields = false;
+
                 $name = $fieldset->getName();
 
                 // If we haven't posted a form, or we haven't clicked find address
@@ -62,22 +64,33 @@ abstract class FormActionController extends AbstractActionController
 
                     $this->persist = false;
 
-                    $addressList = $this->getAddressesForPostcode($post[$name]['searchPostcode']['postcode']);
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
 
-                    if (empty($addressList)) {
+                    if (empty($postcode)) {
 
-                        $fieldset->get('searchPostcode')->remove('addresses');
-                        $fieldset->get('searchPostcode')->remove('select');
+                        $removeSelectFields = true;
 
                         $fieldset->get('searchPostcode')->setMessages(
-                            array('No addresses found for postcode')
+                            array('Please enter a postcode')
                         );
-
                     } else {
 
-                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-                            $this->getAddressService()->formatAddressesForSelect($addressList)
-                        );
+                        $addressList = $this->getAddressesForPostcode($postcode);
+
+                        if (empty($addressList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('No addresses found for postcode')
+                            );
+
+                        } else {
+
+                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                $this->getAddressService()->formatAddressesForSelect($addressList)
+                            );
+                        }
                     }
                 } elseif (isset($post[$name]['searchPostcode']['select'])
                     && !empty($post[$name]['searchPostcode']['select'])) {
@@ -86,8 +99,7 @@ abstract class FormActionController extends AbstractActionController
 
                     $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
-                    $fieldset->get('searchPostcode')->remove('addresses');
-                    $fieldset->get('searchPostcode')->remove('select');
+                    $removeSelectFields = true;
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
 
@@ -95,6 +107,10 @@ abstract class FormActionController extends AbstractActionController
 
                 } else {
 
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
                     $fieldset->get('searchPostcode')->remove('addresses');
                     $fieldset->get('searchPostcode')->remove('select');
                 }
