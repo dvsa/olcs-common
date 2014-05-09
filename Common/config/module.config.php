@@ -4,9 +4,15 @@ $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
 return array(
     'version' => (isset($release['version']) ? $release['version'] : ''),
+    'service_manager' => array(
+        'services' => array(
+            'address' => new \Common\Service\Address\Address()
+        )
+    ),
     'view_helpers' => array(
         'invokables' => array(
             'form' => 'Common\Form\View\Helper\Form',
+            'formCollection' => 'Common\Form\View\Helper\FormCollection',
             'formRow' => 'Common\Form\View\Helper\FormRow',
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
