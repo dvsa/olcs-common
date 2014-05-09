@@ -101,7 +101,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
             $params[$itemIdParam] = $id;
         }
-
         $this->redirect()->toRoute($route, $params, [], true);
     }
 

@@ -205,7 +205,7 @@ class OlcsCustomFormFactory extends Factory
             }
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {
@@ -265,6 +265,8 @@ class OlcsCustomFormFactory extends Factory
         $thisFieldsets = array();
         foreach ($fieldsets as $fieldset) {
 
+            $thisFieldset = array();
+
             // This logic pulls in a fieldset from config
             if (isset($fieldset['type'])) {
 
@@ -286,6 +288,12 @@ class OlcsCustomFormFactory extends Factory
             }
 
             $thisFieldset['elements'] = $this->getElements($fieldset['elements']);
+
+            if (isset($fieldset['type']) && class_exists($fieldset['type'])) {
+
+                $thisFieldset['type'] = $fieldset['type'];
+            }
+
             $thisFieldsets[]['spec'] = $thisFieldset;
         }
         return $thisFieldsets;

@@ -17,7 +17,9 @@
         isset($route) ? $this->includeFlowJs($route, 'selfserve') : ''; ?>
 
     </head>
-    <body>
+
+    <body class="<?php echo $this->applicationName(); ?>">
+
     <?php echo $this->render('layout/partials/header.phtml'); ?>
 
 	<div class="page-wrapper">
