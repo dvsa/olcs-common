@@ -1,9 +1,9 @@
 <?php
 
 /**
- * YesNo formatter test
+ * Translate formatter test
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 
 namespace CommonTest\Service\Table\Formatter;
@@ -11,9 +11,9 @@ namespace CommonTest\Service\Table\Formatter;
 use Common\Service\Table\Formatter\Translate;
 
 /**
- * YesNo formatter test
+ * Translate formatter test
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 class TranslateTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->with('translator')
             ->will($this->returnValue($mockTranslator));
-        $this->assertEquals($expected, Translate::format($data, $column,$sm));
+        $this->assertEquals($expected, Translate::format($data, $column, $sm));
     }
 
     /**

@@ -35,7 +35,7 @@ class YesNoTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->with('translator')
             ->will($this->returnValue($mockTranslator));
-        $this->assertEquals($expected, YesNo::format($data, $column,$sm));
+        $this->assertEquals($expected, YesNo::format($data, $column, $sm));
     }
 
     /**

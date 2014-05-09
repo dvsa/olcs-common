@@ -547,7 +547,9 @@ class TableBuilder
         }
 
         if (isset($config['variables']['title'])) {
-            $config['variables']['title'] = $this->getServiceLocator()->get('translator')->translate($config['variables']['title']);
+            $config['variables']['title'] = $this->getServiceLocator()
+                ->get('translator')
+                ->translate($config['variables']['title']);
         }
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
@@ -976,7 +978,10 @@ class TableBuilder
                 }
             }
 
-            $column['link'] = $this->generatePaginationUrl(array('sort' => $column['sort'], 'order' => $column['order']));
+            $column['link'] = $this->generatePaginationUrl(array(
+                'sort' => $column['sort'],
+                'order' => $column['order']
+            ));
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
