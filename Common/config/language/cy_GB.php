@@ -3,6 +3,7 @@ return array(
     'testProperty' => "W the test",
     'testPropertyPlaceHolder' => "W test @placeHolder is @here",
     'licence-number' => "W Licence #",
+    'licence-number-full' => 'W Licence number',
     'lookup-operator-trading-name' => "W Operator / trading name",
     'lookup-postcode' => "W Postcode",
     'lookup-name' => "W Name",
@@ -26,6 +27,9 @@ return array(
     'new-case-categories-header' => "W Select one or more categories",
     'case-summary' => "W Case summary",
     'ecms-number' => "W ECMS #",
+    'ecms' => 'W ECMS',
+    'v-auth-t-auth' =>  'W V-auth/T-auth',
+    'vehicles-in-posession' => 'Vehicles in posession',
     'new-case-additional-licence' => "W Add additional licences",
     'new-case-next' => "W Next",
     'lookup-search-results' => "W You searched for",
@@ -335,5 +339,12 @@ return array(
     'add-complaint' => 'W Add complaint',
     'edit-complaint' => 'W Edit complaint',
     'subtitle-complaint-text' => 'W Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'
+nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
+        // footer
+    'helpdesk' => 'W Helpdesk',
+    'privacy-and-cookies' => 'W Privacy &amp; Cookies',
+    'built-by' => 'W Built by',
+    'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
+    'crown-copyright' => 'W Crown Copyright',
 );

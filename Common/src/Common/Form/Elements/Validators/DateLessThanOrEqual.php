@@ -5,13 +5,16 @@ use Zend\Validator\AbstractValidator as AbstractValidator;
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
 
-class DateLessThan extends AbstractValidator
+/**
+ * Checks a date is not after another date
+ */
+class DateLessThanOrEqual extends AbstractValidator
 {
     /**
      * Error codes
      * @const string
      */
-    const NOT_LESS_THAN = 'notLessThan';
+    const NOT_LESS_THAN_OR_EQUAL = 'notLessThanOrEqual';
     const MISSING_TOKEN = 'missingToken';
 
     /**
@@ -19,7 +22,7 @@ class DateLessThan extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_LESS_THAN => "This is after a corresponding date, it must be before this date",
+        self::NOT_LESS_THAN_OR_EQUAL => "This is after a corresponding date, it must be the same date or before",
         self::MISSING_TOKEN => 'No token was provided to match against',
     );
 
@@ -92,16 +95,13 @@ class DateLessThan extends AbstractValidator
      */
     public function isValid($value, array $context = null)
     {
-        //die(print_r(func_get_args(), 1));
-        //$thisValue = implode('-', [$value['year'], $value['month'], $value['day']]);
-
         $thisValue = $value;
 
         $c = $context[$this->getToken()];
         $compareValue = implode('-', [$c['year'], $c['month'], $c['day']]);
 
-        if ($thisValue > $compareValue) {
-            $this->error(self::NOT_LESS_THAN);
+        if (!($thisValue <= $compareValue)) {
+            $this->error(self::NOT_LESS_THAN_OR_EQUAL);
             return false;
         }
 

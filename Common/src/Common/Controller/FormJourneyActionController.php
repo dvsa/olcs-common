@@ -26,7 +26,9 @@ abstract class FormJourneyActionController extends FormActionController
     /**
      * Method that is called at the end of a journey.
      */
-    abstract protected function completeAction();
+    protected function completeAction()
+    {
+    }
 
     /**
      * Persists the form data for a section.
@@ -271,26 +273,5 @@ abstract class FormJourneyActionController extends FormActionController
         $step = ucwords($step);
         $step = str_replace(' ', '', $step);
         return 'process' . $step;
-    }
-
-    /**
-     * Get licence entity based on route id value
-     *
-     * @return array|object
-     */
-    protected function getLicenceEntity($applicationId = false)
-    {
-        if ( ! $applicationId ) {
-            $applicationId = (int) $this->params()->fromRoute('applicationId');
-        }
-
-        $bundle = array(
-            'children' => array(
-                'licence',
-            ),
-        );
-
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
-        return $application['licence'];
     }
 }
