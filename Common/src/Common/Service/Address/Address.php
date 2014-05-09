@@ -45,6 +45,7 @@ class Address
      * Get the address
      *
      * @param array $address
+     * @return array
      */
     public function getAddress()
     {
