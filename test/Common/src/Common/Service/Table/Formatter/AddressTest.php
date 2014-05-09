@@ -54,7 +54,12 @@ class AddressTest extends \PHPUnit_Framework_TestCase
                 'foo, bar, cake'
             ),
             array(
-                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake', 'addressLine4' => 'fourth'),
+                array(
+                    'addressLine1' => 'foo',
+                    'addressLine2' => 'bar',
+                    'addressLine3' => 'cake',
+                    'addressLine4' => 'fourth'
+                ),
                 array(),
                 'foo, bar, cake, fourth'
             ),
