@@ -10,12 +10,15 @@
 
 namespace Common\Service\Table;
 
+use Zend\ServiceManager\ServiceManager;
+
 /**
  * Table Builder
  *
  * Builds a table from config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 class TableBuilder
 {
@@ -161,6 +164,11 @@ class TableBuilder
     private $fieldset = null;
 
     /**
+     * @var
+     */
+    private $sm;
+
+    /**
      * Setter for actionFieldName
      *
      * @param string $name
@@ -205,13 +213,14 @@ class TableBuilder
     }
 
     /**
-     * Inject the application config
+     * Inject the service locator
      *
-     * @param array $applicationConfig
+     * @param $sm
      */
-    public function __construct($applicationConfig = array())
+    public function __construct($sm)
     {
-        $this->applicationConfig = $applicationConfig;
+        $this->setServiceLocator($sm);
+        $this->applicationConfig = $sm->get('Config');
     }
 
     /**
@@ -222,6 +231,26 @@ class TableBuilder
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Set Service Manager
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceLocator($sm)
+    {
+        $this->sm = $sm;
+    }
+
+    /**
+     * Get Service Manager
+     *
+     * @return ServiceManager
+     */
+    public function getServiceLocator()
+    {
+        return $this->sm;
     }
 
     /**
@@ -285,7 +314,6 @@ class TableBuilder
     public function getContentHelper()
     {
         if (empty($this->contentHelper)) {
-
             if (!isset($this->applicationConfig['tables']['partials'])) {
 
                 throw new \Exception('Table partial location not defined in config');
@@ -516,6 +544,10 @@ class TableBuilder
             $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
                 ? $this->settings['crud']['formName']
                 : 'default';
+        }
+
+        if (isset($config['variables']['title'])) {
+            $config['variables']['title'] = $this->getServiceLocator()->get('translator')->translate($config['variables']['title']);
         }
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
@@ -954,6 +986,11 @@ class TableBuilder
             $column['width'] = $this->widths[$column['width']];
         }
 
+        if (isset($column['title'])) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $column['title'] = $translator->translate($column['title']);
+        }
+
         return $this->replaceContent($wrapper, $column);
     }
 
@@ -1046,7 +1083,7 @@ class TableBuilder
 
         if (is_callable($column['formatter'])) {
 
-            return call_user_func($column['formatter'], $data, $column);
+            return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());
         }
 
         return '';

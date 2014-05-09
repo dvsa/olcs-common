@@ -387,4 +387,6 @@ return
         'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
         'crown-copyright' => 'W Crown Copyright',
 
+        //Aplications statuses
+        'app_status.new' => 'W New',
 );
