@@ -9,6 +9,8 @@
 
 namespace Common\Controller;
 
+use Common\Form\Elements\Types\Address;
+
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
  *
@@ -17,6 +19,9 @@ namespace Common\Controller;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    private $persist = true;
+
+    private $fieldValues = array();
 
     /**
      * Gets a from from either a built or custom form config.
@@ -26,7 +31,108 @@ abstract class FormActionController extends AbstractActionController
     protected function getForm($type)
     {
         $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
+
+        $form = $this->processPostcodeLookup($form);
+
         return $form;
+    }
+
+    protected function processPostcodeLookup($form)
+    {
+        $request = $this->getRequest();
+
+        $post = array();
+
+        if ($request->isPost()) {
+
+            $post = (array)$request->getPost();
+        }
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+
+            if ($fieldset instanceof Address) {
+
+                $removeSelectFields = false;
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
+
+                    $this->persist = false;
+
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
+
+                    if (empty($postcode)) {
+
+                        $removeSelectFields = true;
+
+                        $fieldset->get('searchPostcode')->setMessages(
+                            array('Please enter a postcode')
+                        );
+                    } else {
+
+                        $addressList = $this->getAddressesForPostcode($postcode);
+
+                        if (empty($addressList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('No addresses found for postcode')
+                            );
+
+                        } else {
+
+                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                $this->getAddressService()->formatAddressesForSelect($addressList)
+                            );
+                        }
+                    }
+                } elseif (isset($post[$name]['searchPostcode']['select'])
+                    && !empty($post[$name]['searchPostcode']['select'])) {
+
+                    $this->persist = false;
+
+                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+
+                    $removeSelectFields = true;
+
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
+
+                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
+
+                } else {
+
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    protected function getAddressService()
+    {
+        return $this->getServiceLocator()->get('address');
+    }
+
+    protected function getAddressForUprn($uprn)
+    {
+        return $this->sendGet('postcode\address', array('id' => $uprn));
+    }
+
+    protected function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\address', array('postcode' => $postcode));
     }
 
     protected function getFormGenerator()
@@ -43,9 +149,12 @@ abstract class FormActionController extends AbstractActionController
     protected function formPost($form, $callback = null, $additionalParams = array())
     {
         if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
 
-            if ($form->isValid()) {
+            $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
+
+            $form->setData($data);
+
+            if ($this->persist && $form->isValid()) {
                 $validatedData = $form->getData();
                 $params = [
                     'validData' => $validatedData,
