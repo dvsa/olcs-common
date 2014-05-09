@@ -75,7 +75,7 @@ abstract class FormActionController extends AbstractActionController
 
                     } else {
 
-                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions($this->formatAddressesForSelect($addressList));
+                        $fieldset->get('searchPostcode')->get('addresses')->setValueOptions($this->getAddressService()->formatAddressesForSelect($addressList));
                     }
                 } elseif (isset($post[$name]['searchPostcode']['select'])
                     && !empty($post[$name]['searchPostcode']['select'])) {
@@ -87,7 +87,7 @@ abstract class FormActionController extends AbstractActionController
                     $fieldset->get('searchPostcode')->remove('addresses');
                     $fieldset->get('searchPostcode')->remove('select');
 
-                    $addressDetails = $this->formatPostalAddressFromBS7666($address);
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBS7666($address);
 
                     $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
 
@@ -102,107 +102,19 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
+    protected function getAddressService()
+    {
+        return $this->getServiceLocator()->get('address');
+    }
+
     protected function getAddressForUprn($uprn)
     {
         return $this->sendGet('postcode\address', array('id' => $uprn));
     }
 
-    protected function formatPostalAddressFromBS7666($address)
-    {
-        $details = array(
-            'addressLine1' => '',
-            'addressLine2' => '',
-            'addressLine3' => '',
-            'addressLine4' => '',
-            'city' => '',
-            'postcode' => ''
-        );
-
-        $addressLines = array(
-            $this->formatSaon($address),
-            $this->formatPaon($address) . (!empty($address['street_description']) ? (' ' . $address['street_description']) : ''),
-            $address['locality_name'],
-            ($address['town_name'] !== $address['administritive_area'] ? $address['town_name'] : '')
-        );
-
-        $lineNo = 1;
-
-        foreach ($addressLines as $line) {
-
-            if (!empty($line)) {
-                $details['addressLine' . $lineNo] = ucwords(strtolower($line));
-                $lineNo++;
-            }
-        }
-
-        if ($address['town_name'] !== $address['administritive_area']) {
-             $details['city'] = $address['administritive_area'];
-        } else {
-            $details['city'] = $address['town_name'];
-        }
-
-        $details['city'] = ucwords(strtolower($details['city']));
-
-        $details['postcode'] = $address['postcode'];
-
-        return $details;
-    }
-
-    private function formatSaon($address)
-    {
-        return $this->formatOn($address, 'sao', 'organisation_name');
-    }
-
-    private function formatPaon($address)
-    {
-        return $this->formatOn($address, 'pao', 'building_name');
-    }
-
-    private function formatOn($address, $prefix, $simple)
-    {
-        $string = '';
-
-        if (!empty($address[$simple])) {
-            $string .= (string)$address[$simple];
-        } else {
-            $string .= (string)$address[$prefix . '_start_number']
-                . (string)$address[$prefix . '_start_prefix']
-                . (!empty($address[$prefix . '_end_number']) ? ('-' . (string)$address[$prefix . '_end_number']) : '')
-                . (string)$address[$prefix . '_end_suffix'];
-
-            if (!empty($address[$prefix . '_start_number']) && !empty($address[$prefix . '_text'])) {
-                $string .= ' ' . (string)$address[$prefix . '_text'];
-            }
-        }
-
-        return trim($string);
-    }
-
     protected function getAddressesForPostcode($postcode)
     {
         return $this->sendGet('postcode\address', array('postcode' => $postcode));
-    }
-
-    protected function formatAddressesForSelect($list)
-    {
-        $options  = array();
-        foreach ($list as $item) {
-
-            $address = $this->formatPostalAddressFromBS7666($item);
-
-            $allowedParts = array('addressLine1', 'addressLine2', 'addressLine3', 'city');
-            $parts = array();
-
-            foreach ($address as $key => $val) {
-                if (in_array($key, $allowedParts) && !empty($val)) {
-                    $parts[] = $val;
-                }
-            }
-
-            $options[$item['uprn']] = implode(', ', $parts);
-        }
-
-        return $options;
     }
 
     protected function getFormGenerator()
