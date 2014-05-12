@@ -460,13 +460,5 @@ return array(
         'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
         'tachograph_analyser.3' => 'N/A',
     ],
-    'conditionundertaking_status_types' => [
-        'Approved' => 'Approved',
-        'Draft' => 'Draft'
-    ],
-    'conditionundertaking_attachedTo_types' => [
-        'OC' => 'OC',
-        'Licence' => 'Licence'
-    ],
 
 );
