@@ -20,9 +20,10 @@ class Date implements FormatterInterface
      *
      * @param array $data
      * @param array $column
+     * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column)
+    public static function format($data, $column, $sm)
     {
         if (!isset($column['dateformat'])) {
             $column['dateformat'] = 'd/m/Y';

@@ -287,6 +287,10 @@ class OlcsCustomFormFactory extends Factory
                 $thisFieldset['options'] = $fieldset['options'];
             }
 
+            if (isset($fieldset['attributes'])) {
+                $thisFieldset['attributes'] = $fieldset['attributes'];
+            }
+
             $thisFieldset['elements'] = $this->getElements($fieldset['elements']);
 
             if (isset($fieldset['type']) && class_exists($fieldset['type'])) {

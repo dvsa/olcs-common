@@ -20,9 +20,10 @@ class Sum implements FormatterInterface
      *
      * @param array $data
      * @param array $column
+     * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column)
+    public static function format($data, $column, $sm)
     {
         $sum = 0;
 

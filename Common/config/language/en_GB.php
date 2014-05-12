@@ -417,4 +417,7 @@ return array(
     'built-by' => 'Built by',
     'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
+
+    //Aplications statuses
+    'app_status.new' => 'New',
 );

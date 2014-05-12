@@ -1,22 +1,22 @@
 <?php
 
 /**
- * YesNo formatter
+ * Translate formatter
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 
 namespace Common\Service\Table\Formatter;
 
 /**
- * YesNo formatter
+ * Translate formatter
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class YesNo implements FormatterInterface
+class Translate implements FormatterInterface
 {
     /**
-     * Format a address
+     * Translate value
      *
      * @param array $data
      * @param array $column
@@ -25,6 +25,6 @@ class YesNo implements FormatterInterface
      */
     public static function format($data, $column, $sm)
     {
-        return ($data[$column['name']] == 1 ? 'Y' : 'N');
+        return $sm->get('translator')->translate($data[$column['name']]);
     }
 }

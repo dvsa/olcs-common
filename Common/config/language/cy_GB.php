@@ -349,4 +349,7 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'built-by' => 'W Built by',
     'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
     'crown-copyright' => 'W Crown Copyright',
+
+    //Aplications statuses
+    'app_status.new' => 'W New',
 );
