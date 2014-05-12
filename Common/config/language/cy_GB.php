@@ -350,4 +350,16 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+
+
+    // conditions & undertakings
+    'add-condition' => 'W Add condition',
+    'edit-condition' => 'W Edit condition',
+    'subtitle-condition-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'W Add undertaking',
+    'edit-undertaking' => 'W Edit undertaking',
+    'subtitle-undertaking-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
 );
