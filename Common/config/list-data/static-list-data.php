@@ -75,12 +75,11 @@ return array(
     ],
     'business_types' =>
     [
-        'org_type.rc' => 'Registered Company',
+        'org_type.lc' => 'Limited company',
         'org_type.st' => 'Sole Trader',
         'org_type.p' => 'Partnership',
-        'org_type.llp' => 'LLP',
-        'org_type.pa' => 'Public authority',
-        'org_type.o' => 'Other/Charity/Trust & University',
+        'org_type.llp' => 'Limited Liability Partnership',
+        'org_type.o' => 'Other (e.g. public authority, charity, trust, university)',
     ],
     'defendant_types' =>
     [
