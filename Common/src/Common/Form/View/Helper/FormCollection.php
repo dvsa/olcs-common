@@ -7,8 +7,10 @@
  */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Zend\Form\ElementInterface;
+use Zend\Form\Element\Collection as CollectionElement;
+use Zend\Form\FieldsetInterface;
+use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
 
 /**
