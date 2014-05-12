@@ -2,7 +2,7 @@
 
 return [
     'postcode-search' => [
-        'name' => 'postcodeSearch',
+        'name' => 'postcode-search',
         'type' => 'Common\Form\Elements\Types\PostcodeSearch',
         'options' => [
             'label' => 'Postcode search'

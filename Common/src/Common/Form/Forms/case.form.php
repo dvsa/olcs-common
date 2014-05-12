@@ -48,7 +48,6 @@ return [
             [
                 'name' => 'fields',
                 'options' => [
-                    'label' => 'Info'
                 ],
                 'elements' => [
                     'description' => [
@@ -58,7 +57,7 @@ return [
                     ],
                     'ecms' => [
                         'type' => 'text',
-                        'label' => 'ECMS #',
+                        'label' => 'ECMS number',
                         'class' => 'medium'
                     ]
                 ]
