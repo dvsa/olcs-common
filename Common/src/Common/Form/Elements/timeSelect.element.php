@@ -2,11 +2,12 @@
 
 return [
     'timeSelect' => [
-        'type' => '\Zend\Form\Element\Time',
+        'type' => 'Common\Form\Elements\Custom\Time',
         'name' => '',
         'options' => [
             'label' => 'Time',
             'create_empty_option' => true,
+            'required' => false,
             'format' => 'h:i'
         ],
         'attributes' => [
