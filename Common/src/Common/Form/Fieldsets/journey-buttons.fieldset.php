@@ -2,7 +2,9 @@
 
 return array(
     'name' => 'form-actions',
-    'class' => 'action-buttons',
+    'attributes' => array(
+        'class' => 'actions-container'
+    ),
     'options' => array(0),
     'elements' => array(
         'submit' => array(

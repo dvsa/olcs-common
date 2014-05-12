@@ -361,4 +361,26 @@ abstract class FormActionController extends AbstractActionController
 
         return $data;
     }
+
+    /**
+     * Check if a button was pressed
+     *
+     * @param string $button
+     * @return bool
+     */
+    public function isButtonPressed($button)
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+
+            if (isset($data['form-actions'][$button])) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
