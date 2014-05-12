@@ -42,11 +42,18 @@ class OlcsCustomFormFactory extends Factory
     );
 
     /**
-     * Holds for form config
+     * Holds the form config
      *
      * @var array
      */
     public $baseFormConfig;
+
+    /**
+     * Holds the form type
+     *
+     * @var string
+     */
+    protected $type;
 
     /**
      * Holds the form paths
@@ -85,6 +92,8 @@ class OlcsCustomFormFactory extends Factory
      */
     public function createForm($type)
     {
+        $this->type = $type;
+
         if (empty($this->baseFormConfig)) {
             $this->baseFormConfig = $this->getFormConfig($type);
         }
@@ -188,6 +197,9 @@ class OlcsCustomFormFactory extends Factory
 
         $newElement['spec'] = $this->config['form']['elements'][$element['type']];
 
+        $config = $this->baseFormConfig[$this->type];
+        $forceDisabled = isset($config['disabled']) && $config['disabled'];
+
         // Sets the type to a filter class for filtering and validation
         if (isset($element['filters'])) {
             $newElement['spec']['type'] = $element['filters'];
@@ -203,6 +215,10 @@ class OlcsCustomFormFactory extends Factory
             if (isset($element[$attribute])) {
                 $newElement['spec']['attributes'][$attribute] = $element[$attribute];
             }
+        }
+
+        if ($forceDisabled) {
+            $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
         $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
