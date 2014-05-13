@@ -421,7 +421,7 @@ return array(
     'helpdesk' => 'Helpdesk',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'built-by' => 'Built by',
-    'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
+    'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
 
     //Aplications statuses
@@ -436,5 +436,5 @@ return array(
     'edit-undertaking' => 'Edit undertaking',
     'subtitle-undertaking-text' => 'Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-    
+
 );
