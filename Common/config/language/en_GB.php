@@ -350,6 +350,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
+        inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'Please provide the company or full name
         of the external contractor who analyses your tachograph records (if applicable)',
