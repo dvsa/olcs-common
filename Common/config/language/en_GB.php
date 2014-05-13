@@ -418,4 +418,22 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
+
+    // Application Journey
+    'application.type-of-licence' => 'Type of licence',
+    'application.type-of-licence.operator-location' => 'Operator location',
+    'application_type-of-licence_operator-location.data' => 'Operator location',
+    'application_type-of-licence_operator-location.data.niFlag' => 'Where do you operate from?',
+    'application.type-of-licence.operator-type' => 'Operator type',
+    'application_type-of-licence_operator-type.data' => 'Operator type',
+    'application_type-of-licence_operator-type.data.goodsOrPsv' => 'What type of operator are you?',
+    'application.type-of-licence.licence-type' => 'Licence type',
+    'application.your-business' => 'Your business',
+    'application.operating-centres' => 'Operating centres',
+    'application.taxi-phv' => 'Taxi/PHV',
+    'application.transport-managers' => 'Transport manager(s)',
+    'application.vehicle-safety' => 'Vehicle & safety',
+    'application.previous-history' => 'Previous history',
+    'application.review-declarations' => 'Review & declarations',
+    'application.payment-submission' => 'Payment & submission',
 );

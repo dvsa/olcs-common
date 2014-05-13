@@ -350,4 +350,15 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+
+    // Application Journey
+    'application.type-of-licence' => 'Type of licence',
+    'application.your-business' => 'Your business',
+    'application.operating-centres' => 'Operating centres',
+    'application.taxi-phv' => 'Taxi/PHV',
+    'application.transport-managers' => 'Transport manager(s)',
+    'application.vehicle-safety' => 'Vehicle & safety',
+    'application.previous-history' => 'Previous history',
+    'application.review-declarations' => 'Review & declarations',
+    'application.payment-submission' => 'Payment & submission',
 );
