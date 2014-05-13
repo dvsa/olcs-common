@@ -160,9 +160,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param string $route
      * @return string
      */
-    public function getUrlFromRoute($route)
+    public function getUrlFromRoute($route, $params = array())
     {
-        return $this->url()->fromRoute($route);
+        return $this->url()->fromRoute($route, $params);
     }
 
     /**
