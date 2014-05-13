@@ -352,6 +352,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
+        inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'Please provide the company or full name
         of the external contractor who analyses your tachograph records (if applicable)',
@@ -373,6 +375,12 @@ return array(
         want authorised on the licence you are applying for.',
     'selfserve-app-subSection-operating-centre-oc-info-psv' => 'Enter the total amount of vehicles that you
         want authorised on the licence you are applying for.',
+
+    //Business Type subsections
+    'selfserve-app-subSection-business-details' => 'Business details',
+    'selfserve-app-subSection-business-addresses' => 'Addresses',
+    'selfserve-app-subSection-business-people' => 'People',
+
     'Authorisation' => 'Authorisation',
     // Generic
     'N/A' => 'Not applicable',

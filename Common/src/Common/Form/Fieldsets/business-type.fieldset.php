@@ -22,7 +22,7 @@ return [
         'next_step' =>
         [
             'values' => [
-                'org_type.rc' => 'registered-company',
+                'org_type.lc' => 'registered-company',
                 'org_type.st' => 'sole-trader',
                 'org_type.p' => 'partnership',
                 'org_type.llp' => 'llp',
