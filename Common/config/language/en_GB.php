@@ -364,6 +364,12 @@ return array(
         want authorised on the licence you are applying for.',
     'selfserve-app-subSection-operating-centre-oc-info-psv' => 'Enter the total amount of vehicles that you
         want authorised on the licence you are applying for.',
+
+    //Business Type subsections
+    'selfserve-app-subSection-business-details' => 'Business details',
+    'selfserve-app-subSection-business-addresses' => 'Addresses',
+    'selfserve-app-subSection-business-people' => 'People',
+
     'Authorisation' => 'Authorisation',
     // Generic
     'N/A' => 'Not applicable',
