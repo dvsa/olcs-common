@@ -348,6 +348,11 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
     'crown-copyright' => 'W Crown Copyright',
 
+    //Business Type subsections
+    'selfserve-app-subSection-business-details' => 'W Business details',
+    'selfserve-app-subSection-business-addresses' => 'W Addresses',
+    'selfserve-app-subSection-business-people' => 'W People',
+
     //Aplications statuses
     'app_status.new' => 'W New',
 );
