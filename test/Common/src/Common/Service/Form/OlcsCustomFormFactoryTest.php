@@ -102,7 +102,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFormException()
     {
-        $form = $this->customFormGenerator->createForm('blahConfig');
+        $this->customFormGenerator->createForm('blahConfig');
     }
 
     /**
@@ -111,7 +111,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddFieldsetException()
     {
-        $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'blahblah');
+        $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'blahblah');
     }
 
     /**
