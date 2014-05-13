@@ -66,11 +66,6 @@ return array(
         'restricted' => 'Restricted',
         'standard-national' => 'Standard National',
         'standard-international' => 'Standard International',
-    ],
-    'licence_types_psv' => [
-        'restricted' => 'Restricted',
-        'standard-national' => 'Standard National',
-        'standard-international' => 'Standard International',
         'special-restricted' => 'Special Restricted',
     ],
     'business_types' =>
