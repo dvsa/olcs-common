@@ -108,6 +108,7 @@ class OlcsCustomFormFactory extends Factory
      * Get the form config for the type
      *
      * @param string $type
+     *
      * @return array
      * @throws \Exception
      */

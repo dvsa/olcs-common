@@ -113,4 +113,63 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $formConfig = $this->customFormGenerator->addFieldset($this->blankFormConfig['testBlankForm'], 'blahblah');
     }
+
+    /**
+     * Make sure that an over-arching form flag of disabled doesn't
+     * disable elements if set to false (e.g. presence isn't enough)
+     *
+     */
+    public function testFormDisabledSetToFalseDoesNotDisableElements()
+    {
+        $config = [
+            'form' => [
+                'name' => 'test',
+                'disabled' => false,
+                'elements' => [
+                    'title' => [
+                        'type' => 'text',
+                    ],
+                    'name' => [
+                        'type' => 'text',
+                    ]
+                ]
+            ]
+        ];
+        $this->customFormGenerator->setFormConfig($config);
+        $form = $this->customFormGenerator->createForm('form');
+
+        foreach ($form->getElements() as $element) {
+            $this->assertFalse($element->hasAttribute('disabled'));
+        }
+    }
+
+    /**
+     * Make sure that an over-arching form flag of disabled set to
+     * true disables all elements within it; we use a separate test
+     * here rather than a DP to be explicit
+     *
+     */
+    public function testFormDisabledSetToTrueDisablesAllElements()
+    {
+        $config = [
+            'form' => [
+                'name' => 'test',
+                'disabled' => true,
+                'elements' => [
+                    'title' => [
+                        'type' => 'text',
+                    ],
+                    'name' => [
+                        'type' => 'text',
+                    ]
+                ]
+            ]
+        ];
+        $this->customFormGenerator->setFormConfig($config);
+        $form = $this->customFormGenerator->createForm('form');
+
+        foreach ($form->getElements() as $element) {
+            $this->assertTrue($element->hasAttribute('disabled'));
+        }
+    }
 }
