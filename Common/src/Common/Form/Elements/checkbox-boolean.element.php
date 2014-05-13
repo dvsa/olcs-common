@@ -5,10 +5,11 @@
  */
 return ['checkbox-boolean' =>
         [
-            'type' => 'checkbox',
+            'type' => '\Common\Form\Elements\InputFilters\Checkbox',
             'options' => [
-                'checked_value' => true,
-                'unchecked_value' => false
+                'checked_value' => 1,
+                'unchecked_value' => 0,
+                'must_be_checked' => false
             ],
         ]
     ];
