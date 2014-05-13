@@ -4,6 +4,10 @@ return [
     'name' => 'llp',
     'elements' =>
     [
+        'business_type' => [
+            'label' => 'What type of business are you?',
+            'type' => 'selectDisabled',
+        ],
         'company_number' =>
         [
             'label' => 'Registered company number',
@@ -15,6 +19,10 @@ return [
             'value' => 'lookup_company',
             'type' => 'submit',
             'label' => 'Find'
+        ],
+        'company_name' =>
+        [
+            'type' => 'companyName'
         ],
     ],
     'options' =>

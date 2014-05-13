@@ -12,7 +12,7 @@ return [
         ],
         'attributes' => [
             'id' => '',
-        //'disabled' => true
+            'disabled' => true
         ]
     ]
 ];

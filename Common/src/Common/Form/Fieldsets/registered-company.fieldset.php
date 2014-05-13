@@ -4,6 +4,17 @@ return [
     'name' => 'registered-company',
     'elements' =>
     [
+        'business_type' => [
+            'label' => 'What type of business are you?',
+            'type' => 'selectDisabled',
+            'value_options' => 'business_types',
+            'class' => 'inline'
+        ],
+        'edit_business_type' => [
+            'type' => 'submit',
+            'label' => 'Back',
+            'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
+        ],
         'company_number' =>
         [
             'label' => 'Registered company number',
@@ -14,7 +25,7 @@ return [
             'name' => 'submit_lookup_company',
             'value' => 'lookup_company',
             'type' => 'submit',
-            'label' => 'Find'
+            'label' => 'Find',
         ],
         'company_name' =>
         [
