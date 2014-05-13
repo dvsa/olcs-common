@@ -28,7 +28,14 @@ class SumTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormat($data, $column, $expected)
     {
-        $this->assertSame($expected, Sum::format($data, $column));
+        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+
+        $sm = $this->getMock('\stdClass', array('get'));
+        $sm->expects($this->any())
+            ->method('get')
+            ->with('translator')
+            ->will($this->returnValue($mockTranslator));
+        $this->assertSame($expected, Sum::format($data, $column, $sm));
     }
 
     /**

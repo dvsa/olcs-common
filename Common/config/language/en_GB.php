@@ -1,9 +1,9 @@
 <?php
-
 return array(
     'testProperty' => "the test",
     'testPropertyPlaceHolder' => "test @placeHolder is @here",
     'licence-number' => "Licence #",
+    'licence-number-full' => 'Licence number',
     'lookup-operator-trading-name' => "Operator / trading name",
     'lookup-postcode' => "Postcode",
     'lookup-name' => "Name",
@@ -27,6 +27,9 @@ return array(
     'new-case-categories-header' => "Select one or more categories",
     'case-summary' => "Case summary",
     'ecms-number' => "ECMS #",
+    'ecms' => 'ECMS',
+    'v-auth-t-auth' =>  'V-auth/T-auth',
+    'vehicles-in-posession' => 'Vehicles in posession',
     'new-case-additional-licence' => "Add additional licences",
     'new-case-next' => "Next",
     'lookup-search-results' => "You searched for",
@@ -361,11 +364,19 @@ return array(
     // Operating Centre Subsections
     'selfserve-app-subSection-operating-centre-oc' => 'Operating centres &amp; authorisation',
     'selfserve-app-subSection-operating-centre-fe' => 'Financial evidence',
+    'selfserve-app-subSection-vehicle-safety-vehicle' => 'Vehicles',
+    'selfserve-app-subSection-vehicle-safety-safety' => 'Safety inspections',
     // Operating Centre
     'selfserve-app-subSection-operating-centre-oc-info' => 'Enter the total amount of vehicles &amp; trailers that you
         want authorised on the licence you are applying for.',
     'selfserve-app-subSection-operating-centre-oc-info-psv' => 'Enter the total amount of vehicles that you
         want authorised on the licence you are applying for.',
+
+    //Business Type subsections
+    'selfserve-app-subSection-business-details' => 'Business details',
+    'selfserve-app-subSection-business-addresses' => 'Addresses',
+    'selfserve-app-subSection-business-people' => 'People',
+
     'Authorisation' => 'Authorisation',
     // Generic
     'N/A' => 'Not applicable',
@@ -410,4 +421,7 @@ return array(
     'built-by' => 'Built by',
     'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
+
+    //Aplications statuses
+    'app_status.new' => 'New',
 );

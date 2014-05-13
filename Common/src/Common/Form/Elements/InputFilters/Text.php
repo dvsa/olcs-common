@@ -40,6 +40,26 @@ class Text extends ZendElement implements InputProviderInterface
     }
 
     /**
+     * Setter for allow empty
+     *
+     * @param boolean $allowEmpty
+     */
+    public function setAllowEmpty($allowEmpty)
+    {
+        $this->allowEmpty = $allowEmpty;
+    }
+
+    /**
+     * Setter for max
+     *
+     * @param int $max
+     */
+    public function setMax($max)
+    {
+        $this->max = $max;
+    }
+
+    /**
      * Provide default input rules for this element.
      *
      * @return array

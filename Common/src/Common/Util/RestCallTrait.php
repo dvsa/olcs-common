@@ -25,6 +25,18 @@ trait RestCallTrait
     private $doctrineHydrator;
 
     /**
+     * Send a get request
+     *
+     * @param string $service
+     * @param array $data
+     * @return array
+     */
+    protected function sendGet($service, $data = array())
+    {
+        return $this->getRestClient($service)->get('', $data);
+    }
+
+    /**
      * Make a rest call and return the response
      *
      * @param string $service

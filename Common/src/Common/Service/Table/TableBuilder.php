@@ -10,12 +10,15 @@
 
 namespace Common\Service\Table;
 
+use Zend\ServiceManager\ServiceManager;
+
 /**
  * Table Builder
  *
  * Builds a table from config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 class TableBuilder
 {
@@ -23,6 +26,7 @@ class TableBuilder
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
     const TYPE_HYBRID = 4;
+    const TYPE_FORM_TABLE = 5;
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
 
@@ -146,20 +150,77 @@ class TableBuilder
     private $order = 'ASC';
 
     /**
-     * Service Locator
+     * Holds the actionFieldName
      *
-     * @var ServiceLocatorInterface
+     * @var string
      */
-    private $serviceLocator;
-    
+    private $actionFieldName = 'action';
+
     /**
-     * Inject the application config
+     * Holds the fieldset name
      *
-     * @param array $applicationConfig
+     * @var null
      */
-    public function __construct($applicationConfig = array())
+    private $fieldset = null;
+
+    /**
+     * @var
+     */
+    private $sm;
+
+    /**
+     * Setter for actionFieldName
+     *
+     * @param string $name
+     */
+    public function setActionFieldName($name)
     {
-        $this->applicationConfig = $applicationConfig;
+        $this->actionFieldName = $name;
+    }
+
+    /**
+     * Return the actionFieldName
+     *
+     * @return string
+     */
+    public function getActionFieldName()
+    {
+        if (!empty($this->fieldset)) {
+            return $this->fieldset . '[' . $this->actionFieldName . ']';
+        }
+
+        return $this->actionFieldName;
+    }
+
+    /**
+     * Setter for Fieldset
+     *
+     * @param string $name
+     */
+    public function setFieldset($name)
+    {
+        $this->fieldset = $name;
+    }
+
+    /**
+     * Getter for fieldset
+     *
+     * @return string
+     */
+    public function getFieldset()
+    {
+        return $this->fieldset;
+    }
+
+    /**
+     * Inject the service locator
+     *
+     * @param $sm
+     */
+    public function __construct($sm)
+    {
+        $this->setServiceLocator($sm);
+        $this->applicationConfig = $sm->get('Config');
     }
 
     /**
@@ -170,6 +231,26 @@ class TableBuilder
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Set Service Manager
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceLocator($sm)
+    {
+        $this->sm = $sm;
+    }
+
+    /**
+     * Get Service Manager
+     *
+     * @return ServiceManager
+     */
+    public function getServiceLocator()
+    {
+        return $this->sm;
     }
 
     /**
@@ -233,7 +314,6 @@ class TableBuilder
     public function getContentHelper()
     {
         if (empty($this->contentHelper)) {
-
             if (!isset($this->applicationConfig['tables']['partials'])) {
 
                 throw new \Exception('Table partial location not defined in config');
@@ -415,7 +495,7 @@ class TableBuilder
      * @param array $config
      * @return string
      */
-    public function buildTable($name, $data = array(), $params = array())
+    public function buildTable($name, $data = array(), $params = array(), $render = true)
     {
         $this->loadConfig($name);
 
@@ -425,7 +505,11 @@ class TableBuilder
 
         $this->setupAction();
 
-        return $this->render();
+        if ($render) {
+            return $this->render();
+        } else {
+            return $this;
+        }
     }
 
     /**
@@ -442,7 +526,7 @@ class TableBuilder
         }
 
         $config = $this->getConfigFromFile($name);
-//print_r($config);
+
         $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
 
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
@@ -450,6 +534,22 @@ class TableBuilder
                 'default' => 10,
                 'options' => array(10, 25, 50)
             );
+        }
+
+        if (isset($this->settings['crud']['action_field_name'])) {
+            $this->setActionFieldName($this->settings['crud']['action_field_name']);
+        }
+
+        if (isset($this->settings['crud']['formName'])) {
+            $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
+                ? $this->settings['crud']['formName']
+                : 'default';
+        }
+
+        if (isset($config['variables']['title'])) {
+            $config['variables']['title'] = $this->getServiceLocator()
+                ->get('translator')
+                ->translate($config['variables']['title']);
         }
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
@@ -507,7 +607,6 @@ class TableBuilder
     public function setupAction()
     {
         if (!isset($this->getVariables()['action'])) {
-            $this->variables['hidden'] = isset($this->settings['crud']['formName']) ? $this->settings['crud']['formName'] : 'default';
             $this->variables['action'] = $this->generateUrl();
         }
     }
@@ -626,24 +725,45 @@ class TableBuilder
      */
     public function renderTable()
     {
+        $this->setType($this->whichType());
+
+        if ((!isset($this->variables['within_form']) || $this->variables['within_form'] == false)
+            && isset($this->settings['crud'])) {
+
+            return $this->renderLayout('crud');
+        }
+
+        return $this->renderLayout('default');
+    }
+
+    /**
+     * Determine which table type we have
+     *
+     * @return int
+     */
+    private function whichType()
+    {
+        if (isset($this->variables['within_form']) && $this->variables['within_form'] == true) {
+
+            return self::TYPE_FORM_TABLE;
+        }
+
         if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
 
-            $this->setType(self::TYPE_HYBRID);
-            return $this->renderLayout('crud');
+            return self::TYPE_HYBRID;
         }
 
         if (isset($this->settings['crud'])) {
 
-            $this->setType(self::TYPE_CRUD);
-            return $this->renderLayout('crud');
+            return self::TYPE_CRUD;
         }
 
         if (isset($this->settings['paginate'])) {
 
-            $this->setType(self::TYPE_PAGINATE);
+            return self::TYPE_PAGINATE;
         }
 
-        return $this->renderLayout('default');
+        return self::TYPE_DEFAULT;
     }
 
     /**
@@ -681,7 +801,9 @@ class TableBuilder
      */
     public function renderActions()
     {
-        if ($this->type !== self::TYPE_CRUD && $this->type !== self::TYPE_HYBRID) {
+        if ($this->type !== self::TYPE_CRUD
+            && $this->type !== self::TYPE_HYBRID
+            && $this->type !== self::TYPE_FORM_TABLE) {
             return '';
         }
 
@@ -715,7 +837,10 @@ class TableBuilder
             $options .= $this->replaceContent('{{[elements/actionOption]}}', $details);
         }
 
-        return $this->replaceContent('{{[elements/actionSelect]}}', array('option' => $options));
+        return $this->replaceContent(
+            '{{[elements/actionSelect]}}',
+            array('option' => $options, 'action_field_name' => $this->getActionFieldName())
+        );
     }
 
     /**
@@ -784,7 +909,7 @@ class TableBuilder
             } else {
                 $details = array(
                     'option' => $option,
-                    'link' => $this->generateUrl(array('page' => 1, 'limit' => $option))
+                    'link' => $this->generatePaginationUrl(array('page' => 1, 'limit' => $option))
                 );
                 $option = $this->replaceContent('{{[elements/limitLink]}}', $details);
             }
@@ -813,7 +938,7 @@ class TableBuilder
             if (is_null($details['page']) || (string)$this->getPage() == $details['page']) {
                 $details['option'] = $details['label'];
             } else {
-                $details['link'] = $this->generateUrl(array('page' => $details['page']));
+                $details['link'] = $this->generatePaginationUrl(array('page' => $details['page']));
                 $details['option'] = $this->replaceContent('{{[elements/paginationLink]}}', $details);
             }
 
@@ -853,7 +978,10 @@ class TableBuilder
                 }
             }
 
-            $column['link'] = $this->generateUrl(array('sort' => $column['sort'], 'order' => $column['order']));
+            $column['link'] = $this->generatePaginationUrl(array(
+                'sort' => $column['sort'],
+                'order' => $column['order']
+            ));
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
@@ -861,6 +989,11 @@ class TableBuilder
         if (isset($column['width']) && isset($this->widths[$column['width']])) {
 
             $column['width'] = $this->widths[$column['width']];
+        }
+
+        if (isset($column['title'])) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $column['title'] = $translator->translate($column['title']);
         }
 
         return $this->replaceContent($wrapper, $column);
@@ -876,6 +1009,13 @@ class TableBuilder
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
+        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
+
+            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
+            $type = new $typeClass($this);
+            $content = $type->render($row, $column);
+        }
+
         if (isset($column['formatter'])) {
 
             $return = $this->callFormatter($column, $row);
@@ -918,7 +1058,7 @@ class TableBuilder
             $vars = array(
                 'colspan' => count($columns),
                 'message' => isset($this->variables['empty_message'])
-                    ? $this->variables['empty_message']
+                    ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
                     : 'The table is empty'
             );
 
@@ -948,7 +1088,7 @@ class TableBuilder
 
         if (is_callable($column['formatter'])) {
 
-            return call_user_func($column['formatter'], $data, $column);
+            return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());
         }
 
         return '';
@@ -989,6 +1129,25 @@ class TableBuilder
     }
 
     /**
+     * Generate pagination url. Strips the controller and action params from
+     * the URL
+     *
+     * @param array $data
+     * @param string $route
+     * @param array $extendParams
+     * @return string
+     */
+    private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
+    {
+        $returnUrl = $this->generateUrl($data, $route, $extendParams);
+
+        // strip out controller and action params
+        $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
+
+        return $returnUrl;
+    }
+
+    /**
      * Format action content
      *
      * @param array $actions
@@ -1014,11 +1173,19 @@ class TableBuilder
         $newActions = array();
 
         foreach ($actions as $name => $details) {
+
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
-            $newActions[] = array('name' => $name, 'label' => $value, 'class' => $class);
+            $actionFieldName = $this->getActionFieldName();
+
+            $newActions[] = array(
+                'name' => $name,
+                'label' => $value,
+                'class' => $class,
+                'action_field_name' => $actionFieldName
+            );
         }
 
         return $newActions;
@@ -1041,25 +1208,5 @@ class TableBuilder
         }
 
         return $actions;
-    }
-    
-	/**
-	 * Sets server locator
-	 *
-	 * @return Zend\ServiceManager\ServiceLocatorInterface
-	 */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-    
-	/**
-	 * Sets server locator
-	 *
-	 * @param Zend\ServiceManager\ServiceLocatorInterface
-	 */
-    public function setServiceLocator($serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
+    }    
 }

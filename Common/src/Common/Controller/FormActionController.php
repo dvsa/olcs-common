@@ -9,6 +9,8 @@
 
 namespace Common\Controller;
 
+use Common\Form\Elements\Types\Address;
+
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
  *
@@ -17,6 +19,9 @@ namespace Common\Controller;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    private $persist = true;
+
+    private $fieldValues = array();
 
     /**
      * Gets a from from either a built or custom form config.
@@ -26,7 +31,108 @@ abstract class FormActionController extends AbstractActionController
     protected function getForm($type)
     {
         $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
+
+        $form = $this->processPostcodeLookup($form);
+
         return $form;
+    }
+
+    protected function processPostcodeLookup($form)
+    {
+        $request = $this->getRequest();
+
+        $post = array();
+
+        if ($request->isPost()) {
+
+            $post = (array)$request->getPost();
+        }
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+
+            if ($fieldset instanceof Address) {
+
+                $removeSelectFields = false;
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
+
+                    $this->persist = false;
+
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
+
+                    if (empty($postcode)) {
+
+                        $removeSelectFields = true;
+
+                        $fieldset->get('searchPostcode')->setMessages(
+                            array('Please enter a postcode')
+                        );
+                    } else {
+
+                        $addressList = $this->getAddressesForPostcode($postcode);
+
+                        if (empty($addressList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('No addresses found for postcode')
+                            );
+
+                        } else {
+
+                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                $this->getAddressService()->formatAddressesForSelect($addressList)
+                            );
+                        }
+                    }
+                } elseif (isset($post[$name]['searchPostcode']['select'])
+                    && !empty($post[$name]['searchPostcode']['select'])) {
+
+                    $this->persist = false;
+
+                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+
+                    $removeSelectFields = true;
+
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
+
+                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
+
+                } else {
+
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    protected function getAddressService()
+    {
+        return $this->getServiceLocator()->get('address');
+    }
+
+    protected function getAddressForUprn($uprn)
+    {
+        return $this->sendGet('postcode\address', array('id' => $uprn));
+    }
+
+    protected function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\address', array('postcode' => $postcode));
     }
 
     protected function getFormGenerator()
@@ -40,13 +146,15 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback=null, $additionalParams = array())
+    protected function formPost($form, $callback = null, $additionalParams = array())
     {
-
         if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
 
-            if ($form->isValid()) {
+            $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
+
+            $form->setData($data);
+
+            if ($this->persist && $form->isValid()) {
                 $validatedData = $form->getData();
                 $params = [
                     'validData' => $validatedData,
@@ -81,11 +189,67 @@ abstract class FormActionController extends AbstractActionController
      *
      * @param string $name
      * @param callable $callback
+     * @param boolean $tables
      * @return object
      */
-    protected function generateForm($name, $callback)
+    protected function generateForm($name, $callback, $tables = false)
     {
         $form = $this->getForm($name);
+
+        if ($tables) {
+            return $form;
+        }
+
+        return $this->formPost($form, $callback);
+    }
+
+    /**
+     * Create a table form with data
+     *
+     * @param string $name
+     * @param array $callbacks
+     * @param mixed $data
+     * @param array $tables
+     * @param boolean $edit
+     * @return object
+     */
+    public function generateTableFormWithData($name, $callbacks, $data = null, $tables = array(), $edit = false)
+    {
+        $callback = $callbacks['success'];
+
+        $form = $this->generateFormWithData($name, $callbacks['success'], $data, $edit, true);
+
+        foreach ($tables as $fieldsetName => $details) {
+
+            $table = $this->getTable(
+                $details['config'],
+                $details['data'],
+                (isset($details['variables']) ? $details['variables'] : array())
+            );
+            $form->get($fieldsetName)->get('table')->setTable($table);
+            $form->get($fieldsetName)->get('rows')->setValue(count($table->getRows()));
+        }
+
+        $postData = null;
+
+        if ($this->getRequest()->isPost()) {
+
+            $postData = (array)$this->getRequest()->getPost();
+        }
+
+        foreach ($tables as $fieldsetName => $details) {
+
+            if (
+                !is_null($postData)
+                && isset($postData[$fieldsetName]['action'])
+                && !empty($postData[$fieldsetName]['action'])
+            ) {
+
+                $form = $this->disableEmptyValidation($form);
+                $callback = $callbacks['crud_action'];
+                break;
+            }
+        }
 
         return $this->formPost($form, $callback);
     }
@@ -96,11 +260,13 @@ abstract class FormActionController extends AbstractActionController
      * @param string $name
      * @param callable $callback
      * @param mixed $data
+     * @param boolean $edit
+     * @param boolean $tables
      * @return object
      */
-    public function generateFormWithData($name, $callback, $data = null, $edit = false)
+    public function generateFormWithData($name, $callback, $data = null, $edit = false, $tables = false)
     {
-        $form = $this->generateForm($name, $callback);
+        $form = $this->generateForm($name, $callback, $tables);
 
         if ($edit && $this->getRequest()->isPost()) {
 
@@ -115,22 +281,34 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
-     * Generate form from GET call
+     * Disable empty validation
      *
-     * @todo Maybe need to do something with $return to format the data
-     *
-     * @param string $name
-     * @param callable $callback
-     * @param string $service
-     * @param int $id
-     *
-     * @return object
+     * @param object $form
      */
-    protected function generateFormFromGet($name, $callback, $service, $id)
+    private function disableEmptyValidation($form)
     {
-        $return = $this->makeRestCall($service, 'GET', array('id' => $id));
+        foreach ($form->getElements() as $key => $element) {
 
-        return $this->generateFormWithData($name, $callback, $return);
+            if (empty($value)) {
+
+                $form->getInputFilter()->get($key)->setAllowEmpty(true);
+            }
+        }
+
+        foreach ($form->getFieldsets() as $key => $fieldset) {
+
+            foreach ($fieldset->getElements() as $elementKey => $element) {
+
+                $value = $element->getValue();
+
+                if (empty($value)) {
+
+                    $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
+                }
+            }
+        }
+
+        return $form;
     }
 
     protected function processAdd($data, $entityName)

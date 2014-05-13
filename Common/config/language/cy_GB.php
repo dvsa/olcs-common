@@ -3,6 +3,7 @@ return array(
     'testProperty' => "W the test",
     'testPropertyPlaceHolder' => "W test @placeHolder is @here",
     'licence-number' => "W Licence #",
+    'licence-number-full' => 'W Licence number',
     'lookup-operator-trading-name' => "W Operator / trading name",
     'lookup-postcode' => "W Postcode",
     'lookup-name' => "W Name",
@@ -26,6 +27,9 @@ return array(
     'new-case-categories-header' => "W Select one or more categories",
     'case-summary' => "W Case summary",
     'ecms-number' => "W ECMS #",
+    'ecms' => 'W ECMS',
+    'v-auth-t-auth' =>  'W V-auth/T-auth',
+    'vehicles-in-posession' => 'Vehicles in posession',
     'new-case-additional-licence' => "W Add additional licences",
     'new-case-next' => "W Next",
     'lookup-search-results' => "W You searched for",
@@ -343,4 +347,12 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'built-by' => 'W Built by',
     'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
     'crown-copyright' => 'W Crown Copyright',
+
+    //Business Type subsections
+    'selfserve-app-subSection-business-details' => 'W Business details',
+    'selfserve-app-subSection-business-addresses' => 'W Addresses',
+    'selfserve-app-subSection-business-people' => 'W People',
+
+    //Aplications statuses
+    'app_status.new' => 'W New',
 );

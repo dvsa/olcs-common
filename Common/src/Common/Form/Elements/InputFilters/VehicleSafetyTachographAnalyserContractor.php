@@ -2,6 +2,8 @@
 
 /**
  * VehicleSafetyTachographAnalyserContractor
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Form\Elements\InputFilters;
 
@@ -10,6 +12,8 @@ use Common\Form\Elements\Validators\VehicleSafetyTachographAnalyserContractorVal
 
 /**
  * VehicleSafetyTachographAnalyserContractor
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class VehicleSafetyTachographAnalyserContractor extends Text implements InputProviderInterface
 {
