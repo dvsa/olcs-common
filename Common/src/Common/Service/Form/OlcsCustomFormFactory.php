@@ -32,7 +32,14 @@ class OlcsCustomFormFactory extends Factory
      *
      * @var array
      */
-    private $elementsWithValueOptions = array('select', 'selectDisabled', 'multicheckbox', 'radio', 'yesNoRadio');
+    private $elementsWithValueOptions = array(
+        'select',
+        'selectDisabled',
+        'multicheckbox',
+        'confirm-checkbox',
+        'radio',
+        'yesNoRadio'
+    );
 
     /**
      * Holds for form config
@@ -190,24 +197,20 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
         }
 
-        if (isset($element['class'])) {
-            $newElement['spec']['attributes']['class'] = $element['class'];
+        $mergeAttributes = array('class', 'placeholder');
+
+        foreach ($mergeAttributes as $attribute) {
+            if (isset($element[$attribute])) {
+                $newElement['spec']['attributes'][$attribute] = $element[$attribute];
+            }
         }
 
-        if (isset($element['label'])) {
-            $newElement['spec']['options']['label'] = $element['label'];
-        }
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
 
-        if (isset($element['label_attributes'])) {
-            $newElement['spec']['options']['label_attributes'] = $element['label_attributes'];
-        }
-
-        if (isset($element['placeholder'])) {
-            $newElement['spec']['attributes']['placeholder'] = $element['placeholder'];
-        }
-
-        if (isset($element['description'])) {
-            $newElement['spec']['options']['description'] = $element['description'];
+        foreach ($mergeOptions as $option) {
+            if (isset($element[$option])) {
+                $newElement['spec']['options'][$option] = $element[$option];
+            }
         }
 
         if (isset($element['type'])
@@ -262,6 +265,8 @@ class OlcsCustomFormFactory extends Factory
         $thisFieldsets = array();
         foreach ($fieldsets as $fieldset) {
 
+            $thisFieldset = array();
+
             // This logic pulls in a fieldset from config
             if (isset($fieldset['type'])) {
 
@@ -282,7 +287,17 @@ class OlcsCustomFormFactory extends Factory
                 $thisFieldset['options'] = $fieldset['options'];
             }
 
+            if (isset($fieldset['attributes'])) {
+                $thisFieldset['attributes'] = $fieldset['attributes'];
+            }
+
             $thisFieldset['elements'] = $this->getElements($fieldset['elements']);
+
+            if (isset($fieldset['type']) && class_exists($fieldset['type'])) {
+
+                $thisFieldset['type'] = $fieldset['type'];
+            }
+
             $thisFieldsets[]['spec'] = $thisFieldset;
         }
         return $thisFieldsets;

@@ -25,6 +25,6 @@ class TableFactory implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new TableBuilder($serviceLocator->get('Config'));
+        return new TableBuilder($serviceLocator);
     }
 }

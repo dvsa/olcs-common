@@ -94,7 +94,7 @@ class ResponseHelper
 
                 if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
 
-                    return $this->responseData['Data'];
+                    return isset($this->responseData['Data']) ? $this->responseData['Data'] : $this->responseData;
                 }
 
                 return false;
@@ -135,12 +135,12 @@ class ResponseHelper
 
         $data = json_decode($body, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE || !isset($data['Response'])) {
+        if (json_last_error() !== JSON_ERROR_NONE) {
 
             throw new \Exception('Invalid response body, expected json: ' . $body);
         }
 
-        $this->responseData = $data['Response'];
+        $this->responseData = (isset($data['Response']) ? $data['Response'] : $data);
     }
 
     private function checkForInternalServerError($body)

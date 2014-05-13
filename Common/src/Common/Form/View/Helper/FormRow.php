@@ -1,13 +1,31 @@
 <?php
+
+/**
+ * Render form row
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
+use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\InputFilters\NoRender;
+use Common\Form\Elements\InputFilters\ActionButton;
+use Common\Form\Elements\InputFilters\ActionLink;
 use Zend\Form\Element\Hidden;
 
+/**
+ * Render form row
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class FormRow extends ZendFormRow
 {
+
     use AlphaGovTraits\Logger;
 
     /**
@@ -15,7 +33,7 @@ class FormRow extends ZendFormRow
      *
      * @var string
      */
-    private static $format = '<div class="field">%s</div>';
+    private static $format = '<div class="field %s">%s</div>';
     private static $errorClass = '<div class="validation-wrapper">%s</div>';
 
     /**
@@ -40,7 +58,19 @@ class FormRow extends ZendFormRow
             $elementErrors = $this->getElementErrorsHelper()->render($element);
         }
 
-        $markup = parent::render($element);
+        if ($element instanceof ActionButton || $element instanceof ActionLink) {
+            return parent::render($element);
+        }
+
+        if ($element instanceof NoRender) {
+            return '';
+        }
+
+        if ($element instanceof Table) {
+            $markup = $element->render();
+        } else {
+            $markup = parent::render($element);
+        }
 
         $type = $element->getAttribute('type');
         if ($type === 'multi_checkbox' && $type === 'radio') {
@@ -52,7 +82,12 @@ class FormRow extends ZendFormRow
         }
 
         if (! ($element instanceof Hidden) && !isset($noWrap)) {
-            $markup = sprintf(self::$format, $markup);
+
+            $class = '';
+
+            $class = $element->getAttribute('data-container-class');
+
+            $markup = sprintf(self::$format, $class, $markup);
         }
 
         if ($oldRenderErrors && $elementErrors != '') {

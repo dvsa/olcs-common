@@ -50,6 +50,9 @@ return array(
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'Proposal to revoke'
     ),
+    'case_categories_bus' => array(
+        'case_category.29' => 'Yes'
+    ),
     'case_stay_outcome' => [
         'stay_status_granted' => 'Granted',
         'stay_status_refused' => 'Refused'
