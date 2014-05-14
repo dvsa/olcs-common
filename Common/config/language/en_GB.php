@@ -442,6 +442,15 @@ return array(
     'application_operating-centres_authorisation.data' => 'Authorisation',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
+    'application_operating-centres_authorisation-add' => 'Add operating centre',
+    'application_operating-centres_authorisation-edit' => 'Edit operating centre',
+    'application_operating-centres_authorisation-sub-action.data' => 'Vehicles & trailers',
+    'application_operating-centres_authorisation-sub-action.data.numberOfVehicles' => 'Total number of vehicles',
+    'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'Total number of trailers',
+    'application_operating-centres_authorisation-sub-action.data.sufficientParking' => 'I have enough parking spaces
+        available for the total number of vehicles and trailers that I want to keep at this address',
+    'application_operating-centres_authorisation-sub-action.data.permission' => 'I am either the site owner or have
+        permission from the site owner to use the premises to park the number of vehicles and trailers stated',
     'application.taxi-phv' => 'Taxi/PHV',
     'application.transport-managers' => 'Transport manager(s)',
     'application.vehicle-safety' => 'Vehicle & safety',
