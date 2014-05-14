@@ -350,6 +350,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
+        inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyserContractor' => 'Please provide the company or full name
         of the external contractor who analyses your tachograph records (if applicable)',
@@ -412,7 +414,7 @@ return array(
     'helpdesk' => 'Helpdesk',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'built-by' => 'Built by',
-    'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
+    'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
 
     //Aplications statuses
