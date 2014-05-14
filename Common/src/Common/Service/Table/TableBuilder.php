@@ -1232,5 +1232,5 @@ class TableBuilder
         }
 
         return $actions;
-    }
+    }    
 }

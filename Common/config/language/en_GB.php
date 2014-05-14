@@ -469,4 +469,7 @@ return array(
     'application.previous-history' => 'Previous history',
     'application.review-declarations' => 'Review & declarations',
     'application.payment-submission' => 'Payment & submission',
+    //propose-to-revoke
+    'propose-to-revoke' => 'Propose to revoke',
+    'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
 );

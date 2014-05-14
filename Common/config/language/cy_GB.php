@@ -366,4 +366,8 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'application.previous-history' => 'Previous history',
     'application.review-declarations' => 'Review & declarations',
     'application.payment-submission' => 'Payment & submission',
+    //propose-to-revoke
+    'propose-to-revoke' => 'W Propose to revoke',
+    'propose-to-revoke-text' => 'W Use this form for a proposal to revoke.',
+
 );
