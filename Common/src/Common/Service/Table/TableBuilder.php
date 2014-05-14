@@ -1208,5 +1208,5 @@ class TableBuilder
         }
 
         return $actions;
-    }
+    }    
 }
