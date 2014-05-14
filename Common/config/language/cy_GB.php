@@ -357,4 +357,12 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+   
+    'date-of-conviction' => 'W Date of conviction',
+    'date-of-offence' => 'W Date of offence',
+    'description' => 'W Description',
+    'name-defendant-type' => 'W Name / Defendant type',
+    'court-fpn' => 'W Court/FPN',
+    'declared' => 'W Declared',
+    'dealt-with' => 'W Dealt with'
 );

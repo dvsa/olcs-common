@@ -396,6 +396,7 @@ return array(
     'vehicle-and-safety' => 'Vehicle & safety',
     'operating-centres' => 'Operating centres',
     'your-business' => 'Your business',
+    'description' => 'Description',
 
     // Complaints
     'add-complaint' => 'Add complaint',
@@ -428,4 +429,12 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
+    
+    'date-of-conviction' => 'Date of conviction',
+    'date-of-offence' => 'Date of offence',
+    'description' => 'Description',
+    'name-defendant-type' => 'Name / Defendant type',
+    'court-fpn' => 'Court/FPN',
+    'declared' => 'Declared',
+    'dealt-with' => 'Dealt with'
 );
