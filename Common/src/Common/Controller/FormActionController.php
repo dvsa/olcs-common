@@ -210,14 +210,13 @@ abstract class FormActionController extends AbstractActionController
      * @param array $callbacks
      * @param mixed $data
      * @param array $tables
-     * @param boolean $edit
      * @return object
      */
-    public function generateTableFormWithData($name, $callbacks, $data = null, $tables = array(), $edit = false)
+    public function generateTableFormWithData($name, $callbacks, $data = null, $tables = array())
     {
         $callback = $callbacks['success'];
 
-        $form = $this->generateFormWithData($name, $callbacks['success'], $data, $edit, true);
+        $form = $this->generateFormWithData($name, $callbacks['success'], $data, true);
 
         foreach ($tables as $fieldsetName => $details) {
 
@@ -260,20 +259,14 @@ abstract class FormActionController extends AbstractActionController
      * @param string $name
      * @param callable $callback
      * @param mixed $data
-     * @param boolean $edit
      * @param boolean $tables
      * @return object
      */
-    public function generateFormWithData($name, $callback, $data = null, $edit = false, $tables = false)
+    public function generateFormWithData($name, $callback, $data = null, $tables = false)
     {
         $form = $this->generateForm($name, $callback, $tables);
 
-        if ($edit && $this->getRequest()->isPost()) {
-
-            $form->setData($this->getRequest()->getPost());
-
-        } elseif (is_array($data)) {
-
+        if (!$this->getRequest()->isPost() && is_array($data)) {
             $form->setData($data);
         }
 
@@ -352,6 +345,8 @@ abstract class FormActionController extends AbstractActionController
         if (!isset($data['addresses'])) {
             $data['addresses'] = array();
         }
+
+        unset($data[$addressName]['searchPostcode']);
 
         $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
 

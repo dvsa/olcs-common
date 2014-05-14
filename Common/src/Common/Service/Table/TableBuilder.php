@@ -306,6 +306,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for footer
+     *
+     * @param array $footer
+     */
+    public function getFooter()
+    {
+        return $this->footer;
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -367,6 +377,16 @@ class TableBuilder
     public function getVariables()
     {
         return $this->variables;
+    }
+
+    /**
+     * Set the columns
+     *
+     * @param array $columns
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
     }
 
     /**
@@ -553,7 +573,7 @@ class TableBuilder
         }
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
-        $this->columns = isset($config['columns']) ? $config['columns'] : array();
+        $this->setColumns(isset($config['columns']) ? $config['columns'] : array());
         $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
         $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
@@ -683,6 +703,10 @@ class TableBuilder
     private function renderTableFooterColumn($column)
     {
         $details = array('content' => '');
+
+        if (isset($column['content'])) {
+            $details['content'] = $column['content'];
+        }
 
         $details['type'] = (isset($column['type']) && $column['type'] == 'th' ? 'th' : 'td');
 

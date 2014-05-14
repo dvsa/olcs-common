@@ -25,6 +25,10 @@ class Translate implements FormatterInterface
      */
     public static function format($data, $column, $sm)
     {
-        return $sm->get('translator')->translate($data[$column['name']]);
+        if (isset($column['name'])) {
+            return $sm->get('translator')->translate($data[$column['name']]);
+        } elseif (isset($column['content'])) {
+            return $sm->get('translator')->translate($column['content']);
+        }
     }
 }

@@ -442,6 +442,8 @@ return array(
     'application.operating-centres.authorisation' => 'Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'Financial evidence',
     'application_operating-centres_authorisation.data' => 'Authorisation',
+    'application_operating-centres_authorisation.data.hint' => 'Enter the total amount of vehicles that you want
+        authorised on the licence you are applying for.',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation-add' => 'Add operating centre',
@@ -453,6 +455,14 @@ return array(
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
+    'application_operating-centres_authorisation.table.title' => 'Operating centres',
+    'application_operating-centres_authorisation.table.address' => 'Operating centre address',
+    'application_operating-centres_authorisation.table.vehicles' => 'Vehicles',
+    'application_operating-centres_authorisation.table.trailers' => 'Trailers',
+    'application_operating-centres_authorisation.table.permission' => 'Permission',
+    'application_operating-centres_authorisation.table.advertised' => 'Advertised',
+    'application_operating-centres_authorisation.table.footer.total' => 'Total vehicles and trailers',
+    'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application.taxi-phv' => 'Taxi/PHV',
     'application.transport-managers' => 'Transport manager(s)',
     'application.vehicle-safety' => 'Vehicle & safety',
