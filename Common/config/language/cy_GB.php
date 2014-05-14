@@ -350,4 +350,8 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+
+    //propose-to-revoke
+    'propose-to-revoke' => 'W Propose to revoke',
+    'propose-to-revoke-text' => 'W Use this form for a proposal to revoke.',
 );

@@ -418,4 +418,8 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
+
+    //propose-to-revoke
+    'propose-to-revoke' => 'Propose to revoke',
+    'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
 );
