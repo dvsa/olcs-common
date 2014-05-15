@@ -140,6 +140,11 @@ abstract class FormActionController extends AbstractActionController
         return $this->getServiceLocator()->get('OlcsCustomForm');
     }
 
+    protected function alterFormBeforeValidation($form)
+    {
+        return $form;
+    }
+
     /**
      * Method to process posted form data and validate it and process a callback
      * @param type $form
@@ -148,6 +153,8 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function formPost($form, $callback = null, $additionalParams = array())
     {
+        $form = $this->alterFormBeforeValidation($form);
+
         if ($this->getRequest()->isPost()) {
 
             $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
@@ -171,6 +178,7 @@ abstract class FormActionController extends AbstractActionController
                 }
             }
         }
+
         return $form;
     }
 

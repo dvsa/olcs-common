@@ -475,6 +475,38 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
+
+    'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'Maximum time between vehicle safety
+        inspections',
+    'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'Maximum time between trailer safety
+        inspections',
+    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of your vehicles or trailers
+        inspected more frequently than the interval stated above?',
+    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of your vehicles
+        inspected more frequently than the interval stated above?',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses your tachograph records?',
+    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'Please provide the company or full name
+        of the external contractor who analyses your tachograph records (if applicable)',
+    'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm that you have suitable
+        arrangements in place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
+    'application_vehicle-safety_safety-add' => 'Add safety inspection provider',
+    'application_vehicle-safety_safety-edit' => 'Edit safety inspection provider',
+    'safety-inspection-providers.table.title' => 'Safety inspection providers',
+    'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
+        on the vehicles and trailers you intend to operate under your licence.',
+    'safety-inspection-providers.table.empty_message-psv' => 'Please tell us about who will carry out the safety
+        inspections on the vehicles you intend to operate under your licence.',
+    'safety-inspection-providers.table.providerName' => 'Provider\'s name',
+    'safety-inspection-providers.table.external' => 'External?',
+    'safety-inspection-providers.table.address' => 'Workshop address',
+    'application_vehicle-safety_safety-sub-action.data.isExternal' => 'Who will carry out the safety inspections?',
+    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'Yourself or another employee of the
+        business holding the operator\'s licence',
+    'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'An external contractor',
+    'application_vehicle-safety_safety-sub-action.data.fao' => 'Contractor\'s name or person\'s full name if performed
+        internally',
+    'application_vehicle-safety_safety-sub-action.address.label' => 'Address',
+
     'application.previous-history' => 'Previous history',
     'application.review-declarations' => 'Review & declarations',
     'application.payment-submission' => 'Payment & submission',

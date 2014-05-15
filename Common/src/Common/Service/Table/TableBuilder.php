@@ -370,6 +370,17 @@ class TableBuilder
     }
 
     /**
+     * Set a single variable
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setVariable($name, $value)
+    {
+        $this->variables[$name] = $value;
+    }
+
+    /**
      * Get variables
      *
      * @return array
@@ -377,6 +388,17 @@ class TableBuilder
     public function getVariables()
     {
         return $this->variables;
+    }
+
+    /**
+     * Get a single variable
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getVariable($name)
+    {
+        return (isset($this->variables[$name]) ? $this->variables[$name] : '');
     }
 
     /**
@@ -1079,11 +1101,13 @@ class TableBuilder
 
             $columns = $this->getColumns();
 
+            $message = isset($this->variables['empty_message'])
+                ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
+                : 'The table is empty';
+
             $vars = array(
                 'colspan' => count($columns),
-                'message' => isset($this->variables['empty_message'])
-                    ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
-                    : 'The table is empty'
+                'message' => $this->getServiceLocator()->get('translator')->translate($message)
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
@@ -1232,5 +1256,5 @@ class TableBuilder
         }
 
         return $actions;
-    }    
+    }
 }

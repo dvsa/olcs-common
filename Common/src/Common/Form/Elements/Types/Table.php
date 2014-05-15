@@ -36,6 +36,16 @@ class Table extends Element
     }
 
     /**
+     * Get the table
+     *
+     * @return object
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
      * Render the table
      *
      * @return string
