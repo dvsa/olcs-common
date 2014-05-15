@@ -437,4 +437,7 @@ return array(
     'subtitle-undertaking-text' => 'Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
+    //propose-to-revoke
+    'propose-to-revoke' => 'Propose to revoke',
+    'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
 );

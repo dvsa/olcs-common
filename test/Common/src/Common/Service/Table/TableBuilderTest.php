@@ -9,6 +9,7 @@
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\TableBuilder;
+use Common\Service\Table\TableFactory;
 
 /**
  * Table Builder Test
@@ -1884,6 +1885,24 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('CONTENT', $table->renderExtraRows());
     }
 
+    
+    /**
+     * Test getServiceLocator method
+     */
+    public function testGetServiceLocator()
+    {
+        $tableFactory = new TableFactory();
+        $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $tableBuilder = $tableFactory->createService($serviceLocator);
+        
+        $newServiceLocator = $tableBuilder->getServiceLocator();
+        
+        $this->assertTrue($newServiceLocator instanceof \Zend\ServiceManager\ServiceManager);
+        $this->assertTrue($newServiceLocator === $serviceLocator);
+    }
+    
+
+
     /**
      * Test action field name and fieldset
      */
@@ -1905,4 +1924,5 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($fieldset . '[' . $actionName . ']', $table->getActionFieldName());
     }
+
 }
