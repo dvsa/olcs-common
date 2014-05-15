@@ -14,9 +14,8 @@
         <?php /* $this->headScript()
             ->prependFile($this->basePath() . '/static/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/static/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); */
-        $this->headScript()->prependFile($this->basePath() . '/static/js/main.js', 'text/javascript');
-        //$this->headScript()->prependFile($this->basePath() . '/static/js/styleguide.js', 'text/javascript');
-        $this->headScript()->prependFile($this->basePath() . '/static/js/jquery.1.11.0.js', 'text/javascript');
+            // $this->headScript()->prependFile($this->basePath() . '/static/js/main.js', 'text/javascript');
+            // $this->headScript()->prependFile($this->basePath() . '/static/js/jquery.1.11.0.js', 'text/javascript');
 
         echo $this->headScript();
         isset($route) ? $this->includeFlowJs($route, 'selfserve') : ''; ?>
@@ -40,5 +39,9 @@
     </div><!-- .page-wrapper-->
     <?php echo $this->render('layout/partials/footer.phtml'); ?>
     <?php echo $this->inlineScript() ?>
+
+    <script type='text/javascript' src='/static/js/lib/jquery.1.11.0.js'></script>
+    <script type='text/javascript' src='/static/js/main.js'></script>
+
     </body>
 </html>
