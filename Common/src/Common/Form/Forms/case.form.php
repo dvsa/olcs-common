@@ -19,12 +19,7 @@ return [
                         'value_options' => 'case_categories_compliance',
                         'required' => false
                     ],
-                    /*'bus' => [
-                        'type' => 'multicheckbox',
-                        'label' => 'Bus registration',
-                        'value_options' => 'case_categories_bus',
-                        'required' => false
-                    ],*/
+
                     'tm' => [
                         'type' => 'multicheckbox',
                         'label' => 'TM',
@@ -42,13 +37,18 @@ return [
                         'label' => 'Licence referral',
                         'value_options' => 'case_categories_referral',
                         'required' => false
-                    ]
+                    ],
+                    'bus' => [
+                        'type' => 'multicheckbox',
+                        'label' => 'Bus registration',
+                        'value_options' => 'case_categories_bus',
+                        'required' => false
+                    ],
                 ]
             ],
             [
                 'name' => 'fields',
                 'options' => [
-                    'label' => 'Info'
                 ],
                 'elements' => [
                     'description' => [
@@ -58,7 +58,7 @@ return [
                     ],
                     'ecms' => [
                         'type' => 'text',
-                        'label' => 'ECMS #',
+                        'label' => 'ECMS number',
                         'class' => 'medium'
                     ]
                 ]

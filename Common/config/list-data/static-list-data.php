@@ -50,6 +50,9 @@ return array(
         'case_category.27' => 'Period of grace',
         'case_category.28' => 'Proposal to revoke'
     ),
+    'case_categories_bus' => array(
+        'case_category.29' => 'Yes'
+    ),
     'case_stay_outcome' => [
         'stay_status_granted' => 'Granted',
         'stay_status_refused' => 'Refused'
@@ -75,12 +78,11 @@ return array(
     ],
     'business_types' =>
     [
-        'org_type.rc' => 'Registered Company',
+        'org_type.lc' => 'Limited company',
         'org_type.st' => 'Sole Trader',
         'org_type.p' => 'Partnership',
-        'org_type.llp' => 'LLP',
-        'org_type.pa' => 'Public authority',
-        'org_type.o' => 'Other/Charity/Trust & University',
+        'org_type.llp' => 'Limited Liability Partnership',
+        'org_type.o' => 'Other (e.g. public authority, charity, trust, university)',
     ],
     'defendant_types' =>
     [
@@ -405,13 +407,13 @@ return array(
         'complaint_type.nol' => 'No operators licence',
         'complaint_type.olr' => 'Operating local service off route',
         'complaint_type.ovb' => 'Obstructing other vehicles at bus station/bus stop',
-        'complaint_type.pvo' => 'Parking vehicle out with operating centre',
+        'complaint_type.pvo' => 'Parking vehicle out - with operating centre',
         'complaint_type.rds' => 'Registration of duplicate services',
         'complaint_type.rta' => 'Registered times not being adhered to',
         'complaint_type.sln' => 'Speed limiters non-operative',
         'complaint_type.spe' => 'Speeding',
         'complaint_type.tgo' => 'Tachograph offences',
-        'complaint_type.ufl' => 'Unsafe roads',
+        'complaint_type.ufl' => 'Unsafe loads',
         'complaint_type.ump' => 'Use of mobile phones while driving',
         'complaint_type.urd' => 'Using red diesel',
         'complaint_type.vpo' => 'Vehicles parked and causing an obstruction',
@@ -459,5 +461,5 @@ return array(
         'tachograph_analyser.1' => 'tachographAnalyser-yourself',
         'tachograph_analyser.2' => 'tachographAnalyser-external-contractor',
         'tachograph_analyser.3' => 'N/A',
-    ]
+    ],
 );

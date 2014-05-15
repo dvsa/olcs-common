@@ -1,9 +1,15 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
+/**
+ * Name Required
+ *
+ * @author S Lizzio <shaun.lizzio@valtech.co.uk>
+ */
 class NameRequired extends Name implements InputProviderInterface
 {
     public function __construct($name = null, $options = array())

@@ -10,7 +10,7 @@ return [
         'elements' => [
             'submit' => [
                 'type' => 'submit',
-                'label' => 'Next',
+                'label' => 'Continue',
                 'class' => 'action--primary large'
             ],
             'version' => [
