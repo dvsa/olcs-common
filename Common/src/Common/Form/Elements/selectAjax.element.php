@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'select' => [
+    'selectAjax' => [
         'type' => '\Zend\Form\Element\Select',
         'name' => '',
         'options' => [
