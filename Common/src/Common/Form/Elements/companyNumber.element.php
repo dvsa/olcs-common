@@ -2,19 +2,45 @@
 
 return [
     'companyNumber' => [
-        'type' => '\Common\Form\Elements\InputFilters\CompanyNumber',
+        'type' => 'fieldset',
         'name' => 'company_number',
-        'options' =>
-        [
-            'label' => '',
-            'label_attributes' => ['class' => 'col-sm-2'],
-            'column-size' => 'sm-5',
-            'help-block' => '8 numbers, e.g. 12345678'
+        'attributes' => [
+            'class' => 'highlight-box',
         ],
-        'attributes' =>
-        [
-            'id' => 'company_number',
-            'placeholder' => ''
+        'elements' => [
+            [
+                'spec' => [
+                    'type' => 'text',
+                    'name' => 'company_number',
+                    'attributes' => [
+                        'class' => 'short',
+                        'data-container-class' => 'inline'
+                    ],
+                ]
+            ],
+            [
+                'spec' => [
+                    'type' => 'button',
+                    'name' => 'submit_lookup_company',
+                    'options' => [
+                        'label' => 'Find company',
+                    ],
+                    'attributes' => [
+                        'class' => 'action--secondary large',
+                        'data-container-class' => 'inline',
+                        'type' => 'submit',
+                    ],
+                ]
+            ],
+            [
+                'spec' => [
+                    'type' => 'Common\Form\Elements\Types\PlainText',
+                    'name' => 'description',
+                    'options' => [
+                        'value' => 'selfserve-business-registered-company-description'
+                    ]
+                ],
+            ]
         ]
     ]
 ];

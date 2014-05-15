@@ -11,9 +11,11 @@ namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
+use Zend\Form\Element;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\Table;
+use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
 
 /**
@@ -46,6 +48,17 @@ class FormElement extends ZendFormElement
     public function render(ZendElementInterface $element)
     {
         $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
+
+        $renderer = $this->getView();
+        if (!method_exists($renderer, 'plugin')) {
+            return '';
+        }
+
+        if ($element instanceof PlainText) {
+            $helper = $renderer->plugin('form_plain_text');
+            return $helper($element);
+        }
+
 
         if ($element instanceof ActionLink) {
 

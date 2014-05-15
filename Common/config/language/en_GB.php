@@ -376,6 +376,9 @@ return array(
     'selfserve-app-subSection-business-details' => 'Business details',
     'selfserve-app-subSection-business-addresses' => 'Addresses',
     'selfserve-app-subSection-business-people' => 'People',
+    'selfserve-business-registered-company-description' => 'If you don\'t have your company number to hand,'
+        . ' or are having problems retrieving your company details, please enter them manually below.',
+
 
     'Authorisation' => 'Authorisation',
     // Generic

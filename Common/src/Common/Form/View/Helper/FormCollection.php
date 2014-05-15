@@ -35,6 +35,7 @@ class FormCollection extends ZendFormCollection
      */
     public function render(ElementInterface $element)
     {
+
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             // Bail early if renderer is not pluggable
@@ -73,7 +74,7 @@ class FormCollection extends ZendFormCollection
         }
 
         // Every collection is wrapped by a fieldset if needed
-        if ($this->shouldWrap) {
+        if ($this->shouldWrap && $element->getOption('wrapElements') !== false) {
             $label = $element->getLabel();
             $legend = '';
 

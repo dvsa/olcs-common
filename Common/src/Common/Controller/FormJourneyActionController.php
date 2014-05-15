@@ -170,7 +170,7 @@ abstract class FormJourneyActionController extends FormActionController
      *
      * @return \Zend\Form
      */
-    public function generateSectionForm()
+    public function generateSectionForm($dynamicOptions = null)
     {
         $formGenerator = $this->getFormGenerator();
 
@@ -184,6 +184,7 @@ abstract class FormJourneyActionController extends FormActionController
 
         // set form config on formGenerator
         $formGenerator->setFormConfig($stepFormConfig);
+        $formGenerator->setDynamicOptions($dynamicOptions);
 
         // create form
         $stepForm = $formGenerator->createForm($section);
