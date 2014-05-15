@@ -101,7 +101,30 @@ class OlcsCustomFormFactory extends Factory
             throw new \Exception("Form $type has no specification config");
         }
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
-        return parent::createForm($formConfig);
+        $form = parent::createForm($formConfig);
+
+        $form = $this->fixId($form);
+
+        return $form;
+    }
+
+    /**
+     * Sets the id of the form to _form.
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function fixId(\Zend\Form\Form $form)
+    {
+        $id = $form->getAttribute('id');
+
+        if ('' != $id) {
+            $form->setAttribute('id', $id . '_form');
+        } else {
+            $form->setAttribute('id', $form->getAttribute('name') . '_form');
+        }
+
+        return $form;
     }
 
     /**
