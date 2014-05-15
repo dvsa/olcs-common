@@ -314,6 +314,7 @@ abstract class FormActionController extends AbstractActionController
     protected function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
+        $documentData = $this->generateDocument($data);
 
         return $this->makeRestCall($entityName, 'POST', $data);
     }
@@ -323,6 +324,36 @@ abstract class FormActionController extends AbstractActionController
         $data = $this->trimFormFields($data);
 
         return $this->makeRestCall($entityName, 'PUT', $data);
+    }
+
+    protected function generateDocument($data = array())
+    {
+        $documentData = [];
+        if (isset($data['generateDocument']) && $data['generateDocument'] == '1') {
+
+            if (!method_exists($this, 'mapDocumentData')) {
+                throw new \RuntimeException('Controller requires mapDocumentData method');
+            }
+            $bookmarks = $this->mapDocumentData($data);
+
+            $documentData = $this->sendPost(
+                'Olcs\Document\GenerateRtf', [
+                    'bookmarks' => $bookmarks,
+                    'country' =>
+                        isset($data['document']['country']) ?
+                        $data['document']['country'] : 'en_GB',
+                    'templateId' =>
+                        isset($data['document']['templateId']) ?
+                        $data['document']['templateId'] : 'S43_Letter',
+                    'format' =>
+                        isset($data['document']['format']) ?
+                        $data['document']['format'] : 'rtf'
+                    ]
+            );
+        }
+        var_dump($documentData);exit;
+
+        return $documentData;
     }
 
     protected function trimFormFields($data)
