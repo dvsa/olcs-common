@@ -11,9 +11,8 @@
         <?php /* echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico')); */
                 echo $this->headLink()->appendStylesheet($this->basePath() . '/static/stylesheets/main.css') ?>
 
-        <?php /* $this->headScript()
-            ->prependFile($this->basePath() . '/static/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/static/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',)); */
+        <?php
+            isset($route) ? $this->includeFlowJs($route, 'selfserve') : '';
         ?>
 
     </head>
@@ -33,15 +32,15 @@
             <?php echo $this->content; ?>
         </div>
     </div><!-- .page-wrapper-->
-    <?php echo $this->render('layout/partials/footer.phtml'); ?>
     <?php
-        $this->headScript()->prependFile($this->basePath() . '/static/js/main.js', 'text/javascript');
-        $this->headScript()->prependFile($this->basePath() . '/static/js/jquery.1.11.0.js', 'text/javascript');
-
-        echo $this->headScript();
-        isset($route) ? $this->includeFlowJs($route, 'selfserve') : '';
-
+        echo $this->render('layout/partials/footer.phtml');
         echo $this->inlineScript();
     ?>
+
+    <script type='text/javascript' src='/static/js/lib/jquery.1.11.0.js'></script>
+    <script type='text/javascript' src='/static/js/main.js'></script>
+
+    <?php echo $this->headScript(); ?>
+
     </body>
 </html>
