@@ -438,6 +438,16 @@ return array(
     'declared' => 'Declared',
     'dealt-with' => 'Dealt with',
 
+    // conditions & undertakings
+    'add-condition' => 'Add condition',
+    'edit-condition' => 'Edit condition',
+    'subtitle-condition-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'Add undertaking',
+    'edit-undertaking' => 'Edit undertaking',
+    'subtitle-undertaking-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
     //propose-to-revoke
     'propose-to-revoke' => 'Propose to revoke',
     'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',

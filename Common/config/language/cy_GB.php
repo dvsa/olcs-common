@@ -366,6 +366,16 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'declared' => 'W Declared',
     'dealt-with' => 'W Dealt with',
 
+    // conditions & undertakings
+    'add-condition' => 'W Add condition',
+    'edit-condition' => 'W Edit condition',
+    'subtitle-condition-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'W Add undertaking',
+    'edit-undertaking' => 'W Edit undertaking',
+    'subtitle-undertaking-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
     //propose-to-revoke
     'propose-to-revoke' => 'W Propose to revoke',
     'propose-to-revoke-text' => 'W Use this form for a proposal to revoke.',
