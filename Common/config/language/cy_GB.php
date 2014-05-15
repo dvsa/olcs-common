@@ -79,6 +79,8 @@ return array(
     'business-type' => "W Business type",
     'submission-vehicle-trailer' => "W V-auth / T-auth",
     'submission-vehicle-possession' => "W Veh in pos",
+    'add-submission-note' => 'W Add a submission note',
+    'add-submission-note-text' => 'W Add a note to section - ',
     'start-date' => "W Start date",
     'review-date' => "W Review date",
     'end-date' => "W End date",
@@ -355,6 +357,14 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+   
+    'date-of-conviction' => 'W Date of conviction',
+    'date-of-offence' => 'W Date of offence',
+    'description' => 'W Description',
+    'name-defendant-type' => 'W Name / Defendant type',
+    'court-fpn' => 'W Court/FPN',
+    'declared' => 'W Declared',
+    'dealt-with' => 'W Dealt with',
 
     // conditions & undertakings
     'add-condition' => 'W Add condition',
