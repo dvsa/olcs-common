@@ -47,8 +47,8 @@ class FormRow extends ZendFormRow
     {
         $this->log('Rendering Form Row', LOG_INFO);
 
-        $oldRenderErrors = $this->getRenderErrors();
-
+        //$oldRenderErrors = $this->getRenderErrors();
+        $oldRenderErrors = true;
         if ($oldRenderErrors) {
 
             /**

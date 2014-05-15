@@ -25,11 +25,6 @@ return [
             'type' => 'companyName',
             'label' => 'Company name',
         ],
-        'type_of_business' =>
-        [
-            'type' => 'text',
-            'label' => 'Nature of business (SIC)'
-        ],
         'trading_names' =>
         [
             'label' => 'Trading names (optional)',
