@@ -351,9 +351,8 @@ abstract class FormActionController extends AbstractActionController
                     ]
             );
         }
-        var_dump($documentData);exit;
 
-        return $documentData;
+        return $documentData['filename'];
     }
 
     protected function trimFormFields($data)
