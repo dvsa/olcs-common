@@ -28,7 +28,7 @@ return [
                                 'data-container-class' => 'block'
                             ],
                             'options' => [
-                                //'label' => 'Trading name',
+                                'wrapElements' => false,
                             ]
                         ],
                     ],

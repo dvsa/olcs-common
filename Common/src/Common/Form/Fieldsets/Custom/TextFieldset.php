@@ -11,6 +11,7 @@ class TextFieldset extends Fieldset
     {
         parent::__construct($name, $options);
 
+        $this->setOptions(array('wrapElements', false));
 
         $this->add(array(
             'name' => 'text',

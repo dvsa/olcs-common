@@ -12,6 +12,7 @@ use Zend\Form\Element\Collection as CollectionElement;
 use Zend\Form\FieldsetInterface;
 use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
+use Common\Form\Elements\Types\CompanyNumber;
 
 /**
  * Form Collection wrapper
@@ -74,7 +75,7 @@ class FormCollection extends ZendFormCollection
         }
 
         // Every collection is wrapped by a fieldset if needed
-        if ($this->shouldWrap && $element->getOption('wrapElements') !== false) {
+        if ($this->shouldWrap) {
             $label = $element->getLabel();
             $legend = '';
 
@@ -109,7 +110,7 @@ class FormCollection extends ZendFormCollection
             );
         }
 
-        if (! ($element instanceof PostcodeSearch)) {
+        if (! ($element instanceof PostcodeSearch) && ! ($element instanceof CompanyNumber)) {
 
             return $markup;
         }

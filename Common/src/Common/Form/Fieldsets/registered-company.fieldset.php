@@ -17,12 +17,13 @@ return [
         ],
         'company_number' =>
         [
-            'label' => 'Registered company number',
             'type' => 'companyNumber',
+            'label' => 'Registered company number',
         ],
         'company_name' =>
         [
-            'type' => 'companyName'
+            'type' => 'companyName',
+            'label' => 'Company name',
         ],
         'type_of_business' =>
         [
@@ -39,7 +40,7 @@ return [
     [
         'next_step' =>
         [
-            'default' => 'complete'
+            'default' => 'addresses'
         ]
     ]
 ];

@@ -7,29 +7,34 @@ return [
         'business_type' => [
             'label' => 'What type of business are you?',
             'type' => 'selectDisabled',
+            'value_options' => 'business_types',
+            'class' => 'inline',
+        ],
+        'edit_business_type' => [
+            'type' => 'submit',
+            'label' => 'Edit',
+            'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
         ],
         'company_number' =>
         [
             'label' => 'Registered company number',
-            'type' => 'companyNumber'
-        ],
-        'submit_lookup_company' =>
-        [
-            'name' => 'submit_lookup_company',
-            'value' => 'lookup_company',
-            'type' => 'submit',
-            'label' => 'Find'
+            'type' => 'companyNumber',
         ],
         'company_name' =>
         [
             'type' => 'companyName'
+        ],
+        'trading_names' =>
+        [
+            'label' => 'Trading names (optional)',
+            'type' => 'tradingNames'
         ],
     ],
     'options' =>
     [
         'next_step' =>
         [
-            'default' => 'complete'
+            'default' => 'addresses'
         ]
     ]
 ];
