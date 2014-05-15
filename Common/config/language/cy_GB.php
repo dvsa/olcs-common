@@ -79,6 +79,8 @@ return array(
     'business-type' => "W Business type",
     'submission-vehicle-trailer' => "W V-auth / T-auth",
     'submission-vehicle-possession' => "W Veh in pos",
+    'add-submission-note' => 'W Add a submission note',
+    'add-submission-note-text' => 'W Add a note to section - ',
     'start-date' => "W Start date",
     'review-date' => "W Review date",
     'end-date' => "W End date",
@@ -355,4 +357,26 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+   
+    'date-of-conviction' => 'W Date of conviction',
+    'date-of-offence' => 'W Date of offence',
+    'description' => 'W Description',
+    'name-defendant-type' => 'W Name / Defendant type',
+    'court-fpn' => 'W Court/FPN',
+    'declared' => 'W Declared',
+    'dealt-with' => 'W Dealt with',
+
+    // conditions & undertakings
+    'add-condition' => 'W Add condition',
+    'edit-condition' => 'W Edit condition',
+    'subtitle-condition-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'W Add undertaking',
+    'edit-undertaking' => 'W Edit undertaking',
+    'subtitle-undertaking-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
+    //propose-to-revoke
+    'propose-to-revoke' => 'W Propose to revoke',
+    'propose-to-revoke-text' => 'W Use this form for a proposal to revoke.',
 );

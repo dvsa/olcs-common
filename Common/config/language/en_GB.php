@@ -80,6 +80,8 @@ return array(
     'business-type' => "Business type",
     'submission-vehicle-trailer' => "V-auth / T-auth",
     'submission-vehicle-possession' => "Veh in pos",
+    'add-submission-note' => 'Add a submission note',
+    'add-submission-note-text' => 'Add a note to section - ',
     'start-date' => "Start date",
     'review-date' => "Review date",
     'end-date' => "End date",
@@ -394,6 +396,7 @@ return array(
     'vehicle-and-safety' => 'Vehicle & safety',
     'operating-centres' => 'Operating centres',
     'your-business' => 'Your business',
+    'description' => 'Description',
 
     // Complaints
     'add-complaint' => 'Add complaint',
@@ -426,4 +429,26 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
+    
+    'date-of-conviction' => 'Date of conviction',
+    'date-of-offence' => 'Date of offence',
+    'description' => 'Description',
+    'name-defendant-type' => 'Name / Defendant type',
+    'court-fpn' => 'Court/FPN',
+    'declared' => 'Declared',
+    'dealt-with' => 'Dealt with',
+
+    // conditions & undertakings
+    'add-condition' => 'Add condition',
+    'edit-condition' => 'Edit condition',
+    'subtitle-condition-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'Add undertaking',
+    'edit-undertaking' => 'Edit undertaking',
+    'subtitle-undertaking-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+
+    //propose-to-revoke
+    'propose-to-revoke' => 'Propose to revoke',
+    'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
 );
