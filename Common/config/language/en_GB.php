@@ -422,7 +422,7 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
-    
+
     'date-of-conviction' => 'Date of conviction',
     'date-of-offence' => 'Date of offence',
     'description' => 'Description',
@@ -529,6 +529,31 @@ return array(
     'application_vehicle-safety_safety-sub-action.address.label' => 'Address',
 
     'application.previous-history' => 'Previous history',
+    'application.previous-history.financial-history' => 'Financial history',
+    'application_previous-history_financial-history.finance.title' => 'Financial history',
+    'application_previous-history_financial-history.finance.hint' => 'Has any person named in this application
+        (including partners, directors or transport managers) ever been:',
+    'application_previous-history_financial-history.finance.bankrupt' => '1. Declared bankrupt or had their estate
+        seized or confiscated?',
+    'application_previous-history_financial-history.finance.liquidation' => '2. Involved with a company, or business,
+        that has gone into (or is going into) liquidation, owing money?',
+    'application_previous-history_financial-history.finance.receivership' => '3. Involved with a company, or business,
+        that has gone into (or is going into) receivership?',
+    'application_previous-history_financial-history.finance.administration' => '4. Involved with a company, or business,
+        that has gone into (or is going into) administration?',
+    'application_previous-history_financial-history.finance.disqualified' => '5. Have you, or have any of your partners,
+        directors, majority shareholders or your transport manager ever been disqualified from acting as a director of a
+        company or from taking part in the management of a company?',
+    'application_previous-history_financial-history.insolvencyDetails.title' => 'Additional information',
+    'application_previous-history_financial-history.insolvencyDetails.hint' => 'Please provide additional information
+        relating to any prior insolvency proceedings. You may also upload evidence such as legal documents.',
+    'application_previous-history_financial-history.insolvencyDetails.placeholder' => 'Min 200 characters',
+    'application_previous-history_financial-history.insolvencyConfirmation.title' => 'Please tick to confirm that you
+        are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
+        between the submission of your application and a decision being made on the application',
+
+    'application.previous-history.licence-history' => 'Licence history',
+    'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.review-declarations' => 'Review & declarations',
     'application.payment-submission' => 'Payment & submission',
     //propose-to-revoke
