@@ -424,7 +424,7 @@ return array(
     'helpdesk' => 'Helpdesk',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'built-by' => 'Built by',
-    'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
+    'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
 
     //Aplications statuses
@@ -436,5 +436,9 @@ return array(
     'name-defendant-type' => 'Name / Defendant type',
     'court-fpn' => 'Court/FPN',
     'declared' => 'Declared',
-    'dealt-with' => 'Dealt with'
+    'dealt-with' => 'Dealt with',
+
+    //propose-to-revoke
+    'propose-to-revoke' => 'Propose to revoke',
+    'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
 );
