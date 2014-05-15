@@ -345,6 +345,6 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'helpdesk' => 'W Helpdesk',
     'privacy-and-cookies' => 'W Privacy &amp; Cookies',
     'built-by' => 'W Built by',
-    'driver-vehicle-standards-agency' => 'W Driver Vehicle Standards Agency',
+    'driver-vehicle-standards-agency' => 'W Driver and Vehicle Standards Agency',
     'crown-copyright' => 'W Crown Copyright',
 );

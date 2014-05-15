@@ -413,6 +413,6 @@ return array(
     'helpdesk' => 'Helpdesk',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
     'built-by' => 'Built by',
-    'driver-vehicle-standards-agency' => 'Driver Vehicle Standards Agency',
+    'driver-vehicle-standards-agency' => 'Driver and Vehicle Standards Agency',
     'crown-copyright' => 'Crown Copyright',
 );
