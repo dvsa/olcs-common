@@ -72,7 +72,7 @@ return array(
             ),
             'document' => array(
                 'Olcs\Template' => 'template',
-                'Olcs\Document' => 'document'
+                'Olcs\Document\Generate' => 'document/generate'
             )
         )
     )

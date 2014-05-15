@@ -37,6 +37,20 @@ trait RestCallTrait
     }
 
     /**
+     * Send a post request. Bypass the checks for response when calling
+     * makeRestCall
+     *
+     * @param string $service
+     * @param array $data
+     * @return array
+     */
+    protected function sendPost($service, $data = array())
+    {
+        return $this->getRestClient($service)->post('', $data);
+    }
+
+
+    /**
      * Make a rest call and return the response
      *
      * @param string $service
