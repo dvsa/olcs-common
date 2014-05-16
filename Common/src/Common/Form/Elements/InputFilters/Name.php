@@ -26,7 +26,7 @@ class Name extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringToLower'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 45]),
+                new ZendValidator\StringLength(['min' => 2, 'max' => 35]),
             ]
         ];
 
