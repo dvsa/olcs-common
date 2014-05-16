@@ -314,22 +314,40 @@ abstract class FormActionController extends AbstractActionController
     protected function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
+
+        $result = $this->makeRestCall($entityName, 'POST', $data);
+
+        $data['id'] = $result['id'];
         $documentData = $this->generateDocument($data);
 
-        return $this->makeRestCall($entityName, 'POST', $data);
+        return $result;
     }
 
     protected function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
-        return $this->makeRestCall($entityName, 'PUT', $data);
+        $result = $this->makeRestCall($entityName, 'PUT', $data);
+
+        $documentData = $this->generateDocument($data);
+
+        return $result;
+
     }
 
+    /**
+     * Method to trigger generation of a document providing a generate checkox
+     * is found in $data
+     *
+     * @param arrat $data
+     * @return array
+     * @throws \RuntimeException
+     */
     protected function generateDocument($data = array())
     {
+
         $documentData = [];
-        if (isset($data['generateDocument']) && $data['generateDocument'] == '1') {
+        if (isset($data['document']['generate']) && $data['document']['generate'] == '1') {
 
             if (!method_exists($this, 'mapDocumentData')) {
                 throw new \RuntimeException('Controller requires mapDocumentData method');
@@ -338,13 +356,17 @@ abstract class FormActionController extends AbstractActionController
 
             $documentData = $this->sendPost(
                 'Olcs\Document\GenerateRtf', [
+                    'data' => [
+                        'formName' => $data['document']['formName'],
+                        'licence' => $this->fromRoute('licence'),
+                        'case' => $this->fromRoute('case'),
+                        'id' => $data['id']
+                    ],
                     'bookmarks' => $bookmarks,
                     'country' =>
                         isset($data['document']['country']) ?
                         $data['document']['country'] : 'en_GB',
-                    'templateId' =>
-                        isset($data['document']['templateId']) ?
-                        $data['document']['templateId'] : 'S43_Letter',
+                    'templateId' => $data['document']['templateId'],
                     'format' =>
                         isset($data['document']['format']) ?
                         $data['document']['format'] : 'rtf'
@@ -352,7 +374,7 @@ abstract class FormActionController extends AbstractActionController
             );
         }
 
-        return $documentData['filename'];
+        return $documentData;
     }
 
     protected function trimFormFields($data)
