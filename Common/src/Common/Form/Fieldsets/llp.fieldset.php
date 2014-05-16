@@ -16,6 +16,10 @@ return [
             'type' => 'submit',
             'label' => 'Find'
         ],
+        'company_name' =>
+        [
+            'type' => 'companyName'
+        ],
     ],
     'options' =>
     [
