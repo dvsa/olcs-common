@@ -19,9 +19,21 @@ use Common\Form\Elements\Types\Address;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    protected $validateForm = true;
+
     private $persist = true;
 
     private $fieldValues = array();
+
+    /**
+     * Switch form validation on or off
+     *
+     * @param boolean $validateForm
+     */
+    protected function setValidateForm($validateForm = true)
+    {
+        $this->validateForm = $validateForm;
+    }
 
     /**
      * Gets a from from either a built or custom form config.
@@ -37,6 +49,12 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
+    /**
+     * Process the postcode lookup functionality
+     *
+     * @param Form $form
+     * @return Form
+     */
     protected function processPostcodeLookup($form)
     {
         $request = $this->getRequest();
@@ -161,8 +179,14 @@ abstract class FormActionController extends AbstractActionController
 
             $form->setData($data);
 
-            if ($this->persist && $form->isValid()) {
-                $validatedData = $form->getData();
+            if (!$this->validateForm || ($this->persist && $form->isValid())) {
+
+                if ($this->validateForm) {
+                    $validatedData = $form->getData();
+                } else {
+                    $validatedData = $data;
+                }
+
                 $params = [
                     'validData' => $validatedData,
                     'form' => $form,

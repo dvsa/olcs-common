@@ -241,11 +241,11 @@ class OlcsCustomFormFactory extends Factory
             }
         }
 
-        if ($forceDisabled) {
+        if ($forceDisabled && (!isset($element['enable']) || !$element['enable'])) {
             $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {

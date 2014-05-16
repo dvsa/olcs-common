@@ -551,11 +551,17 @@ return array(
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'Please tick to confirm that you
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
         between the submission of your application and a decision being made on the application',
+    'application.review-declarations.summary' => 'Application summary',
+    'application.review-declarations.summary.new-window' => 'View in another window',
 
     'application.previous-history.licence-history' => 'Licence history',
     'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.review-declarations' => 'Review & declarations',
     'application.payment-submission' => 'Payment & submission',
+
+    'application.new.button' => 'Start new application',
+    'dashboard.title' => 'Dashboard',
+    'dashboard.subtitle' => 'These are all your current licences and licence applications you have.',
     //propose-to-revoke
     'propose-to-revoke' => 'Propose to revoke',
     'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',

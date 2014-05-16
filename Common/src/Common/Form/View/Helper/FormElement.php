@@ -49,7 +49,14 @@ class FormElement extends ZendFormElement
 
         if ($element instanceof ActionLink) {
 
-            return '<a href="' . $element->getValue() . '">' . $element->getLabel() . '</a>';
+            $route = $element->getOption('route');
+            if (!empty($route)) {
+                $url = $this->getView()->url($route);
+            } else {
+                $url = $element->getValue();
+            }
+
+            return '<a href="' . $url . '">' . $element->getLabel() . '</a>';
         }
 
         if ($element instanceof Html) {
