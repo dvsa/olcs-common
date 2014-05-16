@@ -44,11 +44,18 @@ class OlcsCustomFormFactory extends Factory
     );
 
     /**
-     * Holds for form config
+     * Holds the form config
      *
      * @var array
      */
     public $baseFormConfig;
+
+    /**
+     * Holds the form type
+     *
+     * @var string
+     */
+    protected $type;
 
     /**
      * Holds the form paths
@@ -87,6 +94,8 @@ class OlcsCustomFormFactory extends Factory
      */
     public function createForm($type)
     {
+        $this->type = $type;
+
         if (empty($this->baseFormConfig)) {
             $this->baseFormConfig = $this->getFormConfig($type);
         }
@@ -96,13 +105,37 @@ class OlcsCustomFormFactory extends Factory
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
         $formConfig = $this->injectDynamicOptions($formConfig, $this->getDynamicOptions());
 
-        return parent::createForm($formConfig);
+        $form = parent::createForm($formConfig);
+
+        $form = $this->fixId($form);
+
+        return $form;
+    }
+
+    /**
+     * Sets the id of the form to _form.
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function fixId(\Zend\Form\Form $form)
+    {
+        $id = $form->getAttribute('id');
+
+        if ('' != $id) {
+            $form->setAttribute('id', $id . '_form');
+        } else {
+            $form->setAttribute('id', $form->getAttribute('name') . '_form');
+        }
+
+        return $form;
     }
 
     /**
      * Get the form config for the type
      *
      * @param string $type
+     *
      * @return array
      * @throws \Exception
      */
@@ -242,6 +275,9 @@ class OlcsCustomFormFactory extends Factory
 
         $newElement['spec'] = $this->config['form']['elements'][$element['type']];
 
+        $config = $this->baseFormConfig[$this->type];
+        $forceDisabled = isset($config['disabled']) && $config['disabled'];
+
         // Sets the type to a filter class for filtering and validation
         if (isset($element['filters'])) {
             $newElement['spec']['type'] = $element['filters'];
@@ -257,6 +293,10 @@ class OlcsCustomFormFactory extends Factory
             if (isset($element[$attribute])) {
                 $newElement['spec']['attributes'][$attribute] = $element[$attribute];
             }
+        }
+
+        if ($forceDisabled) {
+            $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
         $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
