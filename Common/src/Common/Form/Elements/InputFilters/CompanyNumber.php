@@ -1,5 +1,6 @@
 <?php
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
@@ -25,7 +26,7 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(8),
+                new ZendValidator\StringLength(8, 8),
                 new ZendValidator\Digits(),
             ]
         ];
