@@ -559,6 +559,9 @@ return array(
     'application.new.button' => 'Start new application',
     'dashboard.title' => 'Dashboard',
     'dashboard.subtitle' => 'These are all your current licences and licence applications you have.',
+    'application.payment-submission.summary.title' => 'Thank you',
+    'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
+
     //propose-to-revoke
     'propose-to-revoke' => 'Propose to revoke',
     'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
