@@ -29,7 +29,7 @@ return array(
     'ecms-number' => "W ECMS #",
     'ecms' => 'W ECMS',
     'v-auth-t-auth' =>  'W V-auth/T-auth',
-    'vehicles-in-posession' => 'Vehicles in posession',
+    'vehicles-in-posession' => 'Vehicles in possession',
     'new-case-additional-licence' => "W Add additional licences",
     'new-case-next' => "W Next",
     'lookup-search-results' => "W You searched for",
