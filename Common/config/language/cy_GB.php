@@ -330,7 +330,7 @@ return array(
     'transport-managers' => "W Transport Manager(s)",
     'case-summary-info' => 'W Case summary information',
     'case-submission' => 'W Case submission',
-    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
+    'case-submission-text' => 'W This document is official and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
     'submission-actions' => 'W Submission Actions',
     'submission-recommend' => 'W Submission recommendation',

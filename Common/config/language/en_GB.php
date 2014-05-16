@@ -338,7 +338,7 @@ return array(
     'transport-managers' => "Transport Manager(s)",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
+    'case-submission-text' => 'This document is official and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
     'submission-actions' => 'Submission Actions',
     'submission-recommend' => 'Submission recommendation',
@@ -403,9 +403,6 @@ return array(
     'edit-complaint' => 'Edit complaint',
     'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-    'case-submission-text' => 'This document is restricted and not for
-        disclosure to any third parties without the specific consent of
-        the Traffic Commissioner',
 
     //Stay types
     'stay_status_granted' => 'Granted',
