@@ -13,7 +13,7 @@ use Zend\Validator\Date as DateValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
- * Checks conviction offence date is before the conviction date
+ * Checks if the hearing time is entered then the date is also entered
  */
 class HearingTimeHasDate extends ZendTimeSelect implements InputProviderInterface
 {
@@ -30,8 +30,7 @@ class HearingTimeHasDate extends ZendTimeSelect implements InputProviderInterfac
 
             'validators' => [
                 new DateValidator(array("format" => 'H:i')),
-                new \Common\Form\Elements\Validators\TimeWithDate('hearingDate'),
-
+                new \Common\Form\Elements\Validators\TimeWithDate('hearingDate')
             ]
         ];
 
