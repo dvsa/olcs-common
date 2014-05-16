@@ -407,7 +407,7 @@ return array(
         'complaint_type.nol' => 'No operators licence',
         'complaint_type.olr' => 'Operating local service off route',
         'complaint_type.ovb' => 'Obstructing other vehicles at bus station/bus stop',
-        'complaint_type.pvo' => 'Parking vehicle out - with operating centre',
+        'complaint_type.pvo' => 'Parking vehicle out-with operating centre',
         'complaint_type.rds' => 'Registration of duplicate services',
         'complaint_type.rta' => 'Registered times not being adhered to',
         'complaint_type.sln' => 'Speed limiters non-operative',
