@@ -79,6 +79,8 @@ return array(
     'business-type' => "W Business type",
     'submission-vehicle-trailer' => "W V-auth / T-auth",
     'submission-vehicle-possession' => "W Veh in pos",
+    'add-submission-note' => 'W Add a submission note',
+    'add-submission-note-text' => 'W Add a note to section - ',
     'start-date' => "W Start date",
     'review-date' => "W Review date",
     'end-date' => "W End date",
@@ -328,7 +330,7 @@ return array(
     'transport-managers' => "W Transport Manager(s)",
     'case-summary-info' => 'W Case summary information',
     'case-submission' => 'W Case submission',
-    'case-submission-text' => 'W This document is restricted and not for disclosure to any third parties without the
+    'case-submission-text' => 'W This document is official and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
     'submission-actions' => 'W Submission Actions',
     'submission-recommend' => 'W Submission recommendation',
@@ -355,6 +357,24 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
+   
+    'date-of-conviction' => 'W Date of conviction',
+    'date-of-offence' => 'W Date of offence',
+    'description' => 'W Description',
+    'name-defendant-type' => 'W Name / Defendant type',
+    'court-fpn' => 'W Court/FPN',
+    'declared' => 'W Declared',
+    'dealt-with' => 'W Dealt with',
+
+    // conditions & undertakings
+    'add-condition' => 'W Add condition',
+    'edit-condition' => 'W Edit condition',
+    'subtitle-condition-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'W Add undertaking',
+    'edit-undertaking' => 'W Edit undertaking',
+    'subtitle-undertaking-text' => 'W Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //propose-to-revoke
     'propose-to-revoke' => 'W Propose to revoke',

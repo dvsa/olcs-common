@@ -80,6 +80,8 @@ return array(
     'business-type' => "Business type",
     'submission-vehicle-trailer' => "V-auth / T-auth",
     'submission-vehicle-possession' => "Veh in pos",
+    'add-submission-note' => 'Add a submission note',
+    'add-submission-note-text' => 'Add a note to section - ',
     'start-date' => "Start date",
     'review-date' => "Review date",
     'end-date' => "End date",
@@ -336,7 +338,7 @@ return array(
     'transport-managers' => "Transport Manager(s)",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
+    'case-submission-text' => 'This document is official and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
     'submission-actions' => 'Submission Actions',
     'submission-recommend' => 'Submission recommendation',
@@ -394,15 +396,13 @@ return array(
     'vehicle-and-safety' => 'Vehicle & safety',
     'operating-centres' => 'Operating centres',
     'your-business' => 'Your business',
+    'description' => 'Description',
 
     // Complaints
     'add-complaint' => 'Add complaint',
     'edit-complaint' => 'Edit complaint',
     'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-    'case-submission-text' => 'This document is restricted and not for
-        disclosure to any third parties without the specific consent of
-        the Traffic Commissioner',
 
     //Stay types
     'stay_status_granted' => 'Granted',
@@ -426,6 +426,24 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
+    
+    'date-of-conviction' => 'Date of conviction',
+    'date-of-offence' => 'Date of offence',
+    'description' => 'Description',
+    'name-defendant-type' => 'Name / Defendant type',
+    'court-fpn' => 'Court/FPN',
+    'declared' => 'Declared',
+    'dealt-with' => 'Dealt with',
+
+    // conditions & undertakings
+    'add-condition' => 'Add condition',
+    'edit-condition' => 'Edit condition',
+    'subtitle-condition-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'add-undertaking' => 'Add undertaking',
+    'edit-undertaking' => 'Edit undertaking',
+    'subtitle-undertaking-text' => 'Lorem ipsum dolor sit amet, consectetuer
+        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //propose-to-revoke
     'propose-to-revoke' => 'Propose to revoke',
