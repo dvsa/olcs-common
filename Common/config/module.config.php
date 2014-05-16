@@ -72,7 +72,8 @@ return array(
             ),
             'document' => array(
                 'Olcs\Template' => 'template',
-                'Olcs\Document\GenerateRtf' => 'document/generate/rtf'
+                'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
+                'Olcs\Document\Retrieve' => 'document/retrieve/'
             )
         )
     )
