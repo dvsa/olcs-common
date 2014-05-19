@@ -4,17 +4,30 @@ return [
     'name' => 'llp',
     'elements' =>
     [
+        'business_type' => [
+            'label' => 'What type of business are you?',
+            'type' => 'selectDisabled',
+            'value_options' => 'business_types',
+            'class' => 'inline',
+        ],
+        'edit_business_type' => [
+            'type' => 'submit',
+            'label' => 'Edit',
+            'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
+        ],
         'company_number' =>
         [
             'label' => 'Registered company number',
-            'type' => 'companyNumber'
+            'type' => 'companyNumber',
         ],
-        'submit_lookup_company' =>
+        'company_name' =>
         [
-            'name' => 'submit_lookup_company',
-            'value' => 'lookup_company',
-            'type' => 'submit',
-            'label' => 'Find'
+            'type' => 'companyName'
+        ],
+        'trading_names' =>
+        [
+            'label' => 'Trading names (optional)',
+            'type' => 'tradingNames'
         ],
         'company_name' =>
         [
@@ -25,7 +38,7 @@ return [
     [
         'next_step' =>
         [
-            'default' => 'complete'
+            'default' => 'addresses'
         ]
     ]
 ];

@@ -4,45 +4,38 @@ return [
     'name' => 'registered-company',
     'elements' =>
     [
+        'business_type' => [
+            'label' => 'What type of business are you?',
+            'type' => 'selectDisabled',
+            'value_options' => 'business_types',
+            'class' => 'inline',
+        ],
+        'edit_business_type' => [
+            'type' => 'submit',
+            'label' => 'Edit',
+            'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
+        ],
         'company_number' =>
         [
+            'type' => 'companyNumber',
             'label' => 'Registered company number',
-            'type' => 'companyNumber'
-        ],
-        'submit_lookup_company' =>
-        [
-            'name' => 'submit_lookup_company',
-            'value' => 'lookup_company',
-            'type' => 'submit',
-            'label' => 'Find'
         ],
         'company_name' =>
         [
-            'type' => 'companyName'
+            'type' => 'companyName',
+            'label' => 'Company name',
         ],
         'trading_names' =>
         [
+            'label' => 'Trading names (optional)',
             'type' => 'tradingNames'
         ],
-        'submit_add_trading_name' =>
-        [
-            'name' => 'submit_add_trading_name',
-            'value' => 'add_trading_name',
-            'type' => 'submit',
-            'label' => 'Add another',
-        // 'class' => 'field inline',
-        ],
-        'type_of_business' =>
-        [
-            'type' => 'businessType',
-            'value_options' => 'sic_codes'
-        ]
     ],
     'options' =>
     [
         'next_step' =>
         [
-            'default' => 'complete'
+            'default' => 'addresses'
         ]
     ]
 ];

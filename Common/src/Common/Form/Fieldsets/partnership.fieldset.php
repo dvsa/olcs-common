@@ -4,32 +4,33 @@ return [
     'name' => 'partnership',
     'elements' =>
     [
+        'business_type' => [
+            'label' => 'What type of business are you?',
+            'type' => 'selectDisabled',
+            'value_options' => 'business_types',
+            'class' => 'inline',
+        ],
+        'edit_business_type' => [
+            'type' => 'submit',
+            'label' => 'Edit',
+            'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
+        ],
         'company_name' =>
         [
-            'type' => 'companyName'
+            'type' => 'companyName',
+            'label' => 'Partnership name',
         ],
         'trading_names' =>
         [
+            'label' => 'Trading names (optional)',
             'type' => 'tradingNames'
         ],
-        'submit_add_trading_name' =>
-        [
-            'name' => 'submit_add_trading_name',
-            'value' => 'add_trading_name',
-            'type' => 'submit',
-            'label' => 'Add another'
-        ],
-        'type_of_business' =>
-        [
-            'type' => 'businessType',
-            'value_options' => 'sic_codes'
-        ]
     ],
     'options' =>
     [
         'next_step' =>
         [
-            'default' => 'complete'
+            'default' => 'addresses'
         ]
     ]
 ];

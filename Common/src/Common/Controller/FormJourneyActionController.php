@@ -147,14 +147,16 @@ abstract class FormJourneyActionController extends FormActionController
      */
     protected function evaluateNextStep($form)
     {
-        $formData = $form->getData($this->getCurrentStep());
         foreach ($form->getFieldsets() as $fieldset) {
-            $next_step_options = $fieldset->getOption('next_step')['values'];
+            if (isset($fieldset->getOption('next_step')['values'])) {
 
-            foreach ($fieldset->getElements() as $element) {
-                $element_value = $element->getValue();
-                if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
-                    return $next_step_options[$element->getValue()];
+                $next_step_options = $fieldset->getOption('next_step')['values'];
+
+                foreach ($fieldset->getElements() as $element) {
+                    $element_value = $element->getValue();
+                    if (isset($next_step_options[$element_value]) && !empty($next_step_options[$element_value])) {
+                        return $next_step_options[$element->getValue()];
+                    }
                 }
             }
             if (isset($fieldset->getOption('next_step')['default'])) {
@@ -170,7 +172,7 @@ abstract class FormJourneyActionController extends FormActionController
      *
      * @return \Zend\Form
      */
-    public function generateSectionForm()
+    public function generateSectionForm($dynamicOptions = null)
     {
         $formGenerator = $this->getFormGenerator();
 
@@ -184,6 +186,7 @@ abstract class FormJourneyActionController extends FormActionController
 
         // set form config on formGenerator
         $formGenerator->setFormConfig($stepFormConfig);
+        $formGenerator->setDynamicOptions($dynamicOptions);
 
         // create form
         $stepForm = $formGenerator->createForm($section);
