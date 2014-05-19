@@ -18,7 +18,8 @@ return array(
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
             'version' => 'Common\View\Helper\Version',
-            'applicationName' => 'Common\View\Helper\ApplicationName'
+            'applicationName' => 'Common\View\Helper\ApplicationName',
+            'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
         )
     ),
     'view_manager' => array(
@@ -69,6 +70,11 @@ return array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
+            ),
+            'document' => array(
+                'Olcs\Template' => 'template',
+                'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
+                'Olcs\Document\Retrieve' => 'document/retrieve/'
             )
         )
     )
