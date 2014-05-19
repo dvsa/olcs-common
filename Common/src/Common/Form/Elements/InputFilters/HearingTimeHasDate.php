@@ -1,16 +1,22 @@
 <?php
+/**
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ *
+ */
+
 namespace Common\Form\Elements\InputFilters;
-use Zend\Form\Element as ZendElement;
+
+use Zend\Form\Element\Time as ZendTimeSelect;
 use Zend\Validator as ZendValidator;
+use Zend\Validator\Date as DateValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
-class Name extends ZendElement implements InputProviderInterface
+/**
+ * Checks if the hearing time is entered then the date is also entered
+ */
+class HearingTimeHasDate extends ZendTimeSelect implements InputProviderInterface
 {
-    public function __construct($name = null, $options = array())
-    {
-        parent::__construct($name, $options);
-    }
-
     /**
      * Provide default input rules for this element.
      *
@@ -21,12 +27,10 @@ class Name extends ZendElement implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => false,
-            'filters' => [
-                ['name' => 'Zend\Filter\StringTrim'],
-                ['name' => 'Zend\Filter\StringToLower'],
-            ],
+
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 35]),
+                new DateValidator(array("format" => 'H:i')),
+                new \Common\Form\Elements\Validators\TimeWithDate('hearingDate')
             ]
         ];
 

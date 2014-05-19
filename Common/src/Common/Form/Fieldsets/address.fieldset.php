@@ -60,7 +60,10 @@ return [
             'type' => 'select',
             'label' => 'Country',
             'required' => true,
-            'value_options' => 'countries'
+            'value_options' => 'countries',
+            'attributes' => [
+                'value' => 'country.GB'
+            ]
         ]
     ]
 ];

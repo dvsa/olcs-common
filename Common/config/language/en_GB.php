@@ -29,7 +29,7 @@ return array(
     'ecms-number' => "ECMS #",
     'ecms' => 'ECMS',
     'v-auth-t-auth' =>  'V-auth/T-auth',
-    'vehicles-in-posession' => 'Vehicles in posession',
+    'vehicles-in-posession' => 'Vehicles in possession',
     'new-case-additional-licence' => "Add additional licences",
     'new-case-next' => "Next",
     'lookup-search-results' => "You searched for",
@@ -338,7 +338,7 @@ return array(
     'transport-managers' => "Transport Manager(s)",
     'case-summary-info' => 'Case summary information',
     'case-submission' => 'Case submission',
-    'case-submission-text' => 'This document is restricted and not for disclosure to any third parties without the
+    'case-submission-text' => 'This document is official and not for disclosure to any third parties without the
         specific consent of the Traffic Commissioner',
     'submission-actions' => 'Submission Actions',
     'submission-recommend' => 'Submission recommendation',
@@ -352,6 +352,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsHint' => 'This can sometimes be the case if
+        you own a particularly old vehicle',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
         inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
@@ -403,9 +405,6 @@ return array(
     'edit-complaint' => 'Edit complaint',
     'subtitle-complaint-text' => 'Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
-    'case-submission-text' => 'This document is restricted and not for
-        disclosure to any third parties without the specific consent of
-        the Traffic Commissioner',
 
     //Stay types
     'stay_status_granted' => 'Granted',
@@ -429,7 +428,7 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
-    
+
     'date-of-conviction' => 'Date of conviction',
     'date-of-offence' => 'Date of offence',
     'description' => 'Description',
