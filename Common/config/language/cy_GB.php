@@ -354,6 +354,8 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     'selfserve-app-subSection-business-details' => 'W Business details',
     'selfserve-app-subSection-business-addresses' => 'W Addresses',
     'selfserve-app-subSection-business-people' => 'W People',
+    'selfserve-business-registered-company-description' => 'W If you don\'t have your company number to hand,'
+        . ' or are having problems retrieving your company details, please enter them manually below.',
 
     //Aplications statuses
     'app_status.new' => 'W New',

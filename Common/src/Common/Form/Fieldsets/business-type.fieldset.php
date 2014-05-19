@@ -1,5 +1,6 @@
 <?php
 
+$translationPrefix = 'application_your-business';
 return [
     'name' => 'business-type',
     'elements' =>
@@ -7,7 +8,7 @@ return [
         'business-type' =>
         [
             'name' => 'business-type',
-            'label' => 'What type of business are you?',
+            'label' => $translationPrefix . '_business-type.data.organisationType',
             'type' => 'select',
             'attributes' => array(
                 'id' => 'business-type',
@@ -18,18 +19,10 @@ return [
     ],
     'options' =>
     [
-        'label' => 'Business type',
+        'label' => 'business-type',
         'next_step' =>
         [
-            'values' => [
-                'org_type.lc' => 'registered-company',
-                'org_type.st' => 'sole-trader',
-                'org_type.p' => 'partnership',
-                'org_type.llp' => 'llp',
-                'org_type.pa' => 'public-authority',
-                'org_type.o' => 'other',
-            ],
-            'default' => 'complete',
+            'default' => 'details',
         ]
     ]
 ];

@@ -27,6 +27,8 @@ class OlcsCustomFormFactory extends Factory
      */
     private $config;
 
+    private $dynamicOptions;
+
     /**
      * Holds the elements that have an array of options
      *
@@ -102,6 +104,8 @@ class OlcsCustomFormFactory extends Factory
             throw new \Exception("Form $type has no specification config");
         }
         $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
+        $formConfig = $this->injectDynamicOptions($formConfig, $this->getDynamicOptions());
+
         $form = parent::createForm($formConfig);
 
         $form = $this->fixId($form);
@@ -146,6 +150,56 @@ class OlcsCustomFormFactory extends Factory
             }
         }
         throw new \Exception("Form $type config file cannot be found");
+    }
+
+    /*
+     * Set dynamic options
+     *
+     * @param $dynamicOptions Optional;
+     */
+    public function setDynamicOptions($dynamicOptions = null)
+    {
+        $this->dynamicOptions = $dynamicOptions;
+    }
+
+    /**
+     * Get dynamic options
+     *
+     * @return miexed
+     */
+    public function getDynamicOptions()
+    {
+        return $this->dynamicOptions;
+    }
+
+    /**
+     * Iterate through config and inject dynamic options
+     *
+     * @param $config
+     * @return mixed
+     */
+    private function injectDynamicOptions($config, $dynamicOptions)
+    {
+        if (empty($dynamicOptions)) {
+            return $config;
+        }
+
+        foreach ($config as &$value) {
+            if (is_array($value)) {
+
+                $value = $this->injectDynamicOptions($value, $dynamicOptions);
+
+            } else {
+
+                foreach ($dynamicOptions as $dKey => $dVal) {
+
+                    if ($value == '{{'.$dKey.'}}') {
+                        $value = $dVal;
+                    }
+                }
+            }
+        }
+        return $config;
     }
 
     /**
