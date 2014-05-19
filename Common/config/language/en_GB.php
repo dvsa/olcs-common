@@ -505,6 +505,8 @@ return array(
         inspections',
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'This can sometimes be the case if
+        you own a particularly old vehicle',
     'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of your vehicles
         inspected more frequently than the interval stated above?',
     'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses your tachograph records?',
