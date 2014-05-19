@@ -467,12 +467,17 @@ return array(
     'application_operating-centres_authorisation-add' => 'Add operating centre',
     'application_operating-centres_authorisation-edit' => 'Edit operating centre',
     'application_operating-centres_authorisation-sub-action.data' => 'Vehicles & trailers',
+    'application_operating-centres_authorisation-sub-action.data-psv' => 'Vehicles',
     'application_operating-centres_authorisation-sub-action.data.numberOfVehicles' => 'Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation-sub-action.data.sufficientParking' => 'I have enough parking spaces
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
+    'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough parking spaces
+        available for the total number of vehicles that I want to keep at this address',
+    'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'I am either the site owner or have
+        permission from the site owner to use the premises to park the number of vehicles stated',
     'application_operating-centres_authorisation.table.title' => 'Operating centres',
     'application_operating-centres_authorisation.table.address' => 'Operating centre address',
     'application_operating-centres_authorisation.table.vehicles' => 'Vehicles',

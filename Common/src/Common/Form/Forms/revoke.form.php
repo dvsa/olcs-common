@@ -40,9 +40,6 @@ return [
             'version' => [
                 'type' => 'hidden'
             ],
-            'crsf' => [
-                'type' => 'crsf',
-            ],
             'submit' => [
                 'type' => 'submit',
                 'label' => 'Save',

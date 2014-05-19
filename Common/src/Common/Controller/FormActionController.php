@@ -19,11 +19,21 @@ use Common\Form\Elements\Types\Address;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    protected $enableCsrf = true;
+
     protected $validateForm = true;
 
     private $persist = true;
 
     private $fieldValues = array();
+
+    /**
+     * Allow csrf to be enabled and disabled
+     */
+    public function setEnabledCsrf($boolean = true)
+    {
+        $this->enableCsrf = $boolean;
+    }
 
     /**
      * Switch form validation on or off
@@ -171,6 +181,10 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function formPost($form, $callback = null, $additionalParams = array())
     {
+        if (!$this->enableCsrf) {
+            $form->remove('csrf');
+        }
+
         $form = $this->alterFormBeforeValidation($form);
 
         if ($this->getRequest()->isPost()) {
@@ -194,11 +208,13 @@ abstract class FormActionController extends AbstractActionController
                 ];
 
                 $params = array_merge($params, $this->getCallbackData());
-                if (!empty($callback)) {
-                    if (is_callable($callback)) {
-                        $callback($params);
-                    }
+
+                if (is_callable($callback)) {
+                    $callback($params);
+                } elseif (is_callable(array($this, $callback))) {
                     call_user_func_array(array($this, $callback), $params);
+                } elseif (!empty($callback)) {
+                    throw new \Exception('Invalid form callback: ' . $callback);
                 }
             }
         }
@@ -352,7 +368,7 @@ abstract class FormActionController extends AbstractActionController
 
     protected function trimFormFields($data)
     {
-        return $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        return $this->trimFields($data, array('csrf', 'submit', 'fields'));
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())
