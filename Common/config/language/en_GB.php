@@ -352,6 +352,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsHint' => 'This can sometimes be the case if
+        you own a particularly old vehicle',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
         inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
@@ -426,7 +428,7 @@ return array(
 
     //Aplications statuses
     'app_status.new' => 'New',
-    
+
     'date-of-conviction' => 'Date of conviction',
     'date-of-offence' => 'Date of offence',
     'description' => 'Description',
