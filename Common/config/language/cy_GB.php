@@ -290,7 +290,7 @@ return array(
     'llp-name' => "W LLP name",
     'application-update-sole-trader' => "W Edit sole trader",
     'edit-case' => "W Edit Case #",
-    'edit-conviction' => "W Edit Conviction #",
+    'edit-conviction' => "W Edit Conviction",
     'notes-associated-with' => 'W Notes associated with %s #%s and licence #%s',
     'note-type' => 'W Note type',
     'note' => 'W Comment',
@@ -359,7 +359,7 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
-   
+
     'date-of-conviction' => 'W Date of conviction',
     'date-of-offence' => 'W Date of offence',
     'description' => 'W Description',

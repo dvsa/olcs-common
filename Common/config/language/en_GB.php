@@ -294,7 +294,7 @@ return array(
     'application-update-sole-trader' => "Edit sole trader",
     'application-update-person-header-director' => "Edit Director",
     'edit-case' => "Edit Case #",
-    'edit-conviction' => "Edit Conviction #",
+    'edit-conviction' => "Edit Conviction",
     'notes-associated-with' => 'Notes associated with %s #%s and licence #%s',
     'note-type' => 'Note type',
     'note' => 'Comment',
