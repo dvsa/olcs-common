@@ -21,15 +21,7 @@ return [
         'label' => 'Business type',
         'next_step' =>
         [
-            'values' => [
-                'org_type.lc' => 'registered-company',
-                'org_type.st' => 'sole-trader',
-                'org_type.p' => 'partnership',
-                'org_type.llp' => 'llp',
-                'org_type.pa' => 'public-authority',
-                'org_type.o' => 'other',
-            ],
-            'default' => 'complete',
+            'default' => 'details',
         ]
     ]
 ];

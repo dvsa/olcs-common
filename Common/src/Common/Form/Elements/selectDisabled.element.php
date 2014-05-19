@@ -2,7 +2,7 @@
 
 return [
     'selectDisabled' => [
-        'type' => '\Zend\Form\Element\Select',
+        'type' => '\Common\Form\Elements\InputFilters\SelectEmpty',
         'name' => '',
         'options' => [
             'label' => '',
@@ -12,7 +12,8 @@ return [
         ],
         'attributes' => [
             'id' => '',
-        //'disabled' => true
-        ]
+            'disabled' => true
+        ],
+        'required' => false,
     ]
 ];
