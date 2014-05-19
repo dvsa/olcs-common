@@ -290,7 +290,7 @@ return array(
     'llp-name' => "W LLP name",
     'application-update-sole-trader' => "W Edit sole trader",
     'edit-case' => "W Edit Case #",
-    'edit-conviction' => "W Edit Conviction #",
+    'edit-conviction' => "W Edit Conviction",
     'notes-associated-with' => 'W Notes associated with %s #%s and licence #%s',
     'note-type' => 'W Note type',
     'note' => 'W Comment',
@@ -340,8 +340,8 @@ return array(
     // Complaints
     'add-complaint' => 'W Add complaint',
     'edit-complaint' => 'W Edit complaint',
-    'subtitle-complaint-text' => 'W Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'subtitle-complaint-text' => 'W Please enter complaint details',
+
 
         // footer
     'helpdesk' => 'W Helpdesk',
@@ -359,7 +359,7 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
 
     //Aplications statuses
     'app_status.new' => 'W New',
-   
+
     'date-of-conviction' => 'W Date of conviction',
     'date-of-offence' => 'W Date of offence',
     'description' => 'W Description',
@@ -371,12 +371,11 @@ nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
     // conditions & undertakings
     'add-condition' => 'W Add condition',
     'edit-condition' => 'W Edit condition',
-    'subtitle-condition-text' => 'W Lorem ipsum dolor sit amet, consectetuer
-        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'subtitle-condition-text' => 'W Please enter condition details',
     'add-undertaking' => 'W Add undertaking',
     'edit-undertaking' => 'W Edit undertaking',
-    'subtitle-undertaking-text' => 'W Lorem ipsum dolor sit amet, consectetuer
-        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+    'subtitle-undertaking-text' => 'W Please enter undertaking details',
+
 
     // Application Journey
     'application.type-of-licence' => 'Type of licence',

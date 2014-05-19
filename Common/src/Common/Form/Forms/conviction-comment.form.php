@@ -9,7 +9,7 @@ return [
         'elements' => [
             'convictionData' => [
                 'type'  => 'textarea',
-                'label' => 'Convictions comments',
+                'label' => 'Convictions from PLS',
                 'class' => 'extra-long'
             ],
             'id' => [

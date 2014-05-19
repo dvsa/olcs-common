@@ -70,6 +70,11 @@ return array(
                 'Vosa\Payment\Token' => 'token',
                 'Vosa\Payment\Db' => 'paymentdb',
                 'Vosa\Payment\Card' => 'cardpayment'
+            ),
+            'document' => array(
+                'Olcs\Template' => 'template',
+                'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
+                'Olcs\Document\Retrieve' => 'document/retrieve/'
             )
         )
     )
