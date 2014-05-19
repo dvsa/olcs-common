@@ -13,4 +13,5 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 class TextMax255Required extends TextMax255 implements InputProviderInterface
 {
     protected $required = true;
+    protected $allowEmpty = false;
 }
