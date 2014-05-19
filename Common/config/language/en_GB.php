@@ -352,6 +352,8 @@ return array(
         inspections',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspections' => 'Are some of your vehicles or trailers
         inspected more frequently than the interval stated above?',
+    'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsHint' => 'This can sometimes be the case if
+        you own a particularly old vehicle',
     'selfserve-app-vehicle-safety-safety-moreFrequentInspectionsNoTrailer' => 'Are some of your vehicles
         inspected more frequently than the interval stated above?',
     'selfserve-app-vehicle-safety-safety-tachographAnalyser' => 'Who analyses your tachograph records?',
@@ -373,6 +375,9 @@ return array(
     'selfserve-app-subSection-business-details' => 'Business details',
     'selfserve-app-subSection-business-addresses' => 'Addresses',
     'selfserve-app-subSection-business-people' => 'People',
+    'selfserve-business-registered-company-description' => 'If you don\'t have your company number to hand,'
+        . ' or are having problems retrieving your company details, please enter them manually below.',
+
 
     'Authorisation' => 'Authorisation',
     // Generic
