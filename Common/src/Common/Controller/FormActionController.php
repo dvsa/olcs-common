@@ -155,7 +155,9 @@ abstract class FormActionController extends AbstractActionController
             $form->setData($data);
 
             if ($this->persist && $form->isValid()) {
+
                 $validatedData = $form->getData();
+
                 $params = [
                     'validData' => $validatedData,
                     'form' => $form,
