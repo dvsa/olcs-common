@@ -1,33 +1,35 @@
 <?php
 
+$translationPrefix = 'application_your-business';
+$detailsPrefix = $translationPrefix .  '_business-details.data.';
 return [
     'name' => 'business-details',
     'elements' =>
     [
         'business_type' => [
-            'label' => 'What type of business are you?',
+            'label' => $translationPrefix . '_business-type.data.organisationType',
             'type' => 'selectDisabled',
             'value_options' => 'business_types',
             'class' => 'inline',
         ],
         'edit_business_type' => [
             'type' => 'submit',
-            'label' => 'Edit',
+            'label' => 'edit',
             'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
         ],
         'company_number' =>
         [
             'type' => 'companyNumber',
-            'label' => 'Registered company number',
+            'label' => $detailsPrefix . 'company_number',
         ],
         'company_name' =>
         [
             'type' => 'companyName',
-            'label' => 'Company name',
+            'label' => $detailsPrefix . 'company_name',
         ],
         'trading_names' =>
         [
-            'label' => 'Trading names (optional)',
+            'label' => $detailsPrefix . 'trading_names_optional',
             'type' => 'tradingNames'
         ],
     ],
