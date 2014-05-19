@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'sole-trader',
+    'name' => 'business-details',
     'elements' =>
     [
         'business_type' => [
@@ -14,6 +14,16 @@ return [
             'type' => 'submit',
             'label' => 'Edit',
             'filters' => '\Common\Form\Elements\InputFilters\ActionLink'
+        ],
+        'company_number' =>
+        [
+            'type' => 'companyNumber',
+            'label' => 'Registered company number',
+        ],
+        'company_name' =>
+        [
+            'type' => 'companyName',
+            'label' => 'Company name',
         ],
         'trading_names' =>
         [
