@@ -387,7 +387,9 @@ return array(
         'submission_recommendation.warning-letter' => 'Warning letter',
         'submission_recommendation.nfa' => 'NFA',
         'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
-        'submission_recommendation.public-inquiry' => 'Public Inquiry'
+        'submission_recommendation.public-inquiry' => 'Public Inquiry',
+        'submission_recommendation.preliminary-hearing' => 'Preliminary Hearing',
+        'submission_recommendation.stl-interview' => 'STL Interview'
     ],
      'submission_decision' => [
         'submission_decision.agree' => 'Agree',
