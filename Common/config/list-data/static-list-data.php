@@ -27,7 +27,7 @@ return array(
     ),
     'case_categories_tm' => array(
         'case_category.10' => 'Duplicate TM',
-        'case_category.11' => 'Repute / professional comptenece of TM',
+        'case_category.11' => 'Repute / professional competence of TM',
         'case_category.12' => 'TM Hours'
     ),
     'case_categories_app' => array(
