@@ -59,7 +59,6 @@ class FormElement extends ZendFormElement
             return $helper($element);
         }
 
-
         if ($element instanceof ActionLink) {
 
             $route = $element->getOption('route');

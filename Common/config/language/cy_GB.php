@@ -75,7 +75,8 @@ return array(
     'from' => "W From",
     'date-prepared' => "W Date prepared",
     'submission-view-title' => "W OTC case submission - %s",
-    'submission-notice' => "W This document is RESTRICTED and not for disclosure to any third parties without the specific consent of the Traffic Commissioner",
+    'submission-notice' => "W This document is RESTRICTED and not for disclosure to any third parties without the
+        specific consent of the Traffic Commissioner",
     'business-type' => "W Business type",
     'submission-vehicle-trailer' => "W V-auth / T-auth",
     'submission-vehicle-possession' => "W Veh in pos",
@@ -260,7 +261,8 @@ return array(
     'correspondence-address-form-label-town-city' => "W Town / City",
     'correspondence-address-form-label-country' => "W Country",
     'correspondence-address-form-label-establishment-address' => "W Is this also the establishment address?",
-    'card-declined' => "W Please check that the details you entered were correct and try again.<br>Otherwise, contact the cardholder.",
+    'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise, contact
+        the cardholder.',
     'payment-declined' => "W Payment declined",
     'payment-successful' => "W Payment successful",
     'payment-for' => "W Payment for",

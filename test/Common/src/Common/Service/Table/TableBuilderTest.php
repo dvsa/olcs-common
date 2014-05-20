@@ -1832,7 +1832,13 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockTranslator->expects($this->any())
             ->method('translate')
-            ->will($this->returnCallback(function($string) {return $string;}));
+            ->will(
+                $this->returnCallback(
+                    function ($string) {
+                        return $string;
+                    }
+                )
+            );
 
         $mockServiceLocator = $this->getMock('\stdClass', array('get'));
 
@@ -1885,7 +1891,13 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockTranslator->expects($this->any())
             ->method('translate')
-            ->will($this->returnCallback(function($string) {return $string;}));
+            ->will(
+                $this->returnCallback(
+                    function ($string) {
+                        return $string;
+                    }
+                )
+            );
 
         $mockServiceLocator = $this->getMock('\stdClass', array('get'));
 
@@ -1989,5 +2001,4 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('cake', $table->getVariable('foo'));
     }
-
 }

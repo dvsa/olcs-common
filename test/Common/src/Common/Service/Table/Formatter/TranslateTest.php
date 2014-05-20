@@ -34,7 +34,13 @@ class TranslateTest extends \PHPUnit_Framework_TestCase
 
         $mockTranslator->expects($this->any())
             ->method('translate')
-            ->will($this->returnCallback(function($string) { return strtoupper($string); }));
+            ->will(
+                $this->returnCallback(
+                    function ($string) {
+                        return strtoupper($string);
+                    }
+                )
+            );
 
         $sm = $this->getMock('\stdClass', array('get'));
         $sm->expects($this->any())
