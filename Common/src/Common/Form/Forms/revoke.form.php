@@ -29,7 +29,8 @@ return [
                 'comment' => [
                     'type'  => 'textarea',
                     'label' => 'Notes',
-                    'class' => 'extra-long'
+                    'class' => 'extra-long',
+                    'filters' => '\Common\Form\Elements\InputFilters\TextMax4000',
                 ],
             'case' => [
                 'type' => 'hidden'
