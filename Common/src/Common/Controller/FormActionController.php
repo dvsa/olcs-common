@@ -46,6 +46,28 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
+     * Switch form persistence on or off
+     *
+     * @param boolean $persist
+     */
+    protected function setPersist($persist = true)
+    {
+        $this->persist = $persist;
+    }
+
+    /**
+     * set the field value for a given key. This allows us
+     * to override form data which has been previously set
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    protected function setFieldValue($key, $value)
+    {
+        $this->fieldValues[$key] = $value;
+    }
+
+    /**
      * Gets a from from either a built or custom form config.
      * @param type $type
      * @return type
