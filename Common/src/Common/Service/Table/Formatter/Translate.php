@@ -27,8 +27,12 @@ class Translate implements FormatterInterface
     {
         if (isset($column['name'])) {
             return $sm->get('translator')->translate($data[$column['name']]);
-        } elseif (isset($column['content'])) {
+        }
+
+        if (isset($column['content'])) {
             return $sm->get('translator')->translate($column['content']);
         }
+
+        return '';
     }
 }
