@@ -58,19 +58,14 @@ return array(
         'stay_status_refused' => 'Refused'
     ],
     'operator_locations' => [
-        'uk' => 'Great Britain',
-        'ni' => 'Northern Ireland'
+        '0' => 'Great Britain',
+        '1' => 'Northern Ireland'
     ],
     'operator_types' => [
         'goods' => 'Goods',
         'psv' => 'PSV'
     ],
     'licence_types' => [
-        'restricted' => 'Restricted',
-        'standard-national' => 'Standard National',
-        'standard-international' => 'Standard International',
-    ],
-    'licence_types_psv' => [
         'restricted' => 'Restricted',
         'standard-national' => 'Standard National',
         'standard-international' => 'Standard International',

@@ -22,7 +22,15 @@
 
 	<div class="page-wrapper">
         <div id="main" role="main">
-            <?php echo $this->content; ?>
+            <?php
+            echo $this->content;
+
+            if (isset($this->children)) {
+                foreach ($this->children as $child) {
+                    echo $this->$child;
+                }
+            }
+            ?>
         </div>
     </div><!-- .page-wrapper-->
     </body>

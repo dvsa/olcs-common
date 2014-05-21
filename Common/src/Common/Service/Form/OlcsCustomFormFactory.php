@@ -96,9 +96,10 @@ class OlcsCustomFormFactory extends Factory
     {
         $this->type = $type;
 
-        if (empty($this->baseFormConfig)) {
+        if (!isset($this->baseFormConfig[$type])) {
             $this->baseFormConfig = $this->getFormConfig($type);
         }
+
         if (!isset($this->baseFormConfig[$type])) {
             throw new \Exception("Form $type has no specification config");
         }
@@ -224,10 +225,9 @@ class OlcsCustomFormFactory extends Factory
             $formConfig['fieldsets'] = $this->getFieldsets($formConfig['fieldsets']);
         }
 
-        if (isset($formConfig['elements'])) {
-            $formConfig['elements']['crsf'] = array('type' => 'crsf');
-            $formConfig['elements'] = $this->getElements($formConfig['elements']);
-        }
+        $formConfig['elements']['csrf'] = array('type' => 'csrf');
+
+        $formConfig['elements'] = $this->getElements($formConfig['elements']);
 
         return $formConfig;
     }
@@ -295,11 +295,11 @@ class OlcsCustomFormFactory extends Factory
             }
         }
 
-        if ($forceDisabled) {
+        if ($forceDisabled && (!isset($element['enable']) || !$element['enable'])) {
             $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description', 'hint');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {

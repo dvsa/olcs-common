@@ -33,8 +33,8 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      */
     public function isValid($value, $context = null)
     {
-        if ($context['licence.tachographIns'] === 'tachograph_analyser.2'
-            && trim($context['licence.tachographInsName']) === '') {
+        if ($context['tachographIns'] === 'tachograph_analyser.2'
+            && trim($context['tachographInsName']) === '') {
 
             $this->error('required');
 
