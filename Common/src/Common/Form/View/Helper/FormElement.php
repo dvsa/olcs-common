@@ -68,7 +68,13 @@ class FormElement extends ZendFormElement
                 $url = $element->getValue();
             }
 
-            return '<a href="' . $url . '">' . $element->getLabel() . '</a>';
+            $class = '';
+
+            if ($element->getAttribute('class')) {
+                $class = $element->getAttribute('class');
+            }
+
+            return '<a href="' . $url . '" class="' . $class . '">' . $element->getLabel() . '</a>';
         }
 
         if ($element instanceof Html) {

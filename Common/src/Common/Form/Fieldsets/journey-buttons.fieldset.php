@@ -11,7 +11,7 @@ return array(
             'enable' => true,
             'type' => 'submit',
             'filters' => '\Common\Form\Elements\InputFilters\ActionButton',
-            'label' => 'Next',
+            'label' => 'Continue',
             'class' => 'action--primary large'
         ),
         'back' => array(
@@ -26,7 +26,8 @@ return array(
             'type' => 'submit',
             'label' => 'Back to home',
             'filters' => '\Common\Form\Elements\InputFilters\ActionLink',
-            'route' => 'home/dashboard'
+            'route' => 'home/dashboard',
+            'class' => 'action--tertiary'
         )
     )
 );
