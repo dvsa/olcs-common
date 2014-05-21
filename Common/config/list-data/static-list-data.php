@@ -27,7 +27,7 @@ return array(
     ),
     'case_categories_tm' => array(
         'case_category.10' => 'Duplicate TM',
-        'case_category.11' => 'Repute / professional comptenece of TM',
+        'case_category.11' => 'Repute / professional competence of TM',
         'case_category.12' => 'TM Hours'
     ),
     'case_categories_app' => array(
@@ -58,19 +58,14 @@ return array(
         'stay_status_refused' => 'Refused'
     ],
     'operator_locations' => [
-        'uk' => 'Great Britain',
-        'ni' => 'Northern Ireland'
+        '0' => 'Great Britain',
+        '1' => 'Northern Ireland'
     ],
     'operator_types' => [
         'goods' => 'Goods',
         'psv' => 'PSV'
     ],
     'licence_types' => [
-        'restricted' => 'Restricted',
-        'standard-national' => 'Standard National',
-        'standard-international' => 'Standard International',
-    ],
-    'licence_types_psv' => [
         'restricted' => 'Restricted',
         'standard-national' => 'Standard National',
         'standard-international' => 'Standard International',
@@ -387,7 +382,9 @@ return array(
         'submission_recommendation.warning-letter' => 'Warning letter',
         'submission_recommendation.nfa' => 'NFA',
         'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
-        'submission_recommendation.public-inquiry' => 'Public Inquiry'
+        'submission_recommendation.public-inquiry' => 'Public Inquiry',
+        'submission_recommendation.preliminary-hearing' => 'Preliminary Hearing',
+        'submission_recommendation.stl-interview' => 'STL Interview'
     ],
      'submission_decision' => [
         'submission_decision.agree' => 'Agree',

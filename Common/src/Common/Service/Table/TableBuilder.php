@@ -306,6 +306,16 @@ class TableBuilder
     }
 
     /**
+     * Setter for footer
+     *
+     * @param array $footer
+     */
+    public function getFooter()
+    {
+        return $this->footer;
+    }
+
+    /**
      * Get the content helper
      *
      * @return object
@@ -360,6 +370,17 @@ class TableBuilder
     }
 
     /**
+     * Set a single variable
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setVariable($name, $value)
+    {
+        $this->variables[$name] = $value;
+    }
+
+    /**
      * Get variables
      *
      * @return array
@@ -367,6 +388,27 @@ class TableBuilder
     public function getVariables()
     {
         return $this->variables;
+    }
+
+    /**
+     * Get a single variable
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getVariable($name)
+    {
+        return (isset($this->variables[$name]) ? $this->variables[$name] : '');
+    }
+
+    /**
+     * Set the columns
+     *
+     * @param array $columns
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
     }
 
     /**
@@ -553,7 +595,7 @@ class TableBuilder
         }
 
         $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
-        $this->columns = isset($config['columns']) ? $config['columns'] : array();
+        $this->setColumns(isset($config['columns']) ? $config['columns'] : array());
         $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
         $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
 
@@ -683,6 +725,10 @@ class TableBuilder
     private function renderTableFooterColumn($column)
     {
         $details = array('content' => '');
+
+        if (isset($column['content'])) {
+            $details['content'] = $column['content'];
+        }
 
         $details['type'] = (isset($column['type']) && $column['type'] == 'th' ? 'th' : 'td');
 
@@ -978,10 +1024,12 @@ class TableBuilder
                 }
             }
 
-            $column['link'] = $this->generatePaginationUrl(array(
-                'sort' => $column['sort'],
-                'order' => $column['order']
-            ));
+            $column['link'] = $this->generatePaginationUrl(
+                array(
+                    'sort' => $column['sort'],
+                    'order' => $column['order']
+                )
+            );
 
             $column['title'] = $this->replaceContent('{{[elements/sortColumn]}}', $column);
         }
@@ -1055,11 +1103,13 @@ class TableBuilder
 
             $columns = $this->getColumns();
 
+            $message = isset($this->variables['empty_message'])
+                ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
+                : 'The table is empty';
+
             $vars = array(
                 'colspan' => count($columns),
-                'message' => isset($this->variables['empty_message'])
-                    ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
-                    : 'The table is empty'
+                'message' => $this->getServiceLocator()->get('translator')->translate($message)
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
@@ -1208,5 +1258,5 @@ class TableBuilder
         }
 
         return $actions;
-    }    
+    }
 }

@@ -18,8 +18,7 @@ class Module
     {
         $translator = $e->getApplication()->getServiceManager()->get('translator');
 
-        $translator
-            ->setLocale($this->getLanguageLocalePreference())
+        $translator->setLocale($this->getLanguageLocalePreference())
             ->setFallbackLocale('en_GB');
 
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
