@@ -24,12 +24,12 @@ trait FlashMessengerTrait
     {
         $this->log('FlashMessenger Plugin Requested from Controller', LOG_DEBUG);
 
-        /*$plugin = $this->plugin('FlashMessenger');
+        $plugin = $this->plugin('FlashMessenger');
 
         $this->log('FlashMessenger Plugin Loaded to Controller', LOG_DEBUG);
         $this->log('FlashMessenger Namespace is: ' . $plugin->getNamespace(), LOG_DEBUG);
 
-        return $plugin;*/
+        return $plugin;
     }
 
     /**
