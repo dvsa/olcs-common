@@ -146,7 +146,13 @@ class ResponseHelper
     private function checkForInternalServerError($body)
     {
         if ($this->response->getStatusCode() == Response::STATUS_CODE_500) {
-            // TODO: Replace with a different exception
+
+            $data = json_decode($body, true);
+
+            if (json_last_error() == JSON_ERROR_NONE) {
+                $body = "\n" . print_r($data, true);
+            }
+
             throw new \Exception('Internal server error: ' . $body);
         }
     }
@@ -154,6 +160,13 @@ class ResponseHelper
     private function checkForUnexpectedResponseCode($body)
     {
         if (!in_array($this->response->getStatusCode(), $this->expectedCodes[$this->method])) {
+
+            $data = json_decode($body, true);
+
+            if (json_last_error() == JSON_ERROR_NONE) {
+                $body = "\n" . print_r($data, true);
+            }
+
             // TODO: Replace with a different exception
             throw new \Exception('Unexpected status code: ' . $body);
         }

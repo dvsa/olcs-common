@@ -19,9 +19,53 @@ use Common\Form\Elements\Types\Address;
  */
 abstract class FormActionController extends AbstractActionController
 {
+    protected $enableCsrf = true;
+
+    protected $validateForm = true;
+
     private $persist = true;
 
     private $fieldValues = array();
+
+    /**
+     * Allow csrf to be enabled and disabled
+     */
+    public function setEnabledCsrf($boolean = true)
+    {
+        $this->enableCsrf = $boolean;
+    }
+
+    /**
+     * Switch form validation on or off
+     *
+     * @param boolean $validateForm
+     */
+    protected function setValidateForm($validateForm = true)
+    {
+        $this->validateForm = $validateForm;
+    }
+
+    /**
+     * Switch form persistence on or off
+     *
+     * @param boolean $persist
+     */
+    protected function setPersist($persist = true)
+    {
+        $this->persist = $persist;
+    }
+
+    /**
+     * set the field value for a given key. This allows us
+     * to override form data which has been previously set
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    protected function setFieldValue($key, $value)
+    {
+        $this->fieldValues[$key] = $value;
+    }
 
     /**
      * Gets a from from either a built or custom form config.
@@ -37,6 +81,12 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
+    /**
+     * Process the postcode lookup functionality
+     *
+     * @param Form $form
+     * @return Form
+     */
     protected function processPostcodeLookup($form)
     {
         $request = $this->getRequest();
@@ -140,6 +190,11 @@ abstract class FormActionController extends AbstractActionController
         return $this->getServiceLocator()->get('OlcsCustomForm');
     }
 
+    protected function alterFormBeforeValidation($form)
+    {
+        return $form;
+    }
+
     /**
      * Method to process posted form data and validate it and process a callback
      * @param type $form
@@ -148,15 +203,25 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function formPost($form, $callback = null, $additionalParams = array())
     {
+        if (!$this->enableCsrf) {
+            $form->remove('csrf');
+        }
+
+        $form = $this->alterFormBeforeValidation($form);
+
         if ($this->getRequest()->isPost()) {
 
             $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
 
             $form->setData($data);
 
-            if ($this->persist && $form->isValid()) {
+            if (!$this->validateForm || ($this->persist && $form->isValid())) {
 
-                $validatedData = $form->getData();
+                if ($this->validateForm) {
+                    $validatedData = $form->getData();
+                } else {
+                    $validatedData = $data;
+                }
 
                 $params = [
                     'validData' => $validatedData,
@@ -165,14 +230,17 @@ abstract class FormActionController extends AbstractActionController
                 ];
 
                 $params = array_merge($params, $this->getCallbackData());
-                if (!empty($callback)) {
-                    if (is_callable($callback)) {
-                        $callback($params);
-                    }
+
+                if (is_callable($callback)) {
+                    $callback($params);
+                } elseif (is_callable(array($this, $callback))) {
                     call_user_func_array(array($this, $callback), $params);
+                } elseif (!empty($callback)) {
+                    throw new \Exception('Invalid form callback: ' . $callback);
                 }
             }
         }
+
         return $form;
     }
 
@@ -212,14 +280,13 @@ abstract class FormActionController extends AbstractActionController
      * @param array $callbacks
      * @param mixed $data
      * @param array $tables
-     * @param boolean $edit
      * @return object
      */
-    public function generateTableFormWithData($name, $callbacks, $data = null, $tables = array(), $edit = false)
+    public function generateTableFormWithData($name, $callbacks, $data = null, $tables = array())
     {
         $callback = $callbacks['success'];
 
-        $form = $this->generateFormWithData($name, $callbacks['success'], $data, $edit, true);
+        $form = $this->generateFormWithData($name, $callbacks['success'], $data, true);
 
         foreach ($tables as $fieldsetName => $details) {
 
@@ -262,20 +329,14 @@ abstract class FormActionController extends AbstractActionController
      * @param string $name
      * @param callable $callback
      * @param mixed $data
-     * @param boolean $edit
      * @param boolean $tables
      * @return object
      */
-    public function generateFormWithData($name, $callback, $data = null, $edit = false, $tables = false)
+    public function generateFormWithData($name, $callback, $data = null, $tables = false)
     {
         $form = $this->generateForm($name, $callback, $tables);
 
-        if ($edit && $this->getRequest()->isPost()) {
-
-            $form->setData($this->getRequest()->getPost());
-
-        } elseif (is_array($data)) {
-
+        if (!$this->getRequest()->isPost() && is_array($data)) {
             $form->setData($data);
         }
 
@@ -381,7 +442,7 @@ abstract class FormActionController extends AbstractActionController
 
     protected function trimFormFields($data)
     {
-        return $this->trimFields($data, array('crsf', 'submit', 'fields'));
+        return $this->trimFields($data, array('csrf', 'submit', 'fields'));
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())
@@ -407,6 +468,8 @@ abstract class FormActionController extends AbstractActionController
             $data['addresses'] = array();
         }
 
+        unset($data[$addressName]['searchPostcode']);
+
         $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
 
         $data['addresses'][$addressName] = $data[$addressName];
@@ -414,5 +477,27 @@ abstract class FormActionController extends AbstractActionController
         unset($data[$addressName]);
 
         return $data;
+    }
+
+    /**
+     * Check if a button was pressed
+     *
+     * @param string $button
+     * @return bool
+     */
+    public function isButtonPressed($button)
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+
+            if (isset($data['form-actions'][$button])) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

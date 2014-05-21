@@ -558,6 +558,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             array(
                 'type' => 'th',
                 'colspan' => 2,
+                'content' => 'foo',
                 'formatter' => function ($data) {
                     return 'ABC';
                 }
@@ -1825,7 +1826,30 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderExtraRowsWithoutRowsCustomMessage()
     {
-        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
+
+        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+
+        $mockTranslator->expects($this->any())
+            ->method('translate')
+            ->will(
+                $this->returnCallback(
+                    function ($string) {
+                        return $string;
+                    }
+                )
+            );
+
+        $mockServiceLocator = $this->getMock('\stdClass', array('get'));
+
+        $mockServiceLocator->expects($this->any())
+            ->method('get')
+            ->with('translator')
+            ->will($this->returnValue($mockTranslator));
+
+        $table->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($mockServiceLocator));
 
         $table->setVariables(array('empty_message' => 'Empty'));
 
@@ -1861,7 +1885,30 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderExtraRowsWithoutRows()
     {
-        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getRows', 'getColumns', 'getContentHelper', 'getServiceLocator'));
+
+        $mockTranslator = $this->getMock('\stdClass', array('translate'));
+
+        $mockTranslator->expects($this->any())
+            ->method('translate')
+            ->will(
+                $this->returnCallback(
+                    function ($string) {
+                        return $string;
+                    }
+                )
+            );
+
+        $mockServiceLocator = $this->getMock('\stdClass', array('get'));
+
+        $mockServiceLocator->expects($this->any())
+            ->method('get')
+            ->with('translator')
+            ->will($this->returnValue($mockTranslator));
+
+        $table->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($mockServiceLocator));
 
         $table->expects($this->once())
             ->method('getRows')
@@ -1885,7 +1932,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('CONTENT', $table->renderExtraRows());
     }
 
-    
     /**
      * Test getServiceLocator method
      */
@@ -1894,14 +1940,12 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $tableFactory = new TableFactory();
         $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
         $tableBuilder = $tableFactory->createService($serviceLocator);
-        
+
         $newServiceLocator = $tableBuilder->getServiceLocator();
-        
+
         $this->assertTrue($newServiceLocator instanceof \Zend\ServiceManager\ServiceManager);
         $this->assertTrue($newServiceLocator === $serviceLocator);
     }
-    
-
 
     /**
      * Test action field name and fieldset
@@ -1925,4 +1969,36 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($fieldset . '[' . $actionName . ']', $table->getActionFieldName());
     }
 
+    /**
+     * Test get and set footer
+     */
+    public function testGetFooter()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setFooter(array('Foo' => 'Bar'));
+
+        $this->assertEquals(array('Foo' => 'Bar'), $table->getFooter());
+    }
+
+    /**
+     * Test get and set variable
+     */
+    public function testGetVariable()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $vars = array(
+            'foo' => 'bar',
+            'bar' => 'cake'
+        );
+
+        $table->setVariables($vars);
+
+        $this->assertEquals('bar', $table->getVariable('foo'));
+
+        $table->setVariable('foo', 'cake');
+
+        $this->assertEquals('cake', $table->getVariable('foo'));
+    }
 }

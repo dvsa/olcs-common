@@ -101,7 +101,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
             $params[$itemIdParam] = $id;
         }
-        $this->redirect()->toRoute($route, $params, [], true);
+
+        return $this->redirect()->toRoute($route, $params, [], true);
     }
 
     /**
@@ -110,7 +111,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function crudActionMissingId()
     {
         $this->addErrorMessage('Please select a row first');
-        $this->redirect()->toRoute(null, array(), array(), true);
+        return $this->redirectToRoute(null, array(), array(), true);
     }
 
     /*
