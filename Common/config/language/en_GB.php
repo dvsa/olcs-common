@@ -385,8 +385,49 @@ return array(
     'selfserve-business-registered-company-description' => 'If you don\'t have your company number to hand,'
         . ' or are having problems retrieving your company details, please enter them manually below.',
 
-
+    //Previous History / Criminal Conviction
+    'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' =>
+'1. Has any person named in this application, (including partners,
+directors and transport managers); any company of which a person named on this
+application is or has been a director; any parent company if you are a limited
+company; or any of your employees or agents been convicted of any relevant
+offense which must be declared to the traffic commissioner?
+',
+    'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' =>
+'Please tick to confirm that you are aware that you must tell the traffic commissioner 
+immediately of any relevant convictions that occur between the submission of your 
+application and a decision being made on this application.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'Continue',
+    'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'Back',
+    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'Offense Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' =>
+'Please provide full details of the  background circumstances of this offense.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' =>
+'Convictions & penalties (if applicable)',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnName' => 'Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'DOC',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence' => 'Offence',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnNameOfCourt' => 'Name of court',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnPenalty' => 'Penalty',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitle' => 'Title',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMr' => 'Mr',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMrs' => 'Mrs',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMiss' => 'Miss',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs' => 'Ms',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formFirstName' => 'First Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formLastName' => 'Last Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction' => 'Date Of Conviction',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails' => 'Offence Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock' =>
+    'Please provide full details of the  background circumstances of this offense.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt' => 'Name of Court',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formPenalty' => 'Penalty',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formSave'=> 'Save',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formSaveAndAddAnother' => 'Save & add another',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formCancel' => 'Cancel',
+    'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'Add offence',
     'Authorisation' => 'Authorisation',
+
     // Generic
     'N/A' => 'Not applicable',
     'Yes' => 'Yes',
@@ -453,4 +494,10 @@ return array(
     //propose-to-revoke
     'propose-to-revoke' => 'Propose to revoke',
     'propose-to-revoke-text' => 'Use this form for a proposal to revoke.',
+
+    // Selfserve app / Previous History
+    'selfserve-app-subSection-financial-history' => 'Financial History',
+    'selfserve-app-subSection-licence-history' => 'Licence History',
+    'selfserve-app-subSection-convictions-and-penalties' => 'Convictions and Penalties',
+
 );
