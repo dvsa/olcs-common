@@ -2,7 +2,6 @@
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\AbstractHelper as ZendFormViewHelperAbstractHelper;
-use Zend\Form\FieldsetInterface as ZendFormFieldsetInterface;
 use Zend\Form\FormInterface as ZendFormFormInterface;
 
 class FormErrors extends ZendFormViewHelperAbstractHelper
@@ -45,29 +44,47 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      */
     public function render(ZendFormFormInterface $form, $message)
     {
+        $renderer = $this->getView();
+
         $errorHtml = sprintf($this->messageOpenFormat, $message);
 
         error_log(var_export($form->getMessages(), 1));
 
         $messagesArray = array();
-        //echo '<pre>';
-        //print_r($form->getMessages());
 
         foreach ($form->getMessages() as $fieldName => $messages) {
             foreach ($messages as $validatorName => $message) {
                 if ($form->get($fieldName)->getAttribute('id')) {
+                    $label = $form->get($fieldName)->getLabel();
+
+                    if (!empty($label)) {
+                        $label = $renderer->translate($label);
+                    }
+
                     $messagesArray[] = sprintf(
                         '<a href="#%s">%s</a>',
                         $form->get($fieldName)->getAttribute('id'),
-                        $form->get($fieldName)->getLabel() . ': ' . $message
+                        (!empty($label) ? $label . ': ' : '') . $message
                     );
                 } else {
                     if (is_array($message)) {
                         foreach($message as $value) {
-                            $messagesArray[] = $form->get($fieldName)->getLabel() . ': ' . $value;
+                            $label = $form->get($fieldName)->getLabel();
+
+                            if (!empty($label)) {
+                                $label = $renderer->translate($label);
+                            }
+
+                            $messagesArray[] = (!empty($label) ? $label . ': ' : '') . $value;
                         }
                     } else {
-                        $messagesArray[] = $form->get($fieldName)->getLabel() . ': ' . $message;
+                        $label = $form->get($fieldName)->getLabel();
+
+                        if (!empty($label)) {
+                            $label = $renderer->translate($label);
+                        }
+
+                        $messagesArray[] = (!empty($label) ? $label . ': ' : '') . $message;
                     }
                 }
             }
@@ -75,11 +92,7 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
 
         $messageString = implode($this->messageSeparatorString, $messagesArray);
 
-        //print_r($messageString);
-
         $errorHtml = $errorHtml . $messageString . $this->messageCloseString;
-
-        //print_r($errorHtml);
 
         return '<div class="validation-summary">' . $errorHtml . '</div>';
     }

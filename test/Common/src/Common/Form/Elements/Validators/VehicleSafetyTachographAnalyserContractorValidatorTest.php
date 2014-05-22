@@ -44,27 +44,27 @@ class VehicleSafetyTachographAnalyserContractorValidatorTest extends \PHPUnit_Fr
         return array(
             array(
                 null,
-                array('licence.tachographIns' => '', 'licence.tachographInsName' => ''),
+                array('tachographIns' => '', 'tachographInsName' => ''),
                 true
             ),
             array(
                 null,
-                array('licence.tachographIns' => 'tachograph_analyser.1', 'licence.tachographInsName' => ''),
+                array('tachographIns' => 'tachograph_analyser.1', 'tachographInsName' => ''),
                 true
             ),
             array(
                 null,
-                array('licence.tachographIns' => 'tachograph_analyser.1', 'licence.tachographInsName' => 'abc'),
+                array('tachographIns' => 'tachograph_analyser.1', 'tachographInsName' => 'abc'),
                 true
             ),
             array(
                 null,
-                array('licence.tachographIns' => 'tachograph_analyser.2', 'licence.tachographInsName' => ''),
+                array('tachographIns' => 'tachograph_analyser.2', 'tachographInsName' => ''),
                 false
             ),
             array(
                 null,
-                array('licence.tachographIns' => 'tachograph_analyser.2', 'licence.tachographInsName' => 'abc'),
+                array('tachographIns' => 'tachograph_analyser.2', 'tachographInsName' => 'abc'),
                 true
             )
         );
