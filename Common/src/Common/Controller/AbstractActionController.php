@@ -179,7 +179,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $response = $this->redirect()->toRoute($route, $params, $options, $reuse);
 
-        $response->setStatusCode(303);
+        $headers = $response->getHeaders();
+
+        $headers->addHeaderLine('CacheControl', 'no-cache, must-revalidate');
+        $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
         return $response;
     }
