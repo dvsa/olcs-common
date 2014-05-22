@@ -24,7 +24,7 @@ class ResponseHelper
 
     public $response;
     private $responseData;
-    private $method;
+    public $method;
     private $params;
     private $data;
     private $expectedCodes = array(
@@ -83,7 +83,7 @@ class ResponseHelper
     {
         $this->body = $this->response->getBody();
 
-       /* $this->checkForValidResponseBody($this->body);
+        $this->checkForValidResponseBody($this->body);
 
         $this->checkForInternalServerError($this->body);
 
@@ -124,10 +124,10 @@ class ResponseHelper
                 }
 
                 return false;
-        }*/
+        }
     }
 
-    private function checkForValidResponseBody($body)
+    public function checkForValidResponseBody($body)
     {
         if (!is_string($body)) {
             throw new \Exception('Invalid response body, expected string' . $body);
@@ -143,7 +143,7 @@ class ResponseHelper
         $this->responseData = (isset($data['Response']) ? $data['Response'] : $data);
     }
 
-    private function checkForInternalServerError($body)
+    public function checkForInternalServerError($body)
     {
         if ($this->response->getStatusCode() == Response::STATUS_CODE_500) {
 
@@ -157,7 +157,7 @@ class ResponseHelper
         }
     }
 
-    private function checkForUnexpectedResponseCode($body)
+    public function checkForUnexpectedResponseCode($body)
     {
         if (!in_array($this->response->getStatusCode(), $this->expectedCodes[$this->method])) {
 
