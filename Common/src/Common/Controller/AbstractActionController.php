@@ -177,7 +177,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
     {
-        return $this->redirect()->toRoute($route, $params, $options, $reuse);
+        $response = $this->redirect()->toRoute($route, $params, $options, $reuse);
+
+        $response->setStatusCode(303);
+
+        return $response;
     }
 
     /**
