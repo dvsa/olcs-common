@@ -30,6 +30,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     public function onDispatch(\Zend\Mvc\MvcEvent $e)
     {
+        $request = $this->getResponse();
+        $headers = $request->getHeaders();
+
+        $headers->addHeaderLine('Cache-Control', 'no-cache, must-revalidate');
+        $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
+
         $this->setLoggedInUser(1);
         parent::onDispatch($e);
     }
@@ -177,14 +183,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function redirectToRoute($route = null, $params = array(), $options = array(), $reuse = false)
     {
-        $response = $this->redirect()->toRoute($route, $params, $options, $reuse);
-
-        $headers = $response->getHeaders();
-
-        $headers->addHeaderLine('CacheControl', 'no-cache, must-revalidate');
-        $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
-
-        return $response;
+        return $this->redirect()->toRoute($route, $params, $options, $reuse);
     }
 
     /**
