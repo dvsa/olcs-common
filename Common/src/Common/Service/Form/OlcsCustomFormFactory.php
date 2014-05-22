@@ -299,7 +299,7 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route', 'hint-position');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route', 'value-label');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {
