@@ -22,7 +22,7 @@ use Zend\Http\Response;
 class ResponseHelper
 {
 
-    private $response;
+    public $response;
     private $responseData;
     private $method;
     private $params;
@@ -83,7 +83,7 @@ class ResponseHelper
     {
         $this->body = $this->response->getBody();
 
-        $this->checkForValidResponseBody($this->body);
+       /* $this->checkForValidResponseBody($this->body);
 
         $this->checkForInternalServerError($this->body);
 
@@ -124,7 +124,7 @@ class ResponseHelper
                 }
 
                 return false;
-        }
+        }*/
     }
 
     private function checkForValidResponseBody($body)
