@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'phone' => [
-        'type' => 'Common\Form\Elements\InputFilters\Phone',
-        'name' => 'phone',
+    'email' => [
+        'type' => 'Common\Form\Elements\InputFilters\Email',
+        'name' => 'email',
         'attributes' => [
             'class' => 'long',
         ]

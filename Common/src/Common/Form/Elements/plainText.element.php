@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'csrf' => [
-        'type' => 'Zend\Form\Element\Csrf',
-        'name' => 'security'
+    'plainText' => [
+        'type' => 'Common\Form\Elements\Types\PlainText',
+        'name' => 'description'
     ]
 ];

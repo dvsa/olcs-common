@@ -1,11 +1,8 @@
 <?php
 
 return [
-    'email' => [
-        'type' => 'Common\Form\Elements\InputFilters\Email',
-        'name' => 'email',
-        'attributes' => [
-            'class' => 'long',
-        ]
+    'hiddenPhoneValidation' => [
+        'type' => 'Common\Form\Elements\InputFilters\OneContactPhoneRequired',
+        'name' => 'phone-validator',
     ]
 ];

@@ -1,8 +1,11 @@
 <?php
 
 return [
-    'csrf' => [
-        'type' => 'Zend\Form\Element\Csrf',
-        'name' => 'security'
+    'phone' => [
+        'type' => 'Common\Form\Elements\InputFilters\Phone',
+        'name' => 'phone',
+        'attributes' => [
+            'class' => 'long',
+        ]
     ]
 ];
