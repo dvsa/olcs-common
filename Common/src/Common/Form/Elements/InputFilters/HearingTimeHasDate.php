@@ -10,6 +10,7 @@ namespace Common\Form\Elements\InputFilters;
 use Zend\Form\Element\Time as ZendTimeSelect;
 use Zend\Validator as ZendValidator;
 use Zend\Validator\Date as DateValidator;
+use Common\Form\Elements\Validators\Time as TimeValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
@@ -29,8 +30,8 @@ class HearingTimeHasDate extends ZendTimeSelect implements InputProviderInterfac
             'required' => false,
 
             'validators' => [
-                new DateValidator(array("format" => 'H:i')),
-                new \Common\Form\Elements\Validators\TimeWithDate('hearingDate')
+                new \Common\Form\Elements\Validators\TimeWithDate('hearingDate'),
+                new TimeValidator(array("format" => 'H:i'))
             ]
         ];
 
