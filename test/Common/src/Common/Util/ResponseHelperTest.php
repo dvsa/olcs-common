@@ -20,33 +20,33 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
     
     public function testSetResponse()
     {
-        $mock = $this->getMock('\Common\Util\ResponseHelper', array('blah'));
+        $mock = $this->getMock('\Common\Util\ResponseHelper', null);
         $response = new \Zend\Http\Response;
         $mock->setResponse($response);
     }
     
     public function testGetResponse()
     {
-        $mock = $this->getMock('\Common\Util\ResponseHelper', array('blah'));
+        $mock = $this->getMock('\Common\Util\ResponseHelper', null);
         $mock->response = new \Zend\Http\Response;
         $return = $mock->getResponse();
     }
     
     public function testSetMethod()
     {
-        $mock = $this->getMock('\Common\Util\ResponseHelper', array('blah'));
+        $mock = $this->getMock('\Common\Util\ResponseHelper', null);
         $return = $mock->setMethod('blah');
     }
     
     public function testSetParams()
     {
-        $mock = $this->getMock('\Common\Util\ResponseHelper', array('blah'));
+        $mock = $this->getMock('\Common\Util\ResponseHelper', null);
         $return = $mock->setParams(array(1,2,3));
     }
     
     public function testSetData()
     {
-        $mock = $this->getMock('\Common\Util\ResponseHelper', array('blah'));
+        $mock = $this->getMock('\Common\Util\ResponseHelper', null);
         $return = $mock->getData(array(1,2,3));
     }
     
@@ -282,9 +282,34 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
         $return = $mock->handleResponse();
     }
     
+    public function testHandleInvalidResponseMethod()
+    {
+        $mock = $this->getSutMock($this->handleReponseMethods);
+        
+        $response = $this->getMock('\stdClass', array('getBody', 'getStatusCode'));
+        $response->expects($this->atLeastOnce())
+            ->method('getBody')
+            ->will($this->returnValue('{}'));
+        $mock->response = $response;
+        
+        $mock->expects($this->once())
+            ->method('checkForValidResponseBody')
+            ->with('{}');
+        
+        $mock->expects($this->once())
+            ->method('checkForInternalServerError')
+            ->with('{}');
+        
+        $mock->expects($this->once())
+            ->method('checkForInternalServerError')
+            ->with('{}');
+        $mock->method = 'BLAH';
+        $return = $mock->handleResponse();
+    }
+    
     public function testCheckForValidResponseBody()
     {
-        $mock = $this->getSutMock(array('blah'));
+        $mock = $this->getSutMock(null);
         $return = $mock->checkForValidResponseBody('{}');
     }
     
@@ -293,7 +318,7 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
      */
     public function testCheckForInvalidResponseBodyString()
     {
-        $mock = $this->getSutMock(array('blah'));
+        $mock = $this->getSutMock(null);
         $return = $mock->checkForValidResponseBody(55);
     }
     
@@ -302,7 +327,7 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
      */
     public function testCheckForInvalidResponseBodyJson()
     {
-        $mock = $this->getSutMock(array('blah'));
+        $mock = $this->getSutMock(null);
         $return = $mock->checkForValidResponseBody('blah');
     }
     
@@ -311,11 +336,22 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
      */
     public function testCheckForInternalServerError()
     {
-        $mock = $this->getSutMock(array('blah'));
+        $mock = $this->getSutMock(null);
         $response = $this->getMock('\stdClass', array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(500));
+        $mock->response = $response;
+        $return = $mock->checkForInternalServerError('{}');
+    }
+    
+    public function testCheckForNoInternalServerError()
+    {
+        $mock = $this->getSutMock(null);
+        $response = $this->getMock('\stdClass', array('getStatusCode'));
+        $response->expects($this->atLeastOnce())
+            ->method('getStatusCode')
+            ->will($this->returnValue(200));
         $mock->response = $response;
         $return = $mock->checkForInternalServerError('{}');
     }
@@ -325,11 +361,23 @@ class ResponseHelperTest extends AbstractHttpControllerTestCase
      */
     public function testCheckForUnexpectedResponseCode()
     {
-        $mock = $this->getSutMock(array('blah'));
+        $mock = $this->getSutMock(null);
         $response = $this->getMock('\stdClass', array('getStatusCode'));
         $response->expects($this->atLeastOnce())
             ->method('getStatusCode')
             ->will($this->returnValue(500));
+        $mock->response = $response;
+        $mock->method = 'GET';
+        $return = $mock->checkForUnexpectedResponseCode('{}');
+    }
+    
+    public function testCheckForExpectedResponseCode()
+    {
+        $mock = $this->getSutMock(null);
+        $response = $this->getMock('\stdClass', array('getStatusCode'));
+        $response->expects($this->atLeastOnce())
+            ->method('getStatusCode')
+            ->will($this->returnValue(200));
         $mock->response = $response;
         $mock->method = 'GET';
         $return = $mock->checkForUnexpectedResponseCode('{}');

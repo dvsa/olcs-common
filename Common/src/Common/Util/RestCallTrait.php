@@ -31,7 +31,7 @@ trait RestCallTrait
      * @param array $data
      * @return array
      */
-    protected function sendGet($service, $data = array())
+    public function sendGet($service, $data = array())
     {
         return $this->getRestClient($service)->get('', $data);
     }
@@ -44,7 +44,7 @@ trait RestCallTrait
      * @param array $data
      * @return array
      */
-    protected function sendPost($service, $data = array())
+    public function sendPost($service, $data = array())
     {
         return $this->getRestClient($service)->post('', $data);
     }
@@ -57,7 +57,7 @@ trait RestCallTrait
      * @param string $method
      * @param mixed $data
      */
-    protected function makeRestCall($service, $method, array $data, array $bundle = null)
+    public function makeRestCall($service, $method, array $data, array $bundle = null)
     {
         $method = strtoupper($method);
         $serviceMethod = strtolower($method);
@@ -104,9 +104,19 @@ trait RestCallTrait
         }
 
         // Gets instance of RestClient to make HTTP method call to API
-        $response = $this->getRestClient($service)->$serviceMethod($path, $data);
+        $response = $this->getServiceRestClient($service, $serviceMethod, $path, $data);
 
         //Handle response and return data
+        return $this->handleResponseMethod($handleResponseMethod, $service, $response);
+    }
+    
+    public function getServiceRestClient($service, $serviceMethod, $path, $data)
+    {
+        return $this->getRestClient($service)->$serviceMethod($path, $data);
+    }
+    
+    public function handleResponseMethod($handleResponseMethod, $service, $response)
+    {
         return $this->$handleResponseMethod($service, $response);
     }
 
@@ -115,7 +125,7 @@ trait RestCallTrait
      *
      * @param string $service
      */
-    protected function getRestClient($service)
+    public function getRestClient($service)
     {
         $resolveApi = $this->getServiceLocator()->get('ServiceApiResolver');
         return $resolveApi->getClient($service);
@@ -129,7 +139,7 @@ trait RestCallTrait
      *
      * @return object
      */
-    private function handleGetResponse($service, $response)
+    public function handleGetResponse($service, $response)
     {
         return $response;
     }
@@ -142,7 +152,7 @@ trait RestCallTrait
      *
      * @return object
      */
-    private function handleGetListResponse($service, $response)
+    public function handleGetListResponse($service, $response)
     {
         // If we have a 404
         if ($response === false) {
@@ -160,7 +170,7 @@ trait RestCallTrait
      *
      * @return object
      */
-    private function handlePostResponse($service, $response)
+    public function handlePostResponse($service, $response)
     {
         // If we have a 400
         if ($response === false) {
@@ -178,7 +188,7 @@ trait RestCallTrait
      *
      * @return object
      */
-    private function handlePutResponse($service, $response)
+    public function handlePutResponse($service, $response)
     {
         if (is_numeric($response)) {
             switch ($response) {
@@ -202,7 +212,7 @@ trait RestCallTrait
      *
      * @return object
      */
-    private function handleDeleteResponse($service, $response)
+    public function handleDeleteResponse($service, $response)
     {
         // If we have a 404
         if ($response === false) {
@@ -217,7 +227,7 @@ trait RestCallTrait
      *
      * @return DoctrineHydrator
      */
-    private function getDoctrineHydrator()
+    public function getDoctrineHydrator()
     {
         if (empty($this->doctrineHydrator)) {
             // Create a hydrator
