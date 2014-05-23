@@ -209,6 +209,7 @@ class RestClient
         $this->client->setRequest(new Request());
 
         $this->client->setUri($this->url->toString() . $path);
+
         $this->client->setHeaders(array(
             $accept,
         ));

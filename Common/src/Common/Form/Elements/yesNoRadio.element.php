@@ -7,7 +7,10 @@ return [
         'options' => [
             'label' => '',
             'value_options' => 'yes_no',
-            'help-block' => 'Please choose'
+            'help-block' => 'Please choose',
+            'label_attributes' => [
+                'class' => 'inline'
+            ]
         ],
         'attributes' => [
             'id' => '',

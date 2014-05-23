@@ -20,7 +20,7 @@ trait FlashMessengerTrait
      *
      * @return FlashMessenger
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         $this->log('FlashMessenger Plugin Requested from Controller', LOG_DEBUG);
 
