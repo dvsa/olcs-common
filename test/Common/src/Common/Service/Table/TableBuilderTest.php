@@ -1808,6 +1808,78 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderBodyColumn With Action Type
+     */
+    public function testRenderBodyColumnWithActionType()
+    {
+        $row = array(
+            'id' => 1,
+            'foo' => 'bar'
+        );
+
+        $column = array(
+            'type' => 'Action',
+            'name' => 'foo',
+            'class' => '',
+            'action' => 'edit'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/td]}}',
+                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar" />')
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
+     * Test renderBodyColumn With Action Type And Fieldset
+     */
+    public function testRenderBodyColumnWithActionTypeAndFieldset()
+    {
+        $row = array(
+            'id' => 1,
+            'foo' => 'bar'
+        );
+
+        $column = array(
+            'type' => 'Action',
+            'name' => 'foo',
+            'class' => '',
+            'action' => 'edit'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/td]}}',
+                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar" />')
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->setFieldset('table');
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
      * Test renderExtraRows with rows
      */
     public function testRenderExtraRowsWithRows()
