@@ -177,12 +177,12 @@ abstract class FormActionController extends AbstractActionController
 
     protected function getAddressForUprn($uprn)
     {
-        return $this->sendGet('postcode\address', array('id' => $uprn));
+        return $this->sendGet('postcode\address', array('id' => $uprn), true);
     }
 
     protected function getAddressesForPostcode($postcode)
     {
-        return $this->sendGet('postcode\address', array('postcode' => $postcode));
+        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
     }
 
     protected function getFormGenerator()
