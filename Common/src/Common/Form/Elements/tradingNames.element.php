@@ -34,13 +34,6 @@ return [
                     ],
                 ],
             ],
-            /**
-             * NP 16/05/2014
-             * Removed this as it was causing low-level zend errors during review.
-             * Couldn't consult with the branch author (Jakub) due to him being on
-             * holiday. Agreed with Stephen Liversedge to remove 'add another' from
-             * AC of OLCS-2650 and merge as is, extracting 'add another' behaviour
-             * out into a separate story
             [
                 'spec' => [
                     'type' => 'button',
@@ -55,7 +48,7 @@ return [
                     ],
                 ],
             ],
-            */
+
         ],
     ],
 ];
