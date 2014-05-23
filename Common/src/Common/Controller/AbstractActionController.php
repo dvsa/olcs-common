@@ -130,7 +130,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function buildTable($table, $results, $data = array())
     {
-        return $this->getTable($table, $results, $data = array(), true);
+        return $this->getTable($table, $results, $data, true);
     }
 
     /*

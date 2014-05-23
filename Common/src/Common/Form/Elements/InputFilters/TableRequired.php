@@ -35,7 +35,7 @@ class TableRequired extends Table implements InputProviderInterface
 
             ],
             'validators' => array(
-                new TableRequiredValidator(array('label' => $this->getLabel()))
+                new TableRequiredValidator(array('label' => $this->getTable()->getVariable('required_label')))
             )
         ];
 

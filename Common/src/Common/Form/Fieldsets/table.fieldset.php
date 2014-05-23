@@ -6,7 +6,6 @@ return array(
     'elements' => array(
         'table' => array(
             'type' => 'table',
-            'label' => 'safety inspection provider',
             'filters' => '\Common\Form\Elements\InputFilters\TableRequired'
         ),
         'action' => array(

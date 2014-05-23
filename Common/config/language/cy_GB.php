@@ -473,6 +473,7 @@ return array(
     'registered-office-details-header' => 'W Registered office details',
     'removals-construction-plant-hire' => 'W Removals / Construction / Plant Hire',
     'review-date' => 'W Review date',
+    'safety-inspection-providers.table.required_label' => 'W safety inspection provider',
     'safety-inspection-providers.table.address' => 'W Workshop address',
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
         inspections on the vehicles and trailers you intend to operate under your licence.',
