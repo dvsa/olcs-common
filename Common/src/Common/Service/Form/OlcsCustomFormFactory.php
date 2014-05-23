@@ -287,7 +287,7 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
         }
 
-        $mergeAttributes = array('class', 'placeholder');
+        $mergeAttributes = array('class', 'placeholder', 'data-container-class');
 
         foreach ($mergeAttributes as $attribute) {
             if (isset($element[$attribute])) {
@@ -299,7 +299,7 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['attributes']['disabled'] = 'disabled';
         }
 
-        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route');
+        $mergeOptions = array('label', 'label_attributes', 'description', 'hint', 'route', 'value-label');
 
         foreach ($mergeOptions as $option) {
             if (isset($element[$option])) {
