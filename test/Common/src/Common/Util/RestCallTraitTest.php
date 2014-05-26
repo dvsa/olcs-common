@@ -26,14 +26,14 @@ class RestCallTraitTest extends AbstractHttpControllerTestCase
         $restClient = $this->getMock('\stdClass', array('get'));
         $restClient->expects($this->once())
             ->method('get')
-            ->with('', array('id' => 1))
+            ->with('/1/7', array())
             ->will($this->returnValue('restClient'));
         
         $mock->expects($this->once())
             ->method('getRestClient')
             ->with('Licence')
             ->will($this->returnValue($restClient));
-        $mock->sendGet('Licence', array('id' => 1));
+        $mock->sendGet('Licence', array('id' => 1, 'licence' => 7), true);
     }
     
     public function testSendPost()

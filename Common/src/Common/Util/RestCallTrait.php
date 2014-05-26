@@ -31,9 +31,25 @@ trait RestCallTrait
      * @param array $data
      * @return array
      */
-    public function sendGet($service, $data = array())
+    
+    public function sendGet($service, $data = array(), $appendParamsToRoute = false)
     {
-        return $this->getRestClient($service)->get('', $data);
+        $route = '';
+
+        if ($appendParamsToRoute) {
+
+            $route = '/';
+
+            foreach ($data as $value) {
+                $route .= urlencode($value) . '/';
+            }
+
+            $data = array();
+        }
+
+        $route = rtrim($route, '/');
+
+        return $this->getRestClient($service)->get($route, $data);
     }
 
     /**
