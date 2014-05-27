@@ -1,8 +1,6 @@
 <?php
 
 return array(
-    'numberOfVehiclesError' => 'W No. of vehicles can not be zero if no. of trailers equals zero',
-    'numberOfTrailersError' => 'W No. of trailers can not be zero if no. of vehicles equals zero',
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
@@ -73,8 +71,17 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'W Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'W VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'W Gross plated weight (kg)',
+    'application_your-business_business-type.contact-details.business-phone' => 'W Business telephone no. (optional)',
+    'application_your-business_business-type.contact-details.email' => 'W E-mail address',
+    'application_your-business_business-type.contact-details.hint' => 'W Please enter at least one telephone number',
+    'application_your-business_business-type.contact-details.home-phone' => 'W Home telephone no. (optional)',
+    'application_your-business_business-type.contact-details.label' => 'W Contact details',
+    'application_your-business_business-type.contact-details.mobile-phone' => 'W Mobile telephone no. (optional)',
+    'application_your-business_business-type.correspondence.label' => 'W Correspondence address',
     'application_your-business_business-type.data' => 'W Business type',
     'application_your-business_business-type.data.organisationType' => 'W What type of business are you?',
+    'application_your-business_business-type.establishment.label' => 'W Establishment address',
+    'application_your-business_business-type.registered-office.label' => 'W Registered office address',
     'applications' => 'W Applications',
     'both' => 'W Both',
     'built-by' => 'W Built by',
@@ -150,6 +157,9 @@ return array(
     'northern-ireland' => 'W Northern Ireland',
     'note' => 'W Comment',
     'notes' => 'W View notes',
+    'numberOfTrailersError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
+    'numberOfVehiclesError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
+    'numberOfVehiclesError-psv' => 'W Total number of vehicles cannot be zero',
     'objections' => 'W Objection(s)',
     'ocs' => 'W OCs',
     'operating-centre' => 'W Operating centre(s)',
@@ -218,6 +228,7 @@ return array(
     'west-midlands' => 'W West Midlands',
     'your-business' => 'W Your business',
     // Potentially unused (Not found with grep)
+    'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'account-balance' => 'W Account balance',
     'add-another' => 'W Add Another',
     'add-condition' => 'W Add condition',
@@ -254,10 +265,16 @@ return array(
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'W I have enough parking
         spaces available for the total number of vehicles that I want to keep at this address',
-    'application_operating-centres_authorisation.data.hint' => 'W Enter the total amount of vehicles that you want
-        authorised on the licence you are applying for.',
+    'application_operating-centres_authorisation.data.hint' => 'W Indicate the number of each category of vehicle you
+        intend to operate under the licence',
+    'application_operating-centres_authorisation.data.totAuthLargeVehicles' => 'W 17 or more passenger seats',
+    'application_operating-centres_authorisation.data.totAuthMediumVehicles' => 'W 9 - 16 passenger seats',
+    'application_operating-centres_authorisation.data.totAuthSmallVehicles' => 'W Small vehicles (Less than 9 passenger
+        seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'W Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'W Total number of vehicles',
+    'application_operating-centres_authorisation.data.totCommunityLicences' => 'W How many community licences do you
+        require?',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'W Total vehicles',
     'application_previous-history_financial-history.finance.administration' => 'W 4. Involved with a company, or
         business, that has gone into (or is going into) administration?',
@@ -475,7 +492,6 @@ return array(
     'registered-office-details-header' => 'W Registered office details',
     'removals-construction-plant-hire' => 'W Removals / Construction / Plant Hire',
     'review-date' => 'W Review date',
-    'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'safety-inspection-providers.table.address' => 'W Workshop address',
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
         inspections on the vehicles and trailers you intend to operate under your licence.',

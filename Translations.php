@@ -22,7 +22,7 @@ foreach ($translations as $key => $value) {
     $found = false;
 
     foreach ($directories as $directory) {
-        $response = shell_exec('grep -r ' . $key . ' ' . $directory);
+        $response = shell_exec('grep -r "' . $key . '" ' . $directory);
 
         if (!empty($response)) {
             $found = true;

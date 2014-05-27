@@ -1,9 +1,6 @@
 <?php
 
 return array(
-    'numberOfVehiclesError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
-    'numberOfVehiclesError-psv' => 'Total number of vehicles cannot be zero',
-    'numberOfTrailersError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -74,15 +71,15 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
+    'application_your-business_business-type.contact-details.business-phone' => 'Business telephone no. (optional)',
+    'application_your-business_business-type.contact-details.email' => 'E-mail address',
+    'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
+    'application_your-business_business-type.contact-details.home-phone' => 'Home telephone no. (optional)',
+    'application_your-business_business-type.contact-details.label' => 'Contact details',
+    'application_your-business_business-type.contact-details.mobile-phone' => 'Mobile telephone no. (optional)',
+    'application_your-business_business-type.correspondence.label' => 'Correspondence address',
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.organisationType' => 'What type of business are you?',
-    'application_your-business_business-type.correspondence.label' => 'Correspondence address',
-    'application_your-business_business-type.contact-details.label' => 'Contact details',
-    'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
-    'application_your-business_business-type.contact-details.business-phone' => 'Business telephone no. (optional)',
-    'application_your-business_business-type.contact-details.home-phone' => 'Home telephone no. (optional)',
-    'application_your-business_business-type.contact-details.mobile-phone' => 'Mobile telephone no. (optional)',
-    'application_your-business_business-type.contact-details.email' => 'E-mail address',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'applications' => 'Applications',
@@ -160,6 +157,9 @@ return array(
     'northern-ireland' => 'Northern Ireland',
     'note' => 'Comment',
     'notes' => 'View notes',
+    'numberOfTrailersError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
+    'numberOfVehiclesError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
+    'numberOfVehiclesError-psv' => 'Total number of vehicles cannot be zero',
     'objections' => 'Objection(s)',
     'ocs' => 'OCs',
     'operating-centre' => 'Operating centre(s)',
@@ -228,6 +228,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+    'Please add a safety inspection provider' => 'Please add a safety inspection provider',
     'account-balance' => 'Account balance',
     'add-another' => 'Add Another',
     'add-condition' => 'Add condition',
@@ -264,10 +265,16 @@ return array(
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough parking spaces
         available for the total number of vehicles that I want to keep at this address',
-    'application_operating-centres_authorisation.data.hint' => 'Enter the total amount of vehicles that you want
-        authorised on the licence you are applying for.',
+    'application_operating-centres_authorisation.data.hint' => 'Indicate the number of each category of vehicle you
+        intend to operate under the licence',
+    'application_operating-centres_authorisation.data.totAuthLargeVehicles' => '17 or more passenger seats',
+    'application_operating-centres_authorisation.data.totAuthMediumVehicles' => '9 - 16 passenger seats',
+    'application_operating-centres_authorisation.data.totAuthSmallVehicles' => 'Small vehicles (Less than 9 passenger
+        seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
+    'application_operating-centres_authorisation.data.totCommunityLicences' => 'How many community licences do you
+        require?',
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application_previous-history_financial-history.finance.administration' => '4. Involved with a company, or business,
         that has gone into (or is going into) administration?',
@@ -485,7 +492,6 @@ return array(
     'registered-office-details-header' => 'Registered office details',
     'removals-construction-plant-hire' => 'Removals / Construction / Plant Hire',
     'review-date' => 'Review date',
-    'Please add a safety inspection provider' => 'Please add a safety inspection provider',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
         on the vehicles and trailers you intend to operate under your licence.',

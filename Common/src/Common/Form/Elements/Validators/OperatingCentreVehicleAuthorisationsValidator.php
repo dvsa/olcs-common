@@ -23,6 +23,8 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
      */
     protected $messageTemplates = array(
         'none-numeric' => 'Please enter a numeric value',
+        'restricted-too-many' => 'The total number of vehicles on a restricted licence cannot exceed 2',
+        'no-vehicle-types' => 'You must enter at least 1 vehicle type',
         'no-operating-centre' => 'Please add an operating centre before setting the total number of vehicles',
         '1-operating-centre' => 'If you are only applying for one operating centre, the total number of authorised vehicles must be the same as at your operating centre',
         'too-low' => 'The total number of authorised vehicles must be equal or greater than the largest number of vehicles authorised at any individual operating centre',
@@ -42,6 +44,12 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
             return false;
         }
 
+        if (isset($context['licenceType'])
+            && $context['licenceType'] == 'restricted' && ($context['totAuthSmallVehicles'] + $context['totAuthMediumVehicles']) > 2) {
+            $this->error('restricted-too-many');
+            return false;
+        }
+
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
 
@@ -51,7 +59,18 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
             return false;
         }
 
-        if ($noOfOperatingCentres === 1 && $value != $context['minVehicleAuth']) {
+        $total = 0;
+
+        $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
+        $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
+        $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
+
+        if ($total == 0) {
+            $this->error('no-vehicle-types');
+            return false;
+        }
+
+        if ($noOfOperatingCentres === 1 && $total != $context['minVehicleAuth']) {
 
             $this->error('1-operating-centre');
             return false;
@@ -61,13 +80,13 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
 
         if ($noOfOperatingCentres >= 2) {
 
-            if ($value < $context['minVehicleAuth']) {
+            if ($total < $context['minVehicleAuth']) {
 
                 $valid = false;
                 $this->error('too-low');
             }
 
-            if ($value > $context['maxVehicleAuth']) {
+            if ($total > $context['maxVehicleAuth']) {
 
                 $valid = false;
                 $this->error('too-high');
