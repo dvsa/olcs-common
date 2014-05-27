@@ -48,8 +48,6 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
 
         $errorHtml = sprintf($this->messageOpenFormat, $message);
 
-        error_log(var_export($form->getMessages(), 1));
-
         $messagesArray = array();
 
         foreach ($form->getMessages() as $fieldName => $messages) {
