@@ -43,9 +43,21 @@ class OperatingCentreCommunityLicencesValidatorTest extends \PHPUnit_Framework_T
     {
         return array(
             array('', array(), false),
-            array(10, array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3), false),
-            array(6, array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3), true),
-            array(3, array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3), true),
+            array(
+                10,
+                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                false
+            ),
+            array(
+                6,
+                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                true
+            ),
+            array(
+                3,
+                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                true
+            ),
         );
     }
 }

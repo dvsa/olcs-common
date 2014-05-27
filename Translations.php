@@ -19,6 +19,8 @@ $unusedArray = $foundArray = array();
 
 foreach ($translations as $key => $value) {
 
+    $found = true;
+    /** Ignore the grep for now just to speed things up
     $found = false;
 
     foreach ($directories as $directory) {
@@ -29,6 +31,7 @@ foreach ($translations as $key => $value) {
             break;
         }
     }
+     */
 
     $value = preg_replace('/(\s+)/', ' ', $value);
 

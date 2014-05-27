@@ -22,8 +22,8 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'none-numeric' => 'Please enter a numeric value',
-        'too-many' => 'The number of community licences cannot exceed the total number of vehicles'
+        'none-numeric' => 'OperatingCentreCommunityLicencesValidator.none-numeric',
+        'too-many' => 'OperatingCentreCommunityLicencesValidator.too-many'
     );
 
     /**
