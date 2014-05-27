@@ -20,7 +20,7 @@ trait FlashMessengerTrait
      *
      * @return FlashMessenger
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         $this->log('FlashMessenger Plugin Requested from Controller', LOG_DEBUG);
 
@@ -57,6 +57,20 @@ trait FlashMessengerTrait
     {
         $this->getFlashMessenger()->addErrorMessage($message);
         $this->log(sprintf("FlashMessenger Error Message Registered: '%s'", $message), LOG_DEBUG);
+        return $this;
+    }
+
+    /**
+     * Adds an warning message to the FlashMessenger.
+     *
+     * @param string $message The message
+     *
+     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     */
+    public function addWarningMessage($message)
+    {
+        $this->getFlashMessenger()->addWarningMessage($message);
+        $this->log(sprintf("FlashMessenger Warning Message Registered: '%s'", $message), LOG_DEBUG);
         return $this;
     }
 

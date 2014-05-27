@@ -11,7 +11,6 @@ namespace Common\Util;
 
 use \Zend\Log as Log;
 use \Zend\Log\Logger as Logger;
-use \Zend\Log\Writer as Writer;
 
 trait LoggerTrait
 {
@@ -29,7 +28,7 @@ trait LoggerTrait
             $logger = $this->getServiceLocator()->get('Zend\Log');
 
             if (($logger instanceof \Zend\Log\Logger) !== true) {
-                throw new \LogicException("Incorrect object. Expecting '\Zend\Log\Logger', found " . get_class($logger));
+                throw new \LogicException("Incorrect object. Expecting '\Zend\Log\Logger'");
             }
 
             $this->setLogger($logger);
