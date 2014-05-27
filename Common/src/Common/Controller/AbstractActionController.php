@@ -28,7 +28,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     private $loggedInUser;
 
+    /**
+     * @codeCoverageIgnore
+     * @param \Zend\Mvc\MvcEvent $e
+     */
     public function onDispatch(\Zend\Mvc\MvcEvent $e)
+    {
+        $this->preOnDispatch();
+        parent::onDispatch($e);
+    }
+
+    /**
+     * Olcs specific onDispatch method.
+     */
+    public function preOnDispatch()
     {
         $request = $this->getResponse();
         $headers = $request->getHeaders();
@@ -37,7 +50,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 
         $this->setLoggedInUser(1);
-        parent::onDispatch($e);
     }
 
     /**
@@ -59,19 +71,26 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param type $keys
      * @return type
      */
-    protected function getParams($keys)
+    public function getParams($keys)
     {
         $params = [];
-        $getParams = array_merge(
-            $this->getEvent()->getRouteMatch()->getParams(),
-            $this->getRequest()->getQuery()->toArray()
-        );
+        $getParams = $this->getAllParams();
         foreach ($getParams as $key => $value) {
             if (in_array($key, $keys)) {
                 $params[$key] = $value;
             }
         }
         return $params;
+    }
+
+    public function getAllParams()
+    {
+        $getParams = array_merge(
+            $this->getEvent()->getRouteMatch()->getParams(),
+            $this->getRequest()->getQuery()->toArray()
+        );
+
+        return $getParams;
     }
 
     /**
@@ -83,7 +102,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
         $action = $this->params()->fromPost('action');
 
@@ -92,7 +111,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         $action = strtolower($action);
-
         $params = array_merge($params, array('action' => $action));
 
         if ($action !== 'add') {
@@ -116,11 +134,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function crudActionMissingId()
     {
-        $this->addErrorMessage('Please select a row first');
+        $this->addWarningMessage('Please select a row');
         return $this->redirectToRoute(null, array(), array(), true);
     }
 
-    /*
+    /**
      * Build a table from config and results
      *
      * @param string $table
@@ -130,10 +148,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function buildTable($table, $results, $data = array())
     {
-        return $this->getTable($table, $results, $data = array(), true);
+        return $this->getTable($table, $results, $data, true);
     }
 
-    /*
+    /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
@@ -205,5 +223,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function setLoggedInUser($id)
     {
         $this->loggedInUser = $id;
+        return $this;
     }
 }

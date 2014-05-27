@@ -11,7 +11,6 @@ namespace Common\Util;
 
 use \Zend\Log as Log;
 use \Zend\Log\Logger as Logger;
-use \Zend\Log\Writer as Writer;
 
 trait LoggerTrait
 {

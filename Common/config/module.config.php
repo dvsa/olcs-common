@@ -20,6 +20,7 @@ return array(
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
+            'flashMessengerAll' => 'Common\View\Helper\FlashMessenger'
         )
     ),
     'view_manager' => array(

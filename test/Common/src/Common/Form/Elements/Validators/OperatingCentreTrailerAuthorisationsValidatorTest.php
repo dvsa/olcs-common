@@ -42,6 +42,7 @@ class OperatingCentreTrailerAuthorisationsValidatorTest extends \PHPUnit_Framewo
     public function providerIsValid()
     {
         return array(
+            array('', array(), false),
             // No OCs
             array(0, array('noOfOperatingCentres' => 0, 'minTrailerAuth' => 0, 'maxTrailerAuth' => 0), true),
             array(1, array('noOfOperatingCentres' => 0, 'minTrailerAuth' => 0, 'maxTrailerAuth' => 0), false),

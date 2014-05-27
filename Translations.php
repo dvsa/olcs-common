@@ -19,16 +19,19 @@ $unusedArray = $foundArray = array();
 
 foreach ($translations as $key => $value) {
 
+    $found = true;
+    /** Ignore the grep for now just to speed things up
     $found = false;
 
     foreach ($directories as $directory) {
-        $response = shell_exec('grep -r ' . $key . ' ' . $directory);
+        $response = shell_exec('grep -r "' . $key . '" ' . $directory);
 
         if (!empty($response)) {
             $found = true;
             break;
         }
     }
+     */
 
     $value = preg_replace('/(\s+)/', ' ', $value);
 
