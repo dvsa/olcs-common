@@ -72,7 +72,7 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
                 $formattedMessage = $this->formatMessage($message, $form, $fieldName);
 
                 if (is_array($formattedMessage)) {
-                    $messagesArray[] = array_merge($messagesArray, $formattedMessage);
+                    $messagesArray = array_merge($messagesArray, $formattedMessage);
                 } else {
                     $messagesArray[] = $formattedMessage;
                 }
