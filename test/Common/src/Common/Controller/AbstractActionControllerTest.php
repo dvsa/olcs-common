@@ -14,6 +14,133 @@ namespace CommonTest\Controller;
  */
 class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 {
+    public function testOnDispatch()
+    {
+        $headers = $this->getMock('stdClass', ['addHeaderLine']);
+
+        $response = $this->getMock('stdClass', ['getHeaders']);
+        $response->expects($this->once())
+                 ->method('getHeaders')
+                 ->will($this->returnValue($headers));
+
+        $sut = $this->getNewSut(['getResponse']);
+        $sut->expects($this->once())
+            ->method('getResponse')
+            ->will($this->returnValue($response));
+
+        $sut->preOnDispatch();
+    }
+
+    public function testSetBreadcrumb()
+    {
+        $navRoutes = [
+            'route1' => ['foo' => 'bar', 'baz' => 'bo']
+        ];
+
+        $page = $this->getMock('stdClass', ['setParams']);
+
+        $nav = $this->getMock('stdClass', ['findBy']);
+        $nav->expects($this->once())
+            ->method('findBy')
+            ->with('route', 'route1')
+            ->will($this->returnValue($page));
+
+        $sl = $this->getMock('\Zend\ServiceManager\ServiceManager', ['get']);
+        $sl->expects($this->once())
+           ->method('get')
+           ->with($this->equalTo('navigation'))
+           ->will($this->returnValue($nav));
+
+        $sut = $this->getNewSut(['getServiceLocator']);
+        $sut->expects($this->once())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($sl));
+
+        $sut->setBreadcrumb($navRoutes);
+    }
+
+    public function testGetParams()
+    {
+        $params = [
+            'foo' => 'bar',
+            'bar' => 'baz',
+        ];
+
+        $sut = $this->getNewSut(['getAllParams']);
+        $sut->expects($this->once())
+            ->method('getAllParams')
+            ->will($this->returnValue($params));
+
+        $this->assertEquals(['foo' => 'bar'], $sut->getParams(['foo']));
+    }
+
+    public function testGetAllParams()
+    {
+        $routeParams = ['foo' => 'bar'];
+        $queryParams = ['foo' => 'bar21'];
+
+        $sut = $this->getNewSut(['getEvent', 'getRequest']);
+
+        // --
+
+        $routeMatch = $this->getMock('stdClass', ['getParams']);
+        $routeMatch->expects($this->once())
+                   ->method('getParams')
+                   ->will($this->returnValue($routeParams));
+
+        $event = $this->getMock('stdClass', ['getRouteMatch']);
+        $event->expects($this->once())
+              ->method('getRouteMatch')
+              ->will($this->returnValue($routeMatch));
+
+        $sut->expects($this->once())
+            ->method('getEvent')
+            ->will($this->returnValue($event));
+
+        // --
+
+        $query = $this->getMock('stdClass', ['toArray']);
+        $query->expects($this->once())
+              ->method('toArray')
+              ->will($this->returnValue($queryParams));
+
+        $request = $this->getMock('stdClass', ['getQuery']);
+        $request->expects($this->once())
+                ->method('getQuery')
+                ->will($this->returnValue($query));
+
+        $sut->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+
+        /* print_r(array_merge($routeParams, $queryParams));
+        print_r($sut->getAllParams());
+        exit(); */
+
+        //;
+
+        $this->assertEquals(array_merge($routeParams, $queryParams), $sut->getAllParams());
+    }
+
+    /**
+     *
+     */
+    public function testCheckForCrudActionReturnsFalse()
+    {
+        $paramsMock = $this->getMock('stdClass', ['fromPost']);
+        $paramsMock->expects($this->at(0))
+                   ->method('fromPost')
+                   ->with('action')
+                   ->will($this->returnValue(''));
+
+        $sut = $this->getNewSut(['params']);
+        $sut->expects($this->atLeastOnce())
+            ->method('params')
+            ->will($this->returnValue($paramsMock));
+
+        $this->assertFalse($sut->checkForCrudAction());
+    }
+
     /**
      * @dataProvider dpCheckForCrudAction
      */
@@ -149,7 +276,7 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($return, $sut->getUrlFromRoute($route, $params));
     }
 
-    public function testGetFromRoute()
+    public function testRedirectToRoute()
     {
         $route = 'craig-route';
         $params = array('1');
@@ -170,6 +297,25 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($redirectMock));
 
         $this->assertSame($return, $sut->redirectToRoute($route, $params, $options, $reuse));
+    }
+
+    public function testGetFromRoute()
+    {
+        $param = 'foo';
+        $return = 'uouo';
+
+        $mock = $this->getMock('stdClass', ['fromRoute']);
+        $mock->expects($this->once())
+             ->method('fromRoute')
+             ->with($this->equalTo($param))
+             ->will($this->returnValue($return));
+
+        $sut = $this->getNewSut(['params']);
+        $sut->expects($this->once())
+            ->method('params')
+            ->will($this->returnValue($mock));
+
+        $this->assertSame($return, $sut->getFromRoute($param));
     }
 
     public function testGetSetLoggedInUser()
