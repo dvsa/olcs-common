@@ -42,19 +42,79 @@ class OperatingCentreVehicleAuthorisationsValidatorTest extends \PHPUnit_Framewo
     public function providerIsValid()
     {
         return array(
-            // No OCs
-            array(0, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), true),
-            array(1, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), false),
-            // 1 OC
-            array(9, array('noOfOperatingCentres' => 1, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 10), false),
-            array(11, array('noOfOperatingCentres' => 1, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 10), false),
-            array(10, array('noOfOperatingCentres' => 1, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 10), true),
-            // Multiple OC's
-            array(9, array('noOfOperatingCentres' => 5, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 50), false),
-            array(10, array('noOfOperatingCentres' => 5, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 50), true),
-            array(30, array('noOfOperatingCentres' => 5, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 50), true),
-            array(50, array('noOfOperatingCentres' => 5, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 50), true),
-            array(51, array('noOfOperatingCentres' => 5, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 50), false)
+            // Non numeric
+            array('', array(), false),
+            // Restricted too many
+            array(
+                0,
+                array('licenceType' => 'restricted', 'totAuthSmallVehicles' => 2, 'totAuthMediumVehicles' => 2),
+                false
+            ),
+            // 0 Operating centres
+            array(0, array('noOfOperatingCentres' => 0), false),
+            // Total is 0
+            array(
+                0,
+                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 0, 'totAuthMediumVehicles' => 0),
+                false
+            ),
+            // With 1 oc, total should = min auth
+            array(0, array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 1, 'minVehicleAuth' => 5), false),
+            // With more than 1 oc, total should be >= min
+            array(0, array('noOfOperatingCentres' => 2, 'totAuthSmallVehicles' => 1, 'minVehicleAuth' => 5), false),
+            // With more than 1 oc, total should be <= max
+            array(
+                0,
+                array(
+                    'noOfOperatingCentres' => 2,
+                    'totAuthSmallVehicles' => 15,
+                    'minVehicleAuth' => 5,
+                    'maxVehicleAuth' => 10
+                ),
+                false
+            ),
+            // Boundaries are fine
+            array(
+                0,
+                array(
+                    'noOfOperatingCentres' => 2,
+                    'totAuthSmallVehicles' => 10,
+                    'minVehicleAuth' => 5,
+                    'maxVehicleAuth' => 10
+                ),
+                true
+            ),
+            array(
+                0,
+                array(
+                    'noOfOperatingCentres' => 2,
+                    'totAuthSmallVehicles' => 5,
+                    'minVehicleAuth' => 5,
+                    'maxVehicleAuth' => 10
+                ),
+                true
+            ),
+            // More OC's are fine
+            array(
+                0,
+                array(
+                    'noOfOperatingCentres' => 20,
+                    'totAuthSmallVehicles' => 10,
+                    'minVehicleAuth' => 5,
+                    'maxVehicleAuth' => 10
+                ),
+                true
+            ),
+            array(
+                0,
+                array(
+                    'noOfOperatingCentres' => 50,
+                    'totAuthSmallVehicles' => 5,
+                    'minVehicleAuth' => 5,
+                    'maxVehicleAuth' => 10
+                ),
+                true
+            ),
         );
     }
 }
