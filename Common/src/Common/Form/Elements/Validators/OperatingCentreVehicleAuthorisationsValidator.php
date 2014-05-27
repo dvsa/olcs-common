@@ -44,55 +44,45 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
             return false;
         }
 
-        if (isset($context['licenceType'])
-            && $context['licenceType'] == 'restricted' && ($context['totAuthSmallVehicles'] + $context['totAuthMediumVehicles']) > 2) {
+        $total = 0;
+        $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
+        $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
+        $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
+
+        if (isset($context['licenceType']) && $context['licenceType'] == 'restricted' && $total > 2) {
             $this->error('restricted-too-many');
             return false;
         }
 
-        $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
-        $value = (int)$value;
-
-        if ($noOfOperatingCentres === 0 && $value !== 0) {
-
+        if ($context['noOfOperatingCentres'] === 0) {
             $this->error('no-operating-centre');
             return false;
         }
-
-        $total = 0;
-
-        $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
-        $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
-        $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
 
         if ($total == 0) {
             $this->error('no-vehicle-types');
             return false;
         }
 
-        if ($noOfOperatingCentres === 1 && $total != $context['minVehicleAuth']) {
+        if ($context['noOfOperatingCentres'] === 1 && $total != $context['minVehicleAuth']) {
 
             $this->error('1-operating-centre');
             return false;
         }
 
-        $valid = true;
-
-        if ($noOfOperatingCentres >= 2) {
+        if ($context['noOfOperatingCentres'] >= 2) {
 
             if ($total < $context['minVehicleAuth']) {
-
-                $valid = false;
                 $this->error('too-low');
+                return false;
             }
 
             if ($total > $context['maxVehicleAuth']) {
-
-                $valid = false;
                 $this->error('too-high');
+                return false;
             }
         }
 
-        return $valid;
+        return true;
     }
 }
