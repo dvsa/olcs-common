@@ -552,4 +552,8 @@ application and a decision being made on this application.',
     'selfserve-app-subSection-previous-history-criminal-conviction-formSaveAndAddAnother' => 'Save & add another',
     'selfserve-app-subSection-previous-history-criminal-conviction-formCancel' => 'Cancel',
     'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'Add offence',
+    'application_previous-history_convictions-penalties-edit' => 'Edit offence',
+    'application_previous-history_convictions-penalties-add' => 'Add offence',
+    'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 
+'Please add any relevant offences which must be declared to the traffic commissioner.'    
 );
