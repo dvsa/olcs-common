@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'numberOfVehiclesError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
+    'numberOfVehiclesError-psv' => 'Total number of vehicles cannot be zero',
+    'numberOfTrailersError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
