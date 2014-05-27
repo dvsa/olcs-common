@@ -22,6 +22,7 @@ class OperatingCentreTrailerAuthorisationsValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
+        'none-numeric' => 'Please enter a numeric value',
         'no-operating-centre' => 'Please add an operating centre before setting the total number of trailers',
         '1-operating-centre' => 'If you are only applying for one operating centre, the total number of authorised trailers must be the same as at your operating centre',
         'too-low' => 'The total number of authorised trailers must be equal or greater than the largest number of trailers authorised at any individual operating centre',
@@ -36,6 +37,11 @@ class OperatingCentreTrailerAuthorisationsValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
+        if (!is_numeric($value)) {
+            $this->error('none-numeric');
+            return false;
+        }
+
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
 
