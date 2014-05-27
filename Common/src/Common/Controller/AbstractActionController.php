@@ -83,7 +83,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
         $action = $this->params()->fromPost('action');
 
@@ -92,7 +92,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         $action = strtolower($action);
-
         $params = array_merge($params, array('action' => $action));
 
         if ($action !== 'add') {
@@ -120,7 +119,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->redirectToRoute(null, array(), array(), true);
     }
 
-    /*
+    /**
      * Build a table from config and results
      *
      * @param string $table
@@ -130,10 +129,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function buildTable($table, $results, $data = array())
     {
-        return $this->getTable($table, $results, $data = array(), true);
+        return $this->getTable($table, $results, $data, true);
     }
 
-    /*
+    /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
@@ -205,5 +204,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function setLoggedInUser($id)
     {
         $this->loggedInUser = $id;
+        return $this;
     }
 }
