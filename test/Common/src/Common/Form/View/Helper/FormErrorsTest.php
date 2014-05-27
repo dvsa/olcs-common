@@ -91,11 +91,7 @@ class FormErrors extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($form);
 
-        $this->expectOutputRegex(
-            '/^<div class="validation-summary">'
-            . '(.*)<a href="#(.*)">(.*)<\/a>(.*)'
-            . '<\/div>$/'
-        );
+        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<a href="#(.*)">(.*)<\/a>(.*)<\/div>$/s');
     }
 
     /**
@@ -108,7 +104,7 @@ class FormErrors extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($form);
 
-        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/');
+        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/s');
     }
 
     /**
@@ -123,7 +119,7 @@ class FormErrors extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($form);
 
-        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/');
+        $this->expectOutputRegex('/^<div class="validation-summary">(.*)<\/div>$/s');
     }
 
     private function prepareHelper()

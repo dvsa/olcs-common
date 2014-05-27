@@ -62,13 +62,14 @@ class FormRow extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="validation-wrapper"><div class="field "><ul><li>(.*)<\/li><\/ul><\/div><\/div>$/');
+        $this->expectOutputRegex(
+            '/^<div class="validation-wrapper"><div class="field ">'.
+            '<ul><li>(.*)<\/li><\/ul><label><span>(.*)<\/span><\/label>(.*)<\/div><\/div>$/'
+        );
     }
 
     /**
      * @outputBuffering disabled
-     *
-     * @group current
      */
     public function testRenderClassicWithId()
     {
@@ -78,7 +79,7 @@ class FormRow extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><\/div>$/');
+        $this->expectOutputRegex('/^<div class="field "><label(.*)>(.*)<\/label>(.*)<\/div>$/');
     }
 
     /**
@@ -154,7 +155,7 @@ class FormRow extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><\/div>$/');
+        $this->expectOutputRegex('/^<div class="field "><label><span>(.*)<\/span><\/label>(.*)<\/div>$/');
     }
 
     /**
@@ -167,7 +168,7 @@ class FormRow extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^$/');
+        $this->expectOutputRegex('/^<div class="field "><fieldset><legend>(.*)<\/legend>(.*)<\/fieldset><\/div>$/');
     }
 
     private function prepareHelper()
