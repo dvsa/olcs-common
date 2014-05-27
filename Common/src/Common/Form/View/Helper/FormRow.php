@@ -208,15 +208,8 @@ class FormRow extends ZendFormRow
                 }
             }
 
-            if ($this->renderErrors) {
-                $markup .= $elementErrors;
-            }
         } else {
-            if ($this->renderErrors) {
-                $markup = $elementString . $elementErrors;
-            } else {
-                $markup = $elementString;
-            }
+            $markup = $elementString;
         }
 
         return $markup;
