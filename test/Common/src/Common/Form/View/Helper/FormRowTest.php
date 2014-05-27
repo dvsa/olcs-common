@@ -71,6 +71,23 @@ class FormRow extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderClassicNoLabel()
+    {
+        $element = $this->prepareElement('Text', ['label' => null]);
+        $element->setMessages(['Message']);
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex(
+            '/^<div class="validation-wrapper"><div class="field ">'.
+            '<ul><li>(.*)<\/li><\/ul>(.*)<\/div><\/div>$/'
+        );
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderClassicWithId()
     {
         $element = $this->prepareElement();
@@ -168,7 +185,7 @@ class FormRow extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><fieldset><legend>(.*)<\/legend>(.*)<\/fieldset><\/div>$/');
+        $this->expectOutputRegex('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/');
     }
 
     private function prepareHelper()

@@ -85,7 +85,7 @@ class FormRow extends ZendFormRow
         }
 
         $type = $element->getAttribute('type');
-        if ($type === 'multi_checkbox' && $type === 'radio') {
+        if ($type === 'multi_checkbox' || $type === 'radio') {
             $noWrap = true;
         }
 
@@ -153,10 +153,6 @@ class FormRow extends ZendFormRow
             );
 
             return $this->view->render($this->partial, $vars);
-        }
-
-        if ($this->renderErrors) {
-            $elementErrors = $elementErrorsHelper->render($element);
         }
 
         $elementString = $elementHelper->render($element);
