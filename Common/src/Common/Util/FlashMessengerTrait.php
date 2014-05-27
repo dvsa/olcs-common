@@ -61,6 +61,20 @@ trait FlashMessengerTrait
     }
 
     /**
+     * Adds an warning message to the FlashMessenger.
+     *
+     * @param string $message The message
+     *
+     * @return \OlcsCommon\Utility\FlashMessengerTrait
+     */
+    public function addWarningMessage($message)
+    {
+        $this->getFlashMessenger()->addWarningMessage($message);
+        $this->log(sprintf("FlashMessenger Warning Message Registered: '%s'", $message), LOG_DEBUG);
+        return $this;
+    }
+
+    /**
      * Adds a success message to the FlashMessenger.
      *
      * @param string $message The message

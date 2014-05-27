@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'numberOfVehiclesError' => 'W No. of vehicles can not be zero if no. of trailers equals zero',
+    'numberOfTrailersError' => 'W No. of trailers can not be zero if no. of vehicles equals zero',
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
@@ -473,6 +475,7 @@ return array(
     'registered-office-details-header' => 'W Registered office details',
     'removals-construction-plant-hire' => 'W Removals / Construction / Plant Hire',
     'review-date' => 'W Review date',
+    'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'safety-inspection-providers.table.address' => 'W Workshop address',
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
         inspections on the vehicles and trailers you intend to operate under your licence.',

@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'numberOfVehiclesError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
+    'numberOfVehiclesError-psv' => 'Total number of vehicles cannot be zero',
+    'numberOfTrailersError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -73,6 +76,15 @@ return array(
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.organisationType' => 'What type of business are you?',
+    'application_your-business_business-type.correspondence.label' => 'Correspondence address',
+    'application_your-business_business-type.contact-details.label' => 'Contact details',
+    'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
+    'application_your-business_business-type.contact-details.business-phone' => 'Business telephone no. (optional)',
+    'application_your-business_business-type.contact-details.home-phone' => 'Home telephone no. (optional)',
+    'application_your-business_business-type.contact-details.mobile-phone' => 'Mobile telephone no. (optional)',
+    'application_your-business_business-type.contact-details.email' => 'E-mail address',
+    'application_your-business_business-type.establishment.label' => 'Establishment address',
+    'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'applications' => 'Applications',
     'both' => 'Both',
     'built-by' => 'Built by',
@@ -473,6 +485,7 @@ return array(
     'registered-office-details-header' => 'Registered office details',
     'removals-construction-plant-hire' => 'Removals / Construction / Plant Hire',
     'review-date' => 'Review date',
+    'Please add a safety inspection provider' => 'Please add a safety inspection provider',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
         on the vehicles and trailers you intend to operate under your licence.',

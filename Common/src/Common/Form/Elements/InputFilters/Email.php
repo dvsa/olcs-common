@@ -1,19 +1,16 @@
 <?php
-
-/**
- * VehicleNumber validation
- *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
- */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Common\Form\Elements\Validators\VehiclesNumber as VehiclesNumberValidator;
 
-class VehiclesNumber extends ZendElement implements InputProviderInterface
+class Email extends ZendElement implements InputProviderInterface
 {
+    public function __construct($name = null, $options = array())
+    {
+        parent::__construct($name, $options);
+    }
 
     /**
      * Provide default input rules for this element.
@@ -24,10 +21,13 @@ class VehiclesNumber extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => true,
+            'required' => false,
+            'filters' => [
+                ['name' => 'Zend\Filter\StringTrim'],
+            ],
             'validators' => [
-                new ZendValidator\Digits(),
-                new VehiclesNumberValidator($this->getName())
+                new ZendValidator\EmailAddress(),
+                new ZendValidator\StringLength(['min' => 5, 'max' => 255]),
             ]
         ];
 

@@ -11,6 +11,7 @@ namespace Common\Form\Elements\InputFilters;
 use Common\Form\Elements\Types\Table;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Common\Form\Elements\Validators\TableRequiredValidator;
+use Common\Service\Table\TableBuilder;
 
 /**
  * Text
@@ -26,6 +27,14 @@ class TableRequired extends Table implements InputProviderInterface
      */
     public function getInputSpecification()
     {
+        $label = 'row to the table';
+
+        $table = $this->getTable();
+
+        if ($table instanceof \Common\Service\Table\TableBuilder) {
+            $label = $table->getVariable('required_label');
+        }
+
         $specification = [
             'name' => $this->getName(),
             'required' => true,
@@ -35,7 +44,7 @@ class TableRequired extends Table implements InputProviderInterface
 
             ],
             'validators' => array(
-                new TableRequiredValidator(array('label' => $this->getLabel()))
+                new TableRequiredValidator(array('label' => $label))
             )
         ];
 

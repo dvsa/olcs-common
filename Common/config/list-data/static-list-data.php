@@ -35,8 +35,8 @@ return array(
         'case_category.14' => 'Representation',
         'case_category.15' => 'Objection',
         'case_category.16' => 'Non-chargeable variation',
-        'case_category.17' => 'Regulation 31',
-        'case_category.18' => 'Schedule 4',
+        'case_category.17' => 'Regulation 31/29',
+        'case_category.18' => 'Schedule 4/1',
         'case_category.19' => 'Chargeable variation',
         'case_category.20' => 'New application'
     ),
