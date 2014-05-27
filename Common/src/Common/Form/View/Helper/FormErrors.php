@@ -1,13 +1,30 @@
 <?php
+
+/**
+ * Form errors view helper
+ *
+ * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\AbstractHelper as ZendFormViewHelperAbstractHelper;
 use Zend\Form\FormInterface as ZendFormFormInterface;
 
+/**
+ * Form errors view helper
+ *
+ * @author Someone <someone@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 class FormErrors extends ZendFormViewHelperAbstractHelper
 {
+
     protected static $defaultErrorText = 'There were errors in the form submission';
-    protected $messageOpenFormat = '<h3>%s</h3><p>Please try the following:</p><ol class="validation-summary__list"><li class="validation-summary__item">';
+    protected $messageOpenFormat = '<h3>%s</h3>
+        <p>Please try the following:</p>
+        <ol class="validation-summary__list"><li class="validation-summary__item">';
     protected $messageCloseString = '</li"></ol>';
     protected $messageSeparatorString = '</li><li class="validation-summary__item">';
 
@@ -44,48 +61,20 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      */
     public function render(ZendFormFormInterface $form, $message)
     {
-        $renderer = $this->getView();
-
         $errorHtml = sprintf($this->messageOpenFormat, $message);
-
-        error_log(var_export($form->getMessages(), 1));
 
         $messagesArray = array();
 
-        foreach ($form->getMessages() as $fieldName => $messages) {
-            foreach ($messages as $validatorName => $message) {
-                if ($form->get($fieldName)->getAttribute('id')) {
-                    $label = $form->get($fieldName)->getLabel();
+        foreach ($form->getMessages() as $fieldName => $fieldMessages) {
 
-                    if (!empty($label)) {
-                        $label = $renderer->translate($label);
-                    }
+            foreach ($fieldMessages as $message) {
 
-                    $messagesArray[] = sprintf(
-                        '<a href="#%s">%s</a>',
-                        $form->get($fieldName)->getAttribute('id'),
-                        (!empty($label) ? $label . ': ' : '') . $message
-                    );
+                $formattedMessage = $this->formatMessage($message, $form, $fieldName);
+
+                if (is_array($formattedMessage)) {
+                    $messagesArray[] = array_merge($messagesArray, $formattedMessage);
                 } else {
-                    if (is_array($message)) {
-                        foreach($message as $value) {
-                            $label = $form->get($fieldName)->getLabel();
-
-                            if (!empty($label)) {
-                                $label = $renderer->translate($label);
-                            }
-
-                            $messagesArray[] = (!empty($label) ? $label . ': ' : '') . $value;
-                        }
-                    } else {
-                        $label = $form->get($fieldName)->getLabel();
-
-                        if (!empty($label)) {
-                            $label = $renderer->translate($label);
-                        }
-
-                        $messagesArray[] = (!empty($label) ? $label . ': ' : '') . $message;
-                    }
+                    $messagesArray[] = $formattedMessage;
                 }
             }
         }
@@ -95,5 +84,46 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
         $errorHtml = $errorHtml . $messageString . $this->messageCloseString;
 
         return '<div class="validation-summary">' . $errorHtml . '</div>';
+    }
+
+    /**
+     * Format the message
+     *
+     * @param string $message
+     * @param Form $form
+     * @param string $fieldName
+     * @return string|array
+     */
+    private function formatMessage($message, $form, $fieldName)
+    {
+        $renderer = $this->getView();
+
+        $label = $form->get($fieldName)->getLabel();
+
+        if (!empty($label)) {
+            $label = $renderer->translate($label) . ': ';
+        }
+
+        // If we have an ID
+        if ($form->get($fieldName)->getAttribute('id')) {
+            $id = $form->get($fieldName)->getAttribute('id');
+            $message = $renderer->translate($message);
+
+            return sprintf('<a href="#%s">%s</a>', $id, $label . $message);
+        }
+
+        if (!is_array($message)) {
+            $message = $renderer->translate($message);
+            return $label . $message;
+        }
+
+        $messages = array();
+
+        foreach ($message as $value) {
+            $value = $renderer->translate($value);
+            $messages[] = $label . $value;
+        }
+
+        return $messages;
     }
 }
