@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'numberOfVehiclesError' => 'W No. of vehicles can not be zero if no. of trailers equals zero',
+    'numberOfTrailersError' => 'W No. of trailers can not be zero if no. of vehicles equals zero',
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',

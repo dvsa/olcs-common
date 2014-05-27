@@ -63,15 +63,27 @@ class Module
                      */
                     $filter = new \Zend\Log\Filter\Priority(LOG_DEBUG);
 
-                    // Log file
-                    $fileWriter = new \Zend\Log\Writer\Stream('/tmp/olcsLogfile.log');
-                    $fileWriter->addFilter($filter);
-                    $log->addWriter($fileWriter);
+                    try {
+                        // Log file
+                        $fileWriter = new \Zend\Log\Writer\Stream('/tmp/olcsLogfile.log');
+                        $fileWriter->addFilter($filter);
+                        $log->addWriter($fileWriter);
+                        $hasWriter = true;
+                    } catch (\Exception $ex) {
+                        $hasWriter = false;
+                    }
 
-                    // Log to sys log - useful if file logging is not working.
-                    $sysLogWriter = new \Zend\Log\Writer\Syslog();
-                    $sysLogWriter->addFilter($filter);
-                    $log->addWriter($sysLogWriter);
+                    try {
+                        // Log to sys log - useful if file logging is not working.
+                        $sysLogWriter = new \Zend\Log\Writer\Syslog();
+                        $sysLogWriter->addFilter($filter);
+                        $log->addWriter($sysLogWriter);
+                    } catch (\Exception $ex) {
+                        // Only throw this exception if we have no writers
+                        if ($hasWriter == false) {
+                            throw $ex;
+                        }
+                    }
 
                     return $log;
                 }
