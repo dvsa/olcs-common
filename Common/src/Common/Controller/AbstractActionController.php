@@ -116,7 +116,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function crudActionMissingId()
     {
-        $this->addErrorMessage('Please select a row first');
+        $this->addWarningMessage('Please select a row');
         return $this->redirectToRoute(null, array(), array(), true);
     }
 
