@@ -1259,7 +1259,7 @@ class TableBuilder
 
         return $actions;
     }
-    
+
     /**
      * Remove column on the fly
      *
@@ -1270,7 +1270,7 @@ class TableBuilder
         if ($name) {
             $columns = $this->getColumns();
             $newColumns = array();
-            foreach($columns as $column) {
+            foreach ($columns as $column) {
                 if (array_key_exists('name', $column) && $column['name'] !== $name) {
                     $newColumns[] = $column;
                 } elseif (array_key_exists('name', $column) === false) {
