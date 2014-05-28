@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="Bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Common">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../Common/src</directory>
+            <exclude>
+                <directory>../Common/src/Common/Form/Forms/</directory>
+                <directory>../Common/src/Common/Form/Fieldsets/*.fieldset.php</directory>
+                <directory>../Common/src/Common/Form/Elements/*.element.php</directory>
+                <directory>../Common/src/Common/Table/Tables/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./coverage-report" charset="UTF-8"
+             yui="true" highlight="true" lowUpperBound="50"
+             highLowerBound="80"/>
+    </logging>
+</phpunit>
