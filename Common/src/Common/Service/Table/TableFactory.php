@@ -42,6 +42,16 @@ class TableFactory implements FactoryInterface
     }
 
     /**
+     * Get an instance of table builder
+     *
+     * @return \Common\Service\Table\TableBuilder
+     */
+    public function getTableBuilder()
+    {
+        return new TableBuilder($this->serviceLocator);
+    }
+
+    /**
      * Wrap the build table method
      *
      * @param string $name
@@ -51,7 +61,7 @@ class TableFactory implements FactoryInterface
      */
     public function buildTable($name, $data = array(), $params = array(), $render = true)
     {
-        $table = new TableBuilder($this->serviceLocator);
+        $table = $this->getTableBuilder();
         return $table->buildTable($name, $data, $params, $render);
     }
 }

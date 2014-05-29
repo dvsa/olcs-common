@@ -32,6 +32,10 @@ class Table extends Element
     {
         $this->table = $table;
 
+        if (is_null($fieldset)) {
+            $fieldset = $this->getName();
+        }
+
         $table->setFieldset($fieldset);
     }
 
