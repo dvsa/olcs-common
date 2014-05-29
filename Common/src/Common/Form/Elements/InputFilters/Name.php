@@ -23,7 +23,6 @@ class Name extends ZendElement implements InputProviderInterface
             'required' => false,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim'],
-                ['name' => 'Zend\Filter\StringToLower'],
             ],
             'validators' => [
                 new ZendValidator\StringLength(['min' => 2, 'max' => 35]),

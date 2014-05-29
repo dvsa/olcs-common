@@ -36,6 +36,7 @@ class FormCollection extends ZendFormCollection
      */
     public function render(ElementInterface $element)
     {
+        $messages = $element->getMessages();
 
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
@@ -59,6 +60,10 @@ class FormCollection extends ZendFormCollection
 
         if ($element instanceof CollectionElement && $element->shouldCreateTemplate()) {
             $templateMarkup = $this->renderTemplate($element);
+        }
+
+        if ($element instanceof CompanyNumber && !empty($messages)) {
+            $attributes['class'] = '';
         }
 
         foreach ($element->getIterator() as $elementOrFieldset) {
@@ -114,8 +119,6 @@ class FormCollection extends ZendFormCollection
 
             return $markup;
         }
-
-        $messages = $element->getMessages();
 
         if (empty($messages)) {
             return $markup;

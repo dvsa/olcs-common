@@ -24,12 +24,12 @@ class RestClient
     /**
      * @var HttpUri
      */
-    protected $url;
+    public $url;
 
     /**
      * @var HttpClient
      */
-    protected $client;
+    public $client;
 
     /**
      * @param HttpUri The URL of the resource that this client is meant to act on
@@ -172,26 +172,23 @@ class RestClient
      * @return mixed          Returns the body of a successful request or false if not found
      * @throws Exception      Whenever the request fails
      */
-    protected function request($method, $path, array $params = array())
+    public function request($method, $path, array $params = array())
     {
         $this->prepareRequest($method, $path, $params);
 
         $response = $this->client->send();
 
-        $responseHelper = new ResponseHelper();
+        $responseHelper = $this->getResponseHelper();
 
         $responseHelper->setMethod($method);
         $responseHelper->setResponse($response);
         $responseHelper->setParams($params);
         return $responseHelper->handleResponse();
-
-        /*if ($response->isNotFound()) {
-            return false;
-        } else if (!$response->isSuccess()) {
-            throw new Exception('Error in HTTP response '.$response->getStatusCode(), $response->getStatusCode());
-        }
-
-        return json_decode($response->getBody(), true);*/
+    }
+    
+    public function getResponseHelper()
+    {
+        return new ResponseHelper();
     }
 
     /**
@@ -199,14 +196,14 @@ class RestClient
      *
      * @see RestClient::request()
      */
-    protected function prepareRequest($method, $path, array $params = array())
+    public function prepareRequest($method, $path, array $params = array())
     {
         $method = strtoupper($method);
 
-        $accept = new Accept();
+        $accept = $this->getAccept();
         $accept->addMediaType('application/json');
 
-        $this->client->setRequest(new Request());
+        $this->client->setRequest($this->getClientRequest());
 
         $this->client->setUri($this->url->toString() . $path);
 
@@ -221,6 +218,16 @@ class RestClient
         } else {
             $this->client->getRequest()->getQuery()->fromArray($params);
         }
+    }
+    
+    public function getAccept()
+    {
+        return new Accept();
+    }
+    
+    public function getClientRequest()
+    {
+        return new Request();
     }
 
     /**
