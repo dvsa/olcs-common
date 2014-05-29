@@ -28,11 +28,11 @@ class Table extends Element
      *
      * @param object $table
      */
-    public function setTable($table)
+    public function setTable($table, $fieldset = null)
     {
         $this->table = $table;
 
-        $table->setFieldset($this->getName());
+        $table->setFieldset($fieldset);
     }
 
     /**
