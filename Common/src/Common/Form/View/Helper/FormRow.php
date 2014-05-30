@@ -101,7 +101,9 @@ class FormRow extends ZendFormRow
                 $class = $element->getAttribute('data-container-class');
             }
 
-            $markup = sprintf(self::$format, $class, $markup);
+            if ($element->getOption('render-container') !== false) {
+                $markup = sprintf(self::$format, $class, $markup);
+            }
         }
 
         if ($oldRenderErrors && $elementErrors != '') {
