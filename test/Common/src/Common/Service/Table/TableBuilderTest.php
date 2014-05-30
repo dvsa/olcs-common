@@ -2011,7 +2011,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $tableFactory = new TableFactory();
         $serviceLocator = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
-        $tableBuilder = $tableFactory->createService($serviceLocator);
+        $tableBuilder = $tableFactory->createService($serviceLocator)->getTableBuilder();
 
         $newServiceLocator = $tableBuilder->getServiceLocator();
 
