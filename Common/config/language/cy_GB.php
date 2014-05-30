@@ -96,6 +96,7 @@ return array(
     'application.vehicle-safety' => 'W Vehicle & safety',
     'application.vehicle-safety.safety' => 'W Safety inspections',
     'application.vehicle-safety.vehicle' => 'W Vehicles',
+    'application.vehicle-safety.vehicle-psv' => 'W Vehicles',
     'application.your-business' => 'W Your business',
     'application.your-business.addresses' => 'W Addresses',
     'application.your-business.business-details' => 'W Business details',
@@ -134,6 +135,8 @@ return array(
     'application_operating-centres_authorisation.table.title' => 'W Operating centres',
     'application_operating-centres_authorisation.table.trailers' => 'W Trailers',
     'application_operating-centres_authorisation.table.vehicles' => 'W Vehicles',
+    'application_previous-history_convictions-penalties-add' => 'W Add offence',
+    'application_previous-history_convictions-penalties-edit' => 'W Edit offence',
     'application_previous-history_financial-history.finance.administration' => 'W 4. Involved with a company, or
         business, that has gone into (or is going into) administration?',
     'application_previous-history_financial-history.finance.bankrupt' => 'W 1. Declared bankrupt or had their estate
@@ -187,6 +190,33 @@ return array(
         inspections',
     'application_vehicle-safety_vehicle-add' => 'W Add vehicle',
     'application_vehicle-safety_vehicle-edit' => 'W Edit vehicle',
+    'application_vehicle-safety_vehicle-psv-large-add' => 'W Add large vehicle',
+    'application_vehicle-safety_vehicle-psv-large-edit' => 'W Edit large vehicle',
+    'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-large.table.title' => 'W 17 or more passenger seat vehicles (if
+        applicable)',
+    'application_vehicle-safety_vehicle-psv-large.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-medium-add' => 'W Add medium vehicle',
+    'application_vehicle-safety_vehicle-psv-medium-edit' => 'W Edit medium vehicle',
+    'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-medium.table.title' => 'W 9 - 16 passenger seat vehicles (if applicable)',
+    'application_vehicle-safety_vehicle-psv-medium.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-small-add' => 'W Add small vehicle',
+    'application_vehicle-safety_vehicle-psv-small-edit' => 'W Edit small vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-small.table.make' => 'W Make / model',
+    'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'W Limousine or novelty vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.title' => 'W Small vehicles (if applicable)',
+    'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or nevelty type
+        vehicle?',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv.enterReg' => 'W Would you like to enter the registration numbers of your
+        vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle.table.title' => 'W Vehicles',
@@ -496,6 +526,44 @@ return array(
     'select-payment-method' => 'W Select payment method',
     'select-person' => 'W Select person',
     'select-type' => 'W Select type',
+    'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'W Back',
+    'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'W Continue',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'W DOC',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnName' => 'W Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnNameOfCourt' => 'W Name of court',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence' => 'W Offence',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnPenalty' => 'W Penalty',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formCancel' => 'W Cancel',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction' => 'W Date Of Conviction',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formFirstName' => 'W First Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formLastName' => 'W Last Name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt' => 'W Name of Court',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails' => 'W Offence Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock' => 'W Please provide full
+        details of the background circumstances of this offense.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formPenalty' => 'W Penalty',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formSave' => 'W Save',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formSaveAndAddAnother' => 'W Save & add another',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitle' => 'W Title',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMiss' => 'W Miss',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMr' => 'W Mr',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMrs' => 'W Mrs',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs' => 'W Ms',
+    'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'W 1. Has any person named in this
+        application, (including partners, directors and transport managers); any company of which a person named on this
+        application is or has been a director; any parent company if you are a limited company; or any of your employees
+        or agents been convicted of any relevant offense which must be declared to the traffic commissioner? ',
+    'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => 'W Please provide full details of the
+        background circumstances of this offense.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'W Please tick to confirm that you
+        are aware that you must tell the traffic commissioner immediately of any relevant convictions that occur between
+        the submission of your application and a decision being made on this application.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'W Offense Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'W Please add any relevant
+        offences which must be declared to the traffic commissioner.',
+    'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'W Convictions & penalties (if
+        applicable)',
+    'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'W Add offence',
     'selfserve-business-registered-company-description' => 'W If you don\'t have your company number to hand, or are
         having problems retrieving your company details, please enter them manually below.',
     'send-to' => 'W Send to',
