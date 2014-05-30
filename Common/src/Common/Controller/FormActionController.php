@@ -374,7 +374,7 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
-    protected function processAdd($data, $entityName)
+    public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -386,7 +386,7 @@ abstract class FormActionController extends AbstractActionController
         return $result;
     }
 
-    protected function processEdit($data, $entityName)
+    public function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -488,16 +488,8 @@ abstract class FormActionController extends AbstractActionController
     public function isButtonPressed($button)
     {
         $request = $this->getRequest();
+        $data = (array)$request->getPost();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-
-            if (isset($data['form-actions'][$button])) {
-
-                return true;
-            }
-        }
-
-        return false;
+        return $request->isPost() && isset($data['form-actions'][$button]);
     }
 }
