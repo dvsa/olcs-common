@@ -594,5 +594,16 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application.your-business.sole-trader' => 'People',
+    'application_your-business_people-sub-action-formTitle' => 'Title',
+    'application_your-business_people-sub-action-formTitleValueMr' => 'Mr',
+    'application_your-business_people-sub-action-formTitleValueMrs' => 'Mrs',
+    'application_your-business_people-sub-action-formTitleValueMiss' => 'Miss',
+    'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
+    'application_your-business_people-sub-action-formFirstName' => 'First name',
+    'application_your-business_people-sub-action-formSurname' => 'Surname',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of Birth'
     // Potentially unused (Not found with grep)
 );
