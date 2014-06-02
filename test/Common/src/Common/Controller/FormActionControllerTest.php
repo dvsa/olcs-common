@@ -15,6 +15,57 @@ namespace CommonTest\Controller;
 class FormActionControllerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /* public function testFormPost()
+    {
+        $form = $this->getMock('\Zend\Form\Form', ['setData', 'isValid', 'getData']);
+        $form->expects($this->any())
+             ->method('isPost')
+             ->will($this->returnValue($pressed));
+
+        $request = $this->getMock('stdClass', ['isPost', 'getPost']);
+        $request->expects($this->any())
+                ->method('isPost')
+                ->will($this->returnValue($pressed));
+        $request->expects($this->any())
+                ->method('getPost')
+                ->will($this->returnValue($data));
+
+        $sut = $this->getNewSut(['getRequest']);
+        $sut->expects($this->once())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+    } */
+
+    public function testCallCallbackIfExistsLocalMethod()
+    {
+        $params = ['german'];
+        $methodName = 'somecallbackMethod';
+
+        $sut = $this->getNewSut([$methodName]);
+        $sut->expects($this->once())
+            ->method($methodName)
+            ->with($this->equalTo($params[0]));
+
+        $sut->callCallbackIfExists($methodName, $params);
+    }
+
+    public function testCallCallbackIfExistsCallback()
+    {
+        $params = ['german'];
+
+        $callback = function() {};
+
+        $sut = $this->getNewSut();
+        $sut->callCallbackIfExists($callback, $params);
+    }
+
+    public function testCallCallbackIfThrowsException()
+    {
+        $this->setExpectedException('\Exception');
+
+        $sut = $this->getNewSut();
+        $sut->callCallbackIfExists('not-exists-and-never-will', []);
+    }
 
     public function testProcessAdd()
     {

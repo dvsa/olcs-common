@@ -201,11 +201,13 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback = null, $additionalParams = array())
+    public function formPost($form, $callback = null, $additionalParams = array())
     {
         if (!$this->enableCsrf) {
             $form->remove('csrf');
         }
+
+        $this->checkDisableCsrf($form);
 
         $form = $this->alterFormBeforeValidation($form);
 
@@ -231,17 +233,29 @@ abstract class FormActionController extends AbstractActionController
 
                 $params = array_merge($params, $this->getCallbackData());
 
-                if (is_callable($callback)) {
-                    $callback($params);
-                } elseif (is_callable(array($this, $callback))) {
-                    call_user_func_array(array($this, $callback), $params);
-                } elseif (!empty($callback)) {
-                    throw new \Exception('Invalid form callback: ' . $callback);
-                }
+                $this->callCallbackIfExists($callback, $params);
             }
         }
 
         return $form;
+    }
+
+    /**
+     * Calls the callback function/method if exists.
+     *
+     * @param unknown_type $callback
+     * @param unknown_type $params
+     * @throws \Exception
+     */
+    public function callCallbackIfExists($callback, $params)
+    {
+        if (is_callable($callback)) {
+            $callback($params);
+        } elseif (is_callable(array($this, $callback))) {
+            call_user_func_array(array($this, $callback), $params);
+        } elseif (!empty($callback)) {
+            throw new \Exception('Invalid form callback: ' . $callback);
+        }
     }
 
     /**
