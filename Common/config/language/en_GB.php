@@ -117,7 +117,9 @@ return array(
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough parking spaces
         available for the total number of vehicles that I want to keep at this address',
     'application_operating-centres_authorisation.data' => 'Authorisation',
-    'application_operating-centres_authorisation.data.hint' => 'Indicate the number of each category of vehicle you
+    'application_operating-centres_authorisation.data.hint' => 'Enter the total amount of vehicles & trailers that you
+        want authorised on the licence you are applying for.',
+    'application_operating-centres_authorisation.data.hint.psv' => 'Indicate the number of each category of vehicle you
         intend to operate under the licence',
     'application_operating-centres_authorisation.data.totAuthLargeVehicles' => '17 or more passenger seats',
     'application_operating-centres_authorisation.data.totAuthMediumVehicles' => '9 - 16 passenger seats',
@@ -222,10 +224,13 @@ return array(
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
     'application_your-business_business-details.data.company_name' => 'Company name',
+    'application_your-business_business-details.data.company_name.other' => 'Organisation name',
+    'application_your-business_business-details.data.company_name.partnership' => 'Partnership name',
     'application_your-business_business-details.data.company_number' => 'Registered company number',
     'application_your-business_business-details.data.trading_names_optional' => 'Trading names (optional)',
     'application_your-business_business-type.contact-details.business-phone' => 'Business telephone no. (optional)',
     'application_your-business_business-type.contact-details.email' => 'E-mail address',
+    'application_your-business_business-type.contact-details.fax-phone' => 'Fax telephone no. (optional)',
     'application_your-business_business-type.contact-details.hint' => 'Please enter at least one telephone number',
     'application_your-business_business-type.contact-details.home-phone' => 'Home telephone no. (optional)',
     'application_your-business_business-type.contact-details.label' => 'Contact details',
