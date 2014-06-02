@@ -671,7 +671,12 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function deleteFile($id, $fieldset, $name)
     {
-        $fileDetails = $this->makeRestCall('Document', 'GET', array('id' => $id), array('properties' => array('identifier')));
+        $fileDetails = $this->makeRestCall(
+            'Document',
+            'GET',
+            array('id' => $id),
+            array('properties' => array('identifier'))
+        );
 
         if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
             if ($this->getServiceLocator()->get('FileUploader')->getUploader()->remove($fileDetails['identifier'])) {

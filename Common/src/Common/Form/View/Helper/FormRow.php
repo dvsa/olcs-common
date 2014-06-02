@@ -174,7 +174,8 @@ class FormRow extends ZendFormRow
                 $markup = sprintf(
                     '<fieldset><legend>%s</legend>%s</fieldset>',
                     $label,
-                    $elementString);
+                    $elementString
+                );
             } else {
                 if ($element->hasAttribute('id') && ! ($element instanceof SingleCheckbox)) {
                     $labelOpen = '';
