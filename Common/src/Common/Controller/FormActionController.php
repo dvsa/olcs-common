@@ -295,7 +295,8 @@ abstract class FormActionController extends AbstractActionController
                 $details['data'],
                 (isset($details['variables']) ? $details['variables'] : array())
             );
-            $form->get($fieldsetName)->get('table')->setTable($table);
+
+            $form->get($fieldsetName)->get('table')->setTable($table, $fieldsetName);
             $form->get($fieldsetName)->get('rows')->setValue(count($table->getRows()));
         }
 

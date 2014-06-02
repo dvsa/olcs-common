@@ -31,8 +31,33 @@ class TableFactoryTest extends \PHPUnit_Framework_TestCase
 
         $tableFactory = new TableFactory();
 
-        $table = $tableFactory->createService($serviceLocator);
+        $table = $tableFactory->createService($serviceLocator)->getTableBuilder();
 
         $this->assertTrue($table instanceof \Common\Service\Table\TableBuilder);
+    }
+
+    /**
+     * Test buildTable
+     */
+    public function testBuildTable()
+    {
+        $name = 'foo';
+        $data = array('foo' => 'var');
+        $params = array('cake' => 'bbar');
+        $render = true;
+
+        $mockTable = $this->getMock('\stdClass', array('buildTable'));
+
+        $mockTable->expects($this->once())
+            ->method('buildTable')
+            ->with($name, $data, $params, $render);
+
+        $tableFactory = $this->getMock('\Common\Service\Table\TableFactory', array('getTableBuilder'));
+
+        $tableFactory->expects($this->once())
+            ->method('getTableBuilder')
+            ->will($this->returnValue($mockTable));
+
+        $tableFactory->buildTable($name, $data, $params, $render);
     }
 }
