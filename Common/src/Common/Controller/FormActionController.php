@@ -201,7 +201,7 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback = null, $additionalParams = array())
+    public function formPost($form, $callback = null, $additionalParams = array())
     {
         if (!$this->enableCsrf) {
             $form->remove('csrf');
@@ -231,17 +231,29 @@ abstract class FormActionController extends AbstractActionController
 
                 $params = array_merge($params, $this->getCallbackData());
 
-                if (is_callable($callback)) {
-                    $callback($params);
-                } elseif (is_callable(array($this, $callback))) {
-                    call_user_func_array(array($this, $callback), $params);
-                } elseif (!empty($callback)) {
-                    throw new \Exception('Invalid form callback: ' . $callback);
-                }
+                $this->callCallbackIfExists($callback, $params);
             }
         }
 
         return $form;
+    }
+
+    /**
+     * Calls the callback function/method if exists.
+     *
+     * @param unknown_type $callback
+     * @param unknown_type $params
+     * @throws \Exception
+     */
+    public function callCallbackIfExists($callback, $params)
+    {
+        if (is_callable($callback)) {
+            $callback($params);
+        } elseif (is_callable(array($this, $callback))) {
+            call_user_func_array(array($this, $callback), $params);
+        } elseif (!empty($callback)) {
+            throw new \Exception('Invalid form callback: ' . $callback);
+        }
     }
 
     /**
@@ -295,7 +307,8 @@ abstract class FormActionController extends AbstractActionController
                 $details['data'],
                 (isset($details['variables']) ? $details['variables'] : array())
             );
-            $form->get($fieldsetName)->get('table')->setTable($table);
+
+            $form->get($fieldsetName)->get('table')->setTable($table, $fieldsetName);
             $form->get($fieldsetName)->get('rows')->setValue(count($table->getRows()));
         }
 
@@ -374,7 +387,7 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
-    protected function processAdd($data, $entityName)
+    public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -386,7 +399,7 @@ abstract class FormActionController extends AbstractActionController
         return $result;
     }
 
-    protected function processEdit($data, $entityName)
+    public function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -488,16 +501,8 @@ abstract class FormActionController extends AbstractActionController
     public function isButtonPressed($button)
     {
         $request = $this->getRequest();
+        $data = (array)$request->getPost();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
-
-            if (isset($data['form-actions'][$button])) {
-
-                return true;
-            }
-        }
-
-        return false;
+        return $request->isPost() && isset($data['form-actions'][$button]);
     }
 }

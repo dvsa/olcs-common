@@ -96,6 +96,7 @@ return array(
     'application.vehicle-safety' => 'W Vehicle & safety',
     'application.vehicle-safety.safety' => 'W Safety inspections',
     'application.vehicle-safety.vehicle' => 'W Vehicles',
+    'application.vehicle-safety.vehicle-psv' => 'W Vehicles',
     'application.your-business' => 'W Your business',
     'application.your-business.addresses' => 'W Addresses',
     'application.your-business.business-details' => 'W Business details',
@@ -189,6 +190,33 @@ return array(
         inspections',
     'application_vehicle-safety_vehicle-add' => 'W Add vehicle',
     'application_vehicle-safety_vehicle-edit' => 'W Edit vehicle',
+    'application_vehicle-safety_vehicle-psv-large-add' => 'W Add large vehicle',
+    'application_vehicle-safety_vehicle-psv-large-edit' => 'W Edit large vehicle',
+    'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-large.table.title' => 'W 17 or more passenger seat vehicles (if
+        applicable)',
+    'application_vehicle-safety_vehicle-psv-large.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-medium-add' => 'W Add medium vehicle',
+    'application_vehicle-safety_vehicle-psv-medium-edit' => 'W Edit medium vehicle',
+    'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-medium.table.title' => 'W 9 - 16 passenger seat vehicles (if applicable)',
+    'application_vehicle-safety_vehicle-psv-medium.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-small-add' => 'W Add small vehicle',
+    'application_vehicle-safety_vehicle-psv-small-edit' => 'W Edit small vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'W Please provide us with the vehicle
+        registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-small.table.make' => 'W Make / model',
+    'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'W Limousine or novelty vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.title' => 'W Small vehicles (if applicable)',
+    'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or nevelty type
+        vehicle?',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv.enterReg' => 'W Would you like to enter the registration numbers of your
+        vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle.table.title' => 'W Vehicles',
