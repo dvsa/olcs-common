@@ -207,8 +207,6 @@ abstract class FormActionController extends AbstractActionController
             $form->remove('csrf');
         }
 
-        $this->checkDisableCsrf($form);
-
         $form = $this->alterFormBeforeValidation($form);
 
         if ($this->getRequest()->isPost()) {
