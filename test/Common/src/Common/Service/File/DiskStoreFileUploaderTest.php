@@ -62,7 +62,13 @@ class DiskStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         $uploader = $this->getMock('\Common\Service\File\DiskStoreFileUploader', array('moveFile'));
         $uploader->expects($this->once())
             ->method('moveFile')
-            ->will($this->returnCallback(function ($oldPath, $newPath) { return rename($oldPath, $newPath); }));
+            ->will(
+                $this->returnCallback(
+                    function ($oldPath, $newPath) {
+                        return rename($oldPath, $newPath);
+                    }
+                )
+            );
 
         $uploader->setConfig($this->config);
         $uploader->setFile($data);
