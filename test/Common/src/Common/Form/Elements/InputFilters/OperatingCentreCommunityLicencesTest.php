@@ -10,6 +10,7 @@ namespace CommonTest\Form\Elements\InputFilters;
 use PHPUnit_Framework_TestCase;
 use Common\Form\Elements\InputFilters\OperatingCentreCommunityLicences;
 use Common\Form\Elements\Validators\OperatingCentreCommunityLicencesValidator;
+use Zend\Validator as ZendValidator;
 
 /**
  * Test OperatingCentreCommunityLicences
@@ -38,6 +39,8 @@ class OperatingCentreCommunityLicencesTest extends PHPUnit_Framework_TestCase
     {
         $spec = $this->element->getInputSpecification();
 
-        $this->assertTrue($spec['validators'][0] instanceof OperatingCentreCommunityLicencesValidator);
+        $this->assertTrue($spec['validators'][0] instanceof ZendValidator\Digits);
+        $this->assertTrue($spec['validators'][1] instanceof ZendValidator\Between);
+        $this->assertTrue($spec['validators'][2] instanceof OperatingCentreCommunityLicencesValidator);
     }
 }
