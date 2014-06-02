@@ -117,8 +117,10 @@ return array(
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'W I have enough parking
         spaces available for the total number of vehicles that I want to keep at this address',
     'application_operating-centres_authorisation.data' => 'W Authorisation',
-    'application_operating-centres_authorisation.data.hint' => 'W Indicate the number of each category of vehicle you
-        intend to operate under the licence',
+    'application_operating-centres_authorisation.data.hint' => 'W Enter the total amount of vehicles & trailers that you
+        want authorised on the licence you are applying for.',
+    'application_operating-centres_authorisation.data.hint.psv' => 'W Indicate the number of each category of vehicle
+        you intend to operate under the licence',
     'application_operating-centres_authorisation.data.totAuthLargeVehicles' => 'W 17 or more passenger seats',
     'application_operating-centres_authorisation.data.totAuthMediumVehicles' => 'W 9 - 16 passenger seats',
     'application_operating-centres_authorisation.data.totAuthSmallVehicles' => 'W Small vehicles (Less than 9 passenger
