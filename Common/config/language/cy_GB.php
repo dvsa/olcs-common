@@ -229,6 +229,7 @@ return array(
     'application_your-business_business-details.data.trading_names_optional' => 'W Trading names (optional)',
     'application_your-business_business-type.contact-details.business-phone' => 'W Business telephone no. (optional)',
     'application_your-business_business-type.contact-details.email' => 'W E-mail address',
+    'application_your-business_business-type.contact-details.fax-phone' => 'W Fax telephone no. (optional)',
     'application_your-business_business-type.contact-details.hint' => 'W Please enter at least one telephone number',
     'application_your-business_business-type.contact-details.home-phone' => 'W Home telephone no. (optional)',
     'application_your-business_business-type.contact-details.label' => 'W Contact details',
