@@ -225,4 +225,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $this->loggedInUser = $id;
         return $this;
     }
+
+    /**
+     * Get uploader
+     *
+     * @return object
+     */
+    public function getUploader()
+    {
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
+    }
 }

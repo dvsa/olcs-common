@@ -679,7 +679,7 @@ abstract class FormActionController extends AbstractActionController
         );
 
         if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
-            if ($this->getServiceLocator()->get('FileUploader')->getUploader()->remove($fileDetails['identifier'])) {
+            if ($this->getUploader()->remove($fileDetails['identifier'])) {
 
                 $this->makeRestCall('Document', 'DELETE', array('id' => $id));
                 $fieldset->remove($name);

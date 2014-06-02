@@ -29,12 +29,23 @@ class DiskStoreFileUploader extends AbstractFileUploader
 
         $newPath = rtrim($location, '/') . '/' . $key;
 
-        if (!move_uploaded_file($file->getPath(), $newPath)) {
+        if (!$this->moveFile($file->getPath(), $newPath)) {
             throw new \Exception('Unable to move uploaded file');
         } else {
             $file->setPath($newPath);
             $file->setIdentifier($key);
         }
+    }
+
+    /**
+     * Move file
+     *
+     * @param string $oldPath
+     * @param string $newPath
+     */
+    public function moveFile($oldPath, $newPath)
+    {
+        return move_uploaded_file($oldPath, $newPath);
     }
 
     /**
