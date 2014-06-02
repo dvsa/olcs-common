@@ -222,6 +222,8 @@ return array(
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
     'application_your-business_business-details.data.company_name' => 'Company name',
+    'application_your-business_business-details.data.company_name.other' => 'Organisation name',
+    'application_your-business_business-details.data.company_name.partnership' => 'Partnership name',
     'application_your-business_business-details.data.company_number' => 'Registered company number',
     'application_your-business_business-details.data.trading_names_optional' => 'Trading names (optional)',
     'application_your-business_business-type.contact-details.business-phone' => 'Business telephone no. (optional)',
