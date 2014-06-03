@@ -6,6 +6,7 @@ return array(
     'Continue' => 'Continue',
     'N/A' => 'Not applicable',
     'No' => 'No',
+    'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences cannot exceed the total
         number of vehicles',
@@ -116,6 +117,12 @@ return array(
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough parking spaces
         available for the total number of vehicles that I want to keep at this address',
+    'application_operating-centres_authorisation-sub-action.advertisements' => 'Advertisements',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'Have you advertised your application for this operating centre in your local newspaper?',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.dateAdPlaced' => 'Date advertisement was placed (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file' => 'Advertisement (if applicable) (optional)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'Please upload a copy of the advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation.data' => 'Authorisation',
     'application_operating-centres_authorisation.data.hint' => 'Enter the total amount of vehicles & trailers that you
         want authorised on the licence you are applying for.',

@@ -21,6 +21,7 @@ class DateSelect extends ZendElement\DateSelect
                     'name'    => 'Callback',
                     'options' => array(
                         'callback' => function ($date) {
+
                         // Convert the date to a specific format
                             if (!is_array($date) || empty($date['year']) ||
                                 empty($date['month']) || empty($date['day'])) {
