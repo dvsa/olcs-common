@@ -13,6 +13,7 @@ use Zend\Form\FieldsetInterface;
 use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\CompanyNumber;
+use Common\Form\Elements\Types\FileUploadList;
 
 /**
  * Form Collection wrapper
@@ -106,13 +107,14 @@ class FormCollection extends ZendFormCollection
                 $attributesString = ' ' . $attributesString;
             }
 
-            $markup = sprintf(
-                '<fieldset%s>%s%s%s</fieldset>',
-                $attributesString,
-                $legend,
-                $hint,
-                $markup
-            );
+            if ($element instanceof FileUploadList) {
+
+                $markup = sprintf('<div%s>%s%s</div>', $attributesString, $hint, $markup);
+
+            } else {
+
+                $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
+            }
         }
 
         if (! ($element instanceof PostcodeSearch) && ! ($element instanceof CompanyNumber)) {
