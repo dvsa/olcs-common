@@ -18,6 +18,7 @@
     </head>
 
     <body class="<?php echo $this->applicationName(); ?>">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
 
     <?php echo $this->render('layout/partials/header.phtml'); ?>
 
