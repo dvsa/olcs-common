@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Text
+ * Table Required
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -14,7 +14,7 @@ use Common\Form\Elements\Validators\TableRequiredValidator;
 use Common\Service\Table\TableBuilder;
 
 /**
- * Text
+ * Table Requried
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -31,7 +31,7 @@ class TableRequired extends Table implements InputProviderInterface
 
         $table = $this->getTable();
 
-        if ($table instanceof \Common\Service\Table\TableBuilder) {
+        if ($table instanceof TableBuilder) {
             $label = $table->getVariable('required_label');
         }
 

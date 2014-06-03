@@ -6,7 +6,8 @@ return array(
     'elements' => array(
         'table' => array(
             'type' => 'table',
-            'label' => 'row'
+            'label' => 'row',
+            'filters' => '\Common\Form\Elements\InputFilters\TableRequired'
         ),
         'action' => array(
             'type' => 'hidden',

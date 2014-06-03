@@ -201,7 +201,7 @@ abstract class FormActionController extends AbstractActionController
      * @param type $callback
      * @return \Zend\Form
      */
-    protected function formPost($form, $callback = null, $additionalParams = array())
+    public function formPost($form, $callback = null, $additionalParams = array())
     {
         if (!$this->enableCsrf) {
             $form->remove('csrf');
@@ -231,17 +231,29 @@ abstract class FormActionController extends AbstractActionController
 
                 $params = array_merge($params, $this->getCallbackData());
 
-                if (is_callable($callback)) {
-                    $callback($params);
-                } elseif (is_callable(array($this, $callback))) {
-                    call_user_func_array(array($this, $callback), $params);
-                } elseif (!empty($callback)) {
-                    throw new \Exception('Invalid form callback: ' . $callback);
-                }
+                $this->callCallbackIfExists($callback, $params);
             }
         }
 
         return $form;
+    }
+
+    /**
+     * Calls the callback function/method if exists.
+     *
+     * @param unknown_type $callback
+     * @param unknown_type $params
+     * @throws \Exception
+     */
+    public function callCallbackIfExists($callback, $params)
+    {
+        if (is_callable($callback)) {
+            $callback($params);
+        } elseif (is_callable(array($this, $callback))) {
+            call_user_func_array(array($this, $callback), $params);
+        } elseif (!empty($callback)) {
+            throw new \Exception('Invalid form callback: ' . $callback);
+        }
     }
 
     /**
@@ -295,7 +307,8 @@ abstract class FormActionController extends AbstractActionController
                 $details['data'],
                 (isset($details['variables']) ? $details['variables'] : array())
             );
-            $form->get($fieldsetName)->get('table')->setTable($table);
+
+            $form->get($fieldsetName)->get('table')->setTable($table, $fieldsetName);
             $form->get($fieldsetName)->get('rows')->setValue(count($table->getRows()));
         }
 
@@ -374,7 +387,7 @@ abstract class FormActionController extends AbstractActionController
         return $form;
     }
 
-    protected function processAdd($data, $entityName)
+    public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -386,7 +399,7 @@ abstract class FormActionController extends AbstractActionController
         return $result;
     }
 
-    protected function processEdit($data, $entityName)
+    public function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
 
@@ -488,16 +501,193 @@ abstract class FormActionController extends AbstractActionController
     public function isButtonPressed($button)
     {
         $request = $this->getRequest();
+        $data = (array)$request->getPost();
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
+        return $request->isPost() && isset($data['form-actions'][$button]);
+    }
 
-            if (isset($data['form-actions'][$button])) {
+    /**
+     * Process file uploads
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileUploads($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getFiles()->toArray();
 
-                return true;
+            return $this->processFileUpload($uploads, $post, $files, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process file deletions
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileDeletions($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+
+            return $this->processFileDeletion($uploads, $post, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file upload
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param array $files
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileUpload($uploads, $data, $files, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileUpload(
+                        $callback,
+                        $data[$fieldset],
+                        $files[$fieldset],
+                        $form
+                    );
+
+                } elseif (isset($data[$fieldset]['file-controls']['upload'])
+                    && !empty($data[$fieldset]['file-controls']['upload'])) {
+
+                    $this->setPersist(false);
+
+                    $error = $files[$fieldset]['file-controls']['file']['error'];
+
+                    $responses[$fieldset] = $error;
+
+                    switch ($error) {
+                        case UPLOAD_ERR_OK:
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $files[$fieldset]['file-controls']['file']
+                            );
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $form->setMessages(
+                                array('__messages__' => array('File was only partially uploaded'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $form->setMessages(
+                                array('__messages__' => array('Please select a file to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $form->setMessages(
+                                array('__messages__' => array('The file was too large to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                        case UPLOAD_ERR_CANT_WRITE:
+                        case UPLOAD_ERR_EXTENSION:
+                            $form->setMessages(
+                                array('__messages__' => array('An unexpected error occurred while uploading the file'))
+                            );
+                            break;
+                    }
+                }
             }
         }
 
-        return false;
+        return $responses;
+    }
+
+    /**
+     * Process a single file deletion
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileDeletion($uploads, $data, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileDeletion(
+                        $callback,
+                        $data[$fieldset],
+                        $form
+                    );
+
+                } else {
+
+                    foreach ($form->get('list')->getFieldsets() as $listFieldset) {
+
+                        $name = $listFieldset->getName();
+
+                        if (isset($data[$fieldset]['list'][$name]['remove'])
+                            && !empty($data[$fieldset]['list'][$name]['remove'])) {
+
+                            $this->setPersist(false);
+
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $data[$fieldset]['list'][$name]['id'],
+                                $form->get('list'),
+                                $name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $responses;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param int $id
+     */
+    protected function deleteFile($id, $fieldset, $name)
+    {
+        $fileDetails = $this->makeRestCall(
+            'Document',
+            'GET',
+            array('id' => $id),
+            array('properties' => array('identifier'))
+        );
+
+        if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
+            if ($this->getUploader()->remove($fileDetails['identifier'])) {
+
+                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $fieldset->remove($name);
+            }
+        }
     }
 }
