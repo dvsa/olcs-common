@@ -62,7 +62,7 @@ class FormElement extends ZendFormElement
 
             $route = $element->getOption('route');
             if (!empty($route)) {
-                $url = $this->getView()->url($route);
+                $url = $this->getView()->url($route, array(), array(), true);
             } else {
                 $url = $element->getValue();
             }

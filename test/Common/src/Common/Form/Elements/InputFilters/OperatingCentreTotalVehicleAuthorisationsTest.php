@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Test OperatingCentreTrailerAuthorisations
+ * Test OperatingCentreTotalVehicleAuthorisationsTest
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
 use PHPUnit_Framework_TestCase;
-use Common\Form\Elements\InputFilters\OperatingCentreTrailerAuthorisations;
-use Common\Form\Elements\Validators\OperatingCentreTrailerAuthorisationsValidator;
+use Common\Form\Elements\InputFilters\OperatingCentreTotalVehicleAuthorisations;
+use Common\Form\Elements\Validators\OperatingCentreTotalVehicleAuthorisationsValidator;
 use Zend\Validator as ZendValidator;
 
 /**
- * Test OperatingCentreTrailerAuthorisations
+ * Test OperatingCentreTotalVehicleAuthorisationsTest
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class OperatingCentreTrailerAuthorisationsTest extends PHPUnit_Framework_TestCase
+class OperatingCentreTotalVehicleAuthorisationsTest extends PHPUnit_Framework_TestCase
 {
     /**+
      * Holds the element
@@ -29,7 +29,7 @@ class OperatingCentreTrailerAuthorisationsTest extends PHPUnit_Framework_TestCas
      */
     public function setUp()
     {
-        $this->element = new OperatingCentreTrailerAuthorisations();
+        $this->element = new OperatingCentreTotalVehicleAuthorisations();
     }
 
     /**
@@ -41,6 +41,6 @@ class OperatingCentreTrailerAuthorisationsTest extends PHPUnit_Framework_TestCas
 
         $this->assertTrue($spec['validators'][0] instanceof ZendValidator\Digits);
         $this->assertTrue($spec['validators'][1] instanceof ZendValidator\Between);
-        $this->assertTrue($spec['validators'][2] instanceof OperatingCentreTrailerAuthorisationsValidator);
+        $this->assertTrue($spec['validators'][2] instanceof OperatingCentreTotalVehicleAuthorisationsValidator);
     }
 }
