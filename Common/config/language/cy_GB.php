@@ -627,5 +627,13 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    // Potentially unused (Not found with grep)
+    'application_your-business_business_details-subsidiaries-tableHeader' => 'Subsidiary companies (optional)',
+    'application_your-business_business_details-subsidiaries-columnName' => 'Company name',
+    'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'Company number',
+    'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'Please add subsidiary company',
+    'application_your-business_business-details-add' => 'Add subsidiary company',
+    'application_your-business_business-details-formName' => 'Company name',
+    'application_your-business_business-details-formCompanyNo' => 'Company number',
+    'application_your-business_business-details-edit' => 'Edit subsidiary company',
+// Potentially unused (Not found with grep)
 );
