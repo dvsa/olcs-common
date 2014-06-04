@@ -5,7 +5,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\TableBuilder;
@@ -220,7 +219,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(), $table->getAttributes());
         $this->assertEquals(array(), $table->getColumns());
-        $this->assertEquals(array(), $table->getVariables());
+        $this->assertEquals(array('hidden' => 'default'), $table->getVariables());
     }
 
     /**
@@ -406,6 +405,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             'limit' => 10
         );
 
+        $expected = array_merge(array('page' => 1, 'sort' => '', 'order' => 'ASC'), $params);
+
         $table = new TableBuilder($this->getMockServiceLocator());
 
         $table->loadParams($params);
@@ -415,7 +416,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(10, $table->getLimit());
         $this->assertEquals('', $table->getSort());
         $this->assertEquals('ASC', $table->getOrder());
-        $this->assertEquals($params, $table->getVariables());
+        $this->assertEquals($expected, $table->getVariables());
     }
 
     /**
@@ -443,6 +444,12 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $expectedVariables['foo'] = 'bar';
         $expectedVariables['title'] = null;
+
+        $expectedVariables['hidden'] = 'default';
+        $expectedVariables['limit'] = 10;
+        $expectedVariables['page'] = 1;
+        $expectedVariables['sort'] = '';
+        $expectedVariables['order'] = 'ASC';
 
         $table = $this->getMockTableBuilder(array('getConfigFromFile'));
 
@@ -559,7 +566,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
                 'type' => 'th',
                 'colspan' => 2,
                 'content' => 'foo',
-                'formatter' => function ($data) {
+                'formatter' => function () {
                     return 'ABC';
                 }
             ),
@@ -580,7 +587,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->will(
                 $this->returnCallback(
-                    function ($string, $vars) {
+                    function ($string) {
                         return $string;
                     }
                 )
@@ -889,6 +896,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnCallback(
                     function ($content, $vars) {
+                        unset($content);
                         return $vars;
                     }
                 )
@@ -935,6 +943,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnCallback(
                     function ($content, $vars) {
+                        unset($content);
                         return $vars;
                     }
                 )

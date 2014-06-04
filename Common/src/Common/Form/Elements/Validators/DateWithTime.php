@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Checks that if a time is entered then the corresponding date is also set
+ * (Used on Impoundings)
+ *
+ * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
+ */
 namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator as AbstractValidator;
@@ -9,6 +16,8 @@ use Zend\Validator\Date as DateValidator;
 /**
  * Checks that if a time is entered then the corresponding date is also set
  * (Used on Impoundings)
+ *
+ * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
  */
 class DateWithTime extends AbstractValidator
 {
@@ -82,7 +91,7 @@ class DateWithTime extends AbstractValidator
     public function setToken($token)
     {
         $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
-        $this->token       = $token;
+        $this->token = $token;
         return $this;
     }
 
@@ -95,6 +104,8 @@ class DateWithTime extends AbstractValidator
      */
     public function isValid($value, array $context = null)
     {
+        unset($value);
+
         $time = $context[$this->getToken()];
 
         $date = new DateValidator(array('format' => 'H:i'));

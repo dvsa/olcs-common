@@ -7,7 +7,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Service\Table\Formatter;
 
 /**

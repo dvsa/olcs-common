@@ -21,12 +21,16 @@ use Zend\Http\Response;
  */
 class ResponseHelper
 {
-
     public $response;
-    private $responseData;
+
     public $method;
+
+    private $responseData;
+
     private $params;
+
     private $data;
+
     private $expectedCodes = array(
         'GET' => array(
             Response::STATUS_CODE_200,

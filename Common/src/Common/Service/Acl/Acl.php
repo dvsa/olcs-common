@@ -1,8 +1,19 @@
 <?php
+
+/**
+ * Acl
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 namespace Db\Service\Acl;
 
 use Zend\Permissions\Acl;
 
+/**
+ * Acl
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 class Acl
 {
     /**
@@ -18,7 +29,7 @@ class Acl
     public function __construct(array $resources = [])
     {
         if (is_array($resources) && count($resources) > 0) {
-            $this->setResources($permissions);
+            $this->setResources($resources);
         }
     }
 

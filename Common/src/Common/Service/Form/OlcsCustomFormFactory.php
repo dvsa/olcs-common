@@ -6,7 +6,6 @@
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-
 namespace Common\Service\Form;
 
 use Zend\Form\Factory;
@@ -103,14 +102,15 @@ class OlcsCustomFormFactory extends Factory
         if (!isset($this->baseFormConfig[$type])) {
             throw new \Exception("Form $type has no specification config");
         }
-        $formConfig = $this->createFormConfig($this->baseFormConfig[$type]);
-        $formConfig = $this->injectDynamicOptions($formConfig, $this->getDynamicOptions());
+
+        $formConfig = $this->injectDynamicOptions(
+            $this->createFormConfig($this->baseFormConfig[$type]),
+            $this->getDynamicOptions()
+        );
 
         $form = parent::createForm($formConfig);
 
-        $form = $this->fixId($form);
-
-        return $form;
+        return $this->fixId($form);
     }
 
     /**
@@ -193,7 +193,7 @@ class OlcsCustomFormFactory extends Factory
 
                 foreach ($dynamicOptions as $dKey => $dVal) {
 
-                    if ($value == '{{'.$dKey.'}}') {
+                    if ($value == '{{' . $dKey . '}}') {
                         $value = $dVal;
                     }
                 }
@@ -363,8 +363,6 @@ class OlcsCustomFormFactory extends Factory
 
             // This logic pulls in a fieldset from config
             if (isset($fieldset['type'])) {
-
-                $newFieldset = array();
 
                 $newFieldset = $this->getFieldsetConfig($fieldset['type']);
 
