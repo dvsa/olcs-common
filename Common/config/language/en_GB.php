@@ -626,6 +626,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application.your-business.sole-trader' => 'People',
     'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
     'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
     'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
@@ -652,13 +653,15 @@ return array(
     'application_your-business_people-sub-action-formTitleValueMiss' => 'Miss',
     'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
     'application_your-business_people-sub-action-formFirstName' => 'First name',
+    'application_your-business_people-sub-action-formSurname' => 'Surname',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of Birth',
     'application_your-business_people-sub-action-formSurname' => 'Last name',
     'application_your-business_people-sub-action-formOtherNames' => 'Other names',
     'application_your-business_people-sub-action-formPosition' => 'Position',
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-add' => 'Add person',
-    'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
-    'application_your-business_people-edit' => 'Edit person'
     // Potentially unused (Not found with grep)
 );
