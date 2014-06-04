@@ -1271,9 +1271,8 @@ class TableBuilder
             $columns = $this->getColumns();
             $newColumns = array();
             foreach ($columns as $column) {
-                if (array_key_exists('name', $column) && $column['name'] !== $name) {
-                    $newColumns[] = $column;
-                } elseif (array_key_exists('name', $column) === false) {
+                if ((array_key_exists('name', $column) === false) ||
+                    (array_key_exists('name', $column) && $column['name'] !== $name)) {
                     $newColumns[] = $column;
                 }
             }
@@ -1281,3 +1280,4 @@ class TableBuilder
         }
     }
 }
+
