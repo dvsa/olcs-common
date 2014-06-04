@@ -101,7 +101,9 @@ class FormRow extends ZendFormRow
                 $class = $element->getAttribute('data-container-class');
             }
 
-            $markup = sprintf(self::$format, $class, $markup);
+            if ($element->getOption('render-container') !== false) {
+                $markup = sprintf(self::$format, $class, $markup);
+            }
         }
 
         if ($oldRenderErrors && $elementErrors != '') {
@@ -172,7 +174,8 @@ class FormRow extends ZendFormRow
                 $markup = sprintf(
                     '<fieldset><legend>%s</legend>%s</fieldset>',
                     $label,
-                    $elementString);
+                    $elementString
+                );
             } else {
                 if ($element->hasAttribute('id') && ! ($element instanceof SingleCheckbox)) {
                     $labelOpen = '';

@@ -4,6 +4,7 @@ namespace Common\Form\Elements\InputFilters;
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Zend\I18n\Validator\Alnum;
 
 class CompanyNumber extends ZendElement implements InputProviderInterface
 {
@@ -26,8 +27,8 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(8, 8),
-                new ZendValidator\Digits(),
+                new Alnum(),
+                new ZendValidator\StringLength(8, 8)
             ]
         ];
 

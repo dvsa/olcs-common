@@ -43,8 +43,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function preOnDispatch()
     {
-        $request = $this->getResponse();
-        $headers = $request->getHeaders();
+        $response = $this->getResponse();
+        $headers = $response->getHeaders();
 
         $headers->addHeaderLine('Cache-Control', 'no-cache, must-revalidate');
         $headers->addHeaderLine('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
@@ -224,5 +224,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $this->loggedInUser = $id;
         return $this;
+    }
+
+    /**
+     * Get uploader
+     *
+     * @return object
+     */
+    public function getUploader()
+    {
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 }
