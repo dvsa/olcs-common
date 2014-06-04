@@ -635,5 +635,4 @@ return array(
     'application_your-business_business-details-formCompanyNo' => 'Company number',
     'application_your-business_business-details-edit' => 'Edit subsidiary company',
     // Potentially unused (Not found with grep)
-    
 );
