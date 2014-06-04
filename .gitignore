@@ -14,3 +14,4 @@ config/autoload/local.php
 .sass-cache/
 *.sw?
 coverage/
+node_modules

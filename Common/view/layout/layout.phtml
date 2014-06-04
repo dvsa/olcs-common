@@ -11,9 +11,7 @@
         <?php /* echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico')); */
                 echo $this->headLink()->appendStylesheet($this->basePath() . '/static/stylesheets/main.css') ?>
 
-        <?php
-            isset($route) ? $this->includeFlowJs($route, 'selfserve') : '';
-        ?>
+        <?php echo $this->headScript(); ?>
 
     </head>
 
@@ -32,15 +30,12 @@
             <?php echo $this->content; ?>
         </div>
     </div><!-- .page-wrapper-->
-    <?php
-        echo $this->render('layout/partials/footer.phtml');
-        echo $this->inlineScript();
-    ?>
 
-    <script type='text/javascript' src='/static/js/lib/jquery.1.11.0.js'></script>
-    <script type='text/javascript' src='/static/js/main.js'></script>
+    <?php echo $this->render('layout/partials/footer.phtml'); ?>
 
-    <?php echo $this->headScript(); ?>
+    <?php echo $this->inlineScript()
+        ->prependFile($this->basePath('static/js/' . $this->applicationName() . '.js'))
+        ->prependFile($this->basePath('static/js/common.js')) ?>
 
     </body>
 </html>
