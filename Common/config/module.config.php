@@ -3,10 +3,35 @@
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
 return array(
+    'router' => array(
+        'routes' => array(
+            'getfile' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/file/:file/:name',
+                    'defaults' => array(
+                        'controller' => 'Common\Controller\File',
+                        'action' => 'download'
+                    )
+                )
+            )
+        )
+    ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
         'services' => array(
             'address' => new \Common\Service\Address\Address()
+        )
+    ),
+    'file_uploader' => array(
+        'default' => 'DiskStore',
+        'config' => array(
+            'location' => realpath(__DIR__ . '/../data/uploads/')
+        )
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'Common\Controller\File' => 'Common\Controller\FileController'
         )
     ),
     'view_helpers' => array(
