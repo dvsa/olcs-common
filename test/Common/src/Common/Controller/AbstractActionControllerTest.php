@@ -81,8 +81,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 
         $sut = $this->getNewSut(['getEvent', 'getRequest']);
 
-        // --
-
         $routeMatch = $this->getMock('stdClass', ['getParams']);
         $routeMatch->expects($this->once())
                    ->method('getParams')
@@ -96,8 +94,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $sut->expects($this->once())
             ->method('getEvent')
             ->will($this->returnValue($event));
-
-        // --
 
         $query = $this->getMock('stdClass', ['toArray']);
         $query->expects($this->once())
@@ -113,17 +109,11 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
             ->method('getRequest')
             ->will($this->returnValue($request));
 
-        /* print_r(array_merge($routeParams, $queryParams));
-        print_r($sut->getAllParams());
-        exit(); */
-
-        //;
-
         $this->assertEquals(array_merge($routeParams, $queryParams), $sut->getAllParams());
     }
 
     /**
-     *
+     * testCheckForCrudActionReturnsFalse
      */
     public function testCheckForCrudActionReturnsFalse()
     {
@@ -225,8 +215,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('url'))
             ->will($this->returnValue($url));
 
-
-
         $sl = $this->getMock('stdClass', ['get']);
         $sl->expects($this->once())
             ->method('get')
@@ -325,7 +313,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $id = 'dsfakjf';
         $this->assertSame($id, $sut->setLoggedInUser($id)->getLoggedInUser());
     }
-
 
     public function getNewSut($methods = array())
     {

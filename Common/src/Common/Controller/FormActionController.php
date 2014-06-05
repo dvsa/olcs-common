@@ -6,7 +6,6 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Shaun <shaun.lizzio@valtech.co.uk>
  */
-
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
@@ -368,6 +367,9 @@ abstract class FormActionController extends AbstractActionController
             if (empty($value)) {
 
                 $form->getInputFilter()->get($key)->setAllowEmpty(true);
+                $form->getInputFilter()->get($key)->setValidatorChain(
+                    new \Zend\Validator\ValidatorChain()
+                );
             }
         }
 
@@ -380,6 +382,9 @@ abstract class FormActionController extends AbstractActionController
                 if (empty($value)) {
 
                     $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
+                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(
+                        new \Zend\Validator\ValidatorChain()
+                    );
                 }
             }
         }
@@ -394,7 +399,7 @@ abstract class FormActionController extends AbstractActionController
         $result = $this->makeRestCall($entityName, 'POST', $data);
 
         $data['id'] = $result['id'];
-        $documentData = $this->generateDocument($data);
+        $this->generateDocument($data);
 
         return $result;
     }
@@ -405,7 +410,7 @@ abstract class FormActionController extends AbstractActionController
 
         $result = $this->makeRestCall($entityName, 'PUT', $data);
 
-        $documentData = $this->generateDocument($data);
+        $this->generateDocument($data);
 
         return $result;
 

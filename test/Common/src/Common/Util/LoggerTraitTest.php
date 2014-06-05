@@ -1,14 +1,19 @@
 <?php
+
 /**
  * Test FlashMessengerTrait
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-
 namespace CommonTest\Controller\Util;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
+/**
+ * Test FlashMessengerTrait
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 class LoggerTraitTest extends AbstractHttpControllerTestCase
 {
 
@@ -37,7 +42,7 @@ class LoggerTraitTest extends AbstractHttpControllerTestCase
         $trait->expects($this->once())
             ->method('setLogger')
             ->with($logger);
-        $returned = $trait->getLogger();
+        $trait->getLogger();
     }
 
     /**
@@ -66,7 +71,7 @@ class LoggerTraitTest extends AbstractHttpControllerTestCase
             ->method('getServiceLocator')
             ->will($this->returnValue($serviceLocator));
 
-        $returned = $trait->getLogger();
+        $trait->getLogger();
     }
 
     public function testLog()
@@ -88,6 +93,6 @@ class LoggerTraitTest extends AbstractHttpControllerTestCase
         $trait->expects($this->once())
             ->method('getLogger')
             ->will($this->returnValue($logger));
-        $returned = $trait->log('a message', 'more info', array());
+        $trait->log('a message', 'more info', array());
     }
 }

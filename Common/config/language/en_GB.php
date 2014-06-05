@@ -6,6 +6,8 @@ return array(
     'Continue' => 'Continue',
     'N/A' => 'Not applicable',
     'No' => 'No',
+    'FHAdditionalInfo.validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %min% characters long',
+    'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is required and can\'t be empty',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences cannot exceed the total
         number of vehicles',
@@ -212,7 +214,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.title' => 'Small vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or nevelty type
+    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration number',
@@ -626,5 +628,42 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application.your-business.sole-trader' => 'People',
+    'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
+    'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
+    'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
+    'selfserve-app-subSection-your-business-people-columnName' => 'Name',
+    'selfserve-app-subSection-your-business-people-columnDate' => 'DOB',
+    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other Names',
+    'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
+    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Please add to this table',
+    'selfserve-app-subSection-your-business-people-guidanceLC' =>
+        'Please provide details of the company directors. This must be the same as the details that are '
+        . 'on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLLP' =>
+        'Please provide details of the members. This must be the same as the details that are on the '
+        . 'companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceP' =>
+        'Please give details below of the partners in the business. You must include details of all '
+        . 'partners, even if they are not primarily responsible for the operation of goods vehicles',
+    'selfserve-app-subSection-your-business-people-guidanceO' =>
+        'Please provide details of the persons responsible for your organisation',
+    'Please add a person' => 'Please add a person',
+    'application_your-business_people-sub-action-formTitle' => 'Title',
+    'application_your-business_people-sub-action-formTitleValueMr' => 'Mr',
+    'application_your-business_people-sub-action-formTitleValueMrs' => 'Mrs',
+    'application_your-business_people-sub-action-formTitleValueMiss' => 'Miss',
+    'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
+    'application_your-business_people-sub-action-formFirstName' => 'First name',
+    'application_your-business_people-sub-action-formSurname' => 'Surname',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of Birth',
+    'application_your-business_people-sub-action-formSurname' => 'Last name',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
+    'application_your-business_people-add' => 'Add person',
+    'application_your-business_people-edit' => 'Edit person',
     // Potentially unused (Not found with grep)
 );

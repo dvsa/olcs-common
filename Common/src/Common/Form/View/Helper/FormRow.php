@@ -123,7 +123,6 @@ class FormRow extends ZendFormRow
         $escapeHtmlHelper    = $this->getEscapeHtmlHelper();
         $labelHelper         = $this->getLabelHelper();
         $elementHelper       = $this->getElementHelper();
-        $elementErrorsHelper = $this->getElementErrorsHelper();
 
         $label           = $element->getLabel();
         $inputErrorClass = $this->getInputErrorClass();

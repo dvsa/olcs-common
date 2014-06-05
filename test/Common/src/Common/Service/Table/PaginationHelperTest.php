@@ -5,7 +5,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace CommonTest\Service\Table;
 
 use Common\Service\Table\PaginationHelper;

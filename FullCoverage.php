@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 $testDirectories = array(
     'common' => realpath(__DIR__ . '/test'),
