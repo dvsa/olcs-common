@@ -59,9 +59,16 @@ return array(
             'title' => 'Cases',
             'formatter' => function($data) {
                 if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
-                    return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId']), 'licence_case_list/pagination', false) . '">' . $data['caseCount'] . '</a>';
+                    return '<a href="' . $this->generateUrl(
+                        array('licence' => $data['licenceId']),
+                        'licence_case_list/pagination',
+                        false
+                    ) . '">' . $data['caseCount'] . '</a>';
                 } else {
-                    return '<a href="' . $this->generateUrl(array('licence' => $data['licenceId'], 'action' => 'add'), 'licence_case_action') . '">[Add Case]</a>';
+                    return '<a href="' . $this->generateUrl(
+                        array('licence' => $data['licenceId'], 'action' => 'add'),
+                        'licence_case_action'
+                    ) . '">[Add Case]</a>';
                 }
             }
         ),

@@ -1,18 +1,21 @@
 <?php
+
 /**
  * FormElement Test
  *
- * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
-use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper;
 
+/**
+ * FormElement Test
+ *
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormElement extends \PHPUnit_Framework_TestCase
 {
 
@@ -20,11 +23,6 @@ class FormElement extends \PHPUnit_Framework_TestCase
      * @var \Zend\Form\Element
      */
     protected $element;
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
 
     private function prepareElement($type = 'Text', $options = array())
     {

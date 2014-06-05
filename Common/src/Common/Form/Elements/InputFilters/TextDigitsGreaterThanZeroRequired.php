@@ -1,15 +1,21 @@
 <?php
-/**
- * 
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
- *
- */
 
+/**
+ * TextDigitsGreaterThanZeroRequired
+ *
+ * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ */
 namespace Common\Form\Elements\InputFilters;
+
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
+/**
+ * TextDigitsGreaterThanZeroRequired
+ *
+ * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ */
 class TextDigitsGreaterThanZeroRequired extends ZendElement implements InputProviderInterface
 {
     /**
@@ -27,8 +33,7 @@ class TextDigitsGreaterThanZeroRequired extends ZendElement implements InputProv
                 new ZendValidator\GreaterThan(array('min' => 0))
             ]
         ];
-        
+
         return $specification;
     }
-
 }

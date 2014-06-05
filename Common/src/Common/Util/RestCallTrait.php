@@ -5,11 +5,9 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Util;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use OlcsEntities\Utility\BundleHydrator;
 use Common\Exception\ResourceNotFoundException;
 use Common\Exception\BadRequestException;
 use Common\Exception\ResourceConflictException;
@@ -31,7 +29,6 @@ trait RestCallTrait
      * @param array $data
      * @return array
      */
-    
     public function sendGet($service, $data = array(), $appendParamsToRoute = false)
     {
         $route = '';
@@ -64,7 +61,6 @@ trait RestCallTrait
     {
         return $this->getRestClient($service)->post('', $data);
     }
-
 
     /**
      * Make a rest call and return the response
@@ -125,12 +121,12 @@ trait RestCallTrait
         //Handle response and return data
         return $this->handleResponseMethod($handleResponseMethod, $service, $response);
     }
-    
+
     public function getServiceRestClient($service, $serviceMethod, $path, $data)
     {
         return $this->getRestClient($service)->$serviceMethod($path, $data);
     }
-    
+
     public function handleResponseMethod($handleResponseMethod, $service, $response)
     {
         return $this->$handleResponseMethod($service, $response);
@@ -188,7 +184,6 @@ trait RestCallTrait
      */
     public function handlePostResponse($service, $response)
     {
-        // If we have a 400
         if ($response === false) {
             throw new BadRequestException();
         }
@@ -253,15 +248,5 @@ trait RestCallTrait
         }
 
         return $this->doctrineHydrator;
-    }
-
-    /**
-     * Return a new BundleHydrator
-     *
-     * @return BundleHydrator
-     */
-    private function getBundleHydrator()
-    {
-        return new BundleHydrator($this->getDoctrineHydrator());
     }
 }

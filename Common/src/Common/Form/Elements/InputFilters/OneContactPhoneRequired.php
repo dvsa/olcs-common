@@ -3,7 +3,7 @@
 /**
  * One contact phone required
  *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 namespace Common\Form\Elements\InputFilters;
 
@@ -14,7 +14,7 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 /**
  * One contact phone required
  *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
 class OneContactPhoneRequired extends ZendElement\Hidden implements InputProviderInterface
 {
@@ -45,16 +45,19 @@ class OneContactPhoneRequired extends ZendElement\Hidden implements InputProvide
      */
     protected function getCallbackValidator()
     {
-        $validator = new ZendValidator\Callback(function ($value, $context) {
+        $validator = new ZendValidator\Callback(
+            function ($value, $context) {
 
-            // check if at least one of three phone inputs is populated
-            $charsCount = strlen($context['phone_business'])
-                + strlen($context['phone_home'])
-                + strlen($context['phone_mobile'])
-                + strlen($context['phone_fax']);
+                unset($value);
+                // check if at least one of three phone inputs is populated
+                $charsCount = strlen($context['phone_business'])
+                    + strlen($context['phone_home'])
+                    + strlen($context['phone_mobile'])
+                    + strlen($context['phone_fax']);
 
-            return ($charsCount > 0);
-        });
+                return ($charsCount > 0);
+            }
+        );
 
         $validator->setMessage('At least one telephone number is required');
         return $validator;

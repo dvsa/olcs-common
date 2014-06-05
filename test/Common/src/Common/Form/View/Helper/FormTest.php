@@ -1,17 +1,23 @@
 <?php
+
 /**
  * FormTest
- * 
+ *
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper;
 
+/**
+ * FormTest
+ *
+ * @package CommonTest\Form\View\Helper
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -59,5 +65,4 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex('/^<form action="(.*)" method="(POST|GET)" name="test" id="test"><\/form>$/');
     }
-
 }
