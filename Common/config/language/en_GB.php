@@ -214,7 +214,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.title' => 'Small vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or nevelty type
+    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration number',

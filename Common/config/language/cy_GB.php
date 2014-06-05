@@ -6,6 +6,8 @@ return array(
     'Continue' => 'W Continue',
     'N/A' => 'W Not applicable',
     'No' => 'W No',
+    'FHAdditionalInfo.validation.too_short' => 'You selected \'yes\' in one of the provided questions, so the input has to be at least %min% characters long',
+    'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of the provided questions, so value is required and can\'t be empty',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'W Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences cannot exceed the total
         number of vehicles',
@@ -213,7 +215,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'W Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.title' => 'W Small vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'W Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or nevelty type
+    'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or novelty type
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
