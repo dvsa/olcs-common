@@ -32,8 +32,8 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::TOO_SHORT => "You selected 'yes' in one of above questions, so the input has to be at least %min% characters long",
-        self::IS_EMPTY => "You selected 'yes' in one of above questions, so value is required and can't be empty",
+        self::TOO_SHORT => "You selected 'yes' in one of the provided questions, so the input has to be at least %min% characters long",
+        self::IS_EMPTY => "You selected 'yes' in one of the provided questions, so value is required and can't be empty",
     );
 
     /**
