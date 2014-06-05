@@ -367,6 +367,9 @@ abstract class FormActionController extends AbstractActionController
             if (empty($value)) {
 
                 $form->getInputFilter()->get($key)->setAllowEmpty(true);
+                $form->getInputFilter()->get($key)->setValidatorChain(
+                    new \Zend\Validator\ValidatorChain()
+                );
             }
         }
 
@@ -379,6 +382,9 @@ abstract class FormActionController extends AbstractActionController
                 if (empty($value)) {
 
                     $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
+                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(
+                        new \Zend\Validator\ValidatorChain()
+                    );
                 }
             }
         }
