@@ -1,31 +1,23 @@
 <?php
+
 /**
  * FormErrors Test
  *
- * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\JsonRenderer;
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\View\Helper;
 use Zend\Form;
 
+/**
+ * FormErrors Test
+ *
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormErrors extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @var \Zend\Form\Form
-     */
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     private function prepareForm($valid = false)
     {
         $form = new Form\Form();
@@ -138,5 +130,4 @@ class FormErrors extends \PHPUnit_Framework_TestCase
 
         return $viewHelper;
     }
-
 }

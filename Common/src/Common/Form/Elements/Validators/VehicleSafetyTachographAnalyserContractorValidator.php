@@ -33,6 +33,8 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
      */
     public function isValid($value, $context = null)
     {
+        unset($value);
+
         if ($context['tachographIns'] === 'tachograph_analyser.2'
             && trim($context['tachographInsName']) === '') {
 

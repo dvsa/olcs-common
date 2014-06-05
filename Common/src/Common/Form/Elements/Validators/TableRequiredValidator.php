@@ -59,6 +59,8 @@ class TableRequiredValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
+        unset($value);
+
         if (empty($context['action']) && $context['rows'] < 1) {
 
             $this->error('required');

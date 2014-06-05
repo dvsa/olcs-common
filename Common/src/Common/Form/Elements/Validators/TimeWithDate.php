@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Checks that if a time is entered then the corresponding date is also set
+ * (Used on Impoundings)
+ *
+ * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
+ */
 namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator as AbstractValidator;
@@ -9,6 +16,8 @@ use Zend\Validator\Date as DateValidator;
 /**
  * Checks that if a time is entered then the corresponding date is also set
  * (Used on Impoundings)
+ *
+ * @author Ian Lindsay <ian.lindsay@valtech.co.uk>
  */
 class TimeWithDate extends AbstractValidator
 {
@@ -82,7 +91,7 @@ class TimeWithDate extends AbstractValidator
     public function setToken($token)
     {
         $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
-        $this->token       = $token;
+        $this->token = $token;
         return $this;
     }
 
@@ -95,12 +104,14 @@ class TimeWithDate extends AbstractValidator
      */
     public function isValid($value, array $context = null)
     {
+        unset($value);
+
         $c = $context[$this->getToken()];
         $compareValue = implode('-', [$c['year'], $c['month'], $c['day']]);
 
         $date = new DateValidator(array('format' => 'Y-m-d'));
 
-        if(!$date->isValid($compareValue)) {
+        if (!$date->isValid($compareValue)) {
             $this->error(self::MISSING_DATE);
             return false;
         }

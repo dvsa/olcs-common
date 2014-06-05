@@ -7,6 +7,8 @@ return array(
     'N/A' => 'Not applicable',
     'No' => 'No',
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
+    'FHAdditionalInfo.validation.too_short' => 'You selected \'yes\' in one of above questions, so the input has to be at least %min% characters long',
+    'FHAdditionalInfo.validation.is_empty' => 'You selected \'yes\' in one of above questions, so value is required and can\'t be empty',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences cannot exceed the total
         number of vehicles',

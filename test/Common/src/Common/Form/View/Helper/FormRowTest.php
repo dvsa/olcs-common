@@ -1,32 +1,23 @@
 <?php
+
 /**
  * FormRow Test
  *
- * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
-use Zend\View\Renderer\JsonRenderer;
-use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
-use Zend\Form;
 
+/**
+ * FormRow Test
+ *
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormRow extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @var \Zend\Form\Form
-     */
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     /**
      * @param string $type
      * @param array $options
@@ -210,5 +201,4 @@ class FormRow extends \PHPUnit_Framework_TestCase
 
         return $viewHelper;
     }
-
 }

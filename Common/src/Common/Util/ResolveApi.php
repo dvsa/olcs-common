@@ -1,18 +1,16 @@
 <?php
+
 /**
  * Resolves API names to API URL:s
- * If a mapping exists in the module.config.php the base url 
+ * If a mapping exists in the module.config.php the base url
  * and api path will be taken from that.
  * If no mapping exists and the api ref. is in the format [baseurl]\[path] then the
  * [baseurl] will be used to get the end point and the path will be camel cased to dashes
  * eg. LicenceVehicle to licence-vehicle.
  * If there is a path only eg. LicenceVehicle then the baseurl will default to backend
  *
- * @package     OlcsCommon
- * @subpackage  Util
- * @author      Mike Cooper
+ * @author Mike Cooper <michael.cooper@valtech.co.uk>
  */
-
 namespace Common\Util;
 
 use Zend\Uri\Http as HttpUri;
@@ -20,6 +18,8 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * Resolves API names to API URL:s
+ *
+ * @author Mike Cooper <michael.cooper@valtech.co.uk>
  */
 class ResolveApi
 {
@@ -61,7 +61,7 @@ class ResolveApi
         }
         return new RestClient($url);
     }
-    
+
     /**
      * Gets the base url for the rest call.
      * @param type $endpoint
@@ -75,7 +75,7 @@ class ResolveApi
         }
         return $this->mapping['endpoints'][$endpoint];
     }
-    
+
     /**
      * Returns url for RestClient($url)
      * @param type $baseUrl

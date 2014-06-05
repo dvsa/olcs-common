@@ -1,17 +1,22 @@
 <?php
+
 /**
  * FormElementErrors Test
- * 
+ *
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\View\Helper;
 
+/**
+ * FormElementErrors Test
+ *
+ * @package CommonTest\Form\View\Helper
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormElementErrors extends \PHPUnit_Framework_TestCase
 {
 
@@ -38,5 +43,4 @@ class FormElementErrors extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex('/^<ul><li>(.*)<\/li><\/ul>$/');
     }
-
 }
