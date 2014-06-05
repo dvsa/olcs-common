@@ -4,8 +4,13 @@ return array(
     'Authorisation' => 'W Authorisation',
     'Confirm' => 'W Confirm',
     'Continue' => 'W Continue',
+    'FHAdditionalInfo.validation.is_empty' => 'W You selected \'yes\' in one of the provided questions, so value is
+        required and can\'t be empty',
+    'FHAdditionalInfo.validation.too_short' => 'W You selected \'yes\' in one of the provided questions, so the input
+        has to be at least %min% characters long',
     'N/A' => 'W Not applicable',
     'No' => 'W No',
+    'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'W Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences cannot exceed the total
         number of vehicles',
@@ -31,6 +36,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.too-low' => 'W The total number of authorised vehicles must be equal
         or greater than the largest number of vehicles authorised at any individual operating centre',
     'Please Select' => 'W Please Select',
+    'Please add a person' => 'W Please add a person',
     'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'Week' => 'W Week',
     'Weeks' => 'W Weeks',
@@ -102,8 +108,20 @@ return array(
     'application.your-business.business-details' => 'W Business details',
     'application.your-business.business-type' => 'W Business type',
     'application.your-business.people' => 'W People',
+    'application.your-business.sole-trader' => 'W People',
     'application_operating-centres_authorisation-add' => 'W Add operating centre',
     'application_operating-centres_authorisation-edit' => 'W Edit operating centre',
+    'application_operating-centres_authorisation-sub-action.advertisements' => 'W Advertisements',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'W Have you advertised your
+        application for this operating centre in your local newspaper?',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'W Newspaper name (if
+        applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.dateAdPlaced' => 'W Date advertisement was
+        placed (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file' => 'W Advertisement (if applicable)
+        (optional)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'W Please upload a copy of the
+        advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation-sub-action.data' => 'W Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'W Vehicles',
     'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'W Total number of trailers',
@@ -241,6 +259,18 @@ return array(
     'application_your-business_business-type.data.organisationType' => 'W What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'W Establishment address',
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
+    'application_your-business_people-add' => 'W Add person',
+    'application_your-business_people-edit' => 'W Edit person',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'W Date of birth',
+    'application_your-business_people-sub-action-formFirstName' => 'W First name',
+    'application_your-business_people-sub-action-formOtherNames' => 'W Other names',
+    'application_your-business_people-sub-action-formPosition' => 'W Position',
+    'application_your-business_people-sub-action-formSurname' => 'W Last name',
+    'application_your-business_people-sub-action-formTitle' => 'W Title',
+    'application_your-business_people-sub-action-formTitleValueMiss' => 'W Miss',
+    'application_your-business_people-sub-action-formTitleValueMr' => 'W Mr',
+    'application_your-business_people-sub-action-formTitleValueMrs' => 'W Mrs',
+    'application_your-business_people-sub-action-formTitleValueMs' => 'W Ms',
     'applications' => 'W Applications',
     'apply-changes' => 'W Apply changes',
     'both' => 'W Both',
@@ -569,6 +599,23 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'W Convictions & penalties (if
         applicable)',
     'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'W Add offence',
+    'selfserve-app-subSection-your-business-people-columnDate' => 'W DOB',
+    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'W Other Names',
+    'selfserve-app-subSection-your-business-people-columnName' => 'W Name',
+    'selfserve-app-subSection-your-business-people-columnPosition' => 'W Position',
+    'selfserve-app-subSection-your-business-people-guidanceLC' => 'W Please provide details of the company directors.
+        This must be the same as the details that are on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLLP' => 'W Please provide details of the members. This must
+        be the same as the details that are on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceO' => 'W Please provide details of the persons responsible
+        for your organisation',
+    'selfserve-app-subSection-your-business-people-guidanceP' => 'W Please give details below of the partners in the
+        business. You must include details of all partners, even if they are not primarily responsible for the operation
+        of goods vehicles',
+    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'W Please add to this table',
+    'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'W Directors',
+    'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'W Partners',
+    'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'W Responsible people',
     'selfserve-business-registered-company-description' => 'W If you don\'t have your company number to hand, or are
         having problems retrieving your company details, please enter them manually below.',
     'send-to' => 'W Send to',
@@ -627,42 +674,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'application.your-business.sole-trader' => 'People',
-    'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
-    'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
-    'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
-    'selfserve-app-subSection-your-business-people-columnName' => 'Name',
-    'selfserve-app-subSection-your-business-people-columnDate' => 'DOB',
-    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other Names',
-    'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
-    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Please add to this table',
-    'selfserve-app-subSection-your-business-people-guidanceLC' =>
-        'Please provide details of the company directors. This must be the same as the details that are '
-        . 'on the companies house register',
-    'selfserve-app-subSection-your-business-people-guidanceLLP' =>
-        'Please provide details of the members. This must be the same as the details that are on the '
-        . 'companies house register',
-    'selfserve-app-subSection-your-business-people-guidanceP' =>
-        'Please give details below of the partners in the business. You must include details of all '
-        . 'partners, even if they are not primarily responsible for the operation of goods vehicles',
-    'selfserve-app-subSection-your-business-people-guidanceO' =>
-        'Please provide details of the persons responsible for your organisation',
-    'Please add a person' => 'Please add a person',
-    'application_your-business_people-sub-action-formTitle' => 'Title',
-    'application_your-business_people-sub-action-formTitleValueMr' => 'Mr',
-    'application_your-business_people-sub-action-formTitleValueMrs' => 'Mrs',
-    'application_your-business_people-sub-action-formTitleValueMiss' => 'Miss',
-    'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
-    'application_your-business_people-sub-action-formFirstName' => 'First name',
-    'application_your-business_people-sub-action-formSurname' => 'Surname',
-    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
-    'application_your-business_people-sub-action-formPosition' => 'Position',
-    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of Birth',
-    'application_your-business_people-sub-action-formSurname' => 'Last name',
-    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
-    'application_your-business_people-sub-action-formPosition' => 'Position',
-    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
-    'application_your-business_people-add' => 'Add person',
-    'application_your-business_people-edit' => 'Edit person',
     // Potentially unused (Not found with grep)
 );
