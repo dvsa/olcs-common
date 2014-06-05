@@ -2082,4 +2082,37 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('cake', $table->getVariable('foo'));
     }
+
+    /**
+     * Test remove column method
+     */
+    public function testRemoveColumn()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+        $columns = array(
+            array('name' => 'name1'),
+            array('name' => 'name2')
+        );
+        $table->setColumns($columns);
+        $table->removeColumn('name1');
+        $newColumns = $table->getColumns();
+        $this->assertEquals(count($newColumns), 1);
+        $this->assertEquals($newColumns[0]['name'], 'name2');
+    }
+
+    /**
+     * Test remove column method if no name property exists
+     */
+    public function testRemoveColumnNoNameExists()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+        $columns = array(
+            array('name' => 'name1'),
+            array('foo' => 'bar')
+        );
+        $table->setColumns($columns);
+        $table->removeColumn('name1');
+        $newColumns = $table->getColumns();
+        $this->assertEquals(count($newColumns), 1);
+    }
 }

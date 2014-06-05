@@ -628,5 +628,42 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application.your-business.sole-trader' => 'People',
+    'selfserve-app-subSection-your-business-people-tableHeaderPartners' => 'Partners',
+    'selfserve-app-subSection-your-business-people-tableHeaderDirectors' => 'Directors',
+    'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
+    'selfserve-app-subSection-your-business-people-columnName' => 'Name',
+    'selfserve-app-subSection-your-business-people-columnDate' => 'DOB',
+    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other Names',
+    'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
+    'selfserve-app-subSection-your-business-people-tableEmptyMessage' => 'Please add to this table',
+    'selfserve-app-subSection-your-business-people-guidanceLC' =>
+        'Please provide details of the company directors. This must be the same as the details that are '
+        . 'on the companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceLLP' =>
+        'Please provide details of the members. This must be the same as the details that are on the '
+        . 'companies house register',
+    'selfserve-app-subSection-your-business-people-guidanceP' =>
+        'Please give details below of the partners in the business. You must include details of all '
+        . 'partners, even if they are not primarily responsible for the operation of goods vehicles',
+    'selfserve-app-subSection-your-business-people-guidanceO' =>
+        'Please provide details of the persons responsible for your organisation',
+    'Please add a person' => 'Please add a person',
+    'application_your-business_people-sub-action-formTitle' => 'Title',
+    'application_your-business_people-sub-action-formTitleValueMr' => 'Mr',
+    'application_your-business_people-sub-action-formTitleValueMrs' => 'Mrs',
+    'application_your-business_people-sub-action-formTitleValueMiss' => 'Miss',
+    'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
+    'application_your-business_people-sub-action-formFirstName' => 'First name',
+    'application_your-business_people-sub-action-formSurname' => 'Surname',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of Birth',
+    'application_your-business_people-sub-action-formSurname' => 'Last name',
+    'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formPosition' => 'Position',
+    'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
+    'application_your-business_people-add' => 'Add person',
+    'application_your-business_people-edit' => 'Edit person',
     // Potentially unused (Not found with grep)
 );
