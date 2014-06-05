@@ -40,7 +40,7 @@ class PreviousHistoryPenaltiesConvictionsPrevConvictionValidator extends Abstrac
      * @param array $context
      * @return bool
      */
-    public function isValid($value, $context = null)
+    public function isValid($value)
     {
         if ($this->getRows() < 1 && $value == 'Y') {
 

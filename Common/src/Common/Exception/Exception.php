@@ -1,7 +1,18 @@
 <?php
+
+/**
+ * Exception class
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 namespace Common\Exception;
 
-class Exception extends \Exception {
-    
-}
+/**
+ * Exception class
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
+class Exception extends \Exception
+{
 
+}

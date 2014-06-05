@@ -80,7 +80,7 @@ class DateLessThanOrEqual extends AbstractValidator
     public function setToken($token)
     {
         $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
-        $this->token       = $token;
+        $this->token = $token;
         return $this;
     }
 

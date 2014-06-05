@@ -39,11 +39,7 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
             return false;
         }
 
-        $total = 0;
-
-        $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
-        $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
-        $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
+        $total = $this->getTotal($context);
 
         if ($value > $total) {
             $this->error('too-many');
@@ -51,5 +47,22 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
         }
 
         return true;
+    }
+
+    /**
+     * Get the total vehicles
+     *
+     * @param array $context
+     * @return int
+     */
+    private function getTotal($context)
+    {
+        $total = 0;
+
+        $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
+        $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
+        $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
+
+        return $total;
     }
 }

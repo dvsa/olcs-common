@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 $translationLocation = __DIR__ . '/Common/config/language/';
 

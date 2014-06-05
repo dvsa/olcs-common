@@ -1,17 +1,23 @@
 <?php
+
+/**
+ * Phone Filter
+ *
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
+ */
 namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
+/**
+ * Phone Filter
+ *
+ * @author Jakub Igla <jakub.igla@valtech.co.uk>
+ */
 class Phone extends ZendElement implements InputProviderInterface
 {
-    public function __construct($name = null, $options = array())
-    {
-        parent::__construct($name, $options);
-    }
-
     /**
      * Provide default input rules for this element.
      *
@@ -26,10 +32,12 @@ class Phone extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new ZendValidator\Regex([
-                    'pattern' => '/^[0-9 ]+$/',
-                    'messages' => ['regexNotMatch' => 'The input must contain only digits or spaces']
-                ]),
+                new ZendValidator\Regex(
+                    array(
+                        'pattern' => '/^[0-9 ]+$/',
+                        'messages' => ['regexNotMatch' => 'The input must contain only digits or spaces']
+                    )
+                ),
                 new ZendValidator\StringLength(['min' => 5, 'max' => 20]),
             ]
         ];

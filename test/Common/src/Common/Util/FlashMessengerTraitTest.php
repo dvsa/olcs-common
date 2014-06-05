@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test FlashMessengerTrait
  *
@@ -15,85 +16,61 @@ class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
     public function testGetFlashMessenger()
     {
         $this->trait = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
-            '',
-            true,
-            true,
-            true,
-            array(
+            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'getParams',
                 'log',
                 'plugin'
             )
         );
-        $pluginManager= $this->getMock('\stdClass', array('getNamespace'));
+        $pluginManager = $this->getMock('\stdClass', array('getNamespace'));
         $this->trait->expects($this->once())
             ->method('plugin')
             ->will($this->returnValue($pluginManager));
-        $returned = $this->trait->getFlashMessenger('backend\VosaCase');
+        $this->trait->getFlashMessenger('backend\VosaCase');
     }
-    
+
     public function testAddInfoMessage()
     {
         $this->trait = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
-            '',
-            true,
-            true,
-            true,
-            array(
+            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'getFlashMessenger',
                 'log'
             )
         );
-        $chainMock= $this->getMock('\stdClass', array('addInfoMessage'));
+        $chainMock = $this->getMock('\stdClass', array('addInfoMessage'));
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $returned = $this->trait->addInfoMessage('backend\VosaCase');
+        $this->trait->addInfoMessage('backend\VosaCase');
     }
-    
+
     public function testErrorMessage()
     {
         $this->trait = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
-            '',
-            true,
-            true,
-            true,
-            array(
+            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'getFlashMessenger',
                 'log'
             )
         );
-        $chainMock= $this->getMock('\stdClass', array('addErrorMessage'));
+        $chainMock = $this->getMock('\stdClass', array('addErrorMessage'));
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $returned = $this->trait->addErrorMessage('backend\VosaCase');
+        $this->trait->addErrorMessage('backend\VosaCase');
     }
-    
+
     public function testSuccessMessage()
     {
         $this->trait = $this->getMockForTrait(
-            '\Common\Util\FlashMessengerTrait',
-            array(),
-            '',
-            true,
-            true,
-            true,
-            array(
+            '\Common\Util\FlashMessengerTrait', array(), '', true, true, true, array(
                 'getFlashMessenger',
                 'log'
             )
         );
-        $chainMock= $this->getMock('\stdClass', array('addSuccessMessage'));
+        $chainMock = $this->getMock('\stdClass', array('addSuccessMessage'));
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $returned = $this->trait->addSuccessMessage('backend\VosaCase');
+        $this->trait->addSuccessMessage('backend\VosaCase');
     }
 }

@@ -32,6 +32,8 @@ class FormElementErrors extends ZendFormElementErrors
      */
     public function render(ZendElementInterface $element, array $attributes = array())
     {
+        unset($attributes);
+
         $this->log('Rendering Element Errors: ' . $element->getName(), LOG_INFO);
 
         return parent::render($element);

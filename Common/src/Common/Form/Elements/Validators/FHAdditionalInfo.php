@@ -8,7 +8,6 @@
  *
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-
 namespace Common\Form\Elements\Validators;
 
 use Zend\Validator as ZendValidator;
@@ -32,15 +31,15 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::TOO_SHORT => "You selected 'yes' in one of above questions, so the input has to be at least %min% characters long",
-        self::IS_EMPTY => "You selected 'yes' in one of above questions, so value is required and can't be empty",
+        self::TOO_SHORT => 'FHAdditionalInfo.validation.too_short',
+        self::IS_EMPTY => 'FHAdditionalInfo.validation.is_empty'
     );
 
     /**
      * @var array
      */
     protected $options = array(
-        'min'      => 200,
+        'min' => 200
     );
 
     /**
@@ -59,7 +58,7 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
         $foundYes = false;
         $elementsToCheck = array_intersect_key($context, array_flip($this->validationContextFields));
 
-        //iterate selected fields to check if yes value was selected
+        // iterate selected fields to check if yes value was selected
         foreach ($elementsToCheck as $element){
             if ($element == 'Y'){
                 $foundYes = true;
@@ -67,18 +66,19 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
             }
         }
 
-        //all fields are set to No, so no need to fill additional data element
-        if (!$foundYes)
+        // all fields are set to No, so no need to fill additional data element
+        if (!$foundYes) {
             return true;
+        }
 
-        //check if value is not empty
+        // check if value is not empty
         $notEmptyValidator = new ZendValidator\NotEmpty();
         if (!$notEmptyValidator->isValid($value)){
             $this->error(self::IS_EMPTY);
             return false;
         }
 
-        //check if value length is at least 200
+        // check if value length is at least 200
         $strLenValidator = new ZendValidator\StringLength(array('min' => 200));
         if (!$strLenValidator->isValid($value)){
             $this->error(self::TOO_SHORT);
