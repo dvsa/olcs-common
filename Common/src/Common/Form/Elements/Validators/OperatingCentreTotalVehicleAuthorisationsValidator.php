@@ -57,6 +57,20 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
             return false;
         }
 
+        return $this->checkMultipleOperatingCentresValidation($noOfOperatingCentres, $value, $context);
+    }
+
+    /**
+     * Had to split this into a separate method as NPath was 60000, (Could split this into 3 separate validators in
+     * the future?)
+     *
+     * @param int $noOfOperatingCentres
+     * @param int $value
+     * @param array $context
+     * @return boolean
+     */
+    private function checkMultipleOperatingCentresValidation($noOfOperatingCentres, $value, $context)
+    {
         $valid = true;
 
         if ($noOfOperatingCentres >= 2) {

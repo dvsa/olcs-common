@@ -1,12 +1,10 @@
 <?php
+
 /**
  * A client for Restful API:s over HTTP
  *
- * @package     olcscommon
- * @subpackage  utility
- * @author      Pelle Wessman <pelle.wessman@valtech.se>
+ * @author Pelle Wessman <pelle.wessman@valtech.se>
  */
-
 namespace Common\Util;
 
 use Zend\Http\Client as HttpClient;
@@ -18,6 +16,8 @@ use Common\Util\ResponseHelper;
 
 /**
  * A client for Restful API:s over HTTP
+ *
+ * @author Pelle Wessman <pelle.wessman@valtech.se>
  */
 class RestClient
 {
@@ -185,7 +185,7 @@ class RestClient
         $responseHelper->setParams($params);
         return $responseHelper->handleResponse();
     }
-    
+
     public function getResponseHelper()
     {
         return new ResponseHelper();
@@ -219,12 +219,12 @@ class RestClient
             $this->client->getRequest()->getQuery()->fromArray($params);
         }
     }
-    
+
     public function getAccept()
     {
         return new Accept();
     }
-    
+
     public function getClientRequest()
     {
         return new Request();

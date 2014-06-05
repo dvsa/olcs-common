@@ -1,11 +1,11 @@
 <?php
+
 /**
  * FormCollection Test
- * 
+ *
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-
 namespace CommonTest\Form\View\Helper;
 
 use Zend\View\HelperPluginManager;
@@ -13,15 +13,16 @@ use Zend\View\Renderer\JsonRenderer;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper;
 
+/**
+ * FormCollection Test
+ *
+ * @package CommonTest\Form\View\Helper
+ * @author Jakub Igla <jakub.igla@gmail.com>
+ */
 class FormCollection extends \PHPUnit_Framework_TestCase
 {
 
     protected $element;
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
 
     private function prepareElement($targetElement = 'Text')
     {

@@ -7,7 +7,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Service\Table;
 
 use Zend\ServiceManager\ServiceManager;
@@ -567,41 +566,73 @@ class TableBuilder
             throw new \Exception('Table config location not defined');
         }
 
-        $config = $this->getConfigFromFile($name);
+        $config = array_merge(
+            array(
+                'settings' => array(),
+                'attributes' => array(),
+                'columns' => array(),
+                'footer' => array()
+            ),
+            $this->getConfigFromFile($name)
+        );
 
-        $this->setSettings(isset($config['settings']) ? $config['settings'] : array());
+        $this->setSettings($config['settings']);
 
+        $this->setPaginationDefaults();
+
+        $this->maybeSetActionFieldName();
+
+        $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
+            ? $this->settings['crud']['formName']
+            : 'default';
+
+        $this->translateTitle($config);
+
+        $this->attributes = $config['attributes'];
+        $this->setColumns($config['columns']);
+        $this->setVariables($config['variables']);
+        $this->setFooter($config['footer']);
+
+        return true;
+    }
+
+    /**
+     * Set Pagination Defaults
+     */
+    private function setPaginationDefaults()
+    {
         if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
             $this->settings['paginate']['limit'] = array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
             );
         }
+    }
 
-        if (isset($this->settings['crud']['action_field_name'])) {
-            $this->setActionFieldName($this->settings['crud']['action_field_name']);
-        }
-
-        if (isset($this->settings['crud']['formName'])) {
-            $config['variables']['hidden'] = isset($this->settings['crud']['formName'])
-                ? $this->settings['crud']['formName']
-                : 'default';
-        }
-
+    /**
+     * Translate title
+     *
+     * @param array $config
+     * @return array
+     */
+    private function translateTitle(&$config)
+    {
         if (isset($config['variables']['title'])) {
             $config['variables']['title'] = $this->getServiceLocator()
                 ->get('translator')
                 ->translate($config['variables']['title']);
         }
-
-        $this->attributes = isset($config['attributes']) ? $config['attributes'] : array();
-        $this->setColumns(isset($config['columns']) ? $config['columns'] : array());
-        $this->setVariables(isset($config['variables']) ? $config['variables'] : array());
-        $this->setFooter(isset($config['footer']) ? $config['footer'] : array());
-
-        return true;
     }
 
+    /**
+     * Maybe set the action field name
+     */
+    private function maybeSetActionFieldName()
+    {
+        if (isset($this->settings['crud']['action_field_name'])) {
+            $this->setActionFieldName($this->settings['crud']['action_field_name']);
+        }
+    }
     /**
      * Load data, set the rows and the total count for pagination
      *
@@ -620,25 +651,30 @@ class TableBuilder
      */
     public function loadParams($array = array())
     {
-        if (isset($array['limit'])) {
-
-            $this->setLimit($array['limit']);
-
-        } elseif (isset($this->settings['paginate']['limit']['default'])) {
-
-            $this->setLimit((int)$this->settings['paginate']['limit']['default']);
-        }
-
-        $this->setPage(isset($array['page']) ? $array['page'] : self::DEFAULT_PAGE);
-
         if (!isset($array['url'])) {
-
             throw new \Exception('Table helper requires the URL helper');
         }
 
+        $defaults = array(
+            'limit' => isset($this->settings['paginate']['limit']['default'])
+                ? $this->settings['paginate']['limit']['default']
+                : null,
+            'page' => self::DEFAULT_PAGE,
+            'sort' => '',
+            'order' => 'ASC'
+        );
+
+        $array = array_merge(
+            $defaults,
+            $array
+        );
+
+        $this->setLimit($array['limit']);
+        $this->setPage($array['page']);
+
         $this->url = $array['url'];
-        $this->setSort(isset($array['sort']) ? $array['sort'] : '');
-        $this->setOrder(isset($array['order']) ? $array['order'] : 'ASC');
+        $this->setSort($array['sort']);
+        $this->setOrder($array['order']);
 
         $this->setVariables(array_merge($this->getVariables(), $array));
     }
@@ -724,23 +760,29 @@ class TableBuilder
      */
     private function renderTableFooterColumn($column)
     {
+        $column = array_merge(
+            array(
+                'type' => 'td',
+                'colspan' => ''
+            ),
+            $column
+        );
+
         $details = array('content' => '');
 
         if (isset($column['content'])) {
             $details['content'] = $column['content'];
         }
 
-        $details['type'] = (isset($column['type']) && $column['type'] == 'th' ? 'th' : 'td');
+        $details['type'] = $column['type'];
 
-        $details['colspan'] = (isset($column['colspan']) ? $column['colspan'] : '');
+        $details['colspan'] = $column['colspan'];
 
         if (isset($column['formatter'])) {
-
             $column['format'] = $this->callFormatter($column, $this->getRows());
         }
 
         if (isset($column['format'])) {
-
             $details['content'] = $this->replaceContent($column['format'], $this->getVariables());
         }
 
@@ -1058,7 +1100,6 @@ class TableBuilder
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
         if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
-
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
             $content = $type->render($row, $column);
@@ -1069,24 +1110,19 @@ class TableBuilder
             $return = $this->callFormatter($column, $row);
 
             if (is_array($return)) {
-
                 $row = array_merge($row, $return);
-
             } else {
-
                 $content = $return;
                 $row['content'] = $content;
             }
         }
 
         if (isset($column['format'])) {
-
             $content = $this->replaceContent($column['format'], $row);
         }
 
         if (!isset($content) || empty($content)) {
-
-            $content = isset($column['name']) && isset($row[$column['name']]) ? $row[$column['name']] : '';
+            $content =  isset($column['name']) && isset($row[$column['name']]) ? $row[$column['name']] : '';
         }
 
         return $this->replaceContent($wrapper, array('content' => $content));

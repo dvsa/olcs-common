@@ -1,12 +1,21 @@
 <?php
+
+/**
+ * InputFilter
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 namespace Common\Form;
 
-use ArrayAccess;
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\InitializableInterface;
 use Zend\InputFilter\InputFilter as ZendInputFilter;
 
+/**
+ * InputFilter
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 class InputFilter extends ZendInputFilter
 {
     /**
@@ -19,18 +28,23 @@ class InputFilter extends ZendInputFilter
     public function setData($data)
     {
         if (!is_array($data) && !$data instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '%s expects an array or Traversable argument; received %s',
-                __METHOD__,
-                (is_object($data) ? get_class($data) : gettype($data))
-            ));
+            throw new Exception\InvalidArgumentException(
+                sprintf(
+                    '%s expects an array or Traversable argument; received %s',
+                    __METHOD__,
+                    (is_object($data) ? get_class($data) : gettype($data))
+                )
+            );
         }
+
         if (is_object($data) && !$data instanceof \ArrayAccess) {
             $data = ArrayUtils::iteratorToArray($data);
         }
+
         $this->data = $this->setEmptyDataselectArraysToNull($data);
-        //$this->data = $data;
+
         $this->populate();
+
         return $this;
     }
 
