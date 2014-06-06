@@ -9,7 +9,6 @@ namespace Common\Form\Elements\InputFilters;
 
 use Zend\Form\Element\Textarea as ZendElement;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
-use Zend\Validator;
 
 /**
  * Input Specification for Convition additional info
@@ -34,8 +33,8 @@ class ConvictionTextarea extends ZendElement implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => true,
+            'allow_empty' => false,
             'validators' => [
-                new Validator\NotEmpty(Validator\NotEmpty::NULL),
             ]
         ];
 
