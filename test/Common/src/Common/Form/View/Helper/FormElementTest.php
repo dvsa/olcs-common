@@ -16,7 +16,7 @@ use Zend\Form\View\Helper;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormElement extends \PHPUnit_Framework_TestCase
+class FormElementTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -30,11 +30,14 @@ class FormElement extends \PHPUnit_Framework_TestCase
             $type = '\Zend\Form\Element\\' . ucfirst($type);
         }
 
-        $options = array_merge([
-            'type' => $type,
-            'label' => 'Label',
-            'hint' => 'Hint',
-        ], $options);
+        $options = array_merge(
+            array(
+                'type' => $type,
+                'label' => 'Label',
+                'hint' => 'Hint',
+            ),
+            $options
+        );
 
         $this->element = new $type('test');
         $this->element->setOptions($options);
@@ -68,7 +71,9 @@ class FormElement extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<input type="text" name="(.*)" class="(.*)" value="(.*)"> \\r\\n <p class="hint">(.*)<\/p>$/');
+        $this->expectOutputRegex(
+            '/^<input type="text" name="(.*)" class="(.*)" value="(.*)"> \\r\\n <p class="hint">(.*)<\/p>$/'
+        );
     }
 
     /**

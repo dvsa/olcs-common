@@ -110,7 +110,7 @@ class DateWithTime extends AbstractValidator
 
         $date = new DateValidator(array('format' => 'H:i'));
 
-        if(!$date->isValid($time)) {
+        if (!$date->isValid($time)) {
             $this->error(self::MISSING_TIME);
             return false;
         }

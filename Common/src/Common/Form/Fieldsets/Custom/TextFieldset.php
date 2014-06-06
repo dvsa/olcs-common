@@ -22,12 +22,14 @@ class TextFieldset extends Fieldset
 
         $this->setOptions(array('wrapElements', false));
 
-        $this->add(array(
-            'name' => 'text',
-            'options' => array(
-                //'label' => 'Name of the brand'
-            ),
-        ));
+        $this->add(
+            array(
+                'name' => 'text',
+                'options' => array(
+                    //'label' => 'Name of the brand'
+                ),
+            )
+        );
     }
 
     public function getInputSpecification()

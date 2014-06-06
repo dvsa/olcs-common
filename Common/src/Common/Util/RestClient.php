@@ -207,9 +207,8 @@ class RestClient
 
         $this->client->setUri($this->url->toString() . $path);
 
-        $this->client->setHeaders(array(
-            $accept,
-        ));
+        $this->client->setHeaders(array($accept));
+
         $this->client->setMethod($method);
 
         if ($method == 'POST' || $method == 'PUT' || $method == 'PATCH') {
@@ -239,12 +238,14 @@ class RestClient
      */
     protected function pathOrParams($path, array $params = null)
     {
+        unset($params);
+
         $args = func_get_args();
         if (is_array($args[0])) {
             array_unshift($args, '');
-        } else if (empty($args[0])) {
+        } elseif (empty($args[0])) {
             $args[0] = '';
-        } else if ($args[0][0] !== '/') {
+        } elseif ($args[0][0] !== '/') {
             $args[0] = '/' . $path;
         }
         return $args;

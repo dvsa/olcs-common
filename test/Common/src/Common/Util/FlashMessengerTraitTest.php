@@ -5,11 +5,15 @@
  *
  * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
-
 namespace CommonTest\Controller\Util;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
+/**
+ * Test FlashMessengerTrait
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
 {
 

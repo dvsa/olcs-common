@@ -16,16 +16,14 @@ use Zend\Form;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormErrors extends \PHPUnit_Framework_TestCase
+class FormErrorsTest extends \PHPUnit_Framework_TestCase
 {
     private function prepareForm($valid = false)
     {
         $form = new Form\Form();
 
         $element = new \Common\Form\Elements\InputFilters\TextRequired('test');
-        $element->setOptions([
-            'label' => 'Label',
-        ]);
+        $element->setOptions(['label' => 'Label']);
         $form->add($element);
 
         $form->setData(
