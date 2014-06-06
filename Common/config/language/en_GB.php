@@ -665,5 +665,23 @@ return array(
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
+    'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
+    . ' (including partners, directors and transport managers) currently hold a goods or public service vehicle'
+    . ' operator\'s licence in any traffic area?',
+    'application_previous-history_licence-history_appliedLicence' => 'a. Previously held or applied for a goods '
+    . 'or public service vehicle operator\'s licence in any traffic area?',
+    'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods '
+    . 'or a public service vehicle operator\'s licence refused by any EU licencing authority?',
+    'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service '
+    . 'vehicle operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+    'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public '
+    . 'Inquiry before a traffic commissioner?',
+    'application_previous-history_licence-history_disqualifiedLicence' => 'e. Beeing disqualified from '
+    . 'holding or obtaining an operator\'s licence by any traffic commissioner?',
+    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve month, '
+    . 'have you, your company or organisation or your partners or directors purchaed the assets or '
+    . 'shareholding of any company that, to you knowledge, currently holds or has previously held an'
+    . ' operator\'s licence in any traffic area?'
+    
     // Potentially unused (Not found with grep)
 );
