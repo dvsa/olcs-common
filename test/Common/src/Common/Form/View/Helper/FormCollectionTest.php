@@ -27,15 +27,17 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
     private function prepareElement($targetElement = 'Text')
     {
         $this->element = new \Zend\Form\Element\Collection('test');
-        $this->element->setOptions([
-            'count' => 1,
-            'target_element' => [
-                'type' => $targetElement
-            ],
-            'should_create_template' => true,
-            'hint' => 'Hint',
-            'label' => 'Label',
-        ]);
+        $this->element->setOptions(
+            array(
+                'count' => 1,
+                'target_element' => [
+                    'type' => $targetElement
+                ],
+                'should_create_template' => true,
+                'hint' => 'Hint',
+                'label' => 'Label',
+            )
+        );
         $this->element->setAttribute('class', 'class');
         $this->element->prepareElement(new \Zend\Form\Form());
     }

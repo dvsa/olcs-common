@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * ServiceApiResolver
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 namespace Common\Service\Api;
 
 use Zend\ServiceManager\FactoryInterface;
@@ -7,9 +12,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\Util\ResolveApi;
 
 /**
- * Description of ServiceApiResolver
+ * ServiceApiResolver
  *
- * @author Michael Cooper
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
 class ServiceApiResolver implements FactoryInterface
 {
