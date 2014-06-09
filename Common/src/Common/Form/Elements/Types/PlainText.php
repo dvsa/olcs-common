@@ -1,19 +1,22 @@
 <?php
+
 /**
  * Plain Text Element
  *
+ * @author Someone <someone@valtech.co.uk>
  */
-
 namespace Common\Form\Elements\Types;
 
 use Zend\Form\Element;
-use Zend\I18n\Translator\TranslatorAwareInterface;
-use Zend\I18n\Translator\TranslatorAwareTrait;
 
-
+/**
+ * Plain Text Element
+ *
+ * @author Someone <someone@valtech.co.uk>
+ */
 class PlainText extends Element
 {
-     /**
+    /**
      * Seed attributes
      *
      * @var array
@@ -40,5 +43,4 @@ class PlainText extends Element
 
         return $this;
     }
-
 }

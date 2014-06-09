@@ -80,8 +80,8 @@ class Address
         $details = $this->details;
 
         $addressLines = array(
-            $this->formatSaon($address),
-            trim($this->formatPaon($address) . ' ' . $this->getAddressPart('street_description')),
+            $this->formatSaon(),
+            trim($this->formatPaon() . ' ' . $this->getAddressPart('street_description')),
             $address['locality_name'],
             ($address['town_name'] !== $address['administritive_area'] ? $address['town_name'] : '')
         );
@@ -149,34 +149,31 @@ class Address
     /**
      * Format the SAON
      *
-     * @param array $address
      * @return string
      */
-    private function formatSaon($address)
+    private function formatSaon()
     {
-        return $this->formatOn($address, 'sao', 'organisation_name');
+        return $this->formatOn('sao', 'organisation_name');
     }
 
     /**
      * Format the PAON
      *
-     * @param array $address
      * @return string
      */
-    private function formatPaon($address)
+    private function formatPaon()
     {
-        return $this->formatOn($address, 'pao', 'building_name');
+        return $this->formatOn('pao', 'building_name');
     }
 
     /**
      * Shared logic to format the ^ons
      *
-     * @param array $address
      * @param string $prefix
      * @param string $simple
      * @return string
      */
-    private function formatOn($address, $prefix, $simple)
+    private function formatOn($prefix, $simple)
     {
         $string = '';
 

@@ -53,7 +53,7 @@ class FormActionControllerTest extends \PHPUnit_Framework_TestCase
     {
         $params = ['german'];
 
-        $callback = function() {
+        $callback = function () {
 
         };
 
