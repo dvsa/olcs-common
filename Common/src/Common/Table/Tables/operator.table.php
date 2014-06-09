@@ -26,7 +26,7 @@ return array(
         ),
         array(
             'title' => 'Op/trading name',
-            'formatter' => function($data) {
+            'formatter' => function ($data) {
                 return $data['trading_as'] ? : $data['name'];
             },
             'sort' => 'operatorName'
@@ -43,7 +43,7 @@ return array(
         ),
         array(
             'title' => 'Correspondence address',
-            'formatter' => function($data) {
+            'formatter' => function ($data) {
                 $parts = array();
                 foreach (array('address_line1', 'address_line2', 'address_line3', 'postcode') as $item) {
                     if (!empty($data[$item])) {
@@ -57,7 +57,7 @@ return array(
         ),
         array(
             'title' => 'Cases',
-            'formatter' => function($data) {
+            'formatter' => function ($data) {
                 if (isset($data['caseCount']) && (int) $data['caseCount'] > 0) {
                     return '<a href="' . $this->generateUrl(
                         array('licence' => $data['licenceId']),
