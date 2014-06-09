@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * ScriptFactory Test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 namespace CommonTest\Service\Script;
 
 use Common\Service\Script\ScriptFactory;
 
+/**
+ * ScriptFactory Test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
 {
     protected $config = [];
@@ -54,10 +64,12 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
     public function testLoadFilesWhereAllFilesExist()
     {
         $scripts = $this->service->loadFiles(['stub', 'another_stub']);
-        $this->assertEquals($scripts, [
-            "alert(\"I am a dummy fixture!\");\n",
-            "alert(\"I am a stub!\");\n"
-        ]);
+        $this->assertEquals(
+            $scripts,
+            [
+                "alert(\"I am a dummy fixture!\");\n",
+                "alert(\"I am a stub!\");\n"
+            ]
+        );
     }
-
 }
