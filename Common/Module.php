@@ -47,6 +47,9 @@ class Module
                 'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
                 },
+                'Script' => function ($sm) {
+                    return new \Common\Service\Script\ScriptFactory($sm->get('Config'));
+                },
                 'Table' => '\Common\Service\Table\TableFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',

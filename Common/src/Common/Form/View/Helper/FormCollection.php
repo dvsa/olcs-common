@@ -102,6 +102,13 @@ class FormCollection extends ZendFormCollection
                 );
             }
 
+            // it's helpful from a JS perspective to give our containers
+            // (usually fieldsets) an attribute so we can latch on to them
+            // explicitally rather than sniffing around in the DOM
+            if (($fieldsetName = $element->getName()) !== null) {
+                $attributes['data-group'] = $fieldsetName;
+            }
+
             $attributesString = $this->createAttributesString($attributes);
             if (!empty($attributesString)) {
                 $attributesString = ' ' . $attributesString;

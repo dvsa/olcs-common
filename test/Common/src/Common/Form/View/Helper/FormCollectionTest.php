@@ -70,8 +70,8 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class"><legend>(.*)<\/legend><p class="hint">(.*)<\/p><span data-template="(.*)">'
-            . '<\/span><\/fieldset>$/'
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            . '<span data-template="(.*)"><\/span><\/fieldset>$/'
         );
     }
 
@@ -87,8 +87,8 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<fieldset class="class"><legend>(.*)<\/legend><p class="hint">(.*)<\/p><fieldset><\/fieldset>'
-            . '<span data-template="(.*)"><\/span><\/fieldset>/'
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            . '<fieldset data-group="(.*)"><\/fieldset><span data-template="(.*)"><\/span><\/fieldset>/'
         );
     }
 
@@ -103,7 +103,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<fieldset><\/fieldset>$/');
+        $this->expectOutputRegex('/^<fieldset data-group="postcode"><\/fieldset>$/');
     }
 
     /**
@@ -119,7 +119,8 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex(
-            '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul><fieldset><\/fieldset><\/div>$/'
+            '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
+            . '<fieldset data-group="postcode"><\/fieldset><\/div>$/'
         );
     }
 
