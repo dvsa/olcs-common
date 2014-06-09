@@ -75,7 +75,12 @@ class RestCallTraitTest extends AbstractHttpControllerTestCase
     public function testMakeRestCallGet()
     {
         $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks($mock, 'get', 'handleGetResponse', array('id' => 1, 'bundle' => '{"licence":[]}'));
+        $mock = $this->getRestClientAndResponseHandlerMocks(
+            $mock,
+            'get',
+            'handleGetResponse',
+            array('id' => 1, 'bundle' => '{"licence":[]}')
+        );
         $mock->makeRestCall('Licence', 'GET', array('id' => 1), array('licence' => array()));
     }
 
@@ -89,21 +94,37 @@ class RestCallTraitTest extends AbstractHttpControllerTestCase
     public function testMakeRestCallPost()
     {
         $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks($mock, 'post', 'handlePostResponse', array('data' => '{"id":1}'));
+        $mock = $this->getRestClientAndResponseHandlerMocks(
+            $mock,
+            'post',
+            'handlePostResponse',
+            array('data' => '{"id":1}')
+        );
         $mock->makeRestCall('Licence', 'POST', array('id' => 1), null);
     }
 
     public function testMakeRestCallPut()
     {
         $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks($mock, 'put', 'handlePutResponse', array('data' => '[]'), '/1');
+        $mock = $this->getRestClientAndResponseHandlerMocks(
+            $mock,
+            'put',
+            'handlePutResponse',
+            array('data' => '[]'),
+            '/1'
+        );
         $mock->makeRestCall('Licence', 'PUT', array('id' => 1), null);
     }
 
     public function testMakeRestCallDelete()
     {
         $mock = $this->getSutMock(null, array('getServiceRestClient', 'handleResponseMethod'));
-        $mock = $this->getRestClientAndResponseHandlerMocks($mock, 'delete', 'handleDeleteResponse', array('id' => 1, 'bundle' => '{"licence":[]}'));
+        $mock = $this->getRestClientAndResponseHandlerMocks(
+            $mock,
+            'delete',
+            'handleDeleteResponse',
+            array('id' => 1, 'bundle' => '{"licence":[]}')
+        );
         $mock->makeRestCall('Licence', 'DELETE', array('id' => 1), array('licence' => array()));
     }
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * ServiceApiResolver
+ *
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ */
 namespace Common\Service\Api;
 
 use Zend\ServiceManager\FactoryInterface;
@@ -7,9 +12,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\Util\ResolveApi;
 
 /**
- * Description of ServiceApiResolver
+ * ServiceApiResolver
  *
- * @author Michael Cooper
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
  */
 class ServiceApiResolver implements FactoryInterface
 {
@@ -19,7 +24,7 @@ class ServiceApiResolver implements FactoryInterface
         $serviceApiMapping['endpoints'] = $config['service_api_mapping']['endpoints'];
         foreach ($config['service_api_mapping']['endpoints'] as $key => $endpoint) {
             if (isset($config['service_api_mapping']['apis'][$key])) {
-                foreach($config['service_api_mapping']['apis'][$key] as $api => $path) {
+                foreach ($config['service_api_mapping']['apis'][$key] as $api => $path) {
                     $serviceApiMapping[$api] = array(
                         'baseUrl' => $endpoint,
                         'path' => $path,

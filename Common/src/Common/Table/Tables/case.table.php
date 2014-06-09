@@ -29,7 +29,7 @@ return array(
         ),
         array(
             'title' => 'Case Number',
-            'formatter' => function($row) {
+            'formatter' => function ($row) {
                 return '<a href="' . $this->generateUrl(
                     array('case' => $row['id'], 'tab' => 'overview'),
                     'case_manage'
