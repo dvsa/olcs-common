@@ -7,14 +7,14 @@
  */
 namespace Common\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 
 /**
  * File controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FileController extends AbstractActionController
+class FileController extends ZendAbstractActionController
 {
     /**
      * Download a file
