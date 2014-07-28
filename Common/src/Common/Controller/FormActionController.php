@@ -584,7 +584,7 @@ abstract class FormActionController extends AbstractActionController
 
                     $error = $files[$fieldset]['file-controls']['file']['error'];
 
-                    $validator = new \Zend\Validator\File\FilesSize('2MB');
+                    $validator = $this->getFileSizeValidator();
 
                     if (
                         $error == UPLOAD_ERR_OK
@@ -705,5 +705,10 @@ abstract class FormActionController extends AbstractActionController
                 $fieldset->remove($name);
             }
         }
+    }
+
+    public function getFileSizeValidator()
+    {
+        return new \Zend\Validator\File\FilesSize('2MB');
     }
 }
