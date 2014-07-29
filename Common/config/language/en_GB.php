@@ -103,6 +103,7 @@ return array(
     'application.vehicle-safety.safety' => 'Safety inspections',
     'application.vehicle-safety.vehicle' => 'Vehicles',
     'application.vehicle-safety.vehicle-psv' => 'Vehicles',
+    'application.vehicle-safety.undertakings' => 'Vehicle Undertakings',
     'application.your-business' => 'Your business',
     'application.your-business.addresses' => 'Addresses',
     'application.your-business.business-details' => 'Business details',
