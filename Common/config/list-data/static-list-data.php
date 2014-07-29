@@ -48,7 +48,7 @@ return array(
         'case_category.25' => 'Financial standing issue (continuation)',
         'case_category.26' => 'Repute fitness of director',
         'case_category.27' => 'Period of grace',
-        'case_category.28' => 'Proposal to revoke'
+        'case_category.28' => 'In-Office revocation'
     ),
     'case_categories_bus' => array(
         'case_category.29' => 'Yes'
@@ -378,7 +378,7 @@ return array(
     ],
     'submission_recommendation' => [
         'submission_recommendation.other' => 'Other',
-        'submission_recommendation.propose-to-revoke' => 'Propose to revoke',
+        'submission_recommendation.propose-to-revoke' => 'In-Office revocation',
         'submission_recommendation.warning-letter' => 'Warning letter',
         'submission_recommendation.nfa' => 'NFA',
         'submission_recommendation.undertakings-conditions' => 'Undertakings & conditions',
