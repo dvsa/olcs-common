@@ -29,6 +29,16 @@ return [
                         'filters' => '\Common\Form\Elements\InputFilters\TextMax4000',
                         'class' => 'extra-long'
                     ],
+                    'isWithdrawn' => [
+                        'type' => 'checkbox',
+                        'label' => 'Is withdrawn?',
+                        'required' => false
+                    ],
+                    'withdrawnDate' => [
+                        'type' => 'dateSelectWithEmpty',
+                        'label' => 'Withdrawn date',
+                        'required' => false
+                    ],
                 ]
             ]
         ],
