@@ -30,14 +30,13 @@ return [
                         'class' => 'extra-long'
                     ],
                     'isWithdrawn' => [
-                        'type' => 'checkbox',
+                        'type' => 'checkbox-yn',
                         'label' => 'Is withdrawn?',
-                        'required' => false
                     ],
                     'withdrawnDate' => [
                         'type' => 'dateSelectWithEmpty',
                         'label' => 'Withdrawn date',
-                        'required' => false
+                        'filters' => '\Common\Form\Elements\InputFilters\DateNotRequiredNotInFuture'
                     ],
                 ]
             ]
