@@ -10,6 +10,7 @@ return array(
         has to be at least %min% characters long',
     'N/A' => 'W Not applicable',
     'No' => 'W No',
+    'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.none-numeric' => 'W Please enter a numeric value',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences cannot exceed the total
         number of vehicles',
@@ -110,6 +111,17 @@ return array(
     'application.your-business.sole-trader' => 'W People',
     'application_operating-centres_authorisation-add' => 'W Add operating centre',
     'application_operating-centres_authorisation-edit' => 'W Edit operating centre',
+    'application_operating-centres_authorisation-sub-action.advertisements' => 'W Advertisements',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'W Have you advertised your
+        application for this operating centre in your local newspaper?',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'W Newspaper name (if
+        applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.dateAdPlaced' => 'W Date advertisement was
+        placed (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file' => 'W Advertisement (if applicable)
+        (optional)',
+    'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'W Please upload a copy of the
+        advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation-sub-action.data' => 'W Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'W Vehicles',
     'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'W Total number of trailers',
