@@ -41,7 +41,7 @@ class File extends ZendFile
         $spec = parent::getInputSpecification();
 
         $spec['validators'] = array(
-            new FilesSize(array('size' => $this->getMaxFileSize()))
+            new FilesSize($this->getMaxFileSize())
         );
 
         return $spec;
