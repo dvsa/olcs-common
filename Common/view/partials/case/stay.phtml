@@ -9,5 +9,9 @@
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of request', 'content' => $this->stay['requestDate']));
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome', 'content' => $this->translate($this->stay['outcome'])));
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Notes', 'content' => $this->stay['notes']));
+        
+        if ($this->stay['isWithdrawn'] == 'Y') {
+            echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Withdrawn', 'content' => $this->stay['withdrawnDate']));
+        }
     ?>
 </div>
