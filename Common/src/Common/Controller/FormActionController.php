@@ -512,6 +512,21 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
+     * This method needs some things.
+     *
+     * 1. A form element with the name of "cancel"
+     *
+     * @return \Zend\Http\Response
+     */
+    public function checkForCancelButton($buttonName = 'cancel')
+    {
+        if ($this->isButtonPressed($buttonName)) {
+
+            return $this->redirectToIndex();
+        }
+    }
+
+    /**
      * Process file uploads
      *
      * @param array $uploads
