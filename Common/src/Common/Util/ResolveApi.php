@@ -71,7 +71,7 @@ class ResolveApi
     private function getBaseUrl($endpoint)
     {
         if (!isset($this->mapping['endpoints'][$endpoint])) {
-            throw new \Exception('Invalid API enpoint');
+            throw new \Exception('Invalid API endpoint: ' . $endpoint);
         }
         return $this->mapping['endpoints'][$endpoint];
     }
