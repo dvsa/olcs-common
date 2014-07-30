@@ -7,7 +7,6 @@ return [
         'options' => [
             'label' => ''
         ],
-        'required' => false,
         'attributes' => [
             'class' => '',
             'id' => ''
