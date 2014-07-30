@@ -186,33 +186,6 @@ abstract class FormActionController extends AbstractActionController
         return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
     }
 
-    /**
-     * Method to retrieve the results of a search by name
-     *
-     * @param string $name
-     * @return array
-     * @todo Wire this up to the backend
-     */
-    protected function getPersonListForName($name)
-    {
-        return [
-            '0' => [
-                'id' => 9,
-                'first_name' => 'John',
-                'middle_name' => null,
-                'surname' => 'Smith'
-            ],
-
-            '1' => [
-                'id' => 10,
-                'first_name' => 'Peter',
-                'middle_name' => null,
-                'surname' => 'Smith',
-
-            ]
-        ];
-    }
-
     protected function getFormGenerator()
     {
         return $this->getServiceLocator()->get('OlcsCustomForm');
@@ -799,7 +772,12 @@ abstract class FormActionController extends AbstractActionController
                             $fieldset->get('searchPerson')->get('person-list')->setValueOptions(
                                 $this->formatPersonsForSelect($personList)
                             );
+                            $fieldset->remove('personFirstname');
+                            $fieldset->remove('personLastname');
+                            $fieldset->remove('dateOfBirth');
                         }
+
+
                     }
                 } elseif (isset($post[$name]['searchPerson']['select'])
                     && !empty($post[$name]['searchPerson']['select'])) {
@@ -807,8 +785,6 @@ abstract class FormActionController extends AbstractActionController
                     $this->persist = false;
 
                     $person = $this->getPersonById($post[$name]['searchPerson']['person-list']);
-
-                    $removeSelectFields = true;
 
                     $personDetails = $this->formatPerson($person);
 
@@ -822,11 +798,29 @@ abstract class FormActionController extends AbstractActionController
                 if ($removeSelectFields) {
                     $fieldset->get('searchPerson')->remove('person-list');
                     $fieldset->get('searchPerson')->remove('select');
+                    $fieldset->remove('personFirstname');
+                    $fieldset->remove('personLastname');
+                    $fieldset->remove('dateOfBirth');
+
                 }
             }
         }
 
         return $form;
+    }
+
+    /**
+     * Method to retrieve the results of a search by name
+     *
+     * @param string $name
+     * @return array
+     */
+    protected function getPersonListForName($name)
+    {
+        $data['firstName'] = $name;
+        $results = $this->makeRestCall('PersonSearch', 'GET', $data);
+
+        return $results['Results'];
     }
 
     /**
@@ -855,12 +849,13 @@ abstract class FormActionController extends AbstractActionController
      *
      * @param type $person_details
      * @return type
+     * @todo get date of birth to prepopulate form
      */
     private function formatPerson($person_details)
     {
         $result['personFirstname'] = $person_details['first_name'];
         $result['personLastname'] = $person_details['surname'];
-        //$result['dateOfBirth'] = $person_details['dob'];
+        //$result['dateOfBirth'] = $person_details['date_of_birth'];
 
         return $result;
     }
@@ -870,10 +865,11 @@ abstract class FormActionController extends AbstractActionController
      *
      * @param type $id
      * @return type
-     * @todo Call relevent backend service
+     * @todo Call relevent backend service to get person details
      */
     private function getPersonById($id)
     {
+        // not working $results = $this->makeRestCall('PersonSearch', 'GET', ['id' => $id]);
         return [
             'first_name' => 'John',
             'surname' => 'Smith',
