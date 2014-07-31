@@ -153,6 +153,8 @@ trait RestCallTrait
      */
     public function handleGetResponse($service, $response)
     {
+        unset($service);
+
         return $response;
     }
 
@@ -166,6 +168,8 @@ trait RestCallTrait
      */
     public function handleGetListResponse($service, $response)
     {
+        unset($service);
+
         // If we have a 404
         if ($response === false) {
             throw new ResourceNotFoundException();
@@ -184,6 +188,8 @@ trait RestCallTrait
      */
     public function handlePostResponse($service, $response)
     {
+        unset($service);
+
         if ($response === false) {
             throw new BadRequestException();
         }
@@ -201,6 +207,8 @@ trait RestCallTrait
      */
     public function handlePutResponse($service, $response)
     {
+        unset($service);
+
         if (is_numeric($response)) {
             switch ($response) {
                 case 400:
@@ -225,6 +233,8 @@ trait RestCallTrait
      */
     public function handleDeleteResponse($service, $response)
     {
+        unset($service);
+
         // If we have a 404
         if ($response === false) {
             throw new ResourceNotFoundException();

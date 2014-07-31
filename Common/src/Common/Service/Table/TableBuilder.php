@@ -1316,4 +1316,3 @@ class TableBuilder
         }
     }
 }
-

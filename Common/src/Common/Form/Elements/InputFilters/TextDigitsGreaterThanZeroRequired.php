@@ -3,7 +3,7 @@
 /**
  * TextDigitsGreaterThanZeroRequired
  *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ * @author Jakub.Igla <jakub.igla@valtech.co.uk>
  */
 namespace Common\Form\Elements\InputFilters;
 
@@ -14,7 +14,7 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 /**
  * TextDigitsGreaterThanZeroRequired
  *
- * @author Jakub.Igla <jakub.igla@valtech.co.uk
+ * @author Jakub.Igla <jakub.igla@valtech.co.uk>
  */
 class TextDigitsGreaterThanZeroRequired extends ZendElement implements InputProviderInterface
 {

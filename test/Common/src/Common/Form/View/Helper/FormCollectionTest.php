@@ -19,7 +19,7 @@ use Zend\Form\View\Helper;
  * @package CommonTest\Form\View\Helper
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormCollection extends \PHPUnit_Framework_TestCase
+class FormCollectionTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $element;
@@ -27,15 +27,17 @@ class FormCollection extends \PHPUnit_Framework_TestCase
     private function prepareElement($targetElement = 'Text')
     {
         $this->element = new \Zend\Form\Element\Collection('test');
-        $this->element->setOptions([
-            'count' => 1,
-            'target_element' => [
-                'type' => $targetElement
-            ],
-            'should_create_template' => true,
-            'hint' => 'Hint',
-            'label' => 'Label',
-        ]);
+        $this->element->setOptions(
+            array(
+                'count' => 1,
+                'target_element' => [
+                    'type' => $targetElement
+                ],
+                'should_create_template' => true,
+                'hint' => 'Hint',
+                'label' => 'Label',
+            )
+        );
         $this->element->setAttribute('class', 'class');
         $this->element->prepareElement(new \Zend\Form\Form());
     }
@@ -67,7 +69,10 @@ class FormCollection extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<fieldset class="class"><legend>(.*)<\/legend><p class="hint">(.*)<\/p><span data-template="(.*)"><\/span><\/fieldset>$/');
+        $this->expectOutputRegex(
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            . '<span data-template="(.*)"><\/span><\/fieldset>$/'
+        );
     }
 
     /**
@@ -81,7 +86,10 @@ class FormCollection extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<fieldset class="class"><legend>(.*)<\/legend><p class="hint">(.*)<\/p><fieldset><\/fieldset><span data-template="(.*)"><\/span><\/fieldset>/');
+        $this->expectOutputRegex(
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend><p class="hint">(.*)<\/p>'
+            . '<fieldset data-group="(.*)"><\/fieldset><span data-template="(.*)"><\/span><\/fieldset>/'
+        );
     }
 
     /**
@@ -95,7 +103,7 @@ class FormCollection extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<fieldset><\/fieldset>$/');
+        $this->expectOutputRegex('/^<fieldset data-group="postcode"><\/fieldset>$/');
     }
 
     /**
@@ -110,7 +118,10 @@ class FormCollection extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul><fieldset><\/fieldset><\/div>$/');
+        $this->expectOutputRegex(
+            '/^<div class="validation-wrapper"><ul><li>(.*)<\/li><\/ul>'
+            . '<fieldset data-group="postcode"><\/fieldset><\/div>$/'
+        );
     }
 
     private function prepareViewHelper()

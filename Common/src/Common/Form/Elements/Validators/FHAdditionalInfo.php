@@ -59,8 +59,8 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
         $elementsToCheck = array_intersect_key($context, array_flip($this->validationContextFields));
 
         // iterate selected fields to check if yes value was selected
-        foreach ($elementsToCheck as $element){
-            if ($element == 'Y'){
+        foreach ($elementsToCheck as $element) {
+            if ($element == 'Y') {
                 $foundYes = true;
                 break;
             }
@@ -73,14 +73,14 @@ class FHAdditionalInfo extends ZendValidator\AbstractValidator
 
         // check if value is not empty
         $notEmptyValidator = new ZendValidator\NotEmpty();
-        if (!$notEmptyValidator->isValid($value)){
+        if (!$notEmptyValidator->isValid($value)) {
             $this->error(self::IS_EMPTY);
             return false;
         }
 
         // check if value length is at least 200
         $strLenValidator = new ZendValidator\StringLength(array('min' => 200));
-        if (!$strLenValidator->isValid($value)){
+        if (!$strLenValidator->isValid($value)) {
             $this->error(self::TOO_SHORT);
             return false;
         }

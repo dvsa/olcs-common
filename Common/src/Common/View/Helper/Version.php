@@ -5,13 +5,13 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\View\Helper;
 
 use Zend\View\Helper\HelperInterface;
 use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Version view helper
  *

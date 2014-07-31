@@ -16,7 +16,7 @@ use Common\Form\View\Helper as CommonHelper;
  *
  * @author Jakub Igla <jakub.igla@gmail.com>
  */
-class FormRow extends \PHPUnit_Framework_TestCase
+class FormRowTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param string $type
@@ -29,11 +29,14 @@ class FormRow extends \PHPUnit_Framework_TestCase
             $type = '\Zend\Form\Element\\' . ucfirst($type);
         }
 
-        $options = array_merge([
-            'type' => $type,
-            'label' => 'Label',
-            'hint' => 'Hint',
-        ], $options);
+        $options = array_merge(
+            array(
+                'type' => $type,
+                'label' => 'Label',
+                'hint' => 'Hint',
+            ),
+            $options
+        );
 
         $element = new $type('test');
         $element->setOptions($options);
