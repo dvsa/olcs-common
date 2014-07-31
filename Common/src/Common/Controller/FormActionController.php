@@ -9,6 +9,7 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Common\Form\Elements\Types\Person;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -76,6 +77,8 @@ abstract class FormActionController extends AbstractActionController
         $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
 
         $form = $this->processPostcodeLookup($form);
+
+        $form = $this->processPersonLookup($form);
 
         return $form;
     }
@@ -147,7 +150,6 @@ abstract class FormActionController extends AbstractActionController
                     $this->persist = false;
 
                     $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
                     $removeSelectFields = true;
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
@@ -710,5 +712,168 @@ abstract class FormActionController extends AbstractActionController
     public function getFileSizeValidator()
     {
         return new \Zend\Validator\File\FilesSize('2MB');
+    }
+
+
+    /**
+     * Process the person lookup functionality
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function processPersonLookup($form)
+    {
+        $request = $this->getRequest();
+
+        $post = array();
+
+        if ($request->isPost()) {
+
+            $post = (array)$request->getPost();
+        }
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+            if ($fieldset instanceof Person) {
+
+                $removeSelectFields = false;
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find person
+                if (isset($post[$name]['searchPerson']['search'])
+                    && !empty($post[$name]['searchPerson']['search'])) {
+
+                    $this->persist = false;
+
+                    $personName = trim($post[$name]['searchPerson']['personSearch']);
+
+                    if (empty($personName)) {
+
+                        $removeSelectFields = true;
+
+                        $fieldset->get('searchPerson')->setMessages(
+                            array('Please enter a person name')
+                        );
+                    } else {
+
+                        $personList = $this->getPersonListForName($personName);
+
+                        if (empty($personList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPersonName')->setMessages(
+                                array('No person found for name')
+                            );
+
+                        } else {
+                            $fieldset->get('searchPerson')->get('person-list')->setValueOptions(
+                                $this->formatPersonsForSelect($personList)
+                            );
+                            $fieldset->remove('personFirstname');
+                            $fieldset->remove('personLastname');
+                            $fieldset->remove('dateOfBirth');
+                        }
+
+
+                    }
+                } elseif (isset($post[$name]['searchPerson']['select'])
+                    && !empty($post[$name]['searchPerson']['select'])) {
+
+                    $this->persist = false;
+
+                    $person = $this->getPersonById($post[$name]['searchPerson']['person-list']);
+
+                    $personDetails = $this->formatPerson($person);
+
+                    $this->fieldValues[$name] = array_merge($post[$name], $personDetails);
+
+                } else {
+
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPerson')->remove('person-list');
+                    $fieldset->get('searchPerson')->remove('select');
+                    $fieldset->remove('personFirstname');
+                    $fieldset->remove('personLastname');
+                    $fieldset->remove('dateOfBirth');
+
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * Method to retrieve the results of a search by name
+     *
+     * @param string $name
+     * @return array
+     */
+    protected function getPersonListForName($name)
+    {
+        $data['firstName'] = $name;
+        $results = $this->makeRestCall('PersonSearch', 'GET', $data);
+
+        return $results['Results'];
+    }
+
+    /**
+     * Method to format the person list result into format suitable for select
+     * dropdown
+     *
+     * @param array $person_list
+     * @return array
+     */
+    private function formatPersonsForSelect($person_list)
+    {
+        $result = [];
+        if (is_array($person_list)) {
+            foreach ($person_list as $person)
+            {
+                $result[$person['id']] = trim($person['surname'] . ' ' . $person['first_name']);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Method to format a person details from db result into form field array
+     * structure
+     *
+     * @param type $person_details
+     * @return type
+     * @todo get date of birth to prepopulate form
+     */
+    private function formatPerson($person_details)
+    {
+        $result['personFirstname'] = $person_details['first_name'];
+        $result['personLastname'] = $person_details['surname'];
+        //$result['dateOfBirth'] = $person_details['date_of_birth'];
+
+        return $result;
+    }
+
+    /**
+     * Method to perform a final look up on the person selected.
+     *
+     * @param type $id
+     * @return type
+     * @todo Call relevent backend service to get person details
+     */
+    private function getPersonById($id)
+    {
+        // not working $results = $this->makeRestCall('PersonSearch', 'GET', ['id' => $id]);
+        return [
+            'first_name' => 'John',
+            'surname' => 'Smith',
+            //'dob' ['']
+        ];
     }
 }
