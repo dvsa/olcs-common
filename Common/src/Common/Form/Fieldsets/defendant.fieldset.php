@@ -9,30 +9,13 @@ return [
                         'label' => 'Defendant type',
                         'value_options' => 'defendant_types'
                     ],
-        'id' => [
-            'type' => 'hidden'
-        ],
-        'version' => [
-            'type' => 'hidden'
-        ],
-        'searchPerson' => [
-            'type' => 'person-search',
-            'label' => 'Search for person'
-        ],
-        'personFirstname' => [
-            'type' => 'personName',
-            'label' => 'First name',
-             'class' => 'long'
-        ],
-        'personLastname' => [
-            'type' => 'personName',
-            'label' => 'Last name',
-            'class' => 'long'
-        ],
-        'dateOfBirth' => [
-             'type' => 'dateSelectWithEmpty',
-             'label' => 'Date of birth',
-             'filters' => '\Common\Form\Elements\InputFilters\DateNotRequiredNotInFuture'
-         ]
+        'personType' => [
+            'type' => 'submit',
+            'class' => 'action--secondary large',
+            'label' => 'Look up defendant',
+            'attributes' => [
+                'value' => 'Person type'
+            ],
+        ]
     ]
 ];

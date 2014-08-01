@@ -204,6 +204,7 @@ abstract class FormActionController extends AbstractActionController
      */
     public function formPost($form, $callback = null, $additionalParams = array())
     {
+
         if (!$this->enableCsrf) {
             $form->remove('csrf');
         }
@@ -723,21 +724,12 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function processEntityLookup($form)
     {
-        $request = $this->getRequest();
-
-        $post = array();
-
-        if ($request->isPost()) {
-
-            $post = (array)$request->getPost();
-        }
 
         $fieldsets = $form->getFieldsets();
 
         foreach ($fieldsets as $fieldset) {
             if ($fieldset instanceof Person) {
-                $fieldset = $this->processPersonLookup($fieldset, $post);
-
+                $fieldset = $this->processPersonLookup($fieldset);
             }
         }
 
@@ -751,21 +743,33 @@ abstract class FormActionController extends AbstractActionController
      * @param type $post
      * @return type
      */
-    protected function processPersonLookup($fieldset, $post)
+    protected function processPersonLookup($fieldset)
     {
+        $request = $this->getRequest();
+
         $removeSelectFields = false;
 
         $name = $fieldset->getName();
 
-        // If we haven't posted a form, or we haven't clicked find person
-        if (isset($post[$name]['searchPerson']['search'])
-            && !empty($post[$name]['searchPerson']['search'])) {
+        $post = array();
+        if ($request->isPost()) {
+            $post = (array)$request->getPost();
+        }
 
+        // If we haven't posted a form, or we haven't clicked find person
+        if (isset($post[$name]['personType'])
+            && !empty($post[$name]['personType'])) {
+            // get the relevant search form
+            $this->processPersonType($fieldset, $post);
+
+        } elseif (isset($post[$name]['searchPerson']['search'])
+            && !empty($post[$name]['searchPerson']['search'])) {
+            // get the relevant results
             $this->processPersonSearch($fieldset, $post);
 
         } elseif (isset($post[$name]['searchPerson']['select'])
             && !empty($post[$name]['searchPerson']['select'])) {
-
+            // get the relevant entity and populate the relevant fields
             $this->processPersonSelected($fieldset, $post);
 
         } else {
@@ -774,8 +778,8 @@ abstract class FormActionController extends AbstractActionController
         }
 
         if ($removeSelectFields) {
-            $fieldset->get('searchPerson')->remove('person-list');
-            $fieldset->get('searchPerson')->remove('select');
+            //$fieldset->get('searchPerson')->remove('person-list');
+            //$fieldset->get('searchPerson')->remove('select');
             $fieldset->remove('personFirstname');
             $fieldset->remove('personLastname');
             $fieldset->remove('dateOfBirth');
@@ -783,17 +787,48 @@ abstract class FormActionController extends AbstractActionController
         return $fieldset;
     }
 
+    protected function processPersonType($fieldset, $post)
+    {
+        $this->setPersist(false);
+
+        $search = new \Common\Form\Elements\Types\PersonSearch('searchPerson', array('label' => 'Select'));
+        $search->setAttributes(
+            array(
+                'type' => 'person-search',
+            )
+        );
+
+        $search->setLabel('Search for person');
+
+        $search->remove('person-list');
+        $search->remove('select');
+        $search->remove('personFirstname');
+        $search->remove('personLastname');
+        $search->remove('dateOfBirth');
+
+        $fieldset->add($search);
+
+    }
+
     protected function processPersonSearch($fieldset, $post)
     {
-        $this->persist = false;
+        $this->setPersist(false);
+
+        $search = new \Common\Form\Elements\Types\PersonSearch('searchPerson', array('label' => 'Select'));
+        $search->setAttributes(
+            array(
+                'type' => 'person-search',
+            )
+        );
+        $search->setLabel('Search for person');
+        $search->remove('personFirstname');
+        $search->remove('personLastname');
+        $search->remove('dateOfBirth');
 
         $personName = trim($post[$fieldset->getName()]['searchPerson']['personSearch']);
 
         if (empty($personName)) {
-
-            $removeSelectFields = true;
-
-            $fieldset->get('searchPerson')->setMessages(
+            $search->setMessages(
                 array('Please enter a person name')
             );
         } else {
@@ -802,29 +837,40 @@ abstract class FormActionController extends AbstractActionController
 
             if (empty($personList)) {
 
-                $removeSelectFields = true;
-
-                $fieldset->get('searchPerson')->setMessages(
+                $search->setMessages(
                     array('No person found for name')
                 );
 
             } else {
-                $fieldset->get('searchPerson')->get('person-list')->setValueOptions(
+                $search->get('person-list')->setValueOptions(
                     $this->formatPersonsForSelect($personList)
                 );
-                $fieldset->remove('personFirstname');
-                $fieldset->remove('personLastname');
-                $fieldset->remove('dateOfBirth');
+                $search->remove('personFirstname');
+                $search->remove('personLastname');
+                $search->remove('dateOfBirth');
             }
 
         }
+        $fieldset->add($search);
 
         return $fieldset;
     }
 
     protected function processPersonSelected($fieldset, $post)
     {
-        $this->persist = false;
+        $this->setPersist(false);
+
+        $search = new \Common\Form\Elements\Types\PersonSearch('searchPerson', array('label' => 'Select'));
+        $search->setAttributes(
+            array(
+                'type' => 'person-search',
+            )
+        );
+        $search->setLabel('Search for person');
+        $search->remove('person-list');
+        $search->remove('select');
+        $fieldset->add($search);
+
         $person = $this->getPersonById($post[$fieldset->getName()]['searchPerson']['person-list']);
 
         $personDetails = $this->formatPerson($person);

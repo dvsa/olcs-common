@@ -70,6 +70,45 @@ class PersonSearch extends Fieldset
         $selectButton->setValue('select');
 
         $this->add($selectButton);
+
+        $personFirstname = new \Common\Form\Elements\InputFilters\Name('personFirstname', array('label' => 'First name'));
+        $personFirstname->setAttributes(
+            array(
+                'id' => 'personFirstname',
+                'class' => 'long'
+            )
+        );
+        $this->add($personFirstname);
+
+        $personLastname = new \Common\Form\Elements\InputFilters\Name('personLastname', array('label' => 'Last name'));
+        $personLastname->setAttributes(
+            array(
+                'id' => 'personLastname',
+                'class' => 'long'
+            )
+        );
+
+        $this->add($personLastname);
+
+        $dateOfBirth = new \Common\Form\Elements\Custom\DateSelect(
+            'dateOfBirth',
+             array('label' => 'Date of birth')
+        );
+        $dateOfBirth->setAttributes(
+            array(
+                'id' => 'dob',
+                'class' => 'long'
+            )
+        );
+        $dateOfBirth->setOptions(
+            [
+                'create_empty_option' => true,
+                'render_delimiters' => false,
+                'required' => false,
+            ]
+        );
+        $this->add($dateOfBirth);
+
     }
 
     public function setMessages($messages)
