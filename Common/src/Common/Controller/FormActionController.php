@@ -729,12 +729,12 @@ abstract class FormActionController extends AbstractActionController
 
         foreach ($fieldsets as $fieldset) {
             if ($fieldset instanceof Person) {
-                //$fieldset->setPriority($fieldset, 1);
                 $searchFieldset = $this->processPersonLookup($fieldset);
-
-                if ($searchFieldset instanceof \Common\Form\Elements\Types\PersonSearch)
-                {
-                    $fieldset->add($searchFieldset);
+                if ($searchFieldset instanceof \Common\Form\Elements\Types\PersonSearch) {
+                    $elements = $searchFieldset->getElements();
+                    foreach($elements as $element) {
+                        $fieldset->add($element);
+                    }
                 }
             }
         }
@@ -751,6 +751,7 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function processPersonLookup($fieldset)
     {
+        $this->setPersist(false);
         $request = $this->getRequest();
 
         $name = $fieldset->getName();
@@ -766,13 +767,13 @@ abstract class FormActionController extends AbstractActionController
             // get the relevant search form
             $searchFieldset = $this->processPersonType($fieldset, $post);
 
-        } elseif (isset($post[$name]['searchPerson']['search'])
-            && !empty($post[$name]['searchPerson']['search'])) {
+        } elseif (isset($post[$name]['search'])
+            && !empty($post[$name]['search'])) {
             // get the relevant results
             $searchFieldset = $this->processPersonSearch($fieldset, $post);
 
-        } elseif (isset($post[$name]['searchPerson']['select'])
-            && !empty($post[$name]['searchPerson']['select'])) {
+        } elseif (isset($post[$name]['select'])
+            && !empty($post[$name]['select'])) {
             // get the relevant entity and populate the relevant fields
             $searchFieldset = $this->processPersonSelected($fieldset, $post);
 
@@ -800,8 +801,6 @@ abstract class FormActionController extends AbstractActionController
         $search->remove('personLastname');
         $search->remove('dateOfBirth');
 
-        //$fieldset->add($search);
-
         return $search;
     }
 
@@ -815,12 +814,8 @@ abstract class FormActionController extends AbstractActionController
                 'type' => 'person-search',
             )
         );
-        $search->setLabel('Search for person');
-        $search->remove('personFirstname');
-        $search->remove('personLastname');
-        $search->remove('dateOfBirth');
 
-        $personName = trim($post[$fieldset->getName()]['searchPerson']['personSearch']);
+        $personName = trim($post[$fieldset->getName()]['personSearch']);
 
         if (empty($personName)) {
             $search->setMessages(
@@ -840,14 +835,15 @@ abstract class FormActionController extends AbstractActionController
                 $search->get('person-list')->setValueOptions(
                     $this->formatPersonsForSelect($personList)
                 );
-                $search->remove('personFirstname');
-                $search->remove('personLastname');
-                $search->remove('dateOfBirth');
+
             }
 
         }
-        //$fieldset->add($search);
 
+        $search->setLabel('Search for person');
+        $search->remove('personFirstname');
+        $search->remove('personLastname');
+        $search->remove('dateOfBirth');
         return $search;
     }
 
@@ -864,11 +860,10 @@ abstract class FormActionController extends AbstractActionController
         $search->setLabel('Search for person');
         $search->remove('person-list');
         $search->remove('select');
-        //$fieldset->add($search);
 
-        $person = $this->getPersonById($post[$fieldset->getName()]['searchPerson']['person-list']);
+        $person = $this->getPersonById($post[$fieldset->getName()]['person-list']);
 
-        $this->fieldValues[$fieldset->getName()]['searchPerson'] = $person;
+        $this->fieldValues[$fieldset->getName()] = $person;
 
         return $search;
     }
