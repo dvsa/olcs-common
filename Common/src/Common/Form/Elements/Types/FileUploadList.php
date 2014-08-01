@@ -53,6 +53,9 @@ class FileUploadList extends Fieldset
             $id = new Hidden('id');
             $id->setValue($file['id']);
 
+            $version = new Hidden('version');
+            $version->setValue($file['version']);
+
             $html = new Html('link', array('render-container' => false));
             $html->setAttribute('data-container-class', 'inline');
             $html->setValue(
@@ -68,6 +71,7 @@ class FileUploadList extends Fieldset
             $fileItem->add($html);
             $fileItem->add($remove);
             $fileItem->add($id);
+            $fileItem->add($version);
 
             $this->add($fileItem);
         }

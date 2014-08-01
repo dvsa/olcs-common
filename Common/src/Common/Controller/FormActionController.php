@@ -609,12 +609,23 @@ abstract class FormActionController extends AbstractActionController
                         $form
                     );
 
-                } elseif (isset($data[$fieldset]['file-controls']['upload'])
-                    && !empty($data[$fieldset]['file-controls']['upload'])) {
+                } elseif (
+                    isset($data[$fieldset]['file-controls']['upload'])
+                    && !empty($data[$fieldset]['file-controls']['upload'])
+                ) {
 
                     $this->setPersist(false);
 
                     $error = $files[$fieldset]['file-controls']['file']['error'];
+
+                    $validator = $this->getFileSizeValidator();
+
+                    if (
+                        $error == UPLOAD_ERR_OK
+                        && !$validator->isValid($files[$fieldset]['file-controls']['file']['tmp_name'])
+                    ) {
+                        $error = UPLOAD_ERR_INI_SIZE;
+                    }
 
                     $responses[$fieldset] = $error;
 
@@ -728,5 +739,10 @@ abstract class FormActionController extends AbstractActionController
                 $fieldset->remove($name);
             }
         }
+    }
+
+    public function getFileSizeValidator()
+    {
+        return new \Zend\Validator\File\FilesSize('2MB');
     }
 }

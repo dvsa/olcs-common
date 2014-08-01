@@ -9,8 +9,10 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 
 /**
  * Text Max 40 Required
+ * DOES NOT extend TextMax40 because that extends Text, which in turn sets
+ * required to be false
  */
-class TextMax40Required extends TextMax40 implements InputProviderInterface
+class TextMax40Required extends TextRequired implements InputProviderInterface
 {
-    protected $required = true;
+    protected $max = 40;
 }
