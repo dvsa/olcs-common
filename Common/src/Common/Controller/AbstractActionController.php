@@ -51,6 +51,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Sets up the index route array.
      *
+     * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
     public function setupIndexRoute(\Zend\Mvc\MvcEvent $e)
@@ -78,6 +79,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Does what it says on the tin.
      *
+     * @codeCoverageIgnore
      * @return mixed
      */
     public function redirectToIndex()

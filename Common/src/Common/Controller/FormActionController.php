@@ -27,6 +27,10 @@ abstract class FormActionController extends AbstractActionController
 
     private $fieldValues = array();
 
+    /**
+     * @codeCoverageIgnore
+     * @param \Zend\Mvc\MvcEvent $e
+     */
     public function onDispatch(MvcEvent $e)
     {
         $onDispatch = parent::onDispatch($e);
