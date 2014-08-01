@@ -75,7 +75,8 @@ class PersonSearch extends Fieldset
         $personFirstname->setAttributes(
             array(
                 'id' => 'personFirstname',
-                'class' => 'long'
+                'class' => 'long',
+                'placeholder' => ''
             )
         );
         $this->add($personFirstname);
@@ -84,7 +85,8 @@ class PersonSearch extends Fieldset
         $personLastname->setAttributes(
             array(
                 'id' => 'personLastname',
-                'class' => 'long'
+                'class' => 'long',
+                'placeholder' => ''
             )
         );
 
@@ -97,7 +99,7 @@ class PersonSearch extends Fieldset
         $dateOfBirth->setAttributes(
             array(
                 'id' => 'dob',
-                'class' => 'long'
+                'class' => 'long',
             )
         );
         $dateOfBirth->setOptions(
