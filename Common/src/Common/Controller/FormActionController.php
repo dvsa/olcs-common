@@ -777,6 +777,8 @@ abstract class FormActionController extends AbstractActionController
             // get the relevant entity and populate the relevant fields
             $searchFieldset = $this->processPersonSelected($fieldset, $post);
 
+        } else {
+            $this->setPersist(true);
         }
 
         return $searchFieldset;
@@ -863,7 +865,9 @@ abstract class FormActionController extends AbstractActionController
 
         $person = $this->getPersonById($post[$fieldset->getName()]['person-list']);
 
-        $this->fieldValues[$fieldset->getName()] = $person;
+        $this->fieldValues[$fieldset->getName()] = array_merge($post[$fieldset->getName()], $person);
+
+        //$this->fieldValues[$fieldset->getName()] = array_merge($person, $post);
 
         return $search;
     }
@@ -877,8 +881,8 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function getPersonListForName($name)
     {
-        $data['firstName'] = $name;
-        $results = $this->makeRestCall('PersonSearch', 'GET', $data);
+        $data['name'] = $name;
+        $results = $this->makeRestCall('DefendantSearch', 'GET', $data);
 
         return $results['Results'];
     }
@@ -896,7 +900,10 @@ abstract class FormActionController extends AbstractActionController
         if (is_array($person_list)) {
             foreach ($person_list as $person)
             {
-                $result[$person['id']] = trim($person['surname'] . ' ' . $person['first_name']);
+                $dob = new \DateTime($person['date_of_birth']);
+                $result[$person['id']] = trim($person['surname'] .
+                    ',  ' . $person['first_name'] .
+                    '     (b. ' . $dob->format('d-M-Y')) . ')';
             }
         }
 
