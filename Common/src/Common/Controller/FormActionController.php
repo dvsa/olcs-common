@@ -778,6 +778,18 @@ abstract class FormActionController extends AbstractActionController
             $searchFieldset = $this->processPersonSelected($fieldset, $post);
 
         } else {
+            // add the search fieldset to ensure the relevant person/operator
+            // form elements are present based on defType
+            $searchFieldset = new \Common\Form\Elements\Types\PersonSearch('searchPerson', array('label' => 'Select'));
+            $searchFieldset->setAttributes(
+                array(
+                    'type' => 'person-search',
+                )
+            );
+            $searchFieldset->setLabel('Search for person');
+            $searchFieldset->remove('person-list');
+            $searchFieldset->remove('select');
+
             $this->setPersist(true);
         }
 
@@ -866,8 +878,6 @@ abstract class FormActionController extends AbstractActionController
         $person = $this->getPersonById($post[$fieldset->getName()]['person-list']);
 
         $this->fieldValues[$fieldset->getName()] = array_merge($post[$fieldset->getName()], $person);
-
-        //$this->fieldValues[$fieldset->getName()] = array_merge($person, $post);
 
         return $search;
     }
