@@ -254,7 +254,6 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
-<<<<<<< HEAD
     'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'Intention',
     'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'Small vehicle conditions and undertakings
         (if applicable)',
@@ -282,12 +281,10 @@ return array(
         are not to be operated under this operator\'s licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
         nine passenger seats or more and issued with a valid Certificate will be used under the licence',
-=======
     'application_your-business_business-details-add' => 'Add subsidiary company',
     'application_your-business_business-details-edit' => 'Edit subsidiary company',
     'application_your-business_business-details-formCompanyNo' => 'Company number',
     'application_your-business_business-details-formName' => 'Company name',
->>>>>>> 687ea5a8ccb08c9f99f6f5bfdd0445e4e2dc9e3b
     'application_your-business_business-details.data.company_name' => 'Company name',
     'application_your-business_business-details.data.company_name.other' => 'Organisation name',
     'application_your-business_business-details.data.company_name.partnership' => 'Partnership name',
