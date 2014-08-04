@@ -46,7 +46,7 @@ class ScriptFactory extends Factory
     /**
      * load an array of files
      *
-     * @param aray $files - the files to load
+     * @param array $files - the files to load
      *
      * @return array
      */
