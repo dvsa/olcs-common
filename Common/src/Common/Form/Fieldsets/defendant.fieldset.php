@@ -9,12 +9,12 @@ return [
                         'label' => 'Defendant type',
                         'value_options' => 'defendant_types'
                     ],
-        'personType' => [
+        'lookupTypeSubmit' => [
             'type' => 'submit',
             'class' => 'action--secondary large',
-            'label' => 'Look up defendant',
+            'label' => 'Submit',
             'attributes' => [
-                'value' => 'Person type'
+                'value' => 'Lookup type'
             ],
         ]
     ]

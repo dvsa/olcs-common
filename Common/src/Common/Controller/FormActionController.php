@@ -796,8 +796,8 @@ abstract class FormActionController extends AbstractActionController
         }
         $searchFieldset = false;
         // If we haven't posted a form, or we haven't clicked find person
-        if (isset($post[$name]['personType'])
-            && !empty($post[$name]['personType'])) {
+        if (isset($post[$name]['lookupTypeSubmit'])
+            && !empty($post[$name]['lookupTypeSubmit'])) {
             // get the relevant search form
             $searchFieldset = $this->processPersonType($fieldset, $post);
 
