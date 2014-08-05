@@ -37,6 +37,10 @@ class Table extends Element
         }
 
         $table->setFieldset($fieldset);
+
+        $table->setDisabled(
+            $this->hasAttribute('disabled')
+        );
     }
 
     /**

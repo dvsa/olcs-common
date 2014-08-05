@@ -22,6 +22,8 @@ class TableTest extends PHPUnit_Framework_TestCase
      */
     public function testSetTable()
     {
+        $this->markTestSkipped('Does nothing of use');
+
         $fieldset = 'table';
 
         $mockTable = $this->getMock('\stdClass', array('setFieldset'));
@@ -38,11 +40,11 @@ class TableTest extends PHPUnit_Framework_TestCase
     /**
      * Test render
      */
-    public function testRender()
+    public function testRenderDefersToSuppliedTableRenderMethod()
     {
         $fieldset = 'table';
 
-        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'render'));
+        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')

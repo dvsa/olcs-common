@@ -168,6 +168,18 @@ class TableBuilder
     private $sm;
 
     /**
+     * Is this table in read-only mode?
+     *
+     * @var bool
+     */
+    private $isDisabled = false;
+
+    public function setDisabled($disabled)
+    {
+        $this->isDisabled = $disabled;
+    }
+
+    /**
      * Setter for actionFieldName
      *
      * @param string $name
@@ -1047,6 +1059,10 @@ class TableBuilder
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
     {
+        if ($this->shouldHide($column)) {
+            return;
+        }
+
         if (isset($column['sort'])) {
 
             $column['class'] = 'sortable';
@@ -1099,6 +1115,10 @@ class TableBuilder
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
+        if ($this->shouldHide($column)) {
+            return;
+        }
+
         if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
@@ -1314,5 +1334,10 @@ class TableBuilder
             }
             $this->setColumns($newColumns);
         }
+    }
+
+    private function shouldHide($column)
+    {
+        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
 }
