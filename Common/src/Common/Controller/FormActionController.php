@@ -756,7 +756,7 @@ abstract class FormActionController extends AbstractActionController
      * @param Form $form
      * @return Form
      */
-    protected function processEntityLookup($form)
+    private function processEntityLookup($form)
     {
 
         $fieldsets = $form->getFieldsets();
@@ -779,11 +779,11 @@ abstract class FormActionController extends AbstractActionController
     /**
      * Method to manipulate the form as neccessary
      *
-     * @param type $fieldset
-     * @param type $post
-     * @return type
+     * @param object $fieldset
+     * @param array $post
+     * @return object
      */
-    protected function processPersonLookup($fieldset)
+    private function processPersonLookup($fieldset)
     {
         $this->setPersist(false);
         $request = $this->getRequest();
@@ -811,6 +811,11 @@ abstract class FormActionController extends AbstractActionController
             // get the relevant entity and populate the relevant fields
             $searchFieldset = $this->processPersonSelected($fieldset, $post);
 
+        } elseif (isset($post[$name]['addNew'])
+            && !empty($post[$name]['addNew'])) {
+            // get the relevant entity and populate the relevant fields
+            $searchFieldset = $this->processPersonAddNew($fieldset, $post);
+
         } else {
             // add the search fieldset to ensure the relevant person/operator
             // form elements are present based on defType
@@ -830,7 +835,14 @@ abstract class FormActionController extends AbstractActionController
         return $searchFieldset;
     }
 
-    protected function processPersonType($fieldset, $post)
+    /**
+     * Method to process the person type
+     *
+     * @param object $fieldset
+     * @param array $post
+     * @return \Common\Form\Elements\Types\PersonSearch
+     */
+    private function processPersonType($fieldset, $post)
     {
         $this->setPersist(false);
 
@@ -852,7 +864,14 @@ abstract class FormActionController extends AbstractActionController
         return $search;
     }
 
-    protected function processPersonSearch($fieldset, $post)
+    /**
+     * Method to process the person search button
+     *
+     * @param object $fieldset
+     * @param array $post
+     * @return \Common\Form\Elements\Types\PersonSearch
+     */
+    private function processPersonSearch($fieldset, $post)
     {
         $this->setPersist(false);
 
@@ -895,7 +914,14 @@ abstract class FormActionController extends AbstractActionController
         return $search;
     }
 
-    protected function processPersonSelected($fieldset, $post)
+    /**
+     * Method to process the person selected
+     *
+     * @param object $fieldset
+     * @param array $post
+     * @return \Common\Form\Elements\Types\PersonSearch
+     */
+    private function processPersonSelected($fieldset, $post)
     {
         $this->setPersist(false);
 
@@ -916,6 +942,32 @@ abstract class FormActionController extends AbstractActionController
         return $search;
     }
 
+    /**
+     * Method to process the add new button
+     *
+     * @param object $fieldset
+     * @param array $post
+     * @return \Common\Form\Elements\Types\PersonSearch
+     */
+    private function processPersonAddNew($fieldset, $post)
+    {
+        $this->setPersist(false);
+
+        $search = new \Common\Form\Elements\Types\PersonSearch('searchPerson', array('label' => 'Select'));
+        $search->setAttributes(
+            array(
+                'type' => 'person-search',
+            )
+        );
+
+        $search->setLabel('Search for person');
+        $search->remove('person-list');
+        $search->remove('select');
+        $search->remove('search');
+        $search->remove('personSearch');
+
+        return $search;
+    }
 
     /**
      * Method to retrieve the results of a search by name
@@ -923,7 +975,7 @@ abstract class FormActionController extends AbstractActionController
      * @param string $name
      * @return array
      */
-    protected function getPersonListForName($name)
+    private function getPersonListForName($name)
     {
         $data['name'] = $name;
         $results = $this->makeRestCall('DefendantSearch', 'GET', $data);
@@ -942,12 +994,13 @@ abstract class FormActionController extends AbstractActionController
     {
         $result = [];
         if (is_array($person_list)) {
-            foreach ($person_list as $person)
-            {
+            foreach ($person_list as $person) {
                 $dob = new \DateTime($person['date_of_birth']);
-                $result[$person['id']] = trim($person['surname'] .
+                $result[$person['id']] = trim(
+                    $person['surname'] .
                     ',  ' . $person['first_name'] .
-                    '     (b. ' . $dob->format('d-M-Y')) . ')';
+                    '     (b. ' . $dob->format('d-M-Y')
+                ) . ')';
             }
         }
 

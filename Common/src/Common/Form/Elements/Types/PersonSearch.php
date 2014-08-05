@@ -44,7 +44,7 @@ class PersonSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--secondary large'
+                'class' => 'action--secondary small'
             )
         );
         $searchButton->setValue('search');
@@ -111,6 +111,16 @@ class PersonSearch extends Fieldset
         );
         $this->add($dateOfBirth);
 
+        $addNewButton = new Button('addNew', array('label' => 'Add new'));
+        $addNewButton->setAttributes(
+            array(
+                'type' => 'submit',
+                'class' => 'action--secondary small'
+            )
+        );
+        $addNewButton->setValue('addNew');
+
+        $this->add($addNewButton);
     }
 
     public function setMessages($messages)

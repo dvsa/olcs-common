@@ -11,7 +11,7 @@ return [
                     ],
         'lookupTypeSubmit' => [
             'type' => 'submit',
-            'class' => 'action--secondary large',
+            'class' => 'action--secondary small',
             'label' => 'Submit',
             'attributes' => [
                 'value' => 'Lookup type'
