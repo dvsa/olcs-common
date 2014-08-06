@@ -74,7 +74,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'addressLine2' => 'Awesome House Street Name',
             'addressLine3' => 'Some Town',
             'addressLine4' => '',
-            'city' => 'Some Area',
+            'town' => 'Some Area',
             'postcode' => 'AB1 1AB'
         );
 
@@ -111,7 +111,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'addressLine2' => '31 Some Street Street Name',
             'addressLine3' => 'Some Town',
             'addressLine4' => '',
-            'city' => 'Some Area',
+            'town' => 'Some Area',
             'postcode' => 'AB1 1AB'
         );
 
@@ -148,7 +148,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'addressLine2' => '31 Some Street Street Name',
             'addressLine3' => '',
             'addressLine4' => '',
-            'city' => 'Some Town',
+            'town' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
 
@@ -185,7 +185,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'addressLine2' => '31 Some Street Street Name',
             'addressLine3' => '',
             'addressLine4' => '',
-            'city' => 'Some Town',
+            'town' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
 

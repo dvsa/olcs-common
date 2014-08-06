@@ -44,7 +44,7 @@ return [
                 'class' => 'visually-hidden',
             ],
         ],
-        'city' => [
+        'town' => [
             'type' => 'text',
             'label' => 'Town/City',
             'class' => 'long',

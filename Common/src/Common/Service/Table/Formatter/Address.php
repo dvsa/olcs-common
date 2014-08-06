@@ -34,7 +34,7 @@ class Address implements FormatterInterface
                 'addressLine2',
                 'addressLine3',
                 'addressLine4',
-                'city',
+                'town',
                 'country',
                 'postcode'
             );

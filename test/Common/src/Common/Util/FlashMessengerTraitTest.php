@@ -30,7 +30,7 @@ class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
         $this->trait->expects($this->once())
             ->method('plugin')
             ->will($this->returnValue($pluginManager));
-        $this->trait->getFlashMessenger('backend\VosaCase');
+        $this->trait->getFlashMessenger('backend\Cases');
     }
 
     public function testAddInfoMessage()
@@ -45,7 +45,7 @@ class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $this->trait->addInfoMessage('backend\VosaCase');
+        $this->trait->addInfoMessage('backend\Cases');
     }
 
     public function testErrorMessage()
@@ -60,7 +60,7 @@ class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $this->trait->addErrorMessage('backend\VosaCase');
+        $this->trait->addErrorMessage('backend\Cases');
     }
 
     public function testSuccessMessage()
@@ -75,6 +75,6 @@ class FlashMessengerTraitTest extends AbstractHttpControllerTestCase
         $this->trait->expects($this->once())
             ->method('getFlashMessenger')
             ->will($this->returnValue($chainMock));
-        $this->trait->addSuccessMessage('backend\VosaCase');
+        $this->trait->addSuccessMessage('backend\Cases');
     }
 }
