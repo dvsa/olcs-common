@@ -2,7 +2,7 @@
 
 return [
     'name' => 'defendant',
-    'type' => '\Common\Form\Elements\Types\Defendant',
+    'type' => '\Common\Form\Elements\Types\EntitySearch',
     'elements' => [
         'defType' => [
                         'type' => 'select',

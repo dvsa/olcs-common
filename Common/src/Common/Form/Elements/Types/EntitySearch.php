@@ -14,6 +14,6 @@ use Zend\Form\Fieldset;
  *
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class Defendant extends Fieldset
+class EntitySearch extends Fieldset
 {
 }
