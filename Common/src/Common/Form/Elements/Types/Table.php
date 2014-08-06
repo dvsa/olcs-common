@@ -38,6 +38,9 @@ class Table extends Element
 
         $table->setFieldset($fieldset);
 
+        // let our table builder know if the element itself
+        // is disabled; it can use this to make certain
+        // rendering decisions
         $table->setDisabled(
             $this->hasAttribute('disabled')
         );

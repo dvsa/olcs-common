@@ -168,12 +168,17 @@ class TableBuilder
     private $sm;
 
     /**
-     * Is this table in read-only mode?
+     * Is this builder inside a disabled table element?
      *
      * @var bool
      */
     private $isDisabled = false;
 
+    /**
+     * Set whether this table appears inside a disabled element
+     *
+     * @param bool $disabled
+     */
     public function setDisabled($disabled)
     {
         $this->isDisabled = $disabled;
