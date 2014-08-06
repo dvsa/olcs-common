@@ -25,6 +25,29 @@ class TaskIdentifier implements FormatterInterface
      */
     public static function format($data, $column, $sm)
     {
-        return $data['id'] . ' (MLH)';
+        $type = $data['type'];
+
+        $link = '';
+
+        // @NOTE please bear in mind these types are completely
+        // made up for the time being, and probably not realistic.
+        // Don't know what the data looks like yet.
+        switch ($type) {
+        case 'Application':
+        case 'Licence':
+            $link = $data['licenceNumber'];
+            break;
+        case 'Transport Manager':
+            $link = $data['transportManagerId'];
+            break;
+        case 'Case':
+            $link = $data['caseId'];
+            break;
+        case 'Bus registration':
+            $link = $data['busRegistrationNumber'];
+            break;
+        }
+
+        return $link . ' (MLH)';
     }
 }
