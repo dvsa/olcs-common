@@ -22,11 +22,9 @@ class TableTest extends PHPUnit_Framework_TestCase
      */
     public function testSetTable()
     {
-        $this->markTestSkipped('Does nothing of use');
-
         $fieldset = 'table';
 
-        $mockTable = $this->getMock('\stdClass', array('setFieldset'));
+        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled'));
 
         $mockTable->expects($this->once())
             ->method('setFieldset')
@@ -59,5 +57,22 @@ class TableTest extends PHPUnit_Framework_TestCase
         $table->setTable($mockTable);
 
         $this->assertEquals('<table></table>', $table->render());
+    }
+
+    public function testSetTablePassesDisabledAttributeToBuilder()
+    {
+        $fieldset = 'table';
+
+        $mockTable = $this->getMock('\stdClass', array('setFieldset', 'setDisabled', 'render'));
+
+        $mockTable->expects($this->once())
+            ->method('setDisabled')
+            ->with(true);
+
+        $table = new Table($fieldset);
+
+        $table->setAttributes(array('disabled' => true));
+
+        $table->setTable($mockTable);
     }
 }
