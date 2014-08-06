@@ -26,7 +26,7 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->config = [
-            'local_scripts_path' => __DIR__ . '/TestResources/'
+            'local_scripts_path' => [__DIR__ . '/TestResources/']
         ];
         $this->service = new ScriptFactory($this->config);
     }
