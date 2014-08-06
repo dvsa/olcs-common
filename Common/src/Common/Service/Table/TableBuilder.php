@@ -901,9 +901,16 @@ class TableBuilder
      */
     public function renderActions()
     {
-        if ($this->type !== self::TYPE_CRUD
-            && $this->type !== self::TYPE_HYBRID
-            && $this->type !== self::TYPE_FORM_TABLE) {
+        $hasActions = in_array(
+            $this->type,
+            array(
+                self::TYPE_CRUD,
+                self::TYPE_HYBRID,
+                self::TYPE_FORM_TABLE
+            )
+        );
+
+        if ($this->isDisabled || !$hasActions) {
             return '';
         }
 
