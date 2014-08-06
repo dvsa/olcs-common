@@ -61,7 +61,7 @@ class OlcsCustomFormFactory extends Factory
      *
      * @var array
      */
-    public $formsPaths;
+    public $formsPaths = [];
 
     /**
      * Holds the fieldset path
@@ -79,7 +79,7 @@ class OlcsCustomFormFactory extends Factory
     {
         $this->config = $config;
         if (isset($this->config['local_forms_path'])) {
-            $this->formsPaths[] = $this->config['local_forms_path'];
+            $this->formsPaths = array_merge($this->formsPaths, (array) $this->config['local_forms_path']);
         }
         $this->formsPaths[] = $this->config['forms_path'];
         $this->fieldsetsPath = $this->config['fieldsets_path'];

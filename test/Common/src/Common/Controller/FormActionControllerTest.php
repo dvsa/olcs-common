@@ -150,4 +150,14 @@ class FormActionControllerTest extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
+
+    /**
+     * Tests getView
+     */
+    public function testGetView()
+    {
+        $sut = $this->getNewSut();
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $sut->getView());
+    }
 }
