@@ -63,7 +63,7 @@ class ScriptFactory extends Factory
     }
 
     /**
-     * load a single file
+     * load a single file, will check multiple paths depending on the number of available modules
      *
      * @param string $file - the file to load
      * @throws \Exception
@@ -72,11 +72,15 @@ class ScriptFactory extends Factory
      */
     public function loadFile($file)
     {
-        foreach ($this->getFilePaths() as $path) {
-            $fullPath = $path . $file . '.js';
-            if ($this->exists($fullPath)) {
-                $data = $this->load($fullPath);
-                return $this->replaceTokens($data, $this->tokens);
+        $paths = $this->getFilePaths();
+
+        if (is_array($paths)) {
+            foreach ($this->getFilePaths() as $path) {
+                $fullPath = $path . $file . '.js';
+                if ($this->exists($fullPath)) {
+                    $data = $this->load($fullPath);
+                    return $this->replaceTokens($data, $this->tokens);
+                }
             }
         }
 
