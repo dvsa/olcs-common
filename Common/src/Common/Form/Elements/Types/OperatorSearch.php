@@ -70,7 +70,7 @@ class OperatorSearch extends Fieldset
 
         $this->add($selectButton);
 
-        $operatorName = new \Common\Form\Elements\InputFilters\Name('operatorName', array('label' => 'operatorName'));
+        $operatorName = new \Common\Form\Elements\InputFilters\Name('operatorName', array('label' => 'operator-name'));
         $operatorName->setAttributes(
             array(
                 'id' => 'operatorName',
