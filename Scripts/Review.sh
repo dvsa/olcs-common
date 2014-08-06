@@ -1,9 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ $1 -eq 0 ]
-	then
-	$1 = "origin/develop"
-fi
+BASE_BRANCH=${1-"origin/develop"}
 
 echo "{panel:title=TITLE|borderStyle=solid|borderColor=#000|titleBGColor=#75e069/dd4040/e29c22|bgColor=#efefef}"
 
@@ -15,7 +12,7 @@ echo "h2.Check PHP syntax"
 
 echo "{code}"
 
-for file in $(git diff $1 --name-only);
+for file in $(git diff $BASE_BRANCH --name-only);
 do
 	if [ -f $file ]
 		then
@@ -32,13 +29,13 @@ echo "h2.Check Coding Standards"
 
 echo "{code}"
 
-for file in $(git diff $1 --name-only);
+for file in $(git diff $BASE_BRANCH --name-only);
 do
 	if [ -f $file ]
 		then
 		if [[ ${file: -4} == ".php" ]]
 			then
-			phpcs --standard="/Users/rob/Development/Valtech/OLCS/sonar-configuration/Profiles/DVSA/CS/ruleset.xml" $file;
+			phpcs --standard="${dev_workspace}/sonar-configuration/Profiles/DVSA/CS/ruleset.xml" $file;
 		fi
 	fi
 done
@@ -55,4 +52,4 @@ echo "{code}"
 
 echo "{panel}"
 
-git diff $1
+git diff $BASE_BRANCH

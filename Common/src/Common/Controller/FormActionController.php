@@ -9,6 +9,8 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -25,6 +27,22 @@ abstract class FormActionController extends AbstractActionController
     private $persist = true;
 
     private $fieldValues = array();
+
+    /**
+     * @codeCoverageIgnore
+     * @param \Zend\Mvc\MvcEvent $e
+     */
+    public function onDispatch(MvcEvent $e)
+    {
+        $onDispatch = parent::onDispatch($e);
+
+        // This must stay here due to a race condition.
+        if ($this instanceof CrudInterface) {
+            $this->checkForCancelButton('cancel');
+        }
+
+        return $onDispatch;
+    }
 
     /**
      * Allow csrf to be enabled and disabled
@@ -460,7 +478,7 @@ abstract class FormActionController extends AbstractActionController
 
     protected function trimFormFields($data)
     {
-        return $this->trimFields($data, array('csrf', 'submit', 'fields'));
+        return $this->trimFields($data, array('csrf', 'submit', 'fields', 'form-actions'));
     }
 
     protected function trimFields($data = array(), $unwantedFields = array())
@@ -509,6 +527,23 @@ abstract class FormActionController extends AbstractActionController
         $data = (array)$request->getPost();
 
         return $request->isPost() && isset($data['form-actions'][$button]);
+    }
+
+    /**
+     * This method needs some things.
+     *
+     * 1. A form element with the name of "cancel"
+     *
+     * @return \Zend\Http\Response
+     */
+    public function checkForCancelButton($buttonName = 'cancel')
+    {
+        if ($this->isButtonPressed($buttonName)) {
+
+            $this->addInfoMessage('Action cancelled successfully');
+
+            return $this->redirectToIndex();
+        }
     }
 
     /**
@@ -710,5 +745,16 @@ abstract class FormActionController extends AbstractActionController
     public function getFileSizeValidator()
     {
         return new \Zend\Validator\File\FilesSize('2MB');
+    }
+
+    /**
+     * Gets a view model with optional params
+     *
+     * @param array $params
+     * @return ViewModel
+     */
+    public function getView(array $params = null)
+    {
+        return new ViewModel($params);
     }
 }

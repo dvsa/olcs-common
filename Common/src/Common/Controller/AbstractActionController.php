@@ -29,13 +29,37 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     private $loggedInUser;
 
     /**
+     * onDispatch now populates this with the route for the index of
+     * the controller curently being executed.
+     *
+     * @var array
+     */
+    protected $indexRoute = [];
+
+    /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
     public function onDispatch(\Zend\Mvc\MvcEvent $e)
     {
+        $this->setupIndexRoute($e);
+
         $this->preOnDispatch();
         parent::onDispatch($e);
+    }
+
+    /**
+     * Sets up the index route array.
+     *
+     * @codeCoverageIgnore
+     * @param \Zend\Mvc\MvcEvent $e
+     */
+    public function setupIndexRoute(\Zend\Mvc\MvcEvent $e)
+    {
+        $this->indexRoute = [
+            $e->getRouteMatch()->getMatchedRouteName(),
+            array_merge($this->params()->fromRoute(), ['action' => 'index', 'id' => null])
+        ];
     }
 
     /**
@@ -53,6 +77,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Does what it says on the tin.
+     *
+     * @codeCoverageIgnore
+     * @return mixed
+     */
+    public function redirectToIndex()
+    {
+        return call_user_func_array([$this->redirect(), 'toRoute'], $this->indexRoute);
+    }
+
+    /**
      * Set navigation for breadcrumb
      * @param type $label
      * @param type $params
@@ -62,7 +97,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         foreach ($navRoutes as $route => $routeParams) {
             $navigation = $this->getServiceLocator()->get('navigation');
             $page = $navigation->findBy('route', $route);
-            $page->setParams($routeParams);
+            if ($page) {
+                $page->setParams($routeParams);
+            }
         }
     }
 
