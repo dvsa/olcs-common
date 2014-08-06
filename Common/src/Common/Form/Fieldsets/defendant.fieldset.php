@@ -2,7 +2,7 @@
 
 return [
     'name' => 'defendant',
-    'type' => '\Common\Form\Elements\Types\Person',
+    'type' => '\Common\Form\Elements\Types\Defendant',
     'elements' => [
         'defType' => [
                         'type' => 'select',
