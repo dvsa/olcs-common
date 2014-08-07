@@ -124,7 +124,7 @@ trait RestCallTrait
 
     public function getServiceRestClient($service, $serviceMethod, $path, $data)
     {
-        echo 'Service: ' . $service . ' Method: ' . $serviceMethod . ' Path: ' . $path . ' Data: ' . print_r($data, true);
+        //echo 'Service: ' . $service . ' Method: ' . $serviceMethod . ' Path: ' . $path . ' Data: ' . json_encode($data);
         return $this->getRestClient($service)->$serviceMethod($path, $data);
     }
 

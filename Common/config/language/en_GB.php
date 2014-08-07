@@ -117,7 +117,7 @@ return array(
         application for this operating centre in your local newspaper?',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name (if
         applicable)',
-    'application_operating-centres_authorisation-sub-action.advertisements.dateAdPlaced' => 'Date advertisement was
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate' => 'Date advertisement was
         placed (if applicable)',
     'application_operating-centres_authorisation-sub-action.advertisements.file' => 'Advertisement (if applicable)
         (optional)',
@@ -247,7 +247,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv.enterReg' => 'Would you like to enter the registration numbers of your
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
         vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
@@ -299,7 +299,7 @@ return array(
     'application_your-business_business-type.contact-details.mobile-phone' => 'Mobile telephone no. (optional)',
     'application_your-business_business-type.correspondence.label' => 'Correspondence address',
     'application_your-business_business-type.data' => 'Business type',
-    'application_your-business_business-type.data.organisationType' => 'What type of business are you?',
+    'application_your-business_business-type.data.type' => 'What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'Establishment address',
     'application_your-business_business-type.registered-office.label' => 'Registered office address',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'Company number',
@@ -421,7 +421,7 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
-    'ecms' => 'ECMS',
+    'ecms_no' => 'ECMS',
     'ecms-number' => 'ECMS #',
     'edit' => 'Edit',
     'edit-case' => 'Edit Case #',

@@ -224,7 +224,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv.enterReg' => 'W Would you like to enter the registration numbers of your
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of your
         vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
@@ -245,7 +245,7 @@ return array(
     'application_your-business_business-type.contact-details.mobile-phone' => 'W Mobile telephone no. (optional)',
     'application_your-business_business-type.correspondence.label' => 'W Correspondence address',
     'application_your-business_business-type.data' => 'W Business type',
-    'application_your-business_business-type.data.organisationType' => 'W What type of business are you?',
+    'application_your-business_business-type.data.type' => 'W What type of business are you?',
     'application_your-business_business-type.establishment.label' => 'W Establishment address',
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
     'application_your-business_people-add' => 'W Add person',
@@ -363,7 +363,7 @@ return array(
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
-    'ecms' => 'W ECMS',
+    'ecms_no' => 'W ECMS',
     'ecms-number' => 'W ECMS #',
     'edit' => 'W Edit',
     'edit-case' => 'W Edit Case #',

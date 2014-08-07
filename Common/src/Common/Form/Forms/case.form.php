@@ -56,7 +56,7 @@ return [
                         'label' => 'Case summary',
                         'class' => 'extra-long'
                     ],
-                    'ecms' => [
+                    'ecms_no' => [
                         'type' => 'text',
                         'label' => 'ECMS number',
                         'class' => 'medium'
