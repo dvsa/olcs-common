@@ -9,6 +9,8 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Common\Form\Elements\Types\Person;
+use Common\Form\Elements\Types\Defendant;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 
@@ -165,7 +167,6 @@ abstract class FormActionController extends AbstractActionController
                     $this->persist = false;
 
                     $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
                     $removeSelectFields = true;
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
@@ -220,6 +221,7 @@ abstract class FormActionController extends AbstractActionController
      */
     public function formPost($form, $callback = null, $additionalParams = array())
     {
+
         if (!$this->enableCsrf) {
             $form->remove('csrf');
         }
