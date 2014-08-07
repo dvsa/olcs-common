@@ -260,8 +260,8 @@ return array(
     'application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo' => 'Do you intend to operate small vehicles
         as a small part of a large bus business as detailed by Section 79A of the Public Passenger Vehicles
         Act (as amended by Section 265 of the Transport Act 2000)?',
-    'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will comply
-        with the \'small part of the business\' requirements (if applicable)',
+    'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
+        comply with the \'small part of the business\' requirements (if applicable)',
     'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
     'application_vehicle-safety_undertakings.nineOrMore.label' => 'If you only intend to use vehicles with 9 or more
         passenger seats under this licence (if granted) do you agree to the following undertaking being specified
