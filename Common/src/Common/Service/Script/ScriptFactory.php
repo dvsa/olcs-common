@@ -46,7 +46,7 @@ class ScriptFactory extends Factory
     /**
      * load an array of files
      *
-     * @param aray $files - the files to load
+     * @param array $files - the files to load
      *
      * @return array
      */
@@ -63,23 +63,28 @@ class ScriptFactory extends Factory
     }
 
     /**
-     * load a single file
+     * load a single file, will check multiple paths depending on the number of available modules
      *
      * @param string $file - the file to load
+     * @throws \Exception
      *
      * @return string
      */
     public function loadFile($file)
     {
-        if (!$this->exists($file)) {
+        $paths = $this->getFilePaths();
 
-            $msg = 'Attempted to load invalid script file "'. $file . '"';
-            throw new \Exception($msg);
+        if (is_array($paths)) {
+            foreach ($this->getFilePaths() as $path) {
+                $fullPath = $path . $file . '.js';
+                if ($this->exists($fullPath)) {
+                    $data = $this->load($fullPath);
+                    return $this->replaceTokens($data, $this->tokens);
+                }
+            }
         }
 
-        $data = $this->load($file);
-
-        return $this->replaceTokens($data, $this->tokens);
+        throw new \Exception('Attempted to load invalid script file "'. $file . '"');
     }
 
     /**
@@ -91,7 +96,7 @@ class ScriptFactory extends Factory
      */
     protected function exists($file)
     {
-        return file_exists($this->getFilePath($file));
+        return file_exists($file);
     }
 
     /**
@@ -103,19 +108,17 @@ class ScriptFactory extends Factory
      */
     protected function load($file)
     {
-        return file_get_contents($this->getFilePath($file));
+        return file_get_contents($file);
     }
 
     /**
-     * get the absolute filesystem path for a given file
-     *
-     * @param string $file - the file whose path to check
+     * get the available file system paths across all modules
      *
      * @return string
      */
-    protected function getFilePath($file)
+    protected function getFilePaths()
     {
-        return $this->config['local_scripts_path'] . $file . '.js';
+        return $this->config['local_scripts_path'];
     }
 
     /**
