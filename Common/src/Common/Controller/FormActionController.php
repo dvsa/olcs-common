@@ -12,6 +12,7 @@ use Common\Form\Elements\Types\Address;
 use Common\Form\Elements\Types\Person;
 use Common\Form\Elements\Types\Defendant;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -748,4 +749,14 @@ abstract class FormActionController extends AbstractActionController
         return new \Zend\Validator\File\FilesSize('2MB');
     }
 
+    /**
+     * Gets a view model with optional params
+     *
+     * @param array $params
+     * @return ViewModel
+     */
+    public function getView(array $params = null)
+    {
+        return new ViewModel($params);
+    }
 }

@@ -58,7 +58,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $this->indexRoute = [
             $e->getRouteMatch()->getMatchedRouteName(),
-            array_merge($this->params()->fromRoute(), ['action' => 'index'])
+            array_merge($this->params()->fromRoute(), ['action' => 'index', 'id' => null])
         ];
     }
 
@@ -97,7 +97,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         foreach ($navRoutes as $route => $routeParams) {
             $navigation = $this->getServiceLocator()->get('navigation');
             $page = $navigation->findBy('route', $route);
-            $page->setParams($routeParams);
+            if ($page) {
+                $page->setParams($routeParams);
+            }
         }
     }
 
