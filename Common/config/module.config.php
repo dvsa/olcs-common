@@ -45,7 +45,8 @@ return array(
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
-            'flashMessengerAll' => 'Common\View\Helper\FlashMessenger'
+            'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
+            'assetPath' => 'Common\View\Helper\AssetPath'
         )
     ),
     'view_manager' => array(
