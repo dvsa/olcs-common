@@ -262,8 +262,8 @@ return array(
         Act (as amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will comply
         with the \'small part of the business\' requirements (if applicable)',
-    'application_vehicle-safety_undertakings-nineOrMore' => 'Vehicles with nine or more passengers',
-    'application_vehicle-safety_undertakings-nineOrMore.hint' => 'If you only intend to use vehicles with 9 or more
+    'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
+    'application_vehicle-safety_undertakings.nineOrMore.label' => 'If you only intend to use vehicles with 9 or more
         passenger seats under this licence (if granted) do you agree to the following undertaking being specified
         on the licence',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
@@ -280,8 +280,13 @@ return array(
     'application_vehicle-safety_undertakings-limousines' => 'Limousines and novelty vehicles',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for
         to be used as Limousines or novelty type vehicles?',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
+        undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
+        novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
+        to be specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
         nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_your-business_business-details-add' => 'Add subsidiary company',
