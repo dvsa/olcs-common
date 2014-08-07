@@ -271,7 +271,10 @@ return array(
         commissioner who may require you to agree to certain undertakings',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and
         English and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Text for small vehicles
+        undertakings agreement Scotland.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'Text for small vehicles agreement.',
     'application_vehicle-safety_undertakings.smallVehiclesConfirmation' => 'Confirm that you agree to the above
         conditions and undertakings being specified on your licence (if granted)',
     'application_vehicle-safety_undertakings-limousines' => 'Limousines and novelty vehicles',
