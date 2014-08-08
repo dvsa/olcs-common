@@ -721,5 +721,11 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'tasks-home.data.team' => 'Team',
+    'tasks-home.data.owner' => 'Owner',
+    'tasks-home.data.category' => 'Category',
+    'tasks-home.data.sub_category' => 'Sub category',
+    'tasks-home.data.date' => 'Date',
+    'tasks-home.data.urgent' => 'Urgent only'
     // Potentially unused (Not found with grep)
 );

@@ -476,6 +476,9 @@ return array(
         'presiding_tc.1' => 'Presiding TC 1',
         'presiding_tc.2' => 'Presiding TC 2',
         'presiding_tc.3' => 'Presiding TC 3',
+    ],
+    'task-date-types' => [
+        'foo' => 'Today',
+        'bar' => 'All dates'
     ]
-
 );

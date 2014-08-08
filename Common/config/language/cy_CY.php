@@ -708,5 +708,11 @@ return array(
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
+    'tasks-home.data.team' => 'W Team',
+    'tasks-home.data.owner' => 'W Owner',
+    'tasks-home.data.category' => 'W Category',
+    'tasks-home.data.sub_category' => 'W Sub category',
+    'tasks-home.data.date' => 'W Date',
+    'tasks-home.data.urgent' => 'W Urgent only'
     // Potentially unused (Not found with grep)
 );
