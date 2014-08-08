@@ -168,6 +168,23 @@ class TableBuilder
     private $sm;
 
     /**
+     * Is this builder inside a disabled table element?
+     *
+     * @var bool
+     */
+    private $isDisabled = false;
+
+    /**
+     * Set whether this table appears inside a disabled element
+     *
+     * @param bool $disabled
+     */
+    public function setDisabled($disabled)
+    {
+        $this->isDisabled = $disabled;
+    }
+
+    /**
      * Setter for actionFieldName
      *
      * @param string $name
@@ -889,9 +906,16 @@ class TableBuilder
      */
     public function renderActions()
     {
-        if ($this->type !== self::TYPE_CRUD
-            && $this->type !== self::TYPE_HYBRID
-            && $this->type !== self::TYPE_FORM_TABLE) {
+        $hasActions = in_array(
+            $this->type,
+            array(
+                self::TYPE_CRUD,
+                self::TYPE_HYBRID,
+                self::TYPE_FORM_TABLE
+            )
+        );
+
+        if ($this->isDisabled || !$hasActions) {
             return '';
         }
 
@@ -1047,6 +1071,10 @@ class TableBuilder
      */
     public function renderHeaderColumn($column, $wrapper = '{{[elements/th]}}')
     {
+        if ($this->shouldHide($column)) {
+            return;
+        }
+
         if (isset($column['sort'])) {
 
             $column['class'] = 'sortable';
@@ -1099,6 +1127,10 @@ class TableBuilder
      */
     public function renderBodyColumn($row, $column, $wrapper = '{{[elements/td]}}')
     {
+        if ($this->shouldHide($column)) {
+            return;
+        }
+
         if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
             $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
             $type = new $typeClass($this);
@@ -1314,5 +1346,10 @@ class TableBuilder
             }
             $this->setColumns($newColumns);
         }
+    }
+
+    private function shouldHide($column)
+    {
+        return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
 }

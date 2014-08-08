@@ -9,7 +9,10 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Common\Form\Elements\Types\Person;
+use Common\Form\Elements\Types\Defendant;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -164,7 +167,6 @@ abstract class FormActionController extends AbstractActionController
                     $this->persist = false;
 
                     $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
                     $removeSelectFields = true;
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
@@ -219,6 +221,7 @@ abstract class FormActionController extends AbstractActionController
      */
     public function formPost($form, $callback = null, $additionalParams = array())
     {
+
         if (!$this->enableCsrf) {
             $form->remove('csrf');
         }
@@ -744,5 +747,16 @@ abstract class FormActionController extends AbstractActionController
     public function getFileSizeValidator()
     {
         return new \Zend\Validator\File\FilesSize('2MB');
+    }
+
+    /**
+     * Gets a view model with optional params
+     *
+     * @param array $params
+     * @return ViewModel
+     */
+    public function getView(array $params = null)
+    {
+        return new ViewModel($params);
     }
 }
