@@ -62,22 +62,22 @@ return array(
         '1' => 'Northern Ireland'
     ],
     'operator_types' => [
-        'goods' => 'Goods',
-        'psv' => 'PSV'
+        'lcat_gv' => 'Goods',
+        'lcat_psv' => 'PSV'
     ],
     'licence_types' => [
-        'restricted' => 'Restricted',
-        'standard-national' => 'Standard National',
-        'standard-international' => 'Standard International',
-        'special-restricted' => 'Special Restricted',
+        'ltyp_r' => 'Restricted',
+        'ltyp_sn' => 'Standard National',
+        'ltyp_si' => 'Standard International',
+        'ltyp_sr' => 'Special Restricted',
     ],
     'business_types' =>
     [
-        'org_type.lc' => 'Limited company',
-        'org_type.st' => 'Sole Trader',
-        'org_type.p' => 'Partnership',
-        'org_type.llp' => 'Limited Liability Partnership',
-        'org_type.o' => 'Other (e.g. public authority, charity, trust, university)',
+        'org_t_rc' => 'Limited company',
+        'org_t_st' => 'Sole Trader',
+        'org_t_p' => 'Partnership',
+        'org_t_llp' => 'Limited Liability Partnership',
+        'org_t_pa' => 'Other (e.g. public authority, charity, trust, university)', // @todo No sure whether this is the correct ref data id
     ],
     'defendant_types' =>
     [

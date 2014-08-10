@@ -184,7 +184,7 @@ return array(
     'application_taxi-phv_licence-sub-action.contactDetails' => 'Council details',
     'application_taxi-phv_licence-sub-action.contactDetails.description' => 'Council name',
     'application_taxi-phv_licence-sub-action.data' => 'Licence details',
-    'application_taxi-phv_licence-sub-action.data.licenceNumber' => 'Taxi/PHV licence number',
+    'application_taxi-phv_licence-sub-action.data.licNo' => 'Taxi/PHV licence number',
     'application_taxi-phv_licence.table.address' => 'Address',
     'application_taxi-phv_licence.table.council' => 'Council',
     'application_taxi-phv_licence.table.empty_message' => 'Please list the taxi or private hire vehicle licences which
