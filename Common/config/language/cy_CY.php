@@ -708,5 +708,14 @@ return array(
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
+    'offence-detail' => 'W Offence detail',
+    'offence-date-from' => 'W Offence date from',
+    'number-of-offences' => 'W Number of offences',
+    'originating-authority' => 'W Originating authority',
+    'offender-name' => 'W Offender name',
+    'position' => 'W Position',
+    'vrm' => 'W VRM',
+    'trailer' => 'W Trailer',
+    'offence-notes' => 'W Offence notes',
     // Potentially unused (Not found with grep)
 );
