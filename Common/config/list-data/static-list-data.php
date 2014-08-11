@@ -478,7 +478,12 @@ return array(
         'presiding_tc.3' => 'Presiding TC 3',
     ],
     'task-date-types' => [
-        'foo' => 'Today',
-        'bar' => 'All dates'
+        'today' => 'Today',
+        'all' => 'All dates'
+    ],
+    'task-status-types' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'all' => 'All'
     ]
 );

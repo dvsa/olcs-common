@@ -713,6 +713,8 @@ return array(
     'tasks-home.data.category' => 'W Category',
     'tasks-home.data.sub_category' => 'W Sub category',
     'tasks-home.data.date' => 'W Date',
-    'tasks-home.data.urgent' => 'W Urgent only'
+    'tasks-home.data.status' => 'W Status',
+    'tasks-home.data.urgent' => 'W Urgent only',
+    'tasks-home.data.filter' => 'W Filter'
     // Potentially unused (Not found with grep)
 );
