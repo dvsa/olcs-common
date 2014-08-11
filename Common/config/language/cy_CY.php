@@ -715,6 +715,6 @@ return array(
     'tasks-home.data.date' => 'W Date',
     'tasks-home.data.status' => 'W Status',
     'tasks-home.data.urgent' => 'W Urgent only',
-    'tasks-home.data.filter' => 'W Filter'
+    'tasks-home.submit.filter' => 'W Filter'
     // Potentially unused (Not found with grep)
 );

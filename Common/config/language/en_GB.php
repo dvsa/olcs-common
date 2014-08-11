@@ -728,6 +728,6 @@ return array(
     'tasks-home.data.date' => 'Date',
     'tasks-home.data.status' => 'Status',
     'tasks-home.data.urgent' => 'Urgent only',
-    'tasks-home.data.filter' => 'Filter'
+    'tasks-home.submit.filter' => 'Filter'
     // Potentially unused (Not found with grep)
 );
