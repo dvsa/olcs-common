@@ -437,10 +437,10 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
-     * Method to trigger generation of a document providing a generate checkox
+     * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
      *
-     * @param arrat $data
+     * @param array $data
      * @return array
      * @throws \RuntimeException
      */
