@@ -33,8 +33,8 @@ class CompanyNumber extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new Alnum(),
-                new ZendValidator\StringLength(8, 8)
+                ['name'=>'Zend\I18n\Validator\Alnum'],
+                ['name' => 'Zend\Validator\StringLength', 'options'=>['min' => 8, 'max' => 8]]
             ]
         ];
 
