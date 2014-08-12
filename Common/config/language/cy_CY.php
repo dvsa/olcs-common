@@ -710,6 +710,7 @@ return array(
     'application_your-business_people-edit' => 'Edit person',
     'offence-detail' => 'W Offence detail',
     'offence-date-from' => 'W Offence date from',
+    'offence-date-to' => 'W Offence date to',
     'number-of-offences' => 'W Number of offences',
     'originating-authority' => 'W Originating authority',
     'offender-name' => 'W Offender name',
@@ -717,5 +718,8 @@ return array(
     'vrm' => 'W VRM',
     'trailer' => 'W Trailer',
     'offence-notes' => 'W Offence notes',
+    'offence-not-found' => 'W Offence not found',
+    'offence-type' => 'W Offence type',
+    'offence-definition' => 'W Act/Si',
     // Potentially unused (Not found with grep)
 );

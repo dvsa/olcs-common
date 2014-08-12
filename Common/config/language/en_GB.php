@@ -723,6 +723,7 @@ return array(
     'your-business' => 'Your business',
     'offence-detail' => 'Offence detail',
     'offence-date-from' => 'Offence date from',
+    'offence-date-to' => 'Offence date to',
     'number-of-offences' => 'Number of offences',
     'originating-authority' => 'Originating authority',
     'offender-name' => 'Offender name',
@@ -731,6 +732,8 @@ return array(
     'trailer' => 'Trailer',
     'offence-notes' => 'Offence notes',
     'offence-not-found' => 'Offence not found',
+    'offence-type' => 'Offence type',
+    'offence-definition' => 'Act/Si',
     'application.your-business.sole-trader' => 'People',
     'Please add a person' => 'Please add a person',
     'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
