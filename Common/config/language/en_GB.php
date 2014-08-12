@@ -723,6 +723,7 @@ return array(
     'your-business' => 'Your business',
     'offence-detail' => 'Offence detail',
     'offence-date-from' => 'Offence date from',
+    'offence-date-to' => 'Offence date to',
     'number-of-offences' => 'Number of offences',
     'originating-authority' => 'Originating authority',
     'offender-name' => 'Offender name',

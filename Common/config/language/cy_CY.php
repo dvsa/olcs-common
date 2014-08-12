@@ -710,6 +710,7 @@ return array(
     'application_your-business_people-edit' => 'Edit person',
     'offence-detail' => 'W Offence detail',
     'offence-date-from' => 'W Offence date from',
+    'offence-date-to' => 'W Offence date to',
     'number-of-offences' => 'W Number of offences',
     'originating-authority' => 'W Originating authority',
     'offender-name' => 'W Offender name',
