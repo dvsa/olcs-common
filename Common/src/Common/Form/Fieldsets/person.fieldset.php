@@ -24,7 +24,7 @@ return [
             'label' => 'Last name',
             'class' => 'long'
         ],
-        'dateOfBirth' => [
+        'birthDate' => [
              'type' => 'dateSelectWithEmpty',
              'label' => 'Date of birth',
              'filters' => '\Common\Form\Elements\InputFilters\DateNotRequiredNotInFuture'

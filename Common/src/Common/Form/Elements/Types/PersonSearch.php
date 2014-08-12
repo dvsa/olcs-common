@@ -94,24 +94,24 @@ class PersonSearch extends Fieldset
 
         $this->add($personLastname);
 
-        $dateOfBirth = new DateSelect(
-            'dateOfBirth',
+        $birthDate = new DateSelect(
+            'birthDate',
              array('label' => 'Date of birth')
         );
-        $dateOfBirth->setAttributes(
+        $birthDate->setAttributes(
             array(
                 'id' => 'dob',
                 'class' => 'long',
             )
         );
-        $dateOfBirth->setOptions(
+        $birthDate->setOptions(
             [
                 'create_empty_option' => true,
                 'render_delimiters' => false,
                 'required' => false,
             ]
         );
-        $this->add($dateOfBirth);
+        $this->add($birthDate);
 
         $addNewButton = new Button('addNew', array('label' => 'Add new'));
         $addNewButton->setAttributes(
