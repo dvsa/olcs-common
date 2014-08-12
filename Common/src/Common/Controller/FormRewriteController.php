@@ -64,7 +64,6 @@ class FormRewriteController extends AbstractActionController
 
         $glob = $this->basePath . '/Form/Forms/';
 
-
         foreach (glob($glob. '*.form.php') as $formFile) {
             $formName =  substr(
                 $formFile,
@@ -76,7 +75,6 @@ class FormRewriteController extends AbstractActionController
             $formData = include $formFile;
             $this->buildFormClass(current($formData));
         }
-
 
         echo "\n\n";
     }
@@ -107,7 +105,8 @@ class FormRewriteController extends AbstractActionController
         }
 
         if (isset($data['attributes'])) {
-            $tags['tags'][] = ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
+            $tags['tags'][] =
+                ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
         }
 
         if (isset($data['type'])) {
@@ -124,17 +123,21 @@ class FormRewriteController extends AbstractActionController
         }
 
         foreach ($fieldsets as $fieldset) {
-            $propertyGenerator = new PropertyGenerator($this->normaliseName($fieldset['name']));
-            $propertyGenerator->setDocBlock(DocBlockGenerator::fromArray([
+            $tags = [
                 'tags'=> [
-                    ['name'=>sprintf('Form\Name("%s")',$fieldset['name'])],
-                    ['name'=>sprintf('Form\ComposedObject("%s")', $this->namespace . '\Form\Fieldset\\' . $fieldset['classname'])]
+                    ['name'=>sprintf('Form\Name("%s")', $fieldset['name'])],
+                    ['name'=>sprintf(
+                        'Form\ComposedObject("%s")',
+                        $this->namespace . '\Form\Fieldset\\' . $fieldset['classname']
+                    )
+                    ]
                 ]
-            ]));
+            ];
 
+            $propertyGenerator = new PropertyGenerator($this->normaliseName($fieldset['name']));
+            $propertyGenerator->setDocBlock(DocBlockGenerator::fromArray($tags));
             $classGenerator->addPropertyFromGenerator($propertyGenerator);
         }
-
 
         unset($data['elements'], $data['attributes'], $data['name'], $data['fieldsets'], $data['type']);
         if (!empty($data)) {
@@ -191,7 +194,8 @@ class FormRewriteController extends AbstractActionController
         }
 
         if (isset($data['attributes'])) {
-            $tags['tags'][] = ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
+            $tags['tags'][] =
+                ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
         }
 
         if (isset($data['options']['required'])) {
@@ -221,17 +225,18 @@ class FormRewriteController extends AbstractActionController
         }
 
         if (isset($data['input_filters'])) {
-            foreach ($data['input_filters'] AS $filterSpec) {
+            foreach ($data['input_filters'] as $filterSpec) {
                 $tags['tags'][] = ['name' => sprintf('Form\Filter(%s)', $this->encodeOptionBlock($filterSpec))];
             }
         }
 
         if (isset($data['validators'])) {
-            foreach ($data['validators'] AS $validateSpec) {
+            foreach ($data['validators'] as $validateSpec) {
                 if (!is_array($validateSpec)) {
                     $this->getLog()->err('Validation spec is not an array for element: ' . $data['name']);
                 } else {
-                    $tags['tags'][] = ['name' => sprintf('Form\Validator(%s)', $this->encodeOptionBlock($validateSpec))];
+                    $tags['tags'][] =
+                        ['name' => sprintf('Form\Validator(%s)', $this->encodeOptionBlock($validateSpec))];
                 }
             }
         }
@@ -258,7 +263,10 @@ class FormRewriteController extends AbstractActionController
             $data['continue_if_empty']
         );
         if (!empty($data)) {
-            $this->getLog()->err('Unhandled properties for element: '. $propertyGenerator->getName() . ' ' . json_encode(array_keys($data)));
+            $this->getLog()->err(
+                'Unhandled properties for element: '. $propertyGenerator->getName() . ' ' .
+                json_encode(array_keys($data))
+            );
         }
 
         return $propertyGenerator;
@@ -268,7 +276,7 @@ class FormRewriteController extends AbstractActionController
     {
         if (isset($data['type'])) {
             $config = $this->getServiceLocator()->get('Config');
-            $path = $config['fieldsets_path'] . $data['type'] . '.fieldset.php';;
+            $path = $config['fieldsets_path'] . $data['type'] . '.fieldset.php';
             $fieldsetConfig = include $path;
             unset($data['type']);
             $data = array_merge($fieldsetConfig, $data);
@@ -278,7 +286,6 @@ class FormRewriteController extends AbstractActionController
         $fieldsetClassName = (isset($data['alt-name'])?$data['alt-name']:$data['name']);
         $fieldsetClassName = $this->normaliseName($fieldsetClassName, true);
         $classGenerator->setName($fieldsetClassName);
-
 
         $tags = [];
 
@@ -291,7 +298,8 @@ class FormRewriteController extends AbstractActionController
         }
 
         if (isset($data['attributes'])) {
-            $tags['tags'][] = ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
+            $tags['tags'][] =
+                ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
         }
 
         if (isset($data['options'])) {
@@ -311,7 +319,15 @@ class FormRewriteController extends AbstractActionController
 
         $fieldsetName = $data['name'];
 
-        unset($data['elements'], $data['attributes'], $data['name'], $data['options'], $data['type'], $data['alt-name']);
+        unset(
+            $data['elements'],
+            $data['attributes'],
+            $data['name'],
+            $data['options'],
+            $data['type'],
+            $data['alt-name']
+        );
+
         if (!empty($data)) {
             $this->getLog()->err('Unhandled properties for fieldset: '. json_encode(array_keys($data)));
         }
@@ -336,7 +352,7 @@ class FormRewriteController extends AbstractActionController
 
     }
 
-    protected function normaliseName($name, $ucFirst= false)
+    protected function normaliseName($name, $ucFirst = false)
     {
         $name = str_replace([' ', '_'], '-', $name);
 
@@ -370,10 +386,8 @@ class FormRewriteController extends AbstractActionController
             $format = '%timestamp% %priorityName% (%priority%): %message%';
             $formatter = new \Zend\Log\Formatter\Simple($format);
 
-
             $writer = new Stream('php://stdout');
             $writer->setFormatter($formatter);
-            //$writer = new Null();
             $this->log->addWriter($writer);
         }
 
@@ -432,9 +446,19 @@ class FormRewriteController extends AbstractActionController
             $data['required'] = $elementSpec['required'];
         }
 
-        unset($elementSpec['type'], $elementSpec['attributes'], $elementSpec['options'], $elementSpec['name'], $elementSpec['filters'], $elementSpec['validators'], $elementSpec['required']);
+        unset(
+            $elementSpec['type'],
+            $elementSpec['attributes'],
+            $elementSpec['options'],
+            $elementSpec['name'],
+            $elementSpec['filters'],
+            $elementSpec['validators'],
+            $elementSpec['required']
+        );
         if (!empty($elementSpec)) {
-            $this->getLog()->err('Unhandled properties for element spec: ' . $data['name'] . ' ' . json_encode(array_keys($elementSpec)));
+            $this->getLog()->err(
+                'Unhandled properties for element spec: ' . $data['name'] . ' ' . json_encode(array_keys($elementSpec))
+            );
         }
 
         return $data;
@@ -518,9 +542,18 @@ class FormRewriteController extends AbstractActionController
             $data['continue_if_empty'] = $spec['continue_if_empty'];
         }
 
-        unset($spec['name'], $spec['required'], $spec['filters'], $spec['validators'], $spec['allow_empty'], $spec['continue_if_empty']);
+        unset(
+            $spec['name'],
+            $spec['required'],
+            $spec['filters'],
+            $spec['validators'],
+            $spec['allow_empty'],
+            $spec['continue_if_empty']
+        );
         if (!empty($spec)) {
-            $this->getLog()->err('Unhandled properties for input spec: ' . $data['name'] . ' ' . json_encode(array_keys($spec)));
+            $this->getLog()->err(
+                'Unhandled properties for input spec: ' . $data['name'] . ' ' . json_encode(array_keys($spec))
+            );
             return $data;
         }
         return $data;
