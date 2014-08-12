@@ -695,5 +695,14 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
+    'offence-detail' => 'W Offence detail',
+    'offence-date-from' => 'W Offence date from',
+    'number-of-offences' => 'W Number of offences',
+    'originating-authority' => 'W Originating authority',
+    'offender-name' => 'W Offender name',
+    'position' => 'W Position',
+    'vrm' => 'W VRM',
+    'trailer' => 'W Trailer',
+    'offence-notes' => 'W Offence notes',
     // Potentially unused (Not found with grep)
 );
