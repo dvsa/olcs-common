@@ -730,6 +730,72 @@ return array(
     'vrm' => 'VRM',
     'trailer' => 'Trailer',
     'offence-notes' => 'Offence notes',
-    'offence-not-found' => 'Offence not found'
+    'offence-not-found' => 'Offence not found',
+    'application.your-business.sole-trader' => 'People',
+    'Please add a person' => 'Please add a person',
+    'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
+    . ' (including partners, directors and transport managers) currently hold a goods or public service vehicle'
+    . " operator's licence in any traffic area?",
+    'application_previous-history_licence-history_appliedForLicence' => 'a. Previously held or applied for a goods '
+    . "or public service vehicle operator's licence in any traffic area?",
+    'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods '
+    . "or a public service vehicle operator's licence refused by any EU licencing authority?",
+    'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service '
+    . "vehicle operator's licence revoked, suspended or curtailed by any EU licencing authority?",
+    'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public '
+    . 'Inquiry before a traffic commissioner?',
+    'application_previous-history_licence-history_disqualifiedLicence' => 'e. Been disqualified from '
+    . "holding or obtaining an operator's licence by any traffic commissioner?",
+    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve month, '
+    . 'have you, your company or organisation or your partners or directors purchased the assets or '
+    . 'shareholding of any company that, to you knowledge, currently holds or has previously held an'
+    . " operator's licence in any traffic area?",
+    'application_previous-history_licence-history_personsInformation' => '2. Has any person named in the application'
+    . ' (including partners, directors or transport managers):',
+    'application_previous-history_licence-history.title' => 'Previous licences history',
+    'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'Licences (if applicable)',
+    'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence no.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',
+    'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' =>
+        'Will this licence be surrendered?',
+    'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' =>
+        'Please provide details about theses licences here',
+    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationDate' =>
+        'Date of disq.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationLength' =>
+        'Length of disq.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' =>
+        'Date of purchase',
+    'selfserve-app-subSection-previous-history-licence-history-licNo' => 'Licence number',
+    'selfserve-app-subSection-previous-history-licence-history-holderName' => 'Licence holder name',
+    'selfserve-app-subSection-previous-history-licence-history-willSurrender' =>
+        'Will this licence be surrendered if this application is granted',
+    'selfserve-app-subSection-previous-history-licence-history-disqualificationDate' =>
+        'Date of disqualification',
+    'selfserve-app-subSection-previous-history-licence-history-disqualificationLength' =>
+        'Length of disqualification',
+    'selfserve-app-subSection-previous-history-licence-history-purchaseDate' =>
+        'Date of purchase',
+    'application_previous-history_licence-history-table-licences-current-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-current-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-current-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-applied-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-applied-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-refused-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-refused-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-refused-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-revoked-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-revoked-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-revoked-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-disqualified-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-disqualified-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-disqualified-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-held-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-held-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-held-delete' => 'Delete licence',
     // Potentially unused (Not found with grep)
 );
