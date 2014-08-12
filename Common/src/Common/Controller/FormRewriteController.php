@@ -86,11 +86,7 @@ class FormRewriteController extends AbstractActionController
 
         if (isset($data['fieldsets'])) {
             foreach ($data['fieldsets'] as $fieldset) {
-                $fieldsetClass = $this->buildFieldsetClass($fieldset, $formName);
-                $fieldsets[] = [
-                    'classname' => $fieldsetClass['classname'],
-                    'name' => isset($fieldset['name'])?$fieldset['name']:$fieldsetClass['name']
-                ];
+                $fieldsets[] = $this->buildFieldsetClassAndReturnProperty($fieldset, $formName);
             }
 
         }
@@ -123,19 +119,7 @@ class FormRewriteController extends AbstractActionController
         }
 
         foreach ($fieldsets as $fieldset) {
-            $tags = [
-                'tags'=> [
-                    ['name'=>sprintf('Form\Name("%s")', $fieldset['name'])],
-                    ['name'=>sprintf(
-                        'Form\ComposedObject("%s")',
-                        $this->namespace . '\Form\Fieldset\\' . $fieldset['classname']
-                    )
-                    ]
-                ]
-            ];
-
-            $propertyGenerator = new PropertyGenerator($this->normaliseName($fieldset['name']));
-            $propertyGenerator->setDocBlock(DocBlockGenerator::fromArray($tags));
+            $propertyGenerator = PropertyGenerator::fromArray($fieldset);
             $classGenerator->addPropertyFromGenerator($propertyGenerator);
         }
 
@@ -272,7 +256,7 @@ class FormRewriteController extends AbstractActionController
         return $propertyGenerator;
     }
 
-    protected function buildFieldsetClass($data, $formName)
+    protected function buildFieldsetClassAndReturnProperty($data, $formName)
     {
         if (isset($data['type'])) {
             $config = $this->getServiceLocator()->get('Config');
@@ -287,10 +271,13 @@ class FormRewriteController extends AbstractActionController
         $fieldsetClassName = $this->normaliseName($fieldsetClassName, true);
         $classGenerator->setName($fieldsetClassName);
 
+        $propertyTags = [];
         $tags = [];
 
         if (isset($data['name'])) {
             $tags['tags'][] = ['name'=> sprintf('Form\\Name("%s")', $data['name'])];
+            $propertyTags['name'] = $this->normaliseName($data['name']);
+            $propertyTags['docblock']['tags'][] = ['name'=>sprintf('Form\Name("%s")', $data['name'])];
         }
 
         if (isset($data['type'])) {
@@ -300,10 +287,15 @@ class FormRewriteController extends AbstractActionController
         if (isset($data['attributes'])) {
             $tags['tags'][] =
                 ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
+
+            $propertyTags['docblock']['tags'][] =
+                ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
         }
 
         if (isset($data['options'])) {
             $tags['tags'][] = ['name' => sprintf("Form\\Options(%s)", $this->encodeOptionBlock($data['options']))];
+            $propertyTags['docblock']['tags'][] =
+                ['name' => sprintf("Form\\Options(%s)", $this->encodeOptionBlock($data['options']))];
         }
 
         $classGenerator->setDocBlock(DocBlockGenerator::fromArray($tags));
@@ -317,7 +309,7 @@ class FormRewriteController extends AbstractActionController
             $this->getLog()->warn('Empty Fieldset: ' .$data['name']);
         }
 
-        $fieldsetName = $data['name'];
+
 
         unset(
             $data['elements'],
@@ -348,7 +340,11 @@ class FormRewriteController extends AbstractActionController
             $this->write($fileGenerator);
         }
 
-        return ['classname'=>$fieldsetClassName, 'name'=>$fieldsetName];
+        $fieldsetFqcn = '\Form\Model\Fieldset\\' . $fieldsetClassName;
+        $propertyTags['docblock']['tags'][] =
+            ['name'=>sprintf('Form\ComposedObject("%s")', $this->namespace . $fieldsetFqcn)];
+
+        return $propertyTags;
 
     }
 
