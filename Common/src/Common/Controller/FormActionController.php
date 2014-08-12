@@ -86,7 +86,7 @@ abstract class FormActionController extends AbstractActionController
         $this->fieldValues[$key] = $value;
     }
 
-    protected function normaliseFormName($name, $ucFirst= false)
+    protected function normaliseFormName($name, $ucFirst = false)
     {
         $name = str_replace([' ', '_'], '-', $name);
 
