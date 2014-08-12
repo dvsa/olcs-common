@@ -17,6 +17,30 @@ return array(
             )
         )
     ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'route101' => array(
+                    'options' => array(
+                        'route' => 'formrewrite [olcs|common|selfserve]:formnamespace',
+                        'defaults' => array(
+                            'controller' => 'Common\Controller\FormRewrite',
+                            'action' => 'index'
+                        )
+                    )
+                ),
+                'route102' => array(
+                    'options' => array(
+                        'route' => 'formcleanup [olcs|common|selfserve]:formnamespace',
+                        'defaults' => array(
+                            'controller' => 'Common\Controller\FormRewrite',
+                            'action' => 'cleanup'
+                        )
+                    )
+                )
+            )
+        )
+    ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
         'services' => array(
@@ -31,7 +55,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Common\Controller\File' => 'Common\Controller\FileController'
+            'Common\Controller\File' => 'Common\Controller\FileController',
+            'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
     ),
     'view_helpers' => array(
@@ -67,6 +92,9 @@ return array(
     'form_elements' => [
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
+        ],
+        'aliases' => [ //remove me when real dynamicselect exists
+            'DynamicSelect' => 'Select'
         ]
     ],
     'tables' => array(

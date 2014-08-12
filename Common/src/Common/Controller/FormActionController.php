@@ -110,7 +110,7 @@ abstract class FormActionController extends AbstractActionController
         $annotationBuilder = new AnnotationBuilder();
         $annotationBuilder->setFormFactory(new Factory($formElementManager));
         foreach (['Olcs', 'SelfServe', 'Common'] as $namespace) {
-            $class = $namespace . '\\Form\\Form\\' . $this->normaliseFormName($type, true);
+            $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
             if (class_exists($class)) {
                 return $annotationBuilder->createForm($class);
             }
