@@ -35,12 +35,18 @@ class Address implements FormatterInterface
                 'addressLine3',
                 'addressLine4',
                 'town',
-                'country',
+                'countryCode',
                 'postcode'
             );
         }
 
         $parts = array();
+
+        if (isset($data['countryCode']['id'])) {
+            $data['countryCode'] = $data['countryCode']['id'];
+        } else {
+            $data['countryCode'] = null;
+        }
 
         foreach ($fields as $item) {
 

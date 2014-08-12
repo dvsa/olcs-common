@@ -6,8 +6,6 @@ return array(
     'Continue' => 'W Continue',
     'FHAdditionalInfo.validation.is_empty' => 'W You selected \'yes\' in one of the provided questions, so value is
         required and can\'t be empty',
-    'FHAdditionalInfo.validation.too_short' => 'W You selected \'yes\' in one of the provided questions, so the input
-        has to be at least %min% characters long',
     'N/A' => 'W Not applicable',
     'No' => 'W No',
     'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
@@ -101,9 +99,9 @@ return array(
     'application.type-of-licence.operator-type' => 'W Operator type',
     'application.vehicle-safety' => 'W Vehicle & safety',
     'application.vehicle-safety.safety' => 'W Safety inspections',
+    'application.vehicle-safety.undertakings' => 'W Vehicle Undertakings',
     'application.vehicle-safety.vehicle' => 'W Vehicles',
     'application.vehicle-safety.vehicle-psv' => 'W Vehicles',
-    'application.vehicle-safety.undertakings' => 'W Vehicle Undertakings',
     'application.your-business' => 'W Your business',
     'application.your-business.addresses' => 'W Addresses',
     'application.your-business.business-details' => 'W Business details',
@@ -115,18 +113,18 @@ return array(
     'application_operating-centres_authorisation-sub-action.advertisements' => 'W Advertisements',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'W Have you advertised your
         application for this operating centre in your local newspaper?',
-    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'W Newspaper name (if
-        applicable)',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate' => 'W Date advertisement was
         placed (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'W Newspaper name (if
+        applicable)',
     'application_operating-centres_authorisation-sub-action.advertisements.file' => 'W Advertisement (if applicable)
         (optional)',
     'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'W Please upload a copy of the
         advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation-sub-action.data' => 'W Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'W Vehicles',
-    'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'W Total number of trailers',
-    'application_operating-centres_authorisation-sub-action.data.numberOfVehicles' => 'W Total number of vehicles',
+    'application_operating-centres_authorisation-sub-action.data.noOfTrailersPossessed' => 'W Total number of trailers',
+    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed' => 'W Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'W I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'W I am either the site owner or
@@ -221,6 +219,33 @@ return array(
         inspections',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'W Maximum time between vehicle safety
         inspections',
+    'application_vehicle-safety_undertakings-limousines' => 'W Limousines and novelty vehicles',
+    'application_vehicle-safety_undertakings-nineOrMore' => 'W Vehicles with nine or more passengers',
+    'application_vehicle-safety_undertakings-nineOrMore.hint' => 'W If you only intend to use vehicles with 9 or more
+        passenger seats under this licence (if granted) do you agree to the following undertaking being specified on the
+        licence',
+    'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'W Intention',
+    'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'W Small vehicle conditions and undertakings
+        (if applicable)',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'W Limousines and novelty type vehicles
+        are not to be operated under this operator\'s licence',
+    'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'W Are the vehicles you are applying for to
+        be used as Limousines or novelty type vehicles?',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Limousines and novelty type vehicles with
+        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.nineOrMore.details' => 'W Please confirm that vehicles with eight passenger
+        seats or less will not be operated under the licence without the prior written agreement of the traffic
+        commissioner who may require you to agree to certain undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesConfirmation' => 'W Confirm that you agree to the above
+        conditions and undertakings being specified on your licence (if granted)',
+    'application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo' => 'W Do you intend to operate small vehicles
+        as a small part of a large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as
+        amended by Section 265 of the Transport Act 2000)?',
+    'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'W Give details of how you will
+        comply with the \'small part of the business\' requirements (if applicable)',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'W Small vehicles undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'W Scottish operators and
+        English and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'W Add vehicle',
     'application_vehicle-safety_vehicle-edit' => 'W Edit vehicle',
     'application_vehicle-safety_vehicle-psv-large-add' => 'W Add large vehicle',
@@ -248,8 +273,8 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of your
-        vehicles?',
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of
+        your vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle.table.title' => 'W Vehicles',
@@ -395,8 +420,8 @@ return array(
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
-    'ecms_no' => 'W ECMS',
     'ecms-number' => 'W ECMS #',
+    'ecms_no' => 'W ECMS',
     'edit' => 'W Edit',
     'edit-case' => 'W Edit Case #',
     'edit-complaint' => 'W Edit complaint',
@@ -484,6 +509,9 @@ return array(
     'new-case-next' => 'W Next',
     'nfas' => 'W NFAs',
     'no-further-action' => 'W No further action',
+    'noOfTrailersPossessedError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
+    'noOfVehiclesPossessedError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
+    'noOfVehiclesPossessedError-psv' => 'W Total number of vehicles cannot be zero',
     'north-east-of-england' => 'W North East of England',
     'north-west-of-england' => 'W North West of England',
     'northern-ireland' => 'W Northern Ireland',
@@ -491,9 +519,6 @@ return array(
     'note-type' => 'W Note type',
     'notes' => 'W View notes',
     'notes-associated-with' => 'W Notes associated with %s #%s and licence #%s',
-    'numberOfTrailersError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
-    'numberOfVehiclesError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
-    'numberOfVehiclesError-psv' => 'W Total number of vehicles cannot be zero',
     'objections' => 'W Objections',
     'ocs' => 'W OCs',
     'offence-date' => 'W Offence date',

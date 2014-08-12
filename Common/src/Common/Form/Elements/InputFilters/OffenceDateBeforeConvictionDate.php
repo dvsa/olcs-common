@@ -45,7 +45,7 @@ class OffenceDateBeforeConvictionDate extends ZendDateSelect implements InputPro
             ),
             'validators' => [
                 new \Common\Form\Elements\Validators\DateNotInFuture(),
-                new \Common\Form\Elements\Validators\DateLessThanOrEqual('dateOfConviction'),
+                new \Common\Form\Elements\Validators\DateLessThanOrEqual('convictionDate'),
                 new DateValidator(array('format' => 'Y-m-d'))
             ]
         ];

@@ -56,13 +56,13 @@ return [
             'class' => 'long',
             'filters' => '\Common\Form\Elements\InputFilters\TextRequired'
         ],
-        'country' => [
+        'countryCode' => [
             'type' => 'select',
             'label' => 'Country',
             'required' => true,
             'value_options' => 'countries',
             'attributes' => [
-                'value' => 'country.GB'
+                'value' => 'GB'
             ]
         ]
     ]

@@ -113,8 +113,8 @@ return array(
     'application_operating-centres_authorisation-edit' => 'W Edit operating centre',
     'application_operating-centres_authorisation-sub-action.data' => 'W Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'W Vehicles',
-    'application_operating-centres_authorisation-sub-action.data.numberOfTrailers' => 'W Total number of trailers',
-    'application_operating-centres_authorisation-sub-action.data.numberOfVehicles' => 'W Total number of vehicles',
+    'application_operating-centres_authorisation-sub-action.data.noOfTrailersPossessed' => 'W Total number of trailers',
+    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed' => 'W Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'W I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'W I am either the site owner or
@@ -459,9 +459,9 @@ return array(
     'note-type' => 'W Note type',
     'notes' => 'W View notes',
     'notes-associated-with' => 'W Notes associated with %s #%s and licence #%s',
-    'numberOfTrailersError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
-    'numberOfVehiclesError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
-    'numberOfVehiclesError-psv' => 'W Total number of vehicles cannot be zero',
+    'noOfTrailersPossessedError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
+    'noOfVehiclesPossessedError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
+    'noOfVehiclesPossessedError-psv' => 'W Total number of vehicles cannot be zero',
     'objections' => 'W Objections',
     'ocs' => 'W OCs',
     'offence-date' => 'W Offence date',

@@ -508,7 +508,7 @@ abstract class FormActionController extends AbstractActionController
 
         unset($data[$addressName]['searchPostcode']);
 
-        $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
 
         $data['addresses'][$addressName] = $data[$addressName];
 
