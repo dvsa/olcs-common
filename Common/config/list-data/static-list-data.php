@@ -476,6 +476,16 @@ return array(
         'presiding_tc.1' => 'Presiding TC 1',
         'presiding_tc.2' => 'Presiding TC 2',
         'presiding_tc.3' => 'Presiding TC 3',
+    ],
+    'prohibition_type' => [
+        'prohibition_type.1' => 'Immediate (S)',
+        'prohibition_type.2' => 'Delayed (S)',
+        'prohibition_type.3' => 'Variation (S)',
+        'prohibition_type.4' => 'Immediate',
+        'prohibition_type.5' => 'Delayed',
+        'prohibition_type.6' => 'Variation',
+        'prohibition_type.7' => 'Refusals Only',
+        'prohibition_type.8' => 'Variation & Refusals Only',
     ]
 
 );
