@@ -309,8 +309,6 @@ class FormRewriteController extends AbstractActionController
             $this->getLog()->warn('Empty Fieldset: ' .$data['name']);
         }
 
-
-
         unset(
             $data['elements'],
             $data['attributes'],
