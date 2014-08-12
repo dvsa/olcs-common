@@ -721,5 +721,13 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.hint.exists' =>
+        '<p class="hint">Your traffic area has been determined from your address.<br/>'
+    . '<a href="#" target="_blank">More about traffic areas</a></p>',
+    'application_operating-centres_authorisation.dataTrafficArea.label.new' => '<b>Traffic area</b>',
+    'application_operating-centres_authorisation.dataTrafficArea.hint.new' =>
+        "Your traffic area is determined by your operating centre's location.<br />For more information and "
+    . 'to find your traffic please visit ' . '<a href="#" target="_blank">this link.</a>'
     // Potentially unused (Not found with grep)
 );
