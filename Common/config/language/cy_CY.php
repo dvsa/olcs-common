@@ -718,5 +718,8 @@ return array(
     'vrm' => 'W VRM',
     'trailer' => 'W Trailer',
     'offence-notes' => 'W Offence notes',
+    'offence-not-found' => 'W Offence not found',
+    'offence-type' => 'W Offence type',
+    'offence-definition' => 'W Act/Si',
     // Potentially unused (Not found with grep)
 );
