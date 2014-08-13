@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Form\View\Helper;
 
+use Zend\Form\LabelAwareInterface;
 use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
@@ -52,6 +53,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     {
         $element = $this->prepareElement();
         $element->setMessages(['Message']);
+        $element->setLabelOption('always_wrap', true);
 
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
@@ -162,6 +164,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     public function testRenderSingleCheckbox()
     {
         $element = $this->prepareElement('Common\Form\Elements\InputFilters\SingleCheckbox');
+        $element->setLabelOption('always_wrap', true);
 
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);

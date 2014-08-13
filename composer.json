@@ -4,8 +4,12 @@
     "type": "library",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*",
-        "doctrine/doctrine-orm-module": "0.*",
+        "zendframework/zendframework": "2.3.*",
+        "doctrine/doctrine-orm-module": "0.*"
+
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "~1.5.3",
         "phpunit/phpunit": "4.0.*",
         "phpunit/phpcov": "*"
     },
