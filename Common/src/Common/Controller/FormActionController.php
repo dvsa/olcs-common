@@ -9,10 +9,13 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Common\Form\Elements\Types\Person;
+use Common\Form\Elements\Types\Defendant;
 use Zend\Filter\Word\DashToCamelCase;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Factory;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -469,10 +472,10 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
-     * Method to trigger generation of a document providing a generate checkox
+     * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
      *
-     * @param arrat $data
+     * @param array $data
      * @return array
      * @throws \RuntimeException
      */
@@ -779,5 +782,16 @@ abstract class FormActionController extends AbstractActionController
     public function getFileSizeValidator()
     {
         return new \Zend\Validator\File\FilesSize('2MB');
+    }
+
+    /**
+     * Gets a view model with optional params
+     *
+     * @param array $params
+     * @return ViewModel
+     */
+    public function getView(array $params = null)
+    {
+        return new ViewModel($params);
     }
 }
