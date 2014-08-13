@@ -48,8 +48,8 @@ class Vrm extends ZendElement implements InputProviderInterface
                 ]
             ],
             'validators' => [
-                new StringLength(['min' => 2, 'max' => 7]),
-                new Alnum()
+                ['name' => 'Zend\Validator\StringLength', 'options'=>['min' => 2, 'max' => 7]],
+                ['name' => 'Zend\I18n\Validator\Alnum']
             ]
         ];
 

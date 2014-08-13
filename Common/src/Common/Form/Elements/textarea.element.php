@@ -18,7 +18,10 @@ return [
             ['name' => 'Zend\Filter\StringToLower']
         ],
         'validators' => [
-            new \Zend\Validator\StringLength(['min' => 10, 'max' => 100])
+            [
+                'name' => 'Zend\Validator\StringLength',
+                'options' => ['min' => 10, 'max' => 100]
+            ]
         ]
     ]
 ];
