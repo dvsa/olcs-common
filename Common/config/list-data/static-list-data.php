@@ -485,5 +485,15 @@ return array(
         'open' => 'Open',
         'closed' => 'Closed',
         'all' => 'All'
+    ],
+    'prohibition_type' => [
+        'prohibition_type.1' => 'Immediate (S)',
+        'prohibition_type.2' => 'Delayed (S)',
+        'prohibition_type.3' => 'Variation (S)',
+        'prohibition_type.4' => 'Immediate',
+        'prohibition_type.5' => 'Delayed',
+        'prohibition_type.6' => 'Variation',
+        'prohibition_type.7' => 'Refusals Only',
+        'prohibition_type.8' => 'Variation & Refusals Only',
     ]
 );

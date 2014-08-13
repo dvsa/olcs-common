@@ -84,6 +84,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $this->prepareElement('\Common\Form\Elements\Types\PlainText');
 
         $viewHelper = $this->prepareViewHelper();
+        $this->element->setValue('plain');
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
