@@ -32,7 +32,7 @@ class Name extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new ZendValidator\StringLength(['min' => 2, 'max' => 35]),
+                ['name' => 'Zend\Validator\StringLength', 'options' => ['min' => 2, 'max' => 35]]
             ]
         ];
 

@@ -8,6 +8,7 @@
  */
 namespace Common\Form\View\Helper;
 
+use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\FormRow as ZendFormRow;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Zend\Form\Element\Hidden;
@@ -176,7 +177,10 @@ class FormRow extends ZendFormRow
                     $elementString
                 );
             } else {
-                if ($element->hasAttribute('id') && ! ($element instanceof SingleCheckbox)) {
+                if ($element->hasAttribute('id')
+                    && ! ($element instanceof SingleCheckbox)
+                    && ($element instanceof LabelAwareInterface && !$element->getLabelOption('always_wrap'))
+                ) {
                     $labelOpen = '';
                     $labelClose = '';
                     $label = $labelHelper($element);
@@ -186,7 +190,9 @@ class FormRow extends ZendFormRow
                     $labelClose = $labelHelper->closeTag();
                 }
 
-                if ($label !== '' && !$element->hasAttribute('id')) {
+                if ($label !== '' && (!$element->hasAttribute('id'))
+                    || ($element instanceof LabelAwareInterface && $element->getLabelOption('always_wrap'))
+                ) {
                     $label = '<span>' . $label . '</span>';
                 }
 

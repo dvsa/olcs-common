@@ -45,7 +45,10 @@ class Textarea extends ZendElement implements InputProviderInterface
         ];
 
         if (!empty($this->max)) {
-            $specification['validators'][] = new ZendValidator\StringLength(['min' => 5, 'max' => $this->max]);
+            $specification['validators'][] = [
+                'name' => 'Zend\Validator\StringLength',
+                'options' => ['min' => 5, 'max' => $this->max]
+            ];
         }
 
         return $specification;
