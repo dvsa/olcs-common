@@ -317,6 +317,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $view->setTemplate($viewName);
         }
 
+        // no, I don't know why it's not getTerminal or isTerminal either...
+        if ($view->terminate()) {
+            return $view;
+        }
+
         // allow both the page title and sub title to be passed as explicit
         // arguments to this method
         if ($pageTitle !== null) {
@@ -326,6 +331,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         if ($pageSubTitle !== null) {
             $this->pageSubTitle = $pageSubTitle;
         }
+
+        // every page has a header, so no conditional logic needed here
+        $header = new ViewModel(
+            [
+                'pageTitle' => $this->pageTitle,
+                'pageSubTitle' => $this->pageSubTitle
+            ]
+        );
+        $header->setTemplate('layout/partials/header');
 
         // allow a controller to specify a more specific page layout to use
         // in addition to the base one all views inherit from
@@ -344,15 +358,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             // having to care what it is
             $view = $layout;
         }
-
-        // every page has a header, so no conditional logic needed here
-        $header = new ViewModel(
-            [
-                'pageTitle' => $this->pageTitle,
-                'pageSubTitle' => $this->pageSubTitle
-            ]
-        );
-        $header->setTemplate('layout/partials/header');
 
         // we *always* inherit from the same base layout
         $base = new ViewModel();
