@@ -2,12 +2,10 @@
 /**
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
- *
  */
 
 namespace Common\Form\Elements\InputFilters;
 
-use Zend\Form\Element\DateSelect as ZendDateSelect;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
 use Zend\Validator\Date as DateValidator;
 
@@ -21,7 +19,7 @@ class StopDateBeforeRequestDate extends DateRequired implements InputProviderInt
     {
         return array(
             new \Common\Form\Elements\Validators\DateNotInFuture(),
-            new \Common\Form\Elements\Validators\DateLessThanOrEqual('dateRequested'),
+            new \Common\Form\Elements\Validators\DateLessThanOrEqual('requestedDate'),
             new DateValidator(array('format' => 'Y-m-d'))
         );
     }

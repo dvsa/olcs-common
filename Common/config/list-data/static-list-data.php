@@ -478,14 +478,13 @@ return array(
         'presiding_tc.3' => 'Presiding TC 3',
     ],
     'prohibition_type' => [
-        'prohibition_type.1' => 'Immediate (S)',
-        'prohibition_type.2' => 'Delayed (S)',
-        'prohibition_type.3' => 'Variation (S)',
-        'prohibition_type.4' => 'Immediate',
-        'prohibition_type.5' => 'Delayed',
-        'prohibition_type.6' => 'Variation',
-        'prohibition_type.7' => 'Refusals Only',
-        'prohibition_type.8' => 'Variation & Refusals Only',
+        'pro_t_si' => 'Immediate (S)',
+        'pro_t_sd' => 'Delayed (S)',
+        'pro_t_sv' => 'Variation (S)',
+        'pro_t_i' => 'Immediate',
+        'pro_t_d' => 'Delayed',
+        'pro_t_v' => 'Variation',
+        'pro_t_ro' => 'Refusals Only',
+        'pro_t_vr' => 'Variation & Refusals Only',
     ]
-
 );
