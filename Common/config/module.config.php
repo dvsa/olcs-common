@@ -84,8 +84,11 @@ return array(
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
         ],
-        'aliases' => [ //remove me when real dynamicselect exists
-            'DynamicSelect' => 'Select'
+        'factories' => [
+            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory'
+        ],
+        'aliases' => [
+            'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
         ]
     ],
     'tables' => array(
