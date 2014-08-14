@@ -1,7 +1,7 @@
 <?php
 
 /**
- * task identifier formatter
+ * task date formatter
  *
  * @author nick payne <nick.payne@valtech.co.uk>
  */
@@ -9,14 +9,14 @@
 namespace Common\Service\Table\Formatter;
 
 /**
- * task identifier formatter
+ * task date formatter
  *
  * @author nick payne <nick.payne@valtech.co.uk>
  */
-class TaskIdentifier implements FormatterInterface
+class TaskDate implements FormatterInterface
 {
     /**
-     * Format a task identifier
+     * Format a task date
      *
      * @param array $data
      * @param array $column
@@ -25,13 +25,11 @@ class TaskIdentifier implements FormatterInterface
      */
     public static function format($data, $column, $sm)
     {
-        $identifier = $data['identifier'];
-        if ($identifier === 'Unlinked') {
-            return 'Unlinked';
+        $date = Date::format($data, $column, $sm);
+        if (isset($data['urgent']) && $data['urgent'] === 'Y') {
+            // @TODO no AC for what the urgent marker looks like
+            $date .= ' (urgent)';
         }
-
-        // @TODO (MLH) if >= 2 valid licences
-
-        return '<a href=#>' . $data['identifier'] . '</a>';
+        return $date;
     }
 }
