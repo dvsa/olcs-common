@@ -35,7 +35,10 @@ class TextMax255RequiredNoMin extends TextMax255 implements InputProviderInterfa
         ];
 
         if (!empty($this->max)) {
-            $specification['validators'][] = new ZendValidator\StringLength(['max' => $this->max]);
+            $specification['validators'][] = [
+                'name' => 'Zend\Validator\StringLength',
+                'options' => ['max' => $this->max]
+            ];
         }
 
         return $specification;

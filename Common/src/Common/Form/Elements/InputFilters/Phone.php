@@ -32,13 +32,14 @@ class Phone extends ZendElement implements InputProviderInterface
                 ['name' => 'Zend\Filter\StringTrim'],
             ],
             'validators' => [
-                new ZendValidator\Regex(
-                    array(
+                [
+                    'name'=> 'Zend\Validator\Regex',
+                    'options' => [
                         'pattern' => '/^[0-9 ]+$/',
                         'messages' => ['regexNotMatch' => 'The input must contain only digits or spaces']
-                    )
-                ),
-                new ZendValidator\StringLength(['min' => 5, 'max' => 20]),
+                    ]
+                ],
+                ['name' => 'Zend\Validator\StringLength', 'options' => ['min' => 5, 'max' => 20]]
             ]
         ];
 

@@ -38,8 +38,8 @@ class Gpw extends ZendElement implements InputProviderInterface
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                new Digits(),
-                new GreaterThan(['min' => 0]),
+                ['name' => 'Zend\Validator\Digits'],
+                ['name' => 'Zend\Validator\GreaterThan', 'options' =>['min' => 0]],
             ]
         ];
 
