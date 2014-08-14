@@ -368,4 +368,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         return $base;
     }
+
+    /*
+     * Load an array of script files which will be rendered inline inside a view
+     *
+     * @param array $scripts
+     * @return array
+     */
+    protected function loadScripts($scripts)
+    {
+        return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+    }
 }
