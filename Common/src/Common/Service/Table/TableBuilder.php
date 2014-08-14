@@ -135,6 +135,13 @@ class TableBuilder
     private $url;
 
     /**
+     * Query object
+     *
+     * @var object
+     */
+    private $query;
+
+    /**
      * Current sort column
      *
      * @var string
@@ -692,6 +699,10 @@ class TableBuilder
         $this->url = $array['url'];
         $this->setSort($array['sort']);
         $this->setOrder($array['order']);
+
+        if (isset($array['query'])) {
+            $this->query = $array['query'];
+        }
 
         $this->setVariables(array_merge($this->getVariables(), $array));
     }
@@ -1257,7 +1268,12 @@ class TableBuilder
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
-        $returnUrl = $this->generateUrl($data, $route, $extendParams);
+        if ($this->query) {
+            $queryString = array_merge($this->query->toArray(), $data);
+            $returnUrl = "?" . http_build_query($queryString);
+        } else{
+            $returnUrl = $this->generateUrl($data, $route, $extendParams);
+        }
 
         // strip out controller and action params
         $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
