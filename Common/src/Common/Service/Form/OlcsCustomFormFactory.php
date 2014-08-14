@@ -35,6 +35,7 @@ class OlcsCustomFormFactory extends Factory
      */
     private $elementsWithValueOptions = array(
         'select',
+        'select-noempty',
         'selectDisabled',
         'multicheckbox',
         'confirm-checkbox',
