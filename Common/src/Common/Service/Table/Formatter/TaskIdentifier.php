@@ -30,8 +30,11 @@ class TaskIdentifier implements FormatterInterface
             return 'Unlinked';
         }
 
-        // @TODO (MLH) if >= 2 valid licences
+        $value = '<a href=#>' . $data['identifier'] . '</a>';
+        if ($data['licenceCount'] > 1) {
+            $value .= ' (MLH)';
+        }
 
-        return '<a href=#>' . $data['identifier'] . '</a>';
+        return $value;
     }
 }
