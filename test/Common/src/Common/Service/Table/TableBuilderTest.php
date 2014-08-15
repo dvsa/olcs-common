@@ -470,6 +470,25 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test loadParams With Query
+     */
+    public function testLoadParamsWithQuery()
+    {
+        $query = new \stdClass();
+
+        $params = array(
+            'url' => 'foo',
+            'query' => $query,
+        );
+
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->loadParams($params);
+
+        $this->assertSame($query, $table->getQuery());
+    }
+
+    /**
      * Test setupAction with action set
      */
     public function testSetupActionWithActionSet()

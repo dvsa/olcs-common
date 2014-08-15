@@ -515,6 +515,16 @@ class TableBuilder
     }
 
     /**
+     * Getter for query
+     *
+     * @return object
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * Setter for sort
      *
      * @param string $sort
@@ -1268,8 +1278,8 @@ class TableBuilder
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
-        if ($this->query) {
-            $queryString = array_merge($this->query->toArray(), $data);
+        if ($this->getQuery()) {
+            $queryString = array_merge($this->getQuery()->toArray(), $data);
             $returnUrl = "?" . http_build_query($queryString);
         } else{
             $returnUrl = $this->generateUrl($data, $route, $extendParams);

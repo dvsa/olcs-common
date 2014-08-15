@@ -1,17 +1,17 @@
 <?php
 
 /**
- * task date formatter
+ * Task date formatter
  *
- * @author nick payne <nick.payne@valtech.co.uk>
+ * @author Nick payne <nick.payne@valtech.co.uk>
  */
 
 namespace Common\Service\Table\Formatter;
 
 /**
- * task date formatter
+ * Task date formatter
  *
- * @author nick payne <nick.payne@valtech.co.uk>
+ * @author Nick payne <nick.payne@valtech.co.uk>
  */
 class TaskDate implements FormatterInterface
 {
