@@ -794,4 +794,17 @@ abstract class FormActionController extends AbstractActionController
     {
         return new ViewModel($params);
     }
+
+    /**
+     * Gets the licence by ID.
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getLicence($id)
+    {
+        $licence = $this->makeRestCall('Licence', 'GET', array('id' => $id));
+
+        return $licence;
+    }
 }
