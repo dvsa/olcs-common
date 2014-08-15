@@ -20,5 +20,9 @@
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome', 'content' => ''));
     }
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Comments', 'content' => $this->record['comment']));
+
+    if ($this->record['isWithdrawn'] == 'Y') {
+        echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Withdrawn', 'content' => $this->record['withdrawnDate']));
+    }
     ?>
 </div>
