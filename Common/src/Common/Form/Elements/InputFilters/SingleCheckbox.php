@@ -47,7 +47,7 @@ class SingleCheckbox extends Checkbox
             'allow_empty' => $this->allowEmpty,
             'validators' => $this->getValidators()
         ];
-        
+
         return $specification;
     }
 }

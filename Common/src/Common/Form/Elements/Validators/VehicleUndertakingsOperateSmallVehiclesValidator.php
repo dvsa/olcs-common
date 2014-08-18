@@ -34,7 +34,7 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
     public function isValid($value, $context = null)
     {
         unset($value);
-        
+
         if ($context['psvOperateSmallVehicles'] === 'Y'
             && trim($context['psvSmallVehicleNotes']) === '') {
 
