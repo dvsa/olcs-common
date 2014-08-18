@@ -86,7 +86,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
                     $this->error('notInNorthernIreland');
                     return false;
                 }
-                if (!$niFlag && $trafficAreaId !== $currentTrafficAreaId) {
+                if (!$niFlag && $trafficAreaId !== $currentTrafficAreaId && $currentTrafficAreaId) {
                     $errorText = 'Your operating centre is in ' . $trafficAreaName . ' traffic area, '
                     . 'which differs to your first operating centre ' . $currentTrafficArea['name'].
                     '. You will need to apply for '
