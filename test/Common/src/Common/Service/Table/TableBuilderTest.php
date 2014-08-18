@@ -470,6 +470,25 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test loadParams With Query
+     */
+    public function testLoadParamsWithQuery()
+    {
+        $query = new \stdClass();
+
+        $params = array(
+            'url' => 'foo',
+            'query' => $query,
+        );
+
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->loadParams($params);
+
+        $this->assertSame($query, $table->getQuery());
+    }
+
+    /**
      * Test setupAction with action set
      */
     public function testSetupActionWithActionSet()
@@ -1251,6 +1270,74 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderLimitOptions with query enabled
+     */
+    public function testRenderLimitOptionsWithQueryEnabled()
+    {
+        $settings = array(
+            'paginate' => array(
+                'limit' => array(
+                    'options' => array(
+                        10, 20, 30
+                    )
+                )
+            )
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->at(0))
+            ->method('replaceContent')
+            ->with('{{[elements/limitOption]}}', array('class' => 'current', 'option' => '10'));
+
+        $mockContentHelper->expects($this->at(1))
+            ->method('replaceContent')
+            ->with('{{[elements/limitLink]}}')
+            ->will($this->returnValue('20'));
+
+        $mockContentHelper->expects($this->at(2))
+            ->method('replaceContent')
+            ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '20'));
+
+        $mockContentHelper->expects($this->at(3))
+            ->method('replaceContent')
+            ->with('{{[elements/limitLink]}}', array('option' => '30', 'link' => '?foo=bar&page=1&limit=30'))
+            ->will($this->returnValue('30'));
+
+        $mockContentHelper->expects($this->at(4))
+            ->method('replaceContent')
+            ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
+
+        $mockQuery = $this->getMock('\stdClass', array('toArray'));
+
+        $mockQuery->expects($this->any())
+            ->method('toArray')
+            ->will($this->returnValue(array('foo' => 'bar')));
+
+        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'getQuery', 'getUrl'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->expects($this->any())
+            ->method('getQuery')
+            ->will($this->returnValue($mockQuery));
+
+        $table->expects($this->any())
+            ->method('getUrl')
+            ->will($this->returnValue($mockUrl));
+
+        $table->setSettings($settings);
+
+        $table->setLimit(10);
+
+        $this->assertEquals('', $table->renderLimitOptions());
+    }
+
+    /**
      * Test renderPageOptions without options
      */
     public function testRenderPageOptionsWithoutOptions()
@@ -1559,6 +1646,40 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockContentHelper));
 
         $table->renderHeaderColumn($column);
+    }
+
+    /**
+     * Test renderHeaderColumn when disabled
+     */
+    public function testRenderHeaderColumnWhenDisabled()
+    {
+        $column = array(
+            'hideWhenDisabled' => true
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table->setDisabled(true);
+
+        $response = $table->renderHeaderColumn($column);
+
+        $this->assertEquals(null, $response);
+    }
+
+    /**
+     * Test renderBodyColumn when disabled
+     */
+    public function testRenderBodyColumnWhenDisabled()
+    {
+        $column = array(
+            'hideWhenDisabled' => true
+        );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table->setDisabled(true);
+
+        $response = $table->renderBodyColumn([], $column);
+
+        $this->assertEquals(null, $response);
     }
 
     /**
