@@ -15,7 +15,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValid
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehicles extends Text implements InputProviderInterface
+class VehicleUndertakingsOperateSmallVehicles extends Textarea implements InputProviderInterface
 {
     protected $continueIfEmpty = true;
     protected $allowEmpty = false;
