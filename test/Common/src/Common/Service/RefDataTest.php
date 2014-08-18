@@ -4,6 +4,10 @@ namespace CommonTest\Service;
 
 use Common\Service\RefData;
 
+/**
+ * Class RefDataTest
+ * @package CommonTest\Service
+ */
 class RefDataTest extends \PHPUnit_Framework_TestCase
 {
     public function testFormatData()
@@ -55,10 +59,12 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $mockSl = $this->getMock('\Zend\ServiceManager\ServiceManager');
         $mockSl->expects($this->any())
                ->method('get')
-               ->willReturnMap([
-                ['translator', true, $mockTranslator],
-                ['ServiceApiResolver', true, $mockApiResolver],
-            ]);
+               ->willReturnMap(
+                   [
+                       ['translator', true, $mockTranslator],
+                       ['ServiceApiResolver', true, $mockApiResolver],
+                   ]
+               );
 
         $sut = new RefData();
         $service = $sut->createService($mockSl);
@@ -146,4 +152,3 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         return $source;
     }
 }
- 

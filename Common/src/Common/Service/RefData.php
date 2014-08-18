@@ -116,7 +116,8 @@ class RefData implements FactoryInterface
         $optionData = [];
 
         foreach ($data as $datum) {
-            if (isset($datum['parent_id'])) { //false if null or not in array
+            //false if null or not in array
+            if (isset($datum['parent_id'])) {
                 $groups[$datum['parent_id']][] = $datum;
             } else {
                 $optionData[$datum['id']] = ['label' => $datum['description'], 'options' => []];

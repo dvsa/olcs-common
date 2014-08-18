@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: valtech
- * Date: 12/08/14
- * Time: 17:04
- */
 
 namespace CommonTest\Form\Element;
 
 use Common\Form\Element\DynamicSelect;
 
-
+/**
+ * Class DynamicSelectTest
+ * @package CommonTest\Form\Element
+ */
 class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetOptions()
@@ -42,4 +39,3 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->getValueOptions();
     }
 }
- 

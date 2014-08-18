@@ -6,6 +6,10 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\Service\RefData as RefDataService;
 
+/**
+ * Class DynamicSelectFactory
+ * @package Common\Form\Element
+ */
 class DynamicSelectFactory implements FactoryInterface
 {
     /**

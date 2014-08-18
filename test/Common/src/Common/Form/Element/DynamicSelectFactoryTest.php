@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: valtech
- * Date: 14/08/14
- * Time: 14:32
- */
 
 namespace CommonTest\Form\Element;
+
 use Common\Form\Element\DynamicSelectFactory;
 
-
+/**
+ * Class DynamicSelectFactoryTest
+ * @package CommonTest\Form\Element
+ */
 class DynamicSelectFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
@@ -27,4 +25,3 @@ class DynamicSelectFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($mockRefDataService, $service->getRefDataService());
     }
 }
- 
