@@ -17,12 +17,12 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 class Postcode implements ServiceLocatorAwareInterface
 {
     use \Common\Util\RestCallTrait;
-    
+
     /**
      * @var ServiceLocatorInterface
      */
     protected $serviceLocator;
-    
+
     /**
      * Get traffic area by postocde
      * 
@@ -48,16 +48,21 @@ class Postcode implements ServiceLocatorAwareInterface
                             )
                         )
                     );
-                    $adminAreaTrafficArea = $this->makeRestCall('AdminAreaTrafficArea', 'GET', array('id' => $adminArea), $bundle);
+                    $adminAreaTrafficArea = $this->makeRestCall(
+                        'AdminAreaTrafficArea', 'GET', array('id' => $adminArea), $bundle
+                    );
                     if (array_key_exists('trafficArea', $adminAreaTrafficArea) && count($adminAreaTrafficArea)) {
-                        $retv = array($adminAreaTrafficArea['trafficArea']['id'], $adminAreaTrafficArea['trafficArea']['name']);
+                        $retv = array(
+                            $adminAreaTrafficArea['trafficArea']['id'],
+                            $adminAreaTrafficArea['trafficArea']['name']
+                        );
                     }
                 }
             }
         }
         return $retv;
     }
- 
+
     /**
      * Set service locator
      *
@@ -77,5 +82,4 @@ class Postcode implements ServiceLocatorAwareInterface
     {
         return $this->serviceLocator;
     }
-    
 }

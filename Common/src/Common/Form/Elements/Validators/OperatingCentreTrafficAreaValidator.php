@@ -17,12 +17,12 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  */
 class OperatingCentreTrafficAreaValidator extends AbstractValidator implements ServiceLocatorAwareInterface
 {
-    
+
     /**
      * @var ServiceLocatorInterface
      */
     protected $serviceLocator;
-    
+
     /**
      * Message templates
      *
@@ -47,19 +47,19 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
      * @var int
      */
     private $operatingCentresCount;
-    
+
     /**
      * Current traffic area
      *
      * @var array
      */
     private $trafficArea;
-                
+
     /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-    
+
     /**
      * Custom validation for postcode / traffic area
      *
@@ -71,15 +71,15 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     {
         $postcodeService = $this->getServiceLocator()->get('postcode');
         if ($value) {
-            
+
             list($trafficAreaId, $trafficAreaName) = $postcodeService->getTrafficAreaByPostcode($value);
 
             $currentTrafficArea = $this->getTrafficArea();
             $currentTrafficAreaId = is_array($currentTrafficArea) && array_key_exists('id', $currentTrafficArea) ?
                 $currentTrafficArea['id'] : null;
-            
+
             $niFlag = $this->getNiFlag();
-            
+
             // validate only if postcode is not empty and recognized
             if ($value && $trafficAreaId) {
                 if ($niFlag && $trafficAreaId !== self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
@@ -88,7 +88,8 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
                 }
                 if (!$niFlag && $trafficAreaId !== $currentTrafficAreaId) {
                     $errorText = 'Your operating centre is in ' . $trafficAreaName . ' traffic area, '
-                    . 'which differs to your first operating centre ' . $currentTrafficArea['name']. '. You will need to apply for '
+                    . 'which differs to your first operating centre ' . $currentTrafficArea['name'].
+                    '. You will need to apply for '
                     . 'more than one licence. Read more.';
                     $this->setMessage($errorText, 'notInTrafficArea');
                     $this->error('notInTrafficArea');
@@ -96,7 +97,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
                 }
             }
         }
-                
+
         return true;
     }
 
@@ -119,7 +120,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     {
         return $this->niFlag;
     }
-    
+
     /**
      * Sets operating centres count
      *
@@ -139,7 +140,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     {
         return $this->operatingCentresCount;
     }
-    
+
     /**
      * Sets trafficArea
      *
@@ -159,7 +160,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     {
         return $this->trafficArea;
     }
-     
+
     /**
      * Set service locator
      *
@@ -179,5 +180,4 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     {
         return $this->serviceLocator;
     }
-    
 }
