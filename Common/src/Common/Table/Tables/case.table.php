@@ -46,7 +46,7 @@ return array(
         ),
         array(
             'title' => 'ECMS',
-            'name' => 'ecms_no'
+            'name' => 'ecmsNo'
         )
     )
 );

@@ -363,7 +363,7 @@ return array(
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
-    'ecms_no' => 'W ECMS',
+    'ecmsNo' => 'W ECMS',
     'ecms-number' => 'W ECMS #',
     'edit' => 'W Edit',
     'edit-case' => 'W Edit Case #',

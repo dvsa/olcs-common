@@ -81,13 +81,13 @@ return array(
     ],
     'defendant_types' =>
     [
-        'defendant_type.operator' => 'Operator',
-        'defendant_type.owner' => 'Owner',
-        'defendant_type.partner' => 'Partner',
-        'defendant_type.director' => 'Director',
-        'defendant_type.driver' => 'Driver',
-        'defendant_type.transport_manager' => 'Transport Manager',
-        'defendant_type.other' => 'Other'
+        'def_t_op' => 'Operator',
+        'def_t_owner' => 'Owner',
+        'def_t_part' => 'Partner',
+        'def_t_dir' => 'Director',
+        'def_t_driver' => 'Driver',
+        'def_t_tm' => 'Transport Manager',
+        'def_t_other' => 'Other'
     ],
     'yes_no' => [
         'Y' => 'Yes',

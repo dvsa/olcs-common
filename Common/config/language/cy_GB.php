@@ -461,7 +461,7 @@ return array(
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
     'ecms-number' => 'W ECMS #',
-    'ecms_no' => 'W ECMS',
+    'ecmsNo' => 'W ECMS',
     'edit' => 'W Edit',
     'edit-case' => 'W Edit Case #',
     'edit-complaint' => 'W Edit complaint',
