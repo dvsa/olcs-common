@@ -1278,11 +1278,12 @@ class TableBuilder
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
+        $returnUrl = $this->generateUrl($data, $route, $extendParams);
+
+        // in query mode we want to manually append a query string to the base route
         if ($this->getQuery()) {
             $queryString = array_merge($this->getQuery()->toArray(), $data);
-            $returnUrl = "?" . http_build_query($queryString);
-        } else{
-            $returnUrl = $this->generateUrl($data, $route, $extendParams);
+            $returnUrl .= "?" . http_build_query($queryString);
         }
 
         // strip out controller and action params
