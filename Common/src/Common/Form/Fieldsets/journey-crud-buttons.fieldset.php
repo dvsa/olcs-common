@@ -2,6 +2,7 @@
 
 return array(
     'name' => 'form-actions',
+    'alt-name' => 'journey-crud-buttons',
     'attributes' => array(
         'class' => 'actions-container'
     ),

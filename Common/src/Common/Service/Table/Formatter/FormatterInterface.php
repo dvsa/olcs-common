@@ -26,5 +26,5 @@ interface FormatterInterface
      * @param array $column
      * @param \Zend\ServiceManager\ServiceManager $sm
      */
-    public static function format($data, $column, $sm);
+    public static function format($data, $column = array(), $sm = null);
 }

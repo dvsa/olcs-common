@@ -8,7 +8,7 @@ return [
         ],
         'fieldsets' => [
             [
-                'name' => 'categories',
+                'name' => 'submissionSections',
                 'options' => [
                     'label' => 'Select one or more categories'
                 ],

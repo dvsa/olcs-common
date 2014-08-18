@@ -33,7 +33,7 @@ return array(
                 return '<a href="' . $this->generateUrl(
                     array('case' => $row['id'], 'tab' => 'overview'),
                     'case_manage'
-                ) . '">' . $row['caseNumber'] . '</a>';
+                ) . '">' . $row['id'] . '</a>';
             }
         ),
         array(
