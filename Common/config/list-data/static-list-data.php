@@ -476,6 +476,78 @@ return array(
         'presiding_tc.1' => 'Presiding TC 1',
         'presiding_tc.2' => 'Presiding TC 2',
         'presiding_tc.3' => 'Presiding TC 3',
-    ]
-
+    ],
+    'task-date-types' => [
+        'today' => 'Today',
+        'all' => 'All dates'
+    ],
+    'task-status-types' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'all' => 'All'
+    ],
+    'prohibition_type' => [
+        'prohibition_type.1' => 'Immediate (S)',
+        'prohibition_type.2' => 'Delayed (S)',
+        'prohibition_type.3' => 'Variation (S)',
+        'prohibition_type.4' => 'Immediate',
+        'prohibition_type.5' => 'Delayed',
+        'prohibition_type.6' => 'Variation',
+        'prohibition_type.7' => 'Refusals Only',
+        'prohibition_type.8' => 'Variation & Refusals Only',
+    ],
+    'legislation_type.psv.gb' => [
+        'legislation_type.psv.gb.1' => 'Section A The user of the '
+            . 'vehicle held a valid operator\'s licence (whether or not '
+            . 'authorising the use of the vehicle)',
+        'legislation_type.psv.gb.2' => 'Section B It was not '
+            . 'being, and had not been used in contravention of Section '
+            . '12 of the 1981 Act.',
+        'legislation_type.psv.gb.3' => 'Section C i did not know '
+            . 'it was being or had been used in contravention  of '
+            . 'Section 12 of the 1981 Act.',
+        'legislation_type.psv.gb.4' => 'Section D That although '
+            . 'knowing that at the time the vehicle was detained it was '
+            . 'being or had been used in contravention of Section 12(1) '
+            . 'of the 1981 Act, but; (i) had taken steps with a view to '
+            . 'preventing that (ii) Has taken steps with a view to '
+            . 'preventing any further such use.'
+    ],
+    'legislation_type.goods.ni' => [
+        'legislation_type.goods.ni.1' => 'Section A At the time the '
+            . 'vehicle was detained, the person using the vehicle held '
+            . 'a valid licence (whether or not authorising the use of '
+            . 'the vehicle);',
+        'legislation_type.goods.ni.2' => 'Section B At the time the '
+            . 'vehicle was detained, the vehicle was not being, and '
+            . 'had not been, used in contravention of section 1 of the'
+            . '2010 Act;',
+        'legislation_type.goods.ni.3' => 'Section C Although at the '
+            . 'time the vehicle was detained it was being, or had been,'
+            . 'used in contravention of section 1 of the 2010 Act, the '
+            . 'owner did not know that it was being, or had been, so used;',
+        'legislation_type.goods.ni.4' => 'Section D Although knowing at '
+            . 'the time the vehicle was detained that it was being, or '
+            . 'had been, used in contravention of section 1 of the 2010 '
+            . 'Act, the owner— (i)had taken steps with a view to '
+            . 'preventing that use; and '
+            . '(ii)has taken steps with a view to preventing any '
+            . 'further such use.'
+    ],
+    'legislation_type.goods.gb' => [
+        'legislation_type.goods.gb.1' => 'Section A The user of the vehicle held a valid '
+            . 'operator\'s licence (whether of not authorising '
+            . 'the use of the vehicle)',
+        'legislation_type.goods.gb.2' => 'Section B It was not being, and had '
+            . 'not been used in contravention of Section 2 of '
+            . ' the 1995 Act.',
+        'legislation_type.goods.gb.3' => 'Section C I did not know it was '
+            . 'being or had been used in contravention of '
+            . 'Section 2 of the 1995 Act.',
+        'legislation_type.goods.gb.4' => 'That although knowing that at the time the '
+            . 'vehicle was detained it was being or had been used in '
+            . 'contravention of Section 2 of the 1995 Act, but;  had taken '
+            . 'steps with a view to preventing that (ii) Has taken steps '
+            . 'with a view to preventing any further such use.'
+    ],
 );

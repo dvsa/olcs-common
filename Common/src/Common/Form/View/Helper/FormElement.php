@@ -48,6 +48,10 @@ class FormElement extends ZendFormElement
     {
         $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
 
+        if (!$element->getAttribute('id')) {
+            $element->setAttribute('id', $element->getName());
+        }
+
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             return '';

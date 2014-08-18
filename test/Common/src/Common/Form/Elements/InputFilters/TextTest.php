@@ -123,6 +123,6 @@ class TextTest extends \PHPUnit_Framework_TestCase
     {
         $this->filter->setMax(10);
 
-        $this->assertTrue($this->getSpecificationElement('validators')[0] instanceof StringLength);
+        $this->assertEquals(10, $this->getSpecificationElement('validators')[0]['options']['max']);
     }
 }

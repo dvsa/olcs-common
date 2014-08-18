@@ -729,8 +729,17 @@ return array(
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' =>
         "Your traffic area is determined by your operating centre's location.<br />For more information and "
     . 'to find your traffic please visit ' . '<a href="#" target="_blank">this link.</a>',
+    'tasks-home.data.team' => 'Team',
+    'tasks-home.data.owner' => 'Owner',
+    'tasks-home.data.category' => 'Category',
+    'tasks-home.data.sub_category' => 'Sub category',
+    'tasks-home.data.date' => 'Date',
+    'tasks-home.data.status' => 'Status',
+    'tasks-home.data.urgent' => 'Urgent only',
+    'tasks-home.submit.filter' => 'Filter',
     'offence-detail' => 'Offence detail',
     'offence-date-from' => 'Offence date from',
+    'offence-date-to' => 'Offence date to',
     'number-of-offences' => 'Number of offences',
     'originating-authority' => 'Originating authority',
     'offender-name' => 'Offender name',
@@ -739,6 +748,8 @@ return array(
     'trailer' => 'Trailer',
     'offence-notes' => 'Offence notes',
     'offence-not-found' => 'Offence not found',
+    'offence-type' => 'Offence type',
+    'offence-definition' => 'Act/Si',
     'application.your-business.sole-trader' => 'People',
     'Please add a person' => 'Please add a person',
     'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
