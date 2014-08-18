@@ -80,10 +80,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function setupIndexRoute(\Zend\Mvc\MvcEvent $e)
     {
-        $this->indexRoute = [
-            $e->getRouteMatch()->getMatchedRouteName(),
-            array_merge($this->params()->fromRoute(), ['action' => 'index', 'id' => null])
-        ];
+        if (empty($this->indexRoute)) {
+            $this->indexRoute = [
+                $e->getRouteMatch()->getMatchedRouteName(),
+                array_merge($this->params()->fromRoute(), ['action' => 'index', 'id' => null])
+            ];
+        }
     }
 
     /**
