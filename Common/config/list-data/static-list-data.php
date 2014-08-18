@@ -477,6 +477,15 @@ return array(
         'presiding_tc.2' => 'Presiding TC 2',
         'presiding_tc.3' => 'Presiding TC 3',
     ],
+    'task-date-types' => [
+        'today' => 'Today',
+        'all' => 'All dates'
+    ],
+    'task-status-types' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'all' => 'All'
+    ],
     'prohibition_type' => [
         'prohibition_type.1' => 'Immediate (S)',
         'prohibition_type.2' => 'Delayed (S)',
@@ -541,7 +550,4 @@ return array(
             . 'steps with a view to preventing that (ii) Has taken steps '
             . 'with a view to preventing any further such use.'
     ],
-
-
-
 );
