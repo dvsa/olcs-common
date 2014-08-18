@@ -199,6 +199,16 @@ return array(
     'application_previous-history_licence-history-table-licences-revoked-delete' => 'W Delete licence',
     'application_previous-history_licence-history-table-licences-revoked-edit' => 'W Edit licence',
     'application_previous-history_licence-history.title' => 'W Previous licences history',
+    'application_previous-history_licence-history_appliedForLicence' => 'W a. Previously held or applied for a goods or
+        public service vehicle operator\'s licence in any traffic area?',
+    'application_previous-history_licence-history_currentLicence' => 'W 1. Does any person named in this application
+        (including partners, directors and transport managers) currently hold a goods or public service vehicle
+        operator\'s licence in any traffic area?',
+    'application_previous-history_licence-history_disqualifiedLicence' => 'W e. Been disqualified from holding or
+        obtaining an operator\'s licence by any traffic commissioner?',
+    'application_previous-history_licence-history_heldLicence' => 'W 3. Within the last twelve month, have you, your
+        company or organisation or your partners or directors purchased the assets or shareholding of any company that,
+        to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_personsInformation' => 'W 2. Has any person named in the application
         (including partners, directors or transport managers):',
     'application_previous-history_licence-history_prevBeenAtPi' => 'W d. Ever attended a Public Inquiry before a traffic
@@ -217,6 +227,12 @@ return array(
     'application_previous-history_licence-history_prevPurchasedAssets' => 'W 3. Within the last twelve month, have you,
         your company or organisation or your partners or directors purchased the assets or shareholding of any company
         that, to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+    'application_previous-history_licence-history_publicInquiryLicence' => 'W d. Ever attended a Public Inquiry before a
+        traffic commissioner?',
+    'application_previous-history_licence-history_refusedLicence' => 'W b. Ever had an application for a goods or a
+        public service vehicle operator\'s licence refused by any EU licencing authority?',
+    'application_previous-history_licence-history_revokedLicence' => 'W c. Ever had a goods or public service vehicle
+        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
     'application_taxi-phv_licence-add' => 'W Add taxi/PHV licence',
     'application_taxi-phv_licence-edit' => 'W Edit taxi/PHV licence',
     'application_taxi-phv_licence-sub-action.contactDetails' => 'W Council details',
@@ -461,7 +477,7 @@ return array(
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
     'ecms-number' => 'W ECMS #',
-    'ecms_no' => 'W ECMS',
+    'ecmsNo' => 'W ECMS',
     'edit' => 'W Edit',
     'edit-case' => 'W Edit Case #',
     'edit-complaint' => 'W Edit complaint',
@@ -766,6 +782,14 @@ return array(
     't-auth' => 'W T-auth',
     'tachographAnalyser-external-contractor' => 'W An external contractor',
     'tachographAnalyser-yourself' => 'W Yourself or another employee of the business holding the operator\'s licence',
+    'tasks-home.data.category' => 'W Category',
+    'tasks-home.data.date' => 'W Date',
+    'tasks-home.data.owner' => 'W Owner',
+    'tasks-home.data.status' => 'W Status',
+    'tasks-home.data.sub_category' => 'W Sub category',
+    'tasks-home.data.team' => 'W Team',
+    'tasks-home.data.urgent' => 'W Urgent only',
+    'tasks-home.submit.filter' => 'W Filter',
     'testProperty' => 'W the test',
     'testPropertyPlaceHolder' => 'W test @placeHolder is @here',
     'tic' => 'W TIC',

@@ -86,7 +86,8 @@ return array(
         'def_t_part'   => 'Partner',
         'def_t_dir'    => 'Director',
         'def_t_driver' => 'Driver',
-        'def_t_tm'     => 'Transport Manager'
+        'def_t_tm'     => 'Transport Manager',
+        'def_t_other' => 'Other'
     ],
     'yes_no' => [
         'Y' => 'Yes',
@@ -475,6 +476,15 @@ return array(
         'presiding_tc.1' => 'Presiding TC 1',
         'presiding_tc.2' => 'Presiding TC 2',
         'presiding_tc.3' => 'Presiding TC 3',
+    ],
+    'task-date-types' => [
+        'today' => 'Today',
+        'all' => 'All dates'
+    ],
+    'task-status-types' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'all' => 'All'
     ],
     'prohibition_type' => [
         'pro_t_si' => 'Immediate (S)',
