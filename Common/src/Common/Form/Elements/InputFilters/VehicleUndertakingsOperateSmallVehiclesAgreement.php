@@ -15,7 +15,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgree
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehiclesAgreement extends Checkbox implements InputProviderInterface
+class VehicleUndertakingsOperateSmallVehiclesAgreement extends SingleCheckbox implements InputProviderInterface
 {
     protected $continueIfEmpty = true;
     protected $allowEmpty = false;

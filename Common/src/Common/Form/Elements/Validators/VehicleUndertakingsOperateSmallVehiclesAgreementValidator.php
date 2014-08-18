@@ -34,12 +34,13 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
     public function isValid($value, $context = null)
     {
         unset($value);
+
         var_dump($context);
 
         // This only gets used if psvOperateSmallVehicles is shown
         if ( isset($context['psvOperateSmallVehicles']) ) {
             if ($context['psvOperateSmallVehicles'] === 'N'
-                && $context['psvSmallVehicleConfirmation'] !== 'checked') {
+                && $context['psvSmallVehicleConfirmation'] !== '1') {
 
                 $this->error('required');
 
