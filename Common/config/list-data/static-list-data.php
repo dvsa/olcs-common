@@ -109,12 +109,12 @@ return array(
         'statement_type.5' => 'NI Section 36',
         'statement_type.6' => 'NI Section 38'
     ],
-    'contact_type' =>
+    'contact_method' =>
     [
-        'contact_type.1' => 'Email',
-        'contact_type.2' => 'Fax',
-        'contact_type.3' => 'Letter',
-        'contact_type.4' => 'Telephone'
+        'cm_email' => 'Email',
+        'cm_fax' => 'Fax',
+        'cm_letter' => 'Letter',
+        'cm_tel' => 'Telephone',
     ],
     'countries' =>
     [
@@ -394,34 +394,34 @@ return array(
     ],
     'complaint_types' =>
     [
-        'complaint_type.cor' => 'Continuing to operate after revocation',
-        'complaint_type.cov' => 'Condition of vehicles',
-        'complaint_type.dgm' => 'Driving in a dangerous manner',
-        'complaint_type.dsk' => 'Driver smoking',
-        'complaint_type.fls' => 'Failure to operate local service',
-        'complaint_type.lvu' => 'Leaving vehicle unattended with engine running',
-        'complaint_type.ndl' => 'Not having correct category of drivers licence',
-        'complaint_type.nol' => 'No operators licence',
-        'complaint_type.olr' => 'Operating local service off route',
-        'complaint_type.ovb' => 'Obstructing other vehicles at bus station/bus stop',
-        'complaint_type.pvo' => 'Parking vehicle out-with operating centre',
-        'complaint_type.rds' => 'Registration of duplicate services',
-        'complaint_type.rta' => 'Registered times not being adhered to',
-        'complaint_type.sln' => 'Speed limiters non-operative',
-        'complaint_type.spe' => 'Speeding',
-        'complaint_type.tgo' => 'Tachograph offences',
-        'complaint_type.ufl' => 'Unsafe loads',
-        'complaint_type.ump' => 'Use of mobile phones while driving',
-        'complaint_type.urd' => 'Using red diesel',
-        'complaint_type.vpo' => 'Vehicles parked and causing an obstruction',
+        'ct_cor' => 'Continuing to operate after revocation',
+        'ct_cov' => 'Condition of vehicles',
+        'ct_dgm' => 'Driving in a dangerous manner',
+        'ct_dsk' => 'Driver smoking',
+        'ct_fls' => 'Failure to operate local service',
+        'ct_lvu' => 'Leaving vehicle unattended with engine running',
+        'ct_ndl' => 'Not having correct category of drivers licence',
+        'ct_nol' => 'No operators licence',
+        'ct_olr' => 'Operating local service off route',
+        'ct_ovb' => 'Obstructing other vehicles at bus station/bus stop',
+        'ct_pvo' => 'Parking vehicle out-with operating centre',
+        'ct_rds' => 'Registration of duplicate services',
+        'ct_rta' => 'Registered times not being adhered to',
+        'ct_sln' => 'Speed limiters non-operative',
+        'ct_spe' => 'Speeding',
+        'ct_tgo' => 'Tachograph offences',
+        'ct_ufl' => 'Unsafe loads',
+        'ct_ump' => 'Use of mobile phones while driving',
+        'ct_urd' => 'Using red diesel',
+        'ct_vpo' => 'Vehicles parked and causing an obstruction',
     ],
     'complaint_status_types' =>
     [
-        'complaint_status.ack' => 'Acknowledged',
-        'complaint_status.pin' => 'PI Notififed',
-        'complaint_status.rfs' => 'Review Form Sent',
-        'complaint_status.vfr' => 'Valid For Review',
-        'complaint_status.yst' => 'Are you still there'
+        'cs_ack' => 'Acknowledged',
+        'cs_pin' => 'PI Notififed',
+        'cs_rfs' => 'Review Form Sent',
+        'cs_vfr' => 'Valid For Review',
+        'cs_yst' => 'Are you still there'
     ],
     'inspection_interval_vehicle' => [
         'inspection_interval_vehicle.1' => '1 {Week}',

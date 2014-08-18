@@ -23,7 +23,7 @@ class Address implements FormatterInterface
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column, $sm)
+    public static function format($data, $column = array(), $sm = null)
     {
         if (isset($column['addressFields'])) {
 
@@ -35,8 +35,8 @@ class Address implements FormatterInterface
                 'addressLine3',
                 'addressLine4',
                 'town',
-                'countryCode',
-                'postcode'
+                'postcode',
+                'countryCode'
             );
         }
 
