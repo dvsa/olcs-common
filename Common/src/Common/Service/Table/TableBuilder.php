@@ -135,6 +135,13 @@ class TableBuilder
     private $url;
 
     /**
+     * Query object
+     *
+     * @var object
+     */
+    private $query;
+
+    /**
      * Current sort column
      *
      * @var string
@@ -508,6 +515,16 @@ class TableBuilder
     }
 
     /**
+     * Getter for query
+     *
+     * @return object
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * Setter for sort
      *
      * @param string $sort
@@ -692,6 +709,10 @@ class TableBuilder
         $this->url = $array['url'];
         $this->setSort($array['sort']);
         $this->setOrder($array['order']);
+
+        if (isset($array['query'])) {
+            $this->query = $array['query'];
+        }
 
         $this->setVariables(array_merge($this->getVariables(), $array));
     }
@@ -1258,6 +1279,12 @@ class TableBuilder
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
         $returnUrl = $this->generateUrl($data, $route, $extendParams);
+
+        // in query mode we want to manually append a query string to the base route
+        if ($this->getQuery()) {
+            $queryString = array_merge($this->getQuery()->toArray(), $data);
+            $returnUrl .= "?" . http_build_query($queryString);
+        }
 
         // strip out controller and action params
         $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
