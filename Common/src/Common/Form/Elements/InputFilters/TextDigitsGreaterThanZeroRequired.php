@@ -29,8 +29,8 @@ class TextDigitsGreaterThanZeroRequired extends ZendElement implements InputProv
             'name' => $this->getName(),
             'required' => true,
             'validators' => [
-                new ZendValidator\Digits(),
-                new ZendValidator\GreaterThan(array('min' => 0))
+                ['name' => 'Zend\Validator\Digits'],
+                ['name' => 'Zend\Validator\GreaterThan', 'options'=>['min' => 0]]
             ]
         ];
 

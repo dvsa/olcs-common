@@ -9,6 +9,11 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
+use Common\Form\Elements\Types\Person;
+use Common\Form\Elements\Types\Defendant;
+use Zend\Filter\Word\DashToCamelCase;
+use Zend\Form\Annotation\AnnotationBuilder;
+use Zend\Form\Factory;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 
@@ -84,6 +89,38 @@ abstract class FormActionController extends AbstractActionController
         $this->fieldValues[$key] = $value;
     }
 
+    protected function normaliseFormName($name, $ucFirst = false)
+    {
+        $name = str_replace([' ', '_'], '-', $name);
+
+        $filter = new DashToCamelCase();
+
+        if (!$ucFirst) {
+            return lcfirst($filter->filter($name));
+        }
+
+        return $filter->filter($name);
+    }
+
+    /**
+     * @param $type
+     * @return \Zend\Form\Form
+     * @TO-DO Turn this into a proper service/factory for forms
+     */
+    protected function getFormClass($type)
+    {
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
+        $annotationBuilder = new AnnotationBuilder();
+        $annotationBuilder->setFormFactory(new Factory($formElementManager));
+        foreach (['Olcs', 'SelfServe', 'Common'] as $namespace) {
+            $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
+            if (class_exists($class)) {
+                return $annotationBuilder->createForm($class);
+            }
+        }
+        return $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
+    }
+
     /**
      * Gets a from from either a built or custom form config.
      * @param type $type
@@ -91,7 +128,7 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function getForm($type)
     {
-        $form = $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
+        $form = $this->getFormClass($type);
 
         $form = $this->processPostcodeLookup($form);
 
@@ -435,10 +472,10 @@ abstract class FormActionController extends AbstractActionController
     }
 
     /**
-     * Method to trigger generation of a document providing a generate checkox
+     * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
      *
-     * @param arrat $data
+     * @param array $data
      * @return array
      * @throws \RuntimeException
      */
@@ -756,5 +793,18 @@ abstract class FormActionController extends AbstractActionController
     public function getView(array $params = null)
     {
         return new ViewModel($params);
+    }
+
+    /**
+     * Gets the licence by ID.
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getLicence($id)
+    {
+        $licence = $this->makeRestCall('Licence', 'GET', array('id' => $id));
+
+        return $licence;
     }
 }
