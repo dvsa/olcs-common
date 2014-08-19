@@ -585,8 +585,8 @@ class Repo
 
                     if (isset($dependency['package'])) {
 
-                        $dependency['package']['version'] = 'dev-release-' . $this->getVersion();
-                        $dependency['package']['source']['reference'] = 'origin/release/' . $this->getVersion();
+                        $dependency['package']['version'] = $this->getVersion();
+                        $dependency['package']['source']['reference'] = 'origin/' . $this->getVersion();
 
                         $this->output('Updating dependency: ' . $dependency['package']['name']);
                     }
