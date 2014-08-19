@@ -99,11 +99,8 @@ class Runner
     public function run()
     {
         try {
-
             $this->runCommand();
-
         } catch (Exception $ex) {
-
             $this->output($ex->getMessage(), self::MESSAGE_ERROR);
         }
     }
@@ -196,13 +193,13 @@ class Runner
     {
         $this->output('Updating release number in config');
 
-        if (file_exists(__DIR__ . '/Common/config/release.json')) {
+        if (file_exists(__DIR__ . '/../Common/config/release.json')) {
 
-            $release = json_decode(file_get_contents(__DIR__ . '/Common/config/release.json'), true);
+            $release = json_decode(file_get_contents(__DIR__ . '/../Common/config/release.json'), true);
 
             $release['version'] = $this->getVersion();
 
-            if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
+            if (!file_put_contents(__DIR__ . '/../Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
                 throw new Exception('Unable to write to release.json');
             }
         } else {
@@ -586,9 +583,17 @@ class Repo
                     if (isset($dependency['package'])) {
 
                         $dependency['package']['version'] = $this->getVersion();
-                        $dependency['package']['source']['reference'] = 'origin/' . $this->getVersion();
+                        $dependency['package']['source']['reference'] = $this->getVersion();
 
                         $this->output('Updating dependency: ' . $dependency['package']['name']);
+                    }
+                }
+            }
+
+            if (isset($composer['require'])) {
+                foreach ($composer['require'] as $key => &$require) {
+                    if (preg_match('/olcs\/([a-zA-Z0-9\-]+)/', $key)) {
+                        $require = (string)$this->getVersion();
                     }
                 }
             }
