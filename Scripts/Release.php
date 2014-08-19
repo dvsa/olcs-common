@@ -206,7 +206,8 @@ class Runner
                 throw new Exception('Unable to write to release.json');
             }
         } else {
-            throw new Exception('No release.json found');
+            // We don't always have a release.json
+            //throw new Exception('No release.json found');
         }
     }
 
