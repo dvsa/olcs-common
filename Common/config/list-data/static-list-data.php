@@ -544,7 +544,7 @@ return array(
         'legislation_type.goods.gb.3' => 'Section C I did not know it was '
             . 'being or had been used in contravention of '
             . 'Section 2 of the 1995 Act.',
-        'legislation_type.goods.gb.4' => 'That although knowing that at the time the '
+        'legislation_type.goods.gb.4' => 'Section D That although knowing that at the time the '
             . 'vehicle was detained it was being or had been used in '
             . 'contravention of Section 2 of the 1995 Act, but;  had taken '
             . 'steps with a view to preventing that (ii) Has taken steps '
