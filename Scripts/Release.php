@@ -228,7 +228,7 @@ class Runner
     private function getRepos()
     {
         return array(
-            new Repo(__DIR__, $this),
+            new Repo(__DIR__ . '/../', $this),
             new Repo(__DIR__ . '/../../olcs-backend', $this),
             new Repo(__DIR__ . '/..../olcs-entities', $this),
             new Repo(__DIR__ . '/../../olcs-internal', $this),
