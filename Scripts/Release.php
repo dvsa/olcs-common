@@ -40,16 +40,37 @@ class Runner
     private $nextRelease = array();
 
     /**
+     * Holds the version
+     *
+     * @var string
+     */
+    private $version;
+
+    /**
      * Format any command line arguments (In the future)
      */
     public function __construct()
     {
-        $options = getopt('t:');
+        $options = getopt('t:v:');
 
         if (isset($options['t']) && defined('self::TYPE_' . strtoupper($options['t']))) {
 
             $this->setType(constant('self::TYPE_' . strtoupper($options['t'])));
         }
+
+        if (isset($options['v'])) {
+            $this->setVersion($options['v']);
+        }
+    }
+
+    /**
+     * Set version number
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 
     /**
@@ -96,9 +117,7 @@ class Runner
     {
         $this->output('Checking repositories', self::MESSAGE_INFO);
 
-        $version = $this->getNextRelease();
-
-        $version = $version[0] . '.' . $version[1];
+        $version = $this->getVersion();
 
         $repos = $this->getRepos();
 
@@ -120,14 +139,15 @@ class Runner
                 throw new Exception($repo->getName() . ': Has uncommitted changes');
             }
 
-            $repo->pullDevelop();
-
             if ($checkAgain && !$repo->isOnDevelop()) {
                 throw new Exception($repo->getName() . ': Is not on develop, please corrent this before continuing');
             }
+
+            $repo->pullDevelop();
         }
 
-        $this->output('Creating release branches', self::MESSAGE_INFO);
+        $this->output('Merging changes into master', self::MESSAGE_INFO);
+
         foreach ($repos as &$repo) {
 
             $repo->createRelease();
@@ -154,6 +174,22 @@ class Runner
     }
 
     /**
+     * Get version
+     *
+     * @return string
+     */
+    private function getVersion()
+    {
+        if (!$this->version) {
+            $version = $this->getNextRelease();
+
+            return $version[0] . '.' . $version[1];
+        }
+
+        return $this->version;
+    }
+
+    /**
      * Update release version
      */
     private function updateReleaseVersion()
@@ -161,11 +197,10 @@ class Runner
         $this->output('Updating release number in config');
 
         if (file_exists(__DIR__ . '/Common/config/release.json')) {
-            $version = $this->getNextRelease();
 
             $release = json_decode(file_get_contents(__DIR__ . '/Common/config/release.json'), true);
 
-            $release['version'] = $version[0] . '.' . $version[1];
+            $release['version'] = $this->getVersion();
 
             if (!file_put_contents(__DIR__ . '/Common/config/release.json', json_encode($release, JSON_UNESCAPED_SLASHES))) {
                 throw new Exception('Unable to write to release.json');
@@ -411,11 +446,22 @@ class Repo
      */
     public function isOnDevelop()
     {
-        $this->output('Checking if repo is on develop');
+        return $this->isOnBranch('develop');
+    }
+
+    /**
+     * Check if the repo os on a branch
+     *
+     * @param string $branch
+     * @return boolean
+     */
+    public function isOnBranch($branch)
+    {
+        $this->output('Checking if repo is on ' . $branch);
 
         if (preg_match('/^On branch ([a-z]+)/', $this->getStatus(), $matches)) {
 
-            return ($matches[1] === 'develop');
+            return ($matches[1] === $branch);
         }
 
         return false;
@@ -460,8 +506,21 @@ class Repo
      */
     public function createRelease()
     {
+        /**
         $this->output('Creating release ' . $this->getVersion());
         shell_exec('cd ' . $this->getLocation() . ' && git flow release start ' . $this->getVersion());
+        $this->loadStatus();
+         */
+
+        $this->output('Merging into master ' . $this->getVersion());
+        shell_exec('cd ' . $this->getLocation() . ' && git checkout master');
+        $this->loadStatus();
+
+        if (!$this->isOnBranch('master')) {
+            throw new \Exception('Unable to checkout master');
+        }
+
+        shell_exec('cd ' . $this->getLocation() . ' && git merge develop');
         $this->loadStatus();
     }
 
@@ -492,9 +551,14 @@ class Repo
      */
     public function publish()
     {
+        /**
         $this->output('Publishing release branch');
 
         shell_exec('cd ' . $this->getLocation() . ' && git flow release publish ' . $this->getVersion());
+         */
+        $this->output('Creating tag');
+
+        shell_exec('cd ' . $this->getLocation() . ' && git tag ' . $this->getVersion() . ' && git push origin master && git push origin ' . $this->getVersion());
     }
 
     /**
