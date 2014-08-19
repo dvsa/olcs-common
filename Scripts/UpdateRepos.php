@@ -1,6 +1,6 @@
 <?php
 
-$directory = __DIR__;
+$directory = __DIR__ . '/../../';
 
 if ($handle = opendir($directory)) {
 
