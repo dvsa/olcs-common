@@ -228,9 +228,9 @@ class Runner
     private function getRepos()
     {
         return array(
-            new Repo(__DIR__ . '/../', $this),
+            new Repo(__DIR__ . '/../../olcs-common', $this),
             new Repo(__DIR__ . '/../../olcs-backend', $this),
-            new Repo(__DIR__ . '/..../olcs-entities', $this),
+            new Repo(__DIR__ . '/../../olcs-entities', $this),
             new Repo(__DIR__ . '/../../olcs-internal', $this),
             new Repo(__DIR__ . '/../../olcs-selfserve', $this),
             new Repo(__DIR__ . '/../../olcs-config', $this),
@@ -558,7 +558,7 @@ class Repo
          */
         $this->output('Creating tag');
 
-        shell_exec('cd ' . $this->getLocation() . ' && git tag ' . $this->getVersion() . ' && git push origin master && git push origin ' . $this->getVersion());
+        shell_exec('cd ' . $this->getLocation() . ' && git tag ' . $this->getVersion()); // && git push origin master && git push origin ' . $this->getVersion()
     }
 
     /**
