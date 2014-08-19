@@ -81,12 +81,12 @@ return array(
     ],
     'defendant_types' =>
     [
-        'def_t_op' => 'Operator',
-        'def_t_owner' => 'Owner',
-        'def_t_part' => 'Partner',
-        'def_t_dir' => 'Director',
+        'def_t_op'     => 'Operator',
+        'def_t_owner'  => 'Owner',
+        'def_t_part'   => 'Partner',
+        'def_t_dir'    => 'Director',
         'def_t_driver' => 'Driver',
-        'def_t_tm' => 'Transport Manager',
+        'def_t_tm'     => 'Transport Manager',
         'def_t_other' => 'Other'
     ],
     'yes_no' => [
@@ -460,12 +460,12 @@ return array(
         'tach_na' => 'N/A',
     ],
     'impounding_type' => [
-        'impounding_type.1' => 'Hearing',
-        'impounding_type.2' => 'Paperwork only'
+        'impt_hearing' => 'Hearing',
+        'impt_paper' => 'Paperwork only'
     ],
     'impounding_outcome' => [
-        'impounding_outcome.1' => 'Vehicle(s) returned',
-        'impounding_outcome.2' => 'Vehicle(s) not returned',
+        'impo_returned' => 'Vehicle(s) returned',
+        'impo_not' => 'Vehicle(s) not returned',
     ],
     'hearing_location' => [
         'hearing_location.1' => 'Hearing location 1',
