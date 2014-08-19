@@ -557,7 +557,7 @@ class Repo
          */
         $this->output('Creating tag');
 
-        shell_exec('cd ' . $this->getLocation() . ' && git tag ' . $this->getVersion()); // && git push origin master && git push origin ' . $this->getVersion()
+        shell_exec('cd ' . $this->getLocation() . ' && git tag ' . $this->getVersion() . ' && git push origin master && git push origin ' . $this->getVersion());
     }
 
     /**
