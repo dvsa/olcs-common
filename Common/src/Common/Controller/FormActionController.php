@@ -33,20 +33,12 @@ abstract class FormActionController extends AbstractActionController
 
     private $fieldValues = array();
 
-    /**
-     * @codeCoverageIgnore
-     * @param \Zend\Mvc\MvcEvent $e
-     */
-    public function onDispatch(MvcEvent $e)
+    protected function attachDefaultListeners()
     {
-        $onDispatch = parent::onDispatch($e);
-
-        // This must stay here due to a race condition.
+        parent::attachDefaultListeners();
         if ($this instanceof CrudInterface) {
-            $this->checkForCancelButton('cancel');
+            $this->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, array($this, 'cancelButtonListener'), 100);
         }
-
-        return $onDispatch;
     }
 
     /**
@@ -566,6 +558,16 @@ abstract class FormActionController extends AbstractActionController
         return $request->isPost() && isset($data['form-actions'][$button]);
     }
 
+    public function cancelButtonListener(MvcEvent $event)
+    {
+        $this->setupIndexRoute($event);
+        $cancelResponse = $this->checkForCancelButton('cancel');
+        if (!is_null($cancelResponse)) {
+            $event->setResult($cancelResponse);
+            return $cancelResponse;
+        }
+    }
+
     /**
      * This method needs some things.
      *
@@ -793,5 +795,18 @@ abstract class FormActionController extends AbstractActionController
     public function getView(array $params = null)
     {
         return new ViewModel($params);
+    }
+
+    /**
+     * Gets the licence by ID.
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getLicence($id)
+    {
+        $licence = $this->makeRestCall('Licence', 'GET', array('id' => $id));
+
+        return $licence;
     }
 }
