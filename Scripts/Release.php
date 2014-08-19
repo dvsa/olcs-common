@@ -371,7 +371,7 @@ class Repo
         if (empty($version)) {
             throw new Exception($this->getName() . ': Version number is empty');
         }
-        $this->version = 'v' . (string)$version;
+        $this->version = (string)$version;
     }
 
     /**
