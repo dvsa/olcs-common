@@ -386,7 +386,7 @@ class Repo
             throw new Exception($this->getName() . ': Version number is empty');
         }
 
-        if (!preg_match('/^v[0-9]+\.[0-9]+$/', $this->version)) {
+        if (!preg_match('/^[0-9]+\.[0-9]+$/', $this->version)) {
             throw new Exception($this->getName() . ' Invalid version number ' . $this->version);
         }
 
