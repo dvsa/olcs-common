@@ -23,7 +23,7 @@ class TaskDate implements FormatterInterface
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column, $sm)
+    public static function format($data, $column = array(), $sm = null)
     {
         $date = Date::format($data, $column, $sm);
         if (isset($data['urgent']) && $data['urgent'] === 'Y') {
