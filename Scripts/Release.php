@@ -512,7 +512,7 @@ class Repo
         $this->loadStatus();
          */
 
-        $this->output('Merging into master ' . $this->getVersion());
+        $this->output('Merging into master');
         shell_exec('cd ' . $this->getLocation() . ' && git checkout master');
         $this->loadStatus();
 
