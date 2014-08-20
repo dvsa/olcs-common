@@ -7,7 +7,7 @@
  */
 namespace Db\Service\Acl;
 
-use Zend\Permissions\Acl;
+use Zend\Permissions\Acl as ZendAcl;
 
 /**
  * Acl
@@ -66,7 +66,7 @@ class Acl
      *
      * @return \Olcs\Db\Service\Acl
      */
-    public function setAcl(Acl\AclInterface $acl)
+    public function setAcl(ZendAcl\AclInterface $acl)
     {
         $this->acl = $acl;
         return $this;
@@ -81,7 +81,7 @@ class Acl
     public function getAcl()
     {
         if (null === $this->acl) {
-            $this->acl = new Acl\Acl();
+            $this->acl = new ZendAcl\Acl();
             $this->acl->addRole('default');
         }
 

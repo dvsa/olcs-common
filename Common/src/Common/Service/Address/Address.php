@@ -27,7 +27,7 @@ class Address
         'addressLine2' => '',
         'addressLine3' => '',
         'addressLine4' => '',
-        'city' => '',
+        'town' => '',
         'postcode' => ''
     );
 
@@ -97,9 +97,9 @@ class Address
         }
 
         if ($address['town_name'] !== $address['administritive_area']) {
-            $details['city'] = $this->formatString($address['administritive_area']);
+            $details['town'] = $this->formatString($address['administritive_area']);
         } else {
-            $details['city'] = $this->formatString($address['town_name']);
+            $details['town'] = $this->formatString($address['town_name']);
         }
 
         $details['postcode'] = $address['postcode'];
@@ -120,7 +120,7 @@ class Address
 
             $address = $this->formatPostalAddressFromBS7666($item);
 
-            $allowedParts = array('addressLine1', 'addressLine2', 'addressLine3', 'city');
+            $allowedParts = array('addressLine1', 'addressLine2', 'addressLine3', 'town');
             $parts = array();
 
             foreach ($address as $key => $val) {

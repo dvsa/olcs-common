@@ -11,6 +11,8 @@ use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Select;
+use Common\Form\Elements\InputFilters\Name;
+use Common\Form\Elements\Custom\DateSelect;
 
 /**
  * PersonSearch fieldset
@@ -71,7 +73,7 @@ class PersonSearch extends Fieldset
 
         $this->add($selectButton);
 
-        $personFirstname = new \Common\Form\Elements\InputFilters\Name('personFirstname', array('label' => 'First name'));
+        $personFirstname = new Name('personFirstname', array('label' => 'First name'));
         $personFirstname->setAttributes(
             array(
                 'id' => 'personFirstname',
@@ -81,7 +83,7 @@ class PersonSearch extends Fieldset
         );
         $this->add($personFirstname);
 
-        $personLastname = new \Common\Form\Elements\InputFilters\Name('personLastname', array('label' => 'Last name'));
+        $personLastname = new Name('personLastname', array('label' => 'Last name'));
         $personLastname->setAttributes(
             array(
                 'id' => 'personLastname',
@@ -92,24 +94,24 @@ class PersonSearch extends Fieldset
 
         $this->add($personLastname);
 
-        $dateOfBirth = new \Common\Form\Elements\Custom\DateSelect(
-            'dateOfBirth',
+        $birthDate = new DateSelect(
+            'birthDate',
              array('label' => 'Date of birth')
         );
-        $dateOfBirth->setAttributes(
+        $birthDate->setAttributes(
             array(
                 'id' => 'dob',
                 'class' => 'long',
             )
         );
-        $dateOfBirth->setOptions(
+        $birthDate->setOptions(
             [
                 'create_empty_option' => true,
                 'render_delimiters' => false,
                 'required' => false,
             ]
         );
-        $this->add($dateOfBirth);
+        $this->add($birthDate);
 
         $addNewButton = new Button('addNew', array('label' => 'Add new'));
         $addNewButton->setAttributes(

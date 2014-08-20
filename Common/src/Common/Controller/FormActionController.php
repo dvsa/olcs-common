@@ -261,6 +261,8 @@ abstract class FormActionController extends AbstractActionController
 
             $form->setData($data);
 
+            $form = $this->postSetFormData($form);
+
             if (!$this->validateForm || ($this->persist && $form->isValid())) {
 
                 if ($this->validateForm) {
@@ -281,6 +283,17 @@ abstract class FormActionController extends AbstractActionController
             }
         }
 
+        return $form;
+    }
+
+    /**
+     * Added extra method called after setting form data
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function postSetFormData($form)
+    {
         return $form;
     }
 
@@ -535,7 +548,7 @@ abstract class FormActionController extends AbstractActionController
 
         unset($data[$addressName]['searchPostcode']);
 
-        $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
 
         $data['addresses'][$addressName] = $data[$addressName];
 
