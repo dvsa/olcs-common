@@ -8,7 +8,7 @@ return [
         ],
         'fieldsets' => [
             [
-                'name' => 'categories',
+                'name' => 'submissionSections',
                 'options' => [
                     'label' => 'Select one or more categories'
                 ],
@@ -56,7 +56,7 @@ return [
                         'label' => 'Case summary',
                         'class' => 'extra-long'
                     ],
-                    'ecms' => [
+                    'ecmsNo' => [
                         'type' => 'text',
                         'label' => 'ECMS number',
                         'class' => 'medium'

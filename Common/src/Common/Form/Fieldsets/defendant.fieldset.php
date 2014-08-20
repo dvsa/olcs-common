@@ -4,11 +4,11 @@ return [
     'name' => 'defendant',
     'type' => '\Common\Form\Elements\Types\EntitySearch',
     'elements' => [
-        'defType' => [
-                        'type' => 'select',
-                        'label' => 'Defendant type',
-                        'value_options' => 'defendant_types'
-                    ],
+        'defendantType' => [
+            'type' => 'select',
+            'label' => 'Defendant type',
+            'value_options' => 'defendant_types'
+        ],
         'lookupTypeSubmit' => [
             'type' => 'submit',
             'class' => 'action--secondary small',

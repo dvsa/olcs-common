@@ -30,7 +30,11 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
      */
     public function getInputSpecification()
     {
-        if (!isset($this->getOptions()['must_be_checked']) || $this->getOptions()['must_be_checked'] == false) {
+        $options = $this->getOptions();
+
+        if (!isset($options['must_be_value'])
+            || $options['must_be_value'] === false
+            || $options['must_be_value'] === null) {
             return array();
         }
 
@@ -41,12 +45,12 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
                 [
                     'name' => 'Identical',
                     'options' => array(
-                        'token' => '1',
+                        'token' => $options['must_be_value'],
                         'messages' => array(
                              ZendValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
-                                    : 'You must agree',
+                                    : 'You must check this box to continue',
                         ),
                     ),
                 ]

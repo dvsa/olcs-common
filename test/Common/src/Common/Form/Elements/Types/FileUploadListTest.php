@@ -25,21 +25,21 @@ class FileUploadListTest extends PHPUnit_Framework_TestCase
         $files = array(
             array(
                 'identifier' => 'hgafdjklhaldsf',
-                'fileName' => 'someFile.png',
+                'filename' => 'someFile.png',
                 'size' => 50,
                 'id' => 7,
                 'version' => 1
             ),
             array(
                 'identifier' => 'hgafdjklhalsdgs',
-                'fileName' => 'someOtherFile.png',
+                'filename' => 'someOtherFile.png',
                 'size' => 5000,
                 'id' => 8,
                 'version' => 1
             ),
             array(
                 'identifier' => 'hdsfgafdjklhalsdgs',
-                'fileName' => 'anotherFile.png',
+                'filename' => 'anotherFile.png',
                 'size' => 50000000,
                 'id' => 9,
                 'version' => 1

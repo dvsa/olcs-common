@@ -35,7 +35,8 @@ class VehicleSafetyTachographAnalyserContractorValidator extends AbstractValidat
     {
         unset($value);
 
-        if ($context['tachographIns'] === 'tachograph_analyser.2'
+        // @todo Maybe need a better place to store these ref data keys
+        if ($context['tachographIns'] === 'tach_external'
             && trim($context['tachographInsName']) === '') {
 
             $this->error('required');

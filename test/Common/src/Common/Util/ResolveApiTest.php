@@ -26,7 +26,7 @@ class ResolveApiTest extends \PHPUnit_Framework_TestCase
                         'payment' => 'http://olcspayment.dev/api/',
                         'backend' => 'http://olcs-backend/',
                     ),
-                    'VosaCase' => array(
+                    'Cases' => array(
                         'baseUrl' => 'http://olcs-backend/',
                         'path' => 'vosa-case',
                     )
@@ -37,13 +37,13 @@ class ResolveApiTest extends \PHPUnit_Framework_TestCase
 
     public function testMappedApiPath()
     {
-        $returned = $this->resolveApi->getClient('VosaCase');
+        $returned = $this->resolveApi->getClient('Cases');
         $this->assertTrue(get_class($returned) === 'Common\Util\RestClient');
     }
 
     public function testUnMappedApiPathWithEndpoint()
     {
-        $returned = $this->resolveApi->getClient('backend\VosaCase');
+        $returned = $this->resolveApi->getClient('backend\Cases');
         $this->assertTrue(get_class($returned) === 'Common\Util\RestClient');
     }
 
@@ -53,7 +53,7 @@ class ResolveApiTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnMappedApiPathWithInvalidEndpoint()
     {
-        $this->resolveApi->getClient('blah\VosaCase');
+        $this->resolveApi->getClient('blah\Cases');
     }
 
     public function testUnMappedApiPathWithoutEndpoint()

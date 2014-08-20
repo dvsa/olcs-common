@@ -33,20 +33,12 @@ abstract class FormActionController extends AbstractActionController
 
     private $fieldValues = array();
 
-    /**
-     * @codeCoverageIgnore
-     * @param \Zend\Mvc\MvcEvent $e
-     */
-    public function onDispatch(MvcEvent $e)
+    protected function attachDefaultListeners()
     {
-        $onDispatch = parent::onDispatch($e);
-
-        // This must stay here due to a race condition.
+        parent::attachDefaultListeners();
         if ($this instanceof CrudInterface) {
-            $this->checkForCancelButton('cancel');
+            $this->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, array($this, 'cancelButtonListener'), 100);
         }
-
-        return $onDispatch;
     }
 
     /**
@@ -543,7 +535,7 @@ abstract class FormActionController extends AbstractActionController
 
         unset($data[$addressName]['searchPostcode']);
 
-        $data[$addressName]['country'] = str_replace('country.', '', $data[$addressName]['country']);
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
 
         $data['addresses'][$addressName] = $data[$addressName];
 
@@ -564,6 +556,16 @@ abstract class FormActionController extends AbstractActionController
         $data = (array)$request->getPost();
 
         return $request->isPost() && isset($data['form-actions'][$button]);
+    }
+
+    public function cancelButtonListener(MvcEvent $event)
+    {
+        $this->setupIndexRoute($event);
+        $cancelResponse = $this->checkForCancelButton('cancel');
+        if (!is_null($cancelResponse)) {
+            $event->setResult($cancelResponse);
+            return $cancelResponse;
+        }
     }
 
     /**

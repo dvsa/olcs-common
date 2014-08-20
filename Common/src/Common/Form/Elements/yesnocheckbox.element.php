@@ -1,14 +1,15 @@
 <?php
 
 return [
-    'singlecheckbox' => [
+    'yesnocheckbox' => [
         'type' => '\Common\Form\Elements\InputFilters\SingleCheckbox',
         'name' => '',
         'options' => [
+            'checked_value' => 'Y',
+            'unchecked_value' => 'N',
             'label' => '',
-            'value_options' => [],
             'help-block' => 'Please choose',
-            'must_be_value' => '1',
+            'must_be_value' => 'Y',
         ],
         'attributes' => [
             'id' => '',

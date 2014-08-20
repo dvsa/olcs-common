@@ -49,7 +49,7 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
         $total += (isset($context['totAuthMediumVehicles']) ? $context['totAuthMediumVehicles'] : 0);
         $total += (isset($context['totAuthLargeVehicles']) ? $context['totAuthLargeVehicles'] : 0);
 
-        if (isset($context['licenceType']) && $context['licenceType'] == 'restricted' && $total > 2) {
+        if (isset($context['licenceType']) && $context['licenceType'] == 'ltyp_r' && $total > 2) {
             $this->error('restricted-too-many');
             return false;
         }
