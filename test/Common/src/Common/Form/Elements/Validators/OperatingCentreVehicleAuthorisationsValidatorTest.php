@@ -47,7 +47,7 @@ class OperatingCentreVehicleAuthorisationsValidatorTest extends \PHPUnit_Framewo
             // Restricted too many
             array(
                 0,
-                array('licenceType' => 'restricted', 'totAuthSmallVehicles' => 2, 'totAuthMediumVehicles' => 2),
+                array('licenceType' => 'ltyp_r', 'totAuthSmallVehicles' => 2, 'totAuthMediumVehicles' => 2),
                 false
             ),
             // 0 Operating centres

@@ -23,7 +23,7 @@ class Translate implements FormatterInterface
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
-    public static function format($data, $column, $sm)
+    public static function format($data, $column = array(), $sm = null)
     {
         if (isset($column['name'])) {
             return $sm->get('translator')->translate($data[$column['name']]);

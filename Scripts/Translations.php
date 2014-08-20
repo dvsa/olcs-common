@@ -1,19 +1,19 @@
 <?php
 // @codingStandardsIgnoreFile
 
-$translationLocation = __DIR__ . '/Common/config/language/';
+$translationLocation = __DIR__ . '/../Common/config/language/';
 
 $translations = include($translationLocation . 'en_GB.php');
 
 $directories = array(
-    realpath(__DIR__ . '/Common/config/list-data/'),
-    realpath(__DIR__ . '/Common/src/'),
-    realpath(__DIR__ . '/test/'),
-    realpath(__DIR__ . '/Common/view/'),
-    realpath(__DIR__ . '/../olcs-internal/module/'),
-    realpath(__DIR__ . '/../olcs-internal/test/'),
-    realpath(__DIR__ . '/../olcs-selfserve/module/'),
-    realpath(__DIR__ . '/../olcs-selfserve/test/')
+    realpath(__DIR__ . '/../Common/config/list-data/'),
+    realpath(__DIR__ . '/../Common/src/'),
+    realpath(__DIR__ . '/../test/'),
+    realpath(__DIR__ . '/../Common/view/'),
+    realpath(__DIR__ . '/../../olcs-internal/module/'),
+    realpath(__DIR__ . '/../../olcs-internal/test/'),
+    realpath(__DIR__ . '/../../olcs-selfserve/module/'),
+    realpath(__DIR__ . '/../../olcs-selfserve/test/')
 );
 
 $unusedArray = $foundArray = array();

@@ -35,7 +35,7 @@ if ($handle = opendir($directory)) {
     		echo shell_exec('cd ' . $directory . '/' . $entry . ' && git fetch -p origin');
 
     		$status = shell_exec('cd ' . $directory . '/' . $entry . ' && git status');
-    		
+
     		// If we have nothing to commit
     		if (strstr($status, 'nothing to commit')) {
 
