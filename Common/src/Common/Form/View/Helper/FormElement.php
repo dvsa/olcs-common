@@ -13,6 +13,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Html;
+use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
@@ -78,6 +79,10 @@ class FormElement extends ZendFormElement
             }
 
             return '<a href="' . $url . '" class="' . $class . '">' . $element->getLabel() . '</a>';
+        }
+
+        if ($element instanceof HtmlTranslated) {
+            return $this->getView()->translate($element->getValue());
         }
 
         if ($element instanceof Html) {
