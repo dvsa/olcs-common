@@ -95,6 +95,7 @@ class FormRewriteController extends AbstractActionController
         $classGenerator->setName($formName);
 
         $tags = [];
+        $tags['tags'][] = ['name' => '@codeCoverageIgnore Auto-generated file with no methods'];
 
         if (isset($data['name'])) {
             $tags['tags'][] = ['name'=> sprintf('Form\\Name("%s")', $data['name'])];
@@ -273,6 +274,7 @@ class FormRewriteController extends AbstractActionController
 
         $propertyTags = [];
         $tags = [];
+        $tags['tags'][] = ['name' => '@codeCoverageIgnore Auto-generated file with no methods'];
 
         if (isset($data['name'])) {
             $tags['tags'][] = ['name'=> sprintf('Form\\Name("%s")', $data['name'])];
@@ -292,7 +294,7 @@ class FormRewriteController extends AbstractActionController
                 ['name' => sprintf("Form\\Attributes(%s)", $this->encodeOptionBlock($data['attributes']))];
         }
 
-        if (isset($data['options'])) {
+        if (isset($data['options']) && $data['options'] != [0]) {
             $tags['tags'][] = ['name' => sprintf("Form\\Options(%s)", $this->encodeOptionBlock($data['options']))];
             $propertyTags['docblock']['tags'][] =
                 ['name' => sprintf("Form\\Options(%s)", $this->encodeOptionBlock($data['options']))];
