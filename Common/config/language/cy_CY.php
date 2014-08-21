@@ -765,4 +765,13 @@ return array(
     'lcat_gv'     =>  'Goods Vehicle',
     'lcat_permit' =>  'Permit',
     'lcat_psv'    =>  'Public Service Vehicle',
+
+    // org_type
+
+    'org_t_irfo' => 'IRFO Operator',
+    'org_t_p'    => 'Partnership',
+    'org_t_pa'   => 'Public Authority',
+    'org_t_rc'   => 'Registered Company',
+    'org_t_st'   => 'Sole Trader',
+    'org_t_llp'  => 'LLP'
 );
