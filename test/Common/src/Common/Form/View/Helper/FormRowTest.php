@@ -193,13 +193,17 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('translate', $translateHelper);
-        $helpers->setService('form_element_errors', new CommonHelper\FormElementErrors());
         $helpers->setService('form_label', new ZendHelper\FormLabel());
         $helpers->setService('form_element', new CommonHelper\FormElement());
         $helpers->setService('form_text', new ZendHelper\FormText());
 
         $view = $this->getMock('Zend\View\Renderer\PhpRenderer', array('render'));
         $view->setHelperPluginManager($helpers);
+
+        // Set the view of element errors then set the service
+        $formElementErrors = new CommonHelper\FormElementErrors();
+        $formElementErrors->setView($view);
+        $helpers->setService('form_element_errors', $formElementErrors);
 
         $viewHelper = new CommonHelper\FormRow();
         $viewHelper->setView($view);
