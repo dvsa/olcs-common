@@ -398,7 +398,7 @@ return array(
     'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
-    'application_your-business_people-sub-action-formFirstName' => 'First name',
+    'application_your-business_people-sub-action-formFirstName' => 'First name(s)',
     'application_your-business_people-sub-action-formOtherNames' => 'Other names',
     'application_your-business_people-sub-action-formPosition' => 'Position',
     'application_your-business_people-sub-action-formSurname' => 'Last name',
@@ -528,7 +528,7 @@ return array(
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
     'finance' => 'Finance',
-    'first-name' => 'First name',
+    'first-name' => 'First name(s)',
     'form-case-number' => 'Case number',
     'from' => 'From',
     'further-info-required' => 'Further info required',
@@ -717,7 +717,7 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-columnPenalty' => 'Penalty',
     'selfserve-app-subSection-previous-history-criminal-conviction-formCancel' => 'Cancel',
     'selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction' => 'Date of conviction',
-    'selfserve-app-subSection-previous-history-criminal-conviction-formFirstName' => 'First name',
+    'selfserve-app-subSection-previous-history-criminal-conviction-formFirstName' => 'First name(s)',
     'selfserve-app-subSection-previous-history-criminal-conviction-formLastName' => 'Last name',
     'selfserve-app-subSection-previous-history-criminal-conviction-formNameOfCourt' => 'Name of court',
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffence' => 'Offence',
@@ -849,5 +849,131 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' =>
+        '<p class="hint">Your traffic area has been determined from your address.<br/>'
+    . '<a href="#" target="_blank">More about traffic areas</a></p>',
+    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.hint.new' =>
+        "Your traffic area is determined by your operating centre's location.<br />For more information and "
+    . 'to find your traffic please visit ' . '<a href="#" target="_blank">this link.</a>',
+    'tasks-home.data.team' => 'Team',
+    'tasks-home.data.owner' => 'Owner',
+    'tasks-home.data.category' => 'Category',
+    'tasks-home.data.sub_category' => 'Sub category',
+    'tasks-home.data.date' => 'Date',
+    'tasks-home.data.status' => 'Status',
+    'tasks-home.data.urgent' => 'Urgent only',
+    'tasks-home.submit.filter' => 'Filter',
+    'offence-detail' => 'Offence detail',
+    'offence-date-from' => 'Offence date from',
+    'offence-date-to' => 'Offence date to',
+    'number-of-offences' => 'Number of offences',
+    'originating-authority' => 'Originating authority',
+    'offender-name' => 'Offender name',
+    'position' => 'Position',
+    'vrm' => 'VRM',
+    'trailer' => 'Trailer',
+    'offence-notes' => 'Offence notes',
+    'offence-not-found' => 'Offence not found',
+    'offence-type' => 'Offence type',
+    'offence-definition' => 'Act/Si',
+    'application.your-business.sole-trader' => 'People',
+    'Please add a person' => 'Please add a person',
+    'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
+    . ' (including partners, directors and transport managers) currently hold a goods or public service vehicle'
+    . " operator's licence in any traffic area?",
+    'application_previous-history_licence-history_appliedForLicence' => 'a. Previously held or applied for a goods '
+    . "or public service vehicle operator's licence in any traffic area?",
+    'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods '
+    . "or a public service vehicle operator's licence refused by any EU licencing authority?",
+    'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service '
+    . "vehicle operator's licence revoked, suspended or curtailed by any EU licencing authority?",
+    'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public '
+    . 'Inquiry before a traffic commissioner?',
+    'application_previous-history_licence-history_disqualifiedLicence' => 'e. Been disqualified from '
+    . "holding or obtaining an operator's licence by any traffic commissioner?",
+    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve month, '
+    . 'have you, your company or organisation or your partners or directors purchased the assets or '
+    . 'shareholding of any company that, to you knowledge, currently holds or has previously held an'
+    . " operator's licence in any traffic area?",
+    'application_previous-history_licence-history_personsInformation' => '2. Has any person named in the application'
+    . ' (including partners, directors or transport managers):',
+    'application_previous-history_licence-history.title' => 'Previous licences history',
+    'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'Licences (if applicable)',
+    'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence no.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',
+    'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' =>
+        'Will this licence be surrendered?',
+    'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' =>
+        'Please provide details about theses licences here',
+    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationDate' =>
+        'Date of disq.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationLength' =>
+        'Length of disq.',
+    'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' =>
+        'Date of purchase',
+    'selfserve-app-subSection-previous-history-licence-history-licNo' => 'Licence number',
+    'selfserve-app-subSection-previous-history-licence-history-holderName' => 'Licence holder name',
+    'selfserve-app-subSection-previous-history-licence-history-willSurrender' =>
+        'Will this licence be surrendered if this application is granted',
+    'selfserve-app-subSection-previous-history-licence-history-disqualificationDate' =>
+        'Date of disqualification',
+    'selfserve-app-subSection-previous-history-licence-history-disqualificationLength' =>
+        'Length of disqualification',
+    'selfserve-app-subSection-previous-history-licence-history-purchaseDate' =>
+        'Date of purchase',
+    'application_previous-history_licence-history-table-licences-current-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-current-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-current-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-applied-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-applied-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-refused-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-refused-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-refused-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-revoked-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-revoked-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-revoked-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-public-inquiry-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-disqualified-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-disqualified-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-disqualified-delete' => 'Delete licence',
+    'application_previous-history_licence-history-table-licences-held-add' => 'Add licence',
+    'application_previous-history_licence-history-table-licences-held-edit' => 'Edit licence',
+    'application_previous-history_licence-history-table-licences-held-delete' => 'Delete licence',
     // Potentially unused (Not found with grep)
+
+    'ltyp_cbp' => 'Community',
+    'ltyp_dbp' => 'Designated Body/Local Authority',
+    'ltyp_lbp' => 'Large',
+    'ltyp_r' => 'Restricted',
+    'ltyp_sbp' => 'Small',
+    'ltyp_si' => 'Standard International',
+    'ltyp_sn' => 'Standard National',
+    'ltyp_sr' => 'Special Restricted',
+
+    // lic_status
+
+    'lsts_cns'         => 'Continuation Not Sought',
+    'lsts_curtailed'   => 'Curtailed',
+    'lsts_granted'     => 'Granted',
+    'lsts_new'         => 'New',
+    'lsts_ntu'         => 'Not Taken Up',
+    'lsts_refused'     => 'Refused',
+    'lsts_revoked'     => 'Revoked',
+    'lsts_surrendered' => 'Surrendered',
+    'lsts_suspended'   => 'Suspended',
+    'lsts_terminated'  => 'Terminated',
+    'lsts_unlicenced'  => 'Unlicenced',
+    'lsts_valid'       => 'Valid',
+    'lsts_withdrawn'   => 'Withdrawn',
+
+    // lic_cat
+
+    'lcat_gv'     =>  'Goods Vehicle',
+    'lcat_permit' =>  'Permit',
+    'lcat_psv'    =>  'Public Service Vehicle',
 );

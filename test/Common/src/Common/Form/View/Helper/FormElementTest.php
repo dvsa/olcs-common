@@ -139,6 +139,21 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForHtmlTranslatedElement()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+        $this->element->setValue('<div></div>');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div><\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForTableElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\Table');

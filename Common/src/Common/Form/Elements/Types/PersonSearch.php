@@ -73,7 +73,7 @@ class PersonSearch extends Fieldset
 
         $this->add($selectButton);
 
-        $personFirstname = new Name('personFirstname', array('label' => 'First name'));
+        $personFirstname = new Name('personFirstname', array('label' => 'First name(s)'));
         $personFirstname->setAttributes(
             array(
                 'id' => 'personFirstname',
