@@ -25,9 +25,8 @@ class OperatingCentreVehicleAuthorisations extends Text implements InputProvider
     protected function getValidators()
     {
         return array(
-            new ZendValidator\Digits(),
-            new ZendValidator\Between(array('min' => 0, 'max' => 1000000)),
-            new OperatingCentreVehicleAuthorisationsValidator()
+            new OperatingCentreVehicleAuthorisationsValidator(),
+            new ZendValidator\Between(array('min' => 0, 'max' => 1000000))
         );
     }
 }
