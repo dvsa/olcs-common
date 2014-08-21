@@ -351,6 +351,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 $viewName = $layout;
                 $layout = new ViewModel();
                 $layout->setTemplate('layout/' . $viewName);
+                $layout->setVariables($view->getVariables());
             }
 
             $layout->addChild($view, 'content');
@@ -365,6 +366,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $base = new ViewModel();
         $base->setTemplate('layout/base')
             ->setTerminal(true)
+            ->setVariables($view->getVariables())
             ->addChild($header, 'header')
             ->addChild($view, 'content');
 

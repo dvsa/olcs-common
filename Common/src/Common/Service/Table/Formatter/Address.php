@@ -25,6 +25,10 @@ class Address implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        if (isset($column['name']) && isset($data[$column['name']])) {
+            $data = $data[$column['name']];
+        }
+
         if (isset($column['addressFields'])) {
 
             $fields = $column['addressFields'];

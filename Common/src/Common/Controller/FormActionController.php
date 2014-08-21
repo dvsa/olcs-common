@@ -9,8 +9,6 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
-use Common\Form\Elements\Types\Person;
-use Common\Form\Elements\Types\Defendant;
 use Zend\Filter\Word\DashToCamelCase;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Factory;
@@ -261,6 +259,8 @@ abstract class FormActionController extends AbstractActionController
 
             $form->setData($data);
 
+            $form = $this->postSetFormData($form);
+
             if (!$this->validateForm || ($this->persist && $form->isValid())) {
 
                 if ($this->validateForm) {
@@ -281,6 +281,17 @@ abstract class FormActionController extends AbstractActionController
             }
         }
 
+        return $form;
+    }
+
+    /**
+     * Added extra method called after setting form data
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function postSetFormData($form)
+    {
         return $form;
     }
 

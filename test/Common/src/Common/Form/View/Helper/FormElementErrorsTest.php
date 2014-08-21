@@ -33,7 +33,13 @@ class FormElementErrors extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
+        $translator = new \Zend\I18n\Translator\Translator();
+        $translateHelper = new \Zend\I18n\View\Helper\Translate();
+        $translateHelper->setTranslator($translator);
+
         $helpers = new HelperPluginManager();
+        $helpers->setService('translate', $translateHelper);
+
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
