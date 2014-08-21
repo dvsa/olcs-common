@@ -82,11 +82,11 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
 
             // validate only if postcode is not empty and recognized
             if ($value && $trafficAreaId) {
-                if ($niFlag && $trafficAreaId !== self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
+                if ($niFlag == 'Y' && $trafficAreaId !== self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
                     $this->error('notInNorthernIreland');
                     return false;
                 }
-                if (!$niFlag && $trafficAreaId !== $currentTrafficAreaId && $currentTrafficAreaId) {
+                if ($niFlag == 'N' && $trafficAreaId !== $currentTrafficAreaId && $currentTrafficAreaId) {
                     $errorText = 'Your operating centre is in ' . $trafficAreaName . ' traffic area, '
                     . 'which differs to your first operating centre ' . $currentTrafficArea['name'].
                     '. You will need to apply for '
