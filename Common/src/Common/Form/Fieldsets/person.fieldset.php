@@ -16,8 +16,8 @@ return [
         ],
         'personFirstname' => [
             'type' => 'personName',
-            'label' => 'First name',
-             'class' => 'long'
+            'label' => 'First name(s)',
+            'class' => 'long'
         ],
         'personLastname' => [
             'type' => 'personName',
