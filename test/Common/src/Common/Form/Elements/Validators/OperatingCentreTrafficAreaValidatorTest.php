@@ -77,26 +77,26 @@ class OperatingCentreTrafficAreaValidatorTest extends \PHPUnit_Framework_TestCas
     {
         return [
             // Northern Ireland - first instance
-            ['E15 1HS', true, null, false],
-            ['WRONGCODE', true, null, true],
-            ['', true, null, true],
-            ['BF1 1EE', true, null, true],
+            ['E15 1HS', 'Y', null, false],
+            ['WRONGCODE', 'Y', null, true],
+            ['', 'Y', null, true],
+            ['BF1 1EE', 'Y', null, true],
 
             // Northern Ireland - second instance
-            ['E15 1HS', true, ['id' => 'N'], false],
-            ['', true, ['id' => 'N'], true],
-            ['WRONGCODE', true, ['id' => 'N'], true],
+            ['E15 1HS', 'Y', ['id' => 'N'], false],
+            ['', 'Y', ['id' => 'N'], true],
+            ['WRONGCODE', 'Y', ['id' => 'N'], true],
 
             // Any Traffic Area - first instance
-            ['E15 1HS', false, null, true],
-            ['', false, null, true],
-            ['WRONGCODE', false, null, true],
+            ['E15 1HS', 'N', null, true],
+            ['', 'N', null, true],
+            ['WRONGCODE', 'N', null, true],
 
             // Any Traffic Area - second instance
-            ['E15 1HS', false, ['id' => 'K'], true],
-            ['LS1 4ES', false, ['id' => 'K', 'name' => 'London and the South East of England'], false],
-            ['', false, ['id' => 'K'], true],
-            ['WRONGCODE', false, ['id' => 'K'], true],
+            ['E15 1HS', 'N', ['id' => 'K'], true],
+            ['LS1 4ES', 'N', ['id' => 'K', 'name' => 'London and the South East of England'], false],
+            ['', 'N', ['id' => 'K'], true],
+            ['WRONGCODE', 'N', ['id' => 'K'], true],
 
         ];
     }
