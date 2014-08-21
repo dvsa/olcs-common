@@ -9,8 +9,6 @@
 namespace Common\Controller;
 
 use Common\Form\Elements\Types\Address;
-use Common\Form\Elements\Types\Person;
-use Common\Form\Elements\Types\Defendant;
 use Zend\Filter\Word\DashToCamelCase;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Factory;
