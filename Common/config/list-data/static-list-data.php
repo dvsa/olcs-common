@@ -58,8 +58,8 @@ return array(
         'stay_status_refused' => 'Refused'
     ],
     'operator_locations' => [
-        '0' => 'Great Britain',
-        '1' => 'Northern Ireland'
+        'Y' => 'Great Britain',
+        'N' => 'Northern Ireland'
     ],
     'operator_types' => [
         'lcat_gv' => 'Goods',
