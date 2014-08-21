@@ -730,4 +730,35 @@ return array(
     'offence-type' => 'W Offence type',
     'offence-definition' => 'W Act/Si',
     // Potentially unused (Not found with grep)
+
+    'ltyp_cbp' => 'Community',
+    'ltyp_dbp' => 'Designated Body/Local Authority',
+    'ltyp_lbp' => 'Large',
+    'ltyp_r' => 'Restricted',
+    'ltyp_sbp' => 'Small',
+    'ltyp_si' => 'Standard International',
+    'ltyp_sn' => 'Standard National',
+    'ltyp_sr' => 'Special Restricted',
+
+    // lic_status
+
+    'lsts_cns'         => 'Continuation Not Sought',
+    'lsts_curtailed'   => 'Curtailed',
+    'lsts_granted'     => 'Granted',
+    'lsts_new'         => 'New',
+    'lsts_ntu'         => 'Not Taken Up',
+    'lsts_refused'     => 'Refused',
+    'lsts_revoked'     => 'Revoked',
+    'lsts_surrendered' => 'Surrendered',
+    'lsts_suspended'   => 'Suspended',
+    'lsts_terminated'  => 'Terminated',
+    'lsts_unlicenced'  => 'Unlicenced',
+    'lsts_valid'       => 'Valid',
+    'lsts_withdrawn'   => 'Withdrawn',
+
+    // lic_cat
+
+    'lcat_gv'     =>  'Goods Vehicle',
+    'lcat_permit' =>  'Permit',
+    'lcat_psv'    =>  'Public Service Vehicle',
 );
