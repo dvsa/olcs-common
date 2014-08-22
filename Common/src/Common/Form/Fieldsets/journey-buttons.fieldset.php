@@ -27,7 +27,7 @@ return array(
             'type' => 'submit',
             'label' => 'Back to home',
             'filters' => '\Common\Form\Elements\InputFilters\ActionLink',
-            'route' => 'home/dashboard',
+            'route' => 'application_start',
             'class' => 'action--tertiary'
         )
     )

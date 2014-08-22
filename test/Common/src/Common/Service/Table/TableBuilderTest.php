@@ -1629,7 +1629,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         );
 
         $expectedColumn = array(
-            'width' => '16px',
+            'width' => '20px',
             'title' => null,
         );
 
