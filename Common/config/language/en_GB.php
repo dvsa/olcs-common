@@ -817,6 +817,7 @@ return array(
     'tachographAnalyser-yourself' => 'Yourself or another employee of the business holding the operator\'s licence',
     'tasks.details' => 'Details',
     'tasks.assignment' => 'Assigned to',
+    'tasks.data.link' => 'Linked to',
     'tasks.data.category' => 'Category',
     'tasks.data.date' => 'Date',
     'tasks.data.actionDate' => 'Action date',
