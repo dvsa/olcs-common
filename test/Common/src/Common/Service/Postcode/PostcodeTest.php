@@ -8,7 +8,7 @@
 namespace CommonTest\Service\Postcode;
 
 use Common\Service\Postcode\Postcode;
-use OlcsTest\Bootstrap;
+use CommonTest\Bootstrap;
 
 /**
  * Postcode service test
