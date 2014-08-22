@@ -822,11 +822,16 @@ abstract class AbstractJourneyController extends AbstractController
     {
         if (is_null($this->hasView)) {
 
-            $this->hasView = file_exists(
-                $this->getServiceLocator()->get(
-                    'Config'
-                )['view_manager']['template_path_stack'][0] . '/' . $this->getViewName() . '.phtml'
-            );
+            $fileExists = false;
+
+            foreach ($this->getServiceLocator()->get('Config')['view_manager']['template_path_stack'] as $location) {
+                if (file_exists($location . '/' . $this->getViewName() . '.phtml')) {
+                    $fileExists = true;
+                    break;
+                }
+            }
+
+            $this->hasView = $fileExists;
         }
 
         return $this->hasView;

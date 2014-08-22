@@ -91,10 +91,10 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         $this->response = new Response();
         $this->routeMatch = new RouteMatch(
             array(
-            'controller' => trim($this->controllerName, '\\'),
-            'action' => $action,
-            'applicationId' => 1,
-            'id' => $id
+                'controller' => trim($this->controllerName, '\\'),
+                'action' => $action,
+                'applicationId' => 1,
+                'id' => $id
             )
         );
 
@@ -108,6 +108,7 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
 
         $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
+
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
 

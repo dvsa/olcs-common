@@ -8,7 +8,7 @@
 return array(
     'Application' => array(
         'namespace' => 'Common\Controller\Application',
-        'homeRoute' => 'home/dashboard',
+        'homeRoute' => 'application_start',
         'identifier' => 'applicationId',
         'completionService' => 'ApplicationCompletion',
         'completionStatusJourneyIdColumn' => 'application',
