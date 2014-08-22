@@ -56,7 +56,7 @@ return array(
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
-			}, 
+			},
         )
     ),
     'file_uploader' => array(
