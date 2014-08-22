@@ -19,7 +19,7 @@ $routes = array_merge(
         'application_start' => array(
             'type' => 'segment',
             'options' => array(
-                'route' => '/'
+                'route' => '/application'
             )
         ),
         'getfile' => array(
