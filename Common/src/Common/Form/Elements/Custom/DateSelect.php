@@ -24,9 +24,14 @@ class DateSelect extends ZendElement\DateSelect
      */
     public function getInputSpecification()
     {
+        if ($this->getOption('max_year_delta')) {
+            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
+            $this->setMaxYear($maxYear);
+        }
+
         return array(
             'name' => $this->getName(),
-            'required' => false,
+            'required' => $this->getOption('required'),
             'filters' => array(
                 array(
                     'name'    => 'Callback',
