@@ -150,7 +150,11 @@ return array(
                         'restriction' => array(
                             'goods'
                         )
-
+                    ),
+                    'Undertakings' => array(
+                        'restriction' => array(
+                            'psv'
+                        )
                     ),
                     'Safety' => array(
 
