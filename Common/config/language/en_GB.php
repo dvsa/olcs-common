@@ -146,6 +146,13 @@ return array(
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
     'application_operating-centres_authorisation.data.totCommunityLicences' => 'How many community licences do you
         require?',
+    'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
+        operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
+        target="_blank">this link.</a>',
+    'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => '<p class="hint">Your traffic
+        area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_operating-centres_authorisation.table.address' => 'Operating centre address',
     'application_operating-centres_authorisation.table.advertised' => 'Advertised',
     'application_operating-centres_authorisation.table.footer.total' => 'Total vehicles and trailers',
@@ -335,6 +342,41 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
+    'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'Intention',
+    'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'Small vehicle conditions and undertakings
+        (if applicable)',
+    'application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo' => 'Do you intend to operate small vehicles
+        as a small part of a large bus business as detailed by Section 79A of the Public Passenger Vehicles
+        Act (as amended by Section 265 of the Transport Act 2000)?',
+    'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
+        comply with the \'small part of the business\' requirements (if applicable)',
+    'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
+    'application_vehicle-safety_undertakings.nineOrMore.label' => 'If you only intend to use vehicles with 9 or more
+        passenger seats under this licence (if granted) do you agree to the following undertaking being specified
+        on the licence',
+    'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
+        seats or less will not be operated under the licence without the prior written agreement of the traffic
+        commissioner who may require you to agree to certain undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and
+        English and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Text for small vehicles
+        undertakings agreement Scotland.',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'Text for small vehicles agreement.',
+    'application_vehicle-safety_undertakings.smallVehiclesConfirmation' => 'Confirm that you agree to the above
+        conditions and undertakings being specified on your licence (if granted)',
+    'application_vehicle-safety_undertakings-limousines' => 'Limousines and novelty vehicles',
+    'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for
+        to be used as Limousines or novelty type vehicles?',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
+        undertaking being specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'Limousines and novelty type vehicles
+        are not to be operated under this operator\'s licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
+        novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
+        to be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
+        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_your-business_business-details-add' => 'Add subsidiary company',
     'application_your-business_business-details-edit' => 'Edit subsidiary company',
     'application_your-business_business-details-formCompanyNo' => 'Company number',
@@ -365,6 +407,8 @@ return array(
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',
     'application_your-business_people-sub-action-formFirstName' => 'First name(s)',
     'application_your-business_people-sub-action-formOtherNames' => 'Other names',
+    'application_your-business_people-sub-action-formOtherNames-hint' => 'Other names by which you have been known since
+        the age of 18',
     'application_your-business_people-sub-action-formPosition' => 'Position',
     'application_your-business_people-sub-action-formSurname' => 'Last name',
     'application_your-business_people-sub-action-formTitle' => 'Title',
@@ -541,6 +585,9 @@ return array(
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',
     'layout-footer-app-name' => 'OLCS.',
+    'lcat_gv' => 'Goods Vehicle',
+    'lcat_permit' => 'Permit',
+    'lcat_psv' => 'Public Service Vehicle',
     'licence' => 'Licence',
     'licence-application-number' => 'Lic #(App ID)',
     'licence-category' => 'Licence category',
@@ -580,6 +627,27 @@ return array(
     'lookup-town' => 'Town',
     'lookup-transport-manager-id' => 'Transport Manager ID',
     'lookup-vehicle-registration-mark' => 'Vehicle Registration Mark',
+    'lsts_cns' => 'Continuation Not Sought',
+    'lsts_curtailed' => 'Curtailed',
+    'lsts_granted' => 'Granted',
+    'lsts_new' => 'New',
+    'lsts_ntu' => 'Not Taken Up',
+    'lsts_refused' => 'Refused',
+    'lsts_revoked' => 'Revoked',
+    'lsts_surrendered' => 'Surrendered',
+    'lsts_suspended' => 'Suspended',
+    'lsts_terminated' => 'Terminated',
+    'lsts_unlicenced' => 'Unlicenced',
+    'lsts_valid' => 'Valid',
+    'lsts_withdrawn' => 'Withdrawn',
+    'ltyp_cbp' => 'Community',
+    'ltyp_dbp' => 'Designated Body/Local Authority',
+    'ltyp_lbp' => 'Large',
+    'ltyp_r' => 'Restricted',
+    'ltyp_sbp' => 'Small',
+    'ltyp_si' => 'Standard International',
+    'ltyp_sn' => 'Standard National',
+    'ltyp_sr' => 'Special Restricted',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
@@ -646,6 +714,12 @@ return array(
     'operator-search-results-licence-op-center' => 'Op Centre',
     'operator-type' => 'Operator type',
     'opposition' => 'Opposition',
+    'org_t_irfo' => 'IRFO Operator',
+    'org_t_llp' => 'LLP',
+    'org_t_p' => 'Partnership',
+    'org_t_pa' => 'Public Authority',
+    'org_t_rc' => 'Registered Company',
+    'org_t_st' => 'Sole Trader',
     'originating-authority' => 'Originating authority',
     'other' => 'Other',
     'other-details-header' => 'Other Details',
@@ -849,140 +923,13 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'Your traffic area',
-    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' =>
-        '<p class="hint">Your traffic area has been determined from your address.<br/>'
-    . '<a href="#" target="_blank">More about traffic areas</a></p>',
-    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'Traffic area',
-    'application_operating-centres_authorisation.dataTrafficArea.hint.new' =>
-        "Your traffic area is determined by your operating centre's location.<br />For more information and "
-    . 'to find your traffic please visit ' . '<a href="#" target="_blank">this link.</a>',
-    'tasks-home.data.team' => 'Team',
-    'tasks-home.data.owner' => 'Owner',
-    'tasks-home.data.category' => 'Category',
-    'tasks-home.data.sub_category' => 'Sub category',
-    'tasks-home.data.date' => 'Date',
-    'tasks-home.data.status' => 'Status',
-    'tasks-home.data.urgent' => 'Urgent only',
-    'tasks-home.submit.filter' => 'Filter',
-    'offence-detail' => 'Offence detail',
-    'offence-date-from' => 'Offence date from',
-    'offence-date-to' => 'Offence date to',
-    'number-of-offences' => 'Number of offences',
-    'originating-authority' => 'Originating authority',
-    'offender-name' => 'Offender name',
-    'position' => 'Position',
-    'vrm' => 'VRM',
-    'trailer' => 'Trailer',
-    'offence-notes' => 'Offence notes',
-    'offence-not-found' => 'Offence not found',
-    'offence-type' => 'Offence type',
-    'offence-definition' => 'Act/Si',
-    'application.your-business.sole-trader' => 'People',
-    'Please add a person' => 'Please add a person',
-    'application_previous-history_licence-history_currentLicence' => '1. Does any person named in this application'
-    . ' (including partners, directors and transport managers) currently hold a goods or public service vehicle'
-    . " operator's licence in any traffic area?",
-    'application_previous-history_licence-history_appliedForLicence' => 'a. Previously held or applied for a goods '
-    . "or public service vehicle operator's licence in any traffic area?",
-    'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods '
-    . "or a public service vehicle operator's licence refused by any EU licencing authority?",
-    'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service '
-    . "vehicle operator's licence revoked, suspended or curtailed by any EU licencing authority?",
-    'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public '
-    . 'Inquiry before a traffic commissioner?',
-    'application_previous-history_licence-history_disqualifiedLicence' => 'e. Been disqualified from '
-    . "holding or obtaining an operator's licence by any traffic commissioner?",
-    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve month, '
-    . 'have you, your company or organisation or your partners or directors purchased the assets or '
-    . 'shareholding of any company that, to you knowledge, currently holds or has previously held an'
-    . " operator's licence in any traffic area?",
-    'application_previous-history_licence-history_personsInformation' => '2. Has any person named in the application'
-    . ' (including partners, directors or transport managers):',
-    'application_previous-history_licence-history.title' => 'Previous licences history',
-    'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'Licences (if applicable)',
-    'selfserve-app-subSection-previous-history-previous-licence-columnLicNo' => 'Licence no.',
-    'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',
-    'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' =>
-        'Will this licence be surrendered?',
-    'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' =>
-        'Please provide details about theses licences here',
-    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationDate' =>
-        'Date of disq.',
-    'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationLength' =>
-        'Length of disq.',
-    'selfserve-app-subSection-previous-history-previous-licence-columnPurchaseDate' =>
-        'Date of purchase',
-    'selfserve-app-subSection-previous-history-licence-history-licNo' => 'Licence number',
-    'selfserve-app-subSection-previous-history-licence-history-holderName' => 'Licence holder name',
-    'selfserve-app-subSection-previous-history-licence-history-willSurrender' =>
-        'Will this licence be surrendered if this application is granted',
-    'selfserve-app-subSection-previous-history-licence-history-disqualificationDate' =>
-        'Date of disqualification',
-    'selfserve-app-subSection-previous-history-licence-history-disqualificationLength' =>
-        'Length of disqualification',
-    'selfserve-app-subSection-previous-history-licence-history-purchaseDate' =>
-        'Date of purchase',
-    'application_previous-history_licence-history-table-licences-current-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-current-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-current-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-applied-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-applied-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-applied-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-refused-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-refused-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-refused-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-revoked-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-revoked-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-revoked-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-public-inquiry-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-public-inquiry-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-public-inquiry-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-disqualified-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-disqualified-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-disqualified-delete' => 'Delete licence',
-    'application_previous-history_licence-history-table-licences-held-add' => 'Add licence',
-    'application_previous-history_licence-history-table-licences-held-edit' => 'Edit licence',
-    'application_previous-history_licence-history-table-licences-held-delete' => 'Delete licence',
     // Potentially unused (Not found with grep)
 
-    'ltyp_cbp' => 'Community',
-    'ltyp_dbp' => 'Designated Body/Local Authority',
-    'ltyp_lbp' => 'Large',
-    'ltyp_r' => 'Restricted',
-    'ltyp_sbp' => 'Small',
-    'ltyp_si' => 'Standard International',
-    'ltyp_sn' => 'Standard National',
-    'ltyp_sr' => 'Special Restricted',
+    'cat_lic' => 'Licence',
+    'cat_oc' => 'Operating Centre',
 
-    // lic_status
-
-    'lsts_cns'         => 'Continuation Not Sought',
-    'lsts_curtailed'   => 'Curtailed',
-    'lsts_granted'     => 'Granted',
-    'lsts_new'         => 'New',
-    'lsts_ntu'         => 'Not Taken Up',
-    'lsts_refused'     => 'Refused',
-    'lsts_revoked'     => 'Revoked',
-    'lsts_surrendered' => 'Surrendered',
-    'lsts_suspended'   => 'Suspended',
-    'lsts_terminated'  => 'Terminated',
-    'lsts_unlicenced'  => 'Unlicenced',
-    'lsts_valid'       => 'Valid',
-    'lsts_withdrawn'   => 'Withdrawn',
-
-    // lic_cat
-
-    'lcat_gv'     =>  'Goods Vehicle',
-    'lcat_permit' =>  'Permit',
-    'lcat_psv'    =>  'Public Service Vehicle',
-
-    // org_type
-
-    'org_t_irfo' => 'IRFO Operator',
-    'org_t_p'    => 'Partnership',
-    'org_t_pa'   => 'Public Authority',
-    'org_t_rc'   => 'Registered Company',
-    'org_t_st'   => 'Sole Trader',
-    'org_t_llp'  => 'LLP',
+    'impt_hearing' => 'Hearing',
+    'impt_paper' => 'Paperwork',
+    'impo_returned' => 'Vehicle Returned',
+    'impo_not' => 'Vehicle Not Returned',
 );

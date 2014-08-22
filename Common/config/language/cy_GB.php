@@ -146,6 +146,13 @@ return array(
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'W Total number of vehicles',
     'application_operating-centres_authorisation.data.totCommunityLicences' => 'W How many community licences do you
         require?',
+    'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'W Your traffic area is determined by your
+        operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
+        target="_blank">this link.</a>',
+    'application_operating-centres_authorisation.dataTrafficArea.label.exists' => 'W Your traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.label.new' => 'W Traffic area',
+    'application_operating-centres_authorisation.dataTrafficArea.labelasahint.exists' => 'W <p class="hint">Your traffic
+        area has been determined from your address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_operating-centres_authorisation.table.address' => 'W Operating centre address',
     'application_operating-centres_authorisation.table.advertised' => 'W Advertised',
     'application_operating-centres_authorisation.table.footer.total' => 'W Total vehicles and trailers',
@@ -366,6 +373,8 @@ return array(
     'application_your-business_people-sub-action-formDateOfBirth' => 'W Date of birth',
     'application_your-business_people-sub-action-formFirstName' => 'W First name(s)',
     'application_your-business_people-sub-action-formOtherNames' => 'W Other names',
+    'application_your-business_people-sub-action-formOtherNames-hint' => 'W Other names by which you have been known
+        since the age of 18',
     'application_your-business_people-sub-action-formPosition' => 'W Position',
     'application_your-business_people-sub-action-formSurname' => 'W Last name',
     'application_your-business_people-sub-action-formTitle' => 'W Title',
@@ -542,6 +551,9 @@ return array(
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
     'layout-footer-app-name' => 'W OLCS.',
+    'lcat_gv' => 'W Goods Vehicle',
+    'lcat_permit' => 'W Permit',
+    'lcat_psv' => 'W Public Service Vehicle',
     'licence' => 'W Licence',
     'licence-application-number' => 'W Lic #(App ID)',
     'licence-category' => 'W Licence category',
@@ -581,6 +593,27 @@ return array(
     'lookup-town' => 'W Town',
     'lookup-transport-manager-id' => 'W Transport Manager ID',
     'lookup-vehicle-registration-mark' => 'W Vehicle Registration Mark',
+    'lsts_cns' => 'W Continuation Not Sought',
+    'lsts_curtailed' => 'W Curtailed',
+    'lsts_granted' => 'W Granted',
+    'lsts_new' => 'W New',
+    'lsts_ntu' => 'W Not Taken Up',
+    'lsts_refused' => 'W Refused',
+    'lsts_revoked' => 'W Revoked',
+    'lsts_surrendered' => 'W Surrendered',
+    'lsts_suspended' => 'W Suspended',
+    'lsts_terminated' => 'W Terminated',
+    'lsts_unlicenced' => 'W Unlicenced',
+    'lsts_valid' => 'W Valid',
+    'lsts_withdrawn' => 'W Withdrawn',
+    'ltyp_cbp' => 'W Community',
+    'ltyp_dbp' => 'W Designated Body/Local Authority',
+    'ltyp_lbp' => 'W Large',
+    'ltyp_r' => 'W Restricted',
+    'ltyp_sbp' => 'W Small',
+    'ltyp_si' => 'W Standard International',
+    'ltyp_sn' => 'W Standard National',
+    'ltyp_sr' => 'W Special Restricted',
     'maint' => 'W Maint',
     'mark-urgent' => 'W Mark as urgent',
     'mlh' => 'W MLH',
@@ -647,6 +680,12 @@ return array(
     'operator-search-results-licence-op-center' => 'W Op Centre',
     'operator-type' => 'W Operator type',
     'opposition' => 'W Opposition',
+    'org_t_irfo' => 'W IRFO Operator',
+    'org_t_llp' => 'W LLP',
+    'org_t_p' => 'W Partnership',
+    'org_t_pa' => 'W Public Authority',
+    'org_t_rc' => 'W Registered Company',
+    'org_t_st' => 'W Sole Trader',
     'originating-authority' => 'W Originating authority',
     'other' => 'W Other',
     'other-details-header' => 'W Other Details',
@@ -852,44 +891,4 @@ return array(
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
     // Potentially unused (Not found with grep)
-
-    'ltyp_cbp' => 'Community',
-    'ltyp_dbp' => 'Designated Body/Local Authority',
-    'ltyp_lbp' => 'Large',
-    'ltyp_r' => 'Restricted',
-    'ltyp_sbp' => 'Small',
-    'ltyp_si' => 'Standard International',
-    'ltyp_sn' => 'Standard National',
-    'ltyp_sr' => 'Special Restricted',
-
-    // lic_status
-
-    'lsts_cns'         => 'Continuation Not Sought',
-    'lsts_curtailed'   => 'Curtailed',
-    'lsts_granted'     => 'Granted',
-    'lsts_new'         => 'New',
-    'lsts_ntu'         => 'Not Taken Up',
-    'lsts_refused'     => 'Refused',
-    'lsts_revoked'     => 'Revoked',
-    'lsts_surrendered' => 'Surrendered',
-    'lsts_suspended'   => 'Suspended',
-    'lsts_terminated'  => 'Terminated',
-    'lsts_unlicenced'  => 'Unlicenced',
-    'lsts_valid'       => 'Valid',
-    'lsts_withdrawn'   => 'Withdrawn',
-
-    // lic_cat
-
-    'lcat_gv'     =>  'Goods Vehicle',
-    'lcat_permit' =>  'Permit',
-    'lcat_psv'    =>  'Public Service Vehicle',
-
-    // org_type
-
-    'org_t_irfo' => 'IRFO Operator',
-    'org_t_p'    => 'Partnership',
-    'org_t_pa'   => 'Public Authority',
-    'org_t_rc'   => 'Registered Company',
-    'org_t_st'   => 'Sole Trader',
-    'org_t_llp'  => 'LLP'
 );
