@@ -73,16 +73,16 @@ return array(
             'address' => new \Common\Service\Address\Address()
         ),
         'factories' => array(
-            'postcode' => function($serviceManager) {
+            'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
-			},
-            'postcodeTrafficAreaValidator' => function($serviceManager) {
+            },
+            'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
-			},
+            },
         )
     ),
     'file_uploader' => array(

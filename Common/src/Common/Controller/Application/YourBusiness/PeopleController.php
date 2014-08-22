@@ -120,7 +120,6 @@ class PeopleController extends YourBusinessController
 
         $org = $this->getOrganisationData($bundle);
 
-
         $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
         $guidance = $form->get('guidance')->get('guidance');
 

@@ -479,7 +479,7 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
         foreach ($present as $fieldsetName => $fieldsetElements) {
             $fieldset = $this->getFormFromView($response)->get($fieldsetName);
             foreach ($fieldsetElements as $element) {
-                $this->assertTrue($fieldset->has($element),$element.' not present');
+                $this->assertTrue($fieldset->has($element), $element . ' not present');
             }
         }
 
@@ -487,7 +487,7 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
             if ( $this->getFormFromView($response)->has($fieldsetName) ) {
                 $fieldset = $this->getFormFromView($response)->get($fieldsetName);
                 foreach ($fieldsetElements as $element) {
-                    $this->assertFalse($fieldset->has($element),$element.' should not be present');
+                    $this->assertFalse($fieldset->has($element), $element . ' should not be present');
                 }
             } else {
                 $this->assertFalse($this->getFormFromView($response)->has($fieldsetName));

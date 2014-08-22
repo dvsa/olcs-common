@@ -250,6 +250,5 @@ class LicenceController extends TaxiPhvController
      */
     protected function save($data, $service = null)
     {
-        return;
     }
 }
