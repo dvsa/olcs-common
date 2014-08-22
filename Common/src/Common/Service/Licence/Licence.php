@@ -63,9 +63,6 @@ class Licence implements ServiceLocatorAwareInterface
 
             $application = $this->makeRestCall('Application', 'GET', array('id' => $applicationId), $bundle);
 
-            // for testing
-            $application['licence']['trafficArea']['id'] = 'K';
-
             if (isset($application['licence']['goodsOrPsv']['id']) && $application['licence']['goodsOrPsv']['id'] &&
                 in_array(
                     $application['licence']['goodsOrPsv']['id'],
