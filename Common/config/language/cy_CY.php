@@ -713,6 +713,7 @@ return array(
     'tasks.data.link' => 'W Linked to',
     'tasks.data.category' => 'W Category',
     'tasks.data.date' => 'W Date',
+    'tasks.data.description' => 'W Description',
     'tasks.data.actionDate' => 'W Action date',
     'tasks.data.owner' => 'W Owner',
     'tasks.data.status' => 'W Status',

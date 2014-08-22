@@ -820,6 +820,7 @@ return array(
     'tasks.data.link' => 'Linked to',
     'tasks.data.category' => 'Category',
     'tasks.data.date' => 'Date',
+    'tasks.data.description' => 'Description',
     'tasks.data.actionDate' => 'Action date',
     'tasks.data.owner' => 'Owner',
     'tasks.data.status' => 'Status',
