@@ -889,4 +889,12 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+
+    'cat_lic' => 'Licence',
+    'cat_oc' => 'Operating Centre',
+
+    'impt_hearing' => 'Hearing',
+    'impt_paper' => 'Paperwork',
+    'impo_returned' => 'Vehicle Returned',
+    'impo_not' => 'Vehicle Not Returned',
 );
