@@ -120,6 +120,10 @@ abstract class FormActionController extends AbstractActionController
     {
         $form = $this->getFormClass($type);
 
+        if (!$form->hasAttribute('action')) {
+            $form->setAttribute('action', $this->getRequest()->getRequestUri());
+        }
+
         $form = $this->processPostcodeLookup($form);
 
         return $form;
