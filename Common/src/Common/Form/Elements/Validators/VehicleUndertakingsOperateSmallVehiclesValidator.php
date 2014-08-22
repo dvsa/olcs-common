@@ -35,12 +35,15 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
     {
         unset($value);
 
-        if ($context['psvOperateSmallVehicles'] === 'Y'
-            && trim($context['psvSmallVehicleNotes']) === '') {
+        // This only gets used if psvOperateSmallVehicles is shown
+        if ( isset($context['psvOperateSmallVhl']) ) {
+            if ($context['psvOperateSmallVhl'] === 'Y'
+                && trim($context['psvSmallVhlNotes']) === '') {
 
-            $this->error('required');
+                $this->error('required');
 
-            return false;
+                return false;
+            }
         }
 
         return true;

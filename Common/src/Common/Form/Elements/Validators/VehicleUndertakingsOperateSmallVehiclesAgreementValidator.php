@@ -35,12 +35,10 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
     {
         unset($value);
 
-        var_dump($context);
-
-        // This only gets used if psvOperateSmallVehicles is shown
-        if ( isset($context['psvOperateSmallVehicles']) ) {
-            if ($context['psvOperateSmallVehicles'] === 'N'
-                && $context['psvSmallVehicleConfirmation'] !== '1') {
+        // This only gets used if psvOperateSmallVhl is shown
+        if ( isset($context['psvOperateSmallVhl']) ) {
+            if ($context['psvOperateSmallVhl'] === 'N'
+                && $context['psvSmallVhlConfirmation'] !== '1') {
 
                 $this->error('required');
 
