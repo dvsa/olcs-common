@@ -8,7 +8,7 @@
 namespace CommonTest\Form\Elements\Validators;
 
 use Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator;
-use OlcsTest\Bootstrap;
+use CommonTest\Bootstrap;
 
 /**
  * Test OperatingCentreTrafficAreaValidator
@@ -27,7 +27,7 @@ class OperatingCentreTrafficAreaValidatorTest extends \PHPUnit_Framework_TestCas
 
     /**
      * Test isValid
-     * 
+     *
      * @dataProvider providerIsValid
      */
     public function testIsValid($value, $niFlag, $trafficArea, $expected)

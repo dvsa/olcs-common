@@ -90,7 +90,7 @@ class TableBuilder
      *
      * @var array
      */
-    private $widths = array('checkbox' => '16px');
+    private $widths = array('checkbox' => '20px');
 
     /**
      * Total count of results

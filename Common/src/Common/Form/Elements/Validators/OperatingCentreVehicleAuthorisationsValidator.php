@@ -64,7 +64,7 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
             return false;
         }
 
-        if ($context['noOfOperatingCentres'] === 1 && $total != $context['minVehicleAuth']) {
+        if ($context['noOfOperatingCentres'] == 1 && $total != $context['minVehicleAuth']) {
 
             $this->error('1-operating-centre');
             return false;
