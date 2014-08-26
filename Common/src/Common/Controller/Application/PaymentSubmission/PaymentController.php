@@ -4,6 +4,7 @@
  * Payment Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\PaymentSubmission;
 
@@ -11,6 +12,7 @@ namespace Common\Controller\Application\PaymentSubmission;
  * Payment Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class PaymentController extends PaymentSubmissionController
 {
@@ -58,10 +60,14 @@ class PaymentController extends PaymentSubmissionController
         $this->makeRestCall('Application', 'PUT', $application);
 
         // Create a task - OLCS-3297
+        // This is set to dummy user account data for the moment
+        // @todo Assign task based on traffic area and operator name
         $task = array(
             'category' => 9,
             'taskSubCategory' => 16,
             'description' => 'GV79 Application',
+            'assignedByUser' => 1,
+            'assignedToUser' => 1,
             'isClosed' => 0,
             'application' => $application['id'],
             'licence' => $application['licence']['id']
