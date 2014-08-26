@@ -722,6 +722,10 @@ class AuthorisationController extends OperatingCentresController
                         'trafficArea' => $id
             );
             $this->makeRestCall('Licence', 'PUT', $data);
+            if ($id) {
+                $licenceService = $this->getLicenceService();
+                $licenceService->generateLicence($this->getIdentifier());
+            }
         }
     }
 
@@ -841,5 +845,15 @@ class AuthorisationController extends OperatingCentresController
     public function getPostcodeValidatorsChain($form)
     {
         return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+    }
+
+    /**
+     * Get licence service
+     *
+     * @return Common\Service\Licence\Licence
+     */
+    public function getLicenceService()
+    {
+        return $this->getServiceLocator()->get('licence');
     }
 }
