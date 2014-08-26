@@ -16,7 +16,7 @@ class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->serviceManager = \OlcsTest\Bootstrap::getServiceManager();
+        $this->serviceManager = \CommonTest\Bootstrap::getServiceManager();
         $this->customFormGenerator = $this->serviceManager->get('OlcsCustomForm');
 
         $this->formConfig = [
