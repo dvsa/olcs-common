@@ -32,12 +32,22 @@ class PaymentController extends PaymentSubmissionController
     }
 
     /**
-     * Placeholder save method
+     * Save method - no payment taken, simply updates to 'in progress'
      *
      * @param array $data
      * @parem string $service
      */
     protected function save($data, $service = null)
     {
+        // Update the application status to "Under Consideration"
+        $bundle = array(
+            'properties' => array(
+                'id',
+                'version'
+            )
+        );
+        $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
+        $application['status']='apsts_consideration';
+        $this->makeRestCall('Application', 'PUT', $application);
     }
 }
