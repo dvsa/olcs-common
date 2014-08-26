@@ -35,7 +35,7 @@ class PaymentController extends PaymentSubmissionController
      * Save method - no payment taken, simply updates to 'in progress'
      *
      * @param array $data
-     * @parem string $service
+     * @param string $service
      */
     protected function save($data, $service = null)
     {
@@ -44,10 +44,29 @@ class PaymentController extends PaymentSubmissionController
             'properties' => array(
                 'id',
                 'version'
+            ),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
             )
         );
         $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
         $application['status']='apsts_consideration';
         $this->makeRestCall('Application', 'PUT', $application);
+
+        // Create a task - OLCS-3297
+        $task = array(
+            'category' => 9,
+            'taskSubCategory' => 16,
+            'description' => 'GV79 Application',
+            'isClosed' => 0,
+            'application' => $application['id'],
+            'licence' => $application['licence']['id']
+        );
+        $this->makeRestCall('Task', 'POST', $task);
+
     }
 }
