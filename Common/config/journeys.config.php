@@ -11,10 +11,6 @@ $journeyArray = array_map(
     glob($journeysDirectory)
 );
 
-function camelToHyphen($string)
-{
-    return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
-}
 $controllers = array();
 
 $journeys = array();
@@ -33,7 +29,7 @@ foreach ($journeyArray as $journey) {
         $allRoutes[$name] = array(
             'type' => 'segment',
             'options' => array(
-                'route' => '/' . camelToHyphen($name) . '[/:' . $details['identifier'] . '][/]',
+                'route' => '/' . strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $name)) . '[/:' . $details['identifier'] . '][/]',
                 'constraints' => array(
                     $details['identifier'] => '[0-9]+'
                 ),
@@ -56,7 +52,7 @@ foreach ($journeyArray as $journey) {
             $allRoutes[$name]['child_routes'][$sectionName] = array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => camelToHyphen($sectionName) . '[/]',
+                    'route' => strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $sectionName)) . '[/]',
                     'defaults' => array(
                         'controller' => $controller,
                         'action' => 'index'
@@ -74,7 +70,7 @@ foreach ($journeyArray as $journey) {
                 $allRoutes[$name]['child_routes'][$sectionName]['child_routes'][$subSectionName] = array(
                     'type' => 'segment',
                     'options' => array(
-                        'route' => camelToHyphen($subSectionName) . '[/:action][/:id][/]',
+                        'route' => strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $subSectionName)) . '[/:action][/:id][/]',
                         'constraints' => array(
                             'id' => '[0-9]+'
                         ),
