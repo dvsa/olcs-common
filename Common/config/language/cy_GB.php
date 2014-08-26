@@ -81,6 +81,8 @@ return array(
     'application.operating-centres' => 'W Operating centres',
     'application.operating-centres.authorisation' => 'W Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'W Financial evidence',
+    'application.overview' => 'W Overview',
+    'application.overview.details' => 'W Overview',
     'application.payment-submission' => 'W Payment & submission',
     'application.payment-submission.payment' => 'W Payment',
     'application.payment-submission.summary.subtitle' => 'W Your application has been submitted successfully!',

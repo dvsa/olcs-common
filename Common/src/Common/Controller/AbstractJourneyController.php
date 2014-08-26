@@ -1387,8 +1387,11 @@ abstract class AbstractJourneyController extends AbstractController
 
         $config = $this->getApplicationConfig();
 
-        if (isset($config['render']['pre-render']) && is_callable($config['render']['pre-render'])) {
-            $layout = call_user_func($config['render']['pre-render'], $layout);
+        if (isset($config['render']['pre-render'])) {
+            $serviceName = $config['render']['pre-render']['service'];
+            $method = $config['render']['pre-render']['method'];
+            $service = $this->getServiceLocator()->get($serviceName);
+            $layout = $service->$method($layout, $this->getIdentifier());
         }
 
         return $layout;
