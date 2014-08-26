@@ -11,34 +11,28 @@ $invokeables = array_merge(
     )
 );
 
-// @TODO For now we just set the journey routes at top level, we may need to tweak this for each application
-$routes = array_merge(
-    $allRoutes,
-    array(
-        // @TODO this route needs overriding in each application
-        'application_start' => array(
-            'type' => 'segment',
-            'options' => array(
-                'route' => '/application'
-            )
-        ),
-        'getfile' => array(
-            'type' => 'segment',
-            'options' => array(
-                'route' => '/file/:file/:name',
-                'defaults' => array(
-                    'controller' => 'Common\Controller\File',
-                    'action' => 'download'
-                )
-            )
-        )
-    )
-);
-
 return array(
     'journeys' => $journeys,
     'router' => array(
-        'routes' => $routes
+        'routes' => array(
+            // @TODO this route needs overriding in each application
+            'application_start' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/application_start_page'
+                )
+            ),
+            'getfile' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/file/:file/:name',
+                    'defaults' => array(
+                        'controller' => 'Common\Controller\File',
+                        'action' => 'download'
+                    )
+                )
+            )
+        )
     ),
     'controllers' => array(
         'invokables' => $invokeables
