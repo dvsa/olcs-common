@@ -175,7 +175,7 @@ class RestClient
     public function request($method, $path, array $params = array())
     {
         $this->prepareRequest($method, $path, $params);
-
+        
         $response = $this->client->send();
 
         $responseHelper = $this->getResponseHelper();
