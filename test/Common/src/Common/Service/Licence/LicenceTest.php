@@ -8,7 +8,6 @@
 namespace CommonTest\Service\Licence;
 
 use Common\Service\Licence\Licence;
-use OlcsTest\Bootstrap;
 
 /**
  * Licence service test
@@ -36,7 +35,12 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
     /**
      * Goods or psv
      */
-    public $goodsOrpsv;
+    public $goodsOrPsv;
+
+    /**
+     * Flag for testing failure of licence generation
+     */
+    public $shouldFail = false;
 
     /**
      * Set up the liccence service
@@ -93,6 +97,21 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test licence generation failure
+     */
+    public function testGenerateLicenceFailure()
+    {
+        $this->trafficArea = 'B';
+        $this->licNo = null;
+        $this->goodsOrPsv = Licence::GOODS_OR_PSV_PSV;
+        $this->shouldFail = true;
+
+        $this->setExpectedException('\Exception');
+
+        $this->licence->generateLicence(1);
+    }
+
+    /**
      * Mock the rest call
      *
      * @param string $service
@@ -143,34 +162,16 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
             }
         }
         if ($service == 'LicenceNoGen' && $method == 'POST') {
-            return array(
-                'id' => 1
-            );
+            if (!$this->shouldFail) {
+                return array(
+                    'id' => 1
+                );
+            } else {
+                return array();
+            }
         }
         if ($service == 'Licence' && $method == 'PUT') {
             return array();
         }
-    }
-
-    /**
-     * Test setServiceLocator
-     *
-     * @dataProvider providerSetServiceLocator
-     */
-    public function testServiceLocator($input, $output)
-    {
-        $this->licence->setServiceLocator($input);
-        $this->assertInstanceOf(get_class($output), $this->licence->getServiceLocator());
-    }
-
-    /**
-     * Provider for setServiceLocator
-     */
-    public function providerSetServiceLocator()
-    {
-        $serviceManager = Bootstrap::getServiceManager();
-        return array(
-            array($serviceManager, $serviceManager)
-        );
     }
 }
