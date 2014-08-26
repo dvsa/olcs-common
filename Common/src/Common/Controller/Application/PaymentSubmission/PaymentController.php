@@ -62,10 +62,12 @@ class PaymentController extends PaymentSubmissionController
         // Create a task - OLCS-3297
         // This is set to dummy user account data for the moment
         // @todo Assign task based on traffic area and operator name
+        $actionDate=strftime("%Y-%m-%d");
         $task = array(
             'category' => 9,
             'taskSubCategory' => 16,
             'description' => 'GV79 Application',
+            'actionDate' => $actionDate,
             'assignedByUser' => 1,
             'assignedToUser' => 1,
             'isClosed' => 0,
