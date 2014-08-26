@@ -123,4 +123,19 @@ class DynamicSelect extends Select
 
         return $this->valueOptions;
     }
+
+    /**
+     * Sets the value, if an array is passed in with an id key it assumes it's a ref_data entity and sets the value
+     * to be equal to the id
+     *
+     * @param mixed $value
+     * @return \Zend\Form\Element
+     */
+    public function setValue($value)
+    {
+        if (is_array($value) && array_key_exists('id', $value)) {
+            $value = $value['id'];
+        }
+        return parent::setValue($value);
+    }
 }

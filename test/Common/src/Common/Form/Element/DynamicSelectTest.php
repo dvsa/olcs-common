@@ -38,4 +38,26 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         //check that the values are only fetched once
         $sut->getValueOptions();
     }
+
+    /**
+     * @param $value
+     * @param $expected
+     * @dataProvider provideSetValue
+     */
+    public function testSetValue($value, $expected)
+    {
+        $sut = new DynamicSelect();
+        $sut->setValue($value);
+
+        $this->assertEquals($expected, $sut->getValue());
+    }
+
+    public function provideSetValue()
+    {
+        return [
+            ['test', 'test'],
+            [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
+            [['id'=>'test', 'desc' => 'Test Item'], 'test']
+        ];
+    }
 }
