@@ -15,7 +15,6 @@ return array(
     'journeys' => $journeys,
     'router' => array(
         'routes' => array(
-            // @TODO this route needs overriding in each application
             'application_start' => array(
                 'type' => 'segment',
                 'options' => array(
