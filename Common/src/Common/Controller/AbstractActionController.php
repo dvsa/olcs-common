@@ -334,13 +334,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $this->pageSubTitle = $pageSubTitle;
         }
 
-        // every page has a header, so no conditional logic needed here
-        $header = new ViewModel(
+        $viewVariables = array_merge(
+            $view->getVariables(),
             [
                 'pageTitle' => $this->pageTitle,
                 'pageSubTitle' => $this->pageSubTitle
             ]
         );
+
+        // every page has a header, so no conditional logic needed here
+        $header = new ViewModel($viewVariables);
         $header->setTemplate('layout/partials/header');
 
         // allow a controller to specify a more specific page layout to use
@@ -351,7 +354,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 $viewName = $layout;
                 $layout = new ViewModel();
                 $layout->setTemplate('layout/' . $viewName);
-                $layout->setVariables($view->getVariables());
+                $layout->setVariables($viewVariables);
             }
 
             $layout->addChild($view, 'content');
@@ -362,11 +365,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $view = $layout;
         }
 
-        // we *always* inherit from the same base layout
+        // we always inherit from the same base layout, unless the request
+        // was asynchronous in which case we render a much simpler wrapper,
+        // but one which will include any inline JS we need
+        // note that if templates don't want this behaviour they can either
+        // mark themselves as terminal, or simply not opt-in to this helper
+        $template = $this->getRequest()->isXmlHttpRequest() ? 'ajax' : 'base';
         $base = new ViewModel();
-        $base->setTemplate('layout/base')
+        $base->setTemplate('layout/' . $template)
             ->setTerminal(true)
-            ->setVariables($view->getVariables())
+            ->setVariables($viewVariables)
             ->addChild($header, 'header')
             ->addChild($view, 'content');
 
