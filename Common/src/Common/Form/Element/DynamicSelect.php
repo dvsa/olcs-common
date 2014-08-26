@@ -3,9 +3,7 @@
 namespace Common\Form\Element;
 
 use Zend\Form\Element\Select;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Common\Service\RefData as RefDataService;
+use Common\Service\Data\RefData as RefDataService;
 
 /**
  * Class DynamicSelect
@@ -92,7 +90,7 @@ class DynamicSelect extends Select
     }
 
     /**
-     * @param \Common\Service\RefData $refDataService
+     * @param \Common\Service\Data\RefData $refDataService
      * @return $this
      */
     public function setRefDataService(RefDataService $refDataService)
@@ -102,7 +100,7 @@ class DynamicSelect extends Select
     }
 
     /**
-     * @return \Common\Service\RefData
+     * @return \Common\Service\Data\RefData
      */
     public function getRefDataService()
     {

@@ -12,7 +12,7 @@ class DynamicSelectFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\RefData');
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
 
         $mockSl = $this->getMock('\Zend\Form\FormElementManager');
         $mockSl->expects($this->any())->method('getServiceLocator')->willReturnSelf();

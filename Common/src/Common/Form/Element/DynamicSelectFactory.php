@@ -4,7 +4,7 @@ namespace Common\Form\Element;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Common\Service\RefData as RefDataService;
+use Common\Service\Data\RefData as RefDataService;
 
 /**
  * Class DynamicSelectFactory
@@ -23,7 +23,7 @@ class DynamicSelectFactory implements FactoryInterface
         /** @var \Zend\Form\FormElementManager $formElementManager */
         $serviceLocator = $formElementManager->getServiceLocator();
         /** @var RefDataService $refDataService */
-        $refDataService = $serviceLocator->get('Common\Service\RefData');
+        $refDataService = $serviceLocator->get('Common\Service\Data\RefData');
 
         $service = new DynamicSelect();
 

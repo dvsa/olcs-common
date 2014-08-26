@@ -22,7 +22,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueOptions()
     {
-        $mockRefDataService = $this->getMock('\Common\Service\RefData');
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
         $mockRefDataService
             ->expects($this->once())
             ->method('fetchListOptions')
