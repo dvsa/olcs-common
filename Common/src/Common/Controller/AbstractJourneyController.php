@@ -742,6 +742,10 @@ abstract class AbstractJourneyController extends AbstractController
 
         $index = 'section' . $section . (!is_null($subSection) ? $subSection : '') . 'Status';
 
+        if (!array_key_exists($index, $sectionCompletion)) {
+            return null;
+        }
+
         return $statusMap[(int) $sectionCompletion[$index]];
     }
 

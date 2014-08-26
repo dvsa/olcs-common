@@ -78,6 +78,8 @@ return array(
     'application-update-person-header-director' => 'Edit Director',
     'application-update-sole-trader' => 'Edit sole trader',
     'application.new.button' => 'Start new application',
+    'application.overview' => 'Overview',
+    'application.overview.details' => 'Overview',
     'application.operating-centres' => 'Operating centres',
     'application.operating-centres.authorisation' => 'Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'Financial evidence',
