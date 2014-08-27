@@ -46,7 +46,8 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        $variables = $response->getVariables();
+        $content = $this->getContentView($response);
+        $variables = $content->getVariables();
 
         $this->assertTrue($variables['isCollapsible']);
     }
@@ -158,9 +159,9 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
         // Make sure we get a view with errors
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        $mainView = $response->getChildren()[1];
+        $form = $this->getFormFromView($response);
 
-        $this->assertFalse($mainView->getVariable('form')->isValid());
+        $this->assertFalse($form->isValid());
     }
 
     public function testIndexActionWithFullSubmitJsRedirectsToNextSection()
@@ -213,9 +214,9 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
         // Make sure we get a view with errors
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        $mainView = $response->getChildren()[1];
+        $form = $this->getFormFromView($response);
 
-        $this->assertFalse($mainView->getVariable('form')->isValid());
+        $this->assertFalse($form->isValid());
     }
 
     /**
