@@ -273,17 +273,17 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'W Yourself or another employee of the
         business holding the operator\'s licence',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'W An external contractor',
-    'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm that you have suitable
-        arrangements in place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of your vehicles or trailers
+    'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm there are suitable
+        arragements in place to keep the vehicles in a fit and serviceable confition at all times',
+    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'W Are some of your vehicles inspected
+    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'W Are some of the vehicles inspected
         more frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'W This can sometimes be the case if you
-        own a particularly old vehicle',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'W Who analyses your tachograph records?',
-    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'W Please provide the company or full
-        name of the external contractor who analyses your tachograph records (if applicable)',
+    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'W This can sometimes be the case for
+        particularly old vehicles',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'W Who analyses the tachograph records?',
+    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'W The company or full name of the
+        external contractor who analyses the tachograph records (if applicable)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'W Maximum time between trailer safety
         inspections',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'W Maximum time between vehicle safety
@@ -879,7 +879,7 @@ return array(
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
     'tachographAnalyser-external-contractor' => 'W An external contractor',
-    'tachographAnalyser-yourself' => 'W Yourself or another employee of the business holding the operator\'s licence',
+    'tachographAnalyser-yourself' => 'W An owner or employee of the business',
     'tasks-home.data.category' => 'W Category',
     'tasks-home.data.date' => 'W Date',
     'tasks-home.data.owner' => 'W Owner',
