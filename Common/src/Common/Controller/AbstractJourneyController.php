@@ -944,9 +944,29 @@ abstract class AbstractJourneyController extends AbstractController
 
             $accessKeys = $this->getAccessKeys();
 
-            $intersection = array_intersect($accessKeys, $details['restriction']);
+            $restrictions = $details['restriction'];
 
-            return !empty($intersection);
+            // Strict requirements MUST be there
+            $strict = array();
+            // Lax requirements can mach ANY
+            $lax = array();
+
+            foreach ($restrictions as $restriction) {
+                if (substr($restriction, 0, 1) == '!') {
+                    $restriction = str_replace('!', '', $restriction);
+                    $strict[] = $restriction;
+                }
+
+                $lax[] = $restriction;
+            }
+
+            // Must be empty
+            $missingScricts = array_diff($strict, $accessKeys);
+
+            // Must not be empty
+            $matchingLaxes = array_intersect($accessKeys, $lax);
+
+            return (empty($missingScricts) && !empty($matchingLaxes));
         }
 
         return true;

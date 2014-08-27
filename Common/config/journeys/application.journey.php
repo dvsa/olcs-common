@@ -20,7 +20,7 @@ return array(
         'sections' => array(
             'Overview' => array(
                 'restriction' => array(
-                    'internal'
+                    '!internal'
                 ),
                 'subSections' => array(
                     'Details' => array(
@@ -241,6 +241,7 @@ return array(
                     'ReviewDeclarations'
                 ),
                 'restriction' => array(
+                    '!selfserve',
                     'goods-standard',
                     'psv-standard',
                     'goods-restricted',
