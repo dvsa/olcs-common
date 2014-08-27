@@ -29,8 +29,27 @@ class TaskIdentifier implements FormatterInterface
         if ($identifier === 'Unlinked') {
             return 'Unlinked';
         }
-
-        $value = '<a href=#>' . $data['identifier'] . '</a>';
+        $viewHelperManager = $sm->get('viewhelpermanager');
+        $urlHelper = $viewHelperManager->get('url');
+        $url = '#';
+        switch ($data['linkType']) {
+            case 'IRFO Organisation':
+                break;
+            case 'Bus Registration':
+                break;
+            case 'Application':
+                break;
+            case 'Case':
+                break;
+            case 'Licence':
+                $url = $urlHelper('licence/overview', array('licence' => $data['linkId']));
+                break;
+            case 'Transport Manager':
+                break;
+            default:
+                break;
+        }
+        $value = '<a href="' . $url . '">' . $data['identifier'] . '</a>';
         if ($data['licenceCount'] > 1) {
             $value .= ' (MLH)';
         }
