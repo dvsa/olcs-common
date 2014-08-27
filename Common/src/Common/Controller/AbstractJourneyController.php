@@ -207,14 +207,20 @@ abstract class AbstractJourneyController extends AbstractController
      */
     protected $hasForm = null;
 
+    protected function getApplicationConfig()
+    {
+        $config = $this->getServiceLocator()->get('Config');
+
+        return $config[strtolower($this->getJourneyName()) . '_journey'];
+    }
+
     /**
      * Override the not found action
      */
     public function notFoundAction()
     {
         $view = $this->getViewModel();
-        // @TODO Make this changeable based on application
-        $view->setTemplate('self-serve/journey/not-found');
+        $view->setTemplate($this->getApplicationConfig()['templates']['not-found']);
 
         return $this->render($view);
     }
@@ -651,7 +657,7 @@ abstract class AbstractJourneyController extends AbstractController
                 continue;
             }
 
-            $accessibleSections[$name] = $this->getAccessibleSection($name);
+            $accessibleSections[$name] = $this->getAccessibleSection($name, $details);
         }
 
         return $accessibleSections;
@@ -663,7 +669,7 @@ abstract class AbstractJourneyController extends AbstractController
      * @param string $name
      * @return array
      */
-    protected function getAccessibleSection($name)
+    protected function getAccessibleSection($name, $details)
     {
         $journeyName = $this->getJourneyName();
         $sectionName = $this->getSectionName();
@@ -676,10 +682,50 @@ abstract class AbstractJourneyController extends AbstractController
 
         return array(
             'status' => $status,
+            'display' => (isset($details['collapsible']) && $details['collapsible']),
+            'class' => (isset($details['collapsible']) && $details['collapsible']) ? 'js-visible' : '',
             'enabled' => $this->isSectionEnabled($name),
             'title' => $this->getSectionLabel($journeyName, $name),
-            'route' => $this->getSectionRoute($journeyName, $name)
+            'route' => $this->getSectionRoute($journeyName, $name),
+            'subSections' => $this->getAccessibleSubSections($name, $details)
         );
+    }
+
+    /**
+     * Get accessible sub sections for section
+     *
+     * @param string $sectionName
+     * @param array $sectionDetails
+     * @return array
+     */
+    protected function getAccessibleSubSections($sectionName, $sectionDetails)
+    {
+        $journeyName = $this->getJourneyName();
+        $currentSubSectionName = $this->getSubSectionName();
+
+        $subSections = array();
+
+        foreach ($sectionDetails['subSections'] as $subSectionName => $subSection) {
+            if (!$this->isSectionAccessible($sectionName, $subSectionName)) {
+                continue;
+            }
+
+            $status = $this->getSectionStatus($sectionName, $subSectionName);
+
+            if ($subSectionName == $currentSubSectionName) {
+                $status = 'current';
+            }
+
+            $subSections[] = array(
+                'status' => $status,
+                'class' => (isset($sectionDetails['collapsible']) && $sectionDetails['collapsible']) ? 'js-hidden' : '',
+                'enabled' => $this->isSectionEnabled($sectionName, $subSectionName),
+                'title' => $this->getSectionLabel($journeyName, $sectionName, $subSectionName),
+                'route' => $this->getSectionRoute($journeyName, $sectionName, $subSectionName)
+            );
+        }
+
+        return $subSections;
     }
 
     /**
@@ -688,13 +734,19 @@ abstract class AbstractJourneyController extends AbstractController
      * @param string $section
      * @return string
      */
-    protected function getSectionStatus($section)
+    protected function getSectionStatus($section, $subSection = null)
     {
         $sectionCompletion = $this->getSectionCompletion();
 
         $statusMap = $this->getJourneyConfig()['completionStatusMap'];
 
-        return $statusMap[(int) $sectionCompletion['section' . $section . 'Status']];
+        $index = 'section' . $section . (!is_null($subSection) ? $subSection : '') . 'Status';
+
+        if (!array_key_exists($index, $sectionCompletion)) {
+            return null;
+        }
+
+        return $statusMap[(int) $sectionCompletion[$index]];
     }
 
     /**
@@ -707,9 +759,7 @@ abstract class AbstractJourneyController extends AbstractController
         $sections = $this->getAccessibleSections();
 
         $view = $this->getViewModel(array('sections' => $sections));
-
-        // @TODO Make this changeable based on application
-        $view->setTemplate('self-serve/journey/' . strtolower($this->getJourneyName()) . '/navigation');
+        $view->setTemplate($this->getApplicationConfig()['templates']['navigation']);
 
         return $view;
     }
@@ -1259,8 +1309,7 @@ abstract class AbstractJourneyController extends AbstractController
         if ($this->hasView()) {
             $view->setTemplate($this->getViewName());
         } elseif ($view->getTemplate() == null) {
-            // @TODO Make this changeable based on application
-            $view->setTemplate('self-serve/journey/' . strtolower($journeyName) . '/main');
+            $view->setTemplate($this->getApplicationConfig()['templates']['main']);
         }
 
         return $view;
@@ -1317,8 +1366,7 @@ abstract class AbstractJourneyController extends AbstractController
         $layoutName = $this->getLayout();
 
         if (empty($layoutName)) {
-            // @TODO Make this changeable based on application
-            $layoutName = 'self-serve/journey/' . strtolower($this->getJourneyName()) . '/layout';
+            $layoutName = $this->getApplicationConfig()['templates']['layout'];
         }
 
         $layout->setTemplate($layoutName);
@@ -1336,6 +1384,15 @@ abstract class AbstractJourneyController extends AbstractController
         $layout->addChild($view, 'main');
 
         $layout->setVariable('children', $children);
+
+        $config = $this->getApplicationConfig();
+
+        if (isset($config['render']['pre-render'])) {
+            $serviceName = $config['render']['pre-render']['service'];
+            $method = $config['render']['pre-render']['method'];
+            $service = $this->getServiceLocator()->get($serviceName);
+            $layout = $service->$method($layout, $this->getIdentifier());
+        }
 
         return $layout;
     }

@@ -18,6 +18,16 @@ return array(
             2 => 'complete'
         ),
         'sections' => array(
+            'Overview' => array(
+                'restriction' => array(
+                    'internal'
+                ),
+                'subSections' => array(
+                    'Details' => array(
+
+                    )
+                )
+            ),
             'TypeOfLicence' => array(
                 'collapsible' => true,
                 'restriction' => array(

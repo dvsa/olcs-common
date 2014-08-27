@@ -20,7 +20,7 @@ class Bootstrap
     {
         // Setup the autloader
         $loader = static::initAutoloader();
-        $loader->addPsr4('CommonTest\\', __dir__ . '/Common/src/Common');
+        $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');
 
         // Grab the application config
         $config = array(

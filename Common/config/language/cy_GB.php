@@ -81,7 +81,10 @@ return array(
     'application.operating-centres' => 'W Operating centres',
     'application.operating-centres.authorisation' => 'W Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'W Financial evidence',
+    'application.overview' => 'W Overview',
+    'application.overview.details' => 'W Overview',
     'application.payment-submission' => 'W Payment & submission',
+    'application.payment-submission.payment' => 'W Payment',
     'application.payment-submission.summary.subtitle' => 'W Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'W Thank you',
     'application.previous-history' => 'W Previous history',
@@ -93,6 +96,7 @@ return array(
     'application.review-declarations.summary.new-window' => 'W View in another window',
     'application.taxi-phv' => 'W Taxi/PHV licences',
     'application.transport-managers' => 'W Transport managers',
+    'application.transport-managers.placeholder' => 'W Transport managers',
     'application.type-of-licence' => 'W Type of licence',
     'application.type-of-licence.licence-type' => 'W Licence type',
     'application.type-of-licence.operator-location' => 'W Operator location',
@@ -292,13 +296,22 @@ return array(
         (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'W Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'W Do you agree to the following
+        undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'W Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Limousines and novelty type vehicles with
         nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'W If you intend to operate limousines
+        or novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
+        to be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.nineOrMore' => 'W Vehicles with nine or more passengers',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'W Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
+    'application_vehicle-safety_undertakings.nineOrMore.label' => 'W If you only intend to use vehicles with 9 or more
+        passenger seats under this licence (if granted) do you agree to the following undertaking being specified on the
+        licence',
     'application_vehicle-safety_undertakings.smallVehiclesConfirmation' => 'W Confirm that you agree to the above
         conditions and undertakings being specified on your licence (if granted)',
     'application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo' => 'W Do you intend to operate small vehicles
@@ -306,7 +319,10 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'W Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'W Text for small vehicles agreement.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'W Small vehicles undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'W Text for small vehicles
+        undertakings agreement Scotland.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'W Scottish operators and
         English and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'W Add vehicle',
@@ -403,6 +419,8 @@ return array(
     'case-summary-info' => 'W Case summary information',
     'case-type' => 'W Raised Against',
     'cases' => 'W Cases',
+    'cat_lic' => 'W Licence',
+    'cat_oc' => 'W Operating Centre',
     'categories' => 'W Categories',
     'choose-one' => 'W Choose one',
     'closed' => 'W Closed',
@@ -511,6 +529,10 @@ return array(
     'header-correspondence-details' => 'W Correspondence details',
     'header-establishment-address' => 'W Establishment address',
     'helpdesk' => 'W Helpdesk',
+    'impo_not' => 'W Vehicle Not Returned',
+    'impo_returned' => 'W Vehicle Returned',
+    'impt_hearing' => 'W Hearing',
+    'impt_paper' => 'W Paperwork',
     'internal' => 'W Internal',
     'internal-external' => 'W Internal/External',
     'internal-licence-details' => 'W Licence details',

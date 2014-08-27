@@ -144,30 +144,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals($hasTrailers, (boolean) strstr($tableHtml, 'trailer'));
@@ -190,30 +172,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(false, $form->get('data')->has('totCommunityLicences'));
@@ -239,30 +203,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(false, $form->get('data')->has('totCommunityLicences'));
@@ -288,30 +234,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(false, $form->get('data')->has('totCommunityLicences'));
@@ -336,30 +264,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(false, $form->get('data')->has('totCommunityLicences'));
@@ -385,30 +295,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(true, $form->get('data')->has('totCommunityLicences'));
@@ -434,30 +326,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $tableHtml = $form->get('table')->get('table')->getTable()->render();
 
         $this->assertEquals(true, $form->get('data')->has('totCommunityLicences'));
@@ -531,30 +405,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $this->assertEquals($hasTrailers, $form->get('data')->has('noOfTrailersPossessed'));
     }
 
@@ -900,30 +756,12 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
         // We are not psv, so should have trailer related content
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         $this->assertEquals($hasTrailers, $form->get('data')->has('noOfTrailersPossessed'));
     }
 
@@ -1018,29 +856,11 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
         // We don't have any operating centres so traffic area section shouldn't be present
         $this->assertEquals($form->has('dataTrafficArea'), false);
 
@@ -1064,29 +884,11 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
 
-        // We should have 2 children (Navigation and Main)
-        $children = $response->getChildren();
-        $this->assertEquals(2, count($children));
-
-        $main = null;
-        $navigation = null;
-
-        foreach ($children as $child) {
-            if ($child->captureTo() == 'navigation') {
-                $navigation = $child;
-                continue;
-            }
-
-            if ($child->captureTo() == 'main') {
-                $main = $child;
-            }
-        }
-
         // Assert that we have Main and Navigation views
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $main);
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $navigation);
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getMainView($response));
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $this->getNavView($response));
 
-        $form = $main->getVariable('form');
+        $form = $this->getFormFromView($response);
 
         // No "Add another" button needed if no traffic area defined and no operating centres added yet
         // and not NI application
