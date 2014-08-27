@@ -21,6 +21,8 @@ return array(
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
         or greater than the largest number of trailers authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationValidator.too-low' => 'W You must enter at least 1 vehicle or trailer',
+    'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'W You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
         centre, the total number of authorised vehicles must be the same as at your operating centre',
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
@@ -227,9 +229,9 @@ return array(
     'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'W e. Been disqualified from holding or
         obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_prevBeenRefused' => 'W b. Ever had an application for a goods or a
-        public service vehicle operator\'s licence refused by any EU licencing authority?',
+        public service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_prevBeenRevoked' => 'W c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_previous-history_licence-history_prevHadLicence' => 'W a. Previously held or applied for a goods or
         public service vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevHasLicence' => 'W 1. Does any person named in this application
@@ -241,9 +243,9 @@ return array(
     'application_previous-history_licence-history_publicInquiryLicence' => 'W d. Ever attended a Public Inquiry before a
         traffic commissioner?',
     'application_previous-history_licence-history_refusedLicence' => 'W b. Ever had an application for a goods or a
-        public service vehicle operator\'s licence refused by any EU licencing authority?',
+        public service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_revokedLicence' => 'W c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_taxi-phv_licence-add' => 'W Add taxi/PHV licence',
     'application_taxi-phv_licence-edit' => 'W Edit taxi/PHV licence',
     'application_taxi-phv_licence-sub-action.contactDetails' => 'W Council details',
@@ -539,7 +541,7 @@ return array(
     'internal-licence-details-address' => 'W Addresses',
     'internal-licence-details-address-label' => 'W Addresses',
     'internal-licence-details-address-title' => 'W Addresses',
-    'internal-licence-details-breadcrumb' => 'W Details',
+    'internal-licence-details-breadcrumb' => 'W Licence details',
     'internal-licence-details-business_details' => 'W Business details',
     'internal-licence-details-business_details-label' => 'W Business details',
     'internal-licence-details-business_details-title' => 'W Business details',
