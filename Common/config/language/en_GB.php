@@ -540,7 +540,7 @@ return array(
     'internal-licence-details-address' => 'Addresses',
     'internal-licence-details-address-label' => 'Addresses',
     'internal-licence-details-address-title' => 'Addresses',
-    'internal-licence-details-breadcrumb' => 'Details',
+    'internal-licence-details-breadcrumb' => 'Licence details',
     'internal-licence-details-business_details' => 'Business details',
     'internal-licence-details-business_details-label' => 'Business details',
     'internal-licence-details-business_details-title' => 'Business details',

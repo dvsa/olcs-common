@@ -541,7 +541,7 @@ return array(
     'internal-licence-details-address' => 'W Addresses',
     'internal-licence-details-address-label' => 'W Addresses',
     'internal-licence-details-address-title' => 'W Addresses',
-    'internal-licence-details-breadcrumb' => 'W Details',
+    'internal-licence-details-breadcrumb' => 'W Licence details',
     'internal-licence-details-business_details' => 'W Business details',
     'internal-licence-details-business_details-label' => 'W Business details',
     'internal-licence-details-business_details-title' => 'W Business details',
