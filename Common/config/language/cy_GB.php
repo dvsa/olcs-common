@@ -21,6 +21,8 @@ return array(
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
         or greater than the largest number of trailers authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationValidator.too-low' => 'W You must enter at least 1 vehicle or trailer',
+    'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'W You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
         centre, the total number of authorised vehicles must be the same as at your operating centre',
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
