@@ -8,7 +8,7 @@
 
 namespace CommonTest\Controller\Application;
 
-use CommonTest\Bootstrap;
+use OlcsTest\Bootstrap;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use Zend\Http\Request;
 use Zend\Http\Response;
