@@ -76,6 +76,11 @@ return array(
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
             },
+            'licence' => function ($serviceManager) {
+                $licenceService = new \Common\Service\Licence\Licence();
+                $licenceService->setServiceLocator($serviceManager);
+                return $licenceService;
+            },
         )
     ),
     'file_uploader' => array(

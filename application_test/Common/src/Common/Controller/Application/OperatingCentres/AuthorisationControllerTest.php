@@ -56,7 +56,65 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     private $licenceType = 'ltyp_sn';
 
 
-    protected $mockedMethods = array('getUploader', 'getFileSizeValidator');
+    protected $mockedMethods = array('getUploader', 'getFileSizeValidator',
+                                     'getLicenceService', 'getPostcodeService',
+                                     'getPostcodeTrafficAreaValidator', 'getPostcodeValidatorsChain');
+
+    public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
+    {
+
+        parent::setUpAction($action, $id, $data, $files);
+
+        $mockLicenceService = $this->getMock('\StdClass', array('generateLicence'));
+
+        $mockLicenceService->expects($this->any())
+            ->method('generateLicence')
+            ->will($this->returnValue(1));
+
+        $this->controller->expects($this->any())
+            ->method('getLicenceService')
+            ->will($this->returnValue($mockLicenceService));
+
+        $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
+        $mockPostcodeValidatorsChain->expects($this->any())
+            ->method('attach')
+            ->will($this->returnValue(true));
+
+        $this->controller->expects($this->any())
+            ->method('getPostcodeValidatorsChain')
+            ->will($this->returnValue($mockPostcodeValidatorsChain));
+
+        $mockPostcodeValidator = $this->getMock(
+            '\Common\Form\Elements\Validators\OperatingCentresTrafficAreaValidator',
+            array('isValid', 'setNiFlag', 'setOperatingCentresCount', 'setTrafficArea')
+        );
+
+        $mockPostcodeValidator->expects($this->any())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+
+        $this->controller->expects($this->any())
+            ->method('getPostcodeTrafficAreaValidator')
+            ->will($this->returnValue($mockPostcodeValidator));
+
+        $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
+
+        $mockPostcodeService->expects($this->any())
+            ->method('getTrafficAreaByPostcode')
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('LS1 4ES', array('B', 'North East of England')),
+                        array('BT1 4EE', array('N', 'Northern Ireland')),
+                    )
+                )
+            );
+
+        $this->controller->expects($this->any())
+            ->method('getPostcodeService')
+            ->will($this->returnValue($mockPostcodeService));
+
+    }
 
     /**
      * Test back button
@@ -419,7 +477,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     /**
      * Test addAction with submit
      *
-     * @group failed1
      * @dataProvider psvTrafficAreaProvider
      */
     public function testAddActionWithSubmit($goodsOrPsv, $hasTrailers, $niFlag)
@@ -519,7 +576,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     /**
      * Test addAction with submit with add another
      *
-     * @group failed
      * @dataProvider psvProvider
      */
     public function testAddActionWithSubmitWithAddAnother($goodsOrPsv, $hasTrailers)
@@ -710,7 +766,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     }
 
     /**
-     * @group failed
      * Test editAction with submit
      */
     public function testEditActionWithSubmit()
@@ -886,51 +941,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                 )
             )
         );
-
-        $this->mockedMethods = array_merge(
-            $this->mockedMethods,
-            array('getPostcodeService', 'getPostcodeTrafficAreaValidator', 'getPostcodeValidatorsChain')
-        );
         $this->setUpAction('add', null, $post, $files);
-
-        $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
-        $mockPostcodeValidatorsChain->expects($this->any())
-            ->method('attach')
-            ->will($this->returnValue(true));
-
-        $this->controller->expects($this->any())
-            ->method('getPostcodeValidatorsChain')
-            ->will($this->returnValue($mockPostcodeValidatorsChain));
-
-        $mockPostcodeValidator = $this->getMock(
-            '\Common\Form\Elements\Validators\OperatingCentresTrafficAreaValidator',
-            array('isValid', 'setNiFlag', 'setOperatingCentresCount', 'setTrafficArea')
-        );
-
-        $mockPostcodeValidator->expects($this->any())
-            ->method('isValid')
-            ->will($this->returnValue(true));
-
-        $this->controller->expects($this->any())
-            ->method('getPostcodeTrafficAreaValidator')
-            ->will($this->returnValue($mockPostcodeValidator));
-
-        $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
-
-        $mockPostcodeService->expects($this->any())
-            ->method('getTrafficAreaByPostcode')
-            ->will(
-                $this->returnValueMap(
-                    array(
-                        array('LS1 4ES', array('B', 'North East of England')),
-                        array('BT1 4EE', array('N', 'Northern Ireland')),
-                    )
-                )
-            );
-
-        $this->controller->expects($this->any())
-            ->method('getPostcodeService')
-            ->will($this->returnValue($mockPostcodeService));
 
         $this->goodsOrPsv = $goodsOrPsv;
         $this->controller->setEnabledCsrf(false);
@@ -1374,6 +1385,10 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                     array(
                         'id' => 'K',
                         'name' => 'London and the South East of England'
+                    ),
+                    array(
+                        'id' => 'N',
+                        'name' => 'Northern ireland'
                     ),
                 )
             );
