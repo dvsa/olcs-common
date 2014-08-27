@@ -10,6 +10,7 @@ namespace Common\Controller;
 
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
+use Common\Helper\RestrictionHelper;
 
 /**
  * Abstract Journey Controller
@@ -676,12 +677,15 @@ abstract class AbstractJourneyController extends AbstractController
 
         $status = $this->getSectionStatus($name);
 
+        $current = false;
+
         if ($name == $sectionName) {
-            $status = 'current';
+            $current = true;
         }
 
         return array(
             'status' => $status,
+            'current' => $current,
             'display' => (isset($details['collapsible']) && $details['collapsible']),
             'class' => (isset($details['collapsible']) && $details['collapsible']) ? 'js-visible' : '',
             'enabled' => $this->isSectionEnabled($name),
@@ -712,12 +716,15 @@ abstract class AbstractJourneyController extends AbstractController
 
             $status = $this->getSectionStatus($sectionName, $subSectionName);
 
+            $current = false;
+
             if ($subSectionName == $currentSubSectionName) {
-                $status = 'current';
+                $current = true;
             }
 
             $subSections[] = array(
                 'status' => $status,
+                'current' => $current,
                 'class' => (isset($sectionDetails['collapsible']) && $sectionDetails['collapsible']) ? 'js-hidden' : '',
                 'enabled' => $this->isSectionEnabled($sectionName, $subSectionName),
                 'title' => $this->getSectionLabel($journeyName, $sectionName, $subSectionName),
@@ -944,32 +951,23 @@ abstract class AbstractJourneyController extends AbstractController
 
             $accessKeys = $this->getAccessKeys();
 
-            $restrictions = $details['restriction'];
-
-            // Strict requirements MUST be there
-            $strict = array();
-            // Lax requirements can mach ANY
-            $lax = array();
-
-            foreach ($restrictions as $restriction) {
-                if (substr($restriction, 0, 1) == '!') {
-                    $restriction = str_replace('!', '', $restriction);
-                    $strict[] = $restriction;
-                }
-
-                $lax[] = $restriction;
-            }
-
-            // Must be empty
-            $missingScricts = array_diff($strict, $accessKeys);
-
-            // Must not be empty
-            $matchingLaxes = array_intersect($accessKeys, $lax);
-
-            return (empty($missingScricts) && !empty($matchingLaxes));
+            return $this->isRestrictionSatisfied($details['restriction'], $accessKeys);
         }
 
         return true;
+    }
+
+    /**
+     * Check if a restriction is satisfied
+     *
+     * @param mixed $restriction
+     * @param array $accessKeys
+     */
+    protected function isRestrictionSatisfied($restriction, $accessKeys)
+    {
+        $helper = new RestrictionHelper();
+
+        return $helper->isRestrictionSatisfied($restriction, $accessKeys);
     }
 
     /**

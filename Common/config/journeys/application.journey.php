@@ -20,7 +20,7 @@ return array(
         'sections' => array(
             'Overview' => array(
                 'restriction' => array(
-                    '!internal'
+                    'internal'
                 ),
                 'subSections' => array(
                     'Details' => array(
@@ -217,6 +217,7 @@ return array(
                     'PreviousHistory'
                 ),
                 'restriction' => array(
+                    // We need any of these keys
                     'goods-standard',
                     'psv-standard',
                     'goods-restricted',
@@ -241,12 +242,18 @@ return array(
                     'ReviewDeclarations'
                 ),
                 'restriction' => array(
-                    '!selfserve',
-                    'goods-standard',
-                    'psv-standard',
-                    'goods-restricted',
-                    'psv-restricted',
-                    'psv-special-restricted'
+                    // An array here means we need ALL access keys
+                    array(
+                        'selfserve',
+                        // However, this array means we can have any of these keys to satisfy the second requirment
+                        array(
+                            'goods-standard',
+                            'psv-standard',
+                            'goods-restricted',
+                            'psv-restricted',
+                            'psv-special-restricted'
+                        )
+                    )
                 ),
                 'subSections' => array(
                     'Payment' => array(
