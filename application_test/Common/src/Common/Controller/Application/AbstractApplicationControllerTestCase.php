@@ -179,7 +179,11 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
 
             $children = $view->getChildrenByCaptureTo('content');
 
-            return array_shift($children);
+            if (is_array($children) && !empty($children)) {
+                return array_shift($children);
+            }
+
+            return $view;
         }
 
         $this->fail('Trying to get last content child of a Response object instead of a ViewModel');
