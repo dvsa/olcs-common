@@ -227,9 +227,9 @@ return array(
     'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'e. Been disqualified from holding or
         obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_prevBeenRefused' => 'b. Ever had an application for a goods or a
-        public service vehicle operator\'s licence refused by any EU licencing authority?',
+        public service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_prevBeenRevoked' => 'c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_previous-history_licence-history_prevHadLicence' => 'a. Previously held or applied for a goods or
         public service vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevHasLicence' => '1. Does any person named in this application
@@ -241,9 +241,9 @@ return array(
     'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public Inquiry before a
         traffic commissioner?',
     'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods or a public
-        service vehicle operator\'s licence refused by any EU licencing authority?',
+        service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_taxi-phv_licence-add' => 'Add taxi/PHV licence',
     'application_taxi-phv_licence-edit' => 'Edit taxi/PHV licence',
     'application_taxi-phv_licence-sub-action.contactDetails' => 'Council details',
