@@ -6,9 +6,9 @@
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\VehicleSafety;
+namespace CommonTest\Controller\Application\VehicleSafety;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 
 /**

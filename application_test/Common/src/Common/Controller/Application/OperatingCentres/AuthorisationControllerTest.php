@@ -7,9 +7,9 @@
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\OperatingCentres;
+namespace CommonTest\Controller\Application\OperatingCentres;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 
 /**

@@ -6,9 +6,9 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\PaymentSubmission;
+namespace CommonTest\Controller\Application\PaymentSubmission;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 
 /**

@@ -6,9 +6,9 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\TransportManagers;
+namespace CommonTest\Controller\Application\TransportManagers;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 
 /**

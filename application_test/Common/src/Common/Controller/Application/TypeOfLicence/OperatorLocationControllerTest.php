@@ -6,9 +6,9 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\TypeOfLicence;
+namespace CommonTest\Controller\Application\TypeOfLicence;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 
 /**

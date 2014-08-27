@@ -6,9 +6,9 @@
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 
-namespace OlcsTest\Controller\Application\YourBusiness;
+namespace CommonTest\Controller\Application\YourBusiness;
 
-use OlcsTest\Controller\Application\AbstractApplicationControllerTestCase;
+use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
 use Common\Controller\Application\YourBusiness\PeopleController;
 
