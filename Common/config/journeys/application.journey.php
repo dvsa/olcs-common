@@ -30,16 +30,6 @@ return array(
             ),
             'TypeOfLicence' => array(
                 'collapsible' => true,
-                'restriction' => array(
-                    null,
-                    'goods',
-                    'psv',
-                    'goods-standard',
-                    'psv-standard',
-                    'goods-restricted',
-                    'psv-restricted',
-                    'psv-special-restricted'
-                ),
                 'subSections' => array(
                     'OperatorLocation' => array(
                     ),
