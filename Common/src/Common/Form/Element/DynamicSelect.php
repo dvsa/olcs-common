@@ -2,6 +2,7 @@
 
 namespace Common\Form\Element;
 
+use Common\Service\Data\ListDataInterface;
 use Zend\Form\Element\Select;
 use Common\Service\Data\RefData as RefDataService;
 
@@ -16,7 +17,7 @@ class DynamicSelect extends Select
      *
      * @var string
      */
-    protected $category;
+    protected $context;
 
     /**
      * If set the element will request grouped data from the select service
@@ -26,12 +27,21 @@ class DynamicSelect extends Select
     protected $useGroups = false;
 
     /**
-     * Instance of the ref data service
+     * @var \Common\Service\Data\ListDataInterface
+     */
+    protected $dataService;
+
+    /**
+     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    protected $serviceLocator;
+
+    /**
+     * Name of the data service to use to fetch list options from
      *
      * @var RefDataService
      */
-    protected $refDataService;
-
+    protected $serviceName = 'Common\Service\Data\RefData';
 
 
     /**
@@ -42,33 +52,40 @@ class DynamicSelect extends Select
     {
         parent::setOptions($options);
 
-        if (isset($this->options['category'])) {
-            $this->setCategory($this->options['category']);
+        if (isset($this->options['context'])) {
+            $this->setContext($this->options['context']);
+        } elseif (isset($this->options['category'])) {
+            //for bc
+            $this->setContext($this->options['category']);
         }
 
         if (isset($this->options['use_groups'])) {
             $this->setUseGroups($this->options['use_groups']);
         }
 
+        if (isset($this->options['service_name'])) {
+            $this->setServiceName($this->options['service_name']);
+        }
+
         return $this;
     }
 
     /**
-     * @param string $category
+     * @param string $context
      * @return $this
      */
-    public function setCategory($category)
+    public function setContext($context)
     {
-        $this->category = $category;
+        $this->context = $context;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getCategory()
+    public function getContext()
     {
-        return $this->category;
+        return $this->context;
     }
 
     /**
@@ -90,21 +107,70 @@ class DynamicSelect extends Select
     }
 
     /**
-     * @param \Common\Service\Data\RefData $refDataService
+     * @param \Common\Service\Data\RefData $serviceName
      * @return $this
      */
-    public function setRefDataService(RefDataService $refDataService)
+    public function setServiceName($serviceName)
     {
-        $this->refDataService = $refDataService;
+        $this->serviceName = $serviceName;
         return $this;
     }
 
     /**
      * @return \Common\Service\Data\RefData
      */
-    public function getRefDataService()
+    public function getServiceName()
     {
-        return $this->refDataService;
+        return $this->serviceName;
+    }
+
+    /**
+     * @param \Common\Service\Data\ListDataInterface $dataService
+     * @return $this
+     */
+    public function setDataService($dataService)
+    {
+        $this->dataService = $dataService;
+        return $this;
+    }
+
+    /**
+     * @throws \Exception If service doesn't implement ListDataInterface
+     * @return \Common\Service\Data\ListDataInterface
+     */
+    public function getDataService()
+    {
+        if (is_null($this->dataService)) {
+            $this->dataService = $this->getServiceLocator()->get($this->getServiceName());
+            if (!($this->dataService instanceof ListDataInterface)) {
+                throw new \Exception(
+                    sprintf(
+                        'Class %s does not implement \Common\Service\Data\ListDataInterface',
+                        $this->getServiceName()
+                    )
+                );
+            }
+        }
+
+        return $this->dataService;
+    }
+
+    /**
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @return $this
+     */
+    public function setServiceLocator($serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+        return $this;
+    }
+
+    /**
+     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
     }
 
     /**
@@ -115,8 +181,8 @@ class DynamicSelect extends Select
     public function getValueOptions()
     {
         if (empty($this->valueOptions)) {
-            $refDataService = $this->getRefDataService();
-            $this->valueOptions = $refDataService->fetchListOptions($this->getCategory(), $this->useGroups());
+            $refDataService = $this->getDataService();
+            $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
         }
 
         return $this->valueOptions;

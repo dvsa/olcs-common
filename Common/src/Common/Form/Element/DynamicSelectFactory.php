@@ -22,12 +22,10 @@ class DynamicSelectFactory implements FactoryInterface
     {
         /** @var \Zend\Form\FormElementManager $formElementManager */
         $serviceLocator = $formElementManager->getServiceLocator();
-        /** @var RefDataService $refDataService */
-        $refDataService = $serviceLocator->get('Common\Service\Data\RefData');
 
         $service = new DynamicSelect();
 
-        $service->setRefDataService($refDataService);
+        $service->setServiceLocator($serviceLocator);
         return $service;
     }
 }

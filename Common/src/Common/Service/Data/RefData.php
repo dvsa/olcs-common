@@ -8,7 +8,7 @@ use Common\Util\RestClient;
  * Class RefData
  * @package Common\Service
  */
-class RefData extends AbstractData
+class RefData extends AbstractData implements ListDataInterface
 {
     protected $serviceName = 'RefData';
 
