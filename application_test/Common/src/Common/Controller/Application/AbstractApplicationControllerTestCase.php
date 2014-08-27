@@ -8,7 +8,7 @@
 
 namespace CommonTest\Controller\Application;
 
-use CommonTest\Bootstrap;
+use OlcsTest\Bootstrap;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use Zend\Http\Request;
 use Zend\Http\Response;
@@ -164,28 +164,55 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
     protected function getFormFromView($view)
     {
         if ($view instanceof ViewModel) {
-            // We should have 2 children (Navigation and Main)
-            $children = $view->getChildren();
-            $this->assertEquals(2, count($children));
 
-            $main = null;
-            $navigation = null;
-
-            foreach ($children as $child) {
-                if ($child->captureTo() == 'navigation') {
-                    $navigation = $child;
-                    continue;
-                }
-
-                if ($child->captureTo() == 'main') {
-                    $main = $child;
-                }
-            }
+            $main = $this->getMainView($view);
 
             return $main->getVariable('form');
         }
 
         $this->fail('Trying to get form of a Response object instead of a ViewModel');
+    }
+
+    protected function getContentView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $children = $view->getChildrenByCaptureTo('content');
+
+            if (is_array($children) && !empty($children)) {
+                return array_shift($children);
+            }
+
+            return $view;
+        }
+
+        $this->fail('Trying to get last content child of a Response object instead of a ViewModel');
+    }
+
+    protected function getMainView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $mainChildren = $view->getChildrenByCaptureTo('main');
+            $this->assertEquals(1, count($mainChildren));
+
+            return $mainChildren[0];
+        }
+
+        $this->fail('Trying to get main child of a Response object instead of a ViewModel');
+    }
+
+    protected function getNavView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $navChildren = $view->getChildrenByCaptureTo('navigation');
+            $this->assertEquals(1, count($navChildren));
+
+            return $navChildren[0];
+        }
+
+        $this->fail('Trying to get nav child of a Response object instead of a ViewModel');
     }
 
     /**

@@ -241,6 +241,12 @@ class ApplicationController extends AbstractJourneyController
             $this->accessKeys[] = $licence['organisation']['type']['id'];
         }
 
+        $config = $this->getApplicationConfig();
+
+        if (isset($config['access_keys'])) {
+            $this->accessKeys = array_merge($this->accessKeys, $config['access_keys']);
+        }
+
         return $this->accessKeys;
     }
 
