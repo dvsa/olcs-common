@@ -28,8 +28,10 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
         ));
         $spec = $element->getInputSpecification();
 
+        $baseYear = date('Y');
         $targetYear = date('Y', strtotime('+11 years'));
         $this->assertTrue($spec['required']);
+        $this->assertEquals($baseYear, $element->getMinYear());
         $this->assertEquals($targetYear, $element->getMaxYear());
     }
 

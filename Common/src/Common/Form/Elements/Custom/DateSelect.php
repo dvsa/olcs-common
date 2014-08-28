@@ -26,6 +26,7 @@ class DateSelect extends ZendElement\DateSelect
     {
         if ($this->getOption('max_year_delta')) {
             $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
+            $this->setMinYear(date('Y'));
             $this->setMaxYear($maxYear);
         }
 
