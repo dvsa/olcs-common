@@ -49,20 +49,23 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     private $hasTrafficAreaDefined = true;
 
     /**
-     * Norther Ireland type of licence
+     * Northern Ireland type of licence
      */
     private $niFlag = 'N';
 
     private $licenceType = 'ltyp_sn';
 
-
-    protected $mockedMethods = array('getUploader', 'getFileSizeValidator',
-                                     'getLicenceService', 'getPostcodeService',
-                                     'getPostcodeTrafficAreaValidator', 'getPostcodeValidatorsChain');
+    protected $mockedMethods = array(
+        'getUploader',
+        'getFileSizeValidator',
+        'getLicenceService',
+        'getPostcodeService',
+        'getPostcodeTrafficAreaValidator',
+        'getPostcodeValidatorsChain'
+    );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
-
         parent::setUpAction($action, $id, $data, $files);
 
         $mockLicenceService = $this->getMock('\StdClass', array('generateLicence'));
