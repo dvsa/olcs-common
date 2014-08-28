@@ -254,10 +254,16 @@ return array(
     'application_taxi-phv_licence-sub-action.data.licNo' => 'Taxi/PHV licence number',
     'application_taxi-phv_licence.table.address' => 'Address',
     'application_taxi-phv_licence.table.council' => 'Council',
-    'application_taxi-phv_licence.table.empty_message' => 'Please list the taxi or private hire vehicle licences which
-        you currently hold',
+    'application_taxi-phv_licence.table.empty_message' => "You haven't added any taxi/phv licences<br/ >"
+    . "Please note: you can multiple Taxi/PHV licences to an application provided they are located in the same traffic area",
     'application_taxi-phv_licence.table.licence-number' => 'Licence number',
     'application_taxi-phv_licence.table.title' => 'Licences',
+    'application_taxi-phv_licence.trafficArea.label.new' => 'Traffic area',
+    'application_taxi-phv_licence.trafficArea.hint.new' => 'Your traffic area is determined based on the first Taxi/PHV licence address.<br />'
+    . 'For more information and to find your traffic area please visit <a href="#" target="_blank">this link.</a>',
+    'application_taxi-phv_licence.trafficArea.label.exists' => 'Your traffic area',
+    'application_taxi-phv_licence.trafficArea.labelasahint.exists' => '<p class="hint">Your traffic
+        area has been determined from your council address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_type-of-licence_licence-type.data' => 'Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'Operator location',
