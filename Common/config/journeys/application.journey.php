@@ -30,16 +30,6 @@ return array(
             ),
             'TypeOfLicence' => array(
                 'collapsible' => true,
-                'restriction' => array(
-                    null,
-                    'goods',
-                    'psv',
-                    'goods-standard',
-                    'psv-standard',
-                    'goods-restricted',
-                    'psv-restricted',
-                    'psv-special-restricted'
-                ),
                 'subSections' => array(
                     'OperatorLocation' => array(
                     ),
@@ -217,6 +207,7 @@ return array(
                     'PreviousHistory'
                 ),
                 'restriction' => array(
+                    // We need any of these keys
                     'goods-standard',
                     'psv-standard',
                     'goods-restricted',
@@ -241,11 +232,18 @@ return array(
                     'ReviewDeclarations'
                 ),
                 'restriction' => array(
-                    'goods-standard',
-                    'psv-standard',
-                    'goods-restricted',
-                    'psv-restricted',
-                    'psv-special-restricted'
+                    // An array here means we need ALL access keys
+                    array(
+                        'selfserve',
+                        // However, this array means we can have any of these keys to satisfy the second requirment
+                        array(
+                            'goods-standard',
+                            'psv-standard',
+                            'goods-restricted',
+                            'psv-restricted',
+                            'psv-special-restricted'
+                        )
+                    )
                 ),
                 'subSections' => array(
                     'Payment' => array(
