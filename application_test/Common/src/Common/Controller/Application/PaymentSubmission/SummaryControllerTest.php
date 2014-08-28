@@ -16,7 +16,7 @@ use Common\Controller\Application\ApplicationController;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SummaryControllerTest extends AbstractApplicationControllerTestCase
+abstract class SummaryControllerTest extends AbstractApplicationControllerTestCase
 {
     protected $controllerName =  '\Common\Controller\Application\PaymentSubmission\SummaryController';
 

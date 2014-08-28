@@ -6,7 +6,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace CommonTest\Controller\Application\OperatingCentres;
+namespace CommonTest\Controller\Application\PaymentSubmission;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\ApplicationController;
@@ -16,7 +16,7 @@ use Common\Controller\Application\ApplicationController;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PaymentControllerTest extends AbstractApplicationControllerTestCase
+abstract class PaymentControllerTest extends AbstractApplicationControllerTestCase
 {
     protected $controllerName =  '\Common\Controller\Application\PaymentSubmission\PaymentController';
 
@@ -79,6 +79,30 @@ class PaymentControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
+        $applicationDataBundle = array(
+            'properties' => array(
+                'id',
+                'version'
+            ),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $applicationDataBundle) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'licence' => array(
+                    'id' => 1
+                )
+            );
+        }
+
         if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
 
             return $this->getLicenceData('goods');
