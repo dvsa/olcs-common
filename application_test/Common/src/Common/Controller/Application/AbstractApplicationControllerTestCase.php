@@ -109,6 +109,34 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
 
+        $mockUrlPlugin = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlPlugin->expects($this->any())
+            ->method('__invoke')
+            ->will($this->returnValue('URL'));
+
+        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
+        $mockViewHelperManager->expects($this->any())
+            ->method('get')
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('url', $mockUrlPlugin),
+                    )
+                )
+            );
+
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
+
+        if (class_exists('\Olcs\Helper\ApplicationJourneyHelper')) {
+            $mockApplicationJourneyHelper = $this->getMock('\Olcs\Helper\ApplicationJourneyHelper', array('makeRestCall'));
+            $mockApplicationJourneyHelper->setServiceLocator($serviceManager);
+            $mockApplicationJourneyHelper->expects($this->any())
+                ->method('makeRestCall')
+                ->will($this->returnCallback(array($this, 'mockRestCall')));
+            $serviceManager->setService('ApplicationJourneyHelper', $mockApplicationJourneyHelper);
+        }
+
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
 
@@ -151,6 +179,44 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
 
         if (isset($this->restResponses[$service][$method])) {
             return $this->restResponses[$service][$method];
+        }
+
+        $headerBundle = array(
+            'properties' => array('id'),
+            'children' => array(
+                'status' => array(
+                    'properties' => array('id')
+                ),
+                'licence' => array(
+                    'properties' => array(
+                        'id',
+                        'licNo'
+                    ),
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(
+                                'name'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $bundle == $headerBundle) {
+            return array(
+                'id' => 1,
+                'status' => array(
+                    'id' => 'apsts_new'
+                ),
+                'licence' => array(
+                    'id' => 1,
+                    'licNo' => 'AB123456',
+                    'organisation' => array(
+                        'name' => 'Foo ltd'
+                    )
+                )
+            );
         }
 
         return $this->mockRestCalls($service, $method, $data, $bundle);
