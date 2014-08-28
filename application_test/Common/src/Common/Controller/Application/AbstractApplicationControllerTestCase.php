@@ -54,8 +54,15 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
      * @param string $method
      * @param mixed $response
      */
-    protected function setRestResponse($service, $method, $response = null)
+    protected function setRestResponse($service, $method, $response = null, $bundle = array())
     {
+        if (!empty($bundle)) {
+            $response = array(
+                'bundle' => $bundle,
+                'response' => $response
+            );
+        }
+
         $this->restResponses[$service][$method] = $response;
     }
 
@@ -178,7 +185,15 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         }
 
         if (isset($this->restResponses[$service][$method])) {
-            return $this->restResponses[$service][$method];
+
+            if (isset($this->restResponses[$service][$method]['bundle'])) {
+
+                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
+                    return $this->restResponses[$service][$method]['response'];
+                }
+            } else {
+                return $this->restResponses[$service][$method];
+            }
         }
 
         $headerBundle = array(
@@ -203,7 +218,7 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
             )
         );
 
-        if ($service == 'Application' && $bundle == $headerBundle) {
+        if ($service == 'Application' && $method == 'GET' && $bundle == $headerBundle) {
             return array(
                 'id' => 1,
                 'status' => array(
@@ -338,19 +353,25 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
             'sectionYourBusinessBusinessDetailsStatus' => 2,
             'sectionYourBusinessAddressesStatus' => 2,
             'sectionYourBusinessPeopleStatus' => 2,
+            'sectionYourBusinessSoleTraderStatus' => 2,
             'sectionTaxiPhvStatus' => 2,
+            'sectionTaxiPhvLicenceStatus' => 2,
             'sectionOperatingCentresStatus' => 2,
             'sectionOperatingCentresAuthorisationStatus' => 2,
             'sectionOperatingCentresFinancialEvidenceStatus' => 2,
             'sectionTransportManagersStatus' => 2,
+            'sectionTransportManagersPlaceholderStatus' => 2,
             'sectionVehicleSafetyStatus' => 2,
             'sectionVehicleSafetyVehicleStatus' => 2,
             'sectionVehicleSafetySafetyStatus' => 2,
+            'sectionVehicleSafetyVehiclePsvStatus' => 2,
+            'sectionVehicleSafetyUndertakingsStatus' => 2,
             'sectionPreviousHistoryStatus' => 2,
             'sectionPreviousHistoryFinancialHistoryStatus' => 2,
             'sectionPreviousHistoryLicenceHistoryStatus' => 2,
-            'sectionPreviousHistoryConvictionPenaltiesStatus' => 2,
+            'sectionPreviousHistoryConvictionsPenaltiesStatus' => 2,
             'sectionReviewDeclarationsStatus' => 2,
+            'sectionReviewDeclarationsSummaryStatus' => 2,
             'sectionPaymentSubmissionStatus' => 0,
             'sectionPaymentSubmissionPaymentStatus' => 0,
             'sectionPaymentSubmissionSummaryStatus' => 0,
