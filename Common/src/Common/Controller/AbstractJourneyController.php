@@ -1174,34 +1174,7 @@ abstract class AbstractJourneyController extends AbstractController
     {
         if ($this->hasForm()) {
 
-            $data = array();
-
-            if (!$this->getRequest()->isPost()) {
-                $data = $this->getFormData();
-            }
-
-            if ($this->isAction() || empty($this->formTables)) {
-                $form = $this->generateFormWithData($this->getFormName(), $this->getFormCallback(), $data);
-            } else {
-                $tableConfigs = array();
-
-                foreach ($this->formTables as $table => $config) {
-                    $tableConfigs[$table] = array(
-                        'config' => $config,
-                        'data' => $this->getFormTableData($this->getIdentifier(), $table)
-                    );
-                }
-
-                $form = $this->generateTableFormWithData(
-                    $this->getFormName(),
-                    array(
-                        'success' => $this->getFormCallback(),
-                        'crud_action' => $this->getFormCallback() . 'Crud'
-                    ),
-                    $data,
-                    $tableConfigs
-                );
-            }
+            $form = $this->getNewForm();
 
             $response = $this->getCaughtResponse();
 
@@ -1211,6 +1184,45 @@ abstract class AbstractJourneyController extends AbstractController
 
             $view->setVariable('form', $form);
         }
+    }
+
+    /**
+     * Moved the get form logic so it can be re-used
+     *
+     * @return Form
+     */
+    protected function getNewForm()
+    {
+        $data = array();
+
+        if (!$this->getRequest()->isPost()) {
+            $data = $this->getFormData();
+        }
+
+        if ($this->isAction() || empty($this->formTables)) {
+            $form = $this->generateFormWithData($this->getFormName(), $this->getFormCallback(), $data);
+        } else {
+            $tableConfigs = array();
+
+            foreach ($this->formTables as $table => $config) {
+                $tableConfigs[$table] = array(
+                    'config' => $config,
+                    'data' => $this->getFormTableData($this->getIdentifier(), $table)
+                );
+            }
+
+            $form = $this->generateTableFormWithData(
+                $this->getFormName(),
+                array(
+                    'success' => $this->getFormCallback(),
+                    'crud_action' => $this->getFormCallback() . 'Crud'
+                ),
+                $data,
+                $tableConfigs
+            );
+        }
+
+        return $form;
     }
 
     /**
@@ -1565,6 +1577,26 @@ abstract class AbstractJourneyController extends AbstractController
      */
     protected function completeSubSections(array $subSections)
     {
+        $sectionCompletion = $this->updateSectionStatuses($subSections);
+
+        // Persist the findings
+        $this->makeRestCall($this->getJourneyConfig()['completionService'], 'PUT', $sectionCompletion);
+
+        // Cache the statuses locally
+        $sectionCompletion['version']++;
+        $this->setSectionCompletion($sectionCompletion);
+    }
+
+    /**
+     * Update the section statuses
+     * - By default the statuses are marked as complete if there were no form errors,
+     *      we may want to override this at a later date
+     *
+     * @param array $subSections
+     * @return array
+     */
+    protected function updateSectionStatuses(array $subSections)
+    {
         $sectionCompletion = $this->getSectionCompletion();
         $sectionName = $this->getSectionName();
         $completeKey = array_search('complete', $this->getJourneyConfig()['completionStatusMap']);
@@ -1572,13 +1604,16 @@ abstract class AbstractJourneyController extends AbstractController
         $sectionConfig = $this->getSectionConfig();
 
         foreach ($subSections as $subSection) {
-            $key = 'section' . $sectionName . $subSection . 'Status';
+
+            // Mark the sub section as complete
+            $key = $this->formatSectionStatusIndex($sectionName, $subSection);
             $sectionCompletion[$key] = $completeKey;
 
+            // Check if all sub sections are complete
             $complete = true;
 
             foreach (array_keys($sectionConfig['subSections']) as $subSectionName) {
-                $sectionStatusKey = 'section' . $sectionName . $subSectionName . 'Status';
+                $sectionStatusKey = $this->formatSectionStatusIndex($sectionName, $subSectionName);
 
                 if ($this->isSectionAccessible($sectionName, $subSectionName)
                     && (!isset($sectionCompletion[$sectionStatusKey])
@@ -1588,16 +1623,27 @@ abstract class AbstractJourneyController extends AbstractController
                 }
             }
 
-            $sectionCompletionKey = ($complete ? $completeKey : $incompleteKey);
-
-            $sectionCompletion['section' . $sectionName . 'Status'] = $sectionCompletionKey;
+            // If all sub sections are complete, mark the section as complete
+            $sectionIndex = $this->formatSectionStatusIndex($sectionName, '');
+            $sectionCompletion[$sectionIndex] = ($complete ? $completeKey : $incompleteKey);
         }
 
-        $this->makeRestCall($this->getJourneyConfig()['completionService'], 'PUT', $sectionCompletion);
+        return $sectionCompletion;
+    }
 
-        $sectionCompletion['version']++;
+    /**
+     * Format section status index
+     *
+     * @param string $section
+     * @param string $subSection
+     * @return string
+     */
+    protected function formatSectionStatusIndex($section = null, $subSection = null)
+    {
+        $section = $section !== null ? $section : $this->getSectionName();
+        $subSection = $subSection !== null ? $subSection : $this->getSubSectionName();
 
-        $this->setSectionCompletion($sectionCompletion);
+        return 'section' . $section . $subSection . 'Status';
     }
 
     /**

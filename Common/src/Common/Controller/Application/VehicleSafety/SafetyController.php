@@ -282,9 +282,9 @@ class SafetyController extends VehicleSafetyController
     {
         unset($name);
 
-        $this->load($id);
+        $loadData = $this->load($id);
 
-        $data = $this->data['licence']['workshops'];
+        $data = $loadData['licence']['workshops'];
 
         $tableData = array();
 
@@ -347,6 +347,10 @@ class SafetyController extends VehicleSafetyController
      */
     protected function processLoad($data)
     {
+        if (isset($data['licence']['tachographIns']['id'])) {
+            $data['licence']['tachographIns'] = $data['licence']['tachographIns']['id'];
+        }
+
         $data['application'] = array(
             'id' => $data['id'],
             'version' => $data['version'],
@@ -358,7 +362,6 @@ class SafetyController extends VehicleSafetyController
         unset($data['safetyConfirmation']);
 
         $data['licence']['safetyInsVehicles'] = 'inspection_interval_vehicle.' . $data['licence']['safetyInsVehicles'];
-
         $data['licence']['safetyInsTrailers'] = 'inspection_interval_trailer.' . $data['licence']['safetyInsTrailers'];
 
         return $data;
@@ -382,29 +385,17 @@ class SafetyController extends VehicleSafetyController
             );
         }
 
+        // Need to explicitly set these to null, otherwise empty string gets converted to 0
+        if (array_key_exists('safetyInsTrailers', $data['licence']) && empty($data['licence']['safetyInsTrailers'])) {
+            $data['licence']['safetyInsTrailers'] = null;
+        }
+
+        if (array_key_exists('safetyInsVehicles', $data['licence']) && empty($data['licence']['safetyInsVehicles'])) {
+            $data['licence']['safetyInsVehicles'] = null;
+        }
+
         parent::save($data['licence'], 'Licence');
 
         parent::save($data['application'], 'Application');
-    }
-
-    /**
-     * Cache the loaded data
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function load($id)
-    {
-        if (empty($this->data)) {
-            $data = parent::load($id);
-
-            $this->data = $data;
-        }
-
-        if (isset($this->data['licence']['tachographIns']['id'])) {
-            $this->data['licence']['tachographIns'] = $this->data['licence']['tachographIns']['id'];
-        }
-
-        return $this->data;
     }
 }
