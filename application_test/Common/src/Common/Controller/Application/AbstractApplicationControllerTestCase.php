@@ -54,8 +54,15 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
      * @param string $method
      * @param mixed $response
      */
-    protected function setRestResponse($service, $method, $response = null)
+    protected function setRestResponse($service, $method, $response = null, $bundle = array())
     {
+        if (!empty($bundle)) {
+            $response = array(
+                'bundle' => $bundle,
+                'response' => $response
+            );
+        }
+
         $this->restResponses[$service][$method] = $response;
     }
 
@@ -109,6 +116,34 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
 
+        $mockUrlPlugin = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlPlugin->expects($this->any())
+            ->method('__invoke')
+            ->will($this->returnValue('URL'));
+
+        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
+        $mockViewHelperManager->expects($this->any())
+            ->method('get')
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('url', $mockUrlPlugin),
+                    )
+                )
+            );
+
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
+
+        if (class_exists('\Olcs\Helper\ApplicationJourneyHelper')) {
+            $mockApplicationJourneyHelper = $this->getMock('\Olcs\Helper\ApplicationJourneyHelper', array('makeRestCall'));
+            $mockApplicationJourneyHelper->setServiceLocator($serviceManager);
+            $mockApplicationJourneyHelper->expects($this->any())
+                ->method('makeRestCall')
+                ->will($this->returnCallback(array($this, 'mockRestCall')));
+            $serviceManager->setService('ApplicationJourneyHelper', $mockApplicationJourneyHelper);
+        }
+
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
 
@@ -150,7 +185,53 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         }
 
         if (isset($this->restResponses[$service][$method])) {
-            return $this->restResponses[$service][$method];
+
+            if (isset($this->restResponses[$service][$method]['bundle'])) {
+
+                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
+                    return $this->restResponses[$service][$method]['response'];
+                }
+            } else {
+                return $this->restResponses[$service][$method];
+            }
+        }
+
+        $headerBundle = array(
+            'properties' => array('id'),
+            'children' => array(
+                'status' => array(
+                    'properties' => array('id')
+                ),
+                'licence' => array(
+                    'properties' => array(
+                        'id',
+                        'licNo'
+                    ),
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(
+                                'name'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $headerBundle) {
+            return array(
+                'id' => 1,
+                'status' => array(
+                    'id' => 'apsts_new'
+                ),
+                'licence' => array(
+                    'id' => 1,
+                    'licNo' => 'AB123456',
+                    'organisation' => array(
+                        'name' => 'Foo ltd'
+                    )
+                )
+            );
         }
 
         return $this->mockRestCalls($service, $method, $data, $bundle);
@@ -272,19 +353,25 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
             'sectionYourBusinessBusinessDetailsStatus' => 2,
             'sectionYourBusinessAddressesStatus' => 2,
             'sectionYourBusinessPeopleStatus' => 2,
+            'sectionYourBusinessSoleTraderStatus' => 2,
             'sectionTaxiPhvStatus' => 2,
+            'sectionTaxiPhvLicenceStatus' => 2,
             'sectionOperatingCentresStatus' => 2,
             'sectionOperatingCentresAuthorisationStatus' => 2,
             'sectionOperatingCentresFinancialEvidenceStatus' => 2,
             'sectionTransportManagersStatus' => 2,
+            'sectionTransportManagersPlaceholderStatus' => 2,
             'sectionVehicleSafetyStatus' => 2,
             'sectionVehicleSafetyVehicleStatus' => 2,
             'sectionVehicleSafetySafetyStatus' => 2,
+            'sectionVehicleSafetyVehiclePsvStatus' => 2,
+            'sectionVehicleSafetyUndertakingsStatus' => 2,
             'sectionPreviousHistoryStatus' => 2,
             'sectionPreviousHistoryFinancialHistoryStatus' => 2,
             'sectionPreviousHistoryLicenceHistoryStatus' => 2,
-            'sectionPreviousHistoryConvictionPenaltiesStatus' => 2,
+            'sectionPreviousHistoryConvictionsPenaltiesStatus' => 2,
             'sectionReviewDeclarationsStatus' => 2,
+            'sectionReviewDeclarationsSummaryStatus' => 2,
             'sectionPaymentSubmissionStatus' => 0,
             'sectionPaymentSubmissionPaymentStatus' => 0,
             'sectionPaymentSubmissionSummaryStatus' => 0,

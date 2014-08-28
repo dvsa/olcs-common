@@ -79,6 +79,30 @@ abstract class PaymentControllerTest extends AbstractApplicationControllerTestCa
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
+        $applicationDataBundle = array(
+            'properties' => array(
+                'id',
+                'version'
+            ),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $applicationDataBundle) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'licence' => array(
+                    'id' => 1
+                )
+            );
+        }
+
         if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
 
             return $this->getLicenceData('goods');
