@@ -275,6 +275,7 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'W An external contractor',
     'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm there are suitable
         arragements in place to keep the vehicles in a fit and serviceable confition at all times',
+    'application_vehicle-safety_safety.application.suitableMaintenance' => 'W Suitable maintenance',
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
     'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'W Are some of the vehicles inspected
