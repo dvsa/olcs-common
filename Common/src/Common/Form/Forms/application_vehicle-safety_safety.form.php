@@ -59,7 +59,7 @@ return array(
                 'name' => 'application',
                 'options' => array(0),
                 'elements' => array(
-                    'suitableMaintenance' => array(
+                    'isMaintenanceSuitable' => array(
                         'type' => 'yesNoRadio',
                         'label' => $translationPrefix . '.application.suitableMaintenance'
                     ),

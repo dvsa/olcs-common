@@ -47,7 +47,8 @@ class SafetyController extends VehicleSafetyController
         'properties' => array(
             'id',
             'version',
-            'safetyConfirmation'
+            'safetyConfirmation',
+            'isMaintenanceSuitable'
         ),
         'children' => array(
             'licence' => array(
@@ -354,12 +355,14 @@ class SafetyController extends VehicleSafetyController
         $data['application'] = array(
             'id' => $data['id'],
             'version' => $data['version'],
-            'safetyConfirmation' => $data['safetyConfirmation']
+            'safetyConfirmation' => $data['safetyConfirmation'],
+            'isMaintenanceSuitable' => $data['isMaintenanceSuitable']
         );
 
         unset($data['id']);
         unset($data['version']);
         unset($data['safetyConfirmation']);
+        unset($data['isMaintenanceSuitable']);
 
         $data['licence']['safetyInsVehicles'] = 'inspection_interval_vehicle.' . $data['licence']['safetyInsVehicles'];
         $data['licence']['safetyInsTrailers'] = 'inspection_interval_trailer.' . $data['licence']['safetyInsTrailers'];
