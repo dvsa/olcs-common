@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\PaymentSubmission;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Summary Controller Test

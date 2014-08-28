@@ -6,10 +6,10 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace CommonTest\Controller\Application;
+namespace CommonTest\Controller\Application\Application;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Application Controller Test
@@ -18,7 +18,7 @@ use Common\Controller\Application\ApplicationController;
  */
 class ApplicationControllerTest extends AbstractApplicationControllerTestCase
 {
-    protected $controllerName =  '\Common\Controller\Application\ApplicationController';
+    protected $controllerName =  '\Common\Controller\Application\Application\ApplicationController';
 
     protected $defaultRestResponse = array();
 
@@ -29,12 +29,13 @@ class ApplicationControllerTest extends AbstractApplicationControllerTestCase
      */
     public function testGetNamespaceParts()
     {
-        $controller = new \Common\Controller\Application\ApplicationController();
+        $controller = new ApplicationController();
         $parts = $controller->getNamespaceParts();
 
         $expected = array(
             'Common',
             'Controller',
+            'Application',
             'Application',
             'ApplicationController'
         );
@@ -51,7 +52,7 @@ class ApplicationControllerTest extends AbstractApplicationControllerTestCase
             'foo' => 'bar'
         );
 
-        $controller = new \Common\Controller\Application\ApplicationController();
+        $controller = new ApplicationController();
         $output = $controller->processDataMapForSave($input);
 
         $this->assertEquals($input, $output);
@@ -101,7 +102,7 @@ class ApplicationControllerTest extends AbstractApplicationControllerTestCase
             )
         );
 
-        $controller = new \Common\Controller\Application\ApplicationController();
+        $controller = new ApplicationController();
         $output = $controller->processDataMapForSave($input, $map);
 
         $this->assertEquals($expected, $output);

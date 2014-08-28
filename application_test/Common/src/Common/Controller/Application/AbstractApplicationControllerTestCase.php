@@ -15,7 +15,7 @@ use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 use Zend\View\Model\ViewModel;
 
 /**

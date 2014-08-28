@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\VehicleSafety;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * VehicleSafety Controller

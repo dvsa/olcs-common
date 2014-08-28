@@ -297,6 +297,18 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
+     * Extend the default and reverse the array
+     *
+     * @return array
+     */
+    public function getNamespaceParts()
+    {
+        $parts = parent::getNamespaceParts();
+
+        return array_reverse($parts);
+    }
+
+    /**
      * Getter for journey name
      *
      * @return string
@@ -318,7 +330,7 @@ abstract class AbstractJourneyController extends AbstractController
     protected function getSectionName()
     {
         if (empty($this->sectionName)) {
-            $this->sectionName = $this->getNamespaceParts()[3];
+            $this->sectionName = $this->getNamespaceParts()[1];
         }
 
         return $this->sectionName;
@@ -333,8 +345,8 @@ abstract class AbstractJourneyController extends AbstractController
     {
         if (empty($this->subSectionName)) {
 
-            if (isset($this->getNamespaceParts()[4])) {
-                $this->subSectionName = str_replace('Controller', '', $this->getNamespaceParts()[4]);
+            if (isset($this->getNamespaceParts()[0])) {
+                $this->subSectionName = str_replace('Controller', '', $this->getNamespaceParts()[0]);
             }
         }
 

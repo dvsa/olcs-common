@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\VehicleSafety;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * VehicleSafety Controller Test

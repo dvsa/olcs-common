@@ -15,6 +15,12 @@ namespace Common\Controller\Application\VehicleSafety;
  */
 class SafetyController extends VehicleSafetyController
 {
+    /**
+     * Whether or not to hide internal form elements
+     *
+     * @var boolean
+     */
+    protected $hideInternalFormElements = false;
 
     /**
      * Cache the data
@@ -307,11 +313,15 @@ class SafetyController extends VehicleSafetyController
     /**
      * Remove the trailer fields for PSV
      *
-     * @param Form $form
-     * @return Form
+     * @param \Zend\Form\Fieldset $form
+     * @return \Zend\Form\Fieldset
      */
     protected function alterForm($form)
     {
+        if (!$this->hideInternalFormElements) {
+            $form->get('application')->remove('suitableMaintenance');
+        }
+
         if ($this->isPsv()) {
             $form->get('licence')->remove('safetyInsTrailers');
 

@@ -59,6 +59,10 @@ return array(
                 'name' => 'application',
                 'options' => array(0),
                 'elements' => array(
+                    'suitableMaintenance' => array(
+                        'type' => 'yesNoRadio',
+                        'label' => $translationPrefix . '.application.suitableMaintenance'
+                    ),
                     'safetyConfirmation' => array(
                         'type' => 'yesnocheckbox',
                         'label' => $translationPrefix . '.application.safetyConfirmation'

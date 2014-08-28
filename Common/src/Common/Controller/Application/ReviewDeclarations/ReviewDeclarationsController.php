@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\ReviewDeclarations;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * ReviewDeclarations Controller

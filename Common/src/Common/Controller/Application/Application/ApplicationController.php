@@ -6,7 +6,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace Common\Controller\Application;
+namespace Common\Controller\Application\Application;
 
 use Common\Controller\AbstractJourneyController;
 

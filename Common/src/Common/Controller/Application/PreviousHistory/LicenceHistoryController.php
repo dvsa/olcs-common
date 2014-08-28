@@ -7,14 +7,12 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
-use Common\Controller\Application\ApplicationController;
-
 /**
  * LicenceHistory Controller
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class LicenceHistoryController extends ApplicationController
+class LicenceHistoryController extends PreviousHistoryController
 {
     /**
      * Set the service for the "Free" save behaviour

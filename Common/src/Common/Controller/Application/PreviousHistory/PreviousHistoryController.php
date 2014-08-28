@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * PreviousHistory Controller

@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\TransportManagers;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * TransportManagers Controller
