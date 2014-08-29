@@ -278,6 +278,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->params()->fromRoute($name);
     }
 
+    /**
+     * Get param from post
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getFromPost($name)
+    {
+        return $this->params()->fromPost($name);
+    }
+
     public function getLoggedInUser()
     {
         return $this->loggedInUser;
