@@ -175,7 +175,7 @@ class RestClient
     public function request($method, $path, array $params = array())
     {
         $this->prepareRequest($method, $path, $params);
-        
+
         $response = $this->client->send();
 
         $responseHelper = $this->getResponseHelper();
@@ -238,8 +238,6 @@ class RestClient
      */
     protected function pathOrParams($path, array $params = null)
     {
-        unset($params);
-
         $args = func_get_args();
         if (is_array($args[0])) {
             array_unshift($args, '');

@@ -342,6 +342,18 @@ class ApplicationController extends AbstractJourneyController
     }
 
     /**
+     * Get licence id
+     *
+     * @return int
+     */
+    protected function getLicenceId()
+    {
+        $licence = $this->getLicenceData();
+
+        return $licence['id'];
+    }
+
+    /**
      * Upload a file
      *
      * @param array $file

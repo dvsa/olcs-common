@@ -68,6 +68,13 @@ abstract class AbstractController extends FormActionController
     protected $service = null;
 
     /**
+     * Holds the form tables
+     *
+     * @var array
+     */
+    protected $formTables;
+
+    /**
      * Sets the caught response
      *
      * @param mixed $response
@@ -218,6 +225,16 @@ abstract class AbstractController extends FormActionController
     }
 
     /**
+     * Get form tables
+     *
+     * @return array
+     */
+    protected function getFormTables()
+    {
+        return $this->formTables;
+    }
+
+    /**
      * Process save when we have a table form
      *
      * @param array $data
@@ -235,7 +252,9 @@ abstract class AbstractController extends FormActionController
             return;
         }
 
-        foreach (array_keys($this->formTables) as $table) {
+        $formTables = $this->getFormTables();
+
+        foreach (array_keys($formTables) as $table) {
 
             if (!is_array($oldData[$table]['action'])) {
                 $action = strtolower($oldData[$table]['action']);
