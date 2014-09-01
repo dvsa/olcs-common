@@ -93,9 +93,9 @@ class SafetyController extends VehicleSafetyController
      * Get the form table data
      *
      * @param int $id
-     * @param string $name
+     * @param string $table
      */
-    protected function getFormTableData($id, $name)
+    protected function getFormTableData($id, $table)
     {
         $loadData = $this->load($id);
 

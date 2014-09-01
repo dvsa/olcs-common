@@ -221,7 +221,14 @@ abstract class AbstractController extends FormActionController
     {
         $data = $this->processDataMapForSave($data, $this->getDataMap());
 
-        return $this->save($data);
+        $response = $this->save($data);
+
+        if ($response instanceof Response || $response instanceof ViewModel) {
+            $this->setCaughtResponse($response);
+            return;
+        }
+
+        return $response;
     }
 
     /**

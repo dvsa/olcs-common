@@ -33,11 +33,11 @@ class ApplicationControllerTest extends AbstractApplicationControllerTestCase
         $parts = $controller->getNamespaceParts();
 
         $expected = array(
-            'Common',
+            'ApplicationController',
+            'Application',
+            'Application',
             'Controller',
-            'Application',
-            'Application',
-            'ApplicationController'
+            'Common',
         );
 
         $this->assertEquals($expected, $parts);

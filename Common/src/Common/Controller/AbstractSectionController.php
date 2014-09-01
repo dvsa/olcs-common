@@ -589,7 +589,10 @@ abstract class AbstractSectionController extends AbstractController
             return $crudAction;
         }
 
-        if ($this->isAction() && $this->isButtonPressed('cancel')) {
+        if ($this->isButtonPressed('cancel')) {
+
+            $this->addInfoMessage('Your changes have been discarded');
+
             return $this->goBackToSection();
         }
     }

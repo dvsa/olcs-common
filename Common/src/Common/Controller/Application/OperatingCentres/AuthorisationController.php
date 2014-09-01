@@ -517,11 +517,11 @@ class AuthorisationController extends OperatingCentresController
     /**
      * Process the loading of data
      *
-     * @param array $data
+     * @param array $oldData
      */
     protected function processLoad($oldData)
     {
-        $results = $this->getFormTableData($this->getIdentifier());
+        $results = $this->getFormTableData($this->getIdentifier(), '');
 
         $data['data'] = $oldData;
 
@@ -781,13 +781,13 @@ class AuthorisationController extends OperatingCentresController
      *
      * @param string $id
      */
-    public function getFormTableData($applicationId)
+    public function getFormTableData($id, $table)
     {
         if (is_null($this->tableData)) {
             $data = $this->makeRestCall(
                 'ApplicationOperatingCentre',
                 'GET',
-                array('application' => $applicationId),
+                array('application' => $id),
                 $this->getActionDataBundle()
             );
 

@@ -238,10 +238,10 @@ class SummaryController extends ReviewDeclarationsController
      * basis, deferring to the relevant controller's data method to
      * fulfil the request
      */
-    protected function getFormTableData($applicationId, $fieldset)
+    protected function getFormTableData($id, $table)
     {
         // this will contain the actual table config to load
-        $table = $this->formTables[$fieldset];
+        $table = $this->formTables[$table];
 
         // we can use this value to map back to the controller which
         // knows how to populate its data
@@ -253,7 +253,7 @@ class SummaryController extends ReviewDeclarationsController
         $controller = $this->getInvokable($section, 'getSummaryTableData');
 
         if ($controller) {
-            return $controller::getSummaryTableData($applicationId, $this, $table);
+            return $controller::getSummaryTableData($id, $this, $table);
         }
     }
 

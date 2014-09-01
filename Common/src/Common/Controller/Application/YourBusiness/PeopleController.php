@@ -63,7 +63,7 @@ class PeopleController extends YourBusinessController
      *
      * @return array
      */
-    protected function getFormTableData()
+    protected function getFormTableData($id, $table)
     {
         $org = $this->getOrganisationData();
 

@@ -153,7 +153,7 @@ class LicenceController extends TaxiPhvController
      *
      * @return array
      */
-    protected function getFormTableData()
+    protected function getFormTableData($id, $table)
     {
         if (is_null($this->tableData)) {
 

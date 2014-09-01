@@ -529,7 +529,8 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
             'properties' => array(
                 'id',
                 'version',
-                'safetyConfirmation'
+                'safetyConfirmation',
+                'isMaintenanceSuitable'
             ),
             'children' => array(
                 'licence' => array(
@@ -585,6 +586,7 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
                 'id' => 1,
                 'version' => 1,
                 'safetyConfirmation' => 1,
+                'isMaintenanceSuitable' => 1,
                 'licence' => array(
                     'id' => 2,
                     'version' => 2,
