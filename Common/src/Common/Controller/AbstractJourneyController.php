@@ -10,6 +10,7 @@ namespace Common\Controller;
 
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
+use Common\Helper\RestrictionHelper;
 
 /**
  * Abstract Journey Controller
@@ -676,12 +677,15 @@ abstract class AbstractJourneyController extends AbstractController
 
         $status = $this->getSectionStatus($name);
 
+        $current = false;
+
         if ($name == $sectionName) {
-            $status = 'current';
+            $current = true;
         }
 
         return array(
             'status' => $status,
+            'current' => $current,
             'display' => (isset($details['collapsible']) && $details['collapsible']),
             'class' => (isset($details['collapsible']) && $details['collapsible']) ? 'js-visible' : '',
             'enabled' => $this->isSectionEnabled($name),
@@ -712,12 +716,15 @@ abstract class AbstractJourneyController extends AbstractController
 
             $status = $this->getSectionStatus($sectionName, $subSectionName);
 
+            $current = false;
+
             if ($subSectionName == $currentSubSectionName) {
-                $status = 'current';
+                $current = true;
             }
 
             $subSections[] = array(
                 'status' => $status,
+                'current' => $current,
                 'class' => (isset($sectionDetails['collapsible']) && $sectionDetails['collapsible']) ? 'js-hidden' : '',
                 'enabled' => $this->isSectionEnabled($sectionName, $subSectionName),
                 'title' => $this->getSectionLabel($journeyName, $sectionName, $subSectionName),
@@ -944,12 +951,23 @@ abstract class AbstractJourneyController extends AbstractController
 
             $accessKeys = $this->getAccessKeys();
 
-            $intersection = array_intersect($accessKeys, $details['restriction']);
-
-            return !empty($intersection);
+            return $this->isRestrictionSatisfied($details['restriction'], $accessKeys);
         }
 
         return true;
+    }
+
+    /**
+     * Check if a restriction is satisfied
+     *
+     * @param mixed $restriction
+     * @param array $accessKeys
+     */
+    protected function isRestrictionSatisfied($restriction, $accessKeys)
+    {
+        $helper = new RestrictionHelper();
+
+        return $helper->isRestrictionSatisfied($restriction, $accessKeys);
     }
 
     /**

@@ -106,7 +106,12 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
     {
         $this->setUpAction('index');
 
-        $this->setRestResponse('Application', 'GET', array('licence' => null));
+        $this->setRestResponse(
+            'Application',
+            'GET',
+            array('licence' => null),
+            ApplicationController::$licenceDataBundle
+        );
 
         $this->lastSection = 'Application/YourBusiness/BusinessDetails';
 
