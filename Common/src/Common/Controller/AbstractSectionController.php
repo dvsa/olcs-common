@@ -602,14 +602,12 @@ abstract class AbstractSectionController extends AbstractController
      *
      * @return Response
      */
-    protected function delete()
+    protected function delete($id = null, $service = null)
     {
-        $actionService = $this->getActionService();
-        $actionId = $this->getActionId();
+        $service = $this->getActionService();
+        $id = $this->getActionId();
 
-        if (!empty($actionService) && !empty($actionId)) {
-
-            $this->makeRestCall($actionService, 'DELETE', array('id' => $actionId));
+        if (parent::delete($id, $service)) {
 
             return $this->goBackToSection();
         }

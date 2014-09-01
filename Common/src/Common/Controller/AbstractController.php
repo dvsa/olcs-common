@@ -190,6 +190,25 @@ abstract class AbstractController extends FormActionController
     }
 
     /**
+     * Delete
+     *
+     * @return Response
+     */
+    protected function delete($id = null, $service = null)
+    {
+        $service = ($service === null ? $this->getService() : $service);
+
+        if (!empty($id) && !empty($service)) {
+
+            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Save data
      *
      * @param array $data
