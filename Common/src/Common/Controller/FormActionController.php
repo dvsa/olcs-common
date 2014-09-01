@@ -120,6 +120,15 @@ abstract class FormActionController extends AbstractActionController
     {
         $form = $this->getFormClass($type);
 
+        // The vast majority of forms thus far don't have actions, but
+        // that means when rendered out of context (e.g. in a JS modal) they
+        // submit the parent page.
+        // Adding an explicit attribute should be completely backwards compatible
+        // because browsers interpret no action as submit the current page
+        if (!$form->hasAttribute('action')) {
+            $form->setAttribute('action', $this->getRequest()->getUri()->getPath());
+        }
+
         $form = $this->processPostcodeLookup($form);
 
         return $form;
