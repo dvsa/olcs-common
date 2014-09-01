@@ -913,4 +913,21 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+
+    'pi_s_schedule' => 'PI Scheduled',
+    'pi_s_reg' => 'PI Registered',
+
+    'pi_t_app_new' => 'Application New',
+    'pi_t_app_var' => 'Application Variation',
+    'pi_t_disc' => 'Disciplinary',
+    'pi_t_env_new' => 'Environmental New',
+    'pi_t_env_var' => 'Environmental Variation',
+    'pi_t_oc_review' => 'OC Review',
+    'pi_t_imp' => 'Impounding',
+    'pi_t_other' => 'Other',
+
+    'tc_r_dhtru' => 'Deputy Head of Traffic Regulation Unit',
+    'tc_r_dtc' => 'Deputy Traffic Commissioner',
+    'tc_r_htru' => 'Head of Traffic Regulation Unit',
+    'tc_r_tc' => 'Traffic Commissioner',
 );
