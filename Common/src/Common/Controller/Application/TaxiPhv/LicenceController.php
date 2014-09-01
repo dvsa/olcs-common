@@ -4,6 +4,7 @@
  * Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Application\TaxiPhv;
 
@@ -11,9 +12,12 @@ namespace Common\Controller\Application\TaxiPhv;
  * Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class LicenceController extends TaxiPhvController
 {
+    use \Common\Controller\Traits\TrafficAreaTrait;
+
     /**
      * Holds the sub action service
      *
@@ -61,7 +65,7 @@ class LicenceController extends TaxiPhvController
             ),
         ),
     );
-    
+
     /**
      * Action data map
      *
@@ -138,17 +142,17 @@ class LicenceController extends TaxiPhvController
     );
 
     /**
-     * Holds the Traffic Area details
+     * Holds the private hire licences count
      *
-     * @var array
+     * @var int
      */
-    private $trafficArea;
+    private $privateHireLicencesCount = null;
 
     /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-    
+
     /**
      * Holds the table data
      *
@@ -262,6 +266,10 @@ class LicenceController extends TaxiPhvController
 
         $data['data']['licence'] = $licenceData['id'];
 
+        $trafficArea = $this->getTrafficArea();
+        if (isset($trafficArea['id'])) {
+            $data['trafficArea']['id'] = $trafficArea['id'];
+        }
         return $data;
     }
 
@@ -291,23 +299,41 @@ class LicenceController extends TaxiPhvController
         }
 
         $data['privateHireLicence']['contactDetails'] = $contactDetailsId;
+        $saved = parent::actionSave($data['privateHireLicence'], $service);
+        if ($this->getActionName() == 'add' && !isset($saved['id'])) {
+            throw new \Exception('Unable to save licence');
+        }
 
-        parent::actionSave($data['privateHireLicence'], $service);
+        // set default Traffic Area if we don't have one
+        if (!array_key_exists('trafficArea', $data) || !$data['trafficArea']['id'] &&
+            $data['contactDetails']['addresses']['address']['postcode']) {
+            $licencesCount = $this->getPrivateHireLicencesCount($data['privateHireLicence']['licence']);
+            // first Licence was just added or we are editing the first one
+            if ($licencesCount == 1) {
+                $postcodeService = $this->getPostcodeService();
+                list($trafficAreaId, $trafficAreaName) =
+                    $postcodeService->getTrafficAreaByPostcode(
+                        $data['contactDetails']['addresses']['address']['postcode']
+                    );
+                if ($trafficAreaId) {
+                    $this->setTrafficArea($trafficAreaId);
+                }
+            }
+        }
     }
 
     /**
      * Save method
      *
      * @param array $data
-     * @param string $service
      */
-    protected function save($data, $service = null)
+    protected function save($data, $service = NULL)
     {
         if (isset($data['trafficArea']) && $data['trafficArea']) {
             $this->setTrafficArea($data['trafficArea']);
         }
     }
-    
+
     /**
      * Set up traffic area fields
      *
@@ -336,153 +362,64 @@ class LicenceController extends TaxiPhvController
 
         return $form;
     }
-    
+
+    /**
+     * Alter form to process traffic area
+     *
+     * @param Form $form
+     */
+    protected function alterActionForm($form)
+    {
+        $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
+
+        $trafficAreaValidator = $this->getPostcodeTrafficAreaValidator();
+        $licenceId = $form->get('data')->get('licence')->getValue();
+        $trafficAreaValidator->setPrivateHireLicencesCount($this->getPrivateHireLicencesCount($licenceId));
+        $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
+
+        $postcodeValidatorChain = $this->getPostcodeValidatorsChain($form);
+        $postcodeValidatorChain->attach($trafficAreaValidator);
+
+        if (!$this->getTrafficArea()) {
+            $form->get('form-actions')->remove('addAnother');
+        }
+        return $form;
+    }
+
     /**
      * Get operating centres count
      *
+     * @param int $licenceId
      * @return int
      */
-    public function getPrivateHireLicencesCount()
+    public function getPrivateHireLicencesCount($licenceId = null)
     {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            )
-        );
-        $privateHireLicences = $this->makeRestCall(
-            'PrivateHireLicence',
-            'GET',
-            array(
-                'application' => $this->getIdentifier(),
-            ),
-            $bundle
-        );
-        return $privateHireLicences['Count'];
-    }    
-
-
-    
-    /**
-     * Get Traffic Area value options for select element
-     *
-     * @return array
-     */
-    protected function getTrafficValueOptions()
-    {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'name',
-            ),
-        );
-
-        $trafficArea = $this->makeRestCall('TrafficArea', 'GET', array(), $bundle);
-        $valueOptions = array();
-        $results = $trafficArea['Results'];
-        if (is_array($results) && count($results)) {
-            usort(
-                $results,
-                function ($a, $b) {
-                    return strcmp($a["name"], $b["name"]);
-                }
-            );
-
-            // remove Northern Ireland Traffic Area
-            foreach ($results as $key => $value) {
-                if ($value['id'] == self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
-                    unset($results[$key]);
-                    break;
-                }
-            }
-
-            foreach ($results as $element) {
-                $valueOptions[$element['id']] = $element['name'];
+        if (!$licenceId) {
+            $licence = $this->getLicenceData();
+            if (is_array($licence) && isset($licence['id'])) {
+                $licenceId = $licence['id'];
             }
         }
-        return $valueOptions;
-    }
-    
-    /**
-     * Get Traffic Area information for current application
-     *
-     * @return array
-     */
-    protected function getTrafficArea()
-    {
-        if (!$this->trafficArea) {
+        if (is_null($this->privateHireLicencesCount) && $licenceId) {
             $bundle = array(
                 'properties' => array(
                     'id',
-                    'version',
-                ),
-                'children' => array(
-                    'licence' => array(
-                        'properties' => array(
-                            'id'
-                        ),
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id',
-                                    'name'
-                                )
-                            )
-                        )
-                    )
+                    'version'
                 )
             );
-
-            $application = $this->makeRestCall(
-                'Application',
+            $privateHireLicences = $this->makeRestCall(
+                'PrivateHireLicence',
                 'GET',
                 array(
-                    'id' => $this->getIdentifier(),
+                    'licence' => $licenceId,
                 ),
                 $bundle
             );
-            if (is_array($application) && array_key_exists('licence', $application) &&
-                is_array($application['licence']) &&
-                array_key_exists('trafficArea', $application['licence'])) {
-                $this->trafficArea = $application['licence']['trafficArea'];
-            }
+            $this->privateHireLicencesCount = $privateHireLicences['Count'];
         }
-        return $this->trafficArea;
+        return $this->privateHireLicencesCount;
     }
 
-    /**
-     * Set traffic area to application's licence based on traarea id
-     *
-     * @param string $id
-     */
-    public function setTrafficArea($id = null)
-    {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            ),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(
-                        'id',
-                        'version'
-                    )
-                )
-            )
-        );
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
-        if (is_array($application) && array_key_exists('licence', $application) &&
-            array_key_exists('version', $application['licence'])) {
-            $data = array(
-                        'id' => $application['licence']['id'],
-                        'version' => $application['licence']['version'],
-                        'trafficArea' => $id
-            );
-            $this->makeRestCall('Licence', 'PUT', $data);
-        }
-    }
-    
     /**
      * Clear Traffic Area if we are deleting last one operating centres
      */
@@ -493,5 +430,61 @@ class LicenceController extends TaxiPhvController
             $this->setTrafficArea(null);
         }
     }
-    
+
+    /**
+     * Get postcode traffic area validator
+     *
+     * @return Common\Form\Elements\Validator\PrivateHireLicenceTrafficAreaValidator
+     */
+    public function getPostcodeTrafficAreaValidator()
+    {
+        return $this->getServiceLocator()->get('postcodePhlTrafficAreaValidator');
+    }
+
+    /**
+     * Method to allow adding new Licence only if Traffic Area has been set
+     *
+     * @param string $route
+     * @param array $params
+     * @param string $itemIdParam
+     *
+     * @return boolean
+     */
+    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    {
+        $table = $this->params()->fromPost('table');
+        $action = isset($table['action']) && !is_array($table['action'])
+            ? strtolower($table['action'])
+            : strtolower($this->params()->fromPost('action'));
+
+        if (empty($action)) {
+            return false;
+        }
+
+        $params = array_merge($params, array('action' => $action));
+
+        if ($action !== 'add') {
+            $id = $this->params()->fromPost('id');
+
+            if (empty($id)) {
+
+                return false;
+            }
+
+            $params[$itemIdParam] = $id;
+        }
+        if (!$this->getTrafficArea()) {
+            $dataTrafficArea = $this->params()->fromPost('dataTrafficArea');
+            $trafficArea = is_array($dataTrafficArea) && isset($dataTrafficArea['trafficArea']) ?
+                $dataTrafficArea['trafficArea'] : '';
+            if ($action == 'add' && !$trafficArea && $this->getPrivateHireLicencesCount()) {
+                $this->addWarningMessage('Please select a traffic area');
+                return $this->redirectToRoute(null, array(), array(), true);
+            } elseif ($action == 'add' && $trafficArea) {
+                $this->setTrafficArea($trafficArea);
+            }
+        }
+
+        return $this->redirect()->toRoute($route, $params, [], true);
+    }
 }
