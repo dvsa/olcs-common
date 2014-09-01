@@ -136,7 +136,10 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         $serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
 
         if (class_exists('\Olcs\Helper\ApplicationJourneyHelper')) {
-            $mockApplicationJourneyHelper = $this->getMock('\Olcs\Helper\ApplicationJourneyHelper', array('makeRestCall'));
+            $mockApplicationJourneyHelper = $this->getMock(
+                '\Olcs\Helper\ApplicationJourneyHelper',
+                array('makeRestCall')
+            );
             $mockApplicationJourneyHelper->setServiceLocator($serviceManager);
             $mockApplicationJourneyHelper->expects($this->any())
                 ->method('makeRestCall')
