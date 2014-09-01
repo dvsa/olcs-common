@@ -142,13 +142,6 @@ class LicenceController extends TaxiPhvController
     );
 
     /**
-     * Holds the private hire licences count
-     *
-     * @var int
-     */
-    private $privateHireLicencesCount = null;
-
-    /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
@@ -400,7 +393,9 @@ class LicenceController extends TaxiPhvController
                 $licenceId = $licence['id'];
             }
         }
-        if (is_null($this->privateHireLicencesCount) && $licenceId) {
+
+        $licencesCount = 0;
+        if ($licenceId) {
             $bundle = array(
                 'properties' => array(
                     'id',
@@ -415,9 +410,9 @@ class LicenceController extends TaxiPhvController
                 ),
                 $bundle
             );
-            $this->privateHireLicencesCount = $privateHireLicences['Count'];
+            $licencesCount = $privateHireLicences['Count'];
         }
-        return $this->privateHireLicencesCount;
+        return $licencesCount;
     }
 
     /**
