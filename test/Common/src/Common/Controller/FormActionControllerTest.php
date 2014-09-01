@@ -160,4 +160,34 @@ class FormActionControllerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $sut->getView());
     }
+
+    public function testGenerateFormWithDataAddsActionIfMissing()
+    {
+        $mockForm = $this->getMock('\Zend\Form\Form', ['hasAttribute', 'setAttribute']);
+        $mockForm->expects($this->once())
+            ->method('hasAttribute')
+            ->will($this->returnValue(false));
+
+        $mockForm->expects($this->once())
+            ->method('setAttribute')
+            ->with('action');
+
+        $mockCustomForm = $this->getMock('\stdClass', ['createForm']);
+        $mockCustomForm->expects($this->once())
+            ->method('createForm')
+            ->will($this->returnValue($mockForm));
+
+        $mockServiceLocator = $this->getMock('\stdClass', ['get']);
+        $mockServiceLocator->expects($this->at(1))
+            ->method('get')
+            ->with('OlcsCustomForm')
+            ->will($this->returnValue($mockCustomForm));
+
+        $sut = $this->getNewSut(['getServiceLocator']);
+        $sut->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($mockServiceLocator));
+
+        $sut->generateFormWithData('foo', null);
+    }
 }

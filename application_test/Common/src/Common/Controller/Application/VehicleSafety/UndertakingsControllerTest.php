@@ -80,8 +80,6 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
 
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
-
-        $form = $this->getFormFromView($response);
     }
 
     /**
