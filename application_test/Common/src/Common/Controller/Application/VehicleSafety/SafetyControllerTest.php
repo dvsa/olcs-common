@@ -21,7 +21,7 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
 
     protected $controllerName = '\Common\Controller\Application\VehicleSafety\SafetyController';
     protected $defaultRestResponse = array();
-    private $goodsOrPsv;
+    protected $goodsOrPsv;
 
     /**
      * Test back button

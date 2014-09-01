@@ -31,11 +31,13 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
      */
     protected function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
-        $this->routeName = str_replace(
-            array('\\Common\\Controller\\', 'Controller', '\\'),
-            array('', '', '/'),
-            $this->controllerName
-        );
+        if (strstr($this->controllerName, '\\Common\\Controller\\')) {
+            $this->routeName = str_replace(
+                array('\\Common\\Controller\\', 'Controller', '\\'),
+                array('', '', '/'),
+                $this->controllerName
+            );
+        }
 
         parent::setUpAction($action, $id, $data, $files);
 
