@@ -781,13 +781,13 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
                 return array();
             }
         }
-        
+
         if ($service == 'PrivateHireLicence' && $method == 'PUT') {
             return array(
                 'id' => 1
             );
         }
-        
+
         $fullBundle = array(
             'properties' => array(
                 'id',

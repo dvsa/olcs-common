@@ -285,7 +285,7 @@ class LicenceController extends TaxiPhvController
             $contactDetailsId = $results['id'];
         } else {
             /**
-             * @todo Handle failure to save contactDetails. For now we just throw an exception until the story has been
+             * Handle failure to save contactDetails. For now we just throw an exception until the story has been
              * complete which encompassess feeding back errors to the user
              */
             throw new \Exception('Unable to save contact details');
@@ -320,7 +320,7 @@ class LicenceController extends TaxiPhvController
      *
      * @param array $data
      */
-    protected function save($data, $service = NULL)
+    protected function save($data, $service = null)
     {
         if (isset($data['trafficArea']) && $data['trafficArea']) {
             $this->setTrafficArea($data['trafficArea']);
