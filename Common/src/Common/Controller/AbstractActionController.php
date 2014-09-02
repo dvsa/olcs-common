@@ -346,7 +346,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         $viewVariables = array_merge(
-            $view->getVariables(),
+            (array)$view->getVariables(),
             [
                 'pageTitle' => $this->pageTitle,
                 'pageSubTitle' => $this->pageSubTitle
