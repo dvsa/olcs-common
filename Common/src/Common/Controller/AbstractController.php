@@ -68,6 +68,13 @@ abstract class AbstractController extends FormActionController
     protected $service = null;
 
     /**
+     * Holds the form tables
+     *
+     * @var array
+     */
+    protected $formTables;
+
+    /**
      * Sets the caught response
      *
      * @param mixed $response
@@ -183,6 +190,27 @@ abstract class AbstractController extends FormActionController
     }
 
     /**
+     * Delete
+     *
+     * @return Response
+     */
+    protected function delete($id = null, $service = null)
+    {
+        if ($service === null) {
+            $service = $this->getService();
+        }
+
+        if (!empty($id) && !empty($service)) {
+
+            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Save data
      *
      * @param array $data
@@ -214,7 +242,24 @@ abstract class AbstractController extends FormActionController
     {
         $data = $this->processDataMapForSave($data, $this->getDataMap());
 
-        return $this->save($data);
+        $response = $this->save($data);
+
+        if ($response instanceof Response || $response instanceof ViewModel) {
+            $this->setCaughtResponse($response);
+            return;
+        }
+
+        return $response;
+    }
+
+    /**
+     * Get form tables
+     *
+     * @return array
+     */
+    protected function getFormTables()
+    {
+        return $this->formTables;
     }
 
     /**
@@ -235,7 +280,9 @@ abstract class AbstractController extends FormActionController
             return;
         }
 
-        foreach (array_keys($this->formTables) as $table) {
+        $formTables = $this->getFormTables();
+
+        foreach (array_keys($formTables) as $table) {
 
             if (!is_array($oldData[$table]['action'])) {
                 $action = strtolower($oldData[$table]['action']);

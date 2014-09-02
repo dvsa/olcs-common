@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\TypeOfLicence;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * OperatorLocation Controller Test

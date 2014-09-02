@@ -27,7 +27,7 @@ abstract class FormActionController extends AbstractActionController
 
     protected $validateForm = true;
 
-    private $persist = true;
+    protected $persist = true;
 
     private $fieldValues = array();
 
@@ -270,6 +270,10 @@ abstract class FormActionController extends AbstractActionController
 
             $form = $this->postSetFormData($form);
 
+            /**
+             * validateForm is true by default, we set it to false if we want to continue processing the form without
+             * validation.
+             */
             if (!$this->validateForm || ($this->persist && $form->isValid())) {
 
                 if ($this->validateForm) {
@@ -278,13 +282,14 @@ abstract class FormActionController extends AbstractActionController
                     $validatedData = $data;
                 }
 
-                $params = [
-                    'validData' => $validatedData,
-                    'form' => $form,
-                    'params' => $additionalParams
-                ];
-
-                $params = array_merge($params, $this->getCallbackData());
+                $params = array_merge(
+                    [
+                        'validData' => $validatedData,
+                        'form' => $form,
+                        'params' => $additionalParams
+                    ],
+                    $this->getCallbackData()
+                );
 
                 $this->callCallbackIfExists($callback, $params);
             }

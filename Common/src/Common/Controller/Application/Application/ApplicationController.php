@@ -6,7 +6,7 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 
-namespace Common\Controller\Application;
+namespace Common\Controller\Application\Application;
 
 use Common\Controller\AbstractJourneyController;
 
@@ -17,14 +17,30 @@ use Common\Controller\AbstractJourneyController;
  */
 class ApplicationController extends AbstractJourneyController
 {
+    /**
+     * Journey completion statuses
+     */
+    const COMPLETION_STATUS_NOT_STARTED = 0;
+    const COMPLETION_STATUS_INCOMPLETE = 1;
+    const COMPLETION_STATUS_COMPLETE = 2;
+
+    /**
+     * Goods or PSV keys
+     */
     const GOODS_OR_PSV_GOODS_VEHICLE = 'lcat_gv';
     const GOODS_OR_PSV_PSV = 'lcat_psv';
 
+    /**
+     * Licence types keys
+     */
     const LICENCE_TYPE_RESTRICTED = 'ltyp_r';
     const LICENCE_TYPE_STANDARD_INTERNATIONAL = 'ltyp_si';
     const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 
+    /**
+     * Organisation type keys
+     */
     const ORG_TYPE_PARTNERSHIP = 'org_t_p';
     const ORG_TYPE_OTHER = 'org_t_pa';
     const ORG_TYPE_REGISTERED_COMPANY = 'org_t_rc';
@@ -323,6 +339,18 @@ class ApplicationController extends AbstractJourneyController
         }
 
         return $this->licenceData;
+    }
+
+    /**
+     * Get licence id
+     *
+     * @return int
+     */
+    protected function getLicenceId()
+    {
+        $licence = $this->getLicenceData();
+
+        return $licence['id'];
     }
 
     /**

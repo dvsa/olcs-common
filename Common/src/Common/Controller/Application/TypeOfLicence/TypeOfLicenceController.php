@@ -8,7 +8,7 @@
  */
 namespace Common\Controller\Application\TypeOfLicence;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * TypeOfLicence Controller

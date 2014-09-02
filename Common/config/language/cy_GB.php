@@ -273,17 +273,18 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'W Yourself or another employee of the
         business holding the operator\'s licence',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'W An external contractor',
-    'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm that you have suitable
-        arrangements in place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of your vehicles or trailers
+    'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm there are suitable
+        arragements in place to keep the vehicles in a fit and serviceable condition at all times',
+    'application_vehicle-safety_safety.application.suitableMaintenance' => 'W Suitable maintenance',
+    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'W Are some of your vehicles inspected
+    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'W Are some of the vehicles inspected
         more frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'W This can sometimes be the case if you
-        own a particularly old vehicle',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'W Who analyses your tachograph records?',
-    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'W Please provide the company or full
-        name of the external contractor who analyses your tachograph records (if applicable)',
+    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'W This can sometimes be the case for
+        particularly old vehicles',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'W Who analyses the tachograph records?',
+    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'W The company or full name of the
+        external contractor who analyses the tachograph records (if applicable)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'W Maximum time between trailer safety
         inspections',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'W Maximum time between vehicle safety
@@ -501,6 +502,10 @@ return array(
     'dob' => 'W Date of birth',
     'doc' => 'W DOC',
     'docs' => 'W Docs',
+    'documents-home.data.category' => 'W Category',
+    'documents-home.data.digitalonly' => 'W Digital only',
+    'documents-home.data.format' => 'W Format',
+    'documents-home.data.sub_category' => 'W Sub category',
     'doo' => 'W DOO',
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
@@ -574,14 +579,14 @@ return array(
     'internal-licence-details-vehicle-title' => 'W Vehicles',
     'internal-licence-processing' => 'W Processing',
     'internal-licence-processing-notes' => 'W Notes',
-    'internal-licence-processing-notes-label' => 'W Notes',
-    'internal-licence-processing-notes-title' => 'W Notes',
     'internal-licence-processing-notes-add' => 'W Add note',
     'internal-licence-processing-notes-add-label' => 'W Add note',
     'internal-licence-processing-notes-add-title' => 'W Add note',
+    'internal-licence-processing-notes-label' => 'W Notes',
     'internal-licence-processing-notes-modify' => 'W Edit note',
     'internal-licence-processing-notes-modify-label' => 'W Edit note',
     'internal-licence-processing-notes-modify-title' => 'W Edit note',
+    'internal-licence-processing-notes-title' => 'W Notes',
     'internal-licence-processing-tasks' => 'W Tasks',
     'internal-licence-processing-tasks-label' => 'W Tasks',
     'internal-licence-processing-tasks-title' => 'W Tasks',
@@ -892,15 +897,21 @@ return array(
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
     'tachographAnalyser-external-contractor' => 'W An external contractor',
-    'tachographAnalyser-yourself' => 'W Yourself or another employee of the business holding the operator\'s licence',
-    'tasks-home.data.category' => 'W Category',
-    'tasks-home.data.date' => 'W Date',
-    'tasks-home.data.owner' => 'W Owner',
-    'tasks-home.data.status' => 'W Status',
-    'tasks-home.data.sub_category' => 'W Sub category',
-    'tasks-home.data.team' => 'W Team',
-    'tasks-home.data.urgent' => 'W Urgent only',
-    'tasks-home.submit.filter' => 'W Filter',
+    'tachographAnalyser-yourself' => 'W An owner or employee of the business',
+    'tasks.assignment' => 'W Assigned to',
+    'tasks.data.actionDate' => 'W Action date',
+    'tasks.data.category' => 'W Category',
+    'tasks.data.date' => 'W Date',
+    'tasks.data.description' => 'W Description',
+    'tasks.data.link' => 'W Linked to',
+    'tasks.data.owner' => 'W Owner',
+    'tasks.data.status' => 'W Status',
+    'tasks.data.sub_category' => 'W Sub category',
+    'tasks.data.team' => 'W Team',
+    'tasks.data.urgent' => 'W Urgent',
+    'tasks.data.urgentOnly' => 'W Urgent only',
+    'tasks.details' => 'W Details',
+    'tasks.submit.filter' => 'W Filter',
     'testProperty' => 'W the test',
     'testPropertyPlaceHolder' => 'W test @placeHolder is @here',
     'tic' => 'W TIC',

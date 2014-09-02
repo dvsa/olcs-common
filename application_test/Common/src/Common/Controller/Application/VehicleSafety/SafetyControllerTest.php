@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\VehicleSafety;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Safety Controller Test
@@ -21,7 +21,7 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
 
     protected $controllerName = '\Common\Controller\Application\VehicleSafety\SafetyController';
     protected $defaultRestResponse = array();
-    private $goodsOrPsv;
+    protected $goodsOrPsv;
 
     /**
      * Test back button
@@ -529,7 +529,8 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
             'properties' => array(
                 'id',
                 'version',
-                'safetyConfirmation'
+                'safetyConfirmation',
+                'isMaintenanceSuitable'
             ),
             'children' => array(
                 'licence' => array(
@@ -585,6 +586,7 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
                 'id' => 1,
                 'version' => 1,
                 'safetyConfirmation' => 1,
+                'isMaintenanceSuitable' => 1,
                 'licence' => array(
                     'id' => 2,
                     'version' => 2,
