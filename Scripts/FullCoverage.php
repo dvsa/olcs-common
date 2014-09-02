@@ -4,7 +4,6 @@
 $testDirectories = array(
     'common' => realpath(__DIR__ . '/../test'),
     'backend' => realpath(__DIR__ . '/../../olcs-backend/test'),
-    'entities' => realpath(__DIR__ . '/../../olcs-entities/test'),
     'internal' => realpath(__DIR__ . '/../../olcs-internal/test'),
     'selfserve' => realpath(__DIR__ . '/../../olcs-selfserve/test')
 );

@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\TaxiPhv;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * TaxiPhv Controller

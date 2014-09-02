@@ -167,9 +167,9 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
      *
      * @return array
      */
-    protected function getFormTableData($applicationId, $tableName)
+    protected function getFormTableData($id, $table)
     {
-        return static::getSummaryTableData($applicationId, $this, $tableName);
+        return static::getSummaryTableData($id, $this, $table);
     }
 
     /**

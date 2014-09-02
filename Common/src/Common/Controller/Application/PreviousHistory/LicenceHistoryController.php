@@ -7,14 +7,12 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
-use Common\Controller\Application\ApplicationController;
-
 /**
  * LicenceHistory Controller
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class LicenceHistoryController extends ApplicationController
+class LicenceHistoryController extends PreviousHistoryController
 {
     /**
      * Set the service for the "Free" save behaviour
@@ -177,11 +175,11 @@ class LicenceHistoryController extends ApplicationController
     /**
      * Get the form table data
      *
-     * @param int $applicationId
-     * @param string $tableName
+     * @param int $id
+     * @param string $table
      * @return array
      */
-    protected function getFormTableData($applicationId, $tableName)
+    protected function getFormTableData($id, $table)
     {
         $bundle = array(
             'properties' => array(
@@ -197,12 +195,12 @@ class LicenceHistoryController extends ApplicationController
             ),
         );
 
-        $previousLicenceType = isset($this->mapTableToType[$tableName]) ? $this->mapTableToType[$tableName] : null;
+        $previousLicenceType = isset($this->mapTableToType[$table]) ? $this->mapTableToType[$table] : null;
 
         $data = $this->makeRestCall(
             'PreviousLicence',
             'GET',
-            array('application' => $applicationId, 'previousLicenceType' => $previousLicenceType),
+            array('application' => $id, 'previousLicenceType' => $previousLicenceType),
             $bundle
         );
 

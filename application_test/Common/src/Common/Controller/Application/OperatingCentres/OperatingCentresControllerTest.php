@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\OperatingCentres;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * OperatingCentres Controller Test

@@ -355,24 +355,4 @@ class VehiclePsvController extends VehicleSafetyController
 
         return null;
     }
-
-    /**
-     * Get a type from PSV type
-     *
-     * @param string $type
-     * @return string|null
-     */
-    private function getTypeFromPsvType($type)
-    {
-        switch ($type) {
-            case 'vhl_t_c':
-                return 'large'; // @todo Not sure if this is the right ref data key
-            case 'vhl_t_b':
-                return 'medium';
-            case 'vhl_t_a':
-                return 'small';
-        }
-
-        return null;
-    }
 }

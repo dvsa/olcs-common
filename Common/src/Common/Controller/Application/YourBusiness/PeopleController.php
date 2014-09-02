@@ -63,7 +63,7 @@ class PeopleController extends YourBusinessController
      *
      * @return array
      */
-    protected function getFormTableData()
+    protected function getFormTableData($id, $table)
     {
         $org = $this->getOrganisationData();
 
@@ -120,37 +120,37 @@ class PeopleController extends YourBusinessController
 
         $org = $this->getOrganisationData($bundle);
 
-        $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+        $translator = $this->getServiceLocator()->get('translator');
         $guidance = $form->get('guidance')->get('guidance');
 
         switch ($org['type']['id']) {
             case self::ORG_TYPE_REGISTERED_COMPANY:
                 $table->setVariable(
                     'title',
-                    $translate('selfserve-app-subSection-your-business-people-tableHeaderDirectors')
+                    $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderDirectors')
                 );
-                $guidance->setValue($translate('selfserve-app-subSection-your-business-people-guidanceLC'));
+                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceLC'));
                 break;
             case self::ORG_TYPE_LLP:
                 $table->setVariable(
                     'title',
-                    $translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
+                    $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
                 );
-                $guidance->setValue($translate('selfserve-app-subSection-your-business-people-guidanceLLP'));
+                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceLLP'));
                 break;
             case self::ORG_TYPE_PARTNERSHIP:
                 $table->setVariable(
                     'title',
-                    $translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
+                    $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
                 );
-                $guidance->setValue($translate('selfserve-app-subSection-your-business-people-guidanceP'));
+                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceP'));
                 break;
             case self::ORG_TYPE_OTHER:
                 $table->setVariable(
                     'title',
-                    $translate('selfserve-app-subSection-your-business-people-tableHeaderPeople')
+                    $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderPeople')
                 );
-                $guidance->setValue($translate('selfserve-app-subSection-your-business-people-guidanceO'));
+                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceO'));
                 break;
             default:
                 break;

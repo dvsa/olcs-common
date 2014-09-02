@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\PaymentSubmission;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * PaymentSubmission Controller

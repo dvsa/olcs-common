@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\VehicleSafety;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Undertakings Controller Test
@@ -80,8 +80,6 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
 
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
-
-        $form = $this->getFormFromView($response);
     }
 
     /**

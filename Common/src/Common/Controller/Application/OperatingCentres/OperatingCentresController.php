@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Application\OperatingCentres;
 
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * OperatingCentres Controller

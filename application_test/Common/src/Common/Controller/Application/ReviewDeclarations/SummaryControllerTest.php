@@ -9,7 +9,7 @@
 namespace CommonTest\Controller\Application\ReviewDeclarations;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Summary Controller Test
@@ -21,6 +21,23 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
     protected $controllerName =  '\Common\Controller\Application\ReviewDeclarations\SummaryController';
 
     protected $defaultRestResponse = array();
+
+    protected $appDataBundle = array(
+        'properties' => 'ALL',
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'goodsOrPsv' => array(
+                        'properties' => array('id')
+                    ),
+                    'licenceType' => array(
+                        'properties' => array('id')
+                    )
+                )
+            ),
+            'documents' => array()
+        )
+    );
 
     /**
      * Test back button
@@ -76,7 +93,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     )
                 ),
                 'documents' => array()
-            )
+            ),
+            $this->appDataBundle
         );
 
         $response = $this->controller->indexAction();
@@ -122,7 +140,12 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET') {
+        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+
+            return $this->getLicenceData();
+        }
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
             return array(
                 'prevConviction' => true,
                 'licence' => array(
@@ -133,7 +156,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(
-                        'id' => 'ltyp_sn'
+                        'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'organisation' => array(
                         'type' => array(

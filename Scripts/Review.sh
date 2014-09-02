@@ -35,7 +35,7 @@ do
 		then
 		if [[ ${file: -4} == ".php" ]]
 			then
-			phpcs --standard="${dev_workspace}/sonar-configuration/Profiles/DVSA/CS/ruleset.xml" $file;
+			./vendor/bin/phpcs --standard="${dev_workspace}/sonar-configuration/Profiles/DVSA/CS/ruleset.xml" $file;
 		fi
 	fi
 done
@@ -46,7 +46,7 @@ echo "h2.Run unit tests"
 
 echo "{code}"
 
-cd test && phpunit
+cd test && ../vendor/bin/phpunit
 
 echo "{code}"
 

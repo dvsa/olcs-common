@@ -10,76 +10,22 @@ namespace Common\Controller;
 
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
+use Common\Helper\RestrictionHelper;
+use Common\Controller\AbstractSectionController;
 
 /**
  * Abstract Journey Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractJourneyController extends AbstractController
+abstract class AbstractJourneyController extends AbstractSectionController
 {
-
-    /**
-     * Holds the isAction
-     *
-     * @var boolean
-     */
-    protected $isAction;
-
-    /**
-     * Holds the action data
-     *
-     * @var array
-     */
-    protected $actionData;
-
     /**
      * Render the navigation
      *
      * @var boolean
      */
     protected $renderNavigation = true;
-
-    /**
-     * Holds the form tables
-     *
-     * @var array
-     */
-    protected $formTables;
-
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $actionDataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data'
-            )
-        )
-    );
-
-    /**
-     * Holds the actionDataBundle
-     *
-     * @var array
-     */
-    protected $actionDataBundle = null;
-
-    /**
-     * Holds the action service name
-     *
-     * @var string
-     */
-    protected $actionService = null;
-
-    /**
-     * Holds any inline scripts for the current page
-     *
-     * @var array
-     */
-    protected $inlineScripts = [];
 
     /**
      * Hold the journey name
@@ -103,13 +49,6 @@ abstract class AbstractJourneyController extends AbstractController
     private $subSectionName;
 
     /**
-     * Holds the action name
-     *
-     * @var string
-     */
-    private $actionName;
-
-    /**
      * Hold the journey config
      *
      * @var array
@@ -129,20 +68,6 @@ abstract class AbstractJourneyController extends AbstractController
      * @var string
      */
     private $tableName;
-
-    /**
-     * Holds the form name
-     *
-     * @var string
-     */
-    private $formName;
-
-    /**
-     * Holds the identifier
-     *
-     * @var int
-     */
-    private $identifier;
 
     /**
      * Holds the section completion
@@ -226,26 +151,6 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Delete
-     *
-     * @return Response
-     */
-    protected function delete()
-    {
-        $actionService = $this->getActionService();
-        $actionId = $this->getActionId();
-
-        if (!empty($actionService) && !empty($actionId)) {
-
-            $this->makeRestCall($actionService, 'DELETE', array('id' => $actionId));
-
-            return $this->goBackToSection();
-        }
-
-        return $this->notFoundAction();
-    }
-
-    /**
      * Render navigation
      *
      * @param boolean $renderNavigation
@@ -266,33 +171,15 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Gets the action data map
+     * Extend the default and reverse the array
      *
      * @return array
      */
-    protected function getActionDataMap()
+    public function getNamespaceParts()
     {
-        return $this->actionDataMap;
-    }
+        $parts = parent::getNamespaceParts();
 
-    /**
-     * Getter for action data bundle
-     *
-     * @return array
-     */
-    protected function getActionDataBundle()
-    {
-        return $this->actionDataBundle;
-    }
-
-    /**
-     * Get the sub action service
-     *
-     * @return string
-     */
-    protected function getActionService()
-    {
-        return $this->actionService;
+        return array_reverse($parts);
     }
 
     /**
@@ -317,7 +204,7 @@ abstract class AbstractJourneyController extends AbstractController
     protected function getSectionName()
     {
         if (empty($this->sectionName)) {
-            $this->sectionName = $this->getNamespaceParts()[3];
+            $this->sectionName = $this->getNamespaceParts()[1];
         }
 
         return $this->sectionName;
@@ -332,26 +219,12 @@ abstract class AbstractJourneyController extends AbstractController
     {
         if (empty($this->subSectionName)) {
 
-            if (isset($this->getNamespaceParts()[4])) {
-                $this->subSectionName = str_replace('Controller', '', $this->getNamespaceParts()[4]);
+            if (isset($this->getNamespaceParts()[0])) {
+                $this->subSectionName = str_replace('Controller', '', $this->getNamespaceParts()[0]);
             }
         }
 
         return $this->subSectionName;
-    }
-
-    /**
-     * Getter for action name
-     *
-     * @return string
-     */
-    protected function getActionName()
-    {
-        if (empty($this->actionName)) {
-            $this->actionName = $this->params()->fromRoute('action');
-        }
-
-        return $this->actionName;
     }
 
     /**
@@ -486,20 +359,6 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Get the journey identifier
-     *
-     * @return int
-     */
-    protected function getIdentifier()
-    {
-        if (empty($this->identifier)) {
-            $this->identifier = $this->params()->fromRoute($this->getIdentifierName());
-        }
-
-        return $this->identifier;
-    }
-
-    /**
      * Setter for section completion
      *
      * @param array $sectionCompletion
@@ -627,20 +486,6 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Get the sub action id
-     *
-     * @return int
-     */
-    protected function getActionId()
-    {
-        if (empty($this->actionId)) {
-            $this->actionId = $this->params()->fromRoute('id');
-        }
-
-        return $this->actionId;
-    }
-
-    /**
      * Get a list of accessible sections
      *
      * @return array
@@ -676,12 +521,15 @@ abstract class AbstractJourneyController extends AbstractController
 
         $status = $this->getSectionStatus($name);
 
+        $current = false;
+
         if ($name == $sectionName) {
-            $status = 'current';
+            $current = true;
         }
 
         return array(
             'status' => $status,
+            'current' => $current,
             'display' => (isset($details['collapsible']) && $details['collapsible']),
             'class' => (isset($details['collapsible']) && $details['collapsible']) ? 'js-visible' : '',
             'enabled' => $this->isSectionEnabled($name),
@@ -712,12 +560,15 @@ abstract class AbstractJourneyController extends AbstractController
 
             $status = $this->getSectionStatus($sectionName, $subSectionName);
 
+            $current = false;
+
             if ($subSectionName == $currentSubSectionName) {
-                $status = 'current';
+                $current = true;
             }
 
             $subSections[] = array(
                 'status' => $status,
+                'current' => $current,
                 'class' => (isset($sectionDetails['collapsible']) && $sectionDetails['collapsible']) ? 'js-hidden' : '',
                 'enabled' => $this->isSectionEnabled($sectionName, $subSectionName),
                 'title' => $this->getSectionLabel($journeyName, $sectionName, $subSectionName),
@@ -944,12 +795,23 @@ abstract class AbstractJourneyController extends AbstractController
 
             $accessKeys = $this->getAccessKeys();
 
-            $intersection = array_intersect($accessKeys, $details['restriction']);
-
-            return !empty($intersection);
+            return $this->isRestrictionSatisfied($details['restriction'], $accessKeys);
         }
 
         return true;
+    }
+
+    /**
+     * Check if a restriction is satisfied
+     *
+     * @param mixed $restriction
+     * @param array $accessKeys
+     */
+    protected function isRestrictionSatisfied($restriction, $accessKeys)
+    {
+        $helper = new RestrictionHelper();
+
+        return $helper->isRestrictionSatisfied($restriction, $accessKeys);
     }
 
     /**
@@ -1004,21 +866,6 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Check if we have a sub action
-     *
-     * @return boolean
-     */
-    protected function isAction()
-    {
-        if (is_null($this->isAction)) {
-            $action = $this->getActionName();
-            $this->isAction = ($action != 'index');
-        }
-
-        return $this->isAction;
-    }
-
-    /**
      * Alter table
      *
      * This method should be overridden
@@ -1029,30 +876,6 @@ abstract class AbstractJourneyController extends AbstractController
     protected function alterTable($table)
     {
         return $table;
-    }
-
-    /**
-     * Alter the form
-     *
-     * This method should be overridden
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function alterForm($form)
-    {
-        return $form;
-    }
-
-    /**
-     * Alter the action form
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function alterActionForm($form)
-    {
-        return $form;
     }
 
     /**
@@ -1096,23 +919,6 @@ abstract class AbstractJourneyController extends AbstractController
         return $view;
     }
 
-    protected function maybeAddScripts($view)
-    {
-        $scripts = $this->getInlineScripts();
-        if (empty($scripts)) {
-            return;
-        }
-
-        // this process defers to a service which takes care of checking
-        // whether the script(s) exist
-        $view->setVariable('scripts', $this->loadScripts($scripts));
-    }
-
-    protected function getInlineScripts()
-    {
-        return $this->inlineScripts;
-    }
-
     /**
      * Potentiall add a table to the view
      *
@@ -1144,34 +950,7 @@ abstract class AbstractJourneyController extends AbstractController
     {
         if ($this->hasForm()) {
 
-            $data = array();
-
-            if (!$this->getRequest()->isPost()) {
-                $data = $this->getFormData();
-            }
-
-            if ($this->isAction() || empty($this->formTables)) {
-                $form = $this->generateFormWithData($this->getFormName(), $this->getFormCallback(), $data);
-            } else {
-                $tableConfigs = array();
-
-                foreach ($this->formTables as $table => $config) {
-                    $tableConfigs[$table] = array(
-                        'config' => $config,
-                        'data' => $this->getFormTableData($this->getIdentifier(), $table)
-                    );
-                }
-
-                $form = $this->generateTableFormWithData(
-                    $this->getFormName(),
-                    array(
-                        'success' => $this->getFormCallback(),
-                        'crud_action' => $this->getFormCallback() . 'Crud'
-                    ),
-                    $data,
-                    $tableConfigs
-                );
-            }
+            $form = $this->getNewForm();
 
             $response = $this->getCaughtResponse();
 
@@ -1196,96 +975,7 @@ abstract class AbstractJourneyController extends AbstractController
             $form->get('form-actions')->remove('back');
         }
 
-        if ($this->isAction()) {
-            $action = $this->getActionName();
-
-            if (strstr($action, '-')) {
-                list($prefix, $action) = explode('-', $action);
-                unset($prefix);
-            }
-
-            if ($action == 'edit') {
-                $form->get('form-actions')->remove('addAnother');
-            }
-        }
-
-        $alterMethod = $this->getAlterFormMethod();
-
-        return $this->$alterMethod($form);
-    }
-
-    /**
-     * Determine the alter form method name
-     *
-     * @return string
-     */
-    protected function getAlterFormMethod()
-    {
-        if ($this->isAction()) {
-            return 'alterActionForm';
-        }
-
-        return 'alterForm';
-    }
-
-    /**
-     * Get the form data
-     *
-     * @return array
-     */
-    protected function getFormData()
-    {
-        if ($this->isAction()) {
-
-            $action = $this->getActionName();
-
-            if (strstr($action, '-')) {
-                $splitted = explode('-', $action);
-                $action = count($splitted) ? $splitted[count($splitted) - 1] : '';
-            }
-
-            if ($action === 'edit') {
-
-                $data = $this->actionLoad($this->getActionId());
-            } else {
-                $data = array();
-            }
-
-            $processedData = $this->processActionLoad($data);
-        } else {
-
-            $data = $this->loadCurrent();
-
-            $processedData = $this->processLoad($data);
-        }
-
-        return $processedData;
-    }
-
-    /**
-     * Simple helper method to load the current application
-     *
-     * @return array
-     */
-    protected function loadCurrent()
-    {
-        return $this->load($this->getIdentifier());
-    }
-
-    /**
-     * Get the form callback
-     *
-     * @return string
-     */
-    protected function getFormCallback()
-    {
-        $callback = 'processSave';
-
-        if ($this->isAction()) {
-            $callback = 'processActionSave';
-        }
-
-        return $callback;
+        return parent::alterFormBeforeValidation($form);
     }
 
     /**
@@ -1322,14 +1012,14 @@ abstract class AbstractJourneyController extends AbstractController
      */
     protected function checkForRedirect()
     {
+        $redirect = parent::checkForRedirect();
+
+        if ($redirect instanceof Response || $redirect instanceof ViewModel) {
+            return $redirect;
+        }
+
         $sectionName = $this->getSectionName();
         $subSectionName = $this->getSubSectionName();
-
-        $crudAction = $this->checkForCrudAction();
-
-        if ($crudAction instanceof Response || $crudAction instanceof ViewModel) {
-            return $crudAction;
-        }
 
         if (!$this->isSectionAccessible($sectionName, null)
             || !$this->isSectionAccessible($sectionName, $subSectionName)) {
@@ -1340,10 +1030,6 @@ abstract class AbstractJourneyController extends AbstractController
             || !$this->isSectionEnabled($sectionName, $subSectionName)
             || $this->isButtonPressed('back')) {
             return $this->goToPreviousStep();
-        }
-
-        if ($this->isAction() && $this->isButtonPressed('cancel')) {
-            return $this->goBackToSection();
         }
     }
 
@@ -1398,38 +1084,6 @@ abstract class AbstractJourneyController extends AbstractController
     }
 
     /**
-     * Load sub section data
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function actionLoad($id)
-    {
-        if (empty($this->actionData)) {
-
-            $this->actionData = $this->makeRestCall(
-                $this->getActionService(),
-                'GET',
-                array('id' => $id),
-                $this->getActionDataBundle()
-            );
-        }
-
-        return $this->actionData;
-    }
-
-    /**
-     * Process loading the sub section data
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processActionLoad($data)
-    {
-        return $data;
-    }
-
-    /**
      * Complete section and save
      *
      * @param array $data
@@ -1451,62 +1105,6 @@ abstract class AbstractJourneyController extends AbstractController
         }
 
         $this->setCaughtResponse($this->goToNextStep());
-    }
-
-    /**
-     * Save sub action data
-     *
-     * @param array $data
-     */
-    protected function actionSave($data, $service = null)
-    {
-        $method = 'POST';
-
-        if (isset($data['id']) && !empty($data['id'])) {
-            $method = 'PUT';
-        }
-
-        if (is_null($service)) {
-            $service = $this->getActionService();
-        }
-
-        return $this->makeRestCall($service, $method, $data);
-    }
-
-    /**
-     * Save the sub action
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processActionSave($data, $form)
-    {
-        unset($form);
-
-        $data = $this->processDataMapForSave($data, $this->getActionDataMap());
-
-        $response = $this->actionSave($data);
-
-        if ($response instanceof Response || $response instanceof ViewModel) {
-            $this->setCaughtResponse($response);
-            return;
-        }
-
-        $this->setCaughtResponse($this->postActionSave());
-    }
-
-    /**
-     * Post action save (Decide where to go)
-     *
-     * @return Response
-     */
-    protected function postActionSave()
-    {
-        if ($this->isButtonPressed('addAnother')) {
-            return $this->goBackToAddAnother();
-        }
-
-        return $this->goBackToSection();
     }
 
     /**
@@ -1535,6 +1133,26 @@ abstract class AbstractJourneyController extends AbstractController
      */
     protected function completeSubSections(array $subSections)
     {
+        $sectionCompletion = $this->updateSectionStatuses($subSections);
+
+        // Persist the findings
+        $this->makeRestCall($this->getJourneyConfig()['completionService'], 'PUT', $sectionCompletion);
+
+        // Cache the statuses locally
+        $sectionCompletion['version']++;
+        $this->setSectionCompletion($sectionCompletion);
+    }
+
+    /**
+     * Update the section statuses
+     * - By default the statuses are marked as complete if there were no form errors,
+     *      we may want to override this at a later date
+     *
+     * @param array $subSections
+     * @return array
+     */
+    protected function updateSectionStatuses(array $subSections)
+    {
         $sectionCompletion = $this->getSectionCompletion();
         $sectionName = $this->getSectionName();
         $completeKey = array_search('complete', $this->getJourneyConfig()['completionStatusMap']);
@@ -1542,13 +1160,16 @@ abstract class AbstractJourneyController extends AbstractController
         $sectionConfig = $this->getSectionConfig();
 
         foreach ($subSections as $subSection) {
-            $key = 'section' . $sectionName . $subSection . 'Status';
+
+            // Mark the sub section as complete
+            $key = $this->formatSectionStatusIndex($sectionName, $subSection);
             $sectionCompletion[$key] = $completeKey;
 
+            // Check if all sub sections are complete
             $complete = true;
 
             foreach (array_keys($sectionConfig['subSections']) as $subSectionName) {
-                $sectionStatusKey = 'section' . $sectionName . $subSectionName . 'Status';
+                $sectionStatusKey = $this->formatSectionStatusIndex($sectionName, $subSectionName);
 
                 if ($this->isSectionAccessible($sectionName, $subSectionName)
                     && (!isset($sectionCompletion[$sectionStatusKey])
@@ -1558,16 +1179,27 @@ abstract class AbstractJourneyController extends AbstractController
                 }
             }
 
-            $sectionCompletionKey = ($complete ? $completeKey : $incompleteKey);
-
-            $sectionCompletion['section' . $sectionName . 'Status'] = $sectionCompletionKey;
+            // If all sub sections are complete, mark the section as complete
+            $sectionIndex = $this->formatSectionStatusIndex($sectionName, '');
+            $sectionCompletion[$sectionIndex] = ($complete ? $completeKey : $incompleteKey);
         }
 
-        $this->makeRestCall($this->getJourneyConfig()['completionService'], 'PUT', $sectionCompletion);
+        return $sectionCompletion;
+    }
 
-        $sectionCompletion['version']++;
+    /**
+     * Format section status index
+     *
+     * @param string $section
+     * @param string $subSection
+     * @return string
+     */
+    protected function formatSectionStatusIndex($section = null, $subSection = null)
+    {
+        $section = $section !== null ? $section : $this->getSectionName();
+        $subSection = $subSection !== null ? $subSection : $this->getSubSectionName();
 
-        $this->setSectionCompletion($sectionCompletion);
+        return 'section' . $section . $subSection . 'Status';
     }
 
     /**
@@ -1759,18 +1391,6 @@ abstract class AbstractJourneyController extends AbstractController
     protected function getIdentifierName()
     {
         return $this->getJourneyConfig()['identifier'];
-    }
-
-    /**
-     * Go back to sub action
-     *
-     * @return Response
-     */
-    protected function goBackToAddAnother()
-    {
-        $route = $this->getSectionRoute();
-
-        return $this->goToSection($route);
     }
 
     /**

@@ -439,7 +439,7 @@ class BusinessDetailsController extends YourBusinessController
      *
      * @return array
      */
-    protected function getFormTableData()
+    protected function getFormTableData($id, $table)
     {
         $organisation = $this->getOrganisationData(array('id'));
 

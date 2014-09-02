@@ -9,14 +9,14 @@
 namespace CommonTest\Controller\Application\PaymentSubmission;
 
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
-use Common\Controller\Application\ApplicationController;
+use Common\Controller\Application\Application\ApplicationController;
 
 /**
  * Summary Controller Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SummaryControllerTest extends AbstractApplicationControllerTestCase
+abstract class SummaryControllerTest extends AbstractApplicationControllerTestCase
 {
     protected $controllerName =  '\Common\Controller\Application\PaymentSubmission\SummaryController';
 

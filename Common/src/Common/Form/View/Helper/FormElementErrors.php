@@ -45,11 +45,13 @@ class FormElementErrors extends ZendFormElementErrors
         }
 
         if (!is_array($messages) && !$messages instanceof Traversable) {
-            throw new Exception\DomainException(sprintf(
-                '%s expects that $element->getMessages() will return an array or Traversable; received "%s"',
-                __METHOD__,
-                (is_object($messages) ? get_class($messages) : gettype($messages))
-            ));
+            throw new Exception\DomainException(
+                sprintf(
+                    '%s expects that $element->getMessages() will return an array or Traversable; received "%s"',
+                    __METHOD__,
+                    (is_object($messages) ? get_class($messages) : gettype($messages))
+                )
+            );
         }
 
         // Prepare attributes for opening tag
@@ -64,10 +66,13 @@ class FormElementErrors extends ZendFormElementErrors
         // Flatten message array
         $escapeHtml      = $this->getEscapeHtmlHelper();
         $messagesToPrint = array();
-        array_walk_recursive($messages, function ($item) use (&$messagesToPrint, $escapeHtml, $renderer) {
-            $item = $renderer->translate($item);
-            $messagesToPrint[] = $escapeHtml($item);
-        });
+        array_walk_recursive(
+            $messages,
+            function ($item) use (&$messagesToPrint, $escapeHtml, $renderer) {
+                $item = $renderer->translate($item);
+                $messagesToPrint[] = $escapeHtml($item);
+            }
+        );
 
         if (empty($messagesToPrint)) {
             return '';

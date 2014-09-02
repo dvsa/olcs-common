@@ -21,7 +21,7 @@
     }
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Comments', 'content' => $this->record['comment']));
 
-    if ($this->record['isWithdrawn'] == 'Y') {
+    if ($this->record['withdrawnDate'] != null) {
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Withdrawn', 'content' => $this->record['withdrawnDate']));
     }
     ?>

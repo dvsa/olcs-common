@@ -8,14 +8,8 @@
 
 namespace CommonTest\Controller\Application;
 
-use OlcsTest\Bootstrap;
-use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use PHPUnit_Framework_TestCase;
-use Common\Controller\Application\ApplicationController;
+use CommonTest\Controller\AbstractSectionControllerTestCase;
+use Common\Controller\Application\Application\ApplicationController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -23,41 +17,10 @@ use Zend\View\Model\ViewModel;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractApplicationControllerTestCase extends AbstractSectionControllerTestCase
 {
-    protected $controllerName = '';
-    protected $defaultRestResponse = array();
-    protected $restResponses = array();
-    protected $controller;
-    protected $request;
-    protected $response;
-    protected $routeMatch;
-    protected $event;
-    protected $mockedMethods = array();
-
-    /**
-     * Reset all
-     */
-    protected function tearDown()
-    {
-        $this->controller = null;
-        $this->request = null;
-        $this->routeMatch = null;
-        $this->event = null;
-        $this->restResponses = $this->defaultRestResponse;
-    }
-
-    /**
-     * Override a rest response
-     *
-     * @param string $service
-     * @param string $method
-     * @param mixed $response
-     */
-    protected function setRestResponse($service, $method, $response = null)
-    {
-        $this->restResponses[$service][$method] = $response;
-    }
+    protected $identifierName = 'applicationId';
+    protected $additionalMockedMethods = array('getNamespaceParts');
 
     /**
      * Setup an action
@@ -68,70 +31,49 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
      */
     protected function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
-        $this->tearDown();
+        if (strstr($this->controllerName, '\\Common\\Controller\\')) {
+            $this->routeName = str_replace(
+                array('\\Common\\Controller\\', 'Controller', '\\'),
+                array('', '', '/'),
+                $this->controllerName
+            );
+        }
 
-        $methods = array_merge($this->mockedMethods, array('makeRestCall', 'getNamespaceParts'));
-
-        $this->controller = $this->getMock(
-            $this->controllerName,
-            $methods
-        );
+        parent::setUpAction($action, $id, $data, $files);
 
         $this->controller->expects($this->any())
             ->method('getNamespaceParts')
-            ->will($this->returnValue(explode('\\', trim($this->controllerName, '\\'))));
+            ->will($this->returnValue(array_reverse(explode('\\', trim($this->controllerName, '\\')))));
 
-        $this->controller->expects($this->any())
-            ->method('makeRestCall')
-            ->will($this->returnCallback(array($this, 'mockRestCall')));
+        $mockUrlPlugin = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlPlugin->expects($this->any())
+            ->method('__invoke')
+            ->will($this->returnValue('URL'));
 
-        $serviceManager = Bootstrap::getServiceManager();
+        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
+        $mockViewHelperManager->expects($this->any())
+            ->method('get')
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('url', $mockUrlPlugin),
+                    )
+                )
+            );
 
-        $this->request = new Request();
-        $this->response = new Response();
-        $this->routeMatch = new RouteMatch(
-            array(
-                'controller' => trim($this->controllerName, '\\'),
-                'action' => $action,
-                'applicationId' => 1,
-                'id' => $id
-            )
-        );
+        $this->serviceManager->setAllowOverride(true);
+        $this->serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
 
-        $routeName = str_replace(
-            array('\\Common\\Controller\\', 'Controller', '\\'),
-            array('', '', '/'),
-            $this->controllerName
-        );
-
-        $this->routeMatch->setMatchedRouteName($routeName);
-
-        $this->event = new MvcEvent();
-        $config = $serviceManager->get('Config');
-
-        $routerConfig = isset($config['router']) ? $config['router'] : array();
-        $router = HttpRouter::factory($routerConfig);
-
-        $this->event->setRouter($router);
-        $this->event->setRouteMatch($this->routeMatch);
-        $this->event->setRequest($this->request);
-        $this->event->setResponse($this->response);
-
-        $this->controller->setEvent($this->event);
-        $this->controller->setServiceLocator($serviceManager);
-
-        if (!empty($data)) {
-
-            $post = new \Zend\Stdlib\Parameters($data);
-
-            $this->controller->getRequest()->setMethod('post')->setPost($post);
-        }
-
-        if (!empty($files)) {
-
-            $files = new \Zend\Stdlib\Parameters($files);
-
-            $this->controller->getRequest()->setFiles($files);
+        if (class_exists('\Olcs\Helper\ApplicationJourneyHelper')) {
+            $mockApplicationJourneyHelper = $this->getMock(
+                '\Olcs\Helper\ApplicationJourneyHelper',
+                array('makeRestCall')
+            );
+            $mockApplicationJourneyHelper->setServiceLocator($this->serviceManager);
+            $mockApplicationJourneyHelper->expects($this->any())
+                ->method('makeRestCall')
+                ->will($this->returnCallback(array($this, 'mockRestCall')));
+            $this->serviceManager->setService('ApplicationJourneyHelper', $mockApplicationJourneyHelper);
         }
     }
 
@@ -150,27 +92,56 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         }
 
         if (isset($this->restResponses[$service][$method])) {
-            return $this->restResponses[$service][$method];
+
+            if (isset($this->restResponses[$service][$method]['bundle'])) {
+
+                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
+                    return $this->restResponses[$service][$method]['response'];
+                }
+            } else {
+                return $this->restResponses[$service][$method];
+            }
+        }
+
+        $headerBundle = array(
+            'properties' => array('id'),
+            'children' => array(
+                'status' => array(
+                    'properties' => array('id')
+                ),
+                'licence' => array(
+                    'properties' => array(
+                        'id',
+                        'licNo'
+                    ),
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(
+                                'name'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $headerBundle) {
+            return array(
+                'id' => 1,
+                'status' => array(
+                    'id' => 'apsts_new'
+                ),
+                'licence' => array(
+                    'id' => 1,
+                    'licNo' => 'AB123456',
+                    'organisation' => array(
+                        'name' => 'Foo ltd'
+                    )
+                )
+            );
         }
 
         return $this->mockRestCalls($service, $method, $data, $bundle);
-    }
-
-    /**
-     * Get form from response
-     *
-     * @param \Zend\View\Model\ViewModel $view
-     */
-    protected function getFormFromView($view)
-    {
-        if ($view instanceof ViewModel) {
-
-            $main = $this->getMainView($view);
-
-            return $main->getVariable('form');
-        }
-
-        $this->fail('Trying to get form of a Response object instead of a ViewModel');
     }
 
     protected function getContentView($view)
@@ -189,19 +160,6 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
         $this->fail('Trying to get last content child of a Response object instead of a ViewModel');
     }
 
-    protected function getMainView($view)
-    {
-        if ($view instanceof ViewModel) {
-
-            $mainChildren = $view->getChildrenByCaptureTo('main');
-            $this->assertEquals(1, count($mainChildren));
-
-            return $mainChildren[0];
-        }
-
-        $this->fail('Trying to get main child of a Response object instead of a ViewModel');
-    }
-
     protected function getNavView($view)
     {
         if ($view instanceof ViewModel) {
@@ -214,16 +172,6 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
 
         $this->fail('Trying to get nav child of a Response object instead of a ViewModel');
     }
-
-    /**
-     * Abstract mock rest calls method
-     *
-     * @param string $service
-     * @param string $method
-     * @param array $data
-     * @param array $bundle
-     */
-    abstract protected function mockRestCalls($service, $method, $data, $bundle);
 
     /**
      * Get licence data
@@ -272,19 +220,25 @@ abstract class AbstractApplicationControllerTestCase extends PHPUnit_Framework_T
             'sectionYourBusinessBusinessDetailsStatus' => 2,
             'sectionYourBusinessAddressesStatus' => 2,
             'sectionYourBusinessPeopleStatus' => 2,
+            'sectionYourBusinessSoleTraderStatus' => 2,
             'sectionTaxiPhvStatus' => 2,
+            'sectionTaxiPhvLicenceStatus' => 2,
             'sectionOperatingCentresStatus' => 2,
             'sectionOperatingCentresAuthorisationStatus' => 2,
             'sectionOperatingCentresFinancialEvidenceStatus' => 2,
             'sectionTransportManagersStatus' => 2,
+            'sectionTransportManagersPlaceholderStatus' => 2,
             'sectionVehicleSafetyStatus' => 2,
             'sectionVehicleSafetyVehicleStatus' => 2,
             'sectionVehicleSafetySafetyStatus' => 2,
+            'sectionVehicleSafetyVehiclePsvStatus' => 2,
+            'sectionVehicleSafetyUndertakingsStatus' => 2,
             'sectionPreviousHistoryStatus' => 2,
             'sectionPreviousHistoryFinancialHistoryStatus' => 2,
             'sectionPreviousHistoryLicenceHistoryStatus' => 2,
-            'sectionPreviousHistoryConvictionPenaltiesStatus' => 2,
+            'sectionPreviousHistoryConvictionsPenaltiesStatus' => 2,
             'sectionReviewDeclarationsStatus' => 2,
+            'sectionReviewDeclarationsSummaryStatus' => 2,
             'sectionPaymentSubmissionStatus' => 0,
             'sectionPaymentSubmissionPaymentStatus' => 0,
             'sectionPaymentSubmissionSummaryStatus' => 0,

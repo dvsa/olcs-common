@@ -27,7 +27,8 @@ foreach ($journeyArray as $journey) {
 
         $journeyNamespace = $details['namespace'];
 
-        $controller = $journeyNamespace . '\\' . $name . 'Controller';
+        $controller = $journeyNamespace . '\\' . $name . '\\' . $name . 'Controller';
+
         $controllers[$controller] = $controller;
 
         $allRoutes[$name] = array(
