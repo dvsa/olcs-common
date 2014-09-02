@@ -54,6 +54,14 @@ return array(
                 )
             ),
             array(
+                'name' => 'trafficArea',
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    )
+                )
+            ),
+            array(
                 'type' => 'journey-crud-buttons'
             )
         )
