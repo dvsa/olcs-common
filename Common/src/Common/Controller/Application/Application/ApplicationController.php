@@ -381,4 +381,24 @@ class ApplicationController extends AbstractJourneyController
 
         $this->makeRestCall('Document', 'POST', array_merge($fileData, $data));
     }
+
+    /**
+     * Get postcode validators chain
+     *
+     * @return Zend\Validator\ValidatorChain
+     */
+    public function getPostcodeValidatorsChain($form)
+    {
+        return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+    }
+
+    /**
+     * Get postcode service
+     *
+     * @return Common\Service\Postcode\Postcode
+     */
+    public function getPostcodeService()
+    {
+        return $this->getServiceLocator()->get('postcode');
+    }
 }
