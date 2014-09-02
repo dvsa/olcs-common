@@ -402,8 +402,6 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Set fields as not required
      *
-     * @todo Move this logic
-     *
      * @param \Zend\InputFilter\InputFilter $inputFilter
      */
     protected function setFieldsAsNotRequired($inputFilter)

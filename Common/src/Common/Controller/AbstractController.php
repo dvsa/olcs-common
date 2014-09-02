@@ -196,7 +196,9 @@ abstract class AbstractController extends FormActionController
      */
     protected function delete($id = null, $service = null)
     {
-        $service = ($service === null ? $this->getService() : $service);
+        if ($service === null) {
+            $service = $this->getService();
+        }
 
         if (!empty($id) && !empty($service)) {
 
