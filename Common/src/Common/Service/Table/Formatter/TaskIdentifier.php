@@ -12,6 +12,7 @@ namespace Common\Service\Table\Formatter;
  * task identifier formatter
  *
  * @author nick payne <nick.payne@valtech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class TaskIdentifier implements FormatterInterface
 {
@@ -25,7 +26,7 @@ class TaskIdentifier implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        $identifier = $data['identifier'];
+        $identifier = $data['linkDisplay'];
         if ($identifier === 'Unlinked') {
             return 'Unlinked';
         }
@@ -33,23 +34,13 @@ class TaskIdentifier implements FormatterInterface
         $urlHelper = $viewHelperManager->get('url');
         $url = '#';
         switch ($data['linkType']) {
-            case 'IRFO Organisation':
-                break;
-            case 'Bus Registration':
-                break;
-            case 'Application':
-                break;
-            case 'Case':
-                break;
             case 'Licence':
-                $url = $urlHelper('licence/overview', array('licence' => $data['linkId']));
-                break;
-            case 'Transport Manager':
+                $url = $urlHelper->__invoke('licence/details/overview', array('licence' => $data['linkId']));
                 break;
             default:
                 break;
         }
-        $value = '<a href="' . $url . '">' . $data['identifier'] . '</a>';
+        $value = '<a href="' . $url . '">' . $data['linkDisplay'] . '</a>';
         if ($data['licenceCount'] > 1) {
             $value .= ' (MLH)';
         }
