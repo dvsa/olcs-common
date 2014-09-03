@@ -27,10 +27,10 @@ trait VehiclePsvSection
      *
      * @var string
      */
-    protected $sharedActionService = 'Vehicle';
+    protected $sharedActionService = 'LicenceVehicle';
 
     /**
-     * Holds the action data bundle
+     * Shared action data bundle
      *
      * @var array
      */
@@ -38,10 +38,27 @@ trait VehiclePsvSection
         'properties' => array(
             'id',
             'version',
-            'vrm',
-            'makeModel',
-            'psvType',
-            'isNovelty'
+            'receivedDate',
+            'deletedDate',
+            'specifiedDate'
+        ),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'vrm',
+                    'makeModel',
+                    'isNovelty'
+                ),
+                'children' => array(
+                    'psvType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            )
         )
     );
 
@@ -54,6 +71,13 @@ trait VehiclePsvSection
         'main' => array(
             'mapFrom' => array(
                 'data'
+            ),
+            'children' => array(
+                'licence-vehicle' => array(
+                    'mapFrom' => array(
+                        'licence-vehicle'
+                    )
+                )
             )
         )
     );
@@ -217,6 +241,8 @@ trait VehiclePsvSection
      */
     public function alterActionForm($form)
     {
+        $form = $this->genericActionFormAlterations($form);
+
         $actionName = $this->getActionName();
 
         if (!in_array($actionName, array('small-add', 'small-edit'))) {
@@ -294,7 +320,10 @@ trait VehiclePsvSection
                 continue;
             }
 
-            $rows[] = $licenceVehicle['vehicle'];
+            $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
+            unset($row['vehicle']);
+
+            $rows[] = $row;
         }
 
         return $rows;
@@ -349,9 +378,17 @@ trait VehiclePsvSection
 
         $type = array_shift($parts);
 
-        $data['psvType'] = $this->getPsvTypeFromType($type);
+        $licenceVehicle = $data;
+        unset($licenceVehicle['vehicle']);
 
-        return array('data' => $data);
+        $data['vehicle']['psvType'] = $this->getPsvTypeFromType($type);
+
+        $data = array(
+            'licence-vehicle' => $licenceVehicle,
+            'data' => $data['vehicle']
+        );
+
+        return $data;
     }
 
     /**

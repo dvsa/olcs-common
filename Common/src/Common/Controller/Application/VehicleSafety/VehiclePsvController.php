@@ -38,16 +38,17 @@ class VehiclePsvController extends VehicleSafetyController
                 'properties' => null,
                 'children' => array(
                     'licenceVehicles' => array(
-                        'properties' => null,
+                        'properties' => array(
+                            'id',
+                            'specifiedDate',
+                            'deletedDate'
+                        ),
                         'children' => array(
                             'vehicle' => array(
                                 'properties' => array(
-                                    'id',
                                     'vrm',
                                     'makeModel',
                                     'isNovelty',
-                                    'specifiedDate',
-                                    'deletedDate'
                                 ),
                                 'children' => array(
                                     'psvType' => array(

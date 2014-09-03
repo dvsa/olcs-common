@@ -167,25 +167,7 @@ trait VehicleSection
      */
     protected function alterActionForm($form)
     {
-        $dataFieldset = $form->get('licence-vehicle');
-
-        $this->disableDateElement($dataFieldset->get('specifiedDate'));
-        $this->disableDateElement($dataFieldset->get('deletedDate'));
-        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        return $form;
-    }
-
-    /**
-     * Disable date element
-     *
-     * @param \Zend\Form\Element\DateSelect $element
-     */
-    protected function disableDateElement($element)
-    {
-        $element->getDayElement()->setAttribute('disabled', 'disabled');
-        $element->getMonthElement()->setAttribute('disabled', 'disabled');
-        $element->getYearElement()->setAttribute('disabled', 'disabled');
+        return $this->genericActionFormAlterations($form);
     }
 
     /**

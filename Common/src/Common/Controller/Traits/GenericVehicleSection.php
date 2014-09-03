@@ -41,4 +41,33 @@ trait GenericVehicleSection
 
         parent::actionSave($licenceVehicle, 'LicenceVehicle');
     }
+
+    /**
+     * Generic form alterations
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function genericActionFormAlterations($form)
+    {
+        $dataFieldset = $form->get('licence-vehicle');
+
+        $this->disableDateElement($dataFieldset->get('specifiedDate'));
+        $this->disableDateElement($dataFieldset->get('deletedDate'));
+        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
+
+        return $form;
+    }
+
+    /**
+     * Disable date element
+     *
+     * @param \Zend\Form\Element\DateSelect $element
+     */
+    protected function disableDateElement($element)
+    {
+        $element->getDayElement()->setAttribute('disabled', 'disabled');
+        $element->getMonthElement()->setAttribute('disabled', 'disabled');
+        $element->getYearElement()->setAttribute('disabled', 'disabled');
+    }
 }
