@@ -16,8 +16,6 @@ use Common\Service\Table\Formatter\FormatterInterface;
  */
 class Vrm implements FormatterInterface
 {
-    protected static $route = 'Application/VehicleSafety/Vehicle';
-
     /**
      * Format an cell
      *
@@ -36,7 +34,7 @@ class Vrm implements FormatterInterface
         }
 
         return '<a href="' . $url(
-            static::getRouteForColumn($column),
+            null,
             array(
                 'id' => $data['id'],
                 'action' => $action
@@ -44,16 +42,5 @@ class Vrm implements FormatterInterface
             array(),
             true
         ) . '">' . $data['vrm'] . '</a>';
-    }
-
-    /**
-     * Return the route for the column
-     *
-     * @param array $column
-     * @return string
-     */
-    protected static function getRouteForColumn($column)
-    {
-        return static::$route . (isset($column['psv']) && $column['psv'] ? 'Psv' : '');
     }
 }

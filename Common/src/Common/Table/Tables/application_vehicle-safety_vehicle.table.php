@@ -1,8 +1,10 @@
 <?php
 
+$translationKeyPrefix = 'application_vehicle-safety_vehicle.table.';
+
 return array(
     'variables' => array(
-        'title' => 'application_vehicle-safety_vehicle.table.title'
+        'title' => $translationKeyPrefix . 'title'
     ),
     'settings' => array(
         'crud' => array(
@@ -27,12 +29,26 @@ return array(
             'format' => '{{[elements/radio]}}'
         ),
         array(
-            'title' => 'application_vehicle-safety_vehicle.table.vrm',
+            'title' => $translationKeyPrefix . 'vrm',
             'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm')
         ),
         array(
-            'title' => 'application_vehicle-safety_vehicle.table.weight',
+            'title' => $translationKeyPrefix . 'weight',
             'format' => '{{platedWeight}} Kg'
+        ),
+        array(
+            'title' => $translationKeyPrefix . 'specified',
+            'formatter' => 'Date',
+            'name' => 'specifiedDate'
+        ),
+        array(
+            'title' => $translationKeyPrefix . 'removed',
+            'formatter' => 'Date',
+            'name' => 'deletedDate'
+        ),
+        array(
+            'title' => $translationKeyPrefix . 'disc-no',
+            'name' => 'discNo'
         )
     )
 );
