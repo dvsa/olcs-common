@@ -20,6 +20,8 @@ use Common\Form\Elements\Validators\TableRequiredValidator;
  */
 trait VehiclePsvSection
 {
+    use GenericVehicleSection;
+
     /**
      * Action service
      *
@@ -231,7 +233,7 @@ trait VehiclePsvSection
      * @param Form $form
      * @return Form
      */
-    public function alterForm($form)
+    public function doAlterForm($form)
     {
         $data = $this->load($this->getIdentifier());
 
@@ -346,7 +348,7 @@ trait VehiclePsvSection
     {
         switch ($type) {
             case 'large':
-                return 'vhl_t_c'; // @todo Not sure if this is the right ref data key
+                return 'vhl_t_c';
             case 'medium':
                 return 'vhl_t_b';
             case 'small':

@@ -71,4 +71,15 @@ class VehiclePsvController extends VehicleSafetyController
 
         return $this->formatTableData($data, $table);
     }
+
+    /**
+     * Alter the form
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function alterForm($form)
+    {
+        return $this->doAlterForm($form);
+    }
 }

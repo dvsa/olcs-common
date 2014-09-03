@@ -28,15 +28,9 @@ return array(
         array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'small-edit'
-                    ),
-                    'Application/VehicleSafety/VehiclePsv'
-                ) . '">' . $row['vrm'] . '</a>';
-            }
+            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm'),
+            'action-type' => 'small',
+            'psv' => true
         ),
         array(
             'title' => $translationPrefix . '.make',

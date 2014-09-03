@@ -29,14 +29,31 @@ class Vrm implements FormatterInterface
     {
         $url = $sm->get('viewhelpermanager')->get('url');
 
+        $action = 'edit';
+
+        if (isset($column['action-type'])) {
+            $action = $column['action-type'] . '-' . $action;
+        }
+
         return '<a href="' . $url(
-            static::$route,
+            static::getRouteForColumn($column),
             array(
                 'id' => $data['id'],
-                'action' => 'edit'
+                'action' => $action
             ),
             array(),
             true
         ) . '">' . $data['vrm'] . '</a>';
+    }
+
+    /**
+     * Return the route for the column
+     *
+     * @param array $column
+     * @return string
+     */
+    protected static function getRouteForColumn($column)
+    {
+        return static::$route . (isset($column['psv']) && $column['psv'] ? 'Psv' : '');
     }
 }
