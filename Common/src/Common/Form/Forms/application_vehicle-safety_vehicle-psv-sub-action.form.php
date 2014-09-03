@@ -37,6 +37,33 @@ return array(
                 )
             ),
             array(
+                'name' => 'licence-vehicle',
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'version' => array(
+                        'type' => 'hidden'
+                    ),
+                    'receivedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.receivedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'specifiedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.specifiedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'deletedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.deletedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'discNo' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.discNo',
+                        'type' => 'text'
+                    )
+                )
+            ),
+            array(
                 'type' => 'journey-crud-buttons'
             )
         )

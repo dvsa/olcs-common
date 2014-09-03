@@ -22,22 +22,23 @@ trait GenericVehicleSection
      */
     protected function saveVehicle($data, $action)
     {
-        $saved = parent::actionSave($data);
+        $licenceVehicle = $data['licence-vehicle'];
+        unset($data['licence-vehicle']);
+
+        $saved = parent::actionSave($data, 'Vehicle');
 
         if ($action == 'add') {
 
             if (!isset($saved['id'])) {
-
                 throw new \Exception('Unable to save vehicle');
             }
 
-            $licenceVehicleData = array(
-                'licence' => $this->getLicenceId(),
-                'dateApplicationReceived' => date('Y-m-d H:i:s'),
-                'vehicle' => $saved['id']
-            );
-
-            parent::actionSave($licenceVehicleData, 'LicenceVehicle');
+            $licenceVehicle['vehicle'] = $saved['id'];
+            $licenceVehicle['licence'] = $this->getLicenceId();
+        } else {
+            $licenceVehicle['vehicle'] = $data['id'];
         }
+
+        parent::actionSave($licenceVehicle, 'LicenceVehicle');
     }
 }

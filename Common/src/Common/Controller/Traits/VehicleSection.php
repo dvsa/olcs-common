@@ -25,7 +25,11 @@ trait VehicleSection
         'properties' => null,
         'children' => array(
             'licenceVehicles' => array(
-                'properties' => null,
+                'properties' => array(
+                    'id',
+                    'specifiedDate',
+                    'deletedDate'
+                ),
                 'children' => array(
                     'goodsDiscs' => array(
                         'ceasedDate',
@@ -33,11 +37,8 @@ trait VehicleSection
                     ),
                     'vehicle' => array(
                         'properties' => array(
-                            'id',
                             'vrm',
-                            'platedWeight',
-                            'specifiedDate',
-                            'deletedDate'
+                            'platedWeight'
                         )
                     )
                 )
@@ -50,7 +51,7 @@ trait VehicleSection
      *
      * @var string
      */
-    protected $sharedActionService = 'Vehicle';
+    protected $sharedActionService = 'LicenceVehicle';
 
     /**
      * Action data map
@@ -61,6 +62,43 @@ trait VehicleSection
         'main' => array(
             'mapFrom' => array(
                 'data'
+            ),
+            'children' => array(
+                'licence-vehicle' => array(
+                    'mapFrom' => array(
+                        'licence-vehicle'
+                    )
+                )
+            )
+        )
+    );
+
+    /**
+     * Shared action data bundle
+     *
+     * @var array
+     */
+    protected $sharedActionDataBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'receivedDate',
+            'deletedDate',
+            'specifiedDate'
+        ),
+        'children' => array(
+            'goodsDiscs' => array(
+                'properties' => array(
+                    'discNo'
+                )
+            ),
+            'vehicle' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'platedWeight',
+                    'vrm'
+                )
             )
         )
     );
@@ -112,6 +150,45 @@ trait VehicleSection
     }
 
     /**
+     * Get action data bundle
+     *
+     * @return array
+     */
+    protected function getActionDataBundle()
+    {
+        return $this->sharedActionDataBundle;
+    }
+
+    /**
+     * Alter form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterActionForm($form)
+    {
+        $dataFieldset = $form->get('licence-vehicle');
+
+        $this->disableDateElement($dataFieldset->get('specifiedDate'));
+        $this->disableDateElement($dataFieldset->get('deletedDate'));
+        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
+
+        return $form;
+    }
+
+    /**
+     * Disable date element
+     *
+     * @param \Zend\Form\Element\DateSelect $element
+     */
+    protected function disableDateElement($element)
+    {
+        $element->getDayElement()->setAttribute('disabled', 'disabled');
+        $element->getMonthElement()->setAttribute('disabled', 'disabled');
+        $element->getYearElement()->setAttribute('disabled', 'disabled');
+    }
+
+    /**
      * Get table data
      *
      * @param int $id
@@ -135,22 +212,12 @@ trait VehicleSection
                     continue;
                 }
 
-                $row = array();
+                $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
 
-                if (isset($licenceVehicle['vehicle']) && !empty($licenceVehicle['vehicle'])) {
-                    $row = $licenceVehicle['vehicle'];
-                }
+                unset($row['vehicle']);
+                unset($row['goodsDiscs']);
 
-                $row['discNo'] = '';
-
-                if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
-                    foreach ($licenceVehicle['goodsDiscs'] as $discs) {
-                        if (empty($discs['ceasedDate'])) {
-                            $row['discNo'] = $discs['discNo'];
-                            break;
-                        }
-                    }
-                }
+                $row['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
 
                 $results[] = $row;
             }
@@ -199,7 +266,40 @@ trait VehicleSection
      */
     protected function processActionLoad($data)
     {
-        return array('data' => $data);
+        $licenceVehicle = $data;
+        unset($licenceVehicle['vehicle']);
+
+        $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
+        unset($licenceVehicle['goodsDiscs']);
+
+        $data = array(
+            'licence-vehicle' => $licenceVehicle,
+            'data' => $data['vehicle']
+        );
+
+        return $data;
+    }
+
+    /**
+     * Get current disc number
+     *
+     * @param array $licenceVehicle
+     * @return string
+     */
+    protected function getCurrentDiscNo($licenceVehicle)
+    {
+        $discNo = '';
+
+        if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
+            foreach ($licenceVehicle['goodsDiscs'] as $discs) {
+                if (empty($discs['ceasedDate'])) {
+                    $discNo = $discs['discNo'];
+                    break;
+                }
+            }
+        }
+
+        return $discNo;
     }
 
     /**
@@ -222,27 +322,6 @@ trait VehicleSection
      */
     public function deleteAction()
     {
-        $vehicleId = $this->getActionId();
-
-        $cond = array(
-            'vehicle' => $vehicleId,
-            'licence' => $this->getLicenceId(),
-        );
-
-        $bundle = array(
-            'properties' => array(
-                'id'
-            )
-        );
-
-        $licenceVehicle = $this->makeRestCall('LicenceVehicle', 'GET', $cond, $bundle);
-
-        if (empty($licenceVehicle) || (isset($licenceVehicle['Count']) && $licenceVehicle['Count'] == 0)) {
-            return $this->notFoundAction();
-        }
-
-        $this->makeRestCall('LicenceVehicle', 'DELETE', array('id' => $licenceVehicle['Results'][0]['id']));
-
-        return $this->goBackToSection();
+        return $this->delete();
     }
 }

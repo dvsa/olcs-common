@@ -288,7 +288,7 @@ class OlcsCustomFormFactory extends Factory
             $newElement['spec']['name'] = $newElement['spec']['attributes']['id'] = $element['name'];
         }
 
-        $mergeAttributes = array('class', 'placeholder', 'data-container-class');
+        $mergeAttributes = array('class', 'placeholder', 'data-container-class', 'disabled');
 
         foreach ($mergeAttributes as $attribute) {
             if (isset($element[$attribute])) {
