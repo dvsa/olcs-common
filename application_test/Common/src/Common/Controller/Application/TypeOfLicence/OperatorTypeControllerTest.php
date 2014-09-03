@@ -57,7 +57,7 @@ class OperatorTypeControllerTest extends AbstractApplicationControllerTestCase
             null,
             array(
                 'operator-type' => array(
-                    'goodsOrPsv' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                    'goodsOrPsv' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                 )
             )
         );

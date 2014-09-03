@@ -80,7 +80,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'id' => 10,
                     'version' => 1,
                     'goodsOrPsv' => array(
-                        'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                        'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(
@@ -152,7 +152,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'id' => 10,
                     'version' => 1,
                     'goodsOrPsv' => array(
-                        'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                        'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(

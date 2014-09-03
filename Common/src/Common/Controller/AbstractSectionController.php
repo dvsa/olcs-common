@@ -125,6 +125,20 @@ abstract class AbstractSectionController extends AbstractController
     protected $inlineScripts = [];
 
     /**
+     * Holds the table name
+     *
+     * @var string
+     */
+    protected $tableName;
+
+    /**
+     * Holds hasTable
+     *
+     * @var boolean
+     */
+    protected $hasTable = null;
+
+    /**
      * Getter for action data bundle
      *
      * @return array
@@ -625,5 +639,79 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         return $this->actionId;
+    }
+
+    /**
+     * Add table to a view
+     * @param type $view
+     */
+    protected function maybeAddTable($view)
+    {
+        if ($this->hasTable()) {
+            $tableName = $this->getTableName();
+
+            if (!empty($tableName)) {
+                $data = $this->getTableData($this->getIdentifier());
+
+                $settings = $this->getTableSettings();
+
+                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+
+                $view->setVariable('table', $table->render());
+            }
+        }
+    }
+
+    /**
+     * Alter table
+     *
+     * This method should be overridden if alterations are required
+     *
+     * @param object $table
+     * @return object
+     */
+    protected function alterTable($table)
+    {
+        return $table;
+    }
+
+    /**
+     * Get table name
+     *
+     * @return string
+     */
+    protected function getTableName()
+    {
+        if ($this->isAction()) {
+
+            return $this->tableName . '-sub-action';
+        }
+
+        return $this->tableName;
+    }
+
+    /**
+     * Check if the current sub section has a table
+     *
+     * @return boolean
+     */
+    protected function hasTable()
+    {
+        if (is_null($this->hasTable)) {
+
+            $tableName = $this->getTableName();
+
+            $this->hasTable = false;
+
+            foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
+
+                if (file_exists($location . $tableName . '.table.php')) {
+                    $this->hasTable = true;
+                    break;
+                }
+            }
+        }
+
+        return $this->hasTable;
     }
 }

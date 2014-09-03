@@ -179,7 +179,7 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
                     'niFlag' => 'Y'
                 ),
                 'operator-type' => array(
-                    'goodsOrPsv' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                    'goodsOrPsv' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                 ),
                 'licence-type' => array(
                     'licenceType' => ApplicationController::LICENCE_TYPE_STANDARD_INTERNATIONAL

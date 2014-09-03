@@ -28,15 +28,7 @@ return array(
         ),
         array(
             'title' => 'application_vehicle-safety_vehicle.table.vrm',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'edit'
-                    ),
-                    'Application/VehicleSafety/Vehicle'
-                ) . '">' . $row['vrm'] . '</a>';
-            }
+            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm')
         ),
         array(
             'title' => 'application_vehicle-safety_vehicle.table.weight',
