@@ -343,4 +343,24 @@ class ApplicationController extends AbstractJourneyController
 
         return $results['licence'];
     }
+
+    /**
+     * Get postcode validators chain
+     *
+     * @return Zend\Validator\ValidatorChain
+     */
+    public function getPostcodeValidatorsChain($form)
+    {
+        return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+    }
+
+    /**
+     * Get postcode service
+     *
+     * @return Common\Service\Postcode\Postcode
+     */
+    public function getPostcodeService()
+    {
+        return $this->getServiceLocator()->get('postcode');
+    }
 }

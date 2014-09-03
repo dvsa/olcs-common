@@ -365,16 +365,17 @@ return array(
         'ZW' => 'Zimbabwe'
     ],
     'appeal_reasons' => [
-        'appeal_reason.1' => 'Application',
-        'appeal_reason.2' => 'Disciplinary PI',
-        'appeal_reason.3' => 'Disciplinary Non PI',
-        'appeal_reason.4' => 'Impounding'
+        'appeal_r_app' => 'Application',
+        'appeal_r_lic_non_pi' => 'Disciplinary Non-PI',
+        'appeal_r_lic_pi' => 'Disciplinary PI',
+        'appeal_r_tm_non_pi' => 'Regulatory Non-PI',
+        'appeal_r_tm_pi' => 'Regulatory PI'
     ],
     'appeal_outcomes' => [
-        'appeal_outcome.1' => 'Successful',
-        'appeal_outcome.2' => 'Partially Successful',
-        'appeal_outcome.3' => 'Dismissed',
-        'appeal_outcome.4' => 'Refer back to TC'
+        'appeal_o_dis' => 'Dismissed',
+        'appeal_o_pas' => 'Partially Successful',
+        'appeal_o_ref' => 'Refer Back to TC',
+        'appeal_o_suc' => 'Successful'
     ],
     'submission_recommendation' => [
         'submission_recommendation.other' => 'Other',

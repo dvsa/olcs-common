@@ -8,14 +8,14 @@
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Appeal deadline', 'content' => $this->record['deadlineDate']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of appeal', 'content' => $this->record['appealDate']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Appeal number', 'content' => $this->record['appealNo']));
-    echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Reason', 'content' => $this->translate('appeal_reason.' . $this->record['reason'])));
+    echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Reason', 'content' => $this->translate($this->record['reason']['description'])));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outline ground', 'content' => $this->record['outlineGround']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date set for appeal hearing', 'content' => $this->record['hearingDate']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Date of decision', 'content' => $this->record['decisionDate']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Papers due at tribunal', 'content' => $this->record['papersDueDate']));
     echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Papers sent', 'content' => $this->record['papersSentDate']));
-    if ($this->record['outcome'] > 0) {
-        echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome', 'content' => $this->translate('appeal_outcome.' . $this->record['outcome'])));
+    if (!empty($this->record['outcome'])) {
+        echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome', 'content' => $this->translate($this->record['outcome']['description'])));
     } else {
         echo $this->render('partials/case/summary-row.phtml', array('heading' => 'Outcome', 'content' => ''));
     }
