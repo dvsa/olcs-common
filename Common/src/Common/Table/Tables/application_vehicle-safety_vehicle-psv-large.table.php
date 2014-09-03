@@ -31,6 +31,16 @@ return array(
             'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm'),
             'action-type' => 'large',
             'psv' => true
+        ),
+        array(
+            'title' => $translationPrefix . '.specified',
+            'formatter' => 'Date',
+            'name' => 'specifiedDate'
+        ),
+        array(
+            'title' => $translationPrefix . '.removed',
+            'formatter' => 'Date',
+            'name' => 'deletedDate'
         )
     )
 );

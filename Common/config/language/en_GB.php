@@ -334,12 +334,16 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-edit' => 'Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-large.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-large.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '17 or more passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-large.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-medium-add' => 'Add medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium-edit' => 'Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-medium.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-medium.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '9 - 16 passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-medium.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-small-add' => 'Add small vehicle',
@@ -348,6 +352,8 @@ return array(
         registration number and size of your vehicles.',
     'application_vehicle-safety_vehicle-psv-small.table.make' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-small.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-small.table.title' => 'Small vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type

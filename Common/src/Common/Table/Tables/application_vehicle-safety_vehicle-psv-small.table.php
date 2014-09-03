@@ -40,6 +40,16 @@ return array(
             'title' => $translationPrefix . '.novelty',
             'name' => 'isNovelty',
             'formatter' => 'YesNo'
+        ),
+        array(
+            'title' => $translationPrefix . '.specified',
+            'formatter' => 'Date',
+            'name' => 'specifiedDate'
+        ),
+        array(
+            'title' => $translationPrefix . '.removed',
+            'formatter' => 'Date',
+            'name' => 'deletedDate'
         )
     )
 );

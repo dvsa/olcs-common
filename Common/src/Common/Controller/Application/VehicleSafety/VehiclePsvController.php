@@ -38,14 +38,18 @@ class VehiclePsvController extends VehicleSafetyController
                 'properties' => null,
                 'children' => array(
                     'licenceVehicles' => array(
-                        'properties' => null,
+                        'properties' => array(
+                            // @todo not sure if there should be a removed date rather than using deleted date OLCS-3619
+                            'deletedDate'
+                        ),
                         'children' => array(
                             'vehicle' => array(
                                 'properties' => array(
                                     'id',
                                     'vrm',
                                     'makeModel',
-                                    'isNovelty'
+                                    'isNovelty',
+                                    'specifiedDate'
                                 ),
                                 'children' => array(
                                     'psvType' => array(

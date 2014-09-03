@@ -283,13 +283,20 @@ trait VehiclePsvSection
 
         $type = $this->getPsvTypeFromType($table);
 
-        foreach ($data['licence']['licenceVehicles'] as $vehicle) {
-            if (!isset($vehicle['vehicle']['psvType']['id'])
-                || $vehicle['vehicle']['psvType']['id'] != $type) {
+        foreach ($data['licence']['licenceVehicles'] as $licenceVehicle) {
+
+            $row = array();
+
+            if (!isset($licenceVehicle['vehicle']['psvType']['id'])
+                || $licenceVehicle['vehicle']['psvType']['id'] != $type) {
                 continue;
             }
 
-            $rows[] = $vehicle['vehicle'];
+            $row = $licenceVehicle['vehicle'];
+
+            $row['deletedDate'] = $licenceVehicle['deletedDate'];
+
+            $rows[] = $row;
         }
 
         return $rows;
