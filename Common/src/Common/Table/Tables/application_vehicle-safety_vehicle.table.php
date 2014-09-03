@@ -4,7 +4,7 @@ $translationPrefix = 'application_vehicle-safety_vehicle.table';
 
 return array(
     'variables' => array(
-        'title' => $translationPrefix . 'title'
+        'title' => $translationPrefix . '.title'
     ),
     'settings' => array(
         'crud' => array(

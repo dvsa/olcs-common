@@ -25,10 +25,7 @@ trait VehicleSection
         'properties' => null,
         'children' => array(
             'licenceVehicles' => array(
-                'properties' => array(
-                    // @todo not sure if there should be a removed date rather than using deleted date OLCS-3619
-                    'deletedDate'
-                ),
+                'properties' => null,
                 'children' => array(
                     'goodsDiscs' => array(
                         'ceasedDate',
@@ -39,7 +36,8 @@ trait VehicleSection
                             'id',
                             'vrm',
                             'platedWeight',
-                            'specifiedDate'
+                            'specifiedDate',
+                            'deletedDate'
                         )
                     )
                 )
@@ -133,13 +131,15 @@ trait VehicleSection
 
             foreach ($data['licenceVehicles'] as $licenceVehicle) {
 
+                if (!$this->showVehicle($licenceVehicle['vehicle'])) {
+                    continue;
+                }
+
                 $row = array();
 
                 if (isset($licenceVehicle['vehicle']) && !empty($licenceVehicle['vehicle'])) {
                     $row = $licenceVehicle['vehicle'];
                 }
-
-                $row['deletedDate'] = $licenceVehicle['deletedDate'];
 
                 $row['discNo'] = '';
 
@@ -157,6 +157,17 @@ trait VehicleSection
         }
 
         return $results;
+    }
+
+    /**
+     * This is extended in the licence section
+     *
+     * @param array $vehicle
+     * @return boolean
+     */
+    protected function showVehicle($vehicle)
+    {
+        return true;
     }
 
     /**

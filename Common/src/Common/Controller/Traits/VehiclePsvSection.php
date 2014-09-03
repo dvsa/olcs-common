@@ -285,21 +285,30 @@ trait VehiclePsvSection
 
         foreach ($data['licence']['licenceVehicles'] as $licenceVehicle) {
 
-            $row = array();
-
             if (!isset($licenceVehicle['vehicle']['psvType']['id'])
                 || $licenceVehicle['vehicle']['psvType']['id'] != $type) {
                 continue;
             }
 
-            $row = $licenceVehicle['vehicle'];
+            if (!$this->showVehicle($licenceVehicle['vehicle'])) {
+                continue;
+            }
 
-            $row['deletedDate'] = $licenceVehicle['deletedDate'];
-
-            $rows[] = $row;
+            $rows[] = $licenceVehicle['vehicle'];
         }
 
         return $rows;
+    }
+
+    /**
+     * This is extended in the licence section
+     *
+     * @param array $vehicle
+     * @return boolean
+     */
+    protected function showVehicle($vehicle)
+    {
+        return true;
     }
 
     /**
