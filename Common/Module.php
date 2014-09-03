@@ -52,6 +52,7 @@ class Module
                     return new \Common\Service\Script\ScriptFactory($sm->get('Config'));
                 },
                 'Table' => '\Common\Service\Table\TableFactory',
+                'Document' => '\Common\Service\Document\DocumentFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
                 'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
