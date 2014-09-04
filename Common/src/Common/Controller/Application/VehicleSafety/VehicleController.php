@@ -17,4 +17,17 @@ use Common\Controller\Traits\VehicleSection;
 class VehicleController extends VehicleSafetyController
 {
     use VehicleSection;
+
+    /**
+     * Save the vehicle
+     *
+     * @todo might be able to combine these 2 methods now
+     *
+     * @param array $data
+     * @param string $service
+     */
+    protected function actionSave($data, $service = null)
+    {
+        return $this->doActionSave($data, $this->getActionName());
+    }
 }

@@ -70,4 +70,22 @@ trait GenericVehicleSection
         $element->getMonthElement()->setAttribute('disabled', 'disabled');
         $element->getYearElement()->setAttribute('disabled', 'disabled');
     }
+
+    /**
+     * Save the vehicle
+     *
+     * @param array $data
+     * @param string $action
+     */
+    protected function doActionSave($data, $action)
+    {
+        if ($action !== 'add') {
+            // We don't want these updating
+            unset($data['licence-vehicle']['specifiedDate']);
+            unset($data['licence-vehicle']['deletedDate']);
+            unset($data['licence-vehicle']['discNo']);
+        }
+
+        $this->saveVehicle($data, $action);
+    }
 }

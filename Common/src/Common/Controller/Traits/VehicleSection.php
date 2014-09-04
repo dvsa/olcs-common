@@ -27,6 +27,7 @@ trait VehicleSection
             'licenceVehicles' => array(
                 'properties' => array(
                     'id',
+                    'receivedDate',
                     'specifiedDate',
                     'deletedDate'
                 ),
@@ -180,9 +181,9 @@ trait VehicleSection
     {
         unset($id);
 
-        $licence = $this->getLicenceData();
+        $licenceId = $this->getLicenceId();
 
-        $data = $this->makeRestCall('Licence', 'GET', array('id' => $licence['id']), $this->tableDataBundle);
+        $data = $this->makeRestCall('Licence', 'GET', array('id' => $licenceId), $this->tableDataBundle);
 
         $results = array();
 
@@ -190,7 +191,7 @@ trait VehicleSection
 
             foreach ($data['licenceVehicles'] as $licenceVehicle) {
 
-                if (!$this->showVehicle($licenceVehicle['vehicle'])) {
+                if (!$this->showVehicle($licenceVehicle)) {
                     continue;
                 }
 
@@ -211,10 +212,10 @@ trait VehicleSection
     /**
      * This is extended in the licence section
      *
-     * @param array $vehicle
+     * @param array $licenceVehicle
      * @return boolean
      */
-    protected function showVehicle($vehicle)
+    protected function showVehicle($licenceVehicle)
     {
         return true;
     }
@@ -248,16 +249,18 @@ trait VehicleSection
      */
     protected function processActionLoad($data)
     {
-        $licenceVehicle = $data;
-        unset($licenceVehicle['vehicle']);
+        if ($this->getActionName() !== 'add') {
+            $licenceVehicle = $data;
+            unset($licenceVehicle['vehicle']);
 
-        $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
-        unset($licenceVehicle['goodsDiscs']);
+            $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
+            unset($licenceVehicle['goodsDiscs']);
 
-        $data = array(
-            'licence-vehicle' => $licenceVehicle,
-            'data' => $data['vehicle']
-        );
+            $data = array(
+                'licence-vehicle' => $licenceVehicle,
+                'data' => $data['vehicle']
+            );
+        }
 
         return $data;
     }
@@ -282,19 +285,6 @@ trait VehicleSection
         }
 
         return $discNo;
-    }
-
-    /**
-     * Save the vehicle
-     *
-     * @todo might be able to combine these 2 methods now
-     *
-     * @param array $data
-     * @param string $service
-     */
-    protected function actionSave($data, $service = null)
-    {
-        $this->saveVehicle($data, $this->getActionName());
     }
 
     /**

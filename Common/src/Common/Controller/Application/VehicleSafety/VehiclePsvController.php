@@ -85,4 +85,19 @@ class VehiclePsvController extends VehicleSafetyController
     {
         return $this->doAlterForm($form);
     }
+
+    /**
+     * Save the vehicle
+     *
+     * @param array $data
+     * @param string $service
+     */
+    protected function actionSave($data, $service = null)
+    {
+        $parts = explode('-', $this->getActionName());
+
+        $action = array_pop($parts);
+
+        return $this->doActionSave($data, $action);
+    }
 }

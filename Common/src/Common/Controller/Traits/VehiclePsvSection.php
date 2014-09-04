@@ -316,7 +316,7 @@ trait VehiclePsvSection
                 continue;
             }
 
-            if (!$this->showVehicle($licenceVehicle['vehicle'])) {
+            if (!$this->showVehicle($licenceVehicle)) {
                 continue;
             }
 
@@ -332,10 +332,10 @@ trait VehiclePsvSection
     /**
      * This is extended in the licence section
      *
-     * @param array $vehicle
+     * @param array $licenceVehicle
      * @return boolean
      */
-    protected function showVehicle($vehicle)
+    protected function showVehicle($licenceVehicle)
     {
         return true;
     }
@@ -344,13 +344,16 @@ trait VehiclePsvSection
      * Save the vehicle
      *
      * @param array $data
-     * @param string $service
+     * @param string $action
      */
-    protected function actionSave($data, $service = null)
+    protected function doActionSave($data, $action)
     {
-        $parts = explode('-', $this->getActionName());
-
-        $action = array_pop($parts);
+        if ($action !== 'add') {
+            // We don't want these updating
+            unset($data['licence-vehicle']['specifiedDate']);
+            unset($data['licence-vehicle']['deletedDate']);
+            unset($data['licence-vehicle']['discNo']);
+        }
 
         $this->saveVehicle($data, $action);
     }
