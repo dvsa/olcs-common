@@ -132,7 +132,7 @@ class SafetyController extends VehicleSafetyController
 
         // Translate contact details to a flat structure
         $translatedData=Array();
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $translatedRow=Array(
                 'isExternal' => $row['isExternal'],
                 'id' => $row['id'],
@@ -177,8 +177,9 @@ class SafetyController extends VehicleSafetyController
     public static function makeFormAlterations($form, $context, $options = array())
     {
         // We aren't sure what fieldset our alterations will be in, as helpfully
-        // they've all been renamed.
-        foreach($options['fieldsets'] as $fieldsetName) {
+        // they've all been renamed, so iterate through to find the unmapped
+        // fieldset names
+        foreach ($options['fieldsets'] as $fieldsetName) {
             $fieldset=$form->get($fieldsetName);
             if ( $fieldset->getAttribute('unmappedName') ) {
                 switch($fieldset->getAttribute('unmappedName')) {
