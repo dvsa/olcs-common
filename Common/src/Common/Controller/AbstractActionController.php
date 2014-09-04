@@ -13,6 +13,7 @@ namespace Common\Controller;
 
 use Common\Util;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
@@ -171,6 +172,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if (empty($action)) {
             return false;
+        }
+
+        // Incase we want to try and hi-jack the crud action check
+        if (method_exists($this, 'checkForAlternativeCrudAction')) {
+            $response = $this->checkForAlternativeCrudAction($action);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
         }
 
         $action = strtolower($action);

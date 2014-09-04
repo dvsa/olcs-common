@@ -253,9 +253,7 @@ class AddressesController extends YourBusinessController
                     $data['contact']['phone_'.$phoneType.'_id']         = $phoneContact['id'];
                     $data['contact']['phone_'.$phoneType.'_version']    = $phoneContact['version'];
                 }
-
             }
-
         }
 
         return $data;
