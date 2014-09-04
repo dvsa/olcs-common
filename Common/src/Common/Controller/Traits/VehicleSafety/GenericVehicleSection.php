@@ -3,6 +3,10 @@
 /**
  * Generic Vehicle Section Trait
  *
+ * Internal/External - Application/Licence - Vehicle/VehiclePsv Section
+ *
+ * @NOTE Includes shared logic between ALL Vehicle and VehiclePsv sections, internally/externally, application/licence
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits;

@@ -3,9 +3,13 @@
 /**
  * Vehicle Section
  *
+ * Internal/External - Application/Licence - Vehicle Section
+ *
+ * @NOTE Includes shared logic between all Vehicle (non PSV) sections, internally/externally, application/licence
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits;
+namespace Common\Controller\Traits\VehicleSafety;
 
 /**
  * Vehicle Section
@@ -166,7 +170,7 @@ trait VehicleSection
      * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
      */
-    protected function alterActionForm($form)
+    protected function doAlterActionForm($form)
     {
         return $this->genericActionFormAlterations($form);
     }
@@ -207,17 +211,6 @@ trait VehicleSection
         }
 
         return $results;
-    }
-
-    /**
-     * This is extended in the licence section
-     *
-     * @param array $licenceVehicle
-     * @return boolean
-     */
-    protected function showVehicle($licenceVehicle)
-    {
-        return true;
     }
 
     /**

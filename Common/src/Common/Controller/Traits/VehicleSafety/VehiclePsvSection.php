@@ -3,18 +3,18 @@
 /**
  * VehiclePsv Section
  *
+ * Internal/External - Application/Licence - VehiclePsv Section
+ *
+ * @NOTE Includes shared logic between all VehiclePsv sections, internally/externally, application/licence
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits;
+namespace Common\Controller\Traits\VehicleSafety;
 
 use Common\Form\Elements\Validators\TableRequiredValidator;
 
 /**
  * VehiclePsv Section
- *
- * @NOTE this trait uses functionality defined in the GenericLicenceSection trait
- *  I would use the trait in here, however using the trait in the implementing class gives us the ability
- *  to opt into an alternative trait with the same interface but with an alternative method of doing the same thing
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -239,7 +239,7 @@ trait VehiclePsvSection
      * @param Form $form
      * @return Form
      */
-    public function alterActionForm($form)
+    public function doAlterActionForm($form)
     {
         $form = $this->genericActionFormAlterations($form);
 
@@ -327,35 +327,6 @@ trait VehiclePsvSection
         }
 
         return $rows;
-    }
-
-    /**
-     * This is extended in the licence section
-     *
-     * @param array $licenceVehicle
-     * @return boolean
-     */
-    protected function showVehicle($licenceVehicle)
-    {
-        return true;
-    }
-
-    /**
-     * Save the vehicle
-     *
-     * @param array $data
-     * @param string $action
-     */
-    protected function doActionSave($data, $action)
-    {
-        if ($action !== 'add') {
-            // We don't want these updating
-            unset($data['licence-vehicle']['specifiedDate']);
-            unset($data['licence-vehicle']['deletedDate']);
-            unset($data['licence-vehicle']['discNo']);
-        }
-
-        $this->saveVehicle($data, $action);
     }
 
     /**
