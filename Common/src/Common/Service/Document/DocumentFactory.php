@@ -10,18 +10,11 @@ class DocumentFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
-    }
+        $contentStore = $serviceLocator->get('ContentStore');
 
-    public function getGenerator($mimeType)
-    {
-        switch ($mimeType) {
-        case 'application/rtf':
-        case 'application/x-rtf':
-            return new RtfGenerator();
-        default:
-            throw new RuntimeException('No generator found for mime type: ' . $mimeType);
-        }
+        $service = new Document();
+        $service->setContentStore($contentStore);
+
+        return $service;
     }
 }

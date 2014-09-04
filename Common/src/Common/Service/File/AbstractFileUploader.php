@@ -112,4 +112,14 @@ abstract class AbstractFileUploader implements FileUploaderInterface
         $file->fromData($data);
         return $file;
     }
+
+    /**
+     * Generate a random sha
+     *
+     * @return string
+     */
+    protected function generateKey()
+    {
+        return sha1(microtime() . uniqid());
+    }
 }

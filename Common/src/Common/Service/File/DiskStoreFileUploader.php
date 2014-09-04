@@ -21,7 +21,7 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Upload the file
      */
-    public function upload()
+    public function upload($namespace = null)
     {
         $file = $this->getFile();
         $key = $this->generateKey();
@@ -93,15 +93,5 @@ class DiskStoreFileUploader extends AbstractFileUploader
         $path = rtrim($location, '/') . '/' . $identifier;
 
         return unlink($path);
-    }
-
-    /**
-     * Generate a random sha
-     *
-     * @return string
-     */
-    private function generateKey()
-    {
-        return sha1(microtime() . uniqid());
     }
 }

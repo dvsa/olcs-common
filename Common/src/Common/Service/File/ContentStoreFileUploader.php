@@ -8,7 +8,7 @@
 namespace Common\Service\File;
 
 use Zend\Http\Response;
-use Dvsa\Jackrabbit\Data\Object\File;
+use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
 /**
  * Content store (jackrabbit) file uploader
@@ -20,16 +20,20 @@ class ContentStoreFileUploader extends AbstractFileUploader
     /**
      * Upload the file
      */
-    public function upload()
+    public function upload($namespace = null)
     {
+        $identifier = $this->generateKey();
+
         $store = $this->getServiceLocator()->get('ContentStore');
         $file  = $this->getFile();
-        $path  = 'documents/' . $this->generateKey();
+        $path  = $namespace. '/' . $identifier;
 
-        if ($file instanceof File) {
+        // allow for the fact the file might already be a jackrabbit
+        // one rather than a tmp uploaded file on disk
+        if ($file instanceof ContentStoreFile) {
             $storeFile = $file;
         } else {
-            $storeFile = new File();
+            $storeFile = new ContentStoreFile();
             $storeFile->setContent(file_get_contents($file->getPath()))
                 ->setMimeType('application/rtf');    // @TODO unstub
         }
@@ -39,7 +43,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
             throw new \Exception('Unable to store uploaded file');
         }
 
-        return $path;
+        return $identifier;
     }
 
     /**
@@ -49,7 +53,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
     {
         $store = $this->getServiceLocator()->get('ContentStore');
 
-        $file = $this->getContentStore()->read($identifier);
+        $file = $store->read($identifier);
 
         $response = new Response();
 
@@ -63,7 +67,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         $response->getHeaders()->addHeaders(
             array(
                 "Content-Type" => $file->getMimeType(),
-                "Content-Disposition: attachment; filename=" . $filePath . ".rtf"
+                "Content-Disposition: attachment; filename=" . $name . ".rtf"
             )
         );
 
@@ -77,10 +81,5 @@ class ContentStoreFileUploader extends AbstractFileUploader
     public function remove($identifier)
     {
         // @TODO remove from JR
-    }
-
-    private function generateKey()
-    {
-        return sha1(microtime() . uniqid());
     }
 }
