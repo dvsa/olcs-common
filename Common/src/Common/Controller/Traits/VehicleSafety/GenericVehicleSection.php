@@ -41,11 +41,7 @@ trait GenericVehicleSection
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
-        $licenceVehicleSaved = parent::actionSave($licenceVehicle, 'LicenceVehicle');
-
-        if ($action == 'add' && $this->sectionType == 'Licence' && isset($licenceVehicleSaved['id'])) {
-            $this->requestDisc($licenceVehicleSaved['id']);
-        }
+        return parent::actionSave($licenceVehicle, 'LicenceVehicle');
     }
 
     /**
@@ -110,6 +106,6 @@ trait GenericVehicleSection
             $data = $this->alterDataForApplication($data);
         }
 
-        $this->saveVehicle($data, $action);
+        return $this->saveVehicle($data, $action);
     }
 }
