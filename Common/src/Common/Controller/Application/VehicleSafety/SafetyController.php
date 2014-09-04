@@ -54,55 +54,20 @@ class SafetyController extends VehicleSafetyController
                     'tachographIns' => array(
                         'properties' => array('id')
                     ),
-                    'workshops' => array(
-                        'properties' => array(
-                            'id',
-                            'isExternal'
-                        ),
-                        'children' => array(
-                            'contactDetails' => array(
-                                'properties' => array(
-                                    'fao'
-                                ),
-                                'children' => array(
-                                    'address' => array(
-                                        'properties' => array(
-                                            'addressLine1',
-                                            'addressLine2',
-                                            'addressLine3',
-                                            'addressLine4',
-                                            'town',
-                                            'postcode'
-                                        ),
-                                        'children' => array(
-                                            'countryCode' => array(
-                                                'properties' => array('id')
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
                 )
             )
         )
     );
 
     /**
-     * Get the form table data
+     * Get the form table data - in this case simply invoke the same logic
+     * as when rendered on a summary page, but provide the controller for context
      *
-     * @param int $id
-     * @param string $table
+     * @return array
      */
     protected function getFormTableData($id, $table)
     {
-        $loadData = $this->load($id);
-
-        $data = $loadData['licence']['workshops'];
-$finalData=$this->doGetFormTableData($data);var_dump($finalData);
-        return $finalData;
-
+        return static::getSummaryTableData($id, $this, $table);
     }
 
     /**

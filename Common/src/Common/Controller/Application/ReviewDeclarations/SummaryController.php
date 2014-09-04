@@ -41,36 +41,6 @@ class SummaryController extends ReviewDeclarationsController
                     ),
                     'tachographIns' => array(
                         'properties' => array('id')
-                    ),
-                    'workshops' => array(
-                        'properties' => array(
-                            'id',
-                            'isExternal'
-                        ),
-                        'children' => array(
-                            'contactDetails' => array(
-                                'properties' => array(
-                                    'fao'
-                                ),
-                                'children' => array(
-                                    'address' => array(
-                                        'properties' => array(
-                                            'addressLine1',
-                                            'addressLine2',
-                                            'addressLine3',
-                                            'addressLine4',
-                                            'town',
-                                            'postcode'
-                                        ),
-                                        'children' => array(
-                                            'countryCode' => array(
-                                                'properties' => array('id')
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
                     )
                 )
             ),
@@ -244,8 +214,8 @@ class SummaryController extends ReviewDeclarationsController
              * Vehicles & Safety
              */
             'application_vehicle-safety_safety-1' => array(
-                'safetyInsVehicles' => $loadData['licence']['safetyInsVehicles'],
-                'safetyInsTrailers' => $loadData['licence']['safetyInsTrailers'],
+                'safetyInsVehicles' => 'inspection_interval_vehicle.'.$loadData['licence']['safetyInsVehicles'],
+                'safetyInsTrailers' => 'inspection_interval_trailer.'.$loadData['licence']['safetyInsTrailers'],
                 'safetyInsVaries' => $loadData['licence']['safetyInsVaries'],
                 'tachographIns' => $loadData['licence']['tachographIns']['id'],
                 'tachographInsName' => $loadData['licence']['tachographInsName'],
@@ -262,7 +232,7 @@ class SummaryController extends ReviewDeclarationsController
             )
 
         );
-        
+
         return $data;
     }
 
