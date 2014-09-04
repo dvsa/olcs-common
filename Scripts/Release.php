@@ -228,7 +228,7 @@ class Runner
         return array(
             new Repo(__DIR__ . '/../../olcs-common', $this),
             new Repo(__DIR__ . '/../../olcs-backend', $this),
-            new Repo(__DIR__ . '/../../olcs-entities', $this),
+            //new Repo(__DIR__ . '/../../olcs-entities', $this),
             new Repo(__DIR__ . '/../../olcs-internal', $this),
             new Repo(__DIR__ . '/../../olcs-selfserve', $this),
             new Repo(__DIR__ . '/../../olcs-config', $this),

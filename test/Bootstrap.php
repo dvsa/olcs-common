@@ -1,6 +1,6 @@
 <?php
 
-namespace OlcsTest;
+namespace CommonTest;
 
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
@@ -19,7 +19,8 @@ class Bootstrap
     public static function init()
     {
         // Setup the autloader
-        static::initAutoloader();
+        $loader = static::initAutoloader();
+        $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');
 
         // Grab the application config
         $config = array(
@@ -46,7 +47,7 @@ class Bootstrap
 
     protected static function initAutoloader()
     {
-        require('vendor/autoload.php');
+        return require('vendor/autoload.php');
     }
 }
 

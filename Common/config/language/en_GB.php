@@ -21,6 +21,8 @@ return array(
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
         greater than the largest number of trailers authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationValidator.too-low' => 'You must enter at least 1 vehicle or trailer',
+    'OperatingCentreVehicleAuthorisationValidator.too-low-psv' => 'You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised vehicles must be the same as at your operating centre',
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
@@ -81,7 +83,10 @@ return array(
     'application.operating-centres' => 'Operating centres',
     'application.operating-centres.authorisation' => 'Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'Financial evidence',
+    'application.overview' => 'Overview',
+    'application.overview.details' => 'Overview',
     'application.payment-submission' => 'Payment & submission',
+    'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
     'application.previous-history' => 'Previous history',
@@ -93,6 +98,7 @@ return array(
     'application.review-declarations.summary.new-window' => 'View in another window',
     'application.taxi-phv' => 'Taxi/PHV licences',
     'application.transport-managers' => 'Transport managers',
+    'application.transport-managers.placeholder' => 'Transport managers',
     'application.type-of-licence' => 'Type of licence',
     'application.type-of-licence.licence-type' => 'Licence type',
     'application.type-of-licence.operator-location' => 'Operator location',
@@ -223,9 +229,9 @@ return array(
     'application_previous-history_licence-history_prevBeenDisqualifiedTc' => 'e. Been disqualified from holding or
         obtaining an operator\'s licence by any traffic commissioner?',
     'application_previous-history_licence-history_prevBeenRefused' => 'b. Ever had an application for a goods or a
-        public service vehicle operator\'s licence refused by any EU licencing authority?',
+        public service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_prevBeenRevoked' => 'c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_previous-history_licence-history_prevHadLicence' => 'a. Previously held or applied for a goods or
         public service vehicle operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_prevHasLicence' => '1. Does any person named in this application
@@ -237,9 +243,9 @@ return array(
     'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public Inquiry before a
         traffic commissioner?',
     'application_previous-history_licence-history_refusedLicence' => 'b. Ever had an application for a goods or a public
-        service vehicle operator\'s licence refused by any EU licencing authority?',
+        service vehicle operator\'s licence refused by any EU licensing authority?',
     'application_previous-history_licence-history_revokedLicence' => 'c. Ever had a goods or public service vehicle
-        operator\'s licence revoked, suspended or curtailed by any EU licencing authority?',
+        operator\'s licence revoked, suspended or curtailed by any EU licensing authority?',
     'application_taxi-phv_licence-add' => 'Add taxi/PHV licence',
     'application_taxi-phv_licence-edit' => 'Edit taxi/PHV licence',
     'application_taxi-phv_licence-sub-action.contactDetails' => 'Council details',
@@ -248,10 +254,19 @@ return array(
     'application_taxi-phv_licence-sub-action.data.licNo' => 'Taxi/PHV licence number',
     'application_taxi-phv_licence.table.address' => 'Address',
     'application_taxi-phv_licence.table.council' => 'Council',
-    'application_taxi-phv_licence.table.empty_message' => 'Please list the taxi or private hire vehicle licences which
-        you currently hold',
+    'application_taxi-phv_licence.table.empty_message' => "You haven't added any taxi/phv licences<br/ >"
+    . "Please note: you can multiple Taxi/PHV licences to an application provided they are located in the "
+    . "same traffic area",
     'application_taxi-phv_licence.table.licence-number' => 'Licence number',
     'application_taxi-phv_licence.table.title' => 'Licences',
+    'application_taxi-phv_licence.trafficArea.label.new' => 'Traffic area',
+    'application_taxi-phv_licence.trafficArea.hint.new' => 'Your traffic area is determined based on the first '
+    . 'Taxi/PHV licence address.<br />'
+    . 'For more information and to find your traffic area please visit <a href="#" target="_blank">this link.</a>',
+    'application_taxi-phv_licence.trafficArea.label.exists' => 'Your traffic area',
+    'application_taxi-phv_licence.trafficArea.labelasahint.exists' => '<p class="hint">Your traffic
+        area has been determined from your council address.<br/><a href="#" target="_blank">'
+    . 'More about traffic areas</a></p>',
     'application_type-of-licence_licence-type.data' => 'Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'Operator location',
@@ -267,17 +282,18 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'Yourself or another employee of the
         business holding the operator\'s licence',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'An external contractor',
-    'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm that you have suitable
-        arrangements in place to keep the vehicles you wish to use in a fit and serviceable condition at all times',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of your vehicles or trailers
+    'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm there are suitable arragements
+        in place to keep the vehicles in a fit and serviceable condition at all times',
+    'application_vehicle-safety_safety.application.suitableMaintenance' => 'Suitable maintenance',
+    'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of your vehicles inspected more
+    'application_vehicle-safety_safety.licence.moreFrequentInspections.psv' => 'Are some of the vehicles inspected more
         frequently than the interval stated above?',
-    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'This can sometimes be the case if you
-        own a particularly old vehicle',
-    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses your tachograph records?',
-    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'Please provide the company or full name
-        of the external contractor who analyses your tachograph records (if applicable)',
+    'application_vehicle-safety_safety.licence.moreFrequentInspectionsHint' => 'This can sometimes be the case for
+        particularly old vehicles',
+    'application_vehicle-safety_safety.licence.tachographAnalyser' => 'Who analyses the tachograph records?',
+    'application_vehicle-safety_safety.licence.tachographAnalyserContractor' => 'The company or full name of the
+        external contractor who analyses the tachograph records (if applicable)',
     'application_vehicle-safety_safety.licence.trailerInspectionInterval' => 'Maximum time between trailer safety
         inspections',
     'application_vehicle-safety_safety.licence.vehicleInspectionInterval' => 'Maximum time between vehicle safety
@@ -292,13 +308,22 @@ return array(
         (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
+    'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
+        undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
     'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
         nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
+        novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
+        be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
+    'application_vehicle-safety_undertakings.nineOrMore.label' => 'If you only intend to use vehicles with 9 or more
+        passenger seats under this licence (if granted) do you agree to the following undertaking being specified on the
+        licence',
     'application_vehicle-safety_undertakings.smallVehiclesConfirmation' => 'Confirm that you agree to the above
         conditions and undertakings being specified on your licence (if granted)',
     'application_vehicle-safety_undertakings.smallVehiclesIntention.yesNo' => 'Do you intend to operate small vehicles
@@ -306,7 +331,10 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'Text for small vehicles agreement.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Text for small vehicles
+        undertakings agreement Scotland.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'Add vehicle',
@@ -402,6 +430,8 @@ return array(
     'case-summary-info' => 'Case summary information',
     'case-type' => 'Raised Against',
     'cases' => 'Cases',
+    'cat_lic' => 'Licence',
+    'cat_oc' => 'Operating Centre',
     'categories' => 'Categories',
     'choose-one' => 'Choose one',
     'closed' => 'Closed',
@@ -480,6 +510,10 @@ return array(
     'dob' => 'Date of birth',
     'doc' => 'DOC',
     'docs' => 'Docs',
+    'documents-home.data.category' => 'Category',
+    'documents-home.data.digitalonly' => 'Digital only',
+    'documents-home.data.format' => 'Format',
+    'documents-home.data.sub_category' => 'Sub category',
     'doo' => 'DOO',
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
@@ -510,13 +544,17 @@ return array(
     'header-correspondence-details' => 'Correspondence details',
     'header-establishment-address' => 'Establishment address',
     'helpdesk' => 'Helpdesk',
+    'impo_not' => 'Vehicle Not Returned',
+    'impo_returned' => 'Vehicle Returned',
+    'impt_hearing' => 'Hearing',
+    'impt_paper' => 'Paperwork',
     'internal' => 'Internal',
     'internal-external' => 'Internal/External',
     'internal-licence-details' => 'Licence details',
     'internal-licence-details-address' => 'Addresses',
     'internal-licence-details-address-label' => 'Addresses',
     'internal-licence-details-address-title' => 'Addresses',
-    'internal-licence-details-breadcrumb' => 'Details',
+    'internal-licence-details-breadcrumb' => 'Licence details',
     'internal-licence-details-business_details' => 'Business details',
     'internal-licence-details-business_details-label' => 'Business details',
     'internal-licence-details-business_details-title' => 'Business details',
@@ -547,6 +585,19 @@ return array(
     'internal-licence-details-vehicle' => 'Vehicles',
     'internal-licence-details-vehicle-label' => 'Vehicles',
     'internal-licence-details-vehicle-title' => 'Vehicles',
+    'internal-licence-processing' => 'Processing',
+    'internal-licence-processing-notes' => 'Notes',
+    'internal-licence-processing-notes-add' => 'Add note',
+    'internal-licence-processing-notes-add-label' => 'Add note',
+    'internal-licence-processing-notes-add-title' => 'Add note',
+    'internal-licence-processing-notes-label' => 'Notes',
+    'internal-licence-processing-notes-modify' => 'Edit note',
+    'internal-licence-processing-notes-modify-label' => 'Edit note',
+    'internal-licence-processing-notes-modify-title' => 'Edit note',
+    'internal-licence-processing-notes-title' => 'Notes',
+    'internal-licence-processing-tasks' => 'Tasks',
+    'internal-licence-processing-tasks-label' => 'Tasks',
+    'internal-licence-processing-tasks-title' => 'Tasks',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',
     'layout-footer-app-name' => 'OLCS.',
@@ -853,15 +904,21 @@ return array(
     'surname' => 'Surname',
     't-auth' => 'T-auth',
     'tachographAnalyser-external-contractor' => 'An external contractor',
-    'tachographAnalyser-yourself' => 'Yourself or another employee of the business holding the operator\'s licence',
-    'tasks-home.data.category' => 'Category',
-    'tasks-home.data.date' => 'Date',
-    'tasks-home.data.owner' => 'Owner',
-    'tasks-home.data.status' => 'Status',
-    'tasks-home.data.sub_category' => 'Sub category',
-    'tasks-home.data.team' => 'Team',
-    'tasks-home.data.urgent' => 'Urgent only',
-    'tasks-home.submit.filter' => 'Filter',
+    'tachographAnalyser-yourself' => 'An owner or employee of the business',
+    'tasks.assignment' => 'Assigned to',
+    'tasks.data.actionDate' => 'Action date',
+    'tasks.data.category' => 'Category',
+    'tasks.data.date' => 'Date',
+    'tasks.data.description' => 'Description',
+    'tasks.data.link' => 'Linked to',
+    'tasks.data.owner' => 'Owner',
+    'tasks.data.status' => 'Status',
+    'tasks.data.sub_category' => 'Sub category',
+    'tasks.data.team' => 'Team',
+    'tasks.data.urgent' => 'Urgent',
+    'tasks.data.urgentOnly' => 'Urgent only',
+    'tasks.details' => 'Details',
+    'tasks.submit.filter' => 'Filter',
     'testProperty' => 'the test',
     'testPropertyPlaceHolder' => 'test @placeHolder is @here',
     'tic' => 'TIC',
@@ -889,4 +946,21 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+
+    'pi_s_schedule' => 'PI Scheduled',
+    'pi_s_reg' => 'PI Registered',
+
+    'pi_t_app_new' => 'Application New',
+    'pi_t_app_var' => 'Application Variation',
+    'pi_t_disc' => 'Disciplinary',
+    'pi_t_env_new' => 'Environmental New',
+    'pi_t_env_var' => 'Environmental Variation',
+    'pi_t_oc_review' => 'OC Review',
+    'pi_t_imp' => 'Impounding',
+    'pi_t_other' => 'Other',
+
+    'tc_r_dhtru' => 'Deputy Head of Traffic Regulation Unit',
+    'tc_r_dtc' => 'Deputy Traffic Commissioner',
+    'tc_r_htru' => 'Head of Traffic Regulation Unit',
+    'tc_r_tc' => 'Traffic Commissioner',
 );

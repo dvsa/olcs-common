@@ -7,7 +7,6 @@
  */
 namespace Common\Util;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Common\Exception\ResourceNotFoundException;
 use Common\Exception\BadRequestException;
 use Common\Exception\ResourceConflictException;
@@ -19,9 +18,6 @@ use Common\Exception\ResourceConflictException;
  */
 trait RestCallTrait
 {
-
-    private $doctrineHydrator;
-
     /**
      * Send a get request
      *
@@ -42,9 +38,9 @@ trait RestCallTrait
             }
 
             $data = array();
-        }
 
-        $route = rtrim($route, '/');
+            $route = rtrim($route, '/');
+        }
 
         return $this->getRestClient($service)->get($route, $data);
     }
@@ -124,7 +120,6 @@ trait RestCallTrait
 
     public function getServiceRestClient($service, $serviceMethod, $path, $data)
     {
-        //echo 'Service: ' . $service . ' Method: ' . $serviceMethod . ' Path: ' . $path . ' Data: ' . json_encode($data);
         return $this->getRestClient($service)->$serviceMethod($path, $data);
     }
 
@@ -242,22 +237,5 @@ trait RestCallTrait
         }
 
         return $response;
-    }
-
-    /**
-     * Return the instance of Doctrine Hydrator
-     *
-     * @return DoctrineHydrator
-     */
-    public function getDoctrineHydrator()
-    {
-        if (empty($this->doctrineHydrator)) {
-            // Create a hydrator
-            $this->doctrineHydrator = new DoctrineHydrator(
-                $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')
-            );
-        }
-
-        return $this->doctrineHydrator;
     }
 }

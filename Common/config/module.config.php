@@ -1,10 +1,26 @@
 <?php
 
+list($allRoutes, $controllers, $journeys) = include(__DIR__ . '/journeys.config.php');
+
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
+$invokeables = array_merge(
+    $controllers, array(
+        'Common\Controller\File' => 'Common\Controller\FileController',
+        'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+    )
+);
+
 return array(
+    'journeys' => $journeys,
     'router' => array(
         'routes' => array(
+            'application_start' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/application_start_page'
+                )
+            ),
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -16,6 +32,9 @@ return array(
                 )
             )
         )
+    ),
+    'controllers' => array(
+        'invokables' => $invokeables
     ),
     'console' => array(
         'router' => array(
@@ -47,28 +66,32 @@ return array(
             'address' => new \Common\Service\Address\Address()
         ),
         'factories' => array(
-            'postcode' => function($serviceManager) {
+            'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
-			},
-            'postcodeTrafficAreaValidator' => function($serviceManager) {
+            },
+            'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
-			}, 
+            },
+            'postcodePhlTrafficAreaValidator' => function ($serviceManager) {
+                $validator = new \Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator();
+                $validator->setServiceLocator($serviceManager);
+                return $validator;
+            },
+            'licence' => function ($serviceManager) {
+                $licenceService = new \Common\Service\Licence\Licence();
+                $licenceService->setServiceLocator($serviceManager);
+                return $licenceService;
+            },
         )
     ),
     'file_uploader' => array(
         'default' => 'DiskStore',
         'config' => array(
             'location' => realpath(__DIR__ . '/../data/uploads/')
-        )
-    ),
-    'controllers' => array(
-        'invokables' => array(
-            'Common\Controller\File' => 'Common\Controller\FileController',
-            'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
     ),
     'view_helpers' => array(
@@ -88,9 +111,10 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-           'partials/view' => __DIR__ . '/../view'
+            'partials/view' => __DIR__ . '/../view'
         )
     ),
+    'local_scripts_path' => [__DIR__ . '/../src/Common/assets/js/inline/'],
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'form_elements' => [
         'invokables' => [
@@ -136,6 +160,11 @@ return array(
                 'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
                 'Olcs\Document\Retrieve' => 'document/retrieve/'
             )
+        ),
+        'endpoints' => array(
+            'payments' => 'http://olcspayment.dev/api/',
+            'backend' => 'http://olcs-backend/',
+            'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
     )
      //-------- End service API mappings -----------------
