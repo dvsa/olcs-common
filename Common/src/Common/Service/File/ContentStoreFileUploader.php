@@ -55,6 +55,8 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $file = $store->read($identifier);
 
+        $fileData = $file->getContent();
+
         $response = new Response();
 
         if ($file === null) {
@@ -66,12 +68,12 @@ class ContentStoreFileUploader extends AbstractFileUploader
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders(
             array(
-                "Content-Type" => $file->getMimeType(),
-                "Content-Disposition: attachment; filename=" . $name . ".rtf"
+                "Content-Disposition: attachment; filename='" . $name . "'",
+                "Content-Length" => strlen($fileData)
             )
         );
 
-        $response->setContent($file->getContent());
+        $response->setContent($fileData);
         return $response;
     }
 
@@ -80,6 +82,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
      */
     public function remove($identifier)
     {
-        // @TODO remove from JR
+        $store = $this->getServiceLocator()->get('ContentStore');
+        return $store->remove($identifier);
     }
 }
