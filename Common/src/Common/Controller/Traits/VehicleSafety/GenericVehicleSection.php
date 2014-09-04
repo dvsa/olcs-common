@@ -41,7 +41,11 @@ trait GenericVehicleSection
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
-        parent::actionSave($licenceVehicle, 'LicenceVehicle');
+        $licenceVehicleSaved = parent::actionSave($licenceVehicle, 'LicenceVehicle');
+
+        if ($action == 'add' && $this->sectionType == 'Licence' && isset($licenceVehicleSaved['id'])) {
+            $this->requestDisc($licenceVehicleSaved['id']);
+        }
     }
 
     /**

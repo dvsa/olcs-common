@@ -37,4 +37,14 @@ trait LicenceGenericVehicleSection
 
         return true;
     }
+
+    /**
+     * Request disc
+     *
+     * @param int $licenceVehicleId
+     */
+    protected function requestDisc($licenceVehicleId)
+    {
+        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId));
+    }
 }
