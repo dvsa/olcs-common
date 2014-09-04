@@ -100,8 +100,90 @@ class SafetyController extends VehicleSafetyController
         $loadData = $this->load($id);
 
         $data = $loadData['licence']['workshops'];
+$finalData=$this->doGetFormTableData($data);var_dump($finalData);
+        return $finalData;
 
-        return $this->doGetFormTableData($data);
+    }
+
+    /**
+     * Get the form table data
+     *
+     * @param int $id
+     * @param string $table
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $dataBundle = array(
+            'properties' => array(
+                'id',
+                'version'
+            ),
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'workshops' => array(
+                            'properties' => array(
+                                'id',
+                                'isExternal'
+                            ),
+                            'children' => array(
+                                'contactDetails' => array(
+                                    'properties' => array(
+                                        'fao'
+                                    ),
+                                    'children' => array(
+                                        'address' => array(
+                                            'properties' => array(
+                                                'addressLine1',
+                                                'addressLine2',
+                                                'addressLine3',
+                                                'addressLine4',
+                                                'town',
+                                                'postcode'
+                                            ),
+                                            'children' => array(
+                                                'countryCode' => array(
+                                                    'properties' => array('id')
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $loadData = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            $dataBundle
+        );
+
+        $data = $loadData['licence']['workshops'];
+
+        // Translate contact details to a flat structure
+        $translatedData=Array();
+        foreach($data as $row) {
+            $translatedRow=Array(
+                'isExternal' => $row['isExternal'],
+                'id' => $row['id'],
+                'fao' => $row['contactDetails']['fao'],
+                'addressLine1' => $row['contactDetails']['address']['addressLine1'],
+                'addressLine2' => $row['contactDetails']['address']['addressLine2'],
+                'addressLine3' => $row['contactDetails']['address']['addressLine3'],
+                'addressLine4' => $row['contactDetails']['address']['addressLine4'],
+                'town' => $row['contactDetails']['address']['town'],
+                'postcode' => $row['contactDetails']['address']['postcode'],
+                'countryCode' => array('id' => $row['contactDetails']['address']['countryCode']['id'])
+            );
+            $translatedData[]=$translatedRow;
+        }
+
+        return $translatedData;
     }
 
     /**
