@@ -163,6 +163,50 @@ class SafetyController extends VehicleSafetyController
     }
 
     /**
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
+     *
+     * @param Form $form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
+     */
+    public static function makeFormAlterations($form, $context, $options = array())
+    {
+        // We aren't sure what fieldset our alterations will be in, as helpfully
+        // they've all been renamed.
+        foreach($options['fieldsets'] as $fieldsetName) {
+            $fieldset=$form->get($fieldsetName);
+            if ( $fieldset->getAttribute('unmappedName') ) {
+                switch($fieldset->getAttribute('unmappedName')) {
+                    case 'licence':
+                        if ( $options['isPsv'] ) {
+                            $fieldset->remove('safetyInsTrailers');
+                        }
+                        break;
+
+                    case 'application':
+                        $fieldset->remove('isMaintenanceSuitable');
+                        break;
+
+                    case 'table':
+                        $table = $fieldset->get('table')->getTable();
+                        $emptyMessage = $table->getVariable('empty_message');
+                        $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        $fieldset->get('table')->setTable($table);
+                        break;
+                }
+            }
+        }
+
+        return $form;
+    }
+
+
+    /**
      * Save the form data
      *
      * @param array $data

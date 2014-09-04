@@ -128,6 +128,7 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+        
         return $form;
     }
 

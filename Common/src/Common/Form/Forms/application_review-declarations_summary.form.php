@@ -56,6 +56,12 @@ foreach ($groups as $key => $group) {
 
         foreach ($fieldsets as $key => $fieldset) {
 
+            // Some places need the unmapped fieldset name, so we set it as an
+            // attribute here.
+            if ( isset($fieldset['name']) ) {
+                $fieldset['attributes']['unmappedName']=$fieldset['name'];
+            }
+
             $i = $key + 1;
 
             if (isset($fieldset['type']) && in_array($fieldset['type'], $ignoreFieldsetTypes)) {
