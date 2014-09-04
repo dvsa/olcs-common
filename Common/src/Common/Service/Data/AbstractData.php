@@ -87,7 +87,7 @@ abstract class AbstractData implements FactoryInterface
         /** @var \Zend\Mvc\I18n\Translator $translator */
         $translator = $serviceLocator->get('translator');
 
-        $client = $apiResolver->getClient('ref-data');
+        $client = $apiResolver->getClient($this->getServiceName());
         $client->setLanguage($translator->getLocale());
         $this->setRestClient($client);
 
