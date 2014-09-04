@@ -53,6 +53,7 @@ class Module
                 },
                 'Table' => '\Common\Service\Table\TableFactory',
                 'Document' => '\Common\Service\Document\DocumentFactory',
+                'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
                 'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',

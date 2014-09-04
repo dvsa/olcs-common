@@ -2,10 +2,15 @@
     "name": "olcs/OlcsCommon",
     "description": "Common library for the OLCS Project",
     "type": "library",
+    "repositories": [{
+        "type": "vcs",
+        "url": "git@gitlab.clb.npm:sc/jackrabbit.git"
+    }],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
-        "doctrine/doctrine-orm-module": "0.*"
+        "doctrine/doctrine-orm-module": "0.*",
+        "dvsa/jackrabbit": "dev-feature/OLCS-3688"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
