@@ -94,8 +94,9 @@ return array(
         'N' => 'No'
     ],
     'document_types' => [
-        'document_type.1' => 'Digital only',
-        'document_type.2' => 'Non-digital'
+        'all' => 'All',
+        'digital' => 'Digital only',
+        'nondigital' => 'Non-digital'
     ],
     'vehicle_body_types' =>
     [
