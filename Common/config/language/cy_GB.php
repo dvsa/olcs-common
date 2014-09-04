@@ -845,7 +845,7 @@ return array(
     'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' => 'W Will this licence be
         surrendered?',
     'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' => 'W Please provide details about
-        theses licences here',
+        these licences here',
     'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'W Licences (if applicable)',
     'selfserve-app-subSection-your-business-people-columnDate' => 'W DOB',
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'W Other Names',
