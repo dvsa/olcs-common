@@ -256,7 +256,7 @@ return array(
     'application_taxi-phv_licence.table.address' => 'W Address',
     'application_taxi-phv_licence.table.council' => 'W Council',
     'application_taxi-phv_licence.table.empty_message' => 'W You haven\'t added any taxi/phv licences<br/ >Please note:
-        you can multiple Taxi/PHV licences to an application provided they are located in the same traffic area',
+        you can add multiple Taxi/PHV licences to an application provided they are located in the same traffic area',
     'application_taxi-phv_licence.table.licence-number' => 'W Licence number',
     'application_taxi-phv_licence.table.title' => 'W Licences',
     'application_taxi-phv_licence.trafficArea.hint.new' => 'W Your traffic area is determined based on the first
