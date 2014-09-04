@@ -351,7 +351,6 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-edit' => 'W Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'W Please provide us with the vehicle
         registration number and size of your vehicles.',
-    'application_vehicle-safety_vehicle-psv-small.table.make' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'W Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => 'W Removed',
     'application_vehicle-safety_vehicle-psv-small.table.specified' => 'W Specified',
@@ -359,7 +358,6 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'W Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or novelty type
         vehicle?',
-    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.deletedDate' => 'W Removed date',
     'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.discNo' => 'W Disc no',

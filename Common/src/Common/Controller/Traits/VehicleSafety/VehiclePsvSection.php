@@ -48,7 +48,6 @@ trait VehiclePsvSection
                     'id',
                     'version',
                     'vrm',
-                    'makeModel',
                     'isNovelty'
                 ),
                 'children' => array(
@@ -247,7 +246,6 @@ trait VehiclePsvSection
 
         if (!in_array($actionName, array('small-add', 'small-edit'))) {
             $form->get('data')->remove('isNovelty');
-            $form->get('data')->remove('makeModel');
         }
 
         return $form;

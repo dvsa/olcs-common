@@ -26,10 +26,6 @@ return array(
                         'type' => 'vehicleVrm',
                         'label' => $translationPrefix. '.data.vrm'
                     ),
-                    'makeModel' => array(
-                        'type' => 'text',
-                        'label' => $translationPrefix. '.data.makeModel'
-                    ),
                     'isNovelty' => array(
                         'type' => 'yesNoRadio',
                         'label' => $translationPrefix. '.data.isNovelty'

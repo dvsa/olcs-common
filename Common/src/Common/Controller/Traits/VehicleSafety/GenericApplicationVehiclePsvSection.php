@@ -46,7 +46,6 @@ trait GenericApplicationVehiclePsvSection
                             'vehicle' => array(
                                 'properties' => array(
                                     'vrm',
-                                    'makeModel',
                                     'isNovelty',
                                 ),
                                 'children' => array(

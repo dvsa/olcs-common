@@ -371,8 +371,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                     'id' => '',
                     'version' => '',
                     'vrm' => 'AB12 CVB',
-                    'isNovelty' => 'Y',
-                    'makeModel' => 'German whip'
+                    'isNovelty' => 'Y'
                 )
             )
         );
@@ -448,8 +447,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                     'id' => '',
                     'version' => '',
                     'vrm' => 'AB12 CVB',
-                    'isNovelty' => 'Y',
-                    'makeModel' => 'German whip'
+                    'isNovelty' => 'Y'
                 ),
                 'form-actions' => array(
                     'addAnother' => 'Add another'
@@ -528,8 +526,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                     'id' => '',
                     'version' => '',
                     'vrm' => 'AB12 CVB',
-                    'isNovelty' => 'Y',
-                    'makeModel' => 'German whip'
+                    'isNovelty' => 'Y'
                 )
             )
         );
@@ -632,8 +629,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                     'id' => 1,
                     'version' => 1,
                     'vrm' => 'AB12 CVB',
-                    'isNovelty' => 'Y',
-                    'makeModel' => 'German whip'
+                    'isNovelty' => 'Y'
                 )
             )
         );
@@ -755,8 +751,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                 'id' => 1,
                 'version' => 1,
                 'vrm' => 'AB12 ABC',
-                'isNovelty' => 'Y',
-                'makeModel' => 'German whip'
+                'isNovelty' => 'Y'
             );
         }
 
@@ -780,7 +775,6 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                                     'properties' => array(
                                         'id',
                                         'vrm',
-                                        'makeModel',
                                         'isNovelty'
                                     ),
                                     'children' => array(
@@ -811,7 +805,6 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                                 'id' => 1,
                                 'vrm' => 'AB12 ABC',
                                 'isNovelty' => 'Y',
-                                'makeModel' => 'German whip',
                                 'psvType' => array(
                                     'id' => 'vhl_t_a'
                                 )
@@ -822,7 +815,6 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                                 'id' => 2,
                                 'vrm' => 'AB13 ABC',
                                 'isNovelty' => null,
-                                'makeModel' => null,
                                 'psvType' => array(
                                     'id' => 'vhl_t_b'
                                 )
@@ -833,7 +825,6 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                                 'id' => 3,
                                 'vrm' => 'AB11 ABC',
                                 'isNovelty' => null,
-                                'makeModel' => null,
                                 'psvType' => array(
                                     'id' => 'vhl_t_c'
                                 )
