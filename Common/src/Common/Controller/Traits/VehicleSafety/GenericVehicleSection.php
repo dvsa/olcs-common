@@ -60,6 +60,19 @@ trait GenericVehicleSection
         $this->disableDateElement($dataFieldset->get('deletedDate'));
         $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
 
+        $action = $this->getActionName();
+
+        $parts = explode('-', $action);
+
+        $action = array_pop($parts);
+
+        if ($action == 'edit') {
+            $filter = $form->getInputFilter();
+            $filter->get('data')->get('vrm')->setAllowEmpty(true);
+            $filter->get('data')->get('vrm')->setRequired(false);
+            $form->get('data')->get('vrm')->setAttribute('disabled', 'disabled');
+        }
+
         return $form;
     }
 
@@ -88,6 +101,7 @@ trait GenericVehicleSection
             unset($data['licence-vehicle']['specifiedDate']);
             unset($data['licence-vehicle']['deletedDate']);
             unset($data['licence-vehicle']['discNo']);
+            unset($data['vrm']);
         }
 
         $this->saveVehicle($data, $action);
