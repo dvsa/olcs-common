@@ -5,8 +5,6 @@
  *
  * Internal/External - Application - Vehicle Section
  *
- * @NOTE Includes shared logic between the APPLICATION/vehicle, both internally and externally
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;

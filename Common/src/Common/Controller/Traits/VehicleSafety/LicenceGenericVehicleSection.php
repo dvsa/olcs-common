@@ -5,8 +5,6 @@
  *
  * Internal/External - Licence - Vehicle/VehiclePsv Section
  *
- * @NOTE Includes shared logic between the LICENCE/vehicle and LICENCE/vehicle-psv sections
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;
@@ -18,6 +16,13 @@ namespace Common\Controller\Traits\VehicleSafety;
  */
 trait LicenceGenericVehicleSection
 {
+    /**
+     * Holds the section type
+     *
+     * @var string
+     */
+    protected $sectionType = 'Licence';
+
     /**
      * We only want to show active vehicles
      *

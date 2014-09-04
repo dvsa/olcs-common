@@ -5,8 +5,6 @@
  *
  * Internal - Application/Licence - Vehicle/VehiclePsv Section
  *
- * @NOTE Includes shared logic between the INTERNAL vehicle and vehicle-psv sections, both Application and Licence
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;

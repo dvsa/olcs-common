@@ -5,8 +5,6 @@
  *
  * Internal/External - Application/Licence - Vehicle/VehiclePsv Section
  *
- * @NOTE Includes shared logic between ALL Vehicle and VehiclePsv sections, internally/externally, application/licence
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;
@@ -102,6 +100,10 @@ trait GenericVehicleSection
             unset($data['licence-vehicle']['deletedDate']);
             unset($data['licence-vehicle']['discNo']);
             unset($data['vrm']);
+        }
+
+        if ($this->sectionType == 'Application') {
+            $data = $this->alterDataForApplication($data);
         }
 
         $this->saveVehicle($data, $action);

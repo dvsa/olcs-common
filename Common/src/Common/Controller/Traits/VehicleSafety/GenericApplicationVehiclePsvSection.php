@@ -5,8 +5,6 @@
  *
  * Internal/External - Application - VehiclePsv Section
  *
- * @NOTE Includes shared logic between the APPLICATION/vehiclePSV, both internally and externally
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;

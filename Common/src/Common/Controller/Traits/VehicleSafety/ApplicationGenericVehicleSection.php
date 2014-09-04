@@ -5,8 +5,6 @@
  *
  * Internal/External - Application - Vehicle/VehiclePsv Section
  *
- * @NOTE Includes shared logic between the APPLICATION/vehicle and APPLICATION/vehicle-psv sections
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\VehicleSafety;
@@ -19,6 +17,13 @@ namespace Common\Controller\Traits\VehicleSafety;
 trait ApplicationGenericVehicleSection
 {
     /**
+     * Holds the section type
+     *
+     * @var string
+     */
+    protected $sectionType = 'Application';
+
+    /**
      * This is extended in the licence section
      *
      * @param array $licenceVehicle
@@ -27,5 +32,18 @@ trait ApplicationGenericVehicleSection
     protected function showVehicle($licenceVehicle)
     {
         return true;
+    }
+
+    /**
+     * Alter data for application
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function alterDataForApplication($data)
+    {
+        $data['licence-vehicle']['application'] = $this->getIdentifier();
+
+        return $data;
     }
 }
