@@ -74,7 +74,7 @@ class DiskStoreFileUploader extends AbstractFileUploader
         $headers->addHeaders(
             array(
                 'Content-Disposition' => 'attachment; filename="' . $name . '"',
-                'Content-Tyoe' => 'application/octet-stream',
+                'Content-Type' => 'application/octet-stream',
                 'Content-Length' => filesize($path)
             )
         );
