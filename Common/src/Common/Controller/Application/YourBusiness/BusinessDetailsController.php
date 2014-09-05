@@ -120,17 +120,15 @@ class BusinessDetailsController extends YourBusinessController
                 }
             }
 
-            if (!empty($tradingNames)) {
-                $data['tradingNames'] = $tradingNames;
+            $data['tradingNames'] = $tradingNames;
 
-                $tradingNameData = array(
-                    'organisation' => $data['id'],
-                    'licence' => $licence['id'],
-                    'tradingNames' => $tradingNames
-                );
+            $tradingNameData = array(
+                'organisation' => $data['id'],
+                'licence' => $licence['id'],
+                'tradingNames' => $tradingNames
+            );
 
-                $this->makeRestCall('TradingNames', 'POST', $tradingNameData);
-            }
+            $this->makeRestCall('TradingNames', 'POST', $tradingNameData);
         }
 
         unset($data['type']);
