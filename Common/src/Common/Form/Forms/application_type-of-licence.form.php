@@ -25,7 +25,7 @@ return array(
                     ),
                     'niFlag' => array(
                         'label' => 'application_type-of-licence_operator-location.data.niFlag',
-                        'type' => 'yesNoRadio',
+                        'type' => 'radio',
                         'value_options' => 'operator_locations'
                     )
                 )

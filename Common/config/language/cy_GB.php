@@ -97,6 +97,7 @@ return array(
     'application.review-declarations.summary' => 'W Application summary',
     'application.review-declarations.summary.new-window' => 'W View in another window',
     'application.taxi-phv' => 'W Taxi/PHV licences',
+    'application.taxi-phv.licence' => 'W Taxi/PHV licences',
     'application.transport-managers' => 'W Transport managers',
     'application.transport-managers.placeholder' => 'W Transport managers',
     'application.type-of-licence' => 'W Type of licence',
@@ -254,10 +255,17 @@ return array(
     'application_taxi-phv_licence-sub-action.data.licNo' => 'W Taxi/PHV licence number',
     'application_taxi-phv_licence.table.address' => 'W Address',
     'application_taxi-phv_licence.table.council' => 'W Council',
-    'application_taxi-phv_licence.table.empty_message' => 'W Please list the taxi or private hire vehicle licences which
-        you currently hold',
+    'application_taxi-phv_licence.table.empty_message' => 'W You haven\'t added any taxi/phv licences<br/ >Please note:
+        you can add multiple Taxi/PHV licences to an application provided they are located in the same traffic area',
     'application_taxi-phv_licence.table.licence-number' => 'W Licence number',
     'application_taxi-phv_licence.table.title' => 'W Licences',
+    'application_taxi-phv_licence.trafficArea.hint.new' => 'W Your traffic area is determined based on the first
+        Taxi/PHV licence address.<br />For more information and to find your traffic area please visit <a href="#"
+        target="_blank">this link.</a>',
+    'application_taxi-phv_licence.trafficArea.label.exists' => 'W Your traffic area',
+    'application_taxi-phv_licence.trafficArea.label.new' => 'W Traffic area',
+    'application_taxi-phv_licence.trafficArea.labelasahint.exists' => 'W <p class="hint">Your traffic area has been
+        determined from your council address.<br/><a href="#" target="_blank">More about traffic areas</a></p>',
     'application_type-of-licence_licence-type.data' => 'W Licence type',
     'application_type-of-licence_licence-type.data.licenceType' => 'W What type of licence do you want to apply for?',
     'application_type-of-licence_operator-location.data' => 'W Operator location',
@@ -873,7 +881,7 @@ return array(
     'selfserve-app-subSection-previous-history-previous-licence-columnWillSurrender' => 'W Will this licence be
         surrendered?',
     'selfserve-app-subSection-previous-history-previous-licence-tableEmptyMessage' => 'W Please provide details about
-        theses licences here',
+        these licences here',
     'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'W Licences (if applicable)',
     'selfserve-app-subSection-your-business-people-columnDate' => 'W DOB',
     'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'W Other Names',
