@@ -22,7 +22,7 @@ class PlaceholderController extends TransportManagersController
     public function indexAction()
     {
         $view = $this->getViewModel();
-        $view->setTemplate('self-serve/journey/placeholder');
+        $view->setTemplate('journey/placeholder');
         return $this->renderSection($view);
     }
 
