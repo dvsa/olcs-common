@@ -3,22 +3,17 @@
 return array(
     'application_your-business_addresses' => array(
         'name' => 'application_your-business_addresses',
-        'attributes' => array(
-            'method' => 'post',
-        ),
         'fieldsets' => array(
             array(
                 'name' => 'correspondence',
-                'elements' => [
-                    [
-                        'type' => 'hidden',
-                        'name' => 'id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'version',
-                    ],
-                ]
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'version' => array(
+                        'type' => 'hidden'
+                    )
+                )
             ),
             array(
                 'name' => 'correspondence_address',
@@ -31,111 +26,93 @@ return array(
                 'name' => 'contact',
                 'options' => array(
                     'label' => 'application_your-business_business-type.contact-details.label',
-                    'hint' => 'application_your-business_business-type.contact-details.hint',
+                    'hint' => 'application_your-business_business-type.contact-details.hint'
                 ),
-                'elements' => [
-                    [
-                        'type' => 'hiddenPhoneValidation',
-                        'name' => 'phone-validator',
-                    ],
-                    [
+                'elements' => array(
+                    'phone-validator' => array(
+                        'type' => 'hiddenPhoneValidation'
+                    ),
+                    'phone_business' => array(
                         'type' => 'phone',
-                        'name' => 'phone_business',
-                        'label' => 'application_your-business_business-type.contact-details.business-phone',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_business_id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_business_version',
-                    ],
-                    [
+                        'label' => 'application_your-business_business-type.contact-details.business-phone'
+                    ),
+                    'phone_business_id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_business_version' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_home' => array(
                         'type' => 'phone',
-                        'name' => 'phone_home',
-                        'label' => 'application_your-business_business-type.contact-details.home-phone',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_home_id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_home_version',
-                    ],
-                    [
+                        'label' => 'application_your-business_business-type.contact-details.home-phone'
+                    ),
+                    'phone_home_id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_home_version' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_mobile' => array(
                         'type' => 'phone',
-                        'name' => 'phone_mobile',
-                        'label' => 'application_your-business_business-type.contact-details.mobile-phone',
-                    ],
-                    [
+                        'label' => 'application_your-business_business-type.contact-details.mobile-phone'
+                    ),
+                    'phone_mobile_id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_mobile_version' => array(
                         'type' => 'hidden',
-                        'name' => 'phone_mobile_id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_mobile_version',
-                    ],
-                    [
+                    ),
+                    'phone_fax' => array(
                         'type' => 'phone',
-                        'name' => 'phone_fax',
-                        'label' => 'application_your-business_business-type.contact-details.fax-phone',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_fax_id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'phone_fax_version',
-                    ],
-                    [
+                        'label' => 'application_your-business_business-type.contact-details.fax-phone'
+                    ),
+                    'phone_fax_id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'phone_fax_version' => array(
+                        'type' => 'hidden'
+                    ),
+                    'email' => array(
                         'type' => 'email',
-                        'name' => 'email',
-                        'label' => 'application_your-business_business-type.contact-details.email',
-                    ]
-                ],
+                        'label' => 'application_your-business_business-type.contact-details.email'
+                    )
+                )
             ),
             array(
                 'name' => 'establishment',
-                'elements' => [
-                    [
-                        'type' => 'hidden',
-                        'name' => 'id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'version',
-                    ],
-                ]
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'version' => array(
+                        'type' => 'hidden'
+                    )
+                )
             ),
             array(
                 'name' => 'establishment_address',
                 'type' => 'address',
                 'options' => array(
                     'label' => 'application_your-business_business-type.establishment.label'
-                ),
+                )
             ),
             array(
                 'name' => 'registered_office',
-                'elements' => [
-                    [
-                        'type' => 'hidden',
-                        'name' => 'id',
-                    ],
-                    [
-                        'type' => 'hidden',
-                        'name' => 'version',
-                    ],
-                ]
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'version' => array(
+                        'type' => 'hidden'
+                    )
+                )
             ),
             array(
                 'name' => 'registered_office_address',
                 'type' => 'address',
                 'options' => array(
                     'label' => 'application_your-business_business-type.registered-office.label'
-                ),
+                )
             ),
             array(
                 'type' => 'journey-buttons'
