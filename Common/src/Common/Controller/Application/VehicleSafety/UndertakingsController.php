@@ -104,18 +104,15 @@ class UndertakingsController extends VehicleSafetyController
                 $translator->translate('application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'),
             'psvSmallVhlScotland' =>
                 $translator->translate('application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'),
-            'psvSmallVhlConfirmation' => ($data['psvSmallVhlConfirmation']!=null?
-                                                    $data['psvSmallVhlConfirmation']:false)
+            'psvSmallVhlConfirmation' => ($data['psvSmallVhlConfirmation']=='Y')
         );
 
         $data['nineOrMore'] = array(
-            'psvNoSmallVhlConfirmation' => ($data['psvNoSmallVhlConfirmation']!=null?
-                                                $data['psvNoSmallVhlConfirmation']:false)
+            'psvNoSmallVhlConfirmation' => ($data['psvNoSmallVhlConfirmation']=='Y')
         );
 
         $data['limousinesNoveltyVehicles'] = array(
-            'psvLimousines' => ($data['psvLimousines']!=null?
-                                                    $data['psvLimousines']:false),
+            'psvLimousines' => ($data['psvLimousines']?'Y':'N'),
             'psvNoLimousineConfirmation' => ($data['psvNoLimousineConfirmation']!=null?
                                                     $data['psvNoLimousineConfirmation']:false),
             'psvOnlyLimousinesConfirmation' => ($data['psvOnlyLimousinesConfirmation']!=null?
@@ -123,6 +120,29 @@ class UndertakingsController extends VehicleSafetyController
         );
 
         return $data;
+    }
+
+    /**
+     * Save the form data
+     *
+     * @param array $data
+     * @param string $service
+     */
+    protected function save($data, $service = null)
+    {
+        if ( isset($data['psvSmallVhlConfirmation']) ) {
+            $data['psvSmallVhlConfirmation']=($data['psvSmallVhlConfirmation']?'Y':'N');
+        }
+
+        if ( isset($data['psvNoSmallVhlConfirmation']) ) {
+            $data['psvNoSmallVhlConfirmation']=($data['psvNoSmallVhlConfirmation']==1?'Y':'N');
+        }
+
+        if ( isset($data['psvLimousines']) ) {
+            $data['psvLimousines']=($data['psvLimousines']=='Y');
+        }
+
+        parent::save($data, 'Application');
     }
 
     /**
