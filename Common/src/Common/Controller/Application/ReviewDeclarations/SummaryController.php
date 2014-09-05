@@ -173,6 +173,8 @@ class SummaryController extends ReviewDeclarationsController
      */
     protected function processLoad($loadData)
     {
+        $translator = $this->getServiceLocator()->get('translator');
+
         $data = array(
             /**
              * Type of Licence
@@ -239,11 +241,20 @@ class SummaryController extends ReviewDeclarationsController
             'application_vehicle-safety_undertakings-2' => array(
                 'psvOperateSmallVhl' => $loadData['psvOperateSmallVhl'],
                 'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation']=='Y'?1:0),
-                'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes']
+                'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes'],
+                'psvSmallVhlUndertakings' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
+                    ),
+                'psvSmallVhlScotland' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+                    )
             ),
 
             'application_vehicle-safety_undertakings-3' => array(
                 'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation']=='Y')
+
             ),
 
             'application_vehicle-safety_undertakings-4' => array(

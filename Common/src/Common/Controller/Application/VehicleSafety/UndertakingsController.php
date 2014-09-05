@@ -101,9 +101,13 @@ class UndertakingsController extends VehicleSafetyController
             'psvSmallVhlNotes' => ($data['psvSmallVhlNotes']!=null?
                                                     $data['psvSmallVhlNotes']:""),
             'psvSmallVhlUndertakings' =>
-                $translator->translate('application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'),
+                $translator->translate(
+                    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
+                ),
             'psvSmallVhlScotland' =>
-                $translator->translate('application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'),
+                $translator->translate(
+                    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+                ),
             'psvSmallVhlConfirmation' => ($data['psvSmallVhlConfirmation']=='Y')
         );
 
@@ -158,7 +162,7 @@ class UndertakingsController extends VehicleSafetyController
         $options['data']=$data;
         $options['isReview']=false;
 
-        $form=$this->makeFormAlterations($form,$this,$options);
+        $form=$this->makeFormAlterations($form, $this, $options);
 
         return $form;
     }
