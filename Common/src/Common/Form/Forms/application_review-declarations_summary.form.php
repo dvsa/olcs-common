@@ -21,7 +21,8 @@ $groups = array(
     array(
         'title' => 'Vehicles & Safety',
         'forms' => array(
-            'application_vehicle-safety_safety'
+            'application_vehicle-safety_safety',
+            'application_vehicle-safety_undertakings'
         )
     )
 

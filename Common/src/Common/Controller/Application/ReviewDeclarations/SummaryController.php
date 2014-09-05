@@ -232,10 +232,27 @@ class SummaryController extends ReviewDeclarationsController
             'application_vehicle-safety_safety-3' => array(
                 'isMaintenanceSuitable' => $loadData['isMaintenanceSuitable'],
                 'safetyConfirmation' => $loadData['safetyConfirmation']
+            ),
+            /**
+             * Vehicle Undertakings
+             */
+            'application_vehicle-safety_undertakings-2' => array(
+                'psvOperateSmallVhl' => $loadData['psvOperateSmallVhl'],
+                'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation']=='Y'?1:0),
+                'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes']
+            ),
+
+            'application_vehicle-safety_undertakings-3' => array(
+                'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation']=='Y')
+            ),
+
+            'application_vehicle-safety_undertakings-4' => array(
+                'psvLimousines' => ($loadData['psvLimousines']?'Y':'N'),
+                'psvNoLimousineConfirmation' => $loadData['psvNoLimousineConfirmation'],
+                'psvOnlyLimousinesConfirmation' => $loadData['psvOnlyLimousinesConfirmation'],
             )
-
         );
-
+        var_dump($loadData);
         return $data;
     }
 
