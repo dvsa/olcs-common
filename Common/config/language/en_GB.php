@@ -958,5 +958,12 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'documents.details' => 'Details',
+    'documents.data.category' => 'Category',
+    'documents.data.sub_category' => 'Sub category',
+    'documents.data.template' => 'Template',
+    'documents.data.link' => 'Link',
+    'documents.data.file' => 'File Upload',
+    'documents.bookmarks' => 'Bookmarks',
     // Potentially unused (Not found with grep)
 );
