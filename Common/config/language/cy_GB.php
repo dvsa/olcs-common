@@ -545,6 +545,9 @@ return array(
     'entity-details' => 'W Entity details',
     'entity-type' => 'W Entity type',
     'environmental' => 'W Environmental',
+    'error.vehicle.vrm-exists-on-application' => 'W A vehicle with this registration number already exists on this
+        application',
+    'error.vehicle.vrm-exists-on-licence' => 'W A vehicle with this registration number already exists on this licence',
     'external' => 'W External',
     'fabs-reference' => 'W Fabs Ref',
     'farmers-livestock-carriers' => 'W Farmers / Livestock Carriers',

@@ -9,6 +9,8 @@
  */
 namespace Common\Controller\Traits\VehicleSafety;
 
+use Common\Form\Elements\Validators\NewVrm;
+
 /**
  * Generic Vehicle Section Trait
  *
@@ -24,6 +26,8 @@ trait GenericVehicleSection
      */
     protected function saveVehicle($data, $action)
     {
+        $licenceId = $this->getLicenceId();
+
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
 
@@ -36,7 +40,7 @@ trait GenericVehicleSection
             }
 
             $licenceVehicle['vehicle'] = $saved['id'];
-            $licenceVehicle['licence'] = $this->getLicenceId();
+            $licenceVehicle['licence'] = $licenceId;
         } else {
             $licenceVehicle['vehicle'] = $data['id'];
         }
@@ -71,7 +75,46 @@ trait GenericVehicleSection
             $form->get('data')->get('vrm')->setAttribute('disabled', 'disabled');
         }
 
+        if ($action == 'add' && $this->getRequest()->isPost()) {
+            $filter = $form->getInputFilter();
+            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
+
+            $validator = new NewVrm();
+
+            $validator->setType($this->sectionType);
+            $validator->setVrms($this->getVrmsForCurrentLicence());
+
+            $validators->attach($validator);
+        }
+
         return $form;
+    }
+
+    /**
+     * Get vrms linked to licence
+     *
+     * @return array
+     */
+    protected function getVrmsForCurrentLicence()
+    {
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'vehicle' => array(
+                    'properties' => array('vrm')
+                )
+            )
+        );
+
+        $data = $this->makeRestCall('LicenceVehicle', 'GET', array('licence' => $this->getLicenceId()), $bundle);
+
+        $vrms = array();
+
+        foreach ($data['Results'] as $row) {
+            $vrms[] = $row['vehicle']['vrm'];
+        }
+
+        return $vrms;
     }
 
     /**
