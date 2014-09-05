@@ -55,7 +55,7 @@ class RestClient
      */
     public function setLanguage($language)
     {
-        $this->language = str_replace('_', '-',$language);
+        $this->language = str_replace('_', '-', $language);
         return $this;
     }
 

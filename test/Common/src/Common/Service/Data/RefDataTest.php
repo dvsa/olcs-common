@@ -59,7 +59,7 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $mockApiResolver
             ->expects($this->once())
             ->method('getClient')
-            ->with($this->equalTo('ref-data'))
+            ->with($this->equalTo('RefData'))
             ->willReturn($mockRestClient);
 
         $mockSl = $this->getMock('\Zend\ServiceManager\ServiceManager');

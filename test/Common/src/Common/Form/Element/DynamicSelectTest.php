@@ -20,7 +20,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Testing', $sut->getLabel());
     }
 
-    public function testBCSetOptions()
+    public function testBcSetOptions()
     {
         $sut =  new DynamicSelect();
         $sut->setOptions(['category' => 'testing']);
@@ -102,7 +102,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         try {
             $sut->getDataService();
         } catch (\Exception $e) {
-            if ('Class testListService does not implement \Common\Service\Data\ListDataInterface' === $e->getMessage()) {
+            if ('Class testListService does not implement \Common\Service\Data\ListDataInterface' == $e->getMessage()) {
                 $thrown = true;
             }
         }
