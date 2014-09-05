@@ -26,4 +26,30 @@ trait GenericApplicationVehicleSection
     {
         return $this->doActionSave($data, $this->getActionName());
     }
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfVehicles()
+    {
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(),
+                    'children' => array(
+                        'licenceVehicles' => array(
+                            'properties' => array('id')
+                        )
+                    )
+                )
+            )
+        );
+
+        $data = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
+
+        return count($data['licence']['licenceVehicles']);
+    }
 }

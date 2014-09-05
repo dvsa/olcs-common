@@ -380,4 +380,31 @@ trait VehiclePsvSection
 
         return null;
     }
+
+    /**
+     * Hijack the crud action check so we can validate the add button
+     *
+     * @param string $action
+     */
+    protected function checkForAlternativeCrudAction($action)
+    {
+        list($type, $action) = explode('-', $action);
+
+        if ($action == 'add') {
+            $totalAuth = $this->getTotalNumberOfAuthorisedVehicles($type);
+
+            if (!is_numeric($totalAuth)) {
+                return;
+            }
+
+            $vehicleCount = $this->getTotalNumberOfVehicles($type);
+
+            if ($vehicleCount >= $totalAuth) {
+                $this->addErrorMessage('You cannot have more vehicles than the total vehicle authority');
+                return $this->redirect()->toRoute(null, array(), array(), true);
+            }
+        }
+
+        return;
+    }
 }

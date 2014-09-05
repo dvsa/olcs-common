@@ -108,4 +108,23 @@ trait GenericVehicleSection
 
         return $this->saveVehicle($data, $action);
     }
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfAuthorisedVehicles($type = '')
+    {
+        $type = ucwords($type);
+
+        $bundle = array(
+            'properties' => array(
+                'totAuth' . $type . 'Vehicles'
+            )
+        );
+
+        $data = $this->makeRestCall($this->sectionType, 'GET', array('id' => $this->getIdentifier()), $bundle);
+        return $data['totAuth' . $type . 'Vehicles'];
+    }
 }

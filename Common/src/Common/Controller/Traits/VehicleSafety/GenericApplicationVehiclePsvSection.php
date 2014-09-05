@@ -106,4 +106,54 @@ trait GenericApplicationVehiclePsvSection
 
         return $this->doActionSave($data, $action);
     }
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfVehicles($type)
+    {
+        $psvType = $this->getPsvTypeFromType($type);
+
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(),
+                    'children' => array(
+                        'licenceVehicles' => array(
+                            'properties' => array(),
+                            'children' => array(
+                                'vehicle' => array(
+                                    'properties' => array(
+                                        'id'
+                                    ),
+                                    'children' => array(
+                                        'psvType' => array(
+                                            'properties' => array(
+                                                'id'
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $data = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
+
+        $count = 0;
+
+        foreach ($data['licence']['licenceVehicles'] as $row) {
+            if (isset($row['vehicle']['psvType']['id']) && $row['vehicle']['psvType']['id'] == $psvType) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 }

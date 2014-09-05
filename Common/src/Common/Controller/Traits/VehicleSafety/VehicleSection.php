@@ -289,15 +289,27 @@ trait VehicleSection
     }
 
     /**
-     * Hi-jack the crud action check, so we can validate whether they have enough vehicles or not
+     * Hijack the crud action check so we can validate the add button
      *
      * @param string $action
      */
     protected function checkForAlternativeCrudAction($action)
     {
         if ($action == 'add') {
-            // Check if we haven't already exceeded the total authorised vehicles
-            // If so we need to add an error message and redirect back to where we are
+            $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
+
+            if (!is_numeric($totalAuth)) {
+                return;
+            }
+
+            $vehicleCount = $this->getTotalNumberOfVehicles();
+
+            if ($vehicleCount >= $totalAuth) {
+                $this->addErrorMessage('You cannot have more vehicles than the total vehicle authority');
+                return $this->redirect()->toRoute(null, array(), array(), true);
+            }
         }
+
+        return;
     }
 }
