@@ -252,7 +252,7 @@ class SummaryController extends ReviewDeclarationsController
                 'psvOnlyLimousinesConfirmation' => $loadData['psvOnlyLimousinesConfirmation'],
             )
         );
-        var_dump($loadData);
+        
         return $data;
     }
 
