@@ -117,7 +117,7 @@ class SummaryController extends ReviewDeclarationsController
                         // always let the controller know this is a review
                         'isReview'  => true,
                         'isPsv'     => $this->isPsv(),
-                        // most forms only have one fieldset, so we pass the
+                        // some forms only have one fieldset, so we pass the
                         // first through to be helpful...
                         'fieldset'  => $sectionFieldsets[0],
                         // ... but pass the rest through too, just in case
@@ -252,7 +252,7 @@ class SummaryController extends ReviewDeclarationsController
                 'psvOnlyLimousinesConfirmation' => $loadData['psvOnlyLimousinesConfirmation'],
             )
         );
-        
+
         return $data;
     }
 
@@ -331,6 +331,8 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+
+        $this->summarySections=array_unique($this->summarySections);
     }
 
     /**

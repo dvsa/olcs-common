@@ -155,6 +155,29 @@ class UndertakingsController extends VehicleSafetyController
     protected function alterForm($form)
     {
         $data = $this->load($this->getIdentifier());
+        $options['data']=$data;
+        $options['isReview']=false;
+
+        $form=$this->makeFormAlterations($form,$this,$options);
+
+        return $form;
+    }
+
+    /**
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
+     *
+     * @param Form $form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
+     */
+    public static function makeFormAlterations($form, $context, $options = array())
+    {
+        $data=$options['data'];
 
         // If this traffic area has no Scottish Rules flag, set it to false.
         if ( !isset($data['trafficArea']['isScottishRules']) ) {
@@ -170,10 +193,25 @@ class UndertakingsController extends VehicleSafetyController
             }
         }
 
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = Array();
+        if ( $options['isReview'] ) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')]=$fieldset;
+            }
+        } else {
+            $fieldsetMap = Array(
+                'smallVehiclesIntention' => 'smallVehiclesIntention',
+                'limousinesNoveltyVehicles' => 'limousinesNoveltyVehicles',
+                'nineOrMore' => 'nineOrMore'
+            );
+        }
+
         // Now remove the form fields we don't need to display to the user.
         if ( $data['totAuthSmallVehicles'] == 0 ) {
             // no smalls - case 3
-            $form->remove('smallVehiclesIntention');
+            $form->remove($fieldsetMap['smallVehiclesIntention']);
         } else {
             // Small vehicles - cases 1, 2, 4, 5
             if ( ( $data['totAuthMediumVehicles'] == 0 )
@@ -181,27 +219,27 @@ class UndertakingsController extends VehicleSafetyController
                 // Small only, cases 1, 2
                 if ( $data['trafficArea']['isScottishRules'] ) {
                     // Case 2 - Scottish small only
-                    $form->get('smallVehiclesIntention')->remove('psvOperateSmallVhl');
-                    $form->get('smallVehiclesIntention')->remove('psvSmallVhlNotes');
-                    $form->remove('nineOrMore');
-                    $form->get('limousinesNoveltyVehicles')->remove('psvOnlyLimousinesConfirmationLabel');
-                    $form->get('limousinesNoveltyVehicles')->remove('psvOnlyLimousinesConfirmation');
+                    $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
+                    $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
+                    $form->remove($fieldsetMap['nineOrMore']);
+                    $form->get($fieldsetMap['limousinesNoveltyVehicles'])->remove('psvOnlyLimousinesConfirmationLabel');
+                    $form->get($fieldsetMap['limousinesNoveltyVehicles'])->remove('psvOnlyLimousinesConfirmation');
                 } else {
                     // Case 1 - England/Wales small only
-                    $form->remove('nineOrMore');
-                    $form->get('limousinesNoveltyVehicles')->remove('psvOnlyLimousinesConfirmationLabel');
-                    $form->get('limousinesNoveltyVehicles')->remove('psvOnlyLimousinesConfirmation');
+                    $form->remove($fieldsetMap['nineOrMore']);
+                    $form->get($fieldsetMap['limousinesNoveltyVehicles'])->remove('psvOnlyLimousinesConfirmationLabel');
+                    $form->get($fieldsetMap['limousinesNoveltyVehicles'])->remove('psvOnlyLimousinesConfirmation');
                 }
             } else {
                 // cases 4, 5
                 if ( $data['trafficArea']['isScottishRules'] ) {
                     // Case 5 Mix Scotland
-                    $form->get('smallVehiclesIntention')->remove('psvOperateSmallVhl');
-                    $form->get('smallVehiclesIntention')->remove('psvSmallVhlNotes');
-                    $form->remove('nineOrMore');
+                    $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
+                    $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
+                    $form->remove($fieldsetMap['nineOrMore']);
                 } else {
                     // Case 4 Mix England/Wales
-                    $form->remove('nineOrMore');
+                    $form->remove($fieldsetMap['nineOrMore']);
                 }
 
             }
