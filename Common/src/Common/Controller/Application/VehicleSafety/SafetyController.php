@@ -4,6 +4,7 @@
  * Safety Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\VehicleSafety;
 
@@ -16,6 +17,7 @@ use Common\Controller\Traits\SafetySection;
  *  in the licence section
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SafetyController extends VehicleSafetyController
 {
@@ -132,20 +134,23 @@ class SafetyController extends VehicleSafetyController
 
         // Translate contact details to a flat structure
         $translatedData=Array();
-        foreach ($data as $row) {
-            $translatedRow=Array(
-                'isExternal' => $row['isExternal'],
-                'id' => $row['id'],
-                'fao' => $row['contactDetails']['fao'],
-                'addressLine1' => $row['contactDetails']['address']['addressLine1'],
-                'addressLine2' => $row['contactDetails']['address']['addressLine2'],
-                'addressLine3' => $row['contactDetails']['address']['addressLine3'],
-                'addressLine4' => $row['contactDetails']['address']['addressLine4'],
-                'town' => $row['contactDetails']['address']['town'],
-                'postcode' => $row['contactDetails']['address']['postcode'],
-                'countryCode' => array('id' => $row['contactDetails']['address']['countryCode']['id'])
-            );
-            $translatedData[]=$translatedRow;
+        if ( ! empty($data) ) {
+            $translatedData=Array();
+            foreach ($data as $row) {
+                $translatedRow=Array(
+                    'isExternal' => $row['isExternal'],
+                    'id' => $row['id'],
+                    'fao' => $row['contactDetails']['fao'],
+                    'addressLine1' => $row['contactDetails']['address']['addressLine1'],
+                    'addressLine2' => $row['contactDetails']['address']['addressLine2'],
+                    'addressLine3' => $row['contactDetails']['address']['addressLine3'],
+                    'addressLine4' => $row['contactDetails']['address']['addressLine4'],
+                    'town' => $row['contactDetails']['address']['town'],
+                    'postcode' => $row['contactDetails']['address']['postcode'],
+                    'countryCode' => array('id' => $row['contactDetails']['address']['countryCode']['id'])
+                );
+                $translatedData[]=$translatedRow;
+            }
         }
 
         return $translatedData;

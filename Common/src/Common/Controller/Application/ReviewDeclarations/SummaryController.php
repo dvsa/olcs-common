@@ -4,6 +4,7 @@
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\ReviewDeclarations;
 
@@ -13,6 +14,7 @@ use Zend\View\Model\ViewModel;
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SummaryController extends ReviewDeclarationsController
 {
