@@ -249,7 +249,6 @@ class AuthorisationController extends OperatingCentresController
             $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
         }
 
-
         if ($options['isPsv']) {
             $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
             $cols = $table->getColumns();
@@ -261,8 +260,47 @@ class AuthorisationController extends OperatingCentresController
             $table->setFooter($footer);
         }
 
+        // Review-only options - we set the traffic area field in a different way
+        // because of the method scope.
         if ( $options['isReview'] ) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
+            $bundle = array(
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'trafficArea' => array(
+                                'properties' => array(
+                                    'name'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            $application = $context->makeRestCall(
+                'Application',
+                'GET',
+                array(
+                    'id' => $options['data']['id'],
+                ),
+                $bundle
+            );
+
+            if (is_array($application) && array_key_exists('licence', $application) &&
+                is_array($application['licence']) &&
+                array_key_exists('trafficArea', $application['licence'])) {
+                $form
+                    ->get($fieldsetMap['dataTrafficArea'])
+                    ->get('trafficAreaInfoNameExists')
+                    ->setValue($application['licence']['trafficArea']['name']);
+            } else {
+                $form
+                    ->get($fieldsetMap['dataTrafficArea'])
+                    ->get('trafficAreaInfoNameExists')
+                    ->setValue('unset');
+            }
+
         }
 
         return $form;
@@ -279,7 +317,7 @@ class AuthorisationController extends OperatingCentresController
         $options=Array(
             'isPsv' => $this->isPsv()
         );
-        $form=$this->makeFormAlterations($form,$context,$options);
+        $form=$this->makeFormAlterations($form, $context, $options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
