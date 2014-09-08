@@ -545,7 +545,40 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
                     'children' => array(
                         'tachographIns' => array(
                             'properties' => array('id')
-                        ),
+                        )
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $dataBundle) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'safetyConfirmation' => 1,
+                'isMaintenanceSuitable' => 1,
+                'licence' => array(
+                    'id' => 2,
+                    'version' => 2,
+                    'safetyInsVehicles' => null,
+                    'safetyInsTrailers' => null,
+                    'safetyInsVaries' => null,
+                    'tachographInsName' => null,
+                    'tachographIns' => array(
+                        'id' => 'Y'
+                    )
+                )
+            );
+        }
+
+        $workshopBundle = array(
+            'properties' => array(
+                'id',
+                'version'
+            ),
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
                         'workshops' => array(
                             'properties' => array(
                                 'id',
@@ -581,20 +614,11 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
             )
         );
 
-        if ($service == 'Application' && $method == 'GET' && $bundle == $dataBundle) {
+        if ($service == 'Application' && $method == 'GET' && $bundle == $workshopBundle) {
             return array(
                 'id' => 1,
                 'version' => 1,
-                'safetyConfirmation' => 1,
-                'isMaintenanceSuitable' => 1,
                 'licence' => array(
-                    'id' => 2,
-                    'version' => 2,
-                    'safetyInsVehicles' => null,
-                    'safetyInsTrailers' => null,
-                    'safetyInsVaries' => null,
-                    'tachographInsName' => null,
-                    'tachographIns' => null,
                     'workshops' => array(
                         array(
                             'id' => 1,

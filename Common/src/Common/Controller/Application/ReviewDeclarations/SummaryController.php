@@ -4,6 +4,7 @@
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\ReviewDeclarations;
 
@@ -13,6 +14,7 @@ use Zend\View\Model\ViewModel;
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SummaryController extends ReviewDeclarationsController
 {
@@ -38,6 +40,9 @@ class SummaryController extends ReviewDeclarationsController
                     ),
                     'licenceType' => array(
                         'properties' => array('id')
+                    ),
+                    'tachographIns' => array(
+                        'properties' => array('id')
                     )
                 )
             ),
@@ -53,7 +58,8 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
-        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions'
+        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
+        'VehicleSafety/Safety' => 'safety-inspection-providers',
     );
 
     /**
@@ -106,7 +112,6 @@ class SummaryController extends ReviewDeclarationsController
                 // to make any extra form alterations based on the fact it is being
                 // rendered out of context on the review page
                 $controller = $this->getInvokable($summarySection, 'makeFormAlterations');
-
                 if ($controller) {
                     $options = array(
                         // always let the controller know this is a review
@@ -125,6 +130,7 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+
         return $form;
     }
 
@@ -205,7 +211,29 @@ class SummaryController extends ReviewDeclarationsController
             'application_previous-history_convictions-penalties-3' => $this->mapApplicationVariables(
                 array('convictionsConfirmation'),
                 $loadData
+            ),
+
+            /**
+             * Vehicles & Safety
+             */
+            'application_vehicle-safety_safety-1' => array(
+                'safetyInsVehicles' => 'inspection_interval_vehicle.'.$loadData['licence']['safetyInsVehicles'],
+                'safetyInsTrailers' => 'inspection_interval_trailer.'.$loadData['licence']['safetyInsTrailers'],
+                'safetyInsVaries' => $loadData['licence']['safetyInsVaries'],
+                'tachographIns' => $loadData['licence']['tachographIns']['id'],
+                'tachographInsName' => $loadData['licence']['tachographInsName'],
+            ),
+
+            // @NOTE application_vehicle-safety_safety-2 is table data
+            'application_vehicle-safety_safety-2' => array(
+                'workshops' => $loadData['licence']['workshops']
+            ),
+
+            'application_vehicle-safety_safety-3' => array(
+                'isMaintenanceSuitable' => $loadData['isMaintenanceSuitable'],
+                'safetyConfirmation' => $loadData['safetyConfirmation']
             )
+
         );
 
         return $data;
