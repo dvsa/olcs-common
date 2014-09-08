@@ -118,7 +118,7 @@ class SummaryController extends ReviewDeclarationsController
                         // always let the controller know this is a review
                         'isReview'  => true,
                         'isPsv'     => $this->isPsv(),
-                        // most forms only have one fieldset, so we pass the
+                        // some forms only have one fieldset, so we pass the
                         // first through to be helpful...
                         'fieldset'  => $sectionFieldsets[0],
                         // ... but pass the rest through too, just in case
@@ -174,6 +174,8 @@ class SummaryController extends ReviewDeclarationsController
      */
     protected function processLoad($loadData)
     {
+        $translator = $this->getServiceLocator()->get('translator');
+
         $data = array(
             /**
              * Type of Licence
@@ -248,8 +250,34 @@ class SummaryController extends ReviewDeclarationsController
             'application_vehicle-safety_safety-3' => array(
                 'isMaintenanceSuitable' => $loadData['isMaintenanceSuitable'],
                 'safetyConfirmation' => $loadData['safetyConfirmation']
-            )
+            ),
+            /**
+             * Vehicle Undertakings
+             */
+            'application_vehicle-safety_undertakings-2' => array(
+                'psvOperateSmallVhl' => $loadData['psvOperateSmallVhl'],
+                'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation']=='Y'?1:0),
+                'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes'],
+                'psvSmallVhlUndertakings' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
+                    ),
+                'psvSmallVhlScotland' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+                    )
+            ),
 
+            'application_vehicle-safety_undertakings-3' => array(
+                'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation']=='Y')
+
+            ),
+
+            'application_vehicle-safety_undertakings-4' => array(
+                'psvLimousines' => ($loadData['psvLimousines']?'Y':'N'),
+                'psvNoLimousineConfirmation' => $loadData['psvNoLimousineConfirmation'],
+                'psvOnlyLimousinesConfirmation' => $loadData['psvOnlyLimousinesConfirmation'],
+            )
         );
 
         return $data;
@@ -330,6 +358,8 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+
+        $this->summarySections=array_unique($this->summarySections);
     }
 
     /**
