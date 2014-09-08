@@ -88,7 +88,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
      */
     public function testIndexActionWithMediumCrudAction()
     {
-        $this->setUpAction('index', null, array('large' => array('action' => 'medium-add')));
+        $this->setUpAction('index', null, array('medium' => array('action' => 'medium-add')));
 
         $response = $this->controller->indexAction();
 
@@ -100,7 +100,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
      */
     public function testIndexActionWithSmallCrudAction()
     {
-        $this->setUpAction('index', null, array('large' => array('action' => 'small-add')));
+        $this->setUpAction('index', null, array('small' => array('action' => 'small-add')));
 
         $response = $this->controller->indexAction();
 

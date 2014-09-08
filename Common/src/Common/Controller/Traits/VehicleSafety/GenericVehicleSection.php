@@ -205,7 +205,12 @@ trait GenericVehicleSection
             )
         );
 
-        $data = $this->makeRestCall($this->sectionType, 'GET', array('id' => $this->getIdentifier()), $bundle);
+        $data = $this->makeRestCall(
+            $this->sectionType,
+            'GET',
+            array('id' => $this->getIdentifier()),
+            $bundle
+        );
         return $data['totAuth' . $type . 'Vehicles'];
     }
 }

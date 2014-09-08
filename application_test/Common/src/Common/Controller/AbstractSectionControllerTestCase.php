@@ -109,7 +109,12 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         $this->request = null;
         $this->routeMatch = null;
         $this->event = null;
-        $this->restResponses = $this->defaultRestResponse;
+        $this->restResponses = array();
+        foreach ($this->defaultRestResponse as $service => $details) {
+            foreach ($details as $method => $response) {
+                $this->restResponses[$service][$method]['default'] = $response;
+            }
+        }
     }
 
     /**
@@ -122,13 +127,12 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
     protected function setRestResponse($service, $method, $response = null, $bundle = array())
     {
         if (!empty($bundle)) {
-            $response = array(
-                'bundle' => $bundle,
-                'response' => $response
-            );
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
         }
 
-        $this->restResponses[$service][$method] = $response;
+        $this->restResponses[$service][$method][$which] = $response;
     }
 
     /**
@@ -145,16 +149,19 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             return null;
         }
 
-        if (isset($this->restResponses[$service][$method])) {
+        if (!empty($bundle)) {
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
+        }
 
-            if (isset($this->restResponses[$service][$method]['bundle'])) {
+        if (isset($this->restResponses[$service][$method][$which])) {
 
-                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
-                    return $this->restResponses[$service][$method]['response'];
-                }
-            } else {
-                return $this->restResponses[$service][$method];
-            }
+            return $this->restResponses[$service][$method][$which];
+
+        } elseif (isset($this->restResponses[$service][$method]['default'])) {
+
+            return $this->restResponses[$service][$method]['default'];
         }
 
         return $this->mockRestCalls($service, $method, $data, $bundle);

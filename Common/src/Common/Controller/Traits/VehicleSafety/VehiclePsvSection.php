@@ -380,8 +380,6 @@ trait VehiclePsvSection
             case 'small':
                 return 'vhl_t_a';
         }
-
-        return null;
     }
 
     /**

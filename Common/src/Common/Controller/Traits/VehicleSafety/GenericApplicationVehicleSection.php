@@ -16,6 +16,20 @@ namespace Common\Controller\Traits\VehicleSafety;
  */
 trait GenericApplicationVehicleSection
 {
+    protected $totalNumberOfVehiclesBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'licenceVehicles' => array(
+                        'properties' => array('id')
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Save the vehicle
      *
@@ -34,21 +48,12 @@ trait GenericApplicationVehicleSection
      */
     protected function getTotalNumberOfVehicles()
     {
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array('id')
-                        )
-                    )
-                )
-            )
+        $data = $this->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $this->getIdentifier()),
+            $this->totalNumberOfVehiclesBundle
         );
-
-        $data = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
 
         return count($data['licence']['licenceVehicles']);
     }

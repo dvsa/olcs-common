@@ -59,6 +59,34 @@ trait GenericApplicationVehiclePsvSection
         )
     );
 
+    protected $totalNumberOfVehiclesBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'licenceVehicles' => array(
+                        'properties' => array(),
+                        'children' => array(
+                            'vehicle' => array(
+                                'properties' => array(
+                                    'id'
+                                ),
+                                'children' => array(
+                                    'psvType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get the data bundle
      *
@@ -116,35 +144,12 @@ trait GenericApplicationVehiclePsvSection
     {
         $psvType = $this->getPsvTypeFromType($type);
 
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+        $data = $this->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $this->getIdentifier()),
+            $this->totalNumberOfVehiclesBundle
         );
-
-        $data = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
 
         $count = 0;
 
