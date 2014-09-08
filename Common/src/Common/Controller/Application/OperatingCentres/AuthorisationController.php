@@ -53,6 +53,40 @@ class AuthorisationController extends OperatingCentresController
                         )
                     )
                 )
+            ),
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array('id')
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
             )
         )
     );
@@ -212,7 +246,8 @@ class AuthorisationController extends OperatingCentresController
         } else {
             $fieldsetMap = Array(
                 'dataTrafficArea' => 'dataTrafficArea',
-                'data' => 'data'
+                'data' => 'data',
+                'table' => 'table'
             );
         }
 
@@ -222,16 +257,17 @@ class AuthorisationController extends OperatingCentresController
             $formOptions['hint'] .= '.psv';
             $form->get($fieldsetMap['data'])->setOptions($options);
 
+            $licenceType=$options['data']['data']['licence']['licenceType']['id'];
             if (!in_array(
-                $this->getLicenceType(),
-                array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
+                $licenceType,
+                array('ltyp_sn', 'ltyp_si')
             )) {
                 $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
             }
 
             if (!in_array(
-                $this->getLicenceType(),
-                array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
+                $context->getLicenceType(),
+                array('ltyp_si', 'ltyp_r')
             )) {
                 $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
             }
@@ -315,9 +351,19 @@ class AuthorisationController extends OperatingCentresController
     protected function alterForm($form)
     {
         $options=Array(
-            'isPsv' => $this->isPsv()
+            'isPsv' => $this->isPsv(),
+            'isReview' => false,
+            'data' => array(
+                'data' => array(
+                    'licence' => array(
+                        'licenceType' => array(
+                            'id' => $this->licenceType
+                        )
+                    )
+                )
+            )
         );
-        $form=$this->makeFormAlterations($form, $context, $options);
+        $form=$this->makeFormAlterations($form, $this, $options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
@@ -846,21 +892,6 @@ class AuthorisationController extends OperatingCentresController
                             )
                         )
                     )
-                ),
-                'application' => array(
-                    'properties' => null,
-                    'children' => array(
-                        'licence' => array(
-                            'properties' => null,
-                            'children' => array(
-                                'trafficArea' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        )
-                    )
                 )
             )
         );
@@ -871,7 +902,7 @@ class AuthorisationController extends OperatingCentresController
             array('application' => $applicationId),
             $actionDataBundle
         );
-
+        
         $newData = array();
 
         foreach ($data['Results'] as $row) {
