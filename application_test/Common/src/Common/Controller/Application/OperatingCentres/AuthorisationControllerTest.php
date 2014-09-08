@@ -1203,33 +1203,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                 'permission' => 1,
                 'adPlaced' => 0,
                 'adPlacedIn' => null,
-                'adPlacedDate' => null,
-                'operatingCentre' => array(
-                    'id' => 3,
-                    'version' => 1,
-                    'address' => array(
-                        'id' => 1,
-                        'version' => 1,
-                        'addressLine1' => 'Some street 1',
-                        'addressLine2' => 'Some street 2',
-                        'addressLine3' => 'Some street 3',
-                        'addressLine4' => 'Some street 4',
-                        'postcode' => 'AB1 1AB',
-                        'town' => 'City',
-                        'countryCode' => array(
-                            'id' => 'GB'
-                        )
-                    ),
-                    'adDocuments' => array(
-                        array(
-                            'id' => 1,
-                            'identifier' => 'adfasdadsag',
-                            'version' => 1,
-                            'filename' => 'nfjosjnfos',
-                            'size' => 10
-                        )
-                    )
-                )
+                'adPlacedDate' => null
             );
         }
 
@@ -1420,5 +1394,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
+
+        echo $service;
     }
 }
