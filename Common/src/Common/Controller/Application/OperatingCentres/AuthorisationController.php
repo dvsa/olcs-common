@@ -189,48 +189,69 @@ class AuthorisationController extends OperatingCentresController
     }
 
     /**
-     * Remove trailer elements for PSV and set up Traffic Area section
+     * Make form alterations
      *
-     * @param object $form
-     * @return object
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
+     *
+     * @param Form $form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
      */
-    protected function alterForm($form)
+    public static function makeFormAlterations($form, $context, $options = array())
     {
-        if ($this->isPsv()) {
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = Array();
+        if ( $options['isReview'] ) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')]=$fieldset;
+            }
+        } else {
+            $fieldsetMap = Array(
+                'dataTrafficArea' => 'dataTrafficArea',
+                'data' => 'data'
+            );
+        }
 
-            $options = $form->get('data')->getOptions();
-            $options['hint'] .= '.psv';
-            $form->get('data')->setOptions($options);
+        if ($options['isPsv']) {
+
+            $formOptions = $form->get($fieldsetMap['data'])->getOptions();
+            $formOptions['hint'] .= '.psv';
+            $form->get($fieldsetMap['data'])->setOptions($options);
 
             if (!in_array(
                 $this->getLicenceType(),
                 array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
             )) {
-                $form->get('data')->remove('totAuthLargeVehicles');
+                $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
             }
 
             if (!in_array(
                 $this->getLicenceType(),
                 array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
             )) {
-                $form->get('data')->remove('totCommunityLicences');
+                $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
             }
 
-            $form->get('data')->remove('totAuthVehicles');
-            $form->get('data')->remove('totAuthTrailers');
-            $form->get('data')->remove('minTrailerAuth');
-            $form->get('data')->remove('maxTrailerAuth');
+            $form->get($fieldsetMap['data'])->remove('totAuthVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthTrailers');
+            $form->get($fieldsetMap['data'])->remove('minTrailerAuth');
+            $form->get($fieldsetMap['data'])->remove('maxTrailerAuth');
 
         } else {
 
-            $form->get('data')->remove('totAuthSmallVehicles');
-            $form->get('data')->remove('totAuthMediumVehicles');
-            $form->get('data')->remove('totAuthLargeVehicles');
-            $form->get('data')->remove('totCommunityLicences');
+            $form->get($fieldsetMap['data'])->remove('totAuthSmallVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthMediumVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
+            $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
         }
 
-        if ($this->isPsv()) {
-            $table = $form->get('table')->get('table')->getTable();
+
+        if ($options['isPsv']) {
+            $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
             $cols = $table->getColumns();
             unset($cols['trailersCol']);
             $table->setColumns($cols);
@@ -239,6 +260,26 @@ class AuthorisationController extends OperatingCentresController
             unset($footer['trailersCol']);
             $table->setFooter($footer);
         }
+
+        if ( $options['isReview'] ) {
+            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
+        }
+
+        return $form;
+    }
+
+    /**
+     * Remove trailer elements for PSV and set up Traffic Area section
+     *
+     * @param object $form
+     * @return object
+     */
+    protected function alterForm($form)
+    {
+        $options=Array(
+            'isPsv' => $this->isPsv()
+        );
+        $form=$this->makeFormAlterations($form,$context,$options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
