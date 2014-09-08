@@ -128,59 +128,6 @@ class AuthorisationController extends OperatingCentresController
             'adPlacedIn',
             'adPlacedDate'
         ),
-        'children' => array(
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
-                )
-            ),
-            'application' => array(
-                'properties' => null,
-                'children' => array(
-                    'licence' => array(
-                        'properties' => null,
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
     );
 
     /**
@@ -777,6 +724,98 @@ class AuthorisationController extends OperatingCentresController
     }
 
     /**
+     * Retrieve the relevant table data as we want to render it on the review summary page
+     * Note that as with most controllers this is the same data we want to render on the
+     * normal form page, hence why getFormTableData (declared later) simply wraps this
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $actionDataBundle = array(
+            'children' => array(
+                'operatingCentre' => array(
+                    'properties' => array(
+                        'id',
+                        'version'
+                    ),
+                    'children' => array(
+                        'address' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'addressLine1',
+                                'addressLine2',
+                                'addressLine3',
+                                'addressLine4',
+                                'postcode',
+                                'town'
+                            ),
+                            'children' => array(
+                                'countryCode' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        ),
+                        'adDocuments' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'filename',
+                                'identifier',
+                                'size'
+                            )
+                        )
+                    )
+                ),
+                'application' => array(
+                    'properties' => null,
+                    'children' => array(
+                        'licence' => array(
+                            'properties' => null,
+                            'children' => array(
+                                'trafficArea' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $data = $context->makeRestCall(
+            'ApplicationOperatingCentre',
+            'GET',
+            array('application' => $applicationId),
+            $actionDataBundle
+        );
+
+        $newData = array();
+
+        foreach ($data['Results'] as $row) {
+
+            $newRow = $row;
+
+            if (isset($row['operatingCentre']['address'])) {
+
+                unset($row['operatingCentre']['address']['id']);
+                unset($row['operatingCentre']['address']['version']);
+
+                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+            }
+
+            unset($newRow['operatingCentre']);
+
+            $newData[] = $newRow;
+        }
+
+        return $newData;
+    }
+
+    /**
      * Get data for table
      *
      * @param string $id
@@ -784,37 +823,10 @@ class AuthorisationController extends OperatingCentresController
     public function getFormTableData($id, $table)
     {
         if (is_null($this->tableData)) {
-            $data = $this->makeRestCall(
-                'ApplicationOperatingCentre',
-                'GET',
-                array('application' => $id),
-                $this->getActionDataBundle()
-            );
-
-            $newData = array();
-
-            foreach ($data['Results'] as $row) {
-
-                $newRow = $row;
-
-                if (isset($row['operatingCentre']['address'])) {
-
-                    unset($row['operatingCentre']['address']['id']);
-                    unset($row['operatingCentre']['address']['version']);
-
-                    $newRow = array_merge($newRow, $row['operatingCentre']['address']);
-                }
-
-                unset($newRow['operatingCentre']);
-
-                $newData[] = $newRow;
-            }
-
-            $this->tableData = $newData;
+            $this->tableData=$this->getSummaryTableData($id, $this, '');
         }
 
         return $this->tableData;
-
     }
 
     /**
