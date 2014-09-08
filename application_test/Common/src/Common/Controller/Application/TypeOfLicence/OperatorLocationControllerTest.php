@@ -234,7 +234,8 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$applicationLicenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }

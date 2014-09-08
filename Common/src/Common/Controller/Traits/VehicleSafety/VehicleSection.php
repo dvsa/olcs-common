@@ -309,7 +309,5 @@ trait VehicleSection
                 return $this->redirect()->toRoute(null, array(), array(), true);
             }
         }
-
-        return;
     }
 }

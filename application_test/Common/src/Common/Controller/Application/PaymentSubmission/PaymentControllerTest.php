@@ -103,7 +103,8 @@ abstract class PaymentControllerTest extends AbstractApplicationControllerTestCa
             );
         }
 
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$applicationLicenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }

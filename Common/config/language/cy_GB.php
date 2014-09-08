@@ -282,7 +282,7 @@ return array(
         business holding the operator\'s licence',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'W An external contractor',
     'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm there are suitable
-        arragements in place to keep the vehicles in a fit and serviceable condition at all times',
+        arrangements in place to keep the vehicles in a fit and serviceable condition at all times',
     'application_vehicle-safety_safety.application.suitableMaintenance' => 'W Suitable maintenance',
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'W Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
