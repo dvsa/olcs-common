@@ -705,7 +705,5 @@ class SafetyControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
-
-        var_dump($bundle);
     }
 }
