@@ -14,51 +14,148 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class AddressesController extends YourBusinessController
 {
-    const MAIN_CONTACT_DETAILS_TYPE = 'correspondence';
+    const MAIN_CONTACT_DETAILS_TYPE = 'ct_corr';
 
     /**
      * Set the service for the "Free" save behaviour
      *
      * @var string
      */
-    protected $service = 'ContactDetails';
+    protected $service = 'Application';
 
-    protected $dataBundle = [
-        'children' => [
-            'licence' => [
-                'children' => [
-                    'organisation' => [
-                        'children' => [
-                            'contactDetails' => [
-                                'children' => [
-                                    'address',
+    /**
+     * Holds the data bundle
+     *
+     * @var array
+     */
+    protected $dataBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'organisation' => array(
+                        'properties' => array(),
+                        'children' => array(
+                            'contactDetails' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'emailAddress'
+                                ),
+                                'children' => array(
+                                    'address' => array(
+                                        'properties' => array(
+                                            'id',
+                                            'version',
+                                            'addressLine1',
+                                            'addressLine2',
+                                            'addressLine3',
+                                            'addressLine4',
+                                            'postcode',
+                                            'town'
+                                        ),
+                                        'children' => array(
+                                            'countryCode' => array(
+                                                'properties' => array(
+                                                    'id'
+                                                )
+                                            )
+                                        )
+                                    ),
                                     'contactType' => array(
-                                        'properties' => 'id'
+                                        'properties' => array(
+                                            'id'
+                                        )
                                     )
-                                ]
-                            ],
-                        ]
-                    ],
-                    'contactDetails' => [
-                        'children' => [
-                            'phoneContacts',
-                            'address',
+                                )
+                            ),
+                        )
+                    ),
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'emailAddress'
+                        ),
+                        'children' => array(
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'phoneNumber'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'address' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'addressLine1',
+                                    'addressLine2',
+                                    'addressLine3',
+                                    'addressLine4',
+                                    'postcode',
+                                    'town'
+                                ),
+                                'children' => array(
+                                    'countryCode' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
                             'contactType' => array(
-                                'properties' => 'id'
+                                'properties' => array(
+                                    'id'
+                                )
                             )
-                        ]
-                    ],
-                ]
-            ],
-        ],
-    ];
+                        )
+                    )
+                )
+            )
+        )
+    );
 
+    /**
+     * Holds the data map
+     *
+     * @var mixed
+     */
     protected $dataMap = null;
 
-    protected $phoneTypes = Array(
+    /**
+     * Phone types
+     *
+     * @var array
+     */
+    protected $phoneTypes = array(
         'business' => 'phone_t_tel',
         'home' => 'phone_t_home',
-        'mobile' => 'phone_t_mobile'
+        'mobile' => 'phone_t_mobile',
+        'fax' => 'phone_t_fax'
+    );
+
+    /**
+     * Type map
+     *
+     * @var array
+     */
+    protected $typeMap = array(
+        self::MAIN_CONTACT_DETAILS_TYPE => 'correspondence',
+        'ct_est' => 'establishment',
+        'ct_reg' => 'registered_office',
+        'phone_t_tel' => 'phone_business',
+        'phone_t_home' => 'phone_home',
+        'phone_t_mobile' => 'phone_mobile',
+        'phone_t_fax' => 'phone_fax'
     );
 
     /**
@@ -69,10 +166,49 @@ class AddressesController extends YourBusinessController
     public function indexAction()
     {
         $view = $this->getViewModel();
+
         return $this->renderSection($view);
     }
 
+    /**
+     * Alter form
+     *
+     * @param Form $form
+     * @return Form
+     */
     protected function alterForm($form)
+    {
+        $allowedLicTypes = array(
+            self::LICENCE_TYPE_STANDARD_NATIONAL,
+            self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        $allowedOrgTypes = array(
+            self::ORG_TYPE_REGISTERED_COMPANY,
+            self::ORG_TYPE_LLP
+        );
+
+        $data = $this->getApplicationData();
+
+        if (!in_array($data['licence']['licenceType']['id'], $allowedLicTypes)) {
+            $form->remove('establishment');
+            $form->remove('establishment_address');
+        }
+
+        if (!in_array($data['licence']['organisation']['type']['id'], $allowedOrgTypes)) {
+            $form->remove('registered_office');
+            $form->remove('registered_office_address');
+        }
+
+        return $form;
+    }
+
+    /**
+     * Get application data
+     *
+     * @return array
+     */
+    protected function getApplicationData()
     {
         $bundle = array(
             'properties' => array(),
@@ -98,22 +234,7 @@ class AddressesController extends YourBusinessController
             )
         );
 
-        $allowedLicTypes = [self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL];
-        $allowedOrgTypes = [self::ORG_TYPE_REGISTERED_COMPANY, self::ORG_TYPE_LLP];
-
-        $data = $this->makeRestCall('Application', 'GET', ['id' => $this->getIdentifier()], $bundle);
-
-        if (!in_array($data['licence']['licenceType']['id'], $allowedLicTypes)) {
-            $form->remove('establishment');
-            $form->remove('establishment_address');
-        }
-
-        if (!in_array($data['licence']['organisation']['type']['id'], $allowedOrgTypes)) {
-            $form->remove('registered_office');
-            $form->remove('registered_office_address');
-        }
-
-        return $form;
+        return $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
     }
 
     /**
@@ -125,101 +246,96 @@ class AddressesController extends YourBusinessController
      */
     protected function save($data, $service = null)
     {
-        $licence = $this->getLicenceData();
+        $licenceId = $this->getLicenceId();
 
-        $correspondence = [
-            'id'                    => $data['correspondence']['id'],
-            'version'               => $data['correspondence']['version'],
-            'contactType'    => 'ct_corr',
-            'licence'               => $licence['id'],
-            'emailAddress'          => $data['contact']['email'],
-            'addresses'             => [
+        $correspondence = array(
+            'id' => $data['correspondence']['id'],
+            'version' => $data['correspondence']['version'],
+            'contactType' => self::MAIN_CONTACT_DETAILS_TYPE,
+            'licence' => $licenceId,
+            'emailAddress' => $data['contact']['email'],
+            'addresses' => array(
                 'address' => $data['correspondence_address'],
-            ]
-        ];
+            )
+        );
 
-        //persist correspondence details
-        $correspondenceDetails = parent::save($correspondence);
+        // persist correspondence details
+        $correspondenceDetails = parent::save($correspondence, 'ContactDetails');
 
-        $correspondenceId = (int)$data['correspondence']['id'] > 0
-            ? $data['correspondence']['id']
-            : $correspondenceDetails['id'];
-
-        //process phones
-        $service = 'PhoneContact';
+        $correspondenceId = isset($correspondenceDetails['id'])
+            ? $correspondenceDetails['id']
+            : $data['correspondence']['id'];
 
         foreach ($this->phoneTypes as $phoneType => $phoneRefName) {
 
-            $phone = [
-                'id'        => $data['contact']['phone_'.$phoneType.'_id'],
-                'version'   => $data['contact']['phone_'.$phoneType.'_version'],
-            ];
+            $phone = array(
+                'id' => $data['contact']['phone_' . $phoneType . '_id'],
+                'version' => $data['contact']['phone_' . $phoneType . '_version'],
+            );
 
-            if (!empty($data['contact']['phone_'.$phoneType])) {
+            if (!empty($data['contact']['phone_' . $phoneType])) {
 
-                $phone['phoneNumber']           = $data['contact']['phone_'.$phoneType];
-                $phone['phoneContactType']      = $phoneRefName;
-                $phone['contactDetails']        = $correspondenceId;
+                $phone['phoneNumber'] = $data['contact']['phone_' . $phoneType];
+                $phone['phoneContactType'] = $phoneRefName;
+                $phone['contactDetails'] = $correspondenceId;
 
-                parent::save($phone, $service);
+                parent::save($phone, 'PhoneContact');
 
             } elseif ((int)$phone['id'] > 0) {
-                $this->makeRestCall($service, 'DELETE', $phone);
+                $this->makeRestCall('PhoneContact', 'DELETE', $phone);
             }
         }
 
         if (!empty($data['establishment'])) {
 
-            $establishment = [
-                'id'                    => $data['establishment']['id'],
-                'version'               => $data['establishment']['version'],
-                'contactType'    => 'ct_est',
-                'licence'               => $licence['id'],
-                'addresses'             => [
+            $establishment = array(
+                'id' => $data['establishment']['id'],
+                'version' => $data['establishment']['version'],
+                'contactType' => 'ct_est',
+                'licence' => $licenceId,
+                'addresses' => array(
                     'address' => $data['establishment_address'],
-                ]
-            ];
+                )
+            );
 
-            parent::save($establishment);
+            parent::save($establishment, 'ContactDetails');
         }
 
         if (!empty($data['registered_office'])) {
 
             $organisation = $this->getOrganisationData(['id']);
 
-            $registeredOffice = [
-                'id'                    => $data['registered_office']['id'],
-                'version'               => $data['registered_office']['version'],
-                'contactType'    => 'ct_reg',
-                'organisation'          => $organisation['id'],
-                'addresses'             => [
+            $registeredOffice = array(
+                'id' => $data['registered_office']['id'],
+                'version' => $data['registered_office']['version'],
+                'contactType' => 'ct_reg',
+                'organisation' => $organisation['id'],
+                'addresses' => array(
                     'address' => $data['registered_office_address'],
-                ]
-            ];
+                )
+            );
 
-            parent::save($registeredOffice);
+            parent::save($registeredOffice, 'ContactDetails');
         }
 
         return $correspondenceDetails;
     }
 
     /**
-     * Load data for the form
+     * Process load data for the form
      *
-     * @param int $id
+     * @param array $data
      * @return array
      */
-    protected function load($id)
+    protected function processLoad($data)
     {
-        $this->service = 'Application';
-        $app = parent::load($id);
+        $app = $data;
 
-        //init
-        $data = [
-            'contact' => [
+        $data = array(
+            'contact' => array(
                 'phone-validator' => true
-            ]
-        ];
+            )
+        );
 
         $contactDetailsMerge = array_merge(
             $app['licence']['contactDetails'],
@@ -232,32 +348,43 @@ class AddressesController extends YourBusinessController
                 continue;
             }
 
-            $type = $contactDetails['contactType']['id'];
+            // Convert the DB type to the form type
+            $dbType = $contactDetails['contactType']['id'];
+            $type = $this->mapFormTypeFromDbType($dbType);
 
-            $data[$type] = [
+            $data[$type] = array(
                 'id' => $contactDetails['id'],
                 'version' => $contactDetails['version'],
-            ];
+            );
 
             $data[$type . '_address'] = $contactDetails['address'];
+            $data[$type . '_address']['countryCode'] = $contactDetails['address']['countryCode']['id'];
 
-            if ($type == self::MAIN_CONTACT_DETAILS_TYPE) {
+            if ($dbType == self::MAIN_CONTACT_DETAILS_TYPE) {
 
                 $data['contact']['email'] = $contactDetails['emailAddress'];
 
                 foreach ($contactDetails['phoneContacts'] as $phoneContact) {
 
-                    $phoneType = $phoneContact['type'];
+                    $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
 
-                    $data['contact']['phone_'.$phoneType]               = $phoneContact['number'];
-                    $data['contact']['phone_'.$phoneType.'_id']         = $phoneContact['id'];
-                    $data['contact']['phone_'.$phoneType.'_version']    = $phoneContact['version'];
+                    $data['contact'][$phoneType] = $phoneContact['phoneNumber'];
+                    $data['contact'][$phoneType . '_id'] = $phoneContact['id'];
+                    $data['contact'][$phoneType . '_version'] = $phoneContact['version'];
                 }
-
             }
-
         }
 
         return $data;
+    }
+
+    /**
+     * Map form type from db type
+     *
+     * @param string $type
+     */
+    protected function mapFormTypeFromDbType($type)
+    {
+        return (isset($this->typeMap[$type]) ? $this->typeMap[$type] : '');
     }
 }

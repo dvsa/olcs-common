@@ -17,7 +17,14 @@ $groups = array(
             //'application_previous-history_licence-history',
             'application_previous-history_convictions-penalties'
         )
+    ),
+    array(
+        'title' => 'Vehicles & Safety',
+        'forms' => array(
+            'application_vehicle-safety_safety'
+        )
     )
+
 );
 
 $formFieldsets = [];
@@ -48,6 +55,12 @@ foreach ($groups as $key => $group) {
         $fieldsets = $config[$form]['fieldsets'];
 
         foreach ($fieldsets as $key => $fieldset) {
+
+            // Some places need the unmapped fieldset name, so we set it as an
+            // attribute here.
+            if ( isset($fieldset['name']) ) {
+                $fieldset['attributes']['unmappedName']=$fieldset['name'];
+            }
 
             $i = $key + 1;
 
