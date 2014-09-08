@@ -463,11 +463,6 @@ abstract class AbstractSectionController extends AbstractController
             return;
         }
 
-        if ($response instanceof Response || $response instanceof ViewModel) {
-            $this->setCaughtResponse($response);
-            return;
-        }
-
         $response = $this->actionSave($data);
 
         if ($response instanceof Response || $response instanceof ViewModel) {

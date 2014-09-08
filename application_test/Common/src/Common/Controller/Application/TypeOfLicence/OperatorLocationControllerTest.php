@@ -110,7 +110,7 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
             'Application',
             'GET',
             array('licence' => null),
-            ApplicationController::$licenceDataBundle
+            ApplicationController::$applicationLicenceDataBundle
         );
 
         $this->lastSection = 'Application/YourBusiness/BusinessDetails';
@@ -234,7 +234,7 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }

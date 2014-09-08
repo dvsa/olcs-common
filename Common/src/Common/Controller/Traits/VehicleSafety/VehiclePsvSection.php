@@ -233,7 +233,7 @@ trait VehiclePsvSection
     /**
      * Alter action form
      *
-     * @param Form $form
+     * @param \Zend\Form\Form $form
      * @return Form
      */
     public function doAlterActionForm($form)
@@ -243,6 +243,9 @@ trait VehiclePsvSection
         $actionName = $this->getActionName();
 
         if (!in_array($actionName, array('small-add', 'small-edit'))) {
+            // @NOTE for some reason I had to also remove the filter manually to remove the validation, this normally
+            // happens automagically
+            $form->getInputFilter()->get('data')->remove('isNovelty');
             $form->get('data')->remove('isNovelty');
         }
 

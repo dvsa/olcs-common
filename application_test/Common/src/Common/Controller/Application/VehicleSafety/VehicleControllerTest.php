@@ -270,7 +270,7 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }
@@ -292,11 +292,19 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
             'properties' => null,
             'children' => array(
                 'licenceVehicles' => array(
-                    'properties' => null,
+                    'properties' => array(
+                        'id',
+                        'receivedDate',
+                        'specifiedDate',
+                        'deletedDate'
+                    ),
                     'children' => array(
+                        'goodsDiscs' => array(
+                            'ceasedDate',
+                            'discNo'
+                        ),
                         'vehicle' => array(
                             'properties' => array(
-                                'id',
                                 'vrm',
                                 'platedWeight'
                             )
@@ -310,15 +318,33 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
             return array(
                 'licenceVehicles' => array(
                     array(
+                        'id' => 1,
+                        'receivedDate' => null,
+                        'specifiedDate' => null,
+                        'deletedDate' => null,
+                        'goodsDisc' => array(
+                            array(
+                                'ceasedDate' => null,
+                                'discNo' => 123
+                            )
+                        ),
                         'vehicle' => array(
-                            'id' => 1,
                             'vrm' => 'AB12 ABG',
                             'platedWeight' => 100
                         )
                     ),
                     array(
+                        'id' => 2,
+                        'receivedDate' => null,
+                        'specifiedDate' => null,
+                        'deletedDate' => null,
+                        'goodsDisc' => array(
+                            array(
+                                'ceasedDate' => null,
+                                'discNo' => 1234
+                            )
+                        ),
                         'vehicle' => array(
-                            'id' => 2,
                             'vrm' => 'DB12 ABG',
                             'platedWeight' => 150
                         )
@@ -327,12 +353,71 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
-        if ($service == 'Vehicle' && $method == 'GET') {
+        $actionDataBundle = array(
+            'properties' => array(
+                'id',
+                'version',
+                'receivedDate',
+                'deletedDate',
+                'specifiedDate'
+            ),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'properties' => array(
+                        'discNo'
+                    )
+                ),
+                'vehicle' => array(
+                    'properties' => array(
+                        'id',
+                        'version',
+                        'platedWeight',
+                        'vrm'
+                    )
+                )
+            )
+        );
+
+        if ($service == 'LicenceVehicle' && $method == 'GET' && $bundle == $actionDataBundle) {
             return array(
                 'id' => 1,
                 'version' => 1,
-                'vrm' => 'AB12 ABC',
-                'platedWeight' => 100
+                'receivedDate' => null,
+                'deletedDate' => null,
+                'specifiedDate' => null,
+                'goodsDiscs' => array(
+                    array(
+                        'discNo' => 123
+                    )
+                ),
+                'vehicle' => array(
+                    'id' => 1,
+                    'version' => 1,
+                    'platedWeight' => 100,
+                    'vrm' => 'AB12 ABC'
+                )
+            );
+        }
+
+        $licenceVehicleBundle = array(
+            'properties' => array(),
+            'children' => array(
+                'vehicle' => array(
+                    'properties' => array('vrm')
+                )
+            )
+        );
+
+        if ($service == 'LicenceVehicle' && $method == 'GET' && $bundle = $licenceVehicleBundle) {
+            return array(
+                'Count' => 1,
+                'Results' => array(
+                    array(
+                        'vehicle' => array(
+                            'vrm' => 'RANDOM'
+                        )
+                    )
+                )
             );
         }
 

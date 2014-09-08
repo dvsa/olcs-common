@@ -728,7 +728,7 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('psv');
         }
@@ -769,13 +769,16 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                     'properties' => null,
                     'children' => array(
                         'licenceVehicles' => array(
-                            'properties' => null,
+                            'properties' => array(
+                                'id',
+                                'specifiedDate',
+                                'deletedDate'
+                            ),
                             'children' => array(
                                 'vehicle' => array(
                                     'properties' => array(
-                                        'id',
                                         'vrm',
-                                        'isNovelty'
+                                        'isNovelty',
                                     ),
                                     'children' => array(
                                         'psvType' => array(
@@ -801,8 +804,10 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                 'licence' => array(
                     'licenceVehicles' => array(
                         array(
+                            'id' => 1,
+                            'specifiedDate' => null,
+                            'deletedDate' => null,
                             'vehicle' => array(
-                                'id' => 1,
                                 'vrm' => 'AB12 ABC',
                                 'isNovelty' => 'Y',
                                 'psvType' => array(
@@ -811,8 +816,10 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                             )
                         ),
                         array(
+                            'id' => 2,
+                            'specifiedDate' => null,
+                            'deletedDate' => null,
                             'vehicle' => array(
-                                'id' => 2,
                                 'vrm' => 'AB13 ABC',
                                 'isNovelty' => null,
                                 'psvType' => array(
@@ -821,14 +828,38 @@ class VehiclePsvControllerTest extends AbstractApplicationControllerTestCase
                             )
                         ),
                         array(
+                            'id' => 3,
+                            'specifiedDate' => null,
+                            'deletedDate' => null,
                             'vehicle' => array(
-                                'id' => 3,
                                 'vrm' => 'AB11 ABC',
                                 'isNovelty' => null,
                                 'psvType' => array(
                                     'id' => 'vhl_t_c'
                                 )
                             )
+                        )
+                    )
+                )
+            );
+        }
+
+        $licenceVehicleBundle = array(
+            'properties' => array(),
+            'children' => array(
+                'vehicle' => array(
+                    'properties' => array('vrm')
+                )
+            )
+        );
+
+        if ($service == 'LicenceVehicle' && $method == 'GET' && $bundle = $licenceVehicleBundle) {
+            return array(
+                'Count' => 1,
+                'Results' => array(
+                    array(
+                        'vehicle' => array(
+                            'vrm' => 'RANDOM'
                         )
                     )
                 )

@@ -174,6 +174,7 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
      * Get form from response
      *
      * @param \Zend\View\Model\ViewModel $view
+     * @return \Zend\Form\Form
      */
     protected function getFormFromView($view)
     {
