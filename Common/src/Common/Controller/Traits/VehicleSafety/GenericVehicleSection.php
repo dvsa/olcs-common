@@ -19,6 +19,44 @@ use Common\Form\Elements\Validators\NewVrm;
 trait GenericVehicleSection
 {
     /**
+     * Check whether we should skip saving
+     *
+     * @param array $data
+     * @param \Zend\Form\Form $form
+     */
+    protected function shouldSkipActionSave($data, $form)
+    {
+        $parts = explode('-', $this->getActionName());
+
+        $action = array_pop($parts);
+
+        // @todo this may be changing after speaking with Same
+        // If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
+        //  if it does, we need to display a message asking the user to confirm
+        /*if ($action == 'add') {
+            // Check if the vehicle exists on another licence
+            $vrm = $data['vrm'];
+
+            $confirm = new \Zend\Form\Element\Checkbox('confirm-add', array('label' => 'Continue adding vehicle'));
+
+            $form->get('licence-vehicle')->add($confirm);
+
+            $form->setMessages(
+                array(
+                    'licence-vehicle' => array(
+                        'confirm-add' => array(
+                            'This vehicle is specified on another licence. Should you wish to continue check this box.'
+                        )
+                    )
+                )
+            );
+            return true;
+        }*/
+
+        return false;
+    }
+
+    /**
      * Save vehicle
      *
      * @param array $data

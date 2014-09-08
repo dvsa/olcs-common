@@ -457,9 +457,16 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function processActionSave($data, $form)
     {
-        unset($form);
-
         $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+
+        if ($this->shouldSkipActionSave($data, $form)) {
+            return;
+        }
+
+        if ($response instanceof Response || $response instanceof ViewModel) {
+            $this->setCaughtResponse($response);
+            return;
+        }
 
         $response = $this->actionSave($data);
 
@@ -469,6 +476,18 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         $this->setCaughtResponse($this->postActionSave());
+    }
+
+    /**
+     * Added a callback to call pre-actionSave
+     *
+     * @param array $data
+     * @param form $form
+     * @return boolean
+     */
+    protected function shouldSkipActionSave($data, $form)
+    {
+        return false;
     }
 
     /**
