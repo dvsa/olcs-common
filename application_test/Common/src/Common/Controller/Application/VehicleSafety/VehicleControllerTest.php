@@ -62,6 +62,18 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
     /**
      * Test indexAction with crud action
      */
+    public function testIndexActionWithEditCrudAction()
+    {
+        $this->setUpAction('index', null, array('action' => 'Edit', 'id' => 1));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test indexAction with crud action
+     */
     public function testIndexActionWithAddCrudActionWithTooManyVehicles()
     {
         $this->setUpAction('index', null, array('action' => 'Add'));
@@ -109,6 +121,60 @@ class VehicleControllerTest extends AbstractApplicationControllerTestCase
         $flashMessenger = $this->controller->plugin('FlashMessenger');
 
         $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test indexAction with crud action
+     */
+    public function testIndexActionWithAddCrudActionWithNotEnoughVehicles()
+    {
+        $this->setUpAction('index', null, array('action' => 'Add'));
+
+        $bundle = array(
+            'properties' => array(
+                'totAuthVehicles'
+            )
+        );
+
+        $response = array(
+            'totAuthVehicles' => 2
+        );
+
+        $this->setRestResponse('Application', 'GET', $response, $bundle);
+
+        $totalNumberOfVehiclesResponse = array(
+            'licence' => array(
+                'licenceVehicles' => array(
+                    array(
+                        'id' => 1
+                    )
+                )
+            )
+        );
+
+        $totalNumberOfVehiclesBundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(),
+                    'children' => array(
+                        'licenceVehicles' => array(
+                            'properties' => array('id')
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
+
+        $response = $this->controller->indexAction();
+
+        $flashMessenger = $this->controller->plugin('FlashMessenger');
+
+        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
 
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
