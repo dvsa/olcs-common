@@ -44,7 +44,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'Common\Service\RefData' => 'Common\Service\RefData',
+                'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
                 'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
                 },

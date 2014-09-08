@@ -27,7 +27,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 {
     use Util\LoggerTrait,
         Util\FlashMessengerTrait,
-        Util\RestCallTrait;
+        Util\RestCallTrait,
+        Traits\ViewHelperManagerAware;
 
     private $loggedInUser;
 

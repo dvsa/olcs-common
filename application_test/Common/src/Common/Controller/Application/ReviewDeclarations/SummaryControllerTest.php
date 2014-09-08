@@ -4,6 +4,7 @@
  * Summary Controller Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 
 namespace CommonTest\Controller\Application\ReviewDeclarations;
@@ -15,6 +16,7 @@ use Common\Controller\Application\Application\ApplicationController;
  * Summary Controller Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SummaryControllerTest extends AbstractApplicationControllerTestCase
 {
@@ -31,6 +33,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'properties' => array('id')
                     ),
                     'licenceType' => array(
+                        'properties' => array('id')
+                    ),
+                    'tachographIns' => array(
                         'properties' => array('id')
                     )
                 )
@@ -76,6 +81,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             'GET',
             array(
                 'prevConviction' => true,
+                'isMaintenanceSuitable' => 'Y',
+                'safetyConfirmation' => 'Y',
                 'licence' => array(
                     'id' => 10,
                     'version' => 1,
@@ -84,13 +91,21 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(
-                        'id' => 'ltyp_sn'
+                        'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'organisation' => array(
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
-                    )
+                    ),
+                    'safetyInsVehicles' => 2,
+                    'safetyInsTrailers' => 2,
+                    'safetyInsVaries' => 'N',
+                    'tachographInsName' => 'Bob',
+                    'tachographIns' => array(
+                        'id' => 'tach_internal'
+                    ),
+                    'workshops' => array()
                 ),
                 'documents' => array()
             ),
@@ -148,6 +163,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
             return array(
                 'prevConviction' => true,
+                'isMaintenanceSuitable' => 'Y',
+                'safetyConfirmation' => 'Y',
                 'licence' => array(
                     'id' => 10,
                     'version' => 1,
@@ -162,7 +179,15 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
-                    )
+                    ),
+                    'safetyInsVehicles' => 2,
+                    'safetyInsTrailers' => 2,
+                    'safetyInsVaries' => 'N',
+                    'tachographInsName' => 'Bob',
+                    'tachographIns' => array(
+                        'id' => 'tach_internal'
+                    ),
+                    'workshops' => array()
                 ),
                 'documents' => array()
             );

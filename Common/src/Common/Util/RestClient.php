@@ -8,6 +8,7 @@
 namespace Common\Util;
 
 use Zend\Http\Client as HttpClient;
+use Zend\Http\Header\AcceptLanguage;
 use Zend\Http\Request;
 use Zend\Uri\Http as HttpUri;
 use Zend\Http\Header\Accept;
@@ -32,7 +33,15 @@ class RestClient
     public $client;
 
     /**
-     * @param HttpUri The URL of the resource that this client is meant to act on
+     * Language to add to an accept-language header
+     *
+     * @var string
+     */
+    public $language = 'en-gb';
+
+    /**
+     * @param \Zend\Uri\Http $url
+     * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
      */
     public function __construct(HttpUri $url)
     {
@@ -41,8 +50,27 @@ class RestClient
     }
 
     /**
+     * @param string $language
+     * @return $this
+     */
+    public function setLanguage($language)
+    {
+        $this->language = str_replace('_', '-', $language);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
      * Returns the URL for a resource
      *
+     * @param null $path
      * @return string
      */
     public function url($path = null)
@@ -203,11 +231,14 @@ class RestClient
         $accept = $this->getAccept();
         $accept->addMediaType('application/json');
 
+        $acceptLanguage = $this->getAcceptLanguage();
+        $acceptLanguage->addLanguage($this->getLanguage());
+
         $this->client->setRequest($this->getClientRequest());
 
         $this->client->setUri($this->url->toString() . $path);
 
-        $this->client->setHeaders(array($accept));
+        $this->client->setHeaders(array($accept, $acceptLanguage));
 
         $this->client->setMethod($method);
 
@@ -222,6 +253,11 @@ class RestClient
     public function getAccept()
     {
         return new Accept();
+    }
+
+    public function getAcceptLanguage()
+    {
+        return new AcceptLanguage();
     }
 
     public function getClientRequest()

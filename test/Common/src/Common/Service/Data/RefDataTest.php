@@ -1,8 +1,8 @@
 <?php
 
-namespace CommonTest\Service;
+namespace CommonTest\Service\Data;
 
-use Common\Service\RefData;
+use Common\Service\Data\RefData;
 
 /**
  * Class RefDataTest
@@ -10,6 +10,12 @@ use Common\Service\RefData;
  */
 class RefDataTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetServiceName()
+    {
+        $sut = new RefData();
+        $this->assertEquals('RefData', $sut->getServiceName());
+    }
+
     public function testFormatData()
     {
         $source = $this->getSingleSource();
@@ -33,11 +39,10 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
     public function testfetchListData()
     {
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
-        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/test/en_GB'))->willReturn([]);
+        $mockRestClient->expects($this->once())->method('get')->with($this->equalTo('/test'))->willReturn([]);
 
         $sut = new RefData();
         $sut->setRestClient($mockRestClient);
-        $sut->setLanguage('en_GB');
 
         $this->assertEquals([], $sut->fetchListData('test'));
     }
@@ -48,12 +53,13 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $mockTranslator->expects($this->once())->method('getLocale')->willReturn('en_GB');
 
         $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', 0);
+        $mockRestClient->expects($this->once())->method('setLanguage')->with($this->equalTo('en_GB'));
 
         $mockApiResolver = $this->getMock('stdClass', ['getClient']);
         $mockApiResolver
             ->expects($this->once())
             ->method('getClient')
-            ->with($this->equalTo('ref-data'))
+            ->with($this->equalTo('RefData'))
             ->willReturn($mockRestClient);
 
         $mockSl = $this->getMock('\Zend\ServiceManager\ServiceManager');
@@ -69,9 +75,8 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
         $sut = new RefData();
         $service = $sut->createService($mockSl);
 
-        $this->assertInstanceOf('\Common\Service\RefData', $service);
+        $this->assertInstanceOf('\Common\Service\Data\RefData', $service);
         $this->assertSame($mockRestClient, $service->getRestClient());
-        $this->assertEquals('en_GB', $service->getLanguage());
     }
 
     /**
