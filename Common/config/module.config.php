@@ -121,10 +121,12 @@ return array(
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
         ],
         'factories' => [
-            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory'
+            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
+            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory'
         ],
         'aliases' => [
-            'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
+            'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
+            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox'
         ]
     ],
     'tables' => array(
