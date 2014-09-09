@@ -28,7 +28,25 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
         $this->config = [
             'local_scripts_path' => [__DIR__ . '/TestResources/']
         ];
-        $this->service = new ScriptFactory($this->config);
+
+        $vhm = $this->getMock('\Zend\View\HelperPluginManager', ['get']);
+        $vhm->expects($this->any())
+            ->method('get')
+            ->with('inlineScript')
+            ->will($this->returnValue(new \Zend\View\Helper\InlineScript()));
+
+        $valueMap = array(
+            array('ViewHelperManager', $vhm),
+            array('Config', $this->config),
+        );
+
+        $sl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $sl->expects($this->any())
+           ->method('get')
+           ->will($this->returnValueMap($valueMap));
+
+        $this->service = new ScriptFactory();
+        $this->service->createService($sl);
     }
 
     public function testLoadFileWithNonExistentPath()
@@ -64,8 +82,15 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
     public function testLoadFilesWhereAllFilesExist()
     {
         $scripts = $this->service->loadFiles(['stub', 'another_stub']);
+
+        $jsArray = [];
+
+        foreach ($scripts->getViewHelperManager()->get('inlineScript') as $item) {
+            $jsArray[] = $item->{'source'};
+        }
+
         $this->assertEquals(
-            $scripts,
+            $jsArray,
             [
                 "alert(\"I am a dummy fixture!\");\n",
                 "alert(\"I am a stub!\");\n"

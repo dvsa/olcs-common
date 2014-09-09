@@ -8,21 +8,22 @@
 
 namespace Common\Service\Script;
 
-use Zend\Form\Factory;
+use Zend\ServiceManager\FactoryInterface;
+use \Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Inline JavaScript loading service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ScriptFactory extends Factory
+class ScriptFactory implements FactoryInterface
 {
     /**
      * Hold the application configuration
      *
      * @var array
      */
-    protected $config = [];
+    protected $filePaths = [];
 
     /**
      * Hold an array of tokens we'll search for and replace in the
@@ -32,15 +33,31 @@ class ScriptFactory extends Factory
     protected $tokens = [];
 
     /**
-     * Constructor
+     * Contains the view helper manager! :)
      *
-     * @param array $config - application configuration
-     *
-     * @return void
+     * @var unknown
      */
-    public function __construct($config)
+    protected $viewHelperManager = null;
+
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->config = $config;
+        $this->setViewHelperManager($serviceLocator->get('ViewHelperManager'));
+
+        $config = $serviceLocator->get('Config');
+
+        if (!isset($config['local_scripts_path'])) {
+            throw new \LogicException('local_scripts_path was not set in the module config');
+        }
+        $this->setFilePaths($config['local_scripts_path']);
+
+        return $this;
     }
 
     /**
@@ -52,14 +69,10 @@ class ScriptFactory extends Factory
      */
     public function loadFiles($files = [])
     {
-        // it'd be nicer to use array_map here, but throwing an
-        // exception inside a closure causes more headaches than
-        // it's worth
-        $scripts = [];
         foreach ($files as $file) {
-            $scripts[] = $this->loadFile($file);
+            $this->getViewHelperManager()->get('inlineScript')->appendScript($this->loadFile($file));
         }
-        return $scripts;
+        return $this;
     }
 
     /**
@@ -112,16 +125,6 @@ class ScriptFactory extends Factory
     }
 
     /**
-     * get the available file system paths across all modules
-     *
-     * @return string
-     */
-    protected function getFilePaths()
-    {
-        return $this->config['local_scripts_path'];
-    }
-
-    /**
      * replace any {{tokens}} found in the content string
      * currently a no-op identity method; may be used in future
      *
@@ -135,4 +138,32 @@ class ScriptFactory extends Factory
         // no-op at the moment
         return $content;
     }
+
+    /**
+     * get the available file system paths across all modules
+     *
+     * @return string
+     */
+    protected function getFilePaths()
+    {
+        return $this->filePaths;
+    }
+
+    public function setFilePaths(array $filePaths)
+    {
+        $this->filePaths = $filePaths;
+        return $this;
+    }
+
+    public function getViewHelperManager()
+    {
+        return $this->viewHelperManager;
+    }
+
+    public function setViewHelperManager(\Zend\View\HelperPluginManager $viewHelperManager)
+    {
+        $this->viewHelperManager = $viewHelperManager;
+        return $this;
+    }
+
 }
