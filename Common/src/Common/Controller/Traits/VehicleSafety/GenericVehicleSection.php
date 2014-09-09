@@ -33,7 +33,7 @@ trait GenericVehicleSection
         // @todo this may be changing after speaking with Same
         // If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
         //  if it does, we need to display a message asking the user to confirm
-        /*if ($action == 'add') {
+        /**if ($action == 'add') {
             // Check if the vehicle exists on another licence
             $vrm = $data['vrm'];
 

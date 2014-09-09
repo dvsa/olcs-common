@@ -18,7 +18,6 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class VehicleControllerTest extends AbstractApplicationControllerTestCase
 {
-
     protected $controllerName = '\Common\Controller\Application\VehicleSafety\VehicleController';
     protected $defaultRestResponse = array();
 
