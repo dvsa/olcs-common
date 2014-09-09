@@ -201,7 +201,9 @@ class SafetyController extends VehicleSafetyController
                     case 'table':
                         $table = $fieldset->get('table')->getTable();
                         $emptyMessage = $table->getVariable('empty_message');
-                        $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        if (substr($emptyMessage, -4) !== '-psv') {
+                            $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        }
                         $fieldset->get('table')->setTable($table);
                         break;
                 }
