@@ -90,6 +90,12 @@ trait VehiclePsvSection
         'large' => 'application_vehicle-safety_vehicle-psv-large'
     );
 
+    protected $psvTypes = array(
+        'large' => 'vhl_t_c',
+        'medium' => 'vhl_t_b',
+        'small' => 'vhl_t_a',
+    );
+
     /**
      * Get action service
      *
@@ -372,14 +378,7 @@ trait VehiclePsvSection
      */
     protected function getPsvTypeFromType($type)
     {
-        switch ($type) {
-            case 'large':
-                return 'vhl_t_c';
-            case 'medium':
-                return 'vhl_t_b';
-            case 'small':
-                return 'vhl_t_a';
-        }
+        return isset($this->psvTypes[$type]) ? $this->psvTypes[$type] : null;
     }
 
     /**
