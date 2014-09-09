@@ -30,30 +30,79 @@ trait GenericVehicleSection
 
         $action = array_pop($parts);
 
-        // @todo this may be changing after speaking with Same
         // If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
         //  if it does, we need to display a message asking the user to confirm
-        /**if ($action == 'add') {
-            // Check if the vehicle exists on another licence
-            $vrm = $data['vrm'];
+        if ($action == 'add') {
 
-            $confirm = new \Zend\Form\Element\Checkbox('confirm-add', array('label' => 'Continue adding vehicle'));
+            $post = (array)$this->getRequest()->getPost();
 
-            $form->get('licence-vehicle')->add($confirm);
+            if (!isset($post['licence-vehicle']['confirm-add']) || empty($post['licence-vehicle']['confirm-add'])) {
+                $licences = $this->getOthersLicencesFromVrm($data['vrm'], $this->getLicenceId());
 
-            $form->setMessages(
-                array(
-                    'licence-vehicle' => array(
-                        'confirm-add' => array(
-                            'This vehicle is specified on another licence. Should you wish to continue check this box.'
+                if (!empty($licences)) {
+                    $confirm = new \Zend\Form\Element\Checkbox(
+                        'confirm-add',
+                        array(
+                            'label' => 'I confirm that I would like to continue adding this vehicle'
+                        )
+                    );
+
+                    // @todo For some reason this message doesn't appear in the FormErrors view helper
+                    // @todo Need to also change this message for external users
+                    $confirm->setMessages(
+                        array(
+                            'This vehicle is specified on another licence: ' . implode(', ', $licences) . '. Please confirm you would like to continue adding this vehicle'
+                        )
+                    );
+
+                    $form->get('licence-vehicle')->add($confirm);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get a list of licences that have this vehicle (Except the current licence)
+     *
+     * @param string $vrm
+     * @param int $licenceId
+     */
+    protected function getOthersLicencesFromVrm($vrm, $licenceId)
+    {
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licenceVehicles' => array(
+                    'properties' => array(),
+                    'children' => array(
+                        'licence' => array(
+                            'properties' => array(
+                                'id',
+                                'licNo'
+                            )
                         )
                     )
                 )
-            );
-            return true;
-        }*/
+            )
+        );
 
-        return false;
+        $results = $this->makeRestCall('vehicle', 'GET', array('vrm' => $vrm), $bundle);
+
+        $licences = array();
+
+        foreach ($results['Results'] as $vehicle) {
+            foreach ($vehicle['licenceVehicles'] as $licenceVehicle) {
+                if (isset($licenceVehicle['licence']['id']) && $licenceVehicle['licence']['id'] != $licenceId) {
+                    $licences[] = $licenceVehicle['licence']['licNo'];
+                }
+            }
+        }
+
+        return $licences;
     }
 
     /**
