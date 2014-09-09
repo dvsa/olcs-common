@@ -93,6 +93,11 @@ return array(
         'Y' => 'Yes',
         'N' => 'No'
     ],
+    'document_types' => [
+        'all' => 'All',
+        'digital' => 'Digital only',
+        'nondigital' => 'Non-digital'
+    ],
     'vehicle_body_types' =>
     [
         'vhl_body_type.flat' => 'Flat sided or skeletal',
