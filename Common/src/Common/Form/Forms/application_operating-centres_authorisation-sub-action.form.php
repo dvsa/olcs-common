@@ -34,11 +34,13 @@ return array(
                         'type' => 'vehiclesNumber',
                         'label' => $translationPrefix . '.data.noOfVehiclesPossessed',
                         'filters' => '\Common\Form\Elements\InputFilters\NumberOfVehicles',
+                        'required' => true
                     ),
                     'noOfTrailersPossessed' => array(
                         'type' => 'vehiclesNumber',
                         'label' => $translationPrefix . '.data.noOfTrailersPossessed',
                         'filters' => '\Common\Form\Elements\InputFilters\NumberOfVehicles',
+                        'required' => true
                     ),
                     'sufficientParking' => array(
                         'type' => 'yesnocheckbox',
