@@ -298,14 +298,14 @@ class AuthorisationController extends OperatingCentresController
             $licenceType=$options['data']['data']['licence']['licenceType']['id'];
             if (!in_array(
                 $licenceType,
-                array('ltyp_sn', 'ltyp_si')
+                array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
             )) {
                 $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
             }
 
             if (!in_array(
                 $context->getLicenceType(),
-                array('ltyp_si', 'ltyp_r')
+                array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
             )) {
                 $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
             }
