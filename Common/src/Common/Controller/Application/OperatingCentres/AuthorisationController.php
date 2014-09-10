@@ -199,7 +199,7 @@ class AuthorisationController extends OperatingCentresController
                     )
                 )
             )
-        ),
+        )
     );
 
     /**
@@ -893,7 +893,7 @@ class AuthorisationController extends OperatingCentresController
      */
     public static function getSummaryTableData($applicationId, $context, $tableName)
     {
-        $actionDataBundle = array(
+        $tableDataBundle = array(
             'children' => array(
                 'operatingCentre' => array(
                     'properties' => array(
@@ -938,7 +938,7 @@ class AuthorisationController extends OperatingCentresController
             'ApplicationOperatingCentre',
             'GET',
             array('application' => $applicationId),
-            $actionDataBundle
+            $tableDataBundle
         );
 
         $newData = array();

@@ -80,6 +80,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             'Application',
             'GET',
             array(
+                'id' => 1,
                 'prevConviction' => true,
                 'isMaintenanceSuitable' => 'Y',
                 'safetyConfirmation' => 'Y',
@@ -169,6 +170,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
 
         if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
             return array(
+                'id' => 1,
                 'prevConviction' => true,
                 'isMaintenanceSuitable' => 'Y',
                 'safetyConfirmation' => 'Y',
@@ -241,6 +243,36 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'title' => 'Mr',
                         'forename' => 'Alex',
                         'familyName' => 'P'
+                    )
+                )
+            );
+        }
+
+
+        if ($service == 'ApplicationOperatingCentre' && $method == 'GET') {
+            return array(
+                'Count' => 1,
+                'Results' => array(
+                    array(
+                        'id' => 1,
+                        'adPlaced' => 1,
+                        'permission' => 1,
+                        'noOfVehiclesPossessed' => 10,
+                        'noOfTrailersPossessed' => 10,
+                        'operatingCentre' => array(
+                            'address' => array(
+                                'id' => 1,
+                                'addressLine1' => '123 Street',
+                                'addressLine2' => 'Address 2',
+                                'addressLine3' => 'Address 3',
+                                'addressLine4' => 'Address 4',
+                                'town' => 'City',
+                                'countryCode' => array(
+                                    'id' => 'GB'
+                                ),
+                                'postcode' => 'AB1 1AB'
+                            )
+                        )
                     )
                 )
             );
