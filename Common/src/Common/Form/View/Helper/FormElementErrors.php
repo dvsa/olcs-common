@@ -9,7 +9,6 @@
 namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElementErrors as ZendFormElementErrors;
-use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Traversable;
 use Zend\Form\ElementInterface;
 use Zend\Form\Exception;
@@ -22,8 +21,6 @@ use Zend\Form\Exception;
  */
 class FormElementErrors extends ZendFormElementErrors
 {
-    use AlphaGovTraits\Logger;
-
     /**
      * Render validation errors for the provided $element
      * @NOTE: Pretty much identical to Zends version except we translate the messages here
@@ -35,9 +32,6 @@ class FormElementErrors extends ZendFormElementErrors
      */
     public function render(ElementInterface $element, array $attributes = array())
     {
-        // @todo Do we really need to log this?
-        $this->log('Rendering Element Errors: ' . $element->getName(), LOG_INFO);
-
         $messages = $element->getMessages();
 
         if (empty($messages)) {

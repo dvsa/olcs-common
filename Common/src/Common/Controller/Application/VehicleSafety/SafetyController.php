@@ -8,7 +8,7 @@
  */
 namespace Common\Controller\Application\VehicleSafety;
 
-use Common\Controller\Traits\SafetySection;
+use Common\Controller\Traits\VehicleSafety\SafetySection;
 
 /**
  * Safety Controller
@@ -61,6 +61,49 @@ class SafetyController extends VehicleSafetyController
         )
     );
 
+    public static $tableBundle = array(
+        'properties' => array(
+            'id',
+            'version'
+        ),
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'workshops' => array(
+                        'properties' => array(
+                            'id',
+                            'isExternal'
+                        ),
+                        'children' => array(
+                            'contactDetails' => array(
+                                'properties' => array(
+                                    'fao'
+                                ),
+                                'children' => array(
+                                    'address' => array(
+                                        'properties' => array(
+                                            'addressLine1',
+                                            'addressLine2',
+                                            'addressLine3',
+                                            'addressLine4',
+                                            'town',
+                                            'postcode'
+                                        ),
+                                        'children' => array(
+                                            'countryCode' => array(
+                                                'properties' => array('id')
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get the form table data - in this case simply invoke the same logic
      * as when rendered on a summary page, but provide the controller for context
@@ -80,54 +123,11 @@ class SafetyController extends VehicleSafetyController
      */
     public static function getSummaryTableData($applicationId, $context, $tableName)
     {
-        $dataBundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            ),
-            'children' => array(
-                'licence' => array(
-                    'children' => array(
-                        'workshops' => array(
-                            'properties' => array(
-                                'id',
-                                'isExternal'
-                            ),
-                            'children' => array(
-                                'contactDetails' => array(
-                                    'properties' => array(
-                                        'fao'
-                                    ),
-                                    'children' => array(
-                                        'address' => array(
-                                            'properties' => array(
-                                                'addressLine1',
-                                                'addressLine2',
-                                                'addressLine3',
-                                                'addressLine4',
-                                                'town',
-                                                'postcode'
-                                            ),
-                                            'children' => array(
-                                                'countryCode' => array(
-                                                    'properties' => array('id')
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
         $loadData = $context->makeRestCall(
             'Application',
             'GET',
             array('id' => $applicationId),
-            $dataBundle
+            self::$tableBundle
         );
 
         $data = $loadData['licence']['workshops'];
@@ -201,7 +201,9 @@ class SafetyController extends VehicleSafetyController
                     case 'table':
                         $table = $fieldset->get('table')->getTable();
                         $emptyMessage = $table->getVariable('empty_message');
-                        $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        if (substr($emptyMessage, -4) !== '-psv') {
+                            $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        }
                         $fieldset->get('table')->setTable($table);
                         break;
                 }

@@ -54,7 +54,7 @@ class OperatingCentreVehicleAuthorisationsValidator extends AbstractValidator
             return false;
         }
 
-        if ($context['noOfOperatingCentres'] === 0) {
+        if ($context['noOfOperatingCentres'] == 0) {
             $this->error('no-operating-centre');
             return false;
         }
