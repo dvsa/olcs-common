@@ -361,8 +361,8 @@ abstract class AbstractSectionController extends AbstractController
             $action = $this->getActionName();
 
             if (strstr($action, '-')) {
-                list($prefix, $action) = explode('-', $action);
-                unset($prefix);
+                $parts = explode('-', $action);
+                $action = array_pop($parts);
             }
 
             if ($action == 'edit') {
