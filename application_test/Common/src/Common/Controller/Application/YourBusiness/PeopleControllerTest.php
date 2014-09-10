@@ -431,7 +431,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
         }
 
         $personDataBundle = array(
-            'properties' => null,
+            'properties' => array('position'),
             'children' => array(
                 'person' => array(
                     'properties' => array(
@@ -441,7 +441,6 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                         'familyName',
                         'birthDate',
                         'otherName',
-                        'position'
                     )
                 )
             )
