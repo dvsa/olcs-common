@@ -72,9 +72,9 @@ class AddressTest extends PHPUnit_Framework_TestCase
         $expectedAddress = array(
             'addressLine1' => 'My Company Ltd',
             'addressLine2' => 'Awesome House Street Name',
-            'addressLine3' => 'Some Town',
+            'addressLine3' => '',
             'addressLine4' => '',
-            'town' => 'Some Area',
+            'town' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
 
@@ -109,9 +109,9 @@ class AddressTest extends PHPUnit_Framework_TestCase
         $expectedAddress = array(
             'addressLine1' => '1a-22b Awesome House',
             'addressLine2' => '31 Some Street Street Name',
-            'addressLine3' => 'Some Town',
+            'addressLine3' => '',
             'addressLine4' => '',
-            'town' => 'Some Area',
+            'town' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
 
@@ -251,8 +251,8 @@ class AddressTest extends PHPUnit_Framework_TestCase
         );
 
         $expectedResult = array(
-            123 => 'My Company Ltd, Awesome House Street Name, Some Town, Some Area',
-            234 => '1a-22b Awesome House, 31 Some Street Street Name, Some Town, Some Area',
+            123 => 'My Company Ltd, Awesome House Street Name, Some Town',
+            234 => '1a-22b Awesome House, 31 Some Street Street Name, Some Town',
             345 => '1a-22b Awesome House, 31 Some Street Street Name, Some Town'
         );
 

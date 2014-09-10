@@ -63,13 +63,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     private $sectionReference;
 
     /**
-     * Holds the table name
-     *
-     * @var string
-     */
-    private $tableName;
-
-    /**
      * Holds the section completion
      *
      * @var array
@@ -117,13 +110,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
      * @var boolean
      */
     protected $hasView = null;
-
-    /**
-     * Holds hasTable
-     *
-     * @var boolean
-     */
-    protected $hasTable = null;
 
     /**
      * Holds hasForm
@@ -739,31 +725,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     }
 
     /**
-     * Check if the current sub section has a table
-     *
-     * @return boolean
-     */
-    protected function hasTable()
-    {
-        if (is_null($this->hasTable)) {
-
-            $tableName = $this->getTableName();
-
-            $this->hasTable = false;
-
-            foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
-
-                if (file_exists($location . $tableName . '.table.php')) {
-                    $this->hasTable = true;
-                    break;
-                }
-            }
-        }
-
-        return $this->hasTable;
-    }
-
-    /**
      * Check if the current sub section has a form
      *
      * @return boolean
@@ -866,19 +827,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     }
 
     /**
-     * Alter table
-     *
-     * This method should be overridden
-     *
-     * @param object $table
-     * @return object
-     */
-    protected function alterTable($table)
-    {
-        return $table;
-    }
-
-    /**
      * Render the section
      *
      * @return Response
@@ -917,27 +865,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     protected function preRender($view)
     {
         return $view;
-    }
-
-    /**
-     * Potentiall add a table to the view
-     *
-     * @param ViewModel $view
-     */
-    protected function maybeAddTable($view)
-    {
-        if ($this->hasTable()) {
-
-            $tableName = $this->getTableName();
-
-            $data = $this->getTableData($this->getIdentifier());
-
-            $settings = $this->getTableSettings();
-
-            $table = $this->alterTable($this->getTable($tableName, $data, $settings));
-
-            $view->setVariable('table', $table->render());
-        }
     }
 
     /**

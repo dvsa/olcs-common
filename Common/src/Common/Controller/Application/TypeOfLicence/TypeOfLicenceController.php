@@ -187,7 +187,7 @@ class TypeOfLicenceController extends ApplicationController
     protected function save($data, $service = null)
     {
         if (isset($data['niFlag']) && $data['niFlag'] == 'Y') {
-            $data['goodsOrPsv'] = self::GOODS_OR_PSV_GOODS_VEHICLE;
+            $data['goodsOrPsv'] = self::LICENCE_CATEGORY_GOODS_VEHICLE;
         }
 
         parent::save($data);

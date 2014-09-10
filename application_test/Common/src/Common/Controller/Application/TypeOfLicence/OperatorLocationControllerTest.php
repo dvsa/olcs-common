@@ -110,7 +110,7 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
             'Application',
             'GET',
             array('licence' => null),
-            ApplicationController::$licenceDataBundle
+            ApplicationController::$applicationLicenceDataBundle
         );
 
         $this->lastSection = 'Application/YourBusiness/BusinessDetails';
@@ -179,7 +179,7 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
                     'niFlag' => 'Y'
                 ),
                 'operator-type' => array(
-                    'goodsOrPsv' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                    'goodsOrPsv' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                 ),
                 'licence-type' => array(
                     'licenceType' => ApplicationController::LICENCE_TYPE_STANDARD_INTERNATIONAL
@@ -234,7 +234,8 @@ class OperatorLocationControllerTest extends AbstractApplicationControllerTestCa
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }

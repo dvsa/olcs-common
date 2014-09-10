@@ -1085,7 +1085,8 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }
@@ -1094,6 +1095,7 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
 
             return $this->getApplicationCompletionData();
         }
+
         $previousLicenceBundle = array(
             'properties' => array(
                 'id',
@@ -1103,10 +1105,15 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
                 'willSurrender',
                 'purchaseDate',
                 'disqualificationDate',
-                'disqualificationLength',
-                'previousLicenceType'
-             )
+                'disqualificationLength'
+            ),
+            'children' => array(
+                'previousLicenceType' => array(
+                    'properties' => array('id')
+                )
+            )
         );
+
         if ($service == 'PreviousLicence' && $method == 'GET' && $bundle == $previousLicenceBundle) {
             return array(
                 'id' => 1,
@@ -1117,25 +1124,14 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
                 'purchaseDate' => '',
                 'disqualificationDate' => '',
                 'disqualificationLength' => '1',
-                'previousLicenceType' => 'CURRENT'
+                'previousLicenceType' => array(
+                    'id' => 'CURRENT'
+                )
             );
         }
 
         if ($service == 'PreviousLicence' && $method == 'POST') {
             return array('id' => 1);
-        }
-        if ($service == 'PreviousLicence' && $method == 'PUT') {
-            return array(
-                'id' => 1,
-                'version' => 1,
-                'licNo' => 'ln',
-                'holderName' => 'hn',
-                'willSurrender' => true,
-                'purchaseDate' => array('month' => '1', 'day' => '1', 'year' => '2010'),
-                'disqualificationDate' => array('month' => '1', 'day' => '1', 'year' => '2010'),
-                'disqualificationLength' => '1',
-                'previousLicenceType' => 'CURRENT'
-            );
         }
 
         if ($service == 'Application' && $method == 'GET') {
