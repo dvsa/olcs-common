@@ -19,12 +19,12 @@ class Licence
     use \Common\Util\RestCallTrait;
     use ZendServiceLocatorAwareTrait;
 
-    const GOODS_OR_PSV_PSV = 'lcat_psv';
-    const GOODS_OR_PSV_GOODS_VEHICLE = 'lcat_gv';
+    const LICENCE_CATEGORY_PSV = 'lcat_psv';
+    const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
 
     /**
      * Generates new licences or updates existing one and saves it to licence entity
-     * 
+     *
      * @param string $applicationId
      * @return string|bool
      */
@@ -63,7 +63,7 @@ class Licence
             if ($application['licence']['goodsOrPsv']['id'] &&
                 in_array(
                     $application['licence']['goodsOrPsv']['id'],
-                    array(self::GOODS_OR_PSV_PSV, self::GOODS_OR_PSV_GOODS_VEHICLE)
+                    array(self::LICENCE_CATEGORY_PSV, self::LICENCE_CATEGORY_GOODS_VEHICLE)
                 ) && isset($application['licence']['trafficArea']['id'])) {
 
                 // processing new licence
@@ -74,7 +74,7 @@ class Licence
                     if (isset($licenceGen['id']) ) {
 
                         // need to add some logging after all stories regarding licence number generation will be done
-                        if ($application['licence']['goodsOrPsv']['id'] == self::GOODS_OR_PSV_PSV) {
+                        if ($application['licence']['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV) {
                             $newLicenceNumber = 'P' . $application['licence']['trafficArea']['id'] . $licenceGen['id'];
                         } else {
                             $newLicenceNumber = 'O' . $application['licence']['trafficArea']['id'] . $licenceGen['id'];

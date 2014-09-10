@@ -86,6 +86,9 @@ return array(
                 $licenceService->setServiceLocator($serviceManager);
                 return $licenceService;
             },
+            'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
+                return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
+            }
         )
     ),
     'file_uploader' => array(

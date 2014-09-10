@@ -8,7 +8,7 @@
  */
 namespace Common\Controller\Application\VehicleSafety;
 
-use Common\Controller\Traits\SafetySection;
+use Common\Controller\Traits\VehicleSafety\SafetySection;
 
 /**
  * Safety Controller

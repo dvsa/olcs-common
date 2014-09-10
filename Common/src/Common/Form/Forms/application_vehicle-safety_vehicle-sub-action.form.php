@@ -19,22 +19,41 @@ return array(
                         'type' => 'hidden'
                     ),
                     'vrm' => array(
-                        'label' => $translationPrefix. '.data.vrm',
+                        'label' => $translationPrefix . '.data.vrm',
                         'type' => 'vehicleVrm'
                     ),
                     'platedWeight' => array(
-                        'label' => $translationPrefix. '.data.weight',
+                        'label' => $translationPrefix . '.data.weight',
                         'type' => 'vehicleGPW',
                         'filters' => '\Common\Form\Elements\InputFilters\VehicleWeight',
                     )
-                    //NOT PART OF THE STORY (2057)
-                    /* 'body_type' => array(
-                      'type' => 'radio',
-                      'value_options' => 'vehicle_body_types',
-                      'options' => array(
-                      'label' => 'Body type:',
-                      ),
-                      ), */
+                )
+            ),
+            array(
+                'name' => 'licence-vehicle',
+                'elements' => array(
+                    'id' => array(
+                        'type' => 'hidden'
+                    ),
+                    'version' => array(
+                        'type' => 'hidden'
+                    ),
+                    'receivedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.receivedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'specifiedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.specifiedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'deletedDate' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.deletedDate',
+                        'type' => 'dateSelectWithEmpty'
+                    ),
+                    'discNo' => array(
+                        'label' => $translationPrefix . '.licence-vehicle.discNo',
+                        'type' => 'text'
+                    )
                 )
             ),
             array(
