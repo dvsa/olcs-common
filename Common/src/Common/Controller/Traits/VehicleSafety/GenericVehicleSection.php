@@ -128,7 +128,7 @@ trait GenericVehicleSection
             )
         );
 
-        $results = $this->makeRestCall('vehicle', 'GET', array('vrm' => $vrm), $bundle);
+        $results = $this->makeRestCall('Vehicle', 'GET', array('vrm' => $vrm), $bundle);
 
         $licences = array();
 
