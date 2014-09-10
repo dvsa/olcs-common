@@ -238,7 +238,8 @@ class SummaryController extends ReviewDeclarationsController
                 'safetyInsVehicles' => 'inspection_interval_vehicle.'.$loadData['licence']['safetyInsVehicles'],
                 'safetyInsTrailers' => 'inspection_interval_trailer.'.$loadData['licence']['safetyInsTrailers'],
                 'safetyInsVaries' => $loadData['licence']['safetyInsVaries'],
-                'tachographIns' => $loadData['licence']['tachographIns']['id'],
+                'tachographIns' => isset($loadData['licence']['tachographIns']['id']) ?
+                    $loadData['licence']['tachographIns']['id'] : '',
                 'tachographInsName' => $loadData['licence']['tachographInsName'],
             ),
 
