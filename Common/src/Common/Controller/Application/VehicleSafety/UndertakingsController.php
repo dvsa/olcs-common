@@ -96,31 +96,29 @@ class UndertakingsController extends VehicleSafetyController
 
         // Load up the data in a format which can be understood by the fieldsets
         $data['smallVehiclesIntention'] = array(
-            'psvOperateSmallVhl' => ($data['psvOperateSmallVhl']!=null?
-                                                    $data['psvOperateSmallVhl']:false),
-            'psvSmallVhlNotes' => ($data['psvSmallVhlNotes']!=null?
-                                                    $data['psvSmallVhlNotes']:""),
-            'psvSmallVhlUndertakings' =>
-                $translator->translate(
-                    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
-                ),
-            'psvSmallVhlScotland' =>
-                $translator->translate(
-                    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
-                ),
-            'psvSmallVhlConfirmation' => ($data['psvSmallVhlConfirmation']=='Y')
+            'psvOperateSmallVhl' => ($data['psvOperateSmallVhl'] != null ? $data['psvOperateSmallVhl'] : false),
+            'psvSmallVhlNotes' => ($data['psvSmallVhlNotes'] != null ? $data['psvSmallVhlNotes'] : ""),
+            'psvSmallVhlUndertakings' => $translator->translate(
+                'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
+            ),
+            'psvSmallVhlScotland' => $translator->translate(
+                'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+            ),
+            'psvSmallVhlConfirmation' => ($data['psvSmallVhlConfirmation'] == 'Y')
         );
 
         $data['nineOrMore'] = array(
-            'psvNoSmallVhlConfirmation' => ($data['psvNoSmallVhlConfirmation']=='Y')
+            'psvNoSmallVhlConfirmation' => ($data['psvNoSmallVhlConfirmation'] == 'Y')
         );
 
         $data['limousinesNoveltyVehicles'] = array(
-            'psvLimousines' => ($data['psvLimousines']?'Y':'N'),
-            'psvNoLimousineConfirmation' => ($data['psvNoLimousineConfirmation']!=null?
-                                                    $data['psvNoLimousineConfirmation']:false),
-            'psvOnlyLimousinesConfirmation' => ($data['psvOnlyLimousinesConfirmation']!=null?
-                                                    $data['psvOnlyLimousinesConfirmation']:false)
+            'psvLimousines' => ($data['psvLimousines'] ? 'Y' : 'N'),
+            'psvNoLimousineConfirmation' => (
+                $data['psvNoLimousineConfirmation'] != null ? $data['psvNoLimousineConfirmation'] : false
+            ),
+            'psvOnlyLimousinesConfirmation' => (
+                $data['psvOnlyLimousinesConfirmation'] != null ? $data['psvOnlyLimousinesConfirmation'] : false
+            )
         );
 
         return $data;
@@ -134,16 +132,16 @@ class UndertakingsController extends VehicleSafetyController
      */
     protected function save($data, $service = null)
     {
-        if ( isset($data['psvSmallVhlConfirmation']) ) {
-            $data['psvSmallVhlConfirmation']=($data['psvSmallVhlConfirmation']?'Y':'N');
+        if (isset($data['psvSmallVhlConfirmation'])) {
+            $data['psvSmallVhlConfirmation'] = ($data['psvSmallVhlConfirmation'] ? 'Y' : 'N');
         }
 
-        if ( isset($data['psvNoSmallVhlConfirmation']) ) {
-            $data['psvNoSmallVhlConfirmation']=($data['psvNoSmallVhlConfirmation']==1?'Y':'N');
+        if (isset($data['psvNoSmallVhlConfirmation'])) {
+            $data['psvNoSmallVhlConfirmation'] = ($data['psvNoSmallVhlConfirmation'] == 1 ? 'Y' : 'N');
         }
 
-        if ( isset($data['psvLimousines']) ) {
-            $data['psvLimousines']=($data['psvLimousines']=='Y');
+        if (isset($data['psvLimousines'])) {
+            $data['psvLimousines'] = ($data['psvLimousines'] == 'Y');
         }
 
         parent::save($data, 'Application');
@@ -159,10 +157,10 @@ class UndertakingsController extends VehicleSafetyController
     protected function alterForm($form)
     {
         $data = $this->load($this->getIdentifier());
-        $options['data']=$data;
-        $options['isReview']=false;
+        $options['data'] = $data;
+        $options['isReview'] = false;
 
-        $form=$this->makeFormAlterations($form, $this, $options);
+        $form = $this->makeFormAlterations($form, $this, $options);
 
         return $form;
     }
@@ -181,31 +179,31 @@ class UndertakingsController extends VehicleSafetyController
      */
     public static function makeFormAlterations($form, $context, $options = array())
     {
-        $data=$options['data'];
+        $data = $options['data'];
 
         // If this traffic area has no Scottish Rules flag, set it to false.
-        if ( !isset($data['trafficArea']['isScottishRules']) ) {
-            $data['trafficArea']['isScottishRules']=false;
+        if (!isset($data['trafficArea']['isScottishRules'])) {
+            $data['trafficArea']['isScottishRules'] = false;
         }
 
         // In some cases, totAuthSmallVhl etc. can be set NULL, and we
         // need to evaluate as zero, so fix that here.
-        $arrayCheck=array('totAuthSmallVehicles','totAuthMediumVehicles','totAuthLargeVehicles');
+        $arrayCheck = array('totAuthSmallVehicles', 'totAuthMediumVehicles', 'totAuthLargeVehicles');
         foreach ($arrayCheck as $attribute) {
-            if ( is_null($data[$attribute]) ) {
-                $data[$attribute]=0;
+            if (is_null($data[$attribute])) {
+                $data[$attribute] = 0;
             }
         }
 
         // Need to enumerate the form fieldsets with their mapping, as we're
         // going to use old/new
-        $fieldsetMap = Array();
-        if ( $options['isReview'] ) {
+        $fieldsetMap = array();
+        if ($options['isReview']) {
             foreach ($options['fieldsets'] as $fieldset) {
-                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')]=$fieldset;
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
             }
         } else {
-            $fieldsetMap = Array(
+            $fieldsetMap = array(
                 'smallVehiclesIntention' => 'smallVehiclesIntention',
                 'limousinesNoveltyVehicles' => 'limousinesNoveltyVehicles',
                 'nineOrMore' => 'nineOrMore'
@@ -213,15 +211,14 @@ class UndertakingsController extends VehicleSafetyController
         }
 
         // Now remove the form fields we don't need to display to the user.
-        if ( $data['totAuthSmallVehicles'] == 0 ) {
+        if ($data['totAuthSmallVehicles'] == 0) {
             // no smalls - case 3
             $form->remove($fieldsetMap['smallVehiclesIntention']);
         } else {
             // Small vehicles - cases 1, 2, 4, 5
-            if ( ( $data['totAuthMediumVehicles'] == 0 )
-                    && ( $data['totAuthLargeVehicles'] == 0 ) ) {
+            if ($data['totAuthMediumVehicles'] == 0 && $data['totAuthLargeVehicles'] == 0) {
                 // Small only, cases 1, 2
-                if ( $data['trafficArea']['isScottishRules'] ) {
+                if ($data['trafficArea']['isScottishRules']) {
                     // Case 2 - Scottish small only
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
@@ -236,7 +233,7 @@ class UndertakingsController extends VehicleSafetyController
                 }
             } else {
                 // cases 4, 5
-                if ( $data['trafficArea']['isScottishRules'] ) {
+                if ($data['trafficArea']['isScottishRules']) {
                     // Case 5 Mix Scotland
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
@@ -245,7 +242,6 @@ class UndertakingsController extends VehicleSafetyController
                     // Case 4 Mix England/Wales
                     $form->remove($fieldsetMap['nineOrMore']);
                 }
-
             }
         }
 
