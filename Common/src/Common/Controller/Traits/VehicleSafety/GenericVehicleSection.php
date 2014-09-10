@@ -139,7 +139,8 @@ trait GenericVehicleSection
 
                     $licenceNumber = 'UNKNOWN';
 
-                    if (empty($licenceVehicle['licence']['licNo']) && isset($licenceVehicle['licence']['applications'][0])) {
+                    if (empty($licenceVehicle['licence']['licNo'])
+                        && isset($licenceVehicle['licence']['applications'][0])) {
                         $licenceNumber = 'APP-' . $licenceVehicle['licence']['applications'][0]['id'];
                     } else {
                         $licenceNumber = $licenceVehicle['licence']['licNo'];
