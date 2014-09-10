@@ -9,6 +9,7 @@
 namespace Common\Controller\Application\Application;
 
 use Common\Controller\AbstractJourneyController;
+use Common\Controller\Traits\GenericLicenceSection;
 
 /**
  * Application Controller
@@ -17,6 +18,8 @@ use Common\Controller\AbstractJourneyController;
  */
 class ApplicationController extends AbstractJourneyController
 {
+    use GenericLicenceSection;
+
     /**
      * Journey completion statuses
      */
@@ -27,8 +30,8 @@ class ApplicationController extends AbstractJourneyController
     /**
      * Goods or PSV keys
      */
-    const GOODS_OR_PSV_GOODS_VEHICLE = 'lcat_gv';
-    const GOODS_OR_PSV_PSV = 'lcat_psv';
+    const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
+    const LICENCE_CATEGORY_PSV = 'lcat_psv';
 
     /**
      * Licence types keys
@@ -52,7 +55,7 @@ class ApplicationController extends AbstractJourneyController
      *
      * @var array
      */
-    public static $licenceDataBundle = array(
+    public static $applicationLicenceDataBundle = array(
         'children' => array(
             'licence' => array(
                 'properties' => array(
@@ -93,25 +96,24 @@ class ApplicationController extends AbstractJourneyController
     protected $service = 'Application';
 
     /**
-     * Cache licence data requests
+     * Get licence data service (Used to extend trait)
      *
-     * @var array
+     * @return string
      */
-    private $licenceData = array();
+    protected function getLicenceDataService()
+    {
+        return 'Application';
+    }
 
     /**
-     * Check if is psv
+     * Get licence data bundle
      *
-     * @var boolean
+     * @return array
      */
-    protected $isPsv = null;
-
-    /**
-     * Licence type
-     *
-     * @var string
-     */
-    protected $licenceType = null;
+    protected function getLicenceDataBundle()
+    {
+        return static::$applicationLicenceDataBundle;
+    }
 
     /**
      * Redirect to the first section
@@ -177,36 +179,6 @@ class ApplicationController extends AbstractJourneyController
         $completion['version']++;
 
         $this->setSectionCompletion($completion);
-    }
-
-    /**
-     * Check if application is psv
-     *
-     * GetAccessKeys "should" always be called first so psv should be set
-     *
-     * @return boolean
-     */
-    protected function isPsv()
-    {
-        return $this->isPsv;
-    }
-
-    /**
-     * Get the licence type
-     *
-     * @return string
-     */
-    protected function getLicenceType()
-    {
-        if (empty($this->licenceType)) {
-            $licenceData = $this->getLicenceData();
-
-            if (isset($licenceData['licenceType']['id'])) {
-                $this->licenceType = $licenceData['licenceType']['id'];
-            }
-        }
-
-        return $this->licenceType;
     }
 
     /**
@@ -278,7 +250,7 @@ class ApplicationController extends AbstractJourneyController
             return null;
         }
 
-        if ($licence['goodsOrPsv']['id'] == self::GOODS_OR_PSV_PSV) {
+        if ($licence['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV) {
             return 'psv';
         }
 
@@ -320,28 +292,6 @@ class ApplicationController extends AbstractJourneyController
     }
 
     /**
-     * Get the licence data
-     *
-     * @return array
-     */
-    protected function getLicenceData()
-    {
-        if (empty($this->licenceData)) {
-
-            $application = $this->makeRestCall(
-                'Application',
-                'GET',
-                array('id' => $this->getIdentifier()),
-                self::$licenceDataBundle
-            );
-
-            $this->licenceData = $application['licence'];
-        }
-
-        return $this->licenceData;
-    }
-
-    /**
      * Get licence id
      *
      * @return int
@@ -380,6 +330,18 @@ class ApplicationController extends AbstractJourneyController
         unset($fileData['name']);
 
         $this->makeRestCall('Document', 'POST', array_merge($fileData, $data));
+    }
+
+    /**
+     * Get the licence data
+     *
+     * @return array
+     */
+    protected function getLicenceData()
+    {
+        $results = $this->doGetLicenceData();
+
+        return $results['licence'];
     }
 
     /**

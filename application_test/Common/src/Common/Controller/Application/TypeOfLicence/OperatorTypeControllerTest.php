@@ -57,7 +57,7 @@ class OperatorTypeControllerTest extends AbstractApplicationControllerTestCase
             null,
             array(
                 'operator-type' => array(
-                    'goodsOrPsv' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                    'goodsOrPsv' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                 )
             )
         );
@@ -79,7 +79,8 @@ class OperatorTypeControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
         }
