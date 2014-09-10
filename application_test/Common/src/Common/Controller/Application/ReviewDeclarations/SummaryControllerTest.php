@@ -248,7 +248,6 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
-
         if ($service == 'ApplicationOperatingCentre' && $method == 'GET') {
             return array(
                 'Count' => 1,
