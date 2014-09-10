@@ -160,7 +160,45 @@ class AuthorisationController extends OperatingCentresController
             'permission',
             'adPlaced',
             'adPlacedIn',
-            'adPlacedDate'
+            'adPlacedDate',
+        ),
+        'children' => array(
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
+            )
         ),
     );
 
@@ -902,7 +940,7 @@ class AuthorisationController extends OperatingCentresController
             array('application' => $applicationId),
             $actionDataBundle
         );
-        
+
         $newData = array();
 
         foreach ($data['Results'] as $row) {
