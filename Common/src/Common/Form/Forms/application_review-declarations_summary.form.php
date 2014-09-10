@@ -1,5 +1,6 @@
 <?php
 
+// @todo Translate these titles
 $groups = array(
     array(
         'title' => 'Type of licence',

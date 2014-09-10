@@ -224,6 +224,7 @@ class OlcsCustomFormFactory extends Factory
     {
         if (isset($formConfig['fieldsets'])) {
             $formConfig['fieldsets'] = $this->getFieldsets($formConfig['fieldsets']);
+            $formConfig = $this->maybeAddHiddenSubmitButton($formConfig);
         }
 
         $formConfig['elements']['csrf'] = array('type' => 'csrf');
@@ -438,5 +439,41 @@ class OlcsCustomFormFactory extends Factory
         }
         $fieldsetConfig = include $path;
         return $fieldsetConfig;
+    }
+
+    /**
+     * Adds hidden submit button to handle Enter key
+     *
+     * @param array $formConfig
+     * @return array
+     */
+    protected function maybeAddHiddenSubmitButton($formConfig)
+    {
+        $needToBreak = false;
+        foreach ($formConfig['fieldsets'] as $fieldset) {
+            if (isset($fieldset['spec']['name']) && $fieldset['spec']['name'] == 'form-actions' &&
+                isset($fieldset['spec']['elements']) && is_array($fieldset['spec']['elements'])) {
+                foreach ($fieldset['spec']['elements'] as $element) {
+                    if (isset($element['spec']['type']) &&
+                        $element['spec']['type'] == '\Common\Form\Elements\InputFilters\ActionButton' &&
+                        $element['spec']['name'] == 'submit') {
+                        $formConfig['elements']['hiddenSubmit'] =
+                            array(
+                                'type' => 'submit',
+                                'name' => 'form-actions[submit]',
+                                'label' => isset($element['spec']['options']['label']) ?
+                                    $element['spec']['options']['label'] : 'Save',
+                                'class' => 'visually-hidden'
+                            );
+                        $needToBreak = true;
+                        break;
+                    }
+                }
+            }
+            if ($needToBreak) {
+                break;
+            }
+        }
+        return $formConfig;
     }
 }
