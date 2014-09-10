@@ -1383,6 +1383,7 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                     'id' => '',
                     'version' => '',
                     'vrm' => 'AB12',
+                    'isNovelty' => 'Y',
                     'platedWeight' => 100
                 )
             )
@@ -1562,6 +1563,7 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                     'id' => '',
                     'version' => '',
                     'vrm' => 'AB12',
+                    'isNovelty' => 'Y',
                     'platedWeight' => 100
                 ),
                 'licence-vehicle' => array(
