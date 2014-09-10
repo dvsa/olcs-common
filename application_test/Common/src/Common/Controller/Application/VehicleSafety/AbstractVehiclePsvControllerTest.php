@@ -1443,7 +1443,8 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                     'platedWeight' => 100
                 ),
                 'licence-vehicle' => array(
-                    'confirm-add' => 'Y'
+                    'confirm-add' => 'Y',
+                    'receivedDate' => array('day' => '01', 'month' => '01', 'year' => '2014')
                 )
             )
         );
@@ -1503,7 +1504,8 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                     'platedWeight' => 100
                 ),
                 'licence-vehicle' => array(
-                    'confirm-add' => 'Y'
+                    'confirm-add' => 'Y',
+                    'receivedDate' => array('day' => '01', 'month' => '01', 'year' => '2014')
                 )
             )
         );
@@ -1563,7 +1565,8 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                     'platedWeight' => 100
                 ),
                 'licence-vehicle' => array(
-                    'confirm-add' => 'Y'
+                    'confirm-add' => 'Y',
+                    'receivedDate' => array('day' => '01', 'month' => '01', 'year' => '2014')
                 )
             )
         );

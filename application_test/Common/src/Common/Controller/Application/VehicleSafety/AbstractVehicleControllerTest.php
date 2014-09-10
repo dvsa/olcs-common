@@ -472,7 +472,8 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                     'platedWeight' => 100
                 ),
                 'licence-vehicle' => array(
-                    'confirm-add' => 'y'
+                    'confirm-add' => 'y',
+                    'receivedDate' => array('day' => '01', 'month' => '01', 'year' => '2014')
                 )
             )
         );
