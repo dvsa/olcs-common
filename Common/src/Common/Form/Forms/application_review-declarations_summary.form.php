@@ -11,6 +11,15 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Your Business',
+        'forms' => array(
+            'application_your-business_business-type',
+            'application_your-business_business-details',
+            'application_your-business_addresses',
+            'application_your-business_people'
+        )
+    ),
+    array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',

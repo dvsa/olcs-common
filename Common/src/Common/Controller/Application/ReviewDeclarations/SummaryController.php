@@ -58,6 +58,8 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
+        'YourBusiness/BusinessDetails' => 'application_your-business_business_details-subsidiaries',
+        'YourBusiness/People' => 'application_your-business_people_in_form',
         'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
         'VehicleSafety/Safety' => 'safety-inspection-providers',
     );
