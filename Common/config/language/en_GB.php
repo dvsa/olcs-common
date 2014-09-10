@@ -809,7 +809,7 @@ return array(
     'select-type' => 'Select type',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'Back',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'Continue',
-    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'DOC',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'Conviction date',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnName' => 'Name',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnNameOfCourt' => 'Name of court',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence' => 'Offence',

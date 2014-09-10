@@ -810,7 +810,7 @@ return array(
     'select-type' => 'W Select type',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'W Back',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'W Continue',
-    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'W DOC',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'W Conviction date',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnName' => 'W Name',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnNameOfCourt' => 'W Name of court',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence' => 'W Offence',
