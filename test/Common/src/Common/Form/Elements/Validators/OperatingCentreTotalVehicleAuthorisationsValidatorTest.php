@@ -43,8 +43,9 @@ class OperatingCentreTotalVehicleAuthorisationsValidatorTest extends \PHPUnit_Fr
     {
         return array(
             array('', array(), false),
+            // No vehicles
+            array(0, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), false),
             // No OCs
-            array(0, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), true),
             array(1, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), false),
             // 1 OC
             array(9, array('noOfOperatingCentres' => 1, 'minVehicleAuth' => 10, 'maxVehicleAuth' => 10), false),
