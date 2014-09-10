@@ -10,6 +10,7 @@
 namespace Common\Controller\Traits\VehicleSafety;
 
 use Common\Form\Elements\Validators\NewVrm;
+use Zend\Form\Element\Checkbox;
 
 /**
  * Generic Vehicle Section Trait
@@ -21,6 +22,8 @@ trait GenericVehicleSection
     /**
      * Check whether we should skip saving
      *
+     * If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
+     *  if it does, we need to display a message asking the user to confirm
      * @param array $data
      * @param \Zend\Form\Form $form
      */
@@ -30,39 +33,67 @@ trait GenericVehicleSection
 
         $action = array_pop($parts);
 
-        // If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
-        //  if it does, we need to display a message asking the user to confirm
         if ($action == 'add') {
 
             $post = (array)$this->getRequest()->getPost();
 
             if (!isset($post['licence-vehicle']['confirm-add']) || empty($post['licence-vehicle']['confirm-add'])) {
-                $licences = $this->getOthersLicencesFromVrm($data['vrm'], $this->getLicenceId());
 
-                if (!empty($licences)) {
-                    $confirm = new \Zend\Form\Element\Checkbox(
-                        'confirm-add',
-                        array(
-                            'label' => 'I confirm that I would like to continue adding this vehicle'
-                        )
-                    );
-
-                    // @todo For some reason this message doesn't appear in the FormErrors view helper
-                    // @todo Need to also change this message for external users
-                    $confirm->setMessages(
-                        array(
-                            'This vehicle is specified on another licence: ' . implode(', ', $licences) . '. Please confirm you would like to continue adding this vehicle'
-                        )
-                    );
-
-                    $form->get('licence-vehicle')->add($confirm);
-
-                    return true;
-                }
+                return $this->checkIfVehicleExistsOnOtherLicences($data, $form);
             }
         }
 
         return false;
+    }
+
+    /**
+     * If vehicle exists on another licence, add a message and confirmation field to the form
+     *
+     * @param array $data
+     * @param \Zend\Form\Form $form
+     * @return boolean
+     */
+    protected function checkIfVehicleExistsOnOtherLicences($data, $form)
+    {
+        $licences = $this->getOthersLicencesFromVrm($data['vrm'], $this->getLicenceId());
+
+        if (!empty($licences)) {
+
+            $confirm = new Checkbox('confirm-add', array('label' => 'vehicle-belongs-to-another-licence-confirmation'));
+
+            $confirm->setMessages(array($this->getErrorMessageForVehicleBelongingToOtherLicences($licences)));
+
+            $form->get('licence-vehicle')->add($confirm);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * We need to manually translate the message, as we need to optionally display a licence number
+     * Based on whether we are internal or external
+     *
+     * @param array $licences
+     * @return string
+     */
+    protected function getErrorMessageForVehicleBelongingToOtherLicences($licences)
+    {
+        $translator = $this->getServiceLocator()->get('translator');
+
+        $translationKey = 'vehicle-belongs-to-another-licence-message-' . strtolower($this->sectionLocation);
+
+        if ($this->sectionLocation == 'Internal') {
+
+            if (count($licences) > 1) {
+                $translationKey .= '-multiple';
+            }
+
+            return sprintf($translator->translate($translationKey), implode(', ', $licences));
+        }
+
+        return $translator->translate($translationKey);
     }
 
     /**
@@ -83,6 +114,13 @@ trait GenericVehicleSection
                             'properties' => array(
                                 'id',
                                 'licNo'
+                            ),
+                            'children' => array(
+                                'applications' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
                             )
                         )
                     )
@@ -96,8 +134,18 @@ trait GenericVehicleSection
 
         foreach ($results['Results'] as $vehicle) {
             foreach ($vehicle['licenceVehicles'] as $licenceVehicle) {
-                if (isset($licenceVehicle['licence']['id']) && $licenceVehicle['licence']['id'] != $licenceId) {
-                    $licences[] = $licenceVehicle['licence']['licNo'];
+                if (isset($licenceVehicle['licence']['id'])
+                    && $licenceVehicle['licence']['id'] != $licenceId) {
+
+                    $licenceNumber = 'UNKNOWN';
+
+                    if (empty($licenceVehicle['licence']['licNo']) && isset($licenceVehicle['licence']['applications'][0])) {
+                        $licenceNumber = 'APP-' . $licenceVehicle['licence']['applications'][0]['id'];
+                    } else {
+                        $licenceNumber = $licenceVehicle['licence']['licNo'];
+                    }
+
+                    $licences[] = $licenceNumber;
                 }
             }
         }

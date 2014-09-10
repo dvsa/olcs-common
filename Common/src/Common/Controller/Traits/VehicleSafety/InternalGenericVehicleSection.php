@@ -16,6 +16,8 @@ namespace Common\Controller\Traits\VehicleSafety;
  */
 trait InternalGenericVehicleSection
 {
+    protected $sectionLocation = 'Internal';
+
     /**
      * Alter the action form
      *

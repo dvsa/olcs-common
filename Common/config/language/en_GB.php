@@ -970,6 +970,13 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'vehicle-and-safety' => 'Vehicle & safety',
+    'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
+        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. Please
+        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
+        Please confirm you would like to continue adding this vehicle',
     'vehicle-count' => '%s vehicles',
     'vehicles' => 'Vehicles',
     'vehicles-in-posession' => 'Vehicles in possession',
