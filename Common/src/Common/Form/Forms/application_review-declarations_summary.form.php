@@ -1,5 +1,6 @@
 <?php
 
+// @todo Translate these titles
 $groups = array(
     array(
         'title' => 'Type of licence',
@@ -21,7 +22,8 @@ $groups = array(
     array(
         'title' => 'Vehicles & Safety',
         'forms' => array(
-            'application_vehicle-safety_safety'
+            'application_vehicle-safety_safety',
+            'application_vehicle-safety_undertakings'
         )
     )
 
