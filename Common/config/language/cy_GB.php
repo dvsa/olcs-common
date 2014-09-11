@@ -401,6 +401,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.specifiedDate' => 'W Specified date',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of
         your vehicles?',
+    'application_vehicle-safety_vehicle-reprint' => 'W Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate' => 'W Removed date',

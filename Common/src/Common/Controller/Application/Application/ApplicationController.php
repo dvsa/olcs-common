@@ -21,6 +21,13 @@ class ApplicationController extends AbstractJourneyController
     use GenericLicenceSection;
 
     /**
+     * Application statuses
+     *
+     * @todo need to get the correct ref data keys
+     */
+    const APPLICATION_STATUS_NOT_YET_SUBMITTED = 'apsts_new';
+
+    /**
      * Journey completion statuses
      */
     const COMPLETION_STATUS_NOT_STARTED = 0;
@@ -362,5 +369,28 @@ class ApplicationController extends AbstractJourneyController
     public function getPostcodeService()
     {
         return $this->getServiceLocator()->get('postcode');
+    }
+
+    /**
+     * Get application status
+     */
+    protected function getApplicationStatus()
+    {
+        $id = $this->getIdentifier();
+
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'status' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
+            )
+        );
+
+        $results = $this->makeRestCall('Application', 'GET', array('id' => $id), $bundle);
+
+        return $results['status']['id'];
     }
 }

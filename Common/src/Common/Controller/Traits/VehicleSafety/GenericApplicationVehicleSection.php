@@ -42,6 +42,22 @@ trait GenericApplicationVehicleSection
     }
 
     /**
+     * If we have the not-yet submitted status, then we should remove the reprint button
+     *
+     * @param \Common\Service\Table\TableBuilder
+     */
+    protected function alterTable($table)
+    {
+        $applicationStatus = $this->getApplicationStatus();
+
+        if ($applicationStatus == self::APPLICATION_STATUS_NOT_YET_SUBMITTED) {
+            $table->removeAction('reprint');
+        }
+
+        return $table;
+    }
+
+    /**
      * Get total number of vehicles
      *
      * @return int

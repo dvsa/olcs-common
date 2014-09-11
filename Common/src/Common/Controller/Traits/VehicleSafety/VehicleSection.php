@@ -18,6 +18,10 @@ trait VehicleSection
 {
     use GenericVehicleSection;
 
+    protected $sharedBespokeSubActions = array(
+        'reprint'
+    );
+
     /**
      * Holds the table data bundle
      *
@@ -107,6 +111,16 @@ trait VehicleSection
     );
 
     /**
+     * Get bespoke sub actions
+     *
+     * @return array
+     */
+    protected function getBespokeSubActions()
+    {
+        return $this->sharedBespokeSubActions;
+    }
+
+    /**
      * Redirect to the first section
      *
      * @return Response
@@ -130,6 +144,88 @@ trait VehicleSection
     public function editAction()
     {
         return $this->renderSection();
+    }
+
+    /**
+     * Reprint action
+     */
+    public function reprintAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
+     * Load data for reprint
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function reprintLoad($id)
+    {
+        return array(
+            'data' => array(
+                'id' => $id
+            )
+        );
+    }
+
+    /**
+     * Request a new disc
+     *
+     * @param array $data
+     */
+    protected function reprintSave($data)
+    {
+        $this->reprintDisc($data['data']['id']);
+
+        return $this->goBackToSection();
+    }
+
+    /**
+     * Reprint a single disc
+     *
+     * @NOTE I have put this logic into it's own method (rather in the reprintSave method), as we will soon be able to
+     * reprint multiple discs at once
+     *
+     * @param int $id
+     */
+    protected function reprintDisc($id)
+    {
+        $this->ceaseActiveDisc($id);
+
+        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $id));
+    }
+
+    /**
+     * If the latest disc is not active, cease it
+     *
+     * @param int $id
+     */
+    protected function ceaseActiveDisc($id)
+    {
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'properties' => array(
+                        'id',
+                        'version',
+                        'ceasedDate'
+                    )
+                )
+            )
+        );
+
+        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $bundle);
+
+        if (!empty($results['goodsDiscs'])) {
+            $activeDisc = $results['goodsDiscs'][0];
+
+            if (empty($activeDisc['ceasedDate'])) {
+                $activeDisc['ceasedDate'] = date('Y=m=d');
+                $this->makeRestCall('GoodsDisc', 'PUT', $activeDisc['ceasedDate']);
+            }
+        }
     }
 
     /**
@@ -240,6 +336,10 @@ trait VehicleSection
      */
     protected function processActionLoad($data)
     {
+        if ($this->getActionName() == 'reprint') {
+            return array();
+        }
+
         if ($this->getActionName() !== 'add') {
             $licenceVehicle = $data;
             unset($licenceVehicle['vehicle']);

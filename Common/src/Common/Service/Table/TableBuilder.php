@@ -9,7 +9,7 @@
  */
 namespace Common\Service\Table;
 
-use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager;
 
 /**
  * Table Builder
@@ -19,8 +19,10 @@ use Zend\ServiceManager\ServiceManager;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Jakub Igla <jakub.igla@valtech.co.uk>
  */
-class TableBuilder
+class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 {
+    use ServiceManager\ServiceLocatorAwareTrait;
+
     const TYPE_DEFAULT = 1;
     const TYPE_PAGINATE = 2;
     const TYPE_CRUD = 3;
@@ -28,6 +30,8 @@ class TableBuilder
     const TYPE_FORM_TABLE = 5;
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
+
+    const MAX_FORM_ACTIONS = 4;
 
     /**
      * Hold the pagination helper
@@ -170,16 +174,22 @@ class TableBuilder
     private $fieldset = null;
 
     /**
-     * @var
-     */
-    private $sm;
-
-    /**
      * Is this builder inside a disabled table element?
      *
      * @var bool
      */
     private $isDisabled = false;
+
+    /**
+     * Inject the service locator
+     *
+     * @param $sm
+     */
+    public function __construct($sm)
+    {
+        $this->setServiceLocator($sm);
+        $this->applicationConfig = $sm->get('Config');
+    }
 
     /**
      * Set whether this table appears inside a disabled element
@@ -236,17 +246,6 @@ class TableBuilder
     }
 
     /**
-     * Inject the service locator
-     *
-     * @param $sm
-     */
-    public function __construct($sm)
-    {
-        $this->setServiceLocator($sm);
-        $this->applicationConfig = $sm->get('Config');
-    }
-
-    /**
      * Setter for type
      *
      * @param int $type
@@ -257,26 +256,6 @@ class TableBuilder
     }
 
     /**
-     * Set Service Manager
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceLocator($sm)
-    {
-        $this->sm = $sm;
-    }
-
-    /**
-     * Get Service Manager
-     *
-     * @return ServiceManager
-     */
-    public function getServiceLocator()
-    {
-        return $this->sm;
-    }
-
-    /**
      * Set settings
      *
      * @param array $settings
@@ -284,6 +263,18 @@ class TableBuilder
     public function setSettings($settings = array())
     {
         $this->settings = $settings;
+    }
+
+    /**
+     * Return a setting or the default
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getSetting($name, $default = null)
+    {
+        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
     }
 
     /**
@@ -307,18 +298,6 @@ class TableBuilder
     }
 
     /**
-     * Return a setting or the default
-     *
-     * @param string $name
-     * @param mixed $default
-     * @return mixed
-     */
-    public function getSetting($name, $default = null)
-    {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $default;
-    }
-
-    /**
      * Setter for footer
      *
      * @param array $footer
@@ -336,6 +315,18 @@ class TableBuilder
     public function getFooter()
     {
         return $this->footer;
+    }
+
+    /**
+     * Remove an action
+     *
+     * @param string $name
+     */
+    public function removeAction($name)
+    {
+        if (isset($this->settings['crud']['actions'][$name])) {
+            unset($this->settings['crud']['actions'][$name]);
+        }
     }
 
     /**
@@ -1304,7 +1295,7 @@ class TableBuilder
      */
     private function formatActionContent($actions)
     {
-        if (count($actions) > 3) {
+        if (count($actions) > self::MAX_FORM_ACTIONS) {
             return $this->renderDropdownActions($actions);
         }
 
@@ -1325,13 +1316,16 @@ class TableBuilder
 
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
+            $label = isset($details['label']) ? $details['label'] : $value;
+
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
             $actionFieldName = $this->getActionFieldName();
 
             $newActions[] = array(
                 'name' => $name,
-                'label' => $value,
+                'value' => $value,
+                'label' => $label,
                 'class' => $class,
                 'action_field_name' => $actionFieldName
             );
