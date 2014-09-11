@@ -82,8 +82,7 @@ class Address
         $addressLines = array(
             $this->formatSaon(),
             trim($this->formatPaon() . ' ' . $this->getAddressPart('street_description')),
-            $address['locality_name'],
-            ($address['town_name'] !== $address['administritive_area'] ? $address['town_name'] : '')
+            $address['locality_name']
         );
 
         $lineNo = 1;
@@ -96,11 +95,7 @@ class Address
             }
         }
 
-        if ($address['town_name'] !== $address['administritive_area']) {
-            $details['town'] = $this->formatString($address['administritive_area']);
-        } else {
-            $details['town'] = $this->formatString($address['town_name']);
-        }
+        $details['town'] = $this->formatString($address['town_name']);
 
         $details['postcode'] = $address['postcode'];
 

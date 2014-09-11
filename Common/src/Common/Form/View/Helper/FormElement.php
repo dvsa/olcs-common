@@ -11,7 +11,6 @@ namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
-use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
@@ -26,8 +25,6 @@ use Common\Form\Elements\InputFilters\ActionLink;
  */
 class FormElement extends ZendFormElement
 {
-
-    use AlphaGovTraits\Logger;
 
     /**
      * The form row output format.
@@ -47,8 +44,6 @@ class FormElement extends ZendFormElement
      */
     public function render(ZendElementInterface $element)
     {
-        $this->log('Rendering Element: ' . $element->getName(), LOG_INFO);
-
         if (!$element->getAttribute('id')) {
             $element->setAttribute('id', $element->getName());
         }
@@ -99,8 +94,6 @@ class FormElement extends ZendFormElement
 
             $view = $this->getView();
             $hint = $view->translate($element->getOption('hint'));
-
-            $this->log('Rendering Element Hint: ' . $hint, LOG_INFO);
 
             $markup = sprintf(self::$format, $markup, $hint);
         }
