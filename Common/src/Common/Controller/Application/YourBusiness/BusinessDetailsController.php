@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\YourBusiness;
 
@@ -13,6 +14,7 @@ namespace Common\Controller\Application\YourBusiness;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class BusinessDetailsController extends YourBusinessController
 {
@@ -496,7 +498,7 @@ class BusinessDetailsController extends YourBusinessController
      */
     protected function getFormTableData($id, $table)
     {
-        $data=$this->getSummaryTableData($id,$this,"");
+        $data=$this->getSummaryTableData($id, $this, "");
 
         return $data;
     }

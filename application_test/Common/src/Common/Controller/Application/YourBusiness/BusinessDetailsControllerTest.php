@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 
 namespace CommonTest\Controller\Application\YourBusiness;
@@ -24,6 +25,17 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
     protected $controllerName = '\Common\Controller\Application\YourBusiness\BusinessDetailsController';
 
     protected $defaultRestResponse = [];
+
+    // application ID call data
+    protected $mockApplicationIdData = [
+        'id' => 1,
+        'version' => 1,
+        'licence' => [
+            'organisation' => [
+                'id' => 1
+            ]
+        ]
+    ];
 
     // must be set if you want to use it
     protected $mockOrganisationData = [];
@@ -501,6 +513,26 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 ]
             ];
 
+            $idBundle = array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'licence' => array(
+                        'children' => array(
+                            'organisation' => array(
+                                'children' => array(
+                                    'type' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    ),
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
             if ($bundle == ApplicationController::$applicationLicenceDataBundle) {
 
                 return $this->getLicenceData('goods');
@@ -511,9 +543,14 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 return $this->mockLicenceData;
             }
 
-            if ($bundle == $orgBundle) {
+            if ($bundle == $orgBundle ) {
 
                 return $this->mockOrganisationData;
+            }
+
+            if ($bundle == $idBundle ) {
+
+                return $this->mockApplicationIdData;
             }
         }
 

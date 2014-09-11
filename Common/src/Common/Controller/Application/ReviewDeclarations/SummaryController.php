@@ -182,7 +182,7 @@ class SummaryController extends ReviewDeclarationsController
     protected function processLoad($loadData)
     {
         $translator = $this->getServiceLocator()->get('translator');
-// var_dump($loadData);
+
         $data = array(
             /**
              * Type of Licence

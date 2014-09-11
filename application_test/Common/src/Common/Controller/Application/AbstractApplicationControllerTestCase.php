@@ -198,7 +198,9 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
                 'organisation' => array(
                     'type' => array(
                         'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
-                    )
+                    ),
+                    'companyOrLlpNo' => 12345678,
+                    'name' => 'Bob Ltd'
                 )
             )
         );

@@ -37,10 +37,36 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     ),
                     'tachographIns' => array(
                         'properties' => array('id')
+                    ),
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                            )
+                        )
                     )
                 )
             ),
             'documents' => array()
+        )
+    );
+
+    protected $appIdBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                        )
+                    )
+                )
+            )
         )
     );
 
@@ -103,7 +129,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'organisation' => array(
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
-                        )
+                        ),
+                        'companyOrLlpNo' => 12345678,
+                        'name' => 'Bob Ltd'
                     ),
                     'safetyInsVehicles' => 2,
                     'safetyInsTrailers' => 2,
@@ -168,6 +196,18 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             return $this->getLicenceData();
         }
 
+        if ($service == 'Application' && $method == 'GET' && $bundle == $this->appIdBundle) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'licence' => array(
+                    'organisation' => array(
+                        'id' => 1
+                    )
+                )
+            );
+        }
+
         if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
             return array(
                 'prevConviction' => true,
@@ -193,7 +233,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'organisation' => array(
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
-                        )
+                        ),
+                        'companyOrLlpNo' => 12345678,
+                        'name' => 'Bob Ltd'
                     ),
                     'safetyInsVehicles' => 2,
                     'safetyInsTrailers' => 2,
@@ -202,7 +244,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'tachographIns' => array(
                         'id' => 'tach_internal'
                     ),
-                    'workshops' => array()
+                    'workshops' => array(),
                 ),
                 'documents' => array()
             );
@@ -242,6 +284,29 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'title' => 'Mr',
                         'forename' => 'Alex',
                         'familyName' => 'P'
+                    )
+                )
+            );
+        }
+
+        $companySubsidiaryBundle = array(
+            'properties' => array(
+                'id',
+                'version',
+                'name',
+                'companyNo'
+            )
+        );
+
+        if ( $service == 'CompanySubsidiary' && $method === 'GET' && $bundle == $companySubsidiaryBundle ) {
+            return array(
+                'Count' => 1,
+                'Results' => array(
+                    array(
+                        'id' => 1,
+                        'version' => 1,
+                        'name' => 'name',
+                        'companyNo' => '12345678'
                     )
                 )
             );
