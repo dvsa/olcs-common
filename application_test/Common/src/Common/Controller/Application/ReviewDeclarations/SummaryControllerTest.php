@@ -311,5 +311,39 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
+
+        $peopleBundle = array(
+            'properties' => array('position'),
+            'children' => array(
+                'person' => array(
+                    'properties' => array(
+                        'id',
+                        'title',
+                        'forename',
+                        'familyName',
+                        'birthDate',
+                        'otherName'
+                    )
+                )
+            )
+        );
+
+        if ( $service == 'OrganisationPerson' && $method === 'GET' && $bundle == $peopleBundle ) {
+            return array(
+                'Count' => 2,
+                'Results' => array (
+                    array(
+                        'person' => array(
+                            'forename' => 'Keith',
+                            'familyName' => 'Chegwin',
+                            'otherName' => 'Albert',
+                            'id' => 78,
+                            'birthDate' => '1975-01-17',
+                            'title' => 'Mr'
+                        )
+                    )
+                )
+            );
+        }
     }
 }

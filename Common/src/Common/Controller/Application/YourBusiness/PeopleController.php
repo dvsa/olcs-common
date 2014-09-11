@@ -16,6 +16,28 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class PeopleController extends YourBusinessController
 {
+    /**
+     *   Application ID bundle
+     */
+    public static $applicationBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Form tables name
@@ -65,7 +87,21 @@ class PeopleController extends YourBusinessController
      */
     protected function getFormTableData($id, $table)
     {
-        $org = $this->getOrganisationData();
+        $tableData=$this->getSummaryTableData($id, $this, '');
+        return $tableData;
+    }
+
+    /**
+     * Get the form table data
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $org = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            self::$applicationBundle
+        );
 
         $bundle = array(
             'properties' => array('position'),
@@ -83,7 +119,7 @@ class PeopleController extends YourBusinessController
             )
         );
 
-        $data = $this->makeRestCall(
+        $data = $context->makeRestCall(
             'OrganisationPerson',
             'GET',
             array('organisation' => $org['id']),
@@ -101,6 +137,7 @@ class PeopleController extends YourBusinessController
         }
 
         return $tableData;
+
     }
 
     /**
@@ -139,7 +176,9 @@ class PeopleController extends YourBusinessController
                     'title',
                     $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
                 );
-                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceLLP'));
+                $guidance->setValue(
+                    $translator->translate('selfserve-app-subSection-your-business-people-guidanceLLP')
+                );
                 break;
             case self::ORG_TYPE_PARTNERSHIP:
                 $table->setVariable(
