@@ -1073,5 +1073,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'apsts_new' => 'Not Yet Submitted',
+    'apsts_consideration' => 'Under Consideration'
     // Potentially unused (Not found with grep)
 );
