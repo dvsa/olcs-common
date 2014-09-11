@@ -202,27 +202,61 @@ class BusinessDetailsController extends YourBusinessController
     }
 
     /**
-     * Conditionally alter the form
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
      *
      * @param Form $form
-     * @return Form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
      */
-    protected function alterForm($form)
+    public static function makeFormAlterations($form, $context, $options = array())
     {
-        $organisationBundle = array(
+        $applicationBundle = array(
             'children' => array(
-                'type' => array(
-                    'properties' => array(
-                        'id'
+                'licence' => array(
+                    'children' => array(
+                        'organisation' => array(
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
                     )
                 )
             )
         );
 
-        $organisation = $this->getOrganisationData($organisationBundle);
+        $application = $context->makeRestCall(
+                'Application',
+                'GET',
+                array('id' => $context->getIdentifier()),
+                $applicationBundle
+        );
 
-        $fieldset = $form->get('data');
+        $organisation=$application['licence']['organisation'];
 
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = array();
+        if ($options['isReview']) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
+            }
+        } else {
+            $fieldsetMap = array(
+                'data' => 'data',
+                'table' => 'table'
+            );
+        }
+
+        $fieldset = $form->get($fieldsetMap['data']);
         switch ($organisation['type']['id']) {
             case self::ORG_TYPE_REGISTERED_COMPANY:
             case self::ORG_TYPE_LLP:
@@ -230,19 +264,36 @@ class BusinessDetailsController extends YourBusinessController
                 break;
             case self::ORG_TYPE_SOLE_TRADER:
                 $fieldset->remove('name')->remove('companyNumber');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
             case self::ORG_TYPE_PARTNERSHIP:
                 $fieldset->remove('companyNumber');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
             case self::ORG_TYPE_OTHER:
                 $fieldset->remove('companyNumber')->remove('tradingNames');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
         }
+
+        return $form;
+    }
+
+    /**
+     * Conditionally alter the form
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function alterForm($form)
+    {
+        $options=array(
+            'isReview' => false
+        );
+        $form=$this->makeFormAlterations($form, $this, $options);
+
 
         return $form;
     }
