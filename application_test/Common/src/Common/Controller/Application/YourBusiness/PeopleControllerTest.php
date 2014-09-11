@@ -466,6 +466,19 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
+        $opDataBundle = array(
+            'properties' => array('id')
+        );
+
+        if ($service == 'OrganisationPerson' && $method == 'GET' && $bundle == $opDataBundle) {
+            return array(
+                'Count' => 0
+            );
+        }
+        if (isset($results['Count']) && !$results['Count']) {
+            return $this->delete();
+        }
+
         $organisationTypeBundle = array(
             'children' => array(
                 'licence' => array(
