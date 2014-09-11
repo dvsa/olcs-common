@@ -234,10 +234,10 @@ class BusinessDetailsController extends YourBusinessController
         );
 
         $application = $context->makeRestCall(
-                'Application',
-                'GET',
-                array('id' => $context->getIdentifier()),
-                $applicationBundle
+            'Application',
+            'GET',
+            array('id' => $context->getIdentifier()),
+            $applicationBundle
         );
 
         $organisation=$application['licence']['organisation'];
@@ -293,7 +293,6 @@ class BusinessDetailsController extends YourBusinessController
             'isReview' => false
         );
         $form=$this->makeFormAlterations($form, $this, $options);
-
 
         return $form;
     }
@@ -555,7 +554,7 @@ class BusinessDetailsController extends YourBusinessController
     }
 
     /**
-     * Get the form table data
+     * Get the form table data for the review stage
      *
      * @param int $id
      * @param string $table

@@ -124,6 +124,31 @@ class AddressesController extends YourBusinessController
         )
     );
 
+
+    public static $addressBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'licenceType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    ),
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Holds the data map
      *
@@ -171,12 +196,18 @@ class AddressesController extends YourBusinessController
     }
 
     /**
-     * Alter form
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
      *
      * @param Form $form
-     * @return Form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
      */
-    protected function alterForm($form)
+    public static function makeFormAlterations($form, $context, $options = array())
     {
         $allowedLicTypes = array(
             self::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -188,17 +219,58 @@ class AddressesController extends YourBusinessController
             self::ORG_TYPE_LLP
         );
 
-        $data = $this->getApplicationData();
+        $data = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $context->getIdentifier()),
+            self::$addressBundle
+        );
+
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = array();
+        if ($options['isReview']) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
+            }
+        } else {
+            $fieldsetMap = array(
+                'establishment' => 'establishment',
+                'establishment_address' => 'establishment_address',
+                'registered_office' => 'registered_office',
+                'registered_office_address' => 'registered_office_address'
+            );
+        }
 
         if (!in_array($data['licence']['licenceType']['id'], $allowedLicTypes)) {
-            $form->remove('establishment');
-            $form->remove('establishment_address');
+            $form->remove($fieldsetMap['establishment']);
+            $form->remove($fieldsetMap['establishment_address']);
         }
 
         if (!in_array($data['licence']['organisation']['type']['id'], $allowedOrgTypes)) {
-            $form->remove('registered_office');
-            $form->remove('registered_office_address');
+            $form->remove($fieldsetMap['registered_office']);
+            $form->remove($fieldsetMap['registered_office_address']);
         }
+
+        if ( $options['isReview'] ) {
+            // Hide the search boxes
+        }
+
+        return $form;
+    }
+
+    /**
+     * Alter form
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function alterForm($form)
+    {
+        $options=array(
+            'isReview' => false
+        );
+        $form=$this->makeFormAlterations($form, $this, $options);
 
         return $form;
     }
@@ -210,31 +282,7 @@ class AddressesController extends YourBusinessController
      */
     protected function getApplicationData()
     {
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'children' => array(
-                        'licenceType' => array(
-                            'properties' => array(
-                                'id'
-                            )
-                        ),
-                        'organisation' => array(
-                            'children' => array(
-                                'type' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        return $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
+        return $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), self::$addressBundle);
     }
 
     /**
