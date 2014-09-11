@@ -75,6 +75,53 @@ class SummaryController extends ReviewDeclarationsController
                             ),
                         ),
                     ),
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'emailAddress'
+                        ),
+                        'children' => array(
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'phoneNumber'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'address' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'addressLine1',
+                                    'addressLine2',
+                                    'addressLine3',
+                                    'addressLine4',
+                                    'postcode',
+                                    'town'
+                                ),
+                                'children' => array(
+                                    'countryCode' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'contactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    )
                 )
             ),
             'documents' => array()
@@ -217,6 +264,13 @@ class SummaryController extends ReviewDeclarationsController
         foreach ($contactList as $contactEntry) {
             $indexedContactList[$contactEntry['contactType']['id']]=$contactEntry['address'];
         }
+        $indexedContactList['ct_corr']=$loadData['licence']['contactDetails'];
+
+        // Flatten out the phone contacts from the only licence contact
+        $phoneList=$loadData['licence']['contactDetails'][0]['phoneContacts'];
+        foreach ($phoneList as $phoneEntry) {
+            $indexedPhoneList[$phoneEntry['phoneContactType']['id']]=$phoneEntry['phoneNumber'];
+        }
 
         $data = array(
             /**
@@ -253,16 +307,21 @@ class SummaryController extends ReviewDeclarationsController
 
             // Contact Details
             'application_your-business_addresses-3' => array(
+                'phone_business' => (isset($indexedPhoneList['phone_t_tel'])?$indexedPhoneList['phone_t_tel']:''),
+                'phone_home' => (isset($indexedPhoneList['phone_t_home'])?$indexedPhoneList['phone_t_home']:''),
+                'phone_mobile' => (isset($indexedPhoneList['phone_t_mobile'])?$indexedPhoneList['phone_t_mobile']:''),
+                'phone_fax' => (isset($indexedPhoneList['phone_t_fax'])?$indexedPhoneList['phone_t_fax']:''),
+                'email' => $loadData['licence']['contactDetails'][0]['emailAddress']
             ),
 
             // Establishment Address
-            'application_your-business_addresses-4' => $this->mapAddressFields(
+            'application_your-business_addresses-5' => $this->mapAddressFields(
                 'ct_est',
                 $indexedContactList
             ),
 
             // Registered Office Address
-            'application_your-business_addresses-5' => $this->mapAddressFields(
+            'application_your-business_addresses-7' => $this->mapAddressFields(
                 'ct_reg',
                 $indexedContactList
             ),

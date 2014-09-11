@@ -68,11 +68,144 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                                 ),
                             ),
                         )
-                    )
-                )
+                    ),
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'emailAddress'
+                        ),
+                        'children' => array(
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'phoneNumber'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'address' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'addressLine1',
+                                    'addressLine2',
+                                    'addressLine3',
+                                    'addressLine4',
+                                    'postcode',
+                                    'town'
+                                ),
+                                'children' => array(
+                                    'countryCode' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'contactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                ),
             ),
             'documents' => array()
         )
+    );
+
+    protected $appDataResponse = array(
+        'prevConviction' => true,
+        'isMaintenanceSuitable' => 'Y',
+        'safetyConfirmation' => 'Y',
+        'psvOperateSmallVhl' => 'Y',
+        'psvSmallVhlNotes' => '',
+        'psvSmallVhlConfirmation' => 'Y',
+        'psvNoSmallVhlConfirmation' => 'Y',
+        'psvLimousines' => 'Y',
+        'psvNoLimousineConfirmation' => 0,
+        'psvOnlyLimousinesConfirmation' => 0,
+        'licence' => array(
+            'id' => 10,
+            'version' => 1,
+            'goodsOrPsv' => array(
+                'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'niFlag' => 0,
+            'licenceType' => array(
+                'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL
+            ),
+            'organisation' => array(
+                'type' => array(
+                    'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
+                ),
+                'companyOrLlpNo' => 12345678,
+                'name' => 'Bob Ltd',
+                'contactDetails' => array(
+                    array(
+                        'contactType' => array(
+                            'id' => 'ct_oc'
+                        ),
+                        'address' => array(
+                            'addressLine1' => 'Shapely Industrial Estate',
+                            'addressLine2' => 'Unit 9',
+                            'addressLine3' => 'Harehills',
+                            'addressLine4' => '',
+                            'town' => 'Leeds',
+                            'postcode' => 'LS9 2FA',
+                            'id' => 21,
+                            'countryCode' => array(
+                                'id' => 'GB'
+                            )
+                        )
+                    )
+                )
+            ),
+            'safetyInsVehicles' => 2,
+            'safetyInsTrailers' => 2,
+            'safetyInsVaries' => 'N',
+            'tachographInsName' => 'Bob',
+            'tachographIns' => array(
+                'id' => 'tach_internal'
+            ),
+            'workshops' => array(),
+            'contactDetails' => array(
+                array(
+                    'contactType' => array(
+                        'id' => 'ct_oc'
+                    ),
+                    'address' => array(
+                        'addressLine1' => 'Shapely Industrial Estate',
+                        'addressLine2' => 'Unit 9',
+                        'addressLine3' => 'Harehills',
+                        'addressLine4' => '',
+                        'town' => 'Leeds',
+                        'postcode' => 'LS9 2FA',
+                        'id' => 21,
+                        'countryCode' => array(
+                            'id' => 'GB'
+                        )
+                    ),
+                    'phoneContacts' => array(
+                        array(
+                            'id' => '1',
+                            'phoneNumber' => '12345',
+                            'phoneContactType' => array('id' => 'phone_t_tel')
+                        )
+                    ),
+                    'emailAddress' => 'blah@blah.com'
+                )
+            )
+        ),
+        'documents' => array()
     );
 
     protected $appIdBundle = array(
@@ -173,7 +306,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                                     'countryCode' => array(
                                         'id' => 'GB'
                                     )
-                                )
+                                ),
+                                'emailAddress' => 'blah@blah.com'
                             )
                         )
                     ),
@@ -184,7 +318,34 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'tachographIns' => array(
                         'id' => 'tach_internal'
                     ),
-                    'workshops' => array()
+                    'workshops' => array(),
+                    'contactDetails' => array(
+                        array(
+                            'contactType' => array(
+                                'id' => 'ct_oc'
+                            ),
+                            'address' => array(
+                                'addressLine1' => 'Shapely Industrial Estate',
+                                'addressLine2' => 'Unit 9',
+                                'addressLine3' => 'Harehills',
+                                'addressLine4' => '',
+                                'town' => 'Leeds',
+                                'postcode' => 'LS9 2FA',
+                                'id' => 21,
+                                'countryCode' => array(
+                                    'id' => 'GB'
+                                )
+                            ),
+                            'phoneContacts' => array(
+                                array(
+                                    'id' => '1',
+                                    'phoneNumber' => '12345',
+                                    'phoneContactType' => array('id' => 'phone_t_tel')
+                                )
+                            ),
+                            'emailAddress' => 'blah@blah.com'
+                        )
+                    )
                 ),
                 'documents' => array()
             ),
@@ -234,13 +395,17 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET'
-            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
+        if ($service == 'Application'
+                && $method == 'GET'
+                && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData();
         }
 
-        if ($service == 'Application' && $method == 'GET' && $bundle == $this->appIdBundle) {
+        if ($service == 'Application'
+                && $method == 'GET'
+                && $bundle == $this->appIdBundle) {
+
             return array(
                 'id' => 1,
                 'version' => 1,
@@ -252,65 +417,10 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
-        if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
-            return array(
-                'prevConviction' => true,
-                'isMaintenanceSuitable' => 'Y',
-                'safetyConfirmation' => 'Y',
-                'psvOperateSmallVhl' => 'Y',
-                'psvSmallVhlNotes' => '',
-                'psvSmallVhlConfirmation' => 'Y',
-                'psvNoSmallVhlConfirmation' => 'Y',
-                'psvLimousines' => 'Y',
-                'psvNoLimousineConfirmation' => 0,
-                'psvOnlyLimousinesConfirmation' => 0,
-                'licence' => array(
-                    'id' => 10,
-                    'version' => 1,
-                    'goodsOrPsv' => array(
-                        'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
-                    ),
-                    'niFlag' => 0,
-                    'licenceType' => array(
-                        'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL
-                    ),
-                    'organisation' => array(
-                        'type' => array(
-                            'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
-                        ),
-                        'companyOrLlpNo' => 12345678,
-                        'name' => 'Bob Ltd',
-                        'contactDetails' => array(
-                            array(
-                                'contactType' => array(
-                                    'id' => 'ct_oc'
-                                ),
-                                'address' => array(
-                                    'addressLine1' => 'Shapely Industrial Estate',
-                                    'addressLine2' => 'Unit 9',
-                                    'addressLine3' => 'Harehills',
-                                    'addressLine4' => '',
-                                    'town' => 'Leeds',
-                                    'postcode' => 'LS9 2FA',
-                                    'id' => 21,
-                                    'countryCode' => array(
-                                        'id' => 'GB'
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    'safetyInsVehicles' => 2,
-                    'safetyInsTrailers' => 2,
-                    'safetyInsVaries' => 'N',
-                    'tachographInsName' => 'Bob',
-                    'tachographIns' => array(
-                        'id' => 'tach_internal'
-                    ),
-                    'workshops' => array(),
-                ),
-                'documents' => array()
-            );
+        if ($service == 'Application'
+                && $method == 'GET'
+                && $bundle == $this->appDataBundle) {
+            return $this->appDataResponse;
         }
 
         if ($service == 'ApplicationCompletion' && $method == 'GET') {
