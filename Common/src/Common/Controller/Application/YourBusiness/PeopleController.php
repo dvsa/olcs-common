@@ -68,7 +68,7 @@ class PeopleController extends YourBusinessController
         $org = $this->getOrganisationData();
 
         $bundle = array(
-            'properties' => null,
+            'properties' => array('position'),
             'children' => array(
                 'person' => array(
                     'properties' => array(
@@ -77,8 +77,7 @@ class PeopleController extends YourBusinessController
                         'forename',
                         'familyName',
                         'birthDate',
-                        'otherName',
-                        'position'
+                        'otherName'
                     )
                 )
             )
@@ -94,7 +93,11 @@ class PeopleController extends YourBusinessController
         $tableData = array();
 
         foreach ($data['Results'] as $result) {
-            $tableData[] = $result['person'];
+            if (is_array($result['person']) && isset($result['position'])) {
+                $tableData[] = array_merge($result['person'], array('position' => $result['position']));
+            } else {
+                $tableData[] = $result['person'];
+            }
         }
 
         return $tableData;
@@ -233,6 +236,9 @@ class PeopleController extends YourBusinessController
      */
     protected function processActionLoad($data)
     {
+        $org = $this->getOrganisationData();
+        $position = $this->getPosition($org['id'], $this->params()->fromRoute('id'));
+        $data['position'] = $position;
         return array('data' => parent::processActionLoad($data));
     }
 
@@ -256,18 +262,55 @@ class PeopleController extends YourBusinessController
     {
         $person = parent::actionSave($data, 'Person');
 
-        // If we are creating a person, we need to link them to the organisation
+        $org = $this->getOrganisationData();
+
+        $needToSaveOrganisationPerson = false;
+        // If we are creating a person, we need to link them to the organisation,
+        // oterhwise we might need to update person's position
         if ($this->getActionName() == 'add') {
-
-            $org = $this->getOrganisationData();
-
             $orgPersonData = array(
                 'organisation' => $org['id'],
-                'person' => $person['id']
+                'person' => $person['id'],
+                'position' => isset($data['position']) ? $data['position'] : ''
             );
-
+            $needToSaveOrganisationPerson = true;
+        } elseif ($this->getActionName() == 'edit' && self::ORG_TYPE_OTHER) {
+            $orgPerson = $this->makeRestCall(
+                'OrganisationPerson',
+                'GET', array('organisation' => $org['id'], 'person' => $data['id'])
+            );
+            $orgPersonData = array(
+                'position' => isset($data['position']) ? $data['position'] : '',
+                'id' => $orgPerson['Results'][0]['id'],
+                'version' => $orgPerson['Results'][0]['version'],
+            );
+            $needToSaveOrganisationPerson = true;
+        }
+        if ($needToSaveOrganisationPerson) {
             parent::actionSave($orgPersonData, 'OrganisationPerson');
         }
+    }
+
+    /**
+     * Get person's position from OrganisatonType
+     *
+     * @param int $orgId
+     * @param int $personId
+     * @return int
+     */
+    protected function getPosition($orgId = null, $personId = null)
+    {
+        $position = '';
+        if ($orgId && $personId) {
+            $orgPerson = $this->makeRestCall(
+                'OrganisationPerson',
+                'GET', array('organisation' => $orgId, 'person' => $personId)
+            );
+            if (is_array($orgPerson) && $orgPerson['Count'] > 0) {
+                $position = $orgPerson['Results'][0]['position'];
+            }
+        }
+        return $position;
     }
 
     /**

@@ -144,7 +144,7 @@ class Module
      * Method to return a list of supported languages, ensures the language cannot be set to one for which
      * we have no translations for
      *
-     * @return Array of locales
+     * @return array of locales
      */
     protected function getSupportedLanguages()
     {

@@ -133,11 +133,11 @@ class SafetyController extends VehicleSafetyController
         $data = $loadData['licence']['workshops'];
 
         // Translate contact details to a flat structure
-        $translatedData=Array();
+        $translatedData = array();
         if ( ! empty($data) ) {
-            $translatedData=Array();
+            $translatedData = array();
             foreach ($data as $row) {
-                $translatedRow=Array(
+                $translatedRow = array(
                     'isExternal' => $row['isExternal'],
                     'id' => $row['id'],
                     'fao' => $row['contactDetails']['fao'],

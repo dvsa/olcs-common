@@ -28,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.no-vehicles' => 'W You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
         restricted licence cannot exceed 2',
@@ -330,10 +331,37 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'W Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'W Text for small vehicles agreement.',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'W (a) The operator will advise the
+        traffic commissioner of the make, model and registration number of vehicles used under that licence, and will
+        advise of any changes. (b) In respect of any vehicle with eight or less passengers seats used under the licence,
+        the operator will provide an audit trail to the traffic commissioner or any enforcement body on request, that
+        demonstrates compliance with PSV requirements. This includes paperwork as to how in respect of any service
+        separate fares were paid and one of the two conditions set out in Question 1 were met. Note this undertaking
+        does not apply when the vehicle is being used under the provisions of Section 79A. (c) Each small vehicle to be
+        used under the licence will have a V5C registration certificate, and the operator must possess and produce, when
+        asked to do so, a document confirming this. (d) Each small vehicle will receive a full safety inspection
+        (maximum every 10 weeks) in premises suitable for the vehicle to ensure that its roadworthiness is maintained.
+        Records of all inspections must be kept in accordance with the Guide to Maintaining Roadworthiness. (e) At no
+        time will the small vehicle carry more than eight passengers. (f) The operator will at all times comply with the
+        legislation in respect of the charging of separate fares and retain 12 months’ evidence of this compliance for
+        each journey. (g) Drivers of small vehicles will carry with them documentary evidence that separate fares have
+        been charged for the current journey. (h) The operator will not use a vehicle that does not meet the ECWVTA
+        standards, British construction and use requirements or the Road Vehicles Approval Regulations 2009 (as
+        amended). (i) The operator or driver will not break the alcohol laws.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'W Small vehicles undertakings',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'W Text for small vehicles
-        undertakings agreement Scotland.',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'W Condition 1: The passengers
+        must have been brought together for the purposes of making the journey by the driver or owner of the vehicle or
+        by some other intermediary who is paid for. In addition each journey must have been advertised to the public, so
+        as to create a genuine opportunity for members of the public to be carried on the particular journey in
+        question, i.e. the journey is not an exclusive hiring for an individual or group, notwithstanding that separate
+        fares are paid. Advertisement at a place of worship, a place of work, a club or other voluntary association for
+        the information of people present at those places, or in periodicals circulated wholly or mainly among such
+        persons, does not count as advertisement to the general public. Finally, in the event that there are multiple
+        destinations, there should be differentiation of fares for the journey based on distance or time. Condition 2:
+        The making of the agreement for the payment of separate fares must have been initiated by the driver or owner of
+        the vehicle, or by some other intermediary who is paid for doing so – not by the passengers themselves, or any
+        other party. In addition, as in condition 1, each journey must be advertised to the public beforehand as being
+        open to passengers to be carried at separate fares.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'W Scottish operators and
         English and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'W Add vehicle',
@@ -568,6 +596,64 @@ return array(
     'impt_paper' => 'W Paperwork',
     'internal' => 'W Internal',
     'internal-external' => 'W Internal/External',
+    'internal-licence-bus' => 'W Bus registration',
+    'internal-licence-bus-details' => 'W Service details',
+    'internal-licence-bus-details-label' => 'W Service details',
+    'internal-licence-bus-details-quality' => 'W Quality schemes',
+    'internal-licence-bus-details-quality-label' => 'W Quality schemes',
+    'internal-licence-bus-details-quality-title' => 'W Quality schemes',
+    'internal-licence-bus-details-service' => 'W Service no. & type',
+    'internal-licence-bus-details-service-label' => 'W Service no. & type',
+    'internal-licence-bus-details-service-title' => 'W Service no. & type',
+    'internal-licence-bus-details-stop' => 'W Stops, manouevres & subsidies',
+    'internal-licence-bus-details-stop-label' => 'W Stops, manouevres & subsidies',
+    'internal-licence-bus-details-stop-title' => 'W Stops, manouevres & subsidies',
+    'internal-licence-bus-details-ta' => 'W TA\'s & authorities',
+    'internal-licence-bus-details-ta-label' => 'W TA\'s & authorities',
+    'internal-licence-bus-details-ta-title' => 'W TA\'s & authorities',
+    'internal-licence-bus-details-title' => 'W Service details',
+    'internal-licence-bus-docs' => 'W Docs & attachments',
+    'internal-licence-bus-docs-label' => 'W Docs & attachments',
+    'internal-licence-bus-docs-placeholder' => 'W Docs & attachments 1',
+    'internal-licence-bus-docs-placeholder-label' => 'W Docs & attachments 1',
+    'internal-licence-bus-docs-placeholder-title' => 'W Docs & attachments 1',
+    'internal-licence-bus-docs-title' => 'W Docs & attachments',
+    'internal-licence-bus-fees' => 'W Fees',
+    'internal-licence-bus-fees-label' => 'W Fees',
+    'internal-licence-bus-fees-placeholder' => 'W Fees 1',
+    'internal-licence-bus-fees-placeholder-label' => 'W Fees 1',
+    'internal-licence-bus-fees-placeholder-title' => 'W Fees 1',
+    'internal-licence-bus-fees-title' => 'W Fees',
+    'internal-licence-bus-processing' => 'W Processing',
+    'internal-licence-bus-processing-label' => 'W Processing',
+    'internal-licence-bus-processing-notes' => 'W Notes',
+    'internal-licence-bus-processing-notes-add' => 'W Add note',
+    'internal-licence-bus-processing-notes-add-label' => 'W Add note',
+    'internal-licence-bus-processing-notes-add-title' => 'W Add note',
+    'internal-licence-bus-processing-notes-label' => 'W Notes',
+    'internal-licence-bus-processing-notes-modify' => 'W Edit note',
+    'internal-licence-bus-processing-notes-modify-label' => 'W Edit note',
+    'internal-licence-bus-processing-notes-modify-title' => 'W Edit note',
+    'internal-licence-bus-processing-notes-title' => 'W Notes',
+    'internal-licence-bus-processing-title' => 'W Processing',
+    'internal-licence-bus-route' => 'W Timetables & routes',
+    'internal-licence-bus-route-label' => 'W Timetables & routes',
+    'internal-licence-bus-route-placeholder' => 'W Timetables & routes 1',
+    'internal-licence-bus-route-placeholder-label' => 'W Timetables & routes 1',
+    'internal-licence-bus-route-placeholder-title' => 'W Timetables & routes 1',
+    'internal-licence-bus-route-title' => 'W Timetables & routes',
+    'internal-licence-bus-short' => 'W Short notice',
+    'internal-licence-bus-short-label' => 'W Short notice',
+    'internal-licence-bus-short-placeholder' => 'W Short notice 1',
+    'internal-licence-bus-short-placeholder-label' => 'W Short notice 1',
+    'internal-licence-bus-short-placeholder-title' => 'W Short notice 1',
+    'internal-licence-bus-short-title' => 'W Short notice',
+    'internal-licence-bus-trc' => 'W TRCs & conditions',
+    'internal-licence-bus-trc-label' => 'W TRCs & conditions',
+    'internal-licence-bus-trc-placeholder' => 'W TRCs & conditions 1',
+    'internal-licence-bus-trc-placeholder-label' => 'W TRCs & conditions 1',
+    'internal-licence-bus-trc-placeholder-title' => 'W TRCs & conditions 1',
+    'internal-licence-bus-trc-title' => 'W TRCs & conditions',
     'internal-licence-details' => 'W Licence details',
     'internal-licence-details-address' => 'W Addresses',
     'internal-licence-details-address-label' => 'W Addresses',
@@ -619,61 +705,6 @@ return array(
     'internal-licence-processing-tasks' => 'W Tasks',
     'internal-licence-processing-tasks-label' => 'W Tasks',
     'internal-licence-processing-tasks-title' => 'W Tasks',
-    'internal-licence-bus' => 'W Bus registration',
-    'internal-licence-bus-details' => 'W Service details',
-    'internal-licence-bus-details-label' => 'W Service details',
-    'internal-licence-bus-details-title' => 'W Service details',
-    'internal-licence-bus-details-service' => 'W Service no. & type',
-    'internal-licence-bus-details-service-label' => 'W Service no. & type',
-    'internal-licence-bus-details-service-title' => 'W Service no. & type',
-    'internal-licence-bus-details-stop' => 'W Stops, manouevres & subsidies',
-    'internal-licence-bus-details-stop-label' => 'W Stops, manouevres & subsidies',
-    'internal-licence-bus-details-stop-title' => 'W Stops, manouevres & subsidies',
-    'internal-licence-bus-details-ta' => 'W TA\'s & authorities',
-    'internal-licence-bus-details-ta-label' => 'W TA\'s & authorities',
-    'internal-licence-bus-details-ta-title' => 'W TA\'s & authorities',
-    'internal-licence-bus-details-quality' => 'W Quality schemes',
-    'internal-licence-bus-details-quality-label' => 'W Quality schemes',
-    'internal-licence-bus-details-quality-title' => 'W Quality schemes',
-    'internal-licence-bus-short' => 'W Short notice',
-    'internal-licence-bus-short-label' => 'W Short notice',
-    'internal-licence-bus-short-title' => 'W Short notice',
-    'internal-licence-bus-short-placeholder' => 'W Short notice 1',
-    'internal-licence-bus-short-placeholder-label' => 'W Short notice 1',
-    'internal-licence-bus-short-placeholder-title' => 'W Short notice 1',
-    'internal-licence-bus-route' => 'W Timetables & routes',
-    'internal-licence-bus-route-label' => 'W Timetables & routes',
-    'internal-licence-bus-route-title' => 'W Timetables & routes',
-    'internal-licence-bus-trc' => 'W TRCs & conditions',
-    'internal-licence-bus-trc-label' => 'W TRCs & conditions',
-    'internal-licence-bus-trc-title' => 'W TRCs & conditions',
-    'internal-licence-bus-trc-placeholder' => 'W TRCs & conditions 1',
-    'internal-licence-bus-trc-placeholder-label' => 'W TRCs & conditions 1',
-    'internal-licence-bus-trc-placeholder-title' => 'W TRCs & conditions 1',
-    'internal-licence-bus-docs' => 'W Docs & attachments',
-    'internal-licence-bus-docs-label' => 'W Docs & attachments',
-    'internal-licence-bus-docs-title' => 'W Docs & attachments',
-    'internal-licence-bus-docs-placeholder' => 'W Docs & attachments 1',
-    'internal-licence-bus-docs-placeholder-label' => 'W Docs & attachments 1',
-    'internal-licence-bus-docs-placeholder-title' => 'W Docs & attachments 1',
-    'internal-licence-bus-processing' => 'W Processing',
-    'internal-licence-bus-processing-label' => 'W Processing',
-    'internal-licence-bus-processing-title' => 'W Processing',
-    'internal-licence-bus-processing-notes' => 'W Notes',
-    'internal-licence-bus-processing-notes-label' => 'W Notes',
-    'internal-licence-bus-processing-notes-title' => 'W Notes',
-    'internal-licence-bus-processing-notes-add' => 'W Add note',
-    'internal-licence-bus-processing-notes-add-label' => 'W Add note',
-    'internal-licence-bus-processing-notes-add-title' => 'W Add note',
-    'internal-licence-bus-processing-notes-modify' => 'W Edit note',
-    'internal-licence-bus-processing-notes-modify-label' => 'W Edit note',
-    'internal-licence-bus-processing-notes-modify-title' => 'W Edit note',
-    'internal-licence-bus-fees' => 'W Fees',
-    'internal-licence-bus-fees-label' => 'W Fees',
-    'internal-licence-bus-fees-title' => 'W Fees',
-    'internal-licence-bus-fees-placeholder' => 'W Fees 1',
-    'internal-licence-bus-fees-placeholder-label' => 'W Fees 1',
-    'internal-licence-bus-fees-placeholder-title' => 'W Fees 1',
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
     'layout-footer-app-name' => 'W OLCS.',
