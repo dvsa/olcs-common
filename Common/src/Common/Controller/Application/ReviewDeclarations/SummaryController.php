@@ -48,6 +48,31 @@ class SummaryController extends ReviewDeclarationsController
                         'children' => array(
                             'type' => array(
                             ),
+                            'contactDetails' => array(
+                                'children' => array(
+                                    'contactType' => array(
+                                        'properties' => array('id')
+                                    ),
+                                    'address' => array(
+                                        'properties' => array(
+                                            'id',
+                                            'addressLine1',
+                                            'addressLine2',
+                                            'addressLine3',
+                                            'addressLine4',
+                                            'town',
+                                            'postcode',
+                                        ),
+                                        'children' => array(
+                                            'countryCode' => array(
+                                                'properties' => array('id')
+                                            )
+                                        )
+                                    ),
+                                    'phoneContacts' => array(
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 )
@@ -183,6 +208,16 @@ class SummaryController extends ReviewDeclarationsController
     {
         $translator = $this->getServiceLocator()->get('translator');
 
+        /*
+         * Flatten out the contacts so they're in a mapped array as used
+         * by the Your Business -> Addresses fieldset.
+         */
+        $contactList=$loadData['licence']['organisation']['contactDetails'];
+        $indexedContactList=array();
+        foreach ($contactList as $contactEntry) {
+            $indexedContactList[$contactEntry['contactType']['id']]=$contactEntry['address'];
+        }
+
         $data = array(
             /**
              * Type of Licence
@@ -208,6 +243,28 @@ class SummaryController extends ReviewDeclarationsController
                 'name' => $loadData['licence']['organisation']['name'],
             ),
             'application_your-business_business-details-2' => array(
+            ),
+
+            // Correspondence Address
+            'application_your-business_addresses-2' => $this->mapAddressFields(
+                'ct_oc',
+                $indexedContactList
+            ),
+
+            // Contact Details
+            'application_your-business_addresses-3' => array(
+            ),
+
+            // Establishment Address
+            'application_your-business_addresses-4' => $this->mapAddressFields(
+                'ct_est',
+                $indexedContactList
+            ),
+
+            // Registered Office Address
+            'application_your-business_addresses-5' => $this->mapAddressFields(
+                'ct_reg',
+                $indexedContactList
             ),
 
             /**
@@ -287,6 +344,27 @@ class SummaryController extends ReviewDeclarationsController
         );
 
         return $data;
+    }
+
+    /**
+     * Helper to map the address fields
+     */
+    protected function mapAddressFields($contactType, $data)
+    {
+        // If the contact type doesn't exist, return a blank
+        if ( ! isset($data[$contactType]) ) {
+            return array();
+        }
+
+        return array(
+             'addressLine1' => $data[$contactType]['addressLine1'],
+             'addressLine2' => $data[$contactType]['addressLine2'],
+             'addressLine3' => $data[$contactType]['addressLine3'],
+             'addressLine4' => $data[$contactType]['addressLine4'],
+             'town' => $data[$contactType]['town'],
+             'postcode' => $data[$contactType]['postcode'],
+             'country' => $data[$contactType]['countryCode']['id']
+         );
     }
 
     /**

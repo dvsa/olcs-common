@@ -41,7 +41,32 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'organisation' => array(
                         'children' => array(
                             'type' => array(
-                            )
+                            ),
+                            'contactDetails' => array(
+                                'children' => array(
+                                    'contactType' => array(
+                                        'properties' => array('id')
+                                    ),
+                                    'address' => array(
+                                        'properties' => array(
+                                            'id',
+                                            'addressLine1',
+                                            'addressLine2',
+                                            'addressLine3',
+                                            'addressLine4',
+                                            'town',
+                                            'postcode',
+                                        ),
+                                        'children' => array(
+                                            'countryCode' => array(
+                                                'properties' => array('id')
+                                            )
+                                        )
+                                    ),
+                                    'phoneContacts' => array(
+                                    ),
+                                ),
+                            ),
                         )
                     )
                 )
@@ -131,7 +156,26 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         ),
                         'companyOrLlpNo' => 12345678,
-                        'name' => 'Bob Ltd'
+                        'name' => 'Bob Ltd',
+                        'contactDetails' => array(
+                            array(
+                                'contactType' => array(
+                                    'id' => 'ct_oc'
+                                ),
+                                'address' => array(
+                                    'addressLine1' => 'Shapely Industrial Estate',
+                                    'addressLine2' => 'Unit 9',
+                                    'addressLine3' => 'Harehills',
+                                    'addressLine4' => '',
+                                    'town' => 'Leeds',
+                                    'postcode' => 'LS9 2FA',
+                                    'id' => 21,
+                                    'countryCode' => array(
+                                        'id' => 'GB'
+                                    )
+                                )
+                            )
+                        )
                     ),
                     'safetyInsVehicles' => 2,
                     'safetyInsTrailers' => 2,
@@ -235,7 +279,26 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         ),
                         'companyOrLlpNo' => 12345678,
-                        'name' => 'Bob Ltd'
+                        'name' => 'Bob Ltd',
+                        'contactDetails' => array(
+                            array(
+                                'contactType' => array(
+                                    'id' => 'ct_oc'
+                                ),
+                                'address' => array(
+                                    'addressLine1' => 'Shapely Industrial Estate',
+                                    'addressLine2' => 'Unit 9',
+                                    'addressLine3' => 'Harehills',
+                                    'addressLine4' => '',
+                                    'town' => 'Leeds',
+                                    'postcode' => 'LS9 2FA',
+                                    'id' => 21,
+                                    'countryCode' => array(
+                                        'id' => 'GB'
+                                    )
+                                )
+                            )
+                        )
                     ),
                     'safetyInsVehicles' => 2,
                     'safetyInsTrailers' => 2,

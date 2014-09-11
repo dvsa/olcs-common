@@ -330,7 +330,6 @@ class AddressesController extends YourBusinessController
     protected function processLoad($data)
     {
         $app = $data;
-
         $data = array(
             'contact' => array(
                 'phone-validator' => true
