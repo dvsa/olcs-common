@@ -214,18 +214,29 @@ class PeopleController extends YourBusinessController
     {
         $id = $this->getActionId();
 
+        $org = $this->getOrganisationData();
+        $results = $this->makeRestCall(
+            'OrganisationPerson',
+            'GET',
+            array('person' => $id, 'organisation' => $org['id']),
+            array('properties' => array('id'))
+        );
+        if (isset($results['Count']) && $results['Count']) {
+            $this->makeRestCall('OrganisationPerson', 'DELETE', array('id' => $results['Results'][0]['id']));
+        }
+
+        // we should delete the person only if it is not connected with any other organisation
         $results = $this->makeRestCall(
             'OrganisationPerson',
             'GET',
             array('person' => $id),
             array('properties' => array('id'))
         );
-
-        if (isset($results['Count']) && $results['Count'] == 1) {
-            $this->makeRestCall('OrganisationPerson', 'DELETE', array('id' => $results['Results'][0]['id']));
+        if (isset($results['Count']) && !$results['Count']) {
+            return $this->delete();
         }
 
-        return $this->delete();
+        return $this->redirectToIndex();
     }
 
     /**
