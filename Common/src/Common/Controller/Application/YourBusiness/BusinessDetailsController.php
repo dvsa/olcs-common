@@ -52,12 +52,69 @@ class BusinessDetailsController extends YourBusinessController
         )
     );
 
+    public static $applicationBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    public static $subCompanyBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'name',
+            'companyNo'
+        )
+    );
+
+
     /**
      * Holds the sub action service
      *
      * @var string
      */
     protected $actionService = 'CompanySubsidiary';
+
+    /**
+     * Company table bundle
+     */
+    protected $actionBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                            'tradingNames' => array(
+                                'properties' => array(
+                                    'id',
+                                    'name'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Holds the actionDataBundle
@@ -439,15 +496,33 @@ class BusinessDetailsController extends YourBusinessController
      */
     protected function getFormTableData($id, $table)
     {
-        $organisation = $this->getOrganisationData(array('id'));
-
-        $data = $this->makeRestCall(
-            $this->getActionService(),
-            'GET',
-            array('organisation' => $organisation['id']),
-            $this->getActionDataBundle()
-        );
+        $data=$this->getSummaryTableData($id,$this,"");
 
         return $data;
+    }
+
+    /**
+     * Get the form table data
+     *
+     * @param int $id
+     * @param string $table
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $organisation = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            self::$applicationBundle
+        );
+
+        $loadData = $context->makeRestCall(
+            'CompanySubsidiary',
+            'GET',
+            array('organisation' => $organisation['id']),
+            self::$subCompanyBundle
+        );
+
+        return $loadData;
     }
 }

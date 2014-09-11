@@ -4,6 +4,7 @@
  * YourBusiness Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\YourBusiness;
 
@@ -13,6 +14,7 @@ use Common\Controller\Application\Application\ApplicationController;
  * YourBusiness Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class YourBusinessController extends ApplicationController
 {
