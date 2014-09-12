@@ -318,13 +318,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Check if a table has an action
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasAction($name)
+    {
+        return isset($this->settings['crud']['actions'][$name]);
+    }
+
+    /**
      * Remove an action
      *
      * @param string $name
      */
     public function removeAction($name)
     {
-        if (isset($this->settings['crud']['actions'][$name])) {
+        if ($this->hasAction($name)) {
             unset($this->settings['crud']['actions'][$name]);
         }
     }
@@ -716,6 +727,19 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         if (!isset($this->getVariables()['action'])) {
             $this->variables['action'] = $this->generateUrl();
         }
+    }
+
+    /**
+     * To string method which calls render
+     *
+     * @NOTE added this for backwards compat, so we can start passing a table object around without affecting the
+     * outcome
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
     }
 
     /**

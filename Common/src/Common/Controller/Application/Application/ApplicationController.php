@@ -25,7 +25,14 @@ class ApplicationController extends AbstractJourneyController
      *
      * @todo need to get the correct ref data keys
      */
-    const APPLICATION_STATUS_NOT_YET_SUBMITTED = 'apsts_new';
+    const APPLICATION_STATUS_NOT_YET_SUBMITTED = 'apsts_not_submitted';
+    const APPLICATION_STATUS_CURTAILED = 'apsts_curtailed';
+    const APPLICATION_STATUS_GRANTED = 'apsts_granted';
+    const APPLICATION_STATUS_NOT_TAKEN_UP = 'apsts_ntu';
+    const APPLICATION_STATUS_REFUSED = 'apsts_refused';
+    const APPLICATION_STATUS_VALID= 'apsts_valid';
+    const APPLICATION_STATUS_WITHDRAWN = 'apsts_withdrawn';
+    const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
 
     /**
      * Journey completion statuses
@@ -63,6 +70,7 @@ class ApplicationController extends AbstractJourneyController
      * @var array
      */
     public static $applicationLicenceDataBundle = array(
+        'properties' => array(),
         'children' => array(
             'licence' => array(
                 'properties' => array(
@@ -101,6 +109,22 @@ class ApplicationController extends AbstractJourneyController
      * @var string
      */
     protected $service = 'Application';
+
+    /**
+     * Application status bundle
+     *
+     * @var array
+     */
+    protected $applicationStatusBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
 
     /**
      * Get licence data service (Used to extend trait)
@@ -378,18 +402,7 @@ class ApplicationController extends AbstractJourneyController
     {
         $id = $this->getIdentifier();
 
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'status' => array(
-                    'properties' => array(
-                        'id'
-                    )
-                )
-            )
-        );
-
-        $results = $this->makeRestCall('Application', 'GET', array('id' => $id), $bundle);
+        $results = $this->makeRestCall('Application', 'GET', $id, $this->applicationStatusBundle);
 
         return $results['status']['id'];
     }

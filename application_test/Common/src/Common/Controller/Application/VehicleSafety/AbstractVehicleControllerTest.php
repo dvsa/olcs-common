@@ -41,6 +41,17 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         )
     );
 
+    protected $applicationStatusBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
     /**
      * Test back button
      */
@@ -61,6 +72,35 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         $this->setUpAction('index');
 
         $response = $this->controller->indexAction();
+
+        $table = $this->getTableFromView($response);
+
+        $this->assertFalse($table->hasAction('reprint'));
+
+        // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test indexAction
+     */
+    public function testIndexActionWithoutReprint()
+    {
+        $this->setUpAction('index');
+
+        $response = array(
+            'status' => array(
+                'id' => ApplicationController::APPLICATION_STATUS_GRANTED
+            )
+        );
+
+        $this->setRestResponse('Application', 'GET', $response, $this->applicationStatusBundle);
+
+        $response = $this->controller->indexAction();
+
+        $table = $this->getTableFromView($response);
+
+        $this->assertTrue($table->hasAction('reprint'));
 
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
@@ -518,6 +558,20 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
     }
 
     /**
+     * Test editAction
+     *
+     * @group reprint
+     */
+    public function testReprintAction()
+    {
+        $this->setUpAction('reprint', 1);
+
+        $response = $this->controller->reprintAction();
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
      * Mock the rest call
      *
      * @param string $service
@@ -531,6 +585,17 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
+        }
+
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == $this->applicationStatusBundle
+        ) {
+
+            return array(
+                'status' => array(
+                    'id' => ApplicationController::APPLICATION_STATUS_NOT_YET_SUBMITTED
+                )
+            );
         }
 
         if ($service == 'ApplicationCompletion' && $method == 'GET') {

@@ -779,7 +779,7 @@ abstract class AbstractSectionController extends AbstractController
 
                 $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
-                $view->setVariable('table', $table->render());
+                $view->setVariable('table', $table);
             }
         }
     }

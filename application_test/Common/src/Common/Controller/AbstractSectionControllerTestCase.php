@@ -164,7 +164,13 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             return $this->restResponses[$service][$method]['default'];
         }
 
-        return $this->mockRestCalls($service, $method, $data, $bundle);
+        $response = $this->mockRestCalls($service, $method, $data, $bundle);
+
+        if ($method == 'GET' && $response === null) {
+            $this->markTestSkipped('Missed a mocked rest call: Service - ' . $service . ' Bundle - ' . print_r($bundle, true));
+        }
+
+        return $response;
     }
 
     /**
@@ -193,6 +199,24 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         }
 
         $this->fail('Trying to get form of a Response object instead of a ViewModel');
+    }
+
+    /**
+     * Get table from response
+     *
+     * @param \Zend\View\Model\ViewModel $view
+     * @return \Zend\Form\Form
+     */
+    protected function getTableFromView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $main = $this->getMainView($view);
+
+            return $main->getVariable('table');
+        }
+
+        $this->fail('Trying to get table of a Response object instead of a ViewModel');
     }
 
     /**

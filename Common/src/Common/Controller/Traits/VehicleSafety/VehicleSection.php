@@ -110,6 +110,19 @@ trait VehicleSection
         )
     );
 
+    protected $ceaseActiveDiscBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'goodsDiscs' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'ceasedDate'
+                )
+            )
+        )
+    );
+
     /**
      * Get bespoke sub actions
      *
@@ -213,20 +226,7 @@ trait VehicleSection
      */
     protected function ceaseActiveDisc($id)
     {
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'goodsDiscs' => array(
-                    'properties' => array(
-                        'id',
-                        'version',
-                        'ceasedDate'
-                    )
-                )
-            )
-        );
-
-        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $bundle);
+        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->ceaseActiveDiscBundle);
 
         if (!empty($results['goodsDiscs'])) {
             $activeDisc = $results['goodsDiscs'][0];
