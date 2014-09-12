@@ -14,8 +14,7 @@ use Common\Form\Elements\Validators\OperatingCentreAuthorisationValidator;
  */
 class NumberOfVehicles extends Text implements InputProviderInterface
 {
-    protected $continueIfEmpty = true;
-    protected $allowEmpty = true;
+    protected $allowEmpty = false;
 
     /**
      * Get a list of validators

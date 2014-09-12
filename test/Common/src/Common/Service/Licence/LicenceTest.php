@@ -56,7 +56,7 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test new licence generation
-     * 
+     *
      * @dataProvider licenceDetailsProvider
      */
     public function testGenerateLicence($trafficArea, $licNo, $goodsOrPsv, $expectedLicence)
@@ -78,17 +78,17 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             // new PSV licence
-            array('K', null, Licence::GOODS_OR_PSV_PSV, 'PK1'),
+            array('K', null, Licence::LICENCE_CATEGORY_PSV, 'PK1'),
             // new Goods licence
-            array('K', null, Licence::GOODS_OR_PSV_GOODS_VEHICLE, 'OK1'),
+            array('K', null, Licence::LICENCE_CATEGORY_GOODS_VEHICLE, 'OK1'),
             // no traffic area - no licence generated
-            array(null, null, Licence::GOODS_OR_PSV_PSV, ''),
+            array(null, null, Licence::LICENCE_CATEGORY_PSV, ''),
             // existing PSV licence - changing traffic area
-            array('K', 'PB1', Licence::GOODS_OR_PSV_PSV, 'PK1'),
+            array('K', 'PB1', Licence::LICENCE_CATEGORY_PSV, 'PK1'),
             // existing Goods licence - changing traffic area
-            array('K', 'OB1', Licence::GOODS_OR_PSV_PSV, 'OK1'),
+            array('K', 'OB1', Licence::LICENCE_CATEGORY_PSV, 'OK1'),
             // existing PSV licence - no traffic area - no licence generated
-            array(null, 'OB1', Licence::GOODS_OR_PSV_PSV, ''),
+            array(null, 'OB1', Licence::LICENCE_CATEGORY_PSV, ''),
             // wrong PSV / GOODS code - no licence generated
             array('K', null, 'A', ''),
             // empty PSV / GOODS code - no licence generated
@@ -103,7 +103,7 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
     {
         $this->trafficArea = 'B';
         $this->licNo = null;
-        $this->goodsOrPsv = Licence::GOODS_OR_PSV_PSV;
+        $this->goodsOrPsv = Licence::LICENCE_CATEGORY_PSV;
         $this->shouldFail = true;
 
         $this->setExpectedException('\Exception');

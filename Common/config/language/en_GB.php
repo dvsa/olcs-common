@@ -28,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.no-vehicles' => 'You must enter at least 1 vehicle',
     'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
@@ -281,8 +282,8 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'Yourself or another employee of the
         business holding the operator\'s licence',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'An external contractor',
-    'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm there are suitable arragements
-        in place to keep the vehicles in a fit and serviceable condition at all times',
+    'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm there are suitable
+        arrangements in place to keep the vehicles in a fit and serviceable condition at all times',
     'application_vehicle-safety_safety.application.suitableMaintenance' => 'Suitable maintenance',
     'application_vehicle-safety_safety.licence.moreFrequentInspections' => 'Are some of the vehicles or trailers
         inspected more frequently than the interval stated above?',
@@ -330,10 +331,37 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => 'Text for small vehicles agreement.',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => '(a) The operator will advise the
+        traffic commissioner of the make, model and registration number of vehicles used under that licence, and will
+        advise of any changes. (b) In respect of any vehicle with eight or less passengers seats used under the licence,
+        the operator will provide an audit trail to the traffic commissioner or any enforcement body on request, that
+        demonstrates compliance with PSV requirements. This includes paperwork as to how in respect of any service
+        separate fares were paid and one of the two conditions set out in Question 1 were met. Note this undertaking
+        does not apply when the vehicle is being used under the provisions of Section 79A. (c) Each small vehicle to be
+        used under the licence will have a V5C registration certificate, and the operator must possess and produce, when
+        asked to do so, a document confirming this. (d) Each small vehicle will receive a full safety inspection
+        (maximum every 10 weeks) in premises suitable for the vehicle to ensure that its roadworthiness is maintained.
+        Records of all inspections must be kept in accordance with the Guide to Maintaining Roadworthiness. (e) At no
+        time will the small vehicle carry more than eight passengers. (f) The operator will at all times comply with the
+        legislation in respect of the charging of separate fares and retain 12 months’ evidence of this compliance for
+        each journey. (g) Drivers of small vehicles will carry with them documentary evidence that separate fares have
+        been charged for the current journey. (h) The operator will not use a vehicle that does not meet the ECWVTA
+        standards, British construction and use requirements or the Road Vehicles Approval Regulations 2009 (as
+        amended). (i) The operator or driver will not break the alcohol laws.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Text for small vehicles
-        undertakings agreement Scotland.',
+    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Condition 1: The passengers
+        must have been brought together for the purposes of making the journey by the driver or owner of the vehicle or
+        by some other intermediary who is paid for. In addition each journey must have been advertised to the public, so
+        as to create a genuine opportunity for members of the public to be carried on the particular journey in
+        question, i.e. the journey is not an exclusive hiring for an individual or group, notwithstanding that separate
+        fares are paid. Advertisement at a place of worship, a place of work, a club or other voluntary association for
+        the information of people present at those places, or in periodicals circulated wholly or mainly among such
+        persons, does not count as advertisement to the general public. Finally, in the event that there are multiple
+        destinations, there should be differentiation of fares for the journey based on distance or time. Condition 2:
+        The making of the agreement for the payment of separate fares must have been initiated by the driver or owner of
+        the vehicle, or by some other intermediary who is paid for doing so – not by the passengers themselves, or any
+        other party. In addition, as in condition 1, each journey must be advertised to the public beforehand as being
+        open to passengers to be carried at separate fares.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'Add vehicle',
@@ -342,30 +370,45 @@ return array(
     'application_vehicle-safety_vehicle-psv-large-edit' => 'Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-large.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-large.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-large.table.title' => '17 or more passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-large.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-medium-add' => 'Add medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium-edit' => 'Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-medium.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-medium.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '9 - 16 passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-medium.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-small-add' => 'Add small vehicle',
     'application_vehicle-safety_vehicle-psv-small-edit' => 'Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
-    'application_vehicle-safety_vehicle-psv-small.table.make' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
+    'application_vehicle-safety_vehicle-psv-small.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle-psv-small.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle-psv-small.table.title' => 'Small vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type
         vehicle?',
-    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration number',
+    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.deletedDate' => 'Removed date',
+    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.discNo' => 'Disc no',
+    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.receivedDate' => 'Received date',
+    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
         vehicles?',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate' => 'Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => 'Disc no',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => 'Received date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
+    'application_vehicle-safety_vehicle.table.disc-no' => 'Disc no',
+    'application_vehicle-safety_vehicle.table.removed' => 'Removed',
+    'application_vehicle-safety_vehicle.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
@@ -529,6 +572,9 @@ return array(
     'entity-details' => 'Entity details',
     'entity-type' => 'Entity type',
     'environmental' => 'Environmental',
+    'error.vehicle.vrm-exists-on-application' => 'A vehicle with this registration number already exists on this
+        application',
+    'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
     'external' => 'External',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
@@ -549,6 +595,67 @@ return array(
     'impt_paper' => 'Paperwork',
     'internal' => 'Internal',
     'internal-external' => 'Internal/External',
+    'internal-licence-bus' => 'Bus registration',
+    'internal-licence-bus.data.status' => 'Status',
+    'internal-licence-bus.submit.filter' => 'Filter',
+    'internal-licence-bus-list' => 'Bus registration list',
+    'internal-licence-bus-details' => 'Service details',
+    'internal-licence-bus-details-label' => 'Service details',
+    'internal-licence-bus-details-quality' => 'Quality schemes',
+    'internal-licence-bus-details-quality-label' => 'Quality schemes',
+    'internal-licence-bus-details-quality-title' => 'Quality schemes',
+    'internal-licence-bus-details-service' => 'Service no. & type',
+    'internal-licence-bus-details-service-label' => 'Service no. & type',
+    'internal-licence-bus-details-service-title' => 'Service no. & type',
+    'internal-licence-bus-details-stop' => 'Stops, manouevres & subsidies',
+    'internal-licence-bus-details-stop-label' => 'Stops, manouevres & subsidies',
+    'internal-licence-bus-details-stop-title' => 'Stops, manouevres & subsidies',
+    'internal-licence-bus-details-ta' => 'TA\'s & authorities',
+    'internal-licence-bus-details-ta-label' => 'TA\'s & authorities',
+    'internal-licence-bus-details-ta-title' => 'TA\'s & authorities',
+    'internal-licence-bus-details-title' => 'Service details',
+    'internal-licence-bus-docs' => 'Docs & attachments',
+    'internal-licence-bus-docs-label' => 'Docs & attachments',
+    'internal-licence-bus-docs-placeholder' => 'Docs & attachments 1',
+    'internal-licence-bus-docs-placeholder-label' => 'Docs & attachments 1',
+    'internal-licence-bus-docs-placeholder-title' => 'Docs & attachments 1',
+    'internal-licence-bus-docs-title' => 'Docs & attachments',
+    'internal-licence-bus-fees' => 'Fees',
+    'internal-licence-bus-fees-label' => 'Fees',
+    'internal-licence-bus-fees-placeholder' => 'Fees 1',
+    'internal-licence-bus-fees-placeholder-label' => 'Fees 1',
+    'internal-licence-bus-fees-placeholder-title' => 'Fees 1',
+    'internal-licence-bus-fees-title' => 'Fees',
+    'internal-licence-bus-processing' => 'Processing',
+    'internal-licence-bus-processing-label' => 'Processing',
+    'internal-licence-bus-processing-notes' => 'Notes',
+    'internal-licence-bus-processing-notes-add' => 'Add note',
+    'internal-licence-bus-processing-notes-add-label' => 'Add note',
+    'internal-licence-bus-processing-notes-add-title' => 'Add note',
+    'internal-licence-bus-processing-notes-label' => 'Notes',
+    'internal-licence-bus-processing-notes-modify' => 'Edit note',
+    'internal-licence-bus-processing-notes-modify-label' => 'Edit note',
+    'internal-licence-bus-processing-notes-modify-title' => 'Edit note',
+    'internal-licence-bus-processing-notes-title' => 'Notes',
+    'internal-licence-bus-processing-title' => 'Processing',
+    'internal-licence-bus-route' => 'Timetables & routes',
+    'internal-licence-bus-route-label' => 'Timetables & routes',
+    'internal-licence-bus-route-placeholder' => 'Timetables & routes 1',
+    'internal-licence-bus-route-placeholder-label' => 'Timetables & routes 1',
+    'internal-licence-bus-route-placeholder-title' => 'Timetables & routes 1',
+    'internal-licence-bus-route-title' => 'Timetables & routes',
+    'internal-licence-bus-short' => 'Short notice',
+    'internal-licence-bus-short-label' => 'Short notice',
+    'internal-licence-bus-short-placeholder' => 'Short notice 1',
+    'internal-licence-bus-short-placeholder-label' => 'Short notice 1',
+    'internal-licence-bus-short-placeholder-title' => 'Short notice 1',
+    'internal-licence-bus-short-title' => 'Short notice',
+    'internal-licence-bus-trc' => 'TRCs & conditions',
+    'internal-licence-bus-trc-label' => 'TRCs & conditions',
+    'internal-licence-bus-trc-placeholder' => 'TRCs & conditions 1',
+    'internal-licence-bus-trc-placeholder-label' => 'TRCs & conditions 1',
+    'internal-licence-bus-trc-placeholder-title' => 'TRCs & conditions 1',
+    'internal-licence-bus-trc-title' => 'TRCs & conditions',
     'internal-licence-details' => 'Licence details',
     'internal-licence-details-address' => 'Addresses',
     'internal-licence-details-address-label' => 'Addresses',
@@ -584,6 +691,9 @@ return array(
     'internal-licence-details-vehicle' => 'Vehicles',
     'internal-licence-details-vehicle-label' => 'Vehicles',
     'internal-licence-details-vehicle-title' => 'Vehicles',
+    'internal-licence-details-vehicle_psv' => 'Vehicles',
+    'internal-licence-details-vehicle_psv-label' => 'Vehicles',
+    'internal-licence-details-vehicle_psv-title' => 'Vehicles',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
     'internal-licence-processing-notes-add' => 'Add note',
@@ -809,7 +919,7 @@ return array(
     'select-type' => 'Select type',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'Back',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'Continue',
-    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'DOC',
+    'selfserve-app-subSection-previous-history-criminal-conviction-columnDate' => 'Conviction date',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnName' => 'Name',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnNameOfCourt' => 'Name of court',
     'selfserve-app-subSection-previous-history-criminal-conviction-columnOffence' => 'Offence',
@@ -949,6 +1059,13 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'vehicle-and-safety' => 'Vehicle & safety',
+    'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
+        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. Please
+        confirm you would like to continue adding this vehicle',
+    'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
+        Please confirm you would like to continue adding this vehicle',
     'vehicle-count' => '%s vehicles',
     'vehicles' => 'Vehicles',
     'vehicles-in-posession' => 'Vehicles in possession',
@@ -958,5 +1075,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'apsts_new' => 'Not Yet Submitted',
+    'apsts_consideration' => 'Under Consideration'
     // Potentially unused (Not found with grep)
 );

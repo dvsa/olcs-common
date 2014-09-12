@@ -86,7 +86,10 @@ return array(
                 $licenceService->setServiceLocator($serviceManager);
                 return $licenceService;
             },
-            'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory'
+            'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
+            'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
+                return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
+            }
         )
     ),
     'file_uploader' => array(
@@ -126,22 +129,6 @@ return array(
         ],
         'aliases' => [
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
-        ]
-    ],
-    'validators' => [
-        'invokables' => [
-            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf'
-        ],
-        'aliases' => [
-            'ValidateIf' => 'Common\Validator\ValidateIf'
-        ]
-    ],
-    'filters' => [
-        'invokables' => [
-            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
-        ],
-        'aliases' => [
-            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
         ]
     ],
     'tables' => array(

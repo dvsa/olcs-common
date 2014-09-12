@@ -15,7 +15,6 @@ use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Button;
 use Zend\Form\ElementInterface;
 use Common\Form\Elements\InputFilters\SingleCheckbox;
-use Common\Form\View\Helper\Traits as AlphaGovTraits;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\InputFilters\NoRender;
 use Common\Form\Elements\InputFilters\ActionButton;
@@ -29,8 +28,6 @@ use Common\Form\Elements\InputFilters\ActionLink;
  */
 class FormRow extends ZendFormRow
 {
-
-    use AlphaGovTraits\Logger;
 
     /**
      * The form row output format.
@@ -49,8 +46,6 @@ class FormRow extends ZendFormRow
      */
     public function render(ZendElementInterface $element)
     {
-        $this->log('Rendering Form Row', LOG_INFO);
-
         //$oldRenderErrors = $this->getRenderErrors();
         $oldRenderErrors = true;
         if ($oldRenderErrors) {

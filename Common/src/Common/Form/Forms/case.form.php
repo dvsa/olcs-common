@@ -60,24 +60,39 @@ return [
                         'type' => 'text',
                         'label' => 'ECMS number',
                         'class' => 'medium'
-                    ]
+                    ],
+                    'licence' => [
+                        'type' => 'hidden'
+                    ],
+                    'id' => [
+                        'type' => 'hidden'
+                    ],
+                    'version' => [
+                        'type' => 'hidden'
+                    ],
                 ]
-            ]
-        ],
-        'elements' => [
-            'licence' => [
-                'type' => 'hidden'
             ],
-            'id' => [
-                'type' => 'hidden'
-            ],
-            'version' => [
-                'type' => 'hidden'
-            ],
-            'submit' => [
-                'type' => 'submit',
-                'label' => 'Save',
-                'class' => 'action--primary large'
+            [
+                'name' => 'form-actions',
+                'attributes' => [
+                    'class' => 'actions-container'
+                ],
+                'elements' => [
+                    'submit' => [
+                        'enable' => true,
+                        'type' => 'submit',
+                        'filters' => '\Common\Form\Elements\InputFilters\ActionButton',
+                        'label' => 'Save',
+                        'class' => 'action--primary large'
+                    ],
+                    'cancel' => array(
+                        'enable' => true,
+                        'type' => 'submit',
+                        'filters' => '\Common\Form\Elements\InputFilters\ActionButton',
+                        'label' => 'Cancel',
+                        'class' => 'action--secondary large'
+                    )
+                ]
             ]
         ]
     ]

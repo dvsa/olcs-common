@@ -91,16 +91,19 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
             return null;
         }
 
-        if (isset($this->restResponses[$service][$method])) {
+        if (!empty($bundle)) {
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
+        }
 
-            if (isset($this->restResponses[$service][$method]['bundle'])) {
+        if (isset($this->restResponses[$service][$method][$which])) {
 
-                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
-                    return $this->restResponses[$service][$method]['response'];
-                }
-            } else {
-                return $this->restResponses[$service][$method];
-            }
+            return $this->restResponses[$service][$method][$which];
+
+        } elseif (isset($this->restResponses[$service][$method]['default'])) {
+
+            return $this->restResponses[$service][$method]['default'];
         }
 
         $headerBundle = array(

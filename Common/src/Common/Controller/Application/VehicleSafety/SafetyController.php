@@ -4,10 +4,11 @@
  * Safety Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\VehicleSafety;
 
-use Common\Controller\Traits\SafetySection;
+use Common\Controller\Traits\VehicleSafety\SafetySection;
 
 /**
  * Safety Controller
@@ -16,6 +17,7 @@ use Common\Controller\Traits\SafetySection;
  *  in the licence section
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SafetyController extends VehicleSafetyController
 {
@@ -54,6 +56,19 @@ class SafetyController extends VehicleSafetyController
                     'tachographIns' => array(
                         'properties' => array('id')
                     ),
+                )
+            )
+        )
+    );
+
+    public static $tableBundle = array(
+        'properties' => array(
+            'id',
+            'version'
+        ),
+        'children' => array(
+            'licence' => array(
+                'children' => array(
                     'workshops' => array(
                         'properties' => array(
                             'id',
@@ -90,18 +105,55 @@ class SafetyController extends VehicleSafetyController
     );
 
     /**
+     * Get the form table data - in this case simply invoke the same logic
+     * as when rendered on a summary page, but provide the controller for context
+     *
+     * @return array
+     */
+    protected function getFormTableData($id, $table)
+    {
+        return static::getSummaryTableData($id, $this, $table);
+    }
+
+    /**
      * Get the form table data
      *
      * @param int $id
      * @param string $table
      */
-    protected function getFormTableData($id, $table)
+    public static function getSummaryTableData($applicationId, $context, $tableName)
     {
-        $loadData = $this->load($id);
+        $loadData = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            self::$tableBundle
+        );
 
         $data = $loadData['licence']['workshops'];
 
-        return $this->doGetFormTableData($data);
+        // Translate contact details to a flat structure
+        $translatedData = array();
+        if ( ! empty($data) ) {
+            $translatedData = array();
+            foreach ($data as $row) {
+                $translatedRow = array(
+                    'isExternal' => $row['isExternal'],
+                    'id' => $row['id'],
+                    'fao' => $row['contactDetails']['fao'],
+                    'addressLine1' => $row['contactDetails']['address']['addressLine1'],
+                    'addressLine2' => $row['contactDetails']['address']['addressLine2'],
+                    'addressLine3' => $row['contactDetails']['address']['addressLine3'],
+                    'addressLine4' => $row['contactDetails']['address']['addressLine4'],
+                    'town' => $row['contactDetails']['address']['town'],
+                    'postcode' => $row['contactDetails']['address']['postcode'],
+                    'countryCode' => array('id' => $row['contactDetails']['address']['countryCode']['id'])
+                );
+                $translatedData[]=$translatedRow;
+            }
+        }
+
+        return $translatedData;
     }
 
     /**
@@ -114,6 +166,53 @@ class SafetyController extends VehicleSafetyController
     {
         return $this->doAlterForm($form, $this->hideInternalFormElements, $this->isPsv());
     }
+
+    /**
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
+     *
+     * @param Form $form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
+     */
+    public static function makeFormAlterations($form, $context, $options = array())
+    {
+        // We aren't sure what fieldset our alterations will be in, as helpfully
+        // they've all been renamed, so iterate through to find the unmapped
+        // fieldset names
+        foreach ($options['fieldsets'] as $fieldsetName) {
+            $fieldset=$form->get($fieldsetName);
+            if ( $fieldset->getAttribute('unmappedName') ) {
+                switch($fieldset->getAttribute('unmappedName')) {
+                    case 'licence':
+                        if ( $options['isPsv'] ) {
+                            $fieldset->remove('safetyInsTrailers');
+                        }
+                        break;
+
+                    case 'application':
+                        $fieldset->remove('isMaintenanceSuitable');
+                        break;
+
+                    case 'table':
+                        $table = $fieldset->get('table')->getTable();
+                        $emptyMessage = $table->getVariable('empty_message');
+                        if (substr($emptyMessage, -4) !== '-psv') {
+                            $table->setVariable('empty_message', $emptyMessage . '-psv');
+                        }
+                        $fieldset->get('table')->setTable($table);
+                        break;
+                }
+            }
+        }
+
+        return $form;
+    }
+
 
     /**
      * Save the form data

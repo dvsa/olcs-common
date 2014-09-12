@@ -302,6 +302,16 @@ abstract class AbstractController extends FormActionController
                     $routeAction = $table . '-' . $action;
                 }
 
+                // Incase we want to try and hi-jack the crud action check
+                if (method_exists($this, 'checkForAlternativeCrudAction')) {
+                    $response = $this->checkForAlternativeCrudAction($routeAction);
+
+                    if ($response instanceof Response) {
+                        $this->setCaughtResponse($response);
+                        return;
+                    }
+                }
+
                 if ($action == 'add') {
                     $this->setCaughtResponse(
                         $this->redirectToRoute(null, array('action' => $routeAction), array(), true)
