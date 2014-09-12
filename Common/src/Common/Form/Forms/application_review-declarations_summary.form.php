@@ -20,9 +20,8 @@ $groups = array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',
-            // this should be implemented in another story
-            //'application_previous-history_licence-history',
-            'application_previous-history_convictions-penalties'
+            'application_previous-history_licence-history',
+            'application_previous-history_convictions-penalties',
         )
     ),
     array(

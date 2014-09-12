@@ -60,7 +60,8 @@ class SummaryController extends ReviewDeclarationsController
         // controller => table config
         'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
         'VehicleSafety/Safety' => 'safety-inspection-providers',
-        'OperatingCentres/Authorisation' => 'authorisation_in_form'
+        'OperatingCentres/Authorisation' => 'authorisation_in_form',
+        'PreviousHistory/LicenceHistory' => 'previous_licences_current'
     );
 
     /**
