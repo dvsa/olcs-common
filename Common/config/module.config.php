@@ -86,6 +86,7 @@ return array(
                 $licenceService->setServiceLocator($serviceManager);
                 return $licenceService;
             },
+            'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory'
         )
     ),
     'file_uploader' => array(
