@@ -361,9 +361,7 @@ class AuthorisationController extends OperatingCentresController
                 $bundle
             );
 
-            if (is_array($application) && array_key_exists('licence', $application) &&
-                is_array($application['licence']) &&
-                array_key_exists('trafficArea', $application['licence'])) {
+            if ( isset($application['licence']['trafficArea']) ) {
                 $form
                     ->get($fieldsetMap['dataTrafficArea'])
                     ->get('trafficAreaInfoNameExists')
