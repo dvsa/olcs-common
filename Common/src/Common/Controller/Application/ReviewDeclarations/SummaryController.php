@@ -293,8 +293,10 @@ class SummaryController extends ReviewDeclarationsController
                 'type' => $loadData['licence']['organisation']['type']['id']
             ),
             'application_your-business_business-details-1' => array(
-                'companyNumber' => $loadData['licence']['organisation']['companyOrLlpNo'],
-                'name' => $loadData['licence']['organisation']['name'],
+                'companyNumber' => array(
+                    'company_number' => $loadData['licence']['organisation']['companyOrLlpNo']
+                ),
+                'name' => $loadData['licence']['organisation']['name']
             ),
             'application_your-business_business-details-2' => array(
             ),
