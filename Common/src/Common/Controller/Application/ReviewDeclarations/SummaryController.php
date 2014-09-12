@@ -309,7 +309,7 @@ class SummaryController extends ReviewDeclarationsController
                     'company_number' => $loadData['licence']['organisation']['companyOrLlpNo']
                 ),
                 'tradingNames' => array(
-                    'trading_name' => $loadData['licence']['organisation']['tradingNames']
+                    'trading_name' => $indexedTradingNamesList
                 ),
                 'name' => $loadData['licence']['organisation']['name']
             ),

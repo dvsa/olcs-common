@@ -343,7 +343,7 @@ class BusinessDetailsController extends YourBusinessController
         if (isset($data['data']['type']['id'])) {
             $data['data']['type'] = $data['data']['type']['id'];
         }
-
+        
         return $data;
     }
 
