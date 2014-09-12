@@ -60,6 +60,7 @@ class SummaryController extends ReviewDeclarationsController
         // controller => table config
         'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
         'VehicleSafety/Safety' => 'safety-inspection-providers',
+        'OperatingCentres/Authorisation' => 'authorisation_in_form'
     );
 
     /**
@@ -189,6 +190,21 @@ class SummaryController extends ReviewDeclarationsController
                 'licenceType' => $loadData['licence']['licenceType']['id']
             ),
 
+            /**
+             * OC&A
+             */
+            'application_operating-centres_authorisation-1' => array(),
+            'application_operating-centres_authorisation-3' => $this->mapApplicationVariables(
+                array(
+                    'totAuthSmallVehicles',
+                    'totAuthMediumVehicles',
+                    'totAuthLargeVehicles',
+                    'totCommunityLicences',
+                    'totAuthVehicles',
+                    'totAuthTrailers'
+                ),
+                $loadData
+            ),
             /**
              * Previous History
              */
