@@ -13,7 +13,6 @@ $groups = array(
     array(
         'title' => 'Your Business',
         'forms' => array(
-            'application_your-business_business-type',
             'application_your-business_business-details',
             'application_your-business_addresses',
             'application_your-business_people'
