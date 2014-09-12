@@ -1304,7 +1304,7 @@ class TableBuilder
      */
     private function formatActionContent($actions)
     {
-        if (count($actions) > 3) {
+        if (count($actions) > 4) {
             return $this->renderDropdownActions($actions);
         }
 
