@@ -167,7 +167,7 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         $response = $this->mockRestCalls($service, $method, $data, $bundle);
 
         if ($method == 'GET' && $response === null) {
-            $this->markTestSkipped('Missed a mocked rest call: Service - ' . $service . ' Bundle - ' . print_r($bundle, true));
+            $this->fail('Missed a mocked rest call: Service - ' . $service . ' Bundle - ' . print_r($bundle, true));
         }
 
         return $response;
