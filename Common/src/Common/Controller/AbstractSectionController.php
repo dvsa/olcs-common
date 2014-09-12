@@ -304,6 +304,12 @@ abstract class AbstractSectionController extends AbstractController
     protected function getAlterFormMethod()
     {
         if ($this->isAction()) {
+
+            if ($this->isBespokeAction()) {
+                $action = $this->getActionFromFullActionName();
+                return 'alter' . ucfirst($action) . 'Form';
+            }
+
             return $this->alterActionFormMethod;
         }
 
@@ -484,7 +490,11 @@ abstract class AbstractSectionController extends AbstractController
 
         $alterMethod = $this->getAlterFormMethod();
 
-        return $this->$alterMethod($form);
+        if (method_exists($this, $alterMethod)) {
+            return $this->$alterMethod($form);
+        }
+
+        return $form;
     }
 
     /**

@@ -188,7 +188,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $params = array_merge($params, array('action' => $action));
 
-        $action = $this->getActionFromFullActionName();
+        $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
 
