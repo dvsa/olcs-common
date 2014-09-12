@@ -167,7 +167,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
         $action = $this->getCrudActionFromPost();
 
@@ -177,13 +177,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $action = strtolower($action);
 
-        // Incase we want to try and hi-jack the crud action check
-        if (method_exists($this, 'checkForAlternativeCrudAction')) {
-            $response = $this->checkForAlternativeCrudAction($action);
+        $response = $this->checkForAlternativeCrudAction($action);
 
-            if ($response instanceof Response) {
-                return $response;
-            }
+        if ($response instanceof Response) {
+            return $response;
         }
 
         $params = array_merge($params, array('action' => $action));
@@ -204,6 +201,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $this->redirect()->toRoute($route, $params, [], true);
+    }
+
+    /**
+     * Do nothing, this method can be overridden to hijack the crud action check
+     *
+     * @param string $action
+     */
+    protected function checkForAlternativeCrudAction($action)
+    {
+
     }
 
     /**

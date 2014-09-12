@@ -112,66 +112,6 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array_merge($routeParams, $queryParams), $sut->getAllParams());
     }
 
-    /**
-     * testCheckForCrudActionReturnsFalse
-     */
-    public function testCheckForCrudActionReturnsFalse()
-    {
-        $paramsMock = $this->getMock('stdClass', ['fromPost']);
-        $paramsMock->expects($this->at(0))
-                   ->method('fromPost')
-                   ->with('action')
-                   ->will($this->returnValue(''));
-
-        $sut = $this->getNewSut(['params']);
-        $sut->expects($this->atLeastOnce())
-            ->method('params')
-            ->will($this->returnValue($paramsMock));
-
-        $this->assertFalse($sut->checkForCrudAction());
-    }
-
-    /**
-     * @dataProvider dpCheckForCrudAction
-     */
-    public function testCheckForCrudAction($id, $route, $params, $return)
-    {
-        $paramsMock = $this->getMock('stdClass', ['fromPost']);
-        $paramsMock->expects($this->at(0))
-                   ->method('fromPost')
-                   ->with('action')
-                   ->will($this->returnValue('edit'));
-        $paramsMock->expects($this->at(1))
-                   ->method('fromPost')
-                   ->with('id')
-                   ->will($this->returnValue($id));
-
-        $redirectMock = $this->getMock('stdClass', ['toRoute']);
-        $redirectMock->expects($this->any())
-                     ->method('toRoute')
-                     ->will($this->returnValue($return));
-
-        $sut = $this->getNewSut(['redirect', 'params']);
-        $sut->expects($this->once())
-            ->method('redirect')
-            ->will($this->returnValue($redirectMock));
-        $sut->expects($this->atLeastOnce())
-            ->method('params')
-            ->will($this->returnValue($paramsMock));
-
-        $this->assertSame($return, $sut->checkForCrudAction($route, $params));
-    }
-
-    public function dpCheckForCrudAction()
-    {
-        $data = [
-            ['1', 'yoyo', ['foo' => 'bar'], 'redirect-return-value'],
-            ['', 'yoyo', ['foo' => 'bar'], false]
-        ];
-
-        return $data;
-    }
-
     public function testBuildTable()
     {
         $table = 'hello';
