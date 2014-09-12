@@ -124,6 +124,23 @@ trait VehicleSection
     );
 
     /**
+     * Disc pending bundle
+     */
+    protected $discPendingBundle = array(
+        'properties' => array(
+            'id',
+            'specifiedDate',
+            'deletedDate'
+        ),
+        'children' => array(
+            'goodsDiscs' => array(
+                'ceasedDate',
+                'discNo'
+            )
+        )
+    );
+
+    /**
      * Get bespoke sub actions
      *
      * @return array
@@ -346,10 +363,6 @@ trait VehicleSection
      */
     protected function processActionLoad($data)
     {
-        if ($this->getActionName() == 'reprint') {
-            return array();
-        }
-
         if ($this->getActionName() !== 'add') {
             $licenceVehicle = $data;
             unset($licenceVehicle['vehicle']);
@@ -440,21 +453,7 @@ trait VehicleSection
      */
     protected function isDiscPendingForLicenceVehicle($id)
     {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'specifiedDate',
-                'deletedDate'
-            ),
-            'children' => array(
-                'goodsDiscs' => array(
-                    'ceasedDate',
-                    'discNo'
-                )
-            )
-        );
-
-        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $bundle);
+        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
 
         $discNo = $this->getCurrentDiscNo($results);
 

@@ -192,10 +192,6 @@ trait GenericVehicleSection
     {
         $action = $this->getActionFromFullActionName();
 
-        if ($action == 'reprint') {
-            return $form;
-        }
-
         $dataFieldset = $form->get('licence-vehicle');
 
         $this->disableDateElement($dataFieldset->get('specifiedDate'));

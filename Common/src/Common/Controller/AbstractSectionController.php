@@ -233,12 +233,6 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function getFormCallback()
     {
-        if ($this->isBespokeAction()) {
-            $action = $this->getActionFromFullActionName();
-
-            return $action . 'Save';
-        }
-
         if ($this->isAction()) {
 
             return $this->actionFormCallback;
@@ -565,13 +559,21 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function processActionSave($data, $form)
     {
-        $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+        if ($this->isBespokeAction()) {
+            $action = $this->getActionFromFullActionName();
+
+            $method = $action . 'Save';
+        } else {
+            $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+
+            $method = 'actionSave';
+        }
 
         if ($this->shouldSkipActionSave($data, $form)) {
             return;
         }
 
-        $response = $this->actionSave($data);
+        $response = $this->$method($data);
 
         if ($response instanceof Response || $response instanceof ViewModel) {
             $this->setCaughtResponse($response);
