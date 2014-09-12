@@ -128,6 +128,14 @@ return array(
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
         ]
     ],
+    'filters' => [
+        'invokables' => [
+            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+        ],
+        'aliases' => [
+            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+        ]
+    ],
     'tables' => array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
