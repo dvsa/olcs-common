@@ -142,6 +142,7 @@ class SummaryController extends ReviewDeclarationsController
         'YourBusiness/People' => 'application_your-business_people_in_form',
         'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
         'VehicleSafety/Safety' => 'safety-inspection-providers',
+        'OperatingCentres/Authorisation' => 'authorisation_in_form'
     );
 
     /**
@@ -343,6 +344,22 @@ class SummaryController extends ReviewDeclarationsController
                 $indexedContactList
             ),
 
+            /**
+             * OC&A
+             */
+            'application_operating-centres_authorisation-1' => array(),
+            'application_operating-centres_authorisation-3' => $this->mapApplicationVariables(
+                array(
+                    'totAuthSmallVehicles',
+                    'totAuthMediumVehicles',
+                    'totAuthLargeVehicles',
+                    'totCommunityLicences',
+                    'totAuthVehicles',
+                    'totAuthTrailers'
+                ),
+                $loadData
+            ),
+            
             /**
              * Previous History
              */

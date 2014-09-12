@@ -19,6 +19,12 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Operating Centres',
+        'forms' => array(
+            'application_operating-centres_authorisation'
+        )
+    ),
+    array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',

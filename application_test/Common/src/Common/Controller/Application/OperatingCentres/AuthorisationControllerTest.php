@@ -1136,7 +1136,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                 'permission',
                 'adPlaced',
                 'adPlacedIn',
-                'adPlacedDate'
+                'adPlacedDate',
             ),
             'children' => array(
                 'operatingCentre' => array(
@@ -1158,7 +1158,9 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                             ),
                             'children' => array(
                                 'countryCode' => array(
-                                    'properties' => array('id')
+                                    'properties' => array(
+                                        'id'
+                                    )
                                 )
                             )
                         ),
@@ -1172,21 +1174,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                             )
                         )
                     )
-                ),
-                'application' => array(
-                    'properties' => null,
-                    'children' => array(
-                        'licence' => array(
-                            'properties' => null,
-                            'children' => array(
-                                'trafficArea' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        )
-                    )
                 )
             )
         );
@@ -1194,7 +1181,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         if ($service == 'ApplicationOperatingCentre'
             && $method == 'GET'
             && $bundle === $actionDataBundle && isset($data['id'])) {
-
             return array(
                 'id' => 1,
                 'version' => 2,
@@ -1279,7 +1265,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                 'totAuthLargeVehicles',
                 'totCommunityLicences',
                 'totAuthVehicles',
-                'totAuthTrailers'
+                'totAuthTrailers',
             ),
             'children' => array(
                 'licence' => array(
@@ -1291,6 +1277,40 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                             'properties' => array(
                                 'id',
                                 'name'
+                            )
+                        )
+                    )
+                ),
+                'operatingCentre' => array(
+                    'properties' => array(
+                        'id',
+                        'version'
+                    ),
+                    'children' => array(
+                        'address' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'addressLine1',
+                                'addressLine2',
+                                'addressLine3',
+                                'addressLine4',
+                                'postcode',
+                                'town'
+                            ),
+                            'children' => array(
+                                'countryCode' => array(
+                                    'properties' => array('id')
+                                )
+                            )
+                        ),
+                        'adDocuments' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'filename',
+                                'identifier',
+                                'size'
                             )
                         )
                     )
@@ -1311,6 +1331,32 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                             'id' => 'B',
                             'name' => 'North East of England'
                         )
+                    ),
+                    'operatingCentre' => array(
+                        'id' => 3,
+                        'version' => 1,
+                        'address' => array(
+                            'id' => 1,
+                            'version' => 1,
+                            'addressLine1' => 'Some street 1',
+                            'addressLine2' => 'Some street 2',
+                            'addressLine3' => 'Some street 3',
+                            'addressLine4' => 'Some street 4',
+                            'postcode' => 'AB1 1AB',
+                            'town' => 'City',
+                            'countryCode' => array(
+                                'id' => 'GB'
+                            )
+                        ),
+                        'adDocuments' => array(
+                            array(
+                                'id' => 1,
+                                'identifier' => 'adfasdadsag',
+                                'version' => 1,
+                                'filename' => 'nfjosjnfos',
+                                'size' => 10
+                            )
+                        )
                     )
                 );
             } else {
@@ -1322,6 +1368,32 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                     'licence' => array(
                         'id' => 1,
                         'trafficArea' => null
+                    ),
+                    'operatingCentre' => array(
+                        'id' => 3,
+                        'version' => 1,
+                        'address' => array(
+                            'id' => 1,
+                            'version' => 1,
+                            'addressLine1' => 'Some street 1',
+                            'addressLine2' => 'Some street 2',
+                            'addressLine3' => 'Some street 3',
+                            'addressLine4' => 'Some street 4',
+                            'postcode' => 'AB1 1AB',
+                            'town' => 'City',
+                            'countryCode' => array(
+                                'id' => 'GB'
+                            )
+                        ),
+                        'adDocuments' => array(
+                            array(
+                                'id' => 1,
+                                'identifier' => 'adfasdadsag',
+                                'version' => 1,
+                                'filename' => 'nfjosjnfos',
+                                'size' => 10
+                            )
+                        )
                     )
                 );
             }
