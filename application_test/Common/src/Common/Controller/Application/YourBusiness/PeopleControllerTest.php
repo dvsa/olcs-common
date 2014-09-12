@@ -432,7 +432,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
         }
 
         $personDataBundle = array(
-            'properties' => null,
+            'properties' => array('position'),
             'children' => array(
                 'person' => array(
                     'properties' => array(
@@ -442,7 +442,6 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                         'familyName',
                         'birthDate',
                         'otherName',
-                        'position'
                     )
                 )
             )
@@ -465,6 +464,19 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                     )
                 )
             );
+        }
+
+        $opDataBundle = array(
+            'properties' => array('id')
+        );
+
+        if ($service == 'OrganisationPerson' && $method == 'GET' && $bundle == $opDataBundle) {
+            return array(
+                'Count' => 0
+            );
+        }
+        if (isset($results['Count']) && !$results['Count']) {
+            return $this->delete();
         }
 
         $organisationTypeBundle = array(
