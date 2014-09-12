@@ -73,6 +73,8 @@ class SummaryController extends ReviewDeclarationsController
                                     ),
                                 ),
                             ),
+                            'tradingNames' => array(
+                            ),
                         ),
                     ),
                     'contactDetails' => array(
@@ -268,8 +270,18 @@ class SummaryController extends ReviewDeclarationsController
 
         // Flatten out the phone contacts from the only licence contact
         $phoneList=$loadData['licence']['contactDetails'][0]['phoneContacts'];
+        $indexedPhoneList=array();
         foreach ($phoneList as $phoneEntry) {
             $indexedPhoneList[$phoneEntry['phoneContactType']['id']]=$phoneEntry['phoneNumber'];
+        }
+
+        // Trading names requires specific formatting
+        $indexedTradingNamesList=array();
+        $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
+        foreach ($tradingNamesList as $tradingName) {
+            $indexedTradingNamesList[]=array(
+                'text' => $tradingName
+            );
         }
 
         $data = array(
@@ -295,6 +307,9 @@ class SummaryController extends ReviewDeclarationsController
             'application_your-business_business-details-1' => array(
                 'companyNumber' => array(
                     'company_number' => $loadData['licence']['organisation']['companyOrLlpNo']
+                ),
+                'tradingNames' => array(
+                    'trading_name' => $loadData['licence']['organisation']['tradingNames']
                 ),
                 'name' => $loadData['licence']['organisation']['name']
             ),
