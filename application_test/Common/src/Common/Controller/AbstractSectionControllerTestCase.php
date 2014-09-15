@@ -57,6 +57,19 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             ->will($this->returnCallback(array($this, 'mockRestCall')));
 
         $this->serviceManager = Bootstrap::getServiceManager();
+        $this->serviceManager->setAllowOverride(true);
+        $licenceService = $this->getMock('Olcs\Service\Data\Licence');
+        $licenceService->expects($this->any())->method('fetchLicenceData')->willReturn(
+            array(
+                'id' => 37,
+                'goodsOrPsv' => array('id' => 'lcat_psv', 'description' => 'Goods'),
+                'licenceType' => array('id' => 'ltyp_bus','description'=> 'Type'),
+                'status' => array('description'=> 'All good'),
+                'licNo' => '1234',
+            )
+        );
+
+        $this->serviceManager->setService('Olcs\Service\Data\Licence', $licenceService);
 
         $this->request = new Request();
         $this->response = new Response();
