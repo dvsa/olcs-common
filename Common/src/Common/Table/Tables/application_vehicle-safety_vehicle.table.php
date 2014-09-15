@@ -10,6 +10,7 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
+                'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
                 'delete' => array('class' => 'warning', 'requireRows' => true)
             )

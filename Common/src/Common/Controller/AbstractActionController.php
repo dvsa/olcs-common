@@ -167,7 +167,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
         $action = $this->getCrudActionFromPost();
 
@@ -177,21 +177,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $action = strtolower($action);
 
-        // Incase we want to try and hi-jack the crud action check
-        if (method_exists($this, 'checkForAlternativeCrudAction')) {
-            $response = $this->checkForAlternativeCrudAction($action);
+        $response = $this->checkForAlternativeCrudAction($action);
 
-            if ($response instanceof Response) {
-                return $response;
-            }
+        if ($response instanceof Response) {
+            return $response;
         }
 
         $params = array_merge($params, array('action' => $action));
 
-        if (strstr($action, '-')) {
-            $parts = explode('-', $action);
-            $action = array_pop($parts);
-        }
+        $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
 
@@ -207,6 +201,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $this->redirect()->toRoute($route, $params, [], true);
+    }
+
+    /**
+     * Do nothing, this method can be overridden to hijack the crud action check
+     *
+     * @param string $action
+     */
+    protected function checkForAlternativeCrudAction($action)
+    {
+
     }
 
     /**
@@ -229,34 +233,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Build a table from config and results
-     *
-     * @param string $table
-     * @param array $results
-     * @param array $data
-     * @return string
-     */
-    public function buildTable($table, $results, $data = array())
-    {
-        return $this->getTable($table, $results, $data, true);
-    }
-
-    /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
      * @param array $results
      * @param array $data
-     * @param boolean $render
      * @return string
      */
-    public function getTable($table, $results, $data = array(), $render = false)
+    public function getTable($table, $results, $data = array())
     {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, $render);
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
     }
 
     /**
