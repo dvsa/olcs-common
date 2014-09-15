@@ -448,6 +448,25 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
 
         $response = $this->controller->deleteAction();
 
+        $form = $this->getFormFromView($response);
+        $this->assertEquals(
+            'vehicle-remove-confirm-label',
+            $form->get('data')->get('id')->getLabel('vehicle-remove-confirm-label')
+        );
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testDeleteActionWithSubmit()
+    {
+        $this->setUpAction('delete', 1, array('data' => array('id' => 1)));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->deleteAction();
+
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
