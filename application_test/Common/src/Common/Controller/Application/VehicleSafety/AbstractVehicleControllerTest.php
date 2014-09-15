@@ -41,6 +41,43 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         )
     );
 
+    protected $applicationStatusBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
+    protected $tableDataBundle = array(
+        'properties' => null,
+        'children' => array(
+            'licenceVehicles' => array(
+                'properties' => array(
+                    'id',
+                    'receivedDate',
+                    'specifiedDate',
+                    'deletedDate'
+                ),
+                'children' => array(
+                    'goodsDiscs' => array(
+                        'ceasedDate',
+                        'discNo'
+                    ),
+                    'vehicle' => array(
+                        'properties' => array(
+                            'vrm',
+                            'platedWeight'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Test back button
      */
@@ -61,6 +98,35 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         $this->setUpAction('index');
 
         $response = $this->controller->indexAction();
+
+        $table = $this->getTableFromView($response);
+
+        $this->assertFalse($table->hasAction('reprint'));
+
+        // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test indexAction
+     */
+    public function testIndexActionWithoutReprint()
+    {
+        $this->setUpAction('index');
+
+        $response = array(
+            'status' => array(
+                'id' => ApplicationController::APPLICATION_STATUS_GRANTED
+            )
+        );
+
+        $this->setRestResponse('Application', 'GET', $response, $this->applicationStatusBundle);
+
+        $response = $this->controller->indexAction();
+
+        $table = $this->getTableFromView($response);
+
+        $this->assertTrue($table->hasAction('reprint'));
 
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
@@ -518,6 +584,297 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
     }
 
     /**
+     * Test indexAction with crud action
+     *
+     * @group reprint
+     */
+    public function testIndexActionWithReprintCrudAction()
+    {
+        $this->setUpAction('index', null, array('action' => 'reprint'));
+
+        $response = $this->controller->indexAction();
+
+        $flashMessenger = $this->controller->plugin('FlashMessenger');
+
+        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test indexAction with crud action
+     *
+     * @group reprint
+     */
+    public function testIndexActionWithReprintCrudActionWithPendingDisc()
+    {
+        $this->setUpAction('index', null, array('action' => 'reprint'));
+
+        $discPendingBundle = array(
+            'properties' => array(
+                'id',
+                'specifiedDate',
+                'deletedDate'
+            ),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'ceasedDate',
+                    'discNo'
+                )
+            )
+        );
+
+        $response = array(
+            'id' => 1,
+            'specifiedDate' => '2014-01-01',
+            'deletedDate' => null,
+            'goodsDiscs' => array(
+                array(
+                    'ceasedDate' => null,
+                    'discNo' => null
+                )
+            )
+        );
+
+        $this->setRestResponse('LicenceVehicle', 'GET', $response, $discPendingBundle);
+
+        $response = $this->controller->indexAction();
+
+        $flashMessenger = $this->controller->plugin('FlashMessenger');
+
+        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test indexAction with crud action
+     *
+     * @group reprint
+     */
+    public function testIndexActionWithReprintCrudActionWithoutPendingDisc()
+    {
+        $this->setUpAction('index', null, array('action' => 'reprint'));
+
+        $discPendingBundle = array(
+            'properties' => array(
+                'id',
+                'specifiedDate',
+                'deletedDate'
+            ),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'ceasedDate',
+                    'discNo'
+                )
+            )
+        );
+
+        $response = array(
+            'id' => 1,
+            'specifiedDate' => '2014-01-01',
+            'deletedDate' => null,
+            'goodsDiscs' => array(
+                array(
+                    'ceasedDate' => '2014-01-01',
+                    'discNo' => 1234
+                )
+            )
+        );
+
+        $this->setRestResponse('LicenceVehicle', 'GET', $response, $discPendingBundle);
+
+        $response = $this->controller->indexAction();
+
+        $flashMessenger = $this->controller->plugin('FlashMessenger');
+
+        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test editAction
+     *
+     * @group reprint
+     */
+    public function testReprintAction()
+    {
+        $this->setUpAction('reprint', 1);
+
+        $response = $this->controller->reprintAction();
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test editAction
+     *
+     * @group reprint
+     */
+    public function testReprintActionWithSubmit()
+    {
+        $this->setUpAction('reprint', 1, array('data' => array('id' => 1)));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->reprintAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test editAction
+     *
+     * @group reprint
+     */
+    public function testReprintActionWithSubmitWithActiveDisc()
+    {
+        $this->setUpAction('reprint', 1, array('data' => array('id' => 1)));
+
+        $response = array(
+            'goodsDiscs' => array(
+                array(
+                    'id' => 1,
+                    'version' => 1,
+                    'ceasedDate' => null
+                )
+            )
+        );
+
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'properties' => array(
+                        'id',
+                        'version',
+                        'ceasedDate'
+                    )
+                )
+            )
+        );
+
+        $this->setRestResponse('LicenceVehicle', 'GET', $response, $bundle);
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->reprintAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test editAction
+     *
+     * @group reprint
+     */
+    public function testReprintActionWithSubmitWithAlreadyCeasedDisc()
+    {
+        $this->setUpAction('reprint', 1, array('data' => array('id' => 1)));
+
+        $response = array(
+            'goodsDiscs' => array(
+                array(
+                    'id' => 1,
+                    'version' => 1,
+                    'ceasedDate' => '2014-01-01'
+                )
+            )
+        );
+
+        $bundle = array(
+            'properties' => array(),
+            'children' => array(
+                'goodsDiscs' => array(
+                    'properties' => array(
+                        'id',
+                        'version',
+                        'ceasedDate'
+                    )
+                )
+            )
+        );
+
+        $this->setRestResponse('LicenceVehicle', 'GET', $response, $bundle);
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->reprintAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test indexAction
+     */
+    public function testIndexActionWithMultipleVehicles()
+    {
+        $this->setUpAction('index');
+
+        $response = array(
+            'licenceVehicles' => array(
+                array(
+                    'id' => 1,
+                    'receivedDate' => null,
+                    'specifiedDate' => '2014-01-01',
+                    'deletedDate' => null,
+                    'goodsDisc' => array(
+                        array(
+                            'ceasedDate' => null,
+                            'discNo' => 123
+                        )
+                    ),
+                    'vehicle' => array(
+                        'vrm' => 'AB12 ABG',
+                        'platedWeight' => 100
+                    )
+                ),
+                array(
+                    'id' => 2,
+                    'receivedDate' => null,
+                    'specifiedDate' => '2014-01-01',
+                    'deletedDate' => null,
+                    'goodsDisc' => array(
+                        array(
+                            'ceasedDate' => '2014-01-01',
+                            'discNo' => 1234
+                        )
+                    ),
+                    'vehicle' => array(
+                        'vrm' => 'DB12 ABG',
+                        'platedWeight' => 150
+                    )
+                ),
+                array(
+                    'id' => 3,
+                    'receivedDate' => null,
+                    'specifiedDate' => '2014-01-01',
+                    'deletedDate' => null,
+                    'goodsDisc' => array(
+                        array(
+                            'ceasedDate' => '2014-01-01',
+                            'discNo' => null
+                        )
+                    ),
+                    'vehicle' => array(
+                        'vrm' => 'DB12 ABG',
+                        'platedWeight' => 150
+                    )
+                )
+            )
+        );
+
+        $this->setRestResponse('Licence', 'GET', $response, $this->tableDataBundle);
+
+        $response = $this->controller->indexAction();
+
+        $table = $this->getTableFromView($response);
+
+        $this->assertFalse($table->hasAction('reprint'));
+
+        // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
      * Mock the rest call
      *
      * @param string $service
@@ -531,6 +888,17 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData('goods');
+        }
+
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == $this->applicationStatusBundle
+        ) {
+
+            return array(
+                'status' => array(
+                    'id' => ApplicationController::APPLICATION_STATUS_NOT_YET_SUBMITTED
+                )
+            );
         }
 
         if ($service == 'ApplicationCompletion' && $method == 'GET') {
@@ -554,33 +922,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             );
         }
 
-        $tableDataBundle = array(
-            'properties' => null,
-            'children' => array(
-                'licenceVehicles' => array(
-                    'properties' => array(
-                        'id',
-                        'receivedDate',
-                        'specifiedDate',
-                        'deletedDate'
-                    ),
-                    'children' => array(
-                        'goodsDiscs' => array(
-                            'ceasedDate',
-                            'discNo'
-                        ),
-                        'vehicle' => array(
-                            'properties' => array(
-                                'vrm',
-                                'platedWeight'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        if ($service == 'Licence' && $method == 'GET' && $bundle == $tableDataBundle) {
+        if ($service == 'Licence' && $method == 'GET' && $bundle == $this->tableDataBundle) {
             return array(
                 'licenceVehicles' => array(
                     array(
@@ -687,13 +1029,14 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             );
         }
 
-        if ($service == 'LicenceVehicle' && $method == 'GET') {
+        // @todo need to add a bundle here
+        /*if ($service == 'LicenceVehicle' && $method == 'GET') {
             return array(
                 'Count' => 1,
                 'Results' => array(
                     array('id' => 1)
                 )
             );
-        }
+        }*/
     }
 }

@@ -29,9 +29,7 @@ trait GenericVehicleSection
      */
     protected function shouldSkipActionSave($data, $form)
     {
-        $parts = explode('-', $this->getActionName());
-
-        $action = array_pop($parts);
+        $action = $this->getActionFromFullActionName();
 
         if ($action == 'add') {
 
@@ -192,17 +190,13 @@ trait GenericVehicleSection
      */
     protected function genericActionFormAlterations($form)
     {
+        $action = $this->getActionFromFullActionName();
+
         $dataFieldset = $form->get('licence-vehicle');
 
         $this->disableDateElement($dataFieldset->get('specifiedDate'));
         $this->disableDateElement($dataFieldset->get('deletedDate'));
         $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        $action = $this->getActionName();
-
-        $parts = explode('-', $action);
-
-        $action = array_pop($parts);
 
         if ($action == 'edit') {
             $filter = $form->getInputFilter();

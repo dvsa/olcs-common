@@ -128,9 +128,7 @@ trait GenericApplicationVehiclePsvSection
      */
     protected function actionSave($data, $service = null)
     {
-        $parts = explode('-', $this->getActionName());
-
-        $action = array_pop($parts);
+        $action = $this->getActionFromFullActionName();
 
         return $this->doActionSave($data, $action);
     }
