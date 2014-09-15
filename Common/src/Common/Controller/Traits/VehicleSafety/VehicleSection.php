@@ -19,7 +19,8 @@ trait VehicleSection
     use GenericVehicleSection;
 
     protected $sharedBespokeSubActions = array(
-        'reprint'
+        'reprint',
+        'delete'
     );
 
     /**
@@ -141,16 +142,6 @@ trait VehicleSection
     );
 
     /**
-     * Get bespoke sub actions
-     *
-     * @return array
-     */
-    protected function getBespokeSubActions()
-    {
-        return $this->sharedBespokeSubActions;
-    }
-
-    /**
      * Redirect to the first section
      *
      * @return Response
@@ -174,6 +165,45 @@ trait VehicleSection
     public function editAction()
     {
         return $this->renderSection();
+    }
+
+    /**
+     * Performs delete action
+     */
+    public function deleteAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
+     * Load data for the delete confirmation form
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function deleteLoad($id)
+    {
+        return array('data' => array('id' => $id));
+    }
+
+    /**
+     * Process delete
+     *
+     * @param array $data
+     */
+    protected function deleteSave($data)
+    {
+        $this->delete($data['data']['id'], $this->getActionService());
+    }
+
+    /**
+     * Get bespoke sub actions
+     *
+     * @return array
+     */
+    protected function getBespokeSubActions()
+    {
+        return $this->sharedBespokeSubActions;
     }
 
     /**
@@ -401,16 +431,6 @@ trait VehicleSection
         }
 
         return '';
-    }
-
-    /**
-     * Performs delete action
-     *
-     * @return \Zend\Http\PhpEnvironment\Response
-     */
-    public function deleteAction()
-    {
-        return $this->delete();
     }
 
     /**

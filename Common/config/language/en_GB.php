@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
+    'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to remove replacement discs for the selected vehicle(s)?',
+    'application_vehicle-safety_vehicle-delete' => 'Remove vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
