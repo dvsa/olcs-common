@@ -587,6 +587,7 @@ return array(
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
+    'filters' => 'Filters',
     'finance' => 'Finance',
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
@@ -705,6 +706,7 @@ return array(
     'internal-licence-details-vehicle_psv-title' => 'Vehicles',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
+    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-notes-add' => 'Add note',
     'internal-licence-processing-notes-add-label' => 'Add note',
     'internal-licence-processing-notes-add-title' => 'Add note',
@@ -1089,5 +1091,9 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'apsts_new' => 'Not Yet Submitted',
+    'apsts_consideration' => 'Under Consideration',
+    'tasks.close.single' => 'Are you sure you want to close this task?',
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
 );

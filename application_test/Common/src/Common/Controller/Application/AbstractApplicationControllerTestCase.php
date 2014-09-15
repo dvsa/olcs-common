@@ -45,21 +45,16 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
             ->method('getNamespaceParts')
             ->will($this->returnValue(array_reverse(explode('\\', trim($this->controllerName, '\\')))));
 
-        $mockUrlPlugin = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlPlugin = $this->getMock('\Zend\View\Helper\Url', array('__invoke'));
         $mockUrlPlugin->expects($this->any())
             ->method('__invoke')
             ->will($this->returnValue('URL'));
 
-        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
-        $mockViewHelperManager->expects($this->any())
-            ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    array(
-                        array('url', $mockUrlPlugin),
-                    )
-                )
-            );
+        $inlineScript = new \Zend\View\Helper\InlineScript();
+
+        $mockViewHelperManager = new \Zend\View\HelperPluginManager();
+        $mockViewHelperManager->setService('url', $mockUrlPlugin);
+        $mockViewHelperManager->setService('inlineScript', $inlineScript);
 
         $this->serviceManager->setAllowOverride(true);
         $this->serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
