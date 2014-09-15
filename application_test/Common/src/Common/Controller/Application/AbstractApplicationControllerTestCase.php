@@ -59,10 +59,6 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
         $this->serviceManager->setAllowOverride(true);
         $this->serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
 
-        // Assert that we have an instance of what we expect. Setup is not really a place to
-        // cast assertions, but given that it's a dependency - I think it's appropriate CR
-        $this->assertSame($inlineScript, $this->serviceManager->get('viewhelpermanager')->get('inlineScript'));
-
         if (class_exists('\Olcs\Helper\ApplicationJourneyHelper')) {
             $mockApplicationJourneyHelper = $this->getMock(
                 '\Olcs\Helper\ApplicationJourneyHelper',
