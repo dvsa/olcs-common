@@ -234,7 +234,6 @@ abstract class AbstractSectionController extends AbstractController
     protected function getFormCallback()
     {
         if ($this->isAction()) {
-
             return $this->actionFormCallback;
         }
 
