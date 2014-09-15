@@ -278,9 +278,11 @@ class SummaryController extends ReviewDeclarationsController
 
         // Trading names requires specific formatting
         $flatTradingNamesList=array();
-        $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
-        foreach ($tradingNamesList as $tradingName) {
-            $flatTradingNamesList[]=$tradingName['name'];
+        if ( isset($loadData['licence']['organisation']['tradingNames']) ) {
+            $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
+            foreach ($tradingNamesList as $tradingName) {
+                $flatTradingNamesList[]=$tradingName['name'];
+            }
         }
 
         $data = array(
