@@ -1268,11 +1268,7 @@ class TableBuilder
      */
     private function generateUrl($data = array(), $route = null, $extendParams = true)
     {
-        if (isset($this->settings['useQuery']) && $this->settings['useQuery'] === true) {
-            return $this->getUrl()->fromRoute($route, $data, array('query' => $data), $extendParams);
-        }
-
-        return $this->getUrl()->fromRoute($route, $data, [], $extendParams);
+        return $this->getUrl()->fromRoute($route, $data, array(), $extendParams);
     }
 
     /**
