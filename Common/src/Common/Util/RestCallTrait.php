@@ -64,10 +64,19 @@ trait RestCallTrait
      * @param string $service
      * @param string $method
      * @param mixed $data
+     * @param array $bundle
      */
-    public function makeRestCall($service, $method, array $data, array $bundle = null)
+    public function makeRestCall($service, $method, $data, array $bundle = null)
     {
         $method = strtoupper($method);
+
+        // If we are sending a GET and we don't have array data, then we have the ID we are requesting
+        if ($method == 'GET' && !is_array($data)) {
+            $data = array(
+                'id' => $data
+            );
+        }
+
         $serviceMethod = strtolower($method);
         $path = '';
 
