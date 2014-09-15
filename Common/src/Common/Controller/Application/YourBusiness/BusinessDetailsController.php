@@ -278,6 +278,13 @@ class BusinessDetailsController extends YourBusinessController
                 break;
         }
 
+        // If this is a review, remove the trading names section
+        if ( $options['isReview'] ) {
+            $fieldset->remove('companyNumber')->remove('tradingNames');
+        } else {
+            $fieldset->remove('companyNumber')->remove('tradingNamesReview');
+        }
+
         return $form;
     }
 
@@ -343,7 +350,7 @@ class BusinessDetailsController extends YourBusinessController
         if (isset($data['data']['type']['id'])) {
             $data['data']['type'] = $data['data']['type']['id'];
         }
-        
+
         return $data;
     }
 

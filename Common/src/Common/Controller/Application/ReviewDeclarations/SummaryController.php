@@ -277,12 +277,10 @@ class SummaryController extends ReviewDeclarationsController
         }
 
         // Trading names requires specific formatting
-        $indexedTradingNamesList=array();
+        $flatTradingNamesList=array();
         $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
         foreach ($tradingNamesList as $tradingName) {
-            $indexedTradingNamesList[]=array(
-                'text' => $tradingName
-            );
+            $flatTradingNamesList[]=$tradingName['name'];
         }
 
         $data = array(
@@ -309,9 +307,7 @@ class SummaryController extends ReviewDeclarationsController
                 'companyNumber' => array(
                     'company_number' => $loadData['licence']['organisation']['companyOrLlpNo']
                 ),
-                'tradingNames' => array(
-                    'trading_name' => $indexedTradingNamesList
-                ),
+                'tradingNamesReview' => implode(PHP_EOL, $flatTradingNamesList),
                 'name' => $loadData['licence']['organisation']['name']
             ),
             'application_your-business_business-details-2' => array(
@@ -359,7 +355,7 @@ class SummaryController extends ReviewDeclarationsController
                 ),
                 $loadData
             ),
-            
+
             /**
              * Previous History
              */

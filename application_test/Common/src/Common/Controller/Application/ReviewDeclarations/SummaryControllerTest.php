@@ -487,7 +487,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 'Count' => 1,
                 'Results' => array(
                     array(
-        '               version' => 1,
+                        'version' => 1,
                         'name' => 'name',
                         'companyNo' => '12345678'
                     )
