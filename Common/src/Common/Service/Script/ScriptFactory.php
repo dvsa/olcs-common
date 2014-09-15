@@ -165,5 +165,4 @@ class ScriptFactory implements FactoryInterface
         $this->viewHelperManager = $viewHelperManager;
         return $this;
     }
-
 }
