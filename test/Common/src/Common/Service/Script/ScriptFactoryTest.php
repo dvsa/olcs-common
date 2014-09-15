@@ -86,7 +86,7 @@ class ScriptFactoryTest extends \PHPUnit_Framework_TestCase
         $jsArray = [];
 
         foreach ($scripts->getViewHelperManager()->get('inlineScript') as $item) {
-            $jsArray[] = $item->{'source'};
+            $jsArray[] = $item->source;
         }
 
         $this->assertEquals(
