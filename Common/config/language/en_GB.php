@@ -1080,5 +1080,9 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'apsts_new' => 'Not Yet Submitted',
+    'apsts_consideration' => 'Under Consideration',
+    'tasks.close.single' => 'Are you sure you want to close this task?',
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
 );
