@@ -17,6 +17,7 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgree
  */
 class VehicleUndertakingsOperateSmallVehiclesAgreement extends SingleCheckbox implements InputProviderInterface
 {
+    protected $required = false;
     protected $continueIfEmpty = true;
     protected $allowEmpty = false;
 
@@ -30,5 +31,23 @@ class VehicleUndertakingsOperateSmallVehiclesAgreement extends SingleCheckbox im
         return array(
             new VehicleUndertakingsOperateSmallVehiclesAgreementValidator()
         );
+    }
+
+    /**
+     * Provide default input rules for this element.
+     *
+     * @return array
+     */
+    public function getInputSpecification()
+    {
+        $specification = [
+            'name' => $this->getName(),
+            'required' => $this->required,
+            'continue_if_empty' => $this->continueIfEmpty,
+            'allow_empty' => $this->allowEmpty,
+            'validators' => $this->getValidators()
+        ];
+
+        return $specification;
     }
 }

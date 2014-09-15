@@ -1,5 +1,6 @@
 <?php
 
+// @todo Translate these titles
 $groups = array(
     array(
         'title' => 'Type of licence',
@@ -10,6 +11,12 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Operating Centres',
+        'forms' => array(
+            'application_operating-centres_authorisation'
+        )
+    ),
+    array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',
@@ -17,7 +24,15 @@ $groups = array(
             //'application_previous-history_licence-history',
             'application_previous-history_convictions-penalties'
         )
+    ),
+    array(
+        'title' => 'Vehicles & Safety',
+        'forms' => array(
+            'application_vehicle-safety_safety',
+            'application_vehicle-safety_undertakings'
+        )
     )
+
 );
 
 $formFieldsets = [];
@@ -48,6 +63,12 @@ foreach ($groups as $key => $group) {
         $fieldsets = $config[$form]['fieldsets'];
 
         foreach ($fieldsets as $key => $fieldset) {
+
+            // Some places need the unmapped fieldset name, so we set it as an
+            // attribute here.
+            if ( isset($fieldset['name']) ) {
+                $fieldset['attributes']['unmappedName']=$fieldset['name'];
+            }
 
             $i = $key + 1;
 

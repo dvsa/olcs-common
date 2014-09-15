@@ -501,7 +501,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 ]
             ];
 
-            if ($bundle == ApplicationController::$licenceDataBundle) {
+            if ($bundle == ApplicationController::$applicationLicenceDataBundle) {
 
                 return $this->getLicenceData('goods');
             }

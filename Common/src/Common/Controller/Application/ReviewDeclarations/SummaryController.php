@@ -4,6 +4,7 @@
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\ReviewDeclarations;
 
@@ -13,6 +14,7 @@ use Zend\View\Model\ViewModel;
  * Summary Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class SummaryController extends ReviewDeclarationsController
 {
@@ -38,6 +40,9 @@ class SummaryController extends ReviewDeclarationsController
                     ),
                     'licenceType' => array(
                         'properties' => array('id')
+                    ),
+                    'tachographIns' => array(
+                        'properties' => array('id')
                     )
                 )
             ),
@@ -53,7 +58,9 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
-        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions'
+        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
+        'VehicleSafety/Safety' => 'safety-inspection-providers',
+        'OperatingCentres/Authorisation' => 'authorisation_in_form'
     );
 
     /**
@@ -106,13 +113,12 @@ class SummaryController extends ReviewDeclarationsController
                 // to make any extra form alterations based on the fact it is being
                 // rendered out of context on the review page
                 $controller = $this->getInvokable($summarySection, 'makeFormAlterations');
-
                 if ($controller) {
                     $options = array(
                         // always let the controller know this is a review
                         'isReview'  => true,
                         'isPsv'     => $this->isPsv(),
-                        // most forms only have one fieldset, so we pass the
+                        // some forms only have one fieldset, so we pass the
                         // first through to be helpful...
                         'fieldset'  => $sectionFieldsets[0],
                         // ... but pass the rest through too, just in case
@@ -125,6 +131,7 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+
         return $form;
     }
 
@@ -167,6 +174,8 @@ class SummaryController extends ReviewDeclarationsController
      */
     protected function processLoad($loadData)
     {
+        $translator = $this->getServiceLocator()->get('translator');
+
         $data = array(
             /**
              * Type of Licence
@@ -181,6 +190,21 @@ class SummaryController extends ReviewDeclarationsController
                 'licenceType' => $loadData['licence']['licenceType']['id']
             ),
 
+            /**
+             * OC&A
+             */
+            'application_operating-centres_authorisation-1' => array(),
+            'application_operating-centres_authorisation-3' => $this->mapApplicationVariables(
+                array(
+                    'totAuthSmallVehicles',
+                    'totAuthMediumVehicles',
+                    'totAuthLargeVehicles',
+                    'totCommunityLicences',
+                    'totAuthVehicles',
+                    'totAuthTrailers'
+                ),
+                $loadData
+            ),
             /**
              * Previous History
              */
@@ -205,6 +229,55 @@ class SummaryController extends ReviewDeclarationsController
             'application_previous-history_convictions-penalties-3' => $this->mapApplicationVariables(
                 array('convictionsConfirmation'),
                 $loadData
+            ),
+
+            /**
+             * Vehicles & Safety
+             */
+            'application_vehicle-safety_safety-1' => array(
+                'safetyInsVehicles' => 'inspection_interval_vehicle.'.$loadData['licence']['safetyInsVehicles'],
+                'safetyInsTrailers' => 'inspection_interval_trailer.'.$loadData['licence']['safetyInsTrailers'],
+                'safetyInsVaries' => $loadData['licence']['safetyInsVaries'],
+                'tachographIns' => isset($loadData['licence']['tachographIns']['id']) ?
+                    $loadData['licence']['tachographIns']['id'] : '',
+                'tachographInsName' => $loadData['licence']['tachographInsName'],
+            ),
+
+            // @NOTE application_vehicle-safety_safety-2 is table data
+            'application_vehicle-safety_safety-2' => array(
+                'workshops' => $loadData['licence']['workshops']
+            ),
+
+            'application_vehicle-safety_safety-3' => array(
+                'isMaintenanceSuitable' => $loadData['isMaintenanceSuitable'],
+                'safetyConfirmation' => $loadData['safetyConfirmation']
+            ),
+            /**
+             * Vehicle Undertakings
+             */
+            'application_vehicle-safety_undertakings-2' => array(
+                'psvOperateSmallVhl' => $loadData['psvOperateSmallVhl'],
+                'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation']=='Y'?1:0),
+                'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes'],
+                'psvSmallVhlUndertakings' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
+                    ),
+                'psvSmallVhlScotland' =>
+                    $translator->translate(
+                        'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+                    )
+            ),
+
+            'application_vehicle-safety_undertakings-3' => array(
+                'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation']=='Y')
+
+            ),
+
+            'application_vehicle-safety_undertakings-4' => array(
+                'psvLimousines' => ($loadData['psvLimousines']?'Y':'N'),
+                'psvNoLimousineConfirmation' => $loadData['psvNoLimousineConfirmation'],
+                'psvOnlyLimousinesConfirmation' => $loadData['psvOnlyLimousinesConfirmation'],
             )
         );
 
@@ -286,6 +359,8 @@ class SummaryController extends ReviewDeclarationsController
                 }
             }
         }
+
+        $this->summarySections=array_unique($this->summarySections);
     }
 
     /**

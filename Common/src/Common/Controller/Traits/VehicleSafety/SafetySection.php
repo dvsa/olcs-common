@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits;
+namespace Common\Controller\Traits\VehicleSafety;
 
 /**
  * Safety Section

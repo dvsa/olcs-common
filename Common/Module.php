@@ -44,7 +44,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'Common\Service\RefData' => 'Common\Service\RefData',
+                'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
                 'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
                 },
@@ -146,7 +146,7 @@ class Module
      * Method to return a list of supported languages, ensures the language cannot be set to one for which
      * we have no translations for
      *
-     * @return Array of locales
+     * @return array of locales
      */
     protected function getSupportedLanguages()
     {

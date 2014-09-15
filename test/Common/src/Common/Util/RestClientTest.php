@@ -172,7 +172,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
     public function testPrepareRequest()
     {
-        $mock = $this->getSutMock(array('getClientRequest', 'getAccept'));
+        $mock = $this->getSutMock(array('getClientRequest', 'getAccept', 'getAcceptLanguage'));
 
         $accept = $this->getMock('\stdClass', array('addMediaType'));
         $accept->expects($this->once())
@@ -182,6 +182,15 @@ class RestClientTest extends AbstractHttpControllerTestCase
         $mock->expects($this->once())
             ->method('getAccept')
             ->will($this->returnValue($accept));
+
+        $acceptLanguage = $this->getMock('\stdClass', array('addLanguage'));
+        $acceptLanguage->expects($this->once())
+            ->method('addLanguage')
+            ->with('en-gb');
+
+        $mock->expects($this->once())
+            ->method('getAcceptLanguage')
+            ->will($this->returnValue($acceptLanguage));
 
         $client = $this->getMock(
             '\stdClass',
@@ -201,7 +210,7 @@ class RestClientTest extends AbstractHttpControllerTestCase
 
         $client->expects($this->once())
             ->method('setHeaders')
-            ->with(array($accept));
+            ->with(array($accept, $acceptLanguage));
         $client->expects($this->once())
             ->method('setMethod')
             ->with('POST');
@@ -230,5 +239,18 @@ class RestClientTest extends AbstractHttpControllerTestCase
     {
         $mock = $this->getSutMock(null);
         $mock->getClientRequest();
+    }
+
+    public function testGetLanguage()
+    {
+        $mock = $this->getSutMock(null);
+        $this->assertEquals('en-gb', $mock->getLanguage());
+    }
+
+    public function testSetLanguage()
+    {
+        $mock = $this->getSutMock(null);
+        $mock->setLanguage('cy_cy');
+        $this->assertEquals('cy-cy', $mock->getLanguage());
     }
 }

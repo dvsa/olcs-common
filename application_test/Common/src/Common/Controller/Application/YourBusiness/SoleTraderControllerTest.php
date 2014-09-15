@@ -174,7 +174,7 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
                         'version' => 1,
                         'niFlag' => 0,
                         'goodsOrPsv' => array(
-                            'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                            'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                         ),
                         'licenceType' => array(
                             'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL

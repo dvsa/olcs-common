@@ -1225,6 +1225,10 @@ class TableBuilder
             $column['formatter'] = $className;
         }
 
+        if (is_object($column['formatter']) && $column['formatter'] instanceof Formatter\FormatterInterface) {
+            $column['formatter'] = array($column['formatter'], 'format');
+        }
+
         if (is_callable($column['formatter'])) {
 
             return call_user_func($column['formatter'], $data, $column, $this->getServiceLocator());

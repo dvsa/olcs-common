@@ -26,7 +26,8 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
         'no-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre',
         '1-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre',
         'too-low' => 'OperatingCentreVehicleAuthorisationsValidator.too-low',
-        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high'
+        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high',
+        'no-vehicles' => 'OperatingCentreVehicleAuthorisationsValidator.no-vehicles'
     );
 
     /**
@@ -44,6 +45,11 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
 
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
+
+        if ($value == 0) {
+            $this->error('no-vehicles');
+            return false;
+        }
 
         if ($noOfOperatingCentres === 0 && $value !== 0) {
 
