@@ -949,7 +949,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
                     'add' => array(),
                     'edit' => array(),
                     'foo' => array(),
-                    'bar' => array()
+                    'bar' => array(),
+                    'cake' => array()
                 )
             )
         );

@@ -48,9 +48,7 @@ class Module
                 'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
                 },
-                'Script' => function ($sm) {
-                    return new \Common\Service\Script\ScriptFactory($sm->get('Config'));
-                },
+                'Script' => '\Common\Service\Script\ScriptFactory',
                 'Table' => '\Common\Service\Table\TableFactory',
                 'Document' => '\Common\Service\Document\DocumentFactory',
                 'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',

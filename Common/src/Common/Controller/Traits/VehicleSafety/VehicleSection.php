@@ -18,6 +18,10 @@ trait VehicleSection
 {
     use GenericVehicleSection;
 
+    protected $sharedBespokeSubActions = array(
+        'reprint'
+    );
+
     /**
      * Holds the table data bundle
      *
@@ -106,6 +110,46 @@ trait VehicleSection
         )
     );
 
+    protected $ceaseActiveDiscBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'goodsDiscs' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'ceasedDate'
+                )
+            )
+        )
+    );
+
+    /**
+     * Disc pending bundle
+     */
+    protected $discPendingBundle = array(
+        'properties' => array(
+            'id',
+            'specifiedDate',
+            'deletedDate'
+        ),
+        'children' => array(
+            'goodsDiscs' => array(
+                'ceasedDate',
+                'discNo'
+            )
+        )
+    );
+
+    /**
+     * Get bespoke sub actions
+     *
+     * @return array
+     */
+    protected function getBespokeSubActions()
+    {
+        return $this->sharedBespokeSubActions;
+    }
+
     /**
      * Redirect to the first section
      *
@@ -130,6 +174,85 @@ trait VehicleSection
     public function editAction()
     {
         return $this->renderSection();
+    }
+
+    /**
+     * Reprint action
+     */
+    public function reprintAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
+     * Load data for reprint
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function reprintLoad($id)
+    {
+        return array(
+            'data' => array(
+                'id' => $id
+            )
+        );
+    }
+
+    /**
+     * Request a new disc
+     *
+     * @param array $data
+     */
+    protected function reprintSave($data)
+    {
+        $this->reprintDisc($data['data']['id']);
+
+        return $this->goBackToSection();
+    }
+
+    /**
+     * Reprint a single disc
+     *
+     * @NOTE I have put this logic into it's own method (rather in the reprintSave method), as we will soon be able to
+     * reprint multiple discs at once
+     *
+     * @param int $id
+     */
+    protected function reprintDisc($id)
+    {
+        $this->ceaseActiveDisc($id);
+
+        $this->requestDisc($id);
+    }
+
+    /**
+     * Request disc
+     *
+     * @param int $licenceVehicleId
+     */
+    protected function requestDisc($licenceVehicleId)
+    {
+        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId));
+    }
+
+    /**
+     * If the latest disc is not active, cease it
+     *
+     * @param int $id
+     */
+    protected function ceaseActiveDisc($id)
+    {
+        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->ceaseActiveDiscBundle);
+
+        if (!empty($results['goodsDiscs'])) {
+            $activeDisc = $results['goodsDiscs'][0];
+
+            if (empty($activeDisc['ceasedDate'])) {
+                $activeDisc['ceasedDate'] = date('Y-m-d');
+                $this->makeRestCall('GoodsDisc', 'PUT', $activeDisc);
+            }
+        }
     }
 
     /**
@@ -264,18 +387,20 @@ trait VehicleSection
      */
     protected function getCurrentDiscNo($licenceVehicle)
     {
-        $discNo = '';
+        if (empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['deletedDate'])) {
+            return 'Pending';
+        }
 
         if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
-            foreach ($licenceVehicle['goodsDiscs'] as $discs) {
-                if (empty($discs['ceasedDate'])) {
-                    $discNo = $discs['discNo'];
-                    break;
-                }
+            $currentDisc = $licenceVehicle['goodsDiscs'][0];
+
+            if (empty($currentDisc['ceasedDate'])) {
+
+                return (empty($currentDisc['discNo']) ? 'Pending' : $currentDisc['discNo']);
             }
         }
 
-        return $discNo;
+        return '';
     }
 
     /**
@@ -295,6 +420,15 @@ trait VehicleSection
      */
     protected function checkForAlternativeCrudAction($action)
     {
+        if ($action == 'reprint') {
+            $id = $this->params()->fromPost('id');
+
+            if ($this->isDiscPendingForLicenceVehicle($id)) {
+                $this->addErrorMessage('reprint-pending-disc-error');
+                return $this->goBackToSection();
+            }
+        }
+
         if ($action == 'add') {
             $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
 
@@ -305,9 +439,24 @@ trait VehicleSection
             $vehicleCount = $this->getTotalNumberOfVehicles();
 
             if ($vehicleCount >= $totalAuth) {
-                $this->addErrorMessage('You cannot have more vehicles than the total vehicle authority');
+                $this->addErrorMessage('more-vehicles-than-total-auth-error');
                 return $this->redirect()->toRoute(null, array(), array(), true);
             }
         }
+    }
+
+    /**
+     * Check if the licence vehicle has a pending active disc
+     *
+     * @param int $id
+     * @return boolean
+     */
+    protected function isDiscPendingForLicenceVehicle($id)
+    {
+        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
+
+        $discNo = $this->getCurrentDiscNo($results);
+
+        return ($discNo == 'Pending');
     }
 }

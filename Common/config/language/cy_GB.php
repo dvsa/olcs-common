@@ -401,6 +401,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.specifiedDate' => 'W Specified date',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of
         your vehicles?',
+    'application_vehicle-safety_vehicle-reprint' => 'W Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate' => 'W Removed date',
@@ -454,6 +455,8 @@ return array(
     'application_your-business_people-sub-action-formTitleValueMs' => 'W Ms',
     'applications' => 'W Applications',
     'apply-changes' => 'W Apply changes',
+    'apsts_consideration' => 'W Under Consideration',
+    'apsts_new' => 'W Not Yet Submitted',
     'both' => 'W Both',
     'built-by' => 'W Built by',
     'bus-compliance-issues' => 'W Bus compliance issues',
@@ -778,6 +781,7 @@ return array(
     'mark-urgent' => 'W Mark as urgent',
     'mlh' => 'W MLH',
     'month' => 'W Month',
+    'more-vehicles-than-total-auth-error' => 'W You cannot have more vehicles than the total vehicle authority',
     'name' => 'W Name',
     'name-defendant-type' => 'W Name / Defendant type',
     'new' => 'W New',
@@ -900,6 +904,7 @@ return array(
     'registered-office-details-header' => 'W Registered office details',
     'removals-construction-plant-hire' => 'W Removals / Construction / Plant Hire',
     'representations' => 'W Representations',
+    'reprint-pending-disc-error' => 'W You have selected a vehicle where a disc print has already been requested',
     'review-date' => 'W Review date',
     'safety-inspection-providers.table.address' => 'W Workshop address',
     'safety-inspection-providers.table.empty_message' => 'W Please tell us about who will carry out the safety
