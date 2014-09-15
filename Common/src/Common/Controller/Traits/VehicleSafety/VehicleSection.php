@@ -18,10 +18,7 @@ trait VehicleSection
 {
     use GenericVehicleSection;
 
-    protected $sharedBespokeSubActions = array(
-        'reprint',
-        'delete'
-    );
+    protected $sharedBespokeSubActions = array('reprint');
 
     /**
      * Holds the table data bundle
@@ -142,16 +139,6 @@ trait VehicleSection
     );
 
     /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Add operating centre
      */
     public function addAction()
@@ -165,35 +152,6 @@ trait VehicleSection
     public function editAction()
     {
         return $this->renderSection();
-    }
-
-    /**
-     * Performs delete action
-     */
-    public function deleteAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Load data for the delete confirmation form
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function deleteLoad($id)
-    {
-        return array('data' => array('id' => $id));
-    }
-
-    /**
-     * Process delete
-     *
-     * @param array $data
-     */
-    protected function deleteSave($data)
-    {
-        $this->delete($data['data']['id'], $this->getActionService());
     }
 
     /**
@@ -253,7 +211,7 @@ trait VehicleSection
     {
         $this->ceaseActiveDisc($id);
 
-        $this->requestDisc($id);
+        $this->requestDisc($id, 'Y');
     }
 
     /**
@@ -261,9 +219,9 @@ trait VehicleSection
      *
      * @param int $licenceVehicleId
      */
-    protected function requestDisc($licenceVehicleId)
+    protected function requestDisc($licenceVehicleId, $isCopy = 'N')
     {
-        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId));
+        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy));
     }
 
     /**
@@ -478,5 +436,19 @@ trait VehicleSection
         $discNo = $this->getCurrentDiscNo($results);
 
         return ($discNo == 'Pending');
+    }
+
+    /**
+     * Extend default process delete
+     *
+     * @param array $data
+     */
+    protected function deleteSave($data)
+    {
+        $licenceVehicleId = $data['data']['id'];
+
+        $this->ceaseActiveDisc($licenceVehicleId);
+
+        parent::deleteSave($data);
     }
 }

@@ -316,6 +316,14 @@ abstract class AbstractJourneyController extends AbstractSectionController
                 $this->isAction(),
                 $this->getActionName()
             );
+
+            // If the guessed form name doesn't exist
+            //  call the parent getFormName
+            //  this is useful for any generic action form such as delete confirmation
+            if (!$this->formExists($this->formName)){
+                $this->formName = null;
+                $this->formName = parent::getFormName();
+            }
         }
 
         return $this->formName;
