@@ -2237,4 +2237,16 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $newColumns = $table->getColumns();
         $this->assertEquals(count($newColumns), 1);
     }
+
+    /**
+     * Test get and set settings
+     */
+    public function testGetSettings()
+    {
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setSettings(array('Foo' => 'Bar'));
+
+        $this->assertEquals(array('Foo' => 'Bar'), $table->getSettings());
+    }
 }
