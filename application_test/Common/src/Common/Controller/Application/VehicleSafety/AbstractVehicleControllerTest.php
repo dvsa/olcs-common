@@ -1047,15 +1047,5 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 )
             );
         }
-
-        // @todo need to add a bundle here
-        /*if ($service == 'LicenceVehicle' && $method == 'GET') {
-            return array(
-                'Count' => 1,
-                'Results' => array(
-                    array('id' => 1)
-                )
-            );
-        }*/
     }
 }

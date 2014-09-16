@@ -139,7 +139,9 @@ class PeopleController extends YourBusinessController
                     'title',
                     $translator->translate('selfserve-app-subSection-your-business-people-tableHeaderPartners')
                 );
-                $guidance->setValue($translator->translate('selfserve-app-subSection-your-business-people-guidanceLLP'));
+                $guidance->setValue(
+                    $translator->translate('selfserve-app-subSection-your-business-people-guidanceLLP')
+                );
                 break;
             case self::ORG_TYPE_PARTNERSHIP:
                 $table->setVariable(
