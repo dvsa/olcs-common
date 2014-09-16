@@ -214,13 +214,6 @@ class AuthorisationController extends OperatingCentresController
     );
 
     /**
-     * Holds the Traffic Area details
-     *
-     * @var array
-     */
-//    private $trafficArea;
-
-    /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
