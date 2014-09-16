@@ -25,7 +25,7 @@ class Postcode implements ServiceLocatorAwareInterface
 
     /**
      * Get traffic area by postocde
-     * 
+     *
      * @param string $postcode
      * @return array
      */
@@ -51,7 +51,10 @@ class Postcode implements ServiceLocatorAwareInterface
                     $adminAreaTrafficArea = $this->makeRestCall(
                         'AdminAreaTrafficArea', 'GET', array('id' => $adminArea), $bundle
                     );
-                    if (is_array($adminAreaTrafficArea) && array_key_exists('trafficArea', $adminAreaTrafficArea) && count($adminAreaTrafficArea)) {
+
+                    if (is_array($adminAreaTrafficArea)
+                        && array_key_exists('trafficArea', $adminAreaTrafficArea) && count($adminAreaTrafficArea)
+                    ) {
                         $retv = array(
                             $adminAreaTrafficArea['trafficArea']['id'],
                             $adminAreaTrafficArea['trafficArea']['name']
