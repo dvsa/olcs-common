@@ -19,6 +19,25 @@ use Zend\Form\Element\Checkbox;
  */
 trait GenericVehicleSection
 {
+
+    /**
+     * Redirect to the first section
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
+     * Performs delete action
+     */
+    public function deleteAction()
+    {
+        return $this->renderSection();
+    }
+
     /**
      * Check whether we should skip saving
      *
@@ -304,5 +323,18 @@ trait GenericVehicleSection
             $bundle
         );
         return $data['totAuth' . $type . 'Vehicles'];
+    }
+
+    /**
+     * Alter delete form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterDeleteForm($form)
+    {
+        $form->get('data')->get('id')->setLabel('vehicle-remove-confirm-label');
+
+        return $form;
     }
 }

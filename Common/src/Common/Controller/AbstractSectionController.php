@@ -91,6 +91,15 @@ abstract class AbstractSectionController extends AbstractController
     protected $bespokeSubActions = array();
 
     /**
+     * Here we can add sub actions that are always bespoke
+     *
+     * @var array
+     */
+    protected $defaultBespokeSubActions = array(
+        'delete'
+    );
+
+    /**
      * Cache the action suffix
      *
      * @var string
@@ -170,6 +179,16 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
+     * Merge the defined bespokeSubActions, with the defaults
+     *
+     * @return array
+     */
+    protected function getAllBespokeSubActions()
+    {
+        return array_merge($this->getBespokeSubActions(), $this->defaultBespokeSubActions);
+    }
+
+    /**
      * Getter for action data bundle
      *
      * @return array
@@ -187,6 +206,14 @@ abstract class AbstractSectionController extends AbstractController
     protected function getFormName()
     {
         if ($this->isAction()) {
+
+            $action = $this->getActionFromFullActionName();
+
+            // @NOTE The delete bespoke action is a special case
+            //  and we want a generic delete confirmation form
+            if ($action == 'delete' && $this->isBespokeAction()) {
+                return 'generic-delete-confirmation';
+            }
 
             return $this->formName . $this->getSuffixForCurrentAction();
         }
@@ -250,7 +277,7 @@ abstract class AbstractSectionController extends AbstractController
             $action = $this->getActionFromFullActionName();
         }
 
-        return in_array($action, $this->getBespokeSubActions());
+        return in_array($action, $this->getAllBespokeSubActions());
     }
 
     /**
@@ -726,7 +753,13 @@ abstract class AbstractSectionController extends AbstractController
 
         if ($this->isButtonPressed('cancel')) {
 
-            $this->addInfoMessage('Your changes have been discarded');
+            $action = $this->getActionFromFullActionName();
+
+            // This message isn't right for cancelling a delete action
+            if ($action != 'delete') {
+
+                $this->addInfoMessage('flash-discarded-changes');
+            }
 
             return $this->goBackToSection();
         }
@@ -944,5 +977,37 @@ abstract class AbstractSectionController extends AbstractController
     protected function render($view)
     {
         return $view;
+    }
+
+    /**
+     * Default Load data for the delete confirmation form
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function deleteLoad($id)
+    {
+        return array('data' => array('id' => $id));
+    }
+
+    /**
+     * Default Process delete
+     *
+     * @param array $data
+     */
+    protected function deleteSave($data)
+    {
+        $this->delete($data['data']['id'], $this->getActionService());
+    }
+
+    /**
+     * Alter delete form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterDeleteForm($form)
+    {
+        return $form;
     }
 }

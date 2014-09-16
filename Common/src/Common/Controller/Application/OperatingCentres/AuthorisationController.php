@@ -276,13 +276,13 @@ class AuthorisationController extends OperatingCentresController
     {
         // Need to enumerate the form fieldsets with their mapping, as we're
         // going to use old/new
-        $fieldsetMap = Array();
-        if ( $options['isReview'] ) {
+        $fieldsetMap = array();
+        if ($options['isReview']) {
             foreach ($options['fieldsets'] as $fieldset) {
-                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')]=$fieldset;
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
             }
         } else {
-            $fieldsetMap = Array(
+            $fieldsetMap = array(
                 'dataTrafficArea' => 'dataTrafficArea',
                 'data' => 'data',
                 'table' => 'table'
@@ -295,7 +295,8 @@ class AuthorisationController extends OperatingCentresController
             $formOptions['hint'] .= '.psv';
             $form->get($fieldsetMap['data'])->setOptions($options);
 
-            $licenceType=$options['data']['data']['licence']['licenceType']['id'];
+            $licenceType = $options['data']['data']['licence']['licenceType']['id'];
+
             if (!in_array(
                 $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
@@ -304,7 +305,7 @@ class AuthorisationController extends OperatingCentresController
             }
 
             if (!in_array(
-                $context->getLicenceType(),
+                $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
             )) {
                 $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
@@ -386,20 +387,21 @@ class AuthorisationController extends OperatingCentresController
      */
     protected function alterForm($form)
     {
-        $options=Array(
+        $options = array(
             'isPsv' => $this->isPsv(),
             'isReview' => false,
             'data' => array(
                 'data' => array(
                     'licence' => array(
                         'licenceType' => array(
-                            'id' => $this->licenceType
+                            'id' => $this->getLicenceType()
                         )
                     )
                 )
             )
         );
-        $form=$this->makeFormAlterations($form, $this, $options);
+
+        $form = $this->makeFormAlterations($form, $this, $options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
