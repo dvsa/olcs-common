@@ -61,7 +61,7 @@ class YourBusinessController extends ApplicationController
                 )
             )
         );
-        
+
         $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
 
         return $application['licence']['organisation'];
