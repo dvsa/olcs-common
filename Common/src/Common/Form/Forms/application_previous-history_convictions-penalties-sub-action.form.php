@@ -21,7 +21,6 @@ return array(
                     'title' => array(
                         'type' => 'select',
                         'label' => $translationPrefix . '-formTitle',
-                        // @todo Not sure these should be hard coded in here
                         'value_options' => array(
                             'Mr' => $translationPrefix . '-formTitleValueMr',
                             'Mrs' => $translationPrefix . '-formTitleValueMrs',
