@@ -9,6 +9,7 @@
 
 namespace CommonTest\Controller\Application\ReviewDeclarations;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -20,6 +21,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class SummaryControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\ReviewDeclarations\SummaryController';
 
     protected $defaultRestResponse = array();
@@ -45,18 +48,6 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             'documents' => array()
         )
     );
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction

@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\PreviousHistory;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,23 +19,13 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class FinancialHistoryControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\PreviousHistory\FinancialHistoryController';
 
     protected $defaultRestResponse = array();
 
     protected $mockedMethods = array('getUploader', 'getFileSizeValidator');
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction

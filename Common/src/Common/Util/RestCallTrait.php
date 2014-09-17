@@ -115,7 +115,6 @@ trait RestCallTrait
             case 'DELETE':
                 $handleResponseMethod = 'handleDeleteResponse';
                 break;
-            // @todo implement other methods if/when necessary
             default:
                 return null;
         }
