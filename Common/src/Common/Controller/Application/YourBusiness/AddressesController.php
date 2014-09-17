@@ -125,7 +125,7 @@ class AddressesController extends YourBusinessController
     );
 
 
-    public static $addressBundle = array(
+    public static $organisationTypeBundle = array(
         'properties' => array(),
         'children' => array(
             'licence' => array(
@@ -223,7 +223,7 @@ class AddressesController extends YourBusinessController
             'Application',
             'GET',
             array('id' => $context->getIdentifier()),
-            self::$addressBundle
+            self::$organisationTypeBundle
         );
 
         // Need to enumerate the form fieldsets with their mapping, as we're

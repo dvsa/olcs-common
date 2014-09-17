@@ -471,17 +471,23 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'id' => 'ltyp_sn'
                     ),
                     'organisation' => array(
-                        'id' => 1
+                        'id' => 1,
+                        'type' => array(
+                            'id' => 'org_t_rc'
+                        )
                     )
                 )
             );
         }
 
         $organisationIdDataBundle = array(
-            'properties' => array(
+            'children' => array(
                 'licence' => array(
                     'children' => array(
                         'organisation' => array(
+                            'properties' => array(
+                                'id'
+                            ),
                             'children' => array(
                                 'type' => array(
                                     'properties' => array(
@@ -499,9 +505,42 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 && $method == 'GET'
                 && $bundle == $organisationIdDataBundle ) {
             return array(
+                'id' => 1,
+                'version' => 1,
                 'licence' => array(
                     'organisation' => array(
-                        'id' => 1
+                        'id' => 1,
+                        'type' => array(
+                            'id' => 'ltdco'
+                        )
+                    )
+                )
+            );
+        }
+
+        $trafficAreaBundle = array(
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'trafficArea' => array(
+                            'properties' => array(
+                                'name'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ( $service == 'Application'
+                && $method == 'GET'
+                && $bundle == $trafficAreaBundle ) {
+            return array(
+                'licence' => array(
+                    'organisation' => array(
+                        'trafficArea' => array(
+                            'name' => 'Deepest Darkest Peru'
+                        )
                     )
                 )
             );
@@ -647,34 +686,41 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
-        $safetyInspectorBundle = array(
+        $workshopBundle = array(
             'properties' => array(
                 'id',
-                'version',
-                'isExternal'
+                'version'
             ),
             'children' => array(
-                'contactDetails' => array(
-                    'properties' => array(
-                        'id',
-                        'version',
-                        'fao'
-                    ),
+                'licence' => array(
                     'children' => array(
-                        'address' => array(
+                        'workshops' => array(
                             'properties' => array(
                                 'id',
-                                'version',
-                                'addressLine1',
-                                'addressLine2',
-                                'addressLine3',
-                                'addressLine4',
-                                'town',
-                                'postcode'
+                                'isExternal'
                             ),
                             'children' => array(
-                                'countryCode' => array(
-                                    'properties' => array('id')
+                                'contactDetails' => array(
+                                    'properties' => array(
+                                        'fao'
+                                    ),
+                                    'children' => array(
+                                        'address' => array(
+                                            'properties' => array(
+                                                'addressLine1',
+                                                'addressLine2',
+                                                'addressLine3',
+                                                'addressLine4',
+                                                'town',
+                                                'postcode'
+                                            ),
+                                            'children' => array(
+                                                'countryCode' => array(
+                                                    'properties' => array('id')
+                                                )
+                                            )
+                                        )
+                                    )
                                 )
                             )
                         )
@@ -685,7 +731,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
 
         if ( $service == 'Application'
                 && $method == 'GET'
-                && $bundle == $safetyInspectorBundle ) {
+                && $bundle == $workshopBundle ) {
             return array(
                 'id' => 1,
                 'version' => 1,
@@ -799,6 +845,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
+
+
 
         // Temporary debug to show when we haven't matched a REST call
         echo $service;

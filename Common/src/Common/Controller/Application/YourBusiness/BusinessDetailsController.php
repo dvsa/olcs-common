@@ -55,10 +55,13 @@ class BusinessDetailsController extends YourBusinessController
     );
 
     public static $applicationBundle = array(
-        'properties' => array(
+        'children' => array(
             'licence' => array(
                 'children' => array(
                     'organisation' => array(
+                        'properties' => array(
+                            'id'
+                        ),
                         'children' => array(
                             'type' => array(
                                 'properties' => array(
@@ -214,14 +217,13 @@ class BusinessDetailsController extends YourBusinessController
     public static function makeFormAlterations($form, $context, $options = array())
     {
         $applicationBundle = array(
-            'properties' => array(
-                'id',
-                'version',
-            ),
             'children' => array(
                 'licence' => array(
                     'children' => array(
                         'organisation' => array(
+                            'properties' => array(
+                                'id'
+                            ),
                             'children' => array(
                                 'type' => array(
                                     'properties' => array(
@@ -570,7 +572,7 @@ class BusinessDetailsController extends YourBusinessController
      */
     public static function getSummaryTableData($applicationId, $context, $tableName)
     {
-        $organisation = $context->makeRestCall(
+        $applicationData = $context->makeRestCall(
             'Application',
             'GET',
             array('id' => $applicationId),
@@ -580,7 +582,7 @@ class BusinessDetailsController extends YourBusinessController
         $loadData = $context->makeRestCall(
             'CompanySubsidiary',
             'GET',
-            array('organisation' => $organisation['id']),
+            array('organisation' => $applicationData['licence']['organisation']['id']),
             self::$subCompanyBundle
         );
 
