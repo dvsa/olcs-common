@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\TaxiPhv;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,6 +19,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class LicenceControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\TaxiPhv\LicenceController';
 
     protected $defaultRestResponse = array();
@@ -40,8 +43,12 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
     /*
      * Mock methods for this controller
      */
-    protected $mockedMethods = array('getLicenceService', 'getPostcodeService',
-                                     'getPostcodeTrafficAreaValidator', 'getPostcodeValidatorsChain');
+    protected $mockedMethods = array(
+        'getLicenceService',
+        'getPostcodeService',
+        'getPostcodeTrafficAreaValidator',
+        'getPostcodeValidatorsChain'
+    );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
@@ -96,19 +103,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('getPostcodeService')
             ->will($this->returnValue($mockPostcodeService));
 
-    }
-
-    /**
-     * Test back button
-     * @group acurrent
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**

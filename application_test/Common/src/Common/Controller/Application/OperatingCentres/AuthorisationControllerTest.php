@@ -9,6 +9,7 @@
 
 namespace CommonTest\Controller\Application\OperatingCentres;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -20,6 +21,7 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
 
     protected $controllerName = '\Common\Controller\Application\OperatingCentres\AuthorisationController';
 
@@ -117,18 +119,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
             ->method('getPostcodeService')
             ->will($this->returnValue($mockPostcodeService));
 
-    }
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**

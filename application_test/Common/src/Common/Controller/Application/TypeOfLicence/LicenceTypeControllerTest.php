@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\TypeOfLicence;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,23 +19,13 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class LicenceTypeControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\TypeOfLicence\LicenceTypeController';
     protected $defaultRestResponse = array();
 
     private $goodsOrPsv;
     private $niFlag = 0;
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test back button with niFlag
