@@ -486,7 +486,7 @@ class AuthorisationController extends OperatingCentresController
         // add traffic area validator
         $licenceData = $this->getLicenceData();
 
-        $trafficAreaValidator = $this->getPostcodeTrafficAreaValidator();
+        $trafficAreaValidator = $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
         $trafficAreaValidator->setNiFlag($licenceData['niFlag']);
         $trafficAreaValidator->setOperatingCentresCount($this->getOperatingCentresCount());
         $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
@@ -846,35 +846,5 @@ class AuthorisationController extends OperatingCentresController
         }
 
         return $this->tableData;
-    }
-
-    /**
-     * Get postcode service
-     *
-     * @return Common\Service\Postcode\Postcode
-     */
-    public function getPostcodeService()
-    {
-        return $this->getServiceLocator()->get('postcode');
-    }
-
-    /**
-     * Get postcode traffic area validator
-     *
-     * @return Common\Form\Elements\Validator\OperatingCentreTrafficAreaValidator
-     */
-    public function getPostcodeTrafficAreaValidator()
-    {
-        return $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
-    }
-
-    /**
-     * Get postcode validators chain
-     *
-     * @return Zend\Validator\ValidatorChain
-     */
-    public function getPostcodeValidatorsChain($form)
-    {
-        return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
     }
 }

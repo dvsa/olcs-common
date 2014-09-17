@@ -24,6 +24,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
 
     protected $defaultRestResponse = array();
 
+    protected $trafficAreaPresent = true;
+
     protected $appDataBundle = array(
         'properties' => 'ALL',
         'children' => array(
@@ -69,6 +71,19 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
     }
 
+    /**
+     * Test indexAction with unset traffic area
+     */
+    public function testIndexActionWithUnsetTrafficArea()
+    {
+        $this->setUpAction('index');
+        $this->trafficAreaPresent = false;
+        $response = $this->controller->indexAction();
+
+        // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+    
     /**
      * Test indexAction with form alterations
      */
@@ -276,6 +291,32 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     )
                 )
             );
+        }
+        $formAlterationsBundle = array(
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'trafficArea' => array(
+                                'properties' => array(
+                                    'name'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        if ($service == 'Application' && $method == 'GET' && $bundle == $formAlterationsBundle) {
+            if ($this->trafficAreaPresent) {
+                return array(
+                    'licence' => array(
+                        'trafficArea' => array(
+                            'name' => 'Name'
+                        )
+                    )
+                );
+            } else {
+                return array();
+            }
         }
     }
 }

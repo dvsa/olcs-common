@@ -378,7 +378,7 @@ class ApplicationController extends AbstractJourneyController
      *
      * @return Zend\Validator\ValidatorChain
      */
-    public function getPostcodeValidatorsChain($form)
+    protected function getPostcodeValidatorsChain($form)
     {
         return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
     }
@@ -388,7 +388,7 @@ class ApplicationController extends AbstractJourneyController
      *
      * @return Common\Service\Postcode\Postcode
      */
-    public function getPostcodeService()
+    protected function getPostcodeService()
     {
         return $this->getServiceLocator()->get('postcode');
     }

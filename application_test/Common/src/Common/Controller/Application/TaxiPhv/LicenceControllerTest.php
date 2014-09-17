@@ -53,9 +53,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('generateLicence')
             ->will($this->returnValue(1));
 
-        $this->controller->expects($this->any())
-            ->method('getLicenceService')
-            ->will($this->returnValue($mockLicenceService));
+        $this->serviceManager->setService('licence', $mockLicenceService);
 
         $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
         $mockPostcodeValidatorsChain->expects($this->any())
@@ -75,9 +73,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('isValid')
             ->will($this->returnValue(true));
 
-        $this->controller->expects($this->any())
-            ->method('getPostcodeTrafficAreaValidator')
-            ->will($this->returnValue($mockPostcodeValidator));
+        $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 

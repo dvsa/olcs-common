@@ -68,15 +68,16 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     {
         parent::setUpAction($action, $id, $data, $files);
 
-        $mockLicenceService = $this->getMock('\StdClass', array('generateLicence'));
-
+        $mockLicenceService = $this->getMock('Common\Service\Licence\Licence', array('generateLicence'));
         $mockLicenceService->expects($this->any())
             ->method('generateLicence')
             ->will($this->returnValue(1));
 
-        $this->controller->expects($this->any())
-            ->method('getLicenceService')
-            ->will($this->returnValue($mockLicenceService));
+        $mockLicenceService = $this->getMock('Common\Service\Licence\Licence', array('generateLicence'));
+        $mockLicenceService->expects($this->any())
+            ->method('generateLicence')
+            ->will($this->returnValue(1));
+        $this->serviceManager->setService('licence', $mockLicenceService);
 
         $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
         $mockPostcodeValidatorsChain->expects($this->any())
@@ -96,9 +97,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
             ->method('isValid')
             ->will($this->returnValue(true));
 
-        $this->controller->expects($this->any())
-            ->method('getPostcodeTrafficAreaValidator')
-            ->will($this->returnValue($mockPostcodeValidator));
+        $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 
@@ -480,6 +479,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     /**
      * Test addAction with submit
      *
+     * @group trait
      * @dataProvider psvTrafficAreaProvider
      */
     public function testAddActionWithSubmit($goodsOrPsv, $hasTrailers, $niFlag)
@@ -1419,7 +1419,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                     )
                 )
             )
-        );
+        );        
         if ($service == 'Application' && $method == 'GET' && $bundle == $appWithTrafficAreaBundle) {
             if ($this->hasTrafficAreaDefined) {
                 return array(
