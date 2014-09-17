@@ -335,9 +335,11 @@ class BusinessDetailsController extends YourBusinessController
         $organisation = $licence['organisation'];
 
         $tradingNames = [];
-
-        foreach ($licence['organisation']['tradingNames'] as $tradingName) {
-            $tradingNames[] = ['text' => $tradingName['name']];
+        
+        if ( isset($licence['organisation']['tradingNames']) ) {
+            foreach ($licence['organisation']['tradingNames'] as $tradingName) {
+                $tradingNames[] = ['text' => $tradingName['name']];
+            }
         }
 
         $tradingNames[] = ['text' => ''];

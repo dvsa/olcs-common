@@ -19,6 +19,7 @@ use Common\Controller\Application\Application\ApplicationController;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCase
 {
@@ -469,10 +470,6 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                     'licence' => array(
                         'children' => array(
                             'organisation' => array(
-                                'properties' => array(
-                                    'id',
-                                    'version'
-                                ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
@@ -517,7 +514,9 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
             $idBundle = array(
                 'properties' => array(
                     'id',
-                    'version',
+                    'version'
+                ),
+                'children' => array(
                     'licence' => array(
                         'children' => array(
                             'organisation' => array(
@@ -588,5 +587,8 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 );
             }
         }
+
+        echo $service;
+        print_r($bundle);
     }
 }
