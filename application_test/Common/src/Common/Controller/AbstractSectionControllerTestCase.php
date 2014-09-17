@@ -57,6 +57,19 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             ->will($this->returnCallback(array($this, 'mockRestCall')));
 
         $this->serviceManager = Bootstrap::getServiceManager();
+        $this->serviceManager->setAllowOverride(true);
+        $licenceService = $this->getMock('Olcs\Service\Data\Licence');
+        $licenceService->expects($this->any())->method('fetchLicenceData')->willReturn(
+            array(
+                'id' => 37,
+                'goodsOrPsv' => array('id' => 'lcat_psv', 'description' => 'Goods'),
+                'licenceType' => array('id' => 'ltyp_bus','description'=> 'Type'),
+                'status' => array('description'=> 'All good'),
+                'licNo' => '1234',
+            )
+        );
+
+        $this->serviceManager->setService('Olcs\Service\Data\Licence', $licenceService);
 
         $this->request = new Request();
         $this->response = new Response();
@@ -109,7 +122,12 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         $this->request = null;
         $this->routeMatch = null;
         $this->event = null;
-        $this->restResponses = $this->defaultRestResponse;
+        $this->restResponses = array();
+        foreach ($this->defaultRestResponse as $service => $details) {
+            foreach ($details as $method => $response) {
+                $this->restResponses[$service][$method]['default'] = $response;
+            }
+        }
     }
 
     /**
@@ -122,13 +140,12 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
     protected function setRestResponse($service, $method, $response = null, $bundle = array())
     {
         if (!empty($bundle)) {
-            $response = array(
-                'bundle' => $bundle,
-                'response' => $response
-            );
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
         }
 
-        $this->restResponses[$service][$method] = $response;
+        $this->restResponses[$service][$method][$which] = $response;
     }
 
     /**
@@ -145,19 +162,28 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             return null;
         }
 
-        if (isset($this->restResponses[$service][$method])) {
-
-            if (isset($this->restResponses[$service][$method]['bundle'])) {
-
-                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
-                    return $this->restResponses[$service][$method]['response'];
-                }
-            } else {
-                return $this->restResponses[$service][$method];
-            }
+        if (!empty($bundle)) {
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
         }
 
-        return $this->mockRestCalls($service, $method, $data, $bundle);
+        if (isset($this->restResponses[$service][$method][$which])) {
+
+            return $this->restResponses[$service][$method][$which];
+
+        } elseif (isset($this->restResponses[$service][$method]['default'])) {
+
+            return $this->restResponses[$service][$method]['default'];
+        }
+
+        $response = $this->mockRestCalls($service, $method, $data, $bundle);
+
+        if ($method == 'GET' && $response === null) {
+            $this->fail('Missed a mocked rest call: Service - ' . $service . ' Bundle - ' . print_r($bundle, true));
+        }
+
+        return $response;
     }
 
     /**
@@ -174,6 +200,7 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
      * Get form from response
      *
      * @param \Zend\View\Model\ViewModel $view
+     * @return \Zend\Form\Form
      */
     protected function getFormFromView($view)
     {
@@ -185,6 +212,24 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         }
 
         $this->fail('Trying to get form of a Response object instead of a ViewModel');
+    }
+
+    /**
+     * Get table from response
+     *
+     * @param \Zend\View\Model\ViewModel $view
+     * @return \Zend\Form\Form
+     */
+    protected function getTableFromView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $main = $this->getMainView($view);
+
+            return $main->getVariable('table');
+        }
+
+        $this->fail('Trying to get table of a Response object instead of a ViewModel');
     }
 
     /**

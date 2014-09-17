@@ -53,6 +53,40 @@ class AuthorisationController extends OperatingCentresController
                         )
                     )
                 )
+            ),
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array('id')
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
             )
         )
     );
@@ -126,7 +160,7 @@ class AuthorisationController extends OperatingCentresController
             'permission',
             'adPlaced',
             'adPlacedIn',
-            'adPlacedDate'
+            'adPlacedDate',
         ),
         'children' => array(
             'operatingCentre' => array(
@@ -161,21 +195,6 @@ class AuthorisationController extends OperatingCentresController
                             'filename',
                             'identifier',
                             'size'
-                        )
-                    )
-                )
-            ),
-            'application' => array(
-                'properties' => null,
-                'children' => array(
-                    'licence' => array(
-                        'properties' => null,
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
                         )
                     )
                 )
@@ -242,48 +261,71 @@ class AuthorisationController extends OperatingCentresController
     }
 
     /**
-     * Remove trailer elements for PSV and set up Traffic Area section
+     * Make form alterations
      *
-     * @param object $form
-     * @return object
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
+     *
+     * @param Form $form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
      */
-    protected function alterForm($form)
+    public static function makeFormAlterations($form, $context, $options = array())
     {
-        if ($this->isPsv()) {
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = array();
+        if ($options['isReview']) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
+            }
+        } else {
+            $fieldsetMap = array(
+                'dataTrafficArea' => 'dataTrafficArea',
+                'data' => 'data',
+                'table' => 'table'
+            );
+        }
 
-            $options = $form->get('data')->getOptions();
-            $options['hint'] .= '.psv';
-            $form->get('data')->setOptions($options);
+        if ($options['isPsv']) {
+
+            $formOptions = $form->get($fieldsetMap['data'])->getOptions();
+            $formOptions['hint'] .= '.psv';
+            $form->get($fieldsetMap['data'])->setOptions($options);
+
+            $licenceType = $options['data']['data']['licence']['licenceType']['id'];
 
             if (!in_array(
-                $this->getLicenceType(),
+                $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
             )) {
-                $form->get('data')->remove('totAuthLargeVehicles');
+                $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
             }
 
             if (!in_array(
-                $this->getLicenceType(),
+                $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
             )) {
-                $form->get('data')->remove('totCommunityLicences');
+                $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
             }
 
-            $form->get('data')->remove('totAuthVehicles');
-            $form->get('data')->remove('totAuthTrailers');
-            $form->get('data')->remove('minTrailerAuth');
-            $form->get('data')->remove('maxTrailerAuth');
+            $form->get($fieldsetMap['data'])->remove('totAuthVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthTrailers');
+            $form->get($fieldsetMap['data'])->remove('minTrailerAuth');
+            $form->get($fieldsetMap['data'])->remove('maxTrailerAuth');
 
         } else {
 
-            $form->get('data')->remove('totAuthSmallVehicles');
-            $form->get('data')->remove('totAuthMediumVehicles');
-            $form->get('data')->remove('totAuthLargeVehicles');
-            $form->get('data')->remove('totCommunityLicences');
+            $form->get($fieldsetMap['data'])->remove('totAuthSmallVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthMediumVehicles');
+            $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
+            $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
         }
 
-        if ($this->isPsv()) {
-            $table = $form->get('table')->get('table')->getTable();
+        if ($options['isPsv']) {
+            $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
             $cols = $table->getColumns();
             unset($cols['trailersCol']);
             $table->setColumns($cols);
@@ -292,6 +334,74 @@ class AuthorisationController extends OperatingCentresController
             unset($footer['trailersCol']);
             $table->setFooter($footer);
         }
+
+        // Review-only options - we set the traffic area field in a different way
+        // because of the method scope.
+        if ( $options['isReview'] ) {
+            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
+            $bundle = array(
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'trafficArea' => array(
+                                'properties' => array(
+                                    'name'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            $application = $context->makeRestCall(
+                'Application',
+                'GET',
+                array(
+                    'id' => $options['data']['id'],
+                ),
+                $bundle
+            );
+
+            if ( isset($application['licence']['trafficArea']) ) {
+                $form
+                    ->get($fieldsetMap['dataTrafficArea'])
+                    ->get('trafficAreaInfoNameExists')
+                    ->setValue($application['licence']['trafficArea']['name']);
+            } else {
+                $form
+                    ->get($fieldsetMap['dataTrafficArea'])
+                    ->get('trafficAreaInfoNameExists')
+                    ->setValue('unset');
+            }
+
+        }
+
+        return $form;
+    }
+
+    /**
+     * Remove trailer elements for PSV and set up Traffic Area section
+     *
+     * @param object $form
+     * @return object
+     */
+    protected function alterForm($form)
+    {
+        $options = array(
+            'isPsv' => $this->isPsv(),
+            'isReview' => false,
+            'data' => array(
+                'data' => array(
+                    'licence' => array(
+                        'licenceType' => array(
+                            'id' => $this->getLicenceType()
+                        )
+                    )
+                )
+            )
+        );
+
+        $form = $this->makeFormAlterations($form, $this, $options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
@@ -777,6 +887,83 @@ class AuthorisationController extends OperatingCentresController
     }
 
     /**
+     * Retrieve the relevant table data as we want to render it on the review summary page
+     * Note that as with most controllers this is the same data we want to render on the
+     * normal form page, hence why getFormTableData (declared later) simply wraps this
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $tableDataBundle = array(
+            'children' => array(
+                'operatingCentre' => array(
+                    'properties' => array(
+                        'id',
+                        'version'
+                    ),
+                    'children' => array(
+                        'address' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'addressLine1',
+                                'addressLine2',
+                                'addressLine3',
+                                'addressLine4',
+                                'postcode',
+                                'town'
+                            ),
+                            'children' => array(
+                                'countryCode' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        ),
+                        'adDocuments' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'filename',
+                                'identifier',
+                                'size'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $data = $context->makeRestCall(
+            'ApplicationOperatingCentre',
+            'GET',
+            array('application' => $applicationId),
+            $tableDataBundle
+        );
+
+        $newData = array();
+
+        foreach ($data['Results'] as $row) {
+
+            $newRow = $row;
+
+            if (isset($row['operatingCentre']['address'])) {
+
+                unset($row['operatingCentre']['address']['id']);
+                unset($row['operatingCentre']['address']['version']);
+
+                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+            }
+
+            unset($newRow['operatingCentre']);
+
+            $newData[] = $newRow;
+        }
+
+        return $newData;
+    }
+
+    /**
      * Get data for table
      *
      * @param string $id
@@ -784,37 +971,10 @@ class AuthorisationController extends OperatingCentresController
     public function getFormTableData($id, $table)
     {
         if (is_null($this->tableData)) {
-            $data = $this->makeRestCall(
-                'ApplicationOperatingCentre',
-                'GET',
-                array('application' => $id),
-                $this->getActionDataBundle()
-            );
-
-            $newData = array();
-
-            foreach ($data['Results'] as $row) {
-
-                $newRow = $row;
-
-                if (isset($row['operatingCentre']['address'])) {
-
-                    unset($row['operatingCentre']['address']['id']);
-                    unset($row['operatingCentre']['address']['version']);
-
-                    $newRow = array_merge($newRow, $row['operatingCentre']['address']);
-                }
-
-                unset($newRow['operatingCentre']);
-
-                $newData[] = $newRow;
-            }
-
-            $this->tableData = $newData;
+            $this->tableData=$this->getSummaryTableData($id, $this, '');
         }
 
         return $this->tableData;
-
     }
 
     /**

@@ -9,6 +9,7 @@
 namespace Common\Controller\Application\Application;
 
 use Common\Controller\AbstractJourneyController;
+use Common\Controller\Traits\GenericLicenceSection;
 
 /**
  * Application Controller
@@ -17,6 +18,20 @@ use Common\Controller\AbstractJourneyController;
  */
 class ApplicationController extends AbstractJourneyController
 {
+    use GenericLicenceSection;
+
+    /**
+     * Application statuses
+     */
+    const APPLICATION_STATUS_NOT_YET_SUBMITTED = 'apsts_not_submitted';
+    const APPLICATION_STATUS_CURTAILED = 'apsts_curtailed';
+    const APPLICATION_STATUS_GRANTED = 'apsts_granted';
+    const APPLICATION_STATUS_NOT_TAKEN_UP = 'apsts_ntu';
+    const APPLICATION_STATUS_REFUSED = 'apsts_refused';
+    const APPLICATION_STATUS_VALID = 'apsts_valid';
+    const APPLICATION_STATUS_WITHDRAWN = 'apsts_withdrawn';
+    const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
+
     /**
      * Journey completion statuses
      */
@@ -27,8 +42,8 @@ class ApplicationController extends AbstractJourneyController
     /**
      * Goods or PSV keys
      */
-    const GOODS_OR_PSV_GOODS_VEHICLE = 'lcat_gv';
-    const GOODS_OR_PSV_PSV = 'lcat_psv';
+    const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
+    const LICENCE_CATEGORY_PSV = 'lcat_psv';
 
     /**
      * Licence types keys
@@ -52,7 +67,8 @@ class ApplicationController extends AbstractJourneyController
      *
      * @var array
      */
-    public static $licenceDataBundle = array(
+    public static $applicationLicenceDataBundle = array(
+        'properties' => array(),
         'children' => array(
             'licence' => array(
                 'properties' => array(
@@ -93,25 +109,40 @@ class ApplicationController extends AbstractJourneyController
     protected $service = 'Application';
 
     /**
-     * Cache licence data requests
+     * Application status bundle
      *
      * @var array
      */
-    private $licenceData = array();
+    protected $applicationStatusBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
 
     /**
-     * Check if is psv
+     * Get licence data service (Used to extend trait)
      *
-     * @var boolean
+     * @return string
      */
-    protected $isPsv = null;
+    protected function getLicenceDataService()
+    {
+        return 'Application';
+    }
 
     /**
-     * Licence type
+     * Get licence data bundle
      *
-     * @var string
+     * @return array
      */
-    protected $licenceType = null;
+    protected function getLicenceDataBundle()
+    {
+        return static::$applicationLicenceDataBundle;
+    }
 
     /**
      * Redirect to the first section
@@ -177,36 +208,6 @@ class ApplicationController extends AbstractJourneyController
         $completion['version']++;
 
         $this->setSectionCompletion($completion);
-    }
-
-    /**
-     * Check if application is psv
-     *
-     * GetAccessKeys "should" always be called first so psv should be set
-     *
-     * @return boolean
-     */
-    protected function isPsv()
-    {
-        return $this->isPsv;
-    }
-
-    /**
-     * Get the licence type
-     *
-     * @return string
-     */
-    protected function getLicenceType()
-    {
-        if (empty($this->licenceType)) {
-            $licenceData = $this->getLicenceData();
-
-            if (isset($licenceData['licenceType']['id'])) {
-                $this->licenceType = $licenceData['licenceType']['id'];
-            }
-        }
-
-        return $this->licenceType;
     }
 
     /**
@@ -278,7 +279,7 @@ class ApplicationController extends AbstractJourneyController
             return null;
         }
 
-        if ($licence['goodsOrPsv']['id'] == self::GOODS_OR_PSV_PSV) {
+        if ($licence['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV) {
             return 'psv';
         }
 
@@ -317,28 +318,6 @@ class ApplicationController extends AbstractJourneyController
         }
 
         return null;
-    }
-
-    /**
-     * Get the licence data
-     *
-     * @return array
-     */
-    protected function getLicenceData()
-    {
-        if (empty($this->licenceData)) {
-
-            $application = $this->makeRestCall(
-                'Application',
-                'GET',
-                array('id' => $this->getIdentifier()),
-                self::$licenceDataBundle
-            );
-
-            $this->licenceData = $application['licence'];
-        }
-
-        return $this->licenceData;
     }
 
     /**
@@ -383,6 +362,18 @@ class ApplicationController extends AbstractJourneyController
     }
 
     /**
+     * Get the licence data
+     *
+     * @return array
+     */
+    protected function getLicenceData()
+    {
+        $results = $this->doGetLicenceData();
+
+        return $results['licence'];
+    }
+
+    /**
      * Get postcode validators chain
      *
      * @return Zend\Validator\ValidatorChain
@@ -400,5 +391,17 @@ class ApplicationController extends AbstractJourneyController
     public function getPostcodeService()
     {
         return $this->getServiceLocator()->get('postcode');
+    }
+
+    /**
+     * Get application status
+     */
+    protected function getApplicationStatus()
+    {
+        $id = $this->getIdentifier();
+
+        $results = $this->makeRestCall('Application', 'GET', $id, $this->applicationStatusBundle);
+
+        return $results['status']['id'];
     }
 }

@@ -14,7 +14,7 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'warning', 'requireRows' => true)
+                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         )
     ),
@@ -28,24 +28,24 @@ return array(
         array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'small-edit'
-                    ),
-                    'Application/VehicleSafety/VehiclePsv'
-                ) . '">' . $row['vrm'] . '</a>';
-            }
-        ),
-        array(
-            'title' => $translationPrefix . '.make',
-            'name' => 'makeModel'
+            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm'),
+            'action-type' => 'small',
+            'psv' => true
         ),
         array(
             'title' => $translationPrefix . '.novelty',
             'name' => 'isNovelty',
             'formatter' => 'YesNo'
+        ),
+        array(
+            'title' => $translationPrefix . '.specified',
+            'formatter' => 'Date',
+            'name' => 'specifiedDate'
+        ),
+        array(
+            'title' => $translationPrefix . '.removed',
+            'formatter' => 'Date',
+            'name' => 'deletedDate'
         )
     )
 );

@@ -63,13 +63,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     private $sectionReference;
 
     /**
-     * Holds the table name
-     *
-     * @var string
-     */
-    private $tableName;
-
-    /**
      * Holds the section completion
      *
      * @var array
@@ -117,20 +110,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
      * @var boolean
      */
     protected $hasView = null;
-
-    /**
-     * Holds hasTable
-     *
-     * @var boolean
-     */
-    protected $hasTable = null;
-
-    /**
-     * Holds hasForm
-     *
-     * @var boolean
-     */
-    protected $hasForm = null;
 
     protected function getApplicationConfig()
     {
@@ -331,8 +310,20 @@ abstract class AbstractJourneyController extends AbstractSectionController
         if (empty($this->formName)) {
 
             $this->formName = $this->formatFormName(
-                $this->getJourneyName(), $this->getSectionName(), $this->getSubSectionName(), $this->isAction()
+                $this->getJourneyName(),
+                $this->getSectionName(),
+                $this->getSubSectionName(),
+                $this->isAction(),
+                $this->getActionName()
             );
+
+            // If the guessed form name doesn't exist
+            //  call the parent getFormName
+            //  this is useful for any generic action form such as delete confirmation
+            if (!$this->formExists($this->formName)) {
+                $this->formName = null;
+                $this->formName = parent::getFormName();
+            }
         }
 
         return $this->formName;
@@ -347,12 +338,13 @@ abstract class AbstractJourneyController extends AbstractSectionController
      * @param string $isAction
      * @return string
      */
-    protected function formatFormName($journey, $section, $subSection, $isAction = false)
+    protected function formatFormName($journey, $section, $subSection, $isAction = false, $action = null)
     {
         $suffix = '';
 
         if ($isAction) {
-            $suffix = '-sub-action';
+
+            $suffix = $this->getSuffixForAction($action);
         }
 
         return $this->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
@@ -739,46 +731,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     }
 
     /**
-     * Check if the current sub section has a table
-     *
-     * @return boolean
-     */
-    protected function hasTable()
-    {
-        if (is_null($this->hasTable)) {
-
-            $tableName = $this->getTableName();
-
-            $this->hasTable = false;
-
-            foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
-
-                if (file_exists($location . $tableName . '.table.php')) {
-                    $this->hasTable = true;
-                    break;
-                }
-            }
-        }
-
-        return $this->hasTable;
-    }
-
-    /**
-     * Check if the current sub section has a form
-     *
-     * @return boolean
-     */
-    protected function hasForm()
-    {
-        if (is_null($this->hasForm)) {
-
-            $this->hasForm = $this->formExists($this->getFormName());
-        }
-
-        return $this->hasForm;
-    }
-
-    /**
      * Check if a section is accessible
      *
      * @param array|string $details (Section if string)
@@ -866,103 +818,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     }
 
     /**
-     * Alter table
-     *
-     * This method should be overridden
-     *
-     * @param object $table
-     * @return object
-     */
-    protected function alterTable($table)
-    {
-        return $table;
-    }
-
-    /**
-     * Render the section
-     *
-     * @return Response
-     */
-    protected function renderSection($view = null, $params = array())
-    {
-        $redirect = $this->checkForRedirect();
-
-        if ($redirect instanceof Response || $redirect instanceof ViewModel) {
-            return $redirect;
-        }
-
-        $view = $this->setupView($view, $params);
-
-        $this->maybeAddTable($view);
-
-        $response = $this->maybeAddForm($view);
-
-        if ($response instanceof Response || $response instanceof ViewModel) {
-            return $response;
-        }
-
-        $this->maybeAddScripts($view);
-
-        $view = $this->preRender($view);
-
-        return $this->render($view);
-    }
-
-    /**
-     * Pre render
-     *
-     * @param ViewModel $view
-     * @return ViewModel
-     */
-    protected function preRender($view)
-    {
-        return $view;
-    }
-
-    /**
-     * Potentiall add a table to the view
-     *
-     * @param ViewModel $view
-     */
-    protected function maybeAddTable($view)
-    {
-        if ($this->hasTable()) {
-
-            $tableName = $this->getTableName();
-
-            $data = $this->getTableData($this->getIdentifier());
-
-            $settings = $this->getTableSettings();
-
-            $table = $this->alterTable($this->getTable($tableName, $data, $settings));
-
-            $view->setVariable('table', $table->render());
-        }
-    }
-
-    /**
-     * Potentially add a form
-     *
-     * @param ViewModel $view
-     * @return Response
-     */
-    protected function maybeAddForm($view)
-    {
-        if ($this->hasForm()) {
-
-            $form = $this->getNewForm();
-
-            $response = $this->getCaughtResponse();
-
-            if ($response instanceof Response || $response instanceof ViewModel) {
-                return $response;
-            }
-
-            $view->setVariable('form', $form);
-        }
-    }
-
-    /**
      * Alter the form before validation
      *
      * @param Form $form
@@ -986,23 +841,27 @@ abstract class AbstractJourneyController extends AbstractSectionController
      */
     protected function setupView($view = null, $params = array())
     {
-        $journeyName = $this->getJourneyName();
-
-        if (empty($view)) {
-            $view = $this->getViewModel($params);
-        }
+        $view = parent::setupView($view, $params);
 
         if ($this->isAction()) {
             $view->setVariable('title', $this->getSectionReference());
         }
 
+        return $view;
+    }
+
+    /**
+     * Get view template name
+     *
+     * @return string
+     */
+    protected function getViewTemplateName()
+    {
         if ($this->hasView()) {
-            $view->setTemplate($this->getViewName());
-        } elseif ($view->getTemplate() == null) {
-            $view->setTemplate($this->getApplicationConfig()['templates']['main']);
+            return $this->getViewName();
         }
 
-        return $view;
+        return $this->getApplicationConfig()['templates']['main'];
     }
 
     /**

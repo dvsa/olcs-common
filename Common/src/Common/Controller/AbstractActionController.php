@@ -13,6 +13,7 @@ namespace Common\Controller;
 
 use Common\Util;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
@@ -166,16 +167,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
-        $action = $this->params()->fromPost('action');
+        $action = $this->getCrudActionFromPost();
 
         if (empty($action)) {
             return false;
         }
 
         $action = strtolower($action);
+
+        $response = $this->checkForAlternativeCrudAction($action);
+
+        if ($response instanceof Response) {
+            return $response;
+        }
+
         $params = array_merge($params, array('action' => $action));
+
+        $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
 
@@ -194,6 +204,26 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Do nothing, this method can be overridden to hijack the crud action check
+     *
+     * @param string $action
+     */
+    protected function checkForAlternativeCrudAction($action)
+    {
+
+    }
+
+    /**
+     * We can now extend our check for crud action
+     *
+     * @return string
+     */
+    protected function getCrudActionFromPost()
+    {
+        return $this->params()->fromPost('action');
+    }
+
+    /**
      * Called when a crud action is missing a required ID
      */
     protected function crudActionMissingId()
@@ -203,34 +233,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Build a table from config and results
-     *
-     * @param string $table
-     * @param array $results
-     * @param array $data
-     * @return string
-     */
-    public function buildTable($table, $results, $data = array())
-    {
-        return $this->getTable($table, $results, $data, true);
-    }
-
-    /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
      * @param array $results
      * @param array $data
-     * @param boolean $render
      * @return string
      */
-    public function getTable($table, $results, $data = array(), $render = false)
+    public function getTable($table, $results, $data = array())
     {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, $render);
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
     }
 
     /**

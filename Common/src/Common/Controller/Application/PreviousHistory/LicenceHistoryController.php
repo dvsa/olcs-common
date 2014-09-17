@@ -80,9 +80,13 @@ class LicenceHistoryController extends PreviousHistoryController
             'willSurrender',
             'purchaseDate',
             'disqualificationDate',
-            'disqualificationLength',
-            'previousLicenceType'
+            'disqualificationLength'
         ),
+        'children' => array(
+            'previousLicenceType' => array(
+                'properties' => array('id')
+            )
+        )
     );
 
     /**
@@ -181,27 +185,13 @@ class LicenceHistoryController extends PreviousHistoryController
      */
     protected function getFormTableData($id, $table)
     {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version',
-                'licNo',
-                'holderName',
-                'willSurrender',
-                'purchaseDate',
-                'disqualificationDate',
-                'disqualificationLength',
-                'previousLicenceType'
-            ),
-        );
-
         $previousLicenceType = isset($this->mapTableToType[$table]) ? $this->mapTableToType[$table] : null;
 
         $data = $this->makeRestCall(
             'PreviousLicence',
             'GET',
             array('application' => $id, 'previousLicenceType' => $previousLicenceType),
-            $bundle
+            $this->actionDataBundle
         );
 
         return $data;
@@ -279,10 +269,15 @@ class LicenceHistoryController extends PreviousHistoryController
     {
         $data = parent::processActionLoad($data);
 
-        $tableName = str_replace('-add', '', $this->getActionName());
+        $actionName = $this->getActionName();
 
-        if (isset($this->mapTableToType[$tableName])) {
-            $data['previousLicenceType'] = $this->mapTableToType[$tableName];
+        $parts = explode('-', $actionName);
+
+        $action = array_pop($parts);
+        $type = implode('-', $parts);
+
+        if ($action == 'add' && isset($this->mapTableToType[$type])) {
+            $data['previousLicenceType'] = $this->mapTableToType[$type];
         }
 
         if (array_key_exists('willSurrender', $data)) {
@@ -293,8 +288,14 @@ class LicenceHistoryController extends PreviousHistoryController
             }
         }
 
-        $returnData = ($this->getActionName() != 'add') ? array('data' => $data) : $data;
-        return $returnData;
+        if ($action != 'add') {
+
+            $data['previousLicenceType'] = $data['previousLicenceType']['id'];
+        }
+
+        return array(
+            'data' => $data
+        );
     }
 
     protected function alterActionForm($form)

@@ -45,21 +45,16 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
             ->method('getNamespaceParts')
             ->will($this->returnValue(array_reverse(explode('\\', trim($this->controllerName, '\\')))));
 
-        $mockUrlPlugin = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlPlugin = $this->getMock('\Zend\View\Helper\Url', array('__invoke'));
         $mockUrlPlugin->expects($this->any())
             ->method('__invoke')
             ->will($this->returnValue('URL'));
 
-        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
-        $mockViewHelperManager->expects($this->any())
-            ->method('get')
-            ->will(
-                $this->returnValueMap(
-                    array(
-                        array('url', $mockUrlPlugin),
-                    )
-                )
-            );
+        $inlineScript = new \Zend\View\Helper\InlineScript();
+
+        $mockViewHelperManager = new \Zend\View\HelperPluginManager();
+        $mockViewHelperManager->setService('url', $mockUrlPlugin);
+        $mockViewHelperManager->setService('inlineScript', $inlineScript);
 
         $this->serviceManager->setAllowOverride(true);
         $this->serviceManager->setService('viewhelpermanager', $mockViewHelperManager);
@@ -91,16 +86,19 @@ abstract class AbstractApplicationControllerTestCase extends AbstractSectionCont
             return null;
         }
 
-        if (isset($this->restResponses[$service][$method])) {
+        if (!empty($bundle)) {
+            $which = base64_encode(json_encode($bundle));
+        } else {
+            $which = 'default';
+        }
 
-            if (isset($this->restResponses[$service][$method]['bundle'])) {
+        if (isset($this->restResponses[$service][$method][$which])) {
 
-                if ($bundle == $this->restResponses[$service][$method]['bundle']) {
-                    return $this->restResponses[$service][$method]['response'];
-                }
-            } else {
-                return $this->restResponses[$service][$method];
-            }
+            return $this->restResponses[$service][$method][$which];
+
+        } elseif (isset($this->restResponses[$service][$method]['default'])) {
+
+            return $this->restResponses[$service][$method]['default'];
         }
 
         $headerBundle = array(

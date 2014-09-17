@@ -82,11 +82,7 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
      */
     public function testIndexActionWithBack()
     {
-        $this->setUpAction(
-            'index', null, array(
-            'form-actions' => array('back' => 'Back')
-        )
-        );
+        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
 
         $this->controller->setEnabledCsrf(false);
         $response = $this->controller->indexAction();
@@ -105,39 +101,6 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
         if ($service == 'Application' && $method == 'GET') {
-            $licenceDataBundle = array(
-                'children' => array(
-                    'licence' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'niFlag'
-                        ),
-                        'children' => array(
-                            'goodsOrPsv' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
-                            'licenceType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
-                            'organisation' => array(
-                                'children' => array(
-                                    'type' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
             $orgTypeBundle = array(
                 'children' => array(
                     'licence' => array(
@@ -167,14 +130,14 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
                         )
                     )
                 );
-            } elseif ($bundle == $licenceDataBundle) {
+            } elseif ($bundle == ApplicationController::$applicationLicenceDataBundle) {
                 return array(
                     'licence' => array(
                         'id' => 10,
                         'version' => 1,
                         'niFlag' => 0,
                         'goodsOrPsv' => array(
-                            'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                            'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                         ),
                         'licenceType' => array(
                             'id' => ApplicationController::LICENCE_TYPE_STANDARD_NATIONAL

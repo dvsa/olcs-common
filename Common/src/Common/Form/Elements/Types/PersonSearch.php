@@ -96,7 +96,7 @@ class PersonSearch extends Fieldset
 
         $birthDate = new DateSelect(
             'birthDate',
-             array('label' => 'Date of birth')
+            array('label' => 'Date of birth')
         );
         $birthDate->setAttributes(
             array(

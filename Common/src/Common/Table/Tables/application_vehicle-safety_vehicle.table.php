@@ -1,15 +1,18 @@
 <?php
 
+$translationPrefix = 'application_vehicle-safety_vehicle.table';
+
 return array(
     'variables' => array(
-        'title' => 'application_vehicle-safety_vehicle.table.title'
+        'title' => $translationPrefix . '.title'
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
+                'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'warning', 'requireRows' => true)
+                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
         'paginate' => array(
@@ -27,20 +30,26 @@ return array(
             'format' => '{{[elements/radio]}}'
         ),
         array(
-            'title' => 'application_vehicle-safety_vehicle.table.vrm',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'edit'
-                    ),
-                    'Application/VehicleSafety/Vehicle'
-                ) . '">' . $row['vrm'] . '</a>';
-            }
+            'title' => $translationPrefix . '.vrm',
+            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm')
         ),
         array(
-            'title' => 'application_vehicle-safety_vehicle.table.weight',
+            'title' => $translationPrefix . '.weight',
             'format' => '{{platedWeight}} Kg'
+        ),
+        array(
+            'title' => $translationPrefix . '.specified',
+            'formatter' => 'Date',
+            'name' => 'specifiedDate'
+        ),
+        array(
+            'title' => $translationPrefix . '.removed',
+            'formatter' => 'Date',
+            'name' => 'deletedDate'
+        ),
+        array(
+            'title' => $translationPrefix . '.disc-no',
+            'name' => 'discNo'
         )
     )
 );

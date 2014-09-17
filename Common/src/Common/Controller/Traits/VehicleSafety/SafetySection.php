@@ -4,15 +4,13 @@
  * Safety Section
  *
  * @author Rob Caiger <rob@clocal.co.uk>
- * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-namespace Common\Controller\Traits;
+namespace Common\Controller\Traits\VehicleSafety;
 
 /**
  * Safety Section
  *
  * @author Rob Caiger <rob@clocal.co.uk>
- * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 trait SafetySection
 {

@@ -80,14 +80,22 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             'Application',
             'GET',
             array(
+                'id' => 1,
                 'prevConviction' => true,
                 'isMaintenanceSuitable' => 'Y',
                 'safetyConfirmation' => 'Y',
+                'psvOperateSmallVhl' => 'Y',
+                'psvSmallVhlNotes' => '',
+                'psvSmallVhlConfirmation' => 'Y',
+                'psvNoSmallVhlConfirmation' => 'Y',
+                'psvLimousines' => 'Y',
+                'psvNoLimousineConfirmation' => 0,
+                'psvOnlyLimousinesConfirmation' => 0,
                 'licence' => array(
                     'id' => 10,
                     'version' => 1,
                     'goodsOrPsv' => array(
-                        'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                        'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(
@@ -155,21 +163,30 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
      */
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
-        if ($service == 'Application' && $method == 'GET' && $bundle == ApplicationController::$licenceDataBundle) {
+        if ($service == 'Application' && $method == 'GET'
+            && $bundle == ApplicationController::$applicationLicenceDataBundle) {
 
             return $this->getLicenceData();
         }
 
         if ($service == 'Application' && $method == 'GET' && $bundle == $this->appDataBundle) {
             return array(
+                'id' => 1,
                 'prevConviction' => true,
                 'isMaintenanceSuitable' => 'Y',
                 'safetyConfirmation' => 'Y',
+                'psvOperateSmallVhl' => 'Y',
+                'psvSmallVhlNotes' => '',
+                'psvSmallVhlConfirmation' => 'Y',
+                'psvNoSmallVhlConfirmation' => 'Y',
+                'psvLimousines' => 'Y',
+                'psvNoLimousineConfirmation' => 0,
+                'psvOnlyLimousinesConfirmation' => 0,
                 'licence' => array(
                     'id' => 10,
                     'version' => 1,
                     'goodsOrPsv' => array(
-                        'id' => ApplicationController::GOODS_OR_PSV_GOODS_VEHICLE
+                        'id' => ApplicationController::LICENCE_CATEGORY_GOODS_VEHICLE
                     ),
                     'niFlag' => 0,
                     'licenceType' => array(
@@ -227,6 +244,35 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'title' => 'Mr',
                         'forename' => 'Alex',
                         'familyName' => 'P'
+                    )
+                )
+            );
+        }
+
+        if ($service == 'ApplicationOperatingCentre' && $method == 'GET') {
+            return array(
+                'Count' => 1,
+                'Results' => array(
+                    array(
+                        'id' => 1,
+                        'adPlaced' => 1,
+                        'permission' => 1,
+                        'noOfVehiclesPossessed' => 10,
+                        'noOfTrailersPossessed' => 10,
+                        'operatingCentre' => array(
+                            'address' => array(
+                                'id' => 1,
+                                'addressLine1' => '123 Street',
+                                'addressLine2' => 'Address 2',
+                                'addressLine3' => 'Address 3',
+                                'addressLine4' => 'Address 4',
+                                'town' => 'City',
+                                'countryCode' => array(
+                                    'id' => 'GB'
+                                ),
+                                'postcode' => 'AB1 1AB'
+                            )
+                        )
                     )
                 )
             );
