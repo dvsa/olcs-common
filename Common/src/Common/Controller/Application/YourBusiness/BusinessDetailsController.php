@@ -56,8 +56,6 @@ class BusinessDetailsController extends YourBusinessController
 
     public static $applicationBundle = array(
         'properties' => array(
-            'id',
-            'version',
             'licence' => array(
                 'children' => array(
                     'organisation' => array(
@@ -216,6 +214,10 @@ class BusinessDetailsController extends YourBusinessController
     public static function makeFormAlterations($form, $context, $options = array())
     {
         $applicationBundle = array(
+            'properties' => array(
+                'id',
+                'version',
+            ),
             'children' => array(
                 'licence' => array(
                     'children' => array(
