@@ -152,7 +152,7 @@ trait TrafficAreaTrait
      *
      * @return Common\Service\Licence\Licence
      */
-    public function getLicenceService()
+    private function getLicenceService()
     {
         return $this->getServiceLocator()->get('licence');
     }
