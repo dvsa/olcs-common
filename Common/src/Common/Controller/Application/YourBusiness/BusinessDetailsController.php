@@ -60,7 +60,8 @@ class BusinessDetailsController extends YourBusinessController
                 'children' => array(
                     'organisation' => array(
                         'properties' => array(
-                            'id'
+                            'id',
+                            'version'
                         ),
                         'children' => array(
                             'type' => array(
@@ -222,7 +223,8 @@ class BusinessDetailsController extends YourBusinessController
                     'children' => array(
                         'organisation' => array(
                             'properties' => array(
-                                'id'
+                                'id',
+                                'version'
                             ),
                             'children' => array(
                                 'type' => array(
@@ -283,10 +285,12 @@ class BusinessDetailsController extends YourBusinessController
         }
 
         // If this is a review, remove the trading names section
-        if ( $options['isReview'] ) {
-            $fieldset->remove('companyNumber')->remove('tradingNames');
-        } else {
-            $fieldset->remove('companyNumber')->remove('tradingNamesReview');
+        if ( $organisation['type']['id'] != self::ORG_TYPE_OTHER ) {
+            if ( $options['isReview'] ) {
+                $fieldset->remove('companyNumber')->remove('tradingNames');
+            } else {
+                $fieldset->remove('companyNumber')->remove('tradingNamesReview');
+            }
         }
 
         return $form;

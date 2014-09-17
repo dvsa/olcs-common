@@ -32,7 +32,10 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         'version' => 1,
         'licence' => [
             'organisation' => [
-                'id' => 1
+                'id' => 1,
+                'type' => [
+                    'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
+                ],
             ]
         ]
     ];
@@ -241,6 +244,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
 
         $fieldset = $this->getFormFromView($response)->get('data');
 
+        $companyType = $fieldset->get('type')->getValue();
         $companyNumber = $fieldset->get('companyNumber');
         $companyName = $fieldset->get('name');
 

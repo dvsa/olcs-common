@@ -427,7 +427,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 'psvOnlyLimousinesConfirmation' => 0,
                 'licence' => array(
                     'organisation' => array(
-                        'id' => 1
+                        'type' => array(
+                            'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
+                        )
                     )
                 )
             );
@@ -472,9 +474,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'id' => 'ltyp_sn'
                     ),
                     'organisation' => array(
-                        'id' => 1,
                         'type' => array(
-                            'id' => 'org_t_rc'
+                            'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
                     )
                 )
@@ -487,7 +488,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     'children' => array(
                         'organisation' => array(
                             'properties' => array(
-                                'id'
+                                'id',
+                                'version'
                             ),
                             'children' => array(
                                 'type' => array(
@@ -511,8 +513,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 'licence' => array(
                     'organisation' => array(
                         'id' => 1,
+                        'version' => 1,
                         'type' => array(
-                            'id' => 'ltdco'
+                            'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
                     )
                 )
