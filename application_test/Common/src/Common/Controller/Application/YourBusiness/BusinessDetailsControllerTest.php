@@ -49,6 +49,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
     protected $mockLicenceData = [
         'licence' => [
             'organisation' => [
+                'id' => 1,
                 'type' => [
                     'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                 ],
@@ -136,6 +137,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         $this->mockLicenceData = [
             'licence' => [
                 'organisation' => [
+                    'id' => 1,
                     'type' => [
                         'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                     ],
@@ -316,6 +318,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         $this->mockOrganisationData = array(
             'licence' => array(
                 'organisation' => array(
+                    'id' => 1,
                     'type' => array(
                         'id' => 'org_t_' . $type
                     )
@@ -466,6 +469,10 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                     'licence' => array(
                         'children' => array(
                             'organisation' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version'
+                                ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
@@ -485,15 +492,15 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 )
             );
 
-            $orgBundle = [
-                'children' => [
-                    'licence' => [
-                        'children' => [
-                            'organisation' => [
-                                'properties' => [
+            $orgBundle = array(
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'organisation' => array(
+                                'properties' => array(
                                     'id',
                                     'version'
-                                ],
+                                ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
@@ -501,11 +508,11 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                                         )
                                     )
                                 )
-                            ]
-                        ]
-                    ]
-                ]
-            ];
+                            )
+                        )
+                    )
+                )
+            );
 
             $idBundle = array(
                 'properties' => array(
@@ -514,6 +521,10 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                     'licence' => array(
                         'children' => array(
                             'organisation' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version'
+                                ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
