@@ -389,7 +389,9 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
     }
 
     /**
-     * Mock the rest call
+     * Mock the rest call.
+     *
+     * @todo Reconcile similar calls down when the entire review stage work has been completed.
      *
      * @param string $service
      * @param string $method
@@ -436,8 +438,178 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             return $this->appDataResponse;
         }
 
-        if ($service == 'ApplicationCompletion' && $method == 'GET') {
+        $organisationDataBundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'licenceType' => array(
+                            'properties' => array(
+                                'id'
+                            )
+                        ),
+                        'organisation' => array(
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
 
+        if ( $service == 'Application'
+                && $method == 'GET'
+                && $bundle == $organisationDataBundle ) {
+            return array(
+                'licence' => array(
+                    'licenceType' => array(
+                        'id' => 'ltyp_sn'
+                    ),
+                    'organisation' => array(
+                        'id' => 1
+                    )
+                )
+            );
+        }
+
+        $organisationIdDataBundle = array(
+            'properties' => array(
+                'licence' => array(
+                    'children' => array(
+                        'organisation' => array(
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ( $service == 'Application'
+                && $method == 'GET'
+                && $bundle == $organisationIdDataBundle ) {
+            return array(
+                'licence' => array(
+                    'organisation' => array(
+                        'id' => 1
+                    )
+                )
+            );
+        }
+
+        $addressDataBundle = array(
+            'properties' => array(),
+            'children' => array(
+                'licence' => array(
+                    'properties' => array(),
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(),
+                            'children' => array(
+                                'contactDetails' => array(
+                                    'properties' => array(
+                                        'id',
+                                        'version',
+                                        'emailAddress'
+                                    ),
+                                    'children' => array(
+                                        'address' => array(
+                                            'properties' => array(
+                                                'id',
+                                                'version',
+                                                'addressLine1',
+                                                'addressLine2',
+                                                'addressLine3',
+                                                'addressLine4',
+                                                'postcode',
+                                                'town'
+                                            ),
+                                            'children' => array(
+                                                'countryCode' => array(
+                                                    'properties' => array(
+                                                        'id'
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        'contactType' => array(
+                                            'properties' => array(
+                                                'id'
+                                            )
+                                        )
+                                    )
+                                ),
+                            )
+                        ),
+                        'contactDetails' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'emailAddress'
+                            ),
+                            'children' => array(
+                                'phoneContacts' => array(
+                                    'properties' => array(
+                                        'id',
+                                        'version',
+                                        'phoneNumber'
+                                    ),
+                                    'children' => array(
+                                        'phoneContactType' => array(
+                                            'properties' => array(
+                                                'id'
+                                            )
+                                        )
+                                    )
+                                ),
+                                'address' => array(
+                                    'properties' => array(
+                                        'id',
+                                        'version',
+                                        'addressLine1',
+                                        'addressLine2',
+                                        'addressLine3',
+                                        'addressLine4',
+                                        'postcode',
+                                        'town'
+                                    ),
+                                    'children' => array(
+                                        'countryCode' => array(
+                                            'properties' => array(
+                                                'id'
+                                            )
+                                        )
+                                    )
+                                ),
+                                'contactType' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ( $service == 'Application'
+                && $method == 'GET'
+                && $bundle == $addressDataBundle ) {
+            return $this->appDataResponse;
+        }
+
+        if ($service == 'ApplicationCompletion' && $method == 'GET') {
             return $this->getApplicationCompletionData();
         }
 
@@ -470,6 +642,74 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                         'title' => 'Mr',
                         'forename' => 'Alex',
                         'familyName' => 'P'
+                    )
+                )
+            );
+        }
+
+        $safetyInspectorBundle = array(
+            'properties' => array(
+                'id',
+                'version',
+                'isExternal'
+            ),
+            'children' => array(
+                'contactDetails' => array(
+                    'properties' => array(
+                        'id',
+                        'version',
+                        'fao'
+                    ),
+                    'children' => array(
+                        'address' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                                'addressLine1',
+                                'addressLine2',
+                                'addressLine3',
+                                'addressLine4',
+                                'town',
+                                'postcode'
+                            ),
+                            'children' => array(
+                                'countryCode' => array(
+                                    'properties' => array('id')
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ( $service == 'Application'
+                && $method == 'GET'
+                && $bundle == $safetyInspectorBundle ) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'licence' => array(
+                    'workshops' => array(
+                        array(
+                            'id' => 1,
+                            'isExternal' => 0,
+                            'contactDetails' => array(
+                                'fao' => 'Bob Smith',
+                                'address' => array(
+                                    'id' => 1,
+                                    'addressLine1' => '123 Street',
+                                    'addressLine2' => 'Address 2',
+                                    'addressLine3' => 'Address 3',
+                                    'addressLine4' => 'Address 4',
+                                    'town' => 'City',
+                                    'countryCode' => array(
+                                        'id' => 'GB'
+                                    ),
+                                    'postcode' => 'AB1 1AB'
+                                )
+                            )
+                        )
                     )
                 )
             );

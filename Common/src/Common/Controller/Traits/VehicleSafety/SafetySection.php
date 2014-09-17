@@ -15,7 +15,7 @@ namespace Common\Controller\Traits\VehicleSafety;
 trait SafetySection
 {
     /**
-     * Holds the shared actoin data bundle
+     * Holds the shared action data bundle
      *
      * @var array
      */
