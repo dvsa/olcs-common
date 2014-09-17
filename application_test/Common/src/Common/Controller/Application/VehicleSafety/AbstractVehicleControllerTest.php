@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Application\VehicleSafety;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -17,6 +18,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 abstract class AbstractVehicleControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $otherLicencesBundle = array(
         'properties' => array(),
         'children' => array(
@@ -77,18 +80,6 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             )
         )
     );
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction
