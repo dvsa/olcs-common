@@ -1099,7 +1099,7 @@ return array(
     'documents.data.file' => 'File Upload',
     'documents.bookmarks' => 'Bookmarks',
     'apsts_new' => 'Not Yet Submitted',
-    'apsts_consideration' => 'Under Consideration'
+    'apsts_consideration' => 'Under Consideration',
     'tasks.close.single' => 'Are you sure you want to close this task?',
     'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
