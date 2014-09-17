@@ -125,6 +125,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
     );
 
     protected $appDataResponse = array(
+        'id' => 1,
         'prevConviction' => true,
         'isMaintenanceSuitable' => 'Y',
         'safetyConfirmation' => 'Y',
