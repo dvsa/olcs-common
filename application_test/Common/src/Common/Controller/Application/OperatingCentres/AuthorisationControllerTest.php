@@ -74,11 +74,6 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         $mockLicenceService->expects($this->any())
             ->method('generateLicence')
             ->will($this->returnValue(1));
-
-        $mockLicenceService = $this->getMock('Common\Service\Licence\Licence', array('generateLicence'));
-        $mockLicenceService->expects($this->any())
-            ->method('generateLicence')
-            ->will($this->returnValue(1));
         $this->serviceManager->setService('licence', $mockLicenceService);
 
         $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
@@ -1409,7 +1404,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
                     )
                 )
             )
-        );        
+        );
         if ($service == 'Application' && $method == 'GET' && $bundle == $appWithTrafficAreaBundle) {
             if ($this->hasTrafficAreaDefined) {
                 return array(

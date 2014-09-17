@@ -74,7 +74,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
     }
-    
+
     /**
      * Test indexAction with form alterations
      */
