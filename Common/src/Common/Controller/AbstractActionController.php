@@ -63,6 +63,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected $pageLayout = null;
 
     /**
+     * Holds any inline scripts for the current page
+     *
+     * @var array
+     */
+    protected $inlineScripts = [];
+
+    /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
@@ -433,5 +440,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function loadScripts($scripts)
     {
         return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+    }
+
+    /**
+     * Get the inline scripts
+     *
+     * @return array
+     */
+    protected function getInlineScripts()
+    {
+        return $this->inlineScripts;
     }
 }

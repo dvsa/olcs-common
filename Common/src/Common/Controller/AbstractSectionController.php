@@ -141,13 +141,6 @@ abstract class AbstractSectionController extends AbstractController
     protected $actionData;
 
     /**
-     * Holds any inline scripts for the current page
-     *
-     * @var array
-     */
-    protected $inlineScripts = [];
-
-    /**
      * Holds the table name
      *
      * @var string
@@ -705,16 +698,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Get the inline scripts
-     *
-     * @return array
-     */
-    protected function getInlineScripts()
-    {
-        return $this->inlineScripts;
-    }
-
-    /**
      * Optionally add scripts to view, if there are any
      *
      * @param ViewModel $view
@@ -822,9 +805,11 @@ abstract class AbstractSectionController extends AbstractController
     protected function maybeAddTable($view)
     {
         if ($this->hasTable() && $view->getVariable('table') == null) {
+
             $tableName = $this->getTableName();
 
             if (!empty($tableName)) {
+
                 $data = $this->getTableData($this->getIdentifier());
 
                 $settings = $this->getTableSettings();

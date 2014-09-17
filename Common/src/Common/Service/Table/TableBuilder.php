@@ -755,7 +755,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Render the table
      *
-     * @return type
+     * @return string
      */
     public function render()
     {
@@ -766,7 +766,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Get config from file
      *  Useful for unit testing
      *
-     * @param string $file
+     * @param string $name
      * @return array
      */
     public function getConfigFromFile($name)
@@ -1158,6 +1158,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         if (isset($column['title'])) {
             $translator = $this->getServiceLocator()->get('translator');
             $column['title'] = $translator->translate($column['title']);
+        }
+
+        if (isset($column['type']) && $column['type'] == 'Checkbox') {
+            $column['title'] = $this->replaceContent('{{[elements/checkall]}}');
         }
 
         return $this->replaceContent($wrapper, $column);
