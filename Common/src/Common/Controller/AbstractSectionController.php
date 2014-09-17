@@ -169,6 +169,13 @@ abstract class AbstractSectionController extends AbstractController
     protected $hasForm = null;
 
     /**
+     * Holds the action id
+     *
+     * @var int
+     */
+    protected $actionId;
+
+    /**
      * Get bespoke sub actions
      *
      * @return array
@@ -772,8 +779,13 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function delete($id = null, $service = null)
     {
-        $service = $this->getActionService();
-        $id = $this->getActionId();
+        if ($id === null) {
+            $id = $this->getActionId();
+        }
+
+        if ($service === null) {
+            $service = $this->getActionService();
+        }
 
         if (parent::delete($id, $service)) {
 
@@ -792,6 +804,12 @@ abstract class AbstractSectionController extends AbstractController
     {
         if (empty($this->actionId)) {
             $this->actionId = $this->params()->fromRoute('id');
+
+            $queryIds = $this->params()->fromQuery('id');
+
+            if (empty($this->actionId) && !empty($queryIds)) {
+                $this->actionId = $queryIds;
+            }
         }
 
         return $this->actionId;
@@ -987,6 +1005,10 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function deleteLoad($id)
     {
+        if (is_array($id)) {
+            $id = implode(',', $id);
+        }
+
         return array('data' => array('id' => $id));
     }
 
@@ -997,7 +1019,13 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function deleteSave($data)
     {
-        $this->delete($data['data']['id'], $this->getActionService());
+        $ids = explode(',', $data['data']['id']);
+
+        foreach ($ids as $id) {
+            parent::delete($id, $this->getActionService());
+        }
+
+        return $this->goBackToSection();
     }
 
     /**

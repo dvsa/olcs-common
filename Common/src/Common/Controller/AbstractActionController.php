@@ -185,6 +185,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $params = array_merge($params, array('action' => $action));
 
+        $options = array();
+
         $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
@@ -197,10 +199,23 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 return false;
             }
 
-            $params[$itemIdParam] = $id;
+            if (is_array($id) && count($id) === 1) {
+                $id = $id[0];
+            }
+
+            // If we have an array of id's we need to use a query string param rather than the route
+            if (is_array($id)) {
+                $options = array(
+                    'query' => array(
+                        $itemIdParam => $id
+                    )
+                );
+            } else {
+                $params[$itemIdParam] = $id;
+            }
         }
 
-        return $this->redirect()->toRoute($route, $params, [], true);
+        return $this->redirect()->toRoute($route, $params, $options, true);
     }
 
     /**
