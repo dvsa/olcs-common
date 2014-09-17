@@ -12,7 +12,7 @@ return array(
                 'add' => array('class' => 'primary'),
                 'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'warning', 'requireRows' => true)
+                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
         'paginate' => array(

@@ -278,6 +278,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
+     * Get settings
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
      * Setter for total
      *
      * @param int $total

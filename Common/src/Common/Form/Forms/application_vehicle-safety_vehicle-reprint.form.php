@@ -13,7 +13,7 @@ return array(
                 'elements' => array(
                     'id' => array(
                         'type' => 'hidden',
-                        'label' => 'Are you sure you want to request replacement discs for the selected vehicle(s)?'
+                        'label' => 'vehicle-disc-reprint-confirm-label'
                     )
                 )
             ),

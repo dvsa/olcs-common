@@ -22,10 +22,12 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
     public function testGetInputSpecificationWithRequiredAndMaxYearDelta()
     {
         $element = new DateSelect();
-        $element->setOptions(array(
-            'max_year_delta' => '+11',
-            'required' => true
-        ));
+        $element->setOptions(
+            array(
+                'max_year_delta' => '+11',
+                'required' => true
+            )
+        );
         $spec = $element->getInputSpecification();
 
         $baseYear = date('Y');
@@ -38,10 +40,12 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
     public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndValue()
     {
         $element = new DateSelect();
-        $element->setOptions(array(
-            'max_year_delta' => '+11',
-            'required' => true
-        ));
+        $element->setOptions(
+            array(
+                'max_year_delta' => '+11',
+                'required' => true
+            )
+        );
         $element->setValue('1990-05-05');
         $spec = $element->getInputSpecification();
 
@@ -54,10 +58,12 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
     public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndValueGreaterThanCurrentYear()
     {
         $element = new DateSelect();
-        $element->setOptions(array(
-            'max_year_delta' => '+11',
-            'required' => true
-        ));
+        $element->setOptions(
+            array(
+                'max_year_delta' => '+11',
+                'required' => true
+            )
+        );
         $element->setValue('2055-05-05');
         $spec = $element->getInputSpecification();
 
