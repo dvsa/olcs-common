@@ -9,6 +9,8 @@
 
 namespace Common\Controller\Application\OperatingCentres;
 
+use Common\Controller\Traits;
+
 /**
  * Authorisation Controller
  *
@@ -17,95 +19,7 @@ namespace Common\Controller\Application\OperatingCentres;
  */
 class AuthorisationController extends OperatingCentresController
 {
-    use \Common\Controller\Traits\TrafficAreaTrait;
-
-    /**
-     * Holds the table data
-     *
-     * @var array
-     */
-    private $tableData = null;
-
-    /**
-     * Holds the data bundle
-     *
-     * @var array
-     */
-    protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totCommunityLicences',
-            'totAuthVehicles',
-            'totAuthTrailers',
-        ),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'name'
-                        )
-                    )
-                )
-            ),
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array('id')
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    /**
-     * Data map
-     *
-     * @var array
-     */
-    protected $dataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data',
-                'dataTrafficArea'
-            ),
-        ),
-    );
+    use Traits\OperatingCentre\GenericApplicationAuthorisationSection;
 
     /**
      * Holds the sub action service
@@ -205,55 +119,9 @@ class AuthorisationController extends OperatingCentresController
     );
 
     /**
-     * Form tables name
-     *
-     * @var string
-     */
-    protected $formTables = array(
-        'table' => 'authorisation_in_form',
-    );
-
-    /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Add operating centre
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit operating centre
-     */
-    public function editAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete sub action
-     *
-     * @return Response
-     */
-    public function deleteAction()
-    {
-        $this->maybeClearTrafficAreaId();
-        return $this->delete();
-    }
 
     /**
      * Make form alterations
@@ -699,6 +567,7 @@ class AuthorisationController extends OperatingCentresController
                 'version'
             )
         );
+
         $operatingCentres = $this->makeRestCall(
             'ApplicationOperatingCentre',
             'GET',
@@ -755,96 +624,5 @@ class AuthorisationController extends OperatingCentresController
         }
 
         return $this->redirect()->toRoute($route, $params, [], true);
-    }
-
-    /**
-     * Retrieve the relevant table data as we want to render it on the review summary page
-     * Note that as with most controllers this is the same data we want to render on the
-     * normal form page, hence why getFormTableData (declared later) simply wraps this
-     */
-    public static function getSummaryTableData($applicationId, $context, $tableName)
-    {
-        $tableDataBundle = array(
-            'children' => array(
-                'operatingCentre' => array(
-                    'properties' => array(
-                        'id',
-                        'version'
-                    ),
-                    'children' => array(
-                        'address' => array(
-                            'properties' => array(
-                                'id',
-                                'version',
-                                'addressLine1',
-                                'addressLine2',
-                                'addressLine3',
-                                'addressLine4',
-                                'postcode',
-                                'town'
-                            ),
-                            'children' => array(
-                                'countryCode' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        ),
-                        'adDocuments' => array(
-                            'properties' => array(
-                                'id',
-                                'version',
-                                'filename',
-                                'identifier',
-                                'size'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $data = $context->makeRestCall(
-            'ApplicationOperatingCentre',
-            'GET',
-            array('application' => $applicationId),
-            $tableDataBundle
-        );
-
-        $newData = array();
-
-        foreach ($data['Results'] as $row) {
-
-            $newRow = $row;
-
-            if (isset($row['operatingCentre']['address'])) {
-
-                unset($row['operatingCentre']['address']['id']);
-                unset($row['operatingCentre']['address']['version']);
-
-                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
-            }
-
-            unset($newRow['operatingCentre']);
-
-            $newData[] = $newRow;
-        }
-
-        return $newData;
-    }
-
-    /**
-     * Get data for table
-     *
-     * @param string $id
-     */
-    public function getFormTableData($id, $table)
-    {
-        if (is_null($this->tableData)) {
-            $this->tableData=$this->getSummaryTableData($id, $this, '');
-        }
-
-        return $this->tableData;
     }
 }
