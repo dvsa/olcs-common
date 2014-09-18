@@ -14,6 +14,12 @@ use Zend\Validator\ValidatorPluginManager;
  */
 class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {
+    const NO_CONTEXT = 'no_context';
+
+    protected $messageTemplates = array(
+        self::NO_CONTEXT         => 'Context field was not found in the input',
+    );
+
     /**
      * @var string
      */
@@ -174,7 +180,7 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
      */
     public function isValid($value, $context = null)
     {
-        if (isset($context[$this->getContextField()])) {
+        if (array_key_exists($this->getContextField(), $context)) {
             if (!(in_array($context[$this->getContextField()], $this->getContextValues()) ^ $this->getContextTruth())) {
                 $result = $this->getValidatorChain()->isValid($value, $context);
                 if (!$result) {
@@ -185,6 +191,9 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
                 return true;
             }
         }
+
+        $this->error(self::NO_CONTEXT);
+        return false;
     }
 
     public function setOptions($options = [])
