@@ -3,13 +3,15 @@
 /**
  * Authorisation Controller
  *
+ * External - Application - Authorisation Section
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 
 namespace Common\Controller\Application\OperatingCentres;
 
-use Common\Controller\Traits;
+use Common\Controller\Traits\OperatingCentre;
 
 /**
  * Authorisation Controller
@@ -19,273 +21,13 @@ use Common\Controller\Traits;
  */
 class AuthorisationController extends OperatingCentresController
 {
-    use Traits\OperatingCentre\GenericApplicationAuthorisationSection;
-
-    /**
-     * Holds the sub action service
-     *
-     * @var string
-     */
-    protected $actionService = 'ApplicationOperatingCentre';
-
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $actionDataMap = array(
-        '_addresses' => array(
-            'address'
-        ),
-        'main' => array(
-            'children' => array(
-                'applicationOperatingCentre' => array(
-                    'mapFrom' => array(
-                        'data',
-                        'advertisements'
-                    )
-                ),
-                'operatingCentre' => array(
-                    'mapFrom' => array(
-                        'operatingCentre'
-                    ),
-                    'children' => array(
-                        'addresses' => array(
-                            'mapFrom' => array(
-                                'addresses'
-                            )
-                        )
-                    )
-                ),
-            )
-        )
-    );
-
-    /**
-     * Holds the actionDataBundle
-     *
-     * @var array
-     */
-    protected $actionDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'noOfTrailersPossessed',
-            'noOfVehiclesPossessed',
-            'sufficientParking',
-            'permission',
-            'adPlaced',
-            'adPlacedIn',
-            'adPlacedDate',
-        ),
-        'children' => array(
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
-                )
-            )
-        )
-    );
+    use OperatingCentre\GenericApplicationAuthorisationSection,
+        OperatingCentre\ExternalApplicationAuthorisationSection;
 
     /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
-    /**
-     * Make form alterations
-     *
-     * This method enables the summary to apply the same form alterations. In this
-     * case we ensure we manipulate the form based on whether the license is PSV or not
-     *
-     * @param Form $form
-     * @param mixed $context
-     * @param array $options
-     *
-     * @return $form
-     */
-    public static function makeFormAlterations($form, $context, $options = array())
-    {
-        // Need to enumerate the form fieldsets with their mapping, as we're
-        // going to use old/new
-        $fieldsetMap = array();
-        if ($options['isReview']) {
-            foreach ($options['fieldsets'] as $fieldset) {
-                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
-            }
-        } else {
-            $fieldsetMap = array(
-                'dataTrafficArea' => 'dataTrafficArea',
-                'data' => 'data',
-                'table' => 'table'
-            );
-        }
-
-        if ($options['isPsv']) {
-
-            $formOptions = $form->get($fieldsetMap['data'])->getOptions();
-            $formOptions['hint'] .= '.psv';
-            $form->get($fieldsetMap['data'])->setOptions($options);
-
-            $licenceType = $options['data']['data']['licence']['licenceType']['id'];
-
-            if (!in_array(
-                $licenceType,
-                array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
-            )) {
-                $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
-            }
-
-            if (!in_array(
-                $licenceType,
-                array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
-            )) {
-                $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
-            }
-
-            $form->get($fieldsetMap['data'])->remove('totAuthVehicles');
-            $form->get($fieldsetMap['data'])->remove('totAuthTrailers');
-            $form->get($fieldsetMap['data'])->remove('minTrailerAuth');
-            $form->get($fieldsetMap['data'])->remove('maxTrailerAuth');
-
-        } else {
-
-            $form->get($fieldsetMap['data'])->remove('totAuthSmallVehicles');
-            $form->get($fieldsetMap['data'])->remove('totAuthMediumVehicles');
-            $form->get($fieldsetMap['data'])->remove('totAuthLargeVehicles');
-            $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
-        }
-
-        if ($options['isPsv']) {
-            $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
-            $cols = $table->getColumns();
-            unset($cols['trailersCol']);
-            $table->setColumns($cols);
-            $footer = $table->getFooter();
-            $footer['total']['content'] .= '-psv';
-            unset($footer['trailersCol']);
-            $table->setFooter($footer);
-        }
-
-        // Review-only options - we set the traffic area field in a different way
-        // because of the method scope.
-        if ( $options['isReview'] ) {
-            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
-            $bundle = array(
-                'children' => array(
-                    'licence' => array(
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'name'
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
-            $application = $context->makeRestCall(
-                'Application',
-                'GET',
-                array(
-                    'id' => $options['data']['id'],
-                ),
-                $bundle
-            );
-
-            if ( isset($application['licence']['trafficArea']) ) {
-                $form
-                    ->get($fieldsetMap['dataTrafficArea'])
-                    ->get('trafficAreaInfoNameExists')
-                    ->setValue($application['licence']['trafficArea']['name']);
-            } else {
-                $form
-                    ->get($fieldsetMap['dataTrafficArea'])
-                    ->get('trafficAreaInfoNameExists')
-                    ->setValue('unset');
-            }
-
-        }
-
-        return $form;
-    }
-
-    /**
-     * Remove trailer elements for PSV and set up Traffic Area section
-     *
-     * @param object $form
-     * @return object
-     */
-    protected function alterForm($form)
-    {
-        $options = array(
-            'isPsv' => $this->isPsv(),
-            'isReview' => false,
-            'data' => array(
-                'data' => array(
-                    'licence' => array(
-                        'licenceType' => array(
-                            'id' => $this->getLicenceType()
-                        )
-                    )
-                )
-            )
-        );
-
-        $form = $this->makeFormAlterations($form, $this, $options);
-
-        // set up Traffic Area section
-        $operatingCentresExists = count($this->tableData);
-        $trafficArea = $this->getTrafficArea();
-        $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
-        if (!$operatingCentresExists) {
-            $form->remove('dataTrafficArea');
-        } elseif ($trafficAreaId) {
-            $form->get('dataTrafficArea')->remove('trafficArea');
-            $template = $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue();
-            $newValue = str_replace('%NAME%', $trafficArea['name'], $template);
-            $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->setValue($newValue);
-        } else {
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoLabelExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoNameExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
-            $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions($this->getTrafficValueOptions());
-        }
-
-        return $form;
-    }
 
     /**
      * Remove trailers for PSV
@@ -541,42 +283,6 @@ class AuthorisationController extends OperatingCentresController
                 'documentSubCategory' => 2
             )
         );
-    }
-
-    /**
-     * Clear Traffic Area if we are deleting last one operating centres
-     */
-    public function maybeClearTrafficAreaId()
-    {
-        $ocCount = $this->getOperatingCentresCount();
-        if ($ocCount == 1 && $this->getActionId()) {
-            $this->setTrafficArea(null);
-        }
-    }
-
-    /**
-     * Get operating centres count
-     *
-     * @return int
-     */
-    public function getOperatingCentresCount()
-    {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            )
-        );
-
-        $operatingCentres = $this->makeRestCall(
-            'ApplicationOperatingCentre',
-            'GET',
-            array(
-                'application' => $this->getIdentifier(),
-            ),
-            $bundle
-        );
-        return $operatingCentres['Count'];
     }
 
     /**

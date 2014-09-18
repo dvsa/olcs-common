@@ -18,6 +18,18 @@ trait GenericApplicationAuthorisationSection
 {
     use GenericAuthorisationSection;
 
+    /**
+     * Holds the sub action service
+     *
+     * @var string
+     */
+    protected $sharedActionService = 'ApplicationOperatingCentre';
+
+    /**
+     * Holds the section service
+     *
+     * @var string
+     */
     protected $sharedService = 'Application';
 
     /**
@@ -102,5 +114,22 @@ trait GenericApplicationAuthorisationSection
         );
 
         return static::formatSummaryTableData($data);
+    }
+
+    /**
+     * Get operating centres count
+     *
+     * @return int
+     */
+    protected function getOperatingCentresCount()
+    {
+        $operatingCentres = $this->makeRestCall(
+            $this->sharedActionService,
+            'GET',
+            array('application' => $this->getIdentifier()),
+            $this->ocCountBundle
+        );
+
+        return $operatingCentres['Count'];
     }
 }

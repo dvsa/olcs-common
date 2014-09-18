@@ -476,6 +476,7 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Get the last part of the action from the action name
      *
+     * @param string $action
      * @return string
      */
     protected function getActionFromFullActionName($action = null)
