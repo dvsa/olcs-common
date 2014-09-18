@@ -284,18 +284,18 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
             );
         }
         $formAlterationsBundle = array(
-                'children' => array(
-                    'licence' => array(
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'name'
-                                )
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'trafficArea' => array(
+                            'properties' => array(
+                                'name'
                             )
                         )
                     )
                 )
-            );
+            )
+        );
         if ($service == 'Application' && $method == 'GET' && $bundle == $formAlterationsBundle) {
             if ($this->trafficAreaPresent) {
                 return array(
