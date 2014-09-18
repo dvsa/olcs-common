@@ -161,7 +161,6 @@ class PeopleController extends YourBusinessController
         );
 
         $org = $this->getOrganisationData($bundle);
-        // var_dump($org);
 
         $translator = $this->getServiceLocator()->get('translator');
         $guidance = $form->get('guidance')->get('guidance');
