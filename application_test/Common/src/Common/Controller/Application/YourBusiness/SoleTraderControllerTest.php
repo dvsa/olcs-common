@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\YourBusiness;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,21 +19,10 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
 
     protected $controllerName = '\Common\Controller\Application\YourBusiness\SoleTraderController';
     protected $defaultRestResponse = array();
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction

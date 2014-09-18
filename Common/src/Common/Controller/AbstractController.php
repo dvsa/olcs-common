@@ -324,11 +324,30 @@ abstract class AbstractController extends FormActionController
                     return;
                 }
 
+                $options = array();
+                $params = array(
+                    'action' => $routeAction
+                );
+
+                if (is_array($id) && count($id) === 1) {
+                    $id = $id[0];
+                }
+
+                if (is_array($id)) {
+                    $options = array(
+                        'query' => array(
+                            'id' => $id
+                        )
+                    );
+                } else {
+                    $params['id'] = $id;
+                }
+
                 $this->setCaughtResponse(
                     $this->redirectToRoute(
                         null,
-                        array('action' => $routeAction, 'id' => $id),
-                        array(),
+                        $params,
+                        $options,
                         true
                     )
                 );

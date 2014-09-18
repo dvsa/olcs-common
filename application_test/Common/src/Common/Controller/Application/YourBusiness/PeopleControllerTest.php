@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\YourBusiness;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 use Common\Controller\Application\YourBusiness\PeopleController;
@@ -19,22 +20,11 @@ use Common\Controller\Application\YourBusiness\PeopleController;
  */
 class PeopleControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
 
     protected $controllerName = '\Common\Controller\Application\YourBusiness\PeopleController';
     protected $defaultRestResponse = array();
     protected $organisation = PeopleController::ORG_TYPE_REGISTERED_COMPANY;
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction - organisation's type - limited company

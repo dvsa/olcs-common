@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Application\VehicleSafety;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -17,6 +18,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 abstract class AbstractVehicleControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $otherLicencesBundle = array(
         'properties' => array(),
         'children' => array(
@@ -77,18 +80,6 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             )
         )
     );
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction
@@ -890,6 +881,58 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         $this->assertFalse($table->hasAction('reprint'));
 
         // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    public function testIndexActionWithDeleteCrudActionWithSingleId()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => 1));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    public function testIndexActionWithDeleteCrudActionWithSingleIdWithArray()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => array(1)));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    public function testIndexActionWithDeleteCrudAction()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => array(1, 2, 3)));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testDeleteActionWithSubmitWithMultipleIds()
+    {
+        $this->setUpAction('delete', 1, array('data' => array('id' => '1,2,3')));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->deleteAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testDeleteActionWithIdsInQuery()
+    {
+        $this->setUpAction('delete', array(1, 2, 3));
+
+        $response = $this->controller->deleteAction();
+
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
     }
 

@@ -23,7 +23,7 @@ return array(
     'columns' => array(
         array(
             'width' => 'checkbox',
-            'type' => 'Selector'
+            'type' => 'Checkbox'
         ),
         array(
             'title' => $translationPrefix . '.vrm',
