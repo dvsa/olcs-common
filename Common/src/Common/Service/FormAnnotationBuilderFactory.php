@@ -39,5 +39,4 @@ class FormAnnotationBuilderFactory implements FactoryInterface
         $annotationBuilder->setFormFactory($formFactory);
         return $annotationBuilder;
     }
-
 }

@@ -212,5 +212,4 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
 
         return parent::setOptions($options);
     }
-
 }

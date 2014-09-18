@@ -4,6 +4,10 @@ namespace CommonTest\Filter;
 
 use Common\Filter\DateSelectNullifier;
 
+/**
+ * Class DateSelectNullifierTest
+ * @package CommonTest\Filter
+ */
 class DateSelectNullifierTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -17,6 +21,9 @@ class DateSelectNullifierTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($output, $sut->filter($input));
     }
 
+    /**
+     * @return array
+     */
     public function provideFilter()
     {
         return [

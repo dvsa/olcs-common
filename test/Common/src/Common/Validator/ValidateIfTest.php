@@ -5,8 +5,15 @@ namespace CommonTest\Validator;
 use Common\Validator\ValidateIf;
 use Mockery as m;
 
+/**
+ * Class ValidateIfTest
+ * @package CommonTest\Validator
+ */
 class ValidateIfTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     *
+     */
     public function testSetOptions()
     {
         $sut = new ValidateIf();
@@ -17,6 +24,9 @@ class ValidateIfTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $sut->getContextTruth());
     }
 
+    /**
+     *
+     */
     public function testGetValidatorChain()
     {
         $mockValidator = m::mock('Zend\Validator\NotEmpty');
@@ -44,7 +54,7 @@ class ValidateIfTest extends \PHPUnit_Framework_TestCase
      * @param $chainValid
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $options, $context, $chainValid, $errorMessages=[])
+    public function testIsValid($expected, $options, $context, $chainValid, $errorMessages = [])
     {
         $value = 'isValid';
         $errorMessages = empty($errorMessages) ? ['error' => 'message'] : $errorMessages;
@@ -63,6 +73,9 @@ class ValidateIfTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function provideIsValid()
     {
         return [
@@ -80,4 +93,3 @@ class ValidateIfTest extends \PHPUnit_Framework_TestCase
         ];
     }
 }
- 

@@ -199,7 +199,7 @@ class DynamicSelect extends Select
     {
         if (is_array($value) && array_key_exists('id', $value)) {
             $value = $value['id'];
-        } else if (is_array($value) && empty($value)) {
+        } elseif (is_array($value) && empty($value)) {
             $value = null;
         }
         return parent::setValue($value);
