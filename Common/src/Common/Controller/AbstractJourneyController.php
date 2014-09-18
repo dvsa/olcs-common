@@ -98,13 +98,6 @@ abstract class AbstractJourneyController extends AbstractSectionController
     protected $viewName;
 
     /**
-     * Holds the action id
-     *
-     * @var int
-     */
-    protected $actionId;
-
-    /**
      * Holds hasView
      *
      * @var boolean

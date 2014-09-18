@@ -884,6 +884,58 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
     }
 
+    public function testIndexActionWithDeleteCrudActionWithSingleId()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => 1));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    public function testIndexActionWithDeleteCrudActionWithSingleIdWithArray()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => array(1)));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    public function testIndexActionWithDeleteCrudAction()
+    {
+        $this->setUpAction('index', null, array('action' => 'delete', 'id' => array(1, 2, 3)));
+
+        $response = $this->controller->indexAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testDeleteActionWithSubmitWithMultipleIds()
+    {
+        $this->setUpAction('delete', 1, array('data' => array('id' => '1,2,3')));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->deleteAction();
+
+        $this->assertInstanceOf('Zend\Http\Response', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testDeleteActionWithIdsInQuery()
+    {
+        $this->setUpAction('delete', array(1, 2, 3));
+
+        $response = $this->controller->deleteAction();
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
     /**
      * Mock the rest call
      *
