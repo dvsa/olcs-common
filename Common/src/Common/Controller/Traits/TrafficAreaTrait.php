@@ -100,6 +100,10 @@ trait TrafficAreaTrait
                         'trafficArea' => $id
             );
             $this->makeRestCall('Licence', 'PUT', $data);
+            if ($id) {
+                $licenceService = $this->getServiceLocator()->get('licence');
+                $licenceService->generateLicence($this->getIdentifier());
+            }
         }
     }
 
@@ -142,5 +146,4 @@ trait TrafficAreaTrait
         }
         return $valueOptions;
     }
-
 }
