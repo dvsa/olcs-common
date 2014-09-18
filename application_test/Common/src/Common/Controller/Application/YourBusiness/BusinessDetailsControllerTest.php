@@ -237,8 +237,6 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
 
         $fieldset = $this->getFormFromView($response)->get('data');
 
-        $companyType = $fieldset->get('type')->getValue();
-        echo "Type=".$companyType;
         $companyNumber = $fieldset->get('companyNumber');
         $companyName = $fieldset->get('name');
 
