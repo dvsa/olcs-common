@@ -65,7 +65,8 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         return [
             ['test', 'test'],
             [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
-            [['id'=>'test', 'desc' => 'Test Item'], 'test']
+            [['id'=>'test', 'desc' => 'Test Item'], 'test'],
+            [[], null]
         ];
     }
 
