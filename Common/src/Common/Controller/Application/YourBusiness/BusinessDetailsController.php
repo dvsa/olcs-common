@@ -68,7 +68,7 @@ class BusinessDetailsController extends YourBusinessController
                                 'properties' => array(
                                     'id'
                                 )
-                            ),
+                            )
                         )
                     )
                 )
@@ -217,33 +217,11 @@ class BusinessDetailsController extends YourBusinessController
      */
     public static function makeFormAlterations($form, $context, $options = array())
     {
-        $applicationBundle = array(
-            'children' => array(
-                'licence' => array(
-                    'children' => array(
-                        'organisation' => array(
-                            'properties' => array(
-                                'id',
-                                'version'
-                            ),
-                            'children' => array(
-                                'type' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
         $application = $context->makeRestCall(
             'Application',
             'GET',
             array('id' => $context->getIdentifier()),
-            $applicationBundle
+            self::$applicationBundle
         );
 
         $organisation=$application['licence']['organisation'];
@@ -335,7 +313,7 @@ class BusinessDetailsController extends YourBusinessController
         $organisation = $licence['organisation'];
 
         $tradingNames = [];
-        
+
         if ( isset($licence['organisation']['tradingNames']) ) {
             foreach ($licence['organisation']['tradingNames'] as $tradingName) {
                 $tradingNames[] = ['text' => $tradingName['name']];
@@ -542,7 +520,17 @@ class BusinessDetailsController extends YourBusinessController
      */
     protected function actionSave($data, $service = null)
     {
-        $organisation = $this->getOrganisationData(['type', 'id']);
+        $extraBundle = array(
+            'children' => array(
+                'type' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
+            )
+        );
+
+        $organisation = $this->getOrganisationData($extraBundle);
         $data['organisation'] = $organisation['id'];
         parent::actionSave($data, 'CompanySubsidiary');
     }

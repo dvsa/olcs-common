@@ -41,16 +41,34 @@ class YourBusinessController extends ApplicationController
      * @param array $organisationBundle
      * @return array
      */
-    protected function getOrganisationData($organisationBundle = array())
+    protected function getOrganisationData($extraBundle = array())
     {
-        if (!isset($organisationBundle['properties'])) {
-            $organisationBundle['properties'] = array();
+        if ( isset($extraBundle['properties']) ) {
+            $extraBundle['properties'] = array_unique(
+                array_merge(
+                    array('id', 'version'),
+                    $extraBundle['properties']
+                )
+            );
+        } else {
+            $extraBundle['properties'] = array('id','version');
         }
 
-        $organisationBundle['properties'] = array_merge(
-            array('id', 'version'),
-            $organisationBundle['properties']
-        );
+        if ( !isset($extraBundle['children']) ) {
+            $extraBundle['children'] = array();
+        }
+
+        // It matters to our testing in what order the bundle is specified
+        // so it can match the relevant REST call, so reorder them here.
+        $organisationBundle=array();
+        if ( ! empty($extraBundle['properties']) ) {
+            $organisationBundle['properties']=$extraBundle['properties'];
+        }
+
+        if ( ! empty($extraBundle['children']) ) {
+            $organisationBundle['children']=$extraBundle['children'];
+        }
+
 
         $bundle = array(
             'children' => array(

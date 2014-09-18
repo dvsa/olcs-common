@@ -24,7 +24,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
 
     protected $controllerName = '\Common\Controller\Application\YourBusiness\PeopleController';
     protected $defaultRestResponse = array();
-    protected $organisation = PeopleController::ORG_TYPE_REGISTERED_COMPANY;
+    protected $organisationType = PeopleController::ORG_TYPE_REGISTERED_COMPANY;
 
     /**
      * Test indexAction - organisation's type - limited company
@@ -45,7 +45,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
     public function testIndexActionOrgTypeLlp()
     {
         $this->setUpAction('index');
-        $this->organisation = PeopleController::ORG_TYPE_LLP;
+        $this->organisationType = PeopleController::ORG_TYPE_LLP;
         $response = $this->controller->indexAction();
 
         // Make sure we get a view not a response
@@ -58,7 +58,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
     public function testIndexActionOrgTypePartners()
     {
         $this->setUpAction('index');
-        $this->organisation = PeopleController::ORG_TYPE_PARTNERSHIP;
+        $this->organisationType = PeopleController::ORG_TYPE_PARTNERSHIP;
         $response = $this->controller->indexAction();
 
         // Make sure we get a view not a response
@@ -71,7 +71,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
     public function testIndexActionOrgTypeNotDefined()
     {
         $this->setUpAction('index');
-        $this->organisation = '';
+        $this->organisationType = '';
         $response = $this->controller->indexAction();
 
         // Make sure we get a view not a response
@@ -84,7 +84,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
     public function testIndexActionOrgTypeOther()
     {
         $this->setUpAction('index');
-        $this->organisation = PeopleController::ORG_TYPE_OTHER;
+        $this->organisationType = PeopleController::ORG_TYPE_OTHER;
         $response = $this->controller->indexAction();
 
         // Make sure we get a view not a response
@@ -477,8 +477,14 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                             'properties' => array(
                                 'id',
                                 'version',
-                                'type',
                                 'companyOrLlpNo'
+                            ),
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
                             )
                         )
                     )
@@ -527,6 +533,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
+
         $organisationDataBundle = array(
             'children' => array(
                 'licence' => array(
@@ -535,7 +542,13 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                             'properties' => array(
                                 'id',
                                 'version',
-                                'type',
+                            ),
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
                             )
                         )
                     )
@@ -546,7 +559,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
             return array(
                 'licence' => array(
                     'organisation' => array(
-                        'type' => $this->organisation
+                        'type' => $this->organisationType
                     )
                 )
             );

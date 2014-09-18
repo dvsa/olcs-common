@@ -885,7 +885,7 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         }
 
         // Temporary debug to show when we haven't matched a REST call
-        echo $service;
+        echo "Unmatched on Summary:".$service."\n";
         var_dump($bundle);
 
     }

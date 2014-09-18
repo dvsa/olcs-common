@@ -496,14 +496,14 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                             'organisation' => array(
                                 'properties' => array(
                                     'id',
-                                    'version'
+                                    'version',
                                 ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
                                             'id'
                                         )
-                                    )
+                                    ),
                                 )
                             )
                         )
@@ -588,7 +588,5 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
             }
         }
 
-        echo $service;
-        print_r($bundle);
     }
 }
