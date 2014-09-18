@@ -27,7 +27,7 @@ return array(
     'columns' => array(
         array(
             'width' => 'checkbox',
-            'format' => '{{[elements/radio]}}'
+            'type' => 'Checkbox'
         ),
         array(
             'title' => $translationPrefix . '.vrm',

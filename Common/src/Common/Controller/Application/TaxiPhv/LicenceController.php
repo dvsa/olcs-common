@@ -365,7 +365,7 @@ class LicenceController extends TaxiPhvController
     {
         $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
 
-        $trafficAreaValidator = $this->getPostcodeTrafficAreaValidator();
+        $trafficAreaValidator = $this->getServiceLocator()->get('postcodePhlTrafficAreaValidator');
         $licenceId = $form->get('data')->get('licence')->getValue();
         $trafficAreaValidator->setPrivateHireLicencesCount($this->getPrivateHireLicencesCount($licenceId));
         $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
@@ -424,16 +424,6 @@ class LicenceController extends TaxiPhvController
         if ($licCount == 1 && $this->getActionId()) {
             $this->setTrafficArea(null);
         }
-    }
-
-    /**
-     * Get postcode traffic area validator
-     *
-     * @return Common\Form\Elements\Validator\PrivateHireLicenceTrafficAreaValidator
-     */
-    public function getPostcodeTrafficAreaValidator()
-    {
-        return $this->getServiceLocator()->get('postcodePhlTrafficAreaValidator');
     }
 
     /**

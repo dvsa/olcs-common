@@ -447,7 +447,11 @@ trait VehicleSection
     {
         $licenceVehicleId = $data['data']['id'];
 
-        $this->ceaseActiveDisc($licenceVehicleId);
+        $licenceVehicleIds = explode(',', $licenceVehicleId);
+
+        foreach ($licenceVehicleIds as $id) {
+            $this->ceaseActiveDisc($id);
+        }
 
         parent::deleteSave($data);
     }

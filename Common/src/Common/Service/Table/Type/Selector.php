@@ -15,7 +15,7 @@ namespace Common\Service\Table\Type;
  */
 class Selector extends AbstractType
 {
-    private $format = '<input type="radio" name="%s" value="%s" />';
+    protected $format = '<input type="radio" name="%s" value="%s" />';
 
     /**
      * Render the selector
