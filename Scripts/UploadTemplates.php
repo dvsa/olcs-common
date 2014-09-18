@@ -10,11 +10,16 @@ class TemplateWorker
     {
         $client = new \Dvsa\Jackrabbit\Service\Client();
 
+        $request = new \Zend\Http\Request();
+        $request->getHeaders()->addHeaderLine('uuid', 'uD12345');
+
         $http = new \Zend\Http\Client();
-        $http->setAuth('uD12345', '');
+        $http->setRequest($request);
+
         $client->setHttpClient($http);
-        $client->setBaseUri('http://vipi-cmg01.ip.npm:8080/hcs');
+
         $client->setBaseUri('http://scdv-ap05.sc.npm:8080/hcs');
+
         $client->setWorkspace('olcs');
 
         $this->client = $client;
