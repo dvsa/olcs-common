@@ -73,14 +73,22 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
 
         $this->request = new Request();
         $this->response = new Response();
-        $this->routeMatch = new RouteMatch(
-            array(
-                'controller' => trim($this->controllerName, '\\'),
-                'action' => $action,
-                $this->identifierName => 1,
-                'id' => $id
-            )
+
+        $routeMatch = array(
+            'controller' => trim($this->controllerName, '\\'),
+            'action' => $action,
+            $this->identifierName => 1
         );
+
+        if (is_array($id)) {
+            $query = new \Zend\Stdlib\Parameters(array('id' => $id));
+
+            $this->controller->getRequest()->setMethod('get')->setQuery($query);
+        } else {
+            $routeMatch['id'] = $id;
+        }
+
+        $this->routeMatch = new RouteMatch($routeMatch);
 
         $this->routeMatch->setMatchedRouteName($this->routeName);
 

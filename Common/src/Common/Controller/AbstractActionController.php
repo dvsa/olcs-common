@@ -63,6 +63,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected $pageLayout = null;
 
     /**
+     * Holds any inline scripts for the current page
+     *
+     * @var array
+     */
+    protected $inlineScripts = [];
+
+    /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
@@ -185,6 +192,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $params = array_merge($params, array('action' => $action));
 
+        $options = array();
+
         $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
@@ -197,10 +206,42 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 return false;
             }
 
-            $params[$itemIdParam] = $id;
+            if (is_array($id) && count($id) === 1) {
+                $id = $id[0];
+            }
+
+            // If we have an array of id's we need to use a query string param rather than the route
+            if (is_array($id)) {
+                $options = array(
+                    'query' => array(
+                        $itemIdParam => $id
+                    )
+                );
+            } else {
+                $params[$itemIdParam] = $id;
+            }
         }
 
-        return $this->redirect()->toRoute($route, $params, [], true);
+        return $this->redirect()->toRoute($route, $params, $options, true);
+    }
+
+    /**
+     * Get the last part of the action from the action name
+     *
+     * @return string
+     */
+    protected function getActionFromFullActionName($action = null)
+    {
+        if ($action == null) {
+            return '';
+        }
+
+        if (!strstr($action, '-')) {
+            return $action;
+        }
+
+        $parts = explode('-', $action);
+        return array_pop($parts);
     }
 
     /**
@@ -418,5 +459,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function loadScripts($scripts)
     {
         return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+    }
+
+    /**
+     * Get the inline scripts
+     *
+     * @return array
+     */
+    protected function getInlineScripts()
+    {
+        return $this->inlineScripts;
     }
 }
