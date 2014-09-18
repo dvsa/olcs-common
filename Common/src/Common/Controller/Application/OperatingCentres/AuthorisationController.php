@@ -17,6 +17,8 @@ namespace Common\Controller\Application\OperatingCentres;
  */
 class AuthorisationController extends OperatingCentresController
 {
+    use \Common\Controller\Traits\TrafficAreaTrait;
+
     /**
      * Holds the table data
      *
@@ -212,13 +214,6 @@ class AuthorisationController extends OperatingCentresController
     );
 
     /**
-     * Holds the Traffic Area details
-     *
-     * @var array
-     */
-    private $trafficArea;
-
-    /**
      * Northern Ireland Traffic Area Code
      */
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
@@ -276,13 +271,13 @@ class AuthorisationController extends OperatingCentresController
     {
         // Need to enumerate the form fieldsets with their mapping, as we're
         // going to use old/new
-        $fieldsetMap = Array();
-        if ( $options['isReview'] ) {
+        $fieldsetMap = array();
+        if ($options['isReview']) {
             foreach ($options['fieldsets'] as $fieldset) {
-                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')]=$fieldset;
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
             }
         } else {
-            $fieldsetMap = Array(
+            $fieldsetMap = array(
                 'dataTrafficArea' => 'dataTrafficArea',
                 'data' => 'data',
                 'table' => 'table'
@@ -295,7 +290,8 @@ class AuthorisationController extends OperatingCentresController
             $formOptions['hint'] .= '.psv';
             $form->get($fieldsetMap['data'])->setOptions($options);
 
-            $licenceType=$options['data']['data']['licence']['licenceType']['id'];
+            $licenceType = $options['data']['data']['licence']['licenceType']['id'];
+
             if (!in_array(
                 $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_NATIONAL, self::LICENCE_TYPE_STANDARD_INTERNATIONAL)
@@ -304,7 +300,7 @@ class AuthorisationController extends OperatingCentresController
             }
 
             if (!in_array(
-                $context->getLicenceType(),
+                $licenceType,
                 array(self::LICENCE_TYPE_STANDARD_INTERNATIONAL, self::LICENCE_TYPE_RESTRICTED)
             )) {
                 $form->get($fieldsetMap['data'])->remove('totCommunityLicences');
@@ -386,20 +382,21 @@ class AuthorisationController extends OperatingCentresController
      */
     protected function alterForm($form)
     {
-        $options=Array(
+        $options = array(
             'isPsv' => $this->isPsv(),
             'isReview' => false,
             'data' => array(
                 'data' => array(
                     'licence' => array(
                         'licenceType' => array(
-                            'id' => $this->licenceType
+                            'id' => $this->getLicenceType()
                         )
                     )
                 )
             )
         );
-        $form=$this->makeFormAlterations($form, $this, $options);
+
+        $form = $this->makeFormAlterations($form, $this, $options);
 
         // set up Traffic Area section
         $operatingCentresExists = count($this->tableData);
@@ -489,7 +486,7 @@ class AuthorisationController extends OperatingCentresController
         // add traffic area validator
         $licenceData = $this->getLicenceData();
 
-        $trafficAreaValidator = $this->getPostcodeTrafficAreaValidator();
+        $trafficAreaValidator = $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
         $trafficAreaValidator->setNiFlag($licenceData['niFlag']);
         $trafficAreaValidator->setOperatingCentresCount($this->getOperatingCentresCount());
         $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
@@ -679,93 +676,6 @@ class AuthorisationController extends OperatingCentresController
     }
 
     /**
-     * Get Traffic Area information for current application
-     *
-     * @return array
-     */
-    protected function getTrafficArea()
-    {
-        if (!$this->trafficArea) {
-            $bundle = array(
-                'properties' => array(
-                    'id',
-                    'version',
-                ),
-                'children' => array(
-                    'licence' => array(
-                        'properties' => array(
-                            'id'
-                        ),
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id',
-                                    'name'
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
-            $application = $this->makeRestCall(
-                'Application',
-                'GET',
-                array(
-                    'id' => $this->getIdentifier(),
-                ),
-                $bundle
-            );
-            if (is_array($application) && array_key_exists('licence', $application) &&
-                is_array($application['licence']) &&
-                array_key_exists('trafficArea', $application['licence'])) {
-                $this->trafficArea = $application['licence']['trafficArea'];
-            }
-        }
-        return $this->trafficArea;
-    }
-
-    /**
-     * Get Traffic Area value options for select element
-     *
-     * @return array
-     */
-    protected function getTrafficValueOptions()
-    {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'name',
-            ),
-        );
-
-        $trafficArea = $this->makeRestCall('TrafficArea', 'GET', array(), $bundle);
-        $valueOptions = array();
-        $results = $trafficArea['Results'];
-        if (is_array($results) && count($results)) {
-            usort(
-                $results,
-                function ($a, $b) {
-                    return strcmp($a["name"], $b["name"]);
-                }
-            );
-
-            // remove Northern Ireland Traffic Area
-            foreach ($results as $key => $value) {
-                if ($value['id'] == self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
-                    unset($results[$key]);
-                    break;
-                }
-            }
-
-            foreach ($results as $element) {
-                $valueOptions[$element['id']] = $element['name'];
-            }
-        }
-        return $valueOptions;
-    }
-
-    /**
      * Clear Traffic Area if we are deleting last one operating centres
      */
     public function maybeClearTrafficAreaId()
@@ -798,43 +708,6 @@ class AuthorisationController extends OperatingCentresController
             $bundle
         );
         return $operatingCentres['Count'];
-    }
-
-    /**
-     * Set traffic area to application's licence based on traarea id
-     *
-     * @param string $id
-     */
-    public function setTrafficArea($id = null)
-    {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            ),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(
-                        'id',
-                        'version'
-                    )
-                )
-            )
-        );
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
-        if (is_array($application) && array_key_exists('licence', $application) &&
-            array_key_exists('version', $application['licence'])) {
-            $data = array(
-                        'id' => $application['licence']['id'],
-                        'version' => $application['licence']['version'],
-                        'trafficArea' => $id
-            );
-            $this->makeRestCall('Licence', 'PUT', $data);
-            if ($id) {
-                $licenceService = $this->getLicenceService();
-                $licenceService->generateLicence($this->getIdentifier());
-            }
-        }
     }
 
     /**
@@ -973,45 +846,5 @@ class AuthorisationController extends OperatingCentresController
         }
 
         return $this->tableData;
-    }
-
-    /**
-     * Get postcode service
-     *
-     * @return Common\Service\Postcode\Postcode
-     */
-    public function getPostcodeService()
-    {
-        return $this->getServiceLocator()->get('postcode');
-    }
-
-    /**
-     * Get postcode traffic area validator
-     *
-     * @return Common\Form\Elements\Validator\OperatingCentreTrafficAreaValidator
-     */
-    public function getPostcodeTrafficAreaValidator()
-    {
-        return $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
-    }
-
-    /**
-     * Get postcode validators chain
-     *
-     * @return Zend\Validator\ValidatorChain
-     */
-    public function getPostcodeValidatorsChain($form)
-    {
-        return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
-    }
-
-    /**
-     * Get licence service
-     *
-     * @return Common\Service\Licence\Licence
-     */
-    public function getLicenceService()
-    {
-        return $this->getServiceLocator()->get('licence');
     }
 }

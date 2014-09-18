@@ -9,6 +9,7 @@
 
 namespace CommonTest\Controller\Application\YourBusiness;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -20,6 +21,7 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
 
     protected $controllerName = '\Common\Controller\Application\YourBusiness\BusinessDetailsController';
 
@@ -52,18 +54,6 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
             'companyNo' => '12345678'
         ]
     ];
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Refactored index action tests using a provider

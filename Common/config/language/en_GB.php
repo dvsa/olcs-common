@@ -365,8 +365,10 @@ return array(
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-add' => 'Add vehicle',
+    'application_vehicle-safety_vehicle-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-edit' => 'Edit vehicle',
     'application_vehicle-safety_vehicle-psv-large-add' => 'Add large vehicle',
+    'application_vehicle-safety_vehicle-psv-large-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-large-edit' => 'Edit large vehicle',
     'application_vehicle-safety_vehicle-psv-large.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
@@ -375,6 +377,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-large.table.title' => '17 or more passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-large.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-medium-add' => 'Add medium vehicle',
+    'application_vehicle-safety_vehicle-psv-medium-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-medium-edit' => 'Edit medium vehicle',
     'application_vehicle-safety_vehicle-psv-medium.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
@@ -383,6 +386,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-medium.table.title' => '9 - 16 passenger seat vehicles (if applicable)',
     'application_vehicle-safety_vehicle-psv-medium.table.vrm' => 'Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-small-add' => 'Add small vehicle',
+    'application_vehicle-safety_vehicle-psv-small-delete' => 'Remove vehicle(s)',
     'application_vehicle-safety_vehicle-psv-small-edit' => 'Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
@@ -400,6 +404,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
         vehicles?',
+    'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate' => 'Removed date',
@@ -453,6 +458,8 @@ return array(
     'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
     'applications' => 'Applications',
     'apply-changes' => 'Apply changes',
+    'apsts_consideration' => 'Under Consideration',
+    'apsts_new' => 'Not Yet Submitted',
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',
@@ -580,12 +587,15 @@ return array(
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
+    'filters' => 'Filters',
     'finance' => 'Finance',
     'first-name' => 'First name(s)',
+    'flash-discarded-changes' => 'Your changes have been discarded',
     'form-case-number' => 'Case number',
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
+    'generic-delete-confirmation-label' => 'Are you sure you want to remove these?',
     'header-correspondence-details' => 'Correspondence details',
     'header-establishment-address' => 'Establishment address',
     'helpdesk' => 'Helpdesk',
@@ -596,9 +606,6 @@ return array(
     'internal' => 'Internal',
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
-    'internal-licence-bus.data.status' => 'Status',
-    'internal-licence-bus.submit.filter' => 'Filter',
-    'internal-licence-bus-list' => 'Bus registration list',
     'internal-licence-bus-details' => 'Service details',
     'internal-licence-bus-details-label' => 'Service details',
     'internal-licence-bus-details-quality' => 'Quality schemes',
@@ -626,6 +633,7 @@ return array(
     'internal-licence-bus-fees-placeholder-label' => 'Fees 1',
     'internal-licence-bus-fees-placeholder-title' => 'Fees 1',
     'internal-licence-bus-fees-title' => 'Fees',
+    'internal-licence-bus-list' => 'Bus registration list',
     'internal-licence-bus-processing' => 'Processing',
     'internal-licence-bus-processing-label' => 'Processing',
     'internal-licence-bus-processing-notes' => 'Notes',
@@ -656,6 +664,8 @@ return array(
     'internal-licence-bus-trc-placeholder-label' => 'TRCs & conditions 1',
     'internal-licence-bus-trc-placeholder-title' => 'TRCs & conditions 1',
     'internal-licence-bus-trc-title' => 'TRCs & conditions',
+    'internal-licence-bus.data.status' => 'Status',
+    'internal-licence-bus.submit.filter' => 'Filter',
     'internal-licence-details' => 'Licence details',
     'internal-licence-details-address' => 'Addresses',
     'internal-licence-details-address-label' => 'Addresses',
@@ -696,6 +706,7 @@ return array(
     'internal-licence-details-vehicle_psv-title' => 'Vehicles',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
+    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-notes-add' => 'Add note',
     'internal-licence-processing-notes-add-label' => 'Add note',
     'internal-licence-processing-notes-add-title' => 'Add note',
@@ -777,6 +788,7 @@ return array(
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
     'month' => 'Month',
+    'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
     'new' => 'New',
@@ -899,6 +911,7 @@ return array(
     'registered-office-details-header' => 'Registered office details',
     'removals-construction-plant-hire' => 'Removals / Construction / Plant Hire',
     'representations' => 'Representations',
+    'reprint-pending-disc-error' => 'You have selected a vehicle where a disc print has already been requested',
     'review-date' => 'Review date',
     'safety-inspection-providers.table.address' => 'Workshop address',
     'safety-inspection-providers.table.empty_message' => 'Please tell us about who will carry out the safety inspections
@@ -1067,6 +1080,9 @@ return array(
     'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
         Please confirm you would like to continue adding this vehicle',
     'vehicle-count' => '%s vehicles',
+    'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to remove replacement discs for the selected
+        vehicle(s)?',
+    'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicles' => 'Vehicles',
     'vehicles-in-posession' => 'Vehicles in possession',
     'vrm' => 'VRM',
@@ -1076,6 +1092,8 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     'apsts_new' => 'Not Yet Submitted',
-    'apsts_consideration' => 'Under Consideration'
+    'apsts_consideration' => 'Under Consideration',
+    'tasks.close.single' => 'Are you sure you want to close this task?',
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
 );

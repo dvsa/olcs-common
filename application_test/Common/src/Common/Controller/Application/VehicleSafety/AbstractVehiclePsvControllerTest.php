@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Application\VehicleSafety;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -17,6 +18,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $largeVehicles = 5;
 
     protected $otherLicencesBundle = array(
@@ -42,18 +45,6 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
             )
         )
     );
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction
@@ -128,20 +119,20 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
     }
 
     /**
-     * Test indexAction with crud action
+     * @dataProvider providerIndexActionWithEachAddCrudAction
      */
-    public function testIndexActionWithSmallAddCrudActionWithNoTotalAuthSet()
+    public function testIndexActionWithEachAddCrudAction($action, $bundleVar, $bundleResponse, $noOfErrors, $vehType)
     {
-        $this->setUpAction('index', null, array('action' => 'small-add'));
+        $this->setUpAction('index', null, array('action' => $action));
 
         $bundle = array(
             'properties' => array(
-                'totAuthSmallVehicles'
+                $bundleVar
             )
         );
 
         $response = array(
-            'totAuthSmallVehicles' => ''
+            $bundleVar => $bundleResponse
         );
 
         $this->setRestResponse('Application', 'GET', $response, $bundle);
@@ -153,7 +144,7 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                         'vehicle' => array(
                             'id' => 1,
                             'psvType' => array(
-                                'id' => 'vhl_t_a'
+                                'id' => $vehType
                             )
                         )
                     )
@@ -196,453 +187,79 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
 
         $flashMessenger = $this->controller->plugin('FlashMessenger');
 
-        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+        $this->assertEquals($noOfErrors, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
 
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithSmallAddCrudActionWithTooManyVehicles()
+
+    public function providerIndexActionWithEachAddCrudAction()
     {
-        $this->setUpAction('index', null, array('action' => 'small-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthSmallVehicles'
+        return array(
+            array(
+                'small-add',
+                'totAuthSmallVehicles',
+                '',
+                0,
+                'vhl_t_a'
+            ),
+            array(
+                'small-add',
+                'totAuthSmallVehicles',
+                1,
+                1,
+                'vhl_t_a'
+            ),
+            array(
+                'small-add',
+                'totAuthSmallVehicles',
+                10,
+                0,
+                'vhl_t_a'
+            ),
+            array(
+                'medium-add',
+                'totAuthMediumVehicles',
+                '',
+                0,
+                'vhl_t_b'
+            ),
+            array(
+                'medium-add',
+                'totAuthMediumVehicles',
+                1,
+                1,
+                'vhl_t_b'
+            ),
+            array(
+                'medium-add',
+                'totAuthMediumVehicles',
+                10,
+                0,
+                'vhl_t_b'
+            ),
+            array(
+                'large-add',
+                'totAuthLargeVehicles',
+                '',
+                0,
+                'vhl_t_c'
+            ),
+            array(
+                'large-add',
+                'totAuthLargeVehicles',
+                1,
+                1,
+                'vhl_t_c'
+            ),
+            array(
+                'large-add',
+                'totAuthLargeVehicles',
+                10,
+                0,
+                'vhl_t_c'
             )
         );
-
-        $response = array(
-            'totAuthSmallVehicles' => 1
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_a'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithSmallAddCrudActionWithNotEnoughVehicles()
-    {
-        $this->setUpAction('index', null, array('action' => 'small-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthSmallVehicles'
-            )
-        );
-
-        $response = array(
-            'totAuthSmallVehicles' => 10
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_a'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithMediumAddCrudActionWithTooManyVehicles()
-    {
-        $this->setUpAction('index', null, array('action' => 'medium-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthMediumVehicles'
-            )
-        );
-
-        $response = array(
-            'totAuthMediumVehicles' => 1
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_b'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithMediumAddCrudActionWithNotEnoughVehicles()
-    {
-        $this->setUpAction('index', null, array('action' => 'medium-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthMediumVehicles'
-            )
-        );
-
-        $response = array(
-            'totAuthMediumVehicles' => 10
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_b'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithLargeAddCrudActionWithTooManyVehicles()
-    {
-        $this->setUpAction('index', null, array('action' => 'large-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthLargeVehicles'
-            )
-        );
-
-        $response = array(
-            'totAuthLargeVehicles' => 1
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_c'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
-     * Test indexAction with crud action
-     */
-    public function testIndexActionWithLargeAddCrudActionWithNotEnoughVehicles()
-    {
-        $this->setUpAction('index', null, array('action' => 'large-add'));
-
-        $bundle = array(
-            'properties' => array(
-                'totAuthLargeVehicles'
-            )
-        );
-
-        $response = array(
-            'totAuthLargeVehicles' => 10
-        );
-
-        $this->setRestResponse('Application', 'GET', $response, $bundle);
-
-        $totalNumberOfVehiclesResponse = array(
-            'licence' => array(
-                'licenceVehicles' => array(
-                    array(
-                        'vehicle' => array(
-                            'id' => 1,
-                            'psvType' => array(
-                                'id' => 'vhl_t_c'
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $totalNumberOfVehiclesBundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licenceVehicles' => array(
-                            'properties' => array(),
-                            'children' => array(
-                                'vehicle' => array(
-                                    'properties' => array(
-                                        'id'
-                                    ),
-                                    'children' => array(
-                                        'psvType' => array(
-                                            'properties' => array(
-                                                'id'
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        );
-
-        $this->setRestResponse('Application', 'GET', $totalNumberOfVehiclesResponse, $totalNumberOfVehiclesBundle);
-
-        $this->controller->setEnabledCsrf(false);
-        $response = $this->controller->indexAction();
-
-        $flashMessenger = $this->controller->plugin('FlashMessenger');
-
-        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**
@@ -1187,6 +804,25 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
 
         $response = $this->controller->largeDeleteAction();
 
+        $form = $this->getFormFromView($response);
+        $this->assertEquals(
+            'vehicle-remove-confirm-label',
+            $form->get('data')->get('id')->getLabel('vehicle-remove-confirm-label')
+        );
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testLargeDeleteActionWithSubmit()
+    {
+        $this->setUpAction('large-delete', 1, array('data' => array('id' => 1)));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->largeDeleteAction();
+
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
@@ -1199,6 +835,25 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
 
         $response = $this->controller->mediumDeleteAction();
 
+        $form = $this->getFormFromView($response);
+        $this->assertEquals(
+            'vehicle-remove-confirm-label',
+            $form->get('data')->get('id')->getLabel('vehicle-remove-confirm-label')
+        );
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testMediumDeleteActionWithSubmit()
+    {
+        $this->setUpAction('medium-delete', 1, array('data' => array('id' => 1)));
+
+        $this->controller->setEnabledCsrf(false);
+        $response = $this->controller->mediumDeleteAction();
+
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
@@ -1209,6 +864,25 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
     {
         $this->setUpAction('small-delete', 1);
 
+        $response = $this->controller->smallDeleteAction();
+
+        $form = $this->getFormFromView($response);
+        $this->assertEquals(
+            'vehicle-remove-confirm-label',
+            $form->get('data')->get('id')->getLabel('vehicle-remove-confirm-label')
+        );
+
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test deleteAction
+     */
+    public function testSmallDeleteActionWithSubmit()
+    {
+        $this->setUpAction('small-delete', 1, array('data' => array('id' => 1)));
+
+        $this->controller->setEnabledCsrf(false);
         $response = $this->controller->smallDeleteAction();
 
         $this->assertInstanceOf('Zend\Http\Response', $response);

@@ -10,8 +10,9 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
+                'reprint' => array('label' => 'Reprint Disc', 'requireRows' => true),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'warning', 'requireRows' => true)
+                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
         'paginate' => array(
@@ -26,7 +27,7 @@ return array(
     'columns' => array(
         array(
             'width' => 'checkbox',
-            'format' => '{{[elements/radio]}}'
+            'type' => 'Checkbox'
         ),
         array(
             'title' => $translationPrefix . '.vrm',

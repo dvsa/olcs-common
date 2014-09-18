@@ -63,6 +63,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected $pageLayout = null;
 
     /**
+     * Holds any inline scripts for the current page
+     *
+     * @var array
+     */
+    protected $inlineScripts = [];
+
+    /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
@@ -167,7 +174,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return boolean
      */
-    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
+    protected function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
     {
         $action = $this->getCrudActionFromPost();
 
@@ -177,21 +184,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $action = strtolower($action);
 
-        // Incase we want to try and hi-jack the crud action check
-        if (method_exists($this, 'checkForAlternativeCrudAction')) {
-            $response = $this->checkForAlternativeCrudAction($action);
+        $response = $this->checkForAlternativeCrudAction($action);
 
-            if ($response instanceof Response) {
-                return $response;
-            }
+        if ($response instanceof Response) {
+            return $response;
         }
 
         $params = array_merge($params, array('action' => $action));
 
-        if (strstr($action, '-')) {
-            $parts = explode('-', $action);
-            $action = array_pop($parts);
-        }
+        $options = array();
+
+        $action = $this->getActionFromFullActionName($action);
 
         if ($action !== 'add') {
 
@@ -203,10 +206,52 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 return false;
             }
 
-            $params[$itemIdParam] = $id;
+            if (is_array($id) && count($id) === 1) {
+                $id = $id[0];
+            }
+
+            // If we have an array of id's we need to use a query string param rather than the route
+            if (is_array($id)) {
+                $options = array(
+                    'query' => array(
+                        $itemIdParam => $id
+                    )
+                );
+            } else {
+                $params[$itemIdParam] = $id;
+            }
         }
 
-        return $this->redirect()->toRoute($route, $params, [], true);
+        return $this->redirect()->toRoute($route, $params, $options, true);
+    }
+
+    /**
+     * Get the last part of the action from the action name
+     *
+     * @return string
+     */
+    protected function getActionFromFullActionName($action = null)
+    {
+        if ($action == null) {
+            return '';
+        }
+
+        if (!strstr($action, '-')) {
+            return $action;
+        }
+
+        $parts = explode('-', $action);
+        return array_pop($parts);
+    }
+
+    /**
+     * Do nothing, this method can be overridden to hijack the crud action check
+     *
+     * @param string $action
+     */
+    protected function checkForAlternativeCrudAction($action)
+    {
+
     }
 
     /**
@@ -229,34 +274,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Build a table from config and results
-     *
-     * @param string $table
-     * @param array $results
-     * @param array $data
-     * @return string
-     */
-    public function buildTable($table, $results, $data = array())
-    {
-        return $this->getTable($table, $results, $data, true);
-    }
-
-    /**
      * Build a table from config and results, and return the table object
      *
      * @param string $table
      * @param array $results
      * @param array $data
-     * @param boolean $render
      * @return string
      */
-    public function getTable($table, $results, $data = array(), $render = false)
+    public function getTable($table, $results, $data = array())
     {
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
 
-        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, $render);
+        return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
     }
 
     /**
@@ -428,5 +459,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function loadScripts($scripts)
     {
         return $this->getServiceLocator()->get('Script')->loadFiles($scripts);
+    }
+
+    /**
+     * Get the inline scripts
+     *
+     * @return array
+     */
+    protected function getInlineScripts()
+    {
+        return $this->inlineScripts;
     }
 }

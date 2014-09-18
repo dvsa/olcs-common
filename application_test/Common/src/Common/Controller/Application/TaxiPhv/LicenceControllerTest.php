@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\TaxiPhv;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,6 +19,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class LicenceControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\TaxiPhv\LicenceController';
 
     protected $defaultRestResponse = array();
@@ -40,8 +43,12 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
     /*
      * Mock methods for this controller
      */
-    protected $mockedMethods = array('getLicenceService', 'getPostcodeService',
-                                     'getPostcodeTrafficAreaValidator', 'getPostcodeValidatorsChain');
+    protected $mockedMethods = array(
+        'getLicenceService',
+        'getPostcodeService',
+        'getPostcodeTrafficAreaValidator',
+        'getPostcodeValidatorsChain'
+    );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
@@ -53,9 +60,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('generateLicence')
             ->will($this->returnValue(1));
 
-        $this->controller->expects($this->any())
-            ->method('getLicenceService')
-            ->will($this->returnValue($mockLicenceService));
+        $this->serviceManager->setService('licence', $mockLicenceService);
 
         $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
         $mockPostcodeValidatorsChain->expects($this->any())
@@ -75,9 +80,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('isValid')
             ->will($this->returnValue(true));
 
-        $this->controller->expects($this->any())
-            ->method('getPostcodeTrafficAreaValidator')
-            ->will($this->returnValue($mockPostcodeValidator));
+        $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 
@@ -96,19 +99,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('getPostcodeService')
             ->will($this->returnValue($mockPostcodeService));
 
-    }
-
-    /**
-     * Test back button
-     * @group acurrent
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**

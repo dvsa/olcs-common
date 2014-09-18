@@ -9,6 +9,7 @@
 
 namespace CommonTest\Controller\Application\ReviewDeclarations;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -20,9 +21,13 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class SummaryControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
+
     protected $controllerName =  '\Common\Controller\Application\ReviewDeclarations\SummaryController';
 
     protected $defaultRestResponse = array();
+
+    protected $trafficAreaPresent = true;
 
     protected $appDataBundle = array(
         'properties' => 'ALL',
@@ -45,24 +50,25 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
     );
 
     /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
      * Test indexAction
      */
     public function testIndexAction()
     {
         $this->setUpAction('index');
 
+        $response = $this->controller->indexAction();
+
+        // Make sure we get a view not a response
+        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    /**
+     * Test indexAction with unset traffic area
+     */
+    public function testIndexActionWithUnsetTrafficArea()
+    {
+        $this->setUpAction('index');
+        $this->trafficAreaPresent = false;
         $response = $this->controller->indexAction();
 
         // Make sure we get a view not a response
@@ -276,6 +282,32 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                     )
                 )
             );
+        }
+        $formAlterationsBundle = array(
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'trafficArea' => array(
+                            'properties' => array(
+                                'name'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        if ($service == 'Application' && $method == 'GET' && $bundle == $formAlterationsBundle) {
+            if ($this->trafficAreaPresent) {
+                return array(
+                    'licence' => array(
+                        'trafficArea' => array(
+                            'name' => 'Name'
+                        )
+                    )
+                );
+            } else {
+                return array();
+            }
         }
     }
 }

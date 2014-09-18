@@ -19,6 +19,25 @@ use Zend\Form\Element\Checkbox;
  */
 trait GenericVehicleSection
 {
+
+    /**
+     * Redirect to the first section
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
+     * Performs delete action
+     */
+    public function deleteAction()
+    {
+        return $this->renderSection();
+    }
+
     /**
      * Check whether we should skip saving
      *
@@ -29,9 +48,7 @@ trait GenericVehicleSection
      */
     protected function shouldSkipActionSave($data, $form)
     {
-        $parts = explode('-', $this->getActionName());
-
-        $action = array_pop($parts);
+        $action = $this->getActionFromFullActionName();
 
         if ($action == 'add') {
 
@@ -192,17 +209,13 @@ trait GenericVehicleSection
      */
     protected function genericActionFormAlterations($form)
     {
+        $action = $this->getActionFromFullActionName();
+
         $dataFieldset = $form->get('licence-vehicle');
 
         $this->disableDateElement($dataFieldset->get('specifiedDate'));
         $this->disableDateElement($dataFieldset->get('deletedDate'));
         $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        $action = $this->getActionName();
-
-        $parts = explode('-', $action);
-
-        $action = array_pop($parts);
 
         if ($action == 'edit') {
             $filter = $form->getInputFilter();
@@ -310,5 +323,18 @@ trait GenericVehicleSection
             $bundle
         );
         return $data['totAuth' . $type . 'Vehicles'];
+    }
+
+    /**
+     * Alter delete form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterDeleteForm($form)
+    {
+        $form->get('data')->get('id')->setLabel('vehicle-remove-confirm-label');
+
+        return $form;
     }
 }

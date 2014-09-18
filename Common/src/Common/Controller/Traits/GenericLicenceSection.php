@@ -19,14 +19,14 @@ trait GenericLicenceSection
      *
      * @var string
      */
-    protected $licenceType = null;
+    private $licenceType = null;
 
     /**
      * Cache licence data requests
      *
      * @var array
      */
-    protected $licenceData = array();
+    private $licenceData = array();
 
     /**
      * Check if is psv
