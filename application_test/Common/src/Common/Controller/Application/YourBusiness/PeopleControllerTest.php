@@ -534,7 +534,6 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
-
         $organisationDataBundleNoType = array(
             'children' => array(
                 'licence' => array(
@@ -602,7 +601,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                         'organisation' => array(
                             'properties' => array(
                                 'id',
-                                'version',
+                                'version'
                             ),
                             'children' => array(
                                 'type' => array(
@@ -628,8 +627,6 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                 )
             );
         }
-
-      //  echo "Unmatched People:"; echo $service; var_dump($bundle);
 
     }
 

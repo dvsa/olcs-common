@@ -218,7 +218,9 @@ class PeopleController extends YourBusinessController
         $bundle = array(
             'children' => array(
                 'type' => array(
-                    'properties' => 'id'
+                    'properties' => array(
+                        'id'
+                    )
                 )
             )
         );

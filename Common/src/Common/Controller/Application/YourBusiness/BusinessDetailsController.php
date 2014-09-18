@@ -229,7 +229,7 @@ class BusinessDetailsController extends YourBusinessController
         // Need to enumerate the form fieldsets with their mapping, as we're
         // going to use old/new
         $fieldsetMap = array();
-        if ($options['isReview']) {
+        if ( $options['isReview'] ) {
             foreach ($options['fieldsets'] as $fieldset) {
                 $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
             }

@@ -238,6 +238,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         $fieldset = $this->getFormFromView($response)->get('data');
 
         $companyType = $fieldset->get('type')->getValue();
+        echo "Type=".$companyType;
         $companyNumber = $fieldset->get('companyNumber');
         $companyName = $fieldset->get('name');
 
@@ -334,6 +335,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
     public function testEditAction()
     {
         $this->setUpAction('edit', 1);
+        $this->setOrganisationType('rc');
 
         $response = $this->controller->editAction();
 
@@ -346,6 +348,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testEditActionWithSubmit()
     {
+        $this->setOrganisationType('rc');
         $this->setUpAction(
             'edit', 1, $this->subsidiaryCompanyData
         );
@@ -361,6 +364,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testEditActionWithCancel()
     {
+        $this->setOrganisationType('rc');
         $post = array(
             'form-actions' => array(
                 'cancel' => 'Cancel'
@@ -424,6 +428,8 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testAddActionWithSubmit()
     {
+        $this->setOrganisationType('rc');
+
         $this->setUpAction(
             'add', null, $this->subsidiaryCompanyData
         );
@@ -439,6 +445,8 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testAddActionWithSubmitWithAddAnother()
     {
+        $this->setOrganisationType('rc');
+
         $data = array_merge(
             $this->subsidiaryCompanyData,
             array('form-actions' => array('addAnother' => 'Add another'))
