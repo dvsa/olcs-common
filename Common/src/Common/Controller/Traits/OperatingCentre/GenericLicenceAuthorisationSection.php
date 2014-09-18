@@ -125,4 +125,30 @@ trait GenericLicenceAuthorisationSection
 
         return $operatingCentres['Count'];
     }
+
+    /**
+     * Alter action form for Goods licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForGoods($form)
+    {
+        $form->remove('advertisements');
+
+        return $form;
+    }
+
+    /**
+     * Do action save
+     *
+     * @param array $data
+     * @param string $service
+     * @return mixed
+     */
+    protected function doActionSave($data, $service)
+    {
+        $data['licence'] = $this->getIdentifier();
+
+        return parent::actionSave($data, $service);
+    }
 }

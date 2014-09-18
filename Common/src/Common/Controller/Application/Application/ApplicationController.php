@@ -374,16 +374,6 @@ class ApplicationController extends AbstractJourneyController
     }
 
     /**
-     * Get postcode validators chain
-     *
-     * @return Zend\Validator\ValidatorChain
-     */
-    protected function getPostcodeValidatorsChain($form)
-    {
-        return $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
-    }
-
-    /**
      * Get postcode service
      *
      * @return Common\Service\Postcode\Postcode
@@ -395,6 +385,8 @@ class ApplicationController extends AbstractJourneyController
 
     /**
      * Get application status
+     *
+     * @return string
      */
     protected function getApplicationStatus()
     {

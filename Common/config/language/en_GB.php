@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'internal-licence-details-operating_centres' => 'Operating centres & authorisation',
+    'select-traffic-area-error' => 'Please select a traffic area',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

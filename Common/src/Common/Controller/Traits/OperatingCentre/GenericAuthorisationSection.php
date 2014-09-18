@@ -20,8 +20,28 @@ trait GenericAuthorisationSection
 {
     use Traits\TrafficAreaTrait;
 
+    /**
+     * OC Count Bundle
+     *
+     * @var array
+     */
     protected $ocCountBundle = array(
         'properties' => array('id')
+    );
+
+    /**
+     * Get document bundle
+     *
+     * @var array
+     */
+    protected $getDocumentBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'identifier',
+            'filename',
+            'size'
+        )
     );
 
     /**
@@ -558,5 +578,275 @@ trait GenericAuthorisationSection
         }
 
         return $fieldsetMap;
+    }
+
+    /**
+     * Save method
+     *
+     * @param array $data
+     * @param string $service
+     */
+    protected function save($data, $service = null)
+    {
+        if (isset($data['trafficArea']) && $data['trafficArea']) {
+            $this->setTrafficArea($data['trafficArea']);
+        }
+        parent::save($data, $service);
+    }
+
+    /**
+     * Process the action load data
+     *
+     * @param array $oldData
+     */
+    protected function processActionLoad($oldData)
+    {
+        $data['data'] = $oldData;
+
+        if ($this->getActionName() != 'add') {
+            $data['operatingCentre'] = $data['data']['operatingCentre'];
+            $data['address'] = $data['operatingCentre']['address'];
+            $data['address']['countryCode'] = $data['address']['countryCode']['id'];
+
+            $data['advertisements'] = array(
+                'adPlaced' => $data['data']['adPlaced'],
+                'adPlacedIn' => $data['data']['adPlacedIn'],
+                'adPlacedDate' => $data['data']['adPlacedDate']
+            );
+
+            unset($data['data']['adPlaced']);
+            unset($data['data']['adPlacedIn']);
+            unset($data['data']['adPlacedDate']);
+            unset($data['data']['operatingCentre']);
+        }
+
+        $data['data']['application'] = $this->getIdentifier();
+        $trafficArea = $this->getTrafficArea();
+
+        if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
+            $data['trafficArea']['id'] = $trafficArea['id'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * Process the loading of data
+     *
+     * @param array $oldData
+     */
+    protected function processLoad($oldData)
+    {
+        $results = $this->getFormTableData($this->getIdentifier(), '');
+
+        $data['data'] = $oldData;
+
+        $data['data']['noOfOperatingCentres'] = count($results);
+        $data['data']['minVehicleAuth'] = 0;
+        $data['data']['maxVehicleAuth'] = 0;
+        $data['data']['minTrailerAuth'] = 0;
+        $data['data']['maxTrailerAuth'] = 0;
+        $data['data']['licenceType'] = $this->getLicenceType();
+
+        foreach ($results as $row) {
+
+            $data['data']['minVehicleAuth'] = max(
+                array($data['data']['minVehicleAuth'], $row['noOfVehiclesPossessed'])
+            );
+
+            $data['data']['minTrailerAuth'] = max(
+                array($data['data']['minTrailerAuth'], $row['noOfTrailersPossessed'])
+            );
+
+            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesPossessed'];
+            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersPossessed'];
+        }
+
+        if (isset($oldData['licence']['trafficArea']['id'])) {
+            $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * Save the operating centre
+     *
+     * @param array $data
+     * @param string $service
+     * @return null|Response
+     */
+    protected function actionSave($data, $service = null)
+    {
+        $saved = parent::actionSave($data['operatingCentre'], 'OperatingCentre');
+
+        if ($this->getActionName() == 'add') {
+
+            if (!isset($saved['id'])) {
+                throw new \Exception('Unable to save operating centre');
+            }
+
+            $data['applicationOperatingCentre']['operatingCentre'] = $saved['id'];
+
+            $operatingCentreId = $saved['id'];
+        } else {
+            $operatingCentreId = $data['operatingCentre']['id'];
+        }
+
+        $this->saveDocuments($data, $operatingCentreId);
+
+        if ($this->isPsv()) {
+            $data['applicationOperatingCentre']['adPlaced'] = 0;
+        }
+
+        $saved = $this->doActionSave($data['applicationOperatingCentre'], $service);
+
+        if ($this->getActionName() == 'add' && !isset($saved['id'])) {
+            throw new \Exception('Unable to save operating centre');
+        }
+
+        // set default Traffic Area if we don't have one
+        if (!isset($data['trafficArea']) || empty($data['trafficArea']['id'])) {
+            $this->setDefaultTrafficArea($data);
+        }
+    }
+
+    /**
+     * Set the default traffic area
+     *
+     * @param array $data
+     */
+    protected function setDefaultTrafficArea($data)
+    {
+        $licenceData = $this->getLicenceData();
+
+        if ($licenceData['niFlag'] == 'Y') {
+            $this->setTrafficArea(self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE);
+            return;
+        }
+
+        $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+
+        if (!empty($postcode) && $this->getOperatingCentresCount() == 1) {
+
+            $postcodeService = $this->getPostcodeService();
+
+            $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
+
+            if (!empty($trafficAreaParts)) {
+                $this->setTrafficArea(array_shift($trafficAreaParts));
+            }
+        }
+    }
+
+    /**
+     * Save the documents
+     *
+     * @todo I'm not sure if this is efficient as it could be
+     *
+     * @param array $data
+     * @param int $operatingCentreId
+     */
+    protected function saveDocuments($data, $operatingCentreId)
+    {
+        if (isset($data['applicationOperatingCentre']['file']['list'])) {
+            foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
+                $this->makeRestCall(
+                    'Document',
+                    'PUT',
+                    array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
+                );
+            }
+        }
+    }
+
+    /**
+     * Remove trailers for PSV
+     *
+     * @param Form $form
+     */
+    protected function alterActionForm($form)
+    {
+        if ($this->isPsv()) {
+            $this->alterActionFormForPsv($form);
+        } else {
+            $this->alterActionFormForGoods($form);
+        }
+
+        $this->alterFormForTrafficArea($form);
+
+        return $form;
+    }
+
+    /**
+     * Alter the form with all the traffic area stuff
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterFormForTrafficArea($form)
+    {
+        $licenceData = $this->getLicenceData();
+
+        $trafficAreaValidator = $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
+        $trafficAreaValidator->setNiFlag($licenceData['niFlag']);
+        $trafficAreaValidator->setOperatingCentresCount($this->getOperatingCentresCount());
+        $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
+
+        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+        $postcodeValidatorChain->attach($trafficAreaValidator);
+
+        $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
+
+        if ($licenceData['niFlag'] == 'N' && !$this->getTrafficArea()) {
+            $form->get('form-actions')->remove('addAnother');
+        }
+    }
+
+    /**
+     * Alter action form for PSV licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForPsv($form)
+    {
+        $form->get('data')->remove('noOfTrailersPossessed');
+        $form->remove('advertisements');
+
+        $dataLabel = $form->get('data')->getLabel();
+        $form->get('data')->setLabel($dataLabel . '-psv');
+
+        $parkingLabel = $form->get('data')->get('sufficientParking')->getLabel();
+        $form->get('data')->get('sufficientParking')->setLabel($parkingLabel . '-psv');
+
+        $permissionLabel = $form->get('data')->get('permission')->getLabel();
+        $form->get('data')->get('permission')->setLabel($permissionLabel . '-psv');
+    }
+
+    /**
+     * Process save crud
+     *
+     * @param array $data
+     */
+    protected function processSaveCrud($data)
+    {
+        $action = strtolower($data['table']['action']);
+
+        if (!$this->getTrafficArea() && $action == 'add') {
+            $trafficArea = isset($data['dataTrafficArea']['trafficArea'])
+                ? $data['dataTrafficArea']['trafficArea']
+                : '';
+
+            if (empty($trafficArea) && $this->getOperatingCentresCount()) {
+                $this->addWarningMessage('select-traffic-area-error');
+                $this->setCaughtResponse($this->redirect()->toRoute(null, array(), array(), true));
+                return;
+            }
+
+            if (!empty($trafficArea)) {
+                $this->setTrafficArea($trafficArea);
+            }
+        }
+
+        return parent::processSaveCrud($data);
     }
 }

@@ -46,8 +46,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
     protected $mockedMethods = array(
         'getLicenceService',
         'getPostcodeService',
-        'getPostcodeTrafficAreaValidator',
-        'getPostcodeValidatorsChain'
+        'getPostcodeTrafficAreaValidator'
     );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
@@ -61,15 +60,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->will($this->returnValue(1));
 
         $this->serviceManager->setService('licence', $mockLicenceService);
-
-        $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
-        $mockPostcodeValidatorsChain->expects($this->any())
-            ->method('attach')
-            ->will($this->returnValue(true));
-
-        $this->controller->expects($this->any())
-            ->method('getPostcodeValidatorsChain')
-            ->will($this->returnValue($mockPostcodeValidatorsChain));
 
         $mockPostcodeValidator = $this->getMock(
             '\Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator',

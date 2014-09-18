@@ -370,7 +370,7 @@ class LicenceController extends TaxiPhvController
         $trafficAreaValidator->setPrivateHireLicencesCount($this->getPrivateHireLicencesCount($licenceId));
         $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
 
-        $postcodeValidatorChain = $this->getPostcodeValidatorsChain($form);
+        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
         $postcodeValidatorChain->attach($trafficAreaValidator);
 
         if (!$this->getTrafficArea()) {

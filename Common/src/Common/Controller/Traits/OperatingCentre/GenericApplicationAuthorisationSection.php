@@ -19,6 +19,13 @@ trait GenericApplicationAuthorisationSection
     use GenericAuthorisationSection;
 
     /**
+     * Category Service
+     *
+     * @var \Common\Service\Data\CategoryData
+     */
+    protected $categoryService;
+
+    /**
      * Holds the sub action service
      *
      * @var string
@@ -131,5 +138,97 @@ trait GenericApplicationAuthorisationSection
         );
 
         return $operatingCentres['Count'];
+    }
+
+    /**
+     * Alter action form for Goods licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForGoods($form)
+    {
+        $this->processFileUploads(array('advertisements' => array('file' => 'processAdvertisementFileUpload')), $form);
+
+        $fileData = $this->getUnlinkedFileData()['Results'];
+
+        if ($this->getActionName() == 'edit') {
+            $fileData = array_merge(
+                $fileData,
+                $this->actionLoad($this->getActionId())['operatingCentre']['adDocuments']
+            );
+        }
+
+        $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $this->url());
+
+        $this->processFileDeletions(array('advertisements' => array('file' => 'deleteFile')), $form);
+    }
+
+    /**
+     * Get unlinked file data
+     *
+     * @return array
+     */
+    protected function getUnlinkedFileData()
+    {
+        $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
+        $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
+
+        return $this->makeRestCall(
+            'Document',
+            'GET',
+            array(
+                'application' => $this->getIdentifier(),
+                'category' => $category['id'],
+                'documentSubCategory' => $subCategory['id'],
+                'operatingCentre' => 'NULL'
+            ),
+            $this->getDocumentBundle
+        );
+    }
+
+    /**
+     * Handle the file upload
+     *
+     * @param array $file
+     */
+    protected function processAdvertisementFileUpload($file)
+    {
+        $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
+        $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
+
+        $this->uploadFile(
+            $file,
+            array(
+                'description' => 'Advertisement',
+                'category' => $category['id'],
+                'documentSubCategory' => $subCategory['id']
+            )
+        );
+    }
+
+    /**
+     * Get category service
+     *
+     * @return \Common\Service\Data\CategoryData
+     */
+    protected function getCategoryService()
+    {
+        if ($this->categoryService == null) {
+            $this->categoryService = $this->getServiceLocator()->get('category');
+        }
+
+        return $this->categoryService;
+    }
+
+    /**
+     * Do action save
+     *
+     * @param array $data
+     * @param string $service
+     * @return mixed
+     */
+    protected function doActionSave($data, $service)
+    {
+        return parent::actionSave($data, $service);
     }
 }
