@@ -44,6 +44,10 @@ class YourBusinessController extends ApplicationController
     protected function getOrganisationData($extraBundle = array())
     {
         if ( isset($extraBundle['properties']) ) {
+        if ( ! is_array($extraBundle['properties']) ) {
+            echo "Extrabundle isn't an array: ".$extraBundle['properties'];
+        }
+
             $extraBundle['properties'] = array_unique(
                 array_merge(
                     array('id', 'version'),

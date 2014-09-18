@@ -220,6 +220,8 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         'properties' => array(
             'id',
             'version',
+        ),
+        'children' => array(
             'licence' => array(
                 'children' => array(
                     'organisation' => array(

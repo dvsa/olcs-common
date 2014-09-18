@@ -351,7 +351,7 @@ class AddressesController extends YourBusinessController
 
         if (!empty($data['registered_office'])) {
 
-            $organisation = $this->getOrganisationData(['id']);
+            $organisation = $this->getOrganisationData(array('properties' => array('id')));
 
             $registeredOffice = array(
                 'id' => $data['registered_office']['id'],

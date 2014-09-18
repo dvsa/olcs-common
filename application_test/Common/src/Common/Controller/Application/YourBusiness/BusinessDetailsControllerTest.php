@@ -548,7 +548,6 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
             }
 
             if ($bundle == $orgBundle ) {
-
                 return $this->mockOrganisationData;
             }
 

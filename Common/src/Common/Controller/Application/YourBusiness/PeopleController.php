@@ -23,6 +23,8 @@ class PeopleController extends YourBusinessController
         'properties' => array(
             'id',
             'version',
+        ),
+        'children' => array(
             'licence' => array(
                 'children' => array(
                     'organisation' => array(

@@ -534,6 +534,67 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
             );
         }
 
+
+        $organisationDataBundleNoType = array(
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                            )
+                        )
+                    )
+                )
+             )
+        );
+        if ($service == 'Application' && $method == 'GET' && $bundle == $organisationDataBundleNoType) {
+            return array(
+                'licence' => array(
+                    'organisation' => array(
+                        'id' => 1
+                    )
+                )
+            );
+        }
+
+        $organisationApplicationBundle = array(
+            'properties' => array(
+                'id',
+                'version',
+            ),
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'organisation' => array(
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                ),
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $organisationApplicationBundle) {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'licence' => array(
+                    'organisation' => array(
+                        'type' => array(
+                            'id' => $this->organisationType
+                        )
+                    )
+                )
+            );
+        }
+
         $organisationDataBundle = array(
             'children' => array(
                 'licence' => array(
@@ -559,11 +620,16 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
             return array(
                 'licence' => array(
                     'organisation' => array(
-                        'type' => $this->organisationType
+                        'id' => 1,
+                        'type' => array(
+                            'id' => $this->organisationType
+                        )
                     )
                 )
             );
         }
+
+      //  echo "Unmatched People:"; echo $service; var_dump($bundle);
 
     }
 
