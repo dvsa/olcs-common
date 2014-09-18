@@ -131,6 +131,22 @@ return array(
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
         ]
     ],
+    'validators' => [
+        'invokables' => [
+            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf'
+        ],
+        'aliases' => [
+            'ValidateIf' => 'Common\Validator\ValidateIf'
+        ]
+    ],
+    'filters' => [
+        'invokables' => [
+            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+        ],
+        'aliases' => [
+            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+        ]
+    ],
     'tables' => array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
