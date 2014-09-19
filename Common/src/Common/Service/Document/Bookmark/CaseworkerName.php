@@ -1,9 +1,9 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-class CaseworkerName extends AbstractBookmark
+class CaseworkerName extends DynamicBookmark
 {
-    public function getQuery($data)
+    public function getQuery(array $data)
     {
         $query = [
             'service' => 'User',
@@ -18,8 +18,8 @@ class CaseworkerName extends AbstractBookmark
         return $query;
     }
 
-    public function format($data)
+    public function format()
     {
-        return $data['name'];
+        return $this->data['name'];
     }
 }

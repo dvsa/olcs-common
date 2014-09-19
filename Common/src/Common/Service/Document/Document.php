@@ -16,6 +16,11 @@ class Document
         $factory = new Bookmark\BookmarkFactory();
 
         foreach ($tokens as $token) {
+            $bookmark = $factory->locate($token);
+            if ($bookmark->isStatic()) {
+                continue;
+            }
+
             $query = $factory->locate($token)->getQuery($data);
             if ($query !== null) {
                 $queryData[$token] = $query;
@@ -35,17 +40,23 @@ class Document
         $factory = new Bookmark\BookmarkFactory();
 
         foreach ($tokens as $token) {
+            $bookmark = $factory->locate($token);
 
-            if (!isset($data[$token])) {
-                // it's quite possible we don't have any data for a given
-                // bookmark in the template; ignore these cases as there's
-                // obviously nothing to format
-                continue;
+            if ($bookmark->isStatic()) {
+
+                $result = $bookmark->format();
+
+            } else if (isset($data[$token])) {
+
+                $bookmark->setData($data[$token]);
+                $result = $bookmark->format();
+
+            } else {
+                // no data to fulfil this dynamic bookmark, but that's okay
+                $result = null;
             }
 
-            $result = $factory->locate($token)->format($data[$token]);
-
-            if ($result !== null) {
+            if ($result) {
                 $populatedData[$token] = $result;
             }
         }

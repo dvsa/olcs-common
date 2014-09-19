@@ -10,7 +10,10 @@ abstract class AbstractBookmark
         $this->token = $token;
     }
 
-    abstract public function getQuery($data);
+    public function isStatic()
+    {
+        return static::TYPE === 'static';
+    }
 
-    abstract public function format($data);
+    abstract public function format();
 }

@@ -1,10 +1,15 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-class StaticText extends AbstractBookmark
+class StaticText extends DynamicBookmark
 {
-    public function getQuery($data)
+    public function getQuery(array $data)
     {
+        // StaticTexts are used as fallbacks when there isn't a more
+        // specific bookmark for a given token. As such there's a good
+        // chance we don't actually have any data in our `bookmarks`
+        // array to satisfy this text block at all, so we need to
+        // be defensive
         if (!isset($data['bookmarks'][$this->token])) {
             return null;
         }
@@ -26,10 +31,10 @@ class StaticText extends AbstractBookmark
         return $queries;
     }
 
-    public function format($data)
+    public function format()
     {
         $result = "";
-        foreach ($data as $paragraph) {
+        foreach ($this->data as $paragraph) {
             $result .= $paragraph['paraText'];
         }
         return $result;

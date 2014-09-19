@@ -1,9 +1,9 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-class CaseworkerDetails extends AbstractBookmark
+class CaseworkerDetails extends DynamicBookmark
 {
-    public function getQuery($data)
+    public function getQuery(array $data)
     {
         $query = [
             'service' => 'User',
@@ -18,10 +18,10 @@ class CaseworkerDetails extends AbstractBookmark
         return $query;
     }
 
-    public function format($data)
+    public function format()
     {
         // @TODO need more data, e.g. address, plus needs to be newline
         // separated
-        return $data['name'] . "\n" . "Address 1";
+        return $this->data['name'] . "\n" . "Address 1";
     }
 }
