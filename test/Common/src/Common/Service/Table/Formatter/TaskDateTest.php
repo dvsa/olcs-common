@@ -42,7 +42,11 @@ class TaskDateTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(array('date' => '2013-01-01'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '01/01/2013'),
-            array(array('date' => '2013-01-01', 'urgent' => 'Y'), array('dateformat' => 'd/m/Y', 'name' => 'date'), '01/01/2013 (urgent)')
+            array(
+                array('date' => '2013-01-01', 'urgent' => 'Y'),
+                array('dateformat' => 'd/m/Y', 'name' => 'date'),
+                '01/01/2013 (urgent)'
+            )
         );
     }
 }

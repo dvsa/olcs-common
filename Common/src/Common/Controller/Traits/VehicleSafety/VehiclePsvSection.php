@@ -137,16 +137,6 @@ trait VehiclePsvSection
     }
 
     /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Add large vehicles
      *
      * @return Response
@@ -173,7 +163,7 @@ trait VehiclePsvSection
      */
     public function largeDeleteAction()
     {
-        return $this->delete();
+        return $this->deleteAction();
     }
 
     /**
@@ -203,7 +193,7 @@ trait VehiclePsvSection
      */
     public function mediumDeleteAction()
     {
-        return $this->delete();
+        return $this->deleteAction();
     }
 
     /**
@@ -233,7 +223,7 @@ trait VehiclePsvSection
      */
     public function smallDeleteAction()
     {
-        return $this->delete();
+        return $this->deleteAction();
     }
 
     /**

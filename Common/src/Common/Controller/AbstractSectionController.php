@@ -84,6 +84,29 @@ abstract class AbstractSectionController extends AbstractController
     protected $isAction;
 
     /**
+     * These actions will attempt to look for a bespoke form/table/view etc
+     *
+     * @var array
+     */
+    protected $bespokeSubActions = array();
+
+    /**
+     * Here we can add sub actions that are always bespoke
+     *
+     * @var array
+     */
+    protected $defaultBespokeSubActions = array(
+        'delete'
+    );
+
+    /**
+     * Cache the action suffix
+     *
+     * @var string
+     */
+    protected $actionSuffix;
+
+    /**
      * Action data map
      *
      * @var array
@@ -118,13 +141,6 @@ abstract class AbstractSectionController extends AbstractController
     protected $actionData;
 
     /**
-     * Holds any inline scripts for the current page
-     *
-     * @var array
-     */
-    protected $inlineScripts = [];
-
-    /**
      * Holds the table name
      *
      * @var string
@@ -137,6 +153,40 @@ abstract class AbstractSectionController extends AbstractController
      * @var boolean
      */
     protected $hasTable = null;
+
+    /**
+     * Holds hasForm
+     *
+     * @var boolean
+     */
+    protected $hasForm = null;
+
+    /**
+     * Holds the action id
+     *
+     * @var int
+     */
+    protected $actionId;
+
+    /**
+     * Get bespoke sub actions
+     *
+     * @return array
+     */
+    protected function getBespokeSubActions()
+    {
+        return $this->bespokeSubActions;
+    }
+
+    /**
+     * Merge the defined bespokeSubActions, with the defaults
+     *
+     * @return array
+     */
+    protected function getAllBespokeSubActions()
+    {
+        return array_merge($this->getBespokeSubActions(), $this->defaultBespokeSubActions);
+    }
 
     /**
      * Getter for action data bundle
@@ -157,10 +207,50 @@ abstract class AbstractSectionController extends AbstractController
     {
         if ($this->isAction()) {
 
-            return $this->formName . '-sub-action';
+            $action = $this->getActionFromFullActionName();
+
+            // @NOTE The delete bespoke action is a special case
+            //  and we want a generic delete confirmation form
+            if ($action == 'delete' && $this->isBespokeAction()) {
+                return 'generic-delete-confirmation';
+            }
+
+            return $this->formName . $this->getSuffixForCurrentAction();
         }
 
         return $this->formName;
+    }
+
+    /**
+     * Get form/table/view suffix for current action
+     *
+     * @return string
+     */
+    protected function getSuffixForCurrentAction()
+    {
+        if ($this->actionSuffix == null) {
+
+            $action = $this->getActionFromFullActionName();
+
+            $this->actionSuffix = $this->getSuffixForAction($action);
+        }
+
+        return $this->actionSuffix;
+    }
+
+    /**
+     * Get suffix for action
+     *
+     * @param string $action
+     * @return string
+     */
+    protected function getSuffixForAction($action)
+    {
+        if ($this->isBespokeAction()) {
+            return '-' . $action;
+        }
+
+        return '-sub-action';
     }
 
     /**
@@ -175,6 +265,19 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         return $this->formCallback;
+    }
+
+    /**
+     * Check if an action is bespoke
+     * @return type
+     */
+    protected function isBespokeAction($action = null)
+    {
+        if ($action == null) {
+            $action = $this->getActionFromFullActionName();
+        }
+
+        return in_array($action, $this->getAllBespokeSubActions());
     }
 
     /**
@@ -221,6 +324,12 @@ abstract class AbstractSectionController extends AbstractController
     protected function getAlterFormMethod()
     {
         if ($this->isAction()) {
+
+            if ($this->isBespokeAction()) {
+                $action = $this->getActionFromFullActionName();
+                return 'alter' . ucfirst($action) . 'Form';
+            }
+
             return $this->alterActionFormMethod;
         }
 
@@ -341,14 +450,15 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function getFormData()
     {
+        if ($this->isBespokeAction()) {
+
+            $action = $this->getActionFromFullActionName();
+            return $this->{$action . 'Load'}($this->getActionId());
+        }
+
         if ($this->isAction()) {
 
-            $action = $this->getActionName();
-
-            if (strstr($action, '-')) {
-                $splitted = explode('-', $action);
-                $action = count($splitted) ? $splitted[count($splitted) - 1] : '';
-            }
+            $action = $this->getActionFromFullActionName();
 
             if ($action === 'edit') {
 
@@ -364,6 +474,20 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
+     * Get the last part of the action from the action name
+     *
+     * @return string
+     */
+    protected function getActionFromFullActionName($action = null)
+    {
+        if ($action == null) {
+            $action = strtolower($this->getActionName());
+        }
+
+        return parent::getActionFromFullActionName($action);
+    }
+
+    /**
      * Alter the form before validation
      *
      * @param Form $form
@@ -372,12 +496,7 @@ abstract class AbstractSectionController extends AbstractController
     protected function alterFormBeforeValidation($form)
     {
         if ($this->isAction()) {
-            $action = $this->getActionName();
-
-            if (strstr($action, '-')) {
-                $parts = explode('-', $action);
-                $action = array_pop($parts);
-            }
+            $action = $this->getActionFromFullActionName();
 
             if ($action == 'edit') {
                 $form->get('form-actions')->remove('addAnother');
@@ -386,7 +505,11 @@ abstract class AbstractSectionController extends AbstractController
 
         $alterMethod = $this->getAlterFormMethod();
 
-        return $this->$alterMethod($form);
+        if (method_exists($this, $alterMethod)) {
+            return $this->$alterMethod($form);
+        }
+
+        return $form;
     }
 
     /**
@@ -457,13 +580,21 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function processActionSave($data, $form)
     {
-        $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+        if ($this->isBespokeAction()) {
+            $action = $this->getActionFromFullActionName();
+
+            $method = $action . 'Save';
+        } else {
+            $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+
+            $method = 'actionSave';
+        }
 
         if ($this->shouldSkipActionSave($data, $form)) {
             return;
         }
 
-        $response = $this->actionSave($data);
+        $response = $this->$method($data);
 
         if ($response instanceof Response || $response instanceof ViewModel) {
             $this->setCaughtResponse($response);
@@ -562,16 +693,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Get the inline scripts
-     *
-     * @return array
-     */
-    protected function getInlineScripts()
-    {
-        return $this->inlineScripts;
-    }
-
-    /**
      * Optionally add scripts to view, if there are any
      *
      * @param ViewModel $view
@@ -617,7 +738,13 @@ abstract class AbstractSectionController extends AbstractController
 
         if ($this->isButtonPressed('cancel')) {
 
-            $this->addInfoMessage('Your changes have been discarded');
+            $action = $this->getActionFromFullActionName();
+
+            // This message isn't right for cancelling a delete action
+            if ($action != 'delete') {
+
+                $this->addInfoMessage('flash-discarded-changes');
+            }
 
             return $this->goBackToSection();
         }
@@ -630,8 +757,13 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function delete($id = null, $service = null)
     {
-        $service = $this->getActionService();
-        $id = $this->getActionId();
+        if ($id === null) {
+            $id = $this->getActionId();
+        }
+
+        if ($service === null) {
+            $service = $this->getActionService();
+        }
 
         if (parent::delete($id, $service)) {
 
@@ -650,6 +782,12 @@ abstract class AbstractSectionController extends AbstractController
     {
         if (empty($this->actionId)) {
             $this->actionId = $this->params()->fromRoute('id');
+
+            $queryIds = $this->params()->fromQuery('id');
+
+            if (empty($this->actionId) && !empty($queryIds)) {
+                $this->actionId = $queryIds;
+            }
         }
 
         return $this->actionId;
@@ -661,17 +799,19 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function maybeAddTable($view)
     {
-        if ($this->hasTable()) {
+        if ($this->hasTable() && $view->getVariable('table') == null) {
+
             $tableName = $this->getTableName();
 
             if (!empty($tableName)) {
+
                 $data = $this->getTableData($this->getIdentifier());
 
                 $settings = $this->getTableSettings();
 
                 $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
-                $view->setVariable('table', $table->render());
+                $view->setVariable('table', $table);
             }
         }
     }
@@ -698,7 +838,7 @@ abstract class AbstractSectionController extends AbstractController
     {
         if ($this->isAction()) {
 
-            return $this->tableName . '-sub-action';
+            return $this->tableName . $this->getSuffixForCurrentAction();
         }
 
         return $this->tableName;
@@ -727,5 +867,155 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         return $this->hasTable;
+    }
+
+    /**
+     * Render the section
+     *
+     * @return Response
+     */
+    protected function renderSection($view = null, $params = array())
+    {
+        $redirect = $this->checkForRedirect();
+
+        if ($redirect instanceof Response || $redirect instanceof ViewModel) {
+            return $redirect;
+        }
+
+        $view = $this->setupView($view, $params);
+
+        $this->maybeAddTable($view);
+
+        $response = $this->maybeAddForm($view);
+
+        if ($response instanceof Response || $response instanceof ViewModel) {
+            return $response;
+        }
+
+        $this->maybeAddScripts($view);
+
+        $view = $this->preRender($view);
+
+        return $this->render($view);
+    }
+
+    /**
+     * Setup the view for renderring
+     *
+     * @param ViewModel $view
+     * @return ViewModel
+     */
+    protected function setupView($view = null, $params = array())
+    {
+        if (empty($view)) {
+            $view = $this->getViewModel($params);
+        }
+
+        if ($view->getTemplate() == null) {
+            $view->setTemplate($this->getViewTemplateName());
+        }
+
+        return $view;
+    }
+
+    /**
+     * Potentially add a form
+     *
+     * @param ViewModel $view
+     * @return Response
+     */
+    protected function maybeAddForm($view)
+    {
+        if ($this->hasForm() && $view->getVariable('form') == null) {
+
+            $form = $this->getNewForm();
+
+            $response = $this->getCaughtResponse();
+
+            if ($response instanceof Response || $response instanceof ViewModel) {
+                return $response;
+            }
+
+            $view->setVariable('form', $form);
+        }
+    }
+
+    /**
+     * Pre render
+     *
+     * @param ViewModel $view
+     * @return ViewModel
+     */
+    protected function preRender($view)
+    {
+        return $view;
+    }
+
+    /**
+     * Check if the current sub section has a form
+     *
+     * @return boolean
+     */
+    protected function hasForm()
+    {
+        if (is_null($this->hasForm)) {
+
+            $this->hasForm = $this->formExists($this->getFormName());
+        }
+
+        return $this->hasForm;
+    }
+
+    /**
+     * Render the view
+     *
+     * @param ViewModel $view
+     * @return ViewModel
+     */
+    protected function render($view)
+    {
+        return $view;
+    }
+
+    /**
+     * Default Load data for the delete confirmation form
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function deleteLoad($id)
+    {
+        if (is_array($id)) {
+            $id = implode(',', $id);
+        }
+
+        return array('data' => array('id' => $id));
+    }
+
+    /**
+     * Default Process delete
+     *
+     * @param array $data
+     */
+    protected function deleteSave($data)
+    {
+        $ids = explode(',', $data['data']['id']);
+
+        foreach ($ids as $id) {
+            parent::delete($id, $this->getActionService());
+        }
+
+        return $this->goBackToSection();
+    }
+
+    /**
+     * Alter delete form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterDeleteForm($form)
+    {
+        return $form;
     }
 }

@@ -57,17 +57,38 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             ->will($this->returnCallback(array($this, 'mockRestCall')));
 
         $this->serviceManager = Bootstrap::getServiceManager();
+        $this->serviceManager->setAllowOverride(true);
+        $licenceService = $this->getMock('Olcs\Service\Data\Licence');
+        $licenceService->expects($this->any())->method('fetchLicenceData')->willReturn(
+            array(
+                'id' => 37,
+                'goodsOrPsv' => array('id' => 'lcat_psv', 'description' => 'Goods'),
+                'licenceType' => array('id' => 'ltyp_bus','description'=> 'Type'),
+                'status' => array('description'=> 'All good'),
+                'licNo' => '1234',
+            )
+        );
+
+        $this->serviceManager->setService('Olcs\Service\Data\Licence', $licenceService);
 
         $this->request = new Request();
         $this->response = new Response();
-        $this->routeMatch = new RouteMatch(
-            array(
-                'controller' => trim($this->controllerName, '\\'),
-                'action' => $action,
-                $this->identifierName => 1,
-                'id' => $id
-            )
+
+        $routeMatch = array(
+            'controller' => trim($this->controllerName, '\\'),
+            'action' => $action,
+            $this->identifierName => 1
         );
+
+        if (is_array($id)) {
+            $query = new \Zend\Stdlib\Parameters(array('id' => $id));
+
+            $this->controller->getRequest()->setMethod('get')->setQuery($query);
+        } else {
+            $routeMatch['id'] = $id;
+        }
+
+        $this->routeMatch = new RouteMatch($routeMatch);
 
         $this->routeMatch->setMatchedRouteName($this->routeName);
 
@@ -164,7 +185,13 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             return $this->restResponses[$service][$method]['default'];
         }
 
-        return $this->mockRestCalls($service, $method, $data, $bundle);
+        $response = $this->mockRestCalls($service, $method, $data, $bundle);
+
+        if ($method == 'GET' && $response === null) {
+            $this->fail('Missed a mocked rest call: Service - ' . $service . ' Bundle - ' . print_r($bundle, true));
+        }
+
+        return $response;
     }
 
     /**
@@ -193,6 +220,24 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
         }
 
         $this->fail('Trying to get form of a Response object instead of a ViewModel');
+    }
+
+    /**
+     * Get table from response
+     *
+     * @param \Zend\View\Model\ViewModel $view
+     * @return \Zend\Form\Form
+     */
+    protected function getTableFromView($view)
+    {
+        if ($view instanceof ViewModel) {
+
+            $main = $this->getMainView($view);
+
+            return $main->getVariable('table');
+        }
+
+        $this->fail('Trying to get table of a Response object instead of a ViewModel');
     }
 
     /**

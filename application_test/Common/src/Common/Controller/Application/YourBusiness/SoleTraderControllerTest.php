@@ -8,6 +8,7 @@
 
 namespace CommonTest\Controller\Application\YourBusiness;
 
+use CommonTest\Controller\Traits\TestBackButtonTrait;
 use CommonTest\Controller\Application\AbstractApplicationControllerTestCase;
 use Common\Controller\Application\Application\ApplicationController;
 
@@ -18,21 +19,10 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
 {
+    use TestBackButtonTrait;
 
     protected $controllerName = '\Common\Controller\Application\YourBusiness\SoleTraderController';
     protected $defaultRestResponse = array();
-
-    /**
-     * Test back button
-     */
-    public function testBackButton()
-    {
-        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
 
     /**
      * Test indexAction
@@ -82,11 +72,7 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
      */
     public function testIndexActionWithBack()
     {
-        $this->setUpAction(
-            'index', null, array(
-            'form-actions' => array('back' => 'Back')
-        )
-        );
+        $this->setUpAction('index', null, array('form-actions' => array('back' => 'Back')));
 
         $this->controller->setEnabledCsrf(false);
         $response = $this->controller->indexAction();
@@ -105,39 +91,6 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
     protected function mockRestCalls($service, $method, $data = array(), $bundle = array())
     {
         if ($service == 'Application' && $method == 'GET') {
-            $licenceDataBundle = array(
-                'children' => array(
-                    'licence' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'niFlag'
-                        ),
-                        'children' => array(
-                            'goodsOrPsv' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
-                            'licenceType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
-                            'organisation' => array(
-                                'children' => array(
-                                    'type' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
             $orgTypeBundle = array(
                 'children' => array(
                     'licence' => array(
@@ -167,7 +120,7 @@ class SoleTraderControllerTest extends AbstractApplicationControllerTestCase
                         )
                     )
                 );
-            } elseif ($bundle == $licenceDataBundle) {
+            } elseif ($bundle == ApplicationController::$applicationLicenceDataBundle) {
                 return array(
                     'licence' => array(
                         'id' => 10,

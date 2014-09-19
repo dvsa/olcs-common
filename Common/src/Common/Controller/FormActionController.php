@@ -99,9 +99,8 @@ abstract class FormActionController extends AbstractActionController
      */
     protected function getFormClass($type)
     {
-        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
-        $annotationBuilder = new AnnotationBuilder();
-        $annotationBuilder->setFormFactory(new Factory($formElementManager));
+        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
+
         foreach (['Olcs', 'SelfServe', 'Common'] as $namespace) {
             $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
             if (class_exists($class)) {
