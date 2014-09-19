@@ -1,10 +1,7 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-class TodaysDate extends StaticBookmark
+class TodaysDate extends DateDelta
 {
-    public function format()
-    {
-        return date("d/m/Y");
-    }
+    // base will do, just need a concrete class
 }
