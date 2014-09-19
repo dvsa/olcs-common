@@ -5,6 +5,6 @@ class TodaysDate extends StaticBookmark
 {
     public function format()
     {
-        return "TODO";
+        return date("d/m/Y");
     }
 }
