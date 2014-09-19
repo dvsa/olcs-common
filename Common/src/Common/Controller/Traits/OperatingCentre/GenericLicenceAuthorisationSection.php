@@ -93,6 +93,47 @@ trait GenericLicenceAuthorisationSection
     );
 
     /**
+     * Traffic area bundle
+     *
+     * @var array
+     */
+    protected $trafficAreaBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'trafficArea' => array(
+                'properties' => array(
+                    'id',
+                    'name'
+                )
+            )
+        )
+    );
+
+    /**
+     * Licence details for traffic area
+     *
+     * @var array
+     */
+    protected $licenceDetailsForTrafficAreaBundle = array(
+        'properties' => array(
+            'id',
+            'version'
+        )
+    );
+
+    /**
+     * Render the section form
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        $this->addVariationInfoMessage();
+
+        return $this->renderSection();
+    }
+
+    /**
      * Retrieve the relevant table data as we want to render it on the review summary page
      * Note that as with most controllers this is the same data we want to render on the
      * normal form page, hence why getFormTableData (declared later) simply wraps this
@@ -127,18 +168,6 @@ trait GenericLicenceAuthorisationSection
     }
 
     /**
-     * Alter action form for Goods licences
-     *
-     * @param \Zend\Form\Form $form
-     */
-    protected function alterActionFormForGoods($form)
-    {
-        $form->remove('advertisements');
-
-        return $form;
-    }
-
-    /**
      * Do action save
      *
      * @param array $data
@@ -150,5 +179,93 @@ trait GenericLicenceAuthorisationSection
         $data['licence'] = $this->getIdentifier();
 
         return parent::actionSave($data, $service);
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm($form)
+    {
+        $form = parent::alterForm($form);
+
+        return $this->doAlterForm($form);
+    }
+
+    /**
+     * Add variation info message
+     */
+    protected function addVariationInfoMessage()
+    {
+        $this->addCurrentMessage(
+            $this->formatTranslation(
+                // @todo replace the href with the real one
+                '%s <a href="#">%s</a>',
+                array(
+                    'variation-application-text',
+                    'variation-application-link-text'
+                )
+            ),
+            'info'
+        );
+    }
+
+    /**
+     * Get licence details to update traffic area
+     *
+     * @return array
+     */
+    protected function getLicenceDetailsToUpdateTrafficArea()
+    {
+        return $this->makeRestCall(
+            'Licence',
+            'GET',
+            array(
+                'id' => $this->getIdentifier()
+            ),
+            $this->licenceDetailsForTrafficAreaBundle
+        );
+    }
+
+    /**
+     * Extend the generic process load method
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function processLoad($data)
+    {
+        // @NOTE Although we actually have licence data here, we are using the form from Application, so we need to
+        //  pretend our licence info is the application info, and add the traffic area to a licence key
+        $data['licence']['trafficArea'] = $data['trafficArea'];
+
+        return $this->doProcessLoad($data);
+    }
+
+    /**
+     * Get Traffic Area information for current application
+     *
+     * @return array
+     */
+    protected function getTrafficArea()
+    {
+        if (empty($this->trafficArea)) {
+            $licence = $this->makeRestCall(
+                'Licence',
+                'GET',
+                array(
+                    'id' => $this->getIdentifier(),
+                ),
+                $this->trafficAreaBundle
+            );
+
+            if (isset($licence['trafficArea'])) {
+                $this->trafficArea = $licence['trafficArea'];
+            }
+        }
+
+        return $this->trafficArea;
     }
 }

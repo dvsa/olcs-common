@@ -107,6 +107,16 @@ trait GenericApplicationAuthorisationSection
     );
 
     /**
+     * Render the section form
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
      * Retrieve the relevant table data as we want to render it on the review summary page
      * Note that as with most controllers this is the same data we want to render on the
      * normal form page, hence why getFormTableData (declared later) simply wraps this
@@ -230,5 +240,27 @@ trait GenericApplicationAuthorisationSection
     protected function doActionSave($data, $service)
     {
         return parent::actionSave($data, $service);
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm($form)
+    {
+        return $this->doAlterForm($form);
+    }
+
+    /**
+     * Extend the generic process load method
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function processLoad($data)
+    {
+        return $this->doProcessLoad($data);
     }
 }

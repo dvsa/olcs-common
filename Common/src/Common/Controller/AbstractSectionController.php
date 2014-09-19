@@ -169,6 +169,19 @@ abstract class AbstractSectionController extends AbstractController
     protected $actionId;
 
     /**
+     * Current messages
+     *
+     * @var array
+     */
+    protected $currentMessages = array(
+        'default' => array(),
+        'error' => array(),
+        'info' => array(),
+        'warning' => array(),
+        'success' => array()
+    );
+
+    /**
      * Get bespoke sub actions
      *
      * @return array
@@ -757,6 +770,29 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
+     * Add current message
+     *
+     * @param string $message
+     * @param string $namespace
+     */
+    protected function addCurrentMessage($message, $namespace = 'default')
+    {
+        $this->currentMessages[$namespace][] = $message;
+    }
+
+    /**
+     * Attach messages to display in the current response
+     */
+    protected function attachCurrentMessages()
+    {
+        foreach ($this->currentMessages as $namespace => $messages) {
+            foreach ($messages as $message) {
+                $this->addMessage($message, $namespace);
+            }
+        }
+    }
+
+    /**
      * Delete
      *
      * @return Response
@@ -902,6 +938,8 @@ abstract class AbstractSectionController extends AbstractController
 
         $view = $this->preRender($view);
 
+        $this->attachCurrentMessages();
+
         return $this->render($view);
     }
 
@@ -1023,5 +1061,61 @@ abstract class AbstractSectionController extends AbstractController
     protected function alterDeleteForm($form)
     {
         return $form;
+    }
+
+    /**
+     * Format a translation string
+     *
+     * @param type $format
+     * @param type $messages
+     * @return type
+     */
+    protected function formatTranslation($format, $messages)
+    {
+        if (!is_array($messages)) {
+            return $this->wrapTranslation($format, $messages);
+        }
+
+        array_walk(
+            $messages,
+            function (&$value) {
+                $value = $this->translate($value);
+            }
+        );
+
+        return vsprintf($format, $messages);
+    }
+
+    /**
+     * Wrap a translated message with the wrapper
+     *
+     * @param string $wrapper
+     * @param string $message
+     * @return string
+     */
+    protected function wrapTranslation($wrapper, $message)
+    {
+        return sprintf($wrapper, $this->translate($message));
+    }
+
+    /**
+     * Translate a message
+     *
+     * @param string $message
+     * @return string
+     */
+    protected function translate($message)
+    {
+        return $this->getTranslator()->translate($message);
+    }
+
+    /**
+     * Get translator
+     *
+     * @return \Zend\I18n\Translator\Translator
+     */
+    protected function getTranslator()
+    {
+        return $this->getServiceLocator()->get('translator');
     }
 }

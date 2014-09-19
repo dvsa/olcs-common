@@ -21,7 +21,46 @@ trait TrafficAreaTrait
      *
      * @var array
      */
-    private $trafficArea;
+    protected $trafficArea;
+
+    /**
+     * Licence details for traffic area
+     *
+     * @var array
+     */
+    protected $applicationLicenceDetailsForTrafficAreaBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                )
+            )
+        )
+    );
+
+    /**
+     * Application traffic area bundle
+     *
+     * @var array
+     */
+    protected $applicationTrafficAreaBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'name'
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Get Traffic Area information for current application
@@ -30,43 +69,21 @@ trait TrafficAreaTrait
      */
     protected function getTrafficArea()
     {
-        if (!$this->trafficArea) {
-            $bundle = array(
-                'properties' => array(
-                    'id',
-                    'version',
-                ),
-                'children' => array(
-                    'licence' => array(
-                        'properties' => array(
-                            'id'
-                        ),
-                        'children' => array(
-                            'trafficArea' => array(
-                                'properties' => array(
-                                    'id',
-                                    'name'
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
+        if (empty($this->trafficArea)) {
             $application = $this->makeRestCall(
                 'Application',
                 'GET',
                 array(
                     'id' => $this->getIdentifier(),
                 ),
-                $bundle
+                $this->applicationTrafficAreaBundle
             );
-            if (is_array($application) && array_key_exists('licence', $application) &&
-                is_array($application['licence']) &&
-                array_key_exists('trafficArea', $application['licence'])) {
+
+            if (isset($application['licence']['trafficArea'])) {
                 $this->trafficArea = $application['licence']['trafficArea'];
             }
         }
+
         return $this->trafficArea;
     }
 
@@ -77,34 +94,42 @@ trait TrafficAreaTrait
      */
     public function setTrafficArea($id = null)
     {
-        $bundle = array(
-            'properties' => array(
-                'id',
-                'version'
-            ),
-            'children' => array(
-                'licence' => array(
-                    'properties' => array(
-                        'id',
-                        'version'
-                    )
-                )
-            )
-        );
-        $application = $this->makeRestCall('Application', 'GET', array('id' => $this->getIdentifier()), $bundle);
-        if (is_array($application) && array_key_exists('licence', $application) &&
-            array_key_exists('version', $application['licence'])) {
+        $licenceDetails = $this->getLicenceDetailsToUpdateTrafficArea();
+
+        if (isset($licenceDetails['version'])) {
+
             $data = array(
-                        'id' => $application['licence']['id'],
-                        'version' => $application['licence']['version'],
-                        'trafficArea' => $id
+                'id' => $licenceDetails['id'],
+                'version' => $licenceDetails['version'],
+                'trafficArea' => $id
             );
+
             $this->makeRestCall('Licence', 'PUT', $data);
+
             if ($id) {
                 $licenceService = $this->getServiceLocator()->get('licence');
                 $licenceService->generateLicence($this->getIdentifier());
             }
         }
+    }
+
+    /**
+     * Get licence details to update traffic area
+     *
+     * @return array
+     */
+    protected function getLicenceDetailsToUpdateTrafficArea()
+    {
+        $application = $this->makeRestCall(
+            'Application',
+            'GET',
+            array(
+                'id' => $this->getIdentifier()
+            ),
+            $this->applicationLicenceDetailsForTrafficAreaBundle
+        );
+
+        return $application['licence'];
     }
 
     /**

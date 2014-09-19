@@ -279,16 +279,6 @@ trait GenericAuthorisationSection
     }
 
     /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Add operating centre
      */
     public function addAction()
@@ -377,7 +367,7 @@ trait GenericAuthorisationSection
      * @param object $form
      * @return object
      */
-    protected function alterForm($form)
+    protected function doAlterForm($form)
     {
         // Make the same form alterations that are required for the summary section
         $form = $this->makeFormAlterations($form, $this, $this->getAlterFormOptions());
@@ -631,11 +621,11 @@ trait GenericAuthorisationSection
     }
 
     /**
-     * Process the loading of data
+     * Generic pricess load method
      *
      * @param array $oldData
      */
-    protected function processLoad($oldData)
+    protected function doProcessLoad($oldData)
     {
         $results = $this->getFormTableData($this->getIdentifier(), '');
 

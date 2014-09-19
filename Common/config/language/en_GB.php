@@ -1,8 +1,6 @@
 <?php
 
 return array(
-    'internal-licence-details-operating_centres' => 'Operating centres & authorisation',
-    'select-traffic-area-error' => 'Please select a traffic area',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -682,6 +680,7 @@ return array(
     'internal-licence-details-operating_centre' => 'Operating centres & authorisation',
     'internal-licence-details-operating_centre-label' => 'Operating centres & authorisation',
     'internal-licence-details-operating_centre-title' => 'Operating centres & authorisation',
+    'internal-licence-details-operating_centres' => 'Operating centres & authorisation',
     'internal-licence-details-overview' => 'Overview',
     'internal-licence-details-overview-label' => 'Overview',
     'internal-licence-details-overview-title' => 'Overview',
@@ -708,7 +707,6 @@ return array(
     'internal-licence-details-vehicle_psv-title' => 'Vehicles',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
-    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-notes-add' => 'Add note',
     'internal-licence-processing-notes-add-label' => 'Add note',
     'internal-licence-processing-notes-add-title' => 'Add note',
@@ -717,6 +715,7 @@ return array(
     'internal-licence-processing-notes-modify-label' => 'Edit note',
     'internal-licence-processing-notes-modify-title' => 'Edit note',
     'internal-licence-processing-notes-title' => 'Notes',
+    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-tasks' => 'Tasks',
     'internal-licence-processing-tasks-label' => 'Tasks',
     'internal-licence-processing-tasks-title' => 'Tasks',
@@ -931,6 +930,7 @@ return array(
     'select-option-yes' => 'Yes',
     'select-payment-method' => 'Select payment method',
     'select-person' => 'Select person',
+    'select-traffic-area-error' => 'Please select a traffic area',
     'select-type' => 'Select type',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonBack' => 'Back',
     'selfserve-app-subSection-previous-history-criminal-conviction-buttonContinue' => 'Continue',
@@ -1040,6 +1040,8 @@ return array(
     'tachographAnalyser-external-contractor' => 'An external contractor',
     'tachographAnalyser-yourself' => 'An owner or employee of the business',
     'tasks.assignment' => 'Assigned to',
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
+    'tasks.close.single' => 'Are you sure you want to close this task?',
     'tasks.data.actionDate' => 'Action date',
     'tasks.data.category' => 'Category',
     'tasks.data.date' => 'Date',
@@ -1073,6 +1075,8 @@ return array(
     'utilities' => 'Utilities',
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
+    'variation-application-link-text' => 'variation application',
+    'variation-application-text' => 'Making changes to some fields within this section may require a',
     'vehicle-and-safety' => 'Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
@@ -1093,9 +1097,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'apsts_new' => 'Not Yet Submitted',
-    'apsts_consideration' => 'Under Consideration',
-    'tasks.close.single' => 'Are you sure you want to close this task?',
-    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
 );
