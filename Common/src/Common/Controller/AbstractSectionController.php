@@ -498,12 +498,7 @@ abstract class AbstractSectionController extends AbstractController
             $action = strtolower($this->getActionName());
         }
 
-        if (!strstr($action, '-')) {
-            return $action;
-        }
-
-        $parts = explode('-', $action);
-        return array_pop($parts);
+        return parent::getActionFromFullActionName($action);
     }
 
     /**

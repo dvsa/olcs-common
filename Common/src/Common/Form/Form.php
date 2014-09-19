@@ -8,7 +8,6 @@
 namespace Common\Form;
 
 use Zend\Form as ZendForm;
-use Common\Form\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
@@ -19,38 +18,30 @@ use Zend\InputFilter\InputFilterInterface;
  */
 class Form extends ZendForm\Form
 {
-    /**
-     * Retrieve input filter used by this form
-     *
-     * @return null|InputFilterInterface
-     */
-    public function getInputFilter()
+    public function setData($data)
     {
-        if ($this->object instanceof InputFilterAwareInterface) {
-            if (null == $this->baseFieldset) {
-                $this->filter = $this->object->getInputFilter();
-            } else {
-                $name = $this->baseFieldset->getName();
-                if (!$this->filter instanceof InputFilterInterface || !$this->filter->has($name)) {
-                    $filter = new InputFilter();
-                    $filter->add($this->object->getInputFilter(), $name);
-                    $this->filter = $filter;
+        $data = $this->setEmptyDataselectArraysToNull($data);
+        return parent::setData($data);
+    }
+
+    /**
+     * Sets empty date select arrays to null.
+     *
+     * @param array $data
+     * @return array
+     */
+    private function setEmptyDataselectArraysToNull($data)
+    {
+        foreach ($data as &$input) {
+            if (is_array($input)) {
+                if (!array_filter($input) && 3 == count($input)) {
+                    $input = null;
+                } else {
+                    $input = $this->setEmptyDataselectArraysToNull($input);
                 }
             }
         }
 
-        if (!isset($this->filter)) {
-            $this->filter = new InputFilter();
-        }
-
-        if (!$this->hasAddedInputFilterDefaults
-            && $this->filter instanceof InputFilterInterface
-            && $this->useInputFilterDefaults()
-        ) {
-            $this->attachInputFilterDefaults($this->filter, $this);
-            $this->hasAddedInputFilterDefaults = true;
-        }
-
-        return $this->filter;
+        return $data;
     }
 }

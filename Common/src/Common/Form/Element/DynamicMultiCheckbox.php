@@ -3,14 +3,14 @@
 namespace Common\Form\Element;
 
 use Common\Service\Data\ListDataInterface;
-use Zend\Form\Element\Select;
+use Zend\Form\Element\MultiCheckbox;
 use Common\Service\Data\RefData as RefDataService;
 
 /**
- * Class DynamicSelect
+ * Class DynamicMultiCheckbox
  * @package Common\Form\Element
  */
-class DynamicSelect extends Select
+class DynamicMultiCheckbox extends MultiCheckbox
 {
     /**
      * Category of data to fetch for this select box
@@ -199,8 +199,6 @@ class DynamicSelect extends Select
     {
         if (is_array($value) && array_key_exists('id', $value)) {
             $value = $value['id'];
-        } elseif (is_array($value) && empty($value)) {
-            $value = null;
         }
         return parent::setValue($value);
     }
