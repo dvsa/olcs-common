@@ -28,13 +28,8 @@ class StaticText extends AbstractBookmark
 
     public function format($data)
     {
-        if (!isset($data[$this->token])) {
-            return null;
-        }
-        $details = $data[$this->token];
-
         $result = "";
-        foreach ($details as $paragraph) {
+        foreach ($data as $paragraph) {
             $result .= $paragraph['paraText'];
         }
         return $result;

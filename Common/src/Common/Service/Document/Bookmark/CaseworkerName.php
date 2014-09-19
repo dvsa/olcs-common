@@ -1,7 +1,7 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-class CaseworkerDetails extends AbstractBookmark
+class CaseworkerName extends AbstractBookmark
 {
     public function getQuery($data)
     {
@@ -20,8 +20,6 @@ class CaseworkerDetails extends AbstractBookmark
 
     public function format($data)
     {
-        // @TODO need more data, e.g. address, plus needs to be newline
-        // separated
-        return $data['name'] . "\n" . "Address 1";
+        return $data['name'];
     }
 }

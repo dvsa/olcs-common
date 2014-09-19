@@ -14,6 +14,7 @@ class Document
             ->extractTokens($file->getContent());
 
         $factory = new Bookmark\BookmarkFactory();
+
         foreach ($tokens as $token) {
             $query = $factory->locate($token)->getQuery($data);
             if ($query !== null) {
@@ -32,8 +33,18 @@ class Document
         $populatedData = [];
 
         $factory = new Bookmark\BookmarkFactory();
+
         foreach ($tokens as $token) {
-            $result = $factory->locate($token)->format($data);
+
+            if (!isset($data[$token])) {
+                // it's quite possible we don't have any data for a given
+                // bookmark in the template; ignore these cases as there's
+                // obviously nothing to format
+                continue;
+            }
+
+            $result = $factory->locate($token)->format($data[$token]);
+
             if ($result !== null) {
                 $populatedData[$token] = $result;
             }
