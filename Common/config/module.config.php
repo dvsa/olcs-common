@@ -162,14 +162,6 @@ return array(
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
-    //-------- Start navigation -----------------
-    'navigation' => array(
-        'default' => array(
-            include __DIR__ . '/navigation.config.php'
-        )
-    ),
-    //-------- End navigation -----------------
-
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
         'apis' => array(

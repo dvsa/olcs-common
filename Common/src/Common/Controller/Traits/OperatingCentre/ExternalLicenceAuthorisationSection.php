@@ -21,7 +21,7 @@ trait ExternalLicenceAuthorisationSection
      *
      * @var array
      */
-    protected $trafficAreaBundle = array(
+    protected $reviewTrafficAreaBundle = array(
         'children' => array(
             'licence' => array(
                 'children' => array(
@@ -48,7 +48,7 @@ trait ExternalLicenceAuthorisationSection
     {
         $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
-        $application = $context->makeRestCall('Application', 'GET', $options['data']['id'], $this->trafficAreaBundle);
+        $application = $context->makeRestCall('Application', 'GET', $options['data']['id'], $this->reviewTrafficAreaBundle);
 
         $value = isset($application['licence']['trafficArea'])
             ? $application['licence']['trafficArea']['name']
