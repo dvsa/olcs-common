@@ -36,6 +36,11 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     protected $contextTruth = true;
 
     /**
+     * @var bool
+     */
+    protected $allowEmpty = false;
+
+    /**
      * @var array
      */
     protected $validators = [];
@@ -104,6 +109,27 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
         return $this->contextTruth;
     }
 
+    /**
+     * @param boolean $allowEmpty
+     */
+    public function setAllowEmpty($allowEmpty)
+    {
+        $this->allowEmpty = $allowEmpty;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function allowEmpty()
+    {
+        return $this->allowEmpty;
+    }
+
+    /**
+     * @param array $validators
+     * @return $this
+     */
     public function setValidators(array $validators)
     {
         $this->validators = $validators;
@@ -182,10 +208,15 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
     {
         if (array_key_exists($this->getContextField(), $context)) {
             if (!(in_array($context[$this->getContextField()], $this->getContextValues()) ^ $this->getContextTruth())) {
+                if ($this->allowEmpty() && empty($value)) {
+                    return true;
+                }
+
                 $result = $this->getValidatorChain()->isValid($value, $context);
                 if (!$result) {
                     $this->abstractOptions['messages'] = $this->getValidatorChain()->getMessages();
                 }
+
                 return $result;
             } else {
                 return true;
@@ -196,6 +227,10 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
         return false;
     }
 
+    /**
+     * @param array $options
+     * @return AbstractValidator
+     */
     public function setOptions($options = [])
     {
         if (isset($options['context_field'])) {
@@ -209,6 +244,11 @@ class ValidateIf extends AbstractValidator implements ValidatorPluginManagerAwar
         if (isset($options['context_values'])) {
             $this->setContextValues($options['context_values']);
         }
+
+        if (isset($options['allow_empty'])) {
+            $this->setAllowEmpty($options['allow_empty']);
+        }
+
 
         return parent::setOptions($options);
     }
