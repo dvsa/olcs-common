@@ -6,43 +6,54 @@ use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
 class Document
 {
-    private $contentStore;
-
-    public function setContentStore($contentStore)
+    public function getBookmarkQueries(ContentStoreFile $file, $data)
     {
-        $this->contentStore = $contentStore;
-    }
+        $queryData = [];
 
-    public function getContentStore()
-    {
-        return $this->contentStore;
-    }
+        $tokens = $this->getParser($file->getMimeType())
+            ->extractTokens($file->getContent());
 
-    public function generateFromTemplate($templateName, $bookmarks)
-    {
-        $file = $this->getContentStore()->read($templateName);
-        if ($file === null) {
-            throw new \Exception('handle properly'); // @TODO
+        $factory = new Bookmark\BookmarkFactory();
+        foreach ($tokens as $token) {
+            $query = $factory->locate($token)->getQuery($data);
+            if ($query !== null) {
+                $queryData[$token] = $query;
+            }
         }
-        $generator = $this->getGenerator($file->getMimeType());
 
-        $contents = $generator->generate($file->getContent(), $bookmarks);
-
-        $result = new ContentStoreFile();
-        $result->setContent($contents);
-        $result->setMimeType($file->getMimeType());
-
-        return $result;
+        return $queryData;
     }
 
-    public function getGenerator($mime)
+    public function populateBookmarks(ContentStoreFile $file, $data)
+    {
+        $parser = $this->getParser($file->getMimeType());
+        $tokens = $parser->extractTokens($file->getContent());
+
+        $populatedData = [];
+
+        $factory = new Bookmark\BookmarkFactory();
+        foreach ($tokens as $token) {
+            $result = $factory->locate($token)->format($data);
+            if ($result !== null) {
+                $populatedData[$token] = $result;
+            }
+        }
+
+        $content = $parser->replace($file->getContent(), $populatedData);
+
+        $file->setContent($content);
+
+        return $file;
+    }
+
+    private function getParser($mime)
     {
         switch ($mime) {
         case 'application/rtf':
         case 'application/x-rtf':
-            return new RtfGenerator();
+            return new Parser\RtfParser();
         default:
-            throw new RuntimeException('No generator found for mime type: ' . $mimeType);
+            throw new RuntimeException('No parser found for mime type: ' . $mimeType);
         }
     }
 }

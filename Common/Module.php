@@ -50,7 +50,6 @@ class Module
                 },
                 'Script' => '\Common\Service\Script\ScriptFactory',
                 'Table' => '\Common\Service\Table\TableFactory',
-                'Document' => '\Common\Service\Document\DocumentFactory',
                 'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
@@ -92,6 +91,9 @@ class Module
 
                     return $log;
                 }
+            ),
+            'invokables' => array(
+                'Document' => '\Common\Service\Document\Document',
             ),
             'aliases' => array(
                 'translator' => 'MvcTranslator',
