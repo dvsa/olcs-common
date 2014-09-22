@@ -44,12 +44,12 @@ class Document
 
             if ($bookmark->isStatic()) {
 
-                $result = $bookmark->format();
+                $result = $bookmark->render();
 
             } else if (isset($data[$token])) {
 
                 $bookmark->setData($data[$token]);
-                $result = $bookmark->format();
+                $result = $bookmark->render();
 
             } else {
                 // no data to fulfil this dynamic bookmark, but that's okay
