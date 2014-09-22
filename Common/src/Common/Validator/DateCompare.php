@@ -21,7 +21,10 @@ class DateCompare extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_GTE => "This date must be after or the same as %compare_to%",
+        self::NOT_GTE => "This date must be after or the same as %compare_to_label%",
+        self::NOT_GT => "This date must be after %compare_to_label%",
+        self::NOT_LTE => "This date must be before or the same as %compare_to_label%",
+        self::NOT_LT => "This date must be before %compare_to_label%"
     );
 
     /**
@@ -103,7 +106,7 @@ class DateCompare extends AbstractValidator
         return $this->operator;
     }
 
-    public function setOptions($options)
+    public function setOptions($options = array())
     {
         if (isset($options['compare_to'])) {
             $this->setCompareTo($options['compare_to']);
@@ -137,7 +140,6 @@ class DateCompare extends AbstractValidator
         }
 
         $dateFilter = new DateSelectNullifier();
-
         $compareToValue = $dateFilter->filter($context[$this->getCompareTo()]);
 
         switch ($this->getOperator()) {
