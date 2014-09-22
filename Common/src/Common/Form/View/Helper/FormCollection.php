@@ -99,8 +99,15 @@ class FormCollection extends ZendFormCollection
                     $label = $escapeHtmlHelper($label);
                 }
 
+                $legendAttributesString = $this->createAttributesString($element->getLabelAttributes());
+
+                if (!empty($legendAttributesString)) {
+                    $legendAttributesString = ' ' . $legendAttributesString;
+                }
+
                 $legend = sprintf(
-                    '<legend>%s</legend>',
+                    '<legend%s>%s</legend>',
+                    $legendAttributesString,
                     $label
                 );
             }

@@ -9,6 +9,7 @@
  */
 namespace Common\Controller\Traits\OperatingCentre;
 
+use Zend\Form\Fieldset;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -184,6 +185,16 @@ trait ExternalLicenceAuthorisationSection
         $element->setLabel($label);
 
         $element->setLabelOption('disable_html_escape', true);
+
+        $attributes = $element->getLabelAttributes();
+
+        if (!isset($attributes['class'])) {
+            $attributes['class'] = '';
+        }
+        // @todo add this back in when the css has been tweaked
+        //$attributes['class'] .= ' tooltip-grandparent';
+
+        $element->setLabelAttributes($attributes);
     }
 
     /**
