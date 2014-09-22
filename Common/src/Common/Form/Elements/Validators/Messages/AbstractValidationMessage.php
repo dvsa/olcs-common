@@ -52,7 +52,7 @@ abstract class AbstractValidationMessage implements ValidationMessageInterface
      */
     public function setShouldTranslate($flag)
     {
-        $this->shouldTranslate = $flag;
+        $this->shouldTranslate = (boolean)$flag;
     }
 
     /**
@@ -72,6 +72,6 @@ abstract class AbstractValidationMessage implements ValidationMessageInterface
      */
     public function setShouldEscape($flag)
     {
-        $this->shouldEscape = $flag;
+        $this->shouldEscape = (boolean)$flag;
     }
 }

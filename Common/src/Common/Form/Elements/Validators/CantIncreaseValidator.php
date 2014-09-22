@@ -35,7 +35,7 @@ class CantIncreaseValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::CANT_INCREASE => 'cant-increase-validator-'
+        self::CANT_INCREASE => 'cant-increase-validator'
     );
 
     /**
@@ -67,10 +67,6 @@ class CantIncreaseValidator extends AbstractValidator
      */
     protected function createMessage($messageKey, $value)
     {
-        if (!isset($this->abstractOptions['messageTemplates'][$messageKey])) {
-            return null;
-        }
-
         return $this->abstractOptions['messageTemplates'][$messageKey];
     }
 
