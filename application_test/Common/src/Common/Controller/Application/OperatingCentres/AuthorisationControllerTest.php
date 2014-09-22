@@ -76,8 +76,13 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         $this->serviceManager->setService('licence', $mockLicenceService);
 
         $mockPostcodeValidator = $this->getMock(
-            '\Common\Form\Elements\Validators\OperatingCentresTrafficAreaValidator',
-            array('isValid', 'setNiFlag', 'setOperatingCentresCount', 'setTrafficArea')
+            '\Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
+            array(
+                'isValid',
+                'setNiFlag',
+                'setOperatingCentresCount',
+                'setTrafficArea'
+            )
         );
 
         $mockPostcodeValidator->expects($this->any())
@@ -85,6 +90,13 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
             ->will($this->returnValue(true));
 
         $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
+
+        $mockCategoryService = $this->getMock('Common\Service\Data\CategoryData', array('makeRestCall'));
+        $mockCategoryService->expects($this->any())
+            ->method('makeRestCall')
+            ->will($this->returnCallback(array($this, 'mockRestCall')));
+
+        $this->serviceManager->setService('category', $mockCategoryService);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 
