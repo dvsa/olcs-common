@@ -1011,7 +1011,7 @@ return array(
     'selfserve-licence-operating_centres' => 'Operating centres',
     'selfserve-licence-operating_centres_authorisation' => 'Operating centres & authorisation',
     'selfserve-licence-operating_centres_financial' => 'Financial evidence',
-    'selfserve-licence-pay' => 'Pay & Submit',
+    'selfserve-licence-pay' => 'Pay & submit',
     'selfserve-licence-previous_history' => 'Previous history',
     'selfserve-licence-review' => 'Review',
     'selfserve-licence-transport_managers' => 'Transport managers',

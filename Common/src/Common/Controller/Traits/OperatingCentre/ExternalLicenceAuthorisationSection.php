@@ -70,6 +70,23 @@ trait ExternalLicenceAuthorisationSection
         $form->get('data')->remove('sufficientParking');
         $form->get('data')->remove('permission');
 
+        $filter = $form->getInputFilter();
+
+        $this->disableElements($form->get('address'));
+        $this->disableValidation($filter->get('address'));
+
+        return $form;
+    }
+
+    /**
+     * Post set form data
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function postSetFormData($form)
+    {
+        // Set the data of the disabled fields
         return $form;
     }
 }

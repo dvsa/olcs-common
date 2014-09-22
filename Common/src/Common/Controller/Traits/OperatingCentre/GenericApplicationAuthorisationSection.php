@@ -117,6 +117,14 @@ trait GenericApplicationAuthorisationSection
     }
 
     /**
+     * Add operating centre
+     */
+    public function addAction()
+    {
+        return $this->renderSection();
+    }
+
+    /**
      * Retrieve the relevant table data as we want to render it on the review summary page
      * Note that as with most controllers this is the same data we want to render on the
      * normal form page, hence why getFormTableData (declared later) simply wraps this
@@ -262,5 +270,33 @@ trait GenericApplicationAuthorisationSection
     protected function processLoad($data)
     {
         return $this->doProcessLoad($data);
+    }
+
+    /**
+     * Process save crud
+     *
+     * @param array $data
+     */
+    protected function processSaveCrud($data)
+    {
+        $action = strtolower($data['table']['action']);
+
+        if (!$this->getTrafficArea() && $action == 'add') {
+            $trafficArea = isset($data['dataTrafficArea']['trafficArea'])
+                ? $data['dataTrafficArea']['trafficArea']
+                : '';
+
+            if (empty($trafficArea) && $this->getOperatingCentresCount()) {
+                $this->addWarningMessage('select-traffic-area-error');
+                $this->setCaughtResponse($this->redirect()->toRoute(null, array(), array(), true));
+                return;
+            }
+
+            if (!empty($trafficArea)) {
+                $this->setTrafficArea($trafficArea);
+            }
+        }
+
+        return parent::processSaveCrud($data);
     }
 }

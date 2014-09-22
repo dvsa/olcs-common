@@ -8,12 +8,15 @@
  */
 namespace Common\Controller;
 
-use Common\Form\Elements\Types\Address;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Form\Factory;
 use Zend\Mvc\MvcEvent;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
+use Zend\InputFilter\InputFilter;
+use Zend\Validator\ValidatorChain;
+use Zend\Filter\Word\DashToCamelCase;
+use Common\Form\Elements\Types\Address;
 
 /**
  * An abstract form controller that all ordinary OLCS controllers inherit from
@@ -439,7 +442,7 @@ abstract class FormActionController extends AbstractActionController
 
                 $form->getInputFilter()->get($key)->setAllowEmpty(true);
                 $form->getInputFilter()->get($key)->setValidatorChain(
-                    new \Zend\Validator\ValidatorChain()
+                    new ValidatorChain()
                 );
             }
         }
@@ -454,7 +457,7 @@ abstract class FormActionController extends AbstractActionController
 
                     $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
                     $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(
-                        new \Zend\Validator\ValidatorChain()
+                        new ValidatorChain()
                     );
                 }
             }
@@ -819,5 +822,51 @@ abstract class FormActionController extends AbstractActionController
     public function getView(array $params = null)
     {
         return new ViewModel($params);
+    }
+
+    /**
+     * Disable field validation
+     *
+     * @param \Zend\InputFilter\InputFilter $inputFilter
+     * @return null
+     */
+    protected function disableValidation($inputFilter)
+    {
+        if ($inputFilter instanceof InputFilter) {
+            foreach ($inputFilter->getInputs() as $input) {
+                $this->disableValidation($input);
+            }
+            return;
+        }
+
+        if ($inputFilter instanceof Input) {
+            $inputFilter->setAllowEmpty(true);
+            $inputFilter->setRequired(false);
+            $inputFilter->setValidatorChain(new ValidatorChain());
+        }
+    }
+
+    /**
+     * Disable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    protected function disableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->disableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->disableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->setAttribute('disabled', 'disabled');
+        }
     }
 }

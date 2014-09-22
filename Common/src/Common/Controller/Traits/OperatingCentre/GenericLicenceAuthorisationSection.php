@@ -18,6 +18,10 @@ trait GenericLicenceAuthorisationSection
 {
     use GenericAuthorisationSection;
 
+    protected $sharedBespokeSubActions = array(
+        'add'
+    );
+
     /**
      * Holds the sub action service
      *
@@ -134,6 +138,26 @@ trait GenericLicenceAuthorisationSection
     }
 
     /**
+     * Get bespoke sub actions
+     *
+     * @return array
+     */
+    protected function getBespokeSubActions()
+    {
+        return $this->sharedBespokeSubActions;
+    }
+
+    /**
+     * Add operating centre
+     */
+    public function addAction()
+    {
+        $this->viewTemplateName = 'licence/add-authorisation';
+
+        return $this->renderSection();
+    }
+
+    /**
      * Retrieve the relevant table data as we want to render it on the review summary page
      * Note that as with most controllers this is the same data we want to render on the
      * normal form page, hence why getFormTableData (declared later) simply wraps this
@@ -189,9 +213,7 @@ trait GenericLicenceAuthorisationSection
      */
     protected function alterForm($form)
     {
-        $form = parent::alterForm($form);
-
-        return $this->doAlterForm($form);
+        return $this->doAlterForm(parent::alterForm($form));
     }
 
     /**
@@ -201,8 +223,7 @@ trait GenericLicenceAuthorisationSection
     {
         $this->addCurrentMessage(
             $this->formatTranslation(
-                // @todo replace the href with the real one
-                '%s <a href="#">%s</a>',
+                '%s <a href="' . $this->url()->fromRoute('application-variation') . '">%s</a>',
                 array(
                     'variation-application-text',
                     'variation-application-link-text'

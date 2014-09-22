@@ -279,14 +279,6 @@ trait GenericAuthorisationSection
     }
 
     /**
-     * Add operating centre
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Edit operating centre
      */
     public function editAction()
@@ -810,33 +802,5 @@ trait GenericAuthorisationSection
 
         $permissionLabel = $form->get('data')->get('permission')->getLabel();
         $form->get('data')->get('permission')->setLabel($permissionLabel . '-psv');
-    }
-
-    /**
-     * Process save crud
-     *
-     * @param array $data
-     */
-    protected function processSaveCrud($data)
-    {
-        $action = strtolower($data['table']['action']);
-
-        if (!$this->getTrafficArea() && $action == 'add') {
-            $trafficArea = isset($data['dataTrafficArea']['trafficArea'])
-                ? $data['dataTrafficArea']['trafficArea']
-                : '';
-
-            if (empty($trafficArea) && $this->getOperatingCentresCount()) {
-                $this->addWarningMessage('select-traffic-area-error');
-                $this->setCaughtResponse($this->redirect()->toRoute(null, array(), array(), true));
-                return;
-            }
-
-            if (!empty($trafficArea)) {
-                $this->setTrafficArea($trafficArea);
-            }
-        }
-
-        return parent::processSaveCrud($data);
     }
 }
