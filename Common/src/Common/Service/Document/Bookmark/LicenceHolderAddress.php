@@ -47,14 +47,7 @@ class LicenceHolderAddress extends DynamicBookmark
     {
         foreach ($this->data['organisation']['contactDetails'] as $contactDetail) {
             if ($contactDetail['contactType']['id'] === 'ct_corr') {
-                $address = $contactDetail['address'];
-
-                return $address['addressLine1']
-                    . "\n" . $address['addressLine2']
-                    . "\n" . $address['addressLine3']
-                    . "\n" . $address['addressLine4']
-                    . "\n" . $address['town']
-                    . "\n" . $address['postcode'];
+                return Formatter\Address::format($contactDetail['address']);
             }
         }
     }

@@ -25,7 +25,6 @@ class CaseworkerName extends DynamicBookmark
 
     public function format()
     {
-        $details = $this->data['contactDetails'];
-        return $details['forename'] . ' ' . $details['familyName'];
+        return Formatter\Name::format($this->data['contactDetails']);
     }
 }
