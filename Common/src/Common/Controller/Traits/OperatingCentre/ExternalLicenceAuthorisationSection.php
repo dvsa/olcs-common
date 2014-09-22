@@ -176,9 +176,10 @@ trait ExternalLicenceAuthorisationSection
     {
         $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
 
-        $label = $element->getLabel();
         $lockView = new ViewModel(array('message' => $this->translate($message)));
         $lockView->setTemplate('partials/lock');
+
+        $label = $element->getLabel();
         $label .= $viewRenderer->render($lockView);
         $element->setLabel($label);
 
