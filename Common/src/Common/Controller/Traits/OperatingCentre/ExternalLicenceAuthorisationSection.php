@@ -9,6 +9,8 @@
  */
 namespace Common\Controller\Traits\OperatingCentre;
 
+use Zend\View\Model\ViewModel;
+
 /**
  * External Licence Authorisation Section
  *
@@ -149,7 +151,38 @@ trait ExternalLicenceAuthorisationSection
         $this->disableElements($form->get('address'));
         $this->disableValidation($filter->get('address'));
 
+        $lockedElements = array(
+            $form->get('address')->get('searchPostcode'),
+            $form->get('address')->get('addressLine1'),
+            $form->get('address')->get('town'),
+            $form->get('address')->get('postcode'),
+            $form->get('address')->get('countryCode'),
+        );
+
+        foreach ($lockedElements as $element) {
+            $this->lockElement($element, 'operating-centre-address-requires-variation');
+        }
+
         return $form;
+    }
+
+    /**
+     * Lock the element
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $message
+     */
+    protected function lockElement($element, $message)
+    {
+        $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
+
+        $label = $element->getLabel();
+        $lockView = new ViewModel(array('message' => $this->translate($message)));
+        $lockView->setTemplate('partials/lock');
+        $label .= $viewRenderer->render($lockView);
+        $element->setLabel($label);
+
+        $element->setLabelOption('disable_html_escape', true);
     }
 
     /**

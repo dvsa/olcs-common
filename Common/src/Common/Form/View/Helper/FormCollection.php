@@ -14,6 +14,7 @@ use Zend\Form\View\Helper\FormCollection as ZendFormCollection;
 use Common\Form\Elements\Types\PostcodeSearch;
 use Common\Form\Elements\Types\CompanyNumber;
 use Common\Form\Elements\Types\FileUploadList;
+use Zend\Form\LabelAwareInterface;
 
 /**
  * Form Collection wrapper
@@ -55,7 +56,6 @@ class FormCollection extends ZendFormCollection
         $attributes       = $element->getAttributes();
         $markup           = '';
         $templateMarkup   = '';
-        $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $elementHelper    = $this->getElementHelper();
         $fieldsetHelper   = $this->getFieldsetHelper();
 
@@ -94,7 +94,10 @@ class FormCollection extends ZendFormCollection
                     );
                 }
 
-                $label = $escapeHtmlHelper($label);
+                if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
+                    $escapeHtmlHelper = $this->getEscapeHtmlHelper();
+                    $label = $escapeHtmlHelper($label);
+                }
 
                 $legend = sprintf(
                     '<legend>%s</legend>',
