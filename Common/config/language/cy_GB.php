@@ -835,6 +835,7 @@ return array(
     'offender-name' => 'W Offender name',
     'open-date' => 'W Open date',
     'operating-centre' => 'W Operating centres',
+    'operating-centre-address-requires-variation' => 'W You cannot change the address of your operating centre',
     'operating-centres' => 'W Operating centres',
     'operator' => 'W Operator',
     'operator-edit-popup-header' => 'W Edit Operator Name',

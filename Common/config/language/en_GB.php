@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'operating-centre-address-requires-variation' => 'You cannot change the address of your operating centre',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -835,6 +834,7 @@ return array(
     'offender-name' => 'Offender name',
     'open-date' => 'Open date',
     'operating-centre' => 'Operating centres',
+    'operating-centre-address-requires-variation' => 'You cannot change the address of your operating centre',
     'operating-centres' => 'Operating centres',
     'operator' => 'Operator',
     'operator-edit-popup-header' => 'Edit Operator Name',
