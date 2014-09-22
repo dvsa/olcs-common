@@ -7,21 +7,24 @@ class CaseworkerName extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        $query = [
+        return [
             'service' => 'User',
             'data' => [
                 'id' => $data['user']
             ],
             'bundle' => [
-                'properties' => ['name']
+                'properties' => ['contactDetails'],
+                'children' => [
+                    'contactDetails' => [
+                        'properties' => ['forename', 'familyName']
+                    ]
+                ]
             ]
         ];
-
-        return $query;
     }
 
     public function format()
     {
-        return $this->data['name'];
+        return $this->data['forename'] . ' ' . $this->data['familyName'];
     }
 }

@@ -7,7 +7,7 @@ class CaseworkerDetails extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        $query = [
+        return [
             'service' => 'User',
             'data' => [
                 'id' => $data['user']
@@ -16,8 +16,6 @@ class CaseworkerDetails extends DynamicBookmark
                 'properties' => ['name']
             ]
         ];
-
-        return $query;
     }
 
     public function format()
