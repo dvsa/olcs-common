@@ -52,10 +52,12 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
      * @param $expected
      * @dataProvider provideSetValue
      */
-    public function testSetValue($value, $expected)
+    public function testSetValue($value, $expected, $multiple = false)
     {
         $sut = new DynamicSelect();
+        $sut->setAttribute('multiple', $multiple);
         $sut->setValue($value);
+
 
         $this->assertEquals($expected, $sut->getValue());
     }
@@ -66,7 +68,9 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
             ['test', 'test'],
             [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
             [['id'=>'test', 'desc' => 'Test Item'], 'test'],
-            [[], null]
+            [[], null],
+            [[['id'=>'test', 'desc' => 'Test Item'], [0 => 'test2']], ['test', [0 => 'test2']], true],
+            [[['id'=>'test', 'desc' => 'Test Item'], ['id'=>'test2', 'desc' => 'Test Item']], ['test', 'test2'], true]
         ];
     }
 
