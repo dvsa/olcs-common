@@ -59,7 +59,7 @@ class Country extends AbstractData implements ListDataInterface
 
             $this->setData('Country', false);
 
-            if (isset($data['Results'])){
+            if (isset($data['Results'])) {
                 $this->setData('Country', $data['Results']);
             }
         }
