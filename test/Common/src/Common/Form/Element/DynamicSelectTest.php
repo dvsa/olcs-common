@@ -58,7 +58,6 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->setAttribute('multiple', $multiple);
         $sut->setValue($value);
 
-
         $this->assertEquals($expected, $sut->getValue());
     }
 

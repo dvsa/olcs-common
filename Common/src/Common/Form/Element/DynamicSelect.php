@@ -199,9 +199,9 @@ class DynamicSelect extends Select
     {
         if (is_array($value) && empty($value)) {
             $value = null;
-        } else if (is_array($value) && array_key_exists('id', $value)) {
+        } elseif (is_array($value) && array_key_exists('id', $value)) {
             $value = $value['id'];
-        } else if ($this->getAttribute('multiple') && is_array($value)) {
+        } elseif ($this->getAttribute('multiple') && is_array($value)) {
             $tmp = [];
             foreach ($value as $singleValue) {
                 if (is_array($singleValue) && array_key_exists('id', $singleValue)) {
