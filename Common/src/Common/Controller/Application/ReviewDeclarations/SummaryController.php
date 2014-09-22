@@ -379,7 +379,6 @@ class SummaryController extends ReviewDeclarationsController
 
                 if ($fieldset->has('table')) {
                     $originalName = $fieldset->getAttribute('unmappedName');
-                    echo $originalName;
                     $this->formTables[$name] = $this->tableConfigs[$summarySection][$originalName];
                 }
             }
