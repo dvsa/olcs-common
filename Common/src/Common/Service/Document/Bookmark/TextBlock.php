@@ -1,6 +1,8 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
+use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+
 class TextBlock extends DynamicBookmark
 {
     public function getQuery(array $data)

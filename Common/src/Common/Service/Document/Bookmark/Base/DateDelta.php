@@ -1,5 +1,5 @@
 <?php
-namespace Common\Service\Document\Bookmark;
+namespace Common\Service\Document\Bookmark\Base;
 
 abstract class DateDelta extends StaticBookmark
 {
