@@ -2,26 +2,30 @@
 
 namespace Common\Service\Document;
 
-use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
-
 class Document
 {
-    public function getBookmarkQueries(ContentStoreFile $file, $data)
+    public function getBookmarkQueries($type, $content, $data)
     {
         $queryData = [];
 
-        $tokens = $this->getParser($file->getMimeType())
-            ->extractTokens($file->getContent());
+        $tokens = $this->getParser($type)
+            ->extractTokens($content);
 
-        $factory = new Bookmark\BookmarkFactory();
+        $bookmarks = $this->getBookmarks($tokens);
 
-        foreach ($tokens as $token) {
-            $bookmark = $factory->locate($token);
+        foreach ($bookmarks as $bookmark) {
+
+            // we don't need to query if the bookmark is static (i.e.
+            // doesn't rely on any backend information)
             if ($bookmark->isStatic()) {
                 continue;
             }
 
-            $query = $factory->locate($token)->getQuery($data);
+            $query = $bookmark->getQuery($data);
+
+            // we need to allow for the fact the bookmark might not want
+            // to actually generate a query in which case it can return
+            // a null value
             if ($query !== null) {
                 $queryData[$token] = $query;
             }
@@ -30,18 +34,16 @@ class Document
         return $queryData;
     }
 
-    public function populateBookmarks(ContentStoreFile $file, $data)
+    public function populateBookmarks($type, $content, $data)
     {
         $populatedData = [];
 
-        $parser = $this->getParser($file->getMimeType());
-        $tokens = $parser->extractTokens($file->getContent());
+        $parser = $this->getParser($type);
+        $tokens = $parser->extractTokens($content);
 
-        $factory = new Bookmark\BookmarkFactory();
+        $bookmarks = $this->getBookmarks($tokens);
 
-        foreach ($tokens as $token) {
-            $bookmark = $factory->locate($token);
-
+        foreach ($bookmarks as $bookmark) {
             if ($bookmark->isStatic()) {
 
                 $result = $bookmark->render();
@@ -61,21 +63,24 @@ class Document
             }
         }
 
-        $content = $parser->replace($file->getContent(), $populatedData);
-
-        $file->setContent($content);
-
-        return $file;
+        return $parser->replace($content, $populatedData);
     }
 
-    private function getParser($mime)
+    private function getParser($type)
     {
-        switch ($mime) {
-        case 'application/rtf':
-        case 'application/x-rtf':
-            return new Parser\RtfParser();
-        default:
-            throw new RuntimeException('No parser found for mime type: ' . $mimeType);
+        $factory = new Parser\ParserFactory();
+        return $factory->getParser($type);
+    }
+
+    private function getBookmarks($tokens)
+    {
+        $bookmarks = [];
+
+        $factory = new Bookmark\BookmarkFactory();
+        foreach ($tokens as $token) {
+            $bookmarks[] = $factory->locate($token);
         }
+
+        return $bookmarks;
     }
 }
