@@ -23,7 +23,7 @@ class BookmarkFactory
              * it is later provided looking for a known key representing user chosen
              * paragraphs
              */
-            $instance = new StaticText();
+            $instance = new TextBlock();
         }
 
         $instance->setToken($token);

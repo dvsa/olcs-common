@@ -5,7 +5,7 @@ class OpFaoName extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        $query = [
+        return [
             'service' => 'Licence',
             'data' => [
                 'id' => $data['licence']
@@ -29,7 +29,6 @@ class OpFaoName extends DynamicBookmark
                 ]
             ]
         ];
-        return $query;
     }
 
     public function format()

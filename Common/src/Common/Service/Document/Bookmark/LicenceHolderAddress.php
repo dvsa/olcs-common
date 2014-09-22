@@ -5,7 +5,7 @@ class LicenceHolderAddress extends DynamicBookmark
 {
     public function getQuery(array $data)
     {
-        $query = [
+        return [
             'service' => 'Licence',
             'data' => [
                 'id' => $data['licence']
@@ -19,6 +19,9 @@ class LicenceHolderAddress extends DynamicBookmark
                             'contactDetails' => [
                                 'properties' => ['contactType', 'address'],
                                 'children' => [
+                                    'contactType' => [
+                                        'properties' => ['id']
+                                    ],
                                     'address' => [
                                         'properties' => [
                                             'addressLine1',
@@ -28,9 +31,6 @@ class LicenceHolderAddress extends DynamicBookmark
                                             'town',
                                             'postcode'
                                         ],
-                                    ],
-                                    'contactType' => [
-                                        'properties' => ['id']
                                     ]
                                 ]
                             ]
@@ -39,8 +39,6 @@ class LicenceHolderAddress extends DynamicBookmark
                 ]
             ]
         ];
-
-        return $query;
     }
 
     public function format()
