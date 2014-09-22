@@ -226,6 +226,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Get the last part of the action from the action name
+     *
+     * @return string
+     */
+    protected function getActionFromFullActionName($action = null)
+    {
+        if ($action == null) {
+            return '';
+        }
+
+        if (!strstr($action, '-')) {
+            return $action;
+        }
+
+        $parts = explode('-', $action);
+        return array_pop($parts);
+    }
+
+    /**
      * Do nothing, this method can be overridden to hijack the crud action check
      *
      * @param string $action

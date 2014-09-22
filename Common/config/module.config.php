@@ -86,6 +86,7 @@ return array(
                 $licenceService->setServiceLocator($serviceManager);
                 return $licenceService;
             },
+            'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             }
@@ -124,10 +125,28 @@ return array(
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
         ],
         'factories' => [
-            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory'
+            'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
+            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory'
         ],
         'aliases' => [
-            'DynamicSelect' => 'Common\Form\Element\DynamicSelect'
+            'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
+            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox'
+        ]
+    ],
+    'validators' => [
+        'invokables' => [
+            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf'
+        ],
+        'aliases' => [
+            'ValidateIf' => 'Common\Validator\ValidateIf'
+        ]
+    ],
+    'filters' => [
+        'invokables' => [
+            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+        ],
+        'aliases' => [
+            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
         ]
     ],
     'tables' => array(
