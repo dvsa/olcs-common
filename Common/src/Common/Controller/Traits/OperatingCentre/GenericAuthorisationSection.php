@@ -397,11 +397,9 @@ trait GenericAuthorisationSection
             'isPsv' => $this->isPsv(),
             'isReview' => false,
             'data' => array(
-                'data' => array(
-                    'licence' => array(
-                        'licenceType' => array(
-                            'id' => $this->getLicenceType()
-                        )
+                'licence' => array(
+                    'licenceType' => array(
+                        'id' => $this->getLicenceType()
                     )
                 )
             )
