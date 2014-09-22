@@ -32,10 +32,10 @@ class Document
 
     public function populateBookmarks(ContentStoreFile $file, $data)
     {
+        $populatedData = [];
+
         $parser = $this->getParser($file->getMimeType());
         $tokens = $parser->extractTokens($file->getContent());
-
-        $populatedData = [];
 
         $factory = new Bookmark\BookmarkFactory();
 
