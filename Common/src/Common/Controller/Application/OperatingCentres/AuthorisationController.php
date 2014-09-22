@@ -290,7 +290,7 @@ class AuthorisationController extends OperatingCentresController
             $formOptions['hint'] .= '.psv';
             $form->get($fieldsetMap['data'])->setOptions($options);
 
-            $licenceType = $options['data']['data']['licence']['licenceType']['id'];
+            $licenceType = $options['data']['licence']['licenceType']['id'];
 
             if (!in_array(
                 $licenceType,
