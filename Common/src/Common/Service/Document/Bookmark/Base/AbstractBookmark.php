@@ -15,5 +15,5 @@ abstract class AbstractBookmark
         return static::TYPE === 'static';
     }
 
-    abstract public function format();
+    abstract public function render();
 }

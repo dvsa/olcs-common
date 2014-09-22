@@ -20,7 +20,7 @@ class LicenceNumber extends DynamicBookmark
         return $query;
     }
 
-    public function format()
+    public function render()
     {
         return $this->data['licNo'];
     }

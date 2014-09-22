@@ -33,7 +33,7 @@ class TextBlock extends DynamicBookmark
         return $queries;
     }
 
-    public function format()
+    public function render()
     {
         $result = "";
         foreach ($this->data as $paragraph) {

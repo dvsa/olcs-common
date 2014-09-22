@@ -33,7 +33,7 @@ class OpFaoName extends DynamicBookmark
         ];
     }
 
-    public function format()
+    public function render()
     {
         foreach ($this->data['organisation']['contactDetails'] as $contactDetail) {
             if ($contactDetail['contactType']['id'] === 'ct_corr') {

@@ -74,7 +74,7 @@ class CaseworkerDetails extends DynamicBookmark
         ];
     }
 
-    public function format()
+    public function render()
     {
         if (!empty($this->data['contactDetails']['address'])) {
             $address = $this->data['contactDetails']['address'];

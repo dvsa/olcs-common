@@ -25,7 +25,7 @@ class LicenceHolderName extends DynamicBookmark
         return $query;
     }
 
-    public function format()
+    public function render()
     {
         return $this->data['organisation']['name'];
     }

@@ -23,7 +23,7 @@ class CaseworkerName extends DynamicBookmark
         ];
     }
 
-    public function format()
+    public function render()
     {
         return Formatter\Name::format($this->data['contactDetails']);
     }
