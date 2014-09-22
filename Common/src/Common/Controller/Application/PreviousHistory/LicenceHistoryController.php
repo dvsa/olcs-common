@@ -163,7 +163,7 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Map a table to it's type
+     * Map a table to it's type. This also maps review table types.
      *
      * @var array
      */
@@ -174,7 +174,15 @@ class LicenceHistoryController extends PreviousHistoryController
         'table-licences-revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
         'table-licences-public-inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
         'table-licences-disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
-        'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
+        'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS,
+
+        'previous_licences_current' => self::PREV_LICENCE_TYPE_HAS_LICENCE,
+        'previous_licences_applied' => self::PREV_LICENCE_TYPE_HAD_LICENCE,
+        'previous_licences_refused' => self::PREV_LICENCE_TYPE_BEEN_REFUSED,
+        'previous_licences_revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
+        'previous_licences_public_inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
+        'previous_licences_disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
+        'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
 
     /**
@@ -216,7 +224,7 @@ class LicenceHistoryController extends PreviousHistoryController
     /**
      * Retrieve the relevant table data as we want to render it on the review summary page
      * Note that as with most controllers this is the same data we want to render on the
-     * normal form page, hence why getFormTableData (declared later) simply wraps this
+     * normal form page, hence why getFormTableData (declared earlier) simply wraps this
      */
     public static function getSummaryTableData($id, $context, $table)
     {
