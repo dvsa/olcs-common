@@ -2,17 +2,17 @@
 
 namespace CommonTest\Form\Element;
 
-use Common\Form\Element\DynamicSelect;
+use Common\Form\Element\DynamicMultiCheckbox;
 
 /**
- * Class DynamicSelectTest
+ * Class DynamicMultiCheckboxTest
  * @package CommonTest\Form\Element
  */
-class DynamicSelectTest extends \PHPUnit_Framework_TestCase
+class DynamicMultiCheckboxTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetOptions()
     {
-        $sut =  new DynamicSelect();
+        $sut =  new DynamicMultiCheckbox();
         $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
@@ -22,7 +22,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
 
     public function testBcSetOptions()
     {
-        $sut =  new DynamicSelect();
+        $sut =  new DynamicMultiCheckbox();
         $sut->setOptions(['category' => 'testing']);
 
         $this->assertEquals('testing', $sut->getContext());
@@ -37,7 +37,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('category'), $this->equalTo(false))
             ->willReturn(['key'=>'value']);
 
-        $sut = new DynamicSelect();
+        $sut = new DynamicMultiCheckbox();
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');
 
@@ -54,7 +54,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetValue($value, $expected)
     {
-        $sut = new DynamicSelect();
+        $sut = new DynamicMultiCheckbox();
         $sut->setValue($value);
 
         $this->assertEquals($expected, $sut->getValue());
@@ -65,8 +65,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         return [
             ['test', 'test'],
             [[0=>'test', 1=> 'test2'], [0=>'test', 1=> 'test2']],
-            [['id'=>'test', 'desc' => 'Test Item'], 'test'],
-            [[], null]
+            [['id'=>'test', 'desc' => 'Test Item'], 'test']
         ];
     }
 
@@ -79,7 +78,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
-        $sut = new DynamicSelect();
+        $sut = new DynamicMultiCheckbox();
         $sut->setServiceLocator($mockSl);
         $sut->setServiceName($serviceName);
         $this->assertEquals($mockService, $sut->getDataService());
@@ -94,7 +93,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $mockSl = $this->getMock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSl->expects($this->once())->method('get')->with($this->equalTo($serviceName))->willReturn($mockService);
 
-        $sut = new DynamicSelect();
+        $sut = new DynamicMultiCheckbox();
         $sut->setServiceLocator($mockSl);
         $sut->setOptions(['service_name'=>$serviceName]);
 
