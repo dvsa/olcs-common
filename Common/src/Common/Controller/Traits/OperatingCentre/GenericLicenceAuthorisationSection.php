@@ -9,6 +9,8 @@
  */
 namespace Common\Controller\Traits\OperatingCentre;
 
+use Common\Form\Elements\Validators\CantIncreaseValidator;
+
 /**
  * Generic Licence Authorisation Section
  *
@@ -206,17 +208,6 @@ trait GenericLicenceAuthorisationSection
     }
 
     /**
-     * Alter the form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    protected function alterForm($form)
-    {
-        return $this->doAlterForm(parent::alterForm($form));
-    }
-
-    /**
      * Add variation info message
      */
     protected function addVariationInfoMessage()
@@ -288,5 +279,113 @@ trait GenericLicenceAuthorisationSection
         }
 
         return $this->trafficArea;
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm($form)
+    {
+        $form = $this->doAlterForm(parent::alterForm($form));
+
+        $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
+
+        $filter = $form->getInputFilter();
+
+        foreach (['vehicles', 'trailers'] as $which) {
+            $key = 'totAuth' . ucfirst($which);
+
+            if ($filter->get('data')->has($key)) {
+                $this->attachCantIncreaseValidator($filter->get('data')->get($key), 'total-' . $which, $data[$key]);
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * Generic licence action form alterations
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForLicence($form)
+    {
+        $filter = $form->getInputFilter();
+
+        $data = $this->getVehicleAuthsForOperatingCentre($this->getActionId());
+
+        foreach (['vehicles', 'trailers'] as $which) {
+            $key = 'noOf' . ucfirst($which) . 'Possessed';
+
+            if ($filter->get('data')->has($key)) {
+                $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);
+            }
+        }
+    }
+
+    /**
+     * Get the vehicle auths for the OC (given a licence_operating_Centre_id)
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function getVehicleAuthsForOperatingCentre($id)
+    {
+        $bundle = array(
+            'properties' => array(
+                'noOfVehiclesPossessed',
+                'noOfTrailersPossessed'
+            )
+        );
+
+        return $this->makeRestCall('LicenceOperatingCentre', 'GET', $id, $bundle);
+    }
+
+    /**
+     * Get total authorisations for licence
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function getTotalAuthorisationsForLicence($id)
+    {
+        $bundle = array(
+            'properties' => array(
+                'totAuthVehicles',
+                'totAuthTrailers'
+            )
+        );
+
+        return $this->makeRestCall('Licence', 'GET', $id, $bundle);
+    }
+
+    /**
+     * Attach a cant increase validator
+     *
+     * @param Input $input
+     * @param string $messageSuffix
+     * @param int $previousValue
+     */
+    protected function attachCantIncreaseValidator($input, $messageSuffix, $previousValue)
+    {
+        $validatorChain = $input->getValidatorChain();
+
+        $cantIncreaseValidator = new CantIncreaseValidator();
+
+        $message = $this->formatTranslation(
+            '%s <a href="' . $this->url()->fromRoute('application-variation') . '">%s</a>',
+            array(
+                'cant-increase-' . $messageSuffix,
+                'create-variation'
+            )
+        );
+
+        $cantIncreaseValidator->setGenericMessage($message);
+        $cantIncreaseValidator->setPreviousValue($previousValue);
+
+        $validatorChain->attach($cantIncreaseValidator);
     }
 }

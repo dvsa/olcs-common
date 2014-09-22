@@ -299,4 +299,14 @@ trait GenericApplicationAuthorisationSection
 
         return parent::processSaveCrud($data);
     }
+
+    /**
+     * Extend the shared alter action form
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionForm($form)
+    {
+        return $this->doAlterActionForm($form);
+    }
 }

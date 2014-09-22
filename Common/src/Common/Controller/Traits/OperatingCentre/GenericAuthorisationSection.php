@@ -747,7 +747,7 @@ trait GenericAuthorisationSection
      *
      * @param Form $form
      */
-    protected function alterActionForm($form)
+    protected function doAlterActionForm($form)
     {
         if ($this->isPsv()) {
             $this->alterActionFormForPsv($form);

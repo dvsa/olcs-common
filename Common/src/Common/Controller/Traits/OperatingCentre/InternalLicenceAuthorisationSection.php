@@ -23,6 +23,19 @@ trait InternalLicenceAuthorisationSection
      */
     protected function alterActionFormForGoods($form)
     {
+    }
+
+    /**
+     * This method is implemented so we can re-use some other code, it doesn't do anything yet
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionForm($form)
+    {
+        $form = $this->doAlterActionForm($form);
+
+        $this->alterActionFormForLicence($form);
+
         return $form;
     }
 }

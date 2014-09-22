@@ -1,6 +1,11 @@
 <?php
 
 return array(
+    'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must',
+    'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must ',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must ',
+    'create-variation' => 'create a variation application',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
