@@ -472,7 +472,7 @@ trait GenericAuthorisationSection
             'maxTrailerAuth'
         );
 
-        $licenceType = $options['data']['data']['licence']['licenceType']['id'];
+        $licenceType = $options['data']['licence']['licenceType']['id'];
 
         $allowLargeVehicles = array(static::LICENCE_TYPE_STANDARD_NATIONAL, static::LICENCE_TYPE_STANDARD_INTERNATIONAL);
 
