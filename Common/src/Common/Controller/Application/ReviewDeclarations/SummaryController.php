@@ -58,10 +58,24 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
-        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
-        'VehicleSafety/Safety' => 'safety-inspection-providers',
-        'OperatingCentres/Authorisation' => 'authorisation_in_form',
-        'PreviousHistory/LicenceHistory' => 'previous_licences_current'
+        'PreviousHistory/ConvictionsPenalties' => array(
+            'criminalconvictions'
+        ),
+        'VehicleSafety/Safety' => array(
+            'safety-inspection-providers'
+        ),
+        'OperatingCentres/Authorisation' => array(
+            'authorisation_in_form'
+        ),
+        'PreviousHistory/LicenceHistory' => array(
+            'previous_licences_current',
+            'previous_licences_applied',
+            'previous_licences_refused',
+            'previous_licences_revoked',
+            'previous_licences_public_inquiry',
+            'previous_licences_disqualified',
+            'previous_licences_held'
+        )
     );
 
     /**
