@@ -139,10 +139,10 @@ class SummaryController extends ReviewDeclarationsController
     private $tableConfigs = array(
         // controller => table config
         'YourBusiness/BusinessDetails' => array(
-            'application_your-business_business_details-subsidiaries'
+            'table' => 'application_your-business_business_details-subsidiaries'
         ),
         'YourBusiness/People' => array(
-            'application_your-business_people_in_form'
+            'table' => 'application_your-business_people_in_form'
         ),
         'PreviousHistory/ConvictionsPenalties' => array(
             'table' => 'criminalconvictions'
