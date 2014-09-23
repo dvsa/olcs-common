@@ -68,16 +68,28 @@ class ValidateDateComparefTest extends \PHPUnit_Framework_TestCase
                     ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                     '2014-01-10',
                     ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                    ['notGreaterThan' => 'This date must be after Other field']],
+                    ['notGreaterThan' => 'This date must be after \'Other field\'']],
 
             //context doesn't match, field is invalid
-
-            //inverse context match, field valid
-
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    [],
+                    ['context field not in input' => NULL]
+                ],
             //missing context
-
+            [false,
+                ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
+                '2014-01-10',
+                [],
+                ['context field not in input' => NULL]
+            ],
             //context matches value is empty
-
+            [false,
+                ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
+                '',
+                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                ['notGreaterThan' => 'This date must be after \'Other field\'']],
         ];
     }
 }
