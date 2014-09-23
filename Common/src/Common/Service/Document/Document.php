@@ -13,7 +13,7 @@ class Document
 
         $bookmarks = $this->getBookmarks($tokens);
 
-        foreach ($bookmarks as $bookmark) {
+        foreach ($bookmarks as $token => $bookmark) {
 
             // we don't need to query if the bookmark is static (i.e.
             // doesn't rely on any backend information)
@@ -43,7 +43,7 @@ class Document
 
         $bookmarks = $this->getBookmarks($tokens);
 
-        foreach ($bookmarks as $bookmark) {
+        foreach ($bookmarks as $token => $bookmark) {
             if ($bookmark->isStatic()) {
 
                 $result = $bookmark->render();
@@ -78,7 +78,7 @@ class Document
 
         $factory = new Bookmark\BookmarkFactory();
         foreach ($tokens as $token) {
-            $bookmarks[] = $factory->locate($token);
+            $bookmarks[$token] = $factory->locate($token);
         }
 
         return $bookmarks;
