@@ -43,6 +43,11 @@ return array(
                         'label' => $detailsPrefix . 'trading_names_optional',
                         'type' => 'tradingNames'
                     ),
+                    'tradingNamesReview' => array(
+                        'label' => $detailsPrefix . 'trading_names_optional',
+                        'class' => 'long',
+                        'type' => 'textarea'
+                    ),
                 )
             ),
             array(

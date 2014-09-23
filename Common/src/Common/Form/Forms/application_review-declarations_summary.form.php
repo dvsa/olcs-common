@@ -11,6 +11,14 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Your Business',
+        'forms' => array(
+            'application_your-business_business-details',
+            'application_your-business_addresses',
+            'application_your-business_people'
+        )
+    ),
+    array(
         'title' => 'Operating Centres',
         'forms' => array(
             'application_operating-centres_authorisation'
