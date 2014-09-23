@@ -455,6 +455,14 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
+     * @return array
+     */
+    protected function getFormDefaults()
+    {
+        return [];
+    }
+
+    /**
      * Get the form data
      *
      * This is not in the method above as it can be overridden independantly
@@ -477,7 +485,7 @@ abstract class AbstractSectionController extends AbstractController
 
                 $data = $this->actionLoad($this->getActionId());
             } else {
-                $data = array();
+                $data = $this->getFormDefaults();
             }
 
             return $this->processActionLoad($data);
