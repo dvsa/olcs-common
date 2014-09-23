@@ -39,6 +39,6 @@ class TextBlock extends DynamicBookmark
         foreach ($this->data as $paragraph) {
             $result .= $paragraph['paraText'] . "\n";
         }
-        return substr($result, 0, -2);
+        return substr($result, 0, -1);
     }
 }
