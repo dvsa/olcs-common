@@ -5,6 +5,14 @@ namespace Common\Validator;
 use Common\Filter\DateSelectNullifier;
 use Zend\Validator\AbstractValidator;
 
+/**
+ * Class DateCompare - used to validate two dates via a legal operator:
+ * 'gt' -> greater than
+ * 'gte' -> greater than or equal to
+ * 'lt' -> less than
+ * 'lte' -> less than or equal to
+ * @package Common\Validator
+ */
 class DateCompare extends AbstractValidator
 {
     /**

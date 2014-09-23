@@ -9,7 +9,7 @@ use Mockery as m;
  * Class ValidateDateCompare
  * @package CommonTest\Validator
  */
-class ValidateDateComparefTest extends \PHPUnit_Framework_TestCase
+class ValidateDateCompareTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * test setOptions
@@ -17,11 +17,13 @@ class ValidateDateComparefTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $sut = new DateCompare();
-        $sut->setOptions([
-            'compare_to' =>'test',
-            'operator' => false,
-            'compare_to_label' => [null]
-        ]);
+        $sut->setOptions(
+            [
+                'compare_to' =>'test',
+                'operator' => false,
+                'compare_to_label' => [null]
+            ]
+        );
 
         $this->assertEquals('test', $sut->getCompareTo());
         $this->assertEquals([null], $sut->getCompareToLabel());
@@ -75,14 +77,14 @@ class ValidateDateComparefTest extends \PHPUnit_Framework_TestCase
                     ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                     '2014-01-10',
                     [],
-                    ['context field not in input' => NULL]
+                    ['context field not in input' => null]
                 ],
             //missing context
             [false,
                 ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                 '2014-01-10',
                 [],
-                ['context field not in input' => NULL]
+                ['context field not in input' => null]
             ],
             //context matches value is empty
             [false,
