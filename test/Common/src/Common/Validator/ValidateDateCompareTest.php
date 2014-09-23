@@ -21,13 +21,15 @@ class ValidateDateCompareTest extends \PHPUnit_Framework_TestCase
             [
                 'compare_to' =>'test',
                 'operator' => false,
-                'compare_to_label' => [null]
+                'compare_to_label' => [null],
+                'operator' => 'lt'
             ]
         );
 
         $this->assertEquals('test', $sut->getCompareTo());
         $this->assertEquals([null], $sut->getCompareToLabel());
-        $this->assertEquals(false, $sut->getOperator());
+        $this->assertEquals('lt', $sut->getOperator());
+
     }
 
     /**
@@ -71,27 +73,80 @@ class ValidateDateCompareTest extends \PHPUnit_Framework_TestCase
                     '2014-01-10',
                     ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
                     ['notGreaterThan' => 'This date must be after \'Other field\'']],
-
-            //context doesn't match, field is invalid
+                //context doesn't match, field is invalid
+                    [false,
+                        ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
+                        '2014-01-10',
+                        [],
+                        ['invalidField' => 'Input field being compared to doesn\'t exist']
+                    ],
+                //missing context
                 [false,
                     ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
                     '2014-01-10',
                     [],
-                    ['context field not in input' => null]
+                    ['invalidField' => 'Input field being compared to doesn\'t exist']
                 ],
-            //missing context
-            [false,
-                ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
-                '2014-01-10',
-                [],
-                ['context field not in input' => null]
-            ],
-            //context matches value is empty
-            [false,
-                ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
-                '',
-                ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
-                ['notGreaterThan' => 'This date must be after \'Other field\'']],
+                //context matches value is empty
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'gt', 'compare_to_label' => 'Other field'],
+                    '',
+                    ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                    ['notGreaterThan' => 'This date must be after \'Other field\'']
+                ],
+                //context matches, field is valid gte
+                [true,
+                    ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=>
+                        ['day' => '10', 'month' => '01', 'year' => '2014'], true],
+                    true
+                ],
+                //context matches, field is invalid gte
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'gte', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=> ['day' => '11', 'month' => '01', 'year' => '2014']],
+                    ['notGreaterThanOrEqual' => 'This date must be after or the same as \'Other field\'']
+                ],
+                //context matches, field is valid lt
+                [true,
+                    ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=>
+                        ['day' => '11', 'month' => '01', 'year' => '2014'], true],
+                    true
+                ],
+                //context matches, field is invalid lt
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'lt', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                    ['notLessThan' => 'This date must be before \'Other field\'']
+                ],
+                //context matches, field is valid lte
+                [true,
+                    ['compare_to' => 'other_field', 'operator' => 'lte', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=>
+                        ['day' => '10', 'month' => '01', 'year' => '2014'], true],
+                    true
+                ],
+                //context matches, field is invalid lte
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'lte', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                    ['notLessThanOrEqual' => 'This date must be before or the same as \'Other field\'']
+                ],
+                //Invalid operator
+                [false,
+                    ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field'],
+                    '2014-01-10',
+                    ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                    ['invalidOperator' => 'Invalid operator']
+                ],
+
         ];
     }
 }

@@ -23,7 +23,8 @@ class DateCompare extends AbstractValidator
     const NOT_GT = 'notGreaterThan';
     const NOT_LTE = 'notLessThanOrEqual';
     const NOT_LT = 'notLessThan';
-    const INVALID_OPERATOR = 'invalid_operator';
+    const INVALID_OPERATOR = 'invalidOperator';
+    const INVALID_FIELD = 'invalidField';
 
     /**
      * Error messages
@@ -34,7 +35,8 @@ class DateCompare extends AbstractValidator
         self::NOT_GT => "This date must be after '%compare_to_label%'",
         self::NOT_LTE => "This date must be before or the same as '%compare_to_label%'",
         self::NOT_LT => "This date must be before '%compare_to_label%'",
-        self::INVALID_OPERATOR => "Invalid operator'"
+        self::INVALID_OPERATOR => "Invalid operator",
+        self::INVALID_FIELD => "Input field being compared to doesn't exist"
     );
 
     /**
@@ -122,7 +124,7 @@ class DateCompare extends AbstractValidator
             $this->setCompareTo($options['compare_to']);
         }
 
-        if (isset($option['operator'])) {
+        if (isset($options['operator'])) {
             $this->setOperator($options['operator']);
         }
 
@@ -145,7 +147,7 @@ class DateCompare extends AbstractValidator
     public function isValid($value, array $context = null)
     {
         if (!isset($context[$this->getCompareTo()])) {
-            $this->error('context field not in input'); //@TO~DO~
+            $this->error(self::INVALID_FIELD); //@TO~DO~
             return false;
         }
 
