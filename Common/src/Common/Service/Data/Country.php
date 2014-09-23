@@ -36,7 +36,7 @@ class Country extends AbstractData implements ListDataInterface
      */
     public function fetchListOptions($category, $useGroups = false)
     {
-        $data = $this->fetchListData($category);
+        $data = $this->fetchListData();
 
         if (!$data) {
             return [];
@@ -48,7 +48,7 @@ class Country extends AbstractData implements ListDataInterface
     /**
      * Ensures only a single call is made to the backend for each dataset
      *
-     * @param $category
+     * @internal param $category
      * @return array
      */
     public function fetchListData()

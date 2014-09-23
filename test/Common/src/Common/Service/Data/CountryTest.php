@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\Country;
+use Mockery as m;
 
 /**
  * Class Country Test
@@ -23,7 +24,54 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 
         $sut = new Country();
 
-        $this->assertEquals($expected, $sut->formatData($source['Results']));
+        $this->assertEquals($expected, $sut->formatData($source));
+    }
+
+    /**
+     * @dataProvider provideFetchListOptions
+     * @param $input
+     * @param $expected
+     */
+    public function testFetchListOptions($input, $expected)
+    {
+        $sut = new Country();
+        $sut->setData('Country', $input);
+
+        $this->assertEquals($expected, $sut->fetchListOptions(''));
+    }
+
+    public function provideFetchListOptions()
+    {
+        return [
+            [$this->getSingleSource(), $this->getSingleExpected()],
+            [false, []]
+        ];
+    }
+
+    /**
+     * @dataProvider provideFetchListData
+     * @param $data
+     * @param $expected
+     */
+    public function testFetchListData($data, $expected)
+    {
+        $mockRestClient = m::mock('Common\Util\RestClient');
+        $mockRestClient->shouldReceive('get')->once()->with('', ['limit' => 1000])->andReturn($data);
+
+        $sut = new Country();
+        $sut->setRestClient($mockRestClient);
+
+        $this->assertEquals($expected, $sut->fetchListData());
+        $sut->fetchListData(); //ensure data is cached
+    }
+
+    public function provideFetchListData()
+    {
+        return [
+            [false, false],
+            [['Results' => $this->getSingleSource()], $this->getSingleSource()],
+            [['some' => 'data'],  false]
+        ];
     }
 
     /**
@@ -45,11 +93,9 @@ class CountryTest extends \PHPUnit_Framework_TestCase
     protected function getSingleSource()
     {
         $source = [
-            'Results' => [
-                ['id' => 'val-1', 'countryDesc' => 'Value 1'],
-                ['id' => 'val-2', 'countryDesc' => 'Value 2'],
-                ['id' => 'val-3', 'countryDesc' => 'Value 3'],
-            ]
+            ['id' => 'val-1', 'countryDesc' => 'Value 1'],
+            ['id' => 'val-2', 'countryDesc' => 'Value 2'],
+            ['id' => 'val-3', 'countryDesc' => 'Value 3'],
         ];
         return $source;
     }
