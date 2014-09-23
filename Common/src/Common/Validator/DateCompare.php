@@ -32,7 +32,8 @@ class DateCompare extends AbstractValidator
         self::NOT_GTE => "This date must be after or the same as '%compare_to_label%'",
         self::NOT_GT => "This date must be after '%compare_to_label%'",
         self::NOT_LTE => "This date must be before or the same as '%compare_to_label%'",
-        self::NOT_LT => "This date must be before '%compare_to_label%'"
+        self::NOT_LT => "This date must be before '%compare_to_label%'",
+        self::INVALID_OPERATOR => "Invalid operator'"
     );
 
     /**
@@ -176,7 +177,7 @@ class DateCompare extends AbstractValidator
                 }
                 return true;
             default:
-                $this->error('invalid operator'); //@TODO
+                $this->error(self::INVALID_OPERATOR);
                 return false;
         }
     }
