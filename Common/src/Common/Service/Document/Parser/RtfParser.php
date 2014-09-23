@@ -41,7 +41,7 @@ class RtfParser implements ParserInterface
     private function getMatches($content)
     {
         preg_match_all(
-            "#{\\\.\\\bkmkstart\s([^}]+)}{\\\.\\\bkmkend\s[^}]+}#",
+            "#{\\\.\\\bkmkstart\s([^}]+)}\s*{\\\.\\\bkmkend\s[^}]+}#",
             $content,
             $matches
         );
