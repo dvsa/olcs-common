@@ -16,6 +16,30 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class PeopleController extends YourBusinessController
 {
+    /**
+     *   Application ID bundle
+     */
+    public static $applicationBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+        ),
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Form tables name
@@ -65,7 +89,21 @@ class PeopleController extends YourBusinessController
      */
     protected function getFormTableData($id, $table)
     {
-        $org = $this->getOrganisationData();
+        $tableData=$this->getSummaryTableData($id, $this, '');
+        return $tableData;
+    }
+
+    /**
+     * Get the form table data
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $org = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            self::$applicationBundle
+        );
 
         $bundle = array(
             'properties' => array('position'),
@@ -83,7 +121,7 @@ class PeopleController extends YourBusinessController
             )
         );
 
-        $data = $this->makeRestCall(
+        $data = $context->makeRestCall(
             'OrganisationPerson',
             'GET',
             array('organisation' => $org['id']),
@@ -101,6 +139,7 @@ class PeopleController extends YourBusinessController
         }
 
         return $tableData;
+
     }
 
     /**
@@ -126,7 +165,7 @@ class PeopleController extends YourBusinessController
         $translator = $this->getServiceLocator()->get('translator');
         $guidance = $form->get('guidance')->get('guidance');
 
-        switch ($org['type']['id']) {
+        switch ($org['type']) {
             case self::ORG_TYPE_REGISTERED_COMPANY:
                 $table->setVariable(
                     'title',
@@ -161,7 +200,7 @@ class PeopleController extends YourBusinessController
                 break;
         }
 
-        if ($org['type']['id'] != self::ORG_TYPE_OTHER) {
+        if ($org['type'] != self::ORG_TYPE_OTHER) {
             $table->removeColumn('position');
         }
 
@@ -178,7 +217,9 @@ class PeopleController extends YourBusinessController
         $bundle = array(
             'children' => array(
                 'type' => array(
-                    'properties' => 'id'
+                    'properties' => array(
+                        'id'
+                    )
                 )
             )
         );

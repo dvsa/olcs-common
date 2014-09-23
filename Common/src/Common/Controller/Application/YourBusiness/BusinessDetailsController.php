@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 namespace Common\Controller\Application\YourBusiness;
 
@@ -13,6 +14,7 @@ namespace Common\Controller\Application\YourBusiness;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class BusinessDetailsController extends YourBusinessController
 {
@@ -52,12 +54,71 @@ class BusinessDetailsController extends YourBusinessController
         )
     );
 
+    public static $applicationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'properties' => array(
+                            'id',
+                            'version'
+                        ),
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    public static $subCompanyBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'name',
+            'companyNo'
+        )
+    );
+
+
     /**
      * Holds the sub action service
      *
      * @var string
      */
     protected $actionService = 'CompanySubsidiary';
+
+    /**
+     * Company table bundle
+     */
+    protected $actionBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            ),
+                            'tradingNames' => array(
+                                'properties' => array(
+                                    'id',
+                                    'name'
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     /**
      * Holds the actionDataBundle
@@ -143,27 +204,43 @@ class BusinessDetailsController extends YourBusinessController
     }
 
     /**
-     * Conditionally alter the form
+     * Make form alterations
+     *
+     * This method enables the summary to apply the same form alterations. In this
+     * case we ensure we manipulate the form based on whether the license is PSV or not
      *
      * @param Form $form
-     * @return Form
+     * @param mixed $context
+     * @param array $options
+     *
+     * @return $form
      */
-    protected function alterForm($form)
+    public static function makeFormAlterations($form, $context, $options = array())
     {
-        $organisationBundle = array(
-            'children' => array(
-                'type' => array(
-                    'properties' => array(
-                        'id'
-                    )
-                )
-            )
+        $application = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $context->getIdentifier()),
+            self::$applicationBundle
         );
 
-        $organisation = $this->getOrganisationData($organisationBundle);
+        $organisation=$application['licence']['organisation'];
 
-        $fieldset = $form->get('data');
+        // Need to enumerate the form fieldsets with their mapping, as we're
+        // going to use old/new
+        $fieldsetMap = array();
+        if ( $options['isReview'] ) {
+            foreach ($options['fieldsets'] as $fieldset) {
+                $fieldsetMap[$form->get($fieldset)->getAttribute('unmappedName')] = $fieldset;
+            }
+        } else {
+            $fieldsetMap = array(
+                'data' => 'data',
+                'table' => 'table'
+            );
+        }
 
+        $fieldset = $form->get($fieldsetMap['data']);
         switch ($organisation['type']['id']) {
             case self::ORG_TYPE_REGISTERED_COMPANY:
             case self::ORG_TYPE_LLP:
@@ -171,19 +248,45 @@ class BusinessDetailsController extends YourBusinessController
                 break;
             case self::ORG_TYPE_SOLE_TRADER:
                 $fieldset->remove('name')->remove('companyNumber');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
             case self::ORG_TYPE_PARTNERSHIP:
                 $fieldset->remove('companyNumber');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
             case self::ORG_TYPE_OTHER:
                 $fieldset->remove('companyNumber')->remove('tradingNames');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
-                $form->remove('table');
+                $form->remove($fieldsetMap['table']);
                 break;
         }
+
+        // If this is a review, remove the trading names section
+        if ( $organisation['type']['id'] != self::ORG_TYPE_OTHER ) {
+            if ( $options['isReview'] ) {
+                $fieldset->remove('tradingNames')->remove('edit_business_type');
+                $fieldset->get('companyNumber')->remove('submit_lookup_company');
+            } else {
+                $fieldset->remove('tradingNamesReview');
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * Conditionally alter the form
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function alterForm($form)
+    {
+        $options=array(
+            'isReview' => false
+        );
+        $form=$this->makeFormAlterations($form, $this, $options);
 
         return $form;
     }
@@ -212,8 +315,10 @@ class BusinessDetailsController extends YourBusinessController
 
         $tradingNames = [];
 
-        foreach ($licence['organisation']['tradingNames'] as $tradingName) {
-            $tradingNames[] = ['text' => $tradingName['name']];
+        if ( isset($licence['organisation']['tradingNames']) ) {
+            foreach ($licence['organisation']['tradingNames'] as $tradingName) {
+                $tradingNames[] = ['text' => $tradingName['name']];
+            }
         }
 
         $tradingNames[] = ['text' => ''];
@@ -416,7 +521,17 @@ class BusinessDetailsController extends YourBusinessController
      */
     protected function actionSave($data, $service = null)
     {
-        $organisation = $this->getOrganisationData(['type', 'id']);
+        $extraBundle = array(
+            'children' => array(
+                'type' => array(
+                    'properties' => array(
+                        'id'
+                    )
+                )
+            )
+        );
+
+        $organisation = $this->getOrganisationData($extraBundle);
         $data['organisation'] = $organisation['id'];
         parent::actionSave($data, 'CompanySubsidiary');
     }
@@ -439,15 +554,33 @@ class BusinessDetailsController extends YourBusinessController
      */
     protected function getFormTableData($id, $table)
     {
-        $organisation = $this->getOrganisationData(array('id'));
-
-        $data = $this->makeRestCall(
-            $this->getActionService(),
-            'GET',
-            array('organisation' => $organisation['id']),
-            $this->getActionDataBundle()
-        );
+        $data=$this->getSummaryTableData($id, $this, "");
 
         return $data;
+    }
+
+    /**
+     * Get the form table data for the review stage
+     *
+     * @param int $id
+     * @param string $table
+     */
+    public static function getSummaryTableData($applicationId, $context, $tableName)
+    {
+        $applicationData = $context->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $applicationId),
+            self::$applicationBundle
+        );
+
+        $loadData = $context->makeRestCall(
+            'CompanySubsidiary',
+            'GET',
+            array('organisation' => $applicationData['licence']['organisation']['id']),
+            self::$subCompanyBundle
+        );
+
+        return $loadData;
     }
 }
