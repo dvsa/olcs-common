@@ -147,13 +147,15 @@ trait TrafficAreaTrait
         );
 
         $trafficArea = $this->makeRestCall('TrafficArea', 'GET', array(), $bundle);
+
         $valueOptions = array();
         $results = $trafficArea['Results'];
+
         if (is_array($results) && count($results)) {
             usort(
                 $results,
                 function ($a, $b) {
-                    return strcmp($a["name"], $b["name"]);
+                    return strcmp($a['name'], $b['name']);
                 }
             );
 

@@ -45,8 +45,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
      */
     protected $mockedMethods = array(
         'getLicenceService',
-        'getPostcodeService',
-        'getPostcodeTrafficAreaValidator'
+        'getPostcodeService'
     );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
@@ -70,7 +69,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('isValid')
             ->will($this->returnValue(true));
 
-        $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
+        $this->serviceManager->setService('postcodePhlTrafficAreaValidator', $mockPostcodeValidator);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 
@@ -107,7 +106,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With submit
+     *
      * @group acurrent
+     * @group test
      */
     public function testIndexActionWithSubmitWithRows()
     {
@@ -115,6 +116,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             'index',
             null,
             array(
+                'dataTrafficArea' => array(
+                    'trafficArea' => 'B'
+                ),
                 'table' => array(
                     'rows' => 1
                 )

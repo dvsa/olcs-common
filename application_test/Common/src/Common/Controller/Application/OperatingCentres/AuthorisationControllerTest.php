@@ -61,8 +61,7 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
         'getUploader',
         'getFileSizeValidator',
         'getLicenceService',
-        'getPostcodeService',
-        'getPostcodeTrafficAreaValidator'
+        'getPostcodeService'
     );
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
@@ -356,20 +355,30 @@ class AuthorisationControllerTest extends AbstractApplicationControllerTestCase
     {
         $this->goodsOrPsv = $goodsOrPsv;
 
-        $this->setUpAction(
-            'index', null, array(
-                'data' => array(
-                    'id' => 1,
-                    'version' => 6,
-                    'totAuthVehicles' => 10,
-                    'noOfOperatingCentres' => 1,
-                    'minVehicleAuth' => 10,
-                    'maxVehicleAuth' => 10,
-                    'minTrailerAuth' => 10,
-                    'maxTrailerAuth' => 10
-                )
+        $data = array(
+            'dataTrafficArea' => array(
+                'trafficArea' => 'B'
+            ),
+            'data' => array(
+                'id' => 1,
+                'version' => 6,
+                'noOfOperatingCentres' => 1,
+                'minVehicleAuth' => 10,
+                'maxVehicleAuth' => 10
             )
         );
+
+        if ($goodsOrPsv == 'psv') {
+            $data['data']['totAuthSmallVehicles'] = 4;
+            $data['data']['totAuthMediumVehicles'] = 4;
+            $data['data']['totAuthLargeVehicles'] = 2;
+        } else {
+            $data['data']['totAuthVehicles'] = 10;
+            $data['data']['minTrailerAuth'] = 10;
+            $data['data']['maxTrailerAuth'] = 10;
+        }
+
+        $this->setUpAction('index', null, $data);
 
         $this->controller->setEnabledCsrf(false);
 

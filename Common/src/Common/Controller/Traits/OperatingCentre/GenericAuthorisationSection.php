@@ -499,7 +499,7 @@ trait GenericAuthorisationSection
     {
         $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
 
-        $table->removeColumn('trailersCol');
+        $table->removeColumn('noOfTrailersPossessed');
 
         $footer = $table->getFooter();
         $footer['total']['content'] .= '-psv';
