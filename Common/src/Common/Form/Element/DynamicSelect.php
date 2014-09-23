@@ -197,11 +197,23 @@ class DynamicSelect extends Select
      */
     public function setValue($value)
     {
-        if (is_array($value) && array_key_exists('id', $value)) {
-            $value = $value['id'];
-        } elseif (is_array($value) && empty($value)) {
+        if (is_array($value) && empty($value)) {
             $value = null;
+        } elseif (is_array($value) && array_key_exists('id', $value)) {
+            $value = $value['id'];
+        } elseif ($this->getAttribute('multiple') && is_array($value)) {
+            $tmp = [];
+            foreach ($value as $singleValue) {
+                if (is_array($singleValue) && array_key_exists('id', $singleValue)) {
+                    $tmp[] = $singleValue['id'];
+                } else {
+                    $tmp[] = $singleValue;
+                }
+            }
+
+            $value = $tmp;
         }
+
         return parent::setValue($value);
     }
 }
