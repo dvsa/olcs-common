@@ -34,6 +34,10 @@ class ContentStoreFileUploader extends AbstractFileUploader
             $storeFile = $file;
         } else {
             $storeFile = new ContentStoreFile();
+            // @TODO: although the destination for this store is JR,
+            // inevitably all temp files come from disk. As such can
+            // this file_get_contents be pushed into the abstract, and
+            // aligned with the DiskStore uploader too?
             $storeFile->setContent(file_get_contents($file->getPath()))
                 ->setMimeType('application/rtf');    // @TODO unstub
         }
@@ -55,8 +59,6 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $file = $store->read($identifier);
 
-        $fileData = $file->getContent();
-
         $response = new Response();
 
         if ($file === null) {
@@ -64,6 +66,8 @@ class ContentStoreFileUploader extends AbstractFileUploader
             $response->setContent('File not found');
             return $response;
         }
+
+        $fileData = $file->getContent();
 
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders(
