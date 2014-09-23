@@ -23,6 +23,7 @@ class DateCompare extends AbstractValidator
     const NOT_GT = 'notGreaterThan';
     const NOT_LTE = 'notLessThanOrEqual';
     const NOT_LT = 'notLessThan';
+    const INVALID_OPERATOR = 'invalid_operator';
 
     /**
      * Error messages
