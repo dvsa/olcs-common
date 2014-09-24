@@ -34,6 +34,7 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                 'contactDetails' => [
                     'forename' => 'A',
                     'familyName' => 'User',
+                    'emailAddress' => 'a@user.com',
                     'address' => [
                         'addressLine1' => 'Line 1'
                     ]
@@ -41,7 +42,7 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
             ]
         );
         $this->assertEquals(
-            "A User\nLine 1",
+            "A User\nLine 1\nDirect Line:\ne-mail: a@user.com",
             $bookmark->render()
         );
     }
@@ -54,10 +55,12 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
                 'contactDetails' => [
                     'forename' => 'A',
                     'familyName' => 'User',
+                    'emailAddress' => 'a@user.com',
                     'address' => []
                 ],
                 'team' => [
                     'trafficArea' => [
+                        'name' => 'An Area',
                         'contactDetails' => [
                             'address' => [
                                 'addressLine1' => 'TA 11'
@@ -68,7 +71,7 @@ class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
             ]
         );
         $this->assertEquals(
-            "A User\nTA 11",
+            "A User\nAn Area\nTA 11\nDirect Line:\ne-mail: a@user.com",
             $bookmark->render()
         );
     }

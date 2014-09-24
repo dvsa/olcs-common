@@ -87,12 +87,21 @@ class CaseworkerDetails extends DynamicBookmark
             $address = $this->data['team']['trafficArea']['contactDetails']['address'];
         }
 
+        $taName = isset($this->data['team']['trafficArea']['name'])
+            ? $this->data['team']['trafficArea']['name']
+            : '';
+
         return implode(
             "\n",
-            [
-                Formatter\Name::format($this->data['contactDetails']),
-                Formatter\Address::format($address)
-            ]
+            array_filter(
+                [
+                    Formatter\Name::format($this->data['contactDetails']),
+                    $taName,
+                    Formatter\Address::format($address),
+                    'Direct Line:' . '', // @TODO pending based on forthcoming discussions with Paul Roberts RE schema
+                    'e-mail: ' . $this->data['contactDetails']['emailAddress']
+                ]
+            )
         );
     }
 }
