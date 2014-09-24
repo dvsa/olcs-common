@@ -40,6 +40,8 @@ Bookmark 3: {\*\bkmkstart bookmark_three}
 {\*\bkmkend bookmark_three}
 Bookmark 3 Repeat: {\*\bkmkstart bookmark_three}
 {\*\bkmkend bookmark_three}
+Date: {\*\bkmkstart letter_date_add_14_days}
+{\*\bkmkend letter_date_add_14_days}
 TXT;
 
         $expected = <<<TXT
@@ -47,13 +49,15 @@ Bookmark 1: Some Content\par With newlines
 Bookmark 2: {\*\bkmkstart bookmark_two} {\*\bkmkend bookmark_two}
 Bookmark 3: Three
 Bookmark 3 Repeat: Three
+Date: Today
 TXT;
 
         $parser = new RtfParser();
 
         $data = [
             "bookmark_one" => "Some Content\nWith newlines",
-            "bookmark_three" => "Three"
+            "bookmark_three" => "Three",
+            "letter_date_add_14_days" => "Today"
         ];
 
         $this->assertEquals(

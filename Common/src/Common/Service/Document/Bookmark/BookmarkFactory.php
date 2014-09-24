@@ -14,7 +14,12 @@ class BookmarkFactory
     public function locate($token)
     {
         $filter = new UnderscoreToCamelCase();
-        $class = '\\Common\\Service\\Document\\Bookmark\\' . $filter->filter($token);
+
+        // bizarrely the filter alone won't replace all underscores,
+        // so we need a bit of extra muscle
+        $className = str_replace("_", "", $filter->filter($token));
+
+        $class = '\\Common\\Service\\Document\\Bookmark\\' . $className;
 
         if (class_exists($class)) {
             /**
