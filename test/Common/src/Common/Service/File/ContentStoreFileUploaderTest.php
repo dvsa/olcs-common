@@ -38,16 +38,6 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         $this->uploader->setServiceLocator($sl);
     }
 
-    public function testUploadWithContentStoreFile()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testUploadWithTmpFile()
-    {
-        $this->markTestIncomplete();
-    }
-
     public function testDownloadWithNoFileFound()
     {
         $response = $this->uploader->download('identifier', 'file.txt');
@@ -79,5 +69,80 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
             ->with('identifier');
 
         $this->uploader->remove('identifier');
+    }
+
+    public function testUploadWithFileWithContent()
+    {
+        $response = $this->getMock('Zend\Http\Response');
+        $response->expects($this->once())
+            ->method('isSuccess')
+            ->willReturn(true);
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('write')
+            ->willReturn($response);
+
+        $this->uploader->setFile(
+            [
+                'content' => 'dummy content',
+                'type' => 'txt/plain'
+            ]
+        );
+
+        $this->uploader->upload('documents');
+    }
+
+    public function testUploadWithFileWithPath()
+    {
+        $response = $this->getMock('Zend\Http\Response');
+        $response->expects($this->once())
+            ->method('isSuccess')
+            ->willReturn(true);
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('write')
+            ->willReturn($response);
+
+        $this->uploader->setFile(
+            [
+                'tmp_name' => __DIR__ . '/Resources/TestFile.txt',
+                'type' => 'txt/plain'
+            ]
+        );
+
+        $file = $this->uploader->upload('documents');
+
+        $this->assertEquals(
+            "Don't modify this file",
+            $file->getContent()
+        );
+    }
+
+    public function testUploadWithErrorResponse()
+    {
+        $response = $this->getMock('Zend\Http\Response');
+        $response->expects($this->once())
+            ->method('isSuccess')
+            ->willReturn(false);
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('write')
+            ->willReturn($response);
+
+        $this->uploader->setFile(
+            [
+                'content' => 'dummy content',
+                'type' => 'txt/plain'
+            ]
+        );
+
+        try {
+            $this->uploader->upload('documents');
+        } catch (\Exception $e) {
+            $this->assertEquals('Unable to store uploaded file', $e->getMessage());
+            return;
+        }
+
+        $this->fail('Expected exception not raised');
     }
 }

@@ -94,7 +94,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         return $store->remove($identifier);
     }
 
-    public function readFile($file)
+    private function readFile($file)
     {
         return file_get_contents($file->getPath());
     }
