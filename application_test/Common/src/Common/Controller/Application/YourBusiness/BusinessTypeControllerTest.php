@@ -53,6 +53,41 @@ class BusinessTypeControllerTest extends AbstractApplicationControllerTestCase
             return $this->getLicenceData('goods');
         }
 
+        $organisationDataBundle = array(
+            'children' => array(
+                'licence' => array(
+                    'children' => array(
+                        'organisation' => array(
+                            'properties' => array(
+                                'id',
+                                'version',
+                            ),
+                            'children' => array(
+                                'type' => array(
+                                    'properties' => array(
+                                        'id'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+             )
+        );
+
+        if ($service == 'Application' && $method == 'GET' && $bundle == $organisationDataBundle) {
+            return array(
+                'licence' => array(
+                    'organisation' => array(
+                        'id' => 1,
+                        'type' => array(
+                            'id' => 'abc'
+                        )
+                    )
+                )
+            );
+        }
+
         if ($service == 'ApplicationCompletion' && $method == 'GET') {
 
             return $this->getApplicationCompletionData();

@@ -5,6 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 
 namespace CommonTest\Controller\Application\YourBusiness;
@@ -18,6 +19,7 @@ use Common\Controller\Application\Application\ApplicationController;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
 class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCase
 {
@@ -27,6 +29,20 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
 
     protected $defaultRestResponse = [];
 
+    // application ID call data
+    protected $mockApplicationIdData = [
+        'id' => 1,
+        'version' => 1,
+        'licence' => [
+            'organisation' => [
+                'id' => 1,
+                'type' => [
+                    'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
+                ],
+            ]
+        ]
+    ];
+
     // must be set if you want to use it
     protected $mockOrganisationData = [];
 
@@ -34,6 +50,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
     protected $mockLicenceData = [
         'licence' => [
             'organisation' => [
+                'id' => 1,
                 'type' => [
                     'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                 ],
@@ -121,6 +138,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         $this->mockLicenceData = [
             'licence' => [
                 'organisation' => [
+                    'id' => 1,
                     'type' => [
                         'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                     ],
@@ -300,6 +318,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
         $this->mockOrganisationData = array(
             'licence' => array(
                 'organisation' => array(
+                    'id' => 1,
                     'type' => array(
                         'id' => 'org_t_' . $type
                     )
@@ -314,6 +333,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
     public function testEditAction()
     {
         $this->setUpAction('edit', 1);
+        $this->setOrganisationType('rc');
 
         $response = $this->controller->editAction();
 
@@ -326,6 +346,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testEditActionWithSubmit()
     {
+        $this->setOrganisationType('rc');
         $this->setUpAction(
             'edit', 1, $this->subsidiaryCompanyData
         );
@@ -341,6 +362,7 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testEditActionWithCancel()
     {
+        $this->setOrganisationType('rc');
         $post = array(
             'form-actions' => array(
                 'cancel' => 'Cancel'
@@ -404,6 +426,8 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testAddActionWithSubmit()
     {
+        $this->setOrganisationType('rc');
+
         $this->setUpAction(
             'add', null, $this->subsidiaryCompanyData
         );
@@ -419,6 +443,8 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
      */
     public function testAddActionWithSubmitWithAddAnother()
     {
+        $this->setOrganisationType('rc');
+
         $data = array_merge(
             $this->subsidiaryCompanyData,
             array('form-actions' => array('addAnother' => 'Add another'))
@@ -469,27 +495,53 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 )
             );
 
-            $orgBundle = [
-                'children' => [
-                    'licence' => [
-                        'children' => [
-                            'organisation' => [
-                                'properties' => [
+            $orgBundle = array(
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'organisation' => array(
+                                'properties' => array(
                                     'id',
-                                    'version'
-                                ],
+                                    'version',
+                                ),
                                 'children' => array(
                                     'type' => array(
                                         'properties' => array(
                                             'id'
                                         )
-                                    )
+                                    ),
                                 )
-                            ]
-                        ]
-                    ]
-                ]
-            ];
+                            )
+                        )
+                    )
+                )
+            );
+
+            $idBundle = array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'licence' => array(
+                        'children' => array(
+                            'organisation' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version'
+                                ),
+                                'children' => array(
+                                    'type' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    ),
+                                )
+                            )
+                        )
+                    )
+                )
+            );
 
             if ($bundle == ApplicationController::$applicationLicenceDataBundle) {
 
@@ -501,9 +553,13 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 return $this->mockLicenceData;
             }
 
-            if ($bundle == $orgBundle) {
-
+            if ($bundle == $orgBundle ) {
                 return $this->mockOrganisationData;
+            }
+
+            if ($bundle == $idBundle ) {
+
+                return $this->mockApplicationIdData;
             }
         }
 
@@ -536,5 +592,6 @@ class BusinessDetailsControllerTest extends AbstractApplicationControllerTestCas
                 );
             }
         }
+
     }
 }
