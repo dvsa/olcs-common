@@ -135,10 +135,12 @@ return array(
     ],
     'validators' => [
         'invokables' => [
-            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf'
+            'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
+            'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
         ],
         'aliases' => [
-            'ValidateIf' => 'Common\Validator\ValidateIf'
+            'ValidateIf' => 'Common\Validator\ValidateIf',
+            'DateCompare' => 'Common\Validator\DateCompare',
         ]
     ],
     'filters' => [
