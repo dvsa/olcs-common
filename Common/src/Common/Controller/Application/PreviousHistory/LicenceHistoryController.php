@@ -163,7 +163,7 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Map a table to it's type. This also maps review table types.
+     * Map a table to its type. This also maps review table types.
      *
      * @var array
      */
@@ -184,6 +184,8 @@ class LicenceHistoryController extends PreviousHistoryController
         'previous_licences_disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
         'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
+
+    protected $inlineScripts = ['licence-history'];
 
     /**
      * Render the section form
