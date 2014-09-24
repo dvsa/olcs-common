@@ -27,7 +27,7 @@ class TemplateWorker
 
     public function readWorkspace()
     {
-        return $this->client->readWorkspace()['structure']['children'];
+        return $this->client->readMeta()['structure']['children'];
     }
 
     public function deleteFolder($name, $data)
