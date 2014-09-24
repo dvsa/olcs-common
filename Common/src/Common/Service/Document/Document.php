@@ -2,14 +2,16 @@
 
 namespace Common\Service\Document;
 
+use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
+
 class Document
 {
-    public function getBookmarkQueries($type, $content, $data)
+    public function getBookmarkQueries(ContentStoreFile $file, $data)
     {
         $queryData = [];
 
-        $tokens = $this->getParser($type)
-            ->extractTokens($content);
+        $tokens = $this->getParser($file->getMimeType())
+            ->extractTokens($file->getContent());
 
         $bookmarks = $this->getBookmarks($tokens);
 
@@ -34,11 +36,13 @@ class Document
         return $queryData;
     }
 
-    public function populateBookmarks($type, $content, $data)
+    public function populateBookmarks(ContentStoreFile $file, $data)
     {
         $populatedData = [];
 
-        $parser = $this->getParser($type);
+        $content = $file->getContent();
+
+        $parser = $this->getParser($file->getMimeType());
         $tokens = $parser->extractTokens($content);
 
         $bookmarks = $this->getBookmarks($tokens);

@@ -3,6 +3,7 @@
 namespace CommonTest\Service\Document;
 
 use Common\Service\Document\Document;
+use Dvsa\Jackrabbit\Data\Object\File;
 
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,13 +14,11 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
     public function testGetBookmarkQueriesForNoBookmarks()
     {
-        $content = '';
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent('');
 
-        $queryData = $this->service->getBookmarkQueries(
-            'application/rtf',
-            $content,
-            []
-        );
+        $queryData = $this->service->getBookmarkQueries($file, []);
         $this->assertEquals([], $queryData);
     }
 
@@ -29,12 +28,11 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 Bookmark 1: {\*\bkmkstart letter_date_add_14_days} {\*\bkmkend letter_date_add_14_days}.
 Boomkark 2: {\*\bkmkstart todays_date}{\*\bkmkend todays_date}
 TXT;
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
 
-        $queryData = $this->service->getBookmarkQueries(
-            'application/rtf',
-            $content,
-            []
-        );
+        $queryData = $this->service->getBookmarkQueries($file, []);
         $this->assertEquals([], $queryData);
     }
 
@@ -44,10 +42,12 @@ TXT;
 Bookmark 1: {\*\bkmkstart caseworker_name} {\*\bkmkend caseworker_name}
 Bookmark 2: {\*\bkmkstart licence_number} {\*\bkmkend licence_number}
 TXT;
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
 
         $queryData = $this->service->getBookmarkQueries(
-            'application/rtf',
-            $content,
+            $file,
             [
                 'user' => 1,
                 'licence' => 123
@@ -65,10 +65,12 @@ Bookmark 1: {\*\bkmkstart para_one} {\*\bkmkend para_one}
 Bookmark 2: {\*\bkmkstart para_two} {\*\bkmkend para_two}
 Bookmark 3: {\*\bkmkstart para_three} {\*\bkmkend para_three}
 TXT;
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
 
         $queryData = $this->service->getBookmarkQueries(
-            'application/rtf',
-            $content,
+            $file,
             [
                 'bookmarks' => [
                     'para_one' => [1],
@@ -89,9 +91,12 @@ TXT;
     {
         $content = "Bookmark 1: {\*\bkmkstart todays_date} {\*\bkmkend todays_date}.";
 
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
+
         $replaced = $this->service->populateBookmarks(
-            'application/rtf',
-            $content,
+            $file,
             []
         );
 
@@ -109,9 +114,12 @@ TXT;
     {
         $content = "Bookmark 1: {\*\bkmkstart licence_number} {\*\bkmkend licence_number}.";
 
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
+
         $replaced = $this->service->populateBookmarks(
-            'application/rtf',
-            $content,
+            $file,
             [
                 'licence_number' => [
                     'licNo' => 1234
@@ -129,9 +137,12 @@ TXT;
     {
         $content = "Bookmark 1: {\*\bkmkstart licence_number} {\*\bkmkend licence_number}.";
 
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
+
         $replaced = $this->service->populateBookmarks(
-            'application/rtf',
-            $content,
+            $file,
             []
         );
 
