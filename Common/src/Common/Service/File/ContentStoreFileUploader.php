@@ -22,32 +22,36 @@ class ContentStoreFileUploader extends AbstractFileUploader
      */
     public function upload($namespace = null)
     {
-        $identifier = $this->generateKey();
+        $file = $this->getFile();
+        $key = $this->generateKey();
 
-        $store = $this->getServiceLocator()->get('ContentStore');
-        $file  = $this->getFile();
-        $path  = $namespace. '/' . $identifier;
+        $path  = $namespace. '/' . $key;
 
-        // allow for the fact the file might already be a jackrabbit
-        // one rather than a tmp uploaded file on disk
-        if ($file instanceof ContentStoreFile) {
-            $storeFile = $file;
-        } else {
-            $storeFile = new ContentStoreFile();
-            // @TODO: although the destination for this store is JR,
-            // inevitably all temp files come from disk. As such can
-            // this file_get_contents be pushed into the abstract, and
-            // aligned with the DiskStore uploader too?
-            $storeFile->setContent(file_get_contents($file->getPath()))
-                ->setMimeType('application/rtf');    // @TODO unstub
+        // allow for the fact the file might already have
+        // content set so we won't need to read from tmp disk
+        if ($file->getContent() === null) {
+            $file->setContent(
+                $this->readFile($file)
+            );
         }
 
-        $response = $store->write($path, $storeFile);
+        $storeFile = new ContentStoreFile();
+        $storeFile->setContent($file->getContent())
+            ->setMimeType($file->getType())
+            ->setMetaData(new \ArrayObject($file->getMeta()));
+
+        $response = $this->getServiceLocator()
+            ->get('ContentStore')
+            ->write($path, $storeFile);
+
         if (!$response->isSuccess()) {
             throw new \Exception('Unable to store uploaded file');
         }
 
-        return $identifier;
+        $file->setPath($path);
+        $file->setIdentifier($key);
+
+        return $file;
     }
 
     /**
@@ -88,5 +92,10 @@ class ContentStoreFileUploader extends AbstractFileUploader
     {
         $store = $this->getServiceLocator()->get('ContentStore');
         return $store->remove($identifier);
+    }
+
+    public function readFile($file)
+    {
+        return file_get_contents($file->getPath());
     }
 }

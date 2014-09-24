@@ -31,10 +31,12 @@ class DiskStoreFileUploader extends AbstractFileUploader
 
         if (!$this->moveFile($file->getPath(), $newPath)) {
             throw new \Exception('Unable to move uploaded file');
-        } else {
-            $file->setPath($newPath);
-            $file->setIdentifier($key);
         }
+
+        $file->setPath($newPath);
+        $file->setIdentifier($key);
+
+        return $file;
     }
 
     /**
