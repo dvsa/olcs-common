@@ -3,6 +3,11 @@ namespace CommonTest\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\LicenceHolderAddress;
 
+/**
+ * Licence holder address test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class LicenceHolderAddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetQueryContainsExpectedKeys()

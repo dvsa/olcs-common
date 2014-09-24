@@ -4,6 +4,11 @@ namespace CommonTest\Service\Document\Parser;
 
 use Common\Service\Document\Parser\RtfParser;
 
+/**
+ * RTF parser test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class RtfParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testExtractTokens()

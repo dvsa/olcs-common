@@ -5,6 +5,11 @@ namespace CommonTest\Service\Document\Parser;
 use PHPUnit_Framework_TestCase;
 use Common\Service\Document\Parser\ParserFactory;
 
+/**
+ * Parser factory test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class ParserFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**

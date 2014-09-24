@@ -1,8 +1,14 @@
 <?php
+
 namespace CommonTest\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\TextBlock;
 
+/**
+ * Text block test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class TextBlockTest extends \PHPUnit_Framework_TestCase
 {
     public function testRenderConcatenatesParagraphsWithNewlines()

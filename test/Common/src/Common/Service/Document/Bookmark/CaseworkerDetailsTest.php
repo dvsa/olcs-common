@@ -1,8 +1,14 @@
 <?php
+
 namespace CommonTest\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\CaseworkerDetails;
 
+/**
+ * Case worker details test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class CaseworkerDetailsTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetQueryContainsExpectedKeys()

@@ -4,6 +4,11 @@ namespace Common\Service\Document;
 
 use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
+/**
+ * Document generation service
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class Document
 {
     public function getBookmarkQueries(ContentStoreFile $file, $data)
@@ -52,7 +57,7 @@ class Document
 
                 $result = $bookmark->render();
 
-            } else if (isset($data[$token])) {
+            } elseif (isset($data[$token])) {
 
                 $bookmark->setData($data[$token]);
                 $result = $bookmark->render();

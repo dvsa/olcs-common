@@ -5,6 +5,11 @@ namespace CommonTest\Service\Document;
 use Common\Service\Document\Document;
 use Dvsa\Jackrabbit\Data\Object\File;
 
+/**
+ * Document service test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()

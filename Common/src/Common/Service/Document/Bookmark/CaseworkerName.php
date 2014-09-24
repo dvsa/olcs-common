@@ -1,8 +1,14 @@
 <?php
+
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
+/**
+ * Caseworker name bookmark
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class CaseworkerName extends DynamicBookmark
 {
     public function getQuery(array $data)

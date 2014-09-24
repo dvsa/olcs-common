@@ -4,6 +4,11 @@ namespace Common\Service\Document\Bookmark;
 
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
+/**
+ * Bookmark factory class
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class BookmarkFactory
 {
     public function locate($token)

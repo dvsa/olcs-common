@@ -1,6 +1,12 @@
 <?php
+
 namespace Common\Service\Document\Bookmark\Base;
 
+/**
+ * Dynamic bookmark
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 abstract class DynamicBookmark extends AbstractBookmark
 {
     const TYPE = 'dynamic';

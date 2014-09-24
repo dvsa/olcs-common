@@ -1,6 +1,12 @@
 <?php
+
 namespace Common\Service\Document\Parser;
 
+/**
+ * RTF parser
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class RtfParser implements ParserInterface
 {
     public function extractTokens($content)

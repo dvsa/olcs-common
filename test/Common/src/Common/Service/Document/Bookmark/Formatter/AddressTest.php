@@ -4,6 +4,11 @@ namespace CommonTest\Service\Document\Bookmark\Formatter;
 
 use Common\Service\Document\Bookmark\Formatter\Address;
 
+/**
+ * Address formatter test
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
 

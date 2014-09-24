@@ -3,6 +3,11 @@ namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
+/**
+ * Caseworker details bookmark
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class CaseworkerDetails extends DynamicBookmark
 {
     public function getQuery(array $data)

@@ -1,6 +1,11 @@
 <?php
 namespace Common\Service\Document\Bookmark\Base;
 
+/**
+ * Abstract bookmark
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 abstract class AbstractBookmark
 {
     protected $token = null;

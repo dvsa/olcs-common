@@ -2,6 +2,11 @@
 
 namespace Common\Service\Document\Bookmark\Formatter;
 
+/**
+ * Name formatter
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class Name implements FormatterInterface
 {
     public static function format(array $data)
