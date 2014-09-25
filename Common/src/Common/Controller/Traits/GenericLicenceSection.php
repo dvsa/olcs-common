@@ -88,24 +88,6 @@ trait GenericLicenceSection
     }
 
     /**
-     * Get the licence type
-     *
-     * @return string
-     */
-    protected function getLicenceType()
-    {
-        if (empty($this->licenceType)) {
-            $licenceData = $this->getLicenceData();
-
-            if (isset($licenceData['licenceType']['id'])) {
-                $this->licenceType = $licenceData['licenceType']['id'];
-            }
-        }
-
-        return $this->licenceType;
-    }
-
-    /**
      * Check if application is psv
      *
      * GetAccessKeys "should" always be called first so psv should be set

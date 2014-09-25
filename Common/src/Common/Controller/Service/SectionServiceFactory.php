@@ -44,7 +44,7 @@ class SectionServiceFactory implements FactoryInterface
     }
 
     /**
-     * Create an instance of the section service
+     * Get the instance of the section service
      *
      * @param string $serviceName
      * @return \Common\Controller\Service\SectionServiceInterface
@@ -52,15 +52,25 @@ class SectionServiceFactory implements FactoryInterface
     public function getSectionService($serviceName)
     {
         if (!isset($this->sectionServices[$serviceName])) {
-
-            $className = __NAMESPACE__ . '\\' . $serviceName . 'SectionService';
-            $service = new $className();
-            $service->setServiceLocator($this->serviceLocator);
-            $service->setSectionServiceFactory($this);
-
-            $this->sectionServices[$serviceName] = $service;
+            $this->sectionServices[$serviceName] = $this->createSectionService($serviceName);
         }
 
         return $this->sectionServices[$serviceName];
+    }
+
+    /**
+     * Create an brand new instance of the section service
+     *
+     * @param string $serviceName
+     * @return \Common\Controller\Service\SectionServiceInterface
+     */
+    public function createSectionService($serviceName)
+    {
+        $className = __NAMESPACE__ . '\\' . $serviceName . 'SectionService';
+        $service = new $className();
+        $service->setServiceLocator($this->serviceLocator);
+        $service->setSectionServiceFactory($this);
+
+        return $service;
     }
 }

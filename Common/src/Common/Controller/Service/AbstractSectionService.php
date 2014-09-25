@@ -13,9 +13,14 @@ use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Util\RestCallTrait;
+use Zend\Validator\File\FilesSize;
+use Common\Form\Elements\Types\Address;
 
 /**
  * Abstract Section Service
+ *
+ * @todo This is essentially a dumping ground from abstractSectionController
+ *  We may want to re-factor
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -25,6 +30,41 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         RestCallTrait;
 
     /**
+     * Hold the identifier
+     *
+     * @var int
+     */
+    protected $identifier;
+
+    /**
+     * Holds whether the section is an action
+     *
+     * @var boolean
+     */
+    protected $isAction;
+
+    /**
+     * Holds the actionId
+     *
+     * @var int
+     */
+    protected $actionId;
+
+    /**
+     * Holds the action name
+     *
+     * @var string
+     */
+    protected $actionName;
+
+    /**
+     * Holds the request
+     *
+     * @var \Zend\Http\Request
+     */
+    protected $request;
+
+    /**
      * Holds the service
      *
      * @var string
@@ -32,60 +72,288 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     protected $service;
 
     /**
+     * Action service
+     *
+     * @var string
+     */
+    protected $actionService;
+
+    /**
+     * Holds the action data bundle
+     *
+     * @var array
+     */
+    protected $actionDataBundle;
+
+    /**
+     * Holds the action data map
+     *
+     * @var array
+     */
+    protected $actionDataMap;
+
+    /**
+     * Holds the data map
+     *
+     * @var array
+     */
+    protected $dataMap;
+
+    /**
+     * Holds the form tables
+     *
+     * @var array
+     */
+    protected $formTables;
+
+    /**
+     * Holds the dataBundle
+     *
+     * @var array
+     */
+    protected $dataBundle;
+
+    /**
+     * Holds the tableDataBundle
+     *
+     * @var array
+     */
+    protected $tableDataBundle;
+
+    /**
      * Cache the translator
      *
      * @var \Zend\I18n\Translator\Translator
      */
-    private $translator;
+    protected $translator;
 
     /**
      * Cache the factory instance
      *
      * @var \Common\Controller\Service\SectionServiceFactory
      */
-    private $sectionServiceFactory;
+    protected $sectionServiceFactory;
 
     /**
      * Cache the section services
      *
      * @var array
      */
-    private $sectionServices = array();
+    protected $sectionServices = array();
 
     /**
-     * Hold the identifier
+     * Holds the loaded data
      *
-     * @var int
+     * @var array
      */
-    private $identifier;
+    protected $loadedData;
 
     /**
-     * Holds whether the section is an action
+     * @todo Need a better way to sort this, but basically need to tell the controller to not persist
      *
      * @var boolean
      */
-    private $isAction;
+    protected $persist = true;
 
     /**
-     * Holds the actionId
+     * Set persist
      *
-     * @var int
+     * @param boolean $persist
      */
-    private $actionId;
+    public function setPersist($persist = true)
+    {
+        $this->persist = $persist;
+    }
 
     /**
-     * Holds the action name
+     * Getter for persist
      *
-     * @var string
+     * @return boolean
      */
-    private $actionName;
+    public function getPersist()
+    {
+        return $this->persist;
+    }
 
     /**
-     * Holds the request
+     * Set the identifier
      *
-     * @var \Zend\Http\Request
+     * @param int $id
      */
-    private $request;
+    public function setIdentifier($id)
+    {
+        $this->identifier = $id;
+    }
+
+    /**
+     * Getter for identifier
+     *
+     * @return int
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * Setter for isAction
+     *
+     * @param boolean $isAction
+     */
+    public function setIsAction($isAction)
+    {
+        $this->isAction = $isAction;
+    }
+
+    /**
+     * Getter for isAction
+     *
+     * @return boolean
+     */
+    public function isAction()
+    {
+        return $this->isAction;
+    }
+
+    /**
+     * Setter for actionId
+     *
+     * @param int $actionId
+     */
+    public function setActionId($actionId)
+    {
+        $this->actionId = $actionId;
+    }
+
+    /**
+     * Getter for actionId
+     *
+     * @return int
+     */
+    public function getActionId()
+    {
+        return $this->actionId;
+    }
+
+    /**
+     * Setter for actionName
+     *
+     * @param string $actionName
+     */
+    public function setActionName($actionName)
+    {
+        $this->actionName = $actionName;
+    }
+
+    /**
+     * Get action name
+     *
+     * @return string
+     */
+    public function getActionName()
+    {
+        return $this->actionName;
+    }
+
+    /**
+     * Setter for request
+     *
+     * @param \Zend\Http\Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Getter for request
+     *
+     * @return \Zend\Http\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Get service
+     *
+     * @return string
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * Get action service
+     *
+     * @return string
+     */
+    public function getActionService()
+    {
+        return $this->actionService;
+    }
+
+    /**
+     * Return the action data bundle
+     *
+     * @return array
+     */
+    public function getActionDataBundle()
+    {
+        return $this->actionDataBundle;
+    }
+
+    /**
+     * Return the action data map
+     *
+     * @return array
+     */
+    public function getActionDataMap()
+    {
+        return $this->actionDataMap;
+    }
+
+    /**
+     * Get data map
+     *
+     * @return array
+     */
+    public function getDataMap()
+    {
+        return $this->dataMap;
+    }
+
+    /**
+     * Return the form tables
+     *
+     * @return array
+     */
+    public function getFormTables()
+    {
+        return $this->formTables;
+    }
+
+    /**
+     * Return the data bundle
+     *
+     * @return array
+     */
+    public function getDataBundle()
+    {
+        return $this->dataBundle;
+    }
+
+    /**
+     * Get table data bundle
+     *
+     * @return array
+     */
+    public function getTableDataBundle()
+    {
+        return $this->tableDataBundle;
+    }
 
     /**
      *
@@ -106,14 +374,37 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     {
         if (!isset($this->sectionServices[$name])) {
             $this->sectionServices[$name] = $this->sectionServiceFactory->getSectionService($name);
-            $this->sectionServices[$name]->setIdentifier($this->getIdentifier());
-            $this->sectionServices[$name]->setIsAction($this->isAction());
-            $this->sectionServices[$name]->setActionId($this->getActionId());
-            $this->sectionServices[$name]->setActionName($this->getActionName());
-            $this->sectionServices[$name]->setRequest($this->getRequest());
+            $this->configureSectionService($this->sectionServices[$name]);
         }
 
         return $this->sectionServices[$name];
+    }
+
+    /**
+     * Create a brand new instance of section service
+     *
+     * @param string $name
+     */
+    protected function createSectionService($name)
+    {
+        $service = $this->sectionServiceFactory->createSectionService($name);
+        $this->configureSectionService($service);
+
+        return $service;
+    }
+
+    /**
+     * Configure a section service
+     *
+     * @param \Common\Controller\Service\SectionServiceInterface $service
+     */
+    protected function configureSectionService($service)
+    {
+        $service->setIdentifier($this->getIdentifier());
+        $service->setIsAction($this->isAction());
+        $service->setActionId($this->getActionId());
+        $service->setActionName($this->getActionName());
+        $service->setRequest($this->getRequest());
     }
 
     /**
@@ -218,113 +509,24 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     }
 
     /**
-     * Set the identifier
+     * Load sub section data
      *
      * @param int $id
+     * @return array
      */
-    public function setIdentifier($id)
+    public function actionLoad($id)
     {
-        $this->identifier = $id;
-    }
+        if ($this->actionData === null) {
 
-    /**
-     * Getter for identifier
-     *
-     * @return int
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
+            $this->actionData = $this->makeRestCall(
+                $this->getActionService(),
+                'GET',
+                array('id' => $id),
+                $this->getActionDataBundle()
+            );
+        }
 
-    /**
-     * Setter for isAction
-     *
-     * @param boolean $isAction
-     */
-    public function setIsAction($isAction)
-    {
-        $this->isAction = $isAction;
-    }
-
-    /**
-     * Getter for isAction
-     *
-     * @return boolean
-     */
-    public function IsAction()
-    {
-        return $this->isAction;
-    }
-
-    /**
-     * Setter for actionId
-     *
-     * @param int $actionId
-     */
-    public function setActionId($actionId)
-    {
-        $this->actionId = $actionId;
-    }
-
-    /**
-     * Getter for actionId
-     *
-     * @return int
-     */
-    public function getActionId()
-    {
-        return $this->actionId;
-    }
-
-    /**
-     * Setter for actionName
-     *
-     * @param string $actionName
-     */
-    public function setActionName($actionName)
-    {
-        $this->actionName = $actionName;
-    }
-
-    /**
-     * Get action name
-     *
-     * @return string
-     */
-    public function getActionName()
-    {
-        return $this->actionName;
-    }
-
-    /**
-     * Setter for request
-     *
-     * @param \Zend\Http\Request $request
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * Getter for request
-     *
-     * @return \Zend\Http\Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Get service
-     *
-     * @return string
-     */
-    public function getService()
-    {
-        return $this->service;
+        return $this->actionData;
     }
 
     /**
@@ -332,7 +534,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      *
      * @param array $data
      */
-    protected function actionSave($data, $service = null)
+    public function actionSave($data, $service = null)
     {
         if (is_null($service)) {
             $service = $this->getActionService();
@@ -359,5 +561,540 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         }
 
         return $this->makeRestCall($service, $method, $data);
+    }
+
+    /**
+     * Default method to get form table data
+     *
+     * @param int $id
+     * @param string $table
+     * @return array
+     */
+    public function getFormTableData($id, $table)
+    {
+        return array();
+    }
+
+    /**
+     * Load the current record
+     *
+     * @return array
+     */
+    public function loadCurrent()
+    {
+        return $this->load($this->getIdentifier());
+    }
+
+    /**
+     * Remove trailer elements for PSV and set up Traffic Area section
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterForm(Form $form)
+    {
+        return $form;
+    }
+
+    /**
+     * Alter the action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterActionForm(Form $form)
+    {
+        return $form;
+    }
+
+    /**
+     * Alter the delete action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterDeleteForm(Form $form)
+    {
+        return $form;
+    }
+
+    /**
+     * Default Process delete
+     *
+     * @param array $data
+     */
+    public function deleteSave($data)
+    {
+        $ids = explode(',', $data['data']['id']);
+
+        foreach ($ids as $id) {
+            $this->delete($id, $this->getActionService());
+        }
+    }
+
+    /**
+     * Delete
+     *
+     * @return Response
+     */
+    public function delete($id = null, $service = null)
+    {
+        if ($service === null) {
+            $service = $this->getService();
+        }
+
+        if (!empty($id) && !empty($service)) {
+
+            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Default Load data for the delete confirmation form
+     *
+     * @param int $id
+     * @return array
+     */
+    public function deleteLoad($id)
+    {
+        if (is_array($id)) {
+            $id = implode(',', $id);
+        }
+
+        return array('data' => array('id' => $id));
+    }
+
+    /**
+     * Alter table
+     *
+     * @param \Common\Service\Table\TableBuilder $table
+     * @return \Common\Service\Table\TableBuilder
+     */
+    public function alterTable($table)
+    {
+        return $table;
+    }
+
+    /**
+     * Load data for the form
+     *
+     * @param int $id
+     * @return array
+     */
+    public function load($id)
+    {
+        if (empty($this->loadedData)) {
+            $service = $this->getService();
+
+            $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
+
+            $this->loadedData = $result;
+        }
+
+        return $this->loadedData;
+    }
+
+    /**
+     * Process the data map for saving
+     *
+     * @param type $data
+     */
+    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
+    {
+        if (empty($map)) {
+            return $oldData;
+        }
+
+        if (isset($map['_addresses'])) {
+            foreach ($map['_addresses'] as $address) {
+                $oldData = $this->processAddressData($oldData, $address);
+            }
+        }
+
+        $data = array();
+        if (isset($map[$section]['mapFrom'])) {
+            foreach ($map[$section]['mapFrom'] as $key) {
+                if (isset($oldData[$key])) {
+                    $data = array_merge($data, $oldData[$key]);
+                }
+            }
+        }
+
+        if (isset($map[$section]['children'])) {
+            foreach ($map[$section]['children'] as $child => $options) {
+                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
+            }
+        }
+
+        if (isset($map[$section]['values'])) {
+            $data = array_merge($data, $map[$section]['values']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Find the address fields and process them accordingly
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function processAddressData($data, $addressName = 'address')
+    {
+        if (!isset($data['addresses'])) {
+            $data['addresses'] = array();
+        }
+
+        unset($data[$addressName]['searchPostcode']);
+
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
+
+        $data['addresses'][$addressName] = $data[$addressName];
+
+        unset($data[$addressName]);
+
+        return $data;
+    }
+
+    /**
+     * Save crud data
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function saveCrud($data)
+    {
+        return $this->save($data);
+    }
+
+    /**
+     * Map the data on load
+     *
+     * @param array $data
+     * @return array
+     */
+    public function processLoad($data)
+    {
+        return $data;
+    }
+
+
+    /**
+     * Process loading the sub section data
+     *
+     * @param array $data
+     * @return array
+     */
+    public function processActionLoad($data)
+    {
+        return $data;
+    }
+
+    /**
+     * Process file uploads
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    public function processFileUploads($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getFiles()->toArray();
+
+            return $this->processFileUpload($uploads, $post, $files, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file upload
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param array $files
+     * @param Form $form
+     * @return array
+     */
+    private function processFileUpload($uploads, $data, $files, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileUpload(
+                        $callback,
+                        $data[$fieldset],
+                        $files[$fieldset],
+                        $form
+                    );
+
+                } elseif (isset($data[$fieldset]['file-controls']['upload'])
+                    && !empty($data[$fieldset]['file-controls']['upload'])
+                ) {
+
+                    // @todo need to sort this out
+                    $this->setPersist(false);
+
+                    $error = $files[$fieldset]['file-controls']['file']['error'];
+
+                    $validator = $this->getFileSizeValidator();
+
+                    if ($error == UPLOAD_ERR_OK
+                        && !$validator->isValid($files[$fieldset]['file-controls']['file']['tmp_name'])
+                    ) {
+                        $error = UPLOAD_ERR_INI_SIZE;
+                    }
+
+                    $responses[$fieldset] = $error;
+
+                    switch ($error) {
+                        case UPLOAD_ERR_OK:
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $files[$fieldset]['file-controls']['file']
+                            );
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $form->setMessages(
+                                array('__messages__' => array('File was only partially uploaded'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $form->setMessages(
+                                array('__messages__' => array('Please select a file to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $form->setMessages(
+                                array('__messages__' => array('The file was too large to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                        case UPLOAD_ERR_CANT_WRITE:
+                        case UPLOAD_ERR_EXTENSION:
+                            $form->setMessages(
+                                array('__messages__' => array('An unexpected error occurred while uploading the file'))
+                            );
+                            break;
+                    }
+                }
+            }
+        }
+        return $responses;
+    }
+
+    /**
+     * Get filesize validator
+     *
+     * @return \Zend\Validator\File\FilesSize
+     */
+    public function getFileSizeValidator()
+    {
+        return new FilesSize('2MB');
+    }
+
+    /**
+     * Process file deletions
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    public function processFileDeletions($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+
+            return $this->processFileDeletion($uploads, $post, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file deletion
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param Form $form
+     * @return array
+     */
+    private function processFileDeletion($uploads, $data, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileDeletion(
+                        $callback,
+                        $data[$fieldset],
+                        $form
+                    );
+
+                } else {
+
+                    foreach ($form->get('list')->getFieldsets() as $listFieldset) {
+
+                        $name = $listFieldset->getName();
+
+                        if (isset($data[$fieldset]['list'][$name]['remove'])
+                            && !empty($data[$fieldset]['list'][$name]['remove'])) {
+
+                            // @todo sort this
+                            $this->setPersist(false);
+
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $data[$fieldset]['list'][$name]['id'],
+                                $form->get('list'),
+                                $name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $responses;
+    }
+
+    /**
+     * Process the postcode lookup functionality
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function processPostcodeLookup($form)
+    {
+        $request = $this->getRequest();
+
+        $post = array();
+
+        if ($request->isPost()) {
+            $post = (array)$request->getPost();
+        }
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+
+            if ($fieldset instanceof Address) {
+
+                $removeSelectFields = false;
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
+
+                    // @todo sort this
+                    $this->setPersist(false);
+
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
+
+                    if (empty($postcode)) {
+
+                        $removeSelectFields = true;
+
+                        $fieldset->get('searchPostcode')->setMessages(
+                            array('Please enter a postcode')
+                        );
+                    } else {
+
+                        $addressList = $this->getAddressesForPostcode($postcode);
+
+                        if (empty($addressList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('No addresses found for postcode')
+                            );
+
+                        } else {
+
+                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                $this->getAddressService()->formatAddressesForSelect($addressList)
+                            );
+                        }
+                    }
+                } elseif (isset($post[$name]['searchPostcode']['select'])
+                    && !empty($post[$name]['searchPostcode']['select'])) {
+
+                    //@todo disable persist on form validation
+                    $this->setPersist(false);
+
+                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+
+                    $removeSelectFields = true;
+
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
+
+                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
+
+                } else {
+
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * Get Addresses For Postcode
+     *
+     * @param string $postcode
+     * @return array
+     */
+    private function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
+    }
+
+    /**
+     * Get address for uprn
+     *
+     * @param string $uprn
+     * @return array
+     */
+    private function getAddressForUprn($uprn)
+    {
+        return $this->sendGet('postcode\address', array('id' => $uprn), true);
+    }
+
+    /**
+     * Get address service
+     *
+     * @return object
+     */
+    private function getAddressService()
+    {
+        return $this->getServiceLocator()->get('address');
     }
 }

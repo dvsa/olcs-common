@@ -196,7 +196,7 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
      *
      * @param array $data
      */
-    protected function setTrafficAreaAfterCrudAction($data)
+    public function setTrafficAreaAfterCrudAction($data)
     {
         $action = strtolower($data['table']['action']);
 
@@ -215,5 +215,17 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
         }
 
         return true;
+    }
+
+    /**
+     * Get licence section service
+     *
+     * @NOTE Going via the application service, sets the licenceId into the service, rather than the appId
+     *
+     * @return \Common\Controller\Service\SectionServiceInterface
+     */
+    protected function getLicenceSectionService()
+    {
+        return $this->getSectionService('Application')->getLicenceSectionService();
     }
 }

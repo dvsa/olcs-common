@@ -17,29 +17,8 @@ use Zend\View\Model\ViewModel;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractSectionController extends AbstractController
+abstract class AbstractSectionController extends AbstractActionController
 {
-    /**
-     * Holds the section service name
-     *
-     * @var string
-     */
-    protected $sectionServiceName;
-
-    /**
-     * Holds the identifier
-     *
-     * @var int
-     */
-    protected $identifier;
-
-    /**
-     * Identifier name
-     *
-     * @var string
-     */
-    protected $identifierName = 'id';
-
     /**
      * Holds the form name
      *
@@ -75,20 +54,6 @@ abstract class AbstractSectionController extends AbstractController
      * @var string
      */
     protected $alterActionFormMethod = 'alterActionForm';
-
-    /**
-     * Holds the action name
-     *
-     * @var string
-     */
-    private $actionName;
-
-    /**
-     * Holds the isAction
-     *
-     * @var boolean
-     */
-    protected $isAction;
 
     /**
      * These actions will attempt to look for a bespoke form/table/view etc
@@ -169,13 +134,6 @@ abstract class AbstractSectionController extends AbstractController
     protected $hasForm = null;
 
     /**
-     * Holds the action id
-     *
-     * @var int
-     */
-    protected $actionId;
-
-    /**
      * Current messages
      *
      * @var array
@@ -187,13 +145,6 @@ abstract class AbstractSectionController extends AbstractController
         'warning' => array(),
         'success' => array()
     );
-
-    /**
-     * Cache the section services
-     *
-     * @var array
-     */
-    private $sectionServices = array();
 
     /**
      * Get bespoke sub actions
@@ -213,16 +164,6 @@ abstract class AbstractSectionController extends AbstractController
     protected function getAllBespokeSubActions()
     {
         return array_merge($this->getBespokeSubActions(), $this->defaultBespokeSubActions);
-    }
-
-    /**
-     * Getter for action data bundle
-     *
-     * @return array
-     */
-    protected function getActionDataBundle()
-    {
-        return $this->actionDataBundle;
     }
 
     /**
@@ -308,42 +249,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Default method to get form table data
-     *
-     * @param int $id
-     * @param string $table
-     * @return array
-     */
-    protected function getFormTableData($id, $table)
-    {
-        return array();
-    }
-
-    /**
-     * Get the journey identifier
-     *
-     * @return int
-     */
-    protected function getIdentifier()
-    {
-        if (empty($this->identifier)) {
-            $this->identifier = $this->params()->fromRoute($this->getIdentifierName());
-        }
-
-        return $this->identifier;
-    }
-
-    /**
-     * Default method to get the identifier name
-     *
-     * @return string
-     */
-    protected function getIdentifierName()
-    {
-        return $this->identifierName;
-    }
-
-    /**
      * Determine the alter form method name
      *
      * @return string
@@ -361,40 +266,6 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         return $this->alterFormMethod;
-    }
-
-    /**
-     * Getter for action name
-     *
-     * @return string
-     */
-    protected function getActionName()
-    {
-        if (empty($this->actionName)) {
-            $this->actionName = $this->params()->fromRoute('action');
-        }
-
-        return $this->actionName;
-    }
-
-    /**
-     * Get the sub action service
-     *
-     * @return string
-     */
-    protected function getActionService()
-    {
-        return $this->actionService;
-    }
-
-    /**
-     * Gets the action data map
-     *
-     * @return array
-     */
-    protected function getActionDataMap()
-    {
-        return $this->actionDataMap;
     }
 
     /**
@@ -459,16 +330,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Simple helper method to load the current application
-     *
-     * @return array
-     */
-    protected function loadCurrent()
-    {
-        return $this->load($this->getIdentifier());
-    }
-
-    /**
      * @return array
      */
     protected function getFormDefaults()
@@ -477,9 +338,26 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
+     * Get the last part of the action from the action name
+     *
+     * @param string $action
+     * @return string
+     */
+    protected function getActionFromFullActionName($action = null)
+    {
+        if ($action == null) {
+            $action = strtolower($this->getActionName());
+        }
+
+        return parent::getActionFromFullActionName($action);
+    }
+
+    /**
      * Get the form data
      *
      * This is not in the method above as it can be overridden independantly
+     *
+     * @todo move this into section service
      *
      * @return array
      */
@@ -509,21 +387,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Get the last part of the action from the action name
-     *
-     * @param string $action
-     * @return string
-     */
-    protected function getActionFromFullActionName($action = null)
-    {
-        if ($action == null) {
-            $action = strtolower($this->getActionName());
-        }
-
-        return parent::getActionFromFullActionName($action);
-    }
-
-    /**
      * Alter the form before validation
      *
      * @param Form $form
@@ -549,30 +412,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Alter the form
-     *
-     * This method should be overridden
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function alterForm($form)
-    {
-        return $form;
-    }
-
-    /**
-     * Alter the action form
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function alterActionForm($form)
-    {
-        return $form;
-    }
-
-    /**
      * Set fields as not required
      *
      * @param \Zend\InputFilter\InputFilter $inputFilter
@@ -591,21 +430,6 @@ abstract class AbstractSectionController extends AbstractController
         }
 
         return $inputs;
-    }
-
-    /**
-     * Check if we have a sub action
-     *
-     * @return boolean
-     */
-    protected function isAction()
-    {
-        if (is_null($this->isAction)) {
-            $action = $this->getActionName();
-            $this->isAction = ($action != 'index');
-        }
-
-        return $this->isAction;
     }
 
     /**
@@ -650,58 +474,6 @@ abstract class AbstractSectionController extends AbstractController
     protected function shouldSkipActionSave($data, $form)
     {
         return false;
-    }
-
-    /**
-     * Process loading the sub section data
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processActionLoad($data)
-    {
-        return $data;
-    }
-
-    /**
-     * Load sub section data
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function actionLoad($id)
-    {
-        if (empty($this->actionData)) {
-
-            $this->actionData = $this->makeRestCall(
-                $this->getActionService(),
-                'GET',
-                array('id' => $id),
-                $this->getActionDataBundle()
-            );
-        }
-
-        return $this->actionData;
-    }
-
-    /**
-     * Save sub action data
-     *
-     * @param array $data
-     */
-    protected function actionSave($data, $service = null)
-    {
-        $method = 'POST';
-
-        if (isset($data['id']) && !empty($data['id'])) {
-            $method = 'PUT';
-        }
-
-        if (is_null($service)) {
-            $service = $this->getActionService();
-        }
-
-        return $this->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -810,49 +582,6 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Delete
-     *
-     * @return Response
-     */
-    protected function delete($id = null, $service = null)
-    {
-        if ($id === null) {
-            $id = $this->getActionId();
-        }
-
-        if ($service === null) {
-            $service = $this->getActionService();
-        }
-
-        if (parent::delete($id, $service)) {
-
-            return $this->goBackToSection();
-        }
-
-        return $this->notFoundAction();
-    }
-
-    /**
-     * Get the sub action id
-     *
-     * @return int
-     */
-    protected function getActionId()
-    {
-        if (empty($this->actionId)) {
-            $this->actionId = $this->params()->fromRoute('id');
-
-            $queryIds = $this->params()->fromQuery('id');
-
-            if (empty($this->actionId) && !empty($queryIds)) {
-                $this->actionId = $queryIds;
-            }
-        }
-
-        return $this->actionId;
-    }
-
-    /**
      * Add table to a view
      * @param type $view
      */
@@ -866,26 +595,11 @@ abstract class AbstractSectionController extends AbstractController
 
                 $data = $this->getTableData($this->getIdentifier());
 
-                $settings = $this->getTableSettings();
-
-                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+                $table = $this->alterTable($this->getTable($tableName, $data, array()));
 
                 $view->setVariable('table', $table);
             }
         }
-    }
-
-    /**
-     * Alter table
-     *
-     * This method should be overridden if alterations are required
-     *
-     * @param object $table
-     * @return object
-     */
-    protected function alterTable($table)
-    {
-        return $table;
     }
 
     /**
@@ -1028,45 +742,117 @@ abstract class AbstractSectionController extends AbstractController
     }
 
     /**
-     * Render the view
+     * Delete
      *
-     * @param ViewModel $view
-     * @return ViewModel
+     * @return Response
      */
-    protected function render($view)
+    protected function delete($id = null, $service = null)
     {
-        return $view;
+        if (parent::delete($id, $service)) {
+
+            return $this->goBackToSection();
+        }
+
+        return $this->notFoundAction();
     }
 
     /**
-     * Default Load data for the delete confirmation form
+     * Getter for action data bundle
+     *
+     * @todo use the section services version (modified for backwards compat for the time being)
+     *
+     * @return array
+     */
+    protected function getActionDataBundle()
+    {
+        if ($this->actionDataBundle === null) {
+            $this->actionDataBundle = $this->getSectionService()->getActionDataBundle();
+        }
+
+        return $this->actionDataBundle;
+    }
+
+    /**
+     * Gets the action data map
+     *
+     * @todo use the section services version (modified for backwards compat for the time being)
+     *
+     * @return array
+     */
+    protected function getActionDataMap()
+    {
+        if ($this->actionDataMap === null) {
+            $this->actionDataMap = $this->getSectionService()->getActionDataMap();
+        }
+
+        return $this->actionDataMap;
+    }
+
+    /**
+     * Default method to get form table data
+     *
+     * @param int $id
+     * @param string $table
+     * @return array
+     */
+    protected function getFormTableData($id, $table)
+    {
+        return $this->getSectionService()->getFormTableData($id, $table);
+    }
+
+    /**
+     * Simple helper method to load the current record
+     *
+     * @todo Move load into section service
+     *
+     * @return array
+     */
+    protected function loadCurrent()
+    {
+        return $this->getSectionService()->load($this->getIdentifier());
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm($form)
+    {
+        return $this->getSectionService()->alterForm($form);
+    }
+
+    /**
+     * Alter the action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterActionForm($form)
+    {
+        return $this->getSectionService()->alterActionForm($form);
+    }
+
+    /**
+     * Load sub section data
      *
      * @param int $id
      * @return array
      */
-    protected function deleteLoad($id)
+    protected function actionLoad($id)
     {
-        if (is_array($id)) {
-            $id = implode(',', $id);
-        }
-
-        return array('data' => array('id' => $id));
+        return $this->getSectionService()->actionLoad($id);
     }
 
     /**
-     * Default Process delete
+     * Save sub action data
      *
      * @param array $data
      */
-    protected function deleteSave($data)
+    protected function actionSave($data, $service = null)
     {
-        $ids = explode(',', $data['data']['id']);
-
-        foreach ($ids as $id) {
-            parent::delete($id, $this->getActionService());
-        }
-
-        return $this->goBackToSection();
+        return $this->getSectionService()->actionSave($data, $service);
     }
 
     /**
@@ -1077,105 +863,53 @@ abstract class AbstractSectionController extends AbstractController
      */
     protected function alterDeleteForm($form)
     {
-        return $form;
+        return $this->getSectionService()->alterDeleteForm($form);
     }
 
     /**
-     * Format a translation string
+     * Default Load data for the delete confirmation form
      *
-     * @todo Start using the section service version of this method
-     *
-     * @param type $format
-     * @param type $messages
-     * @return type
+     * @param int $id
+     * @return array
      */
-    protected function formatTranslation($format, $messages)
+    protected function deleteLoad($id)
     {
-        if (!is_array($messages)) {
-            return $this->wrapTranslation($format, $messages);
-        }
-
-        array_walk(
-            $messages,
-            function (&$value) {
-                $value = $this->translate($value);
-            }
-        );
-
-        return vsprintf($format, $messages);
+        return $this->getSectionService()->deleteLoad($id);
     }
 
     /**
-     * Wrap a translated message with the wrapper
+     * Default Process delete
      *
-     * @todo Start using the section service version of this method
-     *
-     * @param string $wrapper
-     * @param string $message
-     * @return string
+     * @param array $data
      */
-    protected function wrapTranslation($wrapper, $message)
+    protected function deleteSave($data)
     {
-        return sprintf($wrapper, $this->translate($message));
+        $this->getSectionService()->deleteSave($data);
+
+        return $this->goBackToSection();
     }
 
     /**
-     * Translate a message
+     * Alter table
      *
-     * @todo Start using the section service version of this method
+     * This method should be overridden if alterations are required
      *
-     * @param string $message
-     * @return string
+     * @param object $table
+     * @return object
      */
-    protected function translate($message)
+    protected function alterTable($table)
     {
-        return $this->getTranslator()->translate($message);
+        return $this->getService()->alterTable($table);
     }
 
     /**
-     * Get translator
+     * Process loading the sub section data
      *
-     * @todo Start using the section service version of this method
-     *
-     * @return \Zend\I18n\Translator\Translator
+     * @param array $data
+     * @return array
      */
-    protected function getTranslator()
+    protected function processActionLoad($data)
     {
-        return $this->getServiceLocator()->get('translator');
-    }
-
-    /**
-     * Return the section service
-     *
-     * @return \Common\Controller\Service\SectionServiceInterface
-     */
-    protected function getSectionService($sectionServiceName = null)
-    {
-        if ($sectionServiceName === null) {
-            $sectionServiceName = $this->getSectionServiceName();
-        }
-
-        if (!isset($this->sectionServices[$sectionServiceName])) {
-            $this->sectionServices[$sectionServiceName] = $this->getServiceLocator()
-                ->get('SectionService')->getSectionService($sectionServiceName);
-
-            $this->sectionServices[$sectionServiceName]->setIdentifier($this->getIdentifier());
-            $this->sectionServices[$sectionServiceName]->setIsAction($this->isAction());
-            $this->sectionServices[$sectionServiceName]->setActionId($this->getActionId());
-            $this->sectionServices[$sectionServiceName]->setActionName($this->getActionname());
-            $this->sectionServices[$sectionServiceName]->setRequest($this->getRequest());
-        }
-
-        return $this->sectionServices[$sectionServiceName];
-    }
-
-    /**
-     * Get section service name
-     *
-     * @return string
-     */
-    protected function getSectionServiceName()
-    {
-        return $this->sectionServiceName;
+        return $this->getSectionService()->processActionLoad($data);
     }
 }

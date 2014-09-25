@@ -29,24 +29,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
     );
 
     /**
-     * Service
-     * @NOTE should be extended
-     *
-     * @var string
-     */
-    protected $service;
-
-    /**
-     * Action service
-     * @NOTE should be extended
-     *
-     * @var string
-     */
-    protected $actionService;
-
-    /**
      * Action identifier
-     * @NOTE should be extended
      *
      * @var string
      */
@@ -54,7 +37,6 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
 
     /**
      * Data bundle
-     * @NOTE should be extended
      *
      * @var array
      */
@@ -65,8 +47,14 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var array
      */
-    private $tableDataBundle = array(
-        'properties' => array(),
+    protected $tableDataBundle = array(
+        'properties' => array(
+            'id',
+            'permission',
+            'adPlaced',
+            'noOfVehiclesPossessed',
+            'noOfTrailersPossessed'
+        ),
         'children' => array(
             'operatingCentre' => array(
                 'properties' => array(
@@ -112,7 +100,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var array
      */
-    private $actionDataBundle = array(
+    protected $actionDataBundle = array(
         'properties' => array(
             'id',
             'version',
@@ -169,7 +157,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var array
      */
-    private $actionDataMap = array(
+    protected $actionDataMap = array(
         '_addresses' => array(
             'address'
         ),
@@ -202,7 +190,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var array
      */
-    private $dataMap = array(
+    protected $dataMap = array(
         'main' => array(
             'mapFrom' => array(
                 'data',
@@ -216,7 +204,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var string
      */
-    private $formTables = array(
+    protected $formTables = array(
         'table' => 'authorisation_in_form'
     );
 
@@ -225,7 +213,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @var array
      */
-    private $tableData;
+    protected $tableData;
 
     /**
      * Get document bundle
@@ -243,81 +231,11 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
     );
 
     /**
-     * Return the action data bundle
-     *
-     * @return array
-     */
-    public function getActionDataBundle()
-    {
-        return $this->actionDataBundle;
-    }
-
-    /**
-     * Return the action data map
-     *
-     * @return array
-     */
-    public function getActionDataMap()
-    {
-        return $this->actionDataMap;
-    }
-
-    /**
-     * Get action service
-     *
-     * @return string
-     */
-    public function getActionService()
-    {
-        return $this->actionService;
-    }
-
-    /**
-     * Get data map
-     *
-     * @return array
-     */
-    public function getDataMap()
-    {
-        return $this->dataMap;
-    }
-
-    /**
-     * Return the form tables
-     *
-     * @return array
-     */
-    public function getFormTables()
-    {
-        return $this->formTables;
-    }
-
-    /**
-     * Return the data bundle
-     *
-     * @return array
-     */
-    public function getDataBundle()
-    {
-        return $this->dataBundle;
-    }
-
-    /**
-     * Get table data bundle
-     *
-     * @return array
-     */
-    public function getTableDataBundle()
-    {
-        return $this->tableDataBundle;
-    }
-
-    /**
      * Get form table data
      *
      * @return array
      */
-    public function getFormTableData($id)
+    public function getFormTableData($id, $table)
     {
         if ($this->tableData === null) {
 
@@ -507,8 +425,8 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
             $data['applicationOperatingCentre']['adPlaced'] = 0;
         }
 
-        // @todo figure this bit out
-        //$saved = $this->doActionSave($data['applicationOperatingCentre'], $service);
+        // @todo not sure this is right
+        $saved = parent::actionSave($data['applicationOperatingCentre'], $service);
 
         if ($this->getActionName() == 'add' && !isset($saved['id'])) {
             throw new \Exception('Unable to save operating centre');
@@ -660,33 +578,39 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
     }
 
     /**
-     * Check if the licence is psv or not
+     * Check if licence/application is psv
+     *
+     * @NOTE no need to cache, as this is cached within the licence service
      *
      * @return boolean
      */
     protected function isPsv()
     {
-        // @todo implement this
+        return $this->getLicenceSectionService()->isPsv();
     }
 
     /**
      * Get licence data
      *
+     * @NOTE no need to cache, as this is cached within the licence service
+     *
      * @return array
      */
     protected function getLicenceData()
     {
-        // @todo implement this
+        return $this->getLicenceSectionService()->getLicenceData();
     }
 
     /**
      * Get licence type
      *
+     * @NOTE no need to cache, as this is cached within the licence service
+     *
      * @return string
      */
     protected function getLicenceType()
     {
-        // @todo implement this
+        return $this->getLicenceSectionService()->getLicenceType();
     }
 
     /**
@@ -900,4 +824,11 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      * @param \Zend\Form\Form
      */
     abstract protected function alterActionFormForGoods(Form $form);
+
+    /**
+     * Get licence section service
+     *
+     * @return \Common\Controller\Service\SectionServiceInterface
+     */
+    abstract protected function getLicenceSectionService();
 }

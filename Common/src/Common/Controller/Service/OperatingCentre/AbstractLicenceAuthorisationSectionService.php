@@ -252,4 +252,14 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
     {
         return $this->makeRestCall('LicenceOperatingCentre', 'GET', $id, $this->ocAuthorisationsBundle);
     }
+
+    /**
+     * Get licence section service
+     *
+     * @return \Common\Controller\Service\SectionServiceInterface
+     */
+    protected function getLicenceSectionService()
+    {
+        return $this->getSectionService('Licence');
+    }
 }

@@ -25,7 +25,7 @@ class FinancialHistoryControllerTest extends AbstractApplicationControllerTestCa
 
     protected $defaultRestResponse = array();
 
-    protected $mockedMethods = array('getUploader', 'getFileSizeValidator');
+    protected $mockedMethods = array('getUploader');
 
     /**
      * Test indexAction
@@ -132,15 +132,6 @@ class FinancialHistoryControllerTest extends AbstractApplicationControllerTestCa
         $this->controller->expects($this->any())
             ->method('getUploader')
             ->will($this->returnValue($mockUploader));
-
-        $mockValidator = $this->getMock('\stdClass', array('isValid'));
-        $mockValidator->expects($this->once())
-            ->method('isValid')
-            ->will($this->returnValue(true));
-
-        $this->controller->expects($this->any())
-            ->method('getFileSizeValidator')
-            ->will($this->returnValue($mockValidator));
 
         $this->controller->setEnabledCsrf(false);
         $response = $this->controller->indexAction();

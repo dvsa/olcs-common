@@ -12,6 +12,7 @@ use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 use Common\Helper\RestrictionHelper;
 use Common\Controller\AbstractSectionController;
+use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * Abstract Journey Controller
@@ -277,6 +278,18 @@ abstract class AbstractJourneyController extends AbstractSectionController
         }
 
         return $this->sectionReference;
+    }
+
+    /**
+     * Convert camel case to dash
+     *
+     * @param string $string
+     * @return string
+     */
+    protected function camelToDash($string)
+    {
+        $converter = new CamelCaseToDash();
+        return strtolower($converter->filter($string));
     }
 
     /**
