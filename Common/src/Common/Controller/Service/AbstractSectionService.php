@@ -10,11 +10,11 @@ namespace Common\Controller\Service;
 use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Util\RestCallTrait;
 use Zend\Validator\File\FilesSize;
 use Common\Form\Elements\Types\Address;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Abstract Section Service
@@ -28,6 +28,13 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
 {
     use ServiceLocatorAwareTrait,
         RestCallTrait;
+
+    /**
+     * Holds the field values
+     *
+     * @var array
+     */
+    private $fieldValues = array();
 
     /**
      * Hold the identifier
@@ -1049,7 +1056,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
 
-                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
+                    $this->setFieldValue($name, array_merge($post[$name], $addressDetails));
 
                 } else {
 
@@ -1096,5 +1103,71 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     private function getAddressService()
     {
         return $this->getServiceLocator()->get('address');
+    }
+
+    /**
+     * set the field value for a given key. This allows us
+     * to override form data which has been previously set
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public function setFieldValue($key, $value)
+    {
+        $this->fieldValues[$key] = $value;
+    }
+
+    /**
+     * Getter for field values
+     *
+     * @return array
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
+    }
+
+    /**
+     * Called after form->setData
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function postSetFormData(Form $form)
+    {
+        return $form;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param int $id
+     */
+    public function deleteFile($id, $fieldset, $name)
+    {
+        $fileDetails = $this->makeRestCall(
+            'Document',
+            'GET',
+            array('id' => $id),
+            array('properties' => array('identifier'))
+        );
+
+        if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
+            if ($this->getUploader()->remove($fileDetails['identifier'])) {
+
+                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $fieldset->remove($name);
+            }
+        }
+    }
+
+    /**
+     * Get uploader
+     *
+     * @return object
+     */
+    public function getUploader()
+    {
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 }

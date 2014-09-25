@@ -8,6 +8,10 @@
 namespace Common\Controller\Service\OperatingCentre;
 
 use Zend\Form\Form;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\InputFilter;
 
 /**
  * External Licence Authorisation Section Service
@@ -97,6 +101,52 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
         }
 
         return $form;
+    }
+
+    /**
+     * Disable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    protected function disableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->disableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->disableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->setAttribute('disabled', 'disabled');
+        }
+    }
+
+    /**
+     * Disable field validation
+     *
+     * @param \Zend\InputFilter\InputFilter $inputFilter
+     * @return null
+     */
+    protected function disableValidation($inputFilter)
+    {
+        if ($inputFilter instanceof InputFilter) {
+            foreach ($inputFilter->getInputs() as $input) {
+                $this->disableValidation($input);
+            }
+            return;
+        }
+
+        if ($inputFilter instanceof Input) {
+            $inputFilter->setAllowEmpty(true);
+            $inputFilter->setRequired(false);
+            $inputFilter->setValidatorChain(new ValidatorChain());
+        }
     }
 
     /**

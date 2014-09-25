@@ -13,12 +13,9 @@ namespace Common\Controller;
 
 use Common\Util;
 use Zend\Mvc\MvcEvent;
-use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Http\Response;
-use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
-use Zend\InputFilter\InputFilter;
 use Zend\Validator\ValidatorChain;
 use Zend\Filter\Word\DashToCamelCase;
 
@@ -28,7 +25,7 @@ use Zend\Filter\Word\DashToCamelCase;
  * @todo Need to move as much business logic as possible into services
  *
  * @author Pelle Wessman <pelle.wessman@valtech.se>
- * @author Michael Cooperr <michael.cooper@valtech.co.uk>
+ * @author Michael Cooper <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
@@ -176,7 +173,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected $enableCsrf = true;
     protected $validateForm = true;
 
-    private $fieldValues = array();
     private $loggedInUser;
 
     /**
@@ -194,10 +190,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Sets up the index route array.
      *
-     * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
-    public function setupIndexRoute(MvcEvent $e)
+    private function setupIndexRoute(MvcEvent $e)
     {
         if (empty($this->indexRoute)) {
             $this->indexRoute = [
@@ -210,7 +205,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Olcs specific onDispatch method.
      */
-    public function preOnDispatch()
+    private function preOnDispatch()
     {
         $response = $this->getResponse();
         $headers = $response->getHeaders();
@@ -224,7 +219,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Does what it says on the tin.
      *
-     * @codeCoverageIgnore
+     * @todo this shouldn't be public
+     *
      * @return mixed
      */
     public function redirectToIndex()
@@ -234,8 +230,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Set navigation for breadcrumb
-     * @param type $label
-     * @param type $params
+     *
+     * @todo this shouldn't be public
+     *
+     * @param array $navRoutes
      */
     public function setBreadcrumb($navRoutes = array())
     {
@@ -250,6 +248,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get all request params from the query string and route and send back the required ones
+     *
+     * @todo this shouldn't be public
+     *
      * @param type $keys
      * @return type
      */
@@ -265,6 +266,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $params;
     }
 
+    /**
+     * Get all params
+     *
+     * @todo this shouldn't be public
+     *
+     * @return type
+     */
     public function getAllParams()
     {
         $getParams = array_merge(
@@ -386,6 +394,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Build a table from config and results, and return the table object
      *
+     * @todo This method shouldn't be public
+     *
      * @param string $table
      * @param array $results
      * @param array $data
@@ -403,6 +413,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Return a new view model
      *
+     * @todo This method shouldn't be public, and shouldn't exist
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function getViewModel($params = array())
@@ -412,6 +424,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get url from route
+     *
+     * @todo This method shouldn't be public, and shouldn't exist
      *
      * @param string $route
      * @return string
@@ -423,6 +437,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Wraps the redirect()->toRoute to help with unit testing
+     *
+     * @todo This method shouldn't be public, and shouldn't exist
      *
      * @param string $route
      * @param array $params
@@ -438,6 +454,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Get param from route
      *
+     * @todo This method shouldn't be public, and shouldn't exist
+     *
      * @param string $name
      * @return string
      */
@@ -449,6 +467,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Get param from post
      *
+     * @todo This method shouldn't be public, and shouldn't exist
+     *
      * @param string $name
      * @return string
      */
@@ -457,25 +477,43 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->params()->fromPost($name);
     }
 
+    /**
+     * Get logged in user
+     *
+     * @todo This method shouldn't be public
+     *
+     * @return int
+     */
     public function getLoggedInUser()
     {
         return $this->loggedInUser;
     }
 
+    /**
+     * Set logged in user
+     *
+     * @todo This method shouldn't be public
+     *
+     * @param int $id
+     * @return \Common\Controller\AbstractActionController
+     */
     public function setLoggedInUser($id)
     {
         $this->loggedInUser = $id;
+
         return $this;
     }
 
     /**
      * Get uploader
      *
+     * @todo This method shouldn't be public
+     *
      * @return object
      */
     public function getUploader()
     {
-        return $this->getServiceLocator()->get('FileUploader')->getUploader();
+        return $this->getSectionService()->getUploader();
     }
 
     /**
@@ -581,9 +619,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->inlineScripts;
     }
 
+    /**
+     * Attach default listeneers
+     */
     protected function attachDefaultListeners()
     {
         parent::attachDefaultListeners();
+
         if ($this instanceof CrudInterface) {
             $this->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, array($this, 'cancelButtonListener'), 100);
         }
@@ -591,6 +633,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Allow csrf to be enabled and disabled
+     *
+     * @todo This method shouldn't be public
+     *
+     * @param boolean $boolean
      */
     public function setEnabledCsrf($boolean = true)
     {
@@ -636,9 +682,26 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setFieldValue($key, $value)
     {
-        $this->fieldValues[$key] = $value;
+        $this->getSectionService()->setFieldValue($key, $value);
     }
 
+    /**
+     * Getter for field values
+     *
+     * @return array
+     */
+    protected function getFieldValues()
+    {
+        return $this->getSectionService()->getFieldValues();
+    }
+
+    /**
+     * Normalise form name
+     *
+     * @param string $name
+     * @param boolean $ucFirst
+     * @return string
+     */
     protected function normaliseFormName($name, $ucFirst = false)
     {
         $name = str_replace([' ', '_'], '-', $name);
@@ -653,9 +716,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * @param $type
+     * Get form class
+     *
+     * @todo Turn this into a proper service/factory for forms
+     *
+     * @param string $type
      * @return \Zend\Form\Form
-     * @TO-DO Turn this into a proper service/factory for forms
      */
     protected function getFormClass($type)
     {
@@ -672,8 +738,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Gets a from from either a built or custom form config.
-     * @param type $type
-     * @return type
+     *
+     * @param string $type
+     * @return \Zend\Form\Form
      */
     protected function getForm($type)
     {
@@ -693,11 +760,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $form;
     }
 
-    protected function getFormGenerator()
-    {
-        return $this->getServiceLocator()->get('OlcsCustomForm');
-    }
-
+    /**
+     * Alter form before validation
+     *
+     * @NOTE stub method, should be overridden where needed
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
     protected function alterFormBeforeValidation($form)
     {
         return $form;
@@ -705,9 +775,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Method to process posted form data and validate it and process a callback
-     * @param type $form
-     * @param type $callback
-     * @return \Zend\Form
+     *
+     * @todo This method shouldn't be public
+     *
+     * @param \Zend\Form\Form $form
+     * @param callable $callback
+     * @return \Zend\Form\Form
      */
     public function formPost($form, $callback = null, $additionalParams = array())
     {
@@ -719,7 +792,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if ($this->getRequest()->isPost()) {
 
-            $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
+            $data = array_merge((array)$this->getRequest()->getPost(), $this->getFieldValues());
 
             $form->setData($data);
 
@@ -737,14 +810,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                     $validatedData = $data;
                 }
 
-                $params = array_merge(
-                    [
-                        'validData' => $validatedData,
-                        'form' => $form,
-                        'params' => $additionalParams
-                    ],
-                    $this->getCallbackData()
-                );
+                $params = [
+                    'validData' => $validatedData,
+                    'form' => $form,
+                    'params' => $additionalParams
+                ];
 
                 $this->callCallbackIfExists($callback, $params);
             }
@@ -754,21 +824,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Added extra method called after setting form data
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function postSetFormData($form)
-    {
-        return $form;
-    }
-
-    /**
      * Calls the callback function/method if exists.
      *
-     * @param unknown_type $callback
-     * @param unknown_type $params
+     * @todo This method shouldn't be public
+     *
+     * @param callable $callback
+     * @param array $params
      * @throws \Exception
      */
     public function callCallbackIfExists($callback, $params)
@@ -780,16 +841,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         } elseif (!empty($callback)) {
             throw new \Exception('Invalid form callback: ' . $callback);
         }
-    }
-
-    /**
-     * Adds data to the array passed to the formPost callback
-     *
-     * @return array
-     */
-    protected function getCallbackData()
-    {
-        return array();
     }
 
     /**
@@ -813,6 +864,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Create a table form with data
+     *
+     * @todo This method shouldn't be public
      *
      * @param string $name
      * @param array $callbacks
@@ -865,6 +918,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Generate a form with data
      *
+     * @todo This method shouldn't be public
+     *
      * @param string $name
      * @param callable $callback
      * @param mixed $data
@@ -885,40 +940,37 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Disable empty validation
      *
-     * @param object $form
+     * @param \Zend\Form\ElementInterface $form
      */
     private function disableEmptyValidation($form)
     {
-        foreach ($form->getElements() as $key => $element) {
-
-            if (empty($value)) {
-
-                $form->getInputFilter()->get($key)->setAllowEmpty(true);
-                $form->getInputFilter()->get($key)->setValidatorChain(
-                    new ValidatorChain()
-                );
-            }
-        }
-
-        foreach ($form->getFieldsets() as $key => $fieldset) {
-
-            foreach ($fieldset->getElements() as $elementKey => $element) {
+        if ($form instanceof Fieldset) {
+            foreach ($form->getElements() as $key => $element) {
 
                 $value = $element->getValue();
-
                 if (empty($value)) {
-
-                    $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
-                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(
-                        new ValidatorChain()
-                    );
+                    $form->getInputFilter()->get($key)->setAllowEmpty(true);
+                    $form->getInputFilter()->get($key)->setValidatorChain(new ValidatorChain());
                 }
+            }
+
+            foreach ($form->getFieldsets() as $key => $fieldset) {
+                $form = $this->disableEmptyValidation($fieldset);
             }
         }
 
         return $form;
     }
 
+    /**
+     * Process add
+     *
+     * @todo this shouldnt be public, and should live in a service OR we should look at using save instead
+     *
+     * @param array $data
+     * @param string $entityName
+     * @return array
+     */
     public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
@@ -931,6 +983,15 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $result;
     }
 
+    /**
+     * Process edit
+     *
+     * @todo this shouldnt be public, and should live in a service OR we should look at using save instead
+     *
+     * @param array $data
+     * @param string $entityName
+     * @return array
+     */
     public function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
@@ -940,12 +1001,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $this->generateDocument($data);
 
         return $result;
-
     }
 
     /**
      * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
+     *
+     * @todo this needs moving into a service
      *
      * @param array $data
      * @return array
@@ -984,13 +1046,18 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $documentData;
     }
 
+    /**
+     * Trim form fields
+     *
+     * @todo if we move processAdd and processEdit OR use Save instead, we need to remove this
+     *
+     * @param array $data
+     * @return array
+     */
     protected function trimFormFields($data)
     {
-        return $this->trimFields($data, array('csrf', 'submit', 'fields', 'form-actions'));
-    }
+        $unwantedFields = array('csrf', 'submit', 'fields', 'form-actions');
 
-    protected function trimFields($data = array(), $unwantedFields = array())
-    {
         foreach ($unwantedFields as $field) {
             if (isset($data[$field])) {
                 unset($data[$field]);
@@ -1003,6 +1070,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Check if a button was pressed
      *
+     * @todo this method shouldn't be public
+     *
      * @param string $button
      * @return bool
      */
@@ -1014,6 +1083,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $request->isPost() && isset($data['form-actions'][$button]);
     }
 
+    /**
+     * Cancel button listener
+     *
+     * @todo this method shouldn't be public (As it is used as a callback, maybe it should live somewhere else)
+     *
+     * @param MvcEvent $event
+     * @return mixed
+     */
     public function cancelButtonListener(MvcEvent $event)
     {
         $this->setupIndexRoute($event);
@@ -1028,6 +1105,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * This method needs some things.
      *
      * 1. A form element with the name of "cancel"
+     *
+     * @todo same as above
      *
      * @return \Zend\Http\Response
      */
@@ -1048,24 +1127,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function deleteFile($id, $fieldset, $name)
     {
-        $fileDetails = $this->makeRestCall(
-            'Document',
-            'GET',
-            array('id' => $id),
-            array('properties' => array('identifier'))
-        );
-
-        if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
-            if ($this->getUploader()->remove($fileDetails['identifier'])) {
-
-                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
-                $fieldset->remove($name);
-            }
-        }
+        $this->getSectionService()->deleteFile($id, $fieldset, $name);
     }
 
     /**
      * Gets a view model with optional params
+     *
+     * @todo this method shouldn't be public, and shouldn't exist
      *
      * @param array $params
      * @return ViewModel
@@ -1073,52 +1141,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function getView(array $params = null)
     {
         return new ViewModel($params);
-    }
-
-    /**
-     * Disable field validation
-     *
-     * @param \Zend\InputFilter\InputFilter $inputFilter
-     * @return null
-     */
-    protected function disableValidation($inputFilter)
-    {
-        if ($inputFilter instanceof InputFilter) {
-            foreach ($inputFilter->getInputs() as $input) {
-                $this->disableValidation($input);
-            }
-            return;
-        }
-
-        if ($inputFilter instanceof Input) {
-            $inputFilter->setAllowEmpty(true);
-            $inputFilter->setRequired(false);
-            $inputFilter->setValidatorChain(new ValidatorChain());
-        }
-    }
-
-    /**
-     * Disable all elements recursively
-     *
-     * @param \Zend\Form\Fieldset $elements
-     * @return null
-     */
-    protected function disableElements($elements)
-    {
-        if ($elements instanceof Fieldset) {
-            foreach ($elements->getElements() as $element) {
-                $this->disableElements($element);
-            }
-
-            foreach ($elements->getFieldsets() as $fieldset) {
-                $this->disableElements($fieldset);
-            }
-            return;
-        }
-
-        if ($elements instanceof Element) {
-            $elements->setAttribute('disabled', 'disabled');
-        }
     }
 
     /**
@@ -1219,6 +1241,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Process save when we have a table form
      *
+     * @todo Can't move this method to the service yet due to dependencies
+     *
      * @param array $data
      */
     protected function processSaveCrud($data)
@@ -1306,6 +1330,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get the namespace parts
+     *
+     * @todo this method shouldn't be public
      *
      * @return array
      */
@@ -1601,5 +1627,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $this->getSectionService()->delete($id, $service);
+    }
+
+    /**
+     * Added extra method called after setting form data
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function postSetFormData($form)
+    {
+        return $this->getSectionService()->postSetFormData($form);
     }
 }

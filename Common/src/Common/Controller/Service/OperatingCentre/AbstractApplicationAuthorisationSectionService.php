@@ -129,7 +129,9 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
             );
         }
 
-        $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $this->url());
+        $url  = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
+
+        $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $url);
 
         $this->processFileDeletions(array('advertisements' => array('file' => 'deleteFile')), $form);
     }
