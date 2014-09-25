@@ -165,7 +165,7 @@ class PeopleController extends YourBusinessController
         $translator = $this->getServiceLocator()->get('translator');
         $guidance = $form->get('guidance')->get('guidance');
 
-        switch ($org['type']) {
+        switch ($org['type']['id']) {
             case self::ORG_TYPE_REGISTERED_COMPANY:
                 $table->setVariable(
                     'title',
@@ -200,7 +200,7 @@ class PeopleController extends YourBusinessController
                 break;
         }
 
-        if ($org['type'] != self::ORG_TYPE_OTHER) {
+        if ($org['type']['id'] != self::ORG_TYPE_OTHER) {
             $table->removeColumn('position');
         }
 
