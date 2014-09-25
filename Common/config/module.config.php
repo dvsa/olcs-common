@@ -110,7 +110,8 @@ return array(
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
-            'assetPath' => 'Common\View\Helper\AssetPath'
+            'assetPath' => 'Common\View\Helper\AssetPath',
+            'addTags' => 'Common\View\Helper\AddTags'
         )
     ),
     'view_manager' => array(
