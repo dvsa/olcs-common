@@ -19,7 +19,7 @@ class BookmarkFactory
         // so we need a bit of extra muscle
         $className = str_replace("_", "", $filter->filter($token));
 
-        $class = '\\Common\\Service\\Document\\Bookmark\\' . $className;
+        $class = __NAMESPACE__ . '\\' . $className;
 
         if (class_exists($class)) {
             /**
