@@ -94,6 +94,8 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
         )
     );
 
+    protected $inlineScripts = ['convictions-penalties'];
+
     /**
      * Render the section form
      *

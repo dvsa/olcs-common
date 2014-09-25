@@ -12,6 +12,7 @@ $(function() {
 
   OLCS.cascadeForm({
     form: "form",
+    cascade: false,
     rulesets: {
       "table-licences-current": checked("Current", "HasLicence"),
       "table-licences-applied": checked("Applied", "HadLicence"),

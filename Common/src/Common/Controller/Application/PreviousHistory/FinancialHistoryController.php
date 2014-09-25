@@ -57,6 +57,8 @@ class FinancialHistoryController extends PreviousHistoryController
         )
     );
 
+    protected $inlineScripts = ['financial-history'];
+
     /**
      * Render the section form
      *
