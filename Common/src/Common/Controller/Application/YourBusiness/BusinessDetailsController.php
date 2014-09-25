@@ -270,6 +270,8 @@ class BusinessDetailsController extends YourBusinessController
             } else {
                 $fieldset->remove('tradingNamesReview');
             }
+        } else {
+            $fieldset->remove('tradingNamesReview');
         }
 
         return $form;
