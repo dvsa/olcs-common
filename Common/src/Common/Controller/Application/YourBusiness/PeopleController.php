@@ -106,7 +106,7 @@ class PeopleController extends YourBusinessController
         );
 
         $org=$applicationData['licence']['organisation']['id'];
-        
+
         $bundle = array(
             'properties' => array('position'),
             'children' => array(
