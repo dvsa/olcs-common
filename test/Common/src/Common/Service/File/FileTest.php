@@ -22,7 +22,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             'name' => 'Bob',
             'type' => 'image/png',
             'tmp_name' => '/sdflkajdsf/asdfjasldf',
-            'size' => 45646
+            'size' => 45646,
+            'content' => 'foo',
+            'meta' => [1]
         );
 
         $expected = array(
@@ -30,7 +32,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             'name' => 'Bob',
             'type' => 'image/png',
             'path' => '/sdflkajdsf/asdfjasldf',
-            'size' => 45646
+            'size' => 45646,
+            'content' => 'foo',
+            'meta' => [1]
         );
 
         $file = new File();
@@ -52,7 +56,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             'name' => 'Bob',
             'type' => 'image/png',
             'path' => '/sdflkajdsf/asdfjasldf',
-            'size' => 45646
+            'size' => 45646,
+            'content' => null,
+            'meta' => []
         );
 
         $file = new File();

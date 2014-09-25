@@ -138,11 +138,30 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
-        'YourBusiness/BusinessDetails' => 'application_your-business_business_details-subsidiaries',
-        'YourBusiness/People' => 'application_your-business_people_in_form',
-        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
-        'VehicleSafety/Safety' => 'safety-inspection-providers',
-        'OperatingCentres/Authorisation' => 'authorisation_in_form'
+        'YourBusiness/BusinessDetails' => array(
+            'table' => 'application_your-business_business_details-subsidiaries'
+        ),
+        'YourBusiness/People' => array(
+            'table' => 'application_your-business_people_in_form'
+        ),
+        'PreviousHistory/ConvictionsPenalties' => array(
+            'table' => 'criminalconvictions'
+        ),
+        'PreviousHistory/LicenceHistory' => array(
+            'table-licences-current' => 'previous_licences_current',
+            'table-licences-applied' => 'previous_licences_applied',
+            'table-licences-refused' => 'previous_licences_refused',
+            'table-licences-revoked' => 'previous_licences_revoked',
+            'table-licences-public-inquiry' => 'previous_licences_public_inquiry',
+            'table-licences-disqualified' => 'previous_licences_disqualified',
+            'table-licences-held' => 'previous_licences_held'
+        ),
+        'VehicleSafety/Safety' => array(
+            'table' => 'safety-inspection-providers'
+        ),
+        'OperatingCentres/Authorisation' => array(
+            'table' => 'authorisation_in_form'
+        )
     );
 
     /**
@@ -492,10 +511,18 @@ class SummaryController extends ReviewDeclarationsController
 
         // we can use this value to map back to the controller which
         // knows how to populate its data
-        $section = array_search(
-            $table,
-            $this->tableConfigs
-        );
+        // (this needs to know about subsections)
+        $section=false;
+        foreach ($this->tableConfigs as $controllerName => $controllerTableConfig) {
+            $sectionSearch = array_search(
+                $table,
+                $controllerTableConfig
+            );
+
+            if ( $sectionSearch ) {
+                $section=$controllerName;
+            }
+        }
 
         $controller = $this->getInvokable($section, 'getSummaryTableData');
 
@@ -529,7 +556,8 @@ class SummaryController extends ReviewDeclarationsController
                 $this->summarySections[] = $summarySection;
 
                 if ($fieldset->has('table')) {
-                    $this->formTables[$name] = $this->tableConfigs[$summarySection];
+                    $originalName = $fieldset->getAttribute('unmappedName');
+                    $this->formTables[$name] = $this->tableConfigs[$summarySection][$originalName];
                 }
             }
         }

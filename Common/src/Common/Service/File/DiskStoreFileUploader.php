@@ -21,7 +21,7 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Upload the file
      */
-    public function upload()
+    public function upload($namespace = null)
     {
         $file = $this->getFile();
         $key = $this->generateKey();
@@ -31,10 +31,12 @@ class DiskStoreFileUploader extends AbstractFileUploader
 
         if (!$this->moveFile($file->getPath(), $newPath)) {
             throw new \Exception('Unable to move uploaded file');
-        } else {
-            $file->setPath($newPath);
-            $file->setIdentifier($key);
         }
+
+        $file->setPath($newPath);
+        $file->setIdentifier($key);
+
+        return $file;
     }
 
     /**
@@ -74,7 +76,7 @@ class DiskStoreFileUploader extends AbstractFileUploader
         $headers->addHeaders(
             array(
                 'Content-Disposition' => 'attachment; filename="' . $name . '"',
-                'Content-Tyoe' => 'application/octet-stream',
+                'Content-Type' => 'application/octet-stream',
                 'Content-Length' => filesize($path)
             )
         );
@@ -93,15 +95,5 @@ class DiskStoreFileUploader extends AbstractFileUploader
         $path = rtrim($location, '/') . '/' . $identifier;
 
         return unlink($path);
-    }
-
-    /**
-     * Generate a random sha
-     *
-     * @return string
-     */
-    private function generateKey()
-    {
-        return sha1(microtime() . uniqid());
     }
 }

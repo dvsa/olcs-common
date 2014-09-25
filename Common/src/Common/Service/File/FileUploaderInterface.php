@@ -47,7 +47,7 @@ interface FileUploaderInterface extends ServiceLocatorAwareInterface
     /**
      * Process the file upload
      */
-    public function upload();
+    public function upload($namespace = null);
 
     /**
      * Process the file download

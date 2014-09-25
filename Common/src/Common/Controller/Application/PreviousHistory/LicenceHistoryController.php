@@ -94,6 +94,29 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
+     * Holds the actionDataBundle
+     *
+     * @var array
+     */
+    public static $tableDataBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'licNo',
+            'holderName',
+            'willSurrender',
+            'purchaseDate',
+            'disqualificationDate',
+            'disqualificationLength'
+        ),
+        'children' => array(
+            'previousLicenceType' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    /**
      * Licence type - current
      */
     const PREV_LICENCE_TYPE_HAS_LICENCE = 'prev_has_licence';
@@ -144,18 +167,26 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Map a table to it's type
+     * Map a table to it's type. This also maps review table types.
      *
      * @var array
      */
-    private $mapTableToType = array(
+    public static $mapTableToType = array(
         'table-licences-current' => self::PREV_LICENCE_TYPE_HAS_LICENCE,
         'table-licences-applied' => self::PREV_LICENCE_TYPE_HAD_LICENCE,
         'table-licences-refused' => self::PREV_LICENCE_TYPE_BEEN_REFUSED,
         'table-licences-revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
         'table-licences-public-inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
         'table-licences-disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
-        'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
+        'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS,
+
+        'previous_licences_current' => self::PREV_LICENCE_TYPE_HAS_LICENCE,
+        'previous_licences_applied' => self::PREV_LICENCE_TYPE_HAD_LICENCE,
+        'previous_licences_refused' => self::PREV_LICENCE_TYPE_BEEN_REFUSED,
+        'previous_licences_revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
+        'previous_licences_public_inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
+        'previous_licences_disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
+        'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
 
     /**
@@ -179,13 +210,25 @@ class LicenceHistoryController extends PreviousHistoryController
      */
     protected function getFormTableData($id, $table)
     {
-        $previousLicenceType = isset($this->mapTableToType[$table]) ? $this->mapTableToType[$table] : null;
+        $tableData=$this->getSummaryTableData($id, $this, $table);
 
-        $data = $this->makeRestCall(
+        return $tableData;
+    }
+
+    /**
+     * Retrieve the relevant table data as we want to render it on the review summary page
+     * Note that as with most controllers this is the same data we want to render on the
+     * normal form page, hence why getFormTableData (declared earlier) simply wraps this
+     */
+    public static function getSummaryTableData($id, $context, $table)
+    {
+        $previousLicenceType = isset(self::$mapTableToType[$table]) ? self::$mapTableToType[$table] : null;
+
+        $data = $context->makeRestCall(
             'PreviousLicence',
             'GET',
             array('application' => $id, 'previousLicenceType' => $previousLicenceType),
-            $this->actionDataBundle
+            self::$tableDataBundle
         );
 
         return $data;

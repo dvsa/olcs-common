@@ -51,6 +51,7 @@ class Module
                 },
                 'Script' => '\Common\Service\Script\ScriptFactory',
                 'Table' => '\Common\Service\Table\TableFactory',
+                'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
                 'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
@@ -91,6 +92,9 @@ class Module
 
                     return $log;
                 }
+            ),
+            'invokables' => array(
+                'Document' => '\Common\Service\Document\Document',
             ),
             'aliases' => array(
                 'translator' => 'MvcTranslator',
