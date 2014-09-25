@@ -279,8 +279,8 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.fao' => 'Contractor\'s name or person\'s full name if performed
         internally',
     'application_vehicle-safety_safety-sub-action.data.isExternal' => 'Who will carry out the safety inspections?',
-    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'Yourself or another employee of the
-        business holding the operator\'s licence',
+    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'An owner or employee of the
+        business',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'An external contractor',
     'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm there are suitable
         arrangements in place to keep the vehicles in a fit and serviceable condition at all times',
