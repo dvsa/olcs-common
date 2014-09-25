@@ -98,12 +98,14 @@ class PeopleController extends YourBusinessController
      */
     public static function getSummaryTableData($applicationId, $context, $tableName)
     {
-        $org = $context->makeRestCall(
+        $applicationData = $context->makeRestCall(
             'Application',
             'GET',
             array('id' => $applicationId),
             self::$applicationBundle
         );
+
+        $org=$applicationData['organisation']['id'];
 
         $bundle = array(
             'properties' => array('position'),
