@@ -22,6 +22,8 @@ class ApplicationController extends AbstractJourneyController
 
     /**
      * Application statuses
+     *
+     * @todo Start using the ApplicationSectionService constants
      */
     const APPLICATION_STATUS_NOT_YET_SUBMITTED = 'apsts_not_submitted';
     const APPLICATION_STATUS_CURTAILED = 'apsts_curtailed';
@@ -41,12 +43,14 @@ class ApplicationController extends AbstractJourneyController
 
     /**
      * Goods or PSV keys
+     * @todo Start using the LicenceSectionService constants
      */
     const LICENCE_CATEGORY_GOODS_VEHICLE = 'lcat_gv';
     const LICENCE_CATEGORY_PSV = 'lcat_psv';
 
     /**
      * Licence types keys
+     * @todo Start using the LicenceSectionService constants
      */
     const LICENCE_TYPE_RESTRICTED = 'ltyp_r';
     const LICENCE_TYPE_STANDARD_INTERNATIONAL = 'ltyp_si';

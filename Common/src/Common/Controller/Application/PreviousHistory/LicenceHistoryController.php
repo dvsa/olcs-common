@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
+use Common\Controller\Traits;
+
 /**
  * LicenceHistory Controller
  *
@@ -14,6 +16,8 @@ namespace Common\Controller\Application\PreviousHistory;
  */
 class LicenceHistoryController extends PreviousHistoryController
 {
+    use Traits\GenericIndexAction;
+
     /**
      * Set the service for the "Free" save behaviour
      *
@@ -153,16 +157,6 @@ class LicenceHistoryController extends PreviousHistoryController
         'table-licences-disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
         'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Save method

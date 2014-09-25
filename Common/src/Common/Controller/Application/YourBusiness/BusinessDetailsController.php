@@ -9,6 +9,8 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
+
 /**
  * BusinessDetails Controller
  *
@@ -18,6 +20,11 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class BusinessDetailsController extends YourBusinessController
 {
+    use Traits\GenericIndexAction,
+        Traits\GenericAddAction,
+        Traits\GenericEditAction,
+        Traits\GenericDeleteAction;
+
     /**
      * Section service
      *
@@ -142,16 +149,6 @@ class BusinessDetailsController extends YourBusinessController
     protected $formTables = array(
         'table' => 'application_your-business_business_details-subsidiaries'
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Save data
@@ -485,32 +482,6 @@ class BusinessDetailsController extends YourBusinessController
         }
 
         return $form;
-    }
-
-    /**
-     * Add subsidiary company
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit subsidiary company
-     */
-    public function editAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete subsidiary company
-     *
-     * @return Response
-     */
-    public function deleteAction()
-    {
-        return $this->delete();
     }
 
     /**

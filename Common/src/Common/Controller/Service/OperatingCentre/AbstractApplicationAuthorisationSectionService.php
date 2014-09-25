@@ -1,23 +1,21 @@
 <?php
 
 /**
- * Generic Application Authorisation Section
- *
- * Internal/External - Application Section
+ * Abstract Application Authorisation Section Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\OperatingCentre;
+namespace Common\Controller\Service\OperatingCentre;
+
+use Zend\Form\Form;
 
 /**
- * Generic Application Authorisation Section
+ * Abstract Application Authorisation Section Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait GenericApplicationAuthorisationSection
+abstract class AbstractApplicationAuthorisationSectionService extends AbstractAuthorisationSectionService
 {
-    use GenericAuthorisationSection;
-
     /**
      * Category Service
      *
@@ -30,21 +28,28 @@ trait GenericApplicationAuthorisationSection
      *
      * @var string
      */
-    protected $sharedActionService = 'ApplicationOperatingCentre';
+    protected $actionService = 'ApplicationOperatingCentre';
+
+    /**
+     * Action Identifier
+     *
+     * @var string
+     */
+    protected $actionIdentifier = 'application';
 
     /**
      * Holds the section service
      *
      * @var string
      */
-    protected $sharedService = 'Application';
+    protected $service = 'Application';
 
     /**
      * Holds the data bundle
      *
      * @var array
      */
-    protected $sharedDataBundle = array(
+    protected $dataBundle = array(
         'properties' => array(
             'id',
             'version',
@@ -107,63 +112,11 @@ trait GenericApplicationAuthorisationSection
     );
 
     /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Add operating centre
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Retrieve the relevant table data as we want to render it on the review summary page
-     * Note that as with most controllers this is the same data we want to render on the
-     * normal form page, hence why getFormTableData (declared later) simply wraps this
-     */
-    protected static function getSummaryTableData($id, $context, $tableName)
-    {
-        $data = $context->makeRestCall(
-            'ApplicationOperatingCentre',
-            'GET',
-            array('application' => $id),
-            static::$tableDataBundle
-        );
-
-        return static::formatSummaryTableData($data);
-    }
-
-    /**
-     * Get operating centres count
-     *
-     * @return int
-     */
-    protected function getOperatingCentresCount()
-    {
-        $operatingCentres = $this->makeRestCall(
-            $this->sharedActionService,
-            'GET',
-            array('application' => $this->getIdentifier()),
-            $this->ocCountBundle
-        );
-
-        return $operatingCentres['Count'];
-    }
-
-    /**
      * Alter action form for Goods licences
      *
      * @param \Zend\Form\Form $form
      */
-    protected function alterActionFormForGoods($form)
+    protected function alterActionFormForGoods(Form $form)
     {
         $this->processFileUploads(array('advertisements' => array('file' => 'processAdvertisementFileUpload')), $form);
 
@@ -239,45 +192,11 @@ trait GenericApplicationAuthorisationSection
     }
 
     /**
-     * Do action save
-     *
-     * @param array $data
-     * @param string $service
-     * @return mixed
-     */
-    protected function doActionSave($data, $service)
-    {
-        return parent::actionSave($data, $service);
-    }
-
-    /**
-     * Alter the form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    protected function alterForm($form)
-    {
-        return $this->doAlterForm($form);
-    }
-
-    /**
-     * Extend the generic process load method
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processLoad($data)
-    {
-        return $this->doProcessLoad($data);
-    }
-
-    /**
-     * Process save crud
+     * Set Traffic Area After Crud Action
      *
      * @param array $data
      */
-    protected function processSaveCrud($data)
+    protected function setTrafficAreaAfterCrudAction($data)
     {
         $action = strtolower($data['table']['action']);
 
@@ -287,26 +206,14 @@ trait GenericApplicationAuthorisationSection
                 : '';
 
             if (empty($trafficArea) && $this->getOperatingCentresCount()) {
-                $this->addWarningMessage('select-traffic-area-error');
-                $this->setCaughtResponse($this->redirect()->toRoute(null, array(), array(), true));
-                return;
+                return false;
             }
 
             if (!empty($trafficArea)) {
-                $this->setTrafficArea($trafficArea);
+                $this->getSectionService('TrafficArea')->setTrafficArea($trafficArea);
             }
         }
 
-        return parent::processSaveCrud($data);
-    }
-
-    /**
-     * Extend the shared alter action form
-     *
-     * @param \Zend\Form\Form $form
-     */
-    protected function alterActionForm($form)
-    {
-        return $this->doAlterActionForm($form);
+        return true;
     }
 }

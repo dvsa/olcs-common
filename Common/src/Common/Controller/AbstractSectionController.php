@@ -20,6 +20,13 @@ use Zend\View\Model\ViewModel;
 abstract class AbstractSectionController extends AbstractController
 {
     /**
+     * Holds the section service name
+     *
+     * @var string
+     */
+    protected $sectionServiceName;
+
+    /**
      * Holds the identifier
      *
      * @var int
@@ -180,6 +187,13 @@ abstract class AbstractSectionController extends AbstractController
         'warning' => array(),
         'success' => array()
     );
+
+    /**
+     * Cache the section services
+     *
+     * @var array
+     */
+    private $sectionServices = array();
 
     /**
      * Get bespoke sub actions
@@ -1069,6 +1083,8 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Format a translation string
      *
+     * @todo Start using the section service version of this method
+     *
      * @param type $format
      * @param type $messages
      * @return type
@@ -1092,6 +1108,8 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Wrap a translated message with the wrapper
      *
+     * @todo Start using the section service version of this method
+     *
      * @param string $wrapper
      * @param string $message
      * @return string
@@ -1104,6 +1122,8 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Translate a message
      *
+     * @todo Start using the section service version of this method
+     *
      * @param string $message
      * @return string
      */
@@ -1115,10 +1135,47 @@ abstract class AbstractSectionController extends AbstractController
     /**
      * Get translator
      *
+     * @todo Start using the section service version of this method
+     *
      * @return \Zend\I18n\Translator\Translator
      */
     protected function getTranslator()
     {
         return $this->getServiceLocator()->get('translator');
+    }
+
+    /**
+     * Return the section service
+     *
+     * @return \Common\Controller\Service\SectionServiceInterface
+     */
+    protected function getSectionService($sectionServiceName = null)
+    {
+        if ($sectionServiceName === null) {
+            $sectionServiceName = $this->getSectionServiceName();
+        }
+
+        if (!isset($this->sectionServices[$sectionServiceName])) {
+            $this->sectionServices[$sectionServiceName] = $this->getServiceLocator()
+                ->get('SectionService')->getSectionService($sectionServiceName);
+
+            $this->sectionServices[$sectionServiceName]->setIdentifier($this->getIdentifier());
+            $this->sectionServices[$sectionServiceName]->setIsAction($this->isAction());
+            $this->sectionServices[$sectionServiceName]->setActionId($this->getActionId());
+            $this->sectionServices[$sectionServiceName]->setActionName($this->getActionname());
+            $this->sectionServices[$sectionServiceName]->setRequest($this->getRequest());
+        }
+
+        return $this->sectionServices[$sectionServiceName];
+    }
+
+    /**
+     * Get section service name
+     *
+     * @return string
+     */
+    protected function getSectionServiceName()
+    {
+        return $this->sectionServiceName;
     }
 }
