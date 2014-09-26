@@ -662,7 +662,7 @@ abstract class AbstractSectionController extends AbstractActionController
             $this->actionData = $this->makeRestCall(
                 $this->getActionService(),
                 'GET',
-                array('id' => $id),
+                $id,
                 $this->getActionDataBundle()
             );
         }

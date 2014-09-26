@@ -251,7 +251,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
         $this->controller->setEnabledCsrf(false);
         $response = $this->controller->indexAction();
 
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**
