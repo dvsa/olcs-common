@@ -185,8 +185,6 @@ class LicenceHistoryController extends PreviousHistoryController
         'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
 
-    protected $inlineScripts = ['licence-history'];
-
     /**
      * Render the section form
      *
