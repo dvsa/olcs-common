@@ -21,8 +21,6 @@ use Zend\View\Model\ViewModel;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\File\FilesSize;
 use Zend\Validator\ValidatorChain;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\DashToCamelCase;
 use Common\Form\Elements\Types\Address;
 
 /**
@@ -599,13 +597,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $name = str_replace([' ', '_'], '-', $name);
 
-        $filter = new DashToCamelCase();
+        $name = $this->getHelperService('StringHelper')->dashToCamel($name);
 
         if (!$ucFirst) {
-            return lcfirst($filter->filter($name));
+            return lcfirst($name);
         }
 
-        return $filter->filter($name);
+        return $name;
     }
 
     /**
@@ -1762,27 +1760,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Convert camel case to dash
+     * Get a helper service
      *
-     * @param string $string
-     * @return string
+     * @param string $service
+     * @return type
      */
-    protected function camelToDash($string)
+    protected function getHelperService($service)
     {
-        $converter = new CamelCaseToDash();
-        return strtolower($converter->filter($string));
-    }
-
-    /**
-     * Convert dash to camel case
-     *
-     * @param string $string
-     * @return string
-     */
-    protected function dashToCamel($string)
-    {
-        $converter = new DashToCamelCase();
-        return $converter->filter($string);
+        return $this->getServiceLocator()->get('HelperService')->getHelperService($service);
     }
 
     /**

@@ -549,8 +549,8 @@ class SummaryController extends ReviewDeclarationsController
             $name = $fieldset->getName();
 
             if (preg_match("/application_([\w-]+)_([\w-]+)-\d+/", $name, $matches)) {
-                $section        = $this->dashToCamel($matches[1]);
-                $subSection     = $this->dashToCamel($matches[2]);
+                $section        = $this->getHelperService('StringHelper')->dashToCamel($matches[1]);
+                $subSection     = $this->getHelperService('StringHelper')->dashToCamel($matches[2]);
                 $summarySection = $section . '/' . $subSection;
 
                 $this->summarySections[] = $summarySection;

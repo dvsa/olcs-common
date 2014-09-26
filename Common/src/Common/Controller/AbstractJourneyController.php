@@ -274,22 +274,10 @@ abstract class AbstractJourneyController extends AbstractSectionController
                 $suffix = '-' . $this->getActionName();
             }
 
-            $this->sectionReference = $this->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
+            $this->sectionReference = $this->getHelperService('StringHelper')->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
         }
 
         return $this->sectionReference;
-    }
-
-    /**
-     * Convert camel case to dash
-     *
-     * @param string $string
-     * @return string
-     */
-    protected function camelToDash($string)
-    {
-        $converter = new CamelCaseToDash();
-        return strtolower($converter->filter($string));
     }
 
     /**
@@ -353,7 +341,7 @@ abstract class AbstractJourneyController extends AbstractSectionController
             $suffix = $this->getSuffixForAction($action);
         }
 
-        return $this->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
+        return $this->getHelperService('StringHelper')->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
     }
 
     /**
@@ -473,7 +461,7 @@ abstract class AbstractJourneyController extends AbstractSectionController
             $section = $this->getSectionName();
             $subSection = $this->getSubSectionName();
 
-            $this->viewName = $this->camelToDash($journey . '/' . $section . '/' . $subSection);
+            $this->viewName = $this->getHelperService('StringHelper')->camelToDash($journey . '/' . $section . '/' . $subSection);
 
             if ($this->isAction()) {
                 $this->viewName .= '-' . $this->getActionName();
@@ -624,7 +612,7 @@ abstract class AbstractJourneyController extends AbstractSectionController
     protected function getSectionLabel($journey, $section, $subSection = null)
     {
         return strtolower(
-            $this->camelToDash($journey . '.' . $section . (!empty($subSection) ? '.' . $subSection : ''))
+            $this->getHelperService('StringHelper')->camelToDash($journey . '.' . $section . (!empty($subSection) ? '.' . $subSection : ''))
         );
     }
 

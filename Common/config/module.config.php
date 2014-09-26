@@ -67,6 +67,7 @@ return array(
         ),
         'factories' => array(
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
+            'HelperService' => '\Common\Service\Helper\HelperServiceFactory',
             'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
