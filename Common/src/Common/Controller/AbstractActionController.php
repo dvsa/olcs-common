@@ -8,26 +8,28 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\Controller;
 
 use Common\Util;
-use Zend\Form\Form;
 use Zend\Mvc\MvcEvent;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
 use Zend\Http\Response;
+use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
-use Zend\Validator\ValidatorChain;
+use Zend\InputFilter\InputFilter;
 use Zend\Validator\File\FilesSize;
+use Zend\Validator\ValidatorChain;
+use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 use Common\Form\Elements\Types\Address;
-use Zend\Form\FormInterface;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
  *
- * @todo Need to move as much business logic as possible into services
- *
  * @author Pelle Wessman <pelle.wessman@valtech.se>
- * @author Michael Cooper <michael.cooper@valtech.co.uk>
+ * @author Michael Cooperr <michael.cooper@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
@@ -38,47 +40,52 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         Util\RestCallTrait,
         Traits\ViewHelperManagerAware;
 
+    private $loggedInUser;
+
     /**
-     * Holds the section service name
+     * onDispatch now populates this with the route for the index of
+     * the controller curently being executed.
+     *
+     * @var array
+     */
+    protected $indexRoute = [];
+
+    /**
+     * The current page's main title
      *
      * @var string
      */
-    protected $sectionServiceName;
+    protected $pageTitle = null;
 
     /**
-     * Holds the identifier
-     *
-     * @var int
-     */
-    protected $identifier;
-
-    /**
-     * Identifier name
+     * The current page's sub title, if applicable
      *
      * @var string
      */
-    protected $identifierName = 'id';
+    protected $pageSubTitle = null;
 
     /**
-     * Holds the isAction
-     *
-     * @var boolean
-     */
-    protected $isAction;
-
-    /**
-     * Holds the action name
+     * The current page's extra layout, over and above the
+     * standard base template
      *
      * @var string
      */
-    private $actionName;
+    protected $pageLayout = null;
 
     /**
-     * Holds the action id
+     * Holds any inline scripts for the current page
      *
-     * @var int
+     * @var array
      */
-    protected $actionId;
+    protected $inlineScripts = [];
+
+    protected $enableCsrf = true;
+
+    protected $validateForm = true;
+
+    protected $persist = true;
+
+    private $fieldValues = array();
 
     /**
      * Holds the caught response
@@ -86,6 +93,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @var mixed
      */
     protected $caughtResponse = null;
+
+    /**
+     * Holds the loaded data
+     *
+     * @var array
+     */
+    protected $loadedData;
 
     /**
      * Holds the layout
@@ -128,62 +142,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected $formTables;
 
-    /**
-     * Cache the section services
-     *
-     * @var array
-     */
-    private $sectionServices = array();
-
-    /**
-     * onDispatch now populates this with the route for the index of
-     * the controller curently being executed.
-     *
-     * @var array
-     */
-    protected $indexRoute = [];
-
-    /**
-     * The current page's main title
-     *
-     * @var string
-     */
-    protected $pageTitle = null;
-
-    /**
-     * The current page's sub title, if applicable
-     *
-     * @var string
-     */
-    protected $pageSubTitle = null;
-
-    /**
-     * The current page's extra layout, over and above the
-     * standard base template
-     *
-     * @var string
-     */
-    protected $pageLayout = null;
-
-    /**
-     * Holds any inline scripts for the current page
-     *
-     * @var array
-     */
-    protected $inlineScripts = [];
-
-    private $fieldValues = [];
-    private $persist = true;
-    protected $enableCsrf = true;
-    protected $validateForm = true;
-
-    private $loggedInUser;
+    protected $sectionServiceName;
+    protected $sectionServices = array();
 
     /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
-    public function onDispatch(MvcEvent $e)
+    public function onDispatch(\Zend\Mvc\MvcEvent $e)
     {
         $this->setupIndexRoute($e);
 
@@ -194,9 +160,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Sets up the index route array.
      *
+     * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
      */
-    private function setupIndexRoute(MvcEvent $e)
+    public function setupIndexRoute(\Zend\Mvc\MvcEvent $e)
     {
         if (empty($this->indexRoute)) {
             $this->indexRoute = [
@@ -209,7 +176,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Olcs specific onDispatch method.
      */
-    private function preOnDispatch()
+    public function preOnDispatch()
     {
         $response = $this->getResponse();
         $headers = $response->getHeaders();
@@ -223,8 +190,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Does what it says on the tin.
      *
-     * @todo this shouldn't be public
-     *
+     * @codeCoverageIgnore
      * @return mixed
      */
     public function redirectToIndex()
@@ -234,10 +200,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Set navigation for breadcrumb
-     *
-     * @todo this shouldn't be public
-     *
-     * @param array $navRoutes
+     * @param type $label
+     * @param type $params
      */
     public function setBreadcrumb($navRoutes = array())
     {
@@ -252,9 +216,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get all request params from the query string and route and send back the required ones
-     *
-     * @todo this shouldn't be public
-     *
      * @param type $keys
      * @return type
      */
@@ -270,13 +231,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $params;
     }
 
-    /**
-     * Get all params
-     *
-     * @todo this shouldn't be public
-     *
-     * @return type
-     */
     public function getAllParams()
     {
         $getParams = array_merge(
@@ -398,8 +352,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Build a table from config and results, and return the table object
      *
-     * @todo This method shouldn't be public
-     *
      * @param string $table
      * @param array $results
      * @param array $data
@@ -417,8 +369,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Return a new view model
      *
-     * @todo This method shouldn't be public, and shouldn't exist
-     *
      * @return \Zend\View\Model\ViewModel
      */
     public function getViewModel($params = array())
@@ -428,8 +378,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get url from route
-     *
-     * @todo This method shouldn't be public, and shouldn't exist
      *
      * @param string $route
      * @return string
@@ -441,8 +389,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Wraps the redirect()->toRoute to help with unit testing
-     *
-     * @todo This method shouldn't be public, and shouldn't exist
      *
      * @param string $route
      * @param array $params
@@ -458,8 +404,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Get param from route
      *
-     * @todo This method shouldn't be public, and shouldn't exist
-     *
      * @param string $name
      * @return string
      */
@@ -471,8 +415,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Get param from post
      *
-     * @todo This method shouldn't be public, and shouldn't exist
-     *
      * @param string $name
      * @return string
      */
@@ -481,46 +423,24 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->params()->fromPost($name);
     }
 
-    /**
-     * Get logged in user
-     *
-     * @todo This method shouldn't be public
-     *
-     * @return int
-     */
     public function getLoggedInUser()
     {
         return $this->loggedInUser;
     }
 
-    /**
-     * Set logged in user
-     *
-     * @todo This method shouldn't be public
-     *
-     * @param int $id
-     * @return \Common\Controller\AbstractActionController
-     */
     public function setLoggedInUser($id)
     {
         $this->loggedInUser = $id;
-
         return $this;
     }
 
     /**
      * Get uploader
      *
-     * @todo This method shouldn't be public
-     *
      * @return object
      */
     public function getUploader()
     {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getUploader();
-        }
-
         return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 
@@ -627,13 +547,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $this->inlineScripts;
     }
 
-    /**
-     * Attach default listeneers
-     */
     protected function attachDefaultListeners()
     {
         parent::attachDefaultListeners();
-
         if ($this instanceof CrudInterface) {
             $this->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, array($this, 'cancelButtonListener'), 100);
         }
@@ -641,10 +557,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Allow csrf to be enabled and disabled
-     *
-     * @todo This method shouldn't be public
-     *
-     * @param boolean $boolean
      */
     public function setEnabledCsrf($boolean = true)
     {
@@ -668,25 +580,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setPersist($persist = true)
     {
-        if ($this->getSectionServiceName() !== null) {
-            $this->getSectionService()->setPersist($persist);
-        } else {
-            $this->persist = $persist;
-        }
-    }
-
-    /**
-     * Get persist
-     *
-     * @return boolean
-     */
-    protected function getPersist()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getPersist();
-        }
-
-        return $this->persist;
+        $this->persist = $persist;
     }
 
     /**
@@ -698,34 +592,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setFieldValue($key, $value)
     {
-        if ($this->getSectionServiceName() !== null) {
-            $this->getSectionService()->setFieldValue($key, $value);
-        } else {
-            $this->fieldValues[$key] = $value;
-        }
+        $this->fieldValues[$key] = $value;
     }
 
-    /**
-     * Getter for field values
-     *
-     * @return array
-     */
-    protected function getFieldValues()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getFieldValues();
-        }
-
-        return $this->fieldValues;
-    }
-
-    /**
-     * Normalise form name
-     *
-     * @param string $name
-     * @param boolean $ucFirst
-     * @return string
-     */
     protected function normaliseFormName($name, $ucFirst = false)
     {
         $name = str_replace([' ', '_'], '-', $name);
@@ -740,12 +609,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Get form class
-     *
-     * @todo Turn this into a proper service/factory for forms
-     *
-     * @param string $type
+     * @param $type
      * @return \Zend\Form\Form
+     * @TO-DO Turn this into a proper service/factory for forms
      */
     protected function getFormClass($type)
     {
@@ -762,9 +628,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Gets a from from either a built or custom form config.
-     *
-     * @param string $type
-     * @return \Zend\Form\Form
+     * @param type $type
+     * @return type
      */
     protected function getForm($type)
     {
@@ -787,8 +652,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Process the postcode lookup functionality
      *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
+     * @param Form $form
+     * @return Form
      */
     protected function processPostcodeLookup($form)
     {
@@ -797,6 +662,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $post = array();
 
         if ($request->isPost()) {
+
             $post = (array)$request->getPost();
         }
 
@@ -814,7 +680,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 if (isset($post[$name]['searchPostcode']['search'])
                     && !empty($post[$name]['searchPostcode']['search'])) {
 
-                    $this->setPersist(false);
+                    $this->persist = false;
 
                     $postcode = trim($post[$name]['searchPostcode']['postcode']);
 
@@ -847,7 +713,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 } elseif (isset($post[$name]['searchPostcode']['select'])
                     && !empty($post[$name]['searchPostcode']['select'])) {
 
-                    $this->setPersist(false);
+                    $this->persist = false;
 
                     $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
 
@@ -855,7 +721,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
                     $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
 
-                    $this->setFieldValue($name, array_merge($post[$name], $addressDetails));
+                    $this->fieldValues[$name] = array_merge($post[$name], $addressDetails);
 
                 } else {
 
@@ -872,46 +738,26 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $form;
     }
 
-    /**
-     * Get Addresses For Postcode
-     *
-     * @param string $postcode
-     * @return array
-     */
-    private function getAddressesForPostcode($postcode)
-    {
-        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
-    }
-
-    /**
-     * Get address for uprn
-     *
-     * @param string $uprn
-     * @return array
-     */
-    private function getAddressForUprn($uprn)
-    {
-        return $this->sendGet('postcode\address', array('id' => $uprn), true);
-    }
-
-    /**
-     * Get address service
-     *
-     * @return object
-     */
-    private function getAddressService()
+    protected function getAddressService()
     {
         return $this->getServiceLocator()->get('address');
     }
 
-    /**
-     * Alter form before validation
-     *
-     * @NOTE stub method, should be overridden where needed
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
+    protected function getAddressForUprn($uprn)
+    {
+        return $this->sendGet('postcode\address', array('id' => $uprn), true);
+    }
+
+    protected function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
+    }
+
+    protected function getFormGenerator()
+    {
+        return $this->getServiceLocator()->get('OlcsCustomForm');
+    }
+
     protected function alterFormBeforeValidation($form)
     {
         return $form;
@@ -919,17 +765,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Method to process posted form data and validate it and process a callback
-     *
-     * @todo This method shouldn't be public
-     *
-     * @param \Zend\Form\Form $form
-     * @param callable $callback
-     * @return \Zend\Form\Form
+     * @param type $form
+     * @param type $callback
+     * @return \Zend\Form
      */
     public function formPost($form, $callback = null, $additionalParams = array())
     {
         if (!$this->enableCsrf) {
-            $form->getInputFilter()->remove('csrf');
             $form->remove('csrf');
         }
 
@@ -937,7 +779,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if ($this->getRequest()->isPost()) {
 
-            $data = array_merge((array)$this->getRequest()->getPost(), $this->getFieldValues());
+            $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
 
             $form->setData($data);
 
@@ -947,7 +789,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
              * validateForm is true by default, we set it to false if we want to continue processing the form without
              * validation.
              */
-            if (!$this->validateForm || ($this->getPersist() && $form->isValid())) {
+            if (!$this->validateForm || ($this->persist && $form->isValid())) {
 
                 if ($this->validateForm) {
                     $validatedData = $form->getData();
@@ -955,11 +797,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                     $validatedData = $data;
                 }
 
-                $params = [
-                    'validData' => $validatedData,
-                    'form' => $form,
-                    'params' => $additionalParams
-                ];
+                $params = array_merge(
+                    [
+                        'validData' => $validatedData,
+                        'form' => $form,
+                        'params' => $additionalParams
+                    ],
+                    $this->getCallbackData()
+                );
 
                 $this->callCallbackIfExists($callback, $params);
             }
@@ -969,12 +814,21 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Added extra method called after setting form data
+     *
+     * @param Form $form
+     * @return Form
+     */
+    protected function postSetFormData($form)
+    {
+        return $form;
+    }
+
+    /**
      * Calls the callback function/method if exists.
      *
-     * @todo This method shouldn't be public
-     *
-     * @param callable $callback
-     * @param array $params
+     * @param unknown_type $callback
+     * @param unknown_type $params
      * @throws \Exception
      */
     public function callCallbackIfExists($callback, $params)
@@ -986,6 +840,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         } elseif (!empty($callback)) {
             throw new \Exception('Invalid form callback: ' . $callback);
         }
+    }
+
+    /**
+     * Adds data to the array passed to the formPost callback
+     *
+     * @return array
+     */
+    protected function getCallbackData()
+    {
+        return array();
     }
 
     /**
@@ -1009,8 +873,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Create a table form with data
-     *
-     * @todo This method shouldn't be public
      *
      * @param string $name
      * @param array $callbacks
@@ -1063,8 +925,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Generate a form with data
      *
-     * @todo This method shouldn't be public
-     *
      * @param string $name
      * @param callable $callback
      * @param mixed $data
@@ -1085,27 +945,33 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Disable empty validation
      *
-     * @param \Zend\Form\ElementInterface $form
+     * @param object $form
      */
     private function disableEmptyValidation($form)
     {
         foreach ($form->getElements() as $key => $element) {
 
-            $value = $element->getValue();
             if (empty($value)) {
+
                 $form->getInputFilter()->get($key)->setAllowEmpty(true);
-                $form->getInputFilter()->get($key)->setValidatorChain(new ValidatorChain());
+                $form->getInputFilter()->get($key)->setValidatorChain(
+                    new ValidatorChain()
+                );
             }
         }
 
         foreach ($form->getFieldsets() as $key => $fieldset) {
+
             foreach ($fieldset->getElements() as $elementKey => $element) {
 
                 $value = $element->getValue();
 
                 if (empty($value)) {
+
                     $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
-                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(new ValidatorChain());
+                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(
+                        new ValidatorChain()
+                    );
                 }
             }
         }
@@ -1113,15 +979,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $form;
     }
 
-    /**
-     * Process add
-     *
-     * @todo this shouldnt be public, and should live in a service OR we should look at using save instead
-     *
-     * @param array $data
-     * @param string $entityName
-     * @return array
-     */
     public function processAdd($data, $entityName)
     {
         $data = $this->trimFormFields($data);
@@ -1134,15 +991,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $result;
     }
 
-    /**
-     * Process edit
-     *
-     * @todo this shouldnt be public, and should live in a service OR we should look at using save instead
-     *
-     * @param array $data
-     * @param string $entityName
-     * @return array
-     */
     public function processEdit($data, $entityName)
     {
         $data = $this->trimFormFields($data);
@@ -1152,13 +1000,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $this->generateDocument($data);
 
         return $result;
+
     }
 
     /**
      * Method to trigger generation of a document providing a generate checkbox
      * is found in $data
-     *
-     * @todo this needs moving into a service
      *
      * @param array $data
      * @return array
@@ -1166,6 +1013,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function generateDocument($data = array())
     {
+
         $documentData = [];
         if (isset($data['document']['generate']) && $data['document']['generate'] == '1') {
 
@@ -1197,18 +1045,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $documentData;
     }
 
-    /**
-     * Trim form fields
-     *
-     * @todo if we move processAdd and processEdit OR use Save instead, we need to remove this
-     *
-     * @param array $data
-     * @return array
-     */
     protected function trimFormFields($data)
     {
-        $unwantedFields = array('csrf', 'submit', 'fields', 'form-actions');
+        return $this->trimFields($data, array('csrf', 'submit', 'fields', 'form-actions'));
+    }
 
+    protected function trimFields($data = array(), $unwantedFields = array())
+    {
         foreach ($unwantedFields as $field) {
             if (isset($data[$field])) {
                 unset($data[$field]);
@@ -1219,9 +1062,30 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Check if a button was pressed
+     * Find the address fields and process them accordingly
      *
-     * @todo this method shouldn't be public
+     * @param array $data
+     * @return array $data
+     */
+    protected function processAddressData($data, $addressName = 'address')
+    {
+        if (!isset($data['addresses'])) {
+            $data['addresses'] = array();
+        }
+
+        unset($data[$addressName]['searchPostcode']);
+
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
+
+        $data['addresses'][$addressName] = $data[$addressName];
+
+        unset($data[$addressName]);
+
+        return $data;
+    }
+
+    /**
+     * Check if a button was pressed
      *
      * @param string $button
      * @return bool
@@ -1234,14 +1098,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         return $request->isPost() && isset($data['form-actions'][$button]);
     }
 
-    /**
-     * Cancel button listener
-     *
-     * @todo this method shouldn't be public (As it is used as a callback, maybe it should live somewhere else)
-     *
-     * @param MvcEvent $event
-     * @return mixed
-     */
     public function cancelButtonListener(MvcEvent $event)
     {
         $this->setupIndexRoute($event);
@@ -1257,8 +1113,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * 1. A form element with the name of "cancel"
      *
-     * @todo same as above
-     *
      * @return \Zend\Http\Response
      */
     public function checkForCancelButton($buttonName = 'cancel')
@@ -1272,36 +1126,208 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Process file uploads
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileUploads($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getFiles()->toArray();
+
+            return $this->processFileUpload($uploads, $post, $files, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process file deletions
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileDeletions($uploads, $form)
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+
+            return $this->processFileDeletion($uploads, $post, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file upload
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param array $files
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileUpload($uploads, $data, $files, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileUpload(
+                        $callback,
+                        $data[$fieldset],
+                        $files[$fieldset],
+                        $form
+                    );
+
+                } elseif (
+                    isset($data[$fieldset]['file-controls']['upload'])
+                    && !empty($data[$fieldset]['file-controls']['upload'])
+                ) {
+
+                    $this->setPersist(false);
+
+                    $error = $files[$fieldset]['file-controls']['file']['error'];
+
+                    $validator = $this->getFileSizeValidator();
+
+                    if (
+                        $error == UPLOAD_ERR_OK
+                        && !$validator->isValid($files[$fieldset]['file-controls']['file']['tmp_name'])
+                    ) {
+                        $error = UPLOAD_ERR_INI_SIZE;
+                    }
+
+                    $responses[$fieldset] = $error;
+
+                    switch ($error) {
+                        case UPLOAD_ERR_OK:
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $files[$fieldset]['file-controls']['file']
+                            );
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $form->setMessages(
+                                array('__messages__' => array('File was only partially uploaded'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $form->setMessages(
+                                array('__messages__' => array('Please select a file to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $form->setMessages(
+                                array('__messages__' => array('The file was too large to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                        case UPLOAD_ERR_CANT_WRITE:
+                        case UPLOAD_ERR_EXTENSION:
+                            $form->setMessages(
+                                array('__messages__' => array('An unexpected error occurred while uploading the file'))
+                            );
+                            break;
+                    }
+                }
+            }
+        }
+
+        return $responses;
+    }
+
+    /**
+     * Process a single file deletion
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileDeletion($uploads, $data, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileDeletion(
+                        $callback,
+                        $data[$fieldset],
+                        $form
+                    );
+
+                } else {
+
+                    foreach ($form->get('list')->getFieldsets() as $listFieldset) {
+
+                        $name = $listFieldset->getName();
+
+                        if (isset($data[$fieldset]['list'][$name]['remove'])
+                            && !empty($data[$fieldset]['list'][$name]['remove'])) {
+
+                            $this->setPersist(false);
+
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $data[$fieldset]['list'][$name]['id'],
+                                $form->get('list'),
+                                $name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $responses;
+    }
+
+    /**
      * Remove file
      *
      * @param int $id
      */
     protected function deleteFile($id, $fieldset, $name)
     {
-        if ($this->getSectionServiceName() !== null) {
-            $this->getSectionService()->deleteFile($id, $fieldset, $name);
-        } else {
-            $fileDetails = $this->makeRestCall(
-                'Document',
-                'GET',
-                array('id' => $id),
-                array('properties' => array('identifier'))
-            );
+        $fileDetails = $this->makeRestCall(
+            'Document',
+            'GET',
+            array('id' => $id),
+            array('properties' => array('identifier'))
+        );
 
-            if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
-                if ($this->getUploader()->remove($fileDetails['identifier'])) {
+        if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
+            if ($this->getUploader()->remove($fileDetails['identifier'])) {
 
-                    $this->makeRestCall('Document', 'DELETE', array('id' => $id));
-                    $fieldset->remove($name);
-                }
+                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $fieldset->remove($name);
             }
         }
     }
 
+    public function getFileSizeValidator()
+    {
+        return new FilesSize('2MB');
+    }
+
     /**
      * Gets a view model with optional params
-     *
-     * @todo this method shouldn't be public, and shouldn't exist
      *
      * @param array $params
      * @return ViewModel
@@ -1312,13 +1338,49 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Get section service name
+     * Disable field validation
      *
-     * @return string
+     * @param \Zend\InputFilter\InputFilter $inputFilter
+     * @return null
      */
-    protected function getSectionServiceName()
+    protected function disableValidation($inputFilter)
     {
-        return $this->sectionServiceName;
+        if ($inputFilter instanceof InputFilter) {
+            foreach ($inputFilter->getInputs() as $input) {
+                $this->disableValidation($input);
+            }
+            return;
+        }
+
+        if ($inputFilter instanceof Input) {
+            $inputFilter->setAllowEmpty(true);
+            $inputFilter->setRequired(false);
+            $inputFilter->setValidatorChain(new ValidatorChain());
+        }
+    }
+
+    /**
+     * Disable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    protected function disableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->disableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->disableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->setAttribute('disabled', 'disabled');
+        }
     }
 
     /**
@@ -1362,6 +1424,48 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Gets the data map
+     *
+     * @return array
+     */
+    protected function getDataMap()
+    {
+        return $this->dataMap;
+    }
+
+    /**
+     * Getter for data bundle
+     *
+     * @return array
+     */
+    protected function getDataBundle()
+    {
+        return $this->dataBundle;
+    }
+
+    /**
+     * Get the service name
+     *
+     * @return string
+     */
+    protected function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * Get table settings
+     *
+     * This method should be overridden
+     *
+     * @return array
+     */
+    protected function getTableSettings()
+    {
+        return array();
+    }
+
+    /**
      * Check if a form exists
      *
      * @param string $formName
@@ -1384,10 +1488,61 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Complete section and save
+     * Map the data on load
      *
-     * @todo Can't move this to section service just yet due to the dependency on getDataMap and the posibility of save
-     *   being extended
+     * @param array $data
+     * @return array
+     */
+    protected function processLoad($data)
+    {
+        return $data;
+    }
+
+    /**
+     * Delete
+     *
+     * @return Response
+     */
+    protected function delete($id = null, $service = null)
+    {
+        if ($service === null) {
+            $service = $this->getService();
+        }
+
+        if (!empty($id) && !empty($service)) {
+
+            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Save data
+     *
+     * @param array $data
+     * @param string $service
+     * @return array
+     */
+    protected function save($data, $service = null)
+    {
+        $method = 'POST';
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            $method = 'PUT';
+        }
+
+        if (empty($service)) {
+            $service = $this->getService();
+        }
+
+        return $this->makeRestCall($service, $method, $data);
+    }
+
+    /**
+     * Complete section and save
      *
      * @param array $data
      * @return array
@@ -1407,9 +1562,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Process save when we have a table form
+     * Get form tables
      *
-     * @todo Can't move this method to the service yet due to dependencies
+     * @return array
+     */
+    protected function getFormTables()
+    {
+        return $this->formTables;
+    }
+
+    /**
+     * Process save when we have a table form
      *
      * @param array $data
      */
@@ -1471,14 +1634,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 }
 
                 $options = array();
-                $params = array('action' => $routeAction);
+                $params = array(
+                    'action' => $routeAction
+                );
 
                 if (is_array($id) && count($id) === 1) {
                     $id = $id[0];
                 }
 
                 if (is_array($id)) {
-                    $options = array('query' => array('id' => $id));
+                    $options = array(
+                        'query' => array(
+                            'id' => $id
+                        )
+                    );
                 } else {
                     $params['id'] = $id;
                 }
@@ -1497,9 +1666,91 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Get the namespace parts
+     * Save crud data
      *
-     * @todo this method shouldn't be public
+     * @param array $data
+     * @return mixed
+     */
+    protected function saveCrud($data)
+    {
+        return $this->save($data);
+    }
+
+    /**
+     * Load data for the form
+     *
+     * This method should be overridden
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function load($id)
+    {
+        if (empty($this->loadedData)) {
+            $service = $this->getService();
+
+            $result = $this->makeRestCall($service, 'GET', array('id' => $id), $this->getDataBundle());
+
+            if (empty($result)) {
+                $this->setCaughtResponse($this->notFoundAction());
+                return;
+            }
+
+            $this->loadedData = $result;
+        }
+
+        return $this->loadedData;
+    }
+
+    /**
+     * Process the data map for saving
+     *
+     * @param type $data
+     */
+    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
+    {
+        if (empty($map)) {
+            return $oldData;
+        }
+
+        if (isset($map['_addresses'])) {
+
+            foreach ($map['_addresses'] as $address) {
+                $oldData = $this->processAddressData($oldData, $address);
+            }
+        }
+
+        if (isset($map[$section]['mapFrom'])) {
+
+            $data = array();
+
+            foreach ($map[$section]['mapFrom'] as $key) {
+
+                if (isset($oldData[$key])) {
+                    $data = array_merge($data, $oldData[$key]);
+                }
+            }
+
+        } else {
+            $data = array();
+        }
+
+        if (isset($map[$section]['children'])) {
+
+            foreach ($map[$section]['children'] as $child => $options) {
+                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
+            }
+        }
+
+        if (isset($map[$section]['values'])) {
+            $data = array_merge($data, $map[$section]['values']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get the namespace parts
      *
      * @return array
      */
@@ -1508,6 +1759,18 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $controller = get_called_class();
 
         return explode('\\', $controller);
+    }
+
+    /**
+     * Convert camel case to dash
+     *
+     * @param string $string
+     * @return string
+     */
+    protected function camelToDash($string)
+    {
+        $converter = new CamelCaseToDash();
+        return strtolower($converter->filter($string));
     }
 
     /**
@@ -1536,567 +1799,18 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         if (!isset($this->sectionServices[$sectionServiceName])) {
             $this->sectionServices[$sectionServiceName] = $this->getServiceLocator()
                 ->get('SectionService')->getSectionService($sectionServiceName);
-
-            $this->sectionServices[$sectionServiceName]->setIdentifier($this->getIdentifier());
-            $this->sectionServices[$sectionServiceName]->setIsAction($this->isAction());
-            $this->sectionServices[$sectionServiceName]->setActionId($this->getActionId());
-            $this->sectionServices[$sectionServiceName]->setActionName($this->getActionName());
-            $this->sectionServices[$sectionServiceName]->setRequest($this->getRequest());
         }
 
         return $this->sectionServices[$sectionServiceName];
     }
 
     /**
-     * Get the journey identifier
-     *
-     * @return int
-     */
-    protected function getIdentifier()
-    {
-        if (empty($this->identifier)) {
-            $this->identifier = $this->params()->fromRoute($this->getIdentifierName());
-        }
-
-        return $this->identifier;
-    }
-
-    /**
-     * Default method to get the identifier name
+     * Get section service name
      *
      * @return string
      */
-    protected function getIdentifierName()
+    protected function getSectionServiceName()
     {
-        return $this->identifierName;
-    }
-
-    /**
-     * Check if we have a sub action
-     *
-     * @return boolean
-     */
-    protected function isAction()
-    {
-        if (is_null($this->isAction)) {
-            $action = $this->getActionName();
-            $this->isAction = ($action != 'index');
-        }
-
-        return $this->isAction;
-    }
-
-    /**
-     * Getter for action name
-     *
-     * @return string
-     */
-    protected function getActionName()
-    {
-        if (empty($this->actionName)) {
-            $this->actionName = $this->params()->fromRoute('action');
-        }
-
-        return $this->actionName;
-    }
-
-    /**
-     * Get the sub action id
-     *
-     * @return int
-     */
-    protected function getActionId()
-    {
-        if (empty($this->actionId)) {
-            $this->actionId = $this->params()->fromRoute('id');
-
-            $queryIds = $this->params()->fromQuery('id');
-
-            if (empty($this->actionId) && !empty($queryIds)) {
-                $this->actionId = $queryIds;
-            }
-        }
-
-        return $this->actionId;
-    }
-
-    /**
-     * Render the view
-     *
-     * @param ViewModel $view
-     * @return ViewModel
-     */
-    protected function render($view)
-    {
-        return $view;
-    }
-
-    /**
-     * Load data for the form
-     *
-     * This method should be overridden
-     *
-     * @param int $id
-     * @return array
-     */
-    protected function load($id)
-    {
-        if (empty($this->loadedData)) {
-            if ($this->getSectionServiceName() !== null) {
-                $this->loadedData = $this->getSectionService()->load($id);
-            } else {
-
-                $service = $this->getService();
-
-                $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
-
-                $this->loadedData = $result;
-            }
-        }
-
-        if ($this->loadedData === false) {
-            $this->setCaughtResponse($this->notFoundAction());
-            return;
-        }
-
-        return $this->loadedData;
-    }
-
-    /**
-     * Process the data map for saving
-     *
-     * @param type $data
-     */
-    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->processDataMapForSave($oldData, $map, $section);
-        }
-
-        if (empty($map)) {
-            return $oldData;
-        }
-
-        if (isset($map['_addresses'])) {
-            foreach ($map['_addresses'] as $address) {
-                $oldData = $this->processAddressData($oldData, $address);
-            }
-        }
-
-        $data = array();
-        if (isset($map[$section]['mapFrom'])) {
-            foreach ($map[$section]['mapFrom'] as $key) {
-                if (isset($oldData[$key])) {
-                    $data = array_merge($data, $oldData[$key]);
-                }
-            }
-        }
-
-        if (isset($map[$section]['children'])) {
-            foreach ($map[$section]['children'] as $child => $options) {
-                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
-            }
-        }
-
-        if (isset($map[$section]['values'])) {
-            $data = array_merge($data, $map[$section]['values']);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Find the address fields and process them accordingly
-     *
-     * @param array $data
-     * @return array $data
-     */
-    protected function processAddressData($data, $addressName = 'address')
-    {
-        if (!isset($data['addresses'])) {
-            $data['addresses'] = array();
-        }
-
-        unset($data[$addressName]['searchPostcode']);
-
-        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
-
-        $data['addresses'][$addressName] = $data[$addressName];
-
-        unset($data[$addressName]);
-
-        return $data;
-    }
-
-    /**
-     * Save crud data
-     *
-     * @param array $data
-     * @return mixed
-     */
-    protected function saveCrud($data)
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->saveCrud($data);
-        }
-
-        return $this->save($data);
-    }
-
-    /**
-     * Save data
-     *
-     * @todo Start using the section service version (This exists for backwards compat)
-     *
-     * @param array $data
-     * @param string $service
-     * @return array
-     */
-    protected function save($data, $service = null)
-    {
-        if (empty($service)) {
-            $service = $this->getService();
-        }
-
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->save($data, $service);
-        }
-
-        $method = 'POST';
-
-        if (isset($data['id']) && !empty($data['id'])) {
-            $method = 'PUT';
-        }
-
-        return $this->makeRestCall($service, $method, $data);
-    }
-
-    /**
-     * Get the sub action service
-     *
-     * @todo use the section services version (modified for backwards compat for the time being)
-     *
-     * @return string
-     */
-    protected function getActionService()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getActionService();
-        }
-
-        return $this->actionService;
-    }
-
-    /**
-     * Gets the data map
-     *
-     * @todo use the section service version (This is included for backwards compat)
-     *
-     * @return array
-     */
-    protected function getDataMap()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getDataMap();
-        }
-
-        return $this->dataMap;
-    }
-
-    /**
-     * Getter for data bundle
-     *
-     * @todo use the section service version (This is included for backwards compat)
-     *
-     * @return array
-     */
-    protected function getDataBundle()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getDataBundle();
-        }
-
-        return $this->dataBundle;
-    }
-
-    /**
-     * Get the service name
-     *
-     * @todo use the section service version (This is included for backwards compat)
-     *
-     * @return string
-     */
-    protected function getService()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getService();
-        }
-
-        return $this->service;
-    }
-
-    /**
-     * Get form tables
-     *
-     * @return array
-     */
-    protected function getFormTables()
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->getFormTables();
-        }
-
-        return $this->formTables;
-    }
-
-    /**
-     * Map the data on load
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processLoad($data)
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->processLoad($data);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Delete
-     *
-     * @return Response
-     */
-    protected function delete($id = null, $service = null)
-    {
-        if ($id === null) {
-            $id = $this->getActionId();
-        }
-
-        if ($service === null) {
-            $service = $this->getActionService();
-        }
-
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->delete($id, $service);
-        }
-
-        if ($service === null) {
-            $service = $this->getService();
-        }
-
-        if (!empty($id) && !empty($service)) {
-
-            $this->makeRestCall($service, 'DELETE', array('id' => $id));
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Added extra method called after setting form data
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    protected function postSetFormData($form)
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->postSetFormData($form);
-        }
-
-        return $form;
-    }
-
-    /**
-     * Process file uploads
-     *
-     * @param array $uploads
-     * @param Form $form
-     * @return array
-     */
-    protected function processFileUploads($uploads, $form)
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->processFileUploads($uploads, $form);
-        }
-
-        if ($this->getRequest()->isPost()) {
-            $post = $this->getRequest()->getPost();
-            $files = $this->getRequest()->getFiles()->toArray();
-
-            return $this->processFileUpload($uploads, $post, $files, $form);
-        }
-
-        return array();
-    }
-
-    /**
-     * Process a single file upload
-     *
-     * @param array $uploads
-     * @param array $data
-     * @param array $files
-     * @param Form $form
-     * @return array
-     */
-    private function processFileUpload($uploads, $data, $files, $form)
-    {
-        $responses = array();
-
-        foreach ($uploads as $fieldset => $callback) {
-
-            if ($form->has($fieldset)) {
-                $form = $form->get($fieldset);
-
-                if (is_array($callback)) {
-
-                    $responses[$fieldset] = $this->processFileUpload(
-                        $callback,
-                        $data[$fieldset],
-                        $files[$fieldset],
-                        $form
-                    );
-
-                } elseif (isset($data[$fieldset]['file-controls']['upload'])
-                    && !empty($data[$fieldset]['file-controls']['upload'])
-                ) {
-
-                    $this->setPersist(false);
-
-                    $error = $files[$fieldset]['file-controls']['file']['error'];
-
-                    $validator = $this->getFileSizeValidator();
-
-                    if ($error == UPLOAD_ERR_OK
-                        && !$validator->isValid($files[$fieldset]['file-controls']['file']['tmp_name'])
-                    ) {
-                        $error = UPLOAD_ERR_INI_SIZE;
-                    }
-
-                    $responses[$fieldset] = $error;
-
-                    switch ($error) {
-                        case UPLOAD_ERR_OK:
-                            $responses[$fieldset] = call_user_func(
-                                array($this, $callback),
-                                $files[$fieldset]['file-controls']['file']
-                            );
-                            break;
-                        case UPLOAD_ERR_PARTIAL:
-                            $form->setMessages(
-                                array('__messages__' => array('File was only partially uploaded'))
-                            );
-                            break;
-                        case UPLOAD_ERR_NO_FILE:
-                            $form->setMessages(
-                                array('__messages__' => array('Please select a file to upload'))
-                            );
-                            break;
-                        case UPLOAD_ERR_INI_SIZE:
-                        case UPLOAD_ERR_FORM_SIZE:
-                            $form->setMessages(
-                                array('__messages__' => array('The file was too large to upload'))
-                            );
-                            break;
-                        case UPLOAD_ERR_NO_TMP_DIR:
-                        case UPLOAD_ERR_CANT_WRITE:
-                        case UPLOAD_ERR_EXTENSION:
-                            $form->setMessages(
-                                array('__messages__' => array('An unexpected error occurred while uploading the file'))
-                            );
-                            break;
-                    }
-                }
-            }
-        }
-        return $responses;
-    }
-
-    /**
-     * Get filesize validator
-     *
-     * @return \Zend\Validator\File\FilesSize
-     */
-    public function getFileSizeValidator()
-    {
-        return new FilesSize('2MB');
-    }
-
-    /**
-     * Process file deletions
-     *
-     * @param array $uploads
-     * @param Form $form
-     * @return array
-     */
-    public function processFileDeletions($uploads, $form)
-    {
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->processFileDeletions($uploads, $form);
-        }
-
-        if ($this->getRequest()->isPost()) {
-            $post = $this->getRequest()->getPost();
-
-            return $this->processFileDeletion($uploads, $post, $form);
-        }
-
-        return array();
-    }
-
-    /**
-     * Process a single file deletion
-     *
-     * @param array $uploads
-     * @param array $data
-     * @param Form $form
-     * @return array
-     */
-    private function processFileDeletion($uploads, $data, $form)
-    {
-        $responses = array();
-
-        foreach ($uploads as $fieldset => $callback) {
-
-            if ($form->has($fieldset)) {
-                $form = $form->get($fieldset);
-
-                if (is_array($callback)) {
-
-                    $responses[$fieldset] = $this->processFileDeletion(
-                        $callback,
-                        $data[$fieldset],
-                        $form
-                    );
-
-                } else {
-
-                    foreach ($form->get('list')->getFieldsets() as $listFieldset) {
-
-                        $name = $listFieldset->getName();
-
-                        if (isset($data[$fieldset]['list'][$name]['remove'])
-                            && !empty($data[$fieldset]['list'][$name]['remove'])) {
-
-                            // @todo sort this
-                            $this->setPersist(false);
-
-                            $responses[$fieldset] = call_user_func(
-                                array($this, $callback),
-                                $data[$fieldset]['list'][$name]['id'],
-                                $form->get('list'),
-                                $name
-                            );
-                        }
-                    }
-                }
-            }
-        }
-        return $responses;
+        return $this->sectionServiceName;
     }
 }
