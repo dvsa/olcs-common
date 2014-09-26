@@ -210,7 +210,7 @@ class LicenceHistoryController extends PreviousHistoryController
      */
     protected function getFormTableData($id, $table)
     {
-        $tableData=$this->getSummaryTableData($id, $this, $table);
+        $tableData = $this->getSummaryTableData($id, $this, $table);
 
         return $tableData;
     }

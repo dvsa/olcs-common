@@ -19,6 +19,7 @@ use Zend\Validator\ValidatorChain;
 use Zend\Validator\File\FilesSize;
 use Zend\Filter\Word\DashToCamelCase;
 use Common\Form\Elements\Types\Address;
+use Zend\Form\FormInterface;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from

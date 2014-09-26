@@ -389,7 +389,7 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
                 'data' => array(
                     'id' => '',
                     'version' => '',
-                    'previousLicenceType' => 'CURRENT',
+                    'previousLicenceType' => 'prev_has_licence',
                     'licNo' => '1',
                     'holderName' => 'current',
                     'willSurrender' => 'Y'
