@@ -36,6 +36,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     use Util\LoggerTrait,
         Util\FlashMessengerTrait,
         Util\RestCallTrait,
+        Util\HelperServiceAware,
         Traits\ViewHelperManagerAware;
 
     private $loggedInUser;
@@ -1060,29 +1061,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
-     * Find the address fields and process them accordingly
-     *
-     * @param array $data
-     * @return array $data
-     */
-    protected function processAddressData($data, $addressName = 'address')
-    {
-        if (!isset($data['addresses'])) {
-            $data['addresses'] = array();
-        }
-
-        unset($data[$addressName]['searchPostcode']);
-
-        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
-
-        $data['addresses'][$addressName] = $data[$addressName];
-
-        unset($data[$addressName]);
-
-        return $data;
-    }
-
-    /**
      * Check if a button was pressed
      *
      * @param string $button
@@ -1703,48 +1681,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Process the data map for saving
      *
+     * @NOTE This method has been left in for backwards compatability, but now just wraps a helper service
+     *
      * @param type $data
      */
     public function processDataMapForSave($oldData, $map = array(), $section = 'main')
     {
-        if (empty($map)) {
-            return $oldData;
-        }
-
-        if (isset($map['_addresses'])) {
-
-            foreach ($map['_addresses'] as $address) {
-                $oldData = $this->processAddressData($oldData, $address);
-            }
-        }
-
-        if (isset($map[$section]['mapFrom'])) {
-
-            $data = array();
-
-            foreach ($map[$section]['mapFrom'] as $key) {
-
-                if (isset($oldData[$key])) {
-                    $data = array_merge($data, $oldData[$key]);
-                }
-            }
-
-        } else {
-            $data = array();
-        }
-
-        if (isset($map[$section]['children'])) {
-
-            foreach ($map[$section]['children'] as $child => $options) {
-                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
-            }
-        }
-
-        if (isset($map[$section]['values'])) {
-            $data = array_merge($data, $map[$section]['values']);
-        }
-
-        return $data;
+        return $this->getHelperService('DataMapHelper')->processDataMapForSave($oldData, $map, $section);
     }
 
     /**
@@ -1757,17 +1700,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         $controller = get_called_class();
 
         return explode('\\', $controller);
-    }
-
-    /**
-     * Get a helper service
-     *
-     * @param string $service
-     * @return type
-     */
-    protected function getHelperService($service)
-    {
-        return $this->getServiceLocator()->get('HelperService')->getHelperService($service);
     }
 
     /**

@@ -7,10 +7,10 @@
  */
 namespace Common\Controller\Service;
 
+use Common\Util;
 use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\View\Model\ViewModel;
-use Common\Util\RestCallTrait;
 use Zend\Validator\File\FilesSize;
 use Common\Form\Elements\Types\Address;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -26,7 +26,8 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 abstract class AbstractSectionService implements SectionServiceInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait,
-        RestCallTrait;
+        Util\RestCallTrait,
+        Util\HelperServiceAware;
 
     /**
      * Holds the field values
