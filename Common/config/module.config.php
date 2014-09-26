@@ -81,6 +81,9 @@ return array(
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
             },
+            'goodsDiscStartNumberValidator' => function ($serviceManager) {
+                return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
+            },
             'licence' => function ($serviceManager) {
                 $licenceService = new \Common\Service\Licence\Licence();
                 $licenceService->setServiceLocator($serviceManager);

@@ -1094,6 +1094,14 @@ return array(
     'apsts_new' => 'Not Yet Submitted',
     'apsts_consideration' => 'Under Consideration',
     'tasks.close.single' => 'Are you sure you want to close this task?',
-    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
+    'admin_disc-printing.discPrefix' => 'Disc prefix',
+    'admin_disc-printing.discNumbering' => 'Discs numbering',
+    'admin_disc-printing.startNumber' => 'Start number',
+    'admin_disc-printing.endNumber' => 'End number',
+    'admin_disc-printing.totalPages' => 'Number of pages',
+    'admin_disc-printing.noDiscs' => 'There are no discs to be printed',
+    'admin_disc-printing.typeOfLicence' => 'Type of Licence',
+    'admin_disc-printing.pageHeader' => 'Discs Printing',
     // Potentially unused (Not found with grep)
 );
