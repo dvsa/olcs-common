@@ -156,11 +156,15 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
      */
     protected function alterForm($form)
     {
-        $form->remove('form-actions');
+        if ($this->getSectionServiceName() === null) {
+            $form->remove('form-actions');
 
-        $form->add(new SectionButtons());
+            $form->add(new SectionButtons());
 
-        return $form;
+            return $form;
+        }
+
+        return parent::alterForm($form);
     }
 
 

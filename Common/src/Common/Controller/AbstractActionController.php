@@ -780,7 +780,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $form = $this->processPostcodeLookup($form);
 
-
         return $form;
     }
 
@@ -794,11 +793,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $request = $this->getRequest();
 
-        if (!$request->isPost()) {
-            return $form;
-        }
+        $post = array();
 
-        $post = (array)$request->getPost();
+        if ($request->isPost()) {
+            $post = (array)$request->getPost();
+        }
 
         $fieldsets = $form->getFieldsets();
 

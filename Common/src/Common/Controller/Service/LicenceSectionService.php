@@ -7,6 +7,9 @@
  */
 namespace Common\Controller\Service;
 
+use Zend\Form\Form;
+use Common\Form\Fieldsets\Custom\SectionButtons;
+
 /**
  * Licence Section Service
  *
@@ -140,5 +143,20 @@ class LicenceSectionService extends AbstractSectionService
         }
 
         return $this->licenceData;
+    }
+
+    /**
+     * Alter form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterForm(Form $form)
+    {
+        $form->remove('form-actions');
+
+        $form->add(new SectionButtons());
+
+        return $form;
     }
 }

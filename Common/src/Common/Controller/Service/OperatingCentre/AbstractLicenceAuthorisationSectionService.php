@@ -171,6 +171,8 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
      */
     public function alterForm(Form $form)
     {
+        $form = $this->getLicenceSectionService()->alterForm($form);
+
         $form = parent::alterForm($form);
 
         $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());

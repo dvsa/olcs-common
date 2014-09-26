@@ -586,7 +586,9 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      */
     protected function isPsv()
     {
-        return $this->getLicenceSectionService()->isPsv();
+        $isPsv = $this->getLicenceSectionService()->isPsv();
+
+        return $isPsv;
     }
 
     /**

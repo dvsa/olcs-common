@@ -827,6 +827,7 @@ abstract class AbstractSectionController extends AbstractActionController
     protected function alterForm($form)
     {
         if ($this->getSectionServiceName() !== null) {
+
             return $this->getSectionService()->alterForm($form);
         }
 
