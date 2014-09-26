@@ -11,10 +11,12 @@
 namespace Common\Controller;
 
 use Common\Util;
+use Zend\Form\Form;
 use Zend\Mvc\MvcEvent;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 use Zend\Validator\ValidatorChain;
+use Zend\Validator\File\FilesSize;
 use Zend\Filter\Word\DashToCamelCase;
 use Common\Form\Elements\Types\Address;
 
@@ -514,7 +516,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function getUploader()
     {
-        return $this->getSectionService()->getUploader();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getUploader();
+        }
+
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 
     /**
@@ -1271,7 +1277,24 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function deleteFile($id, $fieldset, $name)
     {
-        $this->getSectionService()->deleteFile($id, $fieldset, $name);
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->deleteFile($id, $fieldset, $name);
+        } else {
+            $fileDetails = $this->makeRestCall(
+                'Document',
+                'GET',
+                array('id' => $id),
+                array('properties' => array('identifier'))
+            );
+
+            if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
+                if ($this->getUploader()->remove($fileDetails['identifier'])) {
+
+                    $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                    $fieldset->remove($name);
+                }
+            }
+        }
     }
 
     /**
@@ -1643,7 +1666,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @param type $data
      */
-    protected function processDataMapForSave($oldData, $map = array(), $section = 'main')
+    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
     {
         if ($this->getSectionServiceName() !== null) {
             return $this->getSectionService()->processDataMapForSave($oldData, $map, $section);
@@ -1886,5 +1909,193 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $form;
+    }
+
+    /**
+     * Process file uploads
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    protected function processFileUploads($uploads, $form)
+    {
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processFileUploads($uploads, $form);
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+            $files = $this->getRequest()->getFiles()->toArray();
+
+            return $this->processFileUpload($uploads, $post, $files, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file upload
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param array $files
+     * @param Form $form
+     * @return array
+     */
+    private function processFileUpload($uploads, $data, $files, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileUpload(
+                        $callback,
+                        $data[$fieldset],
+                        $files[$fieldset],
+                        $form
+                    );
+
+                } elseif (isset($data[$fieldset]['file-controls']['upload'])
+                    && !empty($data[$fieldset]['file-controls']['upload'])
+                ) {
+
+                    $this->setPersist(false);
+
+                    $error = $files[$fieldset]['file-controls']['file']['error'];
+
+                    $validator = $this->getFileSizeValidator();
+
+                    if ($error == UPLOAD_ERR_OK
+                        && !$validator->isValid($files[$fieldset]['file-controls']['file']['tmp_name'])
+                    ) {
+                        $error = UPLOAD_ERR_INI_SIZE;
+                    }
+
+                    $responses[$fieldset] = $error;
+
+                    switch ($error) {
+                        case UPLOAD_ERR_OK:
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $files[$fieldset]['file-controls']['file']
+                            );
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $form->setMessages(
+                                array('__messages__' => array('File was only partially uploaded'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $form->setMessages(
+                                array('__messages__' => array('Please select a file to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $form->setMessages(
+                                array('__messages__' => array('The file was too large to upload'))
+                            );
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                        case UPLOAD_ERR_CANT_WRITE:
+                        case UPLOAD_ERR_EXTENSION:
+                            $form->setMessages(
+                                array('__messages__' => array('An unexpected error occurred while uploading the file'))
+                            );
+                            break;
+                    }
+                }
+            }
+        }
+        return $responses;
+    }
+
+    /**
+     * Get filesize validator
+     *
+     * @return \Zend\Validator\File\FilesSize
+     */
+    private function getFileSizeValidator()
+    {
+        return new FilesSize('2MB');
+    }
+
+    /**
+     * Process file deletions
+     *
+     * @param array $uploads
+     * @param Form $form
+     * @return array
+     */
+    public function processFileDeletions($uploads, $form)
+    {
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processFileDeletions($uploads, $form);
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+
+            return $this->processFileDeletion($uploads, $post, $form);
+        }
+
+        return array();
+    }
+
+    /**
+     * Process a single file deletion
+     *
+     * @param array $uploads
+     * @param array $data
+     * @param Form $form
+     * @return array
+     */
+    private function processFileDeletion($uploads, $data, $form)
+    {
+        $responses = array();
+
+        foreach ($uploads as $fieldset => $callback) {
+
+            if ($form->has($fieldset)) {
+                $form = $form->get($fieldset);
+
+                if (is_array($callback)) {
+
+                    $responses[$fieldset] = $this->processFileDeletion(
+                        $callback,
+                        $data[$fieldset],
+                        $form
+                    );
+
+                } else {
+
+                    foreach ($form->get('list')->getFieldsets() as $listFieldset) {
+
+                        $name = $listFieldset->getName();
+
+                        if (isset($data[$fieldset]['list'][$name]['remove'])
+                            && !empty($data[$fieldset]['list'][$name]['remove'])) {
+
+                            // @todo sort this
+                            $this->setPersist(false);
+
+                            $responses[$fieldset] = call_user_func(
+                                array($this, $callback),
+                                $data[$fieldset]['list'][$name]['id'],
+                                $form->get('list'),
+                                $name
+                            );
+                        }
+                    }
+                }
+            }
+        }
+        return $responses;
     }
 }

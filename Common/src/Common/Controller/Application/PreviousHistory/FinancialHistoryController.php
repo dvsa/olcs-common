@@ -69,8 +69,7 @@ class FinancialHistoryController extends PreviousHistoryController
      */
     protected function alterForm($form)
     {
-        $this->getSectionService()
-            ->processFileUploads(array('data' => array('file' => 'processFinancialFileUpload')), $form);
+        $this->processFileUploads(array('data' => array('file' => 'processFinancialFileUpload')), $form);
 
         $options = array(
             'fieldset' => 'data',
@@ -78,8 +77,7 @@ class FinancialHistoryController extends PreviousHistoryController
         );
         $form = static::makeFormAlterations($form, $this, $options);
 
-        $this->getSectionService()
-            ->processFileDeletions(array('data' => array('file' => 'deleteFile')), $form);
+        $this->processFileDeletions(array('data' => array('file' => 'deleteFile')), $form);
 
         return $form;
     }
