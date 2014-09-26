@@ -386,10 +386,7 @@ trait VehicleSection
         if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
             $currentDisc = $licenceVehicle['goodsDiscs'][0];
 
-            if (empty($currentDisc['ceasedDate'])) {
-
-                return (empty($currentDisc['discNo']) ? 'Pending' : $currentDisc['discNo']);
-            }
+            return $currentDisc['discNo'];
         }
 
         return '';
@@ -403,7 +400,20 @@ trait VehicleSection
      */
     protected function isDiscPending($licenceVehicleData)
     {
-        return empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate']);
+        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
+            return true;
+        }
+
+        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
+            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
+
+            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
