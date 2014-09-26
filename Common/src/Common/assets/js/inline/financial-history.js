@@ -6,7 +6,6 @@ $(function() {
   }
 
   OLCS.cascadeForm({
-    form: "form",
     cascade: false,
     rulesets: {
       "data": {

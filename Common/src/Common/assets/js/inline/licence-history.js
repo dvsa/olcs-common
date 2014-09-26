@@ -4,9 +4,7 @@ $(function() {
   // quick helper to DRY up our definitions a bit
   function checked(fieldset, input) {
     return function() {
-      return OLCS.formHelper("dataLicences" + fieldset, "prev" + input)
-      .filter(":checked")
-      .val() === "Y";
+      return OLCS.formHelper.isChecked("dataLicences" + fieldset, "prev" + input);
     };
   }
 

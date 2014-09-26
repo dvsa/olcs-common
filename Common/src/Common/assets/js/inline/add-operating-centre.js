@@ -2,13 +2,10 @@ $(function() {
   "use strict";
 
   function hasAdvertisements() {
-    return OLCS.formHelper("advertisements", "adPlaced")
-    .filter(":checked")
-    .val() === "Y";
+    return OLCS.formHelper.isChecked("advertisements", "adPlaced");
   }
 
   OLCS.cascadeForm({
-    form: "form",
     cascade: false,
     rulesets: {
       "advertisements": {
