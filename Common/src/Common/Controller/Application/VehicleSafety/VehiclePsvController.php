@@ -23,4 +23,6 @@ class VehiclePsvController extends VehicleSafetyController
         VehicleSafetyTraits\ExternalGenericVehicleSection,
         VehicleSafetyTraits\ApplicationGenericVehicleSection,
         VehicleSafetyTraits\GenericApplicationVehiclePsvSection;
+
+    protected $inlineScripts = ['vehicle-psv'];
 }

@@ -37,6 +37,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formRow', new Helper\FormRow());
+        $helpers->setService('addTags', new \Common\View\Helper\AddTags());
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 
@@ -56,6 +57,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
         $helpers = new HelperPluginManager();
         $helpers->setService('formCollection', new Helper\FormCollection());
+        $helpers->setService('addTags', new \Common\View\Helper\AddTags());
         $view = new PhpRenderer();
         $view->setHelperPluginManager($helpers);
 

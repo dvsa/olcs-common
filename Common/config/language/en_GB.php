@@ -123,8 +123,8 @@ return array(
         application for this operating centre in your local newspaper?',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate' => 'Date advertisement was
         placed (if applicable)',
-    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name (if
-        applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name
+        (if applicable)',
     'application_operating-centres_authorisation-sub-action.advertisements.file' => 'Advertisement (if applicable)
         (optional)',
     'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'Please upload a copy of the
@@ -279,8 +279,7 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.fao' => 'Contractor\'s name or person\'s full name if performed
         internally',
     'application_vehicle-safety_safety-sub-action.data.isExternal' => 'Who will carry out the safety inspections?',
-    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'Yourself or another employee of the
-        business holding the operator\'s licence',
+    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'An owner or employee of the business',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'An external contractor',
     'application_vehicle-safety_safety.application.safetyConfirmation' => 'Please confirm there are suitable
         arrangements in place to keep the vehicles in a fit and serviceable condition at all times',
@@ -563,6 +562,13 @@ return array(
     'documents-home.data.digitalonly' => 'Digital only',
     'documents-home.data.format' => 'Format',
     'documents-home.data.sub_category' => 'Sub category',
+    'documents.bookmarks' => 'Bookmarks',
+    'documents.data.category' => 'Category',
+    'documents.data.file' => 'File Upload',
+    'documents.data.link' => 'Link',
+    'documents.data.sub_category' => 'Sub category',
+    'documents.data.template' => 'Template',
+    'documents.details' => 'Details',
     'doo' => 'DOO',
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
@@ -706,7 +712,6 @@ return array(
     'internal-licence-details-vehicle_psv-title' => 'Vehicles',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
-    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-notes-add' => 'Add note',
     'internal-licence-processing-notes-add-label' => 'Add note',
     'internal-licence-processing-notes-add-title' => 'Add note',
@@ -715,6 +720,7 @@ return array(
     'internal-licence-processing-notes-modify-label' => 'Edit note',
     'internal-licence-processing-notes-modify-title' => 'Edit note',
     'internal-licence-processing-notes-title' => 'Notes',
+    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-tasks' => 'Tasks',
     'internal-licence-processing-tasks-label' => 'Tasks',
     'internal-licence-processing-tasks-title' => 'Tasks',
@@ -966,8 +972,8 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'Offense Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant
         offences which must be declared to the traffic commissioner.',
-    'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions & penalties (if
-        applicable)',
+        'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions & penalties
+        (if applicable)',
     'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'Add offence',
     'selfserve-app-subSection-previous-history-licence-history-disqualificationDate' => 'Date of disqualification',
     'selfserve-app-subSection-previous-history-licence-history-disqualificationLength' => 'Length of disqualification',
@@ -1038,6 +1044,8 @@ return array(
     'tachographAnalyser-external-contractor' => 'An external contractor',
     'tachographAnalyser-yourself' => 'An owner or employee of the business',
     'tasks.assignment' => 'Assigned to',
+    'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
+    'tasks.close.single' => 'Are you sure you want to close this task?',
     'tasks.data.actionDate' => 'Action date',
     'tasks.data.category' => 'Category',
     'tasks.data.date' => 'Date',
@@ -1091,16 +1099,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'documents.details' => 'Details',
-    'documents.data.category' => 'Category',
-    'documents.data.sub_category' => 'Sub category',
-    'documents.data.template' => 'Template',
-    'documents.data.link' => 'Link',
-    'documents.data.file' => 'File Upload',
-    'documents.bookmarks' => 'Bookmarks',
-    'apsts_new' => 'Not Yet Submitted',
-    'apsts_consideration' => 'Under Consideration',
-    'tasks.close.single' => 'Are you sure you want to close this task?',
-    'tasks.close.multiple' => 'Are you sure you want to close these tasks?'
     // Potentially unused (Not found with grep)
 );

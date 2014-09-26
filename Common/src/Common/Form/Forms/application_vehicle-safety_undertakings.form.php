@@ -45,12 +45,14 @@ return array(
                     'psvSmallVhlScotland' => array(
                         'label' => $translationPrefix . '.smallVehiclesUndertakingsScotland.title',
                         'class' => 'long',
-                        'type' => 'textarea'
+                        'type' => 'textarea',
+                        'disabled' => 'disabled'
                     ),
                     'psvSmallVhlUndertakings' => array(
                         'label' => $translationPrefix . '.smallVehiclesUndertakings.title',
                         'class' => 'long',
-                        'type' => 'textarea'
+                        'type' => 'textarea',
+                        'disabled' => 'disabled'
                     ),
                     // 15c/d
                     'psvSmallVhlConfirmation' => array(

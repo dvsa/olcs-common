@@ -19,6 +19,8 @@ class AuthorisationController extends OperatingCentresController
 {
     use \Common\Controller\Traits\TrafficAreaTrait;
 
+    protected $inlineScripts = ['add-operating-centre'];
+
     /**
      * Holds the table data
      *
