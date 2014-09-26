@@ -230,7 +230,7 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
 
         // @todo Get the application variation url form somewhere
         // $this->url()->fromRoute('application-variation')
-        $message = $this->formatTranslation(
+        $message = $this->getHelperService('TranslationHelper')->formatTranslation(
             '%s <a href="#">%s</a>',
             array(
                 'cant-increase-' . $messageSuffix,

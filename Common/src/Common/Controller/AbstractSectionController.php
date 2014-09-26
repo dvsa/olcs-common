@@ -1067,62 +1067,6 @@ abstract class AbstractSectionController extends AbstractActionController
     }
 
     /**
-     * Format a translation string
-     *
-     * @param type $format
-     * @param type $messages
-     * @return type
-     */
-    protected function formatTranslation($format, $messages)
-    {
-        if (!is_array($messages)) {
-            return $this->wrapTranslation($format, $messages);
-        }
-
-        array_walk(
-            $messages,
-            function (&$value) {
-                $value = $this->translate($value);
-            }
-        );
-
-        return vsprintf($format, $messages);
-    }
-
-    /**
-     * Wrap a translated message with the wrapper
-     *
-     * @param string $wrapper
-     * @param string $message
-     * @return string
-     */
-    protected function wrapTranslation($wrapper, $message)
-    {
-        return sprintf($wrapper, $this->translate($message));
-    }
-
-    /**
-     * Translate a message
-     *
-     * @param string $message
-     * @return string
-     */
-    protected function translate($message)
-    {
-        return $this->getTranslator()->translate($message);
-    }
-
-    /**
-     * Get translator
-     *
-     * @return \Zend\I18n\Translator\Translator
-     */
-    protected function getTranslator()
-    {
-        return $this->getServiceLocator()->get('translator');
-    }
-
-    /**
      * Return the section service
      *
      * @return \Common\Controller\Service\SectionServiceInterface

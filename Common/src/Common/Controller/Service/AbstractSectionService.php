@@ -135,13 +135,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     protected $tableDataBundle;
 
     /**
-     * Cache the translator
-     *
-     * @var \Zend\I18n\Translator\Translator
-     */
-    protected $translator;
-
-    /**
      * Cache the factory instance
      *
      * @var \Common\Controller\Service\SectionServiceFactory
@@ -446,66 +439,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         //$attributes['class'] .= ' tooltip-grandparent';
 
         $element->setLabelAttributes($attributes);
-    }
-
-    /**
-     * Format a translation string
-     *
-     * @param type $format
-     * @param type $messages
-     * @return type
-     */
-    public function formatTranslation($format, $messages)
-    {
-        if (!is_array($messages)) {
-            return $this->wrapTranslation($format, $messages);
-        }
-
-        array_walk(
-            $messages,
-            function (&$value) {
-                $value = $this->translate($value);
-            }
-        );
-
-        return vsprintf($format, $messages);
-    }
-
-    /**
-     * Wrap a translated message with the wrapper
-     *
-     * @param string $wrapper
-     * @param string $message
-     * @return string
-     */
-    public function wrapTranslation($wrapper, $message)
-    {
-        return sprintf($wrapper, $this->translate($message));
-    }
-
-    /**
-     * Translate a message
-     *
-     * @param string $message
-     * @return string
-     */
-    public function translate($message)
-    {
-        return $this->getTranslator()->translate($message);
-    }
-
-    /**
-     * Get translator
-     *
-     * @return \Zend\I18n\Translator\Translator
-     */
-    public function getTranslator()
-    {
-        if ($this->translator === null) {
-            $this->translator = $this->getServiceLocator()->get('translator');
-        }
-
-        return $this->translator;
     }
 
     /**
