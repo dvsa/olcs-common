@@ -379,7 +379,7 @@ trait VehicleSection
      */
     protected function getCurrentDiscNo($licenceVehicle)
     {
-        if (empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['deletedDate'])) {
+        if ($this->isDiscPending($licenceVehicle)) {
             return 'Pending';
         }
 
@@ -393,6 +393,17 @@ trait VehicleSection
         }
 
         return '';
+    }
+
+    /**
+     * Check if the disc is pending
+     *
+     * @param array $licenceVehicleData
+     * @return boolean
+     */
+    protected function isDiscPending($licenceVehicleData)
+    {
+        return empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate']);
     }
 
     /**
@@ -440,9 +451,7 @@ trait VehicleSection
         foreach ($ids as $id) {
             $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
 
-            $discNo = $this->getCurrentDiscNo($results);
-
-            if ($discNo == 'Pending') {
+            if ($this->isDiscPending($results)) {
                 return true;
             }
         }
