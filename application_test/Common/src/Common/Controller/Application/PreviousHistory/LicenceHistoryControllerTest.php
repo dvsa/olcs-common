@@ -377,6 +377,8 @@ class LicenceHistoryControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test tableLicencesCurrentAddAction with submit
+     *
+     * @group test
      */
     public function testTableLicencesCurrentAddActionWithSubmit()
     {

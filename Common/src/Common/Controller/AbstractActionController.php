@@ -928,6 +928,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     public function formPost($form, $callback = null, $additionalParams = array())
     {
         if (!$this->enableCsrf) {
+            $form->getInputFilter()->remove('csrf');
             $form->remove('csrf');
         }
 
@@ -2020,7 +2021,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return \Zend\Validator\File\FilesSize
      */
-    private function getFileSizeValidator()
+    public function getFileSizeValidator()
     {
         return new FilesSize('2MB');
     }

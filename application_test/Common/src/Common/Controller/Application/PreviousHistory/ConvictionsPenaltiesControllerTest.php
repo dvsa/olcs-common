@@ -108,9 +108,10 @@ class ConvictionsPenaltiesControllerTest extends AbstractApplicationControllerTe
                 )
             )
         );
-        $this->controller->setEnabledCsrf(false);
 
+        $this->controller->setEnabledCsrf(false);
         $response = $this->controller->indexAction();
+
         $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 

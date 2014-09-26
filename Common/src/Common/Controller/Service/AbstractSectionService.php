@@ -549,11 +549,17 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     public function actionSave($data, $service = null)
     {
-        if (is_null($service)) {
+        if ($service === null) {
             $service = $this->getActionService();
         }
 
-        return $this->save($data, $service);
+        $method = 'POST';
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            $method = 'PUT';
+        }
+
+        return $this->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -563,14 +569,14 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     public function save($data, $service = null)
     {
+        if ($service === null) {
+            $service = $this->getService();
+        }
+
         $method = 'POST';
 
         if (isset($data['id']) && !empty($data['id'])) {
             $method = 'PUT';
-        }
-
-        if (empty($service)) {
-            $service = $this->getService();
         }
 
         return $this->makeRestCall($service, $method, $data);

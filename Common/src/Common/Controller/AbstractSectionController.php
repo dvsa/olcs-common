@@ -885,11 +885,17 @@ abstract class AbstractSectionController extends AbstractActionController
             return $this->getSectionService()->actionSave($data, $service);
         }
 
-        if (is_null($service)) {
+        if ($service === null) {
             $service = $this->getActionService();
         }
 
-        return $this->save($data, $service);
+        $method = 'POST';
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            $method = 'PUT';
+        }
+
+        return $this->makeRestCall($service, $method, $data);
     }
 
     /**
