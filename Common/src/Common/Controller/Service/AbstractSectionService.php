@@ -19,8 +19,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 /**
  * Abstract Section Service
  *
- * @todo This is essentially a dumping ground from abstractSectionController
- *  We may want to re-factor
+ * @todo This is essentially a dumping ground from abstractSectionController we may want to re-factor
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -91,6 +90,13 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      * @var array
      */
     protected $actionDataBundle;
+
+    /**
+     * Holds the action data
+     *
+     * @var array
+     */
+    protected $actionData;
 
     /**
      * Holds the action data map
@@ -528,7 +534,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $this->actionData = $this->makeRestCall(
                 $this->getActionService(),
                 'GET',
-                array('id' => $id),
+                $id,
                 $this->getActionDataBundle()
             );
         }
@@ -1169,5 +1175,37 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     public function getUploader()
     {
         return $this->getServiceLocator()->get('FileUploader')->getUploader();
+    }
+
+    // @NOTE THESE ARE TEMPORARY
+
+    /**
+     * Set service
+     *
+     * @param string $service
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * Set action service
+     *
+     * @param string $actionService
+     */
+    public function setActionService($actionService)
+    {
+        $this->actionService = $actionService;
+    }
+
+    /**
+     * Set action data bundle
+     *
+     * @param array $actionDataBundle
+     */
+    public function setActionDataBundle($actionDataBundle)
+    {
+        $this->actionDataBundle = $actionDataBundle;
     }
 }

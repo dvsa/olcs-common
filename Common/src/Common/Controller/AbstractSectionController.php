@@ -355,8 +355,6 @@ abstract class AbstractSectionController extends AbstractActionController
     /**
      * Get the form data
      *
-     * This is not in the method above as it can be overridden independantly
-     *
      * @todo move this into section service
      *
      * @return array
@@ -765,8 +763,8 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getActionDataBundle()
     {
-        if ($this->actionDataBundle === null) {
-            $this->actionDataBundle = $this->getSectionService()->getActionDataBundle();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionDataBundle();
         }
 
         return $this->actionDataBundle;
@@ -781,8 +779,8 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getActionDataMap()
     {
-        if ($this->actionDataMap === null) {
-            $this->actionDataMap = $this->getSectionService()->getActionDataMap();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionDataMap();
         }
 
         return $this->actionDataMap;
@@ -797,7 +795,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getFormTableData($id, $table)
     {
-        return $this->getSectionService()->getFormTableData($id, $table);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getFormTableData($id, $table);
+        }
+
+        return array();
     }
 
     /**
@@ -809,7 +811,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function loadCurrent()
     {
-        return $this->getSectionService()->load($this->getIdentifier());
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->load($this->getIdentifier());
+        }
+
+        return $this->load($this->getIdentifier());
     }
 
     /**
@@ -820,7 +826,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterForm($form)
     {
-        return $this->getSectionService()->alterForm($form);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterForm($form);
+        }
+
+        return $form;
     }
 
     /**
@@ -831,7 +841,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterActionForm($form)
     {
-        return $this->getSectionService()->alterActionForm($form);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterActionForm($form);
+        }
+
+        return $form;
     }
 
     /**
@@ -842,7 +856,21 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function actionLoad($id)
     {
-        return $this->getSectionService()->actionLoad($id);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->actionLoad($id);
+        }
+
+        if ($this->actionData === null) {
+
+            $this->actionData = $this->makeRestCall(
+                $this->getActionService(),
+                'GET',
+                $id,
+                $this->getActionDataBundle()
+            );
+        }
+
+        return $this->actionData;
     }
 
     /**
@@ -852,7 +880,15 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function actionSave($data, $service = null)
     {
-        return $this->getSectionService()->actionSave($data, $service);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->actionSave($data, $service);
+        }
+
+        if (is_null($service)) {
+            $service = $this->getActionService();
+        }
+
+        return $this->save($data, $service);
     }
 
     /**
@@ -863,7 +899,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterDeleteForm($form)
     {
-        return $this->getSectionService()->alterDeleteForm($form);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterDeleteForm($form);
+        }
+
+        return $form;
     }
 
     /**
@@ -874,7 +914,15 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function deleteLoad($id)
     {
-        return $this->getSectionService()->deleteLoad($id);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->deleteLoad($id);
+        }
+
+        if (is_array($id)) {
+            $id = implode(',', $id);
+        }
+
+        return array('data' => array('id' => $id));
     }
 
     /**
@@ -884,7 +932,15 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function deleteSave($data)
     {
-        $this->getSectionService()->deleteSave($data);
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->deleteSave($data);
+        } else {
+            $ids = explode(',', $data['data']['id']);
+
+            foreach ($ids as $id) {
+                $this->delete($id, $this->getActionService());
+            }
+        }
 
         return $this->goBackToSection();
     }
@@ -899,7 +955,11 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterTable($table)
     {
-        return $this->getService()->alterTable($table);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterTable($table);
+        }
+
+        return $table;
     }
 
     /**
@@ -910,6 +970,10 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function processActionLoad($data)
     {
-        return $this->getSectionService()->processActionLoad($data);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processActionLoad($data);
+        }
+
+        return $data;
     }
 }

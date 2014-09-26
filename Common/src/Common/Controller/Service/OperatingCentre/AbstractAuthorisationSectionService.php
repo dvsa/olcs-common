@@ -479,7 +479,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      *
      * @return int
      */
-    protected function getOperatingCentresCount()
+    public function getOperatingCentresCount()
     {
         $operatingCentres = $this->getDataFromActionService($this->getIdentifier(), $this->ocCountBundle);
 

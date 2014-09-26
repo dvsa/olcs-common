@@ -8,16 +8,15 @@
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-
 namespace Common\Controller;
 
 use Common\Util;
 use Zend\Mvc\MvcEvent;
-use Zend\Form\Fieldset;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 use Zend\Validator\ValidatorChain;
 use Zend\Filter\Word\DashToCamelCase;
+use Common\Form\Elements\Types\Address;
 
 /**
  * An abstract controller that all ordinary OLCS controllers inherit from
@@ -35,6 +34,13 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         Util\FlashMessengerTrait,
         Util\RestCallTrait,
         Traits\ViewHelperManagerAware;
+
+    /**
+     * Holds the section service name
+     *
+     * @var string
+     */
+    protected $sectionServiceName;
 
     /**
      * Holds the identifier
@@ -127,13 +133,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     private $sectionServices = array();
 
     /**
-     * Holds the section service name
-     *
-     * @var string
-     */
-    protected $sectionServiceName = 'Generic';
-
-    /**
      * onDispatch now populates this with the route for the index of
      * the controller curently being executed.
      *
@@ -170,6 +169,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected $inlineScripts = [];
 
+    private $fieldValues = [];
+    private $persist = true;
     protected $enableCsrf = true;
     protected $validateForm = true;
 
@@ -660,7 +661,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setPersist($persist = true)
     {
-        $this->getSectionService()->setPersist($persist);
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->setPersist($persist);
+        } else {
+            $this->persist = $persist;
+        }
     }
 
     /**
@@ -670,7 +675,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getPersist()
     {
-        return $this->getSectionService()->getPersist();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getPersist();
+        }
+
+        return $this->persist;
     }
 
     /**
@@ -682,7 +691,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setFieldValue($key, $value)
     {
-        $this->getSectionService()->setFieldValue($key, $value);
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->setFieldValue($key, $value);
+        } else {
+            $this->fieldValues[$key] = $value;
+        }
     }
 
     /**
@@ -692,7 +705,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFieldValues()
     {
-        return $this->getSectionService()->getFieldValues();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getFieldValues();
+        }
+
+        return $this->fieldValues;
     }
 
     /**
@@ -755,9 +772,130 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $form->setAttribute('action', $this->getRequest()->getUri()->getPath());
         }
 
-        $form = $this->getSectionService()->processPostcodeLookup($form);
+        $form = $this->processPostcodeLookup($form);
+
 
         return $form;
+    }
+
+    /**
+     * Process the postcode lookup functionality
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function processPostcodeLookup($form)
+    {
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            return $form;
+        }
+
+        $post = (array)$request->getPost();
+
+        $fieldsets = $form->getFieldsets();
+
+        foreach ($fieldsets as $fieldset) {
+
+            if ($fieldset instanceof Address) {
+
+                $removeSelectFields = false;
+
+                $name = $fieldset->getName();
+
+                // If we haven't posted a form, or we haven't clicked find address
+                if (isset($post[$name]['searchPostcode']['search'])
+                    && !empty($post[$name]['searchPostcode']['search'])) {
+
+                    $this->setPersist(false);
+
+                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
+
+                    if (empty($postcode)) {
+
+                        $removeSelectFields = true;
+
+                        $fieldset->get('searchPostcode')->setMessages(
+                            array('Please enter a postcode')
+                        );
+                    } else {
+
+                        $addressList = $this->getAddressesForPostcode($postcode);
+
+                        if (empty($addressList)) {
+
+                            $removeSelectFields = true;
+
+                            $fieldset->get('searchPostcode')->setMessages(
+                                array('No addresses found for postcode')
+                            );
+
+                        } else {
+
+                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
+                                $this->getAddressService()->formatAddressesForSelect($addressList)
+                            );
+                        }
+                    }
+                } elseif (isset($post[$name]['searchPostcode']['select'])
+                    && !empty($post[$name]['searchPostcode']['select'])) {
+
+                    $this->setPersist(false);
+
+                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
+
+                    $removeSelectFields = true;
+
+                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
+
+                    $this->setFieldValue($name, array_merge($post[$name], $addressDetails));
+
+                } else {
+
+                    $removeSelectFields = true;
+                }
+
+                if ($removeSelectFields) {
+                    $fieldset->get('searchPostcode')->remove('addresses');
+                    $fieldset->get('searchPostcode')->remove('select');
+                }
+            }
+        }
+
+        return $form;
+    }
+
+    /**
+     * Get Addresses For Postcode
+     *
+     * @param string $postcode
+     * @return array
+     */
+    private function getAddressesForPostcode($postcode)
+    {
+        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
+    }
+
+    /**
+     * Get address for uprn
+     *
+     * @param string $uprn
+     * @return array
+     */
+    private function getAddressForUprn($uprn)
+    {
+        return $this->sendGet('postcode\address', array('id' => $uprn), true);
+    }
+
+    /**
+     * Get address service
+     *
+     * @return object
+     */
+    private function getAddressService()
+    {
+        return $this->getServiceLocator()->get('address');
     }
 
     /**
@@ -944,18 +1082,24 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     private function disableEmptyValidation($form)
     {
-        if ($form instanceof Fieldset) {
-            foreach ($form->getElements() as $key => $element) {
+        foreach ($form->getElements() as $key => $element) {
+
+            $value = $element->getValue();
+            if (empty($value)) {
+                $form->getInputFilter()->get($key)->setAllowEmpty(true);
+                $form->getInputFilter()->get($key)->setValidatorChain(new ValidatorChain());
+            }
+        }
+
+        foreach ($form->getFieldsets() as $key => $fieldset) {
+            foreach ($fieldset->getElements() as $elementKey => $element) {
 
                 $value = $element->getValue();
-                if (empty($value)) {
-                    $form->getInputFilter()->get($key)->setAllowEmpty(true);
-                    $form->getInputFilter()->get($key)->setValidatorChain(new ValidatorChain());
-                }
-            }
 
-            foreach ($form->getFieldsets() as $key => $fieldset) {
-                $form = $this->disableEmptyValidation($fieldset);
+                if (empty($value)) {
+                    $form->getInputFilter()->get($key)->get($elementKey)->setAllowEmpty(true);
+                    $form->getInputFilter()->get($key)->get($elementKey)->setValidatorChain(new ValidatorChain());
+                }
             }
         }
 
@@ -1473,14 +1617,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function load($id)
     {
-        $results = $this->getSectionService()->load($id);
+        if (empty($this->loadedData)) {
+            if ($this->getSectionServiceName() !== null) {
+                $this->loadedData = $this->getSectionService()->load($id);
+            } else {
 
-        if ($results === false) {
+                $service = $this->getService();
+
+                $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
+
+                $this->loadedData = $result;
+            }
+        }
+
+        if ($this->loadedData === false) {
             $this->setCaughtResponse($this->notFoundAction());
             return;
         }
 
-        return $results;
+        return $this->loadedData;
     }
 
     /**
@@ -1490,7 +1645,63 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function processDataMapForSave($oldData, $map = array(), $section = 'main')
     {
-        return $this->getSectionService()->processDataMapForSave($oldData, $map, $section);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processDataMapForSave($oldData, $map, $section);
+        }
+
+        if (empty($map)) {
+            return $oldData;
+        }
+
+        if (isset($map['_addresses'])) {
+            foreach ($map['_addresses'] as $address) {
+                $oldData = $this->processAddressData($oldData, $address);
+            }
+        }
+
+        $data = array();
+        if (isset($map[$section]['mapFrom'])) {
+            foreach ($map[$section]['mapFrom'] as $key) {
+                if (isset($oldData[$key])) {
+                    $data = array_merge($data, $oldData[$key]);
+                }
+            }
+        }
+
+        if (isset($map[$section]['children'])) {
+            foreach ($map[$section]['children'] as $child => $options) {
+                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
+            }
+        }
+
+        if (isset($map[$section]['values'])) {
+            $data = array_merge($data, $map[$section]['values']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Find the address fields and process them accordingly
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function processAddressData($data, $addressName = 'address')
+    {
+        if (!isset($data['addresses'])) {
+            $data['addresses'] = array();
+        }
+
+        unset($data[$addressName]['searchPostcode']);
+
+        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
+
+        $data['addresses'][$addressName] = $data[$addressName];
+
+        unset($data[$addressName]);
+
+        return $data;
     }
 
     /**
@@ -1501,7 +1712,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function saveCrud($data)
     {
-        return $this->getSectionService()->saveCrud($data);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->saveCrud($data);
+        }
+
+        return $this->save($data);
     }
 
     /**
@@ -1519,7 +1734,17 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $service = $this->getService();
         }
 
-        return $this->getSectionService()->save($data, $service);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->save($data, $service);
+        }
+
+        $method = 'POST';
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            $method = 'PUT';
+        }
+
+        return $this->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -1531,8 +1756,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getActionService()
     {
-        if ($this->actionService === null) {
-            $this->actionService = $this->getSectionService()->getActionService();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionService();
         }
 
         return $this->actionService;
@@ -1547,8 +1772,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getDataMap()
     {
-        if ($this->dataMap === null) {
-            $this->dataMap = $this->getSectionService()->getDataMap();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getDataMap();
         }
 
         return $this->dataMap;
@@ -1563,8 +1788,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getDataBundle()
     {
-        if ($this->dataBundle === null) {
-            $this->dataBundle = $this->getSectionService()->getDataBundle();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getDataBundle();
         }
 
         return $this->dataBundle;
@@ -1579,8 +1804,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getService()
     {
-        if ($this->service === null) {
-            $this->service = $this->getSectionService()->getService();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getService();
         }
 
         return $this->service;
@@ -1593,8 +1818,8 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFormTables()
     {
-        if ($this->formTables === null) {
-            $this->formTables = $this->getSectionService()->getFormTables();
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getFormTables();
         }
 
         return $this->formTables;
@@ -1608,7 +1833,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function processLoad($data)
     {
-        return $this->getSectionService()->processLoad($data);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processLoad($data);
+        }
+
+        return $data;
     }
 
     /**
@@ -1626,17 +1855,36 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             $service = $this->getActionService();
         }
 
-        return $this->getSectionService()->delete($id, $service);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->delete($id, $service);
+        }
+
+        if ($service === null) {
+            $service = $this->getService();
+        }
+
+        if (!empty($id) && !empty($service)) {
+
+            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Added extra method called after setting form data
      *
-     * @param Form $form
-     * @return Form
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
      */
     protected function postSetFormData($form)
     {
-        return $this->getSectionService()->postSetFormData($form);
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->postSetFormData($form);
+        }
+
+        return $form;
     }
 }
