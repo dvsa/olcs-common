@@ -94,8 +94,7 @@ class Address
                 $lineNo++;
             }
         }
-
-        $details['town'] = $this->formatString($address['town_name']);
+        $details['town'] = $this->formatString($address['post_town']);
 
         $details['postcode'] = $address['postcode'];
 
