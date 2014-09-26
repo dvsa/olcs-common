@@ -182,7 +182,7 @@ trait VehicleSection
     {
         return array(
             'data' => array(
-                'id' => $id
+                'id' => implode(',', (array)$id)
             )
         );
     }
@@ -194,7 +194,11 @@ trait VehicleSection
      */
     protected function reprintSave($data)
     {
-        $this->reprintDisc($data['data']['id']);
+        $ids = explode(',', $data['data']['id']);
+
+        foreach ($ids as $id) {
+            $this->reprintDisc($id);
+        }
 
         return $this->goBackToSection();
     }
@@ -431,11 +435,19 @@ trait VehicleSection
      */
     protected function isDiscPendingForLicenceVehicle($id)
     {
-        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
+        $ids = (array)$id;
 
-        $discNo = $this->getCurrentDiscNo($results);
+        foreach ($ids as $id) {
+            $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
 
-        return ($discNo == 'Pending');
+            $discNo = $this->getCurrentDiscNo($results);
+
+            if ($discNo == 'Pending') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
