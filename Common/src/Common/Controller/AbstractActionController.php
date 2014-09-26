@@ -796,14 +796,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                     $validatedData = $data;
                 }
 
-                $params = array_merge(
-                    [
-                        'validData' => $validatedData,
-                        'form' => $form,
-                        'params' => $additionalParams
-                    ],
-                    $this->getCallbackData()
-                );
+                $params = [
+                    'validData' => $validatedData,
+                    'form' => $form,
+                    'params' => $additionalParams
+                ];
 
                 $this->callCallbackIfExists($callback, $params);
             }
@@ -820,6 +817,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function postSetFormData($form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->postSetFormData($form);
+        }
+
         return $form;
     }
 
@@ -839,16 +842,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         } elseif (!empty($callback)) {
             throw new \Exception('Invalid form callback: ' . $callback);
         }
-    }
-
-    /**
-     * Adds data to the array passed to the formPost callback
-     *
-     * @return array
-     */
-    protected function getCallbackData()
-    {
-        return array();
     }
 
     /**
@@ -1012,7 +1005,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function generateDocument($data = array())
     {
-
         $documentData = [];
         if (isset($data['document']['generate']) && $data['document']['generate'] == '1') {
 
@@ -1110,6 +1102,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function processFileUploads($uploads, $form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processFileUploads($uploads, $form);
+        }
+
         if ($this->getRequest()->isPost()) {
             $post = $this->getRequest()->getPost();
             $files = $this->getRequest()->getFiles()->toArray();
@@ -1129,6 +1127,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function processFileDeletions($uploads, $form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processFileDeletions($uploads, $form);
+        }
+
         if ($this->getRequest()->isPost()) {
             $post = $this->getRequest()->getPost();
 
@@ -1281,6 +1285,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function deleteFile($id, $fieldset, $name)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->deleteFile($id, $fieldset, $name);
+        }
+
         $fileDetails = $this->makeRestCall(
             'Document',
             'GET',
@@ -1406,6 +1416,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getDataMap()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getDataMap();
+        }
+
         return $this->dataMap;
     }
 
@@ -1416,6 +1432,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getDataBundle()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getDataBundle();
+        }
+
         return $this->dataBundle;
     }
 
@@ -1426,6 +1448,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getService()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getService();
+        }
+
         return $this->service;
     }
 
@@ -1471,6 +1499,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function processLoad($data)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processLoad($data);
+        }
+
         return $data;
     }
 
@@ -1481,6 +1515,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function delete($id = null, $service = null)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->delete($id, $service);
+        }
+
         if ($service === null) {
             $service = $this->getService();
         }
@@ -1504,6 +1544,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function save($data, $service = null)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->save($data, $service);
+        }
+
         $method = 'POST';
 
         if (isset($data['id']) && !empty($data['id'])) {
@@ -1544,11 +1590,19 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFormTables()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getFormTables();
+        }
+
         return $this->formTables;
     }
 
     /**
      * Process save when we have a table form
+     *
+     * @todo at some point we need to trim this down a bit and move the non-controller logic into a service
      *
      * @param array $data
      */
@@ -1649,6 +1703,12 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function saveCrud($data)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->saveCrud($data);
+        }
+
         return $this->save($data);
     }
 
@@ -1662,10 +1722,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function load($id)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->load($id);
+        }
+
         if (empty($this->loadedData)) {
             $service = $this->getService();
 
-            $result = $this->makeRestCall($service, 'GET', array('id' => $id), $this->getDataBundle());
+            $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
 
             if (empty($result)) {
                 $this->setCaughtResponse($this->notFoundAction());

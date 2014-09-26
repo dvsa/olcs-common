@@ -740,7 +740,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         return $data;
     }
 
-
     /**
      * Process loading the sub section data
      *
@@ -932,128 +931,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         }
 
         return $responses;
-    }
-
-    /**
-     * Process the postcode lookup functionality
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    public function processPostcodeLookup($form)
-    {
-        $request = $this->getRequest();
-
-        $post = array();
-
-        if ($request->isPost()) {
-            $post = (array)$request->getPost();
-        }
-
-        $fieldsets = $form->getFieldsets();
-
-        foreach ($fieldsets as $fieldset) {
-
-            if ($fieldset instanceof Address) {
-
-                $removeSelectFields = false;
-
-                $name = $fieldset->getName();
-
-                // If we haven't posted a form, or we haven't clicked find address
-                if (isset($post[$name]['searchPostcode']['search'])
-                    && !empty($post[$name]['searchPostcode']['search'])) {
-
-                    // @todo sort this
-                    $this->setPersist(false);
-
-                    $postcode = trim($post[$name]['searchPostcode']['postcode']);
-
-                    if (empty($postcode)) {
-
-                        $removeSelectFields = true;
-
-                        $fieldset->get('searchPostcode')->setMessages(
-                            array('Please enter a postcode')
-                        );
-                    } else {
-
-                        $addressList = $this->getAddressesForPostcode($postcode);
-
-                        if (empty($addressList)) {
-
-                            $removeSelectFields = true;
-
-                            $fieldset->get('searchPostcode')->setMessages(
-                                array('No addresses found for postcode')
-                            );
-
-                        } else {
-
-                            $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-                                $this->getAddressService()->formatAddressesForSelect($addressList)
-                            );
-                        }
-                    }
-                } elseif (isset($post[$name]['searchPostcode']['select'])
-                    && !empty($post[$name]['searchPostcode']['select'])) {
-
-                    //@todo disable persist on form validation
-                    $this->setPersist(false);
-
-                    $address = $this->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
-                    $removeSelectFields = true;
-
-                    $addressDetails = $this->getAddressService()->formatPostalAddressFromBs7666($address);
-
-                    $this->setFieldValue($name, array_merge($post[$name], $addressDetails));
-
-                } else {
-
-                    $removeSelectFields = true;
-                }
-
-                if ($removeSelectFields) {
-                    $fieldset->get('searchPostcode')->remove('addresses');
-                    $fieldset->get('searchPostcode')->remove('select');
-                }
-            }
-        }
-
-        return $form;
-    }
-
-    /**
-     * Get Addresses For Postcode
-     *
-     * @param string $postcode
-     * @return array
-     */
-    private function getAddressesForPostcode($postcode)
-    {
-        return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
-    }
-
-    /**
-     * Get address for uprn
-     *
-     * @param string $uprn
-     * @return array
-     */
-    private function getAddressForUprn($uprn)
-    {
-        return $this->sendGet('postcode\address', array('id' => $uprn), true);
-    }
-
-    /**
-     * Get address service
-     *
-     * @return object
-     */
-    private function getAddressService()
-    {
-        return $this->getServiceLocator()->get('address');
     }
 
     /**
