@@ -167,7 +167,7 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Map a table to it's type. This also maps review table types.
+     * Map a table to its type. This also maps review table types.
      *
      * @var array
      */

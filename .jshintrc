@@ -1,6 +1,5 @@
 {
     "maxerr": 100,
-
     "strict": true,
     "trailing": true,
     "undef": true,
@@ -17,6 +16,11 @@
         "describe": true,
         "before": true,
         "beforeEach": true,
-        "it": true
+        "afterEach": true,
+        "it": true,
+        "expect": true,
+        "$": true,
+        "OLCS": true,
+        "sinon": true
     }
 }

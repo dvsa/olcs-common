@@ -18,4 +18,6 @@ use Common\Controller\Application\Application\ApplicationController;
 class VehicleSafetyController extends ApplicationController
 {
     use Traits\GenericSectionIndexAction;
+
+    protected $inlineScripts = ['vehicle-safety'];
 }

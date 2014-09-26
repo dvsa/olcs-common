@@ -25,6 +25,8 @@ class AuthorisationController extends OperatingCentresController
         Traits\GenericAddAction,
         Traits\GenericEditAction;
 
+    protected $inlineScripts = ['add-operating-centre'];
+
     protected $sectionServiceName = 'OperatingCentre\\ExternalApplicationAuthorisation';
 
     /**

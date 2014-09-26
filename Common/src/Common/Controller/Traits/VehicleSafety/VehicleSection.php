@@ -182,7 +182,7 @@ trait VehicleSection
     {
         return array(
             'data' => array(
-                'id' => $id
+                'id' => implode(',', (array)$id)
             )
         );
     }
@@ -194,7 +194,11 @@ trait VehicleSection
      */
     protected function reprintSave($data)
     {
-        $this->reprintDisc($data['data']['id']);
+        $ids = explode(',', $data['data']['id']);
+
+        foreach ($ids as $id) {
+            $this->reprintDisc($id);
+        }
 
         return $this->goBackToSection();
     }
@@ -375,7 +379,7 @@ trait VehicleSection
      */
     protected function getCurrentDiscNo($licenceVehicle)
     {
-        if (empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['deletedDate'])) {
+        if ($this->isDiscPending($licenceVehicle)) {
             return 'Pending';
         }
 
@@ -389,6 +393,17 @@ trait VehicleSection
         }
 
         return '';
+    }
+
+    /**
+     * Check if the disc is pending
+     *
+     * @param array $licenceVehicleData
+     * @return boolean
+     */
+    protected function isDiscPending($licenceVehicleData)
+    {
+        return empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate']);
     }
 
     /**
@@ -431,11 +446,17 @@ trait VehicleSection
      */
     protected function isDiscPendingForLicenceVehicle($id)
     {
-        $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
+        $ids = (array)$id;
 
-        $discNo = $this->getCurrentDiscNo($results);
+        foreach ($ids as $id) {
+            $results = $this->makeRestCall('LicenceVehicle', 'GET', $id, $this->discPendingBundle);
 
-        return ($discNo == 'Pending');
+            if ($this->isDiscPending($results)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
