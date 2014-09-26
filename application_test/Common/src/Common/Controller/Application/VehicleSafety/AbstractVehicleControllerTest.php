@@ -598,7 +598,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
      *
      * @group reprint
      */
-    public function testIndexActionWithReprintCrudAction()
+    public function testIndexActionWithReprintCrudActionWithoutSelectingRow()
     {
         $this->setUpAction('index', null, array('action' => 'reprint'));
 
@@ -606,9 +606,8 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
 
         $flashMessenger = $this->controller->plugin('FlashMessenger');
 
-        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
+        $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
+        $this->assertEquals(1, count($flashMessenger->getCurrentMessagesFromNamespace('warning')));
     }
 
     /**
@@ -618,7 +617,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
      */
     public function testIndexActionWithReprintCrudActionWithPendingDisc()
     {
-        $this->setUpAction('index', null, array('action' => 'reprint'));
+        $this->setUpAction('index', null, array('action' => 'reprint', 'id' => array(1)));
 
         $discPendingBundle = array(
             'properties' => array(
@@ -664,7 +663,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
      */
     public function testIndexActionWithReprintCrudActionWithoutPendingDisc()
     {
-        $this->setUpAction('index', null, array('action' => 'reprint'));
+        $this->setUpAction('index', null, array('action' => 'reprint', 'id' => array(1)));
 
         $discPendingBundle = array(
             'properties' => array(
@@ -700,7 +699,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
 
         $this->assertEquals(0, count($flashMessenger->getCurrentMessagesFromNamespace('error')));
 
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+        $this->assertInstanceOf('Zend\Http\Response', $response);
     }
 
     /**
