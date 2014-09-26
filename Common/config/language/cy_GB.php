@@ -279,8 +279,8 @@ return array(
     'application_vehicle-safety_safety-sub-action.data.fao' => 'W Contractor\'s name or person\'s full name if performed
         internally',
     'application_vehicle-safety_safety-sub-action.data.isExternal' => 'W Who will carry out the safety inspections?',
-    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'W Yourself or another employee of the
-        business holding the operator\'s licence',
+    'application_vehicle-safety_safety-sub-action.data.isExternal.option.no' => 'W An owner or employee of the
+        business',
     'application_vehicle-safety_safety-sub-action.data.isExternal.option.yes' => 'W An external contractor',
     'application_vehicle-safety_safety.application.safetyConfirmation' => 'W Please confirm there are suitable
         arrangements in place to keep the vehicles in a fit and serviceable condition at all times',
@@ -564,6 +564,13 @@ return array(
     'documents-home.data.digitalonly' => 'W Digital only',
     'documents-home.data.format' => 'W Format',
     'documents-home.data.sub_category' => 'W Sub category',
+    'documents.bookmarks' => 'W Bookmarks',
+    'documents.data.category' => 'W Category',
+    'documents.data.file' => 'W File Upload',
+    'documents.data.link' => 'W Link',
+    'documents.data.sub_category' => 'W Sub category',
+    'documents.data.template' => 'W Template',
+    'documents.details' => 'W Details',
     'doo' => 'W DOO',
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
@@ -707,7 +714,6 @@ return array(
     'internal-licence-details-vehicle_psv-title' => 'W Vehicles',
     'internal-licence-processing' => 'W Processing',
     'internal-licence-processing-notes' => 'W Notes',
-    'internal-licence-processing-notes.data.notetype' => 'Note type',
     'internal-licence-processing-notes-add' => 'W Add note',
     'internal-licence-processing-notes-add-label' => 'W Add note',
     'internal-licence-processing-notes-add-title' => 'W Add note',
@@ -716,6 +722,7 @@ return array(
     'internal-licence-processing-notes-modify-label' => 'W Edit note',
     'internal-licence-processing-notes-modify-title' => 'W Edit note',
     'internal-licence-processing-notes-title' => 'W Notes',
+    'internal-licence-processing-notes.data.notetype' => 'W Note type',
     'internal-licence-processing-tasks' => 'W Tasks',
     'internal-licence-processing-tasks-label' => 'W Tasks',
     'internal-licence-processing-tasks-title' => 'W Tasks',
@@ -1040,6 +1047,8 @@ return array(
     'tachographAnalyser-external-contractor' => 'W An external contractor',
     'tachographAnalyser-yourself' => 'W An owner or employee of the business',
     'tasks.assignment' => 'W Assigned to',
+    'tasks.close.multiple' => 'W Are you sure you want to close these tasks?',
+    'tasks.close.single' => 'W Are you sure you want to close this task?',
     'tasks.data.actionDate' => 'W Action date',
     'tasks.data.category' => 'W Category',
     'tasks.data.date' => 'W Date',
@@ -1094,14 +1103,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'documents.details' => 'W Details',
-    'documents.data.category' => 'W Category',
-    'documents.data.sub_category' => 'W Sub category',
-    'documents.data.template' => 'W Template',
-    'documents.data.link' => 'W Link',
-    'documents.data.file' => 'W File Upload',
-    'documents.bookmarks' => 'W Bookmarks',
-    'apsts_new' => 'W Not Yet Submitted',
-    'apsts_consideration' => 'W Under Consideration'
     // Potentially unused (Not found with grep)
 );
