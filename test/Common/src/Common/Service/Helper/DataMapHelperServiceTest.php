@@ -36,13 +36,13 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
      * @group helper_service
      * @group data_map_helper_service
      */
-    public function testProcessDataMapForSaveWithoutMap()
+    public function testProcessDataMapWithoutMap()
     {
         $input = array(
             'foo' => 'bar'
         );
 
-        $output = $this->sut->processDataMapForSave($input);
+        $output = $this->sut->processDataMap($input);
 
         $this->assertEquals($input, $output);
     }
@@ -51,7 +51,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
      * @group helper_service
      * @group data_map_helper_service
      */
-    public function testProcessDataMapForSave()
+    public function testProcessDataMap()
     {
         $input = array(
             'foo' => array(
@@ -92,7 +92,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $output = $this->sut->processDataMapForSave($input, $map);
+        $output = $this->sut->processDataMap($input, $map);
 
         $this->assertEquals($expected, $output);
     }
@@ -101,7 +101,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
      * @group helper_service
      * @group data_map_helper_service
      */
-    public function testProcessDataMapForSaveWithAddress()
+    public function testProcessDataMapWithAddress()
     {
         $input = array(
             'foo' => array(
@@ -141,7 +141,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $output = $this->sut->processDataMapForSave($input, $map);
+        $output = $this->sut->processDataMap($input, $map);
 
         $this->assertEquals($expected, $output);
     }

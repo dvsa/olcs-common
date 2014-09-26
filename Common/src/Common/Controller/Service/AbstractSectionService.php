@@ -719,68 +719,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     }
 
     /**
-     * Process the data map for saving
-     *
-     * @param type $data
-     */
-    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
-    {
-        if (empty($map)) {
-            return $oldData;
-        }
-
-        if (isset($map['_addresses'])) {
-            foreach ($map['_addresses'] as $address) {
-                $oldData = $this->processAddressData($oldData, $address);
-            }
-        }
-
-        $data = array();
-        if (isset($map[$section]['mapFrom'])) {
-            foreach ($map[$section]['mapFrom'] as $key) {
-                if (isset($oldData[$key])) {
-                    $data = array_merge($data, $oldData[$key]);
-                }
-            }
-        }
-
-        if (isset($map[$section]['children'])) {
-            foreach ($map[$section]['children'] as $child => $options) {
-                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
-            }
-        }
-
-        if (isset($map[$section]['values'])) {
-            $data = array_merge($data, $map[$section]['values']);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Find the address fields and process them accordingly
-     *
-     * @param array $data
-     * @return array $data
-     */
-    protected function processAddressData($data, $addressName = 'address')
-    {
-        if (!isset($data['addresses'])) {
-            $data['addresses'] = array();
-        }
-
-        unset($data[$addressName]['searchPostcode']);
-
-        $data[$addressName]['countryCode'] = $data[$addressName]['countryCode'];
-
-        $data['addresses'][$addressName] = $data[$addressName];
-
-        unset($data[$addressName]);
-
-        return $data;
-    }
-
-    /**
      * Save crud data
      *
      * @param array $data

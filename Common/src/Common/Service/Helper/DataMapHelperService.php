@@ -15,11 +15,11 @@ namespace Common\Service\Helper;
 class DataMapHelperService extends AbstractHelperService
 {
     /**
-     * Process the data map for saving
+     * Process the data map
      *
      * @param type $data
      */
-    public function processDataMapForSave($oldData, $map = array(), $section = 'main')
+    public function processDataMap($oldData, $map = array(), $section = 'main')
     {
         if (empty($map)) {
             return $oldData;
@@ -47,7 +47,7 @@ class DataMapHelperService extends AbstractHelperService
         if (isset($map[$section]['children'])) {
 
             foreach ($map[$section]['children'] as $child => $options) {
-                $data[$child] = $this->processDataMapForSave($oldData, array($child => $options), $child);
+                $data[$child] = $this->processDataMap($oldData, array($child => $options), $child);
             }
         }
 

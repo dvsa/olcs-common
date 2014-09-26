@@ -1687,7 +1687,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function processDataMapForSave($oldData, $map = array(), $section = 'main')
     {
-        return $this->getHelperService('DataMapHelper')->processDataMapForSave($oldData, $map, $section);
+        return $this->getHelperService('DataMapHelper')->processDataMap($oldData, $map, $section);
     }
 
     /**

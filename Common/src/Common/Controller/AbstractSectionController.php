@@ -607,7 +607,7 @@ abstract class AbstractSectionController extends AbstractActionController
 
             $method = $action . 'Save';
         } else {
-            $data = $this->processDataMapForSave($data, $this->getActionDataMap());
+            $data = $this->getHelperService('DataMapHelper')->processDataMap($data, $this->getActionDataMap());
 
             $method = 'actionSave';
         }
