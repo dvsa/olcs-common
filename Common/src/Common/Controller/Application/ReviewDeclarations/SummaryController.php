@@ -43,6 +43,86 @@ class SummaryController extends ReviewDeclarationsController
                     ),
                     'tachographIns' => array(
                         'properties' => array('id')
+                    ),
+                    'organisation' => array(
+                        'children' => array(
+                            'type' => array(
+                            ),
+                            'contactDetails' => array(
+                                'children' => array(
+                                    'contactType' => array(
+                                        'properties' => array('id')
+                                    ),
+                                    'address' => array(
+                                        'properties' => array(
+                                            'id',
+                                            'addressLine1',
+                                            'addressLine2',
+                                            'addressLine3',
+                                            'addressLine4',
+                                            'town',
+                                            'postcode',
+                                        ),
+                                        'children' => array(
+                                            'countryCode' => array(
+                                                'properties' => array('id')
+                                            )
+                                        )
+                                    ),
+                                    'phoneContacts' => array(
+                                    ),
+                                ),
+                            ),
+                            'tradingNames' => array(
+                            ),
+                        ),
+                    ),
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'emailAddress'
+                        ),
+                        'children' => array(
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'phoneNumber'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'address' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'addressLine1',
+                                    'addressLine2',
+                                    'addressLine3',
+                                    'addressLine4',
+                                    'postcode',
+                                    'town'
+                                ),
+                                'children' => array(
+                                    'countryCode' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'contactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
                     )
                 )
             ),
@@ -58,9 +138,30 @@ class SummaryController extends ReviewDeclarationsController
      */
     private $tableConfigs = array(
         // controller => table config
-        'PreviousHistory/ConvictionsPenalties' => 'criminalconvictions',
-        'VehicleSafety/Safety' => 'safety-inspection-providers',
-        'OperatingCentres/Authorisation' => 'authorisation_in_form'
+        'YourBusiness/BusinessDetails' => array(
+            'table' => 'application_your-business_business_details-subsidiaries'
+        ),
+        'YourBusiness/People' => array(
+            'table' => 'application_your-business_people_in_form'
+        ),
+        'PreviousHistory/ConvictionsPenalties' => array(
+            'table' => 'criminalconvictions'
+        ),
+        'PreviousHistory/LicenceHistory' => array(
+            'table-licences-current' => 'previous_licences_current',
+            'table-licences-applied' => 'previous_licences_applied',
+            'table-licences-refused' => 'previous_licences_refused',
+            'table-licences-revoked' => 'previous_licences_revoked',
+            'table-licences-public-inquiry' => 'previous_licences_public_inquiry',
+            'table-licences-disqualified' => 'previous_licences_disqualified',
+            'table-licences-held' => 'previous_licences_held'
+        ),
+        'VehicleSafety/Safety' => array(
+            'table' => 'safety-inspection-providers'
+        ),
+        'OperatingCentres/Authorisation' => array(
+            'table' => 'authorisation_in_form'
+        )
     );
 
     /**
@@ -176,6 +277,33 @@ class SummaryController extends ReviewDeclarationsController
     {
         $translator = $this->getServiceLocator()->get('translator');
 
+        /*
+         * Flatten out the contacts so they're in a mapped array as used
+         * by the Your Business -> Addresses fieldset.
+         */
+        $contactList=$loadData['licence']['organisation']['contactDetails'];
+        $indexedContactList=array();
+        foreach ($contactList as $contactEntry) {
+            $indexedContactList[$contactEntry['contactType']['id']]=$contactEntry['address'];
+        }
+        $indexedContactList['ct_corr']=$loadData['licence']['contactDetails'];
+
+        // Flatten out the phone contacts from the only licence contact
+        $phoneList=$loadData['licence']['contactDetails'][0]['phoneContacts'];
+        $indexedPhoneList=array();
+        foreach ($phoneList as $phoneEntry) {
+            $indexedPhoneList[$phoneEntry['phoneContactType']['id']]=$phoneEntry['phoneNumber'];
+        }
+
+        // Trading names requires specific formatting
+        $flatTradingNamesList=array();
+        if ( isset($loadData['licence']['organisation']['tradingNames']) ) {
+            $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
+            foreach ($tradingNamesList as $tradingName) {
+                $flatTradingNamesList[]=$tradingName['name'];
+            }
+        }
+
         $data = array(
             /**
              * Type of Licence
@@ -188,6 +316,49 @@ class SummaryController extends ReviewDeclarationsController
             ),
             'application_type-of-licence_licence-type-1' => array(
                 'licenceType' => $loadData['licence']['licenceType']['id']
+            ),
+
+            /**
+             * Your Business
+             */
+            'application_your-business_business-type-1' => array(
+                'type' => $loadData['licence']['organisation']['type']['id']
+            ),
+            'application_your-business_business-details-1' => array(
+                'companyNumber' => array(
+                    'company_number' => $loadData['licence']['organisation']['companyOrLlpNo']
+                ),
+                'tradingNamesReview' => implode(PHP_EOL, $flatTradingNamesList),
+                'name' => $loadData['licence']['organisation']['name']
+            ),
+            'application_your-business_business-details-2' => array(
+            ),
+
+            // Correspondence Address
+            'application_your-business_addresses-2' => $this->mapAddressFields(
+                'ct_oc',
+                $indexedContactList
+            ),
+
+            // Contact Details
+            'application_your-business_addresses-3' => array(
+                'phone_business' => (isset($indexedPhoneList['phone_t_tel'])?$indexedPhoneList['phone_t_tel']:''),
+                'phone_home' => (isset($indexedPhoneList['phone_t_home'])?$indexedPhoneList['phone_t_home']:''),
+                'phone_mobile' => (isset($indexedPhoneList['phone_t_mobile'])?$indexedPhoneList['phone_t_mobile']:''),
+                'phone_fax' => (isset($indexedPhoneList['phone_t_fax'])?$indexedPhoneList['phone_t_fax']:''),
+                'email' => $loadData['licence']['contactDetails'][0]['emailAddress']
+            ),
+
+            // Establishment Address
+            'application_your-business_addresses-5' => $this->mapAddressFields(
+                'ct_est',
+                $indexedContactList
+            ),
+
+            // Registered Office Address
+            'application_your-business_addresses-7' => $this->mapAddressFields(
+                'ct_reg',
+                $indexedContactList
             ),
 
             /**
@@ -205,6 +376,7 @@ class SummaryController extends ReviewDeclarationsController
                 ),
                 $loadData
             ),
+
             /**
              * Previous History
              */
@@ -285,6 +457,27 @@ class SummaryController extends ReviewDeclarationsController
     }
 
     /**
+     * Helper to map the address fields
+     */
+    protected function mapAddressFields($contactType, $data)
+    {
+        // If the contact type doesn't exist, return a blank
+        if ( ! isset($data[$contactType]) ) {
+            return array();
+        }
+
+        return array(
+             'addressLine1' => $data[$contactType]['addressLine1'],
+             'addressLine2' => $data[$contactType]['addressLine2'],
+             'addressLine3' => $data[$contactType]['addressLine3'],
+             'addressLine4' => $data[$contactType]['addressLine4'],
+             'town' => $data[$contactType]['town'],
+             'postcode' => $data[$contactType]['postcode'],
+             'country' => $data[$contactType]['countryCode']['id']
+         );
+    }
+
+    /**
      * Simple helper to map a subset of an input array
      * into an output array, as long as they exist
      *
@@ -318,10 +511,18 @@ class SummaryController extends ReviewDeclarationsController
 
         // we can use this value to map back to the controller which
         // knows how to populate its data
-        $section = array_search(
-            $table,
-            $this->tableConfigs
-        );
+        // (this needs to know about subsections)
+        $section=false;
+        foreach ($this->tableConfigs as $controllerName => $controllerTableConfig) {
+            $sectionSearch = array_search(
+                $table,
+                $controllerTableConfig
+            );
+
+            if ( $sectionSearch ) {
+                $section=$controllerName;
+            }
+        }
 
         $controller = $this->getInvokable($section, 'getSummaryTableData');
 
@@ -355,7 +556,8 @@ class SummaryController extends ReviewDeclarationsController
                 $this->summarySections[] = $summarySection;
 
                 if ($fieldset->has('table')) {
-                    $this->formTables[$name] = $this->tableConfigs[$summarySection];
+                    $originalName = $fieldset->getAttribute('unmappedName');
+                    $this->formTables[$name] = $this->tableConfigs[$summarySection][$originalName];
                 }
             }
         }

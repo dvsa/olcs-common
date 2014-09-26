@@ -50,6 +50,20 @@ class File
     protected $size;
 
     /**
+     * Holds the actual file content
+     *
+     * @var string
+     */
+    protected $content;
+
+    /**
+     * Holds any associated metadata. Not supported by all stores
+     *
+     * @var array
+     */
+    protected $meta = [];
+
+    /**
      * Setter for identifier
      *
      * @param string $identifier
@@ -150,6 +164,46 @@ class File
     }
 
     /**
+     * Setter for content
+     *
+     * @param int $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Getter for content
+     *
+     * @return int
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Setter for meta
+     *
+     * @param int $meta
+     */
+    public function setMeta($meta)
+    {
+        $this->meta = $meta;
+    }
+
+    /**
+     * Getter for meta
+     *
+     * @return int
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
      * Populate properties from data
      *
      * @param array $data
@@ -160,7 +214,9 @@ class File
             'name' => array('name'),
             'type' => array('type'),
             'path' => array('tmp_name'),
-            'size' => array('size')
+            'size' => array('size'),
+            'content' => array('content'),
+            'meta' => array('meta')
         );
 
         foreach ($data as $key => $value) {
@@ -185,7 +241,9 @@ class File
             'name' => $this->getName(),
             'type' => $this->getType(),
             'path' => $this->getPath(),
-            'size' => $this->getSize()
+            'size' => $this->getSize(),
+            'content' => $this->getContent(),
+            'meta' => $this->getMeta()
         );
     }
 }

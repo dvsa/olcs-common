@@ -45,11 +45,13 @@ class Module
         return array(
             'factories' => array(
                 'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
+                'Common\Service\Data\Country' => 'Common\Service\Data\Country',
                 'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
                 },
                 'Script' => '\Common\Service\Script\ScriptFactory',
                 'Table' => '\Common\Service\Table\TableFactory',
+                'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
                 'FileUploader' => '\Common\Service\File\FileUploaderFactory',
                 'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
                 'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
@@ -90,6 +92,9 @@ class Module
 
                     return $log;
                 }
+            ),
+            'invokables' => array(
+                'Document' => '\Common\Service\Document\Document',
             ),
             'aliases' => array(
                 'translator' => 'MvcTranslator',

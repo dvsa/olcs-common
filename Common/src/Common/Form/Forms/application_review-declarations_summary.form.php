@@ -11,6 +11,14 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Your Business',
+        'forms' => array(
+            'application_your-business_business-details',
+            'application_your-business_addresses',
+            'application_your-business_people'
+        )
+    ),
+    array(
         'title' => 'Operating Centres',
         'forms' => array(
             'application_operating-centres_authorisation'
@@ -20,9 +28,8 @@ $groups = array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',
-            // this should be implemented in another story
-            //'application_previous-history_licence-history',
-            'application_previous-history_convictions-penalties'
+            'application_previous-history_licence-history',
+            'application_previous-history_convictions-penalties',
         )
     ),
     array(
