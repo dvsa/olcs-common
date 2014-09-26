@@ -17,6 +17,11 @@ use Common\Controller\Application\Application\ApplicationController;
 class PreviousHistoryController extends ApplicationController
 {
     /**
+     * opt-in to some section wide JS
+     */
+    protected $inlineScripts = ['previous-history'];
+
+    /**
      * Redirect to the first section
      *
      * @return Response
