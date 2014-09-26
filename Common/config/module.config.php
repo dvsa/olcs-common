@@ -106,6 +106,7 @@ return array(
             'formElement' => 'Common\Form\View\Helper\FormElement',
             'formElementErrors' => 'Common\Form\View\Helper\FormElementErrors',
             'formErrors' => 'Common\Form\View\Helper\FormErrors',
+            'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
             'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
@@ -122,7 +123,8 @@ return array(
     'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
     'form_elements' => [
         'invokables' => [
-            'DateSelect' => 'Common\Form\Elements\Custom\DateSelect'
+            'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
+            'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect'
         ],
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
@@ -145,10 +147,12 @@ return array(
     ],
     'filters' => [
         'invokables' => [
-            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+            'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
+            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
         ],
         'aliases' => [
-            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier'
+            'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
+            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
         ]
     ],
     'tables' => array(
