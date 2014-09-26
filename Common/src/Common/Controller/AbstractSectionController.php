@@ -208,6 +208,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getActionDataBundle()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionDataBundle();
+        }
+
         return $this->actionDataBundle;
     }
 
@@ -302,6 +308,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getFormTableData($id, $table)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getFormTableData($id, $table);
+        }
+
         return array();
     }
 
@@ -370,6 +382,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getActionService()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionService();
+        }
+
         return $this->actionService;
     }
 
@@ -380,6 +398,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function getActionDataMap()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getActionDataMap();
+        }
+
         return $this->actionDataMap;
     }
 
@@ -451,6 +475,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function loadCurrent()
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->loadCurrent();
+        }
+
         return $this->load($this->getIdentifier());
     }
 
@@ -544,6 +574,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterForm($form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterForm($form);
+        }
+
         return $form;
     }
 
@@ -555,6 +591,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterActionForm($form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterActionForm($form);
+        }
+
         return $form;
     }
 
@@ -646,6 +688,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function processActionLoad($data)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->processActionLoad($data);
+        }
+
         return $data;
     }
 
@@ -657,6 +705,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function actionLoad($id)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->actionLoad($id);
+        }
+
         if (empty($this->actionData)) {
 
             $this->actionData = $this->makeRestCall(
@@ -677,6 +731,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function actionSave($data, $service = null)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->actionSave($data, $service);
+        }
+
         $method = 'POST';
 
         if (isset($data['id']) && !empty($data['id'])) {
@@ -864,13 +924,17 @@ abstract class AbstractSectionController extends AbstractActionController
     /**
      * Alter table
      *
-     * This method should be overridden if alterations are required
-     *
      * @param object $table
      * @return object
      */
     protected function alterTable($table)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterTable($table);
+        }
+
         return $table;
     }
 
@@ -1032,6 +1096,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function deleteLoad($id)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->deleteLoad($id);
+        }
+
         if (is_array($id)) {
             $id = implode(',', $id);
         }
@@ -1046,10 +1116,16 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function deleteSave($data)
     {
-        $ids = explode(',', $data['data']['id']);
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->alterDeleteForm($data);
+        } else {
+            $ids = explode(',', $data['data']['id']);
 
-        foreach ($ids as $id) {
-            parent::delete($id, $this->getActionService());
+            foreach ($ids as $id) {
+                parent::delete($id, $this->getActionService());
+            }
         }
 
         return $this->goBackToSection();
@@ -1063,6 +1139,12 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function alterDeleteForm($form)
     {
+        // @NOTE progressivly start to include the logic within a service
+        //  but maintain the old logic for backwards compatability
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->alterDeleteForm($form);
+        }
+
         return $form;
     }
 
