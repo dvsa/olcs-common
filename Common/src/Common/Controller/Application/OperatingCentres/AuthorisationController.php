@@ -648,10 +648,7 @@ class AuthorisationController extends OperatingCentresController
             $data['data']['maxTrailerAuth'] += (int) $row['noOfTrailersPossessed'];
         }
 
-        if (is_array($oldData) && array_key_exists('licence', $oldData) &&
-            array_key_exists('trafficArea', $oldData['licence']) &&
-            is_array($oldData['licence']['trafficArea']) &&
-            array_key_exists('id', $oldData['licence']['trafficArea'])) {
+        if (isset($oldData['licence']['trafficArea']['id'])) {
             $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
         }
         return $data;

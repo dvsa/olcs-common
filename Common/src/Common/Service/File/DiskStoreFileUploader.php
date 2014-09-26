@@ -25,9 +25,8 @@ class DiskStoreFileUploader extends AbstractFileUploader
     {
         $file = $this->getFile();
         $key = $this->generateKey();
-        $location = $this->getConfig()['location'];
 
-        $newPath = rtrim($location, '/') . '/' . $key;
+        $newPath = $this->getPath($key, $namespace);
 
         if (!$this->moveFile($file->getPath(), $newPath)) {
             throw new \Exception('Unable to move uploaded file');
@@ -53,11 +52,9 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Download the file
      */
-    public function download($identifier, $name)
+    public function download($identifier, $name, $namespace = null)
     {
-        $location = $this->getConfig()['location'];
-
-        $path = rtrim($location, '/') . '/' . $identifier;
+        $path = $this->getPath($identifier, $namespace);
 
         if (!file_exists($path)) {
             $response = new Response();
@@ -88,12 +85,8 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Remove the file
      */
-    public function remove($identifier)
+    public function remove($identifier, $namespace = null)
     {
-        $location = $this->getConfig()['location'];
-
-        $path = rtrim($location, '/') . '/' . $identifier;
-
-        return unlink($path);
+        return unlink($this->getPath($identifier, $namespace));
     }
 }

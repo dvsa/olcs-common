@@ -342,23 +342,24 @@ class ApplicationController extends AbstractJourneyController
     {
         $uploader = $this->getUploader();
         $uploader->setFile($file);
-        $uploader->upload();
 
-        $file = $uploader->getFile();
-
-        $fileData = $file->toArray();
+        $file = $uploader->upload();
 
         $licence = $this->getLicenceData();
 
-        $fileData['filename'] = $fileData['name'];
-        $fileData['application'] = $this->getIdentifier();
-        $fileData['licence'] = $licence['id'];
+        $docData = array_merge(
+            array(
+                'application'   => $this->getIdentifier(),
+                'licence'       => $licence['id'],
+                'filename'      => $file->getName(),
+                'identifier'    => $file->getIdentifier(),
+                'size'          => $file->getSize(),
+                'fileExtension' => 'doc_rtf'
+            ),
+            $data
+        );
 
-        unset($fileData['path']);
-        unset($fileData['type']);
-        unset($fileData['name']);
-
-        $this->makeRestCall('Document', 'POST', array_merge($fileData, $data));
+        $this->makeRestCall('Document', 'POST', $docData);
     }
 
     /**

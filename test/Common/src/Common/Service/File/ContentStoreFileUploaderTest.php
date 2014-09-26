@@ -35,6 +35,10 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
             ->with('ContentStore')
             ->will($this->returnValue($this->contentStoreMock));
 
+        $this->uploader->setConfig(
+            ['location' => 'test']
+        );
+
         $this->uploader->setServiceLocator($sl);
     }
 
@@ -53,7 +57,7 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
-            ->with('identifier')
+            ->with('test/identifier')
             ->will($this->returnValue($file));
 
         $response = $this->uploader->download('identifier', 'file.txt');
@@ -62,11 +66,24 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('dummy content', $response->getContent());
     }
 
+    public function testDownloadWithValidFileAndNamespace()
+    {
+        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file->setContent('dummy content');
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('read')
+            ->with('foo/identifier')
+            ->will($this->returnValue($file));
+
+        $this->uploader->download('identifier', 'file.txt', 'foo');
+    }
+
     public function testRemoveProxiesThroughToContentStore()
     {
         $this->contentStoreMock->expects($this->once())
             ->method('remove')
-            ->with('identifier');
+            ->with('test/identifier');
 
         $this->uploader->remove('identifier');
     }

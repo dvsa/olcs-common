@@ -93,9 +93,9 @@ return array(
         )
     ),
     'file_uploader' => array(
-        'default' => 'DiskStore',
+        'default' => 'ContentStore',
         'config' => array(
-            'location' => realpath(__DIR__ . '/../data/uploads/')
+            'location' => 'documents'
         )
     ),
     'view_helpers' => array(
