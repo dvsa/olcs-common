@@ -72,8 +72,22 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetExtension($name, $extension)
     {
-        $this->markTestIncomplete('not implemented');
         $file = new File();
         $file->setName($name);
+
+        $this->assertEquals(
+            $extension,
+            $file->getExtension()
+        );
+    }
+
+    public function extensionProvider()
+    {
+        return array(
+            array('', ''),
+            array('A file with no extension', ''),
+            array('Another file.txt', 'txt'),
+            array('article.jpg.doc', 'doc')
+        );
     }
 }

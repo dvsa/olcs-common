@@ -78,6 +78,7 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
     {
         $file = new \Dvsa\Jackrabbit\Data\Object\File();
         $file->setContent('dummy content');
+        $file->setMimeType('application/rtf');
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
