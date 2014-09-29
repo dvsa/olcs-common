@@ -66,4 +66,14 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $file->fromData($data);
         $this->assertEquals($expected, $file->toArray());
     }
+
+    /**
+     * @dataProvider extensionProvider
+     */
+    public function testGetExtension($name, $extension)
+    {
+        $this->markTestIncomplete('not implemented');
+        $file = new File();
+        $file->setName($name);
+    }
 }

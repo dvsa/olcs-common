@@ -354,7 +354,7 @@ class ApplicationController extends AbstractJourneyController
                 'filename'      => $file->getName(),
                 'identifier'    => $file->getIdentifier(),
                 'size'          => $file->getSize(),
-                'fileExtension' => 'doc_rtf'
+                'fileExtension' => 'doc_' . $file->getExtension()
             ),
             $data
         );

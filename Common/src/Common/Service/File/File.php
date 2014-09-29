@@ -203,6 +203,10 @@ class File
         return $this->meta;
     }
 
+    public function getExtension()
+    {
+    }
+
     /**
      * Populate properties from data
      *
