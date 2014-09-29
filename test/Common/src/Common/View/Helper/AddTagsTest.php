@@ -32,7 +32,12 @@ class AddTagsTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['no text to replace', 'no text to replace'],
-            ['text to replace (if applicable)', 'text to replace <span class=js-hidden>(if applicable)</span>']
+            ['text to replace (if applicable)', 'text to replace <span class=js-hidden>(if applicable)</span>'],
+            [
+                'multiline to replace (if
+                applicable)',
+                'multiline to replace <span class=js-hidden>(if applicable)</span>'
+            ]
         ];
     }
 }
