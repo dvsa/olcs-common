@@ -169,12 +169,8 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
         if ($options['isReview']) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
-            $application = $this->makeRestCall(
-                'Application',
-                'GET',
-                $options['data']['id'],
-                $this->reviewTrafficAreaBundle
-            );
+            $application = $this->getHelperService('RestHelper')
+                ->makeRestCall('Application', 'GET', $options['data']['id'], $this->reviewTrafficAreaBundle);
 
             $value = isset($application['licence']['trafficArea'])
                 ? $application['licence']['trafficArea']['name']
@@ -216,7 +212,8 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
      */
     protected function getOperatingCentreAddressData($id)
     {
-        $data = $this->makeRestCall($this->getActionService(), 'GET', $id, $this->operatingCentreAddressBundle);
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall($this->getActionService(), 'GET', $id, $this->operatingCentreAddressBundle);
 
         return $data['operatingCentre']['address'];
     }

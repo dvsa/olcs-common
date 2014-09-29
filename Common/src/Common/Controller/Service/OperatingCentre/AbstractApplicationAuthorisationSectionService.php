@@ -146,7 +146,7 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
         $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
         $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
 
-        return $this->makeRestCall(
+        return $this->getHelperService('RestHelper')->makeRestCall(
             'Document',
             'GET',
             array(

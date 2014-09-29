@@ -55,7 +55,8 @@ class ExternalApplicationAuthorisationSectionService extends AbstractApplication
         if ($options['isReview']) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
-            $application = $this->makeRestCall('Application', 'GET', $options['data']['id'], $this->trafficAreaBundle);
+            $application = $this->getHelperService('RestHelper')
+                ->makeRestCall('Application', 'GET', $options['data']['id'], $this->trafficAreaBundle);
 
             $value = isset($application['licence']['trafficArea'])
                 ? $application['licence']['trafficArea']['name']

@@ -212,7 +212,8 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
      */
     protected function getTotalAuthorisationsForLicence($id)
     {
-        return $this->makeRestCall('Licence', 'GET', $id, $this->totalAuthorisationsBundle);
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall('Licence', 'GET', $id, $this->totalAuthorisationsBundle);
     }
 
     /**
@@ -252,7 +253,8 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
      */
     protected function getVehicleAuthsForOperatingCentre($id)
     {
-        return $this->makeRestCall('LicenceOperatingCentre', 'GET', $id, $this->ocAuthorisationsBundle);
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall('LicenceOperatingCentre', 'GET', $id, $this->ocAuthorisationsBundle);
     }
 
     /**

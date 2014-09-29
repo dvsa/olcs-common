@@ -25,7 +25,6 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 abstract class AbstractSectionService implements SectionServiceInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait,
-        Util\RestCallTrait,
         Util\HelperServiceAware;
 
     /**
@@ -464,12 +463,8 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     {
         if ($this->actionData === null) {
 
-            $this->actionData = $this->makeRestCall(
-                $this->getActionService(),
-                'GET',
-                $id,
-                $this->getActionDataBundle()
-            );
+            $this->actionData = $this->getHelperService('RestHelper')
+                ->makeRestCall($this->getActionService(), 'GET', $id, $this->getActionDataBundle());
         }
 
         return $this->actionData;
@@ -492,7 +487,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $method = 'PUT';
         }
 
-        return $this->makeRestCall($service, $method, $data);
+        return $this->getHelperService('RestHelper')->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -512,7 +507,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $method = 'PUT';
         }
 
-        return $this->makeRestCall($service, $method, $data);
+        return $this->getHelperService('RestHelper')->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -597,7 +592,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
 
         if (!empty($id) && !empty($service)) {
 
-            $this->makeRestCall($service, 'DELETE', array('id' => $id));
+            $this->getHelperService('RestHelper')->makeRestCall($service, 'DELETE', array('id' => $id));
 
             return true;
         }
@@ -642,7 +637,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         if (empty($this->loadedData)) {
             $service = $this->getService();
 
-            $result = $this->makeRestCall($service, 'GET', $id, $this->getDataBundle());
+            $result = $this->getHelperService('RestHelper')->makeRestCall($service, 'GET', $id, $this->getDataBundle());
 
             $this->loadedData = $result;
         }
@@ -905,17 +900,13 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     public function deleteFile($id, $fieldset, $name)
     {
-        $fileDetails = $this->makeRestCall(
-            'Document',
-            'GET',
-            array('id' => $id),
-            array('properties' => array('identifier'))
-        );
+        $fileDetails = $this->getHelperService('RestHelper')
+            ->makeRestCall('Document', 'GET', $id, array('properties' => array('identifier')));
 
         if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
             if ($this->getUploader()->remove($fileDetails['identifier'])) {
 
-                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $this->getHelperService('RestHelper')->makeRestCall('Document', 'DELETE', array('id' => $id));
                 $fieldset->remove($name);
             }
         }

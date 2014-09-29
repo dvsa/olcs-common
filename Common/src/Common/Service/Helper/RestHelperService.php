@@ -133,19 +133,19 @@ class RestHelperService extends AbstractHelperService
                 $handleResponseMethod = 'handleDeleteResponse';
                 break;
             default:
-                return null;
+                throw new BadRequestException();
         }
 
         // Gets instance of RestClient to make HTTP method call to API
         $response = $this->getRestClient($service)->$serviceMethod($path, $data);
 
         //Handle response and return data
-        return $this->handleResponseMethod($handleResponseMethod, $service, $response);
+        return $this->handleResponseMethod($handleResponseMethod, $response);
     }
 
-    protected function handleResponseMethod($handleResponseMethod, $service, $response)
+    protected function handleResponseMethod($handleResponseMethod, $response)
     {
-        return $this->$handleResponseMethod($service, $response);
+        return $this->$handleResponseMethod($response);
     }
 
     protected function getApiResolver()

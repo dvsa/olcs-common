@@ -94,7 +94,8 @@ class TrafficAreaSectionService extends AbstractSectionService
     {
         if (empty($this->trafficArea)) {
 
-            $application = $this->makeRestCall('Application', 'GET', $this->getIdentifier(), $this->trafficAreaBundle);
+            $application = $this->getHelperService('RestHelper')
+                ->makeRestCall('Application', 'GET', $this->getIdentifier(), $this->trafficAreaBundle);
 
             if (isset($application['licence']['trafficArea'])) {
                 $this->trafficArea = $application['licence']['trafficArea'];
@@ -121,7 +122,7 @@ class TrafficAreaSectionService extends AbstractSectionService
                 'trafficArea' => $id
             );
 
-            $this->makeRestCall('Licence', 'PUT', $data);
+            $this->getHelperService('RestHelper')->makeRestCall('Licence', 'PUT', $data);
 
             if ($id) {
                 $licenceService = $this->getServiceLocator()->get('licence');
@@ -138,7 +139,8 @@ class TrafficAreaSectionService extends AbstractSectionService
     public function getTrafficAreaValueOptions()
     {
         if ($this->valueOptions === null) {
-            $trafficArea = $this->makeRestCall('TrafficArea', 'GET', array(), $this->trafficAreaValuesBundle);
+            $trafficArea = $this->getHelperService('RestHelper')
+                ->makeRestCall('TrafficArea', 'GET', array(), $this->trafficAreaValuesBundle);
 
             $this->valueOptions = array();
             $results = $trafficArea['Results'];
@@ -172,7 +174,8 @@ class TrafficAreaSectionService extends AbstractSectionService
      */
     protected function getLicenceDetailsToUpdateTrafficArea()
     {
-        $application = $this->makeRestCall('Application', 'GET', $this->getIdentifier(), $this->licDetailsForTaBundle);
+        $application = $this->getHelperService('RestHelper')
+            ->makeRestCall('Application', 'GET', $this->getIdentifier(), $this->licDetailsForTaBundle);
 
         return $application['licence'];
     }

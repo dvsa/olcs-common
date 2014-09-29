@@ -52,7 +52,8 @@ class LicenceTrafficAreaSectionService extends TrafficAreaSectionService
     public function getTrafficArea()
     {
         if ($this->trafficArea === null) {
-            $licence = $this->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->trafficAreaBundle);
+            $licence = $this->getHelperService('RestHelper')
+                ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->trafficAreaBundle);
 
             if (isset($licence['trafficArea'])) {
                 $this->trafficArea = $licence['trafficArea'];
@@ -69,6 +70,7 @@ class LicenceTrafficAreaSectionService extends TrafficAreaSectionService
      */
     protected function getLicenceDetailsToUpdateTrafficArea()
     {
-        return $this->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licDetailsForTaBundle);
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licDetailsForTaBundle);
     }
 }

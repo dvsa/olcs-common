@@ -131,12 +131,8 @@ class LicenceSectionService extends AbstractSectionService
     public function getLicenceData()
     {
         if ($this->licenceData === null) {
-            $this->licenceData = $this->makeRestCall(
-                'Licence',
-                'GET',
-                $this->getIdentifier(),
-                $this->licenceDataBundle
-            );
+            $this->licenceData = $this->getHelperService('RestHelper')
+                ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licenceDataBundle);
 
             $this->isPsv = ($this->licenceData['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV);
             $this->licenceType = $this->licenceData['licenceType']['id'];

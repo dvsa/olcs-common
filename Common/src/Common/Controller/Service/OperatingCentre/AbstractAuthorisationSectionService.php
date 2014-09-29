@@ -495,7 +495,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
      */
     protected function getDataFromActionService($id, $bundle)
     {
-        return $this->makeRestCall(
+        return $this->getHelperService('RestHelper')->makeRestCall(
             $this->getActionService(),
             'GET',
             array($this->actionIdentifier => $id),
@@ -811,7 +811,7 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
     {
         if (isset($data['applicationOperatingCentre']['file']['list'])) {
             foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
-                $this->makeRestCall(
+                $this->getHelperService('RestHelper')->makeRestCall(
                     'Document',
                     'PUT',
                     array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
