@@ -19,12 +19,24 @@ use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
  */
 class Textarea extends ZendElement implements InputProviderInterface
 {
+    protected $continueIfEmpty = false;
+    protected $allowEmpty = false;
     protected $required = false;
     protected $max = null;
 
     public function __construct($name = null, $options = array())
     {
         parent::__construct($name, $options);
+    }
+
+    /**
+     * Get a list of validators
+     *
+     * @return array
+     */
+    protected function getValidators()
+    {
+        return array();
     }
 
     /**
@@ -37,11 +49,12 @@ class Textarea extends ZendElement implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => $this->required ?: false,
+            'continueIfEmpty' => $this->continueIfEmpty ?: false,
+            'allowEmpty' => $this->allowEmpty ?: false,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
-            'validators' => [
-            ]
+            'validators' => $this->getValidators()
         ];
 
         if (!empty($this->max)) {

@@ -18,7 +18,8 @@ use Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValid
 class VehicleUndertakingsOperateSmallVehicles extends Textarea implements InputProviderInterface
 {
     protected $continueIfEmpty = true;
-    protected $allowEmpty = false;
+    protected $allowEmpty = true;
+    protected $required = true;
 
     /**
      * Get a list of validators

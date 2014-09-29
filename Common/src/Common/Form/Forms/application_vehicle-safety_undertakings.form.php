@@ -37,7 +37,7 @@ return array(
                     // 15b[ii]
                     'psvSmallVhlNotes' => array(
                         'label' => $translationPrefix . '.smallVehiclesIntentionDetails.title',
-                        'type' => 'textarea',
+                        'type' => 'vehicleUndertakingsSmallVehiclesTextarea',
                         'class' => 'long',
                         'filters' => '\Common\Form\Elements\InputFilters\VehicleUndertakingsOperateSmallVehicles',
                     ),
