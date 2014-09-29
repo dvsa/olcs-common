@@ -1112,7 +1112,7 @@ return array(
     'vehicle-belongs-to-another-licence-message-internal-multiple' => 'W This vehicle is specified on other licences:
         %s. Please confirm you would like to continue adding this vehicle',
     'vehicle-count' => 'W %s vehicles',
-    'vehicle-disc-reprint-confirm-label' => 'W Are you sure you want to remove replacement discs for the selected
+    'vehicle-disc-reprint-confirm-label' => 'W Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
     'vehicle-remove-confirm-label' => 'W Are you sure you want to remove these vehicles?',
     'vehicles' => 'W Vehicles',
