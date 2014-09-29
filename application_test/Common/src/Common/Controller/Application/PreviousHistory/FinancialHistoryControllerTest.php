@@ -124,10 +124,13 @@ class FinancialHistoryControllerTest extends AbstractApplicationControllerTestCa
             )
         );
 
-        $mockUploader = $this->getMock('\Common\Service\File\DiskStoreFileUploader', array('upload'));
+        $mockUploader = $this->getMock('\Common\Service\File\ContentStoreFileUploader', array('upload'));
+
+        $mockFile = $this->getMock('\Common\Service\File\File');
 
         $mockUploader->expects($this->once())
-            ->method('upload');
+            ->method('upload')
+            ->willReturn($mockFile);
 
         $this->controller->expects($this->any())
             ->method('getUploader')
