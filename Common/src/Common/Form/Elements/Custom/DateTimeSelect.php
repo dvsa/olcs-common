@@ -8,6 +8,7 @@
 namespace Common\Form\Elements\Custom;
 
 use Zend\Form\Element as ZendElement;
+use Zend\Form\Exception\InvalidArgumentException;
 
 /**
  * DateTimeSelect
@@ -75,5 +76,25 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
                 $this->getValidator(),
             )
         );
+    }
+
+    /**
+     * Overrides the default zend behaviour if the value is null
+     *
+     * @param mixed $value
+     * @return void|\Zend\Form\Element
+     */
+    public function setValue($value)
+    {
+        if (null === $value) {
+            $this->yearElement->setValue(null);
+            $this->monthElement->setValue(null);
+            $this->dayElement->setValue(null);
+            $this->hourElement->setValue(null);
+            $this->minuteElement->setValue(null);
+            $this->secondElement->setValue(null);
+        } else {
+            parent::setValue($value);
+        }
     }
 }
