@@ -16,6 +16,7 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class VehicleSafetyController extends ApplicationController
 {
+    protected $inlineScripts = ['vehicle-safety'];
     /**
      * Redirect to the first section
      *

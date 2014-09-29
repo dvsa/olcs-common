@@ -25,21 +25,20 @@ $groups = array(
         )
     ),
     array(
+        'title' => 'Vehicles & Safety',
+        'forms' => array(
+            'application_vehicle-safety_safety',
+            'application_vehicle-safety_undertakings'
+        )
+    ),
+    array(
         'title' => 'Previous history',
         'forms' => array(
             'application_previous-history_financial-history',
             'application_previous-history_licence-history',
             'application_previous-history_convictions-penalties',
         )
-    ),
-    array(
-        'title' => 'Vehicles & Safety',
-        'forms' => array(
-            'application_vehicle-safety_safety',
-            'application_vehicle-safety_undertakings'
-        )
     )
-
 );
 
 $formFieldsets = [];

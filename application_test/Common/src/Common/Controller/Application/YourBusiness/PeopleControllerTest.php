@@ -586,6 +586,7 @@ class PeopleControllerTest extends AbstractApplicationControllerTestCase
                 'version' => 1,
                 'licence' => array(
                     'organisation' => array(
+                        'id' => 1,
                         'type' => array(
                             'id' => $this->organisationType
                         )
