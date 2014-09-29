@@ -14,6 +14,11 @@ use Common\Form\Elements\Custom\DateTimeSelect as DateTimeSelectElement;
 use IntlDateFormatter;
 use DateTime;
 
+/**
+ * Renders a date time select element
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ */
 class FormDateTimeSelect extends ZendFormDateTimeSelect
 {
     /**
