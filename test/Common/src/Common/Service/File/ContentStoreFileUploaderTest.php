@@ -50,6 +50,7 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
     {
         $file = new \Dvsa\Jackrabbit\Data\Object\File();
         $file->setContent('dummy content');
+        $file->setMimeType('application/rtf');
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
@@ -58,8 +59,15 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->uploader->download('identifier', 'file.txt');
 
+        $headers = [
+            'Content-Disposition' => 'attachment; filename="file.txt"',
+            'Content-Type' => 'application/rtf',
+            'Content-Length' => '13'
+        ];
+
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('dummy content', $response->getContent());
+        $this->assertEquals($headers, $response->getHeaders()->toArray());
     }
 
     public function testRemoveProxiesThroughToContentStore()
