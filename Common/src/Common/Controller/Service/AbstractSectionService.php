@@ -12,7 +12,6 @@ use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\View\Model\ViewModel;
 use Zend\Validator\File\FilesSize;
-use Common\Form\Elements\Types\Address;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
@@ -931,8 +930,6 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     {
         return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
-
-    // @NOTE THESE ARE TEMPORARY
 
     /**
      * Set service
