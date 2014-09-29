@@ -1,7 +1,7 @@
 <?php
 
 /**
- * StringHelperService
+ * String Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -11,7 +11,7 @@ use Zend\Filter\Word\DashToCamelCase;
 use Zend\Filter\Word\CamelCaseToDash;
 
 /**
- * StringHelperService
+ * String Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */

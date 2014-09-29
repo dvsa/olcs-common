@@ -38,8 +38,11 @@ abstract class AbstractHelperService implements HelperServiceInterface, ServiceL
      * @param string $name
      * @return \Common\Service\Helper\HelperServiceInterface
      */
+    /*
+     * @NOTE Currently unused, but if needed remove the comments
     protected function getHelperService($name)
     {
         return $this->serviceFactory->getHelperService($name);
     }
+     */
 }
