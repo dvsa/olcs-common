@@ -192,7 +192,6 @@ class LicenceSectionServiceTest extends AbstractSectionServiceTestCase
      */
     public function testSingleRestCall()
     {
-
         $id = 3;
         $licenceData = array(
             'id' => 3,
@@ -231,19 +230,5 @@ class LicenceSectionServiceTest extends AbstractSectionServiceTestCase
         $output = $this->sut->isPsv();
 
         $this->assertEquals(false, $output);
-    }
-
-    protected function attachRestHelperMock()
-    {
-        $this->mockRestHelper = $this->getMock('\stdClass', array('makeRestCall'));
-
-        $mockHelperService = $this->getMock('\stdClass', array('getHelperService'));
-        $mockHelperService->expects($this->any())
-            ->method('getHelperService')
-            ->with('RestHelper')
-            ->will($this->returnValue($this->mockRestHelper));
-
-        $this->serviceManager->setAllowOverride(true);
-        $this->serviceManager->setService('HelperService', $mockHelperService);
     }
 }
