@@ -22,22 +22,13 @@ class ApplicationSectionServiceTest extends AbstractSectionServiceTestCase
      *
      * @var \Common\Controller\Service\ApplicationSectionService
      */
-    private $sut;
-
-    private $mockSectionServiceFactory;
+    protected $sut;
 
     protected function setUp()
     {
-        $this->mockSectionServiceFactory = $this->getMock(
-            '\Common\Controller\Service\SectionServiceFactory',
-            array('createSectionService')
-        );
-
-        $this->serviceManager = Bootstrap::getServiceManager();
-
         $this->sut = new ApplicationSectionService();
-        $this->sut->setServiceLocator($this->serviceManager);
-        $this->sut->setSectionServiceFactory($this->mockSectionServiceFactory);
+
+        parent::setUp();
     }
 
     /**
@@ -63,10 +54,7 @@ class ApplicationSectionServiceTest extends AbstractSectionServiceTestCase
 
         $licenceService = new \Common\Controller\Service\LicenceSectionService();
 
-        $this->mockSectionServiceFactory->expects($this->once())
-            ->method('createSectionService')
-            ->with('Licence')
-            ->will($this->returnValue($licenceService));
+        $this->mockSectionService('Licence', $licenceService);
 
         $service = $this->sut->getLicenceSectionService();
 

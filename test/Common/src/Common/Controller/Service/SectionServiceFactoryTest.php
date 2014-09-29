@@ -23,9 +23,9 @@ class SectionServiceFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @var \Common\Controller\Service\SectionServiceFactoryTest
      */
-    private $sut;
+    protected $sut;
 
-    private $serviceManager;
+    protected $serviceManager;
 
     /**
      * Setup the sut

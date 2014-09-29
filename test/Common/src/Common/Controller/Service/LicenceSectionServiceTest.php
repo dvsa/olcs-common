@@ -9,7 +9,6 @@ namespace CommonTest\Controller\Service;
 
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
-use CommonTest\Bootstrap;
 use Zend\Form\Element\Text;
 use Common\Controller\Service\LicenceSectionService;
 
@@ -25,14 +24,13 @@ class LicenceSectionServiceTest extends AbstractSectionServiceTestCase
      *
      * @var \Common\Controller\Service\LicenceSectionService
      */
-    private $sut;
+    protected $sut;
 
     protected function setUp()
     {
-        $this->serviceManager = Bootstrap::getServiceManager();
-
         $this->sut = new LicenceSectionService();
-        $this->sut->setServiceLocator($this->serviceManager);
+
+        parent::setUp();
     }
 
     /**

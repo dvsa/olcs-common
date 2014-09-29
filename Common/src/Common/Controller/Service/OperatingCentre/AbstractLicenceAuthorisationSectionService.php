@@ -266,4 +266,13 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
     {
         return $this->getSectionService('Licence');
     }
+
+    /**
+     * Alter action form for Goods licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForGoods(Form $form)
+    {
+    }
 }

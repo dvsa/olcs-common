@@ -21,25 +21,6 @@ use Zend\InputFilter\InputFilter;
 class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthorisationSectionService
 {
     /**
-     * Holds the traffic area bundle
-     *
-     * @var array
-     */
-    private $reviewTrafficAreaBundle = array(
-        'children' => array(
-            'licence' => array(
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'name'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    /**
      * Operating centre address bundle
      *
      * @var array
@@ -150,39 +131,6 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
     }
 
     /**
-     * Make form alterations
-     *
-     * This method enables the summary to apply the same form alterations. In this
-     * case we ensure we manipulate the form based on whether the license is PSV or not
-     *
-     * @param \Zend\Form\Form $form
-     * @param array $options
-     *
-     * @return $form
-     */
-    public function makeFormAlterations(Form $form, $options = array())
-    {
-        $form = parent::makeFormAlterations($form, $options);
-
-        $fieldsetMap = $this->getFieldsetMap($form, $options);
-
-        if ($options['isReview']) {
-            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
-
-            $application = $this->getHelperService('RestHelper')
-                ->makeRestCall('Application', 'GET', $options['data']['id'], $this->reviewTrafficAreaBundle);
-
-            $value = isset($application['licence']['trafficArea'])
-                ? $application['licence']['trafficArea']['name']
-                : 'unset';
-
-            $form->get($fieldsetMap['dataTrafficArea'])->get('trafficAreaInfoNameExists')->setValue($value);
-        }
-
-        return $form;
-    }
-
-    /**
      * Post set form data
      *
      * @param \Zend\Form\Form $form
@@ -225,6 +173,8 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
      */
     protected function alterActionFormForGoods(Form $form)
     {
+        parent::alterActionFormForGoods($form);
+
         $form->remove('advertisements')
             ->get('data')
             ->remove('sufficientParking')

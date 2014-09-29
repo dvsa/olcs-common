@@ -337,6 +337,21 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
             $this->alterFormForGoodsLicences($form, $fieldsetMap);
         }
 
+        if ($options['isReview']) {
+            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
+
+            $trafficAreaSection = $this->createSectionService('TrafficArea');
+            $trafficAreaSection->setIdentifier($options['data']['id']);
+            $trafficArea = $trafficAreaSection->getTrafficArea();
+
+            if (!isset($trafficArea['name'])) {
+                $trafficArea['name'] = 'unset';
+            }
+
+            $form->get($fieldsetMap['dataTrafficArea'])->get('trafficAreaInfoNameExists')
+                ->setValue($trafficArea['name']);
+        }
+
         return $form;
     }
 

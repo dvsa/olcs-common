@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Controller\Service;
 
-use CommonTest\Bootstrap;
 use Common\Controller\Service\TrafficAreaSectionService;
 
 /**
@@ -22,14 +21,13 @@ class TrafficAreaSectionServiceTest extends AbstractSectionServiceTestCase
      *
      * @var \Common\Controller\Service\TrafficAreaSectionService
      */
-    private $sut;
+    protected $sut;
 
     protected function setUp()
     {
-        $this->serviceManager = Bootstrap::getServiceManager();
-
         $this->sut = new TrafficAreaSectionService();
-        $this->sut->setServiceLocator($this->serviceManager);
+
+        parent::setUp();
     }
 
     /**
