@@ -55,10 +55,17 @@ class UndertakingsController extends VehicleSafetyController
             'psvOnlyLimousinesConfirmation',
         ),
         'children' => array(
-            'trafficArea' => array(
+            'licence' => array(
                 'properties' => array(
                     'id',
-                    'isScottishRules',
+                ),
+                'children' => array(
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'isScottishRules',
+                        ),
+                    ),
                 ),
             ),
             'status' => array(
@@ -174,8 +181,8 @@ class UndertakingsController extends VehicleSafetyController
         $data = $options['data'];
 
         // If this traffic area has no Scottish Rules flag, set it to false.
-        if (!isset($data['trafficArea']['isScottishRules'])) {
-            $data['trafficArea']['isScottishRules'] = false;
+        if (!isset($data['licence']['trafficArea']['isScottishRules'])) {
+            $data['licence']['trafficArea']['isScottishRules'] = false;
         }
 
         // In some cases, totAuthSmallVhl etc. can be set NULL, and we
@@ -210,7 +217,7 @@ class UndertakingsController extends VehicleSafetyController
             // Small vehicles - cases 1, 2, 4, 5
             if ($data['totAuthMediumVehicles'] == 0 && $data['totAuthLargeVehicles'] == 0) {
                 // Small only, cases 1, 2
-                if ($data['trafficArea']['isScottishRules']) {
+                if ($data['licence']['trafficArea']['isScottishRules']) {
                     // Case 2 - Scottish small only
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
@@ -225,7 +232,7 @@ class UndertakingsController extends VehicleSafetyController
                 }
             } else {
                 // cases 4, 5
-                if ($data['trafficArea']['isScottishRules']) {
+                if ($data['licence']['trafficArea']['isScottishRules']) {
                     // Case 5 Mix Scotland
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvOperateSmallVhl');
                     $form->get($fieldsetMap['smallVehiclesIntention'])->remove('psvSmallVhlNotes');
