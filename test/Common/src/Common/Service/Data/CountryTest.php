@@ -59,7 +59,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $mockRestClient
             ->shouldReceive('get')
             ->once()
-            ->with('', ['limit' => 1000, 'order' => 'countryDesc'])
+            ->with('', ['limit' => 1000, 'sort' => 'countryDesc'])
             ->andReturn($data);
 
         $sut = new Country();
