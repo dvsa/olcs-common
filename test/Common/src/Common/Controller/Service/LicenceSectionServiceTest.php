@@ -11,7 +11,6 @@ use Zend\Form\Form;
 use Zend\Form\Fieldset;
 use CommonTest\Bootstrap;
 use Zend\Form\Element\Text;
-use PHPUnit_Framework_TestCase;
 use Common\Controller\Service\LicenceSectionService;
 
 /**
@@ -19,7 +18,7 @@ use Common\Controller\Service\LicenceSectionService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceSectionServiceTest extends PHPUnit_Framework_TestCase
+class LicenceSectionServiceTest extends AbstractSectionServiceTestCase
 {
     /**
      * Holds the SUT
@@ -27,15 +26,6 @@ class LicenceSectionServiceTest extends PHPUnit_Framework_TestCase
      * @var \Common\Controller\Service\LicenceSectionService
      */
     private $sut;
-
-    /**
-     * Service manager
-     *
-     * @var \Zend\ServiceManager\ServiceManager
-     */
-    private $serviceManager;
-
-    private $mockRestHelper;
 
     protected function setUp()
     {
