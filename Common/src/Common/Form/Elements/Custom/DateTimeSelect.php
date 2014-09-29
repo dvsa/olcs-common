@@ -92,7 +92,7 @@ class DateTimeSelect extends ZendElement\DateTimeSelect
             $this->dayElement->setValue(null);
             $this->hourElement->setValue(null);
             $this->minuteElement->setValue(null);
-            $this->secondElement->setValue(null);
+            $this->secondElement->setValue('00');
         } else {
             parent::setValue($value);
         }
