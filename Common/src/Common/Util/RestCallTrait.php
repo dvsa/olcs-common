@@ -10,12 +10,13 @@ namespace Common\Util;
 /**
  * Make rest calls and handle the response
  *
+ * @todo This has been left in for backwards compatability, we need to remove this eventually and use the rest helper
+ *  service
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 trait RestCallTrait
 {
-    use HelperServiceAware;
-
     /**
      * Send a get request
      *
@@ -25,7 +26,7 @@ trait RestCallTrait
      */
     public function sendGet($service, $data = array(), $appendParamsToRoute = false)
     {
-        return $this->getHelperService('RestHelper')->sendGet($service, $data, $appendParamsToRoute);
+        return $this->getRestService()->sendGet($service, $data, $appendParamsToRoute);
     }
 
     /**
@@ -37,7 +38,7 @@ trait RestCallTrait
      */
     public function sendPost($service, $data = array())
     {
-        return $this->getHelperService('RestHelper')->sendPost($service, $data);
+        return $this->getRestService()->sendPost($service, $data);
     }
 
     /**
@@ -50,7 +51,7 @@ trait RestCallTrait
      */
     public function makeRestCall($service, $method, $data, array $bundle = null)
     {
-        return $this->getHelperService('RestHelper')->makeRestCall($service, $method, $data, $bundle);
+        return $this->getRestService()->makeRestCall($service, $method, $data, $bundle);
     }
 
     /**
@@ -60,6 +61,16 @@ trait RestCallTrait
      */
     public function getRestClient($service)
     {
-        return $this->getHelperService('RestHelper')->getRestClient($service);
+        return $this->getRestService()->getRestClient($service);
+    }
+
+    /**
+     * Get rest service
+     *
+     * @return \Common\Service\Helper\RestHelperService
+     */
+    protected function getRestService()
+    {
+        return $this->getServiceLocator()->get('HelperService')->getHelperService('RestHelper');
     }
 }
