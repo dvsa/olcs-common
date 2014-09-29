@@ -48,9 +48,9 @@ class Textarea extends ZendElement implements InputProviderInterface
     {
         $specification = [
             'name' => $this->getName(),
-            'required' => $this->required ?: false,
-            'continueIfEmpty' => $this->continueIfEmpty ?: false,
-            'allowEmpty' => $this->allowEmpty ?: false,
+            'required' => $this->required,
+            'continue_if_empty' => $this->continueIfEmpty,
+            'allow_empty' => $this->allowEmpty,
             'filters' => [
                 ['name' => 'Zend\Filter\StringTrim']
             ],
