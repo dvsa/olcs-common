@@ -562,6 +562,7 @@ return array(
     'documents-home.data.digitalonly' => 'Digital only',
     'documents-home.data.format' => 'Format',
     'documents-home.data.sub_category' => 'Sub category',
+    'documents-home.submit.filter' => 'Filter',
     'documents.bookmarks' => 'Bookmarks',
     'documents.data.category' => 'Category',
     'documents.data.file' => 'File Upload',
