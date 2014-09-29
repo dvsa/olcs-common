@@ -263,13 +263,11 @@ class BusinessDetailsController extends YourBusinessController
         }
 
         // If this is a review, remove the trading names section
-        if ( $organisation['type']['id'] != self::ORG_TYPE_OTHER ) {
-            if ( $options['isReview'] ) {
-                $fieldset->remove('tradingNames')->remove('edit_business_type');
-                $fieldset->get('companyNumber')->remove('submit_lookup_company');
-            } else {
-                $fieldset->remove('tradingNamesReview');
-            }
+        if ( $organisation['type']['id'] != self::ORG_TYPE_OTHER && $options['isReview'] ) {
+            $fieldset->remove('tradingNames')->remove('edit_business_type');
+            $fieldset->get('companyNumber')->remove('submit_lookup_company');
+        } else {
+            $fieldset->remove('tradingNamesReview');
         }
 
         return $form;

@@ -163,7 +163,7 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Map a table to it's type. This also maps review table types.
+     * Map a table to its type. This also maps review table types.
      *
      * @var array
      */
@@ -319,8 +319,8 @@ class LicenceHistoryController extends PreviousHistoryController
         $action = array_pop($parts);
         $type = implode('-', $parts);
 
-        if ($action == 'add' && isset($this->mapTableToType[$type])) {
-            $data['previousLicenceType'] = $this->mapTableToType[$type];
+        if ($action == 'add' && isset(self::$mapTableToType[$type])) {
+            $data['previousLicenceType'] = self::$mapTableToType[$type];
         }
 
         if (array_key_exists('willSurrender', $data)) {

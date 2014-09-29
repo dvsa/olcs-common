@@ -245,6 +245,8 @@ trait VehiclePsvSection
             $form->get('data')->remove('isNovelty');
         }
 
+        $form->get('licence-vehicle')->remove('discNo');
+
         return $form;
     }
 
