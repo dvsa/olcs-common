@@ -126,7 +126,7 @@ class PeopleController extends YourBusinessController
         $data = $context->makeRestCall(
             'OrganisationPerson',
             'GET',
-            array('organisation' => $org['id']),
+            array('organisation' => $org, 'limit' => 50),
             $bundle
         );
 
