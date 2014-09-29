@@ -218,6 +218,12 @@ class File
         return substr($this->name, $extPos + 1);
     }
 
+    public function getRealType()
+    {
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        return $finfo->buffer($this->getContent());
+    }
+
     /**
      * Populate properties from data
      *

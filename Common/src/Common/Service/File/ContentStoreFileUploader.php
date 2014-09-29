@@ -37,7 +37,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $storeFile = new ContentStoreFile();
         $storeFile->setContent($file->getContent())
-            ->setMimeType($file->getType())
+            ->setMimeType($file->getRealType())
             ->setMetaData(new \ArrayObject($file->getMeta()));
 
         $response = $this->getServiceLocator()
@@ -45,7 +45,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
             ->write($path, $storeFile);
 
         if (!$response->isSuccess()) {
-            throw new \Exception('Unable to store uploaded file');
+            throw new Exception('Unable to store uploaded file');
         }
 
         $file->setPath($path);

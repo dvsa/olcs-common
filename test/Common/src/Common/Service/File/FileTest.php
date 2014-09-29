@@ -90,4 +90,15 @@ class FileTest extends \PHPUnit_Framework_TestCase
             array('article.jpg.doc', 'doc')
         );
     }
+
+    public function testGetRealType()
+    {
+        $file = new File();
+        $file->setContent('plain text');
+
+        $this->assertEquals(
+            'text/plain',
+            $file->getRealType()
+        );
+    }
 }
