@@ -319,8 +319,8 @@ class LicenceHistoryController extends PreviousHistoryController
         $action = array_pop($parts);
         $type = implode('-', $parts);
 
-        if ($action == 'add' && isset($this->mapTableToType[$type])) {
-            $data['previousLicenceType'] = $this->mapTableToType[$type];
+        if ($action == 'add' && isset(self::$mapTableToType[$type])) {
+            $data['previousLicenceType'] = self::$mapTableToType[$type];
         }
 
         if (array_key_exists('willSurrender', $data)) {
