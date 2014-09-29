@@ -123,8 +123,8 @@ return array(
         application for this operating centre in your local newspaper?',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate' => 'Date advertisement was
         placed (if applicable)',
-    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name
-        (if applicable)',
+    'application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn' => 'Newspaper name (if
+        applicable)',
     'application_operating-centres_authorisation-sub-action.advertisements.file' => 'Advertisement (if applicable)
         (optional)',
     'application_operating-centres_authorisation-sub-action.advertisements.file.hint' => 'Please upload a copy of the
@@ -972,8 +972,8 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'Offense Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'Please add any relevant
         offences which must be declared to the traffic commissioner.',
-        'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions & penalties
-        (if applicable)',
+    'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'Convictions & penalties (if
+        applicable)',
     'selfserve-app-subSection-previous-history-criminal-conviction-viewAddOffence' => 'Add offence',
     'selfserve-app-subSection-previous-history-licence-history-disqualificationDate' => 'Date of disqualification',
     'selfserve-app-subSection-previous-history-licence-history-disqualificationLength' => 'Length of disqualification',
@@ -1088,7 +1088,7 @@ return array(
     'vehicle-belongs-to-another-licence-message-internal-multiple' => 'This vehicle is specified on other licences: %s.
         Please confirm you would like to continue adding this vehicle',
     'vehicle-count' => '%s vehicles',
-    'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to remove replacement discs for the selected
+    'vehicle-disc-reprint-confirm-label' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
     'vehicle-remove-confirm-label' => 'Are you sure you want to remove these vehicles?',
     'vehicles' => 'Vehicles',
