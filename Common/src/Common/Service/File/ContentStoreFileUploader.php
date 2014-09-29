@@ -76,8 +76,9 @@ class ContentStoreFileUploader extends AbstractFileUploader
         $response->setStatusCode(200);
         $response->getHeaders()->addHeaders(
             array(
-                "Content-Disposition: attachment; filename='" . $name . "'",
-                "Content-Length" => strlen($fileData)
+                'Content-Disposition: attachment; filename="' . $name . '"',
+                'Content-Type' => $file->getMimeType(),
+                'Content-Length' => strlen($fileData)
             )
         );
 
