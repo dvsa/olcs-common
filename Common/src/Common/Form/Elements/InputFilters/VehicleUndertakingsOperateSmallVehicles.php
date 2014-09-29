@@ -19,7 +19,6 @@ class VehicleUndertakingsOperateSmallVehicles extends Textarea implements InputP
 {
     protected $continueIfEmpty = true;
     protected $allowEmpty = false;
-    protected $required = false;
 
     /**
      * Get a list of validators
