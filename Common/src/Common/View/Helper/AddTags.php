@@ -20,10 +20,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class AddTags extends AbstractHelper implements HelperInterface
 {
     private $tags = [
-        // yes, slight repetition of the key phrase but MUCH faster than
-        // having to use preg_replace or sprintf
+        // yes, slight repetition of the key phrase
+        // but it'll be faster than using a backreference
         // @TODO welsh equivalent when we know what it is
-        '(if applicable)' => '<span class=js-hidden>(if applicable)</span>'
+        '\(if\s+applicable\)' => '<span class=js-hidden>(if applicable)</span>'
     ];
 
     /**
@@ -37,9 +37,9 @@ class AddTags extends AbstractHelper implements HelperInterface
         $replace = [];
 
         foreach ($this->tags as $s => $r) {
-            $search[] = $s;
+            $search[] = '#'.$s.'#';
             $replace[] = $r;
         }
-        return str_replace($search, $replace, $str);
+        return preg_replace($search, $replace, $str);
     }
 }
