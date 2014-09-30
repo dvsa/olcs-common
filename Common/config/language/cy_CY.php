@@ -529,6 +529,7 @@ return array(
     'documents-home.data.digitalonly' => 'W Digital only',
     'documents-home.data.format' => 'W Format',
     'documents-home.data.sub_category' => 'W Sub category',
+    'documents-home.submit.filter' => 'W Filter',
     'doo' => 'W DOO',
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',

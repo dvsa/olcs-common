@@ -35,10 +35,14 @@ class Form extends \Zend\Form\View\Helper\Form
         $fieldsets = $elements = array();
         $hiddenSubmitElement = '';
 
+        $tagDecorator = $this->getView()->plugin('addTags');
+
         foreach ($form as $element) {
 
             if ($element instanceof FieldsetInterface) {
-                $fieldsets[] = $this->getView()->formCollection($element);
+                $fieldsets[] = $tagDecorator(
+                    $this->getView()->formCollection($element)
+                );
             } elseif ($element->getName() == 'form-actions[submit]') {
                 $hiddenSubmitElement = $this->getView()->formRow($element);
             } else {

@@ -64,7 +64,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'building_name' => 'Awesome House',
             'street_description' => 'STREET NAME',
             'locality_name' => null,
-            'town_name' => 'Some Town',
+            'post_town' => 'Some Town',
             'administritive_area' => 'Some Area',
             'postcode' => 'AB1 1AB'
         );
@@ -101,7 +101,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'pao_text' => 'Some Street',
             'street_description' => 'STREET NAME',
             'locality_name' => null,
-            'town_name' => 'Some Town',
+            'post_town' => 'Some Town',
             'administritive_area' => 'Some Area',
             'postcode' => 'AB1 1AB'
         );
@@ -121,7 +121,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test formatPostalAddressFromBs7666 With admin area same as town_name
+     * Test formatPostalAddressFromBs7666 With admin area same as post_town
      */
     public function testFormatPostalAddressFromBs7666WithSameAdminAndTown()
     {
@@ -138,7 +138,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'pao_text' => 'Some Street',
             'street_description' => 'STREET NAME',
             'locality_name' => null,
-            'town_name' => 'Some Town',
+            'post_town' => 'Some Town',
             'administritive_area' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
@@ -175,7 +175,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
             'pao_text' => 'Some Street',
             'street_description' => 'STREET NAME',
             'locality_name' => null,
-            'town_name' => 'Some Town',
+            'post_town' => 'Some Town',
             'administritive_area' => 'Some Town',
             'postcode' => 'AB1 1AB'
         );
@@ -208,7 +208,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
                 'building_name' => 'Awesome House',
                 'street_description' => 'STREET NAME',
                 'locality_name' => null,
-                'town_name' => 'Some Town',
+                'post_town' => 'Some Town',
                 'administritive_area' => 'Some Area',
                 'postcode' => 'AB1 1AB'
             ),
@@ -226,7 +226,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
                 'pao_text' => 'Some Street',
                 'street_description' => 'STREET NAME',
                 'locality_name' => null,
-                'town_name' => 'Some Town',
+                'post_town' => 'Some Town',
                 'administritive_area' => 'Some Area',
                 'postcode' => 'AB1 1AB'
             ),
@@ -244,7 +244,7 @@ class AddressTest extends PHPUnit_Framework_TestCase
                 'pao_text' => 'Some Street',
                 'street_description' => 'STREET NAME',
                 'locality_name' => null,
-                'town_name' => 'Some Town',
+                'post_town' => 'Some Town',
                 'administritive_area' => 'Some Town',
                 'postcode' => 'AB1 1AB'
             )

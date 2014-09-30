@@ -1,7 +1,7 @@
 <?php
 
 /**
- * VehiclesUndertakingsOperateSmallVehicles
+ * VehicleUndertakingsNoLimousineConfirmationValidator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
@@ -10,11 +10,11 @@ namespace Common\Form\Elements\Validators;
 use Zend\Validator\AbstractValidator;
 
 /**
- * VehiclesUndertakingsOperateSmallVehiclesValidator
+ * VehicleUndertakingsOperateSmallVehiclesAgreementValidator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
+class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValidator
 {
     /**
      * Message templates
@@ -22,11 +22,11 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'required' => 'Value is required and can\'t be empty'
+        'required' => 'You must agree'
     );
 
     /**
-     * Custom validation for undertakings text field
+     * Custom validation for undertakings checkbox field
      *
      * @param mixed $value
      * @param array $context
@@ -35,14 +35,16 @@ class VehicleUndertakingsOperateSmallVehiclesValidator extends AbstractValidator
     {
         unset($value);
 
-        // This only gets used if psvOperateSmallVehicles is shown
-        if ( isset($context['psvOperateSmallVhl']) ) {
-            if ($context['psvOperateSmallVhl'] === 'Y'
-                && trim($context['psvSmallVhlNotes']) === '') {
+        // This only gets used if psvOperateSmallVhl is shown
+        if ( isset($context['psvLimousines']) ) {
+            if ($context['psvLimousines'] === 'N'
+                && $context['psvNoLimousineConfirmation'] !== '1') {
                 $this->error('required');
+
                 return false;
             }
         }
+
         return true;
     }
 }

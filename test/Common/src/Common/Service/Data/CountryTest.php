@@ -56,7 +56,11 @@ class CountryTest extends \PHPUnit_Framework_TestCase
     public function testFetchListData($data, $expected)
     {
         $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->with('', ['limit' => 1000])->andReturn($data);
+        $mockRestClient
+            ->shouldReceive('get')
+            ->once()
+            ->with('', ['limit' => 1000, 'sort' => 'countryDesc'])
+            ->andReturn($data);
 
         $sut = new Country();
         $sut->setRestClient($mockRestClient);

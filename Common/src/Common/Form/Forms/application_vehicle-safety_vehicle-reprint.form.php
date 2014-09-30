@@ -32,7 +32,7 @@ return array(
                         'label' => 'Ok',
                         'class' => 'action--primary large'
                     ),
-                    'back' => array(
+                    'cancel' => array(
                         'enable' => true,
                         'type' => 'submit',
                         'filters' => '\Common\Form\Elements\InputFilters\ActionButton',

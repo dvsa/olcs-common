@@ -53,11 +53,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => false
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => false
                 ),
                 'totAuthSmallVehicles' => 1,
                 'totAuthMediumVehicles' => 1,
@@ -100,11 +100,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => false
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => false
                 ),
                 'totAuthSmallVehicles' => 1,
                 'totAuthMediumVehicles' => 0,
@@ -163,11 +163,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 8,
+                        'isScottishRules' => true
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 8,
-                    'isScottishRules' => true
                 ),
                 'totAuthSmallVehicles' => 1,
                 'totAuthMediumVehicles' => 0,
@@ -228,11 +228,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => false
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => false
                 ),
                 'totAuthSmallVehicles' => 0,
                 'totAuthMediumVehicles' => 1,
@@ -292,11 +292,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => null
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => null
                 ),
                 'totAuthSmallVehicles' => null,
                 'totAuthMediumVehicles' => 1,
@@ -355,11 +355,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => false
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => false
                 ),
                 'totAuthSmallVehicles' => 1,
                 'totAuthMediumVehicles' => 1,
@@ -418,11 +418,11 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                         'type' => array(
                             'id' => ApplicationController::ORG_TYPE_REGISTERED_COMPANY
                         )
+                    ),
+                    'trafficArea' => array(
+                        'id' => 5,
+                        'isScottishRules' => true
                     )
-                ),
-                'trafficArea' => array(
-                    'id' => 5,
-                    'isScottishRules' => true
                 ),
                 'totAuthSmallVehicles' => 1,
                 'totAuthMediumVehicles' => 1,
@@ -518,10 +518,17 @@ class UndertakingsControllerTest extends AbstractApplicationControllerTestCase
                 'psvOnlyLimousinesConfirmation',
             ),
             'children' => array(
-                'trafficArea' => array(
+                'licence' => array(
                     'properties' => array(
                         'id',
-                        'isScottishRules',
+                    ),
+                    'children' => array(
+                        'trafficArea' => array(
+                            'properties' => array(
+                                'id',
+                                'isScottishRules',
+                            ),
+                        ),
                     ),
                 ),
                 'status' => array(

@@ -55,7 +55,7 @@ class Country extends AbstractData implements ListDataInterface
     {
         if (is_null($this->getData('Country'))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000]);
+            $data = $this->getRestClient()->get('', ['limit' => 1000, 'sort' => 'countryDesc']);
 
             $this->setData('Country', false);
 
