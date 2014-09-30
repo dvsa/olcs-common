@@ -12,7 +12,6 @@ use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 use Common\Helper\RestrictionHelper;
 use Common\Controller\AbstractSectionController;
-use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * Abstract Journey Controller
@@ -274,7 +273,8 @@ abstract class AbstractJourneyController extends AbstractSectionController
                 $suffix = '-' . $this->getActionName();
             }
 
-            $this->sectionReference = $this->getHelperService('StringHelper')->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
+            $this->sectionReference = $this->getHelperService('StringHelper')
+                ->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
         }
 
         return $this->sectionReference;
@@ -341,7 +341,8 @@ abstract class AbstractJourneyController extends AbstractSectionController
             $suffix = $this->getSuffixForAction($action);
         }
 
-        return $this->getHelperService('StringHelper')->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
+        return $this->getHelperService('StringHelper')
+            ->camelToDash($journey . '_' . $section . '_' . $subSection . $suffix);
     }
 
     /**
@@ -461,7 +462,8 @@ abstract class AbstractJourneyController extends AbstractSectionController
             $section = $this->getSectionName();
             $subSection = $this->getSubSectionName();
 
-            $this->viewName = $this->getHelperService('StringHelper')->camelToDash($journey . '/' . $section . '/' . $subSection);
+            $this->viewName = $this->getHelperService('StringHelper')
+                ->camelToDash($journey . '/' . $section . '/' . $subSection);
 
             if ($this->isAction()) {
                 $this->viewName .= '-' . $this->getActionName();
@@ -612,7 +614,8 @@ abstract class AbstractJourneyController extends AbstractSectionController
     protected function getSectionLabel($journey, $section, $subSection = null)
     {
         return strtolower(
-            $this->getHelperService('StringHelper')->camelToDash($journey . '.' . $section . (!empty($subSection) ? '.' . $subSection : ''))
+            $this->getHelperService('StringHelper')
+                ->camelToDash($journey . '.' . $section . (!empty($subSection) ? '.' . $subSection : ''))
         );
     }
 

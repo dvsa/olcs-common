@@ -140,7 +140,6 @@ class TrafficAreaSectionServiceTest extends AbstractSectionServiceTestCase
             ->with('Application', 'GET', $id)
             ->will($this->returnValue($response));
 
-
         $this->assertEquals('foo', $this->sut->getTrafficArea());
     }
 
@@ -160,7 +159,6 @@ class TrafficAreaSectionServiceTest extends AbstractSectionServiceTestCase
             ->method('makeRestCall')
             ->with('Application', 'GET', $id)
             ->will($this->returnValue($response));
-
 
         $this->assertEquals(null, $this->sut->getTrafficArea());
     }
@@ -205,7 +203,6 @@ class TrafficAreaSectionServiceTest extends AbstractSectionServiceTestCase
             ->method('makeRestCall')
             ->with('TrafficArea', 'GET', array())
             ->will($this->returnValue($response));
-
 
         $options = $this->sut->getTrafficAreaValueOptions();
 

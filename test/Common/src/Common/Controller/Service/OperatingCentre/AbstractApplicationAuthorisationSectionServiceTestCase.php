@@ -7,13 +7,14 @@
  */
 namespace CommonTest\Controller\Service\OperatingCentre;
 
+use CommonTest\Controller\Service\OperatingCentre\AbstractAuthorisationSectionServiceTestCase as AbstractAuthTestCase;
+
 /**
  * Abstract Application Authorisation Section Service Test Case
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractApplicationAuthorisationSectionServiceTestCase
-    extends AbstractAuthorisationSectionServiceTestCase
+abstract class AbstractApplicationAuthorisationSectionServiceTestCase extends AbstractAuthTestCase
 {
 
     protected function getMockLicenceSectionService()

@@ -134,7 +134,6 @@ class LicenceTrafficAreaSectionServiceTest extends AbstractSectionServiceTestCas
             ->with('Licence', 'GET', $id)
             ->will($this->returnValue($response));
 
-
         $this->assertEquals('foo', $this->sut->getTrafficArea());
     }
 
@@ -154,7 +153,6 @@ class LicenceTrafficAreaSectionServiceTest extends AbstractSectionServiceTestCas
             ->method('makeRestCall')
             ->with('Licence', 'GET', $id)
             ->will($this->returnValue($response));
-
 
         $this->assertEquals(null, $this->sut->getTrafficArea());
     }
@@ -199,7 +197,6 @@ class LicenceTrafficAreaSectionServiceTest extends AbstractSectionServiceTestCas
             ->method('makeRestCall')
             ->with('TrafficArea', 'GET', array())
             ->will($this->returnValue($response));
-
 
         $options = $this->sut->getTrafficAreaValueOptions();
 
