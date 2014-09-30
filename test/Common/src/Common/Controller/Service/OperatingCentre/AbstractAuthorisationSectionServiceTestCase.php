@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Controller\Service\OperatingCentre;
 
+use Common\Controller\Service\LicenceSectionService;
 use CommonTest\Controller\Service\AbstractSectionServiceTestCase;
 
 /**
@@ -77,9 +78,94 @@ abstract class AbstractAuthorisationSectionServiceTestCase extends AbstractSecti
      * @group section_service
      * @group operating_centre_section_service
      */
-    public function testAlterForm()
+    public function testSaveWithTrafficArea()
     {
-        
+        $data = array(
+            'trafficArea' => 'A'
+        );
+
+        $this->attachRestHelperMock();
+        $this->mockRestHelper->expects($this->once())
+            ->method('makeRestCall');
+
+        $mockTrafficArea = $this->getMock(
+            '\Common\Controller\Service\TrafficAreaSectionService',
+            array('setTrafficArea')
+        );
+
+        $mockTrafficArea->expects($this->once())
+            ->method('setTrafficArea')
+            ->with('A');
+
+        $this->mockSectionService('TrafficArea', $mockTrafficArea);
+
+        $this->sut->save($data);
+    }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testSaveWithoutTrafficArea()
+    {
+        $data = array(
+            'foo' => 'bar'
+        );
+
+        $this->attachRestHelperMock();
+        $this->mockRestHelper->expects($this->once())
+            ->method('makeRestCall');
+
+        $mockTrafficArea = $this->getMock(
+            '\Common\Controller\Service\TrafficAreaSectionService',
+            array('setTrafficArea')
+        );
+
+        $mockTrafficArea->expects($this->never())
+            ->method('setTrafficArea');
+
+        $this->mockSectionService('TrafficArea', $mockTrafficArea);
+
+        $this->sut->save($data);
+    }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testAlterFormForStandardPsv()
+    {
+        $id = 5;
+        $this->sut->setIdentifier($id);
+        $isPsv = true;
+        $licenceType = LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL;
+        $this->attachRestHelperMock();
+
+        $mockLicenceService = $this->getMockLicenceSectionService();
+        $mockLicenceService->expects($this->once())
+            ->method('isPsv')
+            ->will($this->returnValue($isPsv));
+        $mockLicenceService->expects($this->once())
+            ->method('getLicenceType')
+            ->will($this->returnValue($licenceType));
+
+        // Before alteration
+        $form = $this->getAuthorisationForm();
+
+        // After alteration
+        $form = $this->sut->alterForm($form);
+    }
+
+    protected function getMockLicenceSectionService()
+    {
+        $mockLicenceService = $this->getMock(
+            '\Common\Controller\Service\LicenceSectionService',
+            array('isPsv', 'getLicenceType')
+        );
+
+        $this->mockSectionService('Licence', $mockLicenceService);
+
+        return $mockLicenceService;
     }
 
     protected function getActionForm()

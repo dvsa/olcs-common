@@ -14,5 +14,4 @@ namespace CommonTest\Controller\Service\OperatingCentre;
  */
 abstract class AbstractLicenceAuthorisationSectionServiceTestCase extends AbstractAuthorisationSectionServiceTestCase
 {
-
 }
