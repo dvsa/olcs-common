@@ -95,7 +95,9 @@ return array(
                     ),
                     'psvNoLimousineConfirmation' => array(
                         'type' => 'singlecheckbox',
-                        'label' => $translationPrefix . '.limousinesApplication.agreement'
+                        'label' => $translationPrefix . '.limousinesApplication.agreement',
+                        'filters' =>
+                            '\Common\Form\Elements\InputFilters\VehicleUndertakingsNoLimousineConfirmation'
                     ),
                     // 15g
                     'psvOnlyLimousinesConfirmationLabel' => array(
