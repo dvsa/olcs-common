@@ -330,4 +330,231 @@ class ExternalLicenceAuthorisationSectionServiceTest extends AbstractAuthorisati
             $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue()
         );
     }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testAlterActionFormForPsv()
+    {
+        $isPsv = true;
+        $actionId = 7;
+        $this->sut->setActionId($actionId);
+
+        $licenceData = array(
+            'niFlag' => 'N'
+        );
+        $trafficArea = null;
+
+        $mockViewRenderer = $this->getMock('\stdClass', array('render'));
+        $mockViewRenderer->expects($this->any())
+            ->method('render')
+            ->will($this->returnCallback(array($this, 'renderView')));
+
+        $this->serviceManager->setService('ViewRenderer', $mockViewRenderer);
+
+        $this->attachRestHelperMock();
+        $this->mockRestHelper->expects($this->any())
+            ->method('makeRestCall')
+            ->will($this->returnCallback(array($this, 'mockRestCallsForAlterActionFormForPsv')));
+
+        $mockTranslation = $this->getMock('\stdClass', array('formatTranslation', 'translate'));
+        $mockTranslation->expects($this->any())
+            ->method('formatTranslation')
+            ->will($this->returnCallback(array($this, 'returnInput')));
+        $mockTranslation->expects($this->any())
+            ->method('translate')
+            ->will($this->returnCallback(array($this, 'returnInput')));
+
+        $this->mockHelperService('TranslationHelper', $mockTranslation);
+
+        $mockLicence = $this->getMock(
+            '\Common\Controller\Service\LicenceSectionService',
+            array('isPsv', 'getLicenceData')
+        );
+        $mockLicence->expects($this->any())
+            ->method('isPsv')
+            ->will($this->returnValue($isPsv));
+        $mockLicence->expects($this->any())
+            ->method('getLicenceData')
+            ->will($this->returnValue($licenceData));
+
+        $this->mockSectionService('Licence', $mockLicence);
+
+        $mockTrafficArea = $this->getMock(
+            '\Common\Controller\Service\LicenceTrafficAreaSectionService',
+            array('getTrafficArea')
+        );
+
+        $mockTrafficArea->expects($this->any())
+            ->method('getTrafficArea')
+            ->will($this->returnValue($trafficArea));
+
+        $this->mockSectionService('LicenceTrafficArea', $mockTrafficArea);
+
+        $form = $this->getActionForm();
+
+        // PSV related
+        $this->assertTrue($form->get('data')->has('noOfTrailersPossessed'));
+        $this->assertTrue($form->has('advertisements'));
+
+        // Traffic Area
+        $this->assertTrue($form->get('form-actions')->has('addAnother'));
+
+        $this->assertEquals(null, $form->get('address')->get('addressLine1')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('addressLine2')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('addressLine3')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('town')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('postcode')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('countryCode')->getAttribute('disabled'));
+
+        $form = $this->sut->alterActionForm($form);
+
+        // PSV related
+        $this->assertFalse($form->get('data')->has('noOfTrailersPossessed'));
+        $this->assertFalse($form->has('advertisements'));
+
+        // Traffic Area
+        $this->assertFalse($form->get('form-actions')->has('addAnother'));
+
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine1')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine2')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine3')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('town')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('postcode')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('countryCode')->getAttribute('disabled'));
+    }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testAlterActionFormForGoods()
+    {
+        $isPsv = false;
+        $actionId = 7;
+        $this->sut->setActionId($actionId);
+
+        $licenceData = array(
+            'niFlag' => 'N'
+        );
+        $trafficArea = null;
+
+        $mockViewRenderer = $this->getMock('\stdClass', array('render'));
+        $mockViewRenderer->expects($this->any())
+            ->method('render')
+            ->will($this->returnCallback(array($this, 'renderView')));
+
+        $this->serviceManager->setService('ViewRenderer', $mockViewRenderer);
+
+        $this->attachRestHelperMock();
+        $this->mockRestHelper->expects($this->any())
+            ->method('makeRestCall')
+            ->will($this->returnCallback(array($this, 'mockRestCallsForAlterActionFormForPsv')));
+
+        $mockTranslation = $this->getMock('\stdClass', array('formatTranslation', 'translate'));
+        $mockTranslation->expects($this->any())
+            ->method('formatTranslation')
+            ->will($this->returnCallback(array($this, 'returnInput')));
+        $mockTranslation->expects($this->any())
+            ->method('translate')
+            ->will($this->returnCallback(array($this, 'returnInput')));
+
+        $this->mockHelperService('TranslationHelper', $mockTranslation);
+
+        $mockLicence = $this->getMock(
+            '\Common\Controller\Service\LicenceSectionService',
+            array('isPsv', 'getLicenceData')
+        );
+        $mockLicence->expects($this->any())
+            ->method('isPsv')
+            ->will($this->returnValue($isPsv));
+        $mockLicence->expects($this->any())
+            ->method('getLicenceData')
+            ->will($this->returnValue($licenceData));
+
+        $this->mockSectionService('Licence', $mockLicence);
+
+        $mockTrafficArea = $this->getMock(
+            '\Common\Controller\Service\LicenceTrafficAreaSectionService',
+            array('getTrafficArea')
+        );
+
+        $mockTrafficArea->expects($this->any())
+            ->method('getTrafficArea')
+            ->will($this->returnValue($trafficArea));
+
+        $this->mockSectionService('LicenceTrafficArea', $mockTrafficArea);
+
+        $form = $this->getActionForm();
+
+        // Goods related
+        $this->assertTrue($form->has('advertisements'));
+        $this->assertTrue($form->get('data')->has('sufficientParking'));
+        $this->assertTrue($form->get('data')->has('permission'));
+
+        // Traffic Area
+        $this->assertTrue($form->get('form-actions')->has('addAnother'));
+
+        $this->assertEquals(null, $form->get('address')->get('addressLine1')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('addressLine2')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('addressLine3')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('town')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('postcode')->getAttribute('disabled'));
+        $this->assertEquals(null, $form->get('address')->get('countryCode')->getAttribute('disabled'));
+
+        $form = $this->sut->alterActionForm($form);
+
+        // Goods related
+        $this->assertFalse($form->has('advertisements'));
+        $this->assertFalse($form->get('data')->has('sufficientParking'));
+        $this->assertFalse($form->get('data')->has('permission'));
+
+        // Traffic Area
+        $this->assertFalse($form->get('form-actions')->has('addAnother'));
+
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine1')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine2')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('addressLine3')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('town')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('postcode')->getAttribute('disabled'));
+        $this->assertEquals('disabled', $form->get('address')->get('countryCode')->getAttribute('disabled'));
+    }
+
+    public function mockRestCallsForAlterActionFormForPsv($service, $method, $data, $bundle)
+    {
+        if ($service == 'LicenceOperatingCentre' && $method == 'GET' && $data == 7) {
+            return array(
+                'noOfVehiclesPossessed' => 10,
+                'noOfTrailersPossessed' => 10
+            );
+        }
+
+        if ($service == 'LicenceOperatingCentre' && $method == 'GET' && is_array($data)) {
+            return array(
+                'Count' => 2,
+                'Results' => array(
+                    array(
+                        'id' => 1
+                    ),
+                    array(
+                        'id' => 2
+                    )
+                )
+            );
+        }
+
+        $this->fail(
+            'Un-mocked rest call'
+            . ' - Service:' . $service
+            . ' - Method:' . $method
+            . ' - Data:' . print_r($data, true)
+            . ' - Bundle:' . print_r($bundle, true)
+        );
+    }
+
+    public function renderView($view)
+    {
+        return $view->getTemplate();
+    }
 }

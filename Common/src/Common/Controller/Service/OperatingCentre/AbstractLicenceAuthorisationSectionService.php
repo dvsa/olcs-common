@@ -146,6 +146,8 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
                 $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);
             }
         }
+
+        return $form;
     }
 
     /**

@@ -47,6 +47,8 @@ class AbstractSectionServiceTestCase extends PHPUnit_Framework_TestCase
 
     protected $mockedSectionServices = array();
 
+    protected $mockedHelperServices = array();
+
     protected function setUp()
     {
         $this->serviceManager = Bootstrap::getServiceManager();
@@ -66,6 +68,14 @@ class AbstractSectionServiceTestCase extends PHPUnit_Framework_TestCase
             ->method('createSectionService')
             ->will($this->returnCallback(array($this, 'getMockedSectionService')));
 
+        $mockHelperService = $this->getMock('\stdClass', array('getHelperService'));
+        $mockHelperService->expects($this->any())
+            ->method('getHelperService')
+            ->will($this->returnCallback(array($this, 'getMockedHelperService')));
+
+        $this->serviceManager->setAllowOverride(true);
+        $this->serviceManager->setService('HelperService', $mockHelperService);
+
         $this->sut->setSectionServiceFactory($this->mockSectionService);
     }
 
@@ -73,14 +83,33 @@ class AbstractSectionServiceTestCase extends PHPUnit_Framework_TestCase
     {
         $this->mockRestHelper = $this->getMock('\Common\Service\Helper\RestHelperService', array('makeRestCall'));
 
-        $mockHelperService = $this->getMock('\stdClass', array('getHelperService'));
-        $mockHelperService->expects($this->any())
-            ->method('getHelperService')
-            ->with('RestHelper')
-            ->will($this->returnValue($this->mockRestHelper));
+        $this->mockHelperService('RestHelper', $this->mockRestHelper);
+    }
 
-        $this->serviceManager->setAllowOverride(true);
-        $this->serviceManager->setService('HelperService', $mockHelperService);
+    /**
+     * Callback used to return mocked services
+     *
+     * @param string $service
+     * @return \Common\Service\Helper\HelperServiceInterface
+     */
+    public function getMockedHelperService($service)
+    {
+        if (isset($this->mockedHelperServices[$service])) {
+            return $this->mockedHelperServices[$service];
+        }
+
+        $this->fail('Un-mocked helper service: ' . $service);
+    }
+
+    /**
+     * Set a mock helper service
+     *
+     * @param string $service
+     * @param object $mock
+     */
+    protected function mockHelperService($service, $mock)
+    {
+        $this->mockedHelperServices[$service] = $mock;
     }
 
     /**
@@ -91,7 +120,11 @@ class AbstractSectionServiceTestCase extends PHPUnit_Framework_TestCase
      */
     public function getMockedSectionService($service)
     {
-        return isset($this->mockedSectionServices[$service]) ? $this->mockedSectionServices[$service] : null;
+        if (isset($this->mockedSectionServices[$service])) {
+            return $this->mockedSectionServices[$service];
+        }
+
+        $this->fail('Un-mocked section service: ' . $service);
     }
 
     /**
@@ -103,5 +136,10 @@ class AbstractSectionServiceTestCase extends PHPUnit_Framework_TestCase
     protected function mockSectionService($service, $mock)
     {
         $this->mockedSectionServices[$service] = $mock;
+    }
+
+    public function returnInput($input)
+    {
+        return $input;
     }
 }

@@ -10,7 +10,11 @@ namespace Common\Controller\Service;
 use Common\Util;
 use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\Input;
 use Zend\View\Model\ViewModel;
+use Zend\InputFilter\InputFilter;
+use Zend\Validator\ValidatorChain;
 use Zend\Validator\File\FilesSize;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -422,7 +426,9 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     {
         $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
 
-        $lockView = new ViewModel(array('message' => $this->translate($message)));
+        $lockView = new ViewModel(
+            array('message' => $this->getHelperService('TranslationHelper')->translate($message))
+        );
         $lockView->setTemplate('partials/lock');
 
         $element->setLabel($element->getLabel() . $viewRenderer->render($lockView));
@@ -950,5 +956,51 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     public function setActionDataBundle($actionDataBundle)
     {
         $this->actionDataBundle = $actionDataBundle;
+    }
+
+    /**
+     * Disable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    protected function disableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->disableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->disableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->setAttribute('disabled', 'disabled');
+        }
+    }
+
+    /**
+     * Disable field validation
+     *
+     * @param \Zend\InputFilter\InputFilter $inputFilter
+     * @return null
+     */
+    protected function disableValidation($inputFilter)
+    {
+        if ($inputFilter instanceof InputFilter) {
+            foreach ($inputFilter->getInputs() as $input) {
+                $this->disableValidation($input);
+            }
+            return;
+        }
+
+        if ($inputFilter instanceof Input) {
+            $inputFilter->setAllowEmpty(true);
+            $inputFilter->setRequired(false);
+            $inputFilter->setValidatorChain(new ValidatorChain());
+        }
     }
 }
