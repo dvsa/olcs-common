@@ -14,8 +14,74 @@ use CommonTest\Controller\Service\AbstractSectionServiceTestCase;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AbstractAuthorisationSectionServiceTestCase extends AbstractSectionServiceTestCase
+abstract class AbstractAuthorisationSectionServiceTestCase extends AbstractSectionServiceTestCase
 {
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testGetFormTableData()
+    {
+        $id = 4;
+        $table = '';
+        $response = array(
+            'Count' => 2,
+            'Results' => array(
+                array(
+                    'operatingCentre' => array(
+                        'address' => array(
+                            'id' => 1,
+                            'version' => 2,
+                            'addressLine1' => '123 Foo',
+                            'addressLine2' => 'Bar way',
+                            'postcode' => 'AB1 0AF'
+                        )
+                    )
+                ),
+                array(
+                    'operatingCentre' => array(
+                        'address' => array(
+                            'id' => 2,
+                            'version' => 2,
+                            'addressLine1' => '124 Foo',
+                            'addressLine2' => 'Bar way',
+                            'postcode' => 'AB1 0AF'
+                        )
+                    )
+                )
+            )
+        );
+        $expected = array(
+            array(
+                'addressLine1' => '123 Foo',
+                'addressLine2' => 'Bar way',
+                'postcode' => 'AB1 0AF'
+            ),
+            array(
+                'addressLine1' => '124 Foo',
+                'addressLine2' => 'Bar way',
+                'postcode' => 'AB1 0AF'
+            )
+        );
+        $this->attachRestHelperMock();
+        $this->mockRestHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->will($this->returnValue($response));
+
+        $output = $this->sut->getFormTableData($id, $table);
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testAlterForm()
+    {
+        
+    }
+
     protected function getActionForm()
     {
         $formName = 'application_operating-centres_authorisation-sub-action';

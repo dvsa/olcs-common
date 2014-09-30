@@ -15,7 +15,7 @@ use Common\Controller\Service\OperatingCentre\ExternalLicenceAuthorisationSectio
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ExternalLicenceAuthorisationSectionServiceTest extends AbstractAuthorisationSectionServiceTestCase
+class ExternalLicenceAuthorisationSectionServiceTest extends AbstractLicenceAuthorisationSectionServiceTestCase
 {
     /**
      * Holds the SUT
@@ -87,6 +87,39 @@ class ExternalLicenceAuthorisationSectionServiceTest extends AbstractAuthorisati
             ->method('setData');
 
         $this->sut->postSetFormData($form);
+    }
+
+    /**
+     * @group section_service
+     * @group operating_centre_section_service
+     */
+    public function testMakeFormAlterationsForStandardGoods()
+    {
+        $options = array(
+            'isPsv' => false,
+            'isReview' => false,
+            'data' => array(
+                'licence' => array(
+                    'licenceType' => array(
+                        'id' => LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL
+                    )
+                )
+            )
+        );
+
+        $form = $this->getAuthorisationForm();
+
+        $this->assertTrue($form->get('data')->has('totAuthSmallVehicles'));
+        $this->assertTrue($form->get('data')->has('totAuthMediumVehicles'));
+        $this->assertTrue($form->get('data')->has('totAuthLargeVehicles'));
+        $this->assertTrue($form->get('data')->has('totCommunityLicences'));
+
+        $form = $this->sut->makeFormAlterations($form, $options);
+
+        $this->assertFalse($form->get('data')->has('totAuthSmallVehicles'));
+        $this->assertFalse($form->get('data')->has('totAuthMediumVehicles'));
+        $this->assertFalse($form->get('data')->has('totAuthLargeVehicles'));
+        $this->assertFalse($form->get('data')->has('totCommunityLicences'));
     }
 
     /**
