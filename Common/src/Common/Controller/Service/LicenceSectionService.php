@@ -90,15 +90,13 @@ class LicenceSectionService extends AbstractSectionService
     /**
      * Whether or not the licence is psv
      *
-     * @NOTE if we don't have isPsv set, we can just call getLicenceData which will set this property and be cached
-     *  which should reduce the number of rest calls overall
-     *
      * @return boolean
      */
     public function isPsv()
     {
         if ($this->isPsv === null) {
-            $this->getLicenceData();
+            $licenceData = $this->getLicenceData();
+            $this->isPsv = ($licenceData['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV);
         }
 
         return $this->isPsv;
@@ -107,15 +105,13 @@ class LicenceSectionService extends AbstractSectionService
     /**
      * Get the licence type
      *
-     * @NOTE if we don't have licenceType set, we can just call getLicenceData which will set this property and be
-     *  cached which should reduce the number of rest calls overall
-     *
      * @return array
      */
     public function getLicenceType()
     {
         if ($this->licenceType === null) {
-            $this->getLicenceData();
+            $licenceData = $this->getLicenceData();
+            $this->licenceType = $licenceData['licenceType']['id'];
         }
 
         return $this->licenceType;
@@ -124,21 +120,26 @@ class LicenceSectionService extends AbstractSectionService
     /**
      * Get the licence data
      *
-     * @NOTE here we cache licenceData, isPsv and licenceType
-     *
      * @return array
      */
     public function getLicenceData()
     {
         if ($this->licenceData === null) {
-            $this->licenceData = $this->getHelperService('RestHelper')
-                ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licenceDataBundle);
-
-            $this->isPsv = ($this->licenceData['goodsOrPsv']['id'] == self::LICENCE_CATEGORY_PSV);
-            $this->licenceType = $this->licenceData['licenceType']['id'];
+            $this->licenceData = $this->fetchLicenceData();
         }
 
         return $this->licenceData;
+    }
+
+    /**
+     * Fetch licence data
+     *
+     * @return array
+     */
+    private function fetchLicenceData()
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licenceDataBundle);
     }
 
     /**

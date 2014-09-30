@@ -172,6 +172,15 @@ class SummaryController extends ReviewDeclarationsController
     private $summarySections = array();
 
     /**
+     * Map a section to a sectionService
+     *
+     * @var array
+     */
+    private $sectionServiceMap = array(
+        'OperatingCentres/Authorisation' => 'OperatingCentre\ExternalApplicationAuthorisation'
+    );
+
+    /**
      * Render the section form
      *
      * @return Response
@@ -210,25 +219,32 @@ class SummaryController extends ReviewDeclarationsController
                 }
             } else {
 
-                // if we're in here then check to see if the relevant controller wants
-                // to make any extra form alterations based on the fact it is being
-                // rendered out of context on the review page
-                $controller = $this->getInvokable($summarySection, 'makeFormAlterations');
-                if ($controller) {
-                    $options = array(
-                        // always let the controller know this is a review
-                        'isReview'  => true,
-                        'isPsv'     => $this->isPsv(),
-                        // some forms only have one fieldset, so we pass the
-                        // first through to be helpful...
-                        'fieldset'  => $sectionFieldsets[0],
-                        // ... but pass the rest through too, just in case
-                        'fieldsets' => $sectionFieldsets,
-                        // finally, at this stage some controllers may alter based on
-                        // data available (or not); so pass that through too
-                        'data'      => $data
-                    );
-                    $form = $controller::makeFormAlterations($form, $this, $options);
+                $options = array(
+                    // always let the controller know this is a review
+                    'isReview'  => true,
+                    'isPsv'     => $this->isPsv(),
+                    // some forms only have one fieldset, so we pass the
+                    // first through to be helpful...
+                    'fieldset'  => $sectionFieldsets[0],
+                    // ... but pass the rest through too, just in case
+                    'fieldsets' => $sectionFieldsets,
+                    // finally, at this stage some controllers may alter based on
+                    // data available (or not); so pass that through too
+                    'data'      => $data
+                );
+
+                if (isset($this->sectionServiceMap[$summarySection])) {
+                    $service = $this->getSectionService($this->sectionServiceMap[$summarySection]);
+
+                    $form = $service->makeFormAlterations($form, $options);
+                } else {
+                    // if we're in here then check to see if the relevant controller wants
+                    // to make any extra form alterations based on the fact it is being
+                    // rendered out of context on the review page
+                    $controller = $this->getInvokable($summarySection, 'makeFormAlterations');
+                    if ($controller) {
+                        $form = $controller::makeFormAlterations($form, $this, $options);
+                    }
                 }
             }
         }
@@ -281,26 +297,26 @@ class SummaryController extends ReviewDeclarationsController
          * Flatten out the contacts so they're in a mapped array as used
          * by the Your Business -> Addresses fieldset.
          */
-        $contactList=$loadData['licence']['organisation']['contactDetails'];
-        $indexedContactList=array();
+        $contactList = $loadData['licence']['organisation']['contactDetails'];
+        $indexedContactList = array();
         foreach ($contactList as $contactEntry) {
-            $indexedContactList[$contactEntry['contactType']['id']]=$contactEntry['address'];
+            $indexedContactList[$contactEntry['contactType']['id']] = $contactEntry['address'];
         }
-        $indexedContactList['ct_corr']=$loadData['licence']['contactDetails'];
+        $indexedContactList['ct_corr'] = $loadData['licence']['contactDetails'];
 
         // Flatten out the phone contacts from the only licence contact
-        $phoneList=$loadData['licence']['contactDetails'][0]['phoneContacts'];
-        $indexedPhoneList=array();
+        $phoneList = $loadData['licence']['contactDetails'][0]['phoneContacts'];
+        $indexedPhoneList = array();
         foreach ($phoneList as $phoneEntry) {
-            $indexedPhoneList[$phoneEntry['phoneContactType']['id']]=$phoneEntry['phoneNumber'];
+            $indexedPhoneList[$phoneEntry['phoneContactType']['id']] = $phoneEntry['phoneNumber'];
         }
 
         // Trading names requires specific formatting
-        $flatTradingNamesList=array();
+        $flatTradingNamesList = array();
         if ( isset($loadData['licence']['organisation']['tradingNames']) ) {
-            $tradingNamesList=$loadData['licence']['organisation']['tradingNames'];
+            $tradingNamesList = $loadData['licence']['organisation']['tradingNames'];
             foreach ($tradingNamesList as $tradingName) {
-                $flatTradingNamesList[]=$tradingName['name'];
+                $flatTradingNamesList[] = $tradingName['name'];
             }
         }
 
@@ -429,7 +445,7 @@ class SummaryController extends ReviewDeclarationsController
              */
             'application_vehicle-safety_undertakings-2' => array(
                 'psvOperateSmallVhl' => $loadData['psvOperateSmallVhl'],
-                'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation']=='Y'?1:0),
+                'psvSmallVhlConfirmation' => ($loadData['psvSmallVhlConfirmation'] == 'Y' ? 1 : 0),
                 'psvSmallVhlNotes' => $loadData['psvSmallVhlNotes'],
                 'psvSmallVhlUndertakings' =>
                     $translator->translate(
@@ -442,7 +458,7 @@ class SummaryController extends ReviewDeclarationsController
             ),
 
             'application_vehicle-safety_undertakings-3' => array(
-                'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation']=='Y')
+                'psvNoSmallVhlConfirmation' => ($loadData['psvNoSmallVhlConfirmation'] == 'Y')
 
             ),
 
@@ -512,16 +528,22 @@ class SummaryController extends ReviewDeclarationsController
         // we can use this value to map back to the controller which
         // knows how to populate its data
         // (this needs to know about subsections)
-        $section=false;
+        $section = false;
         foreach ($this->tableConfigs as $controllerName => $controllerTableConfig) {
             $sectionSearch = array_search(
                 $table,
                 $controllerTableConfig
             );
 
-            if ( $sectionSearch ) {
-                $section=$controllerName;
+            if ($sectionSearch) {
+                $section = $controllerName;
             }
+        }
+
+        if (isset($this->sectionServiceMap[$section])) {
+            $service = $this->getSectionService($this->sectionServiceMap[$section]);
+
+            return $service->getSummaryTableData($id, $table);
         }
 
         $controller = $this->getInvokable($section, 'getSummaryTableData');
@@ -562,7 +584,7 @@ class SummaryController extends ReviewDeclarationsController
             }
         }
 
-        $this->summarySections=array_unique($this->summarySections);
+        $this->summarySections = array_unique($this->summarySections);
     }
 
     /**

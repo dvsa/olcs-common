@@ -539,7 +539,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     }
 
     /**
-     * Remove trailer elements for PSV and set up Traffic Area section
+     * Default alter form method
      *
      * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
