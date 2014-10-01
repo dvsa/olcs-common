@@ -17,4 +17,7 @@ class ExternalApplicationFinancialHistorySectionService extends AbstractApplicat
     // So far, all behaviour in the abstract is suitable - because we haven't yet
     // implemented anything other than the external app view of this page
     // We can move behaviour into relevant children as and when
+    //
+    // It was either that or start off with *everything* in the concrete which then
+    // gets abstracted when needed, but it doesn't really matter...
 }
