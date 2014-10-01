@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
+use Common\Controller\Traits;
+
 /**
  * FinancialHistory Controller
  *
@@ -14,6 +16,8 @@ namespace Common\Controller\Application\PreviousHistory;
  */
 class FinancialHistoryController extends PreviousHistoryController
 {
+    use Traits\GenericIndexAction;
+
     /**
      * Data bundle
      *
@@ -56,16 +60,6 @@ class FinancialHistoryController extends PreviousHistoryController
             )
         )
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Alter the form

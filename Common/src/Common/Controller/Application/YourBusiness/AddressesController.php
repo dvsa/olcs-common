@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
+
 /**
  * Addresses Controller
  *
@@ -14,6 +16,8 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class AddressesController extends YourBusinessController
 {
+    use Traits\GenericIndexAction;
+
     const MAIN_CONTACT_DETAILS_TYPE = 'ct_corr';
 
     /**
@@ -182,18 +186,6 @@ class AddressesController extends YourBusinessController
         'phone_t_mobile' => 'phone_mobile',
         'phone_t_fax' => 'phone_fax'
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        $view = $this->getViewModel();
-
-        return $this->renderSection($view);
-    }
 
     /**
      * Make form alterations

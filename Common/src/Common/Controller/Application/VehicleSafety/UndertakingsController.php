@@ -5,8 +5,9 @@
  *
  * @author Jess Rowbottom <jess.rowbottom@valtech.co.uk>
  */
-
 namespace Common\Controller\Application\VehicleSafety;
+
+use Common\Controller\Traits;
 
 /**
  * Vehicle Controller
@@ -15,6 +16,7 @@ namespace Common\Controller\Application\VehicleSafety;
  */
 class UndertakingsController extends VehicleSafetyController
 {
+    use Traits\GenericIndexAction;
 
     /**
      * Action data map
@@ -73,16 +75,6 @@ class UndertakingsController extends VehicleSafetyController
             )
         )
     );
-
-    /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Load the data for the form and format it in a way that the fieldsets can

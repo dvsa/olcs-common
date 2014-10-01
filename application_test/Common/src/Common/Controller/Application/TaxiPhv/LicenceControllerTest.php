@@ -45,10 +45,10 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
      */
     protected $mockedMethods = array(
         'getLicenceService',
-        'getPostcodeService',
-        'getPostcodeTrafficAreaValidator',
-        'getPostcodeValidatorsChain'
+        'getPostcodeService'
     );
+
+    protected $mockTrafficAreaSectionService;
 
     public function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
     {
@@ -62,15 +62,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
         $this->serviceManager->setService('licence', $mockLicenceService);
 
-        $mockPostcodeValidatorsChain = $this->getMock('\StdClass', array('attach'));
-        $mockPostcodeValidatorsChain->expects($this->any())
-            ->method('attach')
-            ->will($this->returnValue(true));
-
-        $this->controller->expects($this->any())
-            ->method('getPostcodeValidatorsChain')
-            ->will($this->returnValue($mockPostcodeValidatorsChain));
-
         $mockPostcodeValidator = $this->getMock(
             '\Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator',
             array('isValid', 'setPrivateHireLicencesCount', 'setTrafficArea')
@@ -80,7 +71,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('isValid')
             ->will($this->returnValue(true));
 
-        $this->serviceManager->setService('postcodeTrafficAreaValidator', $mockPostcodeValidator);
+        $this->serviceManager->setService('postcodePhlTrafficAreaValidator', $mockPostcodeValidator);
 
         $mockPostcodeService = $this->getMock('\StdClass', array('getTrafficAreaByPostcode'));
 
@@ -99,10 +90,58 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             ->method('getPostcodeService')
             ->will($this->returnValue($mockPostcodeService));
 
+        $this->mockSectionServiceFactory->expects($this->any())
+            ->method('getSectionService')
+            ->with('TrafficArea')
+            ->will($this->returnValue($this->setupMockTraffixAreaSectionService()));
+
+    }
+
+    protected function setupMockTraffixAreaSectionService()
+    {
+        $this->mockTrafficAreaSectionService = $this->getMock(
+            '\Common\Controller\Service\TrafficAreaSectionService',
+            array('getTrafficArea', 'getTrafficAreaValueOptions', 'setTrafficArea')
+        );
+
+        $this->mockTrafficAreaSectionService->expects($this->any())
+            ->method('getTrafficAreaValueOptions')
+            ->will($this->returnValue($this->getTrafficAreaValueOptions()));
+
+        $this->mockTrafficAreaSectionService->expects($this->any())
+            ->method('getTrafficArea')
+            ->will($this->returnCallback(array($this, 'getTrafficArea')));
+
+        return $this->mockTrafficAreaSectionService;
+    }
+
+    /**
+     * Get traffic area mock
+     *
+     * @return array
+     */
+    public function getTrafficArea()
+    {
+        if ($this->hasTrafficAreaDefined) {
+            return array('id' => 'B', 'name' => 'North East of England');
+        } else {
+            return null;
+        }
+    }
+
+    protected function getTrafficAreaValueOptions()
+    {
+        return array(
+            'B' => 'North East of England',
+            'K' => 'London and the South East of England',
+            'N' => 'Northern ireland'
+        );
     }
 
     /**
      * Test indexAction
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexAction()
@@ -117,6 +156,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With submit
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithSubmitWithRows()
@@ -125,6 +166,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
             'index',
             null,
             array(
+                'dataTrafficArea' => array(
+                    'trafficArea' => 'B'
+                ),
                 'table' => array(
                     'rows' => 1
                 )
@@ -140,6 +184,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With submit
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithSubmitWithoutRows()
@@ -163,6 +209,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With Add Crud Action
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithAddCrudAction()
@@ -185,6 +233,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With Edit Crud Action without id
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithEditCrudActionWithoutId()
@@ -199,7 +249,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
         );
 
         $this->controller->setEnabledCsrf(false);
-
         $response = $this->controller->indexAction();
 
         $this->assertInstanceOf('Zend\Http\Response', $response);
@@ -207,6 +256,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With Edit Crud Action
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithEditCrudAction()
@@ -230,30 +281,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
     }
 
     /**
-     * Test indexAction With Edit Link Crud action
-     * @group acurrent
-     */
-    public function testIndexActionWithEditLinkCrudAction()
-    {
-        $this->setUpAction(
-            'index', null, array(
-                'table' => array(
-                    'rows' => 1,
-                    'action' => array('edit' => array('2' => 'String')),
-                    'id' => 2
-                )
-            )
-        );
-
-        $this->controller->setEnabledCsrf(false);
-
-        $response = $this->controller->indexAction();
-
-        $this->assertInstanceOf('Zend\Http\Response', $response);
-    }
-
-    /**
      * Test addAction
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testAddAction()
@@ -267,6 +297,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test addAction with cancel
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testAddActionWithCancel()
@@ -287,6 +319,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test addAction with submit
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testAddActionWithSubmit()
@@ -326,6 +360,7 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
     /**
      * Test addAction with submit
      *
+     * @group licence_controller
      * @group acurrent
      * @expectedException Exception
      */
@@ -367,7 +402,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test addAction with submit and failure
+     *
      * @expectedException \Exception
+     * @group licence_controller
      * @group acurrent
      */
     public function testAddActionWithSubmitAndFailure()
@@ -405,6 +442,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test editAction with cancel
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testEditActionWithCancel()
@@ -425,6 +464,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test editAction
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testEditAction()
@@ -438,6 +479,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test edit action with submit
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testEditActionWithSubmit()
@@ -479,6 +522,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With submit with rows and traffic area
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithSubmitWithRowsAndTrafficArea()
@@ -505,6 +550,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test edit action with submit
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testEditActionWithSubmitAndTrafficAreaDefined()
@@ -539,7 +586,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
         );
 
         $this->controller->setEnabledCsrf(false);
-        $this->hasTrafficAreaDefined = true;
         $response = $this->controller->editAction();
 
         $this->assertInstanceOf('Zend\Http\Response', $response);
@@ -547,6 +593,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction with no licence
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionNoLicences()
@@ -563,11 +611,14 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test editAction with no traffic area
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testEditActionWithNoTrafficArea()
     {
         $this->setUpAction('edit', 1);
+
         $this->controller->setEnabledCsrf(false);
         $this->hasTrafficAreaDefined = false;
         $response = $this->controller->editAction();
@@ -577,6 +628,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With Add Crud Action no traffic area
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithAddCrudActionWithNoTrafficArea()
@@ -599,6 +652,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test indexAction With Add Crud Action and no traffic area defined but selected
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testIndexActionWithAddCrudActionWithNoTrafficAreaAndButSelected()
@@ -624,6 +679,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test deleteAction
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testDeleteAction()
@@ -637,6 +694,8 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
 
     /**
      * Test deleteAction without id
+     *
+     * @group licence_controller
      * @group acurrent
      */
     public function testDeleteActionWithoutId()
@@ -816,9 +875,9 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
                 )
             )
         );
-        $phlEditData = array(
-            'id' => 1
-        );
+
+        $phlEditData = 1;
+
         if ($service == 'PrivateHireLicence' && $method == 'GET' && $fullBundle == $bundle && $data == $phlEditData) {
             return array(
                 'id' => 1,
@@ -879,32 +938,6 @@ class LicenceControllerTest extends AbstractApplicationControllerTestCase
                     'Count' => 0
                 );
             }
-        }
-
-        $trafficAreaBundle = array(
-            'properties' => array(
-                'id',
-                'name',
-            ),
-        );
-        if ($service == 'TrafficArea' && $method == 'GET' && $bundle == $trafficAreaBundle) {
-            return array(
-                'Count' => 2,
-                'Results' => array(
-                    array(
-                        'id' => 'B',
-                        'name' => 'North East of England'
-                    ),
-                    array(
-                        'id' => 'K',
-                        'name' => 'London and the South East of England'
-                    ),
-                    array(
-                        'id' => 'N',
-                        'name' => 'Northern ireland'
-                    ),
-                )
-            );
         }
     }
 }

@@ -8,6 +8,8 @@
  */
 namespace Common\Controller\Application\PaymentSubmission;
 
+use Common\Controller\Traits;
+
 /**
  * Payment Controller
  *
@@ -16,15 +18,7 @@ namespace Common\Controller\Application\PaymentSubmission;
  */
 class PaymentController extends PaymentSubmissionController
 {
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
+    use Traits\GenericIndexAction;
 
     protected function alterForm($form)
     {

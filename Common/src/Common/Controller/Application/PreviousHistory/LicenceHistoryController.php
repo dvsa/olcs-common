@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
+use Common\Controller\Traits;
+
 /**
  * LicenceHistory Controller
  *
@@ -14,6 +16,8 @@ namespace Common\Controller\Application\PreviousHistory;
  */
 class LicenceHistoryController extends PreviousHistoryController
 {
+    use Traits\GenericIndexAction;
+
     /**
      * Set the service for the "Free" save behaviour
      *
@@ -186,16 +190,6 @@ class LicenceHistoryController extends PreviousHistoryController
     );
 
     /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Save method
      *
      * @param array $data
@@ -216,7 +210,7 @@ class LicenceHistoryController extends PreviousHistoryController
      */
     protected function getFormTableData($id, $table)
     {
-        $tableData=$this->getSummaryTableData($id, $this, $table);
+        $tableData = $this->getSummaryTableData($id, $this, $table);
 
         return $tableData;
     }

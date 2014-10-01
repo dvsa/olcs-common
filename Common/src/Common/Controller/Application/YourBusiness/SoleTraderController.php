@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
+
 /**
  * Sole Trader Controller
  *
@@ -14,6 +16,8 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class SoleTraderController extends YourBusinessController
 {
+    use Traits\GenericIndexAction;
+
     /**
      * Data map
      *
@@ -45,16 +49,6 @@ class SoleTraderController extends YourBusinessController
             'otherName',
         )
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Save data
