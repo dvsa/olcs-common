@@ -337,36 +337,6 @@ class ApplicationController extends AbstractJourneyController
     }
 
     /**
-     * Upload a file
-     *
-     * @param array $file
-     * @param array $data
-     */
-    protected function uploadFile($file, $data)
-    {
-        $uploader = $this->getUploader();
-        $uploader->setFile($file);
-
-        $file = $uploader->upload();
-
-        $licence = $this->getLicenceData();
-
-        $docData = array_merge(
-            array(
-                'application'   => $this->getIdentifier(),
-                'licence'       => $licence['id'],
-                'filename'      => $file->getName(),
-                'identifier'    => $file->getIdentifier(),
-                'size'          => $file->getSize(),
-                'fileExtension' => 'doc_' . $file->getExtension()
-            ),
-            $data
-        );
-
-        $this->makeRestCall('Document', 'POST', $docData);
-    }
-
-    /**
      * Get the licence data
      *
      * @return array
