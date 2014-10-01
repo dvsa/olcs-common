@@ -129,7 +129,7 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
             );
         }
 
-        $url  = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
+        $url = $this->getHelperService('UrlHelper');
 
         $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $url);
 
