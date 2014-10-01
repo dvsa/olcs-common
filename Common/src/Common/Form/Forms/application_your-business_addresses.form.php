@@ -12,16 +12,22 @@ return array(
                     ),
                     'version' => array(
                         'type' => 'hidden'
-                    )
-                )
-            ),
-            array(
-                'name' => 'correspondence_address',
-                'type' => 'address',
+                    ),
+                    'fao' => array(
+                        'type' => 'text',
+                        'label' => 'application_your-business_fao.label',
+                        'class' => 'long'
+                    ),
+
+                ),
                 'options' => array(
                     'label' => 'application_your-business_business-type.correspondence.label'
                 ),
             ),
+            array(
+                'name' => 'correspondence_address',
+                'type' => 'address',
+             ),
             array(
                 'name' => 'contact',
                 'options' => array(
