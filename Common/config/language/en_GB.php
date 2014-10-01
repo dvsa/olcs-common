@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'application_vehicle-safety_discs-psv.validDiscs' => 'Valid discs',
+    'application_vehicle-safety_discs-psv.pending' => 'Pending',
+    'psv_discs.table.title' => 'Discs',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
