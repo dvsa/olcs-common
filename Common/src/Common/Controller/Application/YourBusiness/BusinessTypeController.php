@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
+
 /**
  * BusinessType Controller
  *
@@ -14,15 +16,7 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class BusinessTypeController extends YourBusinessController
 {
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
+    use Traits\GenericIndexAction;
 
     /**
      * Load data from id

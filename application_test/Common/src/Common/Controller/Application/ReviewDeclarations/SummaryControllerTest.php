@@ -239,6 +239,13 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
         )
     );
 
+    protected function setUpAction($action = 'index', $id = null, $data = array(), $files = array())
+    {
+        parent::setUpAction($action, $id, $data, $files);
+
+        $this->mockSectionService();
+    }
+
     /**
      * Test indexAction
      */
@@ -250,6 +257,32 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
 
         // Make sure we get a view not a response
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $response);
+    }
+
+    protected function mockSectionService()
+    {
+        $mockSectionService = $this->getMock(
+            '\Common\Controller\Service\OperatingCentre\ExternalApplicationAuthorisationSectionService',
+            array('makeFormAlterations', 'getSummaryTableData')
+        );
+        $mockSectionService->expects($this->any())
+            ->method('makeFormAlterations')
+            ->will($this->returnCallback(array($this, 'mockMakeFormAlterations')));
+        $mockSectionService->expects($this->any())
+            ->method('getSummaryTableData')
+            ->will($this->returnValue(array()));
+
+        $mockSectionServiceFactory = $this->getMock('\stdClass', array('getSectionService'));
+        $mockSectionServiceFactory->expects($this->any())
+            ->method('getSectionService')
+            ->will($this->returnValue($mockSectionService));
+
+        $this->serviceManager->setService('SectionService', $mockSectionServiceFactory);
+    }
+
+    public function mockMakeFormAlterations($form)
+    {
+        return $form;
     }
 
     /**
@@ -887,6 +920,5 @@ class SummaryControllerTest extends AbstractApplicationControllerTestCase
                 return array();
             }
         }
-
     }
 }

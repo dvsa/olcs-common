@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\Overview;
 
+use Common\Controller\Traits;
+
 /**
  * Overview Details Controller
  *
@@ -14,13 +16,5 @@ namespace Common\Controller\Application\Overview;
  */
 class DetailsController extends OverviewController
 {
-    /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
+    use Traits\GenericIndexAction;
 }

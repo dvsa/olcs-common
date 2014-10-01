@@ -8,6 +8,7 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
 use Common\Controller\Application\Application\ApplicationController;
 
 /**
@@ -18,6 +19,8 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class YourBusinessController extends ApplicationController
 {
+    use Traits\GenericSectionIndexAction;
+
     /**
      * Set the service for the "Free" save behaviour
      *
@@ -26,19 +29,9 @@ class YourBusinessController extends ApplicationController
     protected $service = 'Organisation';
 
     /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->goToFirstSubSection();
-    }
-
-    /**
      * Get organisation data
      *
-     * @param array $organisationBundle
+     * @param array $extraBundle
      * @return array
      */
     protected function getOrganisationData($extraBundle = array())

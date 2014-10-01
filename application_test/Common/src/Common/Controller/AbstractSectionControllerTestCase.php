@@ -36,6 +36,7 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
     protected $additionalMockedMethods = array();
     protected $identifierName = '';
     protected $serviceManager;
+    protected $mockSectionServiceFactory;
 
     /**
      * Setup an action
@@ -69,7 +70,13 @@ abstract class AbstractSectionControllerTestCase extends PHPUnit_Framework_TestC
             )
         );
 
+        $this->mockSectionServiceFactory = $this->getMock(
+            '\stdClass',
+            array('getSectionService', 'createSectionService')
+        );
+
         $this->serviceManager->setService('Olcs\Service\Data\Licence', $licenceService);
+        $this->serviceManager->setService('SectionService', $this->mockSectionServiceFactory);
 
         $this->request = new Request();
         $this->response = new Response();

@@ -116,7 +116,7 @@ class FormRow extends ZendFormRow
      */
     protected function renderRow(ElementInterface $element)
     {
-        $escapeHtmlHelper    = $this->getEscapeHtmlHelper();
+        //$escapeHtmlHelper    = $this->getEscapeHtmlHelper();
         $labelHelper         = $this->getLabelHelper();
         $elementHelper       = $this->getElementHelper();
 
@@ -155,7 +155,10 @@ class FormRow extends ZendFormRow
         $elementString = $elementHelper->render($element);
 
         if (isset($label) && '' !== $label) {
-            $label = $escapeHtmlHelper($label);
+
+            // @NOTE commented this out, we need to be able to add HTML to a label, can't see that commenting this out
+            //  will affect anything
+            //$label = $escapeHtmlHelper($label);
             $labelAttributes = $element->getLabelAttributes();
 
             if (empty($labelAttributes)) {

@@ -17,9 +17,8 @@ return array(
     'attributes' => array(),
     'columns' => array(
         array(
-            'title' => '',
             'width' => 'checkbox',
-            'format' => '{{[elements/radio]}}'
+            'type' => 'Selector'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.address',
@@ -39,7 +38,7 @@ return array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
             'name' => 'noOfVehiclesPossessed'
         ),
-        'trailersCol' => array(
+        array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
             'name' => 'noOfTrailersPossessed'
         ),
