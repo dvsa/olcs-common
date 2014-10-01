@@ -443,6 +443,7 @@ return array(
     'application_your-business_business_details-subsidiaries-columnName' => 'W Company name',
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W Please add subsidiary company',
     'application_your-business_business_details-subsidiaries-tableHeader' => 'W Subsidiary companies (optional)',
+    'application_your-business_fao.label' => 'W For attention of (optional)',
     'application_your-business_people-add' => 'W Add person',
     'application_your-business_people-edit' => 'W Edit person',
     'application_your-business_people-sub-action-formDateOfBirth' => 'W Date of birth',
