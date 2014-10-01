@@ -579,7 +579,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function setPersist($persist = true)
     {
-        $this->persist = $persist;
+        if ($this->getSectionServiceName() !== null) {
+            $this->getSectionService()->setPersist($persist);
+        } else {
+            $this->persist = $persist;
+        }
+    }
+
+    /**
+     * Check whether we are persisting
+     *
+     * @return boolean
+     */
+    protected function getPersist()
+    {
+        if ($this->getSectionServiceName() !== null) {
+            return $this->getSectionService()->getPersist();
+        }
+
+        return $this->persist;
     }
 
     /**
@@ -788,7 +806,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
              * validateForm is true by default, we set it to false if we want to continue processing the form without
              * validation.
              */
-            if (!$this->validateForm || ($this->persist && $form->isValid())) {
+            if (!$this->validateForm || ($this->getPersist() && $form->isValid())) {
 
                 if ($this->validateForm) {
                     $validatedData = $form->getData();
