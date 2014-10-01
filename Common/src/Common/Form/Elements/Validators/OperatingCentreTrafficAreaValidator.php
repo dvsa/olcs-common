@@ -9,6 +9,7 @@ namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Controller\Service\TrafficAreaSectionService;
 
 /**
  * OperatingCentreTrafficAreaValidator
@@ -56,11 +57,6 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     private $trafficArea;
 
     /**
-     * Northern Ireland Traffic Area Code
-     */
-    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
-    /**
      * Custom validation for postcode / traffic area
      *
      * @param mixed $value
@@ -82,7 +78,9 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
 
             // validate only if postcode is not empty and recognized
             if ($value && $trafficAreaId) {
-                if ($niFlag == 'Y' && $trafficAreaId !== self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
+                if ($niFlag == 'Y'
+                    && $trafficAreaId !== TrafficAreaSectionService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                ) {
                     $this->error('notInNorthernIreland');
                     return false;
                 }

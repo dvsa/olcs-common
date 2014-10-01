@@ -3,6 +3,14 @@
 return [
     'csrf' => [
         'type' => 'Zend\Form\Element\Csrf',
-        'name' => 'security'
+        'name' => 'security',
+        'options' => [
+            'csrf_options' => [
+                'messageTemplates' => [
+                    'notSame' => 'csrf-message'
+                ],
+                'timeout' => 600
+            ]
+        ]
     ]
 ];

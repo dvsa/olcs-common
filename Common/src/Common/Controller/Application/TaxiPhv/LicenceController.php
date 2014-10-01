@@ -8,6 +8,8 @@
  */
 namespace Common\Controller\Application\TaxiPhv;
 
+use Common\Controller\Traits;
+
 /**
  * Licence Controller
  *
@@ -16,7 +18,9 @@ namespace Common\Controller\Application\TaxiPhv;
  */
 class LicenceController extends TaxiPhvController
 {
-    use \Common\Controller\Traits\TrafficAreaTrait;
+    use Traits\GenericIndexAction,
+        Traits\GenericAddAction,
+        Traits\GenericEditAction;
 
     /**
      * Holds the sub action service
@@ -142,11 +146,6 @@ class LicenceController extends TaxiPhvController
     );
 
     /**
-     * Northern Ireland Traffic Area Code
-     */
-    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
-    /**
      * Holds the table data
      *
      * @var array
@@ -161,32 +160,6 @@ class LicenceController extends TaxiPhvController
     protected $formTables = array(
         'table' => 'application_taxi-phv_licence-form'
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Add licence
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit licence
-     */
-    public function editAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Delete licence
@@ -259,7 +232,7 @@ class LicenceController extends TaxiPhvController
 
         $data['data']['licence'] = $licenceData['id'];
 
-        $trafficArea = $this->getTrafficArea();
+        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
         if (isset($trafficArea['id'])) {
             $data['trafficArea']['id'] = $trafficArea['id'];
         }
@@ -309,7 +282,7 @@ class LicenceController extends TaxiPhvController
                         $data['contactDetails']['addresses']['address']['postcode']
                     );
                 if ($trafficAreaId) {
-                    $this->setTrafficArea($trafficAreaId);
+                    $this->getSectionService('TrafficArea')->setTrafficArea($trafficAreaId);
                 }
             }
         }
@@ -323,7 +296,7 @@ class LicenceController extends TaxiPhvController
     protected function save($data, $service = null)
     {
         if (isset($data['trafficArea']) && $data['trafficArea']) {
-            $this->setTrafficArea($data['trafficArea']);
+            $this->getSectionService('TrafficArea')->setTrafficArea($data['trafficArea']);
         }
     }
 
@@ -337,7 +310,7 @@ class LicenceController extends TaxiPhvController
     {
         // set up Traffic Area section
         $licencesExists = count($this->tableData);
-        $trafficArea = $this->getTrafficArea();
+        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
         $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
         if (!$licencesExists) {
             $form->remove('dataTrafficArea');
@@ -350,7 +323,9 @@ class LicenceController extends TaxiPhvController
             $form->get('dataTrafficArea')->remove('trafficAreaInfoLabelExists');
             $form->get('dataTrafficArea')->remove('trafficAreaInfoNameExists');
             $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
-            $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions($this->getTrafficValueOptions());
+            $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
+                $this->getSectionService('TrafficArea')->getTrafficAreaValueOptions()
+            );
         }
 
         return $form;
@@ -365,15 +340,17 @@ class LicenceController extends TaxiPhvController
     {
         $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
 
+        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
+
         $trafficAreaValidator = $this->getServiceLocator()->get('postcodePhlTrafficAreaValidator');
         $licenceId = $form->get('data')->get('licence')->getValue();
         $trafficAreaValidator->setPrivateHireLicencesCount($this->getPrivateHireLicencesCount($licenceId));
-        $trafficAreaValidator->setTrafficArea($this->getTrafficArea());
+        $trafficAreaValidator->setTrafficArea($trafficArea);
 
-        $postcodeValidatorChain = $this->getPostcodeValidatorsChain($form);
+        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
         $postcodeValidatorChain->attach($trafficAreaValidator);
 
-        if (!$this->getTrafficArea()) {
+        if (!$trafficArea) {
             $form->get('form-actions')->remove('addAnother');
         }
         return $form;
@@ -422,7 +399,7 @@ class LicenceController extends TaxiPhvController
     {
         $licCount = $this->getPrivateHireLicencesCount();
         if ($licCount == 1 && $this->getActionId()) {
-            $this->setTrafficArea(null);
+            $this->getSectionService('TrafficArea')->setTrafficArea(null);
         }
     }
 
@@ -458,7 +435,7 @@ class LicenceController extends TaxiPhvController
 
             $params[$itemIdParam] = $id;
         }
-        if (!$this->getTrafficArea()) {
+        if (!$this->getSectionService('TrafficArea')->getTrafficArea()) {
             $dataTrafficArea = $this->params()->fromPost('dataTrafficArea');
             $trafficArea = is_array($dataTrafficArea) && isset($dataTrafficArea['trafficArea']) ?
                 $dataTrafficArea['trafficArea'] : '';
@@ -466,7 +443,7 @@ class LicenceController extends TaxiPhvController
                 $this->addWarningMessage('Please select a traffic area');
                 return $this->redirectToRoute(null, array(), array(), true);
             } elseif ($action == 'add' && $trafficArea) {
-                $this->setTrafficArea($trafficArea);
+                $this->getSectionService('TrafficArea')->setTrafficArea($trafficArea);
             }
         }
 

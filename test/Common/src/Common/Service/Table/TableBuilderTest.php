@@ -2211,15 +2211,19 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     public function testRemoveColumn()
     {
         $table = new TableBuilder($this->getMockServiceLocator());
+
         $columns = array(
             array('name' => 'name1'),
             array('name' => 'name2')
         );
+
         $table->setColumns($columns);
+
+        $this->assertTrue($table->hasColumn('name1'));
+
         $table->removeColumn('name1');
-        $newColumns = $table->getColumns();
-        $this->assertEquals(count($newColumns), 1);
-        $this->assertEquals($newColumns[0]['name'], 'name2');
+
+        $this->assertFalse($table->hasColumn('name1'));
     }
 
     /**

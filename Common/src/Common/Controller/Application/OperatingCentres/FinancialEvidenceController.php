@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Application\OperatingCentres;
 
+use Common\Controller\Traits;
+
 /**
  * FinancialEvidence Controller
  *
@@ -14,15 +16,7 @@ namespace Common\Controller\Application\OperatingCentres;
  */
 class FinancialEvidenceController extends OperatingCentresController
 {
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
+    use Traits\GenericIndexAction;
 
     /**
      * Placeholder save method

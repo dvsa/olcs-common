@@ -14,23 +14,6 @@ namespace CommonTest\Controller;
  */
 class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testOnDispatch()
-    {
-        $headers = $this->getMock('stdClass', ['addHeaderLine']);
-
-        $response = $this->getMock('stdClass', ['getHeaders']);
-        $response->expects($this->once())
-                 ->method('getHeaders')
-                 ->will($this->returnValue($headers));
-
-        $sut = $this->getNewSut(['getResponse']);
-        $sut->expects($this->once())
-            ->method('getResponse')
-            ->will($this->returnValue($response));
-
-        $sut->preOnDispatch();
-    }
-
     public function testSetBreadcrumb()
     {
         $navRoutes = [

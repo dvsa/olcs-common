@@ -9,7 +9,7 @@ $(function() {
   }
 
   function requiresInformation() {
-    return OLCS.formHelper("data").find("[value=Y]:checked").length > 0;
+    return OLCS.formHelper("data").find("[type=radio][value=Y]:checked").length > 0;
   }
 
   OLCS.cascadeForm({

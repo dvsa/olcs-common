@@ -9,7 +9,7 @@
  */
 namespace Common\Util;
 
-use Zend\Mvc\Controller\Plugin\FlashMessenger as FlashMessenger;
+use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 /**
  * A trait that controllers can use to easily interact with the flash messenger.
@@ -23,11 +23,24 @@ trait FlashMessengerTrait
     /**
      * returns an instance of the flash messenger plugin.
      *
-     * @return FlashMessenger
+     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function getFlashMessenger()
     {
         return $this->plugin('FlashMessenger');
+    }
+
+    /**
+     * Add message
+     *
+     * @param string $message
+     * @param string $namespace
+     */
+    public function addMessage($message, $namespace = 'default')
+    {
+        $this->getFlashMessenger()->setNamespace($namespace)->addMessage($message)->setNamespace('default');
+
+        return $this;
     }
 
     /**

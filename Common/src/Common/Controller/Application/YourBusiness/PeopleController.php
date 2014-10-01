@@ -8,6 +8,8 @@
  */
 namespace Common\Controller\Application\YourBusiness;
 
+use Common\Controller\Traits;
+
 /**
  * People Controller
  *
@@ -16,6 +18,9 @@ namespace Common\Controller\Application\YourBusiness;
  */
 class PeopleController extends YourBusinessController
 {
+    use Traits\GenericAddAction,
+        Traits\GenericEditAction;
+
     /**
      *   Application ID bundle
      */
@@ -126,7 +131,7 @@ class PeopleController extends YourBusinessController
         $data = $context->makeRestCall(
             'OrganisationPerson',
             'GET',
-            array('organisation' => $org['id']),
+            array('organisation' => $org, 'limit' => 50),
             $bundle
         );
 
@@ -232,22 +237,6 @@ class PeopleController extends YourBusinessController
             $form->get('data')->remove('position');
         }
         return $form;
-    }
-
-    /**
-     * Add person
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit person
-     */
-    public function editAction()
-    {
-        return $this->renderSection();
     }
 
     /**
