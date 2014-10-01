@@ -10,7 +10,6 @@ namespace Common\Controller;
 
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
-use Common\Helper\RestrictionHelper;
 use Common\Controller\AbstractSectionController;
 
 /**
@@ -744,23 +743,11 @@ abstract class AbstractJourneyController extends AbstractSectionController
 
             $accessKeys = $this->getAccessKeys();
 
-            return $this->isRestrictionSatisfied($details['restriction'], $accessKeys);
+            return $this->getHelperService('RestrictionHelper')
+                ->isRestrictionSatisfied($details['restriction'], $accessKeys);
         }
 
         return true;
-    }
-
-    /**
-     * Check if a restriction is satisfied
-     *
-     * @param mixed $restriction
-     * @param array $accessKeys
-     */
-    protected function isRestrictionSatisfied($restriction, $accessKeys)
-    {
-        $helper = new RestrictionHelper();
-
-        return $helper->isRestrictionSatisfied($restriction, $accessKeys);
     }
 
     /**

@@ -1,27 +1,21 @@
 <?php
 
 /**
- * Licence Details Helper
+ * Licence Navigation Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Helper;
+namespace Common\Service\Helper;
+
+use Common\Controller\Service\LicenceSectionService;
 
 /**
- * Licence Details Helper
+ * Licence Navigation Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceDetailsHelper
+class LicenceNavigationHelperService extends AbstractHelperService
 {
-    const GOODS_OR_PSV_GOODS = 'lcat_gv';
-    const LICENCE_CATEGORY_PSV = 'lcat_psv';
-
-    const LICENCE_TYPE_RESTRICTED = 'ltyp_r';
-    const LICENCE_TYPE_STANDARD_INTERNATIONAL = 'ltyp_si';
-    const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
-    const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
-
     /**
      * Holds the section config
      *
@@ -46,25 +40,25 @@ class LicenceDetailsHelper
         'operating_centre' => array(
             'restricted' => array(
                 // @NOTE The licence must follow ANY of these restrictions
-                self::LICENCE_TYPE_RESTRICTED,
-                self::LICENCE_TYPE_STANDARD_NATIONAL,
-                self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'transport_manager' => array(
             'restricted' => array(
-                self::LICENCE_TYPE_STANDARD_NATIONAL,
-                self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'vehicle' => array(
             'restricted' => array(
                 array(
-                    self::GOODS_OR_PSV_GOODS,
+                    LicenceSectionService::LICENCE_CATEGORY_GOODS_VEHICLE,
                     array(
-                        self::LICENCE_TYPE_RESTRICTED,
-                        self::LICENCE_TYPE_STANDARD_NATIONAL,
-                        self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -72,35 +66,35 @@ class LicenceDetailsHelper
         'vehicle_psv' => array(
             'restricted' => array(
                 array(
-                    self::LICENCE_CATEGORY_PSV,
+                    LicenceSectionService::LICENCE_CATEGORY_PSV,
                     array(
-                        self::LICENCE_TYPE_RESTRICTED,
-                        self::LICENCE_TYPE_STANDARD_NATIONAL,
-                        self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
         ),
         'safety' => array(
             'restricted' => array(
-                self::LICENCE_TYPE_RESTRICTED,
-                self::LICENCE_TYPE_STANDARD_NATIONAL,
-                self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'condition_undertaking' => array(
             'restricted' => array(
-                self::LICENCE_TYPE_RESTRICTED,
-                self::LICENCE_TYPE_STANDARD_NATIONAL,
-                self::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'taxi_phv' => array(
             'restricted' => array(
                 // @NOTE The licence must follow ALL of these restrictions
                 array(
-                    self::LICENCE_CATEGORY_PSV,
-                    self::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    LicenceSectionService::LICENCE_CATEGORY_PSV,
+                    LicenceSectionService::LICENCE_TYPE_SPECIAL_RESTRICTED
                 )
             )
         )
@@ -146,9 +140,7 @@ class LicenceDetailsHelper
         $access = array($goodsOrPsv, $licenceType);
         $restrictions = $sectionDetails['restricted'];
 
-        $restrictionHelper = new RestrictionHelper();
-
-        return $restrictionHelper->isRestrictionSatisfied($restrictions, $access);
+        return $this->getHelperService('RestrictionHelper')->isRestrictionSatisfied($restrictions, $access);
     }
 
     /**
