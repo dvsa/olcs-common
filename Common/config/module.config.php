@@ -66,6 +66,8 @@ return array(
             'address' => new \Common\Service\Address\Address()
         ),
         'factories' => array(
+            'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
+            'HelperService' => '\Common\Service\Helper\HelperServiceFactory',
             'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
@@ -89,6 +91,7 @@ return array(
                 $licenceService->setServiceLocator($serviceManager);
                 return $licenceService;
             },
+            'category' => '\Common\Service\Data\CategoryData',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
@@ -171,14 +174,6 @@ return array(
     'form' => array(
         'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
-    //-------- Start navigation -----------------
-    'navigation' => array(
-        'default' => array(
-            include __DIR__ . '/navigation.config.php'
-        )
-    ),
-    //-------- End navigation -----------------
-
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
         'apis' => array(

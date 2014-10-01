@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Application\OperatingCentres;
 
+use Common\Controller\Traits;
 use Common\Controller\Application\Application\ApplicationController;
 
 /**
@@ -16,13 +17,5 @@ use Common\Controller\Application\Application\ApplicationController;
  */
 class OperatingCentresController extends ApplicationController
 {
-    /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->goToFirstSubSection();
-    }
+    use Traits\GenericSectionIndexAction;
 }

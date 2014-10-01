@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Application\PreviousHistory;
 
+use Common\Controller\Traits;
 use Common\Form\Elements\Validators\PreviousHistoryPenaltiesConvictionsPrevConvictionValidator;
 
 /**
@@ -16,6 +17,10 @@ use Common\Form\Elements\Validators\PreviousHistoryPenaltiesConvictionsPrevConvi
  */
 class ConvictionsPenaltiesController extends PreviousHistoryController
 {
+    use Traits\GenericIndexAction,
+        Traits\GenericAddAction,
+        Traits\GenericEditAction,
+        Traits\GenericDeleteAction;
 
     /**
      * Form tables name
@@ -93,16 +98,6 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
             'familyName'
         )
     );
-
-    /**
-     * Render the section form
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return $this->renderSection();
-    }
 
     /**
      * Action save
@@ -210,22 +205,6 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
     }
 
     /**
-     * Add offense
-     */
-    public function addAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit offense
-     */
-    public function editAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
      * Process load
      *
      * @param array $data
@@ -243,15 +222,5 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
                 'convictionsConfirmation' => $data['convictionsConfirmation']
             )
         );
-    }
-
-    /**
-     * Delete sub action
-     *
-     * @return Response
-     */
-    public function deleteAction()
-    {
-        return $this->delete();
     }
 }

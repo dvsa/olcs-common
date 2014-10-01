@@ -443,7 +443,23 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function setColumns($columns)
     {
-        $this->columns = $columns;
+        $this->columns = array();
+
+        foreach ($columns as $key => $column) {
+            if (!is_string($key)) {
+                if (isset($column['name'])) {
+                    $key = $column['name'];
+                } else {
+                    $key = null;
+                }
+            }
+
+            if ($key == null) {
+                $this->columns[] = $column;
+            } else {
+                $this->columns[$key] = $column;
+            }
+        }
     }
 
     /**
@@ -1391,6 +1407,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $actions;
     }
 
+    public function hasColumn($name)
+    {
+        return isset($this->columns[$name]);
+    }
+
     /**
      * Remove column on the fly
      *
@@ -1398,16 +1419,8 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function removeColumn($name = '')
     {
-        if ($name) {
-            $columns = $this->getColumns();
-            $newColumns = array();
-            foreach ($columns as $column) {
-                if ((array_key_exists('name', $column) === false) ||
-                    (array_key_exists('name', $column) && $column['name'] !== $name)) {
-                    $newColumns[] = $column;
-                }
-            }
-            $this->setColumns($newColumns);
+        if ($this->hasColumn($name)) {
+            unset($this->columns[$name]);
         }
     }
 
