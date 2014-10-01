@@ -432,6 +432,7 @@ return array(
     'application_your-business_business-type.contact-details.home-phone' => 'Home telephone no. (optional)',
     'application_your-business_business-type.contact-details.label' => 'Contact details',
     'application_your-business_business-type.contact-details.mobile-phone' => 'Mobile telephone no. (optional)',
+    'application_your-business_fao.label' => 'For attention of (optional)',
     'application_your-business_business-type.correspondence.label' => 'Correspondence address',
     'application_your-business_business-type.data' => 'Business type',
     'application_your-business_business-type.data.type' => 'What type of business are you?',
