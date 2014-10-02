@@ -19,5 +19,4 @@ class FinancialHistoryController extends PreviousHistoryController
     use Traits\GenericIndexAction;
 
     protected $sectionServiceName = 'PreviousHistory\\ExternalApplicationFinancialHistory';
-
 }
