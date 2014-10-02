@@ -18,6 +18,8 @@ abstract class AbstractLicenceDiscsPsvSectionService extends AbstractDiscsPsvSec
 {
     public function alterForm(Form $form)
     {
-        return parent::alterForm($this->getSectionService('Licence')->alterForm($form));
+        $form->remove('form-actions');
+
+        return parent::alterForm($form);
     }
 }

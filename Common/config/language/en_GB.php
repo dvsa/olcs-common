@@ -1,9 +1,19 @@
 <?php
 
 return array(
+    'application_vehicle-safety_discs-psv-replace-label' => 'Are you sure you want to reprint these discs?',
+    'application_vehicle-safety_discs-psv-void-label' => 'Are you sure you want to void these discs?',
+    'additional-psv-discs-validator-too-many' => 'The number of discs exceeds the total vehicle authority',
+    'application_vehicle-safety_discs-psv-sub-action.additionalDiscs' => 'How many additional discs are required?',
+    'internal-licence-details-discs_psv' => 'Licence discs',
+    'internal-licence-details-discs_psv-label' => 'Licence discs',
     'application_vehicle-safety_discs-psv.validDiscs' => 'Valid discs',
     'application_vehicle-safety_discs-psv.pending' => 'Pending',
     'psv_discs.table.title' => 'Discs',
+    'psv_discs.table.discNo' => 'Disc number',
+    'psv_discs.table.issuedDate' => 'Issued date',
+    'psv_discs.table.ceasedDate' => 'Ceased date',
+    'psv_discs.table.replacement' => 'Replacement',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

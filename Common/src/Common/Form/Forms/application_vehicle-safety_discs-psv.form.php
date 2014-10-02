@@ -17,7 +17,7 @@ return array(
                         'label' => $translationPrefix . '.validDiscs',
                         'type' => 'text'
                     ),
-                    'pending' => array(
+                    'pendingDiscs' => array(
                         'label' => $translationPrefix . '.pending',
                         'type' => 'text'
                     )

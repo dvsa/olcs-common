@@ -8,19 +8,19 @@
 namespace CommonTest\Service\Helper;
 
 use PHPUnit_Framework_TestCase;
-use Common\Service\Helper\DataMapHelperService;
+use Common\Service\Helper\DataHelperService;
 
 /**
  * Data Map Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
+class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Holds the SUT
      *
-     * @var \Common\Service\Helper\DataMapHelperService
+     * @var \Common\Service\Helper\DataHelperService
      */
     private $sut;
 
@@ -29,7 +29,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->sut = new DataMapHelperService();
+        $this->sut = new DataHelperService();
     }
 
     /**

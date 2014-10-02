@@ -42,7 +42,8 @@ return array(
         ),
         array(
             'title' => $translationPrefix . '.replacement',
-            'name' => 'isReplacement'
+            'name' => 'isCopy',
+            'formatter' => 'YesNo'
         )
     )
 );
