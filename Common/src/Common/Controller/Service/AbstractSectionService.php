@@ -931,6 +931,34 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     }
 
     /**
+     * Upload a file
+     *
+     * @param array $file
+     * @param array $data
+     */
+    protected function uploadFile($file, $data)
+    {
+        $uploader = $this->getUploader();
+        $uploader->setFile($file);
+
+        $file = $uploader->upload();
+
+        $docData = array_merge(
+            array(
+                'application'   => $this->getIdentifier(),
+                'filename'      => $file->getName(),
+                'identifier'    => $file->getIdentifier(),
+                'size'          => $file->getSize(),
+                'fileExtension' => 'doc_' . $file->getExtension()
+            ),
+            $data
+        );
+
+        $this->getHelperService('RestHelper')
+            ->makeRestCall('Document', 'POST', $docData);
+    }
+
+    /**
      * Get uploader
      *
      * @return object

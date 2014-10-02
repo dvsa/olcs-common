@@ -203,6 +203,27 @@ class File
         return $this->meta;
     }
 
+    public function getExtension()
+    {
+        if (empty($this->name)) {
+            // we may want to handle this differently, unsure of rules as of yet
+            return '';
+        }
+
+        $extPos = strrpos($this->name, '.');
+        if ($extPos === false) {
+            return '';
+        }
+
+        return substr($this->name, $extPos + 1);
+    }
+
+    public function getRealType()
+    {
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        return $finfo->buffer($this->getContent());
+    }
+
     /**
      * Populate properties from data
      *
