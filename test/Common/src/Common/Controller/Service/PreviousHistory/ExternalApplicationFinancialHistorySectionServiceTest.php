@@ -21,10 +21,6 @@ class ExternalApplicationFinancialHistorySectionServiceTest extends AbstractSect
 
     protected function setUp()
     {
-        $this->sut = $this->getMock(
-            '\Common\Controller\Service\PreviousHistory\ExternalApplicationFinancialHistorySectionService'
-        );
-
         $this->sut = new ExternalApplicationFinancialHistorySectionService();
 
         parent::setUp();
