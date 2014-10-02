@@ -66,4 +66,39 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $file->fromData($data);
         $this->assertEquals($expected, $file->toArray());
     }
+
+    /**
+     * @dataProvider extensionProvider
+     */
+    public function testGetExtension($name, $extension)
+    {
+        $file = new File();
+        $file->setName($name);
+
+        $this->assertEquals(
+            $extension,
+            $file->getExtension()
+        );
+    }
+
+    public function extensionProvider()
+    {
+        return array(
+            array('', ''),
+            array('A file with no extension', ''),
+            array('Another file.txt', 'txt'),
+            array('article.jpg.doc', 'doc')
+        );
+    }
+
+    public function testGetRealType()
+    {
+        $file = new File();
+        $file->setContent('plain text');
+
+        $this->assertEquals(
+            'text/plain',
+            $file->getRealType()
+        );
+    }
 }

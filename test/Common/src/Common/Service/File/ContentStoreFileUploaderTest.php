@@ -35,6 +35,10 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
             ->with('ContentStore')
             ->will($this->returnValue($this->contentStoreMock));
 
+        $this->uploader->setConfig(
+            ['location' => 'test']
+        );
+
         $this->uploader->setServiceLocator($sl);
     }
 
@@ -54,7 +58,7 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
 
         $this->contentStoreMock->expects($this->once())
             ->method('read')
-            ->with('identifier')
+            ->with('test/identifier')
             ->will($this->returnValue($file));
 
         $response = $this->uploader->download('identifier', 'file.txt');
@@ -70,11 +74,25 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($headers, $response->getHeaders()->toArray());
     }
 
+    public function testDownloadWithValidFileAndNamespace()
+    {
+        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file->setContent('dummy content');
+        $file->setMimeType('application/rtf');
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('read')
+            ->with('foo/identifier')
+            ->will($this->returnValue($file));
+
+        $this->uploader->download('identifier', 'file.txt', 'foo');
+    }
+
     public function testRemoveProxiesThroughToContentStore()
     {
         $this->contentStoreMock->expects($this->once())
             ->method('remove')
-            ->with('identifier');
+            ->with('test/identifier');
 
         $this->uploader->remove('identifier');
     }
@@ -126,6 +144,10 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException        \Common\Service\File\Exception
+     * @expectedExceptionMessage Unable to store uploaded file
+     */
     public function testUploadWithErrorResponse()
     {
         $response = $this->getMock('Zend\Http\Response');
@@ -144,13 +166,6 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        try {
-            $this->uploader->upload('documents');
-        } catch (\Exception $e) {
-            $this->assertEquals('Unable to store uploaded file', $e->getMessage());
-            return;
-        }
-
-        $this->fail('Expected exception not raised');
+        $this->uploader->upload('documents');
     }
 }

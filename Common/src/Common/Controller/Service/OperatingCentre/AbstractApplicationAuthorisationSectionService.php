@@ -168,13 +168,15 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
     {
         $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
         $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
+        $licence = $this->getLicenceData();
 
         $this->uploadFile(
             $file,
             array(
                 'description' => 'Advertisement',
                 'category' => $category['id'],
-                'documentSubCategory' => $subCategory['id']
+                'documentSubCategory' => $subCategory['id'],
+                'licence' => $licence['id'],
             )
         );
     }
