@@ -36,6 +36,24 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
      * @group helper_service
      * @group data_map_helper_service
      */
+    public function testArrayRepeat()
+    {
+        $input = array(
+            'foo' => 'bar',
+            'cake' => array(
+                'nested' => true
+            )
+        );
+
+        $expected = array($input, $input, $input);
+
+        $this->assertEquals($expected, $this->sut->arrayRepeat($input, 3));
+    }
+
+    /**
+     * @group helper_service
+     * @group data_map_helper_service
+     */
     public function testProcessDataMapWithoutMap()
     {
         $input = array(
