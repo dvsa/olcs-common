@@ -152,18 +152,6 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
     }
 
     /**
-     *
-     * @param type $data
-     * @param type $service
-     */
-    public function actionSave($data, $service = null)
-    {
-        $additionalDiscCount = $data['data']['additionalDiscs'];
-
-        $this->requestDiscs($additionalDiscCount, array('licence' => $data['data']['id']));
-    }
-
-    /**
      * Override the save method, as we never save anything from this section
      *
      * @param array $data
@@ -220,6 +208,20 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
     }
 
     /**
+     *
+     * @param type $data
+     * @param type $service
+     */
+    public function actionSave($data, $service = null)
+    {
+        $additionalDiscCount = $data['data']['additionalDiscs'];
+
+        $this->requestDiscs($additionalDiscCount, array('licence' => $data['data']['id']));
+
+        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-requested-successfully');
+    }
+
+    /**
      * Load the data for the multiple replace confirmation form
      *
      * @param string $id
@@ -240,6 +242,8 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
         $ids = explode(',', $data['data']['id']);
         $this->ceaseDiscs($ids);
         $this->requestDiscs(count($ids), array('isCopy' => 'Y', 'licence' => $this->getIdentifier()));
+
+        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-replaced-successfully');
     }
 
     /**
@@ -263,6 +267,8 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
         $ids = explode(',', $data['data']['id']);
 
         $this->ceaseDiscs($ids);
+
+        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-voided-successfully');
     }
 
     /**
