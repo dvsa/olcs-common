@@ -175,6 +175,7 @@ class AddressesControllerTest extends AbstractApplicationControllerTestCase
                             [
                                 'id' => 1,
                                 'version' => 1,
+                                'fao' => 'Bob Smith',
                                 'contactType' => array(
                                     'id' => 'ct_reg'
                                 ),
@@ -186,6 +187,7 @@ class AddressesControllerTest extends AbstractApplicationControllerTestCase
                         [
                             'id' => 1,
                             'version' => 1,
+                            'fao' => 'Bob Smith',
                             'contactType' => 'ct_corr',
                             'emailAddress' => 'dummy@mail.com',
                             'address' => $address,

@@ -1,34 +1,36 @@
 <?php
 
 /**
- * Restriction Helper Test
+ * Restriction Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonTest\Helper;
+namespace CommonTest\Service\Helper;
 
-use Common\Helper\RestrictionHelper;
+use Common\Service\Helper\RestrictionHelperService;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Restriction Helper Test
+ * Restriction Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestrictionHelperTest extends PHPUnit_Framework_TestCase
+class RestrictionHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Setup the helper
      */
     public function setUp()
     {
-        $this->helper = new RestrictionHelper();
+        $this->helper = new RestrictionHelperService();
     }
 
     /**
      * Test isRestrictionSatisfied
      *
      * @dataProvider isRestrictionSatisfiedProvider
+     * @group helper_service
+     * @group restriction_helper_service
      */
     public function testIsRestrictionSatisfied($restrictions, $accessKeys, $expected)
     {

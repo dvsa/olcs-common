@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Licence\Details;
 
-use Common\Helper\LicenceDetailsHelper;
 use Common\Controller\AbstractSectionController;
 use Common\Form\Fieldsets\Custom\SectionButtons;
 use Common\Controller\Traits\GenericLicenceSection;
@@ -42,13 +41,6 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
     protected $section = '';
 
     /**
-     * Holds the licence details helper
-     *
-     * @var \Common\Helper\LicenceDetailsHelper
-     */
-    protected $licenceDetailsHelper;
-
-    /**
      * Holds the identifier name
      *
      * @var string
@@ -61,20 +53,6 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
      * @var string
      */
     protected $viewTemplateName = 'partials/section';
-
-    /**
-     * Get the licence details helper
-     *
-     * @return \Common\Helper\LicenceDetailsHelper
-     */
-    protected function getLicenceDetailsHelper()
-    {
-        if (empty($this->licenceDetailsHelper)) {
-            $this->licenceDetailsHelper = new LicenceDetailsHelper();
-        }
-
-        return $this->licenceDetailsHelper;
-    }
 
     /**
      * Extend the render view method
@@ -131,7 +109,7 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
     {
         $licence = $this->getLicence();
 
-        $navigationConfig = $this->getLicenceDetailsHelper()->getNavigation(
+        $navigationConfig = $this->getHelperService('LicenceNavigationHelper')->getNavigation(
             $licence['id'],
             $licence['goodsOrPsv']['id'],
             $licence['licenceType']['id'],

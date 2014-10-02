@@ -117,11 +117,21 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
             return $label . $message;
         }
 
+        return $this->compileMessages($label, $message, $renderer);
+    }
+
+    private function compileMessages($label, $message, $renderer)
+    {
         $messages = array();
 
         foreach ($message as $value) {
-            $value = $renderer->translate($value);
-            $messages[] = $label . $value;
+            if (is_array($value)) {
+                $recursiveMessages = $this->compileMessages($label, $value, $renderer);
+                $messages = array_merge($messages, $recursiveMessages);
+            } else {
+                $value = $renderer->translate($value);
+                $messages[] = $label . $value;
+            }
         }
 
         return $messages;

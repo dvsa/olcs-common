@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Restriction Helper
+ * Restriction Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Helper;
+namespace Common\Service\Helper;
 
 /**
- * Restriction Helper
+ * Restriction Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestrictionHelper
+class RestrictionHelperService extends AbstractHelperService
 {
     /**
      * Check if restriction is satisfied
