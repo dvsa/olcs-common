@@ -96,11 +96,11 @@ class ExternalApplicationFinancialHistorySectionServiceTest extends AbstractSect
 
         $mockCategoryService->expects($this->at(0))
             ->method('getCategoryByDescription')
-            ->willReturn(1);
+            ->willReturn(['id' => 1]);
 
         $mockCategoryService->expects($this->at(1))
             ->method('getCategoryByDescription')
-            ->willReturn(2);
+            ->willReturn(['id' => 2]);
 
         $mockFileUploaderService = $this->getMock('\stdClass', ['getUploader']);
         $mockUploadService = $this->getMock('\stdClass', ['upload', 'setFile']);

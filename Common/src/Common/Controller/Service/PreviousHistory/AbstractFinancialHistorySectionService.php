@@ -69,8 +69,8 @@ abstract class AbstractFinancialHistorySectionService extends AbstractSectionSer
             $file,
             array(
                 'description' => 'Insolvency document',
-                'category' => $category,
-                'documentSubCategory' => $subCategory,
+                'category' => $category['id'],
+                'documentSubCategory' => $subCategory['id'],
                 'licence' => $licence['id']
             )
         );
