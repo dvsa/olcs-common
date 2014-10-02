@@ -8,7 +8,6 @@
 namespace CommonTest\Service\File;
 
 use Common\Service\File\ContentStoreFileUploader;
-use Common\Service\File\Exception as FileException;
 
 /**
  * Content Store File Uploader Test
@@ -145,6 +144,10 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException        \Common\Service\File\Exception
+     * @expectedExceptionMessage Unable to store uploaded file
+     */
     public function testUploadWithErrorResponse()
     {
         $response = $this->getMock('Zend\Http\Response');
@@ -163,13 +166,6 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        try {
-            $this->uploader->upload('documents');
-        } catch (FileException $e) {
-            $this->assertEquals('Unable to store uploaded file', $e->getMessage());
-            return;
-        }
-
-        $this->fail('Expected exception not raised');
+        $this->uploader->upload('documents');
     }
 }
