@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Data Map Helper Service Test
+ * Data Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -11,7 +11,7 @@ use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\DataHelperService;
 
 /**
- * Data Map Helper Service Test
+ * Data Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -34,7 +34,7 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testArrayRepeat()
     {
@@ -52,7 +52,7 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMapWithoutMap()
     {
@@ -67,7 +67,7 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMap()
     {
@@ -117,7 +117,7 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMapWithAddress()
     {

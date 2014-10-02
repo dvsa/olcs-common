@@ -7,8 +7,6 @@
  */
 namespace Common\Service\Helper;
 
-use Zend\Mvc\Controller\Plugin\FlashMessenger;
-
 /**
  * Flash Messenger Helper Service
  *
@@ -20,52 +18,44 @@ class FlashMessengerHelperService extends AbstractHelperService
      * Add a success message
      *
      * @param string $message
+     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addSuccessMessage($message)
     {
-        $this->addMessage($message, FlashMessenger::NAMESPACE_SUCCESS);
+        return $this->getFlashMessenger()->addSuccessMessage($message);
     }
 
     /**
      * Add a error message
      *
      * @param string $message
+     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addErrorMessage($message)
     {
-        $this->addMessage($message, FlashMessenger::NAMESPACE_ERROR);
+        return $this->getFlashMessenger()->addErrorMessage($message);
     }
 
     /**
      * Add a warning message
      *
      * @param string $message
+     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addWarningMessage($message)
     {
-        $this->addMessage($message, FlashMessenger::NAMESPACE_WARNING);
+        return $this->getFlashMessenger()->addWarningMessage($message);
     }
 
     /**
      * Add a info message
      *
      * @param string $message
+     * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function addInfoMessage($message)
     {
-        $this->addMessage($message, FlashMessenger::NAMESPACE_INFO);
-    }
-
-    /**
-     * Add a message to the defined namespace
-     *
-     * @param string $message
-     * @param string $namespace
-     */
-    public function addMessage($message, $namespace = FlashMessenger::NAMESPACE_DEFAULT)
-    {
-        $this->getFlashMessenger()->setNamespace($namespace)->addMessage($message)
-            ->setNamespace(FlashMessenger::NAMESPACE_DEFAULT);
+        return $this->getFlashMessenger()->addInfoMessage($message);
     }
 
     /**
