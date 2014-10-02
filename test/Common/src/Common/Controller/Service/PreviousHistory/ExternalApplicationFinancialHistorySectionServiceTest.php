@@ -92,10 +92,16 @@ class ExternalApplicationFinancialHistorySectionServiceTest extends AbstractSect
         // when all we really want to do is assert we've called $this-uploadFile()
         // with some criteria. Once the file upload stuff has been servicized this
         // won't have to reach so deep
-        //
-        // @TODO actually make assertions; all this does is execute the code without
-        // failure, doesn't actually verify any param / return values
         $mockCategoryService = $this->getMock('\stdClass', ['getCategoryByDescription']);
+
+        $mockCategoryService->expects($this->at(0))
+            ->method('getCategoryByDescription')
+            ->willReturn(1);
+
+        $mockCategoryService->expects($this->at(1))
+            ->method('getCategoryByDescription')
+            ->willReturn(2);
+
         $mockFileUploaderService = $this->getMock('\stdClass', ['getUploader']);
         $mockUploadService = $this->getMock('\stdClass', ['upload', 'setFile']);
 
@@ -108,27 +114,63 @@ class ExternalApplicationFinancialHistorySectionServiceTest extends AbstractSect
             ['getName', 'getIdentifier', 'getSize', 'getExtension']
         );
 
+        $file->expects($this->once())
+            ->method('getName')
+            ->willReturn('filename');
+
+        $file->expects($this->once())
+            ->method('getSize')
+            ->willReturn(1234);
+
+        $file->expects($this->once())
+            ->method('getIdentifier')
+            ->willReturn('abc123');
+
+        $file->expects($this->once())
+            ->method('getExtension')
+            ->willReturn('rtf');
+
         $mockUploadService->expects($this->once())
             ->method('upload')
             ->willReturn($file);
 
-        $mockApplicationSectionService = $this->getMock('\Common\Controller\Service\ApplicationSectionService', ['getLicenceSectionService']);
+        $mockApplicationSectionService = $this->getMock(
+            '\Common\Controller\Service\ApplicationSectionService',
+            ['getLicenceSectionService']
+        );
 
         $mockLicenceSectionService = $this->getMock('\stdClass', ['getLicenceData']);
+
+        $mockLicenceSectionService->expects($this->once())
+            ->method('getLicenceData')
+            ->willReturn(['id' => 1212]);
 
         $mockApplicationSectionService->expects($this->once())
             ->method('getLicenceSectionService')
             ->willReturn($mockLicenceSectionService);
 
+        $expectedData = [
+            'application' => 4321,
+            'filename' => 'filename',
+            'identifier' => 'abc123',
+            'size' => 1234,
+            'fileExtension' => 'doc_rtf',
+            'licence' => 1212,
+            'category' => 1,
+            'documentSubCategory' => 2,
+            'description' => 'Insolvency document'
+        ];
+
         $this->attachRestHelperMock();
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->willReturn('');
+            ->with('Document', 'POST', $expectedData);
 
         $this->mockSectionService('Application', $mockApplicationSectionService);
         $this->serviceManager->setService('category', $mockCategoryService);
         $this->serviceManager->setService('FileUploader', $mockFileUploaderService);
 
+        $this->sut->setIdentifier(4321);
         $this->sut->processFinancialFileUpload(array());
     }
 
