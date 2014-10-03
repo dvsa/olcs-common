@@ -37,6 +37,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         Util\FlashMessengerTrait,
         Util\RestCallTrait,
         Util\HelperServiceAware,
+        Util\EntityServiceAware,
         Traits\ViewHelperManagerAware;
 
     private $loggedInUser;
@@ -1813,16 +1814,5 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function getSectionServiceName()
     {
         return $this->sectionServiceName;
-    }
-
-    /**
-     * Wrapper method to get an entity service
-     *
-     * @param string $service
-     * @return object
-     */
-    protected function getEntityService($service)
-    {
-        return $this->getServiceLocator()->get('EntityService')->get($service);
     }
 }
