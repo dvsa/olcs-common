@@ -504,7 +504,13 @@ abstract class AbstractSectionController extends AbstractActionController
         if ($this->isBespokeAction()) {
 
             $action = $this->getActionFromFullActionName();
-            return $this->{$action . 'Load'}($this->getActionId());
+            $method = $action . 'Load';
+
+            if ($this->getSectionServiceName() !== null) {
+                return $this->getSectionService()->$method($this->getActionId());
+            }
+
+            return $this->$method($this->getActionId());
         }
 
         if ($this->isAction()) {
@@ -649,7 +655,7 @@ abstract class AbstractSectionController extends AbstractActionController
 
             $method = $action . 'Save';
         } else {
-            $data = $this->getHelperService('DataMapHelper')->processDataMap($data, $this->getActionDataMap());
+            $data = $this->getHelperService('DataHelper')->processDataMap($data, $this->getActionDataMap());
 
             $method = 'actionSave';
         }
@@ -658,7 +664,11 @@ abstract class AbstractSectionController extends AbstractActionController
             return;
         }
 
-        $response = $this->$method($data);
+        if ($this->getSectionServiceName() !== null) {
+            $response = $this->getSectionService()->$method($data);
+        } else {
+            $response = $this->$method($data);
+        }
 
         if ($response instanceof Response || $response instanceof ViewModel) {
             $this->setCaughtResponse($response);
@@ -727,16 +737,12 @@ abstract class AbstractSectionController extends AbstractActionController
     /**
      * Save sub action data
      *
+     * @NOTE we no longer need the check for section service here, as we catch it slightly earlier
+     *
      * @param array $data
      */
     protected function actionSave($data, $service = null)
     {
-        // @NOTE progressivly start to include the logic within a service
-        //  but maintain the old logic for backwards compatability
-        if ($this->getSectionServiceName() !== null) {
-            return $this->getSectionService()->actionSave($data, $service);
-        }
-
         $method = 'POST';
 
         if (isset($data['id']) && !empty($data['id'])) {

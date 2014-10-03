@@ -413,6 +413,44 @@ class RestHelperServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @group helper_service
      * @group rest_helper_service
+     */
+    public function testMakeRestCallPutWithMultiple()
+    {
+        $service = 'Sample';
+        $method = 'PUT';
+        $data = array(
+            array(
+                'id' => 1,
+                'foo' => 'bar'
+            ),
+            array(
+                'id' => 2,
+                'foo' => 'bar'
+            ),
+            '_OPTIONS_' => array(
+                'multiple' => true
+            )
+        );
+
+        $response = 200;
+        $expectedData = array(
+            'data' => '{"0":{"id":1,"foo":"bar"},"1":{"id":2,"foo":"bar"},"_OPTIONS_":{"multiple":true}}'
+        );
+
+        $this->mockService = $this->getMock('\stdClass', array('put'));
+        $this->mockService->expects($this->once())
+            ->method('put')
+            ->with('/0', $expectedData)
+            ->will($this->returnValue($response));
+
+        $output = $this->sut->makeRestCall($service, $method, $data);
+
+        $this->assertEquals($response, $output);
+    }
+
+    /**
+     * @group helper_service
+     * @group rest_helper_service
      * @expectedException \Common\Exception\BadRequestException
      */
     public function testMakeRestCallPutWith400()

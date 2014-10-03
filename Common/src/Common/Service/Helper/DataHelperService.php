@@ -1,19 +1,37 @@
 <?php
 
 /**
- * Data Map Helper Service
+ * Data Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Service\Helper;
 
 /**
- * Data Map Helper Service
+ * Data Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DataMapHelperService extends AbstractHelperService
+class DataHelperService extends AbstractHelperService
 {
+    /**
+     * Repeat an array x times
+     *
+     * @param array $array
+     * @param int $count
+     * @return array
+     */
+    public function arrayRepeat($array, $count)
+    {
+        $arrays = array();
+
+        for ($i = 0; $i < $count; $i++) {
+            $arrays[] = $array;
+        }
+
+        return $arrays;
+    }
+
     /**
      * Process the data map
      *

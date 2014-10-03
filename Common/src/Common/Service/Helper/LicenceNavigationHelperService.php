@@ -75,6 +75,18 @@ class LicenceNavigationHelperService extends AbstractHelperService
                 )
             )
         ),
+        'discs_psv' => array(
+            'restricted' => array(
+                array(
+                    LicenceSectionService::LICENCE_CATEGORY_PSV,
+                    array(
+                        LicenceSectionService::LICENCE_TYPE_RESTRICTED,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceSectionService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
+            )
+        ),
         'safety' => array(
             'restricted' => array(
                 LicenceSectionService::LICENCE_TYPE_RESTRICTED,
