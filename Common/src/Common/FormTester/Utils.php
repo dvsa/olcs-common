@@ -20,6 +20,8 @@ use Zend\Form\Element\Submit;
 class Utils
 {
     /**
+     * Recursively extracts all field names from a form
+     *
      * @param FieldsetInterface $form
      * @return array
      */
@@ -43,6 +45,8 @@ class Utils
     }
 
     /**
+     * Performs a recursive array diff and ensures that all differences from both arrays are present in the result
+     *
      * @param $a1
      * @param $a2
      * @return array
@@ -56,35 +60,40 @@ class Utils
     }
 
     /**
-     * @param $aArray1
-     * @param $aArray2
+     * Performs a recursive array diff preferring values from $a1 eg inside sub arrays, keys which are different in $a1
+     * and $a2 or keys which are in $a1 and not $a2 are returned, however keys from $a2 which are not in $a1 are not.
+     *
+     * @param $a1
+     * @param $a2
      * @return array
      */
-    public static function arrayDiffRecursive($aArray1, $aArray2)
+    public static function arrayDiffRecursive($a1, $a2)
     {
-        $aReturn = array();
+        $return = array();
 
-        foreach ($aArray1 as $mKey => $mValue) {
-            if (array_key_exists($mKey, $aArray2)) {
-                if (is_array($mValue)) {
-                    $aRecursiveDiff = static::arrayDiffRecursive($mValue, $aArray2[$mKey]);
-                    if (count($aRecursiveDiff)) {
-                        $aReturn[$mKey] = $aRecursiveDiff;
+        foreach ($a1 as $key => $value) {
+            if (array_key_exists($key, $a2)) {
+                if (is_array($value)) {
+                    $recursiveDiff = static::arrayDiffRecursive($value, $a2[$key]);
+                    if (count($recursiveDiff)) {
+                        $return[$key] = $recursiveDiff;
                     }
                 } else {
-                    if ($mValue != $aArray2[$mKey]) {
-                        $aReturn[$mKey] = $mValue;
+                    if ($value != $a2[$key]) {
+                        $return[$key] = $value;
                     }
                 }
             } else {
-                $aReturn[$mKey] = $mValue;
+                $return[$key] = $value;
             }
         }
 
-        return $aReturn;
+        return $return;
     }
 
     /**
+     * Flattens a multi dimensional array into a single dimension, intended for use with a set of form/test differences
+     *
      * @param $array
      * @param string $prefix
      * @return array

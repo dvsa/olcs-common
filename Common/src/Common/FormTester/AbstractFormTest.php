@@ -22,7 +22,10 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     /**
+     * This test is used to test each form field with each of the values provided for it
+     *
      * @dataProvider provideTestFormFields
+     *
      * @param $validationGroup
      * @param $data
      * @param $valid
@@ -58,6 +61,9 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * This test ensures that every field in the form has at least one valid and one invalid test. Any field that is
+     * missing one or both will generate an Incomplete test notification.
+     *
      * @dataProvider provideTestCompleteness
      *
      * @param $field
