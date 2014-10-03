@@ -5,7 +5,6 @@ namespace Common\FormTester;
 use Common\Form\Element\DynamicSelect;
 use Mockery as m;
 
-
 /**
  * Class AbstractFormTest
  * @package Common\FormTester
@@ -70,7 +69,9 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
             if ($noTests) {
                 $this->markTestIncomplete($this->formName . '::' . $field . ' has no tests');
             } else {
-                $this->markTestIncomplete($this->formName . '::' . $field . ' is missing either a valid or invalid test');
+                $this->markTestIncomplete(
+                    $this->formName . '::' . $field . ' is missing either a valid or invalid test'
+                );
             }
         }
         $this->assertTrue(true); //form is completely tested
@@ -90,7 +91,7 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
             $data = array_merge_recursive($data, $field->getStack()->getTransposed($field->isComplete()));
         }
 
-        $diff = Utils::full_array_diff_recursive($formFields, $data);
+        $diff = Utils::fullArrayDiffRecursive($formFields, $data);
 
         $provided = [];
         foreach (Utils::flatten($diff) as $key => $value) {
@@ -112,11 +113,14 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
             $serviceManager = $this->getServiceManager();
             $serviceManager->setAllowOverride(true);
 
-            $serviceManager->get('FormElementManager')->setFactory('DynamicSelect', function ($serviceLocator, $name, $requestedName) {
-                $element = new DynamicSelect();
-                $element->setValueOptions(['key'=>'value']);
-                return $element;
-            });
+            $serviceManager->get('FormElementManager')->setFactory(
+                'DynamicSelect',
+                function ($serviceLocator, $name, $requestedName) {
+                    $element = new DynamicSelect();
+                    $element->setValueOptions(['key'=>'value']);
+                    return $element;
+                }
+            );
 
             $this->form = $serviceManager->get('FormAnnotationBuilder')->createForm($this->formName);
 

@@ -2,14 +2,28 @@
 
 namespace Common\FormTester;
 
+use Zend\Form\FieldsetInterface;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Submit;
 
+/**
+ * Class Utils
+ *
+ * Utility package for the form tester abstract; contains methods which need recursion, placed in their own class for
+ * tidiness, should be considered as private functions for the Abstract form tester.
+ *
+ * @package Common\FormTester
+ * @private
+ */
 class Utils
 {
-    public static function extractFields(\Zend\Form\FieldsetInterface $form)
+    /**
+     * @param FieldsetInterface $form
+     * @return array
+     */
+    public static function extractFields(FieldsetInterface $form)
     {
         $data = [];
         foreach ($form->getElements() as $element) {
@@ -28,23 +42,35 @@ class Utils
         return $data;
     }
 
-    public static function full_array_diff_recursive($a1, $a2)
+    /**
+     * @param $a1
+     * @param $a2
+     * @return array
+     */
+    public static function fullArrayDiffRecursive($a1, $a2)
     {
         return ArrayUtils::merge(
-            static::array_diff_recursive($a1, $a2),
-            static::array_diff_recursive($a2, $a1)
+            static::arrayDiffRecursive($a1, $a2),
+            static::arrayDiffRecursive($a2, $a1)
         );
     }
 
-    public static function array_diff_recursive($aArray1, $aArray2)
+    /**
+     * @param $aArray1
+     * @param $aArray2
+     * @return array
+     */
+    public static function arrayDiffRecursive($aArray1, $aArray2)
     {
         $aReturn = array();
 
         foreach ($aArray1 as $mKey => $mValue) {
             if (array_key_exists($mKey, $aArray2)) {
                 if (is_array($mValue)) {
-                    $aRecursiveDiff = static::array_diff_recursive($mValue, $aArray2[$mKey]);
-                    if (count($aRecursiveDiff)) { $aReturn[$mKey] = $aRecursiveDiff; }
+                    $aRecursiveDiff = static::arrayDiffRecursive($mValue, $aArray2[$mKey]);
+                    if (count($aRecursiveDiff)) {
+                        $aReturn[$mKey] = $aRecursiveDiff;
+                    }
                 } else {
                     if ($mValue != $aArray2[$mKey]) {
                         $aReturn[$mKey] = $mValue;
@@ -58,6 +84,11 @@ class Utils
         return $aReturn;
     }
 
+    /**
+     * @param $array
+     * @param string $prefix
+     * @return array
+     */
     public static function flatten($array, $prefix = '')
     {
         $return = [];

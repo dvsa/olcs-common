@@ -70,7 +70,7 @@ class Value
     public function getContextArray()
     {
         $data = [];
-        foreach($this->getContext() as $ctx) {
+        foreach ($this->getContext() as $ctx) {
             /** @var Context $data */
             $data = array_merge_recursive($data, $ctx->getData());
         }
