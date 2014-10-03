@@ -104,16 +104,27 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
      */
     protected function getGroupExpected()
     {
-        $expected = [
-            'parent' => [
+        $expected = array (
+            'parent' => array (
                 'label' => 'Parent',
-                'options' => [
-                    'val-1' => 'Value 1',
-                    'val-2' => 'Value 2',
-                    'val-3' => 'Value 3'
-                ]
-            ]
-        ];
+                'options' => array (),
+            ),
+            'p1' => array (
+                'options' => array (
+                  'val-1' => 'Value 1',
+                ),
+            ),
+            'p2' => array (
+                'options' => array (
+                  'val-2' => 'Value 2',
+                ),
+            ),
+            'p3' => array (
+                'options' => array (
+                  'val-3' => 'Value 3',
+                ),
+            ),
+        );
         return $expected;
     }
 
@@ -150,9 +161,9 @@ class RefDataTest extends \PHPUnit_Framework_TestCase
     {
         $source = [
             ['id' => 'parent', 'description' => 'Parent'],
-            ['id' => 'val-1', 'description' => 'Value 1', 'parent_id' => 'parent'],
-            ['id' => 'val-2', 'description' => 'Value 2', 'parent_id' => 'parent'],
-            ['id' => 'val-3', 'description' => 'Value 3', 'parent_id' => 'parent'],
+            ['id' => 'val-1', 'description' => 'Value 1', 'parent' => ['id'=>'p1', 'description'=>'d1']],
+            ['id' => 'val-2', 'description' => 'Value 2', 'parent' => ['id'=>'p2', 'description'=>'d2']],
+            ['id' => 'val-3', 'description' => 'Value 3', 'parent' => ['id'=>'p3', 'description'=>'d3']],
         ];
         return $source;
     }

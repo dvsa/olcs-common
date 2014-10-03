@@ -23,8 +23,8 @@ class RefData extends AbstractData implements ListDataInterface
 
         foreach ($data as $datum) {
             //false if null or not in array
-            if (isset($datum['parent_id'])) {
-                $groups[$datum['parent_id']][] = $datum;
+            if (isset($datum['parent']['id'])) {
+                $groups[$datum['parent']['id']][] = $datum;
             } else {
                 $optionData[$datum['id']] = ['label' => $datum['description'], 'options' => []];
             }
