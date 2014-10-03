@@ -1,6 +1,23 @@
 <?php
 
 return array(
+    'apsts_not_submitted' => 'Not submitted',
+    'dashboard-table-licences-licNo' => 'Licence number',
+    'dashboard-table-licences-licType' => 'Licence type',
+    'dashboard-table-licences-status' => 'Status',
+    'dashboard-table-applications-licNo' => 'Licence number',
+    'dashboard-table-applications-appId' => 'Application number',
+    'dashboard-table-applications-createdDate' => 'Date created',
+    'dashboard-table-applications-submittedDate' => 'Date submitted',
+    'dashboard-table-applications-status' => 'Status',
+    'dashboard-table-variations-licNo' => 'Licence number',
+    'dashboard-table-variations-appId' => 'Application number',
+    'dashboard-table-variations-createdDate' => 'Date created',
+    'dashboard-table-variations-submittedDate' => 'Date submitted',
+    'dashboard-table-variations-status' => 'Status',
+    'dashboard-table-applications' => 'Applications',
+    'dashboard-table-variations' => 'Variation applications',
+    'dashboard-table-licences' => 'Licences',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
