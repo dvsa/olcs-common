@@ -21,8 +21,8 @@ class DateNotInFuture extends DateRequired implements InputProviderInterface
     public function getValidators()
     {
         return array(
-            new DateValidator(array('format' => 'Y-m-d')),
-            new \Common\Form\Elements\Validators\DateNotInFuture()
+            ['name' => 'Date', 'options' => array('format' => 'Y-m-d')],
+            ['name' => '\Common\Form\Elements\Validators\DateNotInFuture']
         );
     }
 }
