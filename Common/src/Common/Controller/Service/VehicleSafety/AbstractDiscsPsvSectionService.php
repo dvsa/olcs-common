@@ -148,6 +148,11 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
             }
         }
 
+        unset($data['totAuthSmallVehicles']);
+        unset($data['totAuthMediumVehicles']);
+        unset($data['totAuthLargeVehicles']);
+        unset($data['psvDiscs']);
+
         return array('data' => $data);
     }
 
