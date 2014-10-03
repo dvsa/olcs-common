@@ -45,6 +45,7 @@ class AddressesController extends YourBusinessController
                                 'properties' => array(
                                     'id',
                                     'version',
+                                    'fao',
                                     'emailAddress'
                                 ),
                                 'children' => array(
@@ -80,6 +81,7 @@ class AddressesController extends YourBusinessController
                         'properties' => array(
                             'id',
                             'version',
+                            'fao',
                             'emailAddress'
                         ),
                         'children' => array(
@@ -291,6 +293,7 @@ class AddressesController extends YourBusinessController
         $correspondence = array(
             'id' => $data['correspondence']['id'],
             'version' => $data['correspondence']['version'],
+            'fao' => $data['correspondence']['fao'],
             'contactType' => self::MAIN_CONTACT_DETAILS_TYPE,
             'licence' => $licenceId,
             'emailAddress' => $data['contact']['email'],
@@ -394,6 +397,7 @@ class AddressesController extends YourBusinessController
             $data[$type] = array(
                 'id' => $contactDetails['id'],
                 'version' => $contactDetails['version'],
+                'fao' => $contactDetails['fao']
             );
 
             $data[$type . '_address'] = $contactDetails['address'];

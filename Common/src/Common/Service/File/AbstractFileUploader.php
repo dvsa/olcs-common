@@ -122,4 +122,13 @@ abstract class AbstractFileUploader implements FileUploaderInterface
     {
         return sha1(microtime() . uniqid());
     }
+
+    protected function getPath($identifier, $namespace = null)
+    {
+        if ($namespace === null) {
+            $namespace = $this->getConfig()['location'];
+        }
+
+        return rtrim($namespace, '/') . '/' . $identifier;
+    }
 }

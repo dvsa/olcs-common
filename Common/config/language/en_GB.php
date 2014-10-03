@@ -441,6 +441,7 @@ return array(
     'application_your-business_business_details-subsidiaries-columnName' => 'Company name',
     'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'Please add subsidiary company',
     'application_your-business_business_details-subsidiaries-tableHeader' => 'Subsidiary companies (optional)',
+    'application_your-business_fao.label' => 'For attention of (optional)',
     'application_your-business_people-add' => 'Add person',
     'application_your-business_people-edit' => 'Edit person',
     'application_your-business_people-sub-action-formDateOfBirth' => 'Date of birth',

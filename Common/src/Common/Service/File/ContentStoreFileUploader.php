@@ -25,7 +25,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         $file = $this->getFile();
         $key = $this->generateKey();
 
-        $path  = $namespace. '/' . $key;
+        $path = $this->getPath($key, $namespace);
 
         // allow for the fact the file might already have
         // content set so we won't need to read from tmp disk
@@ -37,7 +37,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $storeFile = new ContentStoreFile();
         $storeFile->setContent($file->getContent())
-            ->setMimeType($file->getType())
+            ->setMimeType($file->getRealType())
             ->setMetaData(new \ArrayObject($file->getMeta()));
 
         $response = $this->getServiceLocator()
@@ -45,7 +45,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
             ->write($path, $storeFile);
 
         if (!$response->isSuccess()) {
-            throw new \Exception('Unable to store uploaded file');
+            throw new Exception('Unable to store uploaded file');
         }
 
         $file->setPath($path);
@@ -57,11 +57,13 @@ class ContentStoreFileUploader extends AbstractFileUploader
     /**
      * Download the file
      */
-    public function download($identifier, $name)
+    public function download($identifier, $name, $namespace = null)
     {
+        $path = $this->getPath($identifier, $namespace);
+
         $store = $this->getServiceLocator()->get('ContentStore');
 
-        $file = $store->read($identifier);
+        $file = $store->read($path);
 
         $response = new Response();
 
@@ -89,10 +91,11 @@ class ContentStoreFileUploader extends AbstractFileUploader
     /**
      * Remove the file
      */
-    public function remove($identifier)
+    public function remove($identifier, $namespace = null)
     {
+        $path = $this->getPath($identifier, $namespace);
         $store = $this->getServiceLocator()->get('ContentStore');
-        return $store->remove($identifier);
+        return $store->remove($path);
     }
 
     private function readFile($file)
