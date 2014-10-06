@@ -275,9 +275,11 @@ class RestClient
     protected function pathOrParams($path, array $params = null)
     {
         $args = func_get_args();
-        if (is_array($args[0])) {
+        /** This should never happen
+         if (is_array($args[0])) {
             array_unshift($args, '');
-        } elseif (empty($args[0])) {
+        } else*/
+        if (empty($args[0])) {
             $args[0] = '';
         } elseif ($args[0][0] !== '/') {
             $args[0] = '/' . $path;

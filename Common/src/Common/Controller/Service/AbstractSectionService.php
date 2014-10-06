@@ -614,6 +614,18 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     public function deleteLoad($id)
     {
+        return $this->genericMultipleActionLoad($id);
+    }
+
+    /**
+     * For generic multiple actions, we just want to implode the id's e.g. if we are loading a multiple delete
+     *   confirmation form
+     *
+     * @param string|array $id
+     * @return array
+     */
+    protected function genericMultipleActionLoad($id)
+    {
         if (is_array($id)) {
             $id = implode(',', $id);
         }

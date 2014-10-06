@@ -119,12 +119,16 @@ class RestHelperService extends AbstractHelperService
             // At the moment PATCH is the same as PUT
             case 'PUT':
             case 'PATCH':
-                // Currently we only handle updating 1 entity at a time
                 $handleResponseMethod = 'handlePutResponse';
 
-                $path = '/' . $data['id'];
+                if (isset($data['_OPTIONS_']['multiple']) && $data['_OPTIONS_']['multiple']) {
+                    $id = 0;
+                } else {
+                    $id = $data['id'];
+                    unset($data['id']);
+                }
 
-                unset($data['id']);
+                $path = '/' . $id;
 
                 $data = array('data' => json_encode($data));
 

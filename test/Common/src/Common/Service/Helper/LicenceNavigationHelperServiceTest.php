@@ -148,6 +148,7 @@ class LicenceNavigationHelperServiceTest extends PHPUnit_Framework_TestCase
                     'people',
                     'operating_centre',
                     'vehicle_psv',
+                    'discs_psv',
                     'safety',
                     'condition_undertaking'
                 )
@@ -164,6 +165,7 @@ class LicenceNavigationHelperServiceTest extends PHPUnit_Framework_TestCase
                     'operating_centre',
                     'transport_manager',
                     'vehicle_psv',
+                    'discs_psv',
                     'safety',
                     'condition_undertaking'
                 )
@@ -180,6 +182,7 @@ class LicenceNavigationHelperServiceTest extends PHPUnit_Framework_TestCase
                     'operating_centre',
                     'transport_manager',
                     'vehicle_psv',
+                    'discs_psv',
                     'safety',
                     'condition_undertaking'
                 )
