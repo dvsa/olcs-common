@@ -95,9 +95,13 @@ class ApplicationService extends AbstractEntityService
      */
     private $overviewBundle = array(
         'properties' => array(
-            'id'
+            'id',
+            'createdOn'
         ),
         'children' => array(
+            'status' => array(
+                'properties' => array('id')
+            ),
             'licence' => array(
                 'properties' => array(
                     'niFlag'
