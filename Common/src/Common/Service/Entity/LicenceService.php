@@ -15,6 +15,9 @@ namespace Common\Service\Entity;
 class LicenceService extends AbstractEntityService
 {
     const LICENCE_STATUS_NEW = 'lsts_new';
+    const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
+    const LICENCE_STATUS_VALID = 'lsts_valid';
+    const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
 
     /**
      * Define entity for default behaviour

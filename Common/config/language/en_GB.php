@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'application.overview.title' => 'Application overview',
+    'application.overview.application-no' => 'Application no.',
+    'application-no-access' => 'You do not have access to this application',
     'apsts_not_submitted' => 'Not submitted',
     'dashboard-table-licences-licNo' => 'Licence number',
     'dashboard-table-licences-licType' => 'Licence type',
@@ -97,7 +100,7 @@ return array(
     'application-search-subsidiary-header' => 'Subsidiary Company',
     'application-update-person-header-director' => 'Edit Director',
     'application-update-sole-trader' => 'Edit sole trader',
-    'application.new.button' => 'Start new application',
+    'application.new.button' => 'Apply for a new licence',
     'application.operating-centres' => 'Operating centres',
     'application.operating-centres.authorisation' => 'Operating centres &amp; authorisation',
     'application.operating-centres.financial-evidence' => 'Financial evidence',

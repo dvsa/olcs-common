@@ -70,6 +70,51 @@ class ApplicationService extends AbstractEntityService
     );
 
     /**
+     * Bundle to check whether the application belongs to the organisation
+     *
+     * @var array
+     */
+    private $doesBelongToOrgBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'organisation' => array(
+                        'properties' => array('id')
+                    )
+                )
+            )
+        )
+    );
+
+    /**
+     * Holds the overview bundle
+     *
+     * @var array
+     */
+    private $overviewBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'niFlag'
+                ),
+                'children' => array(
+                    'goodsOrPsv' => array(
+                        'properties' => array('id')
+                    ),
+                    'licenceType' => array(
+                        'properties' => array('id')
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -120,5 +165,32 @@ class ApplicationService extends AbstractEntityService
         $this->getEntityService('ApplicationCompletion')->create($applicationCompletionData);
 
         return $application;
+    }
+
+    /**
+     * Check whether the application belongs to the organisation
+     *
+     * @param int $applicationId
+     * @param int $orgId
+     * @return boolean
+     */
+    public function doesBelongToOrganisation($applicationId, $orgId)
+    {
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall('Application', 'GET', $applicationId, $this->doesBelongToOrgBundle);
+
+        return (isset($data['licence']['organisation']['id']) && $data['licence']['organisation']['id'] == $orgId);
+    }
+
+    /**
+     * Get data for overview
+     *
+     * @param int $applicationId
+     * @return array
+     */
+    public function getOverview($applicationId)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall('Application', 'GET', $applicationId, $this->overviewBundle);
     }
 }
