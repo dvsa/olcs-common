@@ -1,6 +1,11 @@
 <?php
 
 return array(
+    'progress' => 'Progress',
+    'application.progress' => '%s of %s sections complete',
+    'application.print' => 'Print application',
+    'application.delete' => 'Delete application',
+    'dashboard.link' => 'Home',
     'application.overview.title' => 'Application overview',
     'application.overview.application-no' => 'Application no.',
     'application-no-access' => 'You do not have access to this application',

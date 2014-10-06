@@ -99,6 +99,9 @@ class ApplicationService extends AbstractEntityService
             'createdOn'
         ),
         'children' => array(
+            'applicationCompletions' => array(
+                'properties' => 'ALL'
+            ),
             'status' => array(
                 'properties' => array('id')
             ),
@@ -163,7 +166,7 @@ class ApplicationService extends AbstractEntityService
         $application = parent::create($data);
 
         $applicationCompletionData = [
-            'id' => $application['id'],
+            'application' => $application['id'],
         ];
 
         $this->getEntityService('ApplicationCompletion')->create($applicationCompletionData);
