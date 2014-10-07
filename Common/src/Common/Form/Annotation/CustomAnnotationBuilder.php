@@ -24,7 +24,7 @@ class CustomAnnotationBuilder extends AnnotationBuilder
      * @param string $type
      * @return bool
      */
-    protected static function isSubclassOf($className, $type)
+    public static function isSubclassOf($className, $type)
     {
         return false;
     }
