@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * AbstractLvaController
  *
@@ -15,6 +16,7 @@ use Common\Util;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
+
 abstract class AbstractLvaController extends AbstractActionController
 {
     use Util\HelperServiceAware,
