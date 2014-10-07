@@ -23,16 +23,41 @@ class SectionConfig
      */
     private $sections = array(
         'type_of_licence' => array(),
-        'business_details' => array(),
-        'addresses' => array(),
-        'people' => array(),
+        'business_details' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'addresses' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'people' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
         'taxi_phv' => array(
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
             )
         ),
-        'operating_centres' => array(),
-        'financial_evidence' => array(),
+        'operating_centres' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'financial_evidence' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
         'transport_managers' => array(
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -68,20 +93,55 @@ class SectionConfig
                 )
             )
         ),
-        'safety' => array(),
-        'conditions_undertakings' => array(),
-        'financial_history' => array(),
-        'licence_history' => array(),
-        'convictions_penalties' => array()
+        'safety' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'conditions_undertakings' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'financial_history' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'licence_history' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        ),
+        'convictions_penalties' => array(
+            'restricted' => array(
+                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                LicenceService::LICENCE_CATEGORY_PSV
+            )
+        )
     );
 
     /**
      * Return all sections
      *
-     * @return array;
+     * @return array
      */
     public function getAll()
     {
         return $this->sections;
+    }
+
+    /**
+     * Return all section references
+     *
+     * @return array
+     */
+    public function getAllReferences()
+    {
+        return array_keys($this->sections);
     }
 }
