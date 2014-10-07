@@ -28,7 +28,7 @@ class ConvictionsPenaltiesController extends PreviousHistoryController
      * @var string
      */
     protected $formTables = array(
-        'table' => 'criminalconvictions'
+        'table' => 'application_vehicle-safety_vehicle-history'
     );
 
     /**

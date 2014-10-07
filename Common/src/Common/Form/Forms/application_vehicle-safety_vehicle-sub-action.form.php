@@ -57,6 +57,11 @@ return array(
                 )
             ),
             array(
+                'name' => 'vehicle_history',
+                'options' => array(0),
+                'type' => 'table'
+            ),
+            array(
                 'type' => 'journey-crud-buttons'
             )
         )

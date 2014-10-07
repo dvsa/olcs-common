@@ -916,11 +916,15 @@ abstract class AbstractSectionController extends AbstractActionController
 
             if (!empty($tableName)) {
 
-                $data = $this->getTableData($this->getIdentifier());
-
                 $settings = $this->getTableSettings();
 
-                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+                if ( $this->isAction() ) {
+                    $data = $this->getActionTableData($this->getIdentifier());
+                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+                } else {
+                    $data = $this->getTableData($this->getIdentifier());
+                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+                }
 
                 $view->setVariable('table', $table);
             }
@@ -973,7 +977,6 @@ abstract class AbstractSectionController extends AbstractActionController
             $this->hasTable = false;
 
             foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
-
                 if (file_exists($location . $tableName . '.table.php')) {
                     $this->hasTable = true;
                     break;
