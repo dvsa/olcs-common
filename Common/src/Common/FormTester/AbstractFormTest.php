@@ -32,7 +32,6 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormFields($form, $validationGroup, $data, $valid)
     {
-        //$form = $this->getForm();
         $form->setValidationGroup($validationGroup);
         $form->setData($data);
 
