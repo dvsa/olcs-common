@@ -89,6 +89,7 @@ return array(
                 return $licenceService;
             },
             'category' => '\Common\Service\Data\CategoryData',
+            'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {

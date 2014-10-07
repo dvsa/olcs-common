@@ -89,6 +89,7 @@ class CorrespondenceAddress
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
+     *     "service_name": "country",
      *     "category": "countries"
      * })
      * @Form\Type("DynamicSelect")
