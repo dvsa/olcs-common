@@ -127,7 +127,7 @@ class RestrictionHelperServiceTest extends PHPUnit_Framework_TestCase
                 array(),
                 false
             ),
-            // Combination of Strict and Not String
+            // Combination of Strict and Not Strict
             array(
                 array(
                     // We need to match ALL items in the sub array

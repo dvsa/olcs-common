@@ -1,20 +1,18 @@
 <?php
 
 /**
- * Section Access Helper Service
+ * Access Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Service\Helper;
 
-use Common\Service\Data\SectionConfig;
-
 /**
- * Section Access Helper Service
+ * Access Helper Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SectionAccessHelperService extends AbstractHelperService
+class AccessHelperService extends AbstractHelperService
 {
     /**
      * Cache the sections
@@ -24,18 +22,39 @@ class SectionAccessHelperService extends AbstractHelperService
     private $sections;
 
     /**
-     * Get a list of accessible sections
+     * Setter for sections
      *
-     * @param string $goodsOrPsv
-     * @param string $licenceType
+     * @param array $sections
+     */
+    public function setSections(array $sections = array())
+    {
+        $this->sections = $sections;
+
+        return $this;
+    }
+
+    /**
+     * Get sections from section config
+     *
      * @return array
      */
-    public function getAccessibleSections($goodsOrPsv, $licenceType)
+    private function getSections()
+    {
+        return $this->sections;
+    }
+
+    /**
+     * Get a list of accessible sections
+     *
+     * @param array $access
+     * @return array
+     */
+    public function getAccessibleSections(array $access = array())
     {
         $sections = $this->getSections();
 
         foreach (array_keys($sections) as $section) {
-            if (!$this->doesLicenceHaveAccess($section, $goodsOrPsv, $licenceType)) {
+            if (!$this->doesHaveAccess($section, $access)) {
                 unset($sections[$section]);
             }
         }
@@ -47,39 +66,22 @@ class SectionAccessHelperService extends AbstractHelperService
      * Check if the licence has access to the section
      *
      * @param string $section
-     * @param string $goodsOrPsv
-     * @param string $licenceType
+     * @param array $access
      * @return boolean
      */
-    public function doesLicenceHaveAccess($section, $goodsOrPsv, $licenceType)
+    public function doesHaveAccess($section, array $access = array())
     {
         $sections = $this->getSections();
 
         $sectionDetails = $sections[$section];
 
         // If the section has no restrictions just return
-        if (!isset($sectionDetails['restricted'])) {
+        if (!isset($sectionDetails['restricted']) || empty($sectionDetails['restricted'])) {
             return true;
         }
 
-        $access = array($goodsOrPsv, $licenceType);
         $restrictions = $sectionDetails['restricted'];
 
         return $this->getHelperService('RestrictionHelper')->isRestrictionSatisfied($restrictions, $access);
-    }
-
-    /**
-     * Get sections from section config
-     *
-     * @return array
-     */
-    protected function getSections()
-    {
-        if ($this->sections === null) {
-            $sectionConfig = new SectionConfig();
-            $this->sections = $sectionConfig->getAll();
-        }
-
-        return $this->sections;
     }
 }

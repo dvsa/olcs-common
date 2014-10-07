@@ -23,24 +23,9 @@ class SectionConfig
      */
     private $sections = array(
         'type_of_licence' => array(),
-        'business_details' => array(
-            'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
-            )
-        ),
-        'addresses' => array(
-            'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
-            )
-        ),
-        'people' => array(
-            'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
-            )
-        ),
+        'business_details' => array(),
+        'addresses' => array(),
+        'people' => array(),
         'taxi_phv' => array(
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
@@ -48,14 +33,23 @@ class SectionConfig
         ),
         'operating_centres' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                LicenceService::LICENCE_TYPE_RESTRICTED,
+                LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'financial_evidence' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    array(
+                        'application'
+                    ),
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'transport_managers' => array(
@@ -66,61 +60,137 @@ class SectionConfig
         ),
         'vehicles' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE
+                array(
+                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'vehicles_psv' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    LicenceService::LICENCE_CATEGORY_PSV,
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'vehicles_declarations' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    'application',
+                    LicenceService::LICENCE_CATEGORY_PSV,
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'discs' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    array(
+                        'licence',
+                        'variation'
+                    ),
+                    LicenceService::LICENCE_CATEGORY_PSV,
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'community_licences' => array(
             'restricted' => array(
-                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
                 array(
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    // Must be variation or licence
+                    array(
+                        'variation',
+                        'licence'
+                    ),
+                    // and must be either
+                    array(
+                        // standard international
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                        // or
+                        array(
+                            // PSV
+                            LicenceService::LICENCE_CATEGORY_PSV,
+                            // and restricted
+                            LicenceService::LICENCE_TYPE_RESTRICTED
+                        )
+                    )
                 )
             )
         ),
         'safety' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                LicenceService::LICENCE_TYPE_RESTRICTED,
+                LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'conditions_undertakings' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ),
+                    array(
+                        'internal',
+                        'licence',
+                        'variation'
+                    )
+                )
             )
         ),
         'financial_history' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    'application',
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'licence_history' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    'application',
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         ),
         'convictions_penalties' => array(
             'restricted' => array(
-                LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                LicenceService::LICENCE_CATEGORY_PSV
+                array(
+                    'application',
+                    array(
+                        LicenceService::LICENCE_TYPE_RESTRICTED,
+                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    )
+                )
             )
         )
     );
