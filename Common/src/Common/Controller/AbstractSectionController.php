@@ -920,11 +920,10 @@ abstract class AbstractSectionController extends AbstractActionController
 
                 if ( $this->isAction() ) {
                     $data = $this->getActionTableData($this->getIdentifier());
-                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
                 } else {
                     $data = $this->getTableData($this->getIdentifier());
-                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
                 }
+                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
                 $view->setVariable('table', $table);
             }
@@ -1005,7 +1004,6 @@ abstract class AbstractSectionController extends AbstractActionController
         $this->maybeAddTable($view);
 
         $response = $this->maybeAddForm($view);
-
         if ($response instanceof Response || $response instanceof ViewModel) {
             return $response;
         }

@@ -84,7 +84,7 @@ trait InternalGenericVehicleSection
             array('application' => $id),
             $this->actionTableDataBundle
         );
-
+        
         return $data;
     }
 

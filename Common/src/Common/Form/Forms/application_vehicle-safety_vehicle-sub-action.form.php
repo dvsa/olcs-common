@@ -57,7 +57,7 @@ return array(
                 )
             ),
             array(
-                'name' => 'vehicle_history',
+                'name' => 'table',
                 'options' => array(0),
                 'type' => 'table'
             ),
