@@ -50,9 +50,16 @@ class LicenceService extends AbstractEntityService
             'id',
             'grantedDate',
             'expiryDate',
+            'niFlag'
         ),
         'children' => array(
             'status' => array(
+                'properties' => array('id')
+            ),
+            'goodsOrPsv' => array(
+                'properties' => array('id')
+            ),
+            'licenceType' => array(
                 'properties' => array('id')
             )
         )
