@@ -8,7 +8,7 @@ use Zend\Form\Element\Select;
  * Class DynamicSelect
  * @package Common\Form\Element
  */
-class DynamicSelect extends Select
+class DynamicRadio extends Select
 {
     use DynamicTrait;
 }

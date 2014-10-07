@@ -132,11 +132,13 @@ return array(
         ],
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
-            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory'
+            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory',
+            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory'
         ],
         'aliases' => [
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
-            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox'
+            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
+            'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
         ]
     ],
     'validators' => [
