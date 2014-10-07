@@ -17,6 +17,6 @@ class CustomAnnotationBuilderTest extends \PHPUnit_Framework_TestCase
     public function testIsSubclassOfReturnsFalse()
     {
         $sut = new CustomAnnotationBuilder();
-        $this->assertEquals(false, $sut::isSubclassOf('',''));
+        $this->assertEquals(false, $sut::isSubclassOf('', ''));
     }
 }

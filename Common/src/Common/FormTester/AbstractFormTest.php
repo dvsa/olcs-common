@@ -30,9 +30,8 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
      * @param $data
      * @param $valid
      */
-    public function testFormFields($validationGroup, $data, $valid)
+    public function testFormFields($form, $validationGroup, $data, $valid)
     {
-        $form = $this->getForm();
         $form->setValidationGroup($validationGroup);
         $form->setData($data);
 
@@ -45,7 +44,7 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
     public function provideTestFormFields()
     {
         $formData = $this->getFormData();
-
+        $form = $this->getForm();
         $returnData = [];
 
         foreach ($formData as $field) {
@@ -53,7 +52,7 @@ abstract class AbstractFormTest extends \PHPUnit_Framework_TestCase
             $validationGroup = $field->getStack()->getTransposed();
             foreach ($field->getValues() as $value) {
                 /** @var Data\Object\Value $value */
-                $returnData[] = [$validationGroup, $value->getData($field->getStack()), $value->isValid()];
+                $returnData[] = [$form, $validationGroup, $value->getData($field->getStack()), $value->isValid()];
             }
         }
 
