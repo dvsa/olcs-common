@@ -29,6 +29,7 @@ class ApplicationYourBusinessBusinessDetailsData
      *     "label": "application_your-business_business-type.data.type",
      *     "value": "defendant_type.operator",
      *     "disable_inarray_validator": false,
+     *     "service_name": "staticList",
      *     "category": "business_types"
      * })
      * @Form\Required(false)
@@ -74,7 +75,7 @@ class ApplicationYourBusinessBusinessDetailsData
      *     "label":
      * "application_your-business_business-details.data.trading_names_optional"
      * })
-     * @Form\Type("fieldset")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TradingNames")
      */
     public $tradingNames = null;
 

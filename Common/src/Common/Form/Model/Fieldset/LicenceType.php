@@ -30,9 +30,10 @@ class LicenceType
      * @Form\Options({
      *     "label": "application_type-of-licence_licence-type.data.licenceType",
      *     "help-block": "Please choose",
+     *     "service_name": "staticList",
      *     "category": "licence_types"
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("DynamicRadio")
      */
     public $licenceType = null;
 

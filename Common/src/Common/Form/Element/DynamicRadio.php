@@ -2,13 +2,13 @@
 
 namespace Common\Form\Element;
 
-use Zend\Form\Element\Select;
+use Zend\Form\Element\Radio;
 
 /**
  * Class DynamicSelect
  * @package Common\Form\Element
  */
-class DynamicRadio extends Select
+class DynamicRadio extends Radio
 {
     use DynamicTrait;
 }

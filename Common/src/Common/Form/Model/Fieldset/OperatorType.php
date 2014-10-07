@@ -30,9 +30,10 @@ class OperatorType
      * @Form\Options({
      *     "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
      *     "help-block": "Please choose",
+     *     "service_name": "staticList",
      *     "category": "operator_types"
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("DynamicRadio")
      */
     public $goodsOrPsv = null;
 

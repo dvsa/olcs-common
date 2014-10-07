@@ -30,9 +30,9 @@ class OperatorLocation
      * @Form\Options({
      *     "label": "application_type-of-licence_operator-location.data.niFlag",
      *     "help-block": "Please choose",
-     *     "category": "operator_locations"
+     *     "value_options": {"Y":"Northern Ireland", "N":"Great Britain"}
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("Radio")
      */
     public $niFlag = null;
 
