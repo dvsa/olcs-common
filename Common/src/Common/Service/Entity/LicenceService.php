@@ -39,4 +39,42 @@ class LicenceService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'Licence';
+
+    /**
+     * Holds the overview bundle
+     *
+     * @var array
+     */
+    private $overviewBundle = array(
+        'properties' => array(
+            'id',
+            'grantedDate',
+            'expiryDate',
+            'niFlag',
+            'licNo'
+        ),
+        'children' => array(
+            'status' => array(
+                'properties' => array('id')
+            ),
+            'goodsOrPsv' => array(
+                'properties' => array('id')
+            ),
+            'licenceType' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    /**
+     * Get data for overview
+     *
+     * @param int $applicationId
+     * @return array
+     */
+    public function getOverview($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->overviewBundle);
+    }
 }
