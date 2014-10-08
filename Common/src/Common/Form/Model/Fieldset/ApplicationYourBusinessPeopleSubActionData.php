@@ -74,14 +74,16 @@ class ApplicationYourBusinessPeopleSubActionData
      */
     public $position = null;
 
-    /**
+   /**
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
      *     "create_empty_option": false,
      *     "render_delimiters": "d m y"
      * })
-     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Type("\Zend\Form\Element\DateSelect")
+     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d"}})
      */
     public $birthDate = null;
 
