@@ -63,6 +63,7 @@ class Table extends Element
      */
     public function render()
     {
+        var_dump($this->table);
         return $this->table->render();
     }
 }
