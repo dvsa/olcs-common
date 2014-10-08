@@ -14,11 +14,17 @@ use Zend\Form\Annotation as Form;
  */
 class Contact
 {
-
     /**
-     * @Form\Required(false)
      * @Form\AllowEmpty(true)
-     * @Form\Type("\Common\Form\Elements\InputFilters\OneContactPhoneRequired")
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Validator({
+     *      "name": "OneOf",
+     *      "options": {
+     *          "fields": {"phone_business", "phone_home", "phone_mobile", "phone_fax"},
+     *          "message": "At least one telephone number is required"
+     *      }
+     * })
+     * @Form\Type("Hidden")
      */
     public $phoneValidator = null;
 
@@ -179,7 +185,4 @@ class Contact
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":5,"max":255}})
      */
     public $email = null;
-
-
 }
-
