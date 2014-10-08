@@ -17,7 +17,7 @@ class LimousinesNoveltyVehicles
      * @Form\Options({
      *     "label":
      * "application_vehicle-safety_undertakings.limousinesApplication.yesNo",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"

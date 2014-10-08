@@ -77,7 +77,9 @@ class ApplicationPreviousHistoryConvictionsPenaltiesSubActionData
      *     "render_delimiters": false
      * })
      * @Form\Required(false)
-     * @Form\Type("Common\Form\Elements\Custom\DateSelect")
+     * @Form\Type("DateSelect")
+     * @Form\Filter({"name": "DateSelectNullifier"})
+     * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d"}})
      */
     public $convictionDate = null;
 

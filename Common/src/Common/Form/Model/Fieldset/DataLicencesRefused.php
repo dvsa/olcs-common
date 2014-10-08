@@ -15,7 +15,7 @@ class DataLicencesRefused
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_previous-history_licence-history_prevBeenRefused",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"

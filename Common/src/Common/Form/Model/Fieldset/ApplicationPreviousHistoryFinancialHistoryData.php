@@ -31,7 +31,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -46,7 +46,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.liquidation",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -61,7 +61,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.receivership",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -76,7 +76,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.administration",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -91,7 +91,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.disqualified",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -102,7 +102,11 @@ class ApplicationPreviousHistoryFinancialHistoryData
     public $disqualified = null;
 
     /**
+     * @Form\Required(true)
+     * @Form\AllowEmpty(true)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Attributes({
+     *     "required": false,
      *     "id": "",
      *     "class": "long",
      *     "placeholder":
@@ -122,6 +126,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\FHAdditionalInfo"})
      */
     public $insolvencyDetails = null;
 
@@ -143,7 +148,4 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $insolvencyConfirmation = null;
-
-
 }
-

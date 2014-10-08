@@ -27,7 +27,6 @@ class ApplicationOperatingCentresAuthorisationData
      *     "label":
      * "application_operating-centres_authorisation.data.totAuthSmallVehicles"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
     public $totAuthSmallVehicles = null;
@@ -38,7 +37,6 @@ class ApplicationOperatingCentresAuthorisationData
      *     "label":
      * "application_operating-centres_authorisation.data.totAuthMediumVehicles"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
     public $totAuthMediumVehicles = null;
@@ -49,7 +47,6 @@ class ApplicationOperatingCentresAuthorisationData
      *     "label":
      * "application_operating-centres_authorisation.data.totAuthLargeVehicles"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
     public $totAuthLargeVehicles = null;
@@ -60,7 +57,6 @@ class ApplicationOperatingCentresAuthorisationData
      *     "label":
      * "application_operating-centres_authorisation.data.totCommunityLicences"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreCommunityLicences")
      */
     public $totCommunityLicences = null;
@@ -70,7 +66,6 @@ class ApplicationOperatingCentresAuthorisationData
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTotalVehicleAuthorisations")
      */
     public $totAuthVehicles = null;
@@ -80,7 +75,6 @@ class ApplicationOperatingCentresAuthorisationData
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthTrailers"
      * })
-     * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTrailerAuthorisations")
      */
     public $totAuthTrailers = null;
