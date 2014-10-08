@@ -24,6 +24,7 @@ class Contact
      *          "message": "At least one telephone number is required"
      *      }
      * })
+     * @Form\Name("phone-validator")
      * @Form\Type("Hidden")
      */
     public $phoneValidator = null;

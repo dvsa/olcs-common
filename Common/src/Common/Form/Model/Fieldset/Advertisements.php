@@ -14,13 +14,12 @@ use Zend\Form\Annotation as Form;
  */
 class Advertisements
 {
-
     /**
      * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {"Y":"Yes", "N":"No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -65,7 +64,4 @@ class Advertisements
      * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
      */
     public $file = null;
-
-
 }
-
