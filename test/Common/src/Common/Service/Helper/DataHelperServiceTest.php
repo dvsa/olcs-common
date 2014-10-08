@@ -1,26 +1,26 @@
 <?php
 
 /**
- * Data Map Helper Service Test
+ * Data Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\Service\Helper;
 
 use PHPUnit_Framework_TestCase;
-use Common\Service\Helper\DataMapHelperService;
+use Common\Service\Helper\DataHelperService;
 
 /**
- * Data Map Helper Service Test
+ * Data Helper Service Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
+class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Holds the SUT
      *
-     * @var \Common\Service\Helper\DataMapHelperService
+     * @var \Common\Service\Helper\DataHelperService
      */
     private $sut;
 
@@ -29,12 +29,30 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->sut = new DataMapHelperService();
+        $this->sut = new DataHelperService();
     }
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
+     */
+    public function testArrayRepeat()
+    {
+        $input = array(
+            'foo' => 'bar',
+            'cake' => array(
+                'nested' => true
+            )
+        );
+
+        $expected = array($input, $input, $input);
+
+        $this->assertEquals($expected, $this->sut->arrayRepeat($input, 3));
+    }
+
+    /**
+     * @group helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMapWithoutMap()
     {
@@ -49,7 +67,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMap()
     {
@@ -99,7 +117,7 @@ class DataMapHelperServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group helper_service
-     * @group data_map_helper_service
+     * @group data_helper_service
      */
     public function testProcessDataMapWithAddress()
     {

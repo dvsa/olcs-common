@@ -86,15 +86,6 @@ class FlashMessenger extends ZendFlashMessenger
         array $messages = array(),
         array $classes = array()
     ) {
-        // Prepare classes for opening tag
-        if (empty($classes)) {
-            if (isset($this->classMessages[$namespace])) {
-                $classes = $this->classMessages[$namespace];
-            } else {
-                $classes = $this->classMessages[PluginFlashMessenger::NAMESPACE_DEFAULT];
-            }
-            $classes = array($classes);
-        }
         // Flatten message array
         $messagesToPrint = array();
         $translator = $this->getTranslator();

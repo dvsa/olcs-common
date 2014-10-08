@@ -18,6 +18,11 @@ use Zend\InputFilter\InputFilterInterface;
  */
 class Form extends ZendForm\Form
 {
+    public function __toString()
+    {
+        return get_class($this);
+    }
+
     public function setData($data)
     {
         $data = $this->setEmptyDataselectArraysToNull($data);

@@ -9,8 +9,6 @@
  */
 namespace Common\Util;
 
-use Zend\Mvc\Controller\Plugin\FlashMessenger;
-
 /**
  * A trait that controllers can use to easily interact with the flash messenger.
  *
