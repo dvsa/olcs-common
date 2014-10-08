@@ -138,6 +138,41 @@ class ApplicationService extends AbstractEntityService
     );
 
     /**
+     * Bundle to retrieve data to update completion status
+     *
+     * @var array
+     */
+    private $completionStatusDataBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'niFlag'
+                ),
+                'children' => array(
+                    'goodsOrPsv' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    ),
+                    'licenceType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    /**
+     * Cache the mapping of application ids to licence ids
+     *
+     * @var array
+     */
+    private $licenceIds = array();
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -198,14 +233,14 @@ class ApplicationService extends AbstractEntityService
     /**
      * Check whether the application belongs to the organisation
      *
-     * @param int $applicationId
+     * @param int $id
      * @param int $orgId
      * @return boolean
      */
-    public function doesBelongToOrganisation($applicationId, $orgId)
+    public function doesBelongToOrganisation($id, $orgId)
     {
         $data = $this->getHelperService('RestHelper')
-            ->makeRestCall('Application', 'GET', $applicationId, $this->doesBelongToOrgBundle);
+            ->makeRestCall('Application', 'GET', $id, $this->doesBelongToOrgBundle);
 
         return (isset($data['licence']['organisation']['id']) && $data['licence']['organisation']['id'] == $orgId);
     }
@@ -213,27 +248,42 @@ class ApplicationService extends AbstractEntityService
     /**
      * Get data for overview
      *
-     * @param int $applicationId
+     * @param int $id
      * @return array
      */
-    public function getOverview($applicationId)
+    public function getOverview($id)
     {
         return $this->getHelperService('RestHelper')
-            ->makeRestCall('Application', 'GET', $applicationId, $this->overviewBundle);
+            ->makeRestCall('Application', 'GET', $id, $this->overviewBundle);
     }
 
     /**
      * Get licence for the given application id
      *
-     * @param int $applicationId
+     * @param int $id
      * @param array $bundle
      * @return array
      */
-    public function getLicenceIdForApplication($applicationId)
+    public function getLicenceIdForApplication($id)
     {
-        $data = $this->getHelperService('RestHelper')
-            ->makeRestCall($this->entity, 'GET', $applicationId, $this->licenceIdForApplicationBundle);
+        if (!isset($this->licenceIds[$id])) {
+            $data = $this->getHelperService('RestHelper')
+                ->makeRestCall($this->entity, 'GET', $id, $this->licenceIdForApplicationBundle);
 
-        return $data['licence']['id'];
+            $this->licenceIds[$id] = $data['licence']['id'];
+        }
+
+        return $this->licenceIds[$id];
+    }
+
+    /**
+     * Get data for completion status
+     * @param int $id
+     * @return array
+     */
+    public function getDataForCompletionStatus($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->completionStatusDataBundle);
     }
 }
