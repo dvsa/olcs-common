@@ -19,8 +19,10 @@ class LicenceType
     * @Form\Options({
     *      "label": "application_type-of-licence_licence-type.data.licenceType",
     *      "value_options":{
-    *          "N":"No",
-    *          "Y":"Yes"
+    *          "ltyp_r": "Restricted",
+    *          "ltyp_sn": "Standard National",
+    *          "ltyp_si": "Standard International",
+    *          "ltyp_sr": "Special Restricted"
     *      }
     * })
     * @Form\Type("Radio")

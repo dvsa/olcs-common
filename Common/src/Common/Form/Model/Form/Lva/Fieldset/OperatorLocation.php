@@ -20,8 +20,8 @@ class OperatorLocation extends Base
     * @Form\Options({
     *      "label": "application_type-of-licence_operator-location.data.niFlag",
     *      "value_options":{
-    *          "N":"No",
-    *          "Y":"Yes"
+    *          "N":"Great Britain",
+    *          "Y":"Northern Ireland"
     *      }
     * })
     * @Form\Type("Radio")

@@ -19,8 +19,8 @@ class OperatorType
     * @Form\Options({
     *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
     *      "value_options":{
-    *          "N":"No",
-    *          "Y":"Yes"
+    *          "lcat_gv":"Goods",
+    *          "lcat_psv":"PSV"
     *      }
     * })
     * @Form\Type("Radio")
