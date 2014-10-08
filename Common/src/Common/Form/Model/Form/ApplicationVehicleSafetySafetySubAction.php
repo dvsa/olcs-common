@@ -13,7 +13,6 @@ use Zend\Form\Annotation as Form;
  */
 class ApplicationVehicleSafetySafetySubAction
 {
-
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationVehicleSafetySafetySubActionData")
@@ -30,7 +29,7 @@ class ApplicationVehicleSafetySafetySubAction
     /**
      * @Form\Name("address")
      * @Form\Options({"label":"application_vehicle-safety_safety-sub-action.address.label"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationVehicleSafetySafetySubActionAddress")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
     public $address = null;
 
@@ -40,7 +39,4 @@ class ApplicationVehicleSafetySafetySubAction
      * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyCrudButtons")
      */
     public $formActions = null;
-
-
 }
-

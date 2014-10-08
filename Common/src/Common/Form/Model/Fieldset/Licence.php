@@ -10,7 +10,6 @@ use Zend\Form\Annotation as Form;
  */
 class Licence
 {
-
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
@@ -19,7 +18,8 @@ class Licence
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
-     *     "category": "inspection_interval_vehicle"
+     *     "category": "inspection_interval_vehicle",
+     *     "service_name": "StaticList"
      * })
      * @Form\Type("DynamicSelect")
      */
@@ -33,7 +33,8 @@ class Licence
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
-     *     "category": "inspection_interval_trailer"
+     *     "category": "inspection_interval_trailer",
+     *     "service_name": "StaticList"
      * })
      * @Form\Type("DynamicSelect")
      */
@@ -61,20 +62,33 @@ class Licence
      * @Form\Options({
      *     "label": "application_vehicle-safety_safety.licence.tachographAnalyser",
      *     "help-block": "Please choose",
-     *     "category": "tachograph_analyser"
+     *     "category": "tachograph_analyser",
+     *     "service_name": "StaticList"
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("DynamicRadio")
      */
     public $tachographIns = null;
 
     /**
-     * @Form\Attributes({"class":"","id":""})
+     * @Form\Required(true)
+     * @Form\AllowEmpty(true)
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Attributes({"class":"","id":"", "required": false})
      * @Form\Options({
      *     "label":
      * "application_vehicle-safety_safety.licence.tachographAnalyserContractor"
      * })
-     * @Form\Required(false)
-     * @Form\Type("\Common\Form\Elements\InputFilters\VehicleSafetyTachographAnalyserContractor")
+     * @Form\Type("Text")
+     * @Form\Validator({
+     *      "name": "ValidateIf",
+     *      "options": {
+     *          "context_field": "tachographIns",
+     *          "context_values": {"tach_external"},
+     *          "validators": {
+     *              {"name": "NotEmpty"}
+     *          }
+     *     }
+     * })
      */
     public $tachographInsName = null;
 
@@ -89,7 +103,4 @@ class Licence
      * @Form\Type("Hidden")
      */
     public $id = null;
-
-
 }
-
