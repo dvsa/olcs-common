@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'variation.overview.application-no' => 'Application no.',
+    'variation.overview.title' => 'Variation application',
+    'variation.print' => 'Print application',
+    'variation.delete' => 'Delete application',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'Authorisation',
@@ -1050,6 +1054,7 @@ return array(
     'section.link.edit.vehicles_psv' => 'Edit vehicles',
     'section.link.update.addresses' => 'Update addresses',
     'section.link.update.business_details' => 'Update business details',
+    'section.link.update.business_type' => 'Updated business type',
     'section.link.update.community_licences' => 'Update community licences',
     'section.link.update.conditions_undertakings' => 'Update conditions & undertakings',
     'section.link.update.convictions_penalties' => 'Update convictions & penalties',

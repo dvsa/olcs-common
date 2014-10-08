@@ -104,19 +104,6 @@ class ApplicationService extends AbstractEntityService
             ),
             'status' => array(
                 'properties' => array('id')
-            ),
-            'licence' => array(
-                'properties' => array(
-                    'niFlag'
-                ),
-                'children' => array(
-                    'goodsOrPsv' => array(
-                        'properties' => array('id')
-                    ),
-                    'licenceType' => array(
-                        'properties' => array('id')
-                    )
-                )
             )
         )
     );
