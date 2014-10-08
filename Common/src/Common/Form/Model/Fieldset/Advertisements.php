@@ -20,7 +20,7 @@ class Advertisements
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y":"Yes", "N":"No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
