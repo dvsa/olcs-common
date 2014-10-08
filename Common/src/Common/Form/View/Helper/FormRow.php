@@ -169,8 +169,12 @@ class FormRow extends ZendFormRow
             // labels. The semantic way is to group them inside a fieldset
             $type = $element->getAttribute('type');
             if ($type === 'multi_checkbox' || $type === 'radio') {
+
+                $dataGroup = $element->getOption('fieldset-data-group');
+
                 $markup = sprintf(
-                    '<fieldset><legend>%s</legend>%s</fieldset>',
+                    '<fieldset data-group="%s"><legend>%s</legend>%s</fieldset>',
+                    $dataGroup,
                     $label,
                     $elementString
                 );
