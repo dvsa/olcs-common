@@ -13,10 +13,11 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $sut =  new DynamicSelect();
-        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'label' => 'Testing']);
+        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true,'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
         $this->assertTrue($sut->useGroups());
+        $this->assertTrue($sut->otherOption());
         $this->assertEquals('Testing', $sut->getLabel());
     }
 
@@ -42,6 +43,26 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->setContext('category');
 
         $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
+
+        //check that the values are only fetched once
+        $sut->getValueOptions();
+    }
+
+    public function testGetValueOptionsWithOtherOption()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key'=>'value']);
+
+        $sut = new DynamicSelect();
+        $sut->setOtherOption(true);
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value','other' => 'Other'], $sut->getValueOptions());
 
         //check that the values are only fetched once
         $sut->getValueOptions();
