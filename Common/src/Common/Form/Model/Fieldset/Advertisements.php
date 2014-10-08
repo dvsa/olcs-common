@@ -16,11 +16,11 @@ class Advertisements
 {
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -31,7 +31,7 @@ class Advertisements
     public $adPlaced = null;
 
     /**
-     * @Form\Attributes({"class":"","id":""})
+     * @Form\Attributes({"class":"","id":"adPlacedIn"})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlacedIn"
@@ -42,7 +42,7 @@ class Advertisements
     public $adPlacedIn = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Attributes({"id":"adPlacedDate"})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlacedDate",
@@ -55,6 +55,7 @@ class Advertisements
     public $adPlacedDate = null;
 
     /**
+     * @Form\Attributes({"id":"file", "class": "file-upload"})
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.file",

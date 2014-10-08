@@ -8,11 +8,9 @@ use Zend\Form\Annotation as Form;
  * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("address")
  * @Form\Type("\Common\Form\Elements\Types\Address")
- * @Form\Options({"label":"Address"})
  */
 class Address
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -90,12 +88,10 @@ class Address
      *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
      *     "help-block": "Please select a category",
+     *     "service_name": "country",
      *     "category": "countries"
      * })
      * @Form\Type("DynamicSelect")
      */
     public $countryCode = null;
-
-
 }
-

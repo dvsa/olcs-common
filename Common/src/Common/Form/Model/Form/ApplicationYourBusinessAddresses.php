@@ -22,7 +22,7 @@ class ApplicationYourBusinessAddresses
 
     /**
      * @Form\Name("correspondence_address")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\CorrespondenceAddress")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
     public $correspondenceAddress = null;
 
@@ -58,7 +58,7 @@ class ApplicationYourBusinessAddresses
     /**
      * @Form\Name("registered_office_address")
      * @Form\Options({"label":"application_your-business_business-type.registered-office.label"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\RegisteredOfficeAddress")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
     public $registeredOfficeAddress = null;
 
