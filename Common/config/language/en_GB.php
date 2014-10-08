@@ -1,12 +1,6 @@
 <?php
 
 return array(
-    'variation.overview.application-no' => 'Application no.',
-    'variation.overview.title' => 'Variation application',
-    'variation.print' => 'Print application',
-    'variation.delete' => 'Delete application',
-    'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
-    'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -783,6 +777,8 @@ return array(
     'internal-licence-processing-tasks' => 'Tasks',
     'internal-licence-processing-tasks-label' => 'Tasks',
     'internal-licence-processing-tasks-title' => 'Tasks',
+    'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
+    'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',
@@ -1252,6 +1248,10 @@ return array(
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
+    'variation.delete' => 'Delete application',
+    'variation.overview.application-no' => 'Application no.',
+    'variation.overview.title' => 'Variation application',
+    'variation.print' => 'Print application',
     'vehicle-and-safety' => 'Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please

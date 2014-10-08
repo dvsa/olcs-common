@@ -779,6 +779,9 @@ return array(
     'internal-licence-processing-tasks' => 'W Tasks',
     'internal-licence-processing-tasks-label' => 'W Tasks',
     'internal-licence-processing-tasks-title' => 'W Tasks',
+    'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
+        licence',
+    'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'W Trailer?',
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
@@ -1050,6 +1053,7 @@ return array(
     'section.link.edit.vehicles_psv' => 'W Edit vehicles',
     'section.link.update.addresses' => 'W Update addresses',
     'section.link.update.business_details' => 'W Update business details',
+    'section.link.update.business_type' => 'W Updated business type',
     'section.link.update.community_licences' => 'W Update community licences',
     'section.link.update.conditions_undertakings' => 'W Update conditions & undertakings',
     'section.link.update.convictions_penalties' => 'W Update convictions & penalties',
@@ -1248,6 +1252,10 @@ return array(
     'v-auth-t-auth' => 'W V-auth/T-auth',
     'variation-application-link-text' => 'W variation application',
     'variation-application-text' => 'W Making changes to some fields within this section may require a',
+    'variation.delete' => 'W Delete application',
+    'variation.overview.application-no' => 'W Application no.',
+    'variation.overview.title' => 'W Variation application',
+    'variation.print' => 'W Print application',
     'vehicle-and-safety' => 'W Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'W I confirm that I would like to continue adding this
         vehicle',
