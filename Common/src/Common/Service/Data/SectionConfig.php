@@ -23,15 +23,34 @@ class SectionConfig
      */
     private $sections = array(
         'type_of_licence' => array(),
-        'business_details' => array(),
-        'addresses' => array(),
-        'people' => array(),
+        'business_type' => array(),
+        'business_details' => array(
+            'prerequisite' => array(
+                'business_type'
+            )
+        ),
+        'addresses' => array(
+            'prerequisite' => array(
+                'business_type'
+            )
+        ),
+        'people' => array(
+            'prerequisite' => array(
+                'business_type'
+            )
+        ),
         'taxi_phv' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
             )
         ),
         'operating_centres' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_RESTRICTED,
                 LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -39,6 +58,9 @@ class SectionConfig
             )
         ),
         'financial_evidence' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     array(
@@ -53,12 +75,18 @@ class SectionConfig
             )
         ),
         'transport_managers' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
                 LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'vehicles' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
@@ -71,6 +99,9 @@ class SectionConfig
             )
         ),
         'vehicles_psv' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     LicenceService::LICENCE_CATEGORY_PSV,
@@ -83,6 +114,9 @@ class SectionConfig
             )
         ),
         'vehicles_declarations' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     'application',
@@ -96,6 +130,9 @@ class SectionConfig
             )
         ),
         'discs' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     array(
@@ -112,6 +149,9 @@ class SectionConfig
             )
         ),
         'community_licences' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     // Must be variation or licence
@@ -135,6 +175,9 @@ class SectionConfig
             )
         ),
         'safety' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 LicenceService::LICENCE_TYPE_RESTRICTED,
                 LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -142,6 +185,9 @@ class SectionConfig
             )
         ),
         'conditions_undertakings' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     array(
@@ -158,6 +204,9 @@ class SectionConfig
             )
         ),
         'financial_history' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     'application',
@@ -170,6 +219,9 @@ class SectionConfig
             )
         ),
         'licence_history' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     'application',
@@ -182,6 +234,9 @@ class SectionConfig
             )
         ),
         'convictions_penalties' => array(
+            'prerequisite' => array(
+                'business_type'
+            ),
             'restricted' => array(
                 array(
                     'application',

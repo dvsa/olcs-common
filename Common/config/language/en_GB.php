@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'section.link.add.business_type' => 'Add business type',
+    'section.link.edit.business_type' => 'Edit business type',
+    'section.name.business_type' => 'Business type',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

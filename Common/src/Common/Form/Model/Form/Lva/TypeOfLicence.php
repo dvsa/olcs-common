@@ -8,6 +8,7 @@
 namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
+use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
  * @Form\Name("lva-type-of-licence")
@@ -18,26 +19,13 @@ use Zend\Form\Annotation as Form;
  */
 class TypeOfLicence
 {
-    /**
-     * @Form\Name("operator-location")
-     * @Form\Options({"label":"Operator location"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatorLocation")
-     */
-    public $operatorLocation = null;
+    use VersionTrait;
 
     /**
-     * @Form\Name("operator-type")
-     * @Form\Options({"label":"Operator type"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatorType")
+     * @Form\Name("type-of-licence")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TypeOfLicence")
      */
-    public $operatorType = null;
-
-    /**
-     * @Form\Name("licence-type")
-     * @Form\Options({"label":"Licence type"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceType")
-     */
-    public $licenceType = null;
+    public $typeOfLicence = null;
 
     /**
      * @Form\Name("form-actions")

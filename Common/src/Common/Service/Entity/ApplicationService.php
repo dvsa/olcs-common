@@ -122,6 +122,22 @@ class ApplicationService extends AbstractEntityService
     );
 
     /**
+     * Holds the bundle to retrieve a licence id for an application
+     *
+     * @var array
+     */
+    private $licenceIdForApplicationBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -199,5 +215,20 @@ class ApplicationService extends AbstractEntityService
     {
         return $this->getHelperService('RestHelper')
             ->makeRestCall('Application', 'GET', $applicationId, $this->overviewBundle);
+    }
+
+    /**
+     * Get licence for the given application id
+     *
+     * @param int $applicationId
+     * @param array $bundle
+     * @return array
+     */
+    public function getLicenceIdForApplication($applicationId)
+    {
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $applicationId, $this->licenceIdForApplicationBundle);
+
+        return $data['licence']['id'];
     }
 }

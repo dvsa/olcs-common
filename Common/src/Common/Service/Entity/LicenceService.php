@@ -67,14 +67,53 @@ class LicenceService extends AbstractEntityService
     );
 
     /**
+     * Holds the bundle to retrieve type of licence bundle
+     *
+     * @var array
+     */
+    private $typeOfLicenceBundle = array(
+        'properties' => array(
+            'version',
+            'niFlag'
+        ),
+        'children' => array(
+            'goodsOrPsv' => array(
+                'properties' => array('id')
+            ),
+            'licenceType' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    /**
      * Get data for overview
      *
-     * @param int $applicationId
+     * @param int $id
      * @return array
      */
     public function getOverview($id)
     {
         return $this->getHelperService('RestHelper')
             ->makeRestCall($this->entity, 'GET', $id, $this->overviewBundle);
+    }
+
+    /**
+     * Get type of licence data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getTypeOfLicenceData($id)
+    {
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->typeOfLicenceBundle);
+
+        return array(
+            'version' => $data['version'],
+            'niFlag' => $data['niFlag'],
+            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
+            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+        );
     }
 }

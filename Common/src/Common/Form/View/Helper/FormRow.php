@@ -51,7 +51,7 @@ class FormRow extends ZendFormRow
         if ($oldRenderErrors) {
 
             /**
-             * We don't want the parent class rto render the errors.
+             * We don't want the parent class to render the errors.
              */
             $this->setRenderErrors(false);
             $elementErrors = $this->getElementErrorsHelper()->render($element);
