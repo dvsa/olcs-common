@@ -102,7 +102,11 @@ class ApplicationPreviousHistoryFinancialHistoryData
     public $disqualified = null;
 
     /**
+     * @Form\Required(true)
+     * @Form\AllowEmpty(true)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Attributes({
+     *     "required": false,
      *     "id": "",
      *     "class": "long",
      *     "placeholder":
@@ -122,6 +126,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\FHAdditionalInfo"})
      */
     public $insolvencyDetails = null;
 
@@ -143,7 +148,4 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $insolvencyConfirmation = null;
-
-
 }
-
