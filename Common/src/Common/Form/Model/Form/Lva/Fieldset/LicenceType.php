@@ -17,7 +17,7 @@ class LicenceType
     /**
     * @Form\Name("licenceType")
     * @Form\Options({
-    *      "label": "application_type-of-licence_operator-location.data.niFlag",
+    *      "label": "application_type-of-licence_licence-type.data.licenceType",
     *      "value_options":{
     *          "N":"No",
     *          "Y":"Yes"
