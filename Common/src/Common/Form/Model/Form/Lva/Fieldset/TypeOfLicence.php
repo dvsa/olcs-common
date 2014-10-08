@@ -39,6 +39,7 @@ class TypeOfLicence
      *      }
      * })
      * @Form\Type("Radio")
+     * @Form\Validator({"name": "\Common\Form\Elements\Validators\Lva\TypeOfLicenceOperatorTypeValidator"})
      */
     public $operatorType = null;
 
@@ -55,6 +56,7 @@ class TypeOfLicence
      *      }
      * })
      * @Form\Type("Radio")
+     * @Form\Validator({"name": "\Common\Form\Elements\Validators\Lva\TypeOfLicenceLicenceTypeValidator"})
      */
     public $licenceType = null;
 }

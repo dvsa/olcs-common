@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
