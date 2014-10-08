@@ -6,12 +6,12 @@ $(function() {
   var F = OLCS.formHelper;
 
   // cache some input lookups
-  var niFlag       = F("operator-location", "niFlag");
-  var operatorType = F("operator-type", "goodsOrPsv");
+  var niFlag       = F("type-of-licence", "operator-location");
+  var operatorType = F("type-of-licence", "operator-type");
 
   // set up a cascade form with the appropriate rules
   OLCS.cascadeForm({
-    form: "#application_type-of-licence_form",
+    form: "form",
     rulesets: {
       // operator location is *always* shown
       "operator-location": true,
@@ -35,7 +35,7 @@ $(function() {
         },
 
         // this rule relates to an element within the fieldset
-        "licenceType=ltyp_sr": function() {
+        "licence-type=ltyp_sr": function() {
           return operatorType.filter(":checked").val() === "lcat_psv";
         }
       }
@@ -50,7 +50,7 @@ $(function() {
       // ditto licence type; what we set here doesn't matter since as soon as the user
       // interacts with the form again we clear these fields
       if (F("licence-type").is(":hidden")) {
-        F("licence-type", "licenceType").first().prop("checked", true);
+        F("licence-type", "licence-type").first().prop("checked", true);
       }
     }
   });
