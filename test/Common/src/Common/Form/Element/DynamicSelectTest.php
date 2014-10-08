@@ -13,7 +13,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $sut =  new DynamicSelect();
-        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true,'label' => 'Testing']);
+        $sut->setOptions(['context' => 'testing', 'use_groups'=>true, 'other_option'=>true, 'label' => 'Testing']);
 
         $this->assertEquals('testing', $sut->getContext());
         $this->assertTrue($sut->useGroups());
@@ -62,7 +62,7 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');
 
-        $this->assertEquals(['key'=>'value','other' => 'Other'], $sut->getValueOptions());
+        $this->assertEquals(['key'=>'value', 'other' => 'Other'], $sut->getValueOptions());
 
         //check that the values are only fetched once
         $sut->getValueOptions();
