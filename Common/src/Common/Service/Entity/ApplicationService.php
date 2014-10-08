@@ -160,7 +160,7 @@ class ApplicationService extends AbstractEntityService
             'organisation' => $organisationId,
         );
 
-        $licence = $this->getEntityService('Licence')->create($licenceData);
+        $licence = $this->getEntityService('Licence')->save($licenceData);
 
         $applicationData = array(
             'licence' => $licence['id'],
@@ -168,7 +168,12 @@ class ApplicationService extends AbstractEntityService
             'isVariation' => false
         );
 
-        return $this->create($applicationData);
+        $application = $this->save($applicationData);
+
+        return array(
+            'application' => $application['id'],
+            'licence' => $licence['id']
+        );
     }
 
     /**
@@ -177,15 +182,15 @@ class ApplicationService extends AbstractEntityService
      * @param array $data
      * @return array
      */
-    public function create($data)
+    public function save($data)
     {
-        $application = parent::create($data);
+        $application = parent::save($data);
 
         $applicationCompletionData = [
             'application' => $application['id'],
         ];
 
-        $this->getEntityService('ApplicationCompletion')->create($applicationCompletionData);
+        $this->getEntityService('ApplicationCompletion')->save($applicationCompletionData);
 
         return $application;
     }

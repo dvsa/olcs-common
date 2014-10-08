@@ -31,18 +31,23 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     protected $entity;
 
     /**
-     * Create a licence
+     * Save the entity
      *
      * @param array $data
-     * @return array
      */
-    public function create($data)
+    public function save($data)
     {
         if (($entity = $this->getEntity()) === null) {
             throw new \Exception('Entity is not defined');
         }
 
-        return $this->getHelperService('RestHelper')->makeRestCall($entity, 'POST', $data);
+        if (isset($data['id'])) {
+            $method = 'PUT';
+        } else {
+            $method = 'POST';
+        }
+
+        return $this->getHelperService('RestHelper')->makeRestCall($entity, $method, $data);
     }
 
     /**
