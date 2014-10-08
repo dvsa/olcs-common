@@ -19,6 +19,46 @@ trait InternalGenericVehicleSection
     protected $sectionLocation = 'Internal';
 
     /**
+     * Form tables name
+     *
+     * @var string
+     */
+    protected $actionTables = array(
+        'table' => 'vehicle_history'
+    );
+
+    /**
+     * Holds the table data bundle
+     *
+     * @var array
+     */
+    protected $actionTableDataBundle = array(
+        'properties' => null,
+        'children' => array(
+            'licenceVehicles' => array(
+                'properties' => array(
+                    'id',
+                    'receivedDate',
+                    'specifiedDate',
+                    'deletedDate'
+                ),
+                'children' => array(
+                    'goodsDiscs' => array(
+                        'ceasedDate',
+                        'discNo'
+                    ),
+                    'vehicle' => array(
+                        'properties' => array(
+                            'vrm',
+                            'platedWeight'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Alter the action form
      *
      * @param Form $form
@@ -28,6 +68,26 @@ trait InternalGenericVehicleSection
     {
         return $this->doAlterActionForm($form);
     }
+
+    /**
+     * Get the form table data
+     *
+     * @param int $id
+     * @param string $table
+     * @return array
+     */
+    protected function getActionTableData($id)
+    {
+        $data = $this->makeRestCall(
+            'PreviousLicence',
+            'GET',
+            array('application' => $id),
+            $this->actionTableDataBundle
+        );
+        
+        return $data;
+    }
+
 
     /**
      * Shared logic between internal vehicle sections
