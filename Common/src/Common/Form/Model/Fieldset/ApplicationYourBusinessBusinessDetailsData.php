@@ -90,13 +90,11 @@ class ApplicationYourBusinessBusinessDetailsData
      *     "column-size": "sm-6",
      *     "help-block": "You can type anything in this box."
      * })
+     * @Form\Required(false)
      * @Form\Type("\Zend\Form\Element\Textarea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      * @Form\Filter({"name":"Zend\Filter\StringToLower"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":10,"max":100}})
      */
     public $tradingNamesReview = null;
-
-
 }
-

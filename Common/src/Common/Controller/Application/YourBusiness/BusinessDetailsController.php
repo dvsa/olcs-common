@@ -169,7 +169,7 @@ class BusinessDetailsController extends YourBusinessController
             $licence = $this->getLicenceData();
             $tradingNames = [];
 
-            foreach ($data['tradingNames']['tradingName'] as $tradingName) {
+            foreach ($data['tradingNames']['trading_name'] as $tradingName) {
 
                 if (trim($tradingName['text']) !== '') {
                     $tradingNames[] = [

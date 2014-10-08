@@ -20,7 +20,7 @@ class TradingNames
      *      "allow_add":true,
      *      "allow_remove":true,
      *      "target_element": {
-     *          "type":"\Zend\Form\Element\Text",
+     *          "type":"\Common\Form\Fieldsets\Custom\TextFieldset",
      *          "atributes": {
      *              "data-container-class":"block"
      *          },
@@ -30,6 +30,7 @@ class TradingNames
      *      }
      * })
      * @Form\Type("Collection")
+     * @Form\Name("trading_name")
      */
     public $tradingName = null;
 
