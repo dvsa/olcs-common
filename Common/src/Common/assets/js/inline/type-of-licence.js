@@ -50,7 +50,7 @@ $(function() {
       // ditto licence type; what we set here doesn't matter since as soon as the user
       // interacts with the form again we clear these fields
       if (F("licence-type").is(":hidden")) {
-        F("licence-type", "licence-type").first().prop("checked", true);
+        F("type-of-licence", "licence-type").first().prop("checked", true);
       }
     }
   });
