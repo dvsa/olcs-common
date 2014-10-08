@@ -24,4 +24,25 @@ class TypeOfLicence
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatorLocation")
      */
     public $operatorLocation = null;
+
+    /**
+     * @Form\Name("operator-type")
+     * @Form\Options({"label":"Operator type"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatorType")
+     */
+    public $operatorType = null;
+
+    /**
+     * @Form\Name("licence-type")
+     * @Form\Options({"label":"Licence type"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceType")
+     */
+    public $licenceType = null;
+
+    /**
+     * @Form\Name("form-actions")
+     * @Form\Attributes({"class":"actions-container"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Fieldset\FormActions")
+     */
+    public $formActions = null;
 }
