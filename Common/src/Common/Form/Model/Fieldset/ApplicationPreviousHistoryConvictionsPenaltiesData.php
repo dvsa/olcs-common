@@ -16,7 +16,7 @@ class ApplicationPreviousHistoryConvictionsPenaltiesData
      * @Form\Options({
      *     "label":
      * "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"

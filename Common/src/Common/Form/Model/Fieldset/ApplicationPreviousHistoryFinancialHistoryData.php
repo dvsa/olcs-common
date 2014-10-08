@@ -31,7 +31,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -46,7 +46,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.liquidation",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -61,7 +61,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.receivership",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -76,7 +76,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.administration",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
@@ -91,7 +91,7 @@ class ApplicationPreviousHistoryFinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.finance.disqualified",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"

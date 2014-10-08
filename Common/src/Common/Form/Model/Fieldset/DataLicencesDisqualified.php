@@ -16,7 +16,7 @@ class DataLicencesDisqualified
      * @Form\Options({
      *     "label":
      * "application_previous-history_licence-history_prevBeenDisqualifiedTc",
-     *     "value_options": "yes_no",
+     *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
