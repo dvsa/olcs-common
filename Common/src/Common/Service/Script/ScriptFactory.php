@@ -70,9 +70,8 @@ class ScriptFactory implements FactoryInterface
     public function loadFiles($files = [])
     {
         foreach ($files as $file) {
-            $this->getViewHelperManager()->get('inlineScript')->appendScript($this->loadFile($file));
+            $this->loadFile($file);
         }
-        return $this;
     }
 
     /**
@@ -89,10 +88,15 @@ class ScriptFactory implements FactoryInterface
 
         if (is_array($paths)) {
             foreach ($this->getFilePaths() as $path) {
+
                 $fullPath = $path . $file . '.js';
+
                 if ($this->exists($fullPath)) {
                     $data = $this->load($fullPath);
-                    return $this->replaceTokens($data, $this->tokens);
+                    $this->getViewHelperManager()->get('inlineScript')->appendScript(
+                        $this->replaceTokens($data, $this->tokens)
+                    );
+                    return;
                 }
             }
         }
