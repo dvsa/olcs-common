@@ -21,6 +21,13 @@ trait DynamicTrait
     protected $useGroups = false;
 
     /**
+     * If set the element will have an extra option "Other"
+     *
+     * @var boolean
+     */
+    protected $otherOption = false;
+
+    /**
      * @var \Common\Service\Data\ListDataInterface
      */
     protected $dataService;
@@ -62,6 +69,24 @@ trait DynamicTrait
     public function setUseGroups($useGroups)
     {
         $this->useGroups = (bool) $useGroups;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function otherOption()
+    {
+        return $this->otherOption;
+    }
+
+    /**
+     * @param $otherOption
+     * @return $this
+     */
+    public function setOtherOption($otherOption)
+    {
+        $this->otherOption = (bool) $otherOption;
         return $this;
     }
 
@@ -163,6 +188,10 @@ trait DynamicTrait
             $this->setServiceName($this->options['service_name']);
         }
 
+        if (isset($this->options['other_option'])) {
+            $this->setOtherOption($this->options['other_option']);
+        }
+
         return $this;
     }
 
@@ -176,6 +205,10 @@ trait DynamicTrait
         if (empty($this->valueOptions)) {
             $refDataService = $this->getDataService();
             $this->valueOptions = $refDataService->fetchListOptions($this->getContext(), $this->useGroups());
+        }
+
+        if ($this->otherOption()) {
+            $this->valueOptions['other'] = 'Other';
         }
 
         return $this->valueOptions;
