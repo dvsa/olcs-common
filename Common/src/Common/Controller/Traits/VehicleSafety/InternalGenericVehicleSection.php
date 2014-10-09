@@ -38,8 +38,21 @@ trait InternalGenericVehicleSection
             'vrm',
             'licenceNo',
             'specifiedDate',
-            'deletedDate',
+            'removalDate',
             'discNo'
+        ),
+
+    );
+
+
+    /**
+     * Holds the bundle to retrieve VRM
+     *
+     * @var array
+     */
+    protected $vehicleBundle = array(
+        'properties' => array(
+            'vrm'
         ),
 
     );
@@ -65,11 +78,12 @@ trait InternalGenericVehicleSection
     protected function getActionTableData($id)
     {
         $vehicleId=$this->getActionId();
+
         $vrmData = $this->makeRestCall(
-            'VehicleHistoryView',
+            'Vehicle',
             'GET',
-            array('vehicle_id' => $vehicleId),
-            $this->actionTableDataBundle
+            array('id' => $vehicleId),
+            $this->vehicleBundle
         );
 
         $data = $this->makeRestCall(
@@ -78,7 +92,7 @@ trait InternalGenericVehicleSection
             array('vrm' => $vrmData['vrm']),
             $this->actionTableDataBundle
         );
-        
+var_dump($data);
         return $data;
     }
 
