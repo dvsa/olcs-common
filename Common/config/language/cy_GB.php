@@ -793,6 +793,7 @@ return array(
     'licence-application-number' => 'W Lic #(App ID)',
     'licence-category' => 'W Licence category',
     'licence-details' => 'W Licence details',
+    'licence-no-access' => 'W You do not have access to this licence',
     'licence-number' => 'W Lic #',
     'licence-number-full' => 'W Licence number',
     'licence-number-status' => 'W Lic # / Status',

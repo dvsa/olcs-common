@@ -80,6 +80,20 @@ class LicenceService extends AbstractEntityService
     );
 
     /**
+     * Bundle to check whether the application belongs to the organisation
+     *
+     * @var array
+     */
+    private $doesBelongToOrgBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'organisation' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    /**
      * Get data for overview
      *
      * @param int $id
@@ -108,5 +122,20 @@ class LicenceService extends AbstractEntityService
             'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
             'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
         );
+    }
+
+    /**
+     * Check whether the licence belongs to the organisation
+     *
+     * @param int $id
+     * @param int $orgId
+     * @return boolean
+     */
+    public function doesBelongToOrganisation($id, $orgId)
+    {
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
+
+        return (isset($data['organisation']['id']) && $data['organisation']['id'] == $orgId);
     }
 }
