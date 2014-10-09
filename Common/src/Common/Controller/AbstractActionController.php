@@ -361,7 +361,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         if (!isset($data['url'])) {
             $data['url'] = $this->getPluginManager()->get('url');
         }
-
+        
         return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);
     }
 

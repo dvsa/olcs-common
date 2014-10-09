@@ -33,29 +33,15 @@ trait InternalGenericVehicleSection
      * @var array
      */
     protected $actionTableDataBundle = array(
-        'properties' => null,
-        'children' => array(
-            'licenceVehicles' => array(
-                'properties' => array(
-                    'id',
-                    'receivedDate',
-                    'specifiedDate',
-                    'deletedDate'
-                ),
-                'children' => array(
-                    'goodsDiscs' => array(
-                        'ceasedDate',
-                        'discNo'
-                    ),
-                    'vehicle' => array(
-                        'properties' => array(
-                            'vrm',
-                            'platedWeight'
-                        )
-                    )
-                )
-            )
-        )
+        'properties' => array(
+            'id',
+            'vrm',
+            'licenceNo',
+            'specifiedDate',
+            'deletedDate',
+            'discNo'
+        ),
+
     );
 
     /**
@@ -78,10 +64,18 @@ trait InternalGenericVehicleSection
      */
     protected function getActionTableData($id)
     {
-        $data = $this->makeRestCall(
-            'PreviousLicence',
+        $vehicleId=$this->getActionId();
+        $vrmData = $this->makeRestCall(
+            'VehicleHistoryView',
             'GET',
-            array('application' => $id),
+            array('vehicle_id' => $vehicleId),
+            $this->actionTableDataBundle
+        );
+
+        $data = $this->makeRestCall(
+            'VehicleHistoryView',
+            'GET',
+            array('vrm' => $vrmData['vrm']),
             $this->actionTableDataBundle
         );
         

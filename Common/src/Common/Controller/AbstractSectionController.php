@@ -923,6 +923,7 @@ abstract class AbstractSectionController extends AbstractActionController
                 } else {
                     $data = $this->getTableData($this->getIdentifier());
                 }
+
                 $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
                 $view->setVariable('table', $table);
