@@ -92,7 +92,7 @@ trait InternalGenericVehicleSection
             array('vrm' => $vrmData['vrm']),
             $this->actionTableDataBundle
         );
-var_dump($data);
+        
         return $data;
     }
 
