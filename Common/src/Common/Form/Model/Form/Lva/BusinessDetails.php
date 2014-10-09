@@ -1,8 +1,9 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
+use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
  * @codeCoverageIgnore Auto-generated file with no methods
@@ -11,12 +12,13 @@ use Zend\Form\Annotation as Form;
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationYourBusinessBusinessDetails
+class BusinessDetails
 {
+    use VersionTrait;
 
     /**
      * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationYourBusinessBusinessDetailsData")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\BusinessDetails")
      */
     public $data = null;
 
@@ -29,10 +31,7 @@ class ApplicationYourBusinessBusinessDetails
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      */
     public $formActions = null;
-
-
 }
-

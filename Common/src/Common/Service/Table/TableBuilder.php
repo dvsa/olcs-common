@@ -714,7 +714,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function loadParams($array = array())
     {
         if (!isset($array['url'])) {
-            throw new \Exception('Table helper requires the URL helper');
+            $array['url'] = $this->getServiceLocator()
+                ->get('HelperService')
+                ->getHelperService('UrlHelper');
         }
 
         $defaults = array(

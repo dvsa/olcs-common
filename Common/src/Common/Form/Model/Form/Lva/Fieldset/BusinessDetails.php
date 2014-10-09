@@ -1,28 +1,16 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("data")
+ * Business details fieldset
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ApplicationYourBusinessBusinessDetailsData
+class BusinessDetails
 {
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
     /**
      * @Form\Attributes({"id":"","disabled":true,"class":"inline"})
      * @Form\Options({
@@ -45,7 +33,7 @@ class ApplicationYourBusinessBusinessDetailsData
      *         "class": "col-sm-2"
      *     },
      *     "column-size": "sm-10",
-     *     "route": "Application/YourBusiness/BusinessType"
+     *     "route": "lva-application/business_type"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionLink")
      */
@@ -96,5 +84,11 @@ class ApplicationYourBusinessBusinessDetailsData
      * @Form\Filter({"name":"Zend\Filter\StringToLower"})
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":10,"max":100}})
      */
+    /**
+     * @TODO NP: removing this for now as we're not really sure if we'll
+     * need review & declarations with new flow, or if we do, we might just
+     * do it all bespoke anyway...
+     *
     public $tradingNamesReview = null;
+     */
 }
