@@ -15,6 +15,13 @@ namespace Common\Service\Entity;
 class OrganisationService extends AbstractEntityService
 {
     /**
+     * Define entity for default behaviour
+     *
+     * @var string
+     */
+    protected $entity = 'Organisation';
+
+    /**
      * Holds the organisation bundle
      *
      * @var array
@@ -24,6 +31,25 @@ class OrganisationService extends AbstractEntityService
         'children' => array(
             'organisation' => array(
                 'properties' => array('id')
+            )
+        )
+    );
+
+    /**
+     * Holds the organisation type bundle
+     *
+     * @var array
+     */
+    private $typeBundle = array(
+        'properties' => array(
+            'type',
+            'version'
+        ),
+        'children' => array(
+            'type' => array(
+                'properties' => array(
+                    'id'
+                )
             )
         )
     );
@@ -43,5 +69,17 @@ class OrganisationService extends AbstractEntityService
         }
 
         return $organisation['Results'][0]['organisation'];
+    }
+
+    /**
+     * Get type of organisation
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getType($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->typeBundle);
     }
 }
