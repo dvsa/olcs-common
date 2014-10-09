@@ -96,6 +96,8 @@ class FormRewriteController extends AbstractActionController
 
         $tags = [];
         $tags['tags'][] = ['name' => '@codeCoverageIgnore Auto-generated file with no methods'];
+        $tags['tags'][] =
+            ['name' => sprintf("Form\\Options(%s)", $this->encodeOptionBlock(['prefer_form_input_filter' => true]))];
 
         if (isset($data['name'])) {
             $tags['tags'][] = ['name'=> sprintf('Form\\Name("%s")', $data['name'])];
@@ -108,6 +110,8 @@ class FormRewriteController extends AbstractActionController
 
         if (isset($data['type'])) {
             $tags['tags'][] = ['name' => sprintf('Form\\Type("%s")', $data['type'])];
+        } else {
+            $tags['tags'][] = ['name' => 'Form\\Type("Common\Form\Form")'];
         }
 
         $classGenerator->setDocBlock(DocBlockGenerator::fromArray($tags));
@@ -498,6 +502,11 @@ class FormRewriteController extends AbstractActionController
                     $data['type'] = 'Text';
                 } elseif (strpos($data['type'], 'Hidden') !== false) {
                     $data['type'] = 'Hidden';
+                } elseif (
+                    strpos($data['type'], 'DateRequired') !== false ||
+                    strpos($data['type'], 'DateNot') !== false
+                ) {
+                    $data['type'] = 'DateSelect';
                 } else {
                     $this->getLog()->warn('Failed converting type: ' . $data['type'] . ' to build in type');
                     return $data;

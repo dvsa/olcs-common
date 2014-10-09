@@ -2,7 +2,7 @@
 
 return array(
     'application_vehicle-safety_vehicle-reprint' => array(
-        'name' => 'application_vehicle-safety_vehicle',
+        'name' => 'application_vehicle-safety_vehicle-reprint',
         'attributes' => array(
             'method' => 'post',
         ),

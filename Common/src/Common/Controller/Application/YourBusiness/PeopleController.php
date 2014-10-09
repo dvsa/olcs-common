@@ -235,6 +235,7 @@ class PeopleController extends YourBusinessController
 
         if ($orgType['type']['id'] != self::ORG_TYPE_OTHER) {
             $form->get('data')->remove('position');
+            $form->getInputFilter()->get('data')->remove('position');
         }
         return $form;
     }

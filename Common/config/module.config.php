@@ -93,6 +93,8 @@ return array(
                 return $licenceService;
             },
             'category' => '\Common\Service\Data\CategoryData',
+            'country' => '\Common\Service\Data\Country',
+            'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
@@ -136,21 +138,27 @@ return array(
         ],
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
-            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory'
+            'Common\Form\Element\DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckboxFactory',
+            'Common\Form\Element\DynamicRadio' => 'Common\Form\Element\DynamicRadioFactory'
         ],
         'aliases' => [
             'DynamicSelect' => 'Common\Form\Element\DynamicSelect',
-            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox'
+            'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
+            'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
         ]
     ],
     'validators' => [
         'invokables' => [
             'Common\Validator\ValidateIf' => 'Common\Validator\ValidateIf',
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
+            'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
+            'Common\Validator\OneOf' => 'Common\Validator\OneOf',
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
+            'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
+            'OneOf' => 'Common\Validator\OneOf'
         ]
     ],
     'filters' => [
