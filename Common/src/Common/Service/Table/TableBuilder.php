@@ -714,7 +714,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function loadParams($array = array())
     {
         if (!isset($array['url'])) {
-
             $array['url'] = $this->getServiceLocator()->get('ControllerPluginManager')->get('url');
         }
 
@@ -901,7 +900,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return $this->renderLayout('crud');
         }
 
-        if (isset($this->variables['submission_section'])) {
+        if (isset($this->settings['submission_section'])) {
             return $this->renderLayout('submission-section');
         }
 
