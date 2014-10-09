@@ -18,7 +18,7 @@ class FormHelperService extends AbstractHelperService
      * Create a form
      *
      * @param string $formName
-     * @return \Zend\Form\Form|mixed
+     * @return \Zend\Form\Form
      * @throws \Exception
      */
     public function createForm($formName)

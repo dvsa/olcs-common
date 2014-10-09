@@ -163,6 +163,48 @@ class ApplicationService extends AbstractEntityService
     private $licenceIds = array();
 
     /**
+     * Application type bundle
+     *
+     * @var array
+     */
+    private $applicationTypeBundle = array(
+        'properties' => array(
+            'isVariation'
+        )
+    );
+
+    /**
+     * Header data bundle
+     *
+     * @var array
+     */
+    private $headerDataBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
+                ),
+                'children' => array(
+                    'organisation' => array(
+                        'properties' => array(
+                            'name'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -284,19 +326,25 @@ class ApplicationService extends AbstractEntityService
      */
     public function getApplicationType($id)
     {
-        $bundle = array(
-            'properties' => array(
-                'isVariation'
-            )
-        );
-
         $data = $this->getHelperService('RestHelper')
-            ->makeRestCall($this->entity, 'GET', $id, $bundle);
+            ->makeRestCall($this->entity, 'GET', $id, $this->applicationTypeBundle);
 
         if (isset($data['isVariation']) && $data['isVariation']) {
             return self::APPLICATION_TYPE_VARIATION;
         }
 
         return self::APPLICATION_TYPE_NEW;
+    }
+
+    /**
+     * Get data for header
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getHeaderData($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
     }
 }
