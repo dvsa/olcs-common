@@ -16,6 +16,9 @@ use Common\Service\Entity\LicenceService;
  */
 class ApplicationService extends AbstractEntityService
 {
+    const APPLICATION_TYPE_NEW = 0;
+    const APPLICATION_TYPE_VARIATION = 1;
+
     /**
      * Define entity for default behaviour
      *
@@ -227,7 +230,7 @@ class ApplicationService extends AbstractEntityService
     public function doesBelongToOrganisation($id, $orgId)
     {
         $data = $this->getHelperService('RestHelper')
-            ->makeRestCall('Application', 'GET', $id, $this->doesBelongToOrgBundle);
+            ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
 
         return (isset($data['licence']['organisation']['id']) && $data['licence']['organisation']['id'] == $orgId);
     }
@@ -272,5 +275,28 @@ class ApplicationService extends AbstractEntityService
     {
         return $this->getHelperService('RestHelper')
             ->makeRestCall($this->entity, 'GET', $id, $this->completionStatusDataBundle);
+    }
+
+    /**
+     * Get application type
+     *
+     * @param type $id
+     */
+    public function getApplicationType($id)
+    {
+        $bundle = array(
+            'properties' => array(
+                'isVariation'
+            )
+        );
+
+        $data = $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $bundle);
+
+        if (isset($data['isVariation']) && $data['isVariation']) {
+            return self::APPLICATION_TYPE_VARIATION;
+        }
+
+        return self::APPLICATION_TYPE_NEW;
     }
 }

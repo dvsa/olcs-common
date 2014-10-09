@@ -790,6 +790,7 @@ return array(
     'licence-application-number' => 'Lic #(App ID)',
     'licence-category' => 'Licence category',
     'licence-details' => 'Licence details',
+    'licence-no-access' => 'You do not have access to this licence',
     'licence-number' => 'Lic #',
     'licence-number-full' => 'Licence number',
     'licence-number-status' => 'Lic # / Status',
