@@ -81,6 +81,18 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         )
     );
 
+    protected $actionTableDataBundle = array(
+        'properties' => array(
+            'id',
+            'vrm',
+            'licenceNo',
+            'specifiedDate',
+            'removalDate',
+            'discNo'
+        ),
+
+    );
+
     /**
      * Test indexAction
      */
@@ -967,6 +979,20 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             return $this->getApplicationCompletionData();
         }
 
+
+        if ($service == 'VehicleHistoryView' && $method == 'GET' && $bundle == $this->actionTableDataBundle) {
+            return array(
+                array(
+                    'id' => 1,
+                    'vrm' => 'VRM1',
+                    'licenceNo' => '123456',
+                    'specifiedDate' => '2014-01-01 00:00:00',
+                    'removalDate' => '2014-01-02 00:00:00',
+                    'discNo' => 1234567
+                )
+            );
+        }
+
         if ($service == 'Vehicle' && $method == 'POST') {
             return array('id' => 1);
         }
@@ -975,11 +1001,21 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             return array('id' => 1);
         }
 
+
         if ($service == 'Vehicle' && $method == 'GET' && $bundle == $this->otherLicencesBundle) {
             return array(
                 'Count' => 0,
                 'Results' => array(
                 )
+            );
+        }
+
+        if ($service == 'Vehicle' && $method == 'GET') {
+            return array(
+                'id' => 1,
+                'version' => 1,
+                'vrm' => 'AB12 ABC',
+                'isNovelty' => 'Y'
             );
         }
 
@@ -1077,7 +1113,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             )
         );
 
-        if ($service == 'LicenceVehicle' && $method == 'GET' && $bundle = $licenceVehicleBundle) {
+        if ($service == 'LicenceVehicle' && $method == 'GET' && $bundle == $licenceVehicleBundle) {
             return array(
                 'Count' => 1,
                 'Results' => array(
@@ -1089,5 +1125,6 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 )
             );
         }
+
     }
 }

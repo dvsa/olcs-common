@@ -55,5 +55,6 @@ class VehicleSafetyControllerTest extends AbstractApplicationControllerTestCase
 
             return $this->getApplicationCompletionData();
         }
+
     }
 }
