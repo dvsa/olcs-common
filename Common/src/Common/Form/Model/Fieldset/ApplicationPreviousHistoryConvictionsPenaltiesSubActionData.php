@@ -69,14 +69,14 @@ class ApplicationPreviousHistoryConvictionsPenaltiesSubActionData
     public $familyName = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
      *     "label":
      * "selfserve-app-subSection-previous-history-criminal-conviction-formDateOfConviction",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
-     * @Form\Required(false)
      * @Form\Type("DateSelect")
      * @Form\Filter({"name": "DateSelectNullifier"})
      * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d"}})
