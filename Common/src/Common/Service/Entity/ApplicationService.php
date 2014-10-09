@@ -140,6 +140,16 @@ class ApplicationService extends AbstractEntityService
                     'niFlag'
                 ),
                 'children' => array(
+                    'organisation' => array(
+                        'properties' => array(),
+                        'children' => array(
+                            'type' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
                     'goodsOrPsv' => array(
                         'properties' => array(
                             'id'

@@ -110,7 +110,9 @@ class ApplicationCompletionService extends AbstractEntityService
      */
     public function getBusinessTypeStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        return empty($applicationData['licence']['organisation']['type']['id'])
+            ? self::STATUS_NOT_STARTED
+            : self::STATUS_COMPLETE;
     }
 
     /**
