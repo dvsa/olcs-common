@@ -8,6 +8,8 @@
 namespace Common\Service\Data;
 
 use Common\Service\Entity\LicenceService;
+use Zend\Filter\Word\UnderscoreToDash;
+use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * Section Config
@@ -226,5 +228,89 @@ class SectionConfig
     public function getAllReferences()
     {
         return array_keys($this->sections);
+    }
+
+    /**
+     * Return route config for all sections
+     *
+     * @return array
+     */
+    public function getAllRoutes()
+    {
+        $sections = $this->getAllReferences();
+
+        $dashFilter = new UnderscoreToDash();
+        $camelFilter = new UnderscoreToCamelCase();
+
+        $types = array(
+            'application' => array(),
+            'licence' => array(),
+            'variation' => array()
+        );
+
+        $routes = array(
+            'dashboard' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/dashboard[/]',
+                    'defaults' => array(
+                        'controller' => 'Dashboard',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'create_application' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/application/create[/]',
+                    'defaults' => array(
+                        'skipPreDispatch' => true,
+                        'controller' => 'Application\TypeOfLicence',
+                        'action' => 'createApplication'
+                    )
+                )
+            )
+        );
+
+        foreach ($types as $type => $options) {
+            $typeController = 'Lva' . $camelFilter->filter($type);
+            $baseRouteName = 'lva-' . $type;
+
+            $routes[$baseRouteName] = array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/' . $type . '/:id[/]',
+                    'constraints' => array(
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => $typeController,
+                        'action' => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array()
+            );
+
+            $childRoutes = array();
+            foreach ($sections as $section) {
+                $routeKey = $dashFilter->filter($section);
+                $sectionController = $camelFilter($section);
+
+                $childRoutes[$section] = array(
+                    'type' => 'segment',
+                    'options' => array(
+                        'route' => $routeKey . '[/]',
+                        'defaults' => array(
+                            'controller' => $typeController . '/' . $sectionController,
+                            'action' => 'index'
+                        )
+                    )
+                );
+            }
+            $routes[$baseRouteName]['child_routes'] = $childRoutes;
+        }
+
+        return $routes;
     }
 }
