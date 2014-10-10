@@ -979,7 +979,6 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
             return $this->getApplicationCompletionData();
         }
 
-
         if ($service == 'VehicleHistoryView' && $method == 'GET' && $bundle == $this->actionTableDataBundle) {
             return array(
                 array(
@@ -1000,7 +999,6 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         if ($service == 'LicenceVehicle' && $method == 'POST') {
             return array('id' => 1);
         }
-
 
         if ($service == 'Vehicle' && $method == 'GET' && $bundle == $this->otherLicencesBundle) {
             return array(

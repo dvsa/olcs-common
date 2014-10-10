@@ -923,7 +923,7 @@ abstract class AbstractSectionController extends AbstractActionController
      * @param type $view
      */
     protected function maybeAddTable($view)
-{
+    {
         if ( $this->hasActionTable()
             && $this->isAction() ) {
             $tableName = $this->getActionTableName();
@@ -938,7 +938,7 @@ abstract class AbstractSectionController extends AbstractActionController
 
                 $view->setVariable('table', $table);
             }
-        } else if ($this->hasTable() && $view->getVariable('table') == null) {
+        } elseif ($this->hasTable() && $view->getVariable('table') == null) {
 
             $tableName = $this->getTableName();
 
