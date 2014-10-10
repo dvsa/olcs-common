@@ -44,6 +44,7 @@ trait BusinessDetailsTrait
             $tradingNames[] = array('text' => $tradingName['name']);
         }
         return array(
+            'version' => $data['version'],
             'data' => array(
                 'companyNumber' => array(
                     'company_number' => $data['companyOrLlpNo']
