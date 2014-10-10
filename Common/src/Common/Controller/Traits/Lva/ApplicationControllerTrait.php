@@ -116,4 +116,23 @@ trait ApplicationControllerTrait
 
         return $this->getEntityService('Licence')->getTypeOfLicenceData($licenceId);
     }
+
+    /**
+     * Complete a section and potentially redirect to the next
+     * one depending on the user's choice
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function completeSection($section)
+    {
+        $this->updateCompletionStatuses($this->getApplicationId());
+
+        $this->addSectionUpdatedMessage($section);
+
+        if ($this->isButtonPressed('saveAndContinue')) {
+            return $this->goToNextSection($section);
+        }
+
+        return $this->goToOverviewAfterSave();
+    }
 }

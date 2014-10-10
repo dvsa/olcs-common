@@ -94,6 +94,29 @@ class LicenceService extends AbstractEntityService
     );
 
     /**
+     * Header data bundle
+     *
+     * @var array
+     */
+    private $headerDataBundle = array(
+        'properties' => array(
+            'licNo'
+        ),
+        'children' => array(
+            'organisation' => array(
+                'properties' => array(
+                    'name'
+                )
+            ),
+            'status' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
+    /**
      * Get data for overview
      *
      * @param int $id
@@ -137,5 +160,17 @@ class LicenceService extends AbstractEntityService
             ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
 
         return (isset($data['organisation']['id']) && $data['organisation']['id'] == $orgId);
+    }
+
+    /**
+     * Get data for header
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getHeaderParams($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
     }
 }

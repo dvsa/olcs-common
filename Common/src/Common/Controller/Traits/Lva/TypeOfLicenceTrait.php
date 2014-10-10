@@ -8,7 +8,7 @@
 namespace Common\Controller\Traits\Lva;
 
 use Zend\Form\Form;
-use Olcs\View\Model\Section;
+use Common\View\Model\Section;
 
 /**
  * Shared logic between Type Of Licence controllers
@@ -70,9 +70,7 @@ trait TypeOfLicenceTrait
     private function getSectionView(Form $form)
     {
         // @TODO in a custom view model instead?
-        $this->getServiceLocator()
-            ->get('Script')
-            ->loadFile('type-of-licence');
+        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
 
         return new Section(
             [
