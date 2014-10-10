@@ -19,6 +19,35 @@ trait InternalGenericVehicleSection
     protected $sectionLocation = 'Internal';
 
     /**
+     * Holds the table data bundle
+     *
+     * @var array
+     */
+    protected $historyTableDataBundle = array(
+        'properties' => array(
+            'id',
+            'vrm',
+            'licenceNo',
+            'specifiedDate',
+            'removalDate',
+            'discNo'
+        )
+    );
+
+
+    /**
+     * Holds the bundle to retrieve VRM
+     *
+     * @var array
+     */
+    protected $vehicleBundle = array(
+        'properties' => array(
+            'vrm'
+        ),
+
+    );
+
+    /**
      * Alter the action form
      *
      * @param Form $form
@@ -28,6 +57,39 @@ trait InternalGenericVehicleSection
     {
         return $this->doAlterActionForm($form);
     }
+
+    /**
+     * Get the form table data
+     *
+     * @param int $id
+     * @param string $table
+     * @return array
+     */
+    protected function getActionTableData($id)
+    {
+        $vehicleId=$this->getActionId();
+
+        $vrmData = $this->makeRestCall(
+            'Vehicle',
+            'GET',
+            array('id' => $vehicleId),
+            $this->vehicleBundle
+        );
+
+        $data = $this->makeRestCall(
+            'VehicleHistoryView',
+            'GET',
+            array(
+                'vrm' => $vrmData['vrm'],
+                'sort' => 'specifiedDate',
+                'order' => 'DESC'
+            ),
+            $this->historyTableDataBundle
+        );
+
+        return $data;
+    }
+
 
     /**
      * Shared logic between internal vehicle sections
