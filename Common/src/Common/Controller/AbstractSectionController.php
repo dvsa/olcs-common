@@ -148,11 +148,25 @@ abstract class AbstractSectionController extends AbstractActionController
     protected $tableName;
 
     /**
+     * Holds the action table name
+     *
+     * @var string
+     */
+    protected $actionTableName;
+
+    /**
      * Holds hasTable
      *
      * @var boolean
      */
     protected $hasTable = null;
+
+    /**
+     * Holds hasActionTable
+     *
+     * @var boolean
+     */
+    protected $hasActionTable = null;
 
     /**
      * Holds hasForm
@@ -910,15 +924,29 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function maybeAddTable($view)
     {
-        if ($this->hasTable() && $view->getVariable('table') == null) {
+        if ( $this->hasActionTable()
+            && $this->isAction() ) {
+            $tableName = $this->getActionTableName();
+
+            if (!empty($tableName)) {
+
+                $settings = $this->getTableSettings();
+
+                $data = $this->getActionTableData($this->getIdentifier());
+
+                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+
+                $view->setVariable('table', $table);
+            }
+        } elseif ($this->hasTable() && $view->getVariable('table') == null) {
 
             $tableName = $this->getTableName();
 
             if (!empty($tableName)) {
 
-                $data = $this->getTableData($this->getIdentifier());
-
                 $settings = $this->getTableSettings();
+
+                $data = $this->getTableData($this->getIdentifier());
 
                 $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
@@ -960,6 +988,21 @@ abstract class AbstractSectionController extends AbstractActionController
     }
 
     /**
+     * Get table name
+     *
+     * @return string
+     */
+    protected function getActionTableName()
+    {
+        if ($this->isAction()) {
+
+            return $this->actionTableName;
+        }
+
+        return $this->actionTableName;
+    }
+
+    /**
      * Check if the current sub section has a table
      *
      * @return boolean
@@ -973,7 +1016,6 @@ abstract class AbstractSectionController extends AbstractActionController
             $this->hasTable = false;
 
             foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
-
                 if (file_exists($location . $tableName . '.table.php')) {
                     $this->hasTable = true;
                     break;
@@ -983,6 +1025,31 @@ abstract class AbstractSectionController extends AbstractActionController
 
         return $this->hasTable;
     }
+
+    /**
+     * Check if the current sub action section has a table
+     *
+     * @return boolean
+     */
+    protected function hasActionTable()
+    {
+        if (is_null($this->hasActionTable)) {
+
+            $tableName = $this->getActionTableName();
+
+            $this->hasActionTable = false;
+
+            foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
+                if (file_exists($location . $tableName . '.table.php')) {
+                    $this->hasActionTable = true;
+                    break;
+                }
+            }
+        }
+
+        return $this->hasActionTable;
+    }
+
 
     /**
      * Render the section
@@ -1002,7 +1069,6 @@ abstract class AbstractSectionController extends AbstractActionController
         $this->maybeAddTable($view);
 
         $response = $this->maybeAddForm($view);
-
         if ($response instanceof Response || $response instanceof ViewModel) {
             return $response;
         }
