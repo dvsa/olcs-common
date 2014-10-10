@@ -98,7 +98,8 @@ return array(
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
-            }
+            },
+            'CompaniesHouse' => '\Common\Service\Data\CompaniesHouse'
         )
     ),
     'file_uploader' => array(
