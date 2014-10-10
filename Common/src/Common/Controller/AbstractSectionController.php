@@ -923,39 +923,34 @@ abstract class AbstractSectionController extends AbstractActionController
      * @param type $view
      */
     protected function maybeAddTable($view)
-    {
-        if ($this->hasTable() && $view->getVariable('table') == null) {
+{
+        if ( $this->hasActionTable()
+            && $this->isAction() ) {
+            $tableName = $this->getActionTableName();
 
-            if ( $this->hasActionTable()
-                && $this->isAction() ) {
-                echo "atn";
-                $tableName = $this->getActionTableName();
+            if (!empty($tableName)) {
 
-                if (!empty($tableName)) {
+                $settings = $this->getTableSettings();
 
-                    $settings = $this->getTableSettings();
+                $data = $this->getActionTableData($this->getIdentifier());
 
-                    $data = $this->getActionTableData($this->getIdentifier());
+                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
-                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+                $view->setVariable('table', $table);
+            }
+        } else if ($this->hasTable() && $view->getVariable('table') == null) {
 
-                    $view->setVariable('table', $table);
-                }
+            $tableName = $this->getTableName();
 
-            } else {
+            if (!empty($tableName)) {
 
-                $tableName = $this->getTableName();
+                $settings = $this->getTableSettings();
 
-                if (!empty($tableName)) {
+                $data = $this->getTableData($this->getIdentifier());
 
-                    $settings = $this->getTableSettings();
+                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
 
-                    $data = $this->getTableData($this->getIdentifier());
-
-                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
-
-                    $view->setVariable('table', $table);
-                }
+                $view->setVariable('table', $table);
             }
         }
     }
@@ -1001,7 +996,7 @@ abstract class AbstractSectionController extends AbstractActionController
     {
         if ($this->isAction()) {
 
-            return $this->actionTableName . $this->getSuffixForCurrentAction();
+            return $this->actionTableName;
         }
 
         return $this->actionTableName;

@@ -19,20 +19,11 @@ trait InternalGenericVehicleSection
     protected $sectionLocation = 'Internal';
 
     /**
-     * Form tables name
-     *
-     * @var string
-     */
-    protected $actionTables = array(
-        'table' => 'vehicle_history'
-    );
-
-    /**
      * Holds the table data bundle
      *
      * @var array
      */
-    protected $actionTableDataBundle = array(
+    protected $historyTableDataBundle = array(
         'properties' => array(
             'id',
             'vrm',
@@ -90,9 +81,9 @@ trait InternalGenericVehicleSection
             'VehicleHistoryView',
             'GET',
             array('vrm' => $vrmData['vrm']),
-            $this->actionTableDataBundle
+            $this->historyTableDataBundle
         );
-        
+
         return $data;
     }
 
