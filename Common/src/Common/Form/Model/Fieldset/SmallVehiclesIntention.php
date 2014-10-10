@@ -48,7 +48,7 @@ class SmallVehiclesIntention
     public $psvSmallVhlNotes = null;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
      * @Form\Options({
      *     "label":
      * "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title",
@@ -59,14 +59,11 @@ class SmallVehiclesIntention
      *     "help-block": "You can type anything in this box."
      * })
      * @Form\Type("\Zend\Form\Element\Textarea")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Filter({"name":"Zend\Filter\StringToLower"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":10,"max":100}})
      */
     public $psvSmallVhlScotland = null;
 
     /**
-     * @Form\Attributes({"id":"","class":"long"})
+     * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
      * @Form\Options({
      *     "label":
      * "application_vehicle-safety_undertakings.smallVehiclesUndertakings.title",
@@ -77,9 +74,6 @@ class SmallVehiclesIntention
      *     "help-block": "You can type anything in this box."
      * })
      * @Form\Type("\Zend\Form\Element\Textarea")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Filter({"name":"Zend\Filter\StringToLower"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":10,"max":100}})
      */
     public $psvSmallVhlUndertakings = null;
 
