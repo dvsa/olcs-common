@@ -31,8 +31,7 @@ trait InternalGenericVehicleSection
             'specifiedDate',
             'removalDate',
             'discNo'
-        ),
-
+        )
     );
 
 
@@ -80,7 +79,11 @@ trait InternalGenericVehicleSection
         $data = $this->makeRestCall(
             'VehicleHistoryView',
             'GET',
-            array('vrm' => $vrmData['vrm']),
+            array(
+                'vrm' => $vrmData['vrm'],
+                'sort' => 'specifiedDate',
+                'order' => 'DESC'
+            ),
             $this->historyTableDataBundle
         );
 
