@@ -55,6 +55,27 @@ class OrganisationService extends AbstractEntityService
     );
 
     /**
+     * Bundle to retrieve data to update completion status
+     *
+     * @var array
+     */
+    private $businessDetailsBundle = array(
+        'children' => array(
+            'type' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
+            'tradingNames' => array(
+                'properties' => array(
+                    'id',
+                    'name'
+                )
+            )
+        )
+    );
+
+    /**
      * Get the organisation for the given user
      *
      * @param int $userId
@@ -81,5 +102,16 @@ class OrganisationService extends AbstractEntityService
     {
         return $this->getHelperService('RestHelper')
             ->makeRestCall($this->entity, 'GET', $id, $this->typeBundle);
+    }
+
+    /**
+     * Get business details data
+     *
+     * @param type $id
+     */
+    public function getBusinessDetailsData($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall($this->entity, 'GET', $id, $this->businessDetailsBundle);
     }
 }
