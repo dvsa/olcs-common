@@ -42,7 +42,7 @@ trait InternalGenericVehicleSection
      */
     protected $vehicleBundle = array(
         'properties' => array(
-
+            'id'
         ),
         'children' => array(
             'vehicle' => array(
