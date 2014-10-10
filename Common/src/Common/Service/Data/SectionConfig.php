@@ -248,29 +248,7 @@ class SectionConfig
             'variation' => array()
         );
 
-        $routes = array(
-            'dashboard' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/dashboard[/]',
-                    'defaults' => array(
-                        'controller' => 'Dashboard',
-                        'action' => 'index'
-                    )
-                )
-            ),
-            'create_application' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/application/create[/]',
-                    'defaults' => array(
-                        'skipPreDispatch' => true,
-                        'controller' => 'Application\TypeOfLicence',
-                        'action' => 'createApplication'
-                    )
-                )
-            )
-        );
+        $routes = array();
 
         foreach ($types as $type => $options) {
             $typeController = 'Lva' . $camelFilter->filter($type);
