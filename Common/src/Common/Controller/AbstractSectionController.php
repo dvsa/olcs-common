@@ -148,11 +148,25 @@ abstract class AbstractSectionController extends AbstractActionController
     protected $tableName;
 
     /**
+     * Holds the action table name
+     *
+     * @var string
+     */
+    protected $actionTableName;
+
+    /**
      * Holds hasTable
      *
      * @var boolean
      */
     protected $hasTable = null;
+
+    /**
+     * Holds hasActionTable
+     *
+     * @var boolean
+     */
+    protected $hasActionTable = null;
 
     /**
      * Holds hasForm
@@ -912,21 +926,36 @@ abstract class AbstractSectionController extends AbstractActionController
     {
         if ($this->hasTable() && $view->getVariable('table') == null) {
 
-            $tableName = $this->getTableName();
+            if ( $this->hasActionTable()
+                && $this->isAction() ) {
+                echo "atn";
+                $tableName = $this->getActionTableName();
 
-            if (!empty($tableName)) {
+                if (!empty($tableName)) {
 
-                $settings = $this->getTableSettings();
+                    $settings = $this->getTableSettings();
 
-                if ( $this->isAction() ) {
                     $data = $this->getActionTableData($this->getIdentifier());
-                } else {
-                    $data = $this->getTableData($this->getIdentifier());
+
+                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+
+                    $view->setVariable('table', $table);
                 }
 
-                $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+            } else {
 
-                $view->setVariable('table', $table);
+                $tableName = $this->getTableName();
+
+                if (!empty($tableName)) {
+
+                    $settings = $this->getTableSettings();
+
+                    $data = $this->getTableData($this->getIdentifier());
+
+                    $table = $this->alterTable($this->getTable($tableName, $data, $settings));
+
+                    $view->setVariable('table', $table);
+                }
             }
         }
     }
@@ -964,6 +993,21 @@ abstract class AbstractSectionController extends AbstractActionController
     }
 
     /**
+     * Get table name
+     *
+     * @return string
+     */
+    protected function getActionTableName()
+    {
+        if ($this->isAction()) {
+
+            return $this->actionTableName . $this->getSuffixForCurrentAction();
+        }
+
+        return $this->actionTableName;
+    }
+
+    /**
      * Check if the current sub section has a table
      *
      * @return boolean
@@ -986,6 +1030,31 @@ abstract class AbstractSectionController extends AbstractActionController
 
         return $this->hasTable;
     }
+
+    /**
+     * Check if the current sub action section has a table
+     *
+     * @return boolean
+     */
+    protected function hasActionTable()
+    {
+        if (is_null($this->hasActionTable)) {
+
+            $tableName = $this->getActionTableName();
+
+            $this->hasActionTable = false;
+
+            foreach ($this->getServiceLocator()->get('Config')['tables']['config'] as $location) {
+                if (file_exists($location . $tableName . '.table.php')) {
+                    $this->hasActionTable = true;
+                    break;
+                }
+            }
+        }
+
+        return $this->hasActionTable;
+    }
+
 
     /**
      * Render the section
