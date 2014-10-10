@@ -42,9 +42,15 @@ trait InternalGenericVehicleSection
      */
     protected $vehicleBundle = array(
         'properties' => array(
-            'vrm'
-        ),
 
+        ),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'vrm'
+                )
+            )
+        )
     );
 
     /**
@@ -69,8 +75,12 @@ trait InternalGenericVehicleSection
     {
         $vehicleId=$this->getActionId();
 
+        if ( is_null($vehicleId) ) {
+            return array();
+        }
+
         $vrmData = $this->makeRestCall(
-            'Vehicle',
+            'LicenceVehicle',
             'GET',
             array('id' => $vehicleId),
             $this->vehicleBundle
@@ -80,7 +90,7 @@ trait InternalGenericVehicleSection
             'VehicleHistoryView',
             'GET',
             array(
-                'vrm' => $vrmData['vrm'],
+                'vrm' => $vrmData['vehicle']['vrm'],
                 'sort' => 'specifiedDate',
                 'order' => 'DESC'
             ),
