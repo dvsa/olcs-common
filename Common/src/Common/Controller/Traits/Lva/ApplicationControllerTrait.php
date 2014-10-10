@@ -31,6 +31,17 @@ trait ApplicationControllerTrait
     }
 
     /**
+     * Get application status
+     *
+     * @params int $applicationId
+     * @return array
+     */
+    protected function getCompletionStatuses($applicationId)
+    {
+        return $this->getEntityService('ApplicationCompletion')->getCompletionStatuses($applicationId);
+    }
+
+    /**
      * Update application status
      *
      * @params int $applicationId

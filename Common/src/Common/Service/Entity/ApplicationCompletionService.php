@@ -28,12 +28,14 @@ class ApplicationCompletionService extends AbstractEntityService
      */
     protected $entity = 'ApplicationCompletion';
 
+
     /**
-     * Update completion statuses
+     * Get completion statuses
      *
      * @param int $applicationId
+     * @return array
      */
-    public function updateCompletionStatuses($applicationId)
+    public function getCompletionStatuses($applicationId)
     {
         $data = $this->getHelperService('RestHelper')
             ->makeRestCall($this->entity, 'GET', array('application' => $applicationId));
@@ -46,7 +48,18 @@ class ApplicationCompletionService extends AbstractEntityService
             throw new \Exception('Too many completion statuses found');
         }
 
-        $completionStatus = $data['Results'][0];
+        return $data['Results'][0];
+    }
+
+    /**
+     * Update completion statuses
+     *
+     * @param int $applicationId
+     */
+    public function updateCompletionStatuses($applicationId)
+    {
+        $completionStatus = $this->getCompletionStatuses($applicationId);
+
         $completionStatus['application'] = $applicationId;
 
         $sectionConfig = new SectionConfig();
