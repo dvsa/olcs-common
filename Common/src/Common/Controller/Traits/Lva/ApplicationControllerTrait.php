@@ -100,8 +100,12 @@ trait ApplicationControllerTrait
      * @param int $applicationId
      * @return int
      */
-    protected function getLicenceId($applicationId)
+    protected function getLicenceId($applicationId = null)
     {
+        if ($applicationId === null) {
+            $applicationId = $this->getApplicationId();
+        }
+
         return $this->getEntityService('Application')->getLicenceIdForApplication($applicationId);
     }
 
