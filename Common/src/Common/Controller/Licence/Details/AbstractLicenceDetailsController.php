@@ -93,6 +93,18 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
     }
 
     /**
+     * Set view template name
+     *
+     * @return string
+     */
+    protected function setViewTemplateName($viewTemplateName)
+    {
+        $this->viewTemplateName=$viewTemplateName;
+
+        return $this->viewTemplateName;
+    }
+
+    /**
      * Get view template name
      *
      * @return string

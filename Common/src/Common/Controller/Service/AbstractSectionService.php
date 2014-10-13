@@ -136,6 +136,14 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     protected $tableDataBundle;
 
+
+    /**
+     * Holds the actionTableDataBundle
+     *
+     * @var array
+     */
+    protected $actionTableDataBundle;
+
     /**
      * Cache the factory instance
      *
@@ -362,6 +370,16 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     public function getTableDataBundle()
     {
         return $this->tableDataBundle;
+    }
+
+    /**
+     * Get action data bundle
+     *
+     * @return array
+     */
+    public function getActionTableDataBundle()
+    {
+        return $this->actionTableDataBundle;
     }
 
     /**
