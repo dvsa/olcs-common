@@ -274,7 +274,6 @@ trait VehiclePsvSection
             if (isset($data['totAuth' . $ucTable . 'Vehicles']) && $data['totAuth' . $ucTable . 'Vehicles'] < 1) {
 
                 $form->remove($table);
-                $form->getInputFilter()->remove($table);
 
             } elseif (
                 !$isCrudPressed && $isPost

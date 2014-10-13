@@ -11,7 +11,7 @@ $(function() {
 
   // set up a cascade form with the appropriate rules
   OLCS.cascadeForm({
-    form: "#application_type-of-licence_form",
+    form: "#application_type-of-licence",
     rulesets: {
       // operator location is *always* shown
       "operator-location": true,
