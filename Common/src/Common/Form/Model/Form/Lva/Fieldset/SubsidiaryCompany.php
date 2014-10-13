@@ -3,23 +3,20 @@
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
+use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
  * @codeCoverageIgnore Auto-generated file with no methods
  */
 class SubsidiaryCompany
 {
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
+    use VersionTrait;
 
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $version = null;
+    public $id = null;
 
     /**
      * @Form\Attributes({"class":"long","id":""})

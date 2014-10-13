@@ -24,17 +24,19 @@ trait BusinessDetailsTrait
         $request = $this->getRequest();
 
         $orgId = $this->getCurrentOrganisationId();
+        // we *always* want to get org data because we rely on it in
+        // alterForm which is called irrespective of whether we're doing
+        // a GET or a POST
+        $orgData = $this->getEntityService('Organisation')->getBusinessDetailsData($orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $orgData = $this->getEntityService('Organisation')->getBusinessDetailsData($orgId);
             $data = $this->formatDataForForm($orgData);
         }
 
         $form = $this->getHelperService('FormHelper')
-            ->createForm('Lva\BusinessDetails')
-            ->setData($data);
+            ->createForm('Lva\BusinessDetails');
 
         $tableData = $this->getEntityService('CompanySubsidiary')
             ->getAllForOrganisation($orgId);
@@ -58,14 +60,16 @@ trait BusinessDetailsTrait
             ->get('table')   // element
             ->setTable($table);
 
-        $this->alterForm($form, $data);
+        $this->alterForm($form, $orgData);
+
+        $form->setData($data);
 
         if ($request->isPost()) {
             /**
              * we'll re-use this in a few places, so cache the lookup
              * just for the sake of legibility
              */
-            $tradingNames = $data['data']['tradingNames'];
+            $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
 
             if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
                 /**
@@ -126,7 +130,7 @@ trait BusinessDetailsTrait
                 /**
                  * Normal submission; save the form data
                  */
-                if (count($tradingNames['trading_name'])) {
+                if (isset($tradingNames['trading_name']) && count($tradingNames['trading_name'])) {
                     $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
                     $this->getEntityService('TradingNames')->save($tradingNames);
                 }
@@ -194,8 +198,7 @@ trait BusinessDetailsTrait
         }
 
         $form = $this->getHelperService('FormHelper')
-            ->createForm('Lva\BusinessDetailsSubsidiaryCompany')
-            ->setData($data);
+            ->createForm('Lva\BusinessDetailsSubsidiaryCompany');
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatSubsidiaryDataForSave($data);
@@ -203,8 +206,11 @@ trait BusinessDetailsTrait
 
             $this->getEntityService('CompanySubsidiary')->save($data);
 
+            // we can't just opt-in to all existing route params because
+            // we might have a child ID if we're editing; if so we *don't*
+            // want that in the redirect or we'll end up back on the same page
             $routeParams = array(
-                'id' => $this->getApplicationId()
+                'id' => $this->params('id')
             );
             if ($this->isButtonPressed('addAnother')) {
                 $routeParams['action'] = 'add';
@@ -267,7 +273,9 @@ trait BusinessDetailsTrait
     {
         return array(
             'version' => $data['version'],
-            'companyOrLlpNo' => $data['data']['companyNumber']['company_number'],
+            'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
+            ? $data['data']['companyNumber']['company_number']
+            : null,
             'name' => $data['data']['name'],
         );
     }
@@ -330,6 +338,8 @@ trait BusinessDetailsTrait
      */
     private function alterForm($form, $data)
     {
+        $orgType = $data['type']['id'];
+
         $fieldset = $form->get('data');
 
         $element = $fieldset->get('editBusinessType');
@@ -340,7 +350,12 @@ trait BusinessDetailsTrait
             )
         );
 
-        switch ($data['data']['type']) {
+        // we have to manually set the business type, otherwise if this
+        // was a POST it won't come through (it's a disabled element)
+        // and will default to the first value (limited company)
+        $fieldset->get('type')->setValue($orgType);
+
+        switch ($orgType) {
             case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationService::ORG_TYPE_LLP:
                 // no-op; the full form is fine
