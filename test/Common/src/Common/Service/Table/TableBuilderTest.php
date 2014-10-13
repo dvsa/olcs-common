@@ -31,6 +31,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockTranslator = $this->getMock('\stdClass', array('translate'));
         $mockSm = $this->getMock('\Zend\ServiceManager\ServiceManager', array('get'));
+        $mockControllerPluginManager = $this->getMock('\Zend\Mvc\Controller\PluginManager', array('get'));
 
         $servicesMap = [
             ['Config', true, ($config
@@ -43,6 +44,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
                 : array())
             ],
             ['translator', true, $mockTranslator],
+            ['ControllerPluginManager', true, $mockControllerPluginManager],
         ];
 
         $mockSm
@@ -381,7 +383,6 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Test loadParams Without Url
      *
-     * @expectedException \Exception
      */
     public function testLoadParamsWithoutUrl()
     {
@@ -664,6 +665,30 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->expects($this->once())
             ->method('renderLayout')
             ->with('crud');
+
+        $table->setSettings($settings);
+
+        $table->renderTable();
+    }
+
+    /**
+     * Test renderTable For SubmissionSection
+     */
+    public function testRenderTableForSubmissionSection()
+    {
+        $settings = array(
+            'submission_section' => 'foo'
+        );
+
+        $table = $this->getMockTableBuilder(array('setType', 'renderLayout'));
+
+        $table->expects($this->once())
+            ->method('setType')
+            ->with(TableBuilder::TYPE_DEFAULT);
+
+        $table->expects($this->once())
+            ->method('renderLayout')
+            ->with('submission-section');
 
         $table->setSettings($settings);
 

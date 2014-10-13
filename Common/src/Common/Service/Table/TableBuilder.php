@@ -902,6 +902,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return $this->renderLayout('crud');
         }
 
+        if (isset($this->settings['submission_section'])) {
+            return $this->renderLayout('submission-section');
+        }
+
         return $this->renderLayout('default');
     }
 
