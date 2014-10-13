@@ -239,11 +239,19 @@ class AddressesController extends YourBusinessController
         if (!in_array($data['licence']['licenceType']['id'], $allowedLicTypes)) {
             $form->remove($fieldsetMap['establishment']);
             $form->remove($fieldsetMap['establishment_address']);
+            $form->getInputFilter()->get('establishment_address')->remove('addressLine1');
+            $form->getInputFilter()->get('establishment_address')->remove('town');
+            $form->getInputFilter()->get('establishment_address')->remove('postcode');
+            $form->getInputFilter()->get('establishment_address')->remove('countryCode');
         }
 
         if (!in_array($data['licence']['organisation']['type']['id'], $allowedOrgTypes)) {
             $form->remove($fieldsetMap['registered_office']);
             $form->remove($fieldsetMap['registered_office_address']);
+            $form->getInputFilter()->get('registered_office_address')->remove('addressLine1');
+            $form->getInputFilter()->get('registered_office_address')->remove('town');
+            $form->getInputFilter()->get('registered_office_address')->remove('postcode');
+            $form->getInputFilter()->get('registered_office_address')->remove('countryCode');
         }
 
         if ( $options['isReview'] ) {

@@ -64,14 +64,14 @@ class ApplicationPreviousHistoryLicenceHistorySubActionData
     public $willSurrender = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
      *     "label":
      * "selfserve-app-subSection-previous-history-licence-history-disqualificationDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
-     * @Form\Required(false)
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
@@ -91,14 +91,14 @@ class ApplicationPreviousHistoryLicenceHistorySubActionData
     public $disqualificationLength = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"dob","required":false})
      * @Form\Options({
      *     "label":
      * "selfserve-app-subSection-previous-history-licence-history-purchaseDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
-     * @Form\Required(false)
      * @Form\Type("DateSelect")
      * @Form\Filter({"name":"DateSelectNullifier"})
      * @Form\Validator({"name":"Date","options":{"format":"Y-m-d"}})
