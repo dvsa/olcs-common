@@ -1,11 +1,10 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("contact")
  * @Form\Options({
  *     "label": "application_your-business_business-type.contact-details.label",
@@ -32,8 +31,7 @@ class Contact
     /**
      * @Form\Attributes({"class":"long"})
      * @Form\Options({
-     *     "label":
-     * "application_your-business_business-type.contact-details.business-phone"
+     *     "label": "application_your-business_business-type.contact-details.business-phone"
      * })
      * @Form\Required(false)
      * @Form\Type("\Common\Form\Elements\InputFilters\Phone")

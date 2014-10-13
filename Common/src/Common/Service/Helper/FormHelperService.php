@@ -7,6 +7,9 @@
  */
 namespace Common\Service\Helper;
 
+use Zend\Form\Form;
+use Zend\Http\Request;
+
 /**
  * Form Helper Service
  *
@@ -28,6 +31,21 @@ class FormHelperService extends AbstractHelperService
         $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
         return $annotationBuilder->createForm($class);
+    }
+
+    /**
+     * Check for address lookups
+     *  Returns true if an address search is present, false otherwise
+     *
+     * @param Form $form
+     * @param Request $request
+     * @return boolean
+     */
+    public function processAddressLookup(Form $form, Request $request)
+    {
+        if (!$request->isPost()) {
+            return false;
+        }
     }
 
     /**

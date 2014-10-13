@@ -40,8 +40,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address line
-     * 2","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"Address line 2","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -49,8 +48,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address line
-     * 3","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"Address line 3","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */
@@ -58,8 +56,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Address line
-     * 4","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Options({"label":"Address line 4","label_attributes":{"class":"visually-hidden"}})
      * @Form\Required(false)
      * @Form\Type("Text")
      */

@@ -1413,6 +1413,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         return $actions;
     }
 
+    public function getColumn($name)
+    {
+        return ($this->hasColumn($name) ? $this->columns[$name] : null);
+    }
+
+    public function setColumn($name, $column)
+    {
+        $this->columns[$name] = $column;
+    }
+
     public function hasColumn($name)
     {
         return isset($this->columns[$name]);
