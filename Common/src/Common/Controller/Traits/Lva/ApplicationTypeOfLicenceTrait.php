@@ -44,7 +44,9 @@ trait ApplicationTypeOfLicenceTrait
             return $this->completeSection('type_of_licence');
         }
 
-        return $this->render($this->getSectionView($form));
+        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
+
+        return $this->render('type_of_licence', $form);
     }
 
     /**
@@ -85,6 +87,8 @@ trait ApplicationTypeOfLicenceTrait
             }
         }
 
-        return $this->renderCreateApplication($this->getSectionView($form));
+        $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
+
+        return $this->renderCreateApplication('type_of_licence', $form);
     }
 }

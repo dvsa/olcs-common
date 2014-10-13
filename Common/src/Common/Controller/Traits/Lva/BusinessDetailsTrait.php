@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Traits\Lva;
 
-use Olcs\View\Model\Section;
-
 /**
  * Shared logic between Business Details controllers
  *
