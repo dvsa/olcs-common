@@ -343,6 +343,8 @@ class LicenceHistoryController extends PreviousHistoryController
                 $form->get('data')->remove('disqualificationDate');
                 $form->get('data')->remove('disqualificationLength');
                 $form->get('data')->remove('purchaseDate');
+                $form->getInputFilter()->get('data')->remove('disqualificationDate');
+                $form->getInputFilter()->get('data')->remove('purchaseDate');
                 break;
             case 'table-licences-applied-add':
             case 'table-licences-applied-edit':
@@ -356,17 +358,21 @@ class LicenceHistoryController extends PreviousHistoryController
                 $form->get('data')->remove('disqualificationDate');
                 $form->get('data')->remove('disqualificationLength');
                 $form->get('data')->remove('purchaseDate');
+                $form->getInputFilter()->get('data')->remove('disqualificationDate');
+                $form->getInputFilter()->get('data')->remove('purchaseDate');
                 break;
             case 'table-licences-disqualified-add':
             case 'table-licences-disqualified-edit':
                 $form->get('data')->remove('willSurrender');
                 $form->get('data')->remove('purchaseDate');
+                $form->getInputFilter()->get('data')->remove('purchaseDate');
                 break;
             case 'table-licences-held-add':
             case 'table-licences-held-edit':
                 $form->get('data')->remove('willSurrender');
                 $form->get('data')->remove('disqualificationDate');
                 $form->get('data')->remove('disqualificationLength');
+                $form->getInputFilter()->get('data')->remove('disqualificationDate');
                 break;
             default:
                 break;

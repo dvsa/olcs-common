@@ -556,7 +556,9 @@ abstract class AbstractAuthorisationSectionService extends AbstractSectionServic
     protected function alterActionFormForPsv(Form $form)
     {
         $form->get('data')->remove('noOfTrailersPossessed');
+        $form->getInputFilter()->get('data')->remove('noOfTrailersPossessed');
         $form->remove('advertisements');
+        $form->getInputFilter()->remove('advertisements');
 
         $dataLabel = $form->get('data')->getLabel();
         $form->get('data')->setLabel($dataLabel . '-psv');
