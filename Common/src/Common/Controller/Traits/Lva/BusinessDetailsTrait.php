@@ -332,6 +332,14 @@ trait BusinessDetailsTrait
     {
         $fieldset = $form->get('data');
 
+        $element = $fieldset->get('editBusinessType');
+        $element->setOptions(
+            array_merge(
+                $element->getOptions(),
+                array('route' => 'lva-' . $this->lva . '/business_type')
+            )
+        );
+
         switch ($data['data']['type']) {
             case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationService::ORG_TYPE_LLP:
