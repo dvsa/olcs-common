@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Traits\Lva;
 
+use \Common\Service\Entity\OrganisationService;
+
 /**
  * Shared logic between Business Details controllers
  *
@@ -55,6 +57,8 @@ trait BusinessDetailsTrait
         $form->get('table')  // fieldset
             ->get('table')   // element
             ->setTable($table);
+
+        $this->alterForm($form, $data);
 
         if ($request->isPost()) {
             /**
@@ -295,13 +299,58 @@ trait BusinessDetailsTrait
         );
     }
 
+    /**
+     * Format subsidiary data for save
+     *
+     * @param array $data
+     * return array
+     */
     private function formatSubsidiaryDataForSave($data)
     {
         return $data['data'];
     }
 
+    /**
+     * Format subsidiary data for form
+     *
+     * @param array $data
+     * return array
+     */
     private function formatSubsidiaryDataForForm($data)
     {
         return array('data' => $data);
+    }
+
+    /**
+     * Alter form based on available data
+     *
+     * @param \Zend\Form\Form $form
+     * @param array $data
+     * @return null
+     */
+    private function alterForm($form, $data)
+    {
+        $fieldset = $form->get('data');
+
+        switch ($data['data']['type']) {
+            case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
+            case OrganisationService::ORG_TYPE_LLP:
+                // no-op; the full form is fine
+                break;
+            case OrganisationService::ORG_TYPE_SOLE_TRADER:
+                $fieldset->remove('name')->remove('companyNumber');
+                $form->remove('table');
+                break;
+            case OrganisationService::ORG_TYPE_PARTNERSHIP:
+                $fieldset->remove('companyNumber');
+                $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
+                $form->remove('table');
+                break;
+            case OrganisationService::ORG_TYPE_OTHER:
+                $fieldset->remove('companyNumber')->remove('tradingNames');
+                $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
+                $form->remove('table');
+                break;
+        }
     }
 }
