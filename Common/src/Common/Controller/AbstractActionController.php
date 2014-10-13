@@ -758,7 +758,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     protected function getAddressService()
     {
-        return $this->getServiceLocator()->get('address');
+        return $this->getHelperService('AddressHelper');
     }
 
     protected function getAddressForUprn($uprn)

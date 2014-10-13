@@ -62,8 +62,8 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
-        'services' => array(
-            'address' => new \Common\Service\Address\Address()
+        'abstract_factories' => array(
+            'Common\Util\AbstractServiceFactory'
         ),
         'factories' => array(
             'EntityService' => '\Common\Service\Entity\ServiceFactory',

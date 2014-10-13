@@ -1,24 +1,19 @@
 <?php
 
 /**
- * Address service handles address formatting
+ * Address helper handles address formatting
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Service\Address;
+namespace Common\Service\Helper;
 
 /**
- * Address service handles address formatting
+ * Address helper handles address formatting
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class Address
+class AddressHelperService extends AbstractHelperService
 {
-    /**
-     * Holds the address parts
-     */
-    private $address = array();
-
     /**
      * Holds the template for the details
      */
@@ -32,56 +27,18 @@ class Address
     );
 
     /**
-     * Set the address
-     *
-     * @param array $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * Get the address
-     *
-     * @param array $address
-     * @return array
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Get an address part
-     *
-     * @param string $name
-     * @return string
-     */
-    public function getAddressPart($name)
-    {
-        return (isset($this->address[$name]) ? (string)$this->address[$name] : '');
-    }
-
-    /**
      * Format an address from BS7666
      *
      * @param array $address
      * @return array
      */
-    public function formatPostalAddressFromBs7666($address = null)
+    public function formatPostalAddressFromBs7666($address)
     {
-        if (is_null($address)) {
-            $address = $this->getAddress();
-        } else {
-            $this->setAddress($address);
-        }
-
         $details = $this->details;
 
         $addressLines = array(
-            $this->formatSaon(),
-            trim($this->formatPaon() . ' ' . $this->getAddressPart('street_description')),
+            $this->formatSaon($address),
+            trim($this->formatPaon($address) . ' ' . $this->getIndexOr($address, 'street_description')),
             $address['locality_name']
         );
 
@@ -145,9 +102,9 @@ class Address
      *
      * @return string
      */
-    private function formatSaon()
+    private function formatSaon($address)
     {
-        return $this->formatOn('sao', 'organisation_name');
+        return $this->formatOn($address, 'sao', 'organisation_name');
     }
 
     /**
@@ -155,9 +112,9 @@ class Address
      *
      * @return string
      */
-    private function formatPaon()
+    private function formatPaon($address)
     {
-        return $this->formatOn('pao', 'building_name');
+        return $this->formatOn($address, 'pao', 'building_name');
     }
 
     /**
@@ -167,28 +124,43 @@ class Address
      * @param string $simple
      * @return string
      */
-    private function formatOn($prefix, $simple)
+    private function formatOn($address, $prefix, $simple)
     {
         $string = '';
 
-        if ($this->getAddressPart($simple) !== '') {
-            $string .= $this->getAddressPart($simple);
+        if ($this->getIndexOr($address, $simple) !== '') {
+            $string .= $this->getIndexOr($address, $simple);
         } else {
-            $string .= $this->getAddressPart($prefix . '_start_number')
-                . $this->getAddressPart($prefix . '_start_prefix')
-                . (
-                    $this->getAddressPart($prefix . '_end_number') !== ''
-                    ? ('-' . $this->getAddressPart($prefix . '_end_number'))
-                    : ''
-                )
-                . $this->getAddressPart($prefix . '_end_suffix');
 
-            if ($this->getAddressPart($prefix . '_start_number') !== ''
-                && $this->getAddressPart($prefix . '_text') !== '') {
-                $string .= ' ' . $this->getAddressPart($prefix . '_text');
+            $string .= sprintf(
+                '%s%s%s%s',
+                $this->getIndexOr($address, $prefix . '_start_number'),
+                $this->getIndexOr($address, $prefix . '_start_prefix'),
+                $this->getIndexOr($address, $prefix . '_end_number') !== ''
+                    ? ('-' . $this->getIndexOr($address, $prefix . '_end_number'))
+                    : '',
+                $this->getIndexOr($address, $prefix . '_end_suffix')
+            );
+
+            if ($this->getIndexOr($address, $prefix . '_start_number') !== ''
+                && $this->getIndexOr($address, $prefix . '_text') !== ''
+            ) {
+                $string .= ' ' . $this->getIndexOr($address, $prefix . '_text');
             }
         }
 
         return trim($string);
+    }
+
+    /**
+     * Get index or the default
+     *
+     * @param array $array
+     * @param string $index
+     * @param mixed $default
+     */
+    private function getIndexOr($array, $index, $default = '')
+    {
+        return (isset($array[$index]) ? $array[$index] : $default);
     }
 }

@@ -31,7 +31,7 @@ trait AddressesTrait
 
         $form = $this->getAddressesForm()->setData($data);
 
-        if (!$this->getHelperService('FormHelper')->processAddressLookup($form, $request)
+        if (!$this->getHelperService('FormHelper')->processAddressLookupForm($form, $request)
             && $request->isPost() && $form->isValid()
         ) {
 
