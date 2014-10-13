@@ -92,7 +92,7 @@ abstract class AbstractLvaController extends AbstractActionController
     /**
      * Get accessible sections
      */
-    protected function getAccessibleSections()
+    protected function getAccessibleSections($keysOnly = true)
     {
         $licenceType = $this->getTypeOfLicenceData();
 
@@ -109,7 +109,11 @@ abstract class AbstractLvaController extends AbstractActionController
         $sections = $this->getHelperService('AccessHelper')->setSections($inputSections)
             ->getAccessibleSections($access);
 
-        return array_keys($sections);
+        if ($keysOnly) {
+            $sections = array_keys($sections);
+        }
+
+        return $sections;
     }
 
     /**

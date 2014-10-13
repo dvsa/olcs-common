@@ -10,6 +10,7 @@ namespace Common\Service\Helper;
 use Zend\Filter\Word\DashToCamelCase;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
  * String Helper Service
@@ -39,6 +40,18 @@ class StringHelperService extends AbstractHelperService
     public function camelToDash($string)
     {
         $converter = new CamelCaseToDash();
+        return strtolower($converter->filter($string));
+    }
+
+    /**
+     * Convert camel case to dash
+     *
+     * @param string $string
+     * @return string
+     */
+    public function camelToUnderscore($string)
+    {
+        $converter = new CamelCaseToUnderscore();
         return strtolower($converter->filter($string));
     }
 
