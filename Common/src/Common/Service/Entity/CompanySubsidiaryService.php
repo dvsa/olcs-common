@@ -21,6 +21,11 @@ class CompanySubsidiaryService extends AbstractEntityService
      */
     protected $entity = 'CompanySubsidiary';
 
+    /**
+     * Company bundle
+     *
+     * @var array
+     */
     private $companyBundle = array(
         'properties' => array(
             'id',
@@ -30,6 +35,12 @@ class CompanySubsidiaryService extends AbstractEntityService
         )
     );
 
+    /**
+     * Retrieve all company subs by organisation ID
+     *
+     * @param int $id
+     * @return array
+     */
     public function getAllForOrganisation($id)
     {
         return $this->getHelperService('RestHelper')
@@ -37,6 +48,23 @@ class CompanySubsidiaryService extends AbstractEntityService
                 $this->entity,
                 'GET',
                 array('organisation' => $id),
+                $this->companyBundle
+            );
+    }
+
+    /**
+     * Retrieve a company subsidiary by ID
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getById($id)
+    {
+        return $this->getHelperService('RestHelper')
+            ->makeRestCall(
+                $this->entity,
+                'GET',
+                $id,
                 $this->companyBundle
             );
     }

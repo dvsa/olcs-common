@@ -41,13 +41,27 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
             throw new \Exception('Entity is not defined');
         }
 
-        if (isset($data['id'])) {
+        if (isset($data['id']) && !empty($data['id'])) {
             $method = 'PUT';
         } else {
             $method = 'POST';
         }
 
         return $this->getHelperService('RestHelper')->makeRestCall($entity, $method, $data);
+    }
+
+    /**
+     * Delete the entity by its ID
+     *
+     * @param int $id
+     */
+    public function delete($id)
+    {
+        if (($entity = $this->getEntity()) === null) {
+            throw new \Exception('Entity is not defined');
+        }
+
+        return $this->getHelperService('RestHelper')->makeRestCall($entity, 'DELETE', array('id' => $id));
     }
 
     /**
