@@ -278,7 +278,7 @@ class SectionConfig
                 $childRoutes[$section] = array(
                     'type' => 'segment',
                     'options' => array(
-                        'route' => $routeKey . '[/:action][/]',
+                        'route' => $routeKey . '[/:action[/:child_id]][/]',
                         'defaults' => array(
                             'controller' => $typeController . '/' . $sectionController,
                             'action' => 'index'

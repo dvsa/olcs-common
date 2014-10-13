@@ -55,4 +55,14 @@ trait BusinessDetailsTrait
             )
         );
     }
+
+    private function formatSubsidiaryDataForSave($data)
+    {
+        return $data['data'];
+    }
+
+    private function formatSubsidiaryDataForForm($data)
+    {
+        return array('data' => $data);
+    }
 }

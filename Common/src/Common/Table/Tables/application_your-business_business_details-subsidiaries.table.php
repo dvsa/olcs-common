@@ -27,10 +27,10 @@ return array(
             'formatter' => function ($row) {
                 return '<a href="' . $this->generateUrl(
                     array(
-                        'id' => $row['id'],
+                        'child_id' => $row['id'],
                         'action' => 'edit'
                     ),
-                    'Application/YourBusiness/BusinessDetails'
+                    'lva-application/business_details'
                 ) . '">' . $row['name'] . '</a>';
             }
         ),
