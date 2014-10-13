@@ -24,13 +24,14 @@ return array(
         array(
             'title' => 'application_your-business_business_details-subsidiaries-columnName',
             'name' => 'name',
-            'formatter' => function ($row) {
+            'type' => 'application', // @NOTE: can be overridden at controller level
+            'formatter' => function ($row, $columnData) {
                 return '<a href="' . $this->generateUrl(
                     array(
                         'child_id' => $row['id'],
                         'action' => 'edit'
                     ),
-                    'lva-application/business_details'
+                    'lva-' . $columnData['type'] . '/business_details'
                 ) . '">' . $row['name'] . '</a>';
             }
         ),

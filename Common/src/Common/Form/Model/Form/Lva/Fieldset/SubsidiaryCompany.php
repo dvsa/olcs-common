@@ -6,11 +6,9 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("data")
  */
 class SubsidiaryCompany
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -48,7 +46,4 @@ class SubsidiaryCompany
      * })
      */
     public $companyNo = null;
-
-
 }
-
