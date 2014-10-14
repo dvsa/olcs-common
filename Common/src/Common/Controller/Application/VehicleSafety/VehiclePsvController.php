@@ -25,4 +25,9 @@ class VehiclePsvController extends VehicleSafetyController
         VehicleSafetyTraits\GenericApplicationVehiclePsvSection;
 
     protected $inlineScripts = ['vehicle-psv'];
+
+    protected function parentActionSave($data, $service = null)
+    {
+        return parent::actionSave($data, $service);
+    }
 }
