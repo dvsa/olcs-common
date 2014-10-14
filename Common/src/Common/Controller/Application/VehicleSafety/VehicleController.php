@@ -22,4 +22,9 @@ class VehicleController extends VehicleSafetyController
         VehicleSafetyTraits\ExternalGenericVehicleSection,
         VehicleSafetyTraits\ApplicationGenericVehicleSection,
         VehicleSafetyTraits\GenericApplicationVehicleSection;
+
+    protected function parentActionSave($data, $service = null)
+    {
+        return parent::actionSave($data, $service);
+    }
 }

@@ -184,7 +184,7 @@ trait GenericVehicleSection
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
 
-        $saved = parent::actionSave($data, 'Vehicle');
+        $saved = $this->parentActionSave($data, 'Vehicle');
 
         if ($action == 'add') {
 
@@ -198,7 +198,7 @@ trait GenericVehicleSection
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
-        return parent::actionSave($licenceVehicle, 'LicenceVehicle');
+        return $this->parentActionSave($licenceVehicle, 'LicenceVehicle');
     }
 
     /**
