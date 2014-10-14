@@ -99,11 +99,11 @@ trait BusinessDetailsTrait
                     // remove existing entries from collection and check for empty entries
                     $names = [];
                     foreach ($tradingNames['trading_name'] as $key => $val) {
-                        if (strlen(trim($val['text'])) > 0) {
+                        if (strlen(trim($val)) > 0) {
                             $names[] = $val;
                         }
                     }
-                    $names[] = ['text' => ''];
+                    $names[] = '';
 
                     $form->get('data')->get('tradingNames')->get('trading_name')->populateValues($names);
                 }
@@ -210,9 +210,9 @@ trait BusinessDetailsTrait
         $tradingNames = [];
 
         foreach ($data['data']['tradingNames']['trading_name'] as $tradingName) {
-            if (trim($tradingName['text']) !== '') {
+            if (trim($tradingName) !== '') {
                 $tradingNames[] = [
-                    'name' => $tradingName['text']
+                    'name' => $tradingName
                 ];
             }
         }
@@ -271,7 +271,7 @@ trait BusinessDetailsTrait
     {
         $tradingNames = array();
         foreach ($data['tradingNames'] as $tradingName) {
-            $tradingNames[] = array('text' => $tradingName['name']);
+            $tradingNames[] = $tradingName['name'];
         }
         return array(
             'version' => $data['version'],

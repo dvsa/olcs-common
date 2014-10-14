@@ -67,14 +67,15 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $sectionConfig = new SectionConfig();
         $sections = $sectionConfig->getAllReferences();
 
-        $applicationData = $this->getServiceLocator()->get('Entity\Application')->getDataForCompletionStatus($applicationId);
+        $applicationData = $this->getServiceLocator()->get('Entity\Application')
+            ->getDataForCompletionStatus($applicationId);
 
-        $filter = new UnderscoreToCamelCase();
+        $filter = $this->getServiceLocator()->get('Helper\String');
 
-        $currentSection = $filter->filter($currentSection);
+        $currentSection = $filter->underscoreToCamel($currentSection);
 
         foreach ($sections as $section) {
-            $section = $filter->filter($section);
+            $section = $filter->underscoreToCamel($section);
 
             $method = 'get' . $section . 'Status';
             $property = lcfirst($section) . 'Status';
