@@ -141,11 +141,22 @@ class ApplicationService extends AbstractEntityService
                 ),
                 'children' => array(
                     'organisation' => array(
-                        'properties' => array(),
+                        'properties' => array(
+                            'companyOrLlpNo',
+                            'name',
+                            'type',
+                            'tradingNames'
+                        ),
                         'children' => array(
                             'type' => array(
                                 'properties' => array(
                                     'id'
+                                )
+                            ),
+                            'tradingNames' => array(
+                                'properties' => array(
+                                    'id',
+                                    'name'
                                 )
                             )
                         )

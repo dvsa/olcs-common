@@ -69,6 +69,13 @@ class OrganisationService extends AbstractEntityService
      * @var array
      */
     private $businessDetailsBundle = array(
+        'properties' => array(
+            'version',
+            'companyOrLlpNo',
+            'name',
+            'type',
+            'tradingNames'
+        ),
         'children' => array(
             'type' => array(
                 'properties' => array(

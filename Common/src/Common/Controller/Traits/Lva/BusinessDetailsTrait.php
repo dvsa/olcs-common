@@ -343,8 +343,8 @@ trait BusinessDetailsTrait
                 break;
 
             case OrganisationService::ORG_TYPE_SOLE_TRADER:
-                $fieldset->remove('name');
-                $fieldset->remove('companyNumber');
+                $fieldset->remove('name')
+                    ->remove('companyNumber');
 
                 $form->remove('table');
                 $form->getInputFilter()->get('data')->remove('name');
@@ -357,7 +357,8 @@ trait BusinessDetailsTrait
                 break;
 
             case OrganisationService::ORG_TYPE_OTHER:
-                $fieldset->remove('companyNumber')->remove('tradingNames');
+                $fieldset->remove('companyNumber')
+                    ->remove('tradingNames');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
                 $form->remove('table');
                 break;
