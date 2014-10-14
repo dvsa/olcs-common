@@ -132,13 +132,15 @@ class AddressHelperService extends AbstractHelperService
             $string .= $this->getIndexOr($address, $simple);
         } else {
 
+            $endNumber = $this->getIndexOr($address, $prefix . '_end_number') !== ''
+                ? ('-' . $this->getIndexOr($address, $prefix . '_end_number'))
+                : '';
+
             $string .= sprintf(
                 '%s%s%s%s',
                 $this->getIndexOr($address, $prefix . '_start_number'),
                 $this->getIndexOr($address, $prefix . '_start_prefix'),
-                $this->getIndexOr($address, $prefix . '_end_number') !== ''
-                    ? ('-' . $this->getIndexOr($address, $prefix . '_end_number'))
-                    : '',
+                $endNumber,
                 $this->getIndexOr($address, $prefix . '_end_suffix')
             );
 

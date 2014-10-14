@@ -39,7 +39,6 @@ trait AddressesTrait
 
             // Save changes
 
-
             return $this->completeSection('addresses');
         }
 
