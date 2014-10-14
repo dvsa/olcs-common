@@ -14,6 +14,8 @@ namespace Common\Controller\Traits\Lva;
  */
 trait AddressesTrait
 {
+    use GenericLvaTrait;
+
     /**
      * Addresses section
      */
@@ -31,7 +33,7 @@ trait AddressesTrait
 
         $form = $this->getAddressesForm()->setData($data);
 
-        if (!$this->getHelperService('FormHelper')->processAddressLookupForm($form, $request)
+        if (!$this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request)
             && $request->isPost() && $form->isValid()
         ) {
 
@@ -73,6 +75,6 @@ trait AddressesTrait
      */
     private function getAddressesForm()
     {
-        return $this->getHelperService('FormHelper')->createForm('Lva\Addresses');
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\Addresses');
     }
 }

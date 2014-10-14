@@ -129,7 +129,7 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
             );
         }
 
-        $url = $this->getHelperService('UrlHelper');
+        $url = $this->getServiceLocator()->get('Helper\Url');
 
         $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $url);
 
@@ -146,7 +146,7 @@ abstract class AbstractApplicationAuthorisationSectionService extends AbstractAu
         $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
         $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
 
-        return $this->getHelperService('RestHelper')->makeRestCall(
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
             'Document',
             'GET',
             array(

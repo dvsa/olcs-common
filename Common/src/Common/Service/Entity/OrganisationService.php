@@ -91,7 +91,7 @@ class OrganisationService extends AbstractEntityService
      */
     public function getForUser($userId)
     {
-        $organisation = $this->getHelperService('RestHelper')
+        $organisation = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('OrganisationUser', 'GET', ['user' => $userId], $this->organisationFromUserBundle);
 
         if ($organisation['Count'] < 1) {
@@ -109,7 +109,7 @@ class OrganisationService extends AbstractEntityService
      */
     public function getType($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->typeBundle);
     }
 
@@ -120,7 +120,7 @@ class OrganisationService extends AbstractEntityService
      */
     public function getBusinessDetailsData($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->businessDetailsBundle);
     }
 }

@@ -23,7 +23,7 @@ class TradingNamesService extends AbstractEntityService
 
     public function save($data)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'POST', $data);
     }
 }

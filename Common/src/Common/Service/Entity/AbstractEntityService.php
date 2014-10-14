@@ -19,8 +19,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  */
 abstract class AbstractEntityService implements ServiceLocatorAwareInterface
 {
-    use Util\HelperServiceAware,
-        Util\EntityServiceAware,
+    use Util\EntityServiceAware,
         ServiceLocatorAwareTrait;
 
     /**
@@ -47,7 +46,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
             $method = 'POST';
         }
 
-        return $this->getHelperService('RestHelper')->makeRestCall($entity, $method, $data);
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, $method, $data);
     }
 
     /**
@@ -61,7 +60,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
             throw new \Exception('Entity is not defined');
         }
 
-        return $this->getHelperService('RestHelper')->makeRestCall($entity, 'DELETE', array('id' => $id));
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', array('id' => $id));
     }
 
     /**

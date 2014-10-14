@@ -16,6 +16,9 @@ use Common\Service\Entity\ApplicationService;
  */
 trait ApplicationControllerTrait
 {
+    abstract protected function notFoundAction();
+    abstract protected function checkForRedirect($lvaId);
+
     /**
      * Hook into the dispatch before the controller action is executed
      */

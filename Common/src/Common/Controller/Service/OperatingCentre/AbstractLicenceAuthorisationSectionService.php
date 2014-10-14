@@ -214,7 +214,7 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
      */
     protected function getTotalAuthorisationsForLicence($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Licence', 'GET', $id, $this->totalAuthorisationsBundle);
     }
 
@@ -233,7 +233,7 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
 
         // @todo Get the application variation url form somewhere
         // $this->url()->fromRoute('application-variation')
-        $message = $this->getHelperService('TranslationHelper')->formatTranslation(
+        $message = $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
             '%s <a href="#">%s</a>',
             array(
                 'cant-increase-' . $messageSuffix,
@@ -255,7 +255,7 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
      */
     protected function getVehicleAuthsForOperatingCentre($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('LicenceOperatingCentre', 'GET', $id, $this->ocAuthorisationsBundle);
     }
 

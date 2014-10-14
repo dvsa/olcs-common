@@ -221,7 +221,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function getForOrganisation($organisationId)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Organisation', 'GET', $organisationId, $this->applicationsForOrganisationBundle);
     }
 
@@ -281,7 +281,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function doesBelongToOrganisation($id, $orgId)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
 
         return (isset($data['licence']['organisation']['id']) && $data['licence']['organisation']['id'] == $orgId);
@@ -295,7 +295,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function getOverview($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Application', 'GET', $id, $this->overviewBundle);
     }
 
@@ -309,7 +309,7 @@ class ApplicationService extends AbstractEntityService
     public function getLicenceIdForApplication($id)
     {
         if (!isset($this->licenceIds[$id])) {
-            $data = $this->getHelperService('RestHelper')
+            $data = $this->getServiceLocator()->get('Helper\Rest')
                 ->makeRestCall($this->entity, 'GET', $id, $this->licenceIdForApplicationBundle);
 
             $this->licenceIds[$id] = $data['licence']['id'];
@@ -325,7 +325,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function getDataForCompletionStatus($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->completionStatusDataBundle);
     }
 
@@ -336,7 +336,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function getApplicationType($id)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->applicationTypeBundle);
 
         if (isset($data['isVariation']) && $data['isVariation']) {
@@ -354,7 +354,7 @@ class ApplicationService extends AbstractEntityService
      */
     public function getHeaderData($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
     }
 }

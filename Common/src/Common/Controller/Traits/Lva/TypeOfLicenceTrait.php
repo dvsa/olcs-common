@@ -88,6 +88,6 @@ trait TypeOfLicenceTrait
      */
     private function getTypeOfLicenceForm()
     {
-        return $this->getHelperService('FormHelper')->createForm('Lva\TypeOfLicence');
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TypeOfLicence');
     }
 }
