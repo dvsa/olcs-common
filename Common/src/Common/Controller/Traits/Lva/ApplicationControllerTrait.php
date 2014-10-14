@@ -48,10 +48,16 @@ trait ApplicationControllerTrait
      * Update application status
      *
      * @params int $applicationId
+     * @params string $section
      */
-    protected function updateCompletionStatuses($applicationId)
+    protected function updateCompletionStatuses($applicationId, $section)
     {
-        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->updateCompletionStatuses($applicationId);
+        if ($applicationId === null) {
+            $applicationId = $this->getApplicationId();
+        }
+
+        $this->getServiceLocator()->get('Entity\ApplicationCompletion')
+            ->updateCompletionStatuses($applicationId, $section);
     }
 
     /**
@@ -132,7 +138,7 @@ trait ApplicationControllerTrait
      */
     protected function completeSection($section)
     {
-        $this->updateCompletionStatuses($this->getApplicationId());
+        $this->updateCompletionStatuses($this->getApplicationId(), $section);
 
         $this->addSectionUpdatedMessage($section);
 

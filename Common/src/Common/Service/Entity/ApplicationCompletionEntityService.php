@@ -9,6 +9,7 @@ namespace Common\Service\Entity;
 
 use Common\Service\Data\SectionConfig;
 use Zend\Filter\Word\UnderscoreToCamelCase;
+use Common\Service\Entity\OrganisationService;
 
 /**
  * Application Completion Entity Service
@@ -55,8 +56,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * Update completion statuses
      *
      * @param int $applicationId
+     * @param string $currentSection
      */
-    public function updateCompletionStatuses($applicationId)
+    public function updateCompletionStatuses($applicationId, $currentSection)
     {
         $completionStatus = $this->getCompletionStatuses($applicationId);
 
@@ -69,12 +71,17 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         $filter = new UnderscoreToCamelCase();
 
+        $currentSection = $filter->filter($currentSection);
+
         foreach ($sections as $section) {
             $section = $filter->filter($section);
 
             $method = 'get' . $section . 'Status';
+            $property = lcfirst($section) . 'Status';
 
-            $completionStatus[lcfirst($section) . 'Status'] = $this->$method($applicationData);
+            if ($section === $currentSection || $completionStatus[$property] > self::STATUS_NOT_STARTED) {
+                $completionStatus[$property] = $this->$method($applicationData);
+            }
         }
 
         $this->save($completionStatus);
@@ -90,29 +97,30 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     {
         $licence = $applicationData['licence'];
 
-        $requiredVars = array(
-            'niFlag' => $licence['niFlag'],
-            'goodsOrPsv' => isset($licence['goodsOrPsv']['id']) ? $licence['goodsOrPsv']['id'] : null,
-            'licenceType' => isset($licence['licenceType']['id']) ? $licence['licenceType']['id'] : null,
+        return $this->checkCompletion(
+            array(
+                'niFlag' => $licence['niFlag'],
+                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']) ? $licence['goodsOrPsv']['id'] : null,
+                'licenceType' => isset($licence['licenceType']['id']) ? $licence['licenceType']['id'] : null,
+            )
         );
+    }
 
-        $countValues = 0;
+    private function checkCompletion(array $properties = array())
+    {
+        $completeCount = 0;
 
-        foreach ($requiredVars as $value) {
+        foreach ($properties as $value) {
             if ($value !== null) {
-                $countValues++;
+                $completeCount++;
             }
         }
 
-        if ($countValues === count($requiredVars)) {
+        if ($completeCount === count($properties)) {
             return self::STATUS_COMPLETE;
         }
 
-        if ($countValues > 0) {
-            return self::STATUS_INCOMPLETE;
-        }
-
-        return self::STATUS_NOT_STARTED;
+        return self::STATUS_INCOMPLETE;
     }
 
     /**
@@ -136,7 +144,37 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getBusinessDetailsStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        if (!isset($applicationData['licence']['organisation']['type']['id'])) {
+            return self::STATUS_NOT_STARTED;
+        }
+
+        $orgData = $applicationData['licence']['organisation'];
+
+        /**
+         * Selectively add required fields based on the org type
+         */
+        switch ($orgData['type']['id']) {
+            case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
+            case OrganisationService::ORG_TYPE_LLP:
+                $requiredVars = array(
+                    'name' => isset($orgData['name']) ? $orgData['name'] : null,
+                    'company' => isset($orgData['companyOrLlpNo']) ? $orgData['companyOrLlpNo'] : null
+                );
+                break;
+
+            case OrganisationService::ORG_TYPE_PARTNERSHIP:
+            case OrganisationService::ORG_TYPE_OTHER:
+                $requiredVars = array(
+                    'name' => isset($orgData['name']) ? $orgData['name'] : null
+                );
+                break;
+
+            case OrganisationService::ORG_TYPE_SOLE_TRADER:
+                $requiredVars = array();
+                break;
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**
