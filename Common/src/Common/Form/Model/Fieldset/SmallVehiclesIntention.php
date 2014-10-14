@@ -41,9 +41,6 @@ class SmallVehiclesIntention
      *     "help-block": "You can type anything in this box."
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\VehicleUndertakingsOperateSmallVehicles")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
-     * @Form\Filter({"name":"Zend\Filter\StringToLower"})
-     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":10,"max":100}})
      */
     public $psvSmallVhlNotes = null;
 

@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Traits\Lva;
 
-use \Common\Service\Entity\OrganisationService;
+use Common\Service\Entity\OrganisationService;
 
 /**
  * Shared logic between Business Details controllers
@@ -38,31 +38,12 @@ trait BusinessDetailsTrait
         $form = $this->getHelperService('FormHelper')
             ->createForm('Lva\BusinessDetails');
 
-        $tableData = $this->getEntityService('CompanySubsidiary')
-            ->getAllForOrganisation($orgId);
+        $this->alterForm($form, $orgData)
+            ->setData($data);
 
-        $table = $this->getServiceLocator()
-            ->get('Table')
-            ->buildTable(
-                // @TODO rename / move table? This trait is re-used
-                // across app / var / licences...
-                'application_your-business_business_details-subsidiaries',
-                $tableData,
-                array(), // params?
-                false
-            );
-
-        $column = $table->getColumn('name');
-        $column['type'] = $this->lva;
-        $table->setColumn('name', $column);
-
-        $form->get('table')  // fieldset
-            ->get('table')   // element
-            ->setTable($table);
-
-        $this->alterForm($form, $orgData);
-
-        $form->setData($data);
+        if ($form->has('table')) {
+            $this->populateTable($form, $orgId);
+        }
 
         if ($request->isPost()) {
             /**
@@ -276,7 +257,7 @@ trait BusinessDetailsTrait
             'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
             ? $data['data']['companyNumber']['company_number']
             : null,
-            'name' => $data['data']['name'],
+            'name' => isset($data['data']['name']) ? $data['data']['name'] : null
         );
     }
 
@@ -334,7 +315,7 @@ trait BusinessDetailsTrait
      *
      * @param \Zend\Form\Form $form
      * @param array $data
-     * @return null
+     * @return \Zend\Form\Form
      */
     private function alterForm($form, $data)
     {
@@ -360,20 +341,53 @@ trait BusinessDetailsTrait
             case OrganisationService::ORG_TYPE_LLP:
                 // no-op; the full form is fine
                 break;
+
             case OrganisationService::ORG_TYPE_SOLE_TRADER:
-                $fieldset->remove('name')->remove('companyNumber');
+                $fieldset->remove('name');
+                $fieldset->remove('companyNumber');
+
                 $form->remove('table');
+                $form->getInputFilter()->get('data')->remove('name');
                 break;
+
             case OrganisationService::ORG_TYPE_PARTNERSHIP:
                 $fieldset->remove('companyNumber');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
                 $form->remove('table');
                 break;
+
             case OrganisationService::ORG_TYPE_OTHER:
                 $fieldset->remove('companyNumber')->remove('tradingNames');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
                 $form->remove('table');
                 break;
         }
+
+        return $form;
+    }
+
+    private function populateTable($form, $orgId)
+    {
+        $tableData = $this->getEntityService('CompanySubsidiary')
+            ->getAllForOrganisation($orgId);
+
+        $table = $this->getServiceLocator()
+            ->get('Table')
+            ->buildTable(
+                // @TODO rename / move table? This trait is re-used
+                // across app / var / licences...
+                'application_your-business_business_details-subsidiaries',
+                $tableData,
+                array(), // params?
+                false
+            );
+
+        $column = $table->getColumn('name');
+        $column['type'] = $this->lva;
+        $table->setColumn('name', $column);
+
+        $form->get('table')  // fieldset
+            ->get('table')   // element
+            ->setTable($table);
     }
 }
