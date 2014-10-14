@@ -82,7 +82,7 @@ class ApplicationSectionService extends AbstractSectionService
     protected function getLicenceId()
     {
         if ($this->licenceId === null) {
-            $data = $this->getHelperService('RestHelper')
+            $data = $this->getServiceLocator()->get('Helper\Rest')
                 ->makeRestCall('Application', 'GET', $this->getIdentifier(), $this->licenceIdBundle);
             $this->licenceId = $data['licence']['id'];
         }

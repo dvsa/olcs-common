@@ -38,7 +38,7 @@ class ApplicationCompletionService extends AbstractEntityService
      */
     public function getCompletionStatuses($applicationId)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', array('application' => $applicationId));
 
         if ($data['Count'] < 1) {

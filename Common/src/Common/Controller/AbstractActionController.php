@@ -36,7 +36,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     use Util\LoggerTrait,
         Util\FlashMessengerTrait,
         Util\RestCallTrait,
-        Util\HelperServiceAware,
         Util\EntityServiceAware,
         Traits\ViewHelperManagerAware;
 
@@ -617,7 +616,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     {
         $name = str_replace([' ', '_'], '-', $name);
 
-        $name = $this->getHelperService('StringHelper')->dashToCamel($name);
+        $name = $this->getServiceLocator()->get('Helper\String')->dashToCamel($name);
 
         if (!$ucFirst) {
             return lcfirst($name);
@@ -758,7 +757,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     protected function getAddressService()
     {
-        return $this->getHelperService('AddressHelper');
+        return $this->getServiceLocator()->get('Helper\Address');
     }
 
     protected function getAddressForUprn($uprn)
@@ -1772,7 +1771,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function processDataMapForSave($oldData, $map = array(), $section = 'main')
     {
-        return $this->getHelperService('DataHelper')->processDataMap($oldData, $map, $section);
+        return $this->getServiceLocator()->get('Helper\Data')->processDataMap($oldData, $map, $section);
     }
 
     /**

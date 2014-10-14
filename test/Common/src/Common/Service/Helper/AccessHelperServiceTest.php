@@ -7,6 +7,7 @@
  */
 namespace CommonTest\Helper;
 
+use CommonTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
 use Common\Service\Helper\AccessHelperService;
 
@@ -31,6 +32,8 @@ class AccessHelperServiceTest extends PHPUnit_Framework_TestCase
      */
     private $mockRestrictionHelper;
 
+    private $serviceLocator;
+
     public function setUp()
     {
         $this->mockRestrictionHelper = $this->getMock(
@@ -38,14 +41,12 @@ class AccessHelperServiceTest extends PHPUnit_Framework_TestCase
             array('isRestrictionSatisfied')
         );
 
-        $mockFactory = $this->getMock('\Common\Service\Helper\HelperServiceFactory', array('getHelperService'));
-        $mockFactory->expects($this->any())
-            ->method('getHelperService')
-            ->with('RestrictionHelper')
-            ->will($this->returnValue($this->mockRestrictionHelper));
+        $this->serviceLocator = Bootstrap::getServiceManager();
+        $this->serviceLocator->setAllowOverride(true);
+        $this->serviceLocator->setService('Helper\Restriction', $this->mockRestrictionHelper);
 
         $this->sut = new AccessHelperService();
-        $this->sut->setHelperServiceFactory($mockFactory);
+        $this->sut->setServiceLocator($this->serviceLocator);
 
         $sections = array(
             'no_restriction' => array(),

@@ -20,8 +20,7 @@ use Zend\Mvc\MvcEvent;
  */
 abstract class AbstractLvaController extends AbstractActionController
 {
-    use Util\HelperServiceAware,
-        Util\EntityServiceAware,
+    use Util\EntityServiceAware,
         Util\FlashMessengerTrait;
 
     /**
@@ -106,7 +105,7 @@ abstract class AbstractLvaController extends AbstractActionController
         $sectionConfig = new SectionConfig();
         $inputSections = $sectionConfig->getAll();
 
-        $sections = $this->getHelperService('AccessHelper')->setSections($inputSections)
+        $sections = $this->getServiceLocator()->get('Helper\Access')->setSections($inputSections)
             ->getAccessibleSections($access);
 
         if ($keysOnly) {
@@ -158,7 +157,7 @@ abstract class AbstractLvaController extends AbstractActionController
      */
     protected function addSectionUpdatedMessage($section)
     {
-        $message = $this->getHelperService('TranslationHelper')->formatTranslation(
+        $message = $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
             '%s %s',
             array(
                 'section.name.' . $section,

@@ -124,7 +124,7 @@ class LicenceService extends AbstractEntityService
      */
     public function getOverview($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->overviewBundle);
     }
 
@@ -136,7 +136,7 @@ class LicenceService extends AbstractEntityService
      */
     public function getTypeOfLicenceData($id)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->typeOfLicenceBundle);
 
         return array(
@@ -156,7 +156,7 @@ class LicenceService extends AbstractEntityService
      */
     public function doesBelongToOrganisation($id, $orgId)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
 
         return (isset($data['organisation']['id']) && $data['organisation']['id'] == $orgId);
@@ -170,7 +170,7 @@ class LicenceService extends AbstractEntityService
      */
     public function getHeaderParams($id)
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
     }
 }

@@ -110,7 +110,7 @@ class ExternalLicenceAuthorisationSectionService extends AbstractLicenceAuthoris
      */
     protected function getOperatingCentreAddressData($id)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->getActionService(), 'GET', $id, $this->operatingCentreAddressBundle);
 
         return $data['operatingCentre']['address'];

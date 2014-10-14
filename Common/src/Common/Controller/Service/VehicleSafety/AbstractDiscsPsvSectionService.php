@@ -68,7 +68,7 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
     public function getFormTableData($id, $table = '')
     {
         if ($this->formTableData === null) {
-            $data = $this->getHelperService('RestHelper')
+            $data = $this->getServiceLocator()->get('Helper\Rest')
                 ->makeRestCall($this->getService(), 'GET', $id, $this->formTableDataBundle);
 
             $this->formTableData = array();
@@ -133,7 +133,7 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
      */
     public function processActionLoad($data)
     {
-        $data = $this->getHelperService('RestHelper')
+        $data = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->getActionService(), 'GET', $this->getIdentifier(), $this->getActionDataBundle());
 
         $data['totalAuth'] = (
@@ -223,7 +223,8 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
 
         $this->requestDiscs($additionalDiscCount, array('licence' => $data['data']['id']));
 
-        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-requested-successfully');
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+            ->addSuccessMessage('psv-discs-requested-successfully');
     }
 
     /**
@@ -248,7 +249,8 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
         $this->ceaseDiscs($ids);
         $this->requestDiscs(count($ids), array('isCopy' => 'Y', 'licence' => $this->getIdentifier()));
 
-        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-replaced-successfully');
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+            ->addSuccessMessage('psv-discs-replaced-successfully');
     }
 
     /**
@@ -273,7 +275,8 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
 
         $this->ceaseDiscs($ids);
 
-        $this->getHelperService('FlashMessengerHelper')->addSuccessMessage('psv-discs-voided-successfully');
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+            ->addSuccessMessage('psv-discs-voided-successfully');
     }
 
     /**
@@ -288,11 +291,11 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
             'isCopy' => 'N'
         );
 
-        $postData = $this->getHelperService('DataHelper')->arrayRepeat(array_merge($defaults, $data), $count);
+        $postData = $this->getServiceLocator()->get('Helper\Data')->arrayRepeat(array_merge($defaults, $data), $count);
 
         $postData['_OPTIONS_'] = array('multiple' => true);
 
-        $this->getHelperService('RestHelper')->makeRestCall('PsvDisc', 'POST', $postData);
+        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('PsvDisc', 'POST', $postData);
     }
 
     /**
@@ -316,6 +319,6 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
 
         $postData['_OPTIONS_']['multiple'] = true;
 
-        $this->getHelperService('RestHelper')->makeRestCall('PsvDisc', 'PUT', $postData);
+        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('PsvDisc', 'PUT', $postData);
     }
 }

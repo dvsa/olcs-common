@@ -71,6 +71,6 @@ trait RestCallTrait
      */
     protected function getRestService()
     {
-        return $this->getServiceLocator()->get('HelperService')->getHelperService('RestHelper');
+        return $this->getServiceLocator()->get('Helper\Rest');
     }
 }

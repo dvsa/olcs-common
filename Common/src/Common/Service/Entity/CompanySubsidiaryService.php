@@ -43,13 +43,8 @@ class CompanySubsidiaryService extends AbstractEntityService
      */
     public function getAllForOrganisation($id)
     {
-        return $this->getHelperService('RestHelper')
-            ->makeRestCall(
-                $this->entity,
-                'GET',
-                array('organisation' => $id),
-                $this->companyBundle
-            );
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', array('organisation' => $id), $this->companyBundle);
     }
 
     /**
@@ -60,12 +55,7 @@ class CompanySubsidiaryService extends AbstractEntityService
      */
     public function getById($id)
     {
-        return $this->getHelperService('RestHelper')
-            ->makeRestCall(
-                $this->entity,
-                'GET',
-                $id,
-                $this->companyBundle
-            );
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->companyBundle);
     }
 }

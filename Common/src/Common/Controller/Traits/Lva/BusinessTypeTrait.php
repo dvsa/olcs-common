@@ -80,6 +80,6 @@ trait BusinessTypeTrait
      */
     private function getBusinessTypeForm()
     {
-        return $this->getHelperService('FormHelper')->createForm('Lva\BusinessType');
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\BusinessType');
     }
 }

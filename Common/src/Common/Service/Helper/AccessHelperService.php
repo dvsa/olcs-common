@@ -82,6 +82,6 @@ class AccessHelperService extends AbstractHelperService
 
         $restrictions = $sectionDetails['restricted'];
 
-        return $this->getHelperService('RestrictionHelper')->isRestrictionSatisfied($restrictions, $access);
+        return $this->getServiceLocator()->get('Helper\Restriction')->isRestrictionSatisfied($restrictions, $access);
     }
 }

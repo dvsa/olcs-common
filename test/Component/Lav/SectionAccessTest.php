@@ -12,7 +12,6 @@ use PHPUnit_Framework_TestCase;
 use Common\Service\Data\SectionConfig;
 use Common\Service\Entity\LicenceService;
 
-
 /**
  * Section Access Test
  *
@@ -22,8 +21,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @group component
-     * @group lav_component
-     * @group section_access_lav_component
+     * @group lva_component
+     * @group section_access_lva_component
      * @dataProvider providerSectionAccessExternalApplication
      */
     public function testSectionAccessExternalApplication($access, $expected)
@@ -33,7 +32,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
         $sectionConfig = new SectionConfig();
         $inputSections = $sectionConfig->getAll();
 
-        $accessHelper = $serviceManager->get('HelperService')->getHelperService('AccessHelper');
+        $accessHelper = $serviceManager->get('Helper\Access');
         $accessibleSections = $accessHelper->setSections($inputSections)->getAccessibleSections($access);
 
         $this->assertEquals($expected, array_keys($accessibleSections));

@@ -35,7 +35,7 @@ trait BusinessDetailsTrait
             $data = $this->formatDataForForm($orgData);
         }
 
-        $form = $this->getHelperService('FormHelper')
+        $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\BusinessDetails');
 
         $this->alterForm($form, $orgData)
@@ -178,7 +178,7 @@ trait BusinessDetailsTrait
             );
         }
 
-        $form = $this->getHelperService('FormHelper')
+        $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\BusinessDetailsSubsidiaryCompany');
 
         if ($request->isPost() && $form->isValid()) {

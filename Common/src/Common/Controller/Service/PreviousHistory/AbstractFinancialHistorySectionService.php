@@ -103,7 +103,7 @@ abstract class AbstractFinancialHistorySectionService extends AbstractSectionSer
 
         $fileList = $fieldset->get('file')->get('list');
 
-        $url = $this->getHelperService('UrlHelper');
+        $url = $this->getServiceLocator()->get('Helper\Url');
 
         $fileList->setFiles($data['documents'], $url);
 

@@ -8,7 +8,6 @@
 namespace Common\View;
 
 use Zend\View\Model\ViewModel;
-use Common\Util\HelperServiceAware;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
@@ -19,8 +18,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  */
 abstract class AbstractViewModel extends ViewModel implements ServiceLocatorAwareInterface
 {
-    use HelperServiceAware,
-        ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Build a table from config and results, and return the table object
@@ -33,7 +31,7 @@ abstract class AbstractViewModel extends ViewModel implements ServiceLocatorAwar
     public function getTable($table, $results, $data = array())
     {
         if (!isset($data['url'])) {
-            $data['url'] = $this->getHelperService('UrlHelper');
+            $data['url'] = $this->getServiceLocator()->get('Helper\Url');
         }
 
         return $this->getServiceLocator()->get('Table')->buildTable($table, $results, $data, false);

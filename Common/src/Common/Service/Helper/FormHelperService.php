@@ -148,7 +148,7 @@ class FormHelperService extends AbstractHelperService
         }
 
         $fieldset->get('searchPostcode')->get('addresses')->setValueOptions(
-            $this->getHelperService('AddressHelper')->formatAddressesForSelect($addressList)
+            $this->getServiceLocator()->get('Helper\Address')->formatAddressesForSelect($addressList)
         );
 
         return true;
@@ -168,7 +168,7 @@ class FormHelperService extends AbstractHelperService
 
         $this->removeAddressSelectFields($fieldset);
 
-        $addressDetails = $this->getHelperService('AddressHelper')->formatPostalAddressFromBs7666($address);
+        $addressDetails = $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
 
         $data = $post;
         $data[$name] = $addressDetails;

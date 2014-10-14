@@ -138,7 +138,7 @@ class LicenceSectionService extends AbstractSectionService
      */
     private function fetchLicenceData()
     {
-        return $this->getHelperService('RestHelper')
+        return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Licence', 'GET', $this->getIdentifier(), $this->licenceDataBundle);
     }
 

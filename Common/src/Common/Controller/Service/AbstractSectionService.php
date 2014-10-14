@@ -28,8 +28,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  */
 abstract class AbstractSectionService implements SectionServiceInterface, ServiceLocatorAwareInterface
 {
-    use ServiceLocatorAwareTrait,
-        Util\HelperServiceAware;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Holds the field values
@@ -445,7 +444,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
 
         $lockView = new ViewModel(
-            array('message' => $this->getHelperService('TranslationHelper')->translate($message))
+            array('message' => $this->getServiceLocator()->get('Helper\Translation')->translate($message))
         );
         $lockView->setTemplate('partials/lock');
 
@@ -487,7 +486,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
     {
         if ($this->actionData === null) {
 
-            $this->actionData = $this->getHelperService('RestHelper')
+            $this->actionData = $this->getServiceLocator()->get('Helper\Rest')
                 ->makeRestCall($this->getActionService(), 'GET', $id, $this->getActionDataBundle());
         }
 
@@ -511,7 +510,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $method = 'PUT';
         }
 
-        return $this->getHelperService('RestHelper')->makeRestCall($service, $method, $data);
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -531,7 +530,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $method = 'PUT';
         }
 
-        return $this->getHelperService('RestHelper')->makeRestCall($service, $method, $data);
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($service, $method, $data);
     }
 
     /**
@@ -616,7 +615,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
 
         if (!empty($id) && !empty($service)) {
 
-            $this->getHelperService('RestHelper')->makeRestCall($service, 'DELETE', array('id' => $id));
+            $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($service, 'DELETE', array('id' => $id));
 
             return true;
         }
@@ -673,7 +672,8 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
         if (empty($this->loadedData)) {
             $service = $this->getService();
 
-            $result = $this->getHelperService('RestHelper')->makeRestCall($service, 'GET', $id, $this->getDataBundle());
+            $result = $this->getServiceLocator()->get('Helper\Rest')
+                ->makeRestCall($service, 'GET', $id, $this->getDataBundle());
 
             $this->loadedData = $result;
         }
@@ -936,13 +936,14 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
      */
     public function deleteFile($id, $fieldset, $name)
     {
-        $fileDetails = $this->getHelperService('RestHelper')
+        $fileDetails = $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Document', 'GET', $id, array('properties' => array('identifier')));
 
         if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
             if ($this->getUploader()->remove($fileDetails['identifier'])) {
 
-                $this->getHelperService('RestHelper')->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $this->getServiceLocator()->get('Helper\Rest')
+                    ->makeRestCall('Document', 'DELETE', array('id' => $id));
                 $fieldset->remove($name);
             }
         }
@@ -972,8 +973,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $data
         );
 
-        $this->getHelperService('RestHelper')
-            ->makeRestCall('Document', 'POST', $docData);
+        $this->getServiceLocator()->get('helper\Rest')->makeRestCall('Document', 'POST', $docData);
     }
 
     /**
