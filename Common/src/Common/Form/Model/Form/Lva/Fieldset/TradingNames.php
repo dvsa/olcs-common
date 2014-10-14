@@ -1,28 +1,26 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("form-actions")
- * @Form\Attributes({"class":"actions-container"})
+ * Trading names fieldset
  */
 class TradingNames
 {
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"id":""})
      * @Form\Options({
      *      "count":1,
      *      "wrapElements":false,
      *      "allow_add":true,
      *      "allow_remove":true,
      *      "target_element": {
-     *          "type":"\Common\Form\Fieldsets\Custom\TextFieldset",
-     *          "atributes": {
-     *              "data-container-class":"block"
+     *          "type":"Text",
+     *          "attributes": {
+     *              "class": "long"
      *          },
      *          "options": {
      *              "wrapElements":false
@@ -35,7 +33,7 @@ class TradingNames
     public $tradingName = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large","data-container-class":"inline"})
+     * @Form\Attributes({"type":"submit","class":"action--tertiary","data-container-class":"inline"})
      * @Form\Options({
      *     "label": "Add another"
      * })

@@ -46,6 +46,7 @@ class BusinessDetails
     public $companyNumber = null;
 
     /**
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({"label":"application_your-business_business-details.data.company_name"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -53,17 +54,8 @@ class BusinessDetails
     public $name = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Options({
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-5",
-     *     "help-block": "Between 2 and 50 characters.",
-     *     "label":
-     * "application_your-business_business-details.data.trading_names_optional"
-     * })
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\TradingNames")
+     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
      */
     public $tradingNames = null;
 
