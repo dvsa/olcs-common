@@ -7,10 +7,8 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Util;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 
 /**
  * Abstract Entity Service
@@ -19,8 +17,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  */
 abstract class AbstractEntityService implements ServiceLocatorAwareInterface
 {
-    use Util\EntityServiceAware,
-        ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Define entity for default behaviour

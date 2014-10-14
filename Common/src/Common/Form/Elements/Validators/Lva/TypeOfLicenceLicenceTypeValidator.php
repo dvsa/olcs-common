@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators\Lva;
 
-use Common\Service\Entity\LicenceService;
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Validator\AbstractValidator;
 
 /**
@@ -34,8 +34,8 @@ class TypeOfLicenceLicenceTypeValidator extends AbstractValidator
      */
     public function isValid($value, $context = array())
     {
-        if ($context['operator-type'] === LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE
-            && $value == LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+        if ($context['operator-type'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            && $value == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
         ) {
             $this->error('invalid-licence-type');
             return false;

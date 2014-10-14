@@ -37,14 +37,14 @@ trait ApplicationTypeOfLicenceTrait
             if ($form->isValid()) {
 
                 $organisationId = $this->getCurrentOrganisationId();
-                $ids = $this->getEntityService('Application')->createNew($organisationId);
+                $ids = $this->getServiceLocator()->get('Entity\Application')->createNew($organisationId);
 
                 $data = $this->formatDataForSave($data);
 
                 $data['id'] = $ids['licence'];
                 $data['version'] = 1;
 
-                $this->getEntityService('Licence')->save($data);
+                $this->getServiceLocator()->get('Entity\Licence')->save($data);
 
                 $this->updateCompletionStatuses($ids['application']);
 

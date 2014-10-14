@@ -12,7 +12,7 @@ namespace Common\Service\Entity;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class OrganisationService extends AbstractEntityService
+class OrganisationEntityService extends AbstractEntityService
 {
     /**
      * Organisation type keys

@@ -37,7 +37,7 @@ trait TypeOfLicenceTrait
 
             $data['id'] = $licenceId;
 
-            $this->getEntityService('Licence')->save($data);
+            $this->getServiceLocator()->get('Entity\Licence')->save($data);
 
             return $this->completeSection('type_of_licence');
         }

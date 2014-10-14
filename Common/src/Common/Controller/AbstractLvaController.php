@@ -20,8 +20,7 @@ use Zend\Mvc\MvcEvent;
  */
 abstract class AbstractLvaController extends AbstractActionController
 {
-    use Util\EntityServiceAware,
-        Util\FlashMessengerTrait;
+    use Util\FlashMessengerTrait;
 
     /**
      * Internal/External

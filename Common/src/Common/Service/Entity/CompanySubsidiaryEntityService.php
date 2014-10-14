@@ -12,7 +12,7 @@ namespace Common\Service\Entity;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class CompanySubsidiaryService extends AbstractEntityService
+class CompanySubsidiaryEntityService extends AbstractEntityService
 {
     /**
      * Define entity for default behaviour

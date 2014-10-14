@@ -7,14 +7,14 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Service\Entity\LicenceService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Application Entity Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationService extends AbstractEntityService
+class ApplicationEntityService extends AbstractEntityService
 {
     const APPLICATION_TYPE_NEW = 0;
     const APPLICATION_TYPE_VARIATION = 1;
@@ -233,11 +233,11 @@ class ApplicationService extends AbstractEntityService
     public function createNew($organisationId)
     {
         $licenceData = array(
-            'status' => LicenceService::LICENCE_STATUS_NEW,
+            'status' => LicenceEntityService::LICENCE_STATUS_NEW,
             'organisation' => $organisationId,
         );
 
-        $licence = $this->getEntityService('Licence')->save($licenceData);
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->save($licenceData);
 
         $applicationData = array(
             'licence' => $licence['id'],
@@ -267,7 +267,7 @@ class ApplicationService extends AbstractEntityService
             'application' => $application['id'],
         ];
 
-        $this->getEntityService('ApplicationCompletion')->save($applicationCompletionData);
+        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
 
         return $application;
     }

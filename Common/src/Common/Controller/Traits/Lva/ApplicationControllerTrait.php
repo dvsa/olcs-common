@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Traits\Lva;
 
-use Common\Service\Entity\ApplicationService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Application Controller Trait
@@ -41,7 +41,7 @@ trait ApplicationControllerTrait
      */
     protected function getCompletionStatuses($applicationId)
     {
-        return $this->getEntityService('ApplicationCompletion')->getCompletionStatuses($applicationId);
+        return $this->getServiceLocator()->get('Entity\ApplicationCompletion')->getCompletionStatuses($applicationId);
     }
 
     /**
@@ -51,7 +51,7 @@ trait ApplicationControllerTrait
      */
     protected function updateCompletionStatuses($applicationId)
     {
-        $this->getEntityService('ApplicationCompletion')->updateCompletionStatuses($applicationId);
+        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->updateCompletionStatuses($applicationId);
     }
 
     /**
@@ -62,7 +62,7 @@ trait ApplicationControllerTrait
      */
     protected function isApplicationNew($applicationId)
     {
-        return $this->getApplicationType($applicationId) === ApplicationService::APPLICATION_TYPE_NEW;
+        return $this->getApplicationType($applicationId) === ApplicationEntityService::APPLICATION_TYPE_NEW;
     }
 
     /**
@@ -73,7 +73,7 @@ trait ApplicationControllerTrait
      */
     protected function isApplicationVariation($applicationId)
     {
-        return $this->getApplicationType($applicationId) === ApplicationService::APPLICATION_TYPE_VARIATION;
+        return $this->getApplicationType($applicationId) === ApplicationEntityService::APPLICATION_TYPE_VARIATION;
     }
 
     /**
@@ -84,7 +84,7 @@ trait ApplicationControllerTrait
      */
     protected function getApplicationType($applicationId)
     {
-        return $this->getEntityService('Application')->getApplicationType($applicationId);
+        return $this->getServiceLocator()->get('Entity\Application')->getApplicationType($applicationId);
     }
 
     /**
@@ -109,7 +109,7 @@ trait ApplicationControllerTrait
             $applicationId = $this->getApplicationId();
         }
 
-        return $this->getEntityService('Application')->getLicenceIdForApplication($applicationId);
+        return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($applicationId);
     }
 
     /**
@@ -121,7 +121,7 @@ trait ApplicationControllerTrait
     {
         $licenceId = $this->getLicenceId($this->getApplicationId());
 
-        return $this->getEntityService('Licence')->getTypeOfLicenceData($licenceId);
+        return $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($licenceId);
     }
 
     /**

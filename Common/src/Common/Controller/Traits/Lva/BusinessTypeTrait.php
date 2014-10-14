@@ -27,13 +27,13 @@ trait BusinessTypeTrait
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($this->getEntityService('Organisation')->getType($orgId));
+            $data = $this->formatDataForForm($this->getServiceLocator()->get('Entity\Organisation')->getType($orgId));
         }
 
         $form = $this->getBusinessTypeForm()->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-            $this->getEntityService('Organisation')->save($this->formatDataForSave($orgId, $data));
+            $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));
 
             return $this->completeSection('business_type');
         }

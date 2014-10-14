@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Traits\Lva;
 
-use Common\Service\Entity\OrganisationService;
+use Common\Service\Entity\OrganisationEntityService;
 
 /**
  * Shared logic between Business Details controllers
@@ -27,7 +27,7 @@ trait BusinessDetailsTrait
         // we *always* want to get org data because we rely on it in
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
-        $orgData = $this->getEntityService('Organisation')->getBusinessDetailsData($orgId);
+        $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -68,7 +68,7 @@ trait BusinessDetailsTrait
 
                 } else {
                     $result = $this->getServiceLocator()
-                        ->get('CompaniesHouse')
+                        ->get('Data\CompaniesHouse')
                         ->search('numberSearch', $data['data']['companyNumber']['company_number']);
 
                     if ($result['Count'] == 1) {
@@ -113,12 +113,12 @@ trait BusinessDetailsTrait
                  */
                 if (isset($tradingNames['trading_name']) && count($tradingNames['trading_name'])) {
                     $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
-                    $this->getEntityService('TradingNames')->save($tradingNames);
+                    $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
                 }
 
                 $saveData = $this->formatDataForSave($data);
                 $saveData['id'] = $orgId;
-                $this->getEntityService('Organisation')->save($saveData);
+                $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
 
                 if (isset($data['table']['action'])) {
                     $action = strtolower($data['table']['action']);
@@ -134,7 +134,7 @@ trait BusinessDetailsTrait
                         );
                     } else {
                         $routeParams = array();
-                        $this->getEntityService('CompanySubsidiary')
+                        $this->getServiceLocator()->get('Entity\CompanySubsidiary')
                             ->delete($data['table']['id']);
                     }
 
@@ -174,7 +174,7 @@ trait BusinessDetailsTrait
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $data = $this->formatSubsidiaryDataForForm(
-                $this->getEntityService('CompanySubsidiary')->getById($this->params('child_id'))
+                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($this->params('child_id'))
             );
         }
 
@@ -185,7 +185,7 @@ trait BusinessDetailsTrait
             $data = $this->formatSubsidiaryDataForSave($data);
             $data['organisation'] = $orgId;
 
-            $this->getEntityService('CompanySubsidiary')->save($data);
+            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
 
             // we can't just opt-in to all existing route params because
             // we might have a child ID if we're editing; if so we *don't*
@@ -337,12 +337,12 @@ trait BusinessDetailsTrait
         $fieldset->get('type')->setValue($orgType);
 
         switch ($orgType) {
-            case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
-            case OrganisationService::ORG_TYPE_LLP:
+            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+            case OrganisationEntityService::ORG_TYPE_LLP:
                 // no-op; the full form is fine
                 break;
 
-            case OrganisationService::ORG_TYPE_SOLE_TRADER:
+            case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
                 $fieldset->remove('name');
                 $fieldset->remove('companyNumber');
 
@@ -350,13 +350,13 @@ trait BusinessDetailsTrait
                 $form->getInputFilter()->get('data')->remove('name');
                 break;
 
-            case OrganisationService::ORG_TYPE_PARTNERSHIP:
+            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
                 $fieldset->remove('companyNumber');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
                 $form->remove('table');
                 break;
 
-            case OrganisationService::ORG_TYPE_OTHER:
+            case OrganisationEntityService::ORG_TYPE_OTHER:
                 $fieldset->remove('companyNumber')->remove('tradingNames');
                 $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
                 $form->remove('table');
@@ -368,7 +368,7 @@ trait BusinessDetailsTrait
 
     private function populateTable($form, $orgId)
     {
-        $tableData = $this->getEntityService('CompanySubsidiary')
+        $tableData = $this->getServiceLocator()->get('Entity\CompanySubsidiary')
             ->getAllForOrganisation($orgId);
 
         $table = $this->getServiceLocator()

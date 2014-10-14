@@ -12,7 +12,7 @@ namespace Common\Service\Entity;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class UserService extends AbstractEntityService
+class UserEntityService extends AbstractEntityService
 {
     /**
      * Get the current user

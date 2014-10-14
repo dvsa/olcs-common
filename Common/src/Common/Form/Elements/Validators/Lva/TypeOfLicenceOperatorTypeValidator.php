@@ -7,7 +7,7 @@
  */
 namespace Common\Form\Elements\Validators\Lva;
 
-use Common\Service\Entity\LicenceService;
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Validator\AbstractValidator;
 
 /**
@@ -34,7 +34,7 @@ class TypeOfLicenceOperatorTypeValidator extends AbstractValidator
      */
     public function isValid($value, $context = array())
     {
-        if ($context['operator-location'] === 'Y' && $value === LicenceService::LICENCE_CATEGORY_PSV) {
+        if ($context['operator-location'] === 'Y' && $value === LicenceEntityService::LICENCE_CATEGORY_PSV) {
             $this->error('invalid-operator-type');
             return false;
         }

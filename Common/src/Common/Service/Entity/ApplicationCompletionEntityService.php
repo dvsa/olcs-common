@@ -15,7 +15,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationCompletionService extends AbstractEntityService
+class ApplicationCompletionEntityService extends AbstractEntityService
 {
     const STATUS_NOT_STARTED = 0;
     const STATUS_INCOMPLETE = 1;
@@ -65,7 +65,7 @@ class ApplicationCompletionService extends AbstractEntityService
         $sectionConfig = new SectionConfig();
         $sections = $sectionConfig->getAllReferences();
 
-        $applicationData = $this->getEntityService('Application')->getDataForCompletionStatus($applicationId);
+        $applicationData = $this->getServiceLocator()->get('Entity\Application')->getDataForCompletionStatus($applicationId);
 
         $filter = new UnderscoreToCamelCase();
 

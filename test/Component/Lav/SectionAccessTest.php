@@ -10,7 +10,7 @@ namespace CommonComponentTest\Lav;
 use CommonTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
 use Common\Service\Data\SectionConfig;
-use Common\Service\Entity\LicenceService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Section Access Test
@@ -47,8 +47,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -70,8 +70,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -93,8 +93,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -115,8 +115,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -139,8 +139,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -163,8 +163,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -186,8 +186,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -203,8 +203,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -227,8 +227,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -251,8 +251,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -274,8 +274,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -299,8 +299,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -324,8 +324,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -348,8 +348,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -365,8 +365,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -385,8 +385,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -406,8 +406,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -425,8 +425,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -446,8 +446,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -468,8 +468,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -489,8 +489,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -506,8 +506,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -526,8 +526,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -547,8 +547,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -566,8 +566,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -587,8 +587,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -609,8 +609,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -630,8 +630,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'licence',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -647,8 +647,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -667,8 +667,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -688,8 +688,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -707,8 +707,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -728,8 +728,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -750,8 +750,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'external',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -772,8 +772,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -792,8 +792,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -813,8 +813,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',
@@ -832,8 +832,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_NATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -853,8 +853,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                 ),
                 array(
                     'type_of_licence',
@@ -875,8 +875,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 array(
                     'internal',
                     'variation',
-                    LicenceService::LICENCE_CATEGORY_PSV,
-                    LicenceService::LICENCE_TYPE_RESTRICTED
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_TYPE_RESTRICTED
                 ),
                 array(
                     'type_of_licence',

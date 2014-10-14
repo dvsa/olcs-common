@@ -7,7 +7,7 @@
  */
 namespace Common\Service\Data;
 
-use Common\Service\Entity\LicenceService;
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Filter\Word\UnderscoreToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -43,14 +43,14 @@ class SectionConfig
         ),
         'taxi_phv' => array(
             'restricted' => array(
-                LicenceService::LICENCE_TYPE_SPECIAL_RESTRICTED
+                LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
             )
         ),
         'operating_centres' => array(
             'restricted' => array(
-                LicenceService::LICENCE_TYPE_RESTRICTED,
-                LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'financial_evidence' => array(
@@ -60,27 +60,27 @@ class SectionConfig
                         'application'
                     ),
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
         ),
         'transport_managers' => array(
             'restricted' => array(
-                LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'vehicles' => array(
             'restricted' => array(
                 array(
-                    LicenceService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -88,11 +88,11 @@ class SectionConfig
         'vehicles_psv' => array(
             'restricted' => array(
                 array(
-                    LicenceService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -101,11 +101,11 @@ class SectionConfig
             'restricted' => array(
                 array(
                     'application',
-                    LicenceService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -117,11 +117,11 @@ class SectionConfig
                         'licence',
                         'variation'
                     ),
-                    LicenceService::LICENCE_CATEGORY_PSV,
+                    LicenceEntityService::LICENCE_CATEGORY_PSV,
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -137,13 +137,13 @@ class SectionConfig
                     // and must be either
                     array(
                         // standard international
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
                         // or
                         array(
                             // PSV
-                            LicenceService::LICENCE_CATEGORY_PSV,
+                            LicenceEntityService::LICENCE_CATEGORY_PSV,
                             // and restricted
-                            LicenceService::LICENCE_TYPE_RESTRICTED
+                            LicenceEntityService::LICENCE_TYPE_RESTRICTED
                         )
                     )
                 )
@@ -151,18 +151,18 @@ class SectionConfig
         ),
         'safety' => array(
             'restricted' => array(
-                LicenceService::LICENCE_TYPE_RESTRICTED,
-                LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
             )
         ),
         'conditions_undertakings' => array(
             'restricted' => array(
                 array(
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     ),
                     array(
                         'internal',
@@ -177,9 +177,9 @@ class SectionConfig
                 array(
                     'application',
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -189,9 +189,9 @@ class SectionConfig
                 array(
                     'application',
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )
@@ -201,9 +201,9 @@ class SectionConfig
                 array(
                     'application',
                     array(
-                        LicenceService::LICENCE_TYPE_RESTRICTED,
-                        LicenceService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        LicenceEntityService::LICENCE_TYPE_RESTRICTED,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     )
                 )
             )

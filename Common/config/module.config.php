@@ -1,18 +1,8 @@
 <?php
 
-list($allRoutes, $controllers, $journeys) = include(__DIR__ . '/journeys.config.php');
-
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
-$invokeables = array_merge(
-    $controllers, array(
-        'Common\Controller\File' => 'Common\Controller\FileController',
-        'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
-    )
-);
-
 return array(
-    'journeys' => $journeys,
     'router' => array(
         'routes' => array(
             'application_start' => array(
@@ -34,7 +24,10 @@ return array(
         )
     ),
     'controllers' => array(
-        'invokables' => $invokeables
+        'invokables' => array(
+            'Common\Controller\File' => 'Common\Controller\FileController',
+            'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+        )
     ),
     'console' => array(
         'router' => array(
@@ -66,7 +59,6 @@ return array(
             'Common\Util\AbstractServiceFactory'
         ),
         'factories' => array(
-            'EntityService' => '\Common\Service\Entity\ServiceFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
@@ -97,8 +89,7 @@ return array(
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
-            },
-            'CompaniesHouse' => '\Common\Service\Data\CompaniesHouse'
+            }
         )
     ),
     'file_uploader' => array(

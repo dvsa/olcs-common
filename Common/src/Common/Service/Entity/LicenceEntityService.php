@@ -12,7 +12,7 @@ namespace Common\Service\Entity;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceService extends AbstractEntityService
+class LicenceEntityService extends AbstractEntityService
 {
     /**
      * Goods or PSV keys
