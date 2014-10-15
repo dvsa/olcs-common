@@ -19,11 +19,16 @@ trait PeopleTrait
     use GenericLvaTrait,
         CrudTableTrait;
 
+    /**
+     * Needed by the Crud Table Trait
+     */
     private $section = 'people';
 
+    /**
+     * Index action
+     */
     public function indexAction()
     {
-
         $request = $this->getRequest();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
@@ -38,6 +43,8 @@ trait PeopleTrait
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table'], 'people');
             }
+
+            return $this->completeSection('people');
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -65,6 +72,9 @@ trait PeopleTrait
         return $this->render('people', $form);
     }
 
+    /**
+     * Alter form based on company type
+     */
     private function alterForm($form, $table, $orgData)
     {
         $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
@@ -113,16 +123,28 @@ trait PeopleTrait
             ->setValue($translator->translate($guidanceLabel));
     }
 
+    /**
+     * Add person action
+     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
+    /**
+     * Edit person action
+     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
     }
 
+    /**
+     * Helper method as both add and edit pretty
+     * much do the same thing
+     *
+     * @param string $mode
+     */
     private function addOrEdit($mode)
     {
         $request = $this->getRequest();
@@ -132,6 +154,7 @@ trait PeopleTrait
             ->getType($orgId);
 
         $data = array();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
@@ -143,10 +166,14 @@ trait PeopleTrait
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\Person');
 
-        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
+        if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+            // we need to pre-populate the user's position from the org for
+            // 'other' business types
+            $data['position'] = $this->getOrganisationPosition($orgId);
+        } else {
+            // otherwise we're not interested in position at all, bin it off
             $this->getServiceLocator()->get('Helper\Form')
                 ->remove($form, 'data->position');
-            $data['position'] = $this->getOrganisationPosition($orgId);
         }
 
         $form->setData($data);
@@ -156,37 +183,25 @@ trait PeopleTrait
 
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
-            // If we are creating a person, we need to link them to the organisation,
-            // otherwise we might need to update person's position
-            if ($mode === 'add') {
-                $orgPersonData = array(
-                    'organisation' => $orgId,
-                    'person' => $person['id'],
-                    'position' => isset($data['position']) ? $data['position'] : ''
-                );
-            } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
-                $orgPerson = $this->getServiceLocator()
-                    ->get('Entity\OrganisationPerson')
-                    ->getByOrgAndPersonId($orgId, $data['id']);
+            $this->addOrganisationPerson(
+                $mode,
+                $orgId,
+                $person,
+                $data
+            );
 
-                // @TODO don't set this if the position hasn't changed
-                $orgPersonData = array(
-                    'position' => isset($data['position']) ? $data['position'] : '',
-                    'id' => $orgPerson['id'],
-                    'version' => $orgPerson['version'],
-                );
-            }
-
-            if (isset($orgPersonData)) {
-                $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
-            }
-
-            return $this->handleCrudSave('people');
+            return $this->handlePostSave();
         }
 
         return $this->render($mode . '_people', $form);
     }
 
+    /**
+     * Get the table data for the main form
+     *
+     * @param int $orgId
+     * @return array
+     */
     private function getTableData($orgId)
     {
         $results = $this->getServiceLocator()->get('Entity\Person')
@@ -203,11 +218,17 @@ trait PeopleTrait
         return $final;
     }
 
+    /**
+     * Format data for injecting into CRUD form
+     */
     private function formatCrudDataForForm($data)
     {
         return array('data' => $data);
     }
 
+    /**
+     * Format data from CRUD form
+     */
     private function formatCrudDataForSave($data)
     {
         $dob = $data['data']['birthDate'];
@@ -219,6 +240,10 @@ trait PeopleTrait
         );
     }
 
+    /**
+     * Mechanism to *actually* delete a person, invoked by the
+     * underlying delete action
+     */
     protected function delete()
     {
         $orgId = $this->getCurrentOrganisationId();
@@ -307,5 +332,37 @@ trait PeopleTrait
             ->getByOrgAndPersonId($orgId, $personId);
 
         return $orgPerson['position'];
+    }
+
+    /**
+     * Helper method to conditionally add or update a matching organisation
+     * person record when saving a new person
+     */
+    private function addOrganisationPerson($mode, $orgId, $person, $data)
+    {
+        // If we are creating a person, we need to link them to the organisation,
+        // otherwise we might need to update person's position
+        if ($mode === 'add') {
+            $orgPersonData = array(
+                'organisation' => $orgId,
+                'person' => $person['id'],
+                'position' => isset($data['position']) ? $data['position'] : ''
+            );
+        } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+            $orgPerson = $this->getServiceLocator()
+                ->get('Entity\OrganisationPerson')
+                ->getByOrgAndPersonId($orgId, $data['id']);
+
+            // @TODO don't set this if the position hasn't changed
+            $orgPersonData = array(
+                'position' => isset($data['position']) ? $data['position'] : '',
+                'id' => $orgPerson['id'],
+                'version' => $orgPerson['version'],
+            );
+        }
+
+        if (isset($orgPersonData)) {
+            $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
+        }
     }
 }

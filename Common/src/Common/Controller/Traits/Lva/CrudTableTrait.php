@@ -23,6 +23,9 @@ trait CrudTableTrait
     abstract protected function formatCrudDataForSave($data);
     abstract protected function formatCrudDataForForm($data);
 
+    /**
+     * Redirect to the most appropriate CRUD action
+     */
     private function handleCrudAction($data)
     {
         $action = strtolower($data['action']);
@@ -46,7 +49,10 @@ trait CrudTableTrait
         );
     }
 
-    private function handleCrudSave($section)
+    /**
+     * Once the CRUD entity has been saved, handle the necessary redirect
+     */
+    private function handlePostSave()
     {
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
