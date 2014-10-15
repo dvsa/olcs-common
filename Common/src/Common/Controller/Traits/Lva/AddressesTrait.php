@@ -8,7 +8,6 @@
 namespace Common\Controller\Traits\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
 
 /**
@@ -167,24 +166,13 @@ trait AddressesTrait
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
         );
 
-        $allowedOrgTypes = array(
-            OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY,
-            OrganisationEntityService::ORG_TYPE_LLP
-        );
-
         $typeOfLicence = $this->getTypeOfLicenceData();
-        $orgType = $this->getServiceLocator()->get('Entity\Organisation')->getType($this->getCurrentOrganisationId());
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if (!in_array($typeOfLicence['licenceType'], $allowedLicTypes)) {
             $formHelper->remove($form, 'establishment')
                 ->remove($form, 'establishment_address');
-        }
-
-        if (!in_array($orgType['type']['id'], $allowedOrgTypes)) {
-            $formHelper->remove($form, 'registered_office')
-                ->remove($form, 'registered_office_address');
         }
 
         return $form;

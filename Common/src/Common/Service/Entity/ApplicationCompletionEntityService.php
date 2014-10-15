@@ -9,6 +9,8 @@ namespace Common\Service\Entity;
 
 use Common\Service\Data\SectionConfig;
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Service\Entity\ContactDetailsEntityService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Application Completion Entity Service
@@ -156,9 +158,19 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
+                $registeredAddress = false;
+
+                foreach ($orgData['contactDetails'] as $contactDetail) {
+                    if ($contactDetail['contactType']['id'] == ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
+                        $registeredAddress = true;
+                        break;
+                    }
+                }
+
                 $requiredVars = array(
                     'name' => isset($orgData['name']) ? $orgData['name'] : null,
-                    'company' => isset($orgData['companyOrLlpNo']) ? $orgData['companyOrLlpNo'] : null
+                    'company' => isset($orgData['companyOrLlpNo']) ? $orgData['companyOrLlpNo'] : null,
+                    'registeredAddress' => $registeredAddress
                 );
                 break;
 
@@ -185,7 +197,55 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getAddressesStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $phoneNumber = null;
+        $correspondenceAddress = null;
+        $establishmentAddress = null;
+        $skipEstablishmentAddress = false;
+
+        $contactDetails = array_merge(
+            $applicationData['licence']['contactDetails'],
+            $applicationData['licence']['organisation']['contactDetails']
+        );
+
+        $allowedLicTypes = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        if (!in_array($applicationData['licence']['licenceType']['id'], $allowedLicTypes)) {
+            $skipEstablishmentAddress = true;
+            $establishmentAddress = true;
+        }
+
+        foreach ($contactDetails as $contactDetail) {
+            if (isset($contactDetail['phoneContacts'][0])) {
+                $phoneNumber = $contactDetail['phoneContacts'][0]['phoneNumber'];
+            }
+
+            if (isset($contactDetail['contactType']['id'])
+                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
+            ) {
+                $correspondenceAddress = true;
+
+                if ($skipEstablishmentAddress) {
+                    break;
+                }
+            }
+
+            if (isset($contactDetail['contactType']['id'])
+                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT) {
+                $establishmentAddress = true;
+                break;
+            }
+        }
+
+        $requiredVars = array(
+            'phoneNumber' => $phoneNumber,
+            'correspondenceAddress' => $correspondenceAddress,
+            'establishmentAddress' => $establishmentAddress
+        );
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**

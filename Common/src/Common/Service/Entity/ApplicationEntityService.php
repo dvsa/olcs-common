@@ -161,6 +161,45 @@ class ApplicationEntityService extends AbstractEntityService
                             ),
                             'organisationPersons' => array(
                                 'properties' => array('id')
+                            ),
+                            'contactDetails' => array(
+                                'properties' => array(
+                                    'id',
+                                    'fao'
+                                ),
+                                'children' => array(
+                                    'contactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'fao'
+                        ),
+                        'children' => array(
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'id',
+                                    'phoneNumber'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'contactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
                             )
                         )
                     ),
