@@ -52,7 +52,8 @@ class OrganisationEntityService extends AbstractEntityService
     private $typeBundle = array(
         'properties' => array(
             'type',
-            'version'
+            'version',
+            'companyOrLlpNo'
         ),
         'children' => array(
             'type' => array(

@@ -18,7 +18,4 @@ class GenericDeleteConfirmationData
      * @Form\Type("Hidden")
      */
     public $id = null;
-
-
 }
-

@@ -25,13 +25,14 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
             'name' => 'name',
-            'formatter' => function ($row) {
+            'type' => 'application',
+            'formatter' => function ($row, $column) {
                 return '<a href="' . $this->generateUrl(
                     array(
-                        'id' => $row['id'],
+                        'child_id' => $row['id'],
                         'action' => 'edit'
                     ),
-                    'Application/YourBusiness/People'
+                    'lva-' . $column['type'] . '/people'
                 ) . '">' . $row['title'] . ' ' . $row['forename'] . ' ' . $row['familyName'] . '</a>';
             },
         ),
