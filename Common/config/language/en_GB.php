@@ -755,6 +755,8 @@ return array(
     'internal-licence-processing-tasks' => 'Tasks',
     'internal-licence-processing-tasks-label' => 'Tasks',
     'internal-licence-processing-tasks-title' => 'Tasks',
+    'internal-pi-hearing-add' => 'Add hearing',
+    'internal-pi-hearing-edit' => 'Edit hearing',
     'isTrailer' => 'Trailer?',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',

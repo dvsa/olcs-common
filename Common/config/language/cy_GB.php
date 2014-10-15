@@ -757,6 +757,8 @@ return array(
     'internal-licence-processing-tasks' => 'W Tasks',
     'internal-licence-processing-tasks-label' => 'W Tasks',
     'internal-licence-processing-tasks-title' => 'W Tasks',
+    'internal-pi-hearing-add' => 'W Add hearing',
+    'internal-pi-hearing-edit' => 'W Edit hearing',
     'isTrailer' => 'W Trailer?',
     'last-name' => 'W Last name',
     'layout-footer' => 'W All rights Reserved.',
