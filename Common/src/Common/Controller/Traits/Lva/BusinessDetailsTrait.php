@@ -215,7 +215,8 @@ trait BusinessDetailsTrait
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\BusinessDetailsSubsidiaryCompany');
+            ->createForm('Lva\BusinessDetailsSubsidiaryCompany')
+            ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatSubsidiaryDataForSave($data);
