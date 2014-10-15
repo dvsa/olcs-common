@@ -790,6 +790,8 @@ return array(
     'internal-licence-processing-tasks-title' => 'Tasks',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
+    'internal-pi-hearing-add' => 'Add hearing',
+    'internal-pi-hearing-edit' => 'Edit hearing',
     'isTrailer' => 'Trailer?',
     'last-name' => 'Last name',
     'layout-footer' => 'All rights Reserved.',
