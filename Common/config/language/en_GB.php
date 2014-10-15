@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'company_number.length.validation.error' => 'The input must be 8 characters long',
+    'company_number.search_no_results.error' => 'Sorry, we couldn\'t find any matching companies, please try again or enter your details manually below',
+    'application_your-business_business-details.data.registered_address' => 'Registered address',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

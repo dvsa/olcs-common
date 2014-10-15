@@ -8,8 +8,7 @@
 namespace Common\Service\Entity;
 
 use Common\Service\Data\SectionConfig;
-use Zend\Filter\Word\UnderscoreToCamelCase;
-use Common\Service\Entity\OrganisationService;
+use Common\Service\Entity\OrganisationEntityService;
 
 /**
  * Application Completion Entity Service
@@ -155,22 +154,22 @@ class ApplicationCompletionEntityService extends AbstractEntityService
          * Selectively add required fields based on the org type
          */
         switch ($orgData['type']['id']) {
-            case OrganisationService::ORG_TYPE_REGISTERED_COMPANY:
-            case OrganisationService::ORG_TYPE_LLP:
+            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+            case OrganisationEntityService::ORG_TYPE_LLP:
                 $requiredVars = array(
                     'name' => isset($orgData['name']) ? $orgData['name'] : null,
                     'company' => isset($orgData['companyOrLlpNo']) ? $orgData['companyOrLlpNo'] : null
                 );
                 break;
 
-            case OrganisationService::ORG_TYPE_PARTNERSHIP:
-            case OrganisationService::ORG_TYPE_OTHER:
+            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
+            case OrganisationEntityService::ORG_TYPE_OTHER:
                 $requiredVars = array(
                     'name' => isset($orgData['name']) ? $orgData['name'] : null
                 );
                 break;
 
-            case OrganisationService::ORG_TYPE_SOLE_TRADER:
+            case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
                 $requiredVars = array();
                 break;
         }

@@ -71,7 +71,7 @@ class Address
     public $town = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"id":""})
      * @Form\Options({"label":"Postcode"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

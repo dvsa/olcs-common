@@ -60,6 +60,12 @@ class BusinessDetails
     public $tradingNames = null;
 
     /**
+     * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
+     */
+    public $registeredAddress = null;
+
+    /**
      * @Form\Attributes({"id":"","class":"long"})
      * @Form\Options({
      *     "label":

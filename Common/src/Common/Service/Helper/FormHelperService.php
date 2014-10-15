@@ -18,6 +18,10 @@ use Common\Form\Elements\Types\Address;
  */
 class FormHelperService extends AbstractHelperService
 {
+    const ALTER_LABEL_RESET = 0;
+    const ALTER_LABEL_APPEND = 1;
+    const ALTER_LABEL_PREPEND = 2;
+
     /**
      * Create a form
      *
@@ -184,5 +188,55 @@ class FormHelperService extends AbstractHelperService
     {
         $fieldset->get('searchPostcode')->remove('addresses');
         $fieldset->get('searchPostcode')->remove('select');
+    }
+
+    /**
+     * Alter an elements label
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $label
+     * @param int $type
+     */
+    public function alterElementLabel($element, $label, $type = self::ALTER_LABEL_RESET)
+    {
+        if (in_array($type, array(self::ALTER_LABEL_APPEND, self::ALTER_LABEL_PREPEND))) {
+            $oldLabel = $element->getLabel();
+
+            if ($type == self::ALTER_LABEL_APPEND) {
+                $label = $oldLabel . $label;
+            } else {
+                $label = $label . $oldLabel;
+            }
+        }
+
+        $element->setLabel($label);
+    }
+
+    /**
+     * When passed something like
+     * $form, 'data->registeredAddress', this method will remove the element from the form and input filter
+     *
+     * @param \Zend\Form\Form $form
+     * @param string $elementReference
+     */
+    public function remove($form, $elementReference)
+    {
+        $filter = $form->getInputFilter();
+
+        $this->removeElement($form, $filter, $elementReference);
+
+        return $this;
+    }
+
+    private function removeElement($form, $filter, $elementReference)
+    {
+        if (strstr($elementReference, '->')) {
+            list($container, $elementReference) = explode('->', $elementReference, 2);
+
+            $this->removeElement($form->get($container), $filter->get($container), $elementReference);
+        } else {
+            $form->remove($elementReference);
+            $filter->remove($elementReference);
+        }
     }
 }

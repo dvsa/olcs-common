@@ -57,13 +57,13 @@ class RegisteredAddress
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({"label":"Town/City","label_attributes":{"class":"visually-hidden"}})
+     * @Form\Required(false)
      * @Form\Type("Text")
-     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $town = null;
 
     /**
-     * @Form\Attributes({"class":"long","id":""})
+     * @Form\Attributes({"id":""})
      * @Form\Options({"label":"Postcode"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})

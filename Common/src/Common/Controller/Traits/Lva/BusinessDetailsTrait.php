@@ -4,15 +4,19 @@
  * Shared logic between Business Details controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Traits\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Service\Entity\AddressEntityService;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Shared logic between Business Details controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 trait BusinessDetailsTrait
 {
@@ -53,74 +57,14 @@ trait BusinessDetailsTrait
             $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
 
             if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-                /**
-                 * User has pressed 'Find company' on registered company number
-                 */
-                if (strlen(trim($data['data']['companyNumber']['company_number'])) != 8) {
-
-                    $form->get('data')->get('companyNumber')->setMessages(
-                        array(
-                            'company_number' => array(
-                                'The input must be 8 characters long'
-                            )
-                        )
-                    );
-
-                } else {
-                    $result = $this->getServiceLocator()
-                        ->get('Data\CompaniesHouse')
-                        ->search('numberSearch', $data['data']['companyNumber']['company_number']);
-
-                    if ($result['Count'] == 1) {
-
-                        $companyName = $result['Results'][0]['CompanyName'];
-                        $form->get('data')->get('name')->setValue($companyName);
-
-                    } else {
-
-                        $form->get('data')->get('companyNumber')->setMessages(
-                            array(
-                                'company_number' => array(
-                                    'Sorry, we couldn\'t find any matching companies, please try again or enter your '
-                                    . 'details manually below'
-                                )
-                            )
-                        );
-                    }
-                }
+                $this->processCompanyLookup($data, $form);
             } elseif (isset($tradingNames['submit_add_trading_name'])) {
-                /**
-                 * User has pressed 'Add another' on trading names
-                 */
-                $form->setValidationGroup(array('data' => ['tradingNames']));
-
-                if ($form->isValid()) {
-
-                    // remove existing entries from collection and check for empty entries
-                    $names = [];
-                    foreach ($tradingNames['trading_name'] as $key => $val) {
-                        if (strlen(trim($val)) > 0) {
-                            $names[] = $val;
-                        }
-                    }
-                    $names[] = '';
-
-                    $form->get('data')->get('tradingNames')->get('trading_name')->populateValues($names);
-                }
+                $this->processTradingNames($tradingNames, $form);
             } elseif ($form->isValid()) {
-                /**
-                 * Normal submission; save the form data
-                 */
-                if (isset($tradingNames['trading_name']) && count($tradingNames['trading_name'])) {
-                    $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
-                    $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
-                }
-
-                $saveData = $this->formatDataForSave($data);
-                $saveData['id'] = $orgId;
-                $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
+                $this->processSave($tradingNames, $orgId, $data);
 
                 if (isset($data['table']['action'])) {
+
                     $action = strtolower($data['table']['action']);
 
                     if ($action === 'add') {
@@ -151,6 +95,98 @@ trait BusinessDetailsTrait
         }
 
         return $this->render('business_details', $form);
+    }
+
+    /**
+     * User has pressed 'Find company' on registered company number
+     */
+    private function processCompanyLookup($data, $form)
+    {
+        if (strlen(trim($data['data']['companyNumber']['company_number'])) === 8) {
+
+            $result = $this->getServiceLocator()
+                ->get('Data\CompaniesHouse')
+                ->search('numberSearch', $data['data']['companyNumber']['company_number']);
+
+            if ($result['Count'] == 1) {
+
+                $form->get('data')->get('name')->setValue($result['Results'][0]['CompanyName']);
+                return;
+            }
+
+            $message = 'company_number.search_no_results.error';
+        } else {
+            $message = 'company_number.length.validation.error';
+        }
+
+        $form->get('data')->get('companyNumber')->setMessages(
+            array(
+                'company_number' => array($message)
+            )
+        );
+    }
+
+    /**
+     * User has pressed 'Add another' on trading names
+     */
+    private function processTradingNames($tradingNames, $form)
+    {
+        $form->setValidationGroup(array('data' => ['tradingNames']));
+
+        if ($form->isValid()) {
+
+            // remove existing entries from collection and check for empty entries
+            $names = [];
+            foreach ($tradingNames['trading_name'] as $val) {
+                if (!empty(trim($val))) {
+                    $names[] = $val;
+                }
+            }
+            $names[] = '';
+
+            $form->get('data')->get('tradingNames')->get('trading_name')->populateValues($names);
+        }
+    }
+
+    /**
+     * Normal submission; save the form data
+     */
+    private function processSave($tradingNames, $orgId, $data)
+    {
+        if (isset($tradingNames['trading_name']) && !empty($tradingNames['trading_name'])) {
+            $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
+            $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
+        }
+
+        if (isset($data['data']['registeredAddress'])) {
+            $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
+        }
+
+        $saveData = $this->formatDataForSave($data);
+        $saveData['id'] = $orgId;
+        $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
+    }
+
+    /**
+     * Save the organisations registered address
+     *
+     * @param int $orgId
+     * @param array $address
+     */
+    private function saveRegisteredAddress($orgId, $address)
+    {
+        $saved = $this->getServiceLocator()->get('Entity\Address')->save($address);
+
+        // If we didn't have an address id, then we need to link it to the organisation
+        if (!isset($address['id']) || empty($address['id'])) {
+            $contactDetailsData = array(
+                'organisation' => $orgId,
+                'address' => $saved['id'],
+                'contactType' => AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS
+            );
+
+            $this->getServiceLocator()->get('Entity\ContactDetails')->save($contactDetailsData);
+        }
     }
 
     public function addAction()
@@ -273,6 +309,16 @@ trait BusinessDetailsTrait
         foreach ($data['tradingNames'] as $tradingName) {
             $tradingNames[] = $tradingName['name'];
         }
+
+        $registeredAddress = array();
+
+        foreach ($data['contactDetails'] as $contactDetail) {
+            if ($contactDetail['contactType']['id'] == AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS) {
+                $registeredAddress = $contactDetail['address'];
+                continue;
+            }
+        }
+
         return array(
             'version' => $data['version'],
             'data' => array(
@@ -283,7 +329,8 @@ trait BusinessDetailsTrait
                     'trading_name' => $tradingNames
                 ),
                 'name' => $data['name'],
-                'type' => $data['type']['id']
+                'type' => $data['type']['id'],
+                'registeredAddress' => $registeredAddress
             )
         );
     }
@@ -343,28 +390,49 @@ trait BusinessDetailsTrait
                 break;
 
             case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
-                $fieldset->remove('name')->remove('companyNumber');
-
-                $form->remove('table');
-                $form->getInputFilter()->get('data')->remove('name');
+                $this->alterFormForNonRegisteredCompany($form);
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->remove($form, 'data->name');
                 break;
 
             case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
-                $fieldset->remove('companyNumber');
-                $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.partnership');
-                $form->remove('table');
+                $this->alterFormForNonRegisteredCompany($form);
+                $this->appendToLabel($fieldset->get('name'), '.partnership');
                 break;
 
             case OrganisationEntityService::ORG_TYPE_OTHER:
-                $fieldset->remove('companyNumber')
-                    ->remove('tradingNames');
-
-                $fieldset->get('name')->setLabel($fieldset->get('name')->getLabel() . '.other');
-                $form->remove('table');
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->remove($form, 'data->tradingNames');
+                $this->alterFormForNonRegisteredCompany($form);
+                $this->appendToLabel($fieldset->get('name'), '.other');
                 break;
         }
 
         return $form;
+    }
+
+    /**
+     * Append to an element label
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $append
+     */
+    private function appendToLabel($element, $append)
+    {
+        $this->getServiceLocator()->get('Helper\Form')
+            ->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
+    }
+
+    /**
+     * Make generic form alterations for non limited (or LLP) companies
+     *
+     * @param \Zend\Form\Form $form
+     */
+    private function alterFormForNonRegisteredCompany($form)
+    {
+        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'table')
+            ->remove($form, 'data->companyNumber')
+            ->remove($form, 'data->registeredAddress');
     }
 
     private function populateTable($form, $orgId)

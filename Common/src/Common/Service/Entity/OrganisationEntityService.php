@@ -77,6 +77,28 @@ class OrganisationEntityService extends AbstractEntityService
             'tradingNames'
         ),
         'children' => array(
+            'contactDetails' => array(
+                'properties' => array(),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'town',
+                            'postcode'
+                        )
+                    ),
+                    'contactType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            ),
             'type' => array(
                 'properties' => array(
                     'id'
