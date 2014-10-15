@@ -158,6 +158,9 @@ class ApplicationEntityService extends AbstractEntityService
                                     'id',
                                     'name'
                                 )
+                            ),
+                            'organisationPersons' => array(
+                                'properties' => array('id')
                             )
                         )
                     ),

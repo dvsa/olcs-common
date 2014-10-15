@@ -196,7 +196,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getPeopleStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        return count($applicationData['licence']['organisation']['organisationPersons'])
+            ? self::STATUS_COMPLETE
+            : self::STATUS_NOT_STARTED;
     }
 
     /**
