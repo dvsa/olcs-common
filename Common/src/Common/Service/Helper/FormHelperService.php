@@ -68,10 +68,6 @@ class FormHelperService extends AbstractHelperService
      */
     public function processAddressLookupForm(Form $form, Request $request)
     {
-        if (!$request->isPost()) {
-            return false;
-        }
-
         $return = false;
 
         $post = (array)$request->getPost();
@@ -111,9 +107,12 @@ class FormHelperService extends AbstractHelperService
         if (isset($post[$name]['searchPostcode']['select']) && !empty($post[$name]['searchPostcode']['select'])) {
 
             $this->processAddressSelect($fieldset, $post, $name, $form);
+            $this->removeAddressSelectFields($fieldset);
+
             return true;
         }
 
+        $this->removeAddressSelectFields($fieldset);
         return false;
     }
 
@@ -169,8 +168,6 @@ class FormHelperService extends AbstractHelperService
     {
         $address = $this->getServiceLocator()->get('Data\Address')
             ->getAddressForUprn($post[$name]['searchPostcode']['addresses']);
-
-        $this->removeAddressSelectFields($fieldset);
 
         $addressDetails = $this->getServiceLocator()->get('Helper\Address')->formatPostalAddressFromBs7666($address);
 

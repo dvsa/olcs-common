@@ -116,6 +116,99 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+    protected $addressesDataBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'organisation' => array(
+                'properties' => array(),
+                'children' => array(
+                    'contactDetails' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'fao',
+                            'emailAddress'
+                        ),
+                        'children' => array(
+                            'address' => array(
+                                'properties' => array(
+                                    'id',
+                                    'version',
+                                    'addressLine1',
+                                    'addressLine2',
+                                    'addressLine3',
+                                    'addressLine4',
+                                    'town',
+                                    'postcode'
+                                ),
+                                'children' => array(
+                                    'countryCode' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
+                                    )
+                                )
+                            ),
+                            'contactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                )
+            ),
+            'contactDetails' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'fao',
+                    'emailAddress'
+                ),
+                'children' => array(
+                    'phoneContacts' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'phoneNumber'
+                        ),
+                        'children' => array(
+                            'phoneContactType' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                    'contactType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -172,5 +265,17 @@ class LicenceEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
+    }
+
+    /**
+     * Get addresses data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getAddressesData($id)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->addressesDataBundle);
     }
 }

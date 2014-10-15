@@ -14,6 +14,9 @@ namespace Common\Service\Entity;
  */
 class ContactDetailsEntityService extends AbstractEntityService
 {
+    const CONTACT_TYPE_ESTABLISHMENT = 'ct_est';
+    const CONTACT_TYPE_CORRESPONDENCE = 'ct_corr';
+    const CONTACT_TYPE_REGISTERED = 'ct_reg';
 
     /**
      * Define entity for default behaviour

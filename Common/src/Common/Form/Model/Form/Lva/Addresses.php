@@ -48,19 +48,6 @@ class Addresses
     public $establishmentAddress = null;
 
     /**
-     * @Form\Name("registered_office")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredOffice")
-     */
-    public $registeredOffice = null;
-
-    /**
-     * @Form\Name("registered_office_address")
-     * @Form\Options({"label":"application_your-business_business-type.registered-office.label"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
-     */
-    public $registeredOfficeAddress = null;
-
-    /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")

@@ -79,7 +79,7 @@ class Address
     public $postcode = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"","placeholder":"","value":"GB"})
      * @Form\Options({
      *     "label": "Country",
      *     "empty_option": "Please Select",

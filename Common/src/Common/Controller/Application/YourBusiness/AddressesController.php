@@ -130,7 +130,6 @@ class AddressesController extends YourBusinessController
         )
     );
 
-
     public static $organisationTypeBundle = array(
         'properties' => array(),
         'children' => array(
