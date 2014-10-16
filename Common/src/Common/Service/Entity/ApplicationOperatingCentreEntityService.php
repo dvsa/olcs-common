@@ -15,12 +15,13 @@ namespace Common\Service\Entity;
 class ApplicationOperatingCentreEntityService extends AbstractEntityService
 {
     protected $entity = 'ApplicationOperatingCentre';
+
     /**
-     * Operating Centres Table data bundle
+     * Address summary data
      *
      * @var array
      */
-    protected $addressBundle = array(
+    protected $addressSummaryBundle = array(
         'properties' => array(
             'id',
             'permission',
@@ -68,9 +69,72 @@ class ApplicationOperatingCentreEntityService extends AbstractEntityService
         )
     );
 
-    public function getAddressData($applicationId)
+    /**
+     * Address data
+     *
+     * @var array
+     */
+    protected $addressBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'noOfTrailersPossessed',
+            'noOfVehiclesPossessed',
+            'sufficientParking',
+            'permission',
+            'adPlaced',
+            'adPlacedIn',
+            'adPlacedDate'
+        ),
+        'children' => array(
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    public function getAddressSummaryDataForApplication($applicationId)
     {
         return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->addressBundle);
+            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->addressSummaryBundle);
+    }
+
+    public function getAddressData($id)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->addressBundle);
     }
 }

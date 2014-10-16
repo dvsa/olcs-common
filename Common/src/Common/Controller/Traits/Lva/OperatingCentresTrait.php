@@ -5,6 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
+
 namespace Common\Controller\Traits\Lva;
 
 use Zend\Form\Form;
@@ -16,6 +17,7 @@ use Zend\Form\Form;
  */
 trait OperatingCentresTrait
 {
+
     use GenericLvaTrait,
         CrudTableTrait;
 
@@ -32,6 +34,55 @@ trait OperatingCentresTrait
 
     abstract protected function getLicenceId($lvaId = null);
 
+    abstract protected function getIdentifier();
+
+    /**
+     * Data map
+     *
+     * @var array
+     */
+    protected $dataMap = array(
+        'main' => array(
+            'mapFrom' => array(
+                'data',
+                'dataTrafficArea'
+            )
+        )
+    );
+
+    /**
+     * Action data map
+     *
+     * @var array
+     */
+    protected $actionDataMap = array(
+        '_addresses' => array(
+            'address'
+        ),
+        'main' => array(
+            'children' => array(
+                'applicationOperatingCentre' => array(
+                    'mapFrom' => array(
+                        'data',
+                        'advertisements'
+		      )
+                ),
+                'operatingCentre' => array(
+                    'mapFrom' => array(
+                        'operatingCentre'
+                    ),
+                    'children' => array(
+                        'addresses' => array(
+                            'mapFrom' => array(
+                                'addresses'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Index action
      */
@@ -40,36 +91,35 @@ trait OperatingCentresTrait
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
+            $data = (array) $request->getPost();
         } else {
             // @TODO this is wrong; the data fetched depends on LVA type (I think)
             $data = $this->getServiceLocator()->get('Entity\Application')
-                ->getOperatingCentresData($this->getApplicationId());
+            ->getOperatingCentresData($this->getApplicationId());
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\OperatingCentres');
+        ->createForm('Lva\OperatingCentres');
 
         $form = $this->alterForm($form)
-            ->setData($data);
+        ->setData($data);
 
         $table = $this->getServiceLocator()
             ->get('Table')
-            ->prepareTable(
-                'authorisation_in_form',
-                $this->getTableData()
-            );
+            ->prepareTable('authorisation_in_form', $this->getTableData());
 
         $column = $table->getColumn('address');
         $column['type'] = $this->lva;
         $table->setColumn('address', $column);
 
-        $form->get('table')  // fieldset
-            ->get('table')   // element
+        $form->get('table')
+            ->get('table')
             ->setTable($table);
 
         if ($request->isPost() && $form->isValid()) {
-            //
+            if (isset($data['table']['action'])) {
+                return $this->handleCrudAction($data['table']);
+            }
         }
 
         return $this->render('operating_centres', $form);
@@ -165,7 +215,7 @@ trait OperatingCentresTrait
         }
     }
 
-     /**
+    /**
      * Get the alter form options
      *
      * @return array
@@ -230,7 +280,7 @@ trait OperatingCentresTrait
 
         // @TODO not in common trait... currently always fetches from app operating centre
         $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-            ->getAddressData($id);
+            ->getAddressSummaryDataForApplication($id);
 
         $newData = array();
 
@@ -256,10 +306,71 @@ trait OperatingCentresTrait
 
     public function addAction()
     {
+        return $this->addOrEdit('edit');
     }
 
     public function editAction()
     {
+        return $this->addOrEdit('edit');
+    }
+
+    private function addOrEdit($mode)
+    {
+        $id = $this->params('child_id');
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $data = (array) $request->getPost();
+        } elseif ($mode === 'edit') {
+            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->getAddressData($id);
+            $data = $this->formatCrudDataForForm($data, $mode);
+        }
+
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createForm('Lva\OperatingCentre')
+            ->setData($data);
+
+        $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+
+        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
+            $data = $this->formatCrudDataForSave($data);
+
+            $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
+
+            if ($mode === 'add') {
+
+                if (!isset($saved['id'])) {
+                    throw new \Exception('Unable to save operating centre');
+                }
+
+                $data['applicationOperatingCentre']['operatingCentre'] = $saved['id'];
+
+                $operatingCentreId = $saved['id'];
+            } else {
+                $operatingCentreId = $data['operatingCentre']['id'];
+            }
+
+            // @TODO: $this->saveDocuments($data, $operatingCentreId);
+
+            if ($this->isPsv()) {
+                $data['applicationOperatingCentre']['adPlaced'] = 0;
+            }
+
+            // @todo not sure this is right
+            // @TODO re-implement
+            $saved = parent::actionSave($data['applicationOperatingCentre'], $service);
+
+            if ($this->getActionName() == 'add' && !isset($saved['id'])) {
+                throw new \Exception('Unable to save operating centre');
+            }
+
+            // set default Traffic Area if we don't have one
+            if (!isset($data['trafficArea']) || empty($data['trafficArea']['id'])) {
+                $this->setDefaultTrafficArea($data);
+            }
+        }
+
+        return $this->render('edit_people', $form);
     }
 
     protected function delete()
@@ -269,11 +380,45 @@ trait OperatingCentresTrait
 
     protected function formatCrudDataForSave($data)
     {
+        return $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->processDataMap($data, $this->actionDataMap);
+    }
+
+    protected function formatCrudDataForForm($oldData, $mode)
+    {
+        $data['data'] = $oldData;
+
+        if ($mode !== 'add') {
+            $data['operatingCentre'] = $data['data']['operatingCentre'];
+            $data['address'] = $data['operatingCentre']['address'];
+            $data['address']['countryCode'] = $data['address']['countryCode']['id'];
+
+            $data['advertisements'] = array(
+                'adPlaced' => $data['data']['adPlaced'],
+                'adPlacedIn' => $data['data']['adPlacedIn'],
+                'adPlacedDate' => $data['data']['adPlacedDate']
+            );
+
+            unset($data['data']['adPlaced']);
+            unset($data['data']['adPlacedIn']);
+            unset($data['data']['adPlacedDate']);
+            unset($data['data']['operatingCentre']);
+        }
+
+        $data['data']['application'] = $this->getIdentifier();
+        $trafficArea = $this->getTrafficArea();
+
+        if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
+            $data['trafficArea']['id'] = $trafficArea['id'];
+        }
+
         return $data;
     }
 
-    protected function formatCrudDataForForm($data)
+    private function getTrafficArea()
     {
-        return $data;
+        // @TODO see TrafficAreaSectionService
+        return array();
     }
 }
