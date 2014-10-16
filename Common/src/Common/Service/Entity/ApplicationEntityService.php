@@ -268,6 +268,71 @@ class ApplicationEntityService extends AbstractEntityService
     );
 
     /**
+     * Operating Centres bundle
+     */
+    protected $ocBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'totCommunityLicences',
+            'totAuthVehicles',
+            'totAuthTrailers',
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id'
+                ),
+                'children' => array(
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'name'
+                        )
+                    )
+                )
+            ),
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array('id')
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -409,5 +474,16 @@ class ApplicationEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
+    }
+    /**
+     * Get operating centres data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getOperatingCentresData($id)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->ocBundle);
     }
 }

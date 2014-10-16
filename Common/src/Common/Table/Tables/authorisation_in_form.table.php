@@ -27,9 +27,8 @@ return array(
                 $column['formatter'] = 'Address';
 
                 return '<a href="' . $this->generateUrl(
-                    array('action' => 'edit', 'id' => $data['id']),
-                    null,
-                    true
+                    array('action' => 'edit', 'child_id' => $data['id']),
+                    'lva-' . $column['type'] . '/operating_centres'
                 ) . '">' . $this->callFormatter($column, $data) . '</a>';
             },
             'name' => 'address'
