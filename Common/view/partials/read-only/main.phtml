@@ -1,0 +1,11 @@
+<div class="read-only">
+    <?php
+        if (isset($header) || isset($actions)) {
+            echo $this->render('partials/read-only/header');
+        }
+
+        if (isset($items)) {
+            echo $this->render('partials/read-only/list');
+        }
+    ?>
+</div>
