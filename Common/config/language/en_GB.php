@@ -592,6 +592,7 @@ return array(
     'documents-home.submit.filter' => 'Filter',
     'documents.bookmarks' => 'Bookmarks',
     'documents.data.category' => 'Category',
+    'documents.data.description' => 'Description',
     'documents.data.file' => 'File Upload',
     'documents.data.link' => 'Link',
     'documents.data.sub_category' => 'Sub category',

@@ -99,7 +99,7 @@ return array(
         )
     ),
     'file_uploader' => array(
-        'default' => 'ContentStore',
+        'default' => 'DiskStore',
         'config' => array(
             'location' => 'documents'
         )

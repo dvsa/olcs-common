@@ -594,6 +594,7 @@ return array(
     'documents-home.submit.filter' => 'W Filter',
     'documents.bookmarks' => 'W Bookmarks',
     'documents.data.category' => 'W Category',
+    'documents.data.description' => 'W Description',
     'documents.data.file' => 'W File Upload',
     'documents.data.link' => 'W Link',
     'documents.data.sub_category' => 'W Sub category',
