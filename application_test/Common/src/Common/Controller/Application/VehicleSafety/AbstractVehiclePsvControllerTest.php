@@ -1422,7 +1422,7 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
         }
 
         $licenceVehicleBundle = array(
-            'properties' => array(),
+            'properties' => array('removalDate'),
             'children' => array(
                 'vehicle' => array(
                     'properties' => array('vrm')
@@ -1435,6 +1435,7 @@ abstract class AbstractVehiclePsvControllerTest extends AbstractApplicationContr
                 'Count' => 1,
                 'Results' => array(
                     array(
+                        'removalDate' => null,
                         'vehicle' => array(
                             'vrm' => 'RANDOM'
                         )

@@ -33,7 +33,8 @@ trait VehicleSection
                     'id',
                     'receivedDate',
                     'specifiedDate',
-                    'deletedDate'
+                    'deletedDate',
+                    'removalDate'
                 ),
                 'children' => array(
                     'goodsDiscs' => array(
@@ -470,7 +471,7 @@ trait VehicleSection
     }
 
     /**
-     * Extend default process delete
+     * Replace default process delete
      *
      * @param array $data
      */
@@ -482,8 +483,12 @@ trait VehicleSection
 
         foreach ($licenceVehicleIds as $id) {
             $this->ceaseActiveDisc($id);
+            $result = $this->makeRestCall('LicenceVehicle', 'GET', $id, ['properties' => ['version']]);
+            $this->makeRestCall(
+                'LicenceVehicle',
+                'PUT',
+                ['id' => $id, 'version' => $result['version'], 'removalDate' => date('Y-m-d')]
+            );
         }
-
-        parent::deleteSave($data);
     }
 }
