@@ -186,6 +186,7 @@ trait PeopleTrait
             $this->addOrganisationPerson(
                 $mode,
                 $orgId,
+                $orgData,
                 $person,
                 $data
             );
@@ -338,7 +339,7 @@ trait PeopleTrait
      * Helper method to conditionally add or update a matching organisation
      * person record when saving a new person
      */
-    private function addOrganisationPerson($mode, $orgId, $person, $data)
+    private function addOrganisationPerson($mode, $orgId, $orgData, $person, $data)
     {
         // If we are creating a person, we need to link them to the organisation,
         // otherwise we might need to update person's position

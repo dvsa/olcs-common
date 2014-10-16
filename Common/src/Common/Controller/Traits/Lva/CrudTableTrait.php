@@ -93,4 +93,20 @@ trait CrudTableTrait
         }
         return $this->render('delete', $form);
     }
+
+    /**
+     * Override built-in cancel functionality if we're
+     * not on the top-level index action (i.e. we're within
+     * a sub action)
+     */
+    protected function handleCancelRedirect($lvaId)
+    {
+        if ($this->params('action') !== 'index') {
+            return $this->redirect()->toRoute(
+                'lva-' . $this->lva . '/' . $this->section,
+                array('id' => $lvaId)
+            );
+        }
+        return parent::handleCancelRedirect($lvaId);
+    }
 }
