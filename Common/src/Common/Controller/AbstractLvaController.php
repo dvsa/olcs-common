@@ -37,6 +37,12 @@ abstract class AbstractLvaController extends AbstractActionController
     protected $lva;
 
     /**
+     * Handle a redirect when 'cancel' is clicked; differs
+     * per implementation
+     */
+    abstract protected function handleCancelRedirect($lvaId);
+
+    /**
      * Execute the request
      *
      * @param  MvcEvent $e
@@ -184,6 +190,19 @@ abstract class AbstractLvaController extends AbstractActionController
         } else {
             return $this->redirect()
                 ->toRoute('lva-' . $this->lva . '/' . $sections[$index + 1], array('id' => $this->getApplicationId()));
+        }
+    }
+
+    /**
+     * Check for redirect
+     *
+     * @param int $lvaId
+     * @return null|\Zend\Http\Response
+     */
+    protected function checkForRedirect($lvaId)
+    {
+        if ($this->isButtonPressed('cancel')) {
+            return $this->handleCancelRedirect($lvaId);
         }
     }
 }
