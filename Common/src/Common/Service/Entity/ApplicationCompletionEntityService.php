@@ -258,7 +258,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     {
         return count($applicationData['licence']['organisation']['organisationPersons'])
             ? self::STATUS_COMPLETE
-            : self::STATUS_NOT_STARTED;
+            : self::STATUS_INCOMPLETE;
     }
 
     /**
