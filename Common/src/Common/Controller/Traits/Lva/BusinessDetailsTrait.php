@@ -20,6 +20,11 @@ use Common\Service\Helper\FormHelperService;
  */
 trait BusinessDetailsTrait
 {
+    use GenericLvaTrait,
+        CrudTableTrait;
+
+    protected $section = 'business_details';
+
     /**
      * Business details section
      */
@@ -64,30 +69,7 @@ trait BusinessDetailsTrait
                 $this->processSave($tradingNames, $orgId, $data);
 
                 if (isset($data['table']['action'])) {
-
-                    $action = strtolower($data['table']['action']);
-
-                    if ($action === 'add') {
-                        $routeParams = array(
-                            'action' => 'add'
-                        );
-                    } elseif ($action === 'edit') {
-                        $routeParams = array(
-                            'action' => 'edit',
-                            'child_id' => $data['table']['id']
-                        );
-                    } else {
-                        $routeParams = array();
-                        $this->getServiceLocator()->get('Entity\CompanySubsidiary')
-                            ->delete($data['table']['id']);
-                    }
-
-                    return $this->redirect()->toRoute(
-                        'lva-' . $this->lva . '/business_details',
-                        $routeParams,
-                        array(),
-                        true
-                    );
+                    return $this->handleCrudAction($data['table'], 'people');
                 }
 
                 return $this->completeSection('business_details');
@@ -191,17 +173,16 @@ trait BusinessDetailsTrait
 
     public function addAction()
     {
-        return $this->addOrEdit(true);
+        return $this->addOrEdit('add');
     }
 
     public function editAction()
     {
-        return $this->addOrEdit(false);
+        return $this->addOrEdit('edit');
     }
 
-    private function addOrEdit($add = true)
+    private function addOrEdit($mode)
     {
-        $mode = $add ? 'add' : 'edit';
         $orgId = $this->getCurrentOrganisationId();
         $request = $this->getRequest();
 
@@ -209,7 +190,7 @@ trait BusinessDetailsTrait
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = $this->formatSubsidiaryDataForForm(
+            $data = $this->formatCrudDataForForm(
                 $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($this->params('child_id'))
             );
         }
@@ -219,24 +200,12 @@ trait BusinessDetailsTrait
             ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-            $data = $this->formatSubsidiaryDataForSave($data);
+            $data = $this->formatCrudDataForSave($data);
             $data['organisation'] = $orgId;
 
             $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
 
-            // we can't just opt-in to all existing route params because
-            // we might have a child ID if we're editing; if so we *don't*
-            // want that in the redirect or we'll end up back on the same page
-            $routeParams = array(
-                'id' => $this->params('id')
-            );
-            if ($this->isButtonPressed('addAnother')) {
-                $routeParams['action'] = 'add';
-            }
-            return $this->redirect()->toRoute(
-                'lva-' . $this->lva . '/business_details',
-                $routeParams
-            );
+            return $this->handlePostSave();
         }
 
         return $this->render($mode . '_subsidiary_company', $form);
@@ -261,24 +230,6 @@ trait BusinessDetailsTrait
             'licence' => $this->getLicenceId(),
             'tradingNames' => $tradingNames
         );
-    }
-
-    /**
-     * Override built-in cancel functionality; need
-     * to check if we're on a sub action
-     *
-     * Might be able to squeeze this into the abstract,
-     * will see how consistent other sub actions are first
-     */
-    protected function handleCancelRedirect($lvaId)
-    {
-        if ($this->params('action') !== 'index') {
-            return $this->redirect()->toRoute(
-                'lva-' . $this->lva . '/business_details',
-                array('id' => $lvaId)
-            );
-        }
-        return parent::handleCancelRedirect($lvaId);
     }
 
     /**
@@ -342,7 +293,7 @@ trait BusinessDetailsTrait
      * @param array $data
      * return array
      */
-    private function formatSubsidiaryDataForSave($data)
+    private function formatCrudDataForSave($data)
     {
         return $data['data'];
     }
@@ -353,7 +304,7 @@ trait BusinessDetailsTrait
      * @param array $data
      * return array
      */
-    private function formatSubsidiaryDataForForm($data)
+    private function formatCrudDataForForm($data)
     {
         return array('data' => $data);
     }
@@ -459,5 +410,15 @@ trait BusinessDetailsTrait
         $form->get('table')  // fieldset
             ->get('table')   // element
             ->setTable($table);
+    }
+
+    /**
+     * Mechanism to *actually* delete a subsidiary, invoked by the
+     * underlying delete action
+     */
+    protected function delete()
+    {
+        $this->getServiceLocator()->get('Entity\CompanySubsidiary')
+            ->delete($this->params('child_id'));
     }
 }
