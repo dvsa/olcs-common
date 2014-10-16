@@ -52,11 +52,9 @@ trait PeopleTrait
 
         $table = $this->getServiceLocator()
             ->get('Table')
-            ->buildTable(
+            ->prepareTable(
                 'application_your-business_people_in_form',
-                $this->getTableData($orgId),
-                array(),
-                false
+                $this->getTableData($orgId)
             );
 
         $column = $table->getColumn('name');

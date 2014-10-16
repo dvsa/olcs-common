@@ -593,12 +593,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Build a table from a config file
+     * Prepare the table
      *
-     * @param array $config
-     * @return string
+     * @param string $name
+     * @param array $data
+     * @param array $params
+     * @return \Common\Service\Table\TableBuilder
      */
-    public function buildTable($name, $data = array(), $params = array(), $render = true)
+    public function prepareTable($name, array $data = array(), array $params = array())
     {
         $this->loadConfig($name);
 
@@ -607,6 +609,19 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->loadParams($params);
 
         $this->setupAction();
+
+        return $this;
+    }
+
+    /**
+     * Build a table from a config file
+     *
+     * @param array $config
+     * @return string
+     */
+    public function buildTable($name, $data = array(), $params = array(), $render = true)
+    {
+        $this->prepareTable($name, $data, $params);
 
         if ($render) {
             return $this->render();

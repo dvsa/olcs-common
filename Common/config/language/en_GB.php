@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'lva-financial-evidence-table.title' => 'Financial evidence',
+    'lva-financial-evidence-table.file-name' => 'File name',
+    'lva-financial-evidence-table.type' => 'Evidence type',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

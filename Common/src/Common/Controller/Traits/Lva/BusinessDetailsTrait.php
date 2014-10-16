@@ -69,7 +69,7 @@ trait BusinessDetailsTrait
                 $this->processSave($tradingNames, $orgId, $data);
 
                 if (isset($data['table']['action'])) {
-                    return $this->handleCrudAction($data['table'], 'people');
+                    return $this->handleCrudAction($data['table']);
                 }
 
                 return $this->completeSection('business_details');
@@ -394,13 +394,11 @@ trait BusinessDetailsTrait
 
         $table = $this->getServiceLocator()
             ->get('Table')
-            ->buildTable(
+            ->prepareTable(
                 // @TODO rename / move table? This trait is re-used
                 // across app / var / licences...
                 'application_your-business_business_details-subsidiaries',
-                $tableData,
-                array(), // params?
-                false
+                $tableData
             );
 
         $column = $table->getColumn('name');

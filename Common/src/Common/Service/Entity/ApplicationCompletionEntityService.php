@@ -291,7 +291,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getFinancialEvidenceStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        return self::STATUS_COMPLETE;
     }
 
     /**
@@ -302,7 +302,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getTransportManagersStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        return self::STATUS_COMPLETE;
     }
 
     /**
