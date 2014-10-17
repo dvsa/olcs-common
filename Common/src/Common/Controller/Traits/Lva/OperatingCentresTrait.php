@@ -9,6 +9,7 @@
 namespace Common\Controller\Traits\Lva;
 
 use Zend\Form\Form;
+use Common\Service\Entity\TrafficAreaEntityService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -123,10 +124,19 @@ trait OperatingCentresTrait
 
         if ($request->isPost() && $form->isValid()) {
 
-            $data = $this->formatDataForSave($data);
+            $appData = $this->formatDataForSave($data);
+
+            if (isset($appData['trafficArea']) && $appData['trafficArea']) {
+                $this->getServiceLocator()->get('Entity\TrafficArea')
+                    ->setTrafficArea(
+                        $this->getApplicationId(),
+                        $appData['trafficArea']
+                    );
+            }
 
             $this->getServiceLocator()->get('Entity\Application')
-                ->save($data);
+                ->save($appData);
+
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table']);
             }
@@ -161,9 +171,7 @@ trait OperatingCentresTrait
         if ($options['isReview']) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
-            $trafficAreaSection = $this->createSectionService('TrafficArea');
-            $trafficAreaSection->setIdentifier($options['data']['id']);
-            $trafficArea = $trafficAreaSection->getTrafficArea();
+            $this->getTrafficArea($options['data']['id']);
 
             if (!isset($trafficArea['name'])) {
                 $trafficArea['name'] = 'unset';
@@ -209,7 +217,7 @@ trait OperatingCentresTrait
      */
     protected function alterFormForTrafficArea(Form $form)
     {
-        $licenceData = $this->getLicenceData();
+        $licenceData = $this->getTypeOfLicenceData();
         $trafficArea = $this->getTrafficArea();
 
         $trafficAreaValidator = $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
@@ -287,32 +295,35 @@ trait OperatingCentresTrait
      */
     private function getTableData()
     {
-        $id = $this->getApplicationId();
+        if (empty($this->tableData)) {
+            $id = $this->getApplicationId();
 
-        // @TODO not in common trait... currently always fetches from app operating centre
-        $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-            ->getAddressSummaryDataForApplication($id);
+            // @TODO not in common trait... currently always fetches from app operating centre
+            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+                ->getAddressSummaryDataForApplication($id);
 
-        $newData = array();
+            $newData = array();
 
-        foreach ($data['Results'] as $row) {
+            foreach ($data['Results'] as $row) {
 
-            $newRow = $row;
+                $newRow = $row;
 
-            if (isset($row['operatingCentre']['address'])) {
+                if (isset($row['operatingCentre']['address'])) {
 
-                unset($row['operatingCentre']['address']['id']);
-                unset($row['operatingCentre']['address']['version']);
+                    unset($row['operatingCentre']['address']['id']);
+                    unset($row['operatingCentre']['address']['version']);
 
-                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+                    $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+                }
+
+                unset($newRow['operatingCentre']);
+
+                $newData[] = $newRow;
             }
-
-            unset($newRow['operatingCentre']);
-
-            $newData[] = $newRow;
+            $this->tableData = $newData;
         }
 
-        return $newData;
+        return $this->tableData;
     }
 
     public function addAction()
@@ -340,6 +351,8 @@ trait OperatingCentresTrait
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentre')
             ->setData($data);
+
+        $form = $this->alterActionForm($form);
 
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
@@ -387,7 +400,9 @@ trait OperatingCentresTrait
 
     protected function delete()
     {
-
+        $this->getServiceLocator()
+            ->get('Entity\ApplicationOperatingCentre')
+            ->delete($this->params('child_id'));
     }
 
     protected function formatCrudDataForSave($data)
@@ -433,10 +448,14 @@ trait OperatingCentresTrait
         return $data;
     }
 
-    private function getTrafficArea()
+    private function getTrafficArea($identifier = null)
     {
-        // @TODO see TrafficAreaSectionService
-        return array();
+        if ($identifier === null) {
+            $identifier = $this->getIdentifier();
+        }
+        return $this->getServiceLocator()
+            ->get('Entity\TrafficArea')
+            ->getTrafficArea($identifier);
     }
 
     /**
@@ -446,27 +465,32 @@ trait OperatingCentresTrait
      */
     protected function setDefaultTrafficArea($data)
     {
-        // @TODO re-implement
-        return;
-        $licenceData = $this->getLicenceData();
+        $licenceData = $this->getTypeOfLicenceData();
 
-        if ($licenceData['niFlag'] == 'Y') {
+        if ($licenceData['niFlag'] === 'Y') {
             $this->getSectionService('TrafficArea')->setTrafficArea(
-                TrafficAreaSectionService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                $this->getApplicationId(),
+                TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
             );
             return;
         }
 
         $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
 
-        if (!empty($postcode) && $this->getOperatingCentresCount() == 1) {
+        if (!empty($postcode) && $this->getOperatingCentresCount() === 1) {
 
-            $postcodeService = $this->getPostcodeService();
+            $postcodeService = $this->getServiceLocator()
+                ->get('Postcode');
 
             $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
 
             if (!empty($trafficAreaParts)) {
-                $this->getSectionService('TrafficArea')->setTrafficArea(array_shift($trafficAreaParts));
+                $this->getServiceLocator()
+                    ->get('Entity\TrafficArea')
+                    ->setTrafficArea(
+                        $this->getApplicationId(),
+                        array_shift($trafficAreaParts)
+                    );
             }
         }
     }
@@ -531,6 +555,65 @@ trait OperatingCentresTrait
 
     private function formatDataForSave($data)
     {
-        return $data['data'];
+        return $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->processDataMap($data, $this->dataMap);
+    }
+
+    public function getOperatingCentresCount()
+    {
+        $operatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+            ->getOperatingCentresCount($this->getApplicationId());
+
+        return $operatingCentres['Count'];
+    }
+
+    /**
+     * Alter action form
+     *
+     * @param Form $form
+     */
+    public function alterActionForm(Form $form)
+    {
+        if ($this->isPsv()) {
+            $this->alterActionFormForPsv($form);
+        } else {
+            $this->alterActionFormForGoods($form);
+        }
+
+        $this->alterFormForTrafficArea($form);
+
+        return $form;
+    }
+
+    /**
+     * Alter action form for PSV licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForPsv(Form $form)
+    {
+        $form->get('data')->remove('noOfTrailersPossessed');
+        $form->getInputFilter()->get('data')->remove('noOfTrailersPossessed');
+        $form->remove('advertisements');
+        $form->getInputFilter()->remove('advertisements');
+
+        $dataLabel = $form->get('data')->getLabel();
+        $form->get('data')->setLabel($dataLabel . '-psv');
+
+        $parkingLabel = $form->get('data')->get('sufficientParking')->getLabel();
+        $form->get('data')->get('sufficientParking')->setLabel($parkingLabel . '-psv');
+
+        $permissionLabel = $form->get('data')->get('permission')->getLabel();
+        $form->get('data')->get('permission')->setLabel($permissionLabel . '-psv');
+    }
+
+    /**
+     * Alter action form for Goods licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForGoods(Form $form)
+    {
     }
 }
