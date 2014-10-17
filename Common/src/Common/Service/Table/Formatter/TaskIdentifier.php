@@ -37,6 +37,9 @@ class TaskIdentifier implements FormatterInterface
             case 'Licence':
                 $url = $urlHelper->__invoke('licence/details/overview', array('licence' => $data['linkId']));
                 break;
+            case 'Application':
+                $url = $urlHelper->__invoke('Application/Overview/Details', array('applicationId' => $data['linkId']));
+                break;
             default:
                 break;
         }

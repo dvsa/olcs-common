@@ -63,7 +63,8 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                     'id',
                     'receivedDate',
                     'specifiedDate',
-                    'deletedDate'
+                    'deletedDate',
+                    'removalDate'
                 ),
                 'children' => array(
                     'goodsDiscs' => array(
@@ -1025,6 +1026,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                         'receivedDate' => null,
                         'specifiedDate' => null,
                         'deletedDate' => null,
+                        'removalDate' => null,
                         'goodsDisc' => array(
                             array(
                                 'ceasedDate' => null,
@@ -1041,6 +1043,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                         'receivedDate' => null,
                         'specifiedDate' => null,
                         'deletedDate' => null,
+                        'removalDate' => null,
                         'goodsDisc' => array(
                             array(
                                 'ceasedDate' => null,
@@ -1062,6 +1065,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 'version',
                 'receivedDate',
                 'deletedDate',
+                'removalDate',
                 'specifiedDate'
             ),
             'children' => array(
@@ -1087,6 +1091,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 'version' => 1,
                 'receivedDate' => null,
                 'deletedDate' => null,
+                'removalDate' => null,
                 'specifiedDate' => null,
                 'goodsDiscs' => array(
                     array(
@@ -1103,7 +1108,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
         }
 
         $licenceVehicleBundle = array(
-            'properties' => array(),
+            'properties' => array('removalDate'),
             'children' => array(
                 'vehicle' => array(
                     'properties' => array('vrm')
@@ -1116,6 +1121,7 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 'Count' => 1,
                 'Results' => array(
                     array(
+                        'removalDate' => null,
                         'vehicle' => array(
                             'vrm' => 'RANDOM'
                         )
@@ -1123,6 +1129,5 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 )
             );
         }
-
     }
 }
