@@ -31,6 +31,9 @@ trait ApplicationGenericVehicleSection
      */
     protected function showVehicle($licenceVehicle)
     {
+        if (!empty($licenceVehicle['removalDate'])) {
+            return false;
+        }
         return true;
     }
 
