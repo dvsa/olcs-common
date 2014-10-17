@@ -17,6 +17,9 @@ use Zend\Form\Form;
  */
 trait OperatingCentresTrait
 {
+    /**
+     * @TODO inline JS
+     */
 
     use GenericLvaTrait,
         CrudTableTrait;
@@ -65,7 +68,7 @@ trait OperatingCentresTrait
                     'mapFrom' => array(
                         'data',
                         'advertisements'
-		      )
+                    )
                 ),
                 'operatingCentre' => array(
                     'mapFrom' => array(
@@ -357,10 +360,9 @@ trait OperatingCentresTrait
             }
 
             // @todo not sure this is right
-            // @TODO re-implement
-            $saved = parent::actionSave($data['applicationOperatingCentre'], $service);
+            $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['applicationOperatingCentre']);
 
-            if ($this->getActionName() == 'add' && !isset($saved['id'])) {
+            if ($mode === 'add' && !isset($saved['id'])) {
                 throw new \Exception('Unable to save operating centre');
             }
 
@@ -368,6 +370,8 @@ trait OperatingCentresTrait
             if (!isset($data['trafficArea']) || empty($data['trafficArea']['id'])) {
                 $this->setDefaultTrafficArea($data);
             }
+
+            return $this->handlePostSave();
         }
 
         return $this->render('edit_people', $form);
@@ -420,5 +424,58 @@ trait OperatingCentresTrait
     {
         // @TODO see TrafficAreaSectionService
         return array();
+    }
+
+    /**
+     * Set the default traffic area
+     *
+     * @param array $data
+     */
+    protected function setDefaultTrafficArea($data)
+    {
+        // @TODO re-implement
+        return;
+        $licenceData = $this->getLicenceData();
+
+        if ($licenceData['niFlag'] == 'Y') {
+            $this->getSectionService('TrafficArea')->setTrafficArea(
+                TrafficAreaSectionService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+            );
+            return;
+        }
+
+        $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+
+        if (!empty($postcode) && $this->getOperatingCentresCount() == 1) {
+
+            $postcodeService = $this->getPostcodeService();
+
+            $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
+
+            if (!empty($trafficAreaParts)) {
+                $this->getSectionService('TrafficArea')->setTrafficArea(array_shift($trafficAreaParts));
+            }
+        }
+    }
+
+    /**
+     * Save the documents
+     *
+     * @param array $data
+     * @param int $operatingCentreId
+     */
+    protected function saveDocuments($data, $operatingCentreId)
+    {
+        // @TODO re-implement
+        return;
+        if (isset($data['applicationOperatingCentre']['file']['list'])) {
+            foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
+                $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
+                    'Document',
+                    'PUT',
+                    array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
+                );
+            }
+        }
     }
 }
