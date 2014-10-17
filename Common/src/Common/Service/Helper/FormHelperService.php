@@ -8,8 +8,13 @@
 namespace Common\Service\Helper;
 
 use Zend\Form\Form;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilter;
+use Zend\Validator\ValidatorChain;
 use Zend\Http\Request;
 use Common\Form\Elements\Types\Address;
+use Zend\Form\Element\Checkbox;
+
 
 /**
  * Form Helper Service
@@ -234,6 +239,40 @@ class FormHelperService extends AbstractHelperService
         } else {
             $form->remove($elementReference);
             $filter->remove($elementReference);
+        }
+    }
+
+    /**
+     * Disable empty validation
+     *
+     * @param Fieldset $form
+     * @param InputFilter $filter
+     */
+    public function disableEmptyValidation(Fieldset $form, InputFilter $filter = null)
+    {
+        if ($filter === null) {
+            $filter = $form->getInputFilter();
+        }
+
+        foreach ($form->getElements() as $key => $element) {
+
+            $value = $element->getValue();
+
+            if (empty($value) || $element instanceof Checkbox) {
+
+                $filter->get($key)->setAllowEmpty(true)
+                    ->setRequired(false)
+                    ->setValidatorChain(
+                        new ValidatorChain()
+                    );
+            }
+        }
+
+        if ($form instanceof Fieldset) {
+            foreach ($form->getFieldsets() as $fieldset) {
+
+                $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
+            }
         }
     }
 }

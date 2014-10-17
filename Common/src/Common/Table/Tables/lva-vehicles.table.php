@@ -20,7 +20,8 @@ return array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
             )
-        )
+        ),
+        'within_form' => true
     ),
     'attributes' => array(
     ),

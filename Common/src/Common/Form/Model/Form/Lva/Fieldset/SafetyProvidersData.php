@@ -1,28 +1,14 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("data")
+ * @Form\Name("lva-safety-providers-data")
  */
-class ApplicationVehicleSafetySafetySubActionData
+class SafetyProvidersData
 {
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $licence = null;
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -44,7 +30,4 @@ class ApplicationVehicleSafetySafetySubActionData
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $isExternal = null;
-
-
 }
-

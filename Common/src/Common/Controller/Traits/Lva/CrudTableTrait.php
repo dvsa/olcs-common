@@ -20,13 +20,28 @@ trait CrudTableTrait
     abstract public function addAction();
     abstract public function editAction();
     abstract protected function delete();
-    abstract protected function formatCrudDataForSave($data);
-    abstract protected function formatCrudDataForForm($data);
+
+    /**
+     * Check if we have a crud action in the form table data, if so return the table data, if not return null
+     *
+     * @param array $formTables
+     * @return array
+     */
+    protected function getCrudAction(array $formTables = array())
+    {
+        foreach ($formTables as $table) {
+            if (isset($table['action'])) {
+                return $table;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Redirect to the most appropriate CRUD action
      */
-    private function handleCrudAction($data)
+    protected function handleCrudAction($data)
     {
         $action = strtolower($data['action']);
 
@@ -42,7 +57,7 @@ trait CrudTableTrait
         }
 
         return $this->redirect()->toRoute(
-            'lva-' . $this->lva . '/' . $this->section,
+            null,
             $routeParams,
             array(),
             true
@@ -52,7 +67,7 @@ trait CrudTableTrait
     /**
      * Once the CRUD entity has been saved, handle the necessary redirect
      */
-    private function handlePostSave()
+    protected function handlePostSave()
     {
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
@@ -60,13 +75,12 @@ trait CrudTableTrait
         $routeParams = array(
             'id' => $this->params('id')
         );
+
         if ($this->isButtonPressed('addAnother')) {
             $routeParams['action'] = 'add';
         }
-        return $this->redirect()->toRoute(
-            'lva-' . $this->lva . '/' . $this->section,
-            $routeParams
-        );
+
+        return $this->redirect()->toRoute(null, $routeParams);
     }
 
     /**
@@ -76,18 +90,16 @@ trait CrudTableTrait
     public function deleteAction()
     {
         $request = $this->getRequest();
-        $id = $this->params('child_id');
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('GenericDeleteConfirmation')
-            ->setData(array('id' => $id));
+            ->createForm('GenericDeleteConfirmation');
 
-        if ($request->isPost() && $form->isValid()) {
+        if ($request->isPost()) {
 
             $this->delete();
 
             return $this->redirect()->toRoute(
-                'lva-' . $this->lva . '/' . $this->section,
+                null,
                 array('id' => $this->params('id'))
             );
         }
@@ -103,10 +115,12 @@ trait CrudTableTrait
     {
         if ($this->params('action') !== 'index') {
             return $this->redirect()->toRoute(
-                'lva-' . $this->lva . '/' . $this->section,
+                null,
                 array('id' => $lvaId)
             );
         }
+
+        // @todo We can't use parent from a trait, we need a workaround for this
         return parent::handleCancelRedirect($lvaId);
     }
 }

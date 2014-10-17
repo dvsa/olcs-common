@@ -1,15 +1,20 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("licence")
+ * @Form\Name("lva-safety-licence")
  */
-class Licence
+class SafetyLicence
 {
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
@@ -91,16 +96,4 @@ class Licence
      * })
      */
     public $tachographInsName = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
 }

@@ -1,44 +1,39 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("application_vehicle-safety_safety")
+ * @Form\Name("lva-safety")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationVehicleSafetySafety
+class Safety
 {
-
     /**
      * @Form\Name("licence")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Licence")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyLicence")
      */
     public $licence = null;
 
     /**
      * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationVehicleSafetySafetyTable")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
     public $table = null;
 
     /**
      * @Form\Name("application")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Application")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyApplication")
      */
     public $application = null;
 
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      */
     public $formActions = null;
-
-
 }
-

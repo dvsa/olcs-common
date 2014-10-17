@@ -58,9 +58,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      */
     private function injectDependencies($service, $serviceLocator)
     {
-        if ($service instanceof ServiceLocatorAwareInterface) {
-            $service->setServiceLocator($serviceLocator);
-        }
+        
     }
 
     /**

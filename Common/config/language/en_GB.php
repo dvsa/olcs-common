@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'lva.section.title.add_safety' => 'Add safety inspection provider',
+    'lva.section.title.edit_safety' => 'Edit safety inspection provider',
     'lva-financial-evidence-table.title' => 'Financial evidence',
     'lva-financial-evidence-table.file-name' => 'File name',
     'lva-financial-evidence-table.type' => 'Evidence type',

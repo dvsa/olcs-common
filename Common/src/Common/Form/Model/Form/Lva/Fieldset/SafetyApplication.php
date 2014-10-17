@@ -1,15 +1,19 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("application")
+ * @Form\Name("lva-safety-application")
  */
-class Application
+class SafetyApplication
 {
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -38,19 +42,4 @@ class Application
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $safetyConfirmation = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
-
 }
-
