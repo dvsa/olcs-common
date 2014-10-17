@@ -1,17 +1,15 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("application_operating-centres_authorisation-sub-action")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationOperatingCentresAuthorisationSubAction
+class OperatingCentre
 {
 
     /**
@@ -24,7 +22,7 @@ class ApplicationOperatingCentresAuthorisationSubAction
     /**
      * @Form\Name("data")
      * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Data")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
      */
     public $data = null;
 
@@ -47,7 +45,7 @@ class ApplicationOperatingCentresAuthorisationSubAction
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyCrudButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      */
     public $formActions = null;
 
@@ -57,7 +55,4 @@ class ApplicationOperatingCentresAuthorisationSubAction
      * @Form\ComposedObject("Common\Form\Model\Fieldset\OperatingCentre")
      */
     public $operatingCentre = null;
-
-
 }
-

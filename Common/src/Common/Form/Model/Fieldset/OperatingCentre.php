@@ -23,7 +23,4 @@ class OperatingCentre
      * @Form\Type("Hidden")
      */
     public $version = null;
-
-
 }
-
