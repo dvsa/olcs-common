@@ -5,14 +5,14 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 /**
  * Shared logic between Business type controllers
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait BusinessTypeTrait
+abstract class AbstractBusinessTypeController extends AbstractController
 {
 
     /**

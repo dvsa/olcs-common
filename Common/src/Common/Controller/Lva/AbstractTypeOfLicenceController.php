@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Shared logic between Type Of Licence controllers
+ * Common Lva Abstract Type Of Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 /**
- * Shared logic between Type Of Licence controllers
+ * Common Lva Abstract Type Of Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait TypeOfLicenceTrait
+abstract class AbstractTypeOfLicenceController extends AbstractController
 {
     /**
      * Type of licence section
@@ -88,6 +88,11 @@ trait TypeOfLicenceTrait
      */
     private function getTypeOfLicenceForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TypeOfLicence');
+        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TypeOfLicence');
+
+        $this->alterFormForLocation($form);
+        $this->alterFormForLva($form);
+
+        return $form;
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Application Type Of Licence Trait
+ * Common Application Type Of Licence Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva\Traits;
 
 /**
- * Application Type Of Licence Trait
+ * Common Application Type Of Licence Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */

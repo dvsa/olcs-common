@@ -5,14 +5,14 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva\Traits;
 
 /**
  * Variation Controller Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait VariationControllerTrait
+trait CommonVariationControllerTrait
 {
     /**
      * Hook into the dispatch before the controller action is executed

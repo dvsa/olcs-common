@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva\Traits;
 
 use Common\Service\Entity\ApplicationEntityService;
 
@@ -14,7 +14,7 @@ use Common\Service\Entity\ApplicationEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait ApplicationControllerTrait
+trait CommonApplicationControllerTrait
 {
     abstract protected function notFoundAction();
     abstract protected function checkForRedirect($lvaId);
