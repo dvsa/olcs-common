@@ -217,7 +217,7 @@ trait OperatingCentresTrait
      */
     protected function alterFormForTrafficArea(Form $form)
     {
-        $licenceData = $this->getLicenceData();
+        $licenceData = $this->getTypeOfLicenceData();
         $trafficArea = $this->getTrafficArea();
 
         $trafficAreaValidator = $this->getServiceLocator()->get('postcodeTrafficAreaValidator');
@@ -351,6 +351,8 @@ trait OperatingCentresTrait
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentre')
             ->setData($data);
+
+        $form = $this->alterActionForm($form);
 
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
@@ -564,5 +566,54 @@ trait OperatingCentresTrait
             ->getOperatingCentresCount($this->getApplicationId());
 
         return $operatingCentres['Count'];
+    }
+
+    /**
+     * Alter action form
+     *
+     * @param Form $form
+     */
+    public function alterActionForm(Form $form)
+    {
+        if ($this->isPsv()) {
+            $this->alterActionFormForPsv($form);
+        } else {
+            $this->alterActionFormForGoods($form);
+        }
+
+        $this->alterFormForTrafficArea($form);
+
+        return $form;
+    }
+
+    /**
+     * Alter action form for PSV licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForPsv(Form $form)
+    {
+        $form->get('data')->remove('noOfTrailersPossessed');
+        $form->getInputFilter()->get('data')->remove('noOfTrailersPossessed');
+        $form->remove('advertisements');
+        $form->getInputFilter()->remove('advertisements');
+
+        $dataLabel = $form->get('data')->getLabel();
+        $form->get('data')->setLabel($dataLabel . '-psv');
+
+        $parkingLabel = $form->get('data')->get('sufficientParking')->getLabel();
+        $form->get('data')->get('sufficientParking')->setLabel($parkingLabel . '-psv');
+
+        $permissionLabel = $form->get('data')->get('permission')->getLabel();
+        $form->get('data')->get('permission')->setLabel($permissionLabel . '-psv');
+    }
+
+    /**
+     * Alter action form for Goods licences
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function alterActionFormForGoods(Form $form)
+    {
     }
 }
