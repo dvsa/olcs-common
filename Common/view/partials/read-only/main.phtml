@@ -4,8 +4,9 @@
             echo $this->render('partials/read-only/header');
         }
 
-        if (isset($items)) {
-            echo $this->render('partials/read-only/list');
-        }
-    ?>
+        echo $this->render('partials/read-only/list');
+
+        if (isset($freetext)) { ?>
+            <p><?php echo $freetext; ?></p>
+    <?php } ?>
 </div>
