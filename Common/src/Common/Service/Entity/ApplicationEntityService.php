@@ -268,6 +268,35 @@ class ApplicationEntityService extends AbstractEntityService
     );
 
     /**
+     * Safety Data bundle
+     *
+     * @var array
+     */
+    protected $safetyDataBundle = array(
+        'properties' => array(
+            'version',
+            'safetyConfirmation',
+            'isMaintenanceSuitable'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'version',
+                    'safetyInsVehicles',
+                    'safetyInsTrailers',
+                    'safetyInsVaries',
+                    'tachographInsName'
+                ),
+                'children' => array(
+                    'tachographIns' => array(
+                        'properties' => array('id')
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -316,11 +345,13 @@ class ApplicationEntityService extends AbstractEntityService
     {
         $application = parent::save($data);
 
-        $applicationCompletionData = [
-            'application' => $application['id'],
-        ];
+        if (!isset($data['id'])) {
+            $applicationCompletionData = [
+                'application' => $application['id'],
+            ];
 
-        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
+            $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
+        }
 
         return $application;
     }
@@ -409,5 +440,16 @@ class ApplicationEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
+    }
+
+    /**
+     * Get safety data
+     *
+     * @param int $id
+     */
+    public function getSafetyData($id)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->safetyDataBundle);
     }
 }
