@@ -122,6 +122,11 @@ trait OperatingCentresTrait
             ->setTable($table);
 
         if ($request->isPost() && $form->isValid()) {
+
+            $data = $this->formatDataForSave($data);
+
+            $this->getServiceLocator()->get('Entity\Application')
+                ->save($data);
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table']);
             }
@@ -522,5 +527,10 @@ trait OperatingCentresTrait
         }
 
         return $data;
+    }
+
+    private function formatDataForSave($data)
+    {
+        return $data['data'];
     }
 }
