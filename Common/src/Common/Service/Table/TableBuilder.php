@@ -1319,7 +1319,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $vars
      * @return string
      */
-    private function replaceContent($content, $vars = array())
+    public function replaceContent($content, $vars = array())
     {
         return $this->getContentHelper()->replaceContent($content, $vars);
     }

@@ -3,9 +3,9 @@
 return array(
     'variables' => array(
         'title' => 'selfserve-app-subSection-your-business-people-tableHeaderPartners',
-        'within_form' => true,
         'empty_message' => 'selfserve-app-subSection-your-business-people-tableEmptyMessage',
         'required_label' => 'person',
+        'within_form' => true,
     ),
     'settings' => array(
         'crud' => array(
@@ -16,25 +16,13 @@ return array(
             )
         )
     ),
-    'attributes' => array(),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Selector'
-        ),
-        array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
-            'name' => 'name',
-            'type' => 'application',
-            'formatter' => function ($row, $column) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'child_id' => $row['id'],
-                        'action' => 'edit'
-                    ),
-                    'lva-' . $column['type'] . '/people'
-                ) . '">' . $row['title'] . ' ' . $row['forename'] . ' ' . $row['familyName'] . '</a>';
-            },
+            'type' => 'Action',
+            'class' => 'action--tertiary',
+            'action' => 'edit',
+            'value_format' => '{{title}} {{forename}} {{familyName}}'
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnHasOtherNames',
@@ -51,9 +39,10 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnPosition',
             'name' => 'position',
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Selector'
         )
-    ),
-    // Footer configuration
-    'footer' => array(
     )
 );

@@ -1,12 +1,9 @@
 <?php
 
-$translationPrefix = 'safety-inspection-providers.table';
-
 return array(
     'variables' => array(
-        'title' => $translationPrefix . '.title',
-        'empty_message' => $translationPrefix . '.empty_message',
-        'required_label' => 'safety inspection provider',
+        'title' => 'application_your-business_business_details-subsidiaries-tableHeader',
+        'empty_message' => 'application_your-business_business_details-subsidiaries-tableEmptyMessage',
         'within_form' => true
     ),
     'settings' => array(
@@ -20,20 +17,15 @@ return array(
     ),
     'columns' => array(
         array(
-            'title' => $translationPrefix . '.providerName',
+            'title' => 'application_your-business_business_details-subsidiaries-columnName',
+            'name' => 'name',
             'class' => 'action--tertiary',
             'action' => 'edit',
-            'name' => 'fao',
             'type' => 'Action'
         ),
         array(
-            'title' => $translationPrefix . '.external',
-            'name' => 'isExternal',
-            'formatter' => 'YesNo'
-        ),
-        array(
-            'title' => $translationPrefix . '.address',
-            'formatter' => 'Address'
+            'title' => 'application_your-business_business_details-subsidiaries-columnCompanyNo',
+            'name' => 'companyNo',
         ),
         array(
             'width' => 'checkbox',

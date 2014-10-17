@@ -148,4 +148,15 @@ trait ApplicationControllerTrait
 
         return $this->goToOverviewAfterSave();
     }
+
+    /**
+     * Complete crud action
+     *
+     * @param string $section
+     * @param string $mode
+     */
+    protected function completeApplicationCrudAction($section)
+    {
+        $this->updateCompletionStatuses($this->getApplicationId(), $section);
+    }
 }

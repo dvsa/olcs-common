@@ -47,19 +47,9 @@ trait PeopleTrait
             return $this->completeSection('people');
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\People');
+        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\People');
 
-        $table = $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable(
-                'application_your-business_people_in_form',
-                $this->getTableData($orgId)
-            );
-
-        $column = $table->getColumn('name');
-        $column['type'] = $this->lva;
-        $table->setColumn('name', $column);
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-people', $this->getTableData($orgId));
 
         $form->get('table')  // fieldset
             ->get('table')   // element
@@ -163,6 +153,11 @@ trait PeopleTrait
 
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\Person');
+
+        // @todo this could do with drying up
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
 
         if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
             // we need to pre-populate the user's position from the org for

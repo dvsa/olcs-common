@@ -199,6 +199,11 @@ trait BusinessDetailsTrait
             ->createForm('Lva\BusinessDetailsSubsidiaryCompany')
             ->setData($data);
 
+        // @todo this could do with drying up
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($data);
             $data['organisation'] = $orgId;
@@ -394,16 +399,7 @@ trait BusinessDetailsTrait
 
         $table = $this->getServiceLocator()
             ->get('Table')
-            ->prepareTable(
-                // @TODO rename / move table? This trait is re-used
-                // across app / var / licences...
-                'application_your-business_business_details-subsidiaries',
-                $tableData
-            );
-
-        $column = $table->getColumn('name');
-        $column['type'] = $this->lva;
-        $table->setColumn('name', $column);
+            ->prepareTable('lva-subsidiaries', $tableData);
 
         $form->get('table')  // fieldset
             ->get('table')   // element

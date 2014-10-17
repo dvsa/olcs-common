@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'lva.section.title.add_subsidiary_company' => 'Add subsidiary company',
+    'lva.section.title.edit_subsidiary_company' => 'Edit subsidiary company',
+    'please-select-row' => 'Please select a row',
     'lva.section.title.add_safety' => 'Add safety inspection provider',
     'lva.section.title.edit_safety' => 'Edit safety inspection provider',
     'lva-financial-evidence-table.title' => 'Financial evidence',

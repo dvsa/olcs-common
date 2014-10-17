@@ -40,32 +40,38 @@ trait CrudTableTrait
 
     /**
      * Redirect to the most appropriate CRUD action
+     *
+     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     protected function handleCrudAction($data)
     {
-        $action = strtolower($data['action']);
-
-        if ($action === 'add') {
-            $routeParams = array(
-                'action' => 'add'
-            );
+        if (is_array($data['action'])) {
+            $action = strtolower(array_keys($data['action'])[0]);
+            $data['id'] = array_keys($data['action'][$action])[0];
         } else {
-            $routeParams = array(
-                'action' => $action,
-                'child_id' => $data['id']
-            );
+            $action = strtolower($data['action']);
         }
 
-        return $this->redirect()->toRoute(
-            null,
-            $routeParams,
-            array(),
-            true
-        );
+        $routeParams = array('action' => $action);
+
+        if ($action !== 'add') {
+
+            if (!isset($data['id'])) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
+                return $this->redirect()->toRoute(null, array(), array(), true);
+            }
+
+            $routeParams['child_id'] = $data['id'];
+        }
+
+        return $this->redirect()->toRoute(null, $routeParams, array(), true);
     }
 
     /**
      * Once the CRUD entity has been saved, handle the necessary redirect
+     *
+     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     protected function handlePostSave()
     {
@@ -86,6 +92,8 @@ trait CrudTableTrait
     /**
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
+     *
+     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     public function deleteAction()
     {
@@ -122,5 +130,20 @@ trait CrudTableTrait
 
         // @todo We can't use parent from a trait, we need a workaround for this
         return parent::handleCancelRedirect($lvaId);
+    }
+
+    /**
+     * Complete crud action
+     *
+     * @param string $section
+     * @param string $mode
+     */
+    protected function completeCrudAction($section, $mode)
+    {
+        $this->addSuccessMessage('lva.section.' . $section . '.' . $mode . '.complete');
+
+        if ($this->lva === 'application') {
+            $this->completeApplicationCrudAction($section);
+        }
     }
 }
