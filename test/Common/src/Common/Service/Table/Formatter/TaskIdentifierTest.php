@@ -22,10 +22,10 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test link formatter
-     * 
+     * @group taskIdentifier
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $expected)
+    public function testFormat($data, $column, $routeName, $param, $expected)
     {
         $sm = $this->getMock('\stdClass', array('get'));
 
@@ -33,7 +33,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
 
         $mockUrlHelper->expects($this->any())
             ->method('__invoke')
-            ->with('licence/details/overview', array('licence' => $data['linkId']))
+            ->with($routeName, array($param => $data['linkId']))
             ->will($this->returnValue('correctUrl'));
 
         $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
@@ -59,6 +59,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
     public function provider()
     {
         return array(
+            // Licence
             array(
                 array(
                     'linkDisplay' => 'Unlinked',
@@ -66,6 +67,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkId' => 1
                 ),
                 array(),
+                'licence/details/overview',
+                'licence',
                 'Unlinked'
             ),
             array(
@@ -76,6 +79,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
+                'licence/details/overview',
+                'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
             array(
@@ -86,6 +91,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 2
                 ),
                 array(),
+                'licence/details/overview',
+                'licence',
                 '<a href="correctUrl">P1234</a> (MLH)'
             ),
             array(
@@ -96,6 +103,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
+                'licence/details/overview',
+                'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
             array(
@@ -106,8 +115,58 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
+                'licence/details/overview',
+                'licence',
                 '<a href="#">P1234</a>'
-            )
+            ),
+            // Application
+            array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'Application',
+                    'linkId' => 1
+                ),
+                array(),
+                'Application/Overview/Details',
+                'applicationId',
+                'Unlinked'
+            ),
+            array(
+                array(
+                    'linkDisplay' => 'P1234',
+                    'linkType' => 'Application',
+                    'linkId' => 1,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'Application/Overview/Details',
+                'applicationId',
+                '<a href="correctUrl">P1234</a>'
+            ),
+            array(
+                array(
+                    'linkDisplay' => 'P1234',
+                    'linkType' => 'Application',
+                    'linkId' => 1,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'Application/Overview/Details',
+                'applicationId',
+                '<a href="correctUrl">P1234</a>'
+            ),
+            array(
+                array(
+                    'linkDisplay' => 'P1234',
+                    'linkType' => '',
+                    'linkId' => 1,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'Application/Overview/Details',
+                'applicationId',
+                '<a href="#">P1234</a>'
+            ),
         );
     }
 }
