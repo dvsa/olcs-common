@@ -115,6 +115,14 @@ trait SafetyTrait
     }
 
     /**
+     * Delete
+     */
+    protected function delete()
+    {
+
+    }
+
+    /**
      * Helper method as both add and edit pretty
      * much do the same thing
      *
@@ -127,14 +135,22 @@ trait SafetyTrait
         $data = array();
         $id = $this->params('child_id');
 
+        if ($mode !== 'add') {
+            $safetyProviderData = $this->getSafetyProviderData($id, $mode);
+        }
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $safetyProviderData = $this->getSafetyProviderData($id, $mode);
-            $data = $this->formatCrudDataForForm($safetyProviderData);
+            $data = $this->formatCrudDataForForm($safetyProviderData, $mode);
         }
 
         $form = $this->getSafetyProviderForm()->setData($data);
+
+        // @todo this could do with drying up
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
 
         $addressLookup = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
@@ -142,7 +158,14 @@ trait SafetyTrait
 
             list($contactDetails, $workshop) = $this->formatCrudDataForSave($data);
 
-            $id = $this->saveContactDetails($contactDetails, $safetyProviderData);
+            if ($mode === 'edit') {
+                $workshop['id'] = $id;
+            }
+
+            $workshop['licence'] = $this->getLicenceId();
+            $workshop['contactDetails'] = $this->saveContactDetails($contactDetails, $safetyProviderData, $mode);
+
+            $this->saveWorkshop($workshop);
 
             return $this->handlePostSave();
         }
@@ -166,31 +189,37 @@ trait SafetyTrait
         return array($processedData['contactDetails'], $processedData['workshop']);
     }
 
-    protected function saveContactDetails($data)
+    /**
+     * Save contact details
+     *
+     * @param array $data
+     * @param array $safetyProviderData
+     * @param string $mode
+     * @return int
+     */
+    protected function saveContactDetails($data, $safetyProviderData, $mode)
     {
-        //$saved = parent::actionSave($data, 'ContactDetails');
+        if ($mode === 'edit') {
+            $data['id'] = $safetyProviderData['contactDetails']['id'];
+        }
+
+        $result = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data);
+
+        if ($mode === 'add') {
+            return $result['id'];
+        }
+
+        return $data['id'];
     }
 
     /**
-     * Save safety provider
+     * Save workshop
      *
      * @param array $data
      */
-    protected function saveSafetyProvider($data)
+    protected function saveWorkshop($data)
     {
-
-
-
-        if ($this->getActionName() == 'add') {
-
-            if (!isset($saved['id'])) {
-                throw new \Exception('Unable to save contact details');
-            }
-
-            $data['workshop']['contactDetails'] = $saved['id'];
-        }
-
-        parent::actionSave($data['workshop'], 'Workshop');
+        $this->getServiceLocator()->get('Entity\Workshop')->save($data);
     }
 
     /**
@@ -287,14 +316,6 @@ trait SafetyTrait
         }
 
         return array($data['licence'], $data['application']);
-    }
-
-    /**
-     * Delete
-     */
-    protected function delete()
-    {
-
     }
 
     /**
@@ -419,45 +440,4 @@ trait SafetyTrait
 
         return $translatedData;
     }
-
-
-
-
-
-
-
-
-
-    /**
-     * Shared logic to get form table data
-     *
-     * @param array $data
-     * @return array
-    protected function doGetFormTableData($data)
-    {
-        $tableData = array();
-
-        foreach ($data as $workshop) {
-
-            $row = $workshop;
-
-            if (isset($row['contactDetails'])) {
-
-                $row = array_merge($row, $row['contactDetails']);
-                unset($row['contactDetails']);
-            }
-
-            if (isset($row['address'])) {
-
-                $row = array_merge($row, $row['address']);
-                unset($row['address']);
-            }
-
-            $tableData[] = $row;
-        }
-
-        return $tableData;
-    }
-     *
-     */
 }

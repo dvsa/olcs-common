@@ -34,6 +34,9 @@ trait LicenceGenericVehicleSection
         if (empty($licenceVehicle['specifiedDate'])) {
             return false;
         }
+        if (!empty($licenceVehicle['removalDate'])) {
+            return false;
+        }
 
         return true;
     }

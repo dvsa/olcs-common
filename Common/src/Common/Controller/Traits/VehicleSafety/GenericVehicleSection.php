@@ -247,7 +247,7 @@ trait GenericVehicleSection
     protected function getVrmsForCurrentLicence()
     {
         $bundle = array(
-            'properties' => array(),
+            'properties' => array('removalDate'),
             'children' => array(
                 'vehicle' => array(
                     'properties' => array('vrm')
@@ -260,7 +260,9 @@ trait GenericVehicleSection
         $vrms = array();
 
         foreach ($data['Results'] as $row) {
-            $vrms[] = $row['vehicle']['vrm'];
+            if (!$row['removalDate']) {
+                $vrms[] = $row['vehicle']['vrm'];
+            }
         }
 
         return $vrms;
