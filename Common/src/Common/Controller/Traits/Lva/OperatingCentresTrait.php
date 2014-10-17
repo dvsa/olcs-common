@@ -127,10 +127,11 @@ trait OperatingCentresTrait
             $appData = $this->formatDataForSave($data);
 
             if (isset($appData['trafficArea']) && $appData['trafficArea']) {
-                $this->getSectionService('TrafficArea')->setTrafficArea(
-                    $this->getApplicationId(),
-                    $appData['trafficArea']
-                );
+                $this->getServiceLocator()->get('Entity\TrafficArea')
+                    ->setTrafficArea(
+                        $this->getApplicationId(),
+                        $appData['trafficArea']
+                    );
             }
 
             $this->getServiceLocator()->get('Entity\Application')
@@ -294,33 +295,35 @@ trait OperatingCentresTrait
      */
     private function getTableData()
     {
-        $id = $this->getApplicationId();
+        if (empty($this->tableData)) {
+            $id = $this->getApplicationId();
 
-        // @TODO not in common trait... currently always fetches from app operating centre
-        $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-            ->getAddressSummaryDataForApplication($id);
+            // @TODO not in common trait... currently always fetches from app operating centre
+            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+                ->getAddressSummaryDataForApplication($id);
 
-        $newData = array();
+            $newData = array();
 
-        foreach ($data['Results'] as $row) {
+            foreach ($data['Results'] as $row) {
 
-            $newRow = $row;
+                $newRow = $row;
 
-            if (isset($row['operatingCentre']['address'])) {
+                if (isset($row['operatingCentre']['address'])) {
 
-                unset($row['operatingCentre']['address']['id']);
-                unset($row['operatingCentre']['address']['version']);
+                    unset($row['operatingCentre']['address']['id']);
+                    unset($row['operatingCentre']['address']['version']);
 
-                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+                    $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+                }
+
+                unset($newRow['operatingCentre']);
+
+                $newData[] = $newRow;
             }
-
-            unset($newRow['operatingCentre']);
-
-            $newData[] = $newRow;
+            $this->tableData = $newData;
         }
-        $this->tableData = $newData;
 
-        return $newData;
+        return $this->tableData;
     }
 
     public function addAction()
@@ -550,7 +553,9 @@ trait OperatingCentresTrait
 
     private function formatDataForSave($data)
     {
-        return $data['data'];
+        return $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->processDataMap($data, $this->dataMap);
     }
 
     public function getOperatingCentresCount()
