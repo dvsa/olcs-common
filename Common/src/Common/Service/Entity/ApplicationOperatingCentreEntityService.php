@@ -126,6 +126,15 @@ class ApplicationOperatingCentreEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * OC Count Bundle
+     *
+     * @var array
+     */
+    protected $ocCountBundle = array(
+        'properties' => array('id')
+    );
+
     public function getAddressSummaryDataForApplication($applicationId)
     {
         return $this->getServiceLocator()->get('Helper\Rest')
@@ -136,5 +145,11 @@ class ApplicationOperatingCentreEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->addressBundle);
+    }
+
+    public function getOperatingCentresCount($applicationId)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->ocCountBundle);
     }
 }

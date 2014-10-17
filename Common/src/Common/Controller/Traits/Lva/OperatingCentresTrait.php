@@ -9,6 +9,7 @@
 namespace Common\Controller\Traits\Lva;
 
 use Zend\Form\Form;
+use Common\Service\Entity\TrafficAreaEntityService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -123,10 +124,18 @@ trait OperatingCentresTrait
 
         if ($request->isPost() && $form->isValid()) {
 
-            $data = $this->formatDataForSave($data);
+            $appData = $this->formatDataForSave($data);
+
+            if (isset($appData['trafficArea']) && $appData['trafficArea']) {
+                $this->getSectionService('TrafficArea')->setTrafficArea(
+                    $this->getApplicationId(),
+                    $appData['trafficArea']
+                );
+            }
 
             $this->getServiceLocator()->get('Entity\Application')
-                ->save($data);
+                ->save($appData);
+
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table']);
             }
@@ -161,9 +170,7 @@ trait OperatingCentresTrait
         if ($options['isReview']) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
-            $trafficAreaSection = $this->createSectionService('TrafficArea');
-            $trafficAreaSection->setIdentifier($options['data']['id']);
-            $trafficArea = $trafficAreaSection->getTrafficArea();
+            $this->getTrafficArea($options['data']['id']);
 
             if (!isset($trafficArea['name'])) {
                 $trafficArea['name'] = 'unset';
@@ -311,6 +318,7 @@ trait OperatingCentresTrait
 
             $newData[] = $newRow;
         }
+        $this->tableData = $newData;
 
         return $newData;
     }
@@ -387,7 +395,9 @@ trait OperatingCentresTrait
 
     protected function delete()
     {
-
+        $this->getServiceLocator()
+            ->get('Entity\ApplicationOperatingCentre')
+            ->delete($this->params('child_id'));
     }
 
     protected function formatCrudDataForSave($data)
@@ -433,10 +443,14 @@ trait OperatingCentresTrait
         return $data;
     }
 
-    private function getTrafficArea()
+    private function getTrafficArea($identifier = null)
     {
-        // @TODO see TrafficAreaSectionService
-        return array();
+        if ($identifier === null) {
+            $identifier = $this->getIdentifier();
+        }
+        return $this->getServiceLocator()
+            ->get('Entity\TrafficArea')
+            ->getTrafficArea($identifier);
     }
 
     /**
@@ -446,27 +460,32 @@ trait OperatingCentresTrait
      */
     protected function setDefaultTrafficArea($data)
     {
-        // @TODO re-implement
-        return;
-        $licenceData = $this->getLicenceData();
+        $licenceData = $this->getTypeOfLicenceData();
 
-        if ($licenceData['niFlag'] == 'Y') {
+        if ($licenceData['niFlag'] === 'Y') {
             $this->getSectionService('TrafficArea')->setTrafficArea(
-                TrafficAreaSectionService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                $this->getApplicationId(),
+                TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
             );
             return;
         }
 
         $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
 
-        if (!empty($postcode) && $this->getOperatingCentresCount() == 1) {
+        if (!empty($postcode) && $this->getOperatingCentresCount() === 1) {
 
-            $postcodeService = $this->getPostcodeService();
+            $postcodeService = $this->getServiceLocator()
+                ->get('Postcode');
 
             $trafficAreaParts = $postcodeService->getTrafficAreaByPostcode($postcode);
 
             if (!empty($trafficAreaParts)) {
-                $this->getSectionService('TrafficArea')->setTrafficArea(array_shift($trafficAreaParts));
+                $this->getServiceLocator()
+                    ->get('Entity\TrafficArea')
+                    ->setTrafficArea(
+                        $this->getApplicationId(),
+                        array_shift($trafficAreaParts)
+                    );
             }
         }
     }
@@ -532,5 +551,13 @@ trait OperatingCentresTrait
     private function formatDataForSave($data)
     {
         return $data['data'];
+    }
+
+    public function getOperatingCentresCount()
+    {
+        $operatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+            ->getOperatingCentresCount($this->getApplicationId());
+
+        return $operatingCentres['Count'];
     }
 }
