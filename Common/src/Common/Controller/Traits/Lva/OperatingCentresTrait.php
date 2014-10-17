@@ -98,14 +98,16 @@ trait OperatingCentresTrait
         } else {
             // @TODO this is wrong; the data fetched depends on LVA type (I think)
             $data = $this->getServiceLocator()->get('Entity\Application')
-            ->getOperatingCentresData($this->getApplicationId());
+                ->getOperatingCentresData($this->getApplicationId());
+
+            $data = $this->formatDataForForm($data);
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-        ->createForm('Lva\OperatingCentres');
+            ->createForm('Lva\OperatingCentres');
 
         $form = $this->alterForm($form)
-        ->setData($data);
+            ->setData($data);
 
         $table = $this->getServiceLocator()
             ->get('Table')
@@ -123,6 +125,7 @@ trait OperatingCentresTrait
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table']);
             }
+            return $this->completeSection('operating_centres');
         }
 
         return $this->render('operating_centres', $form);
@@ -360,7 +363,7 @@ trait OperatingCentresTrait
             }
 
             // @todo not sure this is right
-            $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['applicationOperatingCentre']);
+            $saved = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->save($data['applicationOperatingCentre']);
 
             if ($mode === 'add' && !isset($saved['id'])) {
                 throw new \Exception('Unable to save operating centre');
@@ -384,9 +387,14 @@ trait OperatingCentresTrait
 
     protected function formatCrudDataForSave($data)
     {
-        return $this->getServiceLocator()
+        $data = $this->getServiceLocator()
             ->get('Helper\Data')
             ->processDataMap($data, $this->actionDataMap);
+
+        // @TODO shouldn't have to do this... need to investigate
+        $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
+        $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+        return $data;
     }
 
     protected function formatCrudDataForForm($oldData, $mode)
@@ -477,5 +485,42 @@ trait OperatingCentresTrait
                 );
             }
         }
+    }
+
+    private function formatDataForForm($data)
+    {
+        $data['data'] = $oldData = $data;
+
+        //$results = $this->getFormTableData($this->getIdentifier(), '');
+        $results = $this->getTableData();
+
+        $licenceData = $this->getTypeOfLicenceData();
+
+        $data['data']['noOfOperatingCentres'] = count($results);
+        $data['data']['minVehicleAuth'] = 0;
+        $data['data']['maxVehicleAuth'] = 0;
+        $data['data']['minTrailerAuth'] = 0;
+        $data['data']['maxTrailerAuth'] = 0;
+        $data['data']['licenceType'] = $licenceData['licenceType'];
+
+        foreach ($results as $row) {
+
+            $data['data']['minVehicleAuth'] = max(
+                array($data['data']['minVehicleAuth'], $row['noOfVehiclesPossessed'])
+            );
+
+            $data['data']['minTrailerAuth'] = max(
+                array($data['data']['minTrailerAuth'], $row['noOfTrailersPossessed'])
+            );
+
+            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesPossessed'];
+            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersPossessed'];
+        }
+
+        if (isset($oldData['licence']['trafficArea']['id'])) {
+            $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
+        }
+
+        return $data;
     }
 }

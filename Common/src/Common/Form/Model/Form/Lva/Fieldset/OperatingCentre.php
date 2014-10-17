@@ -14,6 +14,12 @@ class OperatingCentre
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
+    public $id = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
     public $version = null;
 
     /**
