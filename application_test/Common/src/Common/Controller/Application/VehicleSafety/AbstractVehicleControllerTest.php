@@ -1129,14 +1129,5 @@ abstract class AbstractVehicleControllerTest extends AbstractApplicationControll
                 )
             );
         }
-        /*
-        echo 'service: ' .$service . PHP_EOL;
-        echo 'method: ' .$method . PHP_EOL;
-        echo 'data: ' . PHP_EOL;
-        print_r($data);
-        echo 'bundle: ' . PHP_EOL;
-        print_r($bundle);
-        die();
-         */
     }
 }
