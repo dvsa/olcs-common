@@ -209,6 +209,73 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+    // @TODO currently duped with application entity service...
+    // traitify or move to abstract?
+    /**
+     * Operating Centres bundle
+     */
+    protected $ocBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'totCommunityLicences',
+            'totAuthVehicles',
+            'totAuthTrailers',
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id'
+                ),
+                'children' => array(
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'name'
+                        )
+                    )
+                )
+            ),
+            'operatingCentre' => array(
+                'properties' => array(
+                    'id',
+                    'version'
+                ),
+                'children' => array(
+                    'address' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'addressLine1',
+                            'addressLine2',
+                            'addressLine3',
+                            'addressLine4',
+                            'postcode',
+                            'town'
+                        ),
+                        'children' => array(
+                            'countryCode' => array(
+                                'properties' => array('id')
+                            )
+                        )
+                    ),
+                    'adDocuments' => array(
+                        'properties' => array(
+                            'id',
+                            'version',
+                            'filename',
+                            'identifier',
+                            'size'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -277,5 +344,17 @@ class LicenceEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', $id, $this->addressesDataBundle);
+    }
+
+    /**
+     * Get operating centres data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getOperatingCentresData($id)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall($this->entity, 'GET', $id, $this->ocBundle);
     }
 }

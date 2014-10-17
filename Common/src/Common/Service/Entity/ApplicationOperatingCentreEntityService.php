@@ -135,7 +135,7 @@ class ApplicationOperatingCentreEntityService extends AbstractEntityService
         'properties' => array('id')
     );
 
-    public function getAddressSummaryDataForApplication($applicationId)
+    public function getAddressSummaryData($applicationId)
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->addressSummaryBundle);

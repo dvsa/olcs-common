@@ -10,6 +10,7 @@ namespace Common\Controller\Traits\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\TrafficAreaEntityService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -32,10 +33,11 @@ trait OperatingCentresTrait
      */
     private $section = 'operating_centres';
 
-    abstract protected function alterForm($form);
-
-    abstract protected function isPsv();
-
+    /**
+     * Any implementors are expected to provide a licence ID; we
+     * don't care if that's via an entity service lookup or a route
+     * param
+     */
     abstract protected function getLicenceId($lvaId = null);
 
     abstract protected function getIdentifier();
@@ -92,14 +94,14 @@ trait OperatingCentresTrait
      */
     public function indexAction()
     {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva);
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             $data = (array) $request->getPost();
         } else {
-            // @TODO this is wrong; the data fetched depends on LVA type (I think)
-            $data = $this->getServiceLocator()->get('Entity\Application')
-                ->getOperatingCentresData($this->getApplicationId());
+            $data = $this->getServiceLocator()->get($lvaEntity)
+                ->getOperatingCentresData($this->getIdentifier());
 
             $data = $this->formatDataForForm($data);
         }
@@ -127,6 +129,7 @@ trait OperatingCentresTrait
             $appData = $this->formatDataForSave($data);
 
             if (isset($appData['trafficArea']) && $appData['trafficArea']) {
+                // @TODO needs to alter based on LVA
                 $this->getServiceLocator()->get('Entity\TrafficArea')
                     ->setTrafficArea(
                         $this->getApplicationId(),
@@ -134,7 +137,7 @@ trait OperatingCentresTrait
                     );
             }
 
-            $this->getServiceLocator()->get('Entity\Application')
+            $this->getServiceLocator()->get($lvaEntity)
                 ->save($appData);
 
             if (isset($data['table']['action'])) {
@@ -296,11 +299,11 @@ trait OperatingCentresTrait
     private function getTableData()
     {
         if (empty($this->tableData)) {
-            $id = $this->getApplicationId();
+            $id = $this->getIdentifier();
 
             // @TODO not in common trait... currently always fetches from app operating centre
             $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-                ->getAddressSummaryDataForApplication($id);
+                ->getAddressSummaryData($id);
 
             $newData = array();
 
@@ -374,7 +377,7 @@ trait OperatingCentresTrait
                 $operatingCentreId = $data['operatingCentre']['id'];
             }
 
-            // @TODO: $this->saveDocuments($data, $operatingCentreId);
+            $this->saveDocuments($data, $operatingCentreId);
 
             if ($this->isPsv()) {
                 $data['applicationOperatingCentre']['adPlaced'] = 0;
@@ -615,5 +618,55 @@ trait OperatingCentresTrait
      */
     protected function alterActionFormForGoods(Form $form)
     {
+    }
+
+    protected function isPsv()
+    {
+        $data = $this->getTypeOfLicenceData();
+        return isset($data['goodsOrPsv']) && $data['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+    }
+
+    /**
+     * Remove trailer elements for PSV and set up Traffic Area section
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm(Form $form)
+    {
+        // Make the same form alterations that are required for the summary section
+        $form = $this->makeFormAlterations($form, $this->getAlterFormOptions());
+
+        $tableData = $this->getTableData();
+
+        if (empty($tableData)) {
+            $form->remove('dataTrafficArea');
+            return $form;
+        }
+
+        $trafficArea = $this->getTrafficArea();
+        $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
+
+        $dataTrafficAreaFieldset = $form->get('dataTrafficArea');
+
+        if ($trafficAreaId) {
+
+            $nameExistsElement = $dataTrafficAreaFieldset->remove('trafficArea')->get('trafficAreaInfoNameExists');
+
+            $nameExistsElement->setValue(
+                str_replace('%NAME%', $trafficArea['name'], $nameExistsElement->getValue())
+            );
+            return $form;
+        }
+        $options = $this->getServiceLocator()
+            ->get('Entity\TrafficArea')->getTrafficAreaValueOptions();
+
+        $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
+            ->remove('trafficAreaInfoNameExists')
+            ->remove('trafficAreaInfoHintExists')
+            ->get('trafficArea')
+            ->setValueOptions($options);
+
+        return $form;
     }
 }
