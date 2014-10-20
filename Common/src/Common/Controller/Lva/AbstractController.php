@@ -1,12 +1,13 @@
 <?php
 
 /**
- * AbstractLvaController
+ * Lva Abstract Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller;
+namespace Common\Controller\Lva;
 
+use Zend\Form\Form;
 use Common\Util;
 use Common\Service\Data\SectionConfig;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -14,11 +15,11 @@ use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
 
 /**
- * AbstractLvaController
+ * Lva Abstract Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractLvaController extends AbstractActionController
+abstract class AbstractController extends AbstractActionController
 {
     use Util\FlashMessengerTrait;
 
@@ -204,5 +205,15 @@ abstract class AbstractLvaController extends AbstractActionController
         if ($this->isButtonPressed('cancel')) {
             return $this->handleCancelRedirect($lvaId);
         }
+    }
+
+    protected function alterFormForLocation(Form $form)
+    {
+
+    }
+
+    protected function alterFormForLva(Form $form)
+    {
+
     }
 }

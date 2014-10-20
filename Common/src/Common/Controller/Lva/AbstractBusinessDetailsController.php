@@ -1,27 +1,25 @@
 <?php
 
 /**
- * Shared logic between Business Details controllers
+ * Shared logic between Business Details Controller
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\AddressEntityService;
 use Common\Service\Helper\FormHelperService;
+use Common\Controller\Lva\Traits\CrudTableTrait;
 
 /**
- * Shared logic between Business Details controllers
+ * Shared logic between Business Details Controller
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait BusinessDetailsTrait
+abstract class AbstractBusinessDetailsController extends AbstractController
 {
-    use GenericLvaTrait,
-        CrudTableTrait;
+    use CrudTableTrait;
 
     protected $section = 'business_details';
 

@@ -6,7 +6,7 @@
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\TrafficAreaEntityService;
@@ -17,14 +17,12 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-trait OperatingCentresTrait
+abstract class AbstractOperatingCentresController extends AbstractController
 {
     /**
      * @TODO inline JS
      */
-
-    use GenericLvaTrait,
-        CrudTableTrait;
+    use Traits\CrudTableTrait;
 
     protected $tableData = array();
 

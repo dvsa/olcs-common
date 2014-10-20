@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva\Traits;
 
 use Common\Service\Entity\ApplicationCompletionEntityService;
 

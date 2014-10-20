@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 use Common\Service\Helper\FormHelperService;
 use Common\Service\Entity\LicenceEntityService;
@@ -18,9 +18,9 @@ use Common\Service\Entity\ContactDetailsEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait SafetyTrait
+abstract class AbstractSafetyController extends AbstractController
 {
-    use CrudTableTrait;
+    use Lva\Traits\CrudTableTrait;
 
     protected $section = 'safety';
 

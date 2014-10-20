@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
@@ -15,10 +15,8 @@ use Common\Service\Entity\ContactDetailsEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait AddressesTrait
+abstract class AbstractAddressesController extends AbstractController
 {
-    use GenericLvaTrait;
-
     /**
      * Type map
      *

@@ -5,14 +5,14 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 /**
  * Transport Managers Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait TransportManagersTrait
+abstract class AbstractTransportManagersController extends AbstractController
 {
     /**
      * Transport managers section
