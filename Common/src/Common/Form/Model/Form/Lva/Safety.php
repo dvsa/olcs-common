@@ -20,7 +20,7 @@ class Safety
 
     /**
      * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      */
     public $table = null;
 

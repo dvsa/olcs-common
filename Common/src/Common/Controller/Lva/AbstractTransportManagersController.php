@@ -22,6 +22,7 @@ abstract class AbstractTransportManagersController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+            $this->postSave('transport_managers');
             return $this->completeSection('transport_managers');
         }
 

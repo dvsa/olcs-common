@@ -39,6 +39,8 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
 
             $this->getServiceLocator()->get('Entity\Licence')->save($data);
 
+            $this->postSave('type_of_licence');
+
             return $this->completeSection('type_of_licence');
         }
 
@@ -53,7 +55,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
      * @param array $data
      * @return array
      */
-    private function formatDataForSave($data)
+    protected function formatDataForSave($data)
     {
         return array(
             'version' => $data['version'],
@@ -69,7 +71,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
      * @param array $data
      * @return array
      */
-    private function formatDataForForm($data)
+    protected function formatDataForForm($data)
     {
         return array(
             'version' => $data['version'],
@@ -86,7 +88,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
      *
      * @return \Zend\Form\Form
      */
-    private function getTypeOfLicenceForm()
+    protected function getTypeOfLicenceForm()
     {
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TypeOfLicence');
 

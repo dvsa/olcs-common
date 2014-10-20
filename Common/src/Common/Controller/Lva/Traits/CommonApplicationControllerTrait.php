@@ -138,8 +138,6 @@ trait CommonApplicationControllerTrait
      */
     protected function completeSection($section)
     {
-        $this->updateCompletionStatuses($this->getApplicationId(), $section);
-
         $this->addSectionUpdatedMessage($section);
 
         if ($this->isButtonPressed('saveAndContinue')) {
@@ -149,13 +147,7 @@ trait CommonApplicationControllerTrait
         return $this->goToOverviewAfterSave();
     }
 
-    /**
-     * Complete crud action
-     *
-     * @param string $section
-     * @param string $mode
-     */
-    protected function completeApplicationCrudAction($section)
+    protected function postSave($section)
     {
         $this->updateCompletionStatuses($this->getApplicationId(), $section);
     }

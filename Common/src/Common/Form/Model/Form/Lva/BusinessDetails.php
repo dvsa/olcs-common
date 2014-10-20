@@ -8,7 +8,7 @@ use Common\Form\Model\Form\Traits\VersionTrait;
 /**
  * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("application_your-business_business-details")
+ * @Form\Name("lva-business-details")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */

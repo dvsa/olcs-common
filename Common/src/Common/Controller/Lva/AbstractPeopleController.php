@@ -4,6 +4,7 @@
  * Shared logic between People controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Lva;
 
@@ -13,6 +14,7 @@ use Common\Service\Entity\OrganisationEntityService;
  * Shared logic between People controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 abstract class AbstractPeopleController extends AbstractController
 {
@@ -38,6 +40,7 @@ abstract class AbstractPeopleController extends AbstractController
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+            $this->postSave('people');
 
             if (isset($data['table']['action'])) {
                 return $this->handleCrudAction($data['table'], 'people');
@@ -56,6 +59,8 @@ abstract class AbstractPeopleController extends AbstractController
 
         $this->alterForm($form, $table, $orgData);
 
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+
         return $this->render('people', $form);
     }
 
@@ -71,28 +76,28 @@ abstract class AbstractPeopleController extends AbstractController
         $translator = $this->getServiceLocator()->get('translator');
 
         switch ($orgData['type']['id']) {
-        case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
-            $tableHeader .= 'Directors';
-            $guidanceLabel .= 'LC';
-            break;
+            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
+                $tableHeader .= 'Directors';
+                $guidanceLabel .= 'LC';
+                break;
 
-        case OrganisationEntityService::ORG_TYPE_LLP:
-            $tableHeader .= 'Partners';
-            $guidanceLabel .= 'LLP';
-            break;
+            case OrganisationEntityService::ORG_TYPE_LLP:
+                $tableHeader .= 'Partners';
+                $guidanceLabel .= 'LLP';
+                break;
 
-        case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
-            $tableHeader .= 'Partners';
-            $guidanceLabel .= 'P';
-            break;
+            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
+                $tableHeader .= 'Partners';
+                $guidanceLabel .= 'P';
+                break;
 
-        case OrganisationEntityService::ORG_TYPE_OTHER:
-            $tableHeader .= 'People';
-            $guidanceLabel .= 'O';
-            break;
+            case OrganisationEntityService::ORG_TYPE_OTHER:
+                $tableHeader .= 'People';
+                $guidanceLabel .= 'O';
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         // a separate if saves repeating this three times in the switch...
@@ -239,11 +244,25 @@ abstract class AbstractPeopleController extends AbstractController
      */
     protected function delete()
     {
-        $orgId = $this->getCurrentOrganisationId();
         $id = $this->params('child_id');
+        $orgId = $this->getCurrentOrganisationId();
 
-        $orgPersonService = $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson');
+        // This allows us to handle multiple delete
+        $ids = explode(',', $id);
+
+        foreach ($ids as $id) {
+            $this->deletePerson($id, $orgId);
+        }
+    }
+
+    /**
+     * Delete a person from the organisation, and then delete the person if they are now an orphan
+     *
+     * @param int $id
+     */
+    protected function deletePerson($id, $orgId)
+    {
+        $orgPersonService = $this->getServiceLocator()->get('Entity\OrganisationPerson');
 
         $orgPersonService->deleteByOrgAndPersonId($orgId, $id);
 
@@ -252,8 +271,7 @@ abstract class AbstractPeopleController extends AbstractController
         // delete the actual person row if they no longer relate
         // to an organisation
         if (isset($result['Count']) && $result['Count'] === 0) {
-            $this->getServiceLocator()->get('Entity\Person')
-                ->delete($id);
+            $this->getServiceLocator()->get('Entity\Person')->delete($id);
         }
     }
 

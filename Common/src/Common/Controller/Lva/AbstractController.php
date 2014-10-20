@@ -216,4 +216,12 @@ abstract class AbstractController extends AbstractActionController
     {
 
     }
+
+    /**
+     * A method to be called post save, this can be hi-jacked to do things like update completion status
+     */
+    protected function postSave($section)
+    {
+
+    }
 }

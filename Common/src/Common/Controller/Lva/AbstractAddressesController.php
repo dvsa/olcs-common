@@ -76,6 +76,8 @@ abstract class AbstractAddressesController extends AbstractController
 
             $this->maybeSaveEstablishmentAddress($data, 'establishment');
 
+            $this->postSave('addresses');
+
             return $this->completeSection('addresses');
         }
 

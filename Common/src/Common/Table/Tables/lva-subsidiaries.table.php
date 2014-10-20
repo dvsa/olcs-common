@@ -29,7 +29,7 @@ return array(
         ),
         array(
             'width' => 'checkbox',
-            'type' => 'Selector'
+            'type' => 'Checkbox'
         )
     )
 );

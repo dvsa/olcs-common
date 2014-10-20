@@ -34,6 +34,8 @@ abstract class AbstractBusinessTypeController extends AbstractController
         if ($request->isPost() && $form->isValid()) {
             $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));
 
+            $this->postSave('business_type');
+
             return $this->completeSection('business_type');
         }
 

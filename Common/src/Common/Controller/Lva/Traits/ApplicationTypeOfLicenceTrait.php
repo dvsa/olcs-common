@@ -46,7 +46,7 @@ trait ApplicationTypeOfLicenceTrait
 
                 $this->getServiceLocator()->get('Entity\Licence')->save($data);
 
-                $this->updateCompletionStatuses($ids['application']);
+                $this->updateCompletionStatuses($ids['application'], 'type_of_licence');
 
                 return $this->goToOverview($ids['application']);
             }

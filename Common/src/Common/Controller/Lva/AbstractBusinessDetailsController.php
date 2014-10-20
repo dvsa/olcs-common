@@ -64,7 +64,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             } elseif (isset($tradingNames['submit_add_trading_name'])) {
                 $this->processTradingNames($tradingNames, $form);
             } elseif ($form->isValid()) {
+
                 $this->processSave($tradingNames, $orgId, $data);
+                $this->postSave('business_details');
 
                 if (isset($data['table']['action'])) {
                     return $this->handleCrudAction($data['table']);
@@ -73,6 +75,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 return $this->completeSection('business_details');
             }
         }
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('business_details', $form);
     }
@@ -410,7 +414,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function delete()
     {
-        $this->getServiceLocator()->get('Entity\CompanySubsidiary')
-            ->delete($this->params('child_id'));
+        $id = $this->params('child_id');
+        $ids = explode(',', $id);
+
+        foreach ($ids as $id) {
+            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
+        }
     }
 }

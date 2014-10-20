@@ -27,6 +27,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             $data = (array)$request->getPost();
 
             if (!isset($data['table']['action'])) {
+                $this->postSave('financial_evidence');
                 return $this->completeSection('financial_evidence');
             }
         }

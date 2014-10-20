@@ -40,8 +40,6 @@ trait CrudTableTrait
 
     /**
      * Redirect to the most appropriate CRUD action
-     *
-     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     protected function handleCrudAction($data)
     {
@@ -62,6 +60,10 @@ trait CrudTableTrait
                 return $this->redirect()->toRoute(null, array(), array(), true);
             }
 
+            if (is_array($data['id'])) {
+                $data['id'] = implode(',', $data['id']);
+            }
+
             $routeParams['child_id'] = $data['id'];
         }
 
@@ -70,11 +72,11 @@ trait CrudTableTrait
 
     /**
      * Once the CRUD entity has been saved, handle the necessary redirect
-     *
-     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     protected function handlePostSave()
     {
+        $this->postSave($this->section);
+
         // we can't just opt-in to all existing route params because
         // we might have a child ID if we're editing; if so we *don't*
         // want that in the redirect or we'll end up back on the same page
@@ -86,14 +88,14 @@ trait CrudTableTrait
             $routeParams['action'] = 'add';
         }
 
+        // @todo maybe add a flash message in here
+
         return $this->redirect()->toRoute(null, $routeParams);
     }
 
     /**
      * Generic delete functionality; usually does the trick but
      * can be overridden if not
-     *
-     * @todo within this method, we could do with calling another method to update app completion statuses
      */
     public function deleteAction()
     {
@@ -105,6 +107,7 @@ trait CrudTableTrait
         if ($request->isPost()) {
 
             $this->delete();
+            $this->postSave($this->section);
 
             return $this->redirect()->toRoute(
                 null,
@@ -130,20 +133,5 @@ trait CrudTableTrait
 
         // @todo We can't use parent from a trait, we need a workaround for this
         return parent::handleCancelRedirect($lvaId);
-    }
-
-    /**
-     * Complete crud action
-     *
-     * @param string $section
-     * @param string $mode
-     */
-    protected function completeCrudAction($section, $mode)
-    {
-        $this->addSuccessMessage('lva.section.' . $section . '.' . $mode . '.complete');
-
-        if ($this->lva === 'application') {
-            $this->completeApplicationCrudAction($section);
-        }
     }
 }

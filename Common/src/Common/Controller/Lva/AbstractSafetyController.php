@@ -20,7 +20,7 @@ use Common\Service\Entity\ContactDetailsEntityService;
  */
 abstract class AbstractSafetyController extends AbstractController
 {
-    use Lva\Traits\CrudTableTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'safety';
 
@@ -86,6 +86,7 @@ abstract class AbstractSafetyController extends AbstractController
             if ($form->isValid()) {
 
                 $this->save($data);
+                $this->postSave('safety');
 
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);
@@ -94,6 +95,8 @@ abstract class AbstractSafetyController extends AbstractController
                 return $this->completeSection('safety');
             }
         }
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('safety', $form);
     }
@@ -119,7 +122,13 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function delete()
     {
+        $ids = explode(',', $this->params('child_id'));
 
+        $service = $this->getServiceLocator()->get('Entity\Workshop');
+
+        foreach ($ids as $id) {
+            $service->delete($id);
+        }
     }
 
     /**
@@ -147,7 +156,6 @@ abstract class AbstractSafetyController extends AbstractController
 
         $form = $this->getSafetyProviderForm()->setData($data);
 
-        // @todo this could do with drying up
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }
