@@ -53,6 +53,9 @@ class Document
         $bookmarks = $this->getBookmarks($tokens);
 
         foreach ($bookmarks as $token => $bookmark) {
+
+            $bookmark->setParser($parser);
+
             if ($bookmark->isStatic()) {
 
                 $result = $bookmark->render();

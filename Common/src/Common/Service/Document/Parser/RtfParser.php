@@ -9,6 +9,11 @@ namespace Common\Service\Document\Parser;
  */
 class RtfParser implements ParserInterface
 {
+    public function getFileExtension()
+    {
+        return 'rtf';
+    }
+
     public function extractTokens($content)
     {
         $matches = $this->getMatches($content);
