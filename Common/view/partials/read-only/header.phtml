@@ -1,0 +1,28 @@
+<?php
+    use Zend\Form\Element\Button;
+?>
+
+<div class="read-only__header">
+    <h4 class="read-only__title"><?php echo(isset($header) ? $this->translate($header) : '') ?></h4>
+    <div class="actions-container">
+        <?php
+            if (isset($actions)) {
+                foreach ($actions as $action) {
+                    if (isset($action['url'])) {
+                        echo '<a href="' . $action['url'] . '" class="' . (isset($action['class']) ? $action['class'] : 'action--secondary') . '">' . $this->translate($action['label']) . '</a>';
+                    }
+                    else{
+                        $lowerLabel = strtolower($action['label']);
+                        $element = new Button(str_replace(' ', '-', $lowerLabel));
+                        $element->setAttribute('type', 'submit');
+                        $element->setAttribute('name', 'action');
+                        $element->setAttribute('id', $lowerLabel);
+                        $element->setAttribute('class', (isset($action['class']) ? $action['class'] : 'action--secondary'));
+                        $element->setAttribute('value', $this->translate($action['label']));
+                        echo $this->formInput($element);
+                    }
+                }
+            }
+        ?>
+    </div>
+</div>

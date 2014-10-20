@@ -1,0 +1,47 @@
+<?php
+//if we have a date, only try to format if it isn't blank
+if (array_key_exists('date', $item)) {
+    if ($item['date']) {
+        $item['value'] = $this->dateFormat(
+            \DateTime::createFromFormat(
+                \DateTime::ISO8601,
+                $item['date']
+            ),
+            \IntlDateFormatter::SHORT
+        );
+    } else {
+        $item['value'] = '';
+    }
+}
+
+//if we're dealing with something supposed to be numeric but it's empty, echo out a zero
+if (array_key_exists('numeric', $item)) {
+    if(!is_numeric($item['numeric']) || $item['numeric'] == 0) {
+        $item['value'] = '0'; // for some reason a numeric zero breaks the switch below!
+    } else {
+        $item['value'] = $item['numeric'];
+    }
+
+}
+
+//convert values into yes or no
+switch ($item['value']) {
+    case 'Y':
+        $item['value'] = 'Yes';
+        break;
+    case 'N':
+        $item['value'] = 'No';
+        break;
+}
+
+?>
+<li class="definition-list__item<?php echo (isset($item['class']) ? ' ' . $item['class'] : ''); ?>">
+    <dt><?php echo $this->translate($item['label']); ?></dt>
+    <dd>
+        <?php if (isset($item['url']) && $item['url'] != ''): ?>
+            <a href="<?php echo $item['url']; ?>"><?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?></a>
+        <?php else: ?>
+            <?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?>
+        <?php endif; ?>
+    </dd>
+</li>
