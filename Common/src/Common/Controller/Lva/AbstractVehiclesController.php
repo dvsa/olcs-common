@@ -5,14 +5,14 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 /**
  * Vehicles Trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait VehiclesTrait
+abstract class AbstractVehiclesController extends AbstractController
 {
     /**
      * Vehicles section
@@ -331,14 +331,6 @@ trait VehiclesTrait
 
         return $form;
     }
-
-
-
-
-
-
-
-
 
     /**
      * Get vehicles form

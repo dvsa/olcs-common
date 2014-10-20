@@ -5,7 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
 
@@ -14,10 +14,9 @@ use Common\Service\Entity\OrganisationEntityService;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-trait PeopleTrait
+abstract class AbstractPeopleController extends AbstractController
 {
-    use GenericLvaTrait,
-        CrudTableTrait;
+    use Lva\Traits\CrudTableTrait;
 
     /**
      * Needed by the Crud Table Trait

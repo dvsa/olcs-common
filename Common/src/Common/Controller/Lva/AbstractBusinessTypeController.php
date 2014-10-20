@@ -14,7 +14,6 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractBusinessTypeController extends AbstractController
 {
-
     /**
      * Business type section
      */

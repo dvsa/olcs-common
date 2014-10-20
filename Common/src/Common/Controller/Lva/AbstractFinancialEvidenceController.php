@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Traits\Lva;
+namespace Common\Controller\Lva;
 
 /**
  * Financial Evidence Trait
@@ -14,7 +14,7 @@ namespace Common\Controller\Traits\Lva;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait FinancialEvidenceTrait
+abstract class AbstractFinancialEvidenceController extends AbstractController
 {
     /**
      * Financial evidence section
