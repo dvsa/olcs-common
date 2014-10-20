@@ -21,7 +21,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     /**
      * @TODO inline JS
      */
-    use Lva\Traits\CrudTableTrait;
+    use Traits\CrudTableTrait;
 
     protected $tableData = array();
 

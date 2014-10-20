@@ -16,7 +16,7 @@ use Common\Service\Entity\OrganisationEntityService;
  */
 abstract class AbstractPeopleController extends AbstractController
 {
-    use Lva\Traits\CrudTableTrait;
+    use Traits\CrudTableTrait;
 
     /**
      * Needed by the Crud Table Trait
