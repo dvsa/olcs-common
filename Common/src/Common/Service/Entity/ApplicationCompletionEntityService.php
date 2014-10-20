@@ -39,8 +39,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     public function getCompletionStatuses($applicationId)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId));
+        $data = $this->get(array('application' => $applicationId));
 
         if ($data['Count'] < 1) {
             throw new \Exception('Completions status not found');
@@ -113,7 +112,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $completeCount = 0;
 
         foreach ($properties as $value) {
-            if ($value !== null) {
+            if (!empty($value)) {
                 $completeCount++;
             }
         }
@@ -131,7 +130,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getBusinessTypeStatus($applicationData)
+    private function getBusinessTypeStatus($applicationData)
     {
         return empty($applicationData['licence']['organisation']['type']['id'])
             ? self::STATUS_NOT_STARTED
@@ -144,7 +143,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getBusinessDetailsStatus($applicationData)
+    private function getBusinessDetailsStatus($applicationData)
     {
         if (!isset($applicationData['licence']['organisation']['type']['id'])) {
             return self::STATUS_NOT_STARTED;
@@ -195,7 +194,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getAddressesStatus($applicationData)
+    private function getAddressesStatus($applicationData)
     {
         $phoneNumber = null;
         $correspondenceAddress = null;
@@ -254,7 +253,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getPeopleStatus($applicationData)
+    private function getPeopleStatus($applicationData)
     {
         return count($applicationData['licence']['organisation']['organisationPersons'])
             ? self::STATUS_COMPLETE
@@ -267,7 +266,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getTaxiPhvStatus($applicationData)
+    private function getTaxiPhvStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -278,7 +277,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getOperatingCentresStatus($applicationData)
+    private function getOperatingCentresStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -289,7 +288,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getFinancialEvidenceStatus($applicationData)
+    private function getFinancialEvidenceStatus($applicationData)
     {
         return self::STATUS_COMPLETE;
     }
@@ -300,7 +299,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getTransportManagersStatus($applicationData)
+    private function getTransportManagersStatus($applicationData)
     {
         return self::STATUS_COMPLETE;
     }
@@ -311,7 +310,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getVehiclesStatus($applicationData)
+    private function getVehiclesStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -322,7 +321,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getVehiclesPsvStatus($applicationData)
+    private function getVehiclesPsvStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -333,7 +332,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getVehiclesDeclarationsStatus($applicationData)
+    private function getVehiclesDeclarationsStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -344,7 +343,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getDiscsStatus($applicationData)
+    private function getDiscsStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -355,7 +354,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getCommunityLicencesStatus($applicationData)
+    private function getCommunityLicencesStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -366,9 +365,25 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getSafetyStatus($applicationData)
+    private function getSafetyStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $requiredVars = array(
+            $applicationData['licence']['safetyInsVehicles'],
+            $applicationData['licence']['safetyInsVaries'],
+            $applicationData['licence']['tachographIns']['id'],
+            count($applicationData['licence']['workshops']),
+            $applicationData['safetyConfirmation']
+        );
+
+        if ($applicationData['licence']['tachographIns']['id'] === 'tach_external') {
+            $requiredVars[] = $applicationData['licence']['tachographInsName'];
+        }
+
+        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            $requiredVars[] = $applicationData['licence']['safetyInsTrailers'];
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**
@@ -377,7 +392,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getConditionsUndertakingsStatus($applicationData)
+    private function getConditionsUndertakingsStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -388,7 +403,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getFinancialHistoryStatus($applicationData)
+    private function getFinancialHistoryStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -399,7 +414,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getLicenceHistoryStatus($applicationData)
+    private function getLicenceHistoryStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }
@@ -410,7 +425,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    public function getConvictionsPenaltiesStatus($applicationData)
+    private function getConvictionsPenaltiesStatus($applicationData)
     {
         return self::STATUS_NOT_STARTED;
     }

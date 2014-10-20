@@ -133,11 +133,17 @@ class ApplicationEntityService extends AbstractEntityService
      * @var array
      */
     private $completionStatusDataBundle = array(
-        'properties' => array(),
+        'properties' => array(
+            'safetyConfirmation'
+        ),
         'children' => array(
             'licence' => array(
                 'properties' => array(
-                    'niFlag'
+                    'niFlag',
+                    'safetyInsVehicles',
+                    'safetyInsTrailers',
+                    'safetyInsVaries',
+                    'tachographInsName'
                 ),
                 'children' => array(
                     'organisation' => array(
@@ -212,6 +218,12 @@ class ApplicationEntityService extends AbstractEntityService
                         'properties' => array(
                             'id'
                         )
+                    ),
+                    'tachographIns' => array(
+                        'properties' => array('id')
+                    ),
+                    'workshops' => array(
+                        'properties' => array('id')
                     )
                 )
             )
@@ -430,8 +442,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function doesBelongToOrganisation($id, $orgId)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
+        $data = $this->get($id, $this->doesBelongToOrgBundle);
 
         return (isset($data['licence']['organisation']['id']) && $data['licence']['organisation']['id'] == $orgId);
     }
@@ -444,8 +455,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getOverview($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('Application', 'GET', $id, $this->overviewBundle);
+        return $this->get($id, $this->overviewBundle);
     }
 
     /**
@@ -458,8 +468,7 @@ class ApplicationEntityService extends AbstractEntityService
     public function getLicenceIdForApplication($id)
     {
         if (!isset($this->licenceIds[$id])) {
-            $data = $this->getServiceLocator()->get('Helper\Rest')
-                ->makeRestCall($this->entity, 'GET', $id, $this->licenceIdForApplicationBundle);
+            $data = $this->get($id, $this->licenceIdForApplicationBundle);
 
             $this->licenceIds[$id] = $data['licence']['id'];
         }
@@ -474,8 +483,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getDataForCompletionStatus($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->completionStatusDataBundle);
+        return $this->get($id, $this->completionStatusDataBundle);
     }
 
     /**
@@ -485,8 +493,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getApplicationType($id)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->applicationTypeBundle);
+        $data = $this->get($id, $this->applicationTypeBundle);
 
         if (isset($data['isVariation']) && $data['isVariation']) {
             return self::APPLICATION_TYPE_VARIATION;
@@ -503,8 +510,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getHeaderData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
+        return $this->get($id, $this->headerDataBundle);
     }
 
     /**
@@ -514,8 +520,7 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getSafetyData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->safetyDataBundle);
+        return $this->get($id, $this->safetyDataBundle);
     }
 
     /**
@@ -526,7 +531,6 @@ class ApplicationEntityService extends AbstractEntityService
      */
     public function getOperatingCentresData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->ocBundle);
+        return $this->get($id, $this->ocBundle);
     }
 }

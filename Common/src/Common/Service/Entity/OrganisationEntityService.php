@@ -138,8 +138,7 @@ class OrganisationEntityService extends AbstractEntityService
      */
     public function getType($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->typeBundle);
+        return $this->get($id, $this->typeBundle);
     }
 
     /**
@@ -149,7 +148,6 @@ class OrganisationEntityService extends AbstractEntityService
      */
     public function getBusinessDetailsData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->businessDetailsBundle);
+        return $this->get($id, $this->businessDetailsBundle);
     }
 }

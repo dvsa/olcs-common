@@ -14,6 +14,8 @@ namespace Common\Service\Entity;
  */
 class TrafficAreaEntityService extends AbstractEntityService
 {
+    protected $entity = 'TrafficArea';
+
     /**
      * Northern Ireland Traffic Area Code
      */
@@ -140,8 +142,7 @@ class TrafficAreaEntityService extends AbstractEntityService
     public function getTrafficAreaValueOptions()
     {
         if ($this->valueOptions === null) {
-            $trafficArea = $this->getServiceLocator()->get('Helper\Rest')
-                ->makeRestCall('TrafficArea', 'GET', array(), $this->trafficAreaValuesBundle);
+            $trafficArea = $this->get(array(), $this->trafficAreaValuesBundle);
 
             $this->valueOptions = array();
             $results = $trafficArea['Results'];

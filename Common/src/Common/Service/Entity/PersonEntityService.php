@@ -82,7 +82,6 @@ class PersonEntityService extends AbstractEntityService
      */
     public function getById($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('Person', 'GET', $id, $this->personBundle);
+        return $this->get($id, $this->personBundle);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'version-conflict-message' => 'The data you were trying to update has expired, please try again',
     'lva.section.title.add_subsidiary_company' => 'Add subsidiary company',
     'lva.section.title.edit_subsidiary_company' => 'Edit subsidiary company',
     'please-select-row' => 'Please select a row',

@@ -13,6 +13,7 @@ use Common\Service\Data\SectionConfig;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
+use Common\Exception\ResourceConflictException;
 
 /**
  * Lva Abstract Controller
@@ -65,7 +66,12 @@ abstract class AbstractController extends AbstractActionController
         }
 
         if ($routeMatch->getParam('skipPreDispatch', false) || ($actionResponse = $this->preDispatch()) === null) {
-            $actionResponse = $this->$method();
+            try {
+                $actionResponse = $this->$method();
+            } catch (ResourceConflictException $ex) {
+                $this->addErrorMessage('version-conflict-message');
+                $actionResponse = $this->redirect()->toRoute(null, array(), array(), true);
+            }
         }
 
         $e->setResult($actionResponse);
@@ -207,12 +213,18 @@ abstract class AbstractController extends AbstractActionController
         }
     }
 
-    protected function alterFormForLocation(Form $form)
+    /**
+     * No-op but extended
+     */
+    protected function alterFormForLva(Form $form)
     {
 
     }
 
-    protected function alterFormForLva(Form $form)
+    /**
+     * No-op but extended
+     */
+    protected function alterFormForLocation(Form $form)
     {
 
     }

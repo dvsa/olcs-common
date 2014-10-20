@@ -14,8 +14,6 @@ use Common\Service\Entity\ContactDetailsEntityService;
 /**
  * Safety Trait
  *
- * @NOTE this is being built for application first
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 abstract class AbstractSafetyController extends AbstractController
@@ -55,6 +53,20 @@ abstract class AbstractSafetyController extends AbstractController
             )
         )
     );
+
+    /**
+     * Save the form data
+     *
+     * @param array $data
+     */
+    abstract protected function save($data);
+
+    /**
+     * Get Safety Data
+     *
+     * @return array
+     */
+    abstract protected function getSafetyData();
 
     /**
      * Redirect to the first section
@@ -277,22 +289,6 @@ abstract class AbstractSafetyController extends AbstractController
     }
 
     /**
-     * Save the form data
-     *
-     * @param array $data
-     */
-    protected function save($data)
-    {
-        list($licence, $application) = $this->formatSaveData($data);
-
-        $licence['id'] = $this->getLicenceId();
-        $application['id'] = $this->getApplicationId();
-
-        $this->getServiceLocator()->get('Entity\Licence')->save($licence);
-        $this->getServiceLocator()->get('Entity\Application')->save($application);
-    }
-
-    /**
      * Shared logic to save licence
      *
      * @param array $data
@@ -338,7 +334,7 @@ abstract class AbstractSafetyController extends AbstractController
         // This element needs to be visible internally
         $formHelper->remove($form, 'application->isMaintenanceSuitable');
 
-        if ($goodsOrPsv == LicenceEntityService::LICENCE_CATEGORY_PSV) {
+        if ($goodsOrPsv === LicenceEntityService::LICENCE_CATEGORY_PSV) {
 
             $formHelper->remove($form, 'licence->safetyInsTrailers');
 
@@ -355,6 +351,8 @@ abstract class AbstractSafetyController extends AbstractController
 
             $form->get('table')->get('table')->setTable($table);
         }
+
+        $this->alterFormForLva($form);
 
         return $form;
     }
@@ -387,25 +385,16 @@ abstract class AbstractSafetyController extends AbstractController
     }
 
     /**
-     * Get Safety Data
-     *
-     * @return array
-     */
-    protected function getSafetyData()
-    {
-        return $this->getServiceLocator()->get('Entity\Application')->getSafetyData($this->getApplicationId());
-    }
-
-    /**
      * Get safety form
      *
      * @return \Zend\Form\Form
      */
     protected function getSafetyForm()
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\Safety');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form->get('table')->get('table')->setTable($this->getSafetyTable());
+        $form = $formHelper->createForm('Lva\Safety');
+        $formHelper->populateFormTable($form->get('table'), $this->getSafetyTable());
 
         return $form;
     }

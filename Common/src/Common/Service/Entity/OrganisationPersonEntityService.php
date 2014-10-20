@@ -33,8 +33,7 @@ class OrganisationPersonEntityService extends AbstractEntityService
             'organisation' => $orgId,
             'person' => $personId
         );
-        $result = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $query);
+        $result = $this->get($query);
 
         return $result['Results'][0];
     }
@@ -54,7 +53,6 @@ class OrganisationPersonEntityService extends AbstractEntityService
      */
     public function getByPersonId($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', array('person' => $id));
+        return $this->get(array('person' => $id));
     }
 }

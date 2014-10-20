@@ -84,15 +84,13 @@ class WorkshopEntityService extends AbstractEntityService
 
     public function getForLicence($licenceId)
     {
-        $results = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', ['licence' => $licenceId], $this->licenceWorkshopBundle);
+        $results = $this->get(['licence' => $licenceId], $this->licenceWorkshopBundle);
 
         return $results['Results'];
     }
 
     public function getById($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->workshopDataBundle);
+        return $this->get($id, $this->workshopDataBundle);
     }
 }

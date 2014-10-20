@@ -7,14 +7,14 @@
  */
 namespace Common\Service\Helper;
 
+use Zend\Http\Request;
 use Zend\Form\Form;
 use Zend\Form\Fieldset;
+use Zend\Form\Element\Checkbox;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\ValidatorChain;
-use Zend\Http\Request;
 use Common\Form\Elements\Types\Address;
-use Zend\Form\Element\Checkbox;
-
+use Common\Service\Table\TableBuilder;
 
 /**
  * Form Helper Service
@@ -274,5 +274,17 @@ class FormHelperService extends AbstractHelperService
                 $this->disableEmptyValidation($fieldset, $filter->get($fieldset->getName()));
             }
         }
+    }
+
+    /**
+     * Populate form table
+     *
+     * @param \Zend\Form\Fieldset $fieldset
+     * @param \Common\Service\Table\TableBuilder $table
+     */
+    public function populateFormTable(Fieldset $fieldset, TableBuilder $table)
+    {
+        $fieldset->get('table')->setTable($table);
+        $fieldset->get('rows')->setValue(count($table->getRows()));
     }
 }

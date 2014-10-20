@@ -69,4 +69,16 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     {
         return $this->entity;
     }
+
+    /**
+     * Wrap the rest client
+     *
+     * @param int $id
+     * @param array $bundle
+     * @return array
+     */
+    protected function get($id, $bundle = null)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $id, $bundle);
+    }
 }

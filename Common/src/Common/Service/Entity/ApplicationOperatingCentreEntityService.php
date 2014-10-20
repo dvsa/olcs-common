@@ -137,19 +137,16 @@ class ApplicationOperatingCentreEntityService extends AbstractEntityService
 
     public function getAddressSummaryData($applicationId)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->addressSummaryBundle);
+        return $this->get(array('application' => $applicationId), $this->addressSummaryBundle);
     }
 
     public function getAddressData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->addressBundle);
+        return $this->get($id, $this->addressBundle);
     }
 
     public function getOperatingCentresCount($applicationId)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', array('application' => $applicationId), $this->ocCountBundle);
+        return $this->get(array('application' => $applicationId), $this->ocCountBundle);
     }
 }

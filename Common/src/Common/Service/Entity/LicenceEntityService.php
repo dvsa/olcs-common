@@ -277,6 +277,28 @@ class LicenceEntityService extends AbstractEntityService
     );
 
     /**
+     * Safety data bundle
+     *
+     * @var array
+     */
+    protected $safetyDataBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'safetyInsVehicles',
+            'safetyInsTrailers',
+            'safetyInsVaries',
+            'tachographInsName',
+            'isMaintenanceSuitable',
+        ),
+        'children' => array(
+            'tachographIns' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    /**
      * Get data for overview
      *
      * @param int $id
@@ -284,8 +306,7 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function getOverview($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->overviewBundle);
+        return $this->get($id, $this->overviewBundle);
     }
 
     /**
@@ -296,8 +317,7 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function getTypeOfLicenceData($id)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->typeOfLicenceBundle);
+        $data = $this->get($id, $this->typeOfLicenceBundle);
 
         return array(
             'version' => $data['version'],
@@ -316,8 +336,7 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function doesBelongToOrganisation($id, $orgId)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->doesBelongToOrgBundle);
+        $data = $this->get($id, $this->doesBelongToOrgBundle);
 
         return (isset($data['organisation']['id']) && $data['organisation']['id'] == $orgId);
     }
@@ -330,8 +349,7 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function getHeaderParams($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->headerDataBundle);
+        return $this->get($id, $this->headerDataBundle);
     }
 
     /**
@@ -342,8 +360,7 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function getAddressesData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->addressesDataBundle);
+        return $this->get($id, $this->addressesDataBundle);
     }
 
     /**
@@ -354,7 +371,17 @@ class LicenceEntityService extends AbstractEntityService
      */
     public function getOperatingCentresData($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'GET', $id, $this->ocBundle);
+        return $this->get($id, $this->ocBundle);
+    }
+
+    /**
+     * Get safety data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getSafetyData($id)
+    {
+        return $this->get($id, $this->safetyDataBundle);
     }
 }

@@ -20,10 +20,4 @@ class TradingNamesEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'TradingNames';
-
-    public function save($data)
-    {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'POST', $data);
-    }
 }
