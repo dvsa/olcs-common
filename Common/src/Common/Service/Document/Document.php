@@ -75,7 +75,10 @@ class Document
             }
 
             if ($result) {
-                $populatedData[$token] = $result;
+                $populatedData[$token] = [
+                    'content' => $result,
+                    'preformatted' => $bookmark->isPreformatted()
+                ];
             }
         }
 

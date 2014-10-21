@@ -11,11 +11,16 @@ use Common\Service\Document\Parser\RtfParser;
  */
 class DiscListTest extends \PHPUnit_Framework_TestCase
 {
-    /*
     public function testGetQueryContainsExpectedKeys()
     {
+        $bookmark = new DiscList();
+        $query = $bookmark->getQuery([123, 456]);
+
+        $this->assertEquals(2, count($query));
+
+        $this->assertEquals(123, $query[0]['data']['id']);
+        $this->assertEquals(456, $query[1]['data']['id']);
     }
-     */
 
     public function testRenderWithNoData()
     {

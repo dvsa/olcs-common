@@ -12,6 +12,13 @@ abstract class AbstractBookmark
 
     protected $parser = null;
 
+    /**
+     * By default, all bookmarks are not assumed to have been preformatted.
+     * This indicates that the parser should replace any relevant characters
+     * such as newlines with its own representation (e.g. \par, <br>, etc)
+     */
+    const PREFORMATTED = false;
+
     public function setToken($token)
     {
         $this->token = $token;
@@ -20,6 +27,11 @@ abstract class AbstractBookmark
     public function isStatic()
     {
         return static::TYPE === 'static';
+    }
+
+    public function isPreformatted()
+    {
+        return static::PREFORMATTED;
     }
 
     public function getSnippet()

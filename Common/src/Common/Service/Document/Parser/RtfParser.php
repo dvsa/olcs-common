@@ -34,19 +34,26 @@ class RtfParser implements ParserInterface
         for ($i = 0; $i < count($matches[0]); $i++) {
             $literal = $matches[0][$i];
             $token   = $matches[1][$i];
-
             // bear in mind the later str_replace will replace *all*
             // bookmarks of this name; probably what we want of course,
             // but worth being clear about
             if (isset($data[$token])) {
+                $current = $data[$token];
+                if (is_array($current)) {
+                    $str = $current['content'];
+                    $formatted = $current['preformatted'];
+                } else {
+                    $str = $current;
+                    $formatted = false;
+                }
                 $search[]  = $literal;
-                $replace[] = $this->format($data[$token]);
+                // we assume each bookmark will return 'plain' text, so
+                // replace certain characters with RTF style markup
+                $replace[] = $this->format($str, $formatted);
             }
         }
 
-        $content = str_replace($search, $replace, $content);
-
-        return $content;
+        return str_replace($search, $replace, $content);
     }
 
     private function getMatches($content)
@@ -59,8 +66,11 @@ class RtfParser implements ParserInterface
         return $matches;
     }
 
-    private function format($data)
+    private function format($data, $formatted = false)
     {
+        if ($formatted) {
+            return $data;
+        }
         return str_replace("\n", "\par ", $data);
     }
 }

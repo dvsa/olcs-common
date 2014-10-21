@@ -32,6 +32,8 @@ class DiscList extends DynamicBookmark
      */
     const PER_ROW = 2;
 
+    const PREFORMATTED = true;
+
     private $discBundle = [
         'properties' => [
             'id',
