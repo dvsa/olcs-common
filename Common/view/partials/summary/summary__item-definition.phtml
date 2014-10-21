@@ -1,8 +1,0 @@
-<dt><?php echo $this->translate($item['label']); ?></dt>
-<dd>
-    <?php if (isset($item['url']) && $item['url'] != ''): ?>
-        <a href="<?php echo $item['url']; ?>"><?php echo $item['value']; ?></a>
-    <?php else: ?>
-        <?php echo $this->escapeHtml($item['value']); ?>
-    <?php endif; ?>
-</dd>
