@@ -32,7 +32,21 @@ class DiscList extends DynamicBookmark
      */
     const PER_ROW = 2;
 
+    /**
+     * Let the parser know we've already formatted our content by the
+     * time it has been rendered
+     */
     const PREFORMATTED = true;
+
+    /**
+     * Typical row spacer. Magic number gleaned from old codebase
+     */
+    const ROW_HEIGHT = 2526;
+
+    /**
+     * Last row spacer. Magic number gleaned from old codebase
+     */
+    const LAST_ROW_HEIGHT = 359;
 
     private $discBundle = [
         'properties' => [
@@ -148,7 +162,13 @@ class DiscList extends DynamicBookmark
         // bit ugly, but now we have to chunk the discs into N per row
         $discGroups = [];
         for ($i = 0; $i < count($discs); $i+= self::PER_ROW) {
-            $discGroups[] = array_merge($discs[$i], $discs[$i+1]);
+            $discGroups[] = array_merge(
+                $discs[$i],
+                $discs[$i+1],
+                [
+                    'ROW_HEIGHT' => $this->getRowHeight($i)
+                ]
+            );
         }
 
         $snippet = $this->getSnippet();
@@ -204,5 +224,16 @@ class DiscList extends DynamicBookmark
     {
         $prefix = ($index % 2) + 1;
         return 'DISC' . $prefix . '_';
+    }
+
+    /**
+     * Helper to work out our row height. Yuck
+     */
+    private function getRowHeight($index)
+    {
+        $index /= self::PER_ROW;
+        $max = self::PER_PAGE / self::PER_ROW;
+
+        return ($index % $max === $max-1) ? self::LAST_ROW_HEIGHT : self::ROW_HEIGHT;
     }
 }

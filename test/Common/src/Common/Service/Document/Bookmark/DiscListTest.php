@@ -103,10 +103,12 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
             'DISC2_LINE5' => '',
             'DISC2_LICENCE_ID' => 'L3143',
             'DISC2_VEHICLE_REG' => 'VRM321',
-            'DISC2_EXPIRY_DATE' => 'N/A'
+            'DISC2_EXPIRY_DATE' => 'N/A',
+
+            'ROW_HEIGHT' => 2526
         ];
 
-        $expectedOtherRows = [
+        $expectedRowTwo = [
             'DISC1_TITLE' => 'XXXXXXXXXX',
             'DISC1_DISC_NO' => 'XXXXXXXXXX',
             'DISC1_LINE1' => 'XXXXXXXXXX',
@@ -127,8 +129,37 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
             'DISC2_LINE5' => 'XXXXXXXXXX',
             'DISC2_LICENCE_ID' => 'XXXXXXXXXX',
             'DISC2_VEHICLE_REG' => 'XXXXXXXXXX',
-            'DISC2_EXPIRY_DATE' => 'XXXXXXXXXX'
+            'DISC2_EXPIRY_DATE' => 'XXXXXXXXXX',
+
+            'ROW_HEIGHT' => 2526
         ];
+
+        $expectedRowThree = [
+            'DISC1_TITLE' => 'XXXXXXXXXX',
+            'DISC1_DISC_NO' => 'XXXXXXXXXX',
+            'DISC1_LINE1' => 'XXXXXXXXXX',
+            'DISC1_LINE2' => 'XXXXXXXXXX',
+            'DISC1_LINE3' => 'XXXXXXXXXX',
+            'DISC1_LINE4' => 'XXXXXXXXXX',
+            'DISC1_LINE5' => 'XXXXXXXXXX',
+            'DISC1_LICENCE_ID' => 'XXXXXXXXXX',
+            'DISC1_VEHICLE_REG' => 'XXXXXXXXXX',
+            'DISC1_EXPIRY_DATE' => 'XXXXXXXXXX',
+
+            'DISC2_TITLE' => 'XXXXXXXXXX',
+            'DISC2_DISC_NO' => 'XXXXXXXXXX',
+            'DISC2_LINE1' => 'XXXXXXXXXX',
+            'DISC2_LINE2' => 'XXXXXXXXXX',
+            'DISC2_LINE3' => 'XXXXXXXXXX',
+            'DISC2_LINE4' => 'XXXXXXXXXX',
+            'DISC2_LINE5' => 'XXXXXXXXXX',
+            'DISC2_LICENCE_ID' => 'XXXXXXXXXX',
+            'DISC2_VEHICLE_REG' => 'XXXXXXXXXX',
+            'DISC2_EXPIRY_DATE' => 'XXXXXXXXXX',
+
+            'ROW_HEIGHT' => 359
+        ];
+
         $parser->expects($this->at(0))
             ->method('replace')
             ->with('snippet', $expectedRowOne)
@@ -136,12 +167,12 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
 
         $parser->expects($this->at(1))
             ->method('replace')
-            ->with('snippet', $expectedOtherRows)
+            ->with('snippet', $expectedRowTwo)
             ->willReturn('bar');
 
         $parser->expects($this->at(2))
             ->method('replace')
-            ->with('snippet', $expectedOtherRows)
+            ->with('snippet', $expectedRowThree)
             ->willReturn('baz');
 
         $bookmark = $this->getMock('Common\Service\Document\Bookmark\DiscList', ['getSnippet']);
