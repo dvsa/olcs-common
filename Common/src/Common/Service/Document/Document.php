@@ -54,6 +54,10 @@ class Document
 
         foreach ($bookmarks as $token => $bookmark) {
 
+            /**
+             * Let the bookmark now what parser is currently active;
+             * some may use this for sub-bookmark processing
+             */
             $bookmark->setParser($parser);
 
             if ($bookmark->isStatic()) {

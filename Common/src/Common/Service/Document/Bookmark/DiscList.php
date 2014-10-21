@@ -22,6 +22,16 @@ class DiscList extends DynamicBookmark
      */
     const PLACEHOLDER = 'XXXXXXXXX';
 
+    /**
+     * Discs per page - any shortfall will be voided with placeholders
+     */
+    const PER_PAGE = 6;
+
+    /**
+     * Discs per row in a page
+     */
+    const PER_ROW = 2;
+
     private $discBundle = [
         'properties' => [
             'id',
@@ -91,17 +101,16 @@ class DiscList extends DynamicBookmark
             // ... before worrying about whether to split them into different bookmarks
             $tradingParts = $this->splitString($tradingNames);
 
-            $index = ($key % 2) + 1;
-            $prefix = 'DISC' . $index . '_';
+            $prefix = $this->getPrefix($key);
 
             $discs[] = [
                 $prefix . 'TITLE'       => $disc['isCopy'] === 'Y' ? 'COPY' : '',
                 $prefix . 'DISC_NO'     => $disc['discNo'],
-                $prefix . 'LINE1'      => isset($orgParts[0]) ? $orgParts[0] : '',
-                $prefix . 'LINE2'      => isset($orgParts[1]) ? $orgParts[1] : '',
-                $prefix . 'LINE3'      => isset($orgParts[2]) ? $orgParts[2] : '',
-                $prefix . 'LINE4'      => isset($tradingParts[0]) ? $tradingParts[0] : '',
-                $prefix . 'LINE5'      => isset($tradingParts[0]) ? $tradingParts[0] : '',
+                $prefix . 'LINE1'       => isset($orgParts[0]) ? $orgParts[0] : '',
+                $prefix . 'LINE2'       => isset($orgParts[1]) ? $orgParts[1] : '',
+                $prefix . 'LINE3'       => isset($orgParts[2]) ? $orgParts[2] : '',
+                $prefix . 'LINE4'       => isset($tradingParts[0]) ? $tradingParts[0] : '',
+                $prefix . 'LINE5'       => isset($tradingParts[0]) ? $tradingParts[0] : '',
                 $prefix . 'LICENCE_ID'  => $licence['licNo'],
                 $prefix . 'VEHICLE_REG' => $vehicle['vrm'],
                 $prefix . 'EXPIRY_DATE' => isset($licence['expiryDate']) ? $licence['expiryDate'] : 'N/A'
@@ -109,26 +118,29 @@ class DiscList extends DynamicBookmark
         }
 
         /**
-         * We always want an even number of discs, even if we have to
+         * We always want a full page of discs, even if we have to
          * fill the rest up with placeholders
          */
-        if (count($discs) % 2 === 1) {
+        while (($length = count($discs) % self::PER_PAGE) !== 0) {
+
+            $prefix = $this->getPrefix($length);
             $discs[] = [
-                'DISC2_TITLE'       => self::PLACEHOLDER,
-                'DISC2_DISC_NO'     => self::PLACEHOLDER,
-                'DISC2_LINE1'      => self::PLACEHOLDER,
-                'DISC2_LINE2'      => self::PLACEHOLDER,
-                'DISC2_LINE3'      => self::PLACEHOLDER,
-                'DISC2_LINE4'      => self::PLACEHOLDER,
-                'DISC2_LINE5'      => self::PLACEHOLDER,
-                'DISC2_LICENCE_ID'  => self::PLACEHOLDER,
-                'DISC2_VEHICLE_REG' => self::PLACEHOLDER,
-                'DISC2_EXPIRY_DATE' => self::PLACEHOLDER
+                $prefix . 'TITLE'       => self::PLACEHOLDER,
+                $prefix . 'DISC_NO'     => self::PLACEHOLDER,
+                $prefix . 'LINE1'       => self::PLACEHOLDER,
+                $prefix . 'LINE2'       => self::PLACEHOLDER,
+                $prefix . 'LINE3'       => self::PLACEHOLDER,
+                $prefix . 'LINE4'       => self::PLACEHOLDER,
+                $prefix . 'LINE5'       => self::PLACEHOLDER,
+                $prefix . 'LICENCE_ID'  => self::PLACEHOLDER,
+                $prefix . 'VEHICLE_REG' => self::PLACEHOLDER,
+                $prefix . 'EXPIRY_DATE' => self::PLACEHOLDER
             ];
         }
 
+        // bit ugly, but now we have to chunk the discs into N per row
         $discGroups = [];
-        for ($i = 0; $i < count($discs) / 2; $i++) {
+        for ($i = 0; $i < count($discs) / self::PER_ROW; $i++) {
             $discGroups[] = array_merge($discs[$i], $discs[$i+1]);
         }
 
@@ -136,6 +148,8 @@ class DiscList extends DynamicBookmark
         $snippet = $this->getSnippet();
         $parser = $this->getParser();
 
+        // at last, we can loop through each group and run a sub
+        // replacement on its tokens
         foreach ($discGroups as $tokens) {
             $str .= $parser->replace($snippet, $tokens);
         }
@@ -143,18 +157,27 @@ class DiscList extends DynamicBookmark
         return $str;
     }
 
+    /**
+     * Split a string into N array parts based on a predefined
+     * constant max line length
+     */
     private function splitString($str)
     {
-        $max = ceil(strlen($str) / self::MAX_LINE_LENGTH);
+        $len = self::MAX_LINE_LENGTH;
+        $max = ceil(strlen($str) / $len);
         $parts = [];
 
         for ($i = 0; $i < $max; $i++) {
-            $parts[] = substr($str, $i * self::MAX_LINE_LENGTH, self::MAX_LINE_LENGTH);
+            $parts[] = substr($str, $i * $len, $len);
         }
 
         return $parts;
     }
 
+    /*
+     * Take an array of arrays with a name value and return them
+     * as a comma separated string instead
+     */
     private function implodeNames($names)
     {
         return implode(
@@ -166,5 +189,14 @@ class DiscList extends DynamicBookmark
                 $names
             )
         );
+    }
+
+    /**
+     * Return either DISC1_ or DISC2_ based on a given index
+     */
+    private function getPrefix($index)
+    {
+        $prefix = ($index % 2) + 1;
+        return 'DISC' . $prefix . '_';
     }
 }
