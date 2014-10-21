@@ -20,7 +20,7 @@ class DiscList extends DynamicBookmark
     /**
      * No disc content? No problem
      */
-    const PLACEHOLDER = 'XXXXXXXXX';
+    const PLACEHOLDER = 'XXXXXXXXXX';
 
     /**
      * Discs per page - any shortfall will be voided with placeholders
@@ -88,17 +88,22 @@ class DiscList extends DynamicBookmark
 
     public function render()
     {
+        if (empty($this->data)) {
+            return '';
+        }
+
         foreach ($this->data as $key => $disc) {
 
             $licence = $disc['licenceVehicle']['licence'];
             $vehicle = $disc['licenceVehicle']['vehicle'];
             $organisation = $licence['organisation'];
 
+            // split the org over multiple lines if necessary
             $orgParts = $this->splitString($organisation['name']);
 
             // we want all trading names as one comma separated array...
             $tradingNames = $this->implodeNames($organisation['tradingNames']);
-            // ... before worrying about whether to split them into different bookmarks
+            // ... before worrying about whether to split them into different bookmark lines
             $tradingParts = $this->splitString($tradingNames);
 
             $prefix = $this->getPrefix($key);
@@ -110,7 +115,7 @@ class DiscList extends DynamicBookmark
                 $prefix . 'LINE2'       => isset($orgParts[1]) ? $orgParts[1] : '',
                 $prefix . 'LINE3'       => isset($orgParts[2]) ? $orgParts[2] : '',
                 $prefix . 'LINE4'       => isset($tradingParts[0]) ? $tradingParts[0] : '',
-                $prefix . 'LINE5'       => isset($tradingParts[0]) ? $tradingParts[0] : '',
+                $prefix . 'LINE5'       => isset($tradingParts[1]) ? $tradingParts[1] : '',
                 $prefix . 'LICENCE_ID'  => $licence['licNo'],
                 $prefix . 'VEHICLE_REG' => $vehicle['vrm'],
                 $prefix . 'EXPIRY_DATE' => isset($licence['expiryDate']) ? $licence['expiryDate'] : 'N/A'
@@ -140,20 +145,19 @@ class DiscList extends DynamicBookmark
 
         // bit ugly, but now we have to chunk the discs into N per row
         $discGroups = [];
-        for ($i = 0; $i < count($discs) / self::PER_ROW; $i++) {
+        for ($i = 0; $i < count($discs); $i+= self::PER_ROW) {
             $discGroups[] = array_merge($discs[$i], $discs[$i+1]);
         }
 
-        $str = '';
         $snippet = $this->getSnippet();
-        $parser = $this->getParser();
+        $parser  = $this->getParser();
 
         // at last, we can loop through each group and run a sub
         // replacement on its tokens
+        $str = '';
         foreach ($discGroups as $tokens) {
             $str .= $parser->replace($snippet, $tokens);
         }
-
         return $str;
     }
 
@@ -183,7 +187,7 @@ class DiscList extends DynamicBookmark
         return implode(
             ", ",
             array_map(
-                function($val) {
+                function ($val) {
                     return $val['name'];
                 },
                 $names
