@@ -18,67 +18,47 @@ class SlaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideFetchBusRulesData
-     * @param $data
-     * @param $expected
-     */
-    public function testGetRule($data, $expected)
-    {
-        $data = ['Results' => $this->getSingleSource()];
-
-        $category = 'pi';
-
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()
-            ->with('', ['limit' => 1000, 'category' => $category])->andReturn($data);
-
-        $sut = new Sla();
-        $sut->setRestClient($mockRestClient);
-
-        $fieldName = 'decision_letter_sent_date';
-
-        $context = [
-
-            ''
-        ]
-
-        $rules = $sut->getTargetDate($category, 'decision_letter_sent_date');
-
-        die('<pre>' . print_r($rules, 1));
-
-        //ensure data is cached
-    }
-
-    /**
      * @dataProvider provideTargetDate
      */
-    public function testGetTargetDate($date, $context)
+    public function testGetTargetDate($date, $context, $exception = false)
     {
+        $field = 'desisionLetterSentDate';
+
         $busRules = [
             [
-                'field' => 'desisionLetterSentDate',
+                'field' => $field,
                 'compareTo' => 'agreedDate',
                 'days' => '50',
                 'category' => 'pi',
-                'effectiveFrom' => '2010-10-10'
+                'effectiveFrom' => '2010-10-10',
+                'effectiveTo' => '2014-10-09'
             ],
             [
-                'field' => 'desisionLetterSentDate',
+                'field' => $field,
                 'compareTo' => 'agreedDate',
                 'days' => '35',
                 'category' => 'pi',
-                'effectiveFrom' => '2014-10-10'
+                'effectiveFrom' => '2014-10-10',
+                'effectiveTo' => null,
             ]
         ];
 
-
-
         $sut = new Sla();
-        $sut->setData('pi', $busRules);
+        $sut->setData('pi', ['Results' => $busRules]);
 
-        $result = $sut->getTargetDate('pi', 'desisionLetterSentDate', $context);
+        if (true === $exception) {
+            try {
+                $sut->getTargetDate('pi', $field, $context);
+            } catch (\LogicException $e) {
+                $this->assertEquals(
+                    'No rule exists for this context',
+                    $e->getMessage()
+                );
+                return;
+            }
+        }
 
-        $this->assertEquals($date ,$result);
+        $this->assertEquals($date, $sut->getTargetDate('pi', $field, $context));
     }
 
     public function provideTargetDate()
@@ -89,8 +69,13 @@ class SlaTest extends \PHPUnit_Framework_TestCase
                 ['agreedDate' => '2014-10-15']
             ],
             [
-                '2012-11-29',
+                '2012-11-20',
                 ['agreedDate' => '2012-10-01']
+            ],
+            [
+                '2012-11-20',
+                ['agreedDate' => '2000-10-01'],
+                true
             ]
         ];
     }

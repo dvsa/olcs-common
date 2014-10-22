@@ -15,23 +15,45 @@ class Sla extends AbstractData
 
     protected $rules;
 
-    public function getRule($category, $name)
+    public function getTargetDate($category, $name, $context)
     {
-        if (!isset($this->rules[$name])) {
-            $rules = $this->fetchBusRules($category);
-            $foundRule = false;
 
-            foreach ($rules as $rule) {
-                if ($rule['name'] == $name) {
-                    //test effective date
-                    $foundRule = $rule;
+        $rules = $this->fetchBusRules($category);
+
+        foreach ($rules as $rule) {
+
+            if ($rule['field'] == $name) {
+
+                $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+
+                $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
+
+                $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
+                $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
+
+                if ($dateToCompare >= $effectiveFrom) {
+
+                    if (false === $effectiveTo || (false !== $effectiveTo && $dateToCompare <= $effectiveTo)) {
+
+                        return $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+                    }
                 }
             }
-
-            $this->rules[$name] = $foundRule;
         }
 
-        return $this->rules[$name];
+        throw new \LogicException('No rule exists for this context');
+
+    }
+
+    public function processData($in)
+    {
+        $outdata = [];
+
+        foreach ($in['Results'] as $item) {
+            $outdata[] = $item;
+        }
+
+        return $outdata;
     }
 
     /**
@@ -44,33 +66,21 @@ class Sla extends AbstractData
     {
         if (is_null($this->getData($category))) {
             $data = $this->getRestClient()->get('', ['limit' => 1000, 'category' => $category]);
+            if (empty($data)) {
+                return null;
+            }
+            //die('<pre>' . print_r($data, 1));
             $this->setData($category, $data);
         }
 
-        return $this->getData($category);
-    }
-
-    public function getTargetDate($category, $name, $context)
-    {
-        $rule = $this->getRule($category, $name);
-
-        $date = \DateTime::createFromFormat(
-            \DateTime::ISO8601, date(\DateTime::ISO8601,
-            strtotime($context[$rule['compareTo']]))
-        );
-
-        $dateAddString = $rule['days'] . ' days';
-
-        $date->add(\DateInterval::createFromDateString($dateAddString));
-
-        return $context[$rule['compareTo']] + $rule['days'];
+        return $this->processData($this->getData($category));
     }
 
     /**
      * Adds days to a date.
      *
-     * @param unknown $input
-     * @param unknown $days
+     * @param string $input
+     * @param integer $days
      * @return string
      */
     public function dateAddDays($date, $days)
@@ -79,6 +89,10 @@ class Sla extends AbstractData
             \DateTime::ISO8601, date(\DateTime::ISO8601, strtotime($date))
         );
 
-        return $days . ' days';
+        $dateAddString = $days . ' days';
+
+        $date->add(\DateInterval::createFromDateString($dateAddString));
+
+        return $date->format('Y-m-d');
     }
 }
