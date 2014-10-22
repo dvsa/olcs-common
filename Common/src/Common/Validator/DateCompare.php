@@ -66,7 +66,7 @@ class DateCompare extends AbstractValidator
 
     /**
      * Whether we're comparing the time also
-     * @var string
+     * @var bool
      */
     protected $hasTime;
 
@@ -107,7 +107,7 @@ class DateCompare extends AbstractValidator
     }
 
     /**
-     * @param string $hasTime
+     * @param bool $hasTime
      * @return $this
      */
     public function setHasTime($hasTime)
@@ -125,7 +125,7 @@ class DateCompare extends AbstractValidator
     }
 
     /**
-     * @param bool $operator
+     * @param string $operator
      * @return $this
      */
     public function setOperator($operator)
