@@ -1033,7 +1033,8 @@ abstract class AbstractSectionController extends AbstractActionController
      */
     protected function hasActionTable()
     {
-        if (is_null($this->hasActionTable)) {
+        if (is_null($this->hasActionTable)
+                &&  ( $this->getActionName() == "edit" ) ) {
 
             $tableName = $this->getActionTableName();
 
