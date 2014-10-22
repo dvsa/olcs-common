@@ -11,16 +11,23 @@ use Common\Util\RestClient;
  */
 class Sla extends AbstractData
 {
-    protected $serviceName = 'SystemParameter';
+    protected $serviceName = 'Sla';
 
-    protected $rules;
+    protected $context = array();
 
-    public function getTargetDate($category, $name, $context)
+    public function getTargetDate($category, $name, $context = null)
     {
+        if (null === $context) {
+            $context = $this->getContext($category);
+        }
 
         $rules = $this->fetchBusRules($category);
 
+        //die('<pre>' . print_r($rules, 1));
+
         foreach ($rules as $rule) {
+
+            //die('<pre>' . print_r($rule, 1));
 
             if ($rule['field'] == $name) {
 
@@ -43,6 +50,21 @@ class Sla extends AbstractData
 
         throw new \LogicException('No rule exists for this context');
 
+    }
+
+    public function setContext($category, array $context)
+    {
+        $this->context[$category] = $context;
+        return $this;
+    }
+
+    public function getContext($category)
+    {
+        if (array_key_exists($category, $this->context)) {
+            return $this->context[$category];
+        }
+
+        throw new \Exception('No context for category ' . $category);
     }
 
     public function processData($in)

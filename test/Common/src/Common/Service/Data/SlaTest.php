@@ -14,7 +14,7 @@ class SlaTest extends \PHPUnit_Framework_TestCase
     public function testGetServiceName()
     {
         $sut = new Sla();
-        $this->assertEquals('SystemParameter', $sut->getServiceName());
+        $this->assertEquals('Sla', $sut->getServiceName());
     }
 
     /**
