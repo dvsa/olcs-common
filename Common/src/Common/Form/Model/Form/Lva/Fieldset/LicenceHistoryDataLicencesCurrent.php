@@ -1,17 +1,15 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("dataLicencesCurrent")
  * @Form\Options({"label":"application_previous-history_licence-history.title"})
  */
-class DataLicencesCurrent
+class LicenceHistoryDataLicencesCurrent
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -37,7 +35,4 @@ class DataLicencesCurrent
      * @Form\Type("\Common\Form\Elements\InputFilters\PreviousHistoryLicenceHistoryNeedLicence")
      */
     public $prevHasLicence = null;
-
-
 }
-

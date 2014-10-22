@@ -1,20 +1,18 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("dataLicencesHeld")
+ * @Form\Name("dataLicencesPublicInquiry")
  */
-class DataLicencesHeld
+class LicenceHistoryDataLicencesPublicInquiry
 {
-
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label": "application_previous-history_licence-history_prevPurchasedAssets",
+     *     "label": "application_previous-history_licence-history_prevBeenAtPi",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -23,8 +21,5 @@ class DataLicencesHeld
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\PreviousHistoryLicenceHistoryNeedLicence")
      */
-    public $prevPurchasedAssets = null;
-
-
+    public $prevBeenAtPi = null;
 }
-

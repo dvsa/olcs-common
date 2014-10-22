@@ -58,7 +58,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
             return $this->completeSection('financial_history');
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('previous-history');
+        $this->getServiceLocator()->get('Script')->loadFile('financial-history');
 
         return $this->render('financial_history', $form);
     }

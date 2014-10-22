@@ -1,21 +1,18 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("dataLicencesDisqualified")
+ * @Form\Name("dataLicencesHeld")
  */
-class DataLicencesDisqualified
+class LicenceHistoryDataLicencesHeld
 {
-
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_licence-history_prevBeenDisqualifiedTc",
+     *     "label": "application_previous-history_licence-history_prevPurchasedAssets",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -24,8 +21,5 @@ class DataLicencesDisqualified
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\PreviousHistoryLicenceHistoryNeedLicence")
      */
-    public $prevBeenDisqualifiedTc = null;
-
-
+    public $prevPurchasedAssets = null;
 }
-
