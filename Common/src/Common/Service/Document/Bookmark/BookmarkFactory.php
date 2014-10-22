@@ -15,7 +15,7 @@ class BookmarkFactory
     {
         $filter = new UnderscoreToCamelCase();
 
-        // 1) SOMETHING__Like_This -> something_like_this
+        // 1) SOMETHING__Like_This -> something__like_this
         $className = strtolower($token);
         // 2) something__like_this -> Something_LikeThis
         $className = $filter->filter($className);

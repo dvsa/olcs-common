@@ -194,19 +194,53 @@ trait VehicleSection
 
         $content = $documentService->populateBookmarks($file, $result);
 
-        echo $content; die();
-
         $uploader = $this->getServiceLocator()
             ->get('FileUploader')
             ->getUploader();
 
         $uploader->setFile(['content' => $content]);
 
-        $filePath = date('YmdHis') . '_' . self::STORAGE_FILE;
-        $storedFile = $uploader->upload(
-            self::STORAGE_PATH,
-            $filePath
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $category    = $categoryService->getCategoryByDescription('Licensing');
+        $subCategory = $categoryService->getCategoryByDescription('Vehicle List', 'Document');
+
+        $uploadedFile = $uploader->upload();
+
+        $fileName = date('YmdHi') . '_' . 'Goods_Vehicle_List.rtf';
+
+        // @NOTE: not pretty, but this will be absorbed into all the LVA rework anyway in which
+        // this is solved
+        $lvaType = strtolower($this->sectionType);
+
+        $data = [
+            $lvaType              => $this->getIdentifier(),
+            'identifier'          => $uploadedFile->getIdentifier(),
+            'description'         => 'Goods Vehicle List',
+            'filename'            => $fileName,
+            'fileExtension'       => 'doc_rtf',
+            'category'            => $category['id'],
+            'documentSubCategory' => $subCategory['id'],
+            'isDigital'           => true,
+            'isReadOnly'          => true,
+            'issuedDate'          => date('Y-m-d H:i:s'),
+            'size'                => $uploadedFile->getSize()
+        ];
+
+        $this->makeRestCall(
+            'Document',
+            'POST',
+            $data
         );
+
+        /**
+         * rather than have to go off and fetch the file again, just
+         * update the content of the one we got back earlier from JR
+         * and serve it directly
+         */
+        $file->setContent($content);
+
+        return $uploader->serveFile($file, $fileName);
     }
 
     /**
