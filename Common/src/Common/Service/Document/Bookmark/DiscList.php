@@ -3,7 +3,6 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
-use Common\Service\Document\Parser\ParserFactory;
 
 /**
  * Disc list bookmark

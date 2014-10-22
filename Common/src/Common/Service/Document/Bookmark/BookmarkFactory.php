@@ -15,9 +15,12 @@ class BookmarkFactory
     {
         $filter = new UnderscoreToCamelCase();
 
-        // bizarrely the filter alone won't replace all underscores,
-        // so we need a bit of extra muscle
-        $className = str_replace("_", "", $filter->filter($token));
+        // 1) SOMETHING__Like_This -> something_like_this
+        $className = strtolower($token);
+        // 2) something__like_this -> Something_LikeThis
+        $className = $filter->filter($className);
+        // 3) Something_LikeThis -> SomethingLikeThis
+        $className = str_replace("_", "", $className);
 
         $class = __NAMESPACE__ . '\\' . $className;
 

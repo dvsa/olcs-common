@@ -18,7 +18,7 @@ trait VehicleSection
 {
     use GenericVehicleSection;
 
-    protected $sharedBespokeSubActions = array('reprint');
+    protected $sharedBespokeSubActions = array('reprint', 'printVehicles');
 
     /**
      * Holds the table data bundle
@@ -174,6 +174,42 @@ trait VehicleSection
     }
 
     /**
+     * Print vehicles action
+     */
+    public function printVehiclesAction()
+    {
+        $documentService = $this->getServiceLocator()->get('Document');
+
+        $file = $this->getServiceLocator()
+            ->get('ContentStore')
+            ->read('/templates/GVVehiclesList.rtf');
+
+        $queryData = [
+            'licence' => $this->getLicenceId(),
+            'user' => $this->getLoggedInUser()
+        ];
+        $query = $documentService->getBookmarkQueries($file, $queryData);
+
+        $result = $this->makeRestCall('BookmarkSearch', 'GET', [], $query);
+
+        $content = $documentService->populateBookmarks($file, $result);
+
+        echo $content; die();
+
+        $uploader = $this->getServiceLocator()
+            ->get('FileUploader')
+            ->getUploader();
+
+        $uploader->setFile(['content' => $content]);
+
+        $filePath = date('YmdHis') . '_' . self::STORAGE_FILE;
+        $storedFile = $uploader->upload(
+            self::STORAGE_PATH,
+            $filePath
+        );
+    }
+
+    /**
      * Load data for reprint
      *
      * @param int $id
@@ -207,7 +243,7 @@ trait VehicleSection
     /**
      * Reprint a single disc
      *
-     * @NOTE I have put this logic into it's own method (rather in the reprintSave method), as we will soon be able to
+     * @NOTE I have put this logic into its own method (rather in the reprintSave method), as we will soon be able to
      * reprint multiple discs at once
      *
      * @param int $id
