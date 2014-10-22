@@ -65,6 +65,12 @@ class DateCompare extends AbstractValidator
     protected $compareToLabel;
 
     /**
+     * Whether we're comparing the time also
+     * @var string
+     */
+    protected $hasTime;
+
+    /**
      * @param string $compareTo
      * @return $this
      */
@@ -101,6 +107,24 @@ class DateCompare extends AbstractValidator
     }
 
     /**
+     * @param string $hasTime
+     * @return $this
+     */
+    public function setHasTime($hasTime)
+    {
+        $this->hasTime = $hasTime;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHasTime()
+    {
+        return $this->hasTime;
+    }
+
+    /**
      * @param string $operator
      * @return $this
      */
@@ -132,6 +156,10 @@ class DateCompare extends AbstractValidator
             $this->setCompareToLabel($options['compare_to_label']);
         }
 
+        if (isset($options['has_time'])) {
+            $this->setHasTime($options['has_time']);
+        }
+
         return parent::setOptions($options);
     }
 
@@ -142,10 +170,14 @@ class DateCompare extends AbstractValidator
      * @param  mixed $value
      * @param  array $context
      * @return bool
-     * @throws Exception\RuntimeException if the token doesn't exist in the context array
      */
     public function isValid($value, array $context = null)
     {
+        if (empty($value)) {
+            $this->error(self::INVALID_FIELD); //@TO~DO~
+            return false;
+        }
+
         if (!isset($context[$this->getCompareTo()])) {
             $this->error(self::INVALID_FIELD); //@TO~DO~
             return false;
@@ -154,27 +186,44 @@ class DateCompare extends AbstractValidator
         $dateFilter = new DateSelectNullifier();
         $compareToValue = $dateFilter->filter($context[$this->getCompareTo()]);
 
+        if (is_null($compareToValue)) {
+            $this->error(self::INVALID_FIELD); //@TO~DO~
+            return false;
+        }
+
+        $compareDateValue = \DateTime::createFromFormat('Y-m-d', $compareToValue);
+        $compareDateValue->setTime(0, 0, 0);
+
+        //if we're comparing a field which also has a time
+        if ($this->getHasTime()) {
+            $dateValue = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+        } else {
+            $dateValue = \DateTime::createFromFormat('Y-m-d', $value);
+        }
+
+        $dateValue->setTime(0, 0, 0);
+
         switch ($this->getOperator()) {
             case 'gte':
-                if (!($value >= $compareToValue)) {
+                if (!($dateValue >= $compareDateValue)) {
                     $this->error(self::NOT_GTE);
                     return false;
                 }
                 return true;
             case 'lte':
-                if (!($value <= $compareToValue)) {
+                if (!($dateValue <= $compareDateValue)) {
                     $this->error(self::NOT_LTE);
                     return false;
                 }
                 return true;
             case 'gt':
-                if (!($value > $compareToValue)) {
+                if (!($dateValue > $compareDateValue)) {
                     $this->error(self::NOT_GT);
                     return false;
                 }
                 return true;
             case 'lt':
-                if (!($value < $compareToValue)) {
+                if (!($dateValue < $compareDateValue)) {
                     $this->error(self::NOT_LT);
                     return false;
                 }
