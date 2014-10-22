@@ -51,6 +51,10 @@ class VehicleRow extends DynamicBookmark
 
     public function render()
     {
+        if (!isset($this->data['licenceVehicles'])) {
+            return '';
+        }
+
         $vehicles = $this->data['licenceVehicles'];
 
         $snippet = $this->getSnippet();
