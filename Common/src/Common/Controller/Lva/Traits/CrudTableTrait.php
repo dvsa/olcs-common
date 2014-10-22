@@ -38,16 +38,24 @@ trait CrudTableTrait
         return null;
     }
 
+    protected function getActionFromCrudAction($data)
+    {
+        if (is_array($data['action'])) {
+            return strtolower(array_keys($data['action'])[0]);
+        }
+
+        return strtolower($data['action']);
+    }
+
     /**
      * Redirect to the most appropriate CRUD action
      */
     protected function handleCrudAction($data)
     {
+        $action = $this->getActionFromCrudAction($data);
+
         if (is_array($data['action'])) {
-            $action = strtolower(array_keys($data['action'])[0]);
             $data['id'] = array_keys($data['action'][$action])[0];
-        } else {
-            $action = strtolower($data['action']);
         }
 
         $routeParams = array('action' => $action);
@@ -57,7 +65,7 @@ trait CrudTableTrait
             if (!isset($data['id'])) {
 
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
-                return $this->redirect()->toRoute(null, array(), array(), true);
+                return $this->reload();
             }
 
             if (is_array($data['id'])) {
@@ -115,23 +123,5 @@ trait CrudTableTrait
             );
         }
         return $this->render('delete', $form);
-    }
-
-    /**
-     * Override built-in cancel functionality if we're
-     * not on the top-level index action (i.e. we're within
-     * a sub action)
-     */
-    protected function handleCancelRedirect($lvaId)
-    {
-        if ($this->params('action') !== 'index') {
-            return $this->redirect()->toRoute(
-                null,
-                array('id' => $lvaId)
-            );
-        }
-
-        // @todo We can't use parent from a trait, we need a workaround for this
-        return parent::handleCancelRedirect($lvaId);
     }
 }

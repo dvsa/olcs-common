@@ -973,7 +973,7 @@ abstract class AbstractSectionService implements SectionServiceInterface, Servic
             $data
         );
 
-        $this->getServiceLocator()->get('helper\Rest')->makeRestCall('Document', 'POST', $docData);
+        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('Document', 'POST', $docData);
     }
 
     /**

@@ -4,7 +4,8 @@ $translationPrefix = 'application_vehicle-safety_vehicle.table';
 
 return array(
     'variables' => array(
-        'title' => $translationPrefix . '.title'
+        'title' => $translationPrefix . '.title',
+        'within_form' => true
     ),
     'settings' => array(
         'crud' => array(
@@ -20,10 +21,7 @@ return array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
             )
-        ),
-        'within_form' => true
-    ),
-    'attributes' => array(
+        )
     ),
     'columns' => array(
         array(
@@ -42,7 +40,7 @@ return array(
         array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
-            'name' => 'deletedDate'
+            'name' => 'removalDate'
         ),
         array(
             'title' => $translationPrefix . '.disc-no',
@@ -51,6 +49,6 @@ return array(
         array(
             'width' => 'checkbox',
             'type' => 'Checkbox'
-        ),
+        )
     )
 );

@@ -405,7 +405,24 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getFinancialHistoryStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $requiredVars = array(
+            $applicationData['bankrupt'],
+            $applicationData['liquidation'],
+            $applicationData['receivership'],
+            $applicationData['administration'],
+            $applicationData['disqualified']
+        );
+
+        foreach ($requiredVars as $var) {
+            if ($var === 'Y') {
+                $requiredVars[] = $applicationData['insolvencyDetails'];
+                break;
+            }
+        }
+
+        $requiredVars[] = $applicationData['insolvencyConfirmation'];
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**

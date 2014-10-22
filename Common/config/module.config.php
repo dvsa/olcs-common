@@ -55,6 +55,9 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
+        'shared' => array(
+            'Helper\FileUpload' => false
+        ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory'
         ),

@@ -298,6 +298,55 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+    protected $vehicleDataBundle = array(
+        'properties' => null,
+        'children' => array(
+            'licenceVehicles' => array(
+                'properties' => array(
+                    'id',
+                    'receivedDate',
+                    'specifiedDate',
+                    'deletedDate',
+                    'removalDate'
+                ),
+                'children' => array(
+                    'goodsDiscs' => array(
+                        'ceasedDate',
+                        'discNo'
+                    ),
+                    'vehicle' => array(
+                        'properties' => array(
+                            'vrm',
+                            'platedWeight'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    protected $currentVrmBundle = array(
+        'properties' => array(
+            'removalDate'
+        ),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'vrm'
+                )
+            )
+        )
+    );
+
+    protected $vehiclesTotalBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licenceVehicles' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -383,5 +432,33 @@ class LicenceEntityService extends AbstractEntityService
     public function getSafetyData($id)
     {
         return $this->get($id, $this->safetyDataBundle);
+    }
+
+    public function getVehiclesData($id)
+    {
+        return $this->get($id, $this->vehicleDataBundle);
+    }
+
+    public function getCurrentVrms($id)
+    {
+        $data = $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('LicenceVehicle', 'GET', array('licence' => $id), $this->currentVrmBundle);
+
+        $vrms = array();
+
+        foreach ($data['Results'] as $row) {
+            if (!$row['removalDate']) {
+                $vrms[] = $row['vehicle']['vrm'];
+            }
+        }
+
+        return $vrms;
+    }
+
+    public function getVehiclesTotal($id)
+    {
+        $data = $this->get($id, $this->vehiclesTotalBundle);
+
+        return count($data['licenceVehicles']);
     }
 }

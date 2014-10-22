@@ -19,6 +19,8 @@ class ApplicationEntityService extends AbstractEntityService
     const APPLICATION_TYPE_NEW = 0;
     const APPLICATION_TYPE_VARIATION = 1;
 
+    const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
+
     /**
      * Define entity for default behaviour
      *
@@ -134,7 +136,14 @@ class ApplicationEntityService extends AbstractEntityService
      */
     private $completionStatusDataBundle = array(
         'properties' => array(
-            'safetyConfirmation'
+            'safetyConfirmation',
+            'bankrupt',
+            'liquidation',
+            'receivership',
+            'administration',
+            'disqualified',
+            'insolvencyDetails',
+            'insolvencyConfirmation'
         ),
         'children' => array(
             'licence' => array(
@@ -373,6 +382,55 @@ class ApplicationEntityService extends AbstractEntityService
         )
     );
 
+    protected $statusBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'status' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    protected $authorisedVehiclesTotal = array(
+        'properties' => array(
+            'totAuthVehicles'
+        )
+    );
+
+    /**
+     * Document Bundle
+     *
+     * @var array
+     */
+    protected $documentBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'documents' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'filename',
+                    'identifier',
+                    'size'
+                )
+            )
+        )
+    );
+
+    protected $financialHistoryBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'bankrupt',
+            'liquidation',
+            'receivership',
+            'administration',
+            'disqualified',
+            'insolvencyDetails',
+            'insolvencyConfirmation'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -532,5 +590,36 @@ class ApplicationEntityService extends AbstractEntityService
     public function getOperatingCentresData($id)
     {
         return $this->get($id, $this->ocBundle);
+    }
+
+    public function getAuthorisedVehiclesTotal($id)
+    {
+        $data = $this->get($id, $this->authorisedVehiclesTotal);
+
+        return $data['totAuthVehicles'];
+    }
+
+    public function getDocuments($id, $categoryName, $documentSubCategoryName)
+    {
+        $documentBundle = $this->documentBundle;
+
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $category = $categoryService->getCategoryByDescription($categoryName);
+        $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
+
+        $documentBundle['children']['document']['criteria'] = array(
+            'category' => $category['id'],
+            'subCategory' => $subCategory['id']
+        );
+
+        $data = $this->get($id, $documentBundle);
+
+        return $data['documents'];
+    }
+
+    public function getFinancialHistoryData($id)
+    {
+        return $this->get($id, $this->financialHistoryBundle);
     }
 }

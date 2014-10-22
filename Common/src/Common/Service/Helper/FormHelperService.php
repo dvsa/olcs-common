@@ -287,4 +287,16 @@ class FormHelperService extends AbstractHelperService
         $fieldset->get('table')->setTable($table);
         $fieldset->get('rows')->setValue(count($table->getRows()));
     }
+
+    /**
+     * Disable date element
+     *
+     * @param \Zend\Form\Element\DateSelect $element
+     */
+    public function disableDateElement($element)
+    {
+        $element->getDayElement()->setAttribute('disabled', 'disabled');
+        $element->getMonthElement()->setAttribute('disabled', 'disabled');
+        $element->getYearElement()->setAttribute('disabled', 'disabled');
+    }
 }

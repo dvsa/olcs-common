@@ -1,16 +1,14 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("licence-vehicle")
  */
-class ApplicationVehicleSafetyVehicleSubActionLicenceVehicle
+class GoodsVehiclesVehicleLicenceVehicle
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -24,10 +22,9 @@ class ApplicationVehicleSafetyVehicleSubActionLicenceVehicle
     public $version = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Attributes({})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate",
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
@@ -37,10 +34,9 @@ class ApplicationVehicleSafetyVehicleSubActionLicenceVehicle
     public $receivedDate = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Attributes({})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
@@ -50,29 +46,24 @@ class ApplicationVehicleSafetyVehicleSubActionLicenceVehicle
     public $specifiedDate = null;
 
     /**
-     * @Form\Attributes({"id":"dob"})
+     * @Form\Attributes({})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate",
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate",
      *     "create_empty_option": true,
      *     "render_delimiters": false
      * })
      * @Form\Required(false)
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
-    public $deletedDate = null;
+    public $removalDate = null;
 
     /**
-     * @Form\Attributes({"class":"","id":""})
+     * @Form\Attributes({"disabled":"disabled"})
      * @Form\Options({
-     *     "label":
-     * "application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo"
+     *     "label": "application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo"
      * })
      * @Form\Required(false)
      * @Form\Type("Text")
      */
     public $discNo = null;
-
-
 }
-

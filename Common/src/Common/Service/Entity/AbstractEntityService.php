@@ -81,4 +81,18 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     {
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $id, $bundle);
     }
+
+    /**
+     * Forces a put, without the need for version
+     *
+     * @param int $id
+     * @param array $data
+     */
+    protected function forcePut($id, array $data)
+    {
+        $data['id'] = $id;
+        $data['_OPTIONS_']['force'] = true;
+
+        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
+    }
 }

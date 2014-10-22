@@ -39,12 +39,6 @@ abstract class AbstractController extends AbstractActionController
     protected $lva;
 
     /**
-     * Handle a redirect when 'cancel' is clicked; differs
-     * per implementation
-     */
-    abstract protected function handleCancelRedirect($lvaId);
-
-    /**
      * Execute the request
      *
      * @param  MvcEvent $e
@@ -70,7 +64,7 @@ abstract class AbstractController extends AbstractActionController
                 $actionResponse = $this->$method();
             } catch (ResourceConflictException $ex) {
                 $this->addErrorMessage('version-conflict-message');
-                $actionResponse = $this->redirect()->toRoute(null, array(), array(), true);
+                $actionResponse = $this->reload();
             }
         }
 
@@ -209,9 +203,22 @@ abstract class AbstractController extends AbstractActionController
     protected function checkForRedirect($lvaId)
     {
         if ($this->isButtonPressed('cancel')) {
+            // If we are on a sub-section, we need to go back to the section
+            if ($this->params('action') !== 'index') {
+                return $this->redirect()->toRoute(
+                    null,
+                    array('id' => $lvaId)
+                );
+            }
+
             return $this->handleCancelRedirect($lvaId);
         }
     }
+
+    /**
+     * Handle cancel redirect is implemented differently internally than externally
+     */
+    abstract protected function handleCancelRedirect($lvaId);
 
     /**
      * No-op but extended
@@ -235,5 +242,77 @@ abstract class AbstractController extends AbstractActionController
     protected function postSave($section)
     {
 
+    }
+
+    /**
+     * Reload the current page
+     *
+     * @return \Zend\Http\Response
+     */
+    protected function reload()
+    {
+        return $this->redirect()->toRoute(null, array(), array(), true);
+    }
+
+    /**
+     * Delete file
+     *
+     * @NOTE This is public so it can be called as a callback when processing files
+     *
+     * @param int $id
+     */
+    public function deleteFile($id)
+    {
+        $documentService = $this->getServiceLocator()->get('Entity\Document');
+
+        $identifier = $documentService->getIdentifier($id);
+
+        if (!empty($identifier)) {
+            $this->getServiceLocator()->get('FileUploader')->getUploader()->remove($identifier);
+        }
+
+        $documentService->delete($id);
+
+        return true;
+    }
+
+    protected function processFiles($form, $selector, $uploadCallback, $deleteCallback, $loadCallback)
+    {
+        $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
+
+        $uploadHelper->setForm($form)
+            ->setSelector($selector)
+            ->setUploadCallback($uploadCallback)
+            ->setDeleteCallback($deleteCallback)
+            ->setLoadCallback($loadCallback)
+            ->setRequest($this->getRequest());
+
+        return $uploadHelper->process();
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param array $fileData
+     * @param array $data
+     */
+    protected function uploadFile($fileData, $data)
+    {
+        $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
+        $uploader->setFile($fileData);
+
+        $file = $uploader->upload();
+
+        $docData = array_merge(
+            array(
+                'filename'      => $file->getName(),
+                'identifier'    => $file->getIdentifier(),
+                'size'          => $file->getSize(),
+                'fileExtension' => 'doc_' . $file->getExtension()
+            ),
+            $data
+        );
+
+        $this->getServiceLocator()->get('Entity\Document')->save($docData);
     }
 }

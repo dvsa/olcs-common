@@ -211,7 +211,6 @@ return array(
         that has gone into (or is going into) liquidation, owing money?',
     'application_previous-history_financial-history.finance.receivership' => '3. Involved with a company, or business,
         that has gone into (or is going into) receivership?',
-    'application_previous-history_financial-history.finance.title' => 'Financial history',
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'Please tick to confirm that you
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
         between the submission of your application and a decision being made on the application',
@@ -443,7 +442,7 @@ return array(
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
-    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.deletedDate' => 'Removed date',
+    'application_vehicle-safety_vehicle-sub-action.licence-vehicle.removalDate' => 'Removed date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.discNo' => 'Disc no',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.receivedDate' => 'Received date',
     'application_vehicle-safety_vehicle-sub-action.licence-vehicle.specifiedDate' => 'Specified date',

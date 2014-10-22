@@ -1,14 +1,13 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  */
-class ApplicationVehicleSafetyVehicleSubActionData
+class GoodsVehiclesVehicleData
 {
 
     /**
@@ -61,7 +60,4 @@ class ApplicationVehicleSafetyVehicleSubActionData
      * @Form\Type("\Common\Form\Elements\InputFilters\VehicleWeight")
      */
     public $platedWeight = null;
-
-
 }
-
