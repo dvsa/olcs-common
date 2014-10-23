@@ -53,6 +53,13 @@ class Document
         $bookmarks = $this->getBookmarks($tokens);
 
         foreach ($bookmarks as $token => $bookmark) {
+
+            /**
+             * Let the bookmark now what parser is currently active;
+             * some may use this for sub-bookmark processing
+             */
+            $bookmark->setParser($parser);
+
             if ($bookmark->isStatic()) {
 
                 $result = $bookmark->render();
@@ -68,7 +75,10 @@ class Document
             }
 
             if ($result) {
-                $populatedData[$token] = $result;
+                $populatedData[$token] = [
+                    'content' => $result,
+                    'preformatted' => $bookmark->isPreformatted()
+                ];
             }
         }
 
