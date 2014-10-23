@@ -1166,6 +1166,7 @@ return array(
     'your-business' => 'Your business',
     'internal-licence-fees-filter-by' => 'Filter by:',
     'internal-licence-fees-operator-details' => 'Operator details',
-    'internal-licence-fees-fees' => 'Fees'
+    'internal-licence-fees-fees' => 'Fees',
+    'internal-licence-fees-status' => 'Status'
     // Potentially unused (Not found with grep)
 );
