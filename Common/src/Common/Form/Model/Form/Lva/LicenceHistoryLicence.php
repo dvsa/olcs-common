@@ -1,19 +1,17 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("application_previous-history_licence-history-sub-action")
+ * @Form\Name("lva-licence-history-licence")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationPreviousHistoryLicenceHistorySubAction
+class LicenceHistoryLicence
 {
-
     /**
      * @Form\Name("data")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationPreviousHistoryLicenceHistorySubActionData")
@@ -23,10 +21,7 @@ class ApplicationPreviousHistoryLicenceHistorySubAction
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyCrudButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      */
     public $formActions = null;
-
-
 }
-

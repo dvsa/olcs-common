@@ -40,17 +40,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($request->isPost()) {
 
-            $tables = array();
-            foreach (array_keys($this->sections) as $section) {
-                $tables[] = $data[$section]['table'];
-            }
-
-            print '<pre>';
-            print_r($data);
-            print_r($tables);
-            exit;
-
-            $crudAction = $this->getCrudAction($tables);
+            $crudAction = $this->getCrudAction(array());
 
             if ($crudAction !== null) {
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
@@ -74,14 +64,28 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $this->render('licence_history', $form);
     }
 
-    public function addAction()
+    /**
+     * Override the get crud action method
+     *
+     * @param array $formTables
+     * @return array
+     */
+    protected function getCrudAction(array $formTables = array())
     {
+        $data = (array)$this->getRequest()->getPost();
 
-    }
+        foreach (array_keys($this->sections) as $section) {
 
-    public function editAction()
-    {
+            if (isset($data[$section]['table']['action'])) {
 
+                $action = $data[$section]['table']['action'];
+                $data[$section]['table']['routeAction'] = $section . '-' . strtolower($action);
+
+                return $data[$section]['table'];
+            }
+        }
+
+        return null;
     }
 
     protected function delete()
@@ -138,7 +142,11 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $form = $formHelper->createForm('Lva\LicenceHistory');
 
         foreach (array_keys($this->sections) as $section) {
-            $formHelper->populateFormTable($form->get($section)->get('table'), $this->getTable($section));
+            $formHelper->populateFormTable(
+                $form->get($section)->get('table'),
+                $this->getTable($section),
+                $section . '[table]'
+            );
         }
 
         return $form;
@@ -159,6 +167,196 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         return $this->getServiceLocator()->get('Entity\PreviousLicence')
             ->getForApplicationAndType($this->getApplicationId(), $prevLicenceType);
     }
+
+    /**
+     * Add current licence
+     */
+    public function currentAddAction()
+    {
+        return $this->addOrEdit('add', 'current');
+    }
+
+    /**
+     * Edit current licence
+     */
+    public function currentEditAction()
+    {
+        return $this->addOrEdit('edit', 'current');
+    }
+
+    /**
+     * Delete current licence
+     */
+    public function currentDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add applied licence
+     */
+    public function appliedAddAction()
+    {
+        return $this->addOrEdit('add', 'applied');
+    }
+
+    /**
+     * Edit applied licence
+     */
+    public function appliedEditAction()
+    {
+        return $this->addOrEdit('edit', 'applied');
+    }
+
+    /**
+     * Delete applied licence
+     */
+    public function appliedDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add refused licence
+     */
+    public function refusedAddAction()
+    {
+        return $this->addOrEdit('add', 'refused');
+    }
+
+    /**
+     * Edit refused licence
+     */
+    public function refusedEditAction()
+    {
+        return $this->addOrEdit('edit', 'refused');
+    }
+
+    /**
+     * Delete refused licence
+     */
+    public function refusedDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add revoked licence
+     */
+    public function revokedAddAction()
+    {
+        return $this->addOrEdit('add', 'revoked');
+    }
+
+    /**
+     * Edit revoked licence
+     */
+    public function revokedEditAction()
+    {
+        return $this->addOrEdit('edit', 'revoked');
+    }
+
+    /**
+     * Delete revoked licence
+     */
+    public function revokedDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add disqualified licence
+     */
+    public function disqualifiedAddAction()
+    {
+        return $this->addOrEdit('add', 'disqualified');
+    }
+
+    /**
+     * Edit disqualified licence
+     */
+    public function disqualifiedEditAction()
+    {
+        return $this->addOrEdit('edit', 'disqualified');
+    }
+
+    /**
+     * Delete disqualified licence
+     */
+    public function disqualifiedDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add held licence
+     */
+    public function heldAddAction()
+    {
+        return $this->addOrEdit('add', 'held');
+    }
+
+    /**
+     * Edit held licence
+     */
+    public function heldEditAction()
+    {
+        return $this->addOrEdit('edit', 'held');
+    }
+
+    /**
+     * Delete held licence
+     */
+    public function heldDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Add public inquiry licence
+     */
+    public function publicInquiryAddAction()
+    {
+        return $this->addOrEdit('add', 'public-inquiry');
+    }
+
+    /**
+     * Edit public inquiry licence
+     */
+    public function publicInquiryEditAction()
+    {
+        return $this->addOrEdit('edit', 'public-inquiry');
+    }
+
+    /**
+     * Delete public inquiry licence
+     */
+    public function publicInquiryDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
+    /**
+     * Generic functionality for adding/editing
+     *
+     * @param string $mode
+     * @param string $which
+     * @return mixed
+     */
+    protected function addOrEdit($mode, $which)
+    {
+        $form = $this->getLicenceForm();
+
+        return $this->render($mode . '_' . $which . '_licence_history', $form);
+    }
+
+    protected function getLicenceForm()
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\LicenceHistoryLicence');
+    }
+
+
+
 
 
 
@@ -359,173 +557,5 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         return $form;
-    }
-
-    /**
-     * Add current licence
-     */
-    public function tableLicencesCurrentAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit current licence
-     */
-    public function tableLicencesCurrentEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete current licence
-     */
-    public function tableLicencesCurrentDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add applied licence
-     */
-    public function tableLicencesAppliedAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit applied licence
-     */
-    public function tableLicencesAppliedEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete applied licence
-     */
-    public function tableLicencesAppliedDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add refused licence
-     */
-    public function tableLicencesRefusedAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit refused licence
-     */
-    public function tableLicencesRefusedEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete refused licence
-     */
-    public function tableLicencesRefusedDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add revoked licence
-     */
-    public function tableLicencesRevokedAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit revoked licence
-     */
-    public function tableLicencesRevokedEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete revoked licence
-     */
-    public function tableLicencesRevokedDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add public inquiry licence
-     */
-    public function tableLicencesPublicInquiryAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit public inquiry licence
-     */
-    public function tableLicencesPublicInquiryEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete public inquiry licence
-     */
-    public function tableLicencesPublicInquiryDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add disqualified licence
-     */
-    public function tableLicencesDisqualifiedAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit disqualified licence
-     */
-    public function tableLicencesDisqualifiedEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete disqualified licence
-     */
-    public function tableLicencesDisqualifiedDeleteAction()
-    {
-        return $this->delete();
-    }
-
-    /**
-     * Add held licence
-     */
-    public function tableLicencesHeldAddAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Edit held licence
-     */
-    public function tableLicencesHeldEditAction()
-    {
-        return $this->renderSection();
-    }
-
-    /**
-     * Delete held licence
-     */
-    public function tableLicencesHeldDeleteAction()
-    {
-        return $this->delete();
     }
 }

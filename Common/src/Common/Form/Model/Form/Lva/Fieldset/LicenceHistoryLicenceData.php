@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
@@ -8,15 +8,8 @@ use Zend\Form\Annotation as Form;
  * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  */
-class ApplicationPreviousHistoryLicenceHistorySubActionData
+class LicenceHistoryLicenceData
 {
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -105,7 +98,4 @@ class ApplicationPreviousHistoryLicenceHistorySubActionData
      * @Form\Validator({"name":"\Common\Form\Elements\Validators\DateNotInFuture"})
      */
     public $purchaseDate = null;
-
-
 }
-

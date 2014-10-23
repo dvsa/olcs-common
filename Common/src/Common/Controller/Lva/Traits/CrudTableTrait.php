@@ -17,8 +17,8 @@ trait CrudTableTrait
     /**
      * implementors of this trait *must* support add, edit & delete
      */
-    abstract public function addAction();
-    abstract public function editAction();
+    //abstract public function addAction();
+    //abstract public function editAction();
     abstract protected function delete();
 
     /**
@@ -49,6 +49,9 @@ trait CrudTableTrait
 
     /**
      * Redirect to the most appropriate CRUD action
+     *
+     * @param array $data
+     * @return \Zend\Http\Response
      */
     protected function handleCrudAction($data)
     {
@@ -58,7 +61,7 @@ trait CrudTableTrait
             $data['id'] = array_keys($data['action'][$action])[0];
         }
 
-        $routeParams = array('action' => $action);
+        $routeParams = array('action' => isset($data['routeAction']) ? $data['routeAction'] : $action);
 
         if ($action !== 'add') {
 

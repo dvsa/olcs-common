@@ -282,9 +282,9 @@ class FormHelperService extends AbstractHelperService
      * @param \Zend\Form\Fieldset $fieldset
      * @param \Common\Service\Table\TableBuilder $table
      */
-    public function populateFormTable(Fieldset $fieldset, TableBuilder $table)
+    public function populateFormTable(Fieldset $fieldset, TableBuilder $table, $tableFieldsetName = null)
     {
-        $fieldset->get('table')->setTable($table);
+        $fieldset->get('table')->setTable($table, $tableFieldsetName);
         $fieldset->get('rows')->setValue(count($table->getRows()));
     }
 
