@@ -21,7 +21,7 @@ trait GenericVehicleSection
 {
     protected function getNoActionIdentifierRequired()
     {
-        return array('add','vehicles');
+        return array('add', 'vehicles');
     }
 
     /**
