@@ -20,10 +20,13 @@ class ContentStoreFileUploader extends AbstractFileUploader
     /**
      * Upload the file
      */
-    public function upload($namespace = null)
+    public function upload($namespace = null, $key = null)
     {
         $file = $this->getFile();
-        $key = $this->generateKey();
+
+        if ($key === null) {
+            $key = $this->generateKey();
+        }
 
         $path = $this->getPath($key, $namespace);
 
