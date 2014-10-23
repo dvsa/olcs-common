@@ -188,15 +188,7 @@ class DiscList extends DynamicBookmark
      */
     private function splitString($str)
     {
-        $len = self::MAX_LINE_LENGTH;
-        $max = ceil(strlen($str) / $len);
-        $parts = [];
-
-        for ($i = 0; $i < $max; $i++) {
-            $parts[] = substr($str, $i * $len, $len);
-        }
-
-        return $parts;
+        return str_split($str, self::MAX_LINE_LENGTH);
     }
 
     /*
