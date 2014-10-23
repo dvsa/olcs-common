@@ -5,7 +5,7 @@ OLCS.ready(function() {
   "use strict";
 
   OLCS.conditionalButton({
-    container: 'form [data-group="table"]',
+    container: 'form [data-group*="table"]',
     label: 'Edit',
     predicate: function (length, callback) {
       callback(length != 1);
@@ -13,7 +13,7 @@ OLCS.ready(function() {
   });
 
   OLCS.conditionalButton({
-    container: 'form [data-group="table"]',
+    container: 'form [data-group*="table"]',
     label: 'Delete',
     predicate: function (length, callback) {
       callback(length < 1);

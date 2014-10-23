@@ -62,6 +62,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('licence-history');
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('licence_history', $form);
     }
@@ -93,7 +94,13 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function delete()
     {
+        $ids = explode(',', $this->params('child_id'));
 
+        $service = $this->getServiceLocator()->get('Entity\PreviousLicence');
+
+        foreach ($ids as $id) {
+            $service->delete($id);
+        }
     }
 
     protected function save($data)
@@ -110,7 +117,9 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         $saveData = array();
 
         foreach ($this->sections as $reference => $actual) {
-            $saveData[$actual] = $data[$reference]['question'];
+            if (isset($data[$reference]['question'])) {
+                $saveData[$actual] = $data[$reference]['question'];
+            }
         }
 
         $saveData['version'] = $data['current']['version'];
@@ -380,7 +389,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             return $this->handlePostSave();
         }
 
-        return $this->render($mode . '_' . $which . '_licence_history', $form);
+        return $this->render($mode . '_licence_history', $form);
     }
 
     /**
@@ -449,6 +458,24 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     protected function saveLicence($data)
     {
         $saveData = $data['data'];
+
+        if (isset($saveData['disqualificationDate'])) {
+            $saveData['disqualificationDate'] = sprintf(
+                '%s-%s-%s',
+                $saveData['disqualificationDate']['year'],
+                $saveData['disqualificationDate']['month'],
+                $saveData['disqualificationDate']['day']
+            );
+        }
+
+        if (isset($saveData['purchaseDate'])) {
+            $saveData['purchaseDate'] = sprintf(
+                '%s-%s-%s',
+                $saveData['purchaseDate']['year'],
+                $saveData['purchaseDate']['month'],
+                $saveData['purchaseDate']['day']
+            );
+        }
 
         $saveData['id'] = $this->params('child_id');
 

@@ -433,7 +433,45 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getLicenceHistoryStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+
+        $sections = array(
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenRefused',
+            'prevBeenRevoked',
+            'prevBeenDisqualifiedTc',
+            'prevBeenAtPi',
+            'prevPurchasedAssets'
+        );
+
+        $requiredVars = array();
+
+        $filter = $this->getServiceLocator()->get('Helper\String');
+
+        // We must have values for each radio
+        foreach ($sections as $section) {
+
+            $licenceType = $filter->camelToUnderscore($section);
+
+            $requiredVars[] = $applicationData[$section];
+
+            // If the radio is YES, then we must have at least 1 licence of that type
+            if ($applicationData[$section] === 'Y') {
+
+                $hasLicences = null;
+
+                foreach ($applicationData['previousLicences'] as $licence) {
+
+                    if ($licence['previousLicenceType']['id'] === $licenceType) {
+                        $hasLicences = true;
+                    }
+                }
+
+                $requiredVars[] = $hasLicences;
+            }
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**

@@ -143,9 +143,24 @@ class ApplicationEntityService extends AbstractEntityService
             'administration',
             'disqualified',
             'insolvencyDetails',
-            'insolvencyConfirmation'
+            'insolvencyConfirmation',
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenRefused',
+            'prevBeenRevoked',
+            'prevBeenDisqualifiedTc',
+            'prevBeenAtPi',
+            'prevPurchasedAssets'
         ),
         'children' => array(
+            'previousLicences' => array(
+                'properties' => array(),
+                'children' => array(
+                    'previousLicenceType' => array(
+                        'properties' => array('id')
+                    )
+                )
+            ),
             'licence' => array(
                 'properties' => array(
                     'niFlag',
