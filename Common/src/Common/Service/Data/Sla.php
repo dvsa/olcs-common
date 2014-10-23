@@ -23,33 +23,22 @@ class Sla extends AbstractData
 
         $rules = $this->fetchBusRules($category);
 
-        //die('<pre>' . print_r($rules, 1));
-
         foreach ($rules as $rule) {
 
-            //die('<pre>' . print_r($rule, 1));
-
             if ($rule['field'] == $name) {
-
-                $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
 
                 $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
 
                 $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
                 $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
 
-                if ($dateToCompare >= $effectiveFrom) {
-
-                    if (false === $effectiveTo || (false !== $effectiveTo && $dateToCompare <= $effectiveTo)) {
-
-                        return $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
-                    }
+                if ($dateToCompare >= $effectiveFrom && (false === $effectiveTo || $dateToCompare <= $effectiveTo)) {
+                    return $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
                 }
             }
         }
 
         throw new \LogicException('No rule exists for this context');
-
     }
 
     public function setContext($category, array $context)
@@ -67,17 +56,6 @@ class Sla extends AbstractData
         throw new \Exception('No context for category ' . $category);
     }
 
-    public function processData($in)
-    {
-        $outdata = [];
-
-        foreach ($in['Results'] as $item) {
-            $outdata[] = $item;
-        }
-
-        return $outdata;
-    }
-
     /**
      * Ensures only a single call is made to the backend for each dataset
      *
@@ -91,11 +69,15 @@ class Sla extends AbstractData
             if (empty($data)) {
                 return null;
             }
-            //die('<pre>' . print_r($data, 1));
-            $this->setData($category, $data);
+
+            if (!isset($data['Results']) || empty($data['Results']))  {
+                return null;
+            }
+
+            $this->setData($category, $data['Results']);
         }
 
-        return $this->processData($this->getData($category));
+        return $this->getData($category);
     }
 
     /**

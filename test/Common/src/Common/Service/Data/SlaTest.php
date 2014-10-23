@@ -44,21 +44,23 @@ class SlaTest extends \PHPUnit_Framework_TestCase
         ];
 
         $sut = new Sla();
-        $sut->setData('pi', ['Results' => $busRules]);
+        $sut->setData('pi', $busRules);
 
-        if (true === $exception) {
-            try {
-                $sut->getTargetDate('pi', $field, $context);
-            } catch (\LogicException $e) {
-                $this->assertEquals(
-                    'No rule exists for this context',
-                    $e->getMessage()
-                );
-                return;
+        $passed = !$exception;
+
+        try {
+            $result = $sut->getTargetDate('pi', $field, $context);
+        } catch (\LogicException $e) {
+            if ('No rule exists for this context' === $e->getMessage()) {
+                $passed = true;
             }
         }
 
-        $this->assertEquals($date, $sut->getTargetDate('pi', $field, $context));
+        $this->assertTrue($passed, 'Expected exception not thrown or message didn\'t match');
+
+        if (!$exception) {
+            $this->assertEquals($date, $result);
+        }
     }
 
     public function provideTargetDate()
