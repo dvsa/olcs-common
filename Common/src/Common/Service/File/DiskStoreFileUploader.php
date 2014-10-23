@@ -21,9 +21,14 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Upload the file
      */
-    public function upload($namespace = null)
+    public function upload($namespace = null, $key = null)
     {
         $file = $this->getFile();
+        /**
+         * N.B. key is always ignored; this is intentional
+         * The Disk Store always controls its own physical
+         * representation of a file
+         */
         $key = $this->generateKey();
 
         $newPath = $this->getPath($key, $namespace);

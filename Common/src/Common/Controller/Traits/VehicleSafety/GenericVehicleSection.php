@@ -19,6 +19,10 @@ use Zend\Form\Element\Checkbox;
  */
 trait GenericVehicleSection
 {
+    protected function getNoActionIdentifierRequired()
+    {
+        return array('add', 'vehicles');
+    }
 
     /**
      * Redirect to the first section

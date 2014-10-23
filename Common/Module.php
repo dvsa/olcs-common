@@ -44,6 +44,7 @@ class Module
     {
         return array(
             'factories' => array(
+                'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
                 'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
                 'Common\Service\Data\Country' => 'Common\Service\Data\Country',
                 'OlcsCustomForm' => function ($sm) {

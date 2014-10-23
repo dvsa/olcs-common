@@ -11,6 +11,12 @@ use Common\Service\Document\Parser\RtfParser;
  */
 class RtfParserTest extends \PHPUnit_Framework_TestCase
 {
+    public function testExtension()
+    {
+        $parser = new RtfParser();
+        $this->assertEquals('rtf', $parser->getFileExtension());
+    }
+
     public function testExtractTokens()
     {
         $content = <<<TXT
@@ -58,6 +64,26 @@ TXT;
             "bookmark_one" => "Some Content\nWith newlines",
             "bookmark_three" => "Three",
             "letter_date_add_14_days" => "Today"
+        ];
+
+        $this->assertEquals(
+            $expected,
+            $parser->replace($content, $data)
+        );
+    }
+
+    public function testReplaceWhenDataIsPreformatted()
+    {
+        $content = "Bookmark 1: {\*\bkmkstart bookmark_one}{\*\bkmkend bookmark_one}";
+        $expected = "Bookmark 1: Some Content\nWith newlines";
+
+        $parser = new RtfParser();
+
+        $data = [
+            "bookmark_one" => [
+                "content" => "Some Content\nWith newlines",
+                "preformatted" => true
+            ]
         ];
 
         $this->assertEquals(

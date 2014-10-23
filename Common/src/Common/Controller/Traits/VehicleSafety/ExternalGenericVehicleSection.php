@@ -18,6 +18,8 @@ trait ExternalGenericVehicleSection
 {
     protected $sectionLocation = 'External';
 
+    protected $sharedBespokeSubActions = array('reprint');
+
     /**
      * Alter the action form
      *

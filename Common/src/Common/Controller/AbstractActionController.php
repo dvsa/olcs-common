@@ -270,7 +270,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         $action = $this->getActionFromFullActionName($action);
 
-        if ($action !== 'add') {
+        if (!in_array($action, $this->getNoActionIdentifierRequired())) {
 
             $id = $this->params()->fromPost('id');
 
@@ -297,6 +297,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         }
 
         return $this->redirect()->toRoute($route, $params, $options, true);
+    }
+
+    protected function getNoActionIdentifierRequired()
+    {
+        return array('add');
     }
 
     /**
