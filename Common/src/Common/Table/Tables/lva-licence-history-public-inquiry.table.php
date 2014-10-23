@@ -21,15 +21,9 @@ return array(
         array(
             'title' => $prefix . 'columnLicNo',
             'name' => 'licNo',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'table-licences-public-inquiry-edit'
-                    ),
-                    'Application/PreviousHistory/LicenceHistory'
-                ) . '">' . $row['licNo'] . '</a>';
-            }
+            'type' => 'Action',
+            'class' => 'action--tertiary',
+            'action' => 'edit'
         ),
         array(
             'title' => $prefix . 'columnHolderName',

@@ -14,7 +14,7 @@ class LicenceHistoryLicence
 {
     /**
      * @Form\Name("data")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationPreviousHistoryLicenceHistorySubActionData")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryLicenceData")
      */
     public $data = null;
 

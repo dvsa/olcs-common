@@ -26,6 +26,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         'held' => 'prevPurchasedAssets'
     );
 
+    protected $section = 'licence_history';
+
     public function indexAction()
     {
         $request = $this->getRequest();
@@ -78,7 +80,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             if (isset($data[$section]['table']['action'])) {
 
-                $action = $data[$section]['table']['action'];
+                $action = $this->getActionFromCrudAction($data[$section]['table']);
+
                 $data[$section]['table']['routeAction'] = $section . '-' . strtolower($action);
 
                 return $data[$section]['table'];
@@ -160,12 +163,15 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getTableData($which)
     {
+        return $this->getServiceLocator()->get('Entity\PreviousLicence')
+            ->getForApplicationAndType($this->getApplicationId(), $this->getLicenceTypeFromSection($which));
+    }
+
+    protected function getLicenceTypeFromSection($section)
+    {
         $stringHelper = $this->getServiceLocator()->get('Helper\String');
 
-        $prevLicenceType = $stringHelper->camelToUnderscore($this->sections[$which]);
-
-        return $this->getServiceLocator()->get('Entity\PreviousLicence')
-            ->getForApplicationAndType($this->getApplicationId(), $prevLicenceType);
+        return $stringHelper->camelToUnderscore($this->sections[$section]);
     }
 
     /**
@@ -345,134 +351,79 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function addOrEdit($mode, $which)
     {
-        $form = $this->getLicenceForm();
+        $request = $this->getRequest();
+
+        $data = array();
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } elseif ($mode === 'edit') {
+            $id = $this->params('child_id');
+
+            $data = $this->getLicenceFormData($id);
+
+            // If the loaded previous licence type doesn't match the one we are editing
+            if ($data['previousLicenceType']['id'] !== $this->getLicenceTypeFromSection($which)) {
+                return $this->notFoundAction();
+            }
+        }
+
+        if (!$request->isPost()) {
+            $data = $this->formatDataForLicenceForm($data, $which);
+        }
+
+        $form = $this->alterActionForm($this->getLicenceForm(), $which)->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $this->saveLicence($data);
+
+            return $this->handlePostSave();
+        }
 
         return $this->render($mode . '_' . $which . '_licence_history', $form);
     }
 
+    /**
+     * Get the altered licence form
+     *
+     * @param string $which
+     * @return \Zend\Form\Form
+     */
     protected function getLicenceForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\LicenceHistoryLicence');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
-     * Set the action service
+     * Alter the form based on the licence type
      *
-     * @var string
+     * @param \Zend\Form\Form $form
+     * @param string $which
+     * @return \Zend\Form\Form
      */
-    protected $actionService = 'PreviousLicence';
-
-    /**
-     * Holds the actionDataBundle
-     *
-     * @var array
-     */
-    protected $actionDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'licNo',
-            'holderName',
-            'willSurrender',
-            'purchaseDate',
-            'disqualificationDate',
-            'disqualificationLength'
-        ),
-        'children' => array(
-            'previousLicenceType' => array(
-                'properties' => array('id')
-            )
-        )
-    );
-
-    /**
-     * Licence type - current
-     */
-    const PREV_LICENCE_TYPE_HAS_LICENCE = 'prev_has_licence';
-
-    /**
-     * Licence type - applied
-     */
-    const PREV_LICENCE_TYPE_HAD_LICENCE = 'prev_had_licence';
-
-    /**
-     * Licence type - refused
-     */
-    const PREV_LICENCE_TYPE_BEEN_REFUSED = 'prev_been_refused';
-
-    /**
-     * Licence type - revoked
-     */
-    const PREV_LICENCE_TYPE_BEEN_REVOKED = 'prev_been_revoked';
-
-    /**
-     * Licence type - public inquiry
-     */
-    const PREV_LICENCE_TYPE_BEEN_AT_PI = 'prev_been_at_pi';
-
-    /**
-     * Licence type - disqualified
-     */
-    const PREV_LICENCE_TYPE_BEEN_DISQUALIFIED = 'prev_been_disqualified_tc';
-
-    /**
-     * Licence type - held
-     */
-    const PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS = 'prev_has_purchased_assets';
-
-    /**
-     * Map a table to its type. This also maps review table types.
-     *
-     * @var array
-     */
-    public static $mapTableToType = array(
-        'table-licences-current' => self::PREV_LICENCE_TYPE_HAS_LICENCE,
-        'table-licences-applied' => self::PREV_LICENCE_TYPE_HAD_LICENCE,
-        'table-licences-refused' => self::PREV_LICENCE_TYPE_BEEN_REFUSED,
-        'table-licences-revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
-        'table-licences-public-inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
-        'table-licences-disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
-        'table-licences-held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS,
-
-        'previous_licences_current' => self::PREV_LICENCE_TYPE_HAS_LICENCE,
-        'previous_licences_applied' => self::PREV_LICENCE_TYPE_HAD_LICENCE,
-        'previous_licences_refused' => self::PREV_LICENCE_TYPE_BEEN_REFUSED,
-        'previous_licences_revoked' => self::PREV_LICENCE_TYPE_BEEN_REVOKED,
-        'previous_licences_public_inquiry' => self::PREV_LICENCE_TYPE_BEEN_AT_PI,
-        'previous_licences_disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
-        'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
-    );
-
-    /**
-     * Action save
-     *
-     * @param array $data
-     * @param string $service
-     */
-    protected function actionSave($data, $service = null)
+    protected function alterActionForm($form, $which)
     {
-        $applicationId = $this->getIdentifier();
-        $data['application'] = $applicationId;
-        if (array_key_exists('willSurrender', $data) !== false) {
-            $data['willSurrender'] = ($data['willSurrender'] == 'Y') ? 1 : 0;
-        }
-        parent::actionSave($data, $service);
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        if ($which !== 'disqualified') {
+            $formHelper->remove($form, 'data->disqualificationDate');
+            $formHelper->remove($form, 'data->disqualificationLength');
+        }
+
+        if ($which !== 'current') {
+            $formHelper->remove($form, 'data->willSurrender');
+        }
+
+        if ($which !== 'held') {
+            $formHelper->remove($form, 'data->purchaseDate');
+        }
+
+        return $form;
+    }
+
+    protected function getLicenceFormData($id)
+    {
+        return $this->getServiceLocator()->get('Entity\PreviousLicence')->getById($id);
     }
 
     /**
@@ -480,82 +431,34 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      *
      * @param $data
      */
-    protected function processActionLoad($data)
+    protected function formatDataForLicenceForm($data, $which)
     {
-        $data = parent::processActionLoad($data);
-
-        $actionName = $this->getActionName();
-
-        $parts = explode('-', $actionName);
-
-        $action = array_pop($parts);
-        $type = implode('-', $parts);
-
-        if ($action == 'add' && isset(self::$mapTableToType[$type])) {
-            $data['previousLicenceType'] = self::$mapTableToType[$type];
-        }
-
-        if (array_key_exists('willSurrender', $data)) {
-            if ($data['willSurrender'] === true) {
-                $data['willSurrender'] = 'Y';
-            } elseif ($data['willSurrender'] === false) {
-                $data['willSurrender'] = 'N';
-            }
-        }
-
-        if ($action != 'add') {
-
-            $data['previousLicenceType'] = $data['previousLicenceType']['id'];
-        }
+        $data['previousLicenceType'] = $this->getLicenceTypeFromSection($which);
 
         return array(
             'data' => $data
         );
     }
 
-    protected function alterActionForm($form)
+    /**
+     * Save licenceR
+     *
+     * @param array $data
+     * @param string $service
+     */
+    protected function saveLicence($data)
     {
-        switch ($this->getActionName()) {
-            case 'table-licences-current-add':
-            case 'table-licences-current-edit':
-                $form->get('data')->remove('disqualificationDate');
-                $form->get('data')->remove('disqualificationLength');
-                $form->get('data')->remove('purchaseDate');
-                $form->getInputFilter()->get('data')->remove('disqualificationDate');
-                $form->getInputFilter()->get('data')->remove('purchaseDate');
-                break;
-            case 'table-licences-applied-add':
-            case 'table-licences-applied-edit':
-            case 'table-licences-refused-add':
-            case 'table-licences-refused-edit':
-            case 'table-licences-revoked-add':
-            case 'table-licences-revoked-edit':
-            case 'table-licences-public-inquiry-add':
-            case 'table-licences-public-inquiry-edit':
-                $form->get('data')->remove('willSurrender');
-                $form->get('data')->remove('disqualificationDate');
-                $form->get('data')->remove('disqualificationLength');
-                $form->get('data')->remove('purchaseDate');
-                $form->getInputFilter()->get('data')->remove('disqualificationDate');
-                $form->getInputFilter()->get('data')->remove('purchaseDate');
-                break;
-            case 'table-licences-disqualified-add':
-            case 'table-licences-disqualified-edit':
-                $form->get('data')->remove('willSurrender');
-                $form->get('data')->remove('purchaseDate');
-                $form->getInputFilter()->get('data')->remove('purchaseDate');
-                break;
-            case 'table-licences-held-add':
-            case 'table-licences-held-edit':
-                $form->get('data')->remove('willSurrender');
-                $form->get('data')->remove('disqualificationDate');
-                $form->get('data')->remove('disqualificationLength');
-                $form->getInputFilter()->get('data')->remove('disqualificationDate');
-                break;
-            default:
-                break;
+        $saveData = $data['data'];
+
+        $saveData['id'] = $this->params('child_id');
+
+        if (empty($saveData['id'])) {
+            unset($saveData['id']);
+            unset($saveData['version']);
         }
 
-        return $form;
+        $saveData['application'] = $this->getApplicationId();
+
+        $this->getServiceLocator()->get('Entity\PreviousLicence')->save($saveData);
     }
 }

@@ -39,6 +39,29 @@ class PreviousLicenceEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * Holds the data bundle
+     *
+     * @var array
+     */
+    protected $dataBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'licNo',
+            'holderName',
+            'willSurrender',
+            'purchaseDate',
+            'disqualificationDate',
+            'disqualificationLength'
+        ),
+        'children' => array(
+            'previousLicenceType' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
     public function getForApplicationAndType($applicationId, $prevLicenceType)
     {
         $data = $this->get(
@@ -47,5 +70,10 @@ class PreviousLicenceEntityService extends AbstractEntityService
         );
 
         return $data['Results'];
+    }
+
+    public function getById($id)
+    {
+        return $this->get($id, $this->dataBundle);
     }
 }
