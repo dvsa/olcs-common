@@ -9,6 +9,7 @@ return array(
     ),
     'settings' => array(
         'crud' => array(
+            'formName' => 'disqualified',
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
@@ -16,12 +17,7 @@ return array(
             )
         )
     ),
-    'attributes' => array(),
     'columns' => array(
-        array(
-            'width' => 'checkbox',
-            'type' => 'Selector'
-        ),
         array(
             'title' => $prefix . 'columnLicNo',
             'name' => 'licNo',
@@ -48,8 +44,9 @@ return array(
             'title' => $prefix . 'columnDisqualificationLength',
             'name' => 'disqualificationLength',
         ),
-    ),
-    // Footer configuration
-    'footer' => array(
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
+        )
     )
 );

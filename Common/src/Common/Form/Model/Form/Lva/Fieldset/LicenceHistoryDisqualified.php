@@ -5,9 +5,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("dataLicencesDisqualified")
+ * Licence history disqualified
  */
-class LicenceHistoryDataLicencesDisqualified
+class LicenceHistoryDisqualified
 {
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -20,7 +20,14 @@ class LicenceHistoryDataLicencesDisqualified
      *         "class": "inline"
      *     }
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\PreviousHistoryLicenceHistoryNeedLicence")
+     * @Form\Type("radio")
+     * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator"})
      */
-    public $prevBeenDisqualifiedTc = null;
+    public $question = null;
+
+    /**
+     * @Form\Name("table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     */
+    public $table = null;
 }

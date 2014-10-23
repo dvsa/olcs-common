@@ -13,90 +13,46 @@ use Zend\Form\Annotation as Form;
 class LicenceHistory
 {
     /**
-     * @Form\Name("dataLicencesCurrent")
-     * @Form\Options({"label":"application_previous-history_licence-history.title"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesCurrent")
-     * @Form\Validator({"name":"Common\Form\Elements\Validators\PreviousHistoryLicenceHistoryLicenceValidator"})
+     * @Form\Name("current")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryCurrent")
      */
-    public $dataLicencesCurrent = null;
+    public $current = null;
 
     /**
-     * @Form\Name("table-licences-current")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Name("applied")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryApplied")
      */
-    public $tableLicencesCurrent = null;
+    public $applied = null;
 
     /**
-     * @Form\Name("dataLicencesApplied")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesApplied")
+     * @Form\Name("refused")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryRefused")
      */
-    public $dataLicencesApplied = null;
+    public $refused = null;
 
     /**
-     * @Form\Name("table-licences-applied")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Name("revoked")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryRevoked")
      */
-    public $tableLicencesApplied = null;
+    public $revoked = null;
 
     /**
-     * @Form\Name("dataLicencesRefused")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesRefused")
+     * @Form\Name("public-inquiry")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryPublicInquiry")
      */
-    public $dataLicencesRefused = null;
+    public $publicInquiry = null;
 
     /**
-     * @Form\Name("table-licences-refused")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Name("disqualified")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDisqualified")
      */
-    public $tableLicencesRefused = null;
+    public $disqualified = null;
 
     /**
-     * @Form\Name("dataLicencesRevoked")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesRevoked")
+     * @Form\Name("held")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryHeld")
      */
-    public $dataLicencesRevoked = null;
-
-    /**
-     * @Form\Name("table-licences-revoked")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $tableLicencesRevoked = null;
-
-    /**
-     * @Form\Name("dataLicencesPublicInquiry")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesPublicInquiry")
-     */
-    public $dataLicencesPublicInquiry = null;
-
-    /**
-     * @Form\Name("table-licences-public-inquiry")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $tableLicencesPublicInquiry = null;
-
-    /**
-     * @Form\Name("dataLicencesDisqualified")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesDisqualified")
-     */
-    public $dataLicencesDisqualified = null;
-
-    /**
-     * @Form\Name("table-licences-disqualified")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $tableLicencesDisqualified = null;
-
-    /**
-     * @Form\Name("dataLicencesHeld")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceHistoryDataLicencesHeld")
-     */
-    public $dataLicencesHeld = null;
-
-    /**
-     * @Form\Name("table-licences-held")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
-     */
-    public $tableLicencesHeld = null;
+    public $held = null;
 
     /**
      * @Form\Name("form-actions")

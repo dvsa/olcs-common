@@ -431,6 +431,20 @@ class ApplicationEntityService extends AbstractEntityService
         )
     );
 
+    protected $licenceHistoryBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenRefused',
+            'prevBeenRevoked',
+            'prevBeenDisqualifiedTc',
+            'prevBeenAtPi',
+            'prevPurchasedAssets'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -621,5 +635,10 @@ class ApplicationEntityService extends AbstractEntityService
     public function getFinancialHistoryData($id)
     {
         return $this->get($id, $this->financialHistoryBundle);
+    }
+
+    public function getLicenceHistoryData($id)
+    {
+        return $this->get($id, $this->licenceHistoryBundle);
     }
 }

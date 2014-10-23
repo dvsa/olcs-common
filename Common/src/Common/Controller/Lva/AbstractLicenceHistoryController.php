@@ -14,13 +14,121 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractLicenceHistoryController extends AbstractController
 {
+    use Traits\CrudTableTrait;
+
+    protected $sections = array(
+        'current' => 'prevHasLicence',
+        'applied' => 'prevHadLicence',
+        'refused' => 'prevBeenRefused',
+        'revoked' => 'prevBeenRevoked',
+        'public-inquiry' => 'prevBeenAtPi',
+        'disqualified' => 'prevBeenDisqualifiedTc',
+        'held' => 'prevPurchasedAssets'
+    );
+
     public function indexAction()
     {
-        $form = $this->getLicenceHistoryForm();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } else {
+            $data = $this->formatDataForForm($this->getFormData());
+        }
+
+        $form = $this->getLicenceHistoryForm()->setData($data);
+
+        if ($request->isPost()) {
+
+            $tables = array();
+            foreach (array_keys($this->sections) as $section) {
+                $tables[] = $data[$section]['table'];
+            }
+
+            print '<pre>';
+            print_r($data);
+            print_r($tables);
+            exit;
+
+            $crudAction = $this->getCrudAction($tables);
+
+            if ($crudAction !== null) {
+                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+            }
+
+            if ($form->isValid()) {
+
+                $this->save($data);
+                $this->postSave('licence_history');
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                return $this->completeSection('licence_history');
+            }
+        }
 
         $this->getServiceLocator()->get('Script')->loadFile('licence-history');
 
         return $this->render('licence_history', $form);
+    }
+
+    public function addAction()
+    {
+
+    }
+
+    public function editAction()
+    {
+
+    }
+
+    protected function delete()
+    {
+
+    }
+
+    protected function save($data)
+    {
+        $data = $this->formatDataForSave($data);
+
+        $data['id'] = $this->getApplicationId();
+
+        $this->getServiceLocator()->get('Entity\Application')->save($data);
+    }
+
+    protected function formatDataForSave($data)
+    {
+        $saveData = array();
+
+        foreach ($this->sections as $reference => $actual) {
+            $saveData[$actual] = $data[$reference]['question'];
+        }
+
+        $saveData['version'] = $data['current']['version'];
+
+        return $saveData;
+    }
+
+    protected function getFormData()
+    {
+        return $this->getServiceLocator()->get('Entity\Application')->getLicenceHistoryData($this->getApplicationId());
+    }
+
+    protected function formatDataForForm($data)
+    {
+        $formData = array();
+
+        foreach ($this->sections as $reference => $actual) {
+            $formData[$reference] = array(
+                'question' => $data[$actual]
+            );
+        }
+
+        $formData['current']['version'] = $data['version'];
+
+        return $formData;
     }
 
     protected function getLicenceHistoryForm()
@@ -29,124 +137,27 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         $form = $formHelper->createForm('Lva\LicenceHistory');
 
-        $formHelper->populateFormTable($form->get('table-licences-current'), $this->getCurrentTable());
-        $formHelper->populateFormTable($form->get('table-licences-applied'), $this->getAppliedTable());
-        $formHelper->populateFormTable($form->get('table-licences-refused'), $this->getRefusedTable());
-        $formHelper->populateFormTable($form->get('table-licences-revoked'), $this->getRevokedTable());
-        $formHelper->populateFormTable($form->get('table-licences-public-inquiry'), $this->getPublicInquiryTable());
-        $formHelper->populateFormTable($form->get('table-licences-disqualified'), $this->getDisqualifiedTable());
-        $formHelper->populateFormTable($form->get('table-licences-held'), $this->getHeldTable());
+        foreach (array_keys($this->sections) as $section) {
+            $formHelper->populateFormTable($form->get($section)->get('table'), $this->getTable($section));
+        }
 
         return $form;
     }
 
-    /**
-     * Add custom validation logic
-     *
-     * @param Form $form
-     * @return Form
-     */
-    protected function alterForm($form)
+    protected function getTable($which)
     {
-        $post = (array)$this->getRequest()->getPost();
-
-        $tables = [
-            'table-licences-current',
-            'table-licences-applied',
-            'table-licences-refused',
-            'table-licences-revoked',
-            'table-licences-public-inquiry',
-            'table-licences-disqualified',
-            'table-licences-held'
-        ];
-
-        $fieldsets = [
-            'dataLicencesCurrent', 'dataLicencesApplied', 'dataLicencesRefused',
-            'dataLicencesRevoked', 'dataLicencesPublicInquiry', 'dataLicencesDisqualified',
-            'dataLicencesHeld'
-        ];
-        $fields = [
-            'prevHasLicence', 'prevHadLicence', 'prevBeenRefused',
-            'prevBeenRevoked', 'prevBeenAtPi', 'prevBeenDisqualifiedTc',
-            'prevPurchasedAssets'
-        ];
-
-        $shouldAddValidators = true;
-
-        foreach ($tables as $table) {
-            if (isset($post[$table]['action'])) {
-                $shouldAddValidators = false;
-                break;
-            }
-        }
-
-        if ($shouldAddValidators) {
-            for ($i = 0; $i < count($tables); $i++) {
-                $rows = $form->get($tables[$i])->get('rows')->getValue();
-                $licenceValidator =
-                    new \Common\Form\Elements\Validators\PreviousHistoryLicenceHistoryLicenceValidator();
-                $licenceValidator->setRows($rows);
-                $prevHasLicence = $form->getInputFilter()->get($fieldsets[$i])->get($fields[$i])->getValidatorChain();
-                $prevHasLicence->attach($licenceValidator);
-            }
-        }
-        return $form;
-    }
-
-    protected function getCurrentTable()
-    {
-        $data = array();
-
         return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-current', $data);
+            ->prepareTable('lva-licence-history-' . $which, $this->getTableData($which));
     }
 
-    protected function getAppliedTable()
+    protected function getTableData($which)
     {
-        $data = array();
+        $stringHelper = $this->getServiceLocator()->get('Helper\String');
 
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-applied', $data);
-    }
+        $prevLicenceType = $stringHelper->camelToUnderscore($this->sections[$which]);
 
-    protected function getRefusedTable()
-    {
-        $data = array();
-
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-refused', $data);
-    }
-
-    protected function getRevokedTable()
-    {
-        $data = array();
-
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-revoked', $data);
-    }
-
-    protected function getPublicInquiryTable()
-    {
-        $data = array();
-
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-public-inquiry', $data);
-    }
-
-    protected function getDisqualifiedTable()
-    {
-        $data = array();
-
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-disqualified', $data);
-    }
-
-    protected function getHeldTable()
-    {
-        $data = array();
-
-        return $this->getServiceLocator()->get('Table')
-            ->prepareTable('lva-licence-history-held', $data);
+        return $this->getServiceLocator()->get('Entity\PreviousLicence')
+            ->getForApplicationAndType($this->getApplicationId(), $prevLicenceType);
     }
 
 
@@ -157,50 +168,9 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
 
 
-    /**
-     * Set the service for the "Free" save behaviour
-     *
-     * @var string
-     */
-    protected $service = 'Application';
 
-    /**
-     * Data bundle
-     *
-     * @var array
-     */
-    protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'prevHasLicence',
-            'prevHadLicence',
-            'prevBeenRefused',
-            'prevBeenRevoked',
-            'prevBeenDisqualifiedTc',
-            'prevBeenAtPi',
-            'prevPurchasedAssets'
-        )
-    );
 
-    /**
-     * Data map
-     *
-     * @var array
-     */
-    protected $dataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'dataLicencesCurrent',
-                'dataLicencesApplied',
-                'dataLicencesRevoked',
-                'dataLicencesRefused',
-                'dataLicencesDisqualified',
-                'dataLicencesPublicInquiry',
-                'dataLicencesHeld'
-            ),
-        )
-    );
+
 
     /**
      * Set the action service
@@ -215,29 +185,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      * @var array
      */
     protected $actionDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'licNo',
-            'holderName',
-            'willSurrender',
-            'purchaseDate',
-            'disqualificationDate',
-            'disqualificationLength'
-        ),
-        'children' => array(
-            'previousLicenceType' => array(
-                'properties' => array('id')
-            )
-        )
-    );
-
-    /**
-     * Holds the actionDataBundle
-     *
-     * @var array
-     */
-    public static $tableDataBundle = array(
         'properties' => array(
             'id',
             'version',
@@ -312,51 +259,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         'previous_licences_disqualified' => self::PREV_LICENCE_TYPE_BEEN_DISQUALIFIED,
         'previous_licences_held' => self::PREV_LICENCE_TYPE_HAS_PURCHASED_ASSETS
     );
-
-    /**
-     * Save method
-     *
-     * @param array $data
-     * @param string $service
-     */
-    protected function save($data, $service = null)
-    {
-        $data['id'] = $this->getIdentifier();
-        parent::save($data, $service);
-    }
-
-    /**
-     * Get the form table data
-     *
-     * @param int $id
-     * @param string $table
-     * @return array
-     */
-    protected function getFormTableData($id, $table)
-    {
-        $tableData = $this->getSummaryTableData($id, $this, $table);
-
-        return $tableData;
-    }
-
-    /**
-     * Retrieve the relevant table data as we want to render it on the review summary page
-     * Note that as with most controllers this is the same data we want to render on the
-     * normal form page, hence why getFormTableData (declared earlier) simply wraps this
-     */
-    public static function getSummaryTableData($id, $context, $table)
-    {
-        $previousLicenceType = isset(self::$mapTableToType[$table]) ? self::$mapTableToType[$table] : null;
-
-        $data = $context->makeRestCall(
-            'PreviousLicence',
-            'GET',
-            array('application' => $id, 'previousLicenceType' => $previousLicenceType),
-            self::$tableDataBundle
-        );
-
-        return $data;
-    }
 
     /**
      * Action save
@@ -457,36 +359,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
         }
 
         return $form;
-    }
-
-    /**
-     * Process load
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function processLoad($data)
-    {
-        $returnData = array(
-            'id' => $data['id'],
-        );
-        $fieldsets = ['dataLicencesCurrent', 'dataLicencesApplied', 'dataLicencesRevoked', 'dataLicencesRefused',
-            'dataLicencesPublicInquiry', 'dataLicencesDisqualified', 'dataLicencesHeld'];
-        $fields = ['prevHasLicence', 'prevHadLicence', 'prevBeenRevoked', 'prevBeenRefused',
-            'prevBeenAtPi', 'prevBeenDisqualifiedTc', 'prevPurchasedAssets'];
-
-        for ($i = 0; $i < count($fieldsets); $i++) {
-            if ($data[$fields[$i]] == 'Y') {
-                $returnData[$fieldsets[$i]][$fields[$i]] = 'Y';
-            } elseif ($data[$fields[$i]] == 'N') {
-                $returnData[$fieldsets[$i]][$fields[$i]] = 'N';
-            } else {
-                $returnData[$fieldsets[$i]][$fields[$i]] = '';
-            }
-        }
-
-        $returnData['dataLicencesCurrent']['version'] = $data['version'];
-        return $returnData;
     }
 
     /**
