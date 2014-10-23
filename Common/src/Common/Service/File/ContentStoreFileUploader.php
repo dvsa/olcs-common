@@ -68,6 +68,26 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $file = $store->read($path);
 
+        return $this->serveFile($file, $name);
+    }
+
+    /**
+     * Remove the file
+     */
+    public function remove($identifier, $namespace = null)
+    {
+        $path = $this->getPath($identifier, $namespace);
+        $store = $this->getServiceLocator()->get('ContentStore');
+        return $store->remove($path);
+    }
+
+    private function readFile($file)
+    {
+        return file_get_contents($file->getPath());
+    }
+
+    public function serveFile($file, $name)
+    {
         $response = new Response();
 
         if ($file === null) {
@@ -89,20 +109,5 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $response->setContent($fileData);
         return $response;
-    }
-
-    /**
-     * Remove the file
-     */
-    public function remove($identifier, $namespace = null)
-    {
-        $path = $this->getPath($identifier, $namespace);
-        $store = $this->getServiceLocator()->get('ContentStore');
-        return $store->remove($path);
-    }
-
-    private function readFile($file)
-    {
-        return file_get_contents($file->getPath());
     }
 }

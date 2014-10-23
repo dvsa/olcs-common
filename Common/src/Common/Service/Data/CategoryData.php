@@ -47,7 +47,7 @@ class CategoryData implements FactoryInterface, ServiceLocatorAwareInterface
     }
 
     /**
-     * Get a category by it's description
+     * Get a category by its description
      *
      * @param string $description
      * @param string $subCategoryType

@@ -18,8 +18,6 @@ trait VehicleSection
 {
     use GenericVehicleSection;
 
-    protected $sharedBespokeSubActions = array('reprint');
-
     /**
      * Holds the table data bundle
      *
@@ -207,7 +205,7 @@ trait VehicleSection
     /**
      * Reprint a single disc
      *
-     * @NOTE I have put this logic into it's own method (rather in the reprintSave method), as we will soon be able to
+     * @NOTE I have put this logic into its own method (rather in the reprintSave method), as we will soon be able to
      * reprint multiple discs at once
      *
      * @param int $id

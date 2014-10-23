@@ -3,7 +3,6 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
-use Common\Service\Document\Parser\ParserFactory;
 
 /**
  * Disc list bookmark
@@ -189,15 +188,7 @@ class DiscList extends DynamicBookmark
      */
     private function splitString($str)
     {
-        $len = self::MAX_LINE_LENGTH;
-        $max = ceil(strlen($str) / $len);
-        $parts = [];
-
-        for ($i = 0; $i < $max; $i++) {
-            $parts[] = substr($str, $i * $len, $len);
-        }
-
-        return $parts;
+        return str_split($str, self::MAX_LINE_LENGTH);
     }
 
     /*

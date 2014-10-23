@@ -2,18 +2,18 @@
 
 namespace CommonTest\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\LicenceHolderName;
+use Common\Service\Document\Bookmark\TaName;
 
 /**
- * Licence holder name test
+ * TA Name test
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicenceHolderNameTest extends \PHPUnit_Framework_TestCase
+class TaNameTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetQueryContainsExpectedKeys()
     {
-        $bookmark = new LicenceHolderName();
+        $bookmark = new TaName();
         $query = $bookmark->getQuery(['licence' => 123]);
 
         $this->assertEquals('Licence', $query['service']);
@@ -28,17 +28,17 @@ class LicenceHolderNameTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        $bookmark = new LicenceHolderName();
+        $bookmark = new TaName();
         $bookmark->setData(
             [
-                'organisation' => [
-                    'name' => 'Org 1'
+                'trafficArea' => [
+                    'name' => 'TA Name 1'
                 ]
             ]
         );
 
         $this->assertEquals(
-            'Org 1',
+            'TA Name 1',
             $bookmark->render()
         );
     }

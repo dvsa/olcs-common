@@ -5,7 +5,7 @@ namespace Common\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
 /**
- * Text block bookmark
+ * Operator 'FAO' bookmark
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
