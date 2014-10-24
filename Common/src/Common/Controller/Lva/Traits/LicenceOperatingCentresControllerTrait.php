@@ -6,6 +6,7 @@
 namespace Common\Controller\Lva\Traits;
 
 use Common\Form\Elements\Validators\CantIncreaseValidator;
+use Zend\Form\Form;
 
 /**
  */
@@ -49,5 +50,27 @@ trait LicenceOperatingCentresControllerTrait
         return $this->getServiceLocator()
             ->get('Entity\LicenceOperatingCentre')
             ->getVehicleAuths($id);
+    }
+
+    /**
+     * Generic licence action form alterations
+     *
+     * @param \Zend\Form\Form $form
+     */
+    public function alterActionForm(Form $form)
+    {
+        $filter = $form->getInputFilter();
+
+        $data = $this->getVehicleAuthsForOperatingCentre($this->params('child_id'));
+
+        foreach (['vehicles', 'trailers'] as $which) {
+            $key = 'noOf' . ucfirst($which) . 'Possessed';
+
+            if ($filter->get('data')->has($key)) {
+                $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);
+            }
+        }
+
+        return $form;
     }
 }
