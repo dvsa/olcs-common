@@ -53,6 +53,19 @@ trait LicenceOperatingCentresControllerTrait
     }
 
     /**
+     * Get total authorisations for licence
+     *
+     * @param int $id
+     * @return array
+     */
+    protected function getTotalAuthorisationsForLicence($id)
+    {
+        return $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getTotalAuths($id);
+    }
+
+    /**
      * Generic licence action form alterations
      *
      * @param \Zend\Form\Form $form

@@ -396,6 +396,13 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+    private $totalAuthorisationsBundle = array(
+        'properties' => array(
+            'totAuthVehicles',
+            'totAuthTrailers'
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -602,5 +609,10 @@ class LicenceEntityService extends AbstractEntityService
     {
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('Licence', 'GET', $identifier, $this->licDetailsForTaBundle);
+    }
+
+    public function getTotalAuths($id)
+    {
+        return $this->get($id, $this->totalAuthorisationsBundle);
     }
 }
