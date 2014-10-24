@@ -10,7 +10,7 @@ use Zend\ServiceManager\FactoryInterface;
  * Class AbstractData
  * @package Olcs\Service\Data
  */
-abstract class AbstractData implements FactoryInterface
+abstract class AbstractData implements FactoryInterface, RestClientAwareInterface
 {
     /**
      * @var RestClient
