@@ -776,6 +776,10 @@ return array(
     'internal-licence-details-vehicle_psv' => 'Vehicles',
     'internal-licence-details-vehicle_psv-label' => 'Vehicles',
     'internal-licence-details-vehicle_psv-title' => 'Vehicles',
+    'internal-licence-fees-fees' => 'Fees',
+    'internal-licence-fees-filter-by' => 'Filter by:',
+    'internal-licence-fees-operator-details' => 'Operator details',
+    'internal-licence-fees-status' => 'Status',
     'internal-licence-processing' => 'Processing',
     'internal-licence-processing-notes' => 'Notes',
     'internal-licence-processing-notes-add' => 'Add note',
@@ -1325,8 +1329,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal-licence-fees-filter-by' => 'Filter by:',
-    'internal-licence-fees-operator-details' => 'Operator details',
-    'internal-licence-fees-fees' => 'Fees'
     // Potentially unused (Not found with grep)
 );
