@@ -39,6 +39,19 @@ abstract class AbstractController extends AbstractActionController
     protected $lva;
 
     /**
+     * Current messages
+     *
+     * @var array
+     */
+    protected $currentMessages = array(
+        'default' => array(),
+        'error' => array(),
+        'info' => array(),
+        'warning' => array(),
+        'success' => array()
+    );
+
+    /**
      * Execute the request
      *
      * @param  MvcEvent $e
@@ -314,5 +327,28 @@ abstract class AbstractController extends AbstractActionController
         );
 
         $this->getServiceLocator()->get('Entity\Document')->save($docData);
+    }
+
+    /**
+     * Add current message
+     *
+     * @param string $message
+     * @param string $namespace
+     */
+    protected function addCurrentMessage($message, $namespace = 'default')
+    {
+        $this->currentMessages[$namespace][] = $message;
+    }
+
+    /**
+     * Attach messages to display in the current response
+     */
+    protected function attachCurrentMessages()
+    {
+        foreach ($this->currentMessages as $namespace => $messages) {
+            foreach ($messages as $message) {
+                $this->addMessage($message, $namespace);
+            }
+        }
     }
 }
