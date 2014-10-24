@@ -27,6 +27,10 @@ class Sla extends AbstractData
 
             if ($rule['field'] == $name) {
 
+                if (!array_key_exists($rule['compareTo'], $context)) {
+                    return null;
+                }
+
                 $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
 
                 $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
