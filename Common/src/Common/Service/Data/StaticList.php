@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Service\Data;
+
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
