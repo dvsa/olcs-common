@@ -596,11 +596,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Build a table from a config file
      *
      * @param array $config
+     * @param array $data
+     * @param array $params
+     * @param bool $render
      * @return string
      */
-    public function buildTable($name, $data = array(), $params = array(), $render = true)
+    public function buildTable($config, $data = array(), $params = array(), $render = true)
     {
-        $this->loadConfig($name);
+        $this->loadConfig($config);
 
         $this->loadData($data);
 
@@ -618,14 +621,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Load the configuration if it exists
      *
-     * @param string $name
-     * @throws \Exception
+     * @param $config
+     * @return bool
      */
-    public function loadConfig($name)
+    public function loadConfig($config)
     {
-        if (!isset($this->applicationConfig['tables']['config'])
-            || empty($this->applicationConfig['tables']['config'])) {
-            throw new \Exception('Table config location not defined');
+        if (!is_array($config)) {
+            $config = $this->getConfigFromFile($config);
         }
 
         $config = array_merge(
@@ -635,7 +637,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'columns' => array(),
                 'footer' => array()
             ),
-            $this->getConfigFromFile($name)
+            $config
         );
 
         $this->setSettings($config['settings']);
@@ -787,6 +789,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function getConfigFromFile($name)
     {
+        if (!isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])) {
+            throw new \Exception('Table config location not defined');
+        }
+
         $found = false;
 
         foreach ($this->applicationConfig['tables']['config'] as $location) {

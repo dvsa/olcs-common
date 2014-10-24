@@ -25,7 +25,7 @@ class DynamicMultiCheckboxFactory implements FactoryInterface
 
         $service = new DynamicMultiCheckbox();
 
-        $service->setServiceLocator($serviceLocator);
+        $service->setServiceLocator($serviceLocator->get('DataServiceManager'));
         return $service;
     }
 }

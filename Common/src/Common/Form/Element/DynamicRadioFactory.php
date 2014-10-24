@@ -4,13 +4,12 @@ namespace Common\Form\Element;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Common\Service\Data\RefData as RefDataService;
 
 /**
- * Class DynamicSelectFactory
+ * Class DynamicRadioFactory
  * @package Common\Form\Element
  */
-class DynamicSelectFactory implements FactoryInterface
+class DynamicRadioFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -23,7 +22,7 @@ class DynamicSelectFactory implements FactoryInterface
         /** @var \Zend\Form\FormElementManager $formElementManager */
         $serviceLocator = $formElementManager->getServiceLocator();
 
-        $service = new DynamicSelect();
+        $service = new DynamicRadio();
 
         $service->setServiceLocator($serviceLocator->get('DataServiceManager'));
         return $service;

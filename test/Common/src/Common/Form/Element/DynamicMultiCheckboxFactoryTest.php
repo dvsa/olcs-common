@@ -15,6 +15,7 @@ class DynamicMultiCheckboxFactoryTest extends \PHPUnit_Framework_TestCase
 
         $mockSl = $this->getMock('\Zend\Form\FormElementManager');
         $mockSl->expects($this->any())->method('getServiceLocator')->willReturnSelf();
+        $mockSl->expects($this->any())->method('get')->willReturnSelf();
 
         $sut = new DynamicMultiCheckboxFactory();
         $service = $sut->createService($mockSl);
