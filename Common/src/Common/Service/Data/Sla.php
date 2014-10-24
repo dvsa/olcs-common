@@ -73,7 +73,7 @@ class Sla extends AbstractData
                 return null;
             }
 
-            if (!isset($data['Results']) || empty($data['Results']))  {
+            if (!isset($data['Results']) || empty($data['Results'])) {
                 return null;
             }
 
