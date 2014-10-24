@@ -34,11 +34,31 @@ class LicenceEntityService extends AbstractEntityService
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
 
     /**
+     * Northern Ireland Traffic Area Code
+     */
+    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
+
+    /**
      * Define entity for default behaviour
      *
      * @var string
      */
     protected $entity = 'Licence';
+
+    /**
+     * Holds the cached Traffic Area details
+     *
+     * @var string
+     */
+    protected $trafficArea;
+
+    /**
+     * Cache the TA value options
+     *
+     * @var array
+     */
+    private $trafficAreaValueOptions;
+
 
     /**
      * Holds the overview bundle
@@ -348,6 +368,35 @@ class LicenceEntityService extends AbstractEntityService
     );
 
     /**
+     * Application traffic area bundle
+     *
+     * @var array
+     */
+    protected $trafficAreaBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'trafficArea' => array(
+                'properties' => array(
+                    'id',
+                    'name'
+                )
+            )
+        )
+    );
+
+    /**
+     * Licence details for traffic area
+     *
+     * @var array
+     */
+    protected $licDetailsForTaBundle = array(
+        'properties' => array(
+            'id',
+            'version'
+        )
+    );
+
+    /**
      * Get data for overview
      *
      * @param int $id
@@ -460,5 +509,98 @@ class LicenceEntityService extends AbstractEntityService
         $data = $this->get($id, $this->vehiclesTotalBundle);
 
         return count($data['licenceVehicles']);
+    }
+
+    /**
+     * Get traffic area for licence
+     *
+     * @param int $licenceId
+     * @return string
+     */
+    public function getTrafficArea($licenceId)
+    {
+        if ($this->trafficArea === null) {
+            $licence = $this->getServiceLocator()->get('Helper\Rest')
+                ->makeRestCall('Licence', 'GET', $licenceId, $this->trafficAreaBundle);
+
+            if (isset($licence['trafficArea'])) {
+                $this->trafficArea = $licence['trafficArea'];
+            }
+        }
+
+        return $this->trafficArea;
+    }
+
+    /**
+     * Set traffic area to application's licence based on area id
+     *
+     * @param int $identifier
+     * @param int $id
+     */
+    public function setTrafficArea($identifier, $id = null)
+    {
+        $licenceDetails = $this->getLicenceDetailsToUpdateTrafficArea($identifier);
+
+        if (isset($licenceDetails['version'])) {
+
+            $data = array(
+                'id' => $licenceDetails['id'],
+                'version' => $licenceDetails['version'],
+                'trafficArea' => $id
+            );
+
+            $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('Licence', 'PUT', $data);
+
+            if ($id) {
+                $licenceService = $this->getServiceLocator()->get('licence');
+                $licenceService->generateLicence($identifier);
+            }
+        }
+    }
+
+    /**
+     * Get Traffic Area value options for select element
+     *
+     * @return array
+     */
+    public function getTrafficAreaValueOptions()
+    {
+        if ($this->trafficAreaValueOptions === null) {
+            $trafficArea = $this->get(array(), $this->trafficAreaValuesBundle);
+
+            $this->trafficAreaValueOptions = array();
+            $results = $trafficArea['Results'];
+
+            if (!empty($results)) {
+                usort(
+                    $results,
+                    function ($a, $b) {
+                        return strcmp($a['name'], $b['name']);
+                    }
+                );
+
+                foreach ($results as $key => $value) {
+                    // Skip Northern Ireland Traffic Area
+                    if ($value['id'] == static::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
+                        continue;
+                    }
+
+                    $this->trafficAreaValueOptions[$value['id']] = $value['name'];
+                }
+            }
+        }
+
+        return $this->trafficAreaValueOptions;
+    }
+
+    /**
+     * Get licence details to update traffic area
+     *
+     * @return array
+     */
+    protected function getLicenceDetailsToUpdateTrafficArea($identifier)
+    {
+        return $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall('Licence', 'GET', $identifier, $this->licDetailsForTaBundle);
     }
 }

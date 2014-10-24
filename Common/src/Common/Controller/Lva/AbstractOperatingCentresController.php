@@ -28,6 +28,16 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private $section = 'operating_centres';
 
+    protected function getTrafficArea($lvaId = null)
+    {
+        if ($lvaId === null) {
+            $lvaId = $this->getLicenceId();
+        }
+        return $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getTrafficArea($lvaId);
+    }
+
     protected function getIdentifier()
     {
         return $this->params('id');
@@ -120,10 +130,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $appData = $this->formatDataForSave($data);
 
             if (isset($appData['trafficArea']) && $appData['trafficArea']) {
-                // @TODO needs to alter based on LVA
-                $this->getServiceLocator()->get('Entity\TrafficArea')
+                $this->getServiceLocator()->get('Entity\Licence')
                     ->setTrafficArea(
-                        $this->getApplicationId(),
+                        $this->getLicenceId(),
                         $appData['trafficArea']
                     );
             }
@@ -452,16 +461,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $data;
     }
 
-    private function getTrafficArea($identifier = null)
-    {
-        if ($identifier === null) {
-            $identifier = $this->getIdentifier();
-        }
-        return $this->getServiceLocator()
-            ->get('Entity\TrafficArea')
-            ->getTrafficArea($identifier);
-    }
-
     /**
      * Set the default traffic area
      *
@@ -660,7 +659,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $form;
         }
         $options = $this->getServiceLocator()
-            ->get('Entity\TrafficArea')->getTrafficAreaValueOptions();
+            ->get('Entity\Licence')->getTrafficAreaValueOptions();
 
         $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
             ->remove('trafficAreaInfoNameExists')
