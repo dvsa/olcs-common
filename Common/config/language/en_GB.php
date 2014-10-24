@@ -494,6 +494,8 @@ return array(
     'case-associated-with' => 'Cases associated with %s',
     'case-details' => 'Case details',
     'case-id' => 'Case ID',
+    'case-note-add-label' => 'Add note',
+    'case-note-edit-label' => 'Edit note',
     'case-number' => 'Case #',
     'case-submission' => 'Case submission',
     'case-submission-text' => 'This document is official and not for disclosure to any third parties without the
