@@ -30,7 +30,7 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
             array(
                 'id' => 2,
                 'discNo' => '123AB',
-                'issuedDate' => '2014-01-01',
+                'issuedDate' => '2014-01-01 10:10:00',
                 'ceasedDate' => null,
                 'isCopy' => 'N'
             ),
@@ -44,7 +44,7 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
             array(
                 'id' => 5,
                 'discNo' => '',
-                'issuedDate' => '2014-01-01',
+                'issuedDate' => '2014-01-01 10:10:00',
                 'ceasedDate' => null,
                 'isCopy' => 'N'
             )
@@ -68,15 +68,15 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
                 array(
                     'id' => 2,
                     'discNo' => '123AB',
-                    'issuedDate' => '2014-01-01',
+                    'issuedDate' => '2014-01-01 10:10:00',
                     'ceasedDate' => null,
                     'isCopy' => 'N'
                 ),
                 array(
                     'id' => 3,
                     'discNo' => '123ABC',
-                    'issuedDate' => '2014-01-01',
-                    'ceasedDate' => '2014-02-01',
+                    'issuedDate' => '2014-01-01 10:10:00',
+                    'ceasedDate' => '2014-02-01 10:10:00',
                     'isCopy' => 'N'
                 ),
                 array(
@@ -91,7 +91,7 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
                 array(
                     'id' => 5,
                     'discNo' => null,
-                    'issuedDate' => '2014-01-01',
+                    'issuedDate' => '2014-01-01 10:10:00',
                     'ceasedDate' => null,
                     'isCopy' => 'N'
                 )
@@ -157,11 +157,11 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
                 ),
                 array(
                     'id' => 2,
-                    'ceasedDate' => '2014-01-01'
+                    'ceasedDate' => '2014-01-01 10:10:00'
                 ),
                 array(
                     'id' => 3,
-                    'ceasedDate' => '2014-01-02'
+                    'ceasedDate' => '2014-01-02 10:10:00'
                 )
             )
         );
@@ -341,7 +341,7 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
     public function testReplaceSave()
     {
         $id = 2;
-        $date = date('Y-m-d');
+        $date = date('Y-m-d H:i:s');
 
         $this->sut->setIdentifier($id);
 
@@ -413,7 +413,7 @@ abstract class AbstractDiscsPsvSectionServiceTestCase extends AbstractSectionSer
     public function testVoidSave()
     {
         $id = 2;
-        $date = date('Y-m-d');
+        $date = date('Y-m-d H:i:s');
 
         $this->sut->setIdentifier($id);
 

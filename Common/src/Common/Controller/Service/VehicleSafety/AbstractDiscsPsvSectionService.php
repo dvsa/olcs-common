@@ -302,7 +302,7 @@ abstract class AbstractDiscsPsvSectionService extends AbstractSectionService
      */
     protected function ceaseDiscs($ids)
     {
-        $ceasedDate = date('Y-m-d');
+        $ceasedDate = date('Y-m-d H:i:s');
         $postData = array();
 
         foreach ($ids as $id) {
