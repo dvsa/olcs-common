@@ -60,7 +60,7 @@ class TemplateWorker
 
             while (false !== ($entry = readdir($handle))) {
 
-                if ($entry !== "." && $entry !== "..") {
+                if (substr($entry, 0, 1) !== ".") {
                     $file = new \Dvsa\Jackrabbit\Data\Object\File();
                     $file->setContent(
                         file_get_contents($source . '/' . $entry)

@@ -12,4 +12,6 @@ interface ParserInterface
     public function extractTokens($content);
 
     public function replace($content, $data);
+
+    public function getFileExtension();
 }

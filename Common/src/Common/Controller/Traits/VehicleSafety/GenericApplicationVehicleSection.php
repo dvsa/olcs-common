@@ -54,6 +54,12 @@ trait GenericApplicationVehicleSection
             $table->removeAction('reprint');
         }
 
+        // it's not ideal checking this property here, but these traits are all being
+        // reworked as part of OLCS-4522 anyway
+        if ($this->sectionLocation === 'External') {
+            $table->removeAction('print-vehicles');
+        }
+
         return $table;
     }
 
