@@ -488,7 +488,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         );
 
         if ($applicationData['prevConviction'] === 'Y') {
-            
+            $requiredVars[] = count($applicationData['previousConvictions']);
         }
 
         return $this->checkCompletion($requiredVars);

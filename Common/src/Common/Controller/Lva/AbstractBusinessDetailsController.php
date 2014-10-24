@@ -122,7 +122,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             // remove existing entries from collection and check for empty entries
             $names = [];
             foreach ($tradingNames['trading_name'] as $val) {
-                if (!empty(trim($val))) {
+                $trimmedVal = trim($val);
+                if (!empty($trimmedVal)) {
                     $names[] = $val;
                 }
             }

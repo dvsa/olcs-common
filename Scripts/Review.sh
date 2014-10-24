@@ -54,7 +54,7 @@ echo "h2.Checking coverage of diff"
 
 echo "{code}"
 
-cd .. && git diff origin/develop > data/review/patch.txt && vendor/bin/phpcov patch-coverage --patch data/review/patch.txt data/review/coverage.cov
+#cd .. && git diff origin/develop > data/review/patch.txt && vendor/bin/phpcov patch-coverage --patch data/review/patch.txt data/review/coverage.cov
 
 echo "{code}"
 

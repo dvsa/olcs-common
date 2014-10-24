@@ -155,6 +155,11 @@ class ApplicationEntityService extends AbstractEntityService
             'convictionsConfirmation'
         ),
         'children' => array(
+            'previousConvictions' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
             'previousLicences' => array(
                 'properties' => array(),
                 'children' => array(
