@@ -482,6 +482,15 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getConvictionsPenaltiesStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $requiredVars = array(
+            $applicationData['prevConviction'],
+            $applicationData['convictionsConfirmation']
+        );
+
+        if ($applicationData['prevConviction'] === 'Y') {
+            $requiredVars[] = count($applicationData['previousConvictions']);
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 }

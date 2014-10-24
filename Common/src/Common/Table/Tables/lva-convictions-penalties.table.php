@@ -15,25 +15,13 @@ return array(
             )
         )
     ),
-    'attributes' => array(),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Selector',
-            'hideWhenDisabled' => true
-        ),
-        array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnName',
-            'name' => 'name',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'edit'
-                    ),
-                    'Application/PreviousHistory/ConvictionsPenalties'
-                ) . '">' . $row['name'] . '</a>';
-            }
+            'value_format' => '{{title}} {{forename}} {{familyName}}',
+            'type' => 'Action',
+            'class' => 'action--tertiary',
+            'action' => 'edit'
         ),
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnDate',
@@ -51,9 +39,11 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnPenalty',
             'name' => 'penalty',
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox',
+            'hideWhenDisabled' => true
         )
-    ),
-    // Footer configuration
-    'footer' => array(
     )
 );
