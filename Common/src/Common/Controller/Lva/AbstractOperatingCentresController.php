@@ -28,7 +28,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private $section = 'operating_centres';
 
-    abstract protected function getTrafficArea($lvaId = null);
+    protected function getTrafficArea($lvaId = null)
+    {
+        if ($lvaId === null) {
+            $lvaId = $this->getLicenceId();
+        }
+        return $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getTrafficArea($lvaId);
+    }
 
     protected function getIdentifier()
     {
@@ -122,10 +130,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $appData = $this->formatDataForSave($data);
 
             if (isset($appData['trafficArea']) && $appData['trafficArea']) {
-                // @TODO needs to alter based on LVA
-                $this->getServiceLocator()->get('Entity\TrafficArea')
+                $this->getServiceLocator()->get('Entity\Licence')
                     ->setTrafficArea(
-                        $this->getApplicationId(),
+                        $this->getLicenceId(),
                         $appData['trafficArea']
                     );
             }
@@ -652,7 +659,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $form;
         }
         $options = $this->getServiceLocator()
-            ->get('Entity\TrafficArea')->getTrafficAreaValueOptions();
+            ->get('Entity\Licence')->getTrafficAreaValueOptions();
 
         $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
             ->remove('trafficAreaInfoNameExists')
