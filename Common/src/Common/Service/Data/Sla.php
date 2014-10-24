@@ -33,7 +33,10 @@ class Sla extends AbstractData
                 $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
 
                 if ($dateToCompare >= $effectiveFrom && (false === $effectiveTo || $dateToCompare <= $effectiveTo)) {
-                    return $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+
+                    $daysFinal = $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+
+                    return $daysFinal;
                 }
             }
         }
@@ -89,6 +92,10 @@ class Sla extends AbstractData
      */
     public function dateAddDays($date, $days)
     {
+        if (empty($date)) {
+            return null;
+        }
+
         $date = \DateTime::createFromFormat(
             \DateTime::ISO8601, date(\DateTime::ISO8601, strtotime($date))
         );
