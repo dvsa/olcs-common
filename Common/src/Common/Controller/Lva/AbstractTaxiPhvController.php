@@ -25,7 +25,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = array();
+            $data = $this->getFormData();
         }
 
         $form = $this->getForm()->setData($data);
@@ -67,6 +67,13 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return $this->alterForm($form);
     }
 
+    protected function getFormData()
+    {
+        return array(
+            'dataTrafficArea' => $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId())
+        );
+    }
+
     protected function getTable()
     {
         return $this->getServiceLocator()->get('Table')->prepareTable('lva-taxi-phv', $this->getTableData());
@@ -99,6 +106,36 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
 
         return $this->tableData;
+    }
+
+    protected function alterForm($form)
+    {
+        $licenceTableData = $this->getTableData();
+
+        $licenceService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $trafficArea = $licenceService->getTrafficArea($this->getLicenceId());
+
+        $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
+
+        if (!empty($licenceTableData)) {
+            $form->remove('dataTrafficArea');
+        } elseif ($trafficAreaId) {
+            $form->get('dataTrafficArea')->remove('trafficArea');
+            $template = $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue();
+            $newValue = str_replace('%NAME%', $trafficArea['name'], $template);
+            $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->setValue($newValue);
+        } else {
+            $form->get('dataTrafficArea')->remove('trafficAreaInfoLabelExists');
+            $form->get('dataTrafficArea')->remove('trafficAreaInfoNameExists');
+            $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
+
+            $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
+                $licenceService->getTrafficAreaValueOptions()
+            );
+        }
+
+        return $form;
     }
 
     public function addAction()
@@ -149,88 +186,27 @@ abstract class AbstractTaxiPhvController extends AbstractController
         return array();
     }
 
-    protected function alterForm($form)
-    {
-        $licenceTableData = $this->getTableData();
-
-        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
-        $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
-
-        if (!empty($licenceTableData)) {
-            $form->remove('dataTrafficArea');
-        } elseif ($trafficAreaId) {
-            $form->get('dataTrafficArea')->remove('trafficArea');
-            $template = $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue();
-            $newValue = str_replace('%NAME%', $trafficArea['name'], $template);
-            $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->setValue($newValue);
-        } else {
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoLabelExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoNameExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
-            $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
-                $this->getSectionService('TrafficArea')->getTrafficAreaValueOptions()
-            );
-        }
-
-        return $form;
-    }
-
     /**
      * Delete licence
-     *
-     * @todo These 2 methods need altering to allow multiple delete
      *
      * @return Response
      */
     public function delete()
     {
-        $this->maybeClearTrafficAreaId();
+        $ids = explode(',', $this->params('child_id'));
+        $licCount = $this->getServiceLocator()->getCountByLicence($this->getLicenceId());
 
-        // Do delete
-    }
+        if (count($ids) === $licCount) {
+            $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea(null);
+        }
 
-    /**
-     * Clear Traffic Area if we are deleting last one operating centres
-     */
-    protected function maybeClearTrafficAreaId()
-    {
-        $licCount = $this->getPrivateHireLicencesCount();
-        if ($licCount == 1 && $this->getActionId()) {
-            $this->getSectionService('TrafficArea')->setTrafficArea(null);
+        $service = $this->getServiceLocator()->get('Entity\PrivateHireLicence');
+
+        foreach ($ids as $id) {
+            $service->delete($id);
         }
     }
 
-    /**
-     * Get operating centres count
-     *
-     * @param int $licenceId
-     * @return int
-     */
-    protected function getPrivateHireLicencesCount()
-    {
-        $licenceId = $this->getLicenceId();
-
-        $licencesCount = 0;
-
-        if ($licenceId) {
-            $bundle = array(
-                'properties' => array(
-                    'id',
-                    'version'
-                )
-            );
-            $privateHireLicences = $this->makeRestCall(
-                'PrivateHireLicence',
-                'GET',
-                array(
-                    'licence' => $licenceId,
-                ),
-                $bundle
-            );
-            $licencesCount = $privateHireLicences['Count'];
-        }
-        return $licencesCount;
-    }
 
 
 
@@ -240,32 +216,10 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
 
 
-    /**
-     * Holds the data bundle
-     *
-     * @var array
-     */
-    protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-        ),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'name'
-                        )
-                    )
-                )
-            )
-        )
-    );
+
+
+
+
 
     /**
      * Data map

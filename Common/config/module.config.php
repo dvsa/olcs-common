@@ -81,11 +81,6 @@ return array(
             'goodsDiscStartNumberValidator' => function ($serviceManager) {
                 return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
             },
-            'licence' => function ($serviceManager) {
-                $licenceService = new \Common\Service\Licence\Licence();
-                $licenceService->setServiceLocator($serviceManager);
-                return $licenceService;
-            },
             'category' => '\Common\Service\Data\CategoryData',
             'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
