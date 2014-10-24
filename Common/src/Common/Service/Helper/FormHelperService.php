@@ -15,6 +15,10 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\ValidatorChain;
 use Common\Form\Elements\Types\Address;
 use Common\Service\Table\TableBuilder;
+use Zend\Form\Element;
+use Zend\Form\Element\DateSelect;
+use Zend\InputFilter\Input;
+use Zend\View\Model\ViewModel;
 
 /**
  * Form Helper Service
@@ -298,5 +302,85 @@ class FormHelperService extends AbstractHelperService
         $element->getDayElement()->setAttribute('disabled', 'disabled');
         $element->getMonthElement()->setAttribute('disabled', 'disabled');
         $element->getYearElement()->setAttribute('disabled', 'disabled');
+    }
+
+    /**
+     * Disable all elements recursively
+     *
+     * @param \Zend\Form\Fieldset $elements
+     * @return null
+     */
+    public function disableElements($elements)
+    {
+        if ($elements instanceof Fieldset) {
+            foreach ($elements->getElements() as $element) {
+                $this->disableElements($element);
+            }
+
+            foreach ($elements->getFieldsets() as $fieldset) {
+                $this->disableElements($fieldset);
+            }
+            return;
+        }
+
+        if ($elements instanceof DateSelect) {
+            $this->disableDateElement($elements);
+            return;
+        }
+
+        if ($elements instanceof Element) {
+            $elements->setAttribute('disabled', 'disabled');
+        }
+    }
+
+    /**
+     * Disable field validation
+     *
+     * @param \Zend\InputFilter\InputFilter $inputFilter
+     * @return null
+     */
+    public function disableValidation($inputFilter)
+    {
+        if ($inputFilter instanceof InputFilter) {
+            foreach ($inputFilter->getInputs() as $input) {
+                $this->disableValidation($input);
+            }
+            return;
+        }
+
+        if ($inputFilter instanceof Input) {
+            $inputFilter->setAllowEmpty(true);
+            $inputFilter->setRequired(false);
+            $inputFilter->setValidatorChain(new ValidatorChain());
+        }
+    }
+
+    /**
+     * Lock the element
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $message
+     */
+    public function lockElement(Element $element, $message)
+    {
+        $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
+
+        $lockView = new ViewModel(
+            array('message' => $this->getServiceLocator()->get('Helper\Translation')->translate($message))
+        );
+        $lockView->setTemplate('partials/lock');
+
+        $element->setLabel($element->getLabel() . $viewRenderer->render($lockView));
+        $element->setLabelOption('disable_html_escape', true);
+
+        $attributes = $element->getLabelAttributes();
+
+        if (!isset($attributes['class'])) {
+            $attributes['class'] = '';
+        }
+        // @todo add this back in when the css has been tweaked
+        //$attributes['class'] .= ' tooltip-grandparent';
+
+        $element->setLabelAttributes($attributes);
     }
 }
