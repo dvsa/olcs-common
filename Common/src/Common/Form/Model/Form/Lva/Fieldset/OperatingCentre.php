@@ -23,12 +23,6 @@ class OperatingCentre
     public $version = null;
 
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $application = null;
-
-    /**
      * @Form\Options({
      *     "label":
      * "application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed"
