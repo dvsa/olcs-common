@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'lva.section.title.add_convictions_penalties' => 'Add previous conviction',
+    'lva.section.title.edit_convictions_penalties' => 'Edit previous conviction',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

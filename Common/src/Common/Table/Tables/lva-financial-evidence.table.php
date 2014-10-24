@@ -20,16 +20,16 @@ return array(
     ),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Selector'
-        ),
-        array(
             'title' => $translationPrefix . '.file-name',
             'name' => 'fileName'
         ),
         array(
             'title' => $translationPrefix . '.type',
             'name' => 'type'
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
         )
     )
 );

@@ -14,11 +14,6 @@ namespace Common\Controller\Lva\Traits;
  */
 trait CrudTableTrait
 {
-    /**
-     * implementors of this trait *must* support add, edit & delete
-     */
-    //abstract public function addAction();
-    //abstract public function editAction();
     abstract protected function delete();
 
     /**

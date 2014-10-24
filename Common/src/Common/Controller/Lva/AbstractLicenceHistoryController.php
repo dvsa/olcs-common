@@ -61,8 +61,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('licence-history');
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'licence-history']);
 
         return $this->render('licence_history', $form);
     }

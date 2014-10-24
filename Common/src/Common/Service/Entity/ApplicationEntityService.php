@@ -150,7 +150,9 @@ class ApplicationEntityService extends AbstractEntityService
             'prevBeenRevoked',
             'prevBeenDisqualifiedTc',
             'prevBeenAtPi',
-            'prevPurchasedAssets'
+            'prevPurchasedAssets',
+            'prevConviction',
+            'convictionsConfirmation'
         ),
         'children' => array(
             'previousLicences' => array(
@@ -460,6 +462,14 @@ class ApplicationEntityService extends AbstractEntityService
         )
     );
 
+    protected $convictionsPenaltiesData = array(
+        'properties' => array(
+            'version',
+            'prevConviction',
+            'convictionsConfirmation'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -655,5 +665,10 @@ class ApplicationEntityService extends AbstractEntityService
     public function getLicenceHistoryData($id)
     {
         return $this->get($id, $this->licenceHistoryBundle);
+    }
+
+    public function getConvictionsPenaltiesData($id)
+    {
+        return $this->get($id, $this->convictionsPenaltiesData);
     }
 }

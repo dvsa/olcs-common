@@ -1,15 +1,19 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  */
-class ApplicationPreviousHistoryConvictionsPenaltiesData
+class ConvictionsPenaltiesData
 {
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})
@@ -23,21 +27,13 @@ class ApplicationPreviousHistoryConvictionsPenaltiesData
      *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator"})
      */
-    public $prevConviction = null;
+    public $question = null;
 
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
+     * @Form\Name("table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $version = null;
-
-
+    public $table = null;
 }
-
