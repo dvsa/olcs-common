@@ -289,11 +289,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private function getTableData()
     {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
         if (empty($this->tableData)) {
             $id = $this->getIdentifier();
 
-            // @TODO not in common trait... currently always fetches from app operating centre
-            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+            $data = $this->getServiceLocator()->get($lvaEntity)
                 ->getAddressSummaryData($id);
 
             $newData = array();
@@ -395,7 +396,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $this->handlePostSave();
         }
 
-        return $this->render('edit_operating_centre', $form);
+        return $this->render($mode . '_operating_centre', $form);
     }
 
     protected function delete()
