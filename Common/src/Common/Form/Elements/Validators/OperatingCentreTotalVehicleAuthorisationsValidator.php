@@ -77,6 +77,7 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
      */
     private function checkMultipleOperatingCentresValidation($noOfOperatingCentres, $value, $context)
     {
+
         $valid = true;
 
         if ($noOfOperatingCentres >= 2) {

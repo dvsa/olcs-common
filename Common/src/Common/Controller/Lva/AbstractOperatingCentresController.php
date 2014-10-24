@@ -19,9 +19,6 @@ use Common\Service\Entity\LicenceEntityService;
  */
 abstract class AbstractOperatingCentresController extends AbstractController
 {
-    /**
-     * @TODO inline JS
-     */
     use Traits\CrudTableTrait;
 
     protected $tableData = array();
@@ -92,7 +89,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $data = (array) $request->getPost();
+            $data = (array)$request->getPost();
         } else {
             $data = $this->getServiceLocator()->get($lvaEntity)
                 ->getOperatingCentresData($this->getIdentifier());
@@ -292,11 +289,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private function getTableData()
     {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
         if (empty($this->tableData)) {
             $id = $this->getIdentifier();
 
-            // @TODO not in common trait... currently always fetches from app operating centre
-            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+            $data = $this->getServiceLocator()->get($lvaEntity)
                 ->getAddressSummaryData($id);
 
             $newData = array();
@@ -325,7 +323,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function addAction()
     {
-        return $this->addOrEdit('edit');
+        return $this->addOrEdit('add');
     }
 
     public function editAction()
@@ -335,13 +333,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     private function addOrEdit($mode)
     {
+        $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
+
         $id = $this->params('child_id');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $data = (array) $request->getPost();
-        } elseif ($mode === 'edit') {
-            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->getAddressData($id);
+            $data = (array)$request->getPost();
+        } else {
+            if ($mode === 'edit') {
+                $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->getAddressData($id);
+            } else {
+                $data = [];
+            }
             $data = $this->formatCrudDataForForm($data, $mode);
         }
 
@@ -392,7 +396,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $this->handlePostSave();
         }
 
-        return $this->render('edit_people', $form);
+        return $this->render($mode . '_operating_centre', $form);
     }
 
     protected function delete()
@@ -411,6 +415,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         // @TODO shouldn't have to do this... need to investigate
         $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
         $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+
+        // we no longer store this in the form...
+        $data['applicationOperatingCentre']['application'] = $this->getApplicationId();
+
         return $data;
     }
 
@@ -435,7 +443,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             unset($data['data']['operatingCentre']);
         }
 
-        $data['data']['application'] = $this->getIdentifier();
         $trafficArea = $this->getTrafficArea();
 
         if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
