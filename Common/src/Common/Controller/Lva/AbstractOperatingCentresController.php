@@ -31,14 +31,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private $section = 'operating_centres';
 
-    /**
-     * Any implementors are expected to provide a licence ID; we
-     * don't care if that's via an entity service lookup or a route
-     * param
-     */
-    abstract protected function getLicenceId($lvaId = null);
-
-    abstract protected function getIdentifier();
+    protected function getIdentifier()
+    {
+        return $this->params('id');
+    }
 
     /**
      * Data map
