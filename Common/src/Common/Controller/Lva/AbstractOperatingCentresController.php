@@ -471,6 +471,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $licenceData = $this->getTypeOfLicenceData();
 
         if ($licenceData['niFlag'] === 'Y') {
+            // @TODO... no more section services
             $this->getSectionService('TrafficArea')->setTrafficArea(
                 $this->getApplicationId(),
                 TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
@@ -489,9 +490,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
             if (!empty($trafficAreaParts)) {
                 $this->getServiceLocator()
-                    ->get('Entity\TrafficArea')
+                    ->get('Entity\Licence')
                     ->setTrafficArea(
-                        $this->getApplicationId(),
+                        $this->getLicenceId(),
                         array_shift($trafficAreaParts)
                     );
             }
@@ -565,8 +566,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function getOperatingCentresCount()
     {
-        $operatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-            ->getOperatingCentresCount($this->getApplicationId());
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $operatingCentres = $this->getServiceLocator()->get($lvaEntity)
+            ->getOperatingCentresCount($this->getIdentifier());
 
         return $operatingCentres['Count'];
     }
