@@ -882,7 +882,7 @@ return array(
     'lva.section.title.addresses' => 'Addresses',
     'lva.section.title.business_details' => 'Business details',
     'lva.section.title.business_type' => 'Business type',
-    'lva.section.title.community_licences' => 'Communitt licences',
+    'lva.section.title.community_licences' => 'Community licences',
     'lva.section.title.conditions_undertakings' => 'Conditions and undertakings',
     'lva.section.title.convictions_penalties' => 'Convictions penalties',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
