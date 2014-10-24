@@ -28,6 +28,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private $section = 'operating_centres';
 
+    abstract protected function getTrafficArea($lvaId = null);
+
     protected function getIdentifier()
     {
         return $this->params('id');
@@ -450,16 +452,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         return $data;
-    }
-
-    private function getTrafficArea($identifier = null)
-    {
-        if ($identifier === null) {
-            $identifier = $this->getIdentifier();
-        }
-        return $this->getServiceLocator()
-            ->get('Entity\TrafficArea')
-            ->getTrafficArea($identifier);
     }
 
     /**
