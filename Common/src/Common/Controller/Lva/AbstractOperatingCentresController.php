@@ -703,4 +703,45 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $formOptions['hint'] .= '.psv';
         $form->get($fieldsetMap['data'])->setOptions($formOptions);
     }
+
+    /**
+     * Alter form for PSV applications
+     *
+     * @param \Zend\Form\Form $form
+     * @param array $fieldsetMap
+     * @param array $options
+     */
+    protected function alterFormForPsvLicences(Form $form, $fieldsetMap, $options)
+    {
+        $this->alterFormHintForPsv($form, $fieldsetMap);
+
+        $removeFields = array(
+            'totAuthVehicles',
+            'totAuthTrailers',
+            'minTrailerAuth',
+            'maxTrailerAuth'
+        );
+
+        $licenceType = $options['data']['licence']['licenceType']['id'];
+
+        $allowLargeVehicles = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        $allowCommunityLicences = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+            LicenceEntityService::LICENCE_TYPE_RESTRICTED
+        );
+
+        if (!in_array($licenceType, $allowLargeVehicles)) {
+            $removeFields[] = 'totAuthLargeVehicles';
+        }
+
+        if (!in_array($licenceType, $allowCommunityLicences)) {
+            $removeFields[] = 'totCommunityLicences';
+        }
+
+        $this->removeFormFields($form, $fieldsetMap['data'], $removeFields);
+    }
 }
