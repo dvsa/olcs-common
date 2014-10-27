@@ -2,8 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Common\Util\RestClient;
-
 /**
  * Class RefData
  * @package Common\Service

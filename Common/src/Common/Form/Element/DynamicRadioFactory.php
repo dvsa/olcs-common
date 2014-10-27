@@ -24,7 +24,7 @@ class DynamicRadioFactory implements FactoryInterface
 
         $service = new DynamicRadio();
 
-        $service->setServiceLocator($serviceLocator);
+        $service->setServiceLocator($serviceLocator->get('DataServiceManager'));
         return $service;
     }
 }

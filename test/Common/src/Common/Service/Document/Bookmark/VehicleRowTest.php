@@ -38,9 +38,17 @@ class VehicleRowTest extends \PHPUnit_Framework_TestCase
             'licenceVehicles' => [
                 [
                     'specifiedDate' => '2014-07-03',
+                    'removalDate' => null,
                     'vehicle' => [
                         'platedWeight' => 12345,
                         'vrm' => 'VRM123'
+                    ]
+                ], [
+                    'specifiedDate' => '2014-07-03',
+                    'removalDate' => '2014-10-10',
+                    'vehicle' => [
+                        'platedWeight' => 12345,
+                        'vrm' => 'VRM321'
                     ]
                 ]
             ]
@@ -48,6 +56,8 @@ class VehicleRowTest extends \PHPUnit_Framework_TestCase
 
         $parser = $this->getMock('Common\Service\Document\Parser\RtfParser', ['replace']);
 
+        // note how we don't expect the second row to feature as it has been
+        // marked as removed
         $expectedRowOne = [
             'SPEC_DATE' => '03-Jul-2014',
             'PLATED_WEIGHT' => 12345,
