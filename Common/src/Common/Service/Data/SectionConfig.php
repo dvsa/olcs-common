@@ -98,6 +98,9 @@ class SectionConfig
             )
         ),
         'vehicles_declarations' => array(
+            'prerequisite' => array(
+                'operating_centres'
+            ),
             'restricted' => array(
                 array(
                     'application',

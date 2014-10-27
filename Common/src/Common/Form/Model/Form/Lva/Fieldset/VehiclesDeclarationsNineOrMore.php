@@ -1,16 +1,14 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("nineOrMore")
  */
-class NineOrMore
+class VehiclesDeclarationsNineOrMore
 {
-
     /**
      * @Form\Options({"label":"application_vehicle-safety_undertakings.nineOrMore.label"})
      * @Form\Type("\Common\Form\Elements\Types\Html")
@@ -21,16 +19,12 @@ class NineOrMore
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.nineOrMore.details",
-     *     "value_options": {
-     *
-     *     },
+     *     "checked_value": "Y",
+     *     "unchecked_value": "N",
      *     "help-block": "Please choose",
-     *     "must_be_value": "1"
+     *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $psvNoSmallVhlConfirmation = null;
-
-
 }
-

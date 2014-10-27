@@ -480,6 +480,38 @@ class ApplicationEntityService extends AbstractEntityService
         )
     );
 
+    protected $vehicleDeclarationDataBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'psvOperateSmallVhl',
+            'psvSmallVhlNotes',
+            'psvSmallVhlConfirmation',
+            'psvNoSmallVhlConfirmation',
+            'psvLimousines',
+            'psvNoLimousineConfirmation',
+            'psvOnlyLimousinesConfirmation'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id'
+                ),
+                'children' => array(
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'isScottishRules'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -680,5 +712,10 @@ class ApplicationEntityService extends AbstractEntityService
     public function getConvictionsPenaltiesData($id)
     {
         return $this->get($id, $this->convictionsPenaltiesData);
+    }
+
+    public function getDataForVehiclesDeclarations($id)
+    {
+        return $this->get($id, $this->vehicleDeclarationDataBundle);
     }
 }
