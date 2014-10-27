@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator;
+
 /**
  * Shared logic between Taxi Phv controllers
  *
@@ -14,9 +16,45 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractTaxiPhvController extends AbstractController
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait {
+        Traits\CrudTableTrait::handleCrudAction as genericHandleCrudAction;
+    }
 
     protected $tableData;
+
+    protected $section = 'taxi_phv';
+
+    /**
+     * Action data map
+     *
+     * @var array
+     */
+    protected $licenceDataMap = array(
+        '_addresses' => array(
+            'address'
+        ),
+        'main' => array(
+            'children' => array(
+                'privateHireLicence' => array(
+                    'mapFrom' => array(
+                        'data'
+                    )
+                ),
+                'contactDetails' => array(
+                    'mapFrom' => array(
+                        'contactDetails'
+                    ),
+                    'children' => array(
+                        'addresses' => array(
+                            'mapFrom' => array(
+                                'addresses'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
 
     public function indexAction()
     {
@@ -43,6 +81,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
             if ($form->isValid()) {
 
+                $this->save($data);
                 $this->postSave('taxi_phv');
 
                 if ($crudAction !== null) {
@@ -53,7 +92,52 @@ abstract class AbstractTaxiPhvController extends AbstractController
             }
         }
 
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+
         return $this->render('taxi_phv', $form);
+    }
+
+    protected function handleCrudAction($data)
+    {
+        $action = $this->getActionFromCrudAction($data);
+
+        $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId());
+
+        if (empty($trafficArea)) {
+            $dataTrafficArea = $this->params()->fromPost('dataTrafficArea');
+
+            $trafficArea = is_array($dataTrafficArea) && isset($dataTrafficArea['trafficArea'])
+                ? $dataTrafficArea['trafficArea'] : '';
+
+            if ($action == 'add' && empty($trafficArea) && $this->getPrivateHireLicencesCount() > 0) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addWarningMessage('Please select a traffic area');
+
+                return $this->reload();
+
+            } elseif ($action == 'add' && !empty($trafficArea)) {
+                $this->getServiceLocator()->get('Entity\Licence')
+                    ->setTrafficArea($this->getLicenceId(), $trafficArea);
+            }
+        }
+
+        return $this->genericHandleCrudAction($data);
+    }
+
+    /**
+     * Save method
+     *
+     * @param array $data
+     */
+    protected function save($data)
+    {
+        if (isset($data['dataTrafficArea']['trafficArea']) && !empty($data['dataTrafficArea']['trafficArea'])) {
+            $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea(
+                $this->getLicenceId(),
+                $data['dataTrafficArea']['trafficArea']
+            );
+        }
     }
 
     protected function getForm()
@@ -95,9 +179,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
                     'councilName' => $row['contactDetails']['description']
                 );
 
-                // Not sure if this is significant
-                //unset($row['contactDetails']['address']['id']);
-                //unset($row['contactDetails']['address']['version']);
+                unset($row['contactDetails']['address']['id']);
+                unset($row['contactDetails']['address']['version']);
 
                 $newData[] = array_merge($newRow, $row['contactDetails']['address']);
             }
@@ -157,7 +240,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = $this->getLicenceFormData();
+            $id = $this->params('child_id');
+            $data = $this->getLicenceFormData($id);
+        }
+
+        if (!$request->isPost()) {
+            $data = $this->formatDataForLicenceForm($mode, $data);
         }
 
         $form = $this->getLicenceForm()->setData($data);
@@ -167,6 +255,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
 
         if ($request->isPost() && $form->isValid()) {
+
+            $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->licenceDataMap);
 
             $this->saveLicence($data);
 
@@ -178,12 +268,47 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
     protected function getLicenceForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\TaxiPhvLicence');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $form = $formHelper->createForm('Lva\TaxiPhvLicence');
+
+        $formHelper->processAddressLookupForm($form, $this->getRequest());
+
+        return $this->alterActionForm($form);
     }
 
-    protected function getLicenceFormData()
+    /**
+     * Alter form to process traffic area
+     *
+     * @param Form $form
+     */
+    protected function alterActionForm($form)
     {
-        return array();
+        $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
+
+        $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId());
+
+        $trafficAreaValidator = new PrivateHireLicenceTrafficAreaValidator();
+        $trafficAreaValidator->setServiceLocator($this->getServiceLocator());
+
+        $trafficAreaValidator->setPrivateHireLicencesCount(
+            $this->getPrivateHireLicencesCount($this->getLicenceId())
+        );
+
+        $trafficAreaValidator->setTrafficArea($trafficArea);
+
+        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
+        $postcodeValidatorChain->attach($trafficAreaValidator);
+
+        if (!$trafficArea && $form->get('form-actions')->has('addAnother')) {
+            $form->get('form-actions')->remove('addAnother');
+        }
+        return $form;
+    }
+
+    protected function getLicenceFormData($id)
+    {
+        return $this->getServiceLocator()->get('Entity\PrivateHireLicence')->getById($id);
     }
 
     /**
@@ -194,7 +319,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     public function delete()
     {
         $ids = explode(',', $this->params('child_id'));
-        $licCount = $this->getServiceLocator()->getCountByLicence($this->getLicenceId());
+        $licCount = $this->getPrivateHireLicencesCount($this->getLicenceId());
 
         if (count($ids) === $licCount) {
             $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea(null);
@@ -207,90 +332,32 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Data map
-     *
-     * @var array
-     */
-    protected $dataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data',
-                'dataTrafficArea'
-            ),
-        ),
-    );
-
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $actionDataMap = array(
-        '_addresses' => array(
-            'address'
-        ),
-        'main' => array(
-            'children' => array(
-                'privateHireLicence' => array(
-                    'mapFrom' => array(
-                        'data'
-                    )
-                ),
-                'contactDetails' => array(
-                    'mapFrom' => array(
-                        'contactDetails'
-                    ),
-                    'children' => array(
-                        'addresses' => array(
-                            'mapFrom' => array(
-                                'addresses'
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    );
+    protected function getPrivateHireLicencesCount($licenceId)
+    {
+        return $this->getServiceLocator()->get('Entity\PrivateHireLicence')->getCountByLicence($licenceId);
+    }
 
     /**
      * Process the action load data
      *
      * @param array $oldData
      */
-    protected function processActionLoad($oldData)
+    protected function formatDataForLicenceForm($mode, $oldData)
     {
         $data['data'] = $oldData;
 
-        if ($this->getActionName() != 'add') {
-
+        if ($mode !== 'add') {
             $data['contactDetails'] = $oldData['contactDetails'];
             $data['address'] = $oldData['contactDetails']['address'];
             $data['address']['countryCode'] = $data['address']['countryCode']['id'];
         }
 
-        $licenceData = $this->getLicenceData();
+        $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId());
 
-        $data['data']['licence'] = $licenceData['id'];
-
-        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
         if (isset($trafficArea['id'])) {
-            $data['trafficArea']['id'] = $trafficArea['id'];
+            $data['trafficArea'] = $trafficArea['id'];
         }
+
         return $data;
     }
 
@@ -301,11 +368,11 @@ abstract class AbstractTaxiPhvController extends AbstractController
      * @param string $service
      * @return null|Response
      */
-    protected function actionSave($data, $service = null)
+    protected function saveLicence($data)
     {
         $data['contactDetails']['contactType'] = 'ct_council';
 
-        $results = parent::actionSave($data['contactDetails'], 'ContactDetails');
+        $results = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data['contactDetails']);
 
         if (!empty($data['contactDetails']['id'])) {
             $contactDetailsId = $data['contactDetails']['id'];
@@ -320,110 +387,40 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
 
         $data['privateHireLicence']['contactDetails'] = $contactDetailsId;
-        $saved = parent::actionSave($data['privateHireLicence'], $service);
-        if ($this->getActionName() == 'add' && !isset($saved['id'])) {
-            throw new \Exception('Unable to save licence');
+
+        $id = $this->params('child_id');
+
+        if (!empty($id)) {
+            $data['privateHireLicence']['id'] = $id;
         }
 
+        $licenceId = $this->getLicenceId();
+
+        $data['privateHireLicence']['licence'] = $licenceId;
+
+        $this->getServiceLocator()->get('Entity\PrivateHireLicence')->save($data['privateHireLicence']);
+
         // set default Traffic Area if we don't have one
-        if (!array_key_exists('trafficArea', $data) || !$data['trafficArea']['id'] &&
-            $data['contactDetails']['addresses']['address']['postcode']) {
-            $licencesCount = $this->getPrivateHireLicencesCount($data['privateHireLicence']['licence']);
+        if (!isset($data['trafficArea'])
+            || empty($data['trafficArea']['id'])
+            && $data['contactDetails']['addresses']['address']['postcode']
+        ) {
+
+            $licencesCount = $this->getPrivateHireLicencesCount($licenceId);
+
             // first Licence was just added or we are editing the first one
-            if ($licencesCount == 1) {
-                $postcodeService = $this->getPostcodeService();
-                list($trafficAreaId, $trafficAreaName) =
-                    $postcodeService->getTrafficAreaByPostcode(
-                        $data['contactDetails']['addresses']['address']['postcode']
-                    );
-                if ($trafficAreaId) {
-                    $this->getSectionService('TrafficArea')->setTrafficArea($trafficAreaId);
+            if ($licencesCount === 1) {
+
+                $postcodeService = $this->getServiceLocator()->get('postcode');
+
+                $trafficAreaId = $postcodeService->getTrafficAreaByPostcode(
+                    $data['contactDetails']['addresses']['address']['postcode']
+                )[0];
+
+                if (!empty($trafficAreaId)) {
+                    $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea($licenceId, $trafficAreaId);
                 }
             }
         }
-    }
-
-    /**
-     * Save method
-     *
-     * @param array $data
-     */
-    protected function save($data, $service = null)
-    {
-        if (isset($data['trafficArea']) && $data['trafficArea']) {
-            $this->getSectionService('TrafficArea')->setTrafficArea($data['trafficArea']);
-        }
-    }
-
-    /**
-     * Alter form to process traffic area
-     *
-     * @param Form $form
-     */
-    protected function alterActionForm($form)
-    {
-        $form->getInputFilter()->get('address')->get('postcode')->setRequired(false);
-
-        $trafficArea = $this->getSectionService('TrafficArea')->getTrafficArea();
-
-        $trafficAreaValidator = $this->getServiceLocator()->get('postcodePhlTrafficAreaValidator');
-        $licenceId = $form->get('data')->get('licence')->getValue();
-        $trafficAreaValidator->setPrivateHireLicencesCount($this->getPrivateHireLicencesCount($licenceId));
-        $trafficAreaValidator->setTrafficArea($trafficArea);
-
-        $postcodeValidatorChain = $form->getInputFilter()->get('address')->get('postcode')->getValidatorChain();
-        $postcodeValidatorChain->attach($trafficAreaValidator);
-
-        if (!$trafficArea) {
-            $form->get('form-actions')->remove('addAnother');
-        }
-        return $form;
-    }
-
-    /**
-     * Method to allow adding new Licence only if Traffic Area has been set
-     *
-     * @param string $route
-     * @param array $params
-     * @param string $itemIdParam
-     *
-     * @return boolean
-     */
-    public function checkForCrudAction($route = null, $params = array(), $itemIdParam = 'id')
-    {
-        $table = $this->params()->fromPost('table');
-        $action = isset($table['action']) && !is_array($table['action'])
-            ? strtolower($table['action'])
-            : strtolower($this->params()->fromPost('action'));
-
-        if (empty($action)) {
-            return false;
-        }
-
-        $params = array_merge($params, array('action' => $action));
-
-        if ($action !== 'add') {
-            $id = $this->params()->fromPost('id');
-
-            if (empty($id)) {
-
-                return false;
-            }
-
-            $params[$itemIdParam] = $id;
-        }
-        if (!$this->getSectionService('TrafficArea')->getTrafficArea()) {
-            $dataTrafficArea = $this->params()->fromPost('dataTrafficArea');
-            $trafficArea = is_array($dataTrafficArea) && isset($dataTrafficArea['trafficArea']) ?
-                $dataTrafficArea['trafficArea'] : '';
-            if ($action == 'add' && !$trafficArea && $this->getPrivateHireLicencesCount()) {
-                $this->addWarningMessage('Please select a traffic area');
-                return $this->redirectToRoute(null, array(), array(), true);
-            } elseif ($action == 'add' && $trafficArea) {
-                $this->getSectionService('TrafficArea')->setTrafficArea($trafficArea);
-            }
-        }
-
-        return $this->redirect()->toRoute($route, $params, [], true);
     }
 }

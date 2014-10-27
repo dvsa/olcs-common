@@ -73,11 +73,6 @@ return array(
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
             },
-            'postcodePhlTrafficAreaValidator' => function ($serviceManager) {
-                $validator = new \Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator();
-                $validator->setServiceLocator($serviceManager);
-                return $validator;
-            },
             'goodsDiscStartNumberValidator' => function ($serviceManager) {
                 return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
             },

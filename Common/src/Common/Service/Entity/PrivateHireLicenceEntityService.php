@@ -74,4 +74,9 @@ class PrivateHireLicenceEntityService extends AbstractEntityService
     {
         return $this->get(array('licence' => $licenceId), $this->countBundle)['Count'];
     }
+
+    public function getById($id)
+    {
+        return $this->get($id, $this->dataBundle);
+    }
 }

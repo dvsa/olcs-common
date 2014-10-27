@@ -14,12 +14,6 @@ class TaxiPhvLicenceData
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $id = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
     public $version = null;
 
     /**
@@ -29,10 +23,4 @@ class TaxiPhvLicenceData
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $privateHireLicenceNo = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $licence = null;
 }

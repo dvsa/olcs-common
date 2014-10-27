@@ -177,6 +177,11 @@ class ApplicationEntityService extends AbstractEntityService
                     'tachographInsName'
                 ),
                 'children' => array(
+                    'privateHireLicences' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    ),
                     'organisation' => array(
                         'properties' => array(
                             'companyOrLlpNo',

@@ -268,7 +268,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getTaxiPhvStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        if (!empty($applicationData['licence']['privateHireLicences'])) {
+            return self::STATUS_COMPLETE;
+        }
+
+        return self::STATUS_INCOMPLETE;
     }
 
     /**

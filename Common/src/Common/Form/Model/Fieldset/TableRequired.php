@@ -17,7 +17,7 @@ class TableRequired
      * @Form\Type("\Common\Form\Elements\Types\Table")
      * @Form\Validator({
      *     "name":"Common\Form\Elements\Validators\TableRequiredValidator",
-     *     "options":{"label":"safety inspection provider"}
+     *     "options":{"label":"record"}
      * })
      */
     public $table = null;

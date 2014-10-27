@@ -18,9 +18,6 @@ return array(
             )
         )
     ),
-
-    'attributes' => array(
-    ),
     'columns' => array(
         array(
             'title' => $translationPrefix . '.licence-number',
