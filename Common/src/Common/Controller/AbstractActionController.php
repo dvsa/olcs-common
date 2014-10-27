@@ -826,6 +826,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
                 ];
 
                 $this->callCallbackIfExists($callback, $params);
+            } elseif (!$this->validateForm || ($this->getPersist() && !$form->isValid())) {
+                if (method_exists($this, 'onInvalidPost')) {
+                    $this->onInvalidPost($form);
+                }
             }
         }
 
