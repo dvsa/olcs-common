@@ -24,7 +24,8 @@ class VehicleRow extends DynamicBookmark
         'children' => [
             'licenceVehicles' => [
                 'properties' => [
-                    'specifiedDate'
+                    'specifiedDate',
+                    'removalDate'
                 ],
                 'children' => [
                     'vehicle' => [
@@ -61,7 +62,13 @@ class VehicleRow extends DynamicBookmark
         $parser  = $this->getParser();
 
         $str = '';
+
         foreach ($vehicles as $vehicle) {
+            // ignore any vehicles marked as having been removed
+            if ($vehicle['removalDate'] !== null) {
+                continue;
+            }
+
             $tokens = [
                 'SPEC_DATE'     => date('d-M-Y', strtotime($vehicle['specifiedDate'])),
                 'PLATED_WEIGHT' => $vehicle['vehicle']['platedWeight'],
