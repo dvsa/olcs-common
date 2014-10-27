@@ -11,6 +11,7 @@ namespace Common\Form\View\Helper;
 
 use Zend\Form\View\Helper\AbstractHelper as ZendFormViewHelperAbstractHelper;
 use Zend\Form\FormInterface as ZendFormFormInterface;
+use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
  * Form errors view helper
@@ -79,6 +80,10 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
             }
         }
 
+        if (empty($messagesArray)) {
+            return '';
+        }
+
         $messageString = implode($this->messageSeparatorString, $messagesArray);
 
         $errorHtml = $errorHtml . $messageString . $this->messageCloseString;
@@ -129,6 +134,12 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
                 $recursiveMessages = $this->compileMessages($label, $value, $renderer);
                 $messages = array_merge($messages, $recursiveMessages);
             } else {
+                if ($value instanceof ValidationMessageInterface) {
+                    // @TODO: these need checking to see if they should
+                    // translate or escape HTML. They don't currently render
+                    // on develop hence we're skipping them for now. Needs fixing.
+                    continue;
+                }
                 $value = $renderer->translate($value);
                 $messages[] = $label . $value;
             }

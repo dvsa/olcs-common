@@ -38,7 +38,8 @@ class OperatingCentre
 
     /**
      * @Form\Name("trafficArea")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\TrafficArea")
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
      */
     public $trafficArea = null;
 

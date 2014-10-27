@@ -26,10 +26,11 @@ trait LicenceOperatingCentresControllerTrait
         $cantIncreaseValidator = new CantIncreaseValidator();
 
         $message = $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
-            '%s <a href="#">%s</a>',
+            '%s <a href="%s">%s</a>',
             array(
                 'cant-increase-' . $messageSuffix,
-                $this->url()->fromRoute('create_variation', ['id' => $this->getIdentifier()])
+                $this->url()->fromRoute('create_variation', ['id' => $this->getIdentifier()]),
+                'create-variation'
             )
         );
 

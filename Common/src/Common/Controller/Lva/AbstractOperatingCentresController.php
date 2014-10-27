@@ -342,6 +342,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     private function addOrEdit($mode)
     {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
         $id = $this->params('child_id');
@@ -351,7 +352,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $data = (array)$request->getPost();
         } else {
             if ($mode === 'edit') {
-                $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->getAddressData($id);
+                $data = $this->getServiceLocator()->get($lvaEntity)->getAddressData($id);
             } else {
                 $data = [];
             }
@@ -391,7 +392,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
 
             // @todo not sure this is right
-            $saved = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->save($data['applicationOperatingCentre']);
+            $saved = $this->getServiceLocator()->get($lvaEntity)->save($data['applicationOperatingCentre']);
 
             if ($mode === 'add' && !isset($saved['id'])) {
                 throw new \Exception('Unable to save operating centre');
@@ -410,8 +411,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     protected function delete()
     {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
         $this->getServiceLocator()
-            ->get('Entity\ApplicationOperatingCentre')
+            ->get($lvaEntity)
             ->delete($this->params('child_id'));
     }
 
@@ -455,7 +458,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $trafficArea = $this->getTrafficArea();
 
         if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
-            $data['trafficArea']['id'] = $trafficArea['id'];
+            $data['trafficArea'] = $trafficArea['id'];
         }
 
         return $data;
@@ -702,5 +705,46 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $formOptions = $form->get($fieldsetMap['data'])->getOptions();
         $formOptions['hint'] .= '.psv';
         $form->get($fieldsetMap['data'])->setOptions($formOptions);
+    }
+
+    /**
+     * Alter form for PSV applications
+     *
+     * @param \Zend\Form\Form $form
+     * @param array $fieldsetMap
+     * @param array $options
+     */
+    protected function alterFormForPsvLicences(Form $form, $fieldsetMap, $options)
+    {
+        $this->alterFormHintForPsv($form, $fieldsetMap);
+
+        $removeFields = array(
+            'totAuthVehicles',
+            'totAuthTrailers',
+            'minTrailerAuth',
+            'maxTrailerAuth'
+        );
+
+        $licenceType = $options['data']['licence']['licenceType']['id'];
+
+        $allowLargeVehicles = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        );
+
+        $allowCommunityLicences = array(
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+            LicenceEntityService::LICENCE_TYPE_RESTRICTED
+        );
+
+        if (!in_array($licenceType, $allowLargeVehicles)) {
+            $removeFields[] = 'totAuthLargeVehicles';
+        }
+
+        if (!in_array($licenceType, $allowCommunityLicences)) {
+            $removeFields[] = 'totCommunityLicences';
+        }
+
+        $this->removeFormFields($form, $fieldsetMap['data'], $removeFields);
     }
 }
