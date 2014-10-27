@@ -64,9 +64,6 @@ return array(
         'invokables' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager'
         ),
-        'services' => array(
-            'address' => new \Common\Service\Address\Address()
-        ),
         'factories' => array(
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'postcode' => function ($serviceManager) {
