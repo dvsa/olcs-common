@@ -396,6 +396,7 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+
     protected $licenceNoGenBundle = array(
         'properties' => array(
             'id',
@@ -413,6 +414,13 @@ class LicenceEntityService extends AbstractEntityService
                     'id'
                 )
             )
+        )
+    );
+
+    private $totalAuthorisationsBundle = array(
+        'properties' => array(
+            'totAuthVehicles',
+            'totAuthTrailers'
         )
     );
 
@@ -679,5 +687,10 @@ class LicenceEntityService extends AbstractEntityService
         }
 
         return false;
+    }
+
+    public function getTotalAuths($id)
+    {
+        return $this->get($id, $this->totalAuthorisationsBundle);
     }
 }

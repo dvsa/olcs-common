@@ -471,6 +471,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $licenceData = $this->getTypeOfLicenceData();
 
         if ($licenceData['niFlag'] === 'Y') {
+            // @TODO... no more section services
             $this->getSectionService('TrafficArea')->setTrafficArea(
                 $this->getApplicationId(),
                 TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
@@ -489,9 +490,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
             if (!empty($trafficAreaParts)) {
                 $this->getServiceLocator()
-                    ->get('Entity\TrafficArea')
+                    ->get('Entity\Licence')
                     ->setTrafficArea(
-                        $this->getApplicationId(),
+                        $this->getLicenceId(),
                         array_shift($trafficAreaParts)
                     );
             }
@@ -565,8 +566,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function getOperatingCentresCount()
     {
-        $operatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-            ->getOperatingCentresCount($this->getApplicationId());
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $operatingCentres = $this->getServiceLocator()->get($lvaEntity)
+            ->getOperatingCentresCount($this->getIdentifier());
 
         return $operatingCentres['Count'];
     }
@@ -618,6 +620,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterActionFormForGoods(Form $form)
     {
+        // used to be abstract... could change it back?
     }
 
     protected function isPsv()
@@ -668,5 +671,36 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->setValueOptions($options);
 
         return $form;
+    }
+
+    /**
+     * Alter form table for PSV
+     *
+     * @param \Zend\Form\Form $form
+     * @param array $fieldsetMap
+     */
+    protected function alterFormTableForPsv(Form $form, $fieldsetMap)
+    {
+        $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
+
+        $table->removeColumn('noOfTrailersPossessed');
+
+        $footer = $table->getFooter();
+        $footer['total']['content'] .= '-psv';
+        unset($footer['trailersCol']);
+        $table->setFooter($footer);
+    }
+
+    /**
+     * Alter form hint for psv
+     *
+     * @param \Zend\Form\Form $form
+     * @param array $fieldsetMap
+     */
+    protected function alterFormHintForPsv(Form $form, $fieldsetMap)
+    {
+        $formOptions = $form->get($fieldsetMap['data'])->getOptions();
+        $formOptions['hint'] .= '.psv';
+        $form->get($fieldsetMap['data'])->setOptions($formOptions);
     }
 }

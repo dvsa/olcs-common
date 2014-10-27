@@ -17,4 +17,16 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
     protected $entity = 'LicenceOperatingCentre';
 
     protected $type = 'licence';
+
+    private $ocAuthorisationsBundle = array(
+        'properties' => array(
+            'noOfVehiclesPossessed',
+            'noOfTrailersPossessed'
+        )
+    );
+
+    public function getVehicleAuths($id)
+    {
+        return $this->get($id, $this->ocAuthorisationsBundle);
+    }
 }
