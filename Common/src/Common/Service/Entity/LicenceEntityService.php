@@ -424,6 +424,26 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+    protected $psvDiscsBundle = array(
+        'properties' => array(
+            'id',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles'
+        ),
+        'children' => array(
+            'psvDiscs' => array(
+                'properties' => array(
+                    'id',
+                    'discNo',
+                    'issuedDate',
+                    'ceasedDate',
+                    'isCopy'
+                )
+            )
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -692,5 +712,15 @@ class LicenceEntityService extends AbstractEntityService
     public function getTotalAuths($id)
     {
         return $this->get($id, $this->totalAuthorisationsBundle);
+    }
+
+    public function getPsvDiscs($id)
+    {
+        return $this->get($id, $this->psvDiscsBundle)['psvDiscs'];
+    }
+
+    public function getPsvDiscsRequestData($id)
+    {
+        return $this->get($id, $this->psvDiscsBundle);
     }
 }

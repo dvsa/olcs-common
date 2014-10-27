@@ -342,17 +342,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     }
 
     /**
-     * Get discs status
-     *
-     * @param array $applicationData
-     * @return int
-     */
-    private function getDiscsStatus($applicationData)
-    {
-        return self::STATUS_NOT_STARTED;
-    }
-
-    /**
      * Get community licences status
      *
      * @param array $applicationData
@@ -398,7 +387,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getConditionsUndertakingsStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        return self::STATUS_COMPLETE;
     }
 
     /**

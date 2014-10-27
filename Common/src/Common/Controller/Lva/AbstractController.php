@@ -25,6 +25,11 @@ abstract class AbstractController extends AbstractActionController
     use Util\FlashMessengerTrait;
 
     /**
+     * Handle cancel redirect is implemented differently internally than externally
+     */
+    abstract protected function handleCancelRedirect($lvaId);
+
+    /**
      * Internal/External
      *
      * @var string
@@ -227,11 +232,6 @@ abstract class AbstractController extends AbstractActionController
             return $this->handleCancelRedirect($lvaId);
         }
     }
-
-    /**
-     * Handle cancel redirect is implemented differently internally than externally
-     */
-    abstract protected function handleCancelRedirect($lvaId);
 
     /**
      * No-op but extended

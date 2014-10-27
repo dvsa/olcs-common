@@ -38,7 +38,7 @@ class StaticList extends AbstractData implements ListDataInterface, ServiceLocat
      */
     public function fetchListData($context)
     {
-        $config = $this->getServiceLocator()->getServiceLocator()->get('Config');
+        $config = $this->getServiceLocator()->get('Config');
 
         if (is_null($this->getData('static-list-' . $context))) {
 

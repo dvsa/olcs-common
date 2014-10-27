@@ -21,13 +21,7 @@ return array(
             )
         )
     ),
-    'attributes' => array(
-    ),
     'columns' => array(
-        array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        ),
         array(
             'title' => $translationPrefix . '.discNo',
             'name' => 'discNo'
@@ -44,6 +38,10 @@ return array(
             'title' => $translationPrefix . '.replacement',
             'name' => 'isCopy',
             'formatter' => 'YesNo'
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
         )
     )
 );
