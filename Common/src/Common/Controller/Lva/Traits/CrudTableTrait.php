@@ -14,8 +14,6 @@ namespace Common\Controller\Lva\Traits;
  */
 trait CrudTableTrait
 {
-    abstract protected function delete();
-
     /**
      * Check if we have a crud action in the form table data, if so return the table data, if not return null
      *
@@ -107,9 +105,6 @@ trait CrudTableTrait
     {
         $request = $this->getRequest();
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('GenericDeleteConfirmation');
-
         if ($request->isPost()) {
 
             $this->delete();
@@ -120,6 +115,21 @@ trait CrudTableTrait
                 array('id' => $this->params('id'))
             );
         }
+
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createForm('GenericDeleteConfirmation');
+
         return $this->render('delete', $form);
+    }
+
+    /**
+     * This method needs to exists for deleteAction to work, the method should be overidden, but cannot be declared
+     *  abstract as it's not always required, so by default we throw an exception
+     *
+     * @throws \BadMethodCallException
+     */
+    protected function delete()
+    {
+        throw new \BadMethodCallException('Delete method must be implemented');
     }
 }

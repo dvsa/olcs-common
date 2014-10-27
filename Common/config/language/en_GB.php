@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'lva.section.title.void_discs' => 'Are you sure you would like to void these discs?',
+    'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
+    'lva.section.title.add_discs' => 'Request discs',
     'lva.section.title.add_convictions_penalties' => 'Add previous conviction',
     'lva.section.title.edit_convictions_penalties' => 'Edit previous conviction',
     'Authorisation' => 'Authorisation',

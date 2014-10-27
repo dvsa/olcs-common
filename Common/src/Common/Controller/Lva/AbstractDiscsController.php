@@ -14,6 +14,8 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractDiscsController extends AbstractController
 {
+    use Traits\CrudTableTrait;
+
     /**
      * Setup the section
      *
@@ -21,138 +23,43 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected $section = 'discs';
 
+    protected $formTableData;
+
     public function indexAction()
     {
-        $form = $this->getDiscsForm();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $data = (array)$request->getPost();
+
+            $crudAction = $this->getCrudAction(array($data['table']));
+
+            if ($crudAction !== null) {
+
+                return $this->handleCrudAction($crudAction);
+            }
+
+        } else {
+            $data = $this->getFormData();
+        }
+
+        $form = $this->getDiscsForm()->setData($data);
 
         $this->getServiceLocator()->get('Script')->loadFile('discs');
 
         return $this->render('discs', $form);
     }
 
-    protected function getDiscsForm()
-    {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\PsvDiscs');
-    }
-
-    public function addAction()
-    {
-        return $this->render('add_discs');
-    }
-
-    public function replaceAction()
-    {
-        return $this->render('replace_discs');
-    }
-
-    public function voidAction()
-    {
-        return $this->render('void_discs');
-    }
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-    protected $service = 'Licence';
-    protected $actionService = 'Licence';
-
-    protected $formTableDataBundle = array(
-        'properties' => array(),
-        'children' => array(
-            'psvDiscs' => array(
-                'properties' => array(
-                    'id',
-                    'discNo',
-                    'issuedDate',
-                    'ceasedDate',
-                    'isCopy'
-                )
-            )
-        )
-    );
-
-    protected $actionDataBundle = array(
-        'properties' => array(
-            'id',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
-        ),
-        'children' => array(
-            'psvDiscs' => array(
-                'properties' => array(
-                    'id',
-                    'ceasedDate'
-                )
-            )
-        )
-    );
-
-    protected $formTables = array(
-        'table' => 'psv_discs'
-    );
-
-    protected $formTableData;
-
     /**
-     * Return the form table data
-     *
-     * @param type $id
-     * @param type $table
-     * @return type
-     */
-    public function getFormTableData($id, $table = '')
-    {
-        if ($this->formTableData === null) {
-            $data = $this->getServiceLocator()->get('Helper\Rest')
-                ->makeRestCall($this->getService(), 'GET', $id, $this->formTableDataBundle);
-
-            $this->formTableData = array();
-
-            foreach ($data['psvDiscs'] as $disc) {
-                // Ignore ceased discs
-                if (!empty($disc['ceasedDate'])) {
-                    continue;
-                }
-                $disc['discNo'] = $this->getDiscNumberFromDisc($disc);
-                $this->formTableData[] = $disc;
-            }
-        }
-
-        return $this->formTableData;
-    }
-
-    /**
-     * Override load method so it doesn't do anything
-     *
-     * @param int $id
-     * @return array
-     */
-    public function load($id)
-    {
-        return array();
-    }
-
-    /**
-     * Process load
+     * Get form data
      *
      * @param array $data
      * @return array
      */
-    public function processLoad($data)
+    protected function getFormData()
     {
-        $discs = $this->getFormTableData($this->getIdentifier());
+        $discs = $this->getTableData();
 
         $data = array(
             'data' => array(
@@ -172,46 +79,41 @@ abstract class AbstractDiscsController extends AbstractController
         return $data;
     }
 
-    /**
-     * Process action load
-     *
-     * @param array $data
-     * @return array
-     */
-    public function processActionLoad($data)
+    protected function getDiscsForm()
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->getActionService(), 'GET', $this->getIdentifier(), $this->getActionDataBundle());
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $data['totalAuth'] = (
-            $data['totAuthSmallVehicles'] + $data['totAuthMediumVehicles'] + $data['totAuthLargeVehicles']
-        );
+        $form = $formHelper->createForm('Lva\PsvDiscs');
 
-        $data['discCount'] = 0;
+        $formHelper->populateFormTable($form->get('table'), $this->getDiscsTable());
 
-        foreach ($data['psvDiscs'] as $disc) {
-            if (empty($disc['ceasedDate'])) {
-                $data['discCount']++;
+        return $form;
+    }
+
+    protected function getDiscsTable()
+    {
+        return $this->getServiceLocator()->get('Table')->prepareTable('lva-psv-discs', $this->getTableData());
+    }
+
+    protected function getTableData()
+    {
+        if ($this->formTableData === null) {
+            $data = $this->getServiceLocator()->get('Entity\Licence')
+                ->getPsvDiscs($this->getLicenceId());
+
+            $this->formTableData = array();
+
+            foreach ($data as $disc) {
+                if (!empty($disc['ceasedDate'])) {
+                    continue;
+                }
+
+                $disc['discNo'] = $this->getDiscNumberFromDisc($disc);
+                $this->formTableData[] = $disc;
             }
         }
 
-        unset($data['totAuthSmallVehicles']);
-        unset($data['totAuthMediumVehicles']);
-        unset($data['totAuthLargeVehicles']);
-        unset($data['psvDiscs']);
-
-        return array('data' => $data);
-    }
-
-    /**
-     * Override the save method, as we never save anything from this section
-     *
-     * @param array $data
-     * @param string $service
-     */
-    public function save($data, $service = null)
-    {
-
+        return $this->formTableData;
     }
 
     /**
@@ -233,97 +135,40 @@ abstract class AbstractDiscsController extends AbstractController
         return '';
     }
 
-    /**
-     * Alter form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    public function alterForm(Form $form)
+    public function addAction()
     {
-        $this->disableElements($form->get('data'));
+        $request = $this->getRequest();
 
-        return $form;
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } else {
+            $data = $this->getRequestFormData();
+        }
+
+        $form = $this->getRequestForm()->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+            $this->processRequestDiscs($data);
+
+            return $this->postSave('discs');
+        }
+
+        return $this->render('add_discs', $form);
     }
 
     /**
-     * Alter action form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    public function alterActionForm(Form $form)
-    {
-        $form->get('form-actions')->remove('addAnother');
-
-        return $form;
-    }
-
-    /**
+     * Request discs
      *
      * @param type $data
-     * @param type $service
      */
-    public function actionSave($data, $service = null)
+    public function processRequestDiscs($data)
     {
         $additionalDiscCount = $data['data']['additionalDiscs'];
 
-        $this->requestDiscs($additionalDiscCount, array('licence' => $data['data']['id']));
+        $this->requestDiscs($additionalDiscCount, array('licence' => $this->getLicenceId()));
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')
             ->addSuccessMessage('psv-discs-requested-successfully');
-    }
-
-    /**
-     * Load the data for the multiple replace confirmation form
-     *
-     * @param string $id
-     * @return array
-     */
-    public function replaceLoad($id)
-    {
-        return $this->genericMultipleActionLoad($id);
-    }
-
-    /**
-     * Replace the selected discs
-     *
-     * @param array $data
-     */
-    public function replaceSave($data)
-    {
-        $ids = explode(',', $data['data']['id']);
-        $this->ceaseDiscs($ids);
-        $this->requestDiscs(count($ids), array('isCopy' => 'Y', 'licence' => $this->getIdentifier()));
-
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addSuccessMessage('psv-discs-replaced-successfully');
-    }
-
-    /**
-     * Load the data for the multiple void confirmation form
-     *
-     * @param string $id
-     * @return array
-     */
-    public function voidLoad($id)
-    {
-        return $this->genericMultipleActionLoad($id);
-    }
-
-    /**
-     * Void multiple discs
-     *
-     * @param array $data
-     */
-    public function voidSave($data)
-    {
-        $ids = explode(',', $data['data']['id']);
-
-        $this->ceaseDiscs($ids);
-
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addSuccessMessage('psv-discs-voided-successfully');
     }
 
     /**
@@ -342,7 +187,87 @@ abstract class AbstractDiscsController extends AbstractController
 
         $postData['_OPTIONS_'] = array('multiple' => true);
 
-        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('PsvDisc', 'POST', $postData);
+        $this->getServiceLocator()->get('Entity\PsvDisc')->save($postData);
+    }
+
+    /**
+     * Process action load
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function getRequestFormData()
+    {
+        $data = $this->getServiceLocator()->get('Entity\Licence')
+            ->getPsvDiscsRequestData($this->getLicenceId());
+
+        $data['totalAuth'] = (
+            $data['totAuthSmallVehicles'] + $data['totAuthMediumVehicles'] + $data['totAuthLargeVehicles']
+        );
+
+        $data['discCount'] = 0;
+
+        foreach ($data['psvDiscs'] as $disc) {
+            if (empty($disc['ceasedDate'])) {
+                $data['discCount']++;
+            }
+        }
+
+        unset($data['totAuthSmallVehicles']);
+        unset($data['totAuthMediumVehicles']);
+        unset($data['totAuthLargeVehicles']);
+        unset($data['psvDiscs']);
+
+        return array('data' => $data);
+    }
+
+    protected function getRequestForm()
+    {
+        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\PsvDiscsRequest');
+
+        $form->get('form-actions')->remove('addAnother');
+
+        return $form;
+    }
+
+    public function replaceAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $this->replaceSave();
+
+            return $this->redirect()->toRoute(null, array('id' => $this->params('id')));
+        }
+
+        $form = $this->getGenericConfirmationForm();
+
+        return $this->render('replace_discs', $form);
+    }
+
+    public function voidAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $this->voidSave();
+
+            return $this->redirect()->toRoute(
+                null,
+                array('id' => $this->params('id'))
+            );
+        }
+
+        $form = $this->getGenericConfirmationForm();
+
+        return $this->render('void_discs', $form);
+    }
+
+    protected function getGenericConfirmationForm()
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
     }
 
     /**
@@ -352,20 +277,38 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected function ceaseDiscs($ids)
     {
-        $ceasedDate = date('Y-m-d');
-        $postData = array();
+        $this->getServiceLocator()->get('Entity\PsvDisc')->ceaseDiscs($ids);
+    }
 
-        foreach ($ids as $id) {
+    /**
+     * Replace the selected discs
+     *
+     * @param array $data
+     */
+    public function replaceSave()
+    {
+        $ids = explode(',', $this->params('child_id'));
 
-            $postData[] = array(
-                'id' => $id,
-                'ceasedDate' => $ceasedDate,
-                '_OPTIONS_' => array('force' => true)
-            );
-        }
+        $this->ceaseDiscs($ids);
 
-        $postData['_OPTIONS_']['multiple'] = true;
+        $this->requestDiscs(count($ids), array('isCopy' => 'Y', 'licence' => $this->getLicenceId()));
 
-        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('PsvDisc', 'PUT', $postData);
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+            ->addSuccessMessage('psv-discs-replaced-successfully');
+    }
+
+    /**
+     * Void multiple discs
+     *
+     * @param array $data
+     */
+    public function voidSave()
+    {
+        $ids = explode(',', $this->params('child_id'));
+
+        $this->ceaseDiscs($ids);
+
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+            ->addSuccessMessage('psv-discs-voided-successfully');
     }
 }
