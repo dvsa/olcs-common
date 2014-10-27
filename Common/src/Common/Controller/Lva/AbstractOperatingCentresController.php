@@ -428,9 +428,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->processDataMap($data, $this->actionDataMap);
 
         if (isset($data['applicationOperatingCentre']['adPlacedDate'])) {
-            // @TODO shouldn't have to do this... need to investigate
-            $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
-            $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+            $adPlaced = $data['applicationOperatingCentre']['adPlacedDate'];
+            $formattedDate = $adPlaced['year'] . '-' . $adPlaced['month'] . '-' . $adPlaced['day'];
+            $data['applicationOperatingCentre']['adPlacedDate'] = $formattedDate;
         }
 
         // we no longer store this in the form...
