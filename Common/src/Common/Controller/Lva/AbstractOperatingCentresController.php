@@ -425,9 +425,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->get('Helper\Data')
             ->processDataMap($data, $this->actionDataMap);
 
-        // @TODO shouldn't have to do this... need to investigate
-        $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
-        $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+        if (isset($data['applicationOperatingCentre']['adPlacedDate'])) {
+            // @TODO shouldn't have to do this... need to investigate
+            $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
+            $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+        }
 
         // we no longer store this in the form...
         $data['applicationOperatingCentre'][$this->lva] = $this->getIdentifier();
@@ -484,7 +486,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return;
         }
 
-        $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+        if (isset($data['operatingCentre']['addresses']['address'])) {
+            $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+        }
 
         if (!empty($postcode) && $this->getOperatingCentresCount() === 1) {
 
