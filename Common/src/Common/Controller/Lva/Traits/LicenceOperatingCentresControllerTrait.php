@@ -7,6 +7,7 @@ namespace Common\Controller\Lva\Traits;
 
 use Common\Form\Elements\Validators\CantIncreaseValidator;
 use Zend\Form\Form;
+use Zend\View\Model\ViewModel;
 
 /**
  */
@@ -87,4 +88,39 @@ trait LicenceOperatingCentresControllerTrait
 
         return $form;
     }
+
+    protected function commonAlterForm(Form $form)
+    {
+        $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
+
+        $filter = $form->getInputFilter();
+
+        foreach (['vehicles', 'trailers'] as $which) {
+            $key = 'totAuth' . ucfirst($which);
+
+            if ($filter->get('data')->has($key)) {
+                $this->attachCantIncreaseValidator(
+                    $filter->get('data')->get($key),
+                    'total-' . $which,
+                    $data[$key]
+                );
+            }
+        }
+
+        return $form;
+    }
+
+    public function addAction()
+    {
+        $view = new ViewModel(
+            array(
+                'licence' => $this->getIdentifier()
+            )
+        );
+        $view->setTemplate('licence/add-authorisation');
+
+        return $this->render($view);
+    }
+
+
 }

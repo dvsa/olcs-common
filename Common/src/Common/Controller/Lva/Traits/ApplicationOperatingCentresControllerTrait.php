@@ -5,6 +5,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Zend\Form\Form;
+
 /**
  */
 trait ApplicationOperatingCentresControllerTrait
@@ -16,6 +18,9 @@ trait ApplicationOperatingCentresControllerTrait
      */
     protected function alterActionFormForGoods(Form $form)
     {
+        // @TODO re-implement
+        return;
+
         $this->processFileUploads(array('advertisements' => array('file' => 'processAdvertisementFileUpload')), $form);
 
         $fileData = $this->getUnlinkedFileData()['Results'];
@@ -41,8 +46,10 @@ trait ApplicationOperatingCentresControllerTrait
      */
     protected function getUnlinkedFileData()
     {
-        $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
-        $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
+        return;
+        // @TODO re-implement
+        $category = $this->getServiceLocator()->get('Data\Category')->getCategoryByDescription('Licensing');
+        $subCategory = $this->getServiceLocator()->get('Data\Category')->getCategoryByDescription('Advertisement', 'Document');
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
             'Document',

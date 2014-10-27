@@ -110,9 +110,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentres');
 
-        $form = $this->alterForm($form)
-            ->setData($data);
-
         $table = $this->getServiceLocator()
             ->get('Table')
             ->prepareTable('authorisation_in_form', $this->getTableData());
@@ -124,6 +121,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form->get('table')
             ->get('table')
             ->setTable($table);
+
+        $form = $this->alterForm($form)
+            ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
 
@@ -244,13 +244,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function getAlterFormOptions()
     {
+        $licenceData = $this->getTypeOfLicenceData();
+
         return array(
             'isPsv' => $this->isPsv(),
             'isReview' => false,
             'data' => array(
                 'licence' => array(
                     'licenceType' => array(
-                        'id' => $this->getLicenceId()
+                        'id' => $licenceData['licenceType']
                     )
                 )
             )
@@ -343,6 +345,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     private function addOrEdit($mode)
     {
         $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
         $id = $this->params('child_id');
@@ -424,12 +427,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->get('Helper\Data')
             ->processDataMap($data, $this->actionDataMap);
 
-        // @TODO shouldn't have to do this... need to investigate
-        $adPlacedDate = $data['applicationOperatingCentre']['adPlacedDate'];
-        $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
+        if (isset($data['applicationOperatingCentre']['adPlacedDate'])) {
+            $adPlaced = $data['applicationOperatingCentre']['adPlacedDate'];
+            $formattedDate = $adPlaced['year'] . '-' . $adPlaced['month'] . '-' . $adPlaced['day'];
+            $data['applicationOperatingCentre']['adPlacedDate'] = $formattedDate;
+        }
 
         // we no longer store this in the form...
-        $data['applicationOperatingCentre']['application'] = $this->getApplicationId();
+        $data['applicationOperatingCentre'][$this->lva] = $this->getIdentifier();
 
         return $data;
     }
@@ -457,7 +462,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $trafficArea = $this->getTrafficArea();
 
-        if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
+        if (is_array($trafficArea) && isset($trafficArea['id'])) {
             $data['trafficArea'] = $trafficArea['id'];
         }
 
@@ -474,15 +479,18 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $licenceData = $this->getTypeOfLicenceData();
 
         if ($licenceData['niFlag'] === 'Y') {
-            // @TODO... no more section services
-            $this->getSectionService('TrafficArea')->setTrafficArea(
-                $this->getApplicationId(),
-                TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
-            );
+            $this->getServiceLocator()
+                ->get('Entity\Licence')
+                ->setTrafficArea(
+                    $this->getLicenceId(),
+                    TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                );
             return;
         }
 
-        $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+        if (isset($data['operatingCentre']['addresses']['address'])) {
+            $postcode = $data['operatingCentre']['addresses']['address']['postcode'];
+        }
 
         if (!empty($postcode) && $this->getOperatingCentresCount() === 1) {
 
@@ -640,10 +648,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterForm(Form $form)
     {
+        $tableData = $this->getTableData();
+
         // Make the same form alterations that are required for the summary section
         $form = $this->makeFormAlterations($form, $this->getAlterFormOptions());
-
-        $tableData = $this->getTableData();
 
         if (empty($tableData)) {
             $form->remove('dataTrafficArea');
@@ -746,5 +754,26 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $this->removeFormFields($form, $fieldsetMap['data'], $removeFields);
+    }
+
+    /**
+     * Add variation info message
+     */
+    protected function addVariationInfoMessage()
+    {
+        $params = [
+            'id' => $this->getIdentifier()
+        ];
+
+        $this->addCurrentMessage(
+            $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
+                '%s <a href="' . $this->url()->fromRoute('create_variation', $params) . '">%s</a>',
+                array(
+                    'variation-application-text',
+                    'variation-application-link-text'
+                )
+            ),
+            'info'
+        );
     }
 }
