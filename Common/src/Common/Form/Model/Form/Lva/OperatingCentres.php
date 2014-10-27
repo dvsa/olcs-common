@@ -19,7 +19,7 @@ class OperatingCentres
 
     /**
      * @Form\Name("dataTrafficArea")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\DataTrafficArea")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TrafficArea")
      */
     public $dataTrafficArea = null;
 

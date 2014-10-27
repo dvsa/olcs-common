@@ -27,13 +27,20 @@ class Sla extends AbstractData
 
             if ($rule['field'] == $name) {
 
+                if (!array_key_exists($rule['compareTo'], $context)) {
+                    return null;
+                }
+
                 $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
 
                 $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
                 $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
 
                 if ($dateToCompare >= $effectiveFrom && (false === $effectiveTo || $dateToCompare <= $effectiveTo)) {
-                    return $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+
+                    $daysFinal = $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+
+                    return $daysFinal;
                 }
             }
         }
@@ -70,7 +77,7 @@ class Sla extends AbstractData
                 return null;
             }
 
-            if (!isset($data['Results']) || empty($data['Results']))  {
+            if (!isset($data['Results']) || empty($data['Results'])) {
                 return null;
             }
 
@@ -89,6 +96,10 @@ class Sla extends AbstractData
      */
     public function dateAddDays($date, $days)
     {
+        if (empty($date)) {
+            return null;
+        }
+
         $date = \DateTime::createFromFormat(
             \DateTime::ISO8601, date(\DateTime::ISO8601, strtotime($date))
         );

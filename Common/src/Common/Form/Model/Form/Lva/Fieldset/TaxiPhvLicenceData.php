@@ -1,23 +1,15 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data"})
  */
-class ApplicationTaxiPhvLicenceSubActionData
+class TaxiPhvLicenceData
 {
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $id = null;
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -31,13 +23,4 @@ class ApplicationTaxiPhvLicenceSubActionData
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $privateHireLicenceNo = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $licence = null;
-
-
 }
-

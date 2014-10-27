@@ -18,25 +18,13 @@ return array(
             )
         )
     ),
-
-    'attributes' => array(
-    ),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Selector'
-        ),
-        array(
             'title' => $translationPrefix . '.licence-number',
-            'formatter' => function ($row) {
-                return '<a href="' . $this->generateUrl(
-                    array(
-                        'id' => $row['id'],
-                        'action' => 'edit'
-                    ),
-                    'Application/TaxiPhv/Licence'
-                ) . '">' . $row['privateHireLicenceNo'] . '</a>';
-            }
+            'class' => 'action--tertiary',
+            'action' => 'edit',
+            'name' => 'privateHireLicenceNo',
+            'type' => 'Action'
         ),
         array(
             'title' => $translationPrefix . '.council',
@@ -46,6 +34,10 @@ return array(
             'title' => $translationPrefix . '.address',
             'formatter' => 'Address',
             'name' => 'address'
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
         )
     )
 );

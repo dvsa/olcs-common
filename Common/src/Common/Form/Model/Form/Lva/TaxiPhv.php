@@ -1,39 +1,34 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
- * @Form\Name("application_taxi-phv_licence")
+ * @Form\Name("lva-taxi-phv")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationTaxiPhvLicence
+class TaxiPhv
 {
-
     /**
      * @Form\Name("table")
      * @Form\Options({})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationTaxiPhvLicenceTable")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
      */
     public $table = null;
 
     /**
      * @Form\Name("dataTrafficArea")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationTaxiPhvLicenceDataTrafficArea")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TrafficArea")
      */
     public $dataTrafficArea = null;
 
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      */
     public $formActions = null;
-
-
 }
-

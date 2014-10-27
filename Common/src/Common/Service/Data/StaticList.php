@@ -1,15 +1,19 @@
 <?php
 
-/**
- * Static List data service
- */
+
 namespace Common\Service\Data;
 
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+
 /**
- * Static List data service
+ * Class StaticList
+ * @package Common\Service
  */
-class StaticList extends AbstractData implements ListDataInterface
+class StaticList extends AbstractData implements ListDataInterface, ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     /**
      * @param $context
      * @param bool $useGroups
@@ -34,7 +38,7 @@ class StaticList extends AbstractData implements ListDataInterface
      */
     public function fetchListData($context)
     {
-        $config = $this->getServiceLocator()->get('Config');
+        $config = $this->getServiceLocator()->getServiceLocator()->get('Config');
 
         if (is_null($this->getData('static-list-' . $context))) {
 

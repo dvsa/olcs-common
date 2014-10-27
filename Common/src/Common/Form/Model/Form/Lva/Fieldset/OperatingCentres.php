@@ -117,7 +117,4 @@ class OperatingCentres
      * @Form\Type("Hidden")
      */
     public $maxTrailerAuth = null;
-
-
 }
-

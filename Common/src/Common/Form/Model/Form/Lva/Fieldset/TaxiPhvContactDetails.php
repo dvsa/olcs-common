@@ -1,17 +1,15 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("contactDetails")
  * @Form\Options({"label":"application_taxi-phv_licence-sub-action.contactDetails"})
  */
-class ContactDetails
+class TaxiPhvContactDetails
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -27,14 +25,10 @@ class ContactDetails
     /**
      * @Form\Attributes({"class":"","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_taxi-phv_licence-sub-action.contactDetails.description"
+     *     "label": "application_taxi-phv_licence-sub-action.contactDetails.description"
      * })
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */
     public $description = null;
-
-
 }
-

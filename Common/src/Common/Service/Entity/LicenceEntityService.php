@@ -396,6 +396,27 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
+
+    protected $licenceNoGenBundle = array(
+        'properties' => array(
+            'id',
+            'licNo',
+            'version'
+        ),
+        'children' => array(
+            'trafficArea' => array(
+                'properties' => array(
+                    'id',
+                )
+            ),
+            'goodsOrPsv' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
     private $totalAuthorisationsBundle = array(
         'properties' => array(
             'totAuthVehicles',
@@ -521,14 +542,13 @@ class LicenceEntityService extends AbstractEntityService
     /**
      * Get traffic area for licence
      *
-     * @param int $licenceId
+     * @param int $id
      * @return string
      */
-    public function getTrafficArea($licenceId)
+    public function getTrafficArea($id)
     {
         if ($this->trafficArea === null) {
-            $licence = $this->getServiceLocator()->get('Helper\Rest')
-                ->makeRestCall('Licence', 'GET', $licenceId, $this->trafficAreaBundle);
+            $licence = $this->get($id, $this->trafficAreaBundle);
 
             if (isset($licence['trafficArea'])) {
                 $this->trafficArea = $licence['trafficArea'];
@@ -556,11 +576,10 @@ class LicenceEntityService extends AbstractEntityService
                 'trafficArea' => $id
             );
 
-            $this->getServiceLocator()->get('Helper\Rest')->makeRestCall('Licence', 'PUT', $data);
+            $this->save($data);
 
             if ($id) {
-                $licenceService = $this->getServiceLocator()->get('licence');
-                $licenceService->generateLicence($identifier);
+                $this->generateLicence($identifier);
             }
         }
     }
@@ -588,7 +607,7 @@ class LicenceEntityService extends AbstractEntityService
 
                 foreach ($results as $key => $value) {
                     // Skip Northern Ireland Traffic Area
-                    if ($value['id'] == static::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
+                    if ($value['id'] == self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
                         continue;
                     }
 
@@ -603,12 +622,71 @@ class LicenceEntityService extends AbstractEntityService
     /**
      * Get licence details to update traffic area
      *
+     * @params int $id
      * @return array
      */
-    protected function getLicenceDetailsToUpdateTrafficArea($identifier)
+    protected function getLicenceDetailsToUpdateTrafficArea($id)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('Licence', 'GET', $identifier, $this->licDetailsForTaBundle);
+        return $this->get($id, $this->licDetailsForTaBundle);
+    }
+
+    /**
+     * Generates new licences or updates existing one and saves it to licence entity
+     *
+     * @param string $licenceId
+     * @return string|bool
+     */
+    public function generateLicence($licenceId)
+    {
+        $licence = $this->get($licenceId, $this->licenceNoGenBundle);
+
+        if (!isset($licence['goodsOrPsv']['id']) || !isset($licence['trafficArea']['id'])) {
+            return;
+        }
+
+        $saveData = array(
+            'id' => $licence['id'],
+            'version' => $licence['version']
+        );
+
+        if (empty($licence['licNo'])) {
+
+            $licenceGen = $this->getServiceLocator()->get('Entity\LicenceNoGen')->save(array('licence' => $licenceId));
+
+            if (isset($licenceGen['id']) ) {
+
+                $saveData['licNo'] = sprintf(
+                    '%s%s%s',
+                    $licence['goodsOrPsv']['id'] === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
+                    $licence['trafficArea']['id'],
+                    $licenceGen['id']
+                );
+
+                $this->save($saveData);
+
+                return $saveData['licNo'];
+
+            } else {
+                throw new \Exception('Error licence generation');
+            }
+        } else {
+
+            $previousTrafficAreaCode = substr($licence['licNo'], 1, 1);
+
+            if ($previousTrafficAreaCode != $licence['trafficArea']['id']) {
+                $saveData['licNo'] = sprintf('%s%s%s',
+                    substr($licence['licNo'], 0, 1),
+                    $licence['trafficArea']['id'],
+                    substr($licence['licNo'], 2)
+                );
+
+                $this->save($saveData);
+
+                return $saveData['licNo'];
+            }
+        }
+
+        return false;
     }
 
     public function getTotalAuths($id)

@@ -25,7 +25,7 @@ class DynamicSelectFactory implements FactoryInterface
 
         $service = new DynamicSelect();
 
-        $service->setServiceLocator($serviceLocator);
+        $service->setServiceLocator($serviceLocator->get('DataServiceManager'));
         return $service;
     }
 }

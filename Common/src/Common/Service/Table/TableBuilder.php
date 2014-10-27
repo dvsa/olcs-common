@@ -595,14 +595,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Prepare the table
      *
-     * @param string $name
+     * @param string|array $config
      * @param array $data
      * @param array $params
      * @return \Common\Service\Table\TableBuilder
      */
-    public function prepareTable($name, array $data = array(), array $params = array())
+    public function prepareTable($config, array $data = array(), array $params = array())
     {
-        $this->loadConfig($name);
+        $this->loadConfig($config);
 
         $this->loadData($data);
 
@@ -616,12 +616,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Build a table from a config file
      *
-     * @param array $config
+     * @param string|array $config
+     * @param array $data
+     * @param array $params
+     * @param boolean $render
      * @return string
      */
-    public function buildTable($name, $data = array(), $params = array(), $render = true)
+    public function buildTable($config, $data = array(), $params = array(), $render = true)
     {
-        $this->prepareTable($name, $data, $params);
+        $this->prepareTable($config, $data, $params);
 
         if ($render) {
             return $this->render();
@@ -633,14 +636,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Load the configuration if it exists
      *
-     * @param string $name
-     * @throws \Exception
+     * @param $config
+     * @return bool
      */
-    public function loadConfig($name)
+    public function loadConfig($config)
     {
-        if (!isset($this->applicationConfig['tables']['config'])
-            || empty($this->applicationConfig['tables']['config'])) {
-            throw new \Exception('Table config location not defined');
+        if (!is_array($config)) {
+            $config = $this->getConfigFromFile($config);
         }
 
         $config = array_merge(
@@ -650,7 +652,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'columns' => array(),
                 'footer' => array()
             ),
-            $this->getConfigFromFile($name)
+            $config
         );
 
         $this->setSettings($config['settings']);
@@ -802,6 +804,11 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function getConfigFromFile($name)
     {
+        if (!isset($this->applicationConfig['tables']['config'])
+            || empty($this->applicationConfig['tables']['config'])) {
+            throw new \Exception('Table config location not defined');
+        }
+
         $found = false;
 
         foreach ($this->applicationConfig['tables']['config'] as $location) {

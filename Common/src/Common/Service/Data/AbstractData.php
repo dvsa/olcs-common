@@ -5,18 +5,13 @@ namespace Common\Service\Data;
 use Common\Util\RestClient;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Class AbstractData
  * @package Olcs\Service\Data
  */
-abstract class AbstractData implements FactoryInterface, ServiceLocatorAwareInterface
+abstract class AbstractData implements FactoryInterface, RestClientAwareInterface
 {
-
-    use ServiceLocatorAwareTrait;
-
     /**
      * @var RestClient
      */
