@@ -240,7 +240,7 @@ trait VehicleSection
             $activeDisc = $results['goodsDiscs'][0];
 
             if (empty($activeDisc['ceasedDate'])) {
-                $activeDisc['ceasedDate'] = date('Y-m-d');
+                $activeDisc['ceasedDate'] = date('Y-m-d H:i:s');
                 $this->makeRestCall('GoodsDisc', 'PUT', $activeDisc);
             }
         }
