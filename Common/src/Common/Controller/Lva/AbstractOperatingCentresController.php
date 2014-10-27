@@ -110,9 +110,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentres');
 
-        $form = $this->alterForm($form)
-            ->setData($data);
-
         $table = $this->getServiceLocator()
             ->get('Table')
             ->prepareTable('authorisation_in_form', $this->getTableData());
@@ -124,6 +121,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form->get('table')
             ->get('table')
             ->setTable($table);
+
+        $form = $this->alterForm($form)
+            ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
 
@@ -244,13 +244,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function getAlterFormOptions()
     {
+        $licenceData = $this->getTypeOfLicenceData();
+
         return array(
             'isPsv' => $this->isPsv(),
             'isReview' => false,
             'data' => array(
                 'licence' => array(
                     'licenceType' => array(
-                        'id' => $this->getLicenceId()
+                        'id' => $licenceData['licenceType']
                     )
                 )
             )
@@ -646,10 +648,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterForm(Form $form)
     {
+        $tableData = $this->getTableData();
+
         // Make the same form alterations that are required for the summary section
         $form = $this->makeFormAlterations($form, $this->getAlterFormOptions());
-
-        $tableData = $this->getTableData();
 
         if (empty($tableData)) {
             $form->remove('dataTrafficArea');
