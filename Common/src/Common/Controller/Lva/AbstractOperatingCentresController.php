@@ -343,6 +343,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     private function addOrEdit($mode)
     {
         $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
         $id = $this->params('child_id');
@@ -429,7 +430,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $data['applicationOperatingCentre']['adPlacedDate'] = null; //$adPlacedDate['year'] . '-' . $adPlacedDate['month'] . '-' . $adPlacedDate['day'];
 
         // we no longer store this in the form...
-        $data['applicationOperatingCentre']['application'] = $this->getApplicationId();
+        $data['applicationOperatingCentre'][$this->lva] = $this->getIdentifier();
 
         return $data;
     }
@@ -457,7 +458,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $trafficArea = $this->getTrafficArea();
 
-        if (is_array($trafficArea) && array_key_exists('id', $trafficArea)) {
+        if (is_array($trafficArea) && isset($trafficArea['id'])) {
             $data['trafficArea'] = $trafficArea['id'];
         }
 
@@ -474,11 +475,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $licenceData = $this->getTypeOfLicenceData();
 
         if ($licenceData['niFlag'] === 'Y') {
-            // @TODO... no more section services
-            $this->getSectionService('TrafficArea')->setTrafficArea(
-                $this->getApplicationId(),
-                TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
-            );
+            $this->getServiceLocator()
+                ->get('Entity\Licence')
+                ->setTrafficArea(
+                    $this->getLicenceId(),
+                    TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                );
             return;
         }
 
