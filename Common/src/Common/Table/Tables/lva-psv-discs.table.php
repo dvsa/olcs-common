@@ -27,10 +27,12 @@ return array(
             'name' => 'discNo'
         ),
         array(
+            'formatter' => 'DateTime',
             'title' => $translationPrefix . '.issuedDate',
             'name' => 'issuedDate'
         ),
         array(
+            'formatter' => 'DateTime',
             'title' => $translationPrefix . '.ceasedDate',
             'name' => 'ceasedDate'
         ),
