@@ -9,7 +9,6 @@
 namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
-use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
@@ -496,7 +495,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 ->get('Entity\Licence')
                 ->setTrafficArea(
                     $this->getLicenceId(),
-                    TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                    LicenceEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
                 );
             return;
         }
@@ -834,13 +833,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $documents,
             function ($d) use ($operatingCentreId) {
 
-                // @TODO VERY temporary; filtering not working at the mo
-                // on olcs-backend.
-                if (!isset($d['documentSubCategory']['id']) || $d['documentSubCategory']['id'] !== 2) {
-                    return false;
-                }
-
-                // always include 'unliked' OCs
+                // always include 'unlinked' OCs
                 if (empty($d['operatingCentre'])) {
                     return true;
                 }

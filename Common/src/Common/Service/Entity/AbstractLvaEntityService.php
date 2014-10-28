@@ -134,8 +134,12 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
 
         $documentBundle['children']['documents']['criteria'] = array(
-            'documentSubCategory' => $subCategory['id'],
+            '_OPTIONS_' => array(
+                // @NOTE: doctrine is borking on these particular queries; go manual instead
+                'manualSearch' => true,
+            ),
             'category' => $category['id'],
+            'documentSubCategory' => $subCategory['id']
         );
 
         $data = $this->get($id, $documentBundle);
