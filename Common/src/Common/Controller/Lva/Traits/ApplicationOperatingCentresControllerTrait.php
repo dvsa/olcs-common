@@ -18,4 +18,6 @@ trait ApplicationOperatingCentresControllerTrait
             'licence' => $this->getLicenceId()
         );
     }
+
+    // @TODO port setTrafficAreaAfterCrud
 }
