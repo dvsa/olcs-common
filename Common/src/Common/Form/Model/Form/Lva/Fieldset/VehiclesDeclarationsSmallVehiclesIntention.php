@@ -50,8 +50,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box."
+     *     "column-size": "sm-6"
      * })
      * @Form\Type("\Zend\Form\Element\Textarea")
      */
@@ -64,8 +63,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box."
+     *     "column-size": "sm-6"
      * })
      * @Form\Type("\Zend\Form\Element\Textarea")
      */

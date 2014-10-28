@@ -152,7 +152,17 @@ class ApplicationEntityService extends AbstractEntityService
             'prevBeenAtPi',
             'prevPurchasedAssets',
             'prevConviction',
-            'convictionsConfirmation'
+            'convictionsConfirmation',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'psvOperateSmallVhl',
+            'psvSmallVhlNotes',
+            'psvSmallVhlConfirmation',
+            'psvNoSmallVhlConfirmation',
+            'psvLimousines',
+            'psvNoLimousineConfirmation',
+            'psvOnlyLimousinesConfirmation'
         ),
         'children' => array(
             'previousConvictions' => array(
@@ -260,6 +270,12 @@ class ApplicationEntityService extends AbstractEntityService
                     ),
                     'workshops' => array(
                         'properties' => array('id')
+                    ),
+                    'trafficArea' => array(
+                        'properties' => array(
+                            'id',
+                            'isScottishRules'
+                        )
                     )
                 )
             )
@@ -503,9 +519,7 @@ class ApplicationEntityService extends AbstractEntityService
         ),
         'children' => array(
             'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
+                'properties' => array(),
                 'children' => array(
                     'trafficArea' => array(
                         'properties' => array(
