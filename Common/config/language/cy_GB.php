@@ -507,6 +507,8 @@ return array(
     'case-associated-with' => 'W Cases associated with %s',
     'case-details' => 'W Case details',
     'case-id' => 'W Case ID',
+    'case-note-add-label' => 'W Add note',
+    'case-note-edit-label' => 'W Edit note',
     'case-number' => 'W Case #',
     'case-submission' => 'W Case submission',
     'case-submission-text' => 'W This document is official and not for disclosure to any third parties without the
