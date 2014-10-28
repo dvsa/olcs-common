@@ -370,7 +370,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
-        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
+        $hasProcessedFiles = $this->maybeProcessFiles($form);
+
+        if (!$hasProcessedFiles && !$hasProcessed && $request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($data);
 
             $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
@@ -511,15 +513,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * Save the documents
+     * Save the (previously unlinked) documents
      *
      * @param array $data
      * @param int $operatingCentreId
      */
     protected function saveDocuments($data, $operatingCentreId)
     {
-        // @TODO re-implement
-        return;
         if (isset($data['applicationOperatingCentre']['file']['list'])) {
             foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
                 $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
@@ -775,5 +775,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ),
             'info'
         );
+    }
+
+    protected function maybeProcessFiles($form)
+    {
+        return false;
     }
 }

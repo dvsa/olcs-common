@@ -439,6 +439,12 @@ class ApplicationEntityService extends AbstractEntityService
                     'filename',
                     'identifier',
                     'size'
+                ),
+                // granted, not everything needs this, but it saves another bundle
+                'children' => array(
+                    'operatingCentre' => array(
+                        'properties' => array('id')
+                    )
                 )
             )
         )

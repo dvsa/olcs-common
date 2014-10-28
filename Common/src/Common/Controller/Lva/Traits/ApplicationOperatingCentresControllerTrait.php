@@ -18,49 +18,20 @@ trait ApplicationOperatingCentresControllerTrait
      */
     protected function alterActionFormForGoods(Form $form)
     {
-        // @TODO re-implement
-        return;
-
-        $this->processFileUploads(array('advertisements' => array('file' => 'processAdvertisementFileUpload')), $form);
-
-        $fileData = $this->getUnlinkedFileData()['Results'];
-
-        if ($this->getActionName() == 'edit') {
-            $fileData = array_merge(
-                $fileData,
-                $this->actionLoad($this->getActionId())['operatingCentre']['adDocuments']
-            );
-        }
-
-        $url = $this->getServiceLocator()->get('Helper\Url');
-
-        $form->get('advertisements')->get('file')->get('list')->setFiles($fileData, $url);
-
-        $this->processFileDeletions(array('advertisements' => array('file' => 'deleteFile')), $form);
+        return $form;
     }
 
     /**
-     * Get unlinked file data
-     *
-     * @return array
+     * Handle file processing
      */
-    protected function getUnlinkedFileData()
+    protected function maybeProcessFiles($form)
     {
-        return;
-        // @TODO re-implement
-        $category = $this->getServiceLocator()->get('Data\Category')->getCategoryByDescription('Licensing');
-        $subCategory = $this->getServiceLocator()->get('Data\Category')->getCategoryByDescription('Advertisement', 'Document');
-
-        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
-            'Document',
-            'GET',
-            array(
-                'application' => $this->getIdentifier(),
-                'category' => $category['id'],
-                'documentSubCategory' => $subCategory['id'],
-                'operatingCentre' => 'NULL'
-            ),
-            $this->getDocumentBundle
+        return $this->processFiles(
+            $form,
+            'advertisements->file',
+            array($this, 'processAdvertisementFileUpload'),
+            array($this, 'deleteFile'),
+            array($this, 'getDocuments')
         );
     }
 
@@ -69,20 +40,48 @@ trait ApplicationOperatingCentresControllerTrait
      *
      * @param array $file
      */
-    protected function processAdvertisementFileUpload($file)
+    public function processAdvertisementFileUpload($file)
     {
-        $category = $this->getCategoryService()->getCategoryByDescription('Licensing');
-        $subCategory = $this->getCategoryService()->getCategoryByDescription('Advertisement', 'Document');
-        $licence = $this->getLicenceData();
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $category = $categoryService->getCategoryByDescription('Licensing');
+        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
 
         $this->uploadFile(
             $file,
             array(
+                'application' => $this->getApplicationId(),
                 'description' => 'Advertisement',
                 'category' => $category['id'],
                 'documentSubCategory' => $subCategory['id'],
-                'licence' => $licence['id'],
+                'licence' => $this->getLicenceId()
             )
+        );
+    }
+
+    public function getDocuments()
+    {
+        if (($id = $this->params('child_id')) !== null) {
+            $data = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->getAddressData($id);
+            $operatingCentreId = $data['operatingCentre']['id'];
+        } else {
+            $operatingCentreId = null;
+        }
+
+        $documents = $this->getServiceLocator()->get('Entity\Application')
+            ->getDocuments($this->getApplicationId(), 'Licensing', 'Advertisement');
+
+        return array_filter(
+            $documents,
+            function ($d) use ($operatingCentreId) {
+
+                // always include 'unliked' OCs
+                if (empty($d['operatingCentre'])) {
+                    return true;
+                }
+
+                return $d['operatingCentre']['id'] === $operatingCentreId;
+            }
         );
     }
 }
