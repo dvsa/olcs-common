@@ -338,7 +338,50 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesDeclarationsStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $requiredVars = array(
+            // NineOrMore
+            'psvNoSmallVhlConfirmation' => $applicationData['psvNoSmallVhlConfirmation'],
+            // SmallVehiclesIntention
+            'psvOperateSmallVhl' => $applicationData['psvOperateSmallVhl'],
+            'psvSmallVhlNotes' => $applicationData['psvSmallVhlNotes'],
+            'psvSmallVhlConfirmation' => $applicationData['psvSmallVhlConfirmation'],
+            // limousinesNoveltyVehicles
+            'psvLimousines' => $applicationData['psvLimousines'],
+            'psvNoLimousineConfirmation' => $applicationData['psvNoLimousineConfirmation'],
+            'psvOnlyLimousinesConfirmation' => $applicationData['psvOnlyLimousinesConfirmation']
+        );
+
+        if (!isset($applicationData['licence']['trafficArea']['isScottishRules'])) {
+            $applicationData['licence']['trafficArea']['isScottishRules'] = false;
+        }
+
+        $arrayCheck = array('totAuthSmallVehicles', 'totAuthMediumVehicles', 'totAuthLargeVehicles');
+
+        foreach ($arrayCheck as $attribute) {
+            if (is_null($applicationData[$attribute])) {
+                $applicationData[$attribute] = 0;
+            }
+        }
+
+        if ($applicationData['totAuthSmallVehicles'] == 0) {
+            unset($requiredVars['psvOperateSmallVhl']);
+            unset($requiredVars['psvSmallVhlNotes']);
+            unset($requiredVars['psvSmallVhlConfirmation']);
+        } else {
+
+            unset($requiredVars['psvNoSmallVhlConfirmation']);
+
+            if ($applicationData['totAuthMediumVehicles'] == 0 && $applicationData['totAuthLargeVehicles'] == 0) {
+                unset($applicationData['psvOnlyLimousinesConfirmation']);
+            }
+
+            if ($applicationData['licence']['trafficArea']['isScottishRules']) {
+                unset($applicationData['psvOperateSmallVhl']);
+                unset($applicationData['psvSmallVhlNotes']);
+            }
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**
