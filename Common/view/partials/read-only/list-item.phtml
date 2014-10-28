@@ -2,9 +2,11 @@
 //if we have a date, only try to format if it isn't blank
 if (array_key_exists('date', $item)) {
     if ($item['date']) {
+        $dateFormat = isset($item['dateFormat']) ? $item['dateFormat'] : \DateTime::ISO8601;
+        
         $item['value'] = $this->dateFormat(
             \DateTime::createFromFormat(
-                \DateTime::ISO8601,
+                $dateFormat,
                 $item['date']
             ),
             \IntlDateFormatter::SHORT
