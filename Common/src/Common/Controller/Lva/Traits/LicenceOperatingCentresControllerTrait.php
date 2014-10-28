@@ -122,5 +122,10 @@ trait LicenceOperatingCentresControllerTrait
         return $this->render($view);
     }
 
-
+    protected function getDocumentProperties()
+    {
+        return array(
+            'licence' => $this->getLicenceId()
+        );
+    }
 }

@@ -28,6 +28,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private $section = 'operating_centres';
 
+    /**
+     * These vary depending on licence or application
+     */
+    abstract protected function getDocumentProperties();
+
     protected function getTrafficArea($lvaId = null)
     {
         if ($lvaId === null) {
@@ -368,11 +373,17 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $form = $this->alterActionForm($form);
 
-        $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
-        $hasProcessedFiles = $this->maybeProcessFiles($form);
+        $hasProcessedFiles = $this->processFiles(
+            $form,
+            'advertisements->file',
+            array($this, 'processAdvertisementFileUpload'),
+            array($this, 'deleteFile'),
+            array($this, 'getDocuments')
+        );
 
-        if (!$hasProcessedFiles && !$hasProcessed && $request->isPost() && $form->isValid()) {
+        if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($data);
 
             $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
@@ -520,14 +531,16 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function saveDocuments($data, $operatingCentreId)
     {
-        if (isset($data['applicationOperatingCentre']['file']['list'])) {
-            foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
-                $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
-                    'Document',
-                    'PUT',
-                    array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
-                );
-            }
+        if (!isset($data['applicationOperatingCentre']['file']['list'])) {
+            return;
+        }
+
+        foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
+            $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
+                'Document',
+                'PUT',
+                array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
+            );
         }
     }
 
@@ -777,8 +790,63 @@ abstract class AbstractOperatingCentresController extends AbstractController
         );
     }
 
-    protected function maybeProcessFiles($form)
+    /**
+     * Handle the file upload
+     *
+     * @param array $file
+     */
+    public function processAdvertisementFileUpload($file)
     {
-        return false;
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $category = $categoryService->getCategoryByDescription('Licensing');
+        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
+
+        $this->uploadFile(
+            $file,
+            array_merge(
+                array(
+                    'description' => 'Advertisement',
+                    'category' => $category['id'],
+                    'documentSubCategory' => $subCategory['id'],
+                ),
+                $this->getDocumentProperties()
+            )
+        );
+    }
+
+    public function getDocuments()
+    {
+        $lvaEntity = 'Entity\\' . ucfirst($this->lva);
+        $lvaOcEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+
+        if (($id = $this->params('child_id')) !== null) {
+            $data = $this->getServiceLocator()->get($lvaOcEntity)->getAddressData($id);
+            $operatingCentreId = $data['operatingCentre']['id'];
+        } else {
+            $operatingCentreId = null;
+        }
+
+        $documents = $this->getServiceLocator()->get($lvaEntity)
+            ->getDocuments($this->getIdentifier(), 'Licensing', 'Advertisement');
+
+        return array_filter(
+            $documents,
+            function ($d) use ($operatingCentreId) {
+
+                // @TODO VERY temporary; filtering not working at the mo
+                // on olcs-backend.
+                if (!isset($d['documentSubCategory']['id']) || $d['documentSubCategory']['id'] !== 2) {
+                    return false;
+                }
+
+                // always include 'unliked' OCs
+                if (empty($d['operatingCentre'])) {
+                    return true;
+                }
+
+                return $d['operatingCentre']['id'] === $operatingCentreId;
+            }
+        );
     }
 }

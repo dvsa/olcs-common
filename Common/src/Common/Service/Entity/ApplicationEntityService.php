@@ -14,7 +14,7 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationEntityService extends AbstractEntityService
+class ApplicationEntityService extends AbstractLvaEntityService
 {
     const APPLICATION_TYPE_NEW = 0;
     const APPLICATION_TYPE_VARIATION = 1;
@@ -332,71 +332,6 @@ class ApplicationEntityService extends AbstractEntityService
     );
 
     /**
-     * Operating Centres bundle
-     */
-    protected $ocBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totCommunityLicences',
-            'totAuthVehicles',
-            'totAuthTrailers',
-        ),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'name'
-                        )
-                    )
-                )
-            ),
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array('id')
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    /**
      * Safety Data bundle
      *
      * @var array
@@ -437,32 +372,6 @@ class ApplicationEntityService extends AbstractEntityService
     protected $authorisedVehiclesTotal = array(
         'properties' => array(
             'totAuthVehicles'
-        )
-    );
-
-    /**
-     * Document Bundle
-     *
-     * @var array
-     */
-    protected $documentBundle = array(
-        'properties' => array(),
-        'children' => array(
-            'documents' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'filename',
-                    'identifier',
-                    'size'
-                ),
-                // granted, not everything needs this, but it saves another bundle
-                'children' => array(
-                    'operatingCentre' => array(
-                        'properties' => array('id')
-                    )
-                )
-            )
         )
     );
 
@@ -682,41 +591,11 @@ class ApplicationEntityService extends AbstractEntityService
         return $this->get($id, $this->safetyDataBundle);
     }
 
-    /**
-     * Get operating centres data
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getOperatingCentresData($id)
-    {
-        return $this->get($id, $this->ocBundle);
-    }
-
     public function getAuthorisedVehiclesTotal($id)
     {
         $data = $this->get($id, $this->authorisedVehiclesTotal);
 
         return $data['totAuthVehicles'];
-    }
-
-    public function getDocuments($id, $categoryName, $documentSubCategoryName)
-    {
-        $documentBundle = $this->documentBundle;
-
-        $categoryService = $this->getServiceLocator()->get('category');
-
-        $category = $categoryService->getCategoryByDescription($categoryName);
-        $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
-
-        $documentBundle['children']['document']['criteria'] = array(
-            'category' => $category['id'],
-            'subCategory' => $subCategory['id']
-        );
-
-        $data = $this->get($id, $documentBundle);
-
-        return $data['documents'];
     }
 
     public function getFinancialHistoryData($id)
