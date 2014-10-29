@@ -14,7 +14,6 @@ namespace Common\Service\Entity;
  */
 class LicenceEntityService extends AbstractLvaEntityService
 {
-
     /**
      * Goods or PSV keys
      */
@@ -296,6 +295,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         'properties' => array(),
         'children' => array(
             'licenceVehicles' => array(
+                'criteria' => array(
+                    'removalDate' => null
+                ),
                 'properties' => array('id')
             )
         )

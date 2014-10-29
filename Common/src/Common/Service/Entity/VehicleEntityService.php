@@ -45,7 +45,7 @@ class VehicleEntityService extends AbstractEntityService
         )
     );
 
-    protected function getLicencesForVrm($vrm)
+    public function getLicencesForVrm($vrm)
     {
         $results = $this->get(array('vrm' => $vrm), $this->licencesForVehicleBundle);
 

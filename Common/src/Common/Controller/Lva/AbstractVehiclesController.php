@@ -19,6 +19,28 @@ abstract class AbstractVehiclesController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
+    protected $section = 'vehicles';
+
+    /**
+     * Action data map
+     *
+     * @var array
+     */
+    protected $vehicleDataMap = array(
+        'main' => array(
+            'mapFrom' => array(
+                'data'
+            ),
+            'children' => array(
+                'licence-vehicle' => array(
+                    'mapFrom' => array(
+                        'licence-vehicle'
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * We need to know which vehicles to show
      *
@@ -70,7 +92,9 @@ abstract class AbstractVehiclesController extends AbstractController
     protected function checkForAlternativeCrudAction($action)
     {
         if ($action == 'reprint') {
-            $id = $this->params()->fromPost('id');
+            $post = (array)$this->getRequest()->getPost();
+
+            $id = $post['table']['id'];
 
             if ($this->isDiscPendingForLicenceVehicle($id)) {
 
@@ -117,14 +141,7 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function getTotalNumberOfVehicles()
     {
-        $data = $this->makeRestCall(
-            'Application',
-            'GET',
-            array('id' => $this->getIdentifier()),
-            $this->totalNumberOfVehiclesBundle
-        );
-
-        return count($data['licence']['licenceVehicles']);
+        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesTotal($this->getLicenceId());
     }
 
     /**
@@ -191,7 +208,13 @@ abstract class AbstractVehiclesController extends AbstractController
                 || (isset($data['licence-vehicle']['confirm-add']) && !empty($data['licence-vehicle']['confirm-add']))
                 || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
             ) {
+
+                $data = $data = $this->getServiceLocator()->get('Helper\Data')
+                    ->processDataMap($data, $this->vehicleDataMap);
+
                 $this->saveVehicle($data, $mode);
+
+                return $this->handlePostSave();
             }
         }
 
@@ -221,6 +244,21 @@ abstract class AbstractVehiclesController extends AbstractController
 
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
+
+        if (checkdate(
+            (int)$licenceVehicle['receivedDate']['month'],
+            (int)$licenceVehicle['receivedDate']['day'],
+            (int)$licenceVehicle['receivedDate']['year']
+        )) {
+            $licenceVehicle['receivedDate'] = sprintf(
+                '%s-%s-%s',
+                $licenceVehicle['receivedDate']['year'],
+                $licenceVehicle['receivedDate']['month'],
+                $licenceVehicle['receivedDate']['day']
+            );
+        } else {
+            unset($licenceVehicle['receivedDate']);
+        }
 
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
@@ -418,7 +456,7 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function checkIfVehicleExistsOnOtherLicences($data, $form)
     {
-        $licences = $this->getOthersLicencesFromVrm($data['vrm'], $this->getLicenceId());
+        $licences = $this->getOthersLicencesFromVrm($data['data']['vrm'], $this->getLicenceId());
 
         if (!empty($licences)) {
 
@@ -532,76 +570,40 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     public function reprintAction()
     {
-        return $this->render('reprint_vehicles');
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $this->reprintSave();
+
+            return $this->redirect()->toRoute(
+                null,
+                array('id' => $this->params('id'))
+            );
+        }
+
+        $form = $this->getConfirmationForm();
+
+        return $this->render('reprint_vehicles', $form);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-protected $totalNumberOfVehiclesBundle = array(
-        'properties' => array(),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(),
-                'children' => array(
-                    'licenceVehicles' => array(
-                        'properties' => array('id')
-                    )
-                )
-            )
-        )
-    );
-
-    /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $sharedActionDataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data'
-            ),
-            'children' => array(
-                'licence-vehicle' => array(
-                    'mapFrom' => array(
-                        'licence-vehicle'
-                    )
-                )
-            )
-        )
-    );
+    protected function getConfirmationForm()
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+    }
 
     /**
      * Request a new disc
      *
      * @param array $data
      */
-    protected function reprintSave($data)
+    protected function reprintSave()
     {
-        $ids = explode(',', $data['data']['id']);
+        $ids = explode(',', $this->params('child_id'));
 
         foreach ($ids as $id) {
             $this->reprintDisc($id);
         }
-
-        return $this->goBackToSection();
     }
 
     /**
@@ -626,6 +628,8 @@ protected $totalNumberOfVehiclesBundle = array(
      */
     protected function requestDisc($licenceVehicleId, $isCopy = 'N')
     {
-        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy));
+        $data = array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy);
+
+        $this->getServiceLocator()->get('Entity\GoodsDisc')->save($data);
     }
 }
