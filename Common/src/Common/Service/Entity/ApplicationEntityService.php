@@ -156,6 +156,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'totAuthSmallVehicles',
             'totAuthMediumVehicles',
             'totAuthLargeVehicles',
+            'totAuthVehicles',
+            'totAuthTrailers',
+            'totCommunityLicences',
             'psvOperateSmallVhl',
             'psvSmallVhlNotes',
             'psvSmallVhlConfirmation',
@@ -165,6 +168,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'psvOnlyLimousinesConfirmation'
         ),
         'children' => array(
+            'operatingCentres' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
             'previousConvictions' => array(
                 'properties' => array(
                     'id'
@@ -278,7 +286,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         )
                     )
                 )
-            )
+            ),
         )
     );
 

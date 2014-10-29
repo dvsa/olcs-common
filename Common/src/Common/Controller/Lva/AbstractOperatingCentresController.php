@@ -162,9 +162,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->getServiceLocator()->get($lvaEntity)
                 ->save($appData);
 
-            if (isset($data['table']['action'])) {
-                return $this->handleCrudAction($data['table']);
+            $crudAction = $this->getCrudAction(array($data['table']));
+
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction);
             }
+
+            $this->postSave('operating_centres');
+
             return $this->completeSection('operating_centres');
         }
 
