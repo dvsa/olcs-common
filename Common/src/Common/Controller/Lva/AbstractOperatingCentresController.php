@@ -95,11 +95,29 @@ abstract class AbstractOperatingCentresController extends AbstractController
     );
 
     /**
+     * Get the entity name representing this LVA type. By default
+     * we can work this out, but child controllers can override
+     * if needs be
+     */
+    protected function getLvaEntity()
+    {
+        return 'Entity\\' . ucfirst($this->lva);
+    }
+
+    /**
+     * Get the entity name representing this LVA's Operating Centres
+     */
+    protected function getLvaOperatingCentreEntity()
+    {
+        return 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+    }
+
+    /**
      * Index action
      */
     public function indexAction()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva);
+        $lvaEntity = $this->getLvaEntity();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -304,7 +322,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private function getTableData()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         if (empty($this->tableData)) {
             $id = $this->getIdentifier();
@@ -348,7 +366,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     private function addOrEdit($mode)
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
@@ -426,7 +444,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     protected function delete()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         $this->getServiceLocator()
             ->get($lvaEntity)
@@ -589,7 +607,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function getOperatingCentresCount()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
         $operatingCentres = $this->getServiceLocator()->get($lvaEntity)
             ->getOperatingCentresCount($this->getIdentifier());
 
@@ -816,8 +834,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function getDocuments()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva);
-        $lvaOcEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaEntity();
+        $lvaOcEntity = $this->getLvaOperatingCentreEntity();
 
         if (($id = $this->params('child_id')) !== null) {
             $data = $this->getServiceLocator()->get($lvaOcEntity)->getAddressData($id);
