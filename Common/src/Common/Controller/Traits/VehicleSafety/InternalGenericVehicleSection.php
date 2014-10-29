@@ -36,7 +36,6 @@ trait InternalGenericVehicleSection
         )
     );
 
-
     /**
      * Holds the bundle to retrieve VRM
      *

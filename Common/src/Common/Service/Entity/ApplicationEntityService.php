@@ -625,4 +625,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
     {
         return $this->get($id, $this->vehicleDeclarationDataBundle);
     }
+
+    public function getStatus($id)
+    {
+        return $this->get($id, $this->statusBundle)['status']['id'];
+    }
 }

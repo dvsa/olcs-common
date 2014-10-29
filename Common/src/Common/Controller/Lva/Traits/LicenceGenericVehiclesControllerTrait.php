@@ -12,7 +12,7 @@ namespace Common\Controller\Lva\Traits;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait LicenceVehiclesControllerTrait
+trait LicenceGenericVehiclesControllerTrait
 {
     /**
      * We only want to show active vehicles

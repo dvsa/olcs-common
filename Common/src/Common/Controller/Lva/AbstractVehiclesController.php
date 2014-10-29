@@ -49,6 +49,8 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     abstract protected function showVehicle(array $licenceVehicle);
 
+    abstract protected function alterVehicleFormForLocation($form, $mode);
+
     /**
      * Redirect to the first section
      *
@@ -70,7 +72,7 @@ abstract class AbstractVehiclesController extends AbstractController
                 $alternativeCrudAction = $this->checkForAlternativeCrudAction($action);
 
                 if ($alternativeCrudAction === null) {
-                    return $this->handleCrudAction($crudAction);
+                    return $this->handleCrudAction($crudAction, array('add', 'print-vehicles'));
                 }
 
                 return $alternativeCrudAction;
@@ -80,6 +82,8 @@ abstract class AbstractVehiclesController extends AbstractController
         }
 
         $form = $this->getForm();
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('vehicles', $form);
     }
@@ -237,10 +241,7 @@ abstract class AbstractVehiclesController extends AbstractController
             unset($data['vrm']);
         }
 
-        // @todo This needs implementing some other way
-//        if ($this->sectionType == 'Application') {
-//            $data = $this->alterDataForApplication($data);
-//        }
+        $data = $this->alterDataForLva($data);
 
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
@@ -275,7 +276,13 @@ abstract class AbstractVehiclesController extends AbstractController
             $licenceVehicle['vehicle'] = $data['id'];
         }
 
-        $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
+        $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
+
+        if (isset($licenceVehicle['id'])) {
+            return $licenceVehicle['id'];
+        }
+
+        return $saved['id'];
     }
 
     protected function getVehicleFormData($id)
@@ -317,6 +324,8 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function alterVehicleForm($form, $mode)
     {
+        $this->alterVehicleFormForLocation($form, $mode);
+
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $dataFieldset = $form->get('licence-vehicle');
@@ -372,7 +381,17 @@ abstract class AbstractVehiclesController extends AbstractController
 
     protected function getTable()
     {
-        return $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData());
+        return $this->alterTable(
+            $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData())
+        );
+    }
+
+    /**
+     * Alter table. No-op but is extended in certain sections
+     */
+    protected function alterTable($table)
+    {
+        return $table;
     }
 
     protected function getTableData()
@@ -631,5 +650,16 @@ abstract class AbstractVehiclesController extends AbstractController
         $data = array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy);
 
         $this->getServiceLocator()->get('Entity\GoodsDisc')->save($data);
+    }
+
+    /**
+     * No-op, overridden in different sections
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function alterDataForLva($data)
+    {
+        return $data;
     }
 }

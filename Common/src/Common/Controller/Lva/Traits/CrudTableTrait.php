@@ -46,7 +46,7 @@ trait CrudTableTrait
      * @param array $data
      * @return \Zend\Http\Response
      */
-    protected function handleCrudAction($data)
+    protected function handleCrudAction($data, $rowsNotRequired = array('add'))
     {
         $action = $this->getActionFromCrudAction($data);
 
@@ -56,7 +56,7 @@ trait CrudTableTrait
 
         $routeParams = array('action' => isset($data['routeAction']) ? $data['routeAction'] : $action);
 
-        if ($action !== 'add') {
+        if (!in_array($action, $rowsNotRequired)) {
 
             if (!isset($data['id'])) {
 

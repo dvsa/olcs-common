@@ -76,6 +76,22 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * Holds the bundle to retrieve VRM
+     *
+     * @var array
+     */
+    protected $vrmBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'vrm'
+                )
+            )
+        )
+    );
+
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
@@ -115,5 +131,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
     public function getDiscPendingData($id)
     {
         return $this->get($id, $this->discPendingBundle);
+    }
+
+    public function getVrm($id)
+    {
+        return $this->get($id, $this->vrmBundle)['vehicle']['vrm'];
     }
 }

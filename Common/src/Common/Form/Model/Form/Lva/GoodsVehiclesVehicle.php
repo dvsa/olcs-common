@@ -25,6 +25,12 @@ class GoodsVehiclesVehicle
     public $licenceVehicle = null;
 
     /**
+     * @Form\Name("vehicle-history-table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     */
+    public $vehicleHistoryTable;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
