@@ -42,6 +42,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($request->isPost()) {
 
+            // @NOTE: empty array because the parent's signature
+            // for this overridden method requires one
             $crudAction = $this->getCrudAction(array());
 
             if ($crudAction !== null) {

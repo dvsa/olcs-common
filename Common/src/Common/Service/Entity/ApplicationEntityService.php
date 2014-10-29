@@ -450,6 +450,49 @@ class ApplicationEntityService extends AbstractLvaEntityService
     );
 
     /**
+     * Vehicle PSV bundle
+     *
+     * @var array
+     */
+    protected $vehiclesPsvBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'hasEnteredReg'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => null,
+                'children' => array(
+                    'licenceVehicles' => array(
+                        'properties' => array(
+                            'id',
+                            'specifiedDate',
+                            'deletedDate'
+                        ),
+                        'children' => array(
+                            'vehicle' => array(
+                                'properties' => array(
+                                    'vrm',
+                                    'isNovelty',
+                                ),
+                                'children' => array(
+                                    'psvType' => array(
+                                        'properties' => array('id')
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -624,5 +667,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForVehiclesDeclarations($id)
     {
         return $this->get($id, $this->vehicleDeclarationDataBundle);
+    }
+
+    public function getDataForVehiclesPsv($id)
+    {
+        return $this->get($id, $this->vehiclesPsvBundle);
     }
 }
