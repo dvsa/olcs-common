@@ -20,16 +20,28 @@ abstract class AbstractVehiclesPsvController extends AbstractController
 
     protected $section = 'vehicles-psv';
 
+    private $tables = ['small', 'medium', 'large'];
+
     /**
      * Index action
      */
     public function indexAction()
     {
-        $form = $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createForm('Lva\PvsVehicles');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        //$this->getServiceLocator()->get('Script')->loadFile('???');
+        $form = $formHelper->createForm('Lva\PsvVehicles');
+
+        foreach ($this->tables as $tableName) {
+            $table = $this->getServiceLocator()
+                ->get('Table')
+                ->prepareTable(
+                    'lva-psv-vehicles-' . $tableName,
+                    []
+                );
+            $formHelper->populateFormTable($form->get($tableName), $table);
+        }
+
+        $this->getServiceLocator()->get('Script')->loadFile('vehicle-psv');
 
         return $this->render('vehicles-psv', $form);
     }

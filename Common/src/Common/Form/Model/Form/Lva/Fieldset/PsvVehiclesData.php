@@ -1,17 +1,11 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
-/**
- * @codeCoverageIgnore Auto-generated file with no methods
- * @Form\Name("data")
- * @Form\Options({})
- */
-class ApplicationVehicleSafetyVehiclePsvData
+class PsvVehiclesData
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -37,7 +31,4 @@ class ApplicationVehicleSafetyVehiclePsvData
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $hasEnteredReg = null;
-
-
 }
-

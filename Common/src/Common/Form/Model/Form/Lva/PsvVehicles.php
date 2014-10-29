@@ -1,23 +1,21 @@
 <?php
 
-namespace Common\Form\Model\Form;
+namespace Common\Form\Model\Form\Lva;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("application_vehicle-safety_vehicle-psv")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class ApplicationVehicleSafetyVehiclePsv
+class PsvVehicles
 {
-
     /**
      * @Form\Name("data")
      * @Form\Options({})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\ApplicationVehicleSafetyVehiclePsvData")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehiclesData")
      */
     public $data = null;
 
@@ -42,10 +40,7 @@ class ApplicationVehicleSafetyVehiclePsv
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyButtons")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      */
     public $formActions = null;
-
-
 }
-
