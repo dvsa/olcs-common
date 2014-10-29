@@ -12,8 +12,10 @@ namespace Common\Service\Entity;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceEntityService extends AbstractEntityService
+class LicenceEntityService extends AbstractEntityService implements Interfaces\TotalAuthorisationInterface
 {
+    use Traits\TotalAuthorisationTrait;
+
     /**
      * Goods or PSV keys
      */
@@ -396,7 +398,6 @@ class LicenceEntityService extends AbstractEntityService
         )
     );
 
-
     protected $licenceNoGenBundle = array(
         'properties' => array(
             'id',
@@ -533,7 +534,7 @@ class LicenceEntityService extends AbstractEntityService
 
     public function getVehiclesData($id)
     {
-        return $this->get($id, $this->vehicleDataBundle);
+        return $this->get($id, $this->vehicleDataBundle)['licenceVehicles'];
     }
 
     public function getCurrentVrms($id)

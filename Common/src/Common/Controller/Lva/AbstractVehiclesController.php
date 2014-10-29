@@ -7,9 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
-use Zend\Form\Form;
-use Zend\Form\Element\Checkbox;
 use Common\Form\Elements\Validators\NewVrm;
+use Zend\Form\Element\Checkbox;
 
 /**
  * Vehicles Trait
@@ -20,30 +19,8 @@ abstract class AbstractVehiclesController extends AbstractController
 {
     use Traits\CrudTableTrait;
 
-    protected $section = 'vehicles';
-
     /**
-     * Action data map
-     *
-     * @var array
-     */
-    protected $vehicleDataMap = array(
-        'main' => array(
-            'mapFrom' => array(
-                'data'
-            ),
-            'children' => array(
-                'licence-vehicle' => array(
-                    'mapFrom' => array(
-                        'licence-vehicle'
-                    )
-                )
-            )
-        )
-    );
-
-    /**
-     * Decide whether to show the vehicle in the table
+     * We need to know which vehicles to show
      *
      * @param array $licenceVehicle
      * @return boolean
@@ -51,16 +28,7 @@ abstract class AbstractVehiclesController extends AbstractController
     abstract protected function showVehicle(array $licenceVehicle);
 
     /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    abstract protected function getTotalNumberOfAuthorisedVehicles();
-
-    /**
      * Redirect to the first section
-     *
-     * @NOTE as we don't have a form here, we don't need to update completion status, so we don't call postSave
      *
      * @return Response
      */
@@ -71,17 +39,19 @@ abstract class AbstractVehiclesController extends AbstractController
         if ($request->isPost()) {
 
             $data = (array)$request->getPost();
-
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
 
-                if ($this->getActionFromCrudAction($crudAction) === 'add' && !$this->hasVehicleSpaces()) {
-                    $this->addErrorMessage('more-vehicles-than-total-auth-error');
-                    return $this->reload();
+                $action = $this->getActionFromCrudAction($crudAction);
+
+                $alternativeCrudAction = $this->checkForAlternativeCrudAction($action);
+
+                if ($alternativeCrudAction === null) {
+                    return $this->handleCrudAction($crudAction);
                 }
 
-                return $this->handleCrudAction($crudAction);
+                return $alternativeCrudAction;
             }
 
             return $this->completeSection('vehicles');
@@ -89,27 +59,93 @@ abstract class AbstractVehiclesController extends AbstractController
 
         $form = $this->getForm();
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
-
         return $this->render('vehicles', $form);
     }
 
     /**
-     * Check if we have room for any more vehicles
+     * Hijack the crud action check so we can validate the add button
      *
-     * @return boolean
+     * @param string $action
      */
-    protected function hasVehicleSpaces()
+    protected function checkForAlternativeCrudAction($action)
     {
-        $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
+        if ($action == 'reprint') {
+            $id = $this->params()->fromPost('id');
 
-        if (is_numeric($totalAuth)) {
-            $vehicleCount = $this->getTotalNumberOfVehicles();
+            if ($this->isDiscPendingForLicenceVehicle($id)) {
 
-            return ($vehicleCount < $totalAuth);
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addErrorMessage('reprint-pending-disc-error');
+
+                return $this->reload();
+            }
         }
 
-        return true;
+        if ($action == 'add') {
+            $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
+
+            if (!is_numeric($totalAuth)) {
+                return;
+            }
+
+            $vehicleCount = $this->getTotalNumberOfVehicles();
+
+            if ($vehicleCount >= $totalAuth) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addErrorMessage('more-vehicles-than-total-auth-error');
+
+                return $this->reload();
+            }
+        }
+    }
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfAuthorisedVehicles()
+    {
+        return $this->getLvaEntityService()->getTotalAuthorisation($this->params('id'));
+    }
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfVehicles()
+    {
+        $data = $this->makeRestCall(
+            'Application',
+            'GET',
+            array('id' => $this->getIdentifier()),
+            $this->totalNumberOfVehiclesBundle
+        );
+
+        return count($data['licence']['licenceVehicles']);
+    }
+
+    /**
+     * Check if the licence vehicle has a pending active disc
+     *
+     * @param int $id
+     * @return boolean
+     */
+    protected function isDiscPendingForLicenceVehicle($id)
+    {
+        $ids = (array)$id;
+
+        foreach ($ids as $id) {
+            $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
+
+            if ($this->isDiscPending($results)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -128,219 +164,38 @@ abstract class AbstractVehiclesController extends AbstractController
         return $this->addOrEdit('edit');
     }
 
-    /**
-     * Add/Edit action
-     *
-     * @param string $mode
-     */
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
-
+        $id = $this->params('id');
         $data = array();
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = $this->loadVehicle();
+            $data = $this->formatVehicleDataForForm($this->getVehicleFormData($id));
         }
 
-        $form = $this->getVehicleForm($mode)->setData($data);
+        $form = $this->alterVehicleForm($this->getVehicleForm()->setData($data), $mode);
 
-        // @todo this could do with drying up
-        if ($mode !== 'add') {
+        if ($mode === 'edit') {
             $form->get('form-actions')->remove('addAnother');
         }
 
         if ($request->isPost() && $form->isValid()) {
 
-            $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->vehicleDataMap);
-
-            $data = $this->alterVehicleDataForSave($data);
-
-            $this->saveVehicle($data, $mode);
-
-            return $this->handlePostSave();
-        }
-
-        return $this->render($mode . '_vehicles', $form);
-    }
-
-    protected function loadVehicle()
-    {
-        $data = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehicle(
-            $this->params('child_id')
-        );
-
-        $licenceVehicle = $data;
-
-        unset($licenceVehicle['vehicle']);
-
-        $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
-        unset($licenceVehicle['goodsDiscs']);
-
-        return array(
-            'licence-vehicle' => $licenceVehicle,
-            'data' => $data['vehicle']
-        );
-    }
-
-    /**
-     * Get current disc number
-     *
-     * @param array $licenceVehicle
-     * @return string
-     */
-    abstract protected function getCurrentDiscNo($licenceVehicle);
-
-    /**
-     * Get the vehicles form
-     *
-     * @return \Zend\Form\Form
-     */
-    protected function getForm()
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $form = $formHelper->createForm('Lva\GoodsVehicles');
-
-        $formHelper->populateFormTable($form->get('table'), $this->getVehicleTable());
-
-        return $form;
-    }
-
-    /**
-     * Get vehicles table
-     *
-     * @return \Common\Service\Table\TableBuilder
-     */
-    protected function getVehicleTable()
-    {
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getVehicleTableData());
-
-        $this->alterTable($table);
-
-        return $table;
-    }
-
-    /**
-     * This currently doesn't do anything, but is extended by various traits
-     *
-     * @param \Common\Service\Table\TableBuilder
-     */
-    protected function alterTable($table)
-    {
-
-    }
-
-    /**
-     * Get vehicle table data
-     *
-     * @return array
-     */
-    protected function getVehicleTableData()
-    {
-        $vehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($this->getLicenceId());
-
-        return $this->formatTableData($vehicles);
-    }
-
-    /**
-     * Format table data
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function formatTableData($data)
-    {
-        $results = array();
-
-        if (isset($data['licenceVehicles']) && !empty($data['licenceVehicles'])) {
-
-            foreach ($data['licenceVehicles'] as $licenceVehicle) {
-
-                if (!$this->showVehicle($licenceVehicle)) {
-                    continue;
-                }
-
-                $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
-
-                unset($row['vehicle']);
-                unset($row['goodsDiscs']);
-
-                $row['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
-
-                $results[] = $row;
+            // If we are in edit mode, we can save
+            // If we are in add mode, and we have confirmed add, we can save
+            // If we are in add mode, and haven't confirmed add, but the VRM is new we can save
+            if ($mode === 'edit'
+                || (isset($data['licence-vehicle']['confirm-add']) && !empty($data['licence-vehicle']['confirm-add']))
+                || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
+            ) {
+                $this->saveVehicle($data, $mode);
             }
         }
 
-        return $results;
-    }
-
-    /**
-     * Get the add/edit vehicle form
-     *
-     * @return \Zend\Form\Form
-     */
-    protected function getVehicleForm($mode)
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\GoodsVehiclesVehicle');
-
-        $this->alterVehicleForm($form);
-
-        $dataFieldset = $form->get('licence-vehicle');
-
-        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
-        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
-
-        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        if ($mode == 'edit') {
-            $filter = $form->getInputFilter();
-            $filter->get('data')->get('vrm')->setAllowEmpty(true);
-            $filter->get('data')->get('vrm')->setRequired(false);
-            $form->get('data')->get('vrm')->setAttribute('disabled', 'disabled');
-        }
-
-        if ($mode == 'add' && $this->getRequest()->isPost()) {
-            $filter = $form->getInputFilter();
-            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
-
-            $validators->attach($this->getNewVrmValidator());
-        }
-
-        return $form;
-    }
-
-    /**
-     * This method currently doesn't do anything, but is extended in various traits
-     *
-     * @param Form $form
-     */
-    protected function alterVehicleForm(Form $form)
-    {
-
-    }
-
-    protected function getNewVrmValidator()
-    {
-        $validator = new NewVrm();
-
-        $validator->setType('Application');
-        $validator->setVrms($this->getVrmsForCurrentLicence());
-
-        return $validator;
-    }
-
-    /**
-     * Get vrms linked to licence
-     *
-     * @return array
-     */
-    protected function getVrmsForCurrentLicence()
-    {
-        return $this->getServiceLocator()->get('Entity\Licence')->getCurrentVrms($this->getLicenceId());
+        return $this->render($mode . '_vehicles', $form);
     }
 
     /**
@@ -354,22 +209,28 @@ abstract class AbstractVehiclesController extends AbstractController
         if ($mode !== 'add') {
             // We don't want these updating
             unset($data['licence-vehicle']['specifiedDate']);
-            unset($data['licence-vehicle']['removalDate']);
+            unset($data['licence-vehicle']['deletedDate']);
             unset($data['licence-vehicle']['discNo']);
             unset($data['vrm']);
         }
 
+        // @todo This needs implementing some other way
+//        if ($this->sectionType == 'Application') {
+//            $data = $this->alterDataForApplication($data);
+//        }
+
         $licenceVehicle = $data['licence-vehicle'];
         unset($data['licence-vehicle']);
-
-        if ($mode == 'add') {
-            unset($data['id']);
-            unset($data['version']);
-        }
 
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
         if ($mode == 'add') {
+
+            if (!isset($saved['id'])) {
+                // @todo replace with a different exception
+                throw new \Exception('Unable to save vehicle');
+            }
+
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
         } else {
@@ -379,78 +240,169 @@ abstract class AbstractVehiclesController extends AbstractController
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
     }
 
+    protected function getVehicleFormData($id)
+    {
+        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehicle($id);
+    }
+
     /**
-     * This by default doesn't do anything, but is extended in various traits
+     * Format the data for the form
      *
      * @param array $data
      * @return array
      */
-    protected function alterVehicleDataForSave(array $data)
+    protected function formatVehicleDataForForm($data)
     {
-        return $data;
+        $licenceVehicle = $data;
+        unset($licenceVehicle['vehicle']);
+
+        $licenceVehicle['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
+        unset($licenceVehicle['goodsDiscs']);
+
+        return array(
+            'licence-vehicle' => $licenceVehicle,
+            'data' => $data['vehicle']
+        );
+    }
+
+    protected function getVehicleForm()
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\GoodsVehiclesVehicle');
     }
 
     /**
-     * Cease and delete the vehicle
-     */
-    protected function delete()
-    {
-        $ids = explode(',', $this->params('child_id'));
-
-        $licenceVehicleService = $this->getServiceLocator()->get('Entity\LicenceVehicle');
-
-        foreach ($ids as $id) {
-
-            $licenceVehicleService->ceaseActiveDisc($id);
-
-            $licenceVehicleService->delete($id);
-        }
-    }
-
-    /**
-     * Get the total number of vehicles
+     * Generic form alterations
      *
-     * @return int
-     */
-    protected function getTotalNumberOfVehicles()
-    {
-        return $this->getServiceLocator()->get('Entity\Licence')
-            ->getVehiclesTotal($this->getLicenceId());
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Check whether we should skip saving
-     *
-     * If we are adding the vehicle, we need to check if the vehicle already exists on another licence,
-     *  if it does, we need to display a message asking the user to confirm
-     * @param array $data
      * @param \Zend\Form\Form $form
+     * @param string $mode
+     * @return \Zend\Form\Form
      */
-    protected function shouldSkipActionSave($data, $form)
+    protected function alterVehicleForm($form, $mode)
     {
-        $action = $this->getActionFromFullActionName();
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        if ($action == 'add') {
+        $dataFieldset = $form->get('licence-vehicle');
 
-            $post = (array)$this->getRequest()->getPost();
+        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
+        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
 
-            if (!isset($post['licence-vehicle']['confirm-add']) || empty($post['licence-vehicle']['confirm-add'])) {
+        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
 
-                return $this->checkIfVehicleExistsOnOtherLicences($data, $form);
+        // disable the vrm field on edit
+        if ($mode === 'edit') {
+            $formHelper->disableElement($form, 'data->vrm');
+        }
+
+        // Attach a validator to check the VRM doesn't already exist
+        // We only really need to do this when posting
+        if ($mode === 'add' && $this->getRequest()->isPost()) {
+
+            $filter = $form->getInputFilter();
+            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
+
+            $validator = new NewVrm();
+
+            $validator->setType(ucwords($this->lva));
+            $validator->setVrms($this->getVrmsForCurrentLicence());
+
+            $validators->attach($validator);
+        }
+
+        return $form;
+    }
+
+    /**
+     * Get vrms linked to licence
+     *
+     * @return array
+     */
+    protected function getVrmsForCurrentLicence()
+    {
+        return $this->getServiceLocator()->get('Entity\Licence')->getCurrentVrms($this->getLicenceId());
+    }
+
+    protected function getForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $form = $formHelper->createForm('Lva\GoodsVehicles');
+
+        $formHelper->populateFormTable($form->get('table'), $this->getTable());
+
+        return $form;
+    }
+
+    protected function getTable()
+    {
+        return $this->getServiceLocator()->get('Table')->prepareTable('lva-vehicles', $this->getTableData());
+    }
+
+    protected function getTableData()
+    {
+        $licenceId = $this->getLicenceId();
+
+        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($licenceId);
+
+        $results = array();
+
+        foreach ($licenceVehicles as $licenceVehicle) {
+
+            if (!$this->showVehicle($licenceVehicle)) {
+                continue;
+            }
+
+            $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
+
+            unset($row['vehicle']);
+            unset($row['goodsDiscs']);
+
+            $row['discNo'] = $this->getCurrentDiscNo($licenceVehicle);
+
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
+    /**
+     * Get current disc number
+     *
+     * @param array $licenceVehicle
+     * @return string
+     */
+    protected function getCurrentDiscNo($licenceVehicle)
+    {
+        if ($this->isDiscPending($licenceVehicle)) {
+            return 'Pending';
+        }
+
+        if (isset($licenceVehicle['goodsDiscs']) && !empty($licenceVehicle['goodsDiscs'])) {
+            $currentDisc = $licenceVehicle['goodsDiscs'][0];
+
+            return $currentDisc['discNo'];
+        }
+
+        return '';
+    }
+
+    /**
+     * Check if the disc is pending
+     *
+     * @param array $licenceVehicleData
+     * @return boolean
+     */
+    protected function isDiscPending($licenceVehicleData)
+    {
+        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
+            return true;
+        }
+
+        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
+            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
+
+            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
+
+                return true;
             }
         }
 
@@ -483,6 +435,39 @@ abstract class AbstractVehiclesController extends AbstractController
     }
 
     /**
+     * Get a list of licences that have this vehicle (Except the current licence)
+     *
+     * @param string $vrm
+     * @param int $licenceId
+     */
+    protected function getOthersLicencesFromVrm($vrm, $licenceId)
+    {
+        $licenceVehicles = $this->getServiceLocator()->get('Entity\Vehicle')->getLicencesForVrm($vrm);
+
+        $licences = array();
+
+        foreach ($licenceVehicles as $licenceVehicle) {
+            if (isset($licenceVehicle['licence']['id'])
+                && $licenceVehicle['licence']['id'] != $licenceId) {
+
+                $licenceNumber = 'UNKNOWN';
+
+                if (empty($licenceVehicle['licence']['licNo'])
+                    && isset($licenceVehicle['licence']['applications'][0])
+                ) {
+                    $licenceNumber = 'APP-' . $licenceVehicle['licence']['applications'][0]['id'];
+                } else {
+                    $licenceNumber = $licenceVehicle['licence']['licNo'];
+                }
+
+                $licences[] = $licenceNumber;
+            }
+        }
+
+        return $licences;
+    }
+
+    /**
      * We need to manually translate the message, as we need to optionally display a licence number
      * Based on whether we are internal or external
      *
@@ -491,11 +476,12 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function getErrorMessageForVehicleBelongingToOtherLicences($licences)
     {
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-        $translationKey = 'vehicle-belongs-to-another-licence-message-' . strtolower($this->sectionLocation);
+        $translationKey = 'vehicle-belongs-to-another-licence-message-' . $this->lva;
 
-        if ($this->sectionLocation == 'Internal') {
+        // Internally we can add the licence numbers
+        if ($this->location == 'internal') {
 
             if (count($licences) > 1) {
                 $translationKey .= '-multiple';
@@ -508,60 +494,138 @@ abstract class AbstractVehiclesController extends AbstractController
     }
 
     /**
-     * Get a list of licences that have this vehicle (Except the current licence)
-     *
-     * @param string $vrm
-     * @param int $licenceId
+     * Delete vehicles
      */
-    protected function getOthersLicencesFromVrm($vrm, $licenceId)
+    protected function delete()
     {
-        $bundle = array(
-            'properties' => array(),
-            'children' => array(
-                'licenceVehicles' => array(
-                    'properties' => array(),
-                    'children' => array(
-                        'licence' => array(
-                            'properties' => array(
-                                'id',
-                                'licNo'
-                            ),
-                            'children' => array(
-                                'applications' => array(
-                                    'properties' => array(
-                                        'id'
-                                    )
-                                )
-                            )
-                        )
+        $licenceVehicleIds = explode(',', $this->params('child_id'));
+
+        foreach ($licenceVehicleIds as $id) {
+
+            $this->ceaseActiveDisc($id);
+
+            $this->getServiceLocator()->get('Entity\LicenceVehicle')->delete($id);
+        }
+    }
+
+    /**
+     * If the latest disc is not active, cease it
+     *
+     * @param int $id
+     */
+    protected function ceaseActiveDisc($id)
+    {
+        $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->ceaseActiveDisc($id);
+
+        if (!empty($results['goodsDiscs'])) {
+            $activeDisc = $results['goodsDiscs'][0];
+
+            if (empty($activeDisc['ceasedDate'])) {
+                $activeDisc['ceasedDate'] = date('Y-m-d H:i:s');
+                $this->getServiceLocator()->get('Entity\GoodsDisc')->save($activeDisc);
+            }
+        }
+    }
+
+    /**
+     * Reprint action
+     */
+    public function reprintAction()
+    {
+        return $this->render('reprint_vehicles');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+protected $totalNumberOfVehiclesBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'licenceVehicles' => array(
+                        'properties' => array('id')
                     )
                 )
             )
-        );
+        )
+    );
 
-        $results = $this->makeRestCall('Vehicle', 'GET', array('vrm' => $vrm), $bundle);
+    /**
+     * Action data map
+     *
+     * @var array
+     */
+    protected $sharedActionDataMap = array(
+        'main' => array(
+            'mapFrom' => array(
+                'data'
+            ),
+            'children' => array(
+                'licence-vehicle' => array(
+                    'mapFrom' => array(
+                        'licence-vehicle'
+                    )
+                )
+            )
+        )
+    );
 
-        $licences = array();
+    /**
+     * Request a new disc
+     *
+     * @param array $data
+     */
+    protected function reprintSave($data)
+    {
+        $ids = explode(',', $data['data']['id']);
 
-        foreach ($results['Results'] as $vehicle) {
-            foreach ($vehicle['licenceVehicles'] as $licenceVehicle) {
-                if (isset($licenceVehicle['licence']['id'])
-                    && $licenceVehicle['licence']['id'] != $licenceId) {
-
-                    $licenceNumber = 'UNKNOWN';
-
-                    if (empty($licenceVehicle['licence']['licNo'])
-                        && isset($licenceVehicle['licence']['applications'][0])) {
-                        $licenceNumber = 'APP-' . $licenceVehicle['licence']['applications'][0]['id'];
-                    } else {
-                        $licenceNumber = $licenceVehicle['licence']['licNo'];
-                    }
-
-                    $licences[] = $licenceNumber;
-                }
-            }
+        foreach ($ids as $id) {
+            $this->reprintDisc($id);
         }
 
-        return $licences;
+        return $this->goBackToSection();
+    }
+
+    /**
+     * Reprint a single disc
+     *
+     * @NOTE I have put this logic into its own method (rather in the reprintSave method), as we will soon be able to
+     * reprint multiple discs at once
+     *
+     * @param int $id
+     */
+    protected function reprintDisc($id)
+    {
+        $this->ceaseActiveDisc($id);
+
+        $this->requestDisc($id, 'Y');
+    }
+
+    /**
+     * Request disc
+     *
+     * @param int $licenceVehicleId
+     */
+    protected function requestDisc($licenceVehicleId, $isCopy = 'N')
+    {
+        $this->makeRestCall('GoodsDisc', 'POST', array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy));
     }
 }

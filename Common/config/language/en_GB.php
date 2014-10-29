@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'lva.section.title.edit_vehicles' => 'Edit vehicle',
+    'lva.section.title.add_vehicles' => 'Add vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

@@ -14,8 +14,10 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationEntityService extends AbstractEntityService
+class ApplicationEntityService extends AbstractEntityService implements Interfaces\TotalAuthorisationInterface
 {
+    use Traits\TotalAuthorisationTrait;
+
     const APPLICATION_TYPE_NEW = 0;
     const APPLICATION_TYPE_VARIATION = 1;
 
