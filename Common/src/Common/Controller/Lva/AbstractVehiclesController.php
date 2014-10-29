@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Vehicles Trait
+ * Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -12,7 +12,7 @@ use Zend\Form\Element\Checkbox;
 use Common\Form\Elements\Validators\NewVrm;
 
 /**
- * Vehicles Trait
+ * Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
