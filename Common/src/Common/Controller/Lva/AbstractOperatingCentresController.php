@@ -9,7 +9,6 @@
 namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
-use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
@@ -27,6 +26,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
      * Needed by the Crud Table Trait
      */
     private $section = 'operating_centres';
+
+    /**
+     * These vary depending on licence or application
+     */
+    abstract protected function getDocumentProperties();
 
     protected function getTrafficArea($lvaId = null)
     {
@@ -91,11 +95,29 @@ abstract class AbstractOperatingCentresController extends AbstractController
     );
 
     /**
+     * Get the entity name representing this LVA type. By default
+     * we can work this out, but child controllers can override
+     * if needs be
+     */
+    protected function getLvaEntity()
+    {
+        return 'Entity\\' . ucfirst($this->lva);
+    }
+
+    /**
+     * Get the entity name representing this LVA's Operating Centres
+     */
+    protected function getLvaOperatingCentreEntity()
+    {
+        return 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+    }
+
+    /**
      * Index action
      */
     public function indexAction()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva);
+        $lvaEntity = $this->getLvaEntity();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -140,9 +162,14 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->getServiceLocator()->get($lvaEntity)
                 ->save($appData);
 
-            if (isset($data['table']['action'])) {
-                return $this->handleCrudAction($data['table']);
+            $crudAction = $this->getCrudAction(array($data['table']));
+
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction);
             }
+
+            $this->postSave('operating_centres');
+
             return $this->completeSection('operating_centres');
         }
 
@@ -300,7 +327,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     private function getTableData()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         if (empty($this->tableData)) {
             $id = $this->getIdentifier();
@@ -344,7 +371,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     private function addOrEdit($mode)
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
@@ -368,9 +395,17 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $form = $this->alterActionForm($form);
 
-        $hasProcessed = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
 
-        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
+        $hasProcessedFiles = $this->processFiles(
+            $form,
+            'advertisements->file',
+            array($this, 'processAdvertisementFileUpload'),
+            array($this, 'deleteFile'),
+            array($this, 'getDocuments')
+        );
+
+        if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($data);
 
             $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
@@ -414,7 +449,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     protected function delete()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         $this->getServiceLocator()
             ->get($lvaEntity)
@@ -483,7 +518,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 ->get('Entity\Licence')
                 ->setTrafficArea(
                     $this->getLicenceId(),
-                    TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                    LicenceEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
                 );
             return;
         }
@@ -511,23 +546,23 @@ abstract class AbstractOperatingCentresController extends AbstractController
     }
 
     /**
-     * Save the documents
+     * Save the (previously unlinked) documents
      *
      * @param array $data
      * @param int $operatingCentreId
      */
     protected function saveDocuments($data, $operatingCentreId)
     {
-        // @TODO re-implement
-        return;
-        if (isset($data['applicationOperatingCentre']['file']['list'])) {
-            foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
-                $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
-                    'Document',
-                    'PUT',
-                    array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
-                );
-            }
+        if (!isset($data['applicationOperatingCentre']['file']['list'])) {
+            return;
+        }
+
+        foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
+            $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
+                'Document',
+                'PUT',
+                array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
+            );
         }
     }
 
@@ -577,7 +612,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     public function getOperatingCentresCount()
     {
-        $lvaEntity = 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+        $lvaEntity = $this->getLvaOperatingCentreEntity();
         $operatingCentres = $this->getServiceLocator()->get($lvaEntity)
             ->getOperatingCentresCount($this->getIdentifier());
 
@@ -774,6 +809,60 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 )
             ),
             'info'
+        );
+    }
+
+    /**
+     * Handle the file upload
+     *
+     * @param array $file
+     */
+    public function processAdvertisementFileUpload($file)
+    {
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $category = $categoryService->getCategoryByDescription('Licensing');
+        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
+
+        $this->uploadFile(
+            $file,
+            array_merge(
+                array(
+                    'description' => 'Advertisement',
+                    'category' => $category['id'],
+                    'documentSubCategory' => $subCategory['id'],
+                ),
+                $this->getDocumentProperties()
+            )
+        );
+    }
+
+    public function getDocuments()
+    {
+        $lvaEntity = $this->getLvaEntity();
+        $lvaOcEntity = $this->getLvaOperatingCentreEntity();
+
+        if (($id = $this->params('child_id')) !== null) {
+            $data = $this->getServiceLocator()->get($lvaOcEntity)->getAddressData($id);
+            $operatingCentreId = $data['operatingCentre']['id'];
+        } else {
+            $operatingCentreId = null;
+        }
+
+        $documents = $this->getServiceLocator()->get($lvaEntity)
+            ->getDocuments($this->getIdentifier(), 'Licensing', 'Advertisement');
+
+        return array_filter(
+            $documents,
+            function ($d) use ($operatingCentreId) {
+
+                // always include 'unlinked' OCs
+                if (empty($d['operatingCentre'])) {
+                    return true;
+                }
+
+                return $d['operatingCentre']['id'] === $operatingCentreId;
+            }
         );
     }
 }

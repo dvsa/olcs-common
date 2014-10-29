@@ -12,9 +12,8 @@ namespace Common\Service\Entity;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceEntityService extends AbstractEntityService implements Interfaces\TotalAuthorisationInterface
+class LicenceEntityService extends AbstractLvaEntityService
 {
-    use Traits\TotalAuthorisationTrait;
 
     /**
      * Goods or PSV keys
@@ -224,73 +223,6 @@ class LicenceEntityService extends AbstractEntityService implements Interfaces\T
                     'contactType' => array(
                         'properties' => array(
                             'id'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    // @TODO currently duped with application entity service...
-    // traitify or move to abstract?
-    /**
-     * Operating Centres bundle
-     */
-    protected $ocBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totCommunityLicences',
-            'totAuthVehicles',
-            'totAuthTrailers',
-        ),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'name'
-                        )
-                    )
-                )
-            ),
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array('id')
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
                         )
                     )
                 )
@@ -508,17 +440,6 @@ class LicenceEntityService extends AbstractEntityService implements Interfaces\T
     public function getAddressesData($id)
     {
         return $this->get($id, $this->addressesDataBundle);
-    }
-
-    /**
-     * Get operating centres data
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getOperatingCentresData($id)
-    {
-        return $this->get($id, $this->ocBundle);
     }
 
     /**

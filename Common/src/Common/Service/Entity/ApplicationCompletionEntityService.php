@@ -283,7 +283,54 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getOperatingCentresStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        if (count($applicationData['operatingCentres']) === 0) {
+            return self::STATUS_INCOMPLETE;
+        }
+
+        $licType = $applicationData['licence']['goodsOrPsv']['id'];
+
+        $requiredVars = array(
+            'totAuthSmallVehicles' => $applicationData['totAuthSmallVehicles'],
+            'totAuthMediumVehicles' => $applicationData['totAuthMediumVehicles'],
+            'totAuthLargeVehicles' => $applicationData['totAuthLargeVehicles'],
+            'totAuthVehicles' => $applicationData['totAuthVehicles'],
+            'totAuthTrailers' => $applicationData['totAuthTrailers'],
+            'totCommunityLicences' => $applicationData['totCommunityLicences'],
+        );
+
+        if ($licType === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+
+            unset($requiredVars['totAuthSmallVehicles']);
+            unset($requiredVars['totAuthMediumVehicles']);
+            unset($requiredVars['totAuthLargeVehicles']);
+            unset($requiredVars['totCommunityLicences']);
+
+        } else {
+
+            unset($requiredVars['totAuthVehicles']);
+            unset($requiredVars['totAuthTrailers']);
+
+            $allowLargeVehicles = array(
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+            );
+
+            $allowCommunityLicences = array(
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            );
+
+            if (!in_array($licType, $allowLargeVehicles)) {
+                unset($requiredVars['totAuthLargeVehicles']);
+            }
+
+            if (!in_array($licType, $allowCommunityLicences)) {
+                unset($requiredVars['totCommunityLicences']);
+            }
+
+        }
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**
