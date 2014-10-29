@@ -351,4 +351,15 @@ abstract class AbstractController extends AbstractActionController
             }
         }
     }
+
+    protected function getLvaEntityService()
+    {
+        if ($this->lva === 'variation') {
+            $service = 'Application';
+        } else {
+            $service = ucwords($this->lva);
+        }
+
+        return $this->getServiceLocator()->get('Entity\\' . $service);
+    }
 }

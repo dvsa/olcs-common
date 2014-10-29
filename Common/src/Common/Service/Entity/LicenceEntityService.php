@@ -295,6 +295,9 @@ class LicenceEntityService extends AbstractLvaEntityService
         'properties' => array(),
         'children' => array(
             'licenceVehicles' => array(
+                'criteria' => array(
+                    'removalDate' => null
+                ),
                 'properties' => array('id')
             )
         )
@@ -328,7 +331,6 @@ class LicenceEntityService extends AbstractLvaEntityService
             'version'
         )
     );
-
 
     protected $licenceNoGenBundle = array(
         'properties' => array(
@@ -455,7 +457,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getVehiclesData($id)
     {
-        return $this->get($id, $this->vehicleDataBundle);
+        return $this->get($id, $this->vehicleDataBundle)['licenceVehicles'];
     }
 
     public function getCurrentVrms($id)

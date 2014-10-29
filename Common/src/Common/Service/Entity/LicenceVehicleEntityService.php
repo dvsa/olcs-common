@@ -59,6 +59,23 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * Disc pending bundle
+     */
+    protected $discPendingBundle = array(
+        'properties' => array(
+            'id',
+            'specifiedDate',
+            'deletedDate'
+        ),
+        'children' => array(
+            'goodsDiscs' => array(
+                'ceasedDate',
+                'discNo'
+            )
+        )
+    );
+
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
@@ -93,5 +110,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
             $activeDisc['ceasedDate'] = date('Y-m-d');
             $this->getServiceLocator()->get('Entity\GoodsDisc')->save($activeDisc);
         }
+    }
+
+    public function getDiscPendingData($id)
+    {
+        return $this->get($id, $this->discPendingBundle);
     }
 }

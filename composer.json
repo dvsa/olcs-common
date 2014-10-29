@@ -5,6 +5,10 @@
     "repositories": [{
         "type": "vcs",
         "url": "git@gitlab.clb.npm:sc/jackrabbit.git"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com:/MajorCaiger/benephactor.git"
     }],
     "require": {
         "php": ">=5.3.3",
@@ -16,7 +20,8 @@
         "phpunit/phpunit": "4.0.*",
         "mockery/mockery": "~0.9.2",
         "phpunit/phpcov": "*",
-        "dvsa/jackrabbit": "v1.1.0"
+        "dvsa/jackrabbit": "v1.1.0",
+        "benephactor/benephactor": "dev-develop"
     },
     "autoload": {
         "psr-0": {

@@ -293,6 +293,40 @@ class FormHelperService extends AbstractHelperService
     }
 
     /**
+     * Recurse through the form and the input filter to disable the final result
+     *
+     * @param \Zend\Form\Form $form
+     * @param string $reference
+     * @param \Zend\InputFilter\InputFilter $filter
+     * @return null
+     */
+    public function disableElement($form, $reference, $filter = null)
+    {
+        if ($filter === null) {
+            $filter = $form->getInputFilter();
+        }
+
+        if (strstr($reference, '->')) {
+            list($index, $reference) = explode('->', $reference, 2);
+
+            return $this->disableElement($form->get($index), $reference, $filter->get($index));
+        }
+
+        $element = $form->get($reference);
+
+        if ($element instanceof DateSelect) {
+            $this->disableDateElement($element);
+        } else {
+            $element->setAttribute('disabled', 'disabled');
+        }
+
+        $filter->get($reference)->setAllowEmpty(true);
+        $filter->get($reference)->setRequired(false);
+
+        return;
+    }
+
+    /**
      * Disable date element
      *
      * @param \Zend\Form\Element\DateSelect $element

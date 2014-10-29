@@ -113,6 +113,12 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         )
     );
 
+    protected $totalAuthorisationBundle = array(
+        'properties' => array(
+            'totAuthVehicles'
+        )
+    );
+
     /**
      * Get operating centres data
      *
@@ -145,5 +151,10 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         $data = $this->get($id, $documentBundle);
 
         return $data['documents'];
+    }
+
+    public function getTotalAuthorisation($id)
+    {
+        return $this->get($id, $this->totalAuthorisationBundle)['totAuthVehicles'];
     }
 }
