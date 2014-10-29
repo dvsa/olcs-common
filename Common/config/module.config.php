@@ -76,6 +76,11 @@ return array(
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
             },
+            'vehicleList' => function ($serviceManager) {
+                $vehicleList = new \Common\Service\VehicleList\VehicleList();
+                $vehicleList->setServiceLocator($serviceManager);
+                return $vehicleList;
+            },
             'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
                 $validator->setServiceLocator($serviceManager);
