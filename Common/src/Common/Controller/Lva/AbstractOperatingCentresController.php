@@ -198,6 +198,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->alterFormForGoodsLicences($form, $fieldsetMap);
         }
 
+        /*
+         * @TODO: re-implement if we do reviews & decs in the same way (unlikely)
         if ($options['isReview']) {
             $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
 
@@ -210,6 +212,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $form->get($fieldsetMap['dataTrafficArea'])->get('trafficAreaInfoNameExists')
                 ->setValue($trafficArea['name']);
         }
+         */
 
         return $form;
     }
@@ -628,10 +631,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterActionFormForPsv(Form $form)
     {
-        $form->get('data')->remove('noOfTrailersRequired');
-        $form->getInputFilter()->get('data')->remove('noOfTrailersRequired');
-        $form->remove('advertisements');
-        $form->getInputFilter()->remove('advertisements');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->remove($form, 'data->noOfTrailersRequired');
+        $formHelper->remove($form, 'advertisements');
 
         $dataLabel = $form->get('data')->getLabel();
         $form->get('data')->setLabel($dataLabel . '-psv');
@@ -672,8 +675,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         // Make the same form alterations that are required for the summary section
         $form = $this->makeFormAlterations($form, $this->getAlterFormOptions());
 
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
         if (empty($tableData)) {
-            $form->remove('dataTrafficArea');
+            $formHelper->remove($form, 'dataTrafficArea');
             return $form;
         }
 
@@ -684,7 +689,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         if ($trafficAreaId) {
 
-            $nameExistsElement = $dataTrafficAreaFieldset->remove('trafficArea')->get('trafficAreaInfoNameExists');
+            $formHelper->remove($form, 'dataTrafficArea->trafficArea');
+            $nameExistsElement = $dataTrafficAreaFieldset->get('trafficAreaInfoNameExists');
 
             $nameExistsElement->setValue(
                 str_replace('%NAME%', $trafficArea['name'], $nameExistsElement->getValue())
