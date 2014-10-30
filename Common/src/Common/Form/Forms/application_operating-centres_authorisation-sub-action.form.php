@@ -30,15 +30,15 @@ return array(
                     'application' => array(
                         'type' => 'hidden'
                     ),
-                    'noOfVehiclesPossessed' => array(
+                    'noOfVehiclesRequired' => array(
                         'type' => 'vehiclesNumber',
-                        'label' => $translationPrefix . '.data.noOfVehiclesPossessed',
+                        'label' => $translationPrefix . '.data.noOfVehiclesRequired',
                         'filters' => '\Common\Form\Elements\InputFilters\NumberOfVehicles',
                         'required' => true
                     ),
-                    'noOfTrailersPossessed' => array(
+                    'noOfTrailersRequired' => array(
                         'type' => 'vehiclesNumber',
-                        'label' => $translationPrefix . '.data.noOfTrailersPossessed',
+                        'label' => $translationPrefix . '.data.noOfTrailersRequired',
                         'filters' => '\Common\Form\Elements\InputFilters\NumberOfVehicles',
                         'required' => true
                     ),

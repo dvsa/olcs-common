@@ -25,20 +25,20 @@ class OperatingCentre
     /**
      * @Form\Options({
      *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed"
+     * "application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\NumberOfVehicles")
      */
-    public $noOfVehiclesPossessed = null;
+    public $noOfVehiclesRequired = null;
 
     /**
      * @Form\Options({
      *     "label":
-     * "application_operating-centres_authorisation-sub-action.data.noOfTrailersPossessed"
+     * "application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\NumberOfVehicles")
      */
-    public $noOfTrailersPossessed = null;
+    public $noOfTrailersRequired = null;
 
     /**
      * @Form\Attributes({"id":"","placeholder":""})

@@ -35,11 +35,11 @@ return array(
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
-            'name' => 'noOfVehiclesPossessed'
+            'name' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
-            'name' => 'noOfTrailersPossessed'
+            'name' => 'noOfTrailersRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.permission',
@@ -61,11 +61,11 @@ return array(
         ),
         array(
             'formatter' => 'Sum',
-            'name' => 'noOfVehiclesPossessed'
+            'name' => 'noOfVehiclesRequired'
         ),
         'trailersCol' => array(
             'formatter' => 'Sum',
-            'name' => 'noOfTrailersPossessed'
+            'name' => 'noOfTrailersRequired'
         ),
         'remainingColspan' => array(
             'colspan' => 2

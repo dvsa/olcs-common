@@ -149,8 +149,8 @@ return array(
         advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation-sub-action.data' => 'Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'Vehicles',
-    'application_operating-centres_authorisation-sub-action.data.noOfTrailersPossessed' => 'Total number of trailers',
-    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed' => 'Total number of vehicles',
+    'application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired' => 'Total number of trailers',
+    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired' => 'Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'I am either the site owner or have
@@ -930,9 +930,9 @@ return array(
     'new-case-next' => 'Next',
     'nfas' => 'NFAs',
     'no-further-action' => 'No further action',
-    'noOfTrailersPossessedError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
-    'noOfVehiclesPossessedError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
-    'noOfVehiclesPossessedError-psv' => 'Total number of vehicles cannot be zero',
+    'noOfTrailersRequiredError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
+    'noOfVehiclesRequiredError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
+    'noOfVehiclesRequiredError-psv' => 'Total number of vehicles cannot be zero',
     'north-east-of-england' => 'North East of England',
     'north-west-of-england' => 'North West of England',
     'northern-ireland' => 'Northern Ireland',
