@@ -85,29 +85,6 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test setServiceLocator
-     *
-     * @group vehicleList
-     * @dataProvider providerSetServiceLocator
-     */
-    public function testServiceLocator($input, $output)
-    {
-        $this->vehicleList->setServiceLocator($input);
-        $this->assertInstanceOf(get_class($output), $this->vehicleList->getServiceLocator());
-    }
-
-    /**
-     * Provider for setServiceLocator
-     */
-    public function providerSetServiceLocator()
-    {
-        $serviceManager = Bootstrap::getServiceManager();
-        return array(
-            array($serviceManager, $serviceManager)
-        );
-    }
-
-    /**
      * Test set licence ids
      * 
      * @group vehicleList
@@ -129,19 +106,6 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
         $loggedInUser = 1;
         $this->vehicleList->setLoggedInUser($loggedInUser);
         $this->assertEquals($this->vehicleList->getLoggedInUser(), $loggedInUser);
-    }
-
-    /**
-     * Test set content store method
-     * 
-     * @group vehicleList
-     */
-    public function testSetContentStoreMethod()
-    {
-        $mockContentStore = $this->getMockContentStore();
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
-        $this->vehicleList->setContentStoreMethod('GET');
     }
 
     /**

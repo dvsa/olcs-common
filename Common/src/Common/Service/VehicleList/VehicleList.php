@@ -8,6 +8,7 @@
 namespace Common\Service\VehicleList;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Service to get create vehicle list and save it to JackRabbit
@@ -16,12 +17,8 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  */
 class VehicleList implements ServiceLocatorAwareInterface
 {
-    use \Common\Util\RestCallTrait;
-
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
+    use \Common\Util\RestCallTrait,
+        ServiceLocatorAwareTrait;
 
     /**
      * @var array
@@ -79,23 +76,17 @@ class VehicleList implements ServiceLocatorAwareInterface
             ];
             $query = $documentService->getBookmarkQueries($file, $queryData);
             if (!is_array($query) || !count($query)) {
-                $retv = false;
-                $message = 'Error getting bookmark queries';
-                break;
+                throw new \Exception('Error getting bookmark queries');
             }
 
             $result = $this->makeRestCall('BookmarkSearch', 'GET', [], $query);
             if (!is_array($result) || !count($result)) {
-                $retv = false;
-                $message = 'Error getting bookmarks';
-                break;
+                throw new \Exception('Error getting bookmarks');
             }
 
             $content = $documentService->populateBookmarks($file, $result);
             if (!$content) {
-                $retv = false;
-                $message = 'Error populating bookmarks bookmarks';
-                break;
+                throw new \Exception('Error populating template bookmarks');
             }
 
             $uploader = $this->getServiceLocator()
@@ -106,9 +97,7 @@ class VehicleList implements ServiceLocatorAwareInterface
 
             $uploadedFile = $uploader->upload();
             if (!$uploadedFile) {
-                $retv = false;
-                $message = 'Error uploading file';
-                break;
+                throw new \Exception('Error uploading file');
             }
 
             $fileName = date('YmdHi') . '_' . 'Goods_Vehicle_List.rtf';
@@ -127,19 +116,11 @@ class VehicleList implements ServiceLocatorAwareInterface
                 'size'                => $uploadedFile->getSize()
             ];
 
-            try {
-                $this->makeRestCall(
-                    'Document',
-                    'POST',
-                    $data
-                );
-            } catch (\Exception $e) {
-                $retv = false;
-                $message = $e->getMessage();
-            }
-        }
-        if (!$retv) {
-            throw new \Exception($message);
+            $this->makeRestCall(
+                'Document',
+                'POST',
+                $data
+            );
         }
 
         if ($serveFile && count($licenceIds) == 1) {
@@ -162,33 +143,13 @@ class VehicleList implements ServiceLocatorAwareInterface
      *
      * @param string $method
      */
-    public function setContentStoreMethod($method = 'GET')
+    protected function setContentStoreMethod($method = 'GET')
     {
         $this->getServiceLocator()
             ->get('ContentStore')
             ->getHttpClient()
             ->getRequest()
             ->setMethod($method);
-    }
-
-    /**
-     * Set service locator
-     *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
     }
 
     /**
