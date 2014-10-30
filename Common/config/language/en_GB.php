@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
     'lva.section.title.edit_vehicles' => 'Edit vehicle',
     'lva.section.title.add_vehicles' => 'Add vehicle',
     'Authorisation' => 'Authorisation',

@@ -363,7 +363,16 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        $totalAuth = $applicationData['totAuthVehicles'];
+
+        if (isset($applicationData['licence']['licenceVehicles'])
+            && !empty($applicationData['licence']['licenceVehicles'])
+            && (is_numeric($totalAuth) && count($applicationData['licence']['licenceVehicles']) <= $totalAuth)
+        ) {
+            return self::STATUS_COMPLETE;
+        }
+
+        return self::STATUS_INCOMPLETE;
     }
 
     /**

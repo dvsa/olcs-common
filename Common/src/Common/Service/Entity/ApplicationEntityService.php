@@ -195,6 +195,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'tachographInsName'
                 ),
                 'children' => array(
+                    'licenceVehicles' => array(
+                        'criteria' => array(
+                            'removalDate' => null
+                        ),
+                        'properties' => array(
+                            'id'
+                        )
+                    ),
                     'privateHireLicences' => array(
                         'properties' => array(
                             'id'

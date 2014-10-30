@@ -21,6 +21,9 @@ abstract class AbstractVehiclesController extends AbstractController
 
     protected $section = 'vehicles';
 
+    protected $totalAuthorisedVehicles;
+    protected $totalVehicles;
+
     /**
      * Action data map
      *
@@ -62,6 +65,8 @@ abstract class AbstractVehiclesController extends AbstractController
 
         if ($request->isPost()) {
 
+            $this->postSave('vehicles');
+
             $data = (array)$request->getPost();
             $crudAction = $this->getCrudAction(array($data['table']));
 
@@ -84,6 +89,12 @@ abstract class AbstractVehiclesController extends AbstractController
         $form = $this->getForm();
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+
+        if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
+                'more-vehicles-than-authorisation'
+            );
+        }
 
         return $this->render('vehicles', $form);
     }
@@ -135,7 +146,11 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function getTotalNumberOfAuthorisedVehicles()
     {
-        return $this->getLvaEntityService()->getTotalAuthorisation($this->params('id'));
+        if (empty($this->totalAuthorisedVehicles)) {
+            $this->totalAuthorisedVehicles = $this->getLvaEntityService()->getTotalAuthorisation($this->params('id'));
+        }
+
+        return $this->totalAuthorisedVehicles;
     }
 
     /**
@@ -145,7 +160,12 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function getTotalNumberOfVehicles()
     {
-        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesTotal($this->getLicenceId());
+        if (empty($this->totalVehicles)) {
+            $this->totalVehicles = $this->getServiceLocator()->get('Entity\Licence')
+                ->getVehiclesTotal($this->getLicenceId());
+        }
+
+        return $this->totalVehicles;
     }
 
     /**
