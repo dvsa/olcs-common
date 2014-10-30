@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Form\Form;
 
 /**
@@ -35,10 +36,13 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     {
         $request = $this->getRequest();
 
+        // we always need this basic data
+        $entityData = $this->getData();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($this->getFormData());
+            $data = $this->formatDataForForm($entityData);
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -47,12 +51,19 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             ->createForm('Lva\PsvVehicles')
             ->setData($data);
 
+        // we want to alter based on the *original* entity data, not how
+        // it's been manipulated to suit the form (if relevant)
+        $form = $this->doAlterForm($form, $entityData);
+
         foreach ($this->tables as $tableName) {
+            if (!$form->has($tableName)) {
+                continue;
+            }
+
             $table = $this->getServiceLocator()
                 ->get('Table')
                 ->prepareTable(
                     'lva-psv-vehicles-' . $tableName,
-                    // @TODO data
                     $this->getTableData($tableName)
                 );
 
@@ -95,7 +106,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->render('vehicles_psv', $form);
     }
 
-    protected function getFormData()
+    protected function getData()
     {
         // @TODO not in abstract, references 'Application'
         return $this->getServiceLocator()
@@ -161,6 +172,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->addOrEdit('edit', 'small');
     }
 
+    public function smallDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
     public function mediumAddAction()
     {
         return $this->addOrEdit('add', 'medium');
@@ -171,6 +187,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->addOrEdit('edit', 'medium');
     }
 
+    public function mediumDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
     public function largeAddAction()
     {
         return $this->addOrEdit('add', 'large');
@@ -179,6 +200,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     public function largeAction()
     {
         return $this->addOrEdit('edit', 'large');
+    }
+
+    public function largeDeleteAction()
+    {
+        return $this->deleteAction();
     }
 
     protected function addOrEdit($mode, $type)
@@ -230,19 +256,19 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      * @param Form $form
      * @return Form
      */
-    public function doAlterForm($form)
+    public function doAlterForm($form, $data)
     {
-        // @TODO re-implement!
-        $data = $this->load($this->getIdentifier());
-
         $isPost = $this->getRequest()->isPost();
         $post = $this->getRequest()->getPost();
+
+        $formHelper = $this->getServiceLocator()
+            ->get('Helper\Form');
 
         $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
             || (isset($post['small']['action']) && !empty($post['small']['action']));
 
-        foreach (array_keys($this->getFormTables()) as $table) {
+        foreach ($this->tables as $table) {
 
             $ucTable = ucwords($table);
 
@@ -262,10 +288,9 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             }
         }
 
-        if ($this->getLicenceType() == self::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
-
-            $form->remove('large');
-            $form->getInputFilter()->remove('large');
+        $licenceData = $this->getTypeOfLicenceData();
+        if ($licenceData['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
+            $formHelper->remove($form, 'large');
         }
 
         return $form;
@@ -353,5 +378,17 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             return [];
         }
         return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclePsv($id);
+    }
+
+    /**
+     * Delete vehicles
+     */
+    protected function delete()
+    {
+        $licenceVehicleIds = explode(',', $this->params('child_id'));
+
+        foreach ($licenceVehicleIds as $id) {
+            $this->getServiceLocator()->get('Entity\LicenceVehicle')->delete($id);
+        }
     }
 }
