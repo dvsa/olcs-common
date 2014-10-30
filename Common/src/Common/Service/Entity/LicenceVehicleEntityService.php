@@ -92,9 +92,41 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
+    protected $vehiclePsvBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'receivedDate',
+            'deletedDate',
+            'specifiedDate'
+        ),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'id',
+                    'version',
+                    'vrm',
+                    'isNovelty'
+                ),
+                'children' => array(
+                    'psvType' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
+    }
+
+    public function getVehiclePsv($id)
+    {
+        return $this->get($id, $this->vehiclePsvBundle);
     }
 
     /**

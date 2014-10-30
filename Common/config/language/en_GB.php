@@ -424,10 +424,6 @@ return array(
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration number',
-    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.deletedDate' => 'Removed date',
-    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.discNo' => 'Disc no',
-    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.receivedDate' => 'Received date',
-    'application_vehicle-safety_vehicle-psv-sub-action.licence-vehicle.specifiedDate' => 'Specified date',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
         vehicles?',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',

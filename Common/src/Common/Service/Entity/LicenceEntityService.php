@@ -278,6 +278,32 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $vehiclePsvDataBundle = array(
+        'properties' => null,
+        'children' => array(
+            'licenceVehicles' => array(
+                'properties' => array(
+                    'id',
+                    'specifiedDate',
+                    'deletedDate'
+                ),
+                'children' => array(
+                    'vehicle' => array(
+                        'properties' => array(
+                            'vrm',
+                            'isNovelty',
+                        ),
+                        'children' => array(
+                            'psvType' => array(
+                                'properties' => array('id')
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     protected $currentVrmBundle = array(
         'properties' => array(
             'removalDate'
@@ -458,6 +484,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getVehiclesData($id)
     {
         return $this->get($id, $this->vehicleDataBundle)['licenceVehicles'];
+    }
+
+    public function getVehiclesPsvData($id)
+    {
+        return $this->get($id, $this->vehiclePsvDataBundle)['licenceVehicles'];
     }
 
     public function getCurrentVrms($id)
