@@ -1,9 +1,6 @@
 <?php
 
 return array(
-    'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
-    'lva.section.title.edit_vehicles' => 'Edit vehicle',
-    'lva.section.title.add_vehicles' => 'Add vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -884,6 +881,7 @@ return array(
     'lva.section.title.add_licence_history' => 'Add licence',
     'lva.section.title.add_safety' => 'Add safety inspection provider',
     'lva.section.title.add_subsidiary_company' => 'Add subsidiary company',
+    'lva.section.title.add_vehicles' => 'Add vehicle',
     'lva.section.title.addresses' => 'Addresses',
     'lva.section.title.business_details' => 'Business details',
     'lva.section.title.business_type' => 'Business type',
@@ -896,6 +894,7 @@ return array(
     'lva.section.title.edit_licence_history' => 'Edit licence',
     'lva.section.title.edit_safety' => 'Edit safety inspection provider',
     'lva.section.title.edit_subsidiary_company' => 'Edit subsidiary company',
+    'lva.section.title.edit_vehicles' => 'Edit vehicle',
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.licence_history' => 'Licence history',
@@ -914,6 +913,7 @@ return array(
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
     'month' => 'Month',
+    'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
