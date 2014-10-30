@@ -42,9 +42,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($request->isPost()) {
 
-            // @NOTE: empty array because the parent's signature
-            // for this overridden method requires one
-            $crudAction = $this->getCrudAction(array());
+            $crudAction = $this->getCrudAction($data);
 
             if ($crudAction !== null) {
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
@@ -76,7 +74,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function getCrudAction(array $formTables = array())
     {
-        $data = (array)$this->getRequest()->getPost();
+        $data = $formTables;
 
         foreach (array_keys($this->sections) as $section) {
 

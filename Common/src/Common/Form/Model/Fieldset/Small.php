@@ -34,7 +34,4 @@ class Small
      * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      */
     public $id = null;
-
-
 }
-

@@ -49,18 +49,23 @@ abstract class AbstractVehiclesPsvController extends AbstractController
                     // @TODO data
                     []
                 );
-            $formHelper->populateFormTable($form->get($tableName), $table);
+
+            $formHelper->populateFormTable(
+                $form->get($tableName),
+                $table,
+                $tableName
+            );
         }
 
         if ($request->isPost()) {
 
-            // @NOTE: empty array because the parent's signature
-            // for this overridden method requires one
-            $crudAction = $this->getCrudAction(array());
+            $crudAction = $this->getCrudAction($data);
 
+            /*
             if ($crudAction !== null) {
                 $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
+             */
 
             if ($form->isValid()) {
 
@@ -87,9 +92,11 @@ abstract class AbstractVehiclesPsvController extends AbstractController
      * @param array $formTables
      * @return array
      */
-    protected function getCrudAction(array $formTables = array())
+    protected function etCrudAction(array $formTables = array())
     {
         $data = (array)$this->getRequest()->getPost();
+
+        echo "<pre>"; var_dump($data); die();
 
         foreach ($this->tables as $section) {
 
@@ -135,5 +142,49 @@ abstract class AbstractVehiclesPsvController extends AbstractController
         // @TODO remove ref to 'Application'
         $data['id'] = $this->params('id');
         return $this->getServiceLocator()->get('Entity\Application')->save($data);
+    }
+
+    /**
+     * Override the get crud action method
+     *
+     * @param array $formTables
+     * @return array
+     */
+    protected function getCrudAction(array $formTables = array())
+    {
+        $data = $formTables;
+
+        foreach ($this->tables as $section) {
+
+            if (isset($data[$section]['action'])) {
+
+                $action = $this->getActionFromCrudAction($data[$section]);
+
+                $data[$section]['routeAction'] = $section . '-' . strtolower($action);
+
+                return $data[$section];
+            }
+        }
+
+        return null;
+    }
+
+    public function smallAddAction()
+    {
+        return $this->addOrEdit('add', 'small');
+    }
+
+    public function smallEditAction()
+    {
+        return $this->addOrEdit('edit', 'small');
+    }
+
+    protected function addOrEdit($mode, $type)
+    {
+        $form = $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createForm('Lva\PsvVehiclesVehicle');
+
+        return $this->render($mode . '_vehicle', $form);
     }
 }
