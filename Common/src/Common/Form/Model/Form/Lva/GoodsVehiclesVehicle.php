@@ -20,7 +20,7 @@ class GoodsVehiclesVehicle
 
     /**
      * @Form\Name("licence-vehicle")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\GoodsVehiclesVehicleLicenceVehicle")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\LicenceVehicle")
      */
     public $licenceVehicle = null;
 
