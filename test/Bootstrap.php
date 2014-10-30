@@ -14,7 +14,7 @@ date_default_timezone_set('Europe/London');
  */
 class Bootstrap
 {
-    protected static $serviceManager;
+    protected static $config = array();
 
     public static function init()
     {
@@ -35,15 +35,16 @@ class Bootstrap
             )
         );
 
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
+        self::$config = $config;
     }
 
     public static function getServiceManager()
     {
-        return static::$serviceManager;
+        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager->setService('ApplicationConfig', self::$config);
+        $serviceManager->get('ModuleManager')->loadModules();
+
+        return $serviceManager;
     }
 
     protected static function initAutoloader()

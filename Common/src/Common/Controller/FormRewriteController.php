@@ -4,17 +4,13 @@ namespace Common\Controller;
 
 use Zend\Code\Generator\PropertyGenerator;
 use Zend\Filter\Word\DashToCamelCase;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Textarea;
 use Zend\InputFilter\InputProviderInterface;
 use Zend\Log\Logger;
-use Zend\Log\Writer\Null;
 use Zend\Log\Writer\Stream;
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController as ZendAbstractActionController;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\DocBlockGenerator;
 use Zend\Code\Generator\FileGenerator;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class FormRewriteController
@@ -22,7 +18,7 @@ use Zend\Stdlib\ArrayUtils;
  * @TO-DO when the forms have all been converted, this controller, its entry in modules.config and the console route to
  * it can all be removed
  */
-class FormRewriteController extends AbstractActionController
+class FormRewriteController extends ZendAbstractActionController
 {
     protected $log;
     protected $basePath;

@@ -52,6 +52,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -75,6 +76,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -98,6 +100,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -120,6 +123,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -144,6 +148,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -168,6 +173,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -191,6 +197,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -208,6 +215,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -232,6 +240,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -256,6 +265,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -279,6 +289,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -304,6 +315,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -329,6 +341,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -353,6 +366,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -370,6 +384,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -390,6 +405,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -411,6 +427,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -430,6 +447,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -451,6 +469,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -473,6 +492,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -494,6 +514,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -511,6 +532,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -531,6 +553,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -552,6 +575,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -571,6 +595,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -592,6 +617,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -614,6 +640,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -635,6 +662,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -652,6 +680,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -672,6 +701,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -693,6 +723,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -712,6 +743,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -733,6 +765,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -755,6 +788,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -777,6 +811,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -797,6 +832,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -818,6 +854,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -837,6 +874,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -858,6 +896,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
@@ -880,6 +919,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                     'type_of_licence',
+                    'business_type',
                     'business_details',
                     'addresses',
                     'people',
