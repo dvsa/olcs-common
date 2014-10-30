@@ -23,6 +23,8 @@ class Bootstrap
         $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');
         $loader->addPsr4('CommonComponentTest\\', __DIR__ . '/Component');
 
+        self::getServiceManager();
+
         // Grab the application config
         $config = array(
             'modules' => array(
