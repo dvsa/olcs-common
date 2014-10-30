@@ -85,9 +85,6 @@ class VehicleList implements ServiceLocatorAwareInterface
             }
 
             $content = $documentService->populateBookmarks($file, $result);
-            if (!$content) {
-                throw new \Exception('Error populating template bookmarks');
-            }
 
             $uploader = $this->getServiceLocator()
                 ->get('FileUploader')
@@ -96,9 +93,6 @@ class VehicleList implements ServiceLocatorAwareInterface
             $uploader->setFile(['content' => $content]);
 
             $uploadedFile = $uploader->upload();
-            if (!$uploadedFile) {
-                throw new \Exception('Error uploading file');
-            }
 
             $fileName = date('YmdHi') . '_' . 'Goods_Vehicle_List.rtf';
 
