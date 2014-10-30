@@ -36,21 +36,24 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     {
         $request = $this->getRequest();
 
+        // we always need this basic data
+        $entityData = $this->getData();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->getFormData();
+            $data = $this->formatDataForForm($entityData);
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $formHelper
             ->createForm('Lva\PsvVehicles')
-            ->setData(
-                $this->formatDataForForm($data)
-            );
+            ->setData($data);
 
-        $form = $this->doAlterForm($form, $data);
+        // we want to alter based on the *original* entity data, not how
+        // it's been manipulated to suit the form (if relevant)
+        $form = $this->doAlterForm($form, $entityData);
 
         foreach ($this->tables as $tableName) {
             if (!$form->has($tableName)) {
@@ -103,7 +106,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->render('vehicles_psv', $form);
     }
 
-    protected function getFormData()
+    protected function getData()
     {
         // @TODO not in abstract, references 'Application'
         return $this->getServiceLocator()
@@ -169,6 +172,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->addOrEdit('edit', 'small');
     }
 
+    public function smallDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
     public function mediumAddAction()
     {
         return $this->addOrEdit('add', 'medium');
@@ -179,6 +187,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->addOrEdit('edit', 'medium');
     }
 
+    public function mediumDeleteAction()
+    {
+        return $this->deleteAction();
+    }
+
     public function largeAddAction()
     {
         return $this->addOrEdit('add', 'large');
@@ -187,6 +200,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     public function largeAction()
     {
         return $this->addOrEdit('edit', 'large');
+    }
+
+    public function largeDeleteAction()
+    {
+        return $this->deleteAction();
     }
 
     protected function addOrEdit($mode, $type)
@@ -360,5 +378,17 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             return [];
         }
         return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclePsv($id);
+    }
+
+    /**
+     * Delete vehicles
+     */
+    protected function delete()
+    {
+        $licenceVehicleIds = explode(',', $this->params('child_id'));
+
+        foreach ($licenceVehicleIds as $id) {
+            $this->getServiceLocator()->get('Entity\LicenceVehicle')->delete($id);
+        }
     }
 }

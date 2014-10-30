@@ -285,7 +285,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                 'properties' => array(
                     'id',
                     'specifiedDate',
-                    'deletedDate'
+                    'deletedDate',
+                    'removalDate'
                 ),
                 'children' => array(
                     'vehicle' => array(
