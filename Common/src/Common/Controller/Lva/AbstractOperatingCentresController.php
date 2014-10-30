@@ -585,15 +585,15 @@ abstract class AbstractOperatingCentresController extends AbstractController
         foreach ($results as $row) {
 
             $data['data']['minVehicleAuth'] = max(
-                array($data['data']['minVehicleAuth'], $row['noOfVehiclesPossessed'])
+                array($data['data']['minVehicleAuth'], $row['noOfVehiclesRequired'])
             );
 
             $data['data']['minTrailerAuth'] = max(
-                array($data['data']['minTrailerAuth'], $row['noOfTrailersPossessed'])
+                array($data['data']['minTrailerAuth'], $row['noOfTrailersRequired'])
             );
 
-            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesPossessed'];
-            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersPossessed'];
+            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesRequired'];
+            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersRequired'];
         }
 
         if (isset($oldData['licence']['trafficArea']['id'])) {
@@ -644,8 +644,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterActionFormForPsv(Form $form)
     {
-        $form->get('data')->remove('noOfTrailersPossessed');
-        $form->getInputFilter()->get('data')->remove('noOfTrailersPossessed');
+        $form->get('data')->remove('noOfTrailersRequired');
+        $form->getInputFilter()->get('data')->remove('noOfTrailersRequired');
         $form->remove('advertisements');
         $form->getInputFilter()->remove('advertisements');
 
@@ -729,7 +729,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $table = $form->get($fieldsetMap['table'])->get('table')->getTable();
 
-        $table->removeColumn('noOfTrailersPossessed');
+        $table->removeColumn('noOfTrailersRequired');
 
         $footer = $table->getFooter();
         $footer['total']['content'] .= '-psv';

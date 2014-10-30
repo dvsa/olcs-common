@@ -79,7 +79,7 @@ trait LicenceOperatingCentresControllerTrait
         $data = $this->getVehicleAuthsForOperatingCentre($this->params('child_id'));
 
         foreach (['vehicles', 'trailers'] as $which) {
-            $key = 'noOf' . ucfirst($which) . 'Possessed';
+            $key = 'noOf' . ucfirst($which) . 'Required';
 
             if ($filter->get('data')->has($key)) {
                 $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);

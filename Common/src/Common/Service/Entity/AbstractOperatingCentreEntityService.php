@@ -25,8 +25,8 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
             'id',
             'permission',
             'adPlaced',
-            'noOfVehiclesPossessed',
-            'noOfTrailersPossessed'
+            'noOfVehiclesRequired',
+            'noOfTrailersRequired'
         ),
         'children' => array(
             'operatingCentre' => array(
@@ -77,8 +77,8 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
         'properties' => array(
             'id',
             'version',
-            'noOfTrailersPossessed',
-            'noOfVehiclesPossessed',
+            'noOfTrailersRequired',
+            'noOfVehiclesRequired',
             'sufficientParking',
             'permission',
             'adPlaced',

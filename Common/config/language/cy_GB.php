@@ -149,8 +149,8 @@ return array(
         advertisement you placed in your local newspaper in relation to your application.',
     'application_operating-centres_authorisation-sub-action.data' => 'W Vehicles & trailers',
     'application_operating-centres_authorisation-sub-action.data-psv' => 'W Vehicles',
-    'application_operating-centres_authorisation-sub-action.data.noOfTrailersPossessed' => 'W Total number of trailers',
-    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesPossessed' => 'W Total number of vehicles',
+    'application_operating-centres_authorisation-sub-action.data.noOfTrailersRequired' => 'W Total number of trailers',
+    'application_operating-centres_authorisation-sub-action.data.noOfVehiclesRequired' => 'W Total number of vehicles',
     'application_operating-centres_authorisation-sub-action.data.permission' => 'W I am either the site owner or have
         permission from the site owner to use the premises to park the number of vehicles and trailers stated',
     'application_operating-centres_authorisation-sub-action.data.permission-psv' => 'W I am either the site owner or
@@ -930,9 +930,9 @@ return array(
     'new-case-next' => 'W Next',
     'nfas' => 'W NFAs',
     'no-further-action' => 'W No further action',
-    'noOfTrailersPossessedError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
-    'noOfVehiclesPossessedError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
-    'noOfVehiclesPossessedError-psv' => 'W Total number of vehicles cannot be zero',
+    'noOfTrailersRequiredError' => 'W Total number of trailers cannot be zero if total number of vehicles is zero',
+    'noOfVehiclesRequiredError' => 'W Total number of vehicles cannot be zero if total number of trailers is zero',
+    'noOfVehiclesRequiredError-psv' => 'W Total number of vehicles cannot be zero',
     'north-east-of-england' => 'W North East of England',
     'north-west-of-england' => 'W North West of England',
     'northern-ireland' => 'W Northern Ireland',

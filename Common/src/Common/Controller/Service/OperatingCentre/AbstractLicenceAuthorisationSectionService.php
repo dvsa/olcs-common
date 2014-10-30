@@ -107,8 +107,8 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
 
     private $ocAuthorisationsBundle = array(
         'properties' => array(
-            'noOfVehiclesPossessed',
-            'noOfTrailersPossessed'
+            'noOfVehiclesRequired',
+            'noOfTrailersRequired'
         )
     );
 
@@ -140,7 +140,7 @@ abstract class AbstractLicenceAuthorisationSectionService extends AbstractAuthor
         $data = $this->getVehicleAuthsForOperatingCentre($this->getActionId());
 
         foreach (['vehicles', 'trailers'] as $which) {
-            $key = 'noOf' . ucfirst($which) . 'Possessed';
+            $key = 'noOf' . ucfirst($which) . 'Required';
 
             if ($filter->get('data')->has($key)) {
                 $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);

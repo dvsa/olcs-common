@@ -20,8 +20,8 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
     private $ocAuthorisationsBundle = array(
         'properties' => array(
-            'noOfVehiclesPossessed',
-            'noOfTrailersPossessed'
+            'noOfVehiclesRequired',
+            'noOfTrailersRequired'
         )
     );
 
