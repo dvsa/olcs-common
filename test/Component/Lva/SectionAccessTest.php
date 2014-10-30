@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace CommonComponentTest\Lav;
+namespace CommonComponentTest\Lva;
 
 use CommonTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
