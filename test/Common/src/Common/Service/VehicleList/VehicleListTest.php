@@ -8,6 +8,7 @@
 namespace CommonTest\Service\VehicleList;
 
 use Common\Service\VehicleList\VehicleList;
+use Common\Service\VehicleList\Exception;
 use CommonTest\Bootstrap;
 
 /**
@@ -65,7 +66,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     {
         if ($service == 'Document' && $method == 'POST') {
             if ($this->raiseExceptionWhileSavingDocument) {
-                throw new \Exception('Error saving document');
+                throw new Exception('Error saving document');
             }
             return true;
         }
@@ -123,7 +124,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test generate vehicle list with no template received
      * 
-     * @expectedException \Exception
+     * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoTemplate()
@@ -161,7 +162,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test generate vehicle list with no bookmarks queries received
      * 
-     * @expectedException \Exception
+     * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoBookmarkQueries()
@@ -204,7 +205,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test generate vehicle list with no bookmarks received
      * 
-     * @expectedException \Exception
+     * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoBookmarks()
@@ -249,7 +250,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test generate vehicle list with exception while saving document
      * 
-     * @expectedException \Exception
+     * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListWithExceptionWhilteSavingDocument()

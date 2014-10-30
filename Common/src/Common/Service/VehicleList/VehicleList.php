@@ -65,7 +65,7 @@ class VehicleList implements ServiceLocatorAwareInterface
             ->read('/templates/GVVehiclesList.rtf');
 
         if (!$file) {
-            throw new \Exception('Error getting template file');
+            throw new Exception('Error getting template file');
         }
 
         foreach ($licenceIds as $licenceId) {
@@ -76,12 +76,12 @@ class VehicleList implements ServiceLocatorAwareInterface
             ];
             $query = $documentService->getBookmarkQueries($file, $queryData);
             if (!is_array($query) || !count($query)) {
-                throw new \Exception('Error getting bookmark queries');
+                throw new Exception('Error getting bookmark queries');
             }
 
             $result = $this->makeRestCall('BookmarkSearch', 'GET', [], $query);
             if (!is_array($result) || !count($result)) {
-                throw new \Exception('Error getting bookmarks');
+                throw new Exception('Error getting bookmarks');
             }
 
             $content = $documentService->populateBookmarks($file, $result);
