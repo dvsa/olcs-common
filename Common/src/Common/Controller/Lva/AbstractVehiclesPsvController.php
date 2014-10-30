@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Form\Form;
 
 /**
@@ -38,21 +39,28 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($this->getFormData());
+            $data = $this->getFormData();
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $formHelper
             ->createForm('Lva\PsvVehicles')
-            ->setData($data);
+            ->setData(
+                $this->formatDataForForm($data)
+            );
+
+        $form = $this->doAlterForm($form, $data);
 
         foreach ($this->tables as $tableName) {
+            if (!$form->has($tableName)) {
+                continue;
+            }
+
             $table = $this->getServiceLocator()
                 ->get('Table')
                 ->prepareTable(
                     'lva-psv-vehicles-' . $tableName,
-                    // @TODO data
                     $this->getTableData($tableName)
                 );
 
@@ -230,19 +238,19 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      * @param Form $form
      * @return Form
      */
-    public function doAlterForm($form)
+    public function doAlterForm($form, $data)
     {
-        // @TODO re-implement!
-        $data = $this->load($this->getIdentifier());
-
         $isPost = $this->getRequest()->isPost();
         $post = $this->getRequest()->getPost();
+
+        $formHelper = $this->getServiceLocator()
+            ->get('Helper\Form');
 
         $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
             || (isset($post['small']['action']) && !empty($post['small']['action']));
 
-        foreach (array_keys($this->getFormTables()) as $table) {
+        foreach ($this->tables as $table) {
 
             $ucTable = ucwords($table);
 
@@ -262,10 +270,9 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             }
         }
 
-        if ($this->getLicenceType() == self::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
-
-            $form->remove('large');
-            $form->getInputFilter()->remove('large');
+        $licenceData = $this->getTypeOfLicenceData();
+        if ($licenceData['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
+            $formHelper->remove($form, 'large');
         }
 
         return $form;
