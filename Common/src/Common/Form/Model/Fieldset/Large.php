@@ -5,12 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("large")
  */
 class Large
 {
-
     /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")
@@ -34,7 +32,4 @@ class Large
      * @Form\Type("\Common\Form\Elements\InputFilters\NoRender")
      */
     public $id = null;
-
-
 }
-

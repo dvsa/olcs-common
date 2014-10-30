@@ -5,14 +5,12 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("operator-type")
  * @Form\Attributes({"class":"hidden"})
  * @Form\Options({"label":"application_type-of-licence_operator-type.data"})
  */
 class OperatorType
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -36,7 +34,4 @@ class OperatorType
      * @Form\Type("DynamicRadio")
      */
     public $goodsOrPsv = null;
-
-
 }
-

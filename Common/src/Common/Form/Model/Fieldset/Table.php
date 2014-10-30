@@ -9,7 +9,6 @@ use Zend\Form\Annotation as Form;
  */
 class Table
 {
-
     /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")

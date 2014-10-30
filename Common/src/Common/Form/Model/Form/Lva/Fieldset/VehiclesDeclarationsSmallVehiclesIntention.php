@@ -82,7 +82,9 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "must_be_value": "Y"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"})
+     * @Form\Validator({
+     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesAgreementValidator"
+     * })
      */
     public $psvSmallVhlConfirmation = null;
 }

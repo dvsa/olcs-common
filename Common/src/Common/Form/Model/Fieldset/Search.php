@@ -5,12 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("search")
  */
 class Search
 {
-
     /**
      * @Form\Attributes({"class":"medium","id":""})
      * @Form\Options({"label":"Lic #"})
@@ -54,7 +52,4 @@ class Search
      * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":35}})
      */
     public $familyName = null;
-
-
 }
-

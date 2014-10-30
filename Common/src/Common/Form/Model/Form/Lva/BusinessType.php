@@ -6,7 +6,6 @@ use Zend\Form\Annotation as Form;
 use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("application_your-business_business-type")
  * @Form\Attributes({"method":"post"})

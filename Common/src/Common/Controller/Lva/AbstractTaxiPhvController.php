@@ -154,7 +154,8 @@ abstract class AbstractTaxiPhvController extends AbstractController
     protected function getFormData()
     {
         return array(
-            'dataTrafficArea' => $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($this->getLicenceId())
+            'dataTrafficArea' => $this->getServiceLocator()->get('Entity\Licence')
+                ->getTrafficArea($this->getLicenceId())
         );
     }
 

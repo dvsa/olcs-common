@@ -5,12 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("licence-vehicle")
  */
 class LicenceVehicle
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -72,7 +70,4 @@ class LicenceVehicle
      * @Form\Type("Text")
      */
     public $discNo = null;
-
-
 }
-

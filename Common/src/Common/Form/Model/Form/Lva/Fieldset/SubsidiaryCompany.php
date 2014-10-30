@@ -6,7 +6,7 @@ use Zend\Form\Annotation as Form;
 use Common\Form\Model\Form\Traits\VersionTrait;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
+ * Subsidiary company
  */
 class SubsidiaryCompany
 {

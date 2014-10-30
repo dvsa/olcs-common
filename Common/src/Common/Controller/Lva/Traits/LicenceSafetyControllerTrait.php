@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva\Traits;
 
 use Zend\Form\Form;
-use Olcs\Controller\Lva\Traits\LicenceControllerTrait;
 
 /**
  * Licence Safety Controller Trait
@@ -17,18 +16,12 @@ use Olcs\Controller\Lva\Traits\LicenceControllerTrait;
  */
 trait LicenceSafetyControllerTrait
 {
-    use LicenceControllerTrait {
-        LicenceControllerTrait::alterFormForLva as genericAlterFormForLva;
-    }
-
     protected function save($data)
     {
         // Get the (first/)licence part of the formatted data
         $licence = $this->formatSaveData($data)[0];
 
         $licence['id'] = $this->getLicenceId();
-
-        // @todo We may need to set the value of suitable maintence, depending on the AC being clarified
 
         $this->getServiceLocator()->get('Entity\Licence')->save($licence);
     }
@@ -57,7 +50,6 @@ trait LicenceSafetyControllerTrait
      */
     protected function alterFormForLva(Form $form)
     {
-        $this->genericAlterFormForLva($form);
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
         $formHelper->remove($form, 'application->safetyConfirmation');
     }

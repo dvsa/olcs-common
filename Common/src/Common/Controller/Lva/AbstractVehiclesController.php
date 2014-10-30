@@ -284,12 +284,6 @@ abstract class AbstractVehiclesController extends AbstractController
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
         if ($mode == 'add') {
-
-            if (!isset($saved['id'])) {
-                // @todo replace with a different exception
-                throw new \Exception('Unable to save vehicle');
-            }
-
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
         } else {

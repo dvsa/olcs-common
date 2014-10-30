@@ -4,6 +4,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
+/**
+ * Psv Vehicle Data
+ */
 class PsvVehiclesData
 {
     /**

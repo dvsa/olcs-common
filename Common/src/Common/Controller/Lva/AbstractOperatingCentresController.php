@@ -301,23 +301,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             'totCommunityLicences'
         );
 
-        $this->removeFormFields($form, $fieldsetMap['data'], $removeFields);
-    }
-
-    /**
-     * Remove a list of form fields
-     *
-     * @TODO was in abstract section service... do we need it? Helper maybe?
-     *
-     * @param \Zend\Form\Form $form
-     * @param string $fieldset
-     * @param array $fields
-     */
-    public function removeFormFields(Form $form, $fieldset, array $fields)
-    {
-        foreach ($fields as $field) {
-            $form->get($fieldset)->remove($field);
-        }
+        $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, $fieldsetMap['data'], $removeFields);
     }
 
     /**
@@ -395,7 +379,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $form = $this->alterActionForm($form);
 
-        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
+            ->processAddressLookupForm($form, $request);
 
         $hasProcessedFiles = $this->processFiles(
             $form,
@@ -429,7 +414,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $data['applicationOperatingCentre']['adPlaced'] = 0;
             }
 
-            // @todo not sure this is right
             $saved = $this->getServiceLocator()->get($lvaEntity)->save($data['applicationOperatingCentre']);
 
             if ($mode === 'add' && !isset($saved['id'])) {
@@ -788,7 +772,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $removeFields[] = 'totCommunityLicences';
         }
 
-        $this->removeFormFields($form, $fieldsetMap['data'], $removeFields);
+        $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, $fieldsetMap['data'], $removeFields);
     }
 
     /**

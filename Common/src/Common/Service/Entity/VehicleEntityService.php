@@ -51,8 +51,8 @@ class VehicleEntityService extends AbstractEntityService
 
         $return = array();
 
-        foreach ($results['Results'] as $result)
-        {
+        foreach ($results['Results'] as $result) {
+
             $return[] = $result['licenceVehicles'];
         }
 

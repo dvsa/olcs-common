@@ -5,15 +5,13 @@ namespace Common\Form\Model\Form;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("case")
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class Case
+class CaseForm
 {
-
     /**
      * @Form\Name("submissionSections")
      * @Form\Options({"label":"Select one or more categories"})
@@ -34,7 +32,4 @@ class Case
      * @Form\ComposedObject("Common\Form\Model\Fieldset\CaseFormActions")
      */
     public $formActions = null;
-
-
 }
-

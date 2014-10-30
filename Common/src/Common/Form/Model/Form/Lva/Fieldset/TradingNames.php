@@ -9,7 +9,6 @@ use Zend\Form\Annotation as Form;
  */
 class TradingNames
 {
-
     /**
      * @Form\Attributes({"id":""})
      * @Form\Options({

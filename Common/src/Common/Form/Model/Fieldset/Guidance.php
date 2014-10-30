@@ -5,7 +5,6 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("guidance")
  */
 class Guidance
@@ -16,7 +15,4 @@ class Guidance
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
     public $guidance = null;
-
-
 }
-

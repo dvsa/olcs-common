@@ -5,7 +5,6 @@ namespace Common\Form\Model\Form;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("licence_operating-centres_authorisation-add")
  * @Form\Attributes({"method":"post"})
@@ -13,14 +12,10 @@ use Zend\Form\Annotation as Form;
  */
 class LicenceOperatingCentresAuthorisationAdd
 {
-
     /**
      * @Form\Name("data")
      * @Form\Options({"label":"Adding an operating centre"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\LicenceOperatingCentresAuthorisationAddData")
      */
     public $data = null;
-
-
 }
-

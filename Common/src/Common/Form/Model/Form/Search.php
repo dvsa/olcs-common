@@ -5,7 +5,6 @@ namespace Common\Form\Model\Form;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Options({"prefer_form_input_filter":true})
  * @Form\Name("search")
  * @Form\Attributes({"method":"post"})
@@ -13,7 +12,6 @@ use Zend\Form\Annotation as Form;
  */
 class Search
 {
-
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({
@@ -39,7 +37,4 @@ class Search
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Advanced")
      */
     public $advanced = null;
-
-
 }
-

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Type of licence fieldset
- *
- * @author Rob Caiger <rob@clocal.co.uk>
- */
 namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;

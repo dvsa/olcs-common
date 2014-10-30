@@ -618,7 +618,8 @@ class LicenceEntityService extends AbstractLvaEntityService
             $previousTrafficAreaCode = substr($licence['licNo'], 1, 1);
 
             if ($previousTrafficAreaCode != $licence['trafficArea']['id']) {
-                $saveData['licNo'] = sprintf('%s%s%s',
+                $saveData['licNo'] = sprintf(
+                    '%s%s%s',
                     substr($licence['licNo'], 0, 1),
                     $licence['trafficArea']['id'],
                     substr($licence['licNo'], 2)

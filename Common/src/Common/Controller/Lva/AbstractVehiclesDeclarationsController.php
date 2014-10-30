@@ -151,7 +151,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             }
         }
 
-        if ($data['totAuthSmallVehicles'] == 0) {
+        if ($data['totAuthSmallVehicles'] != 0) {
             $formHelper->remove($form, 'smallVehiclesIntention');
             return;
         }

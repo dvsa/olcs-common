@@ -7,7 +7,7 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist>
+        <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">../Common/src</directory>
             <exclude>
                 <directory>../Common/src/Common/Form/Forms/</directory>

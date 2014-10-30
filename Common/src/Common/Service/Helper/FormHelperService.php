@@ -322,8 +322,6 @@ class FormHelperService extends AbstractHelperService
 
         $filter->get($reference)->setAllowEmpty(true);
         $filter->get($reference)->setRequired(false);
-
-        return;
     }
 
     /**
@@ -416,5 +414,19 @@ class FormHelperService extends AbstractHelperService
         //$attributes['class'] .= ' tooltip-grandparent';
 
         $element->setLabelAttributes($attributes);
+    }
+
+    /**
+     * Remove a list of form fields
+     *
+     * @param \Zend\Form\Form $form
+     * @param string $fieldset
+     * @param array $fields
+     */
+    public function removeFieldList(Form $form, $fieldset, array $fields)
+    {
+        foreach ($fields as $field) {
+            $this->remove($form, $fieldset . '->' . $field);
+        }
     }
 }

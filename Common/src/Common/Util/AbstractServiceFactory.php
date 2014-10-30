@@ -9,7 +9,6 @@ namespace Common\Util;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Abstract Service Factory
@@ -45,20 +44,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
 
         $service = new $serviceClassName();
 
-        $this->injectDependencies($service, $serviceLocator);
-
         return $service;
-    }
-
-    /**
-     * Inject the service dependencies
-     *
-     * @param object $service
-     * @param object $serviceLocator
-     */
-    private function injectDependencies($service, $serviceLocator)
-    {
-        
     }
 
     /**

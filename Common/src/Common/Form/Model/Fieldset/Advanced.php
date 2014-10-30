@@ -5,13 +5,11 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("advanced")
  * @Form\Options({"label":"Advanced search"})
  */
 class Advanced
 {
-
     /**
      * @Form\Attributes({"id":"","class":"extra-long"})
      * @Form\Options({
@@ -92,7 +90,4 @@ class Advanced
      * @Form\Type("Text")
      */
     public $companyNo = null;
-
-
 }
-

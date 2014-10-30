@@ -5,7 +5,6 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  * @Form\Options({
  *     "label": "Secure payment information",
@@ -14,7 +13,6 @@ use Zend\Form\Annotation as Form;
  */
 class ApplicationPaymentSubmissionPaymentData
 {
-
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
@@ -50,7 +48,7 @@ class ApplicationPaymentSubmissionPaymentData
 
     /**
      * @Form\Attributes({
-     *     "value": "<select><option>Please select</option></select>n                  
+     *     "value": "<select><option>Please select</option></select>n
      *          <select><option>Please select</option></select>"
      * })
      * @Form\Options({"label":"Expiry date"})
@@ -75,7 +73,4 @@ class ApplicationPaymentSubmissionPaymentData
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
     public $amount = null;
-
-
 }
-

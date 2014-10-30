@@ -5,12 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  */
 class ApplicationYourBusinessSoleTraderData
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -79,7 +77,4 @@ class ApplicationYourBusinessSoleTraderData
      * @Form\Type("Common\Form\Elements\Custom\DateSelect")
      */
     public $birthDate = null;
-
-
 }
-

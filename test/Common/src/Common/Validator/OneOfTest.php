@@ -35,7 +35,7 @@ class OneOfTest extends \PHPUnit_Framework_TestCase
      * @param $chainValid
      * @param array $errorMessages
      */
-    public function testIsValid($expected, $options,  $context)
+    public function testIsValid($expected, $options, $context)
     {
         $sut = new OneOf();
         $sut->setOptions($options);

@@ -11,7 +11,6 @@ use Zend\Form\Annotation as Form;
  */
 class OperatingCentre
 {
-
     /**
      * @Form\Name("address")
      * @Form\Options({"label":"Address"})

@@ -5,13 +5,11 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("submissionSections")
  * @Form\Options({"label":"Select one or more categories"})
  */
 class SubmissionSections
 {
-
     /**
      * @Form\Attributes({})
      * @Form\Options({
@@ -71,7 +69,4 @@ class SubmissionSections
      * @Form\Type("DynamicSelect")
      */
     public $bus = null;
-
-
 }
-

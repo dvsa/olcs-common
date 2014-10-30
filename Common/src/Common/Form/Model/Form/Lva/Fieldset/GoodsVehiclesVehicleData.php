@@ -9,7 +9,6 @@ use Zend\Form\Annotation as Form;
  */
 class GoodsVehiclesVehicleData
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")

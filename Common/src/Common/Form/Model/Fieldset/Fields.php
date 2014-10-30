@@ -5,13 +5,11 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("fields")
  * @Form\Options({})
  */
 class Fields
 {
-
     /**
      * @Form\Attributes({"id":"","class":"extra-long"})
      * @Form\Options({
@@ -54,7 +52,4 @@ class Fields
      * @Form\Type("Hidden")
      */
     public $version = null;
-
-
 }
-

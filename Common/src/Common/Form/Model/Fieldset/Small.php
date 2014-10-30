@@ -5,12 +5,10 @@ namespace Common\Form\Model\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("small")
  */
 class Small
 {
-
     /**
      * @Form\Options({"label":"row"})
      * @Form\Type("\Common\Form\Elements\Types\Table")

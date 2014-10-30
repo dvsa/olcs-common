@@ -12,7 +12,6 @@ use Zend\Form\Annotation as Form;
  */
 class PsvVehiclesVehicle
 {
-
     /**
      * @Form\Name("data")
      * @Form\Options({})

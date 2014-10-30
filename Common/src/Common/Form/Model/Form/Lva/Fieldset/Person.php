@@ -5,12 +5,10 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("data")
  */
 class Person
 {
-
     /**
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
@@ -74,7 +72,7 @@ class Person
      */
     public $position = null;
 
-   /**
+    /**
      * @Form\Attributes({"id":"dob"})
      * @Form\Options({
      *     "label": "application_your-business_people-sub-action-formDateOfBirth",
@@ -86,7 +84,4 @@ class Person
      * @Form\Validator({"name": "Date", "options": {"format": "Y-m-d"}})
      */
     public $birthDate = null;
-
-
 }
-

@@ -23,7 +23,7 @@ abstract class AbstractPeopleController extends AbstractController
     /**
      * Needed by the Crud Table Trait
      */
-    private $section = 'people';
+    protected $section = 'people';
 
     /**
      * Index action
@@ -364,7 +364,6 @@ abstract class AbstractPeopleController extends AbstractController
                 ->get('Entity\OrganisationPerson')
                 ->getByOrgAndPersonId($orgId, $data['id']);
 
-            // @TODO don't set this if the position hasn't changed
             $orgPersonData = array(
                 'position' => isset($data['position']) ? $data['position'] : '',
                 'id' => $orgPerson['id'],
