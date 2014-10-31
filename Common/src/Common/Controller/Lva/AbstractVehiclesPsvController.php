@@ -9,6 +9,7 @@ namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\VehicleEntityService;
+use Common\Form\Elements\Validators\TableRequiredValidator;
 use Zend\Form\Form;
 
 /**
