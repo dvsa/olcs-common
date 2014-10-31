@@ -56,6 +56,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
+        // *always* check if the user has exceeded their authority
+        // as a nice little addition; they may have changed their OC totals
         if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
                 'more-vehicles-than-authorisation'

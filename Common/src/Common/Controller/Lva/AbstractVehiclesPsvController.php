@@ -107,7 +107,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
             if ($form->isValid()) {
 
-                $this->save($data);
+                $this->save($form->getData());
 
                 $this->postSave('vehicles_psv');
 
@@ -286,8 +286,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
             ) {
 
-                $data = $data = $this->getServiceLocator()->get('Helper\Data')
-                    ->processDataMap($data, $this->vehicleDataMap);
+                $data = $this->getServiceLocator()->get('Helper\Data')
+                    ->processDataMap($form->getData(), $this->vehicleDataMap);
 
                 $this->saveVehicle($data, $mode);
 
