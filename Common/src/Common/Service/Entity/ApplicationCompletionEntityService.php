@@ -287,8 +287,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             return self::STATUS_INCOMPLETE;
         }
 
-        $licType = $applicationData['licence']['goodsOrPsv']['id'];
-
         $requiredVars = array(
             'totAuthSmallVehicles' => $applicationData['totAuthSmallVehicles'],
             'totAuthMediumVehicles' => $applicationData['totAuthMediumVehicles'],
@@ -298,7 +296,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'totCommunityLicences' => $applicationData['totCommunityLicences'],
         );
 
-        if ($licType === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
 
             unset($requiredVars['totAuthSmallVehicles']);
             unset($requiredVars['totAuthMediumVehicles']);
@@ -319,6 +317,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
                 LicenceEntityService::LICENCE_TYPE_RESTRICTED
             );
+
+            $licType = $applicationData['licence']['licenceType']['id'];
 
             if (!in_array($licType, $allowLargeVehicles)) {
                 unset($requiredVars['totAuthLargeVehicles']);
