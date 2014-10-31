@@ -42,11 +42,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $data = $this->get(array('application' => $applicationId));
 
         if ($data['Count'] < 1) {
-            throw new \Exception('Completions status not found');
+            throw new Exceptions\UnexpectedResponseException('Completions status not found');
         }
 
         if ($data['Count'] > 1) {
-            throw new \Exception('Too many completion statuses found');
+            throw new Exceptions\UnexpectedResponseException('Too many completion statuses found');
         }
 
         return $data['Results'][0];
@@ -80,31 +80,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $method = 'get' . $section . 'Status';
             $property = lcfirst($section) . 'Status';
 
-            if ($section === $currentSection || $completionStatus[$property] > self::STATUS_NOT_STARTED) {
+            if ($section === $currentSection || $completionStatus[$property] != self::STATUS_NOT_STARTED) {
                 $completionStatus[$property] = $this->$method($applicationData);
             }
         }
 
         $this->save($completionStatus);
-    }
-
-    /**
-     * Get type of licence status
-     *
-     * @param array $applicationData
-     * @return int
-     */
-    public function getTypeOfLicenceStatus($applicationData)
-    {
-        $licence = $applicationData['licence'];
-
-        return $this->checkCompletion(
-            array(
-                'niFlag' => $licence['niFlag'],
-                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']) ? $licence['goodsOrPsv']['id'] : null,
-                'licenceType' => isset($licence['licenceType']['id']) ? $licence['licenceType']['id'] : null,
-            )
-        );
     }
 
     private function checkCompletion(array $properties = array())
@@ -122,6 +103,25 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         return self::STATUS_INCOMPLETE;
+    }
+
+    /**
+     * Get type of licence status
+     *
+     * @param array $applicationData
+     * @return int
+     */
+    private function getTypeOfLicenceStatus($applicationData)
+    {
+        $licence = $applicationData['licence'];
+
+        return $this->checkCompletion(
+            array(
+                'niFlag' => $licence['niFlag'],
+                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']) ? $licence['goodsOrPsv']['id'] : null,
+                'licenceType' => isset($licence['licenceType']['id']) ? $licence['licenceType']['id'] : null,
+            )
+        );
     }
 
     /**
@@ -181,8 +181,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 break;
 
             case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
-                $requiredVars = array();
-                break;
+                return self::STATUS_COMPLETE;
         }
 
         return $this->checkCompletion($requiredVars);
