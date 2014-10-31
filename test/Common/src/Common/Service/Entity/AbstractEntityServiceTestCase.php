@@ -45,4 +45,14 @@ abstract class AbstractEntityServiceTestCase extends PHPUnit_Framework_TestCase
 
         return $expectation->with($entity, $method, $data);
     }
+
+    protected function mockDate($date)
+    {
+        $mockDateHelper = $this->getMock('\stdClass', ['getDate']);
+        $mockDateHelper->expects($this->any())
+            ->method('getDate')
+            ->will($this->returnValue($date));
+
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+    }
 }

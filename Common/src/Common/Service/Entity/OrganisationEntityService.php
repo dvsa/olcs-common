@@ -124,7 +124,7 @@ class OrganisationEntityService extends AbstractEntityService
             ->makeRestCall('OrganisationUser', 'GET', ['user' => $userId], $this->organisationFromUserBundle);
 
         if ($organisation['Count'] < 1) {
-            throw new \Exception('Organisation not found');
+            throw new Exceptions\UnexpectedResponseException('Organisation not found');
         }
 
         return $organisation['Results'][0]['organisation'];

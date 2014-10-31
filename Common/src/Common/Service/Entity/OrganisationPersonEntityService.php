@@ -33,7 +33,12 @@ class OrganisationPersonEntityService extends AbstractEntityService
             'organisation' => $orgId,
             'person' => $personId
         );
+
         $result = $this->get($query);
+
+        if ($result['Count'] < 1) {
+            throw new Exceptions\UnexpectedResponseException('Expected to get one organisation person record');
+        }
 
         return $result['Results'][0];
     }
@@ -44,7 +49,8 @@ class OrganisationPersonEntityService extends AbstractEntityService
             'organisation' => $orgId,
             'person' => $personId
         );
-        $result = $this->getServiceLocator()->get('Helper\Rest')
+
+        $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall($this->entity, 'DELETE', $query);
     }
 

@@ -147,7 +147,9 @@ class LicenceVehicleEntityService extends AbstractEntityService
      */
     public function delete($id)
     {
-        $this->forcePut($id, array('removalDate' => date('Y-m-d')));
+        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
+
+        $this->forcePut($id, array('removalDate' => $date));
     }
 
     /**
@@ -166,7 +168,8 @@ class LicenceVehicleEntityService extends AbstractEntityService
         $activeDisc = $results['goodsDiscs'][0];
 
         if (empty($activeDisc['ceasedDate'])) {
-            $activeDisc['ceasedDate'] = date('Y-m-d');
+            $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
+            $activeDisc['ceasedDate'] = $date;
             $this->getServiceLocator()->get('Entity\GoodsDisc')->save($activeDisc);
         }
     }
@@ -183,21 +186,17 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
     public function getCurrentVrmsForLicence($licenceId)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall(
-                'LicenceVehicle',
-                'GET',
-                array(
-                    'licence' => $licenceId,
-                    'removalDate' => 'NULL',
-                    'limit' => 'all'
-                ),
-                $this->currentVrmBundle
-            );
+        $data = array(
+            'licence' => $licenceId,
+            'removalDate' => 'NULL',
+            'limit' => 'all'
+        );
+
+        $results = $this->get($data, $this->currentVrmBundle);
 
         $vrms = array();
 
-        foreach ($data['Results'] as $row) {
+        foreach ($results['Results'] as $row) {
             $vrms[] = $row['vehicle']['vrm'];
         }
 
