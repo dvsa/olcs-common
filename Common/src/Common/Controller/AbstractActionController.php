@@ -214,6 +214,72 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Sets the page title
+     *
+     * @param array $pageTitle
+     * @return $this
+     */
+    public function setPageTitle($pageTitle)
+    {
+        $this->pageTitle = $pageTitle;
+        return $this;
+    }
+
+    /**
+     * Returns the page title
+     *
+     * @return array
+     */
+    public function getPageTitle()
+    {
+        return $this->pageTitle;
+    }
+
+    /**
+     * Sets the page sub title
+     *
+     * @param array $pageSubTitle
+     * @return $this
+     */
+    public function setPageSubTitle($pageSubTitle)
+    {
+        $this->pageSubTitle = $pageSubTitle;
+        return $this;
+    }
+
+    /**
+     * Returns the page sub title
+     *
+     * @return array
+     */
+    public function getPageSubTitle()
+    {
+        return $this->pageSubTitle;
+    }
+
+    /**
+     * Sets loaded data
+     *
+     * @param array $loadedData
+     * @return $this
+     */
+    public function setLoadedData($loadedData)
+    {
+        $this->loadedData = $loadedData;
+        return $this;
+    }
+
+    /**
+     * Returns the loaded data
+     *
+     * @return array
+     */
+    public function getLoadedData()
+    {
+        return $this->loadedData;
+    }
+
+    /**
      * Get all request params from the query string and route and send back the required ones
      * @param type $keys
      * @return type
@@ -476,18 +542,18 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         // allow both the page title and sub title to be passed as explicit
         // arguments to this method
         if ($pageTitle !== null) {
-            $this->pageTitle = $pageTitle;
+            $this->setPageTitle($pageTitle);
         }
 
         if ($pageSubTitle !== null) {
-            $this->pageSubTitle = $pageSubTitle;
+            $this->setPageSubTitle($pageSubTitle);
         }
 
         $viewVariables = array_merge(
             (array)$view->getVariables(),
             [
-                'pageTitle' => $this->pageTitle,
-                'pageSubTitle' => $this->pageSubTitle
+                'pageTitle' => $this->getPageTitle(),
+                'pageSubTitle' => $this->getPageSubTitle()
             ]
         );
 
@@ -546,9 +612,21 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @return array
      */
-    protected function getInlineScripts()
+    public function getInlineScripts()
     {
         return $this->inlineScripts;
+    }
+
+    /**
+     * Set the inline scripts
+     *
+     * @param array $inlineScripts
+     * @return array
+     */
+    public function setInlineScripts($inlineScripts)
+    {
+        $this->inlineScripts = $inlineScripts;
+        return $this;
     }
 
     protected function attachDefaultListeners()
