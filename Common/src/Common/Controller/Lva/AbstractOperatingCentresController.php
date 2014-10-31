@@ -385,16 +385,20 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
             ->processAddressLookupForm($form, $request);
 
-        $hasProcessedFiles = $this->processFiles(
-            $form,
-            'advertisements->file',
-            array($this, 'processAdvertisementFileUpload'),
-            array($this, 'deleteFile'),
-            array($this, 'getDocuments')
-        );
+        if ($form->has('advertisements')) {
+            $hasProcessedFiles = $this->processFiles(
+                $form,
+                'advertisements->file',
+                array($this, 'processAdvertisementFileUpload'),
+                array($this, 'deleteFile'),
+                array($this, 'getDocuments')
+            );
+        } else {
+            $hasProcessedFiles = false;
+        }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
-            $data = $this->formatCrudDataForSave($data);
+            $data = $this->formatCrudDataForSave($form->getData());
 
             $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
 
@@ -448,12 +452,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $data = $this->getServiceLocator()
             ->get('Helper\Data')
             ->processDataMap($data, $this->actionDataMap);
-
-        if (isset($data['applicationOperatingCentre']['adPlacedDate'])) {
-            $adPlaced = $data['applicationOperatingCentre']['adPlacedDate'];
-            $formattedDate = $adPlaced['year'] . '-' . $adPlaced['month'] . '-' . $adPlaced['day'];
-            $data['applicationOperatingCentre']['adPlacedDate'] = $formattedDate;
-        }
 
         // we no longer store this in the form...
         $data['applicationOperatingCentre'][$this->lva] = $this->getIdentifier();
