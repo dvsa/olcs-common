@@ -15,6 +15,13 @@ namespace Common\Service\Entity;
 class VehicleEntityService extends AbstractEntityService
 {
     /**
+     * PSV types
+     */
+    const PSV_TYPE_SMALL  = 'vhl_t_a';
+    const PSV_TYPE_MEDIUM = 'vhl_t_b';
+    const PSV_TYPE_LARGE  = 'vhl_t_c';
+
+    /**
      * Define entity for default behaviour
      *
      * @var string

@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\VehicleEntityService;
 use Zend\Form\Form;
 
 /**
@@ -21,13 +22,20 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
     protected $section = 'vehicles_psv';
 
-    private $tables = ['small', 'medium', 'large'];
-
     private $psvTypes = [
-        'small' => 'vhl_t_a',
-        'medium' => 'vhl_t_b',
-        'large' => 'vhl_t_c'
+        'small'  => VehicleEntityService::PSV_TYPE_SMALL,
+        'medium' => VehicleEntityService::PSV_TYPE_MEDIUM,
+        'large'  => VehicleEntityService::PSV_TYPE_LARGE
     ];
+
+    /**
+     * Simple helper method to extract tables based on
+     * available types
+     */
+    private function getTables()
+    {
+        return array_keys($this->psvTypes);
+    }
 
     /**
      * Index action
@@ -37,7 +45,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         $request = $this->getRequest();
 
         // we always need this basic data
-        $entityData = $this->getData();
+        // @TODO not in abstract, references 'Application'
+        $entityData = $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->getDataForVehiclesPsv($this->params('id'));
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -53,9 +64,12 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         // we want to alter based on the *original* entity data, not how
         // it's been manipulated to suit the form (if relevant)
-        $form = $this->doAlterForm($form, $entityData);
+        $form = $this->alterForm($form, $entityData);
 
-        foreach ($this->tables as $tableName) {
+        foreach ($this->getTables() as $tableName) {
+
+            // no point wasting time fetching data for a table
+            // we've already removed
             if (!$form->has($tableName)) {
                 continue;
             }
@@ -106,24 +120,22 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $this->render('vehicles_psv', $form);
     }
 
-    protected function getData()
-    {
-        // @TODO not in abstract, references 'Application'
-        return $this->getServiceLocator()
-            ->get('Entity\Application')
-            ->getDataForVehiclesPsv($this->params('id'));
-    }
-
+    /**
+     * Format data for the main form; not a lot to it
+     */
     protected function formatDataForForm($data)
     {
         return array(
             'data' => array(
-                'version' => $data['version'],
+                'version'       => $data['version'],
                 'hasEnteredReg' => $data['hasEnteredReg']
             )
         );
     }
 
+    /**
+     * Format data for save on the main form
+     */
     protected function formatDataForSave($data)
     {
         return $data['data'];
@@ -132,9 +144,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected function save($data)
     {
         $data = $this->formatDataForSave($data);
-        // @TODO remove ref to 'Application'
         $data['id'] = $this->params('id');
-        return $this->getServiceLocator()->get('Entity\Application')->save($data);
+        return $this->getLvaEntityService()->save($data);
     }
 
     /**
@@ -147,7 +158,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     {
         $data = $formTables;
 
-        foreach ($this->tables as $section) {
+        foreach ($this->getTables() as $section) {
 
             if (isset($data[$section]['action'])) {
 
@@ -215,6 +226,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
+            // @NOTE: deliberately an 'else' here, since we want to
+            // populate the form on both add *and* edit
             $data = $this->formatVehicleDataForForm(
                 $this->getVehicleFormData($this->params('child_id')),
                 $type
@@ -225,11 +238,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             ->get('Helper\Form')
             ->createForm('Lva\PsvVehiclesVehicle');
 
-        $form = $this->alterVehicleForm($form, $mode);
-
-        $form->setData($data);
+        $form = $this->alterVehicleForm($form, $mode)
+            ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
+
             // If we are in edit mode, we can save
             // If we are in add mode, and we have confirmed add, we can save
             // If we are in add mode, and haven't confirmed add, but the VRM is new we can save
@@ -256,10 +269,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      * @param Form $form
      * @return Form
      */
-    public function doAlterForm($form, $data)
+    public function alterForm($form, $data)
     {
         $isPost = $this->getRequest()->isPost();
-        $post = $this->getRequest()->getPost();
+        $post   = $this->getRequest()->getPost();
 
         $formHelper = $this->getServiceLocator()
             ->get('Helper\Form');
@@ -268,7 +281,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
             || (isset($post['small']['action']) && !empty($post['small']['action']));
 
-        foreach ($this->tables as $table) {
+        foreach ($this->getTables() as $table) {
 
             $ucTable = ucwords($table);
 
@@ -321,25 +334,31 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return $form;
     }
 
+    /**
+     * Format vehicle data for form
+     */
     protected function formatVehicleDataForForm($data, $type)
     {
         $licenceVehicle = $data;
         unset($data['licenceVehicle']);
 
+        // the main data key wants to be mapped from the vehicle
+        // array, but bear in mind it might not exist if we're on 'add'
         $data = isset($data['vehicle']) ? $data['vehicle'] : [];
+        // ... the reason we're called on add is we always want psvType
         $data['psvType'] = $this->getPsvTypeFromType($type);
 
         return array(
             'licence-vehicle' => $licenceVehicle,
-            'data' => $data
+            'data'            => $data
         );
     }
 
     protected function getTableData($table)
     {
-        $licenceId = $this->getLicenceId();
-
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesPsvData($licenceId);
+        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesPsvData(
+            $this->getLicenceId()
+        );
 
         $rows = array();
 
@@ -347,15 +366,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         foreach ($licenceVehicles as $licenceVehicle) {
 
+            // wrong type (small, medium, large)
             if (!isset($licenceVehicle['vehicle']['psvType']['id'])
-                || $licenceVehicle['vehicle']['psvType']['id'] != $type) {
+                || $licenceVehicle['vehicle']['psvType']['id'] !== $type) {
                 continue;
             }
 
+            // wrong visibility (removed)
             if (!$this->showVehicle($licenceVehicle)) {
                 continue;
             }
 
+            // flatten data
             $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
             unset($row['vehicle']);
 
@@ -376,10 +398,13 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return isset($this->psvTypes[$type]) ? $this->psvTypes[$type] : null;
     }
 
+    /**
+     * Get data to populate the vehicle form
+     */
     protected function getVehicleFormData($id = null)
     {
         if ($id === null) {
-            return [];
+            return array();
         }
         return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclePsv($id);
     }
