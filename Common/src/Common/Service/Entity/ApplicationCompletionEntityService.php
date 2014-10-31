@@ -94,7 +94,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         foreach ($properties as $value) {
             // some values can legitimately be set to zero and still be valid, so empty won't do
-            if (isset($value)) {
+            if ($value !== null) {
                 $completeCount++;
             }
         }
@@ -147,7 +147,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     private function getBusinessDetailsStatus($applicationData)
     {
         if (!isset($applicationData['licence']['organisation']['type']['id'])) {
-            return self::STATUS_NOT_STARTED;
+            return self::STATUS_INCOMPLETE;
         }
 
         $orgData = $applicationData['licence']['organisation'];
@@ -158,11 +158,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
-                $registeredAddress = false;
+                $registeredAddress = null;
 
                 foreach ($orgData['contactDetails'] as $contactDetail) {
-                    if ($contactDetail['contactType']['id'] == ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
-                        $registeredAddress = true;
+                    if ($contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
+                        $registeredAddress =  true;
                         break;
                     }
                 }
@@ -411,15 +411,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $applicationData['licence']['trafficArea']['isScottishRules'] = false;
         }
 
-        $arrayCheck = array('totAuthSmallVehicles', 'totAuthMediumVehicles', 'totAuthLargeVehicles');
-
-        foreach ($arrayCheck as $attribute) {
-            if (is_null($applicationData[$attribute])) {
-                $applicationData[$attribute] = 0;
-            }
-        }
-
-        if ($applicationData['totAuthSmallVehicles'] == 0) {
+        if (empty($applicationData['totAuthSmallVehicles'])) {
             unset($requiredVars['psvOperateSmallVhl']);
             unset($requiredVars['psvSmallVhlNotes']);
             unset($requiredVars['psvSmallVhlConfirmation']);
@@ -427,28 +419,29 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             unset($requiredVars['psvNoSmallVhlConfirmation']);
 
-            if ($applicationData['totAuthMediumVehicles'] == 0 && $applicationData['totAuthLargeVehicles'] == 0) {
-                unset($applicationData['psvOnlyLimousinesConfirmation']);
+            if (empty($applicationData['totAuthMediumVehicles']) && empty($applicationData['totAuthLargeVehicles'])) {
+                unset($requiredVars['psvOnlyLimousinesConfirmation']);
             }
 
             if ($applicationData['licence']['trafficArea']['isScottishRules']) {
-                unset($applicationData['psvOperateSmallVhl']);
-                unset($applicationData['psvSmallVhlNotes']);
+                unset($requiredVars['psvOperateSmallVhl']);
+                unset($requiredVars['psvSmallVhlNotes']);
             }
         }
 
-        return $this->checkCompletion($requiredVars);
-    }
+        $total = array_sum(
+            array(
+                (int)$applicationData['totAuthSmallVehicles'],
+                (int)$applicationData['totAuthMediumVehicles'],
+                (int)$applicationData['totAuthLargeVehicles']
+            )
+        );
 
-    /**
-     * Get community licences status
-     *
-     * @param array $applicationData
-     * @return int
-     */
-    private function getCommunityLicencesStatus($applicationData)
-    {
-        return self::STATUS_NOT_STARTED;
+        $requiredVars[] = array(
+            'total' => ($total !== 0 ? $total : null)
+        );
+
+        return $this->checkCompletion($requiredVars);
     }
 
     /**
@@ -486,6 +479,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getConditionsUndertakingsStatus($applicationData)
     {
+        // @todo need to do this
         return self::STATUS_COMPLETE;
     }
 

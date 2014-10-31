@@ -175,7 +175,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
 
         return array(
             // Incomplete type of licence data
-            array(
+            0 => array(
                 // Current section
                 'type_of_licence',
                 // Mocked start completion data
@@ -218,7 +218,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Complete type of licence data
-            array(
+            1 => array(
                 // Current section
                 'type_of_licence',
                 // Mocked start completion data
@@ -261,7 +261,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Missing business type data
-            array(
+            2 => array(
                 // Current section
                 'business_type',
                 // Mocked start completion data
@@ -301,7 +301,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Complete business type data
-            array(
+            3 => array(
                 // Current section
                 'business_type',
                 // Mocked start completion data
@@ -342,7 +342,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details not started
-            array(
+            4 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -362,7 +362,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                     'application' => 3,
                     'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
@@ -382,7 +382,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details incomplete llp
-            array(
+            5 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -426,7 +426,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details complete llp
-            array(
+            6 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -476,7 +476,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details incomplete partnership
-            array(
+            7 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -517,7 +517,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details complete partnership
-            array(
+            8 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -559,7 +559,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Business details complete sole trader
-            array(
+            9 => array(
                 // Current section
                 'business_details',
                 // Mocked start completion data
@@ -600,7 +600,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Addresses incomplete 1
-            array(
+            10 => array(
                 // Current section
                 'addresses',
                 // Mocked start completion data
@@ -656,7 +656,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Addresses complete 1
-            array(
+            11 => array(
                 // Current section
                 'addresses',
                 // Mocked start completion data
@@ -717,7 +717,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Addresses complete 2
-            array(
+            12 => array(
                 // Current section
                 'addresses',
                 // Mocked start completion data
@@ -773,7 +773,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // People incomplete
-            array(
+            13 => array(
                 // Current section
                 'people',
                 // Mocked start completion data
@@ -812,7 +812,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // People complete
-            array(
+            14 => array(
                 // Current section
                 'people',
                 // Mocked start completion data
@@ -853,7 +853,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Taxi PHV incomplete
-            array(
+            15 => array(
                 // Current section
                 'taxi_phv',
                 // Mocked start completion data
@@ -891,7 +891,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // Taxi PHV complete
-            array(
+            16 => array(
                 // Current section
                 'taxi_phv',
                 // Mocked start completion data
@@ -930,7 +930,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // OC incomplete 1
-            array(
+            17 => array(
                 // Current section
                 'operating_centres',
                 // Mocked start completion data
@@ -965,7 +965,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // OC incomplete 2
-            array(
+            18 => array(
                 // Current section
                 'operating_centres',
                 // Mocked start completion data
@@ -1013,7 +1013,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // OC incomplete 3
-            array(
+            19 => array(
                 // Current section
                 'operating_centres',
                 // Mocked start completion data
@@ -1032,6 +1032,60 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                     'licence' => array(
                         'goodsOrPsv' => array(
                             'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        ),
+                        'licenceType' => array(
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        )
+                    )
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // OC incomplete 4
+            20 => array(
+                // Current section
+                'operating_centres',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => null,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'totAuthVehicles' => null,
+                    'totAuthTrailers' => null,
+                    'totCommunityLicences' => null,
+                    'operatingCentres' => array(
+                        'foo'
+                    ),
+                    'licence' => array(
+                        'goodsOrPsv' => array(
+                            'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        ),
+                        'licenceType' => array(
+                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
                         )
                     )
                 ),
@@ -1061,7 +1115,7 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // OC complete 1
-            array(
+            21 => array(
                 // Current section
                 'operating_centres',
                 // Mocked start completion data
@@ -1102,6 +1156,670 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                     'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Financial Evidence placeholder
+            22 => array(
+                // Current section
+                'financial_evidence',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Transport managers placeholder
+            23 => array(
+                // Current section
+                'transport_managers',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles incomplete
+            24 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthVehicles' => null
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles incomplete
+            25 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licence' => array(
+                        'licenceVehicles' => array(
+
+                        )
+                    ),
+                    'totAuthVehicles' => null
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles incomplete
+            26 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licence' => array(
+                        'licenceVehicles' => array(
+                            array(
+                                'foo'
+                            )
+                        )
+                    ),
+                    'totAuthVehicles' => null
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles incomplete (Too many vehicles)
+            27 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licence' => array(
+                        'licenceVehicles' => array(
+                            array(
+                                'foo'
+                            ),
+                            array(
+                                'foo'
+                            )
+                        )
+                    ),
+                    'totAuthVehicles' => 1
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles complete
+            28 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licence' => array(
+                        'licenceVehicles' => array(
+                            array(
+                                'foo'
+                            ),
+                            array(
+                                'foo'
+                            )
+                        )
+                    ),
+                    'totAuthVehicles' => 2
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles complete
+            29 => array(
+                // Current section
+                'vehicles',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'licence' => array(
+                        'licenceVehicles' => array(
+                            array(
+                                'foo'
+                            ),
+                            array(
+                                'foo'
+                            )
+                        )
+                    ),
+                    'totAuthVehicles' => 4
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations incomplete
+            30 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => null,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => null,
+                    'psvOperateSmallVhl' => null,
+                    'psvSmallVhlNotes' => null,
+                    'psvSmallVhlConfirmation' => null,
+                    'psvLimousines' => null,
+                    'psvNoLimousineConfirmation' => null,
+                    'psvOnlyLimousinesConfirmation' => null,
+                    'licence' => array(
+                        'trafficArea' => array(
+
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations incomplete
+            31 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => 1,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => null,
+                    'psvOperateSmallVhl' => null,
+                    'psvSmallVhlNotes' => null,
+                    'psvSmallVhlConfirmation' => null,
+                    'psvLimousines' => null,
+                    'psvNoLimousineConfirmation' => null,
+                    'psvOnlyLimousinesConfirmation' => null,
+                    'licence' => array(
+                        'trafficArea' => array(
+
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations incomplete
+            32 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => 1,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => null,
+                    'psvOperateSmallVhl' => null,
+                    'psvSmallVhlNotes' => null,
+                    'psvSmallVhlConfirmation' => null,
+                    'psvLimousines' => null,
+                    'psvNoLimousineConfirmation' => null,
+                    'psvOnlyLimousinesConfirmation' => null,
+                    'licence' => array(
+                        'trafficArea' => array(
+                            'isScottishRules' => 1
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations complete
+            33 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => null,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => 'Y',
+                    'psvOperateSmallVhl' => null,
+                    'psvSmallVhlNotes' => null,
+                    'psvSmallVhlConfirmation' => null,
+                    'psvLimousines' => 'N',
+                    'psvNoLimousineConfirmation' => 'N',
+                    'psvOnlyLimousinesConfirmation' => 'N',
+                    'licence' => array(
+                        'trafficArea' => array(
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations complete
+            34 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => 1,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => null,
+                    'psvOperateSmallVhl' => 'Y',
+                    'psvSmallVhlNotes' => 'Y',
+                    'psvSmallVhlConfirmation' => 'Y',
+                    'psvLimousines' => 'N',
+                    'psvNoLimousineConfirmation' => 'N',
+                    'psvOnlyLimousinesConfirmation' => 'N',
+                    'licence' => array(
+                        'trafficArea' => array(
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Vehicles declarations complete
+            35 => array(
+                // Current section
+                'vehicles_declarations',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'totAuthSmallVehicles' => 1,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null,
+                    'psvNoSmallVhlConfirmation' => null,
+                    'psvOperateSmallVhl' => null,
+                    'psvSmallVhlNotes' => null,
+                    'psvSmallVhlConfirmation' => 'Y',
+                    'psvLimousines' => 'N',
+                    'psvNoLimousineConfirmation' => 'N',
+                    'psvOnlyLimousinesConfirmation' => 'N',
+                    'licence' => array(
+                        'trafficArea' => array(
+                            'isScottishRules' => 1
+                        )
+                    )
+
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Safety incomplete
+            36 => array(
+                // Current section
+                'safety',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'safetyConfirmation' => null,
+                    'licence' => array(
+                        'safetyInsVehicles' => null,
+                        'safetyInsVaries' => null,
+                        'workshops' => array(),
+                        'tachographIns' => array(
+                            'id' => null
+                        ),
+                        'goodsOrPsv' => array(
+                            'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
+                        )
+                    )
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
