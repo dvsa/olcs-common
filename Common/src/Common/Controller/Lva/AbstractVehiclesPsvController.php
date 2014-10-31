@@ -173,51 +173,82 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return null;
     }
 
+    /**
+     * Add a small vehicle
+     */
     public function smallAddAction()
     {
         return $this->addOrEdit('add', 'small');
     }
 
+    /**
+     * Edit a small vehicle
+     */
     public function smallEditAction()
     {
         return $this->addOrEdit('edit', 'small');
     }
 
+    /**
+     * Delete a small vehicle
+     */
     public function smallDeleteAction()
     {
         return $this->deleteAction();
     }
 
+    /**
+     * Add a medium vehicle
+     */
     public function mediumAddAction()
     {
         return $this->addOrEdit('add', 'medium');
     }
 
+    /**
+     * Edit a medium vehicle
+     */
     public function mediumEditAction()
     {
         return $this->addOrEdit('edit', 'medium');
     }
 
+    /**
+     * Delete a medium vehicle
+     */
     public function mediumDeleteAction()
     {
         return $this->deleteAction();
     }
 
+    /**
+     * Add a large vehicle
+     */
     public function largeAddAction()
     {
         return $this->addOrEdit('add', 'large');
     }
 
-    public function largeAction()
+    /**
+     * Edit a large vehicle
+     */
+    public function largeEditAction()
     {
         return $this->addOrEdit('edit', 'large');
     }
 
+    /**
+     * Delete a large vehicle
+     */
     public function largeDeleteAction()
     {
         return $this->deleteAction();
     }
 
+    /**
+     * Helper method to add or edit a vehicle
+     * of any size
+     */
     protected function addOrEdit($mode, $type)
     {
         $request = $this->getRequest();
@@ -326,10 +357,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         }
 
         $formHelper->remove($form, 'licence-vehicle->discNo');
-
-        if ($mode !== 'add') {
-            $form->get('form-actions')->remove('addAnother');
-        }
 
         return $form;
     }

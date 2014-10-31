@@ -136,11 +136,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             $data = $this->formatVehicleDataForForm($this->getVehicleFormData($id));
         }
 
-        $form = $this->alterVehicleForm($this->getVehicleForm()->setData($data), $mode);
-
-        if ($mode === 'edit') {
-            $form->get('form-actions')->remove('addAnother');
-        }
+        $form = $this->alterVehicleForm(
+            $this->getVehicleForm()->setData($data),
+            $mode
+        );
 
         if ($request->isPost() && $form->isValid()) {
 

@@ -241,6 +241,10 @@ abstract class AbstractVehiclesController extends AbstractController
             $validators->attach($validator);
         }
 
+        if ($mode === 'edit') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
         return $form;
     }
 
