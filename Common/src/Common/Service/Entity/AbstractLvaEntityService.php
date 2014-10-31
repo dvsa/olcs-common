@@ -115,7 +115,10 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
 
     protected $totalAuthorisationBundle = array(
         'properties' => array(
-            'totAuthVehicles'
+            'totAuthVehicles',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles'
         )
     );
 
@@ -153,8 +156,8 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         return $data['documents'];
     }
 
-    public function getTotalAuthorisation($id)
+    public function getTotalVehicleAuthorisation($id, $type = '')
     {
-        return $this->get($id, $this->totalAuthorisationBundle)['totAuthVehicles'];
+        return $this->get($id, $this->totalAuthorisationBundle)['totAuth' . $type . 'Vehicles'];
     }
 }

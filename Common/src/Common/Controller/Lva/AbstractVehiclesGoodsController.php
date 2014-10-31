@@ -56,6 +56,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
+        // *always* check if the user has exceeded their authority
+        // as a nice little addition; they may have changed their OC totals
         if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
                 'more-vehicles-than-authorisation'
@@ -63,46 +65,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return $this->render('vehicles', $form);
-    }
-
-    /**
-     * Hijack the crud action check so we can validate the add button
-     *
-     * @param string $action
-     */
-    protected function checkForAlternativeCrudAction($action)
-    {
-        if ($action == 'reprint') {
-            $post = (array)$this->getRequest()->getPost();
-
-            $id = $post['table']['id'];
-
-            if ($this->isDiscPendingForLicenceVehicle($id)) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('reprint-pending-disc-error');
-
-                return $this->reload();
-            }
-        }
-
-        if ($action == 'add') {
-            $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
-
-            if (!is_numeric($totalAuth)) {
-                return;
-            }
-
-            $vehicleCount = $this->getTotalNumberOfVehicles();
-
-            if ($vehicleCount >= $totalAuth) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('more-vehicles-than-total-auth-error');
-
-                return $this->reload();
-            }
-        }
     }
 
     /**
@@ -367,5 +329,34 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected function getVehicleFormData($id)
     {
         return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehicle($id);
+    }
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfAuthorisedVehicles()
+    {
+        if (empty($this->totalAuthorisedVehicles)) {
+            $this->totalAuthorisedVehicles = $this->getLvaEntityService()->getTotalVehicleAuthorisation($this->params('id'));
+        }
+
+        return $this->totalAuthorisedVehicles;
+    }
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfVehicles()
+    {
+        if (empty($this->totalVehicles)) {
+            $this->totalVehicles = $this->getServiceLocator()->get('Entity\Licence')
+                ->getVehiclesTotal($this->getLicenceId());
+        }
+
+        return $this->totalVehicles;
     }
 }

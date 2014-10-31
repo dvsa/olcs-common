@@ -383,7 +383,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->saveLicence($data);
+            $this->saveLicence($form->getData());
 
             return $this->handlePostSave();
         }
@@ -457,24 +457,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     protected function saveLicence($data)
     {
         $saveData = $data['data'];
-
-        if (isset($saveData['disqualificationDate'])) {
-            $saveData['disqualificationDate'] = sprintf(
-                '%s-%s-%s',
-                $saveData['disqualificationDate']['year'],
-                $saveData['disqualificationDate']['month'],
-                $saveData['disqualificationDate']['day']
-            );
-        }
-
-        if (isset($saveData['purchaseDate'])) {
-            $saveData['purchaseDate'] = sprintf(
-                '%s-%s-%s',
-                $saveData['purchaseDate']['year'],
-                $saveData['purchaseDate']['month'],
-                $saveData['purchaseDate']['day']
-            );
-        }
 
         $saveData['id'] = $this->params('child_id');
 

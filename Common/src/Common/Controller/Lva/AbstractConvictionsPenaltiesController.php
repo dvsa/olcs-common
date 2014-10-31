@@ -139,7 +139,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->savePreviousConviction($mode, $data);
+            $this->savePreviousConviction($mode, $form->getData());
 
             return $this->handlePostSave();
         }
@@ -179,13 +179,6 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         if ($mode === 'edit') {
             $saveData['id'] = $this->params('id');
         }
-
-        $saveData['convictionDate'] = sprintf(
-            '%s-%s-%s',
-            $saveData['convictionDate']['year'],
-            $saveData['convictionDate']['month'],
-            $saveData['convictionDate']['day']
-        );
 
         $this->getServiceLocator()->get('Entity\PreviousConviction')->save($saveData);
     }
