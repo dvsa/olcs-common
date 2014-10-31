@@ -93,7 +93,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $completeCount = 0;
 
         foreach ($properties as $value) {
-            if (!empty($value)) {
+            // some values can legitimately be set to zero and still be valid, so empty won't do
+            if (isset($value)) {
                 $completeCount++;
             }
         }
