@@ -94,8 +94,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         $completeCount = 0;
 
         foreach ($properties as $value) {
-            // some values can legitimately be set to zero and still be valid, so empty won't do
-            if ($value !== null) {
+            if ($value === true) {
                 $completeCount++;
             }
         }
@@ -105,6 +104,18 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         return self::STATUS_INCOMPLETE;
+    }
+
+    private function isYnValue($value)
+    {
+        $value = strtoupper($value);
+
+        return ($value === 'Y' || $value === 'N');
+    }
+
+    private function isAtLeast1($value)
+    {
+        return is_numeric($value) && $value > 0;
     }
 
     /**
@@ -119,9 +130,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         return $this->checkCompletion(
             array(
-                'niFlag' => $licence['niFlag'],
-                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']) ? $licence['goodsOrPsv']['id'] : null,
-                'licenceType' => isset($licence['licenceType']['id']) ? $licence['licenceType']['id'] : null,
+                'niFlag' => $this->isYnValue($licence['niFlag']),
+                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']),
+                'licenceType' => isset($licence['licenceType']['id'])
             )
         );
     }
@@ -134,9 +145,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getBusinessTypeStatus($applicationData)
     {
-        return empty($applicationData['licence']['organisation']['type']['id'])
-            ? self::STATUS_NOT_STARTED
-            : self::STATUS_COMPLETE;
+        return $this->checkCompletion(
+            array(
+                !empty($applicationData['licence']['organisation']['type']['id'])
+            )
+        );
     }
 
     /**
@@ -159,7 +172,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
-                $registeredAddress = null;
+                $registeredAddress = false;
 
                 foreach ($orgData['contactDetails'] as $contactDetail) {
                     if ($contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
@@ -169,8 +182,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 }
 
                 $requiredVars = array(
-                    'name' => isset($orgData['name']) ? $orgData['name'] : null,
-                    'company' => isset($orgData['companyOrLlpNo']) ? $orgData['companyOrLlpNo'] : null,
+                    'name' => isset($orgData['name']),
+                    'company' => isset($orgData['companyOrLlpNo']),
                     'registeredAddress' => $registeredAddress
                 );
                 break;
@@ -178,7 +191,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
             case OrganisationEntityService::ORG_TYPE_OTHER:
                 $requiredVars = array(
-                    'name' => isset($orgData['name']) ? $orgData['name'] : null
+                    'name' => isset($orgData['name'])
                 );
                 break;
 
@@ -197,9 +210,9 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getAddressesStatus($applicationData)
     {
-        $phoneNumber = null;
-        $correspondenceAddress = null;
-        $establishmentAddress = null;
+        $phoneNumber = false;
+        $correspondenceAddress = false;
+        $establishmentAddress = false;
         $skipEstablishmentAddress = false;
 
         $contactDetails = array_merge(
@@ -219,7 +232,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         foreach ($contactDetails as $contactDetail) {
             if (isset($contactDetail['phoneContacts'][0])) {
-                $phoneNumber = $contactDetail['phoneContacts'][0]['phoneNumber'];
+                $phoneNumber = !empty($contactDetail['phoneContacts'][0]['phoneNumber']);
             }
 
             if (isset($contactDetail['contactType']['id'])
@@ -256,9 +269,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getPeopleStatus($applicationData)
     {
-        return count($applicationData['licence']['organisation']['organisationPersons'])
-            ? self::STATUS_COMPLETE
-            : self::STATUS_INCOMPLETE;
+        return $this->checkCompletion(
+            array(
+                !empty($applicationData['licence']['organisation']['organisationPersons'])
+            )
+        );
     }
 
     /**
@@ -269,11 +284,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getTaxiPhvStatus($applicationData)
     {
-        if (!empty($applicationData['licence']['privateHireLicences'])) {
-            return self::STATUS_COMPLETE;
-        }
-
-        return self::STATUS_INCOMPLETE;
+        return $this->checkCompletion(
+            array(
+                !empty($applicationData['licence']['privateHireLicences'])
+            )
+        );
     }
 
     /**
@@ -289,12 +304,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         $requiredVars = array(
-            'totAuthSmallVehicles' => $applicationData['totAuthSmallVehicles'],
-            'totAuthMediumVehicles' => $applicationData['totAuthMediumVehicles'],
-            'totAuthLargeVehicles' => $applicationData['totAuthLargeVehicles'],
-            'totAuthVehicles' => $applicationData['totAuthVehicles'],
-            'totAuthTrailers' => $applicationData['totAuthTrailers'],
-            'totCommunityLicences' => $applicationData['totCommunityLicences'],
+            'totAuthSmallVehicles' => $applicationData['totAuthSmallVehicles'] !== null,
+            'totAuthMediumVehicles' => $applicationData['totAuthMediumVehicles'] !== null,
+            'totAuthLargeVehicles' => $applicationData['totAuthLargeVehicles'] !== null,
+            'totAuthVehicles' => $applicationData['totAuthVehicles'] !== null,
+            'totAuthTrailers' => $applicationData['totAuthTrailers'] !== null,
+            'totCommunityLicences' => $applicationData['totCommunityLicences'] !== null,
         );
 
         if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
@@ -366,14 +381,13 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     {
         $totalAuth = $applicationData['totAuthVehicles'];
 
-        if (isset($applicationData['licence']['licenceVehicles'])
-            && !empty($applicationData['licence']['licenceVehicles'])
-            && (is_numeric($totalAuth) && count($applicationData['licence']['licenceVehicles']) <= $totalAuth)
-        ) {
-            return self::STATUS_COMPLETE;
-        }
-
-        return self::STATUS_INCOMPLETE;
+        return $this->checkCompletion(
+            array(
+                (isset($applicationData['licence']['licenceVehicles'])
+                    && !empty($applicationData['licence']['licenceVehicles'])),
+                (is_numeric($totalAuth) && count($applicationData['licence']['licenceVehicles']) <= $totalAuth)
+            )
+        );
     }
 
     /**
@@ -428,15 +442,15 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     {
         $requiredVars = array(
             // NineOrMore
-            'psvNoSmallVhlConfirmation' => $applicationData['psvNoSmallVhlConfirmation'],
+            'psvNoSmallVhlConfirmation' => $this->isYnValue($applicationData['psvNoSmallVhlConfirmation']),
             // SmallVehiclesIntention
-            'psvOperateSmallVhl' => $applicationData['psvOperateSmallVhl'],
-            'psvSmallVhlNotes' => $applicationData['psvSmallVhlNotes'],
-            'psvSmallVhlConfirmation' => $applicationData['psvSmallVhlConfirmation'],
+            'psvOperateSmallVhl' => $this->isYnValue($applicationData['psvOperateSmallVhl']),
+            'psvSmallVhlNotes' => !empty($applicationData['psvSmallVhlNotes']),
+            'psvSmallVhlConfirmation' => $this->isYnValue($applicationData['psvSmallVhlConfirmation']),
             // limousinesNoveltyVehicles
-            'psvLimousines' => $applicationData['psvLimousines'],
-            'psvNoLimousineConfirmation' => $applicationData['psvNoLimousineConfirmation'],
-            'psvOnlyLimousinesConfirmation' => $applicationData['psvOnlyLimousinesConfirmation']
+            'psvLimousines' => $this->isYnValue($applicationData['psvLimousines']),
+            'psvNoLimousineConfirmation' => $this->isYnValue($applicationData['psvNoLimousineConfirmation']),
+            'psvOnlyLimousinesConfirmation' => $this->isYnValue($applicationData['psvOnlyLimousinesConfirmation'])
         );
 
         if (!isset($applicationData['licence']['trafficArea']['isScottishRules'])) {
@@ -469,9 +483,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             )
         );
 
-        $requiredVars[] = array(
-            'total' => ($total !== 0 ? $total : null)
-        );
+        $requiredVars[] = $this->isAtLeast1($total);
 
         return $this->checkCompletion($requiredVars);
     }
@@ -485,19 +497,19 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     private function getSafetyStatus($applicationData)
     {
         $requiredVars = array(
-            $applicationData['licence']['safetyInsVehicles'],
-            $applicationData['licence']['safetyInsVaries'],
-            $applicationData['licence']['tachographIns']['id'],
-            count($applicationData['licence']['workshops']),
-            $applicationData['safetyConfirmation']
+            $this->isAtLeast1($applicationData['licence']['safetyInsVehicles']),
+            $this->isYnValue($applicationData['licence']['safetyInsVaries']),
+            !empty($applicationData['licence']['tachographIns']['id']),
+            $this->isAtLeast1(count($applicationData['licence']['workshops'])),
+            $this->isYnValue($applicationData['safetyConfirmation'])
         );
 
         if ($applicationData['licence']['tachographIns']['id'] === 'tach_external') {
-            $requiredVars[] = $applicationData['licence']['tachographInsName'];
+            $requiredVars[] = !empty($applicationData['licence']['tachographInsName']);
         }
 
         if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            $requiredVars[] = $applicationData['licence']['safetyInsTrailers'];
+            $requiredVars[] = $this->isAtLeast1($applicationData['licence']['safetyInsTrailers']);
         }
 
         return $this->checkCompletion($requiredVars);
@@ -511,7 +523,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getConditionsUndertakingsStatus($applicationData)
     {
-        // @todo need to do this
         return self::STATUS_COMPLETE;
     }
 
@@ -523,22 +534,29 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getFinancialHistoryStatus($applicationData)
     {
-        $requiredVars = array(
-            $applicationData['bankrupt'],
-            $applicationData['liquidation'],
-            $applicationData['receivership'],
-            $applicationData['administration'],
-            $applicationData['disqualified']
+        $ynVars = array(
+            'bankrupt',
+            'liquidation',
+            'receivership',
+            'administration',
+            'disqualified'
         );
 
-        foreach ($requiredVars as $var) {
-            if ($var === 'Y') {
-                $requiredVars[] = $applicationData['insolvencyDetails'];
+        $requiredVars = array();
+
+        foreach ($ynVars as $var) {
+            $requiredVars[] = $this->isYnValue($applicationData[$var]);
+        }
+
+        foreach ($ynVars as $var) {
+            if ($applicationData[$var] === 'Y') {
+                $requiredVars[] = !empty($applicationData['insolvencyDetails'])
+                    && strlen($applicationData['insolvencyDetails']) >= 200;
                 break;
             }
         }
 
-        $requiredVars[] = $applicationData['insolvencyConfirmation'];
+        $requiredVars[] = $applicationData['insolvencyConfirmation'] === 'Y';
 
         return $this->checkCompletion($requiredVars);
     }
@@ -551,7 +569,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getLicenceHistoryStatus($applicationData)
     {
-
         $sections = array(
             'prevHasLicence',
             'prevHadLicence',
@@ -571,12 +588,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             $licenceType = $filter->camelToUnderscore($section);
 
-            $requiredVars[] = $applicationData[$section];
+            $requiredVars[] = $this->isYnValue($applicationData[$section]);
 
             // If the radio is YES, then we must have at least 1 licence of that type
             if ($applicationData[$section] === 'Y') {
 
-                $hasLicences = null;
+                $hasLicences = false;
 
                 foreach ($applicationData['previousLicences'] as $licence) {
 
@@ -601,12 +618,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     private function getConvictionsPenaltiesStatus($applicationData)
     {
         $requiredVars = array(
-            $applicationData['prevConviction'],
-            $applicationData['convictionsConfirmation']
+            $this->isYnValue($applicationData['prevConviction']),
+            $applicationData['convictionsConfirmation'] === 'Y'
         );
 
         if ($applicationData['prevConviction'] === 'Y') {
-            $requiredVars[] = count($applicationData['previousConvictions']);
+            $requiredVars[] = $this->isAtLeast1(count($applicationData['previousConvictions']));
         }
 
         return $this->checkCompletion($requiredVars);
