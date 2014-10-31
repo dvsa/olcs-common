@@ -7,8 +7,6 @@
  */
 namespace CommonTest\Service\Entity;
 
-use CommonTest\Bootstrap;
-use PHPUnit_Framework_TestCase;
 use Common\Service\Entity\ApplicationCompletionEntityService;
 use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
@@ -19,32 +17,13 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
+class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCase
 {
-    protected $sut;
-
-    protected $sm;
-
-    protected $restHelper;
-
     protected function setUp()
     {
         $this->sut = new ApplicationCompletionEntityService();
 
-        $this->restHelper = $this->getMock('\stdClass', array('makeRestCall'));
-
-        $this->sm = Bootstrap::getServiceManager();
-        $this->sm->setAllowOverride(true);
-        $this->sm->setService('Helper\Rest', $this->restHelper);
-
-        $this->sut->setServiceLocator($this->sm);
-    }
-
-    protected function expectOneRestCall($entity, $method, $data, $bundle = null)
-    {
-        return $this->restHelper->expects($this->once())
-            ->method('makeRestCall')
-            ->with($entity, $method, $data, $bundle);
+        parent::setUp();
     }
 
     /**
@@ -2734,6 +2713,40 @@ class ApplicationCompletionEntityServiceTest extends PHPUnit_Framework_TestCase
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                )
+            ),
+            // Conditions Undertakings
+            'conditions_undertakings_1' => array(
+                // Current section
+                'conditions_undertakings',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
         );

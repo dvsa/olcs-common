@@ -491,7 +491,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getConditionsUndertakingsStatus($applicationData)
     {
-        // @todo need to do this
         return self::STATUS_COMPLETE;
     }
 
