@@ -201,6 +201,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ),
                         'properties' => array(
                             'id'
+                        ),
+                        'children' => array(
+                            'vehicle' => array(
+                                'properties' => array(),
+                                'children' => array(
+                                    'psvType' => array(
+                                        'properties' => array('id')
+                                    )
+                                )
+                            )
                         )
                     ),
                     'privateHireLicences' => array(

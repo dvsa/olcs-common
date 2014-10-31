@@ -11,6 +11,7 @@ use Common\Service\Data\SectionConfig;
 use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\VehicleEntityService;
 
 /**
  * Application Completion Entity Service
@@ -397,7 +398,38 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesPsvStatus($applicationData)
     {
-        return self::STATUS_NOT_STARTED;
+        if (!isset($applicationData['licence']['licenceVehicles'])) {
+            return self::STATUS_INCOMPLETE;
+        }
+
+        $psvTypes = [
+            'small'  => VehicleEntityService::PSV_TYPE_SMALL,
+            'medium' => VehicleEntityService::PSV_TYPE_MEDIUM,
+            'large'  => VehicleEntityService::PSV_TYPE_LARGE
+        ];
+
+        foreach ($psvTypes as $type => $val) {
+            /*
+             * This loop looks *similar* to normal vehicles but it's inverted;
+             * we want to bail as early as possible if things don't look right
+             */
+            $totalAuth = $applicationData['totAuth' . ucfirst($type). 'Vehicles'];
+
+            $totalVehicles = 0;
+
+            foreach ($applicationData['licence']['licenceVehicles'] as $vehicle) {
+                if (isset($vehicle['psvType']['id']) && $vehicle['psvType']['id'] === $val) {
+                    $totalVehicles++;
+                }
+            }
+
+            if ($totalVehicles > $totalAuth) {
+                return self::STATUS_INCOMPLETE;
+            }
+        }
+
+        // if we made it here, life must be good
+        return self::STATUS_COMPLETE;
     }
 
     /**
