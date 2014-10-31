@@ -34,7 +34,6 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     abstract protected function getTotalNumberOfVehicles();
 
-
     /**
      * Action data map
      *
