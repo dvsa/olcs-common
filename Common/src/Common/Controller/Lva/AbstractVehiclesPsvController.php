@@ -314,6 +314,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $formHelper->remove($form, 'licence-vehicle->discNo');
 
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
         return $form;
     }
 

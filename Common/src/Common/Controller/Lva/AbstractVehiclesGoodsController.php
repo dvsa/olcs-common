@@ -21,7 +21,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected $section = 'vehicles';
 
     /**
-     * Redirect to the first section
+     * Index action
      *
      * @return Response
      */
@@ -106,57 +106,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     }
 
     /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfAuthorisedVehicles()
-    {
-        if (empty($this->totalAuthorisedVehicles)) {
-            $this->totalAuthorisedVehicles = $this->getLvaEntityService()->getTotalAuthorisation($this->params('id'));
-        }
-
-        return $this->totalAuthorisedVehicles;
-    }
-
-    /**
-     * Get total number of vehicles
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfVehicles()
-    {
-        if (empty($this->totalVehicles)) {
-            $this->totalVehicles = $this->getServiceLocator()->get('Entity\Licence')
-                ->getVehiclesTotal($this->getLicenceId());
-        }
-
-        return $this->totalVehicles;
-    }
-
-    /**
-     * Check if the licence vehicle has a pending active disc
-     *
-     * @param int $id
-     * @return boolean
-     */
-    protected function isDiscPendingForLicenceVehicle($id)
-    {
-        $ids = (array)$id;
-
-        foreach ($ids as $id) {
-            $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->getDiscPendingData($id);
-
-            if ($this->isDiscPending($results)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Add operating centre
+     * Add vehicle
      */
     public function addAction()
     {
@@ -164,13 +114,16 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     }
 
     /**
-     * Edit operating centre
+     * Edit vehicle
      */
     public function editAction()
     {
         return $this->addOrEdit('edit');
     }
 
+    /**
+     * Common add / edit logic
+     */
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
@@ -308,30 +261,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return '';
-    }
-
-    /**
-     * Check if the disc is pending
-     *
-     * @param array $licenceVehicleData
-     * @return boolean
-     */
-    protected function isDiscPending($licenceVehicleData)
-    {
-        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
-            return true;
-        }
-
-        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
-            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
-
-            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
-
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

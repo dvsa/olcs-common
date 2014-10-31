@@ -54,51 +54,6 @@ abstract class AbstractVehiclesController extends AbstractController
     }
 
     /**
-     * Redirect to the first section
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $this->postSave('vehicles');
-
-            $data = (array)$request->getPost();
-            $crudAction = $this->getCrudAction(array($data['table']));
-
-            if ($crudAction !== null) {
-
-                $action = $this->getActionFromCrudAction($crudAction);
-
-                $alternativeCrudAction = $this->checkForAlternativeCrudAction($action);
-
-                if ($alternativeCrudAction === null) {
-                    return $this->handleCrudAction($crudAction, array('add', 'print-vehicles'));
-                }
-
-                return $alternativeCrudAction;
-            }
-
-            return $this->completeSection('vehicles');
-        }
-
-        $form = $this->getForm();
-
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
-
-        if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
-                'more-vehicles-than-authorisation'
-            );
-        }
-
-        return $this->render('vehicles', $form);
-    }
-
-    /**
      * Hijack the crud action check so we can validate the add button
      *
      * @param string $action
@@ -392,5 +347,29 @@ abstract class AbstractVehiclesController extends AbstractController
     protected function alterDataForLva($data)
     {
         return $data;
+    }
+
+    /**
+     * Check if the disc is pending
+     *
+     * @param array $licenceVehicleData
+     * @return boolean
+     */
+    protected function isDiscPending($licenceVehicleData)
+    {
+        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
+            return true;
+        }
+
+        if (isset($licenceVehicleData['goodsDiscs']) && !empty($licenceVehicleData['goodsDiscs'])) {
+            $currentDisc = $licenceVehicleData['goodsDiscs'][0];
+
+            if (empty($currentDisc['ceasedDate']) && empty($currentDisc['discNo'])) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
