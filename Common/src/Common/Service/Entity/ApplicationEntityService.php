@@ -385,12 +385,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
-    protected $authorisedVehiclesTotal = array(
-        'properties' => array(
-            'totAuthVehicles'
-        )
-    );
-
     protected $financialHistoryBundle = array(
         'properties' => array(
             'id',
@@ -490,6 +484,34 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                 'children' => array(
                                     'psvType' => array(
                                         'properties' => array('id')
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    protected $totalNumberOfVehiclesBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'licenceVehicles' => array(
+                        'properties' => array(),
+                        'children' => array(
+                            'vehicle' => array(
+                                'properties' => array(
+                                    'id'
+                                ),
+                                'children' => array(
+                                    'psvType' => array(
+                                        'properties' => array(
+                                            'id'
+                                        )
                                     )
                                 )
                             )
@@ -648,13 +670,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getSafetyData($id)
     {
         return $this->get($id, $this->safetyDataBundle);
-    }
-
-    public function getAuthorisedVehiclesTotal($id)
-    {
-        $data = $this->get($id, $this->authorisedVehiclesTotal);
-
-        return $data['totAuthVehicles'];
     }
 
     public function getFinancialHistoryData($id)

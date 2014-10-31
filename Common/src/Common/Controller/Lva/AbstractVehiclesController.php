@@ -17,8 +17,23 @@ use Zend\Form\Element\Checkbox;
  */
 abstract class AbstractVehiclesController extends AbstractController
 {
-    protected $totalAuthorisedVehicles;
-    protected $totalVehicles;
+    protected $totalAuthorisedVehicles = array();
+    protected $totalVehicles = array();
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    abstract protected function getTotalNumberOfAuthorisedVehicles();
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    abstract protected function getTotalNumberOfVehicles();
+
 
     /**
      * Action data map
@@ -60,7 +75,7 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function checkForAlternativeCrudAction($action)
     {
-        if ($action == 'reprint') {
+        if ($action === 'reprint') {
             $post = (array)$this->getRequest()->getPost();
 
             $id = $post['table']['id'];
@@ -74,7 +89,7 @@ abstract class AbstractVehiclesController extends AbstractController
             }
         }
 
-        if ($action == 'add') {
+        if ($action === 'add') {
             $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
 
             if (!is_numeric($totalAuth)) {
@@ -91,35 +106,6 @@ abstract class AbstractVehiclesController extends AbstractController
                 return $this->reload();
             }
         }
-    }
-
-    /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfAuthorisedVehicles()
-    {
-        if (empty($this->totalAuthorisedVehicles)) {
-            $this->totalAuthorisedVehicles = $this->getLvaEntityService()->getTotalAuthorisation($this->params('id'));
-        }
-
-        return $this->totalAuthorisedVehicles;
-    }
-
-    /**
-     * Get total number of vehicles
-     *
-     * @return int
-     */
-    protected function getTotalNumberOfVehicles()
-    {
-        if (empty($this->totalVehicles)) {
-            $this->totalVehicles = $this->getServiceLocator()->get('Entity\Licence')
-                ->getVehiclesTotal($this->getLicenceId());
-        }
-
-        return $this->totalVehicles;
     }
 
     /**
@@ -330,7 +316,7 @@ abstract class AbstractVehiclesController extends AbstractController
         $translationKey = 'vehicle-belongs-to-another-licence-message-' . $this->lva;
 
         // Internally we can add the licence numbers
-        if ($this->location == 'internal') {
+        if ($this->location === 'internal') {
 
             if (count($licences) > 1) {
                 $translationKey .= '-multiple';

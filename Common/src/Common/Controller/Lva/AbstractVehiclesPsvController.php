@@ -92,14 +92,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
             $crudAction = $this->getCrudAction($data);
 
-            // @TODO re-implement checkForAlternativeCrudAction
-            // and limit 'add' based on total authed vehicles
-
-            /*
             if ($crudAction !== null) {
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
+                    $this->getActionFromCrudAction($crudAction)
+                );
+
+                if ($alternativeCrudResponse !== null) {
+                    return $alternativeCrudResponse;
+                }
+
+                // handle the original action as planned
+                return $this->handleCrudAction($crudAction);
             }
-             */
 
             if ($form->isValid()) {
 
@@ -445,6 +449,63 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         foreach ($licenceVehicleIds as $id) {
             $this->getServiceLocator()->get('Entity\LicenceVehicle')->delete($id);
+        }
+    }
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfAuthorisedVehicles()
+    {
+        $type = $this->getTypeFromPost();
+
+        if (!isset($this->totalAuthorisedVehicles[$type])) {
+            $this->totalAuthorisedVehicles[$type] = $this->getLvaEntityService()->getTotalVehicleAuthorisation(
+                $this->params('id'),
+                ucfirst($type)
+            );
+        }
+
+        return $this->totalAuthorisedVehicles[$type];
+    }
+
+    /**
+     * Get the total number of vehicles
+     *
+     * @return int
+     */
+    protected function getTotalNumberOfVehicles()
+    {
+        $type = $this->getPsvTypeFromType(
+            $this->getTypeFromPost()
+        );
+
+        if (!isset($this->totalVehicles[$type])) {
+            $this->totalVehicles[$type] = $this->getServiceLocator()
+                ->get('Entity\Licence')
+                ->getVehiclesPsvTotal(
+                    $this->getLicenceId(),
+                    $type
+                );
+        }
+
+        return $this->totalVehicles[$type];
+    }
+
+    /**
+     * Helper so we can always work out what type of PSV we're
+     * dealing with from POST data
+     */
+    protected function getTypeFromPost()
+    {
+        $data = (array)$this->getRequest()->getPost();
+
+        foreach ($this->getTables() as $type) {
+            if (isset($data[$type]['action'])) {
+                return $type;
+            }
         }
     }
 }
