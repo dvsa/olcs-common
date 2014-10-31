@@ -305,19 +305,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-    protected $currentVrmBundle = array(
-        'properties' => array(
-            'removalDate'
-        ),
-        'children' => array(
-            'vehicle' => array(
-                'properties' => array(
-                    'vrm'
-                )
-            )
-        )
-    );
-
     protected $vehiclesTotalBundle = array(
         'properties' => array(),
         'children' => array(
@@ -521,18 +508,9 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getCurrentVrms($id)
     {
-        $data = $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('LicenceVehicle', 'GET', array('licence' => $id), $this->currentVrmBundle);
-
-        $vrms = array();
-
-        foreach ($data['Results'] as $row) {
-            if (!$row['removalDate']) {
-                $vrms[] = $row['vehicle']['vrm'];
-            }
-        }
-
-        return $vrms;
+        return $this->getServiceLocator()
+            ->get('Entity\LicenceVehicle')
+            ->getCurrentVrmsForLicence($id);
     }
 
     public function getVehiclesTotal($id)

@@ -119,6 +119,17 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
+    protected $currentVrmBundle = array(
+        'properties' => array('vehicle'),
+        'children' => array(
+            'vehicle' => array(
+                'properties' => array(
+                    'vrm'
+                )
+            )
+        )
+    );
+
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
@@ -168,5 +179,28 @@ class LicenceVehicleEntityService extends AbstractEntityService
     public function getVrm($id)
     {
         return $this->get($id, $this->vrmBundle)['vehicle']['vrm'];
+    }
+
+    public function getCurrentVrmsForLicence($licenceId)
+    {
+        $data = $this->getServiceLocator()->get('Helper\Rest')
+            ->makeRestCall(
+                'LicenceVehicle',
+                'GET',
+                array(
+                    'licence' => $licenceId,
+                    'removalDate' => 'NULL',
+                    'limit' => 'all'
+                ),
+                $this->currentVrmBundle
+            );
+
+        $vrms = array();
+
+        foreach ($data['Results'] as $row) {
+            $vrms[] = $row['vehicle']['vrm'];
+        }
+
+        return $vrms;
     }
 }
