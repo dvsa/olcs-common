@@ -62,11 +62,11 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
-        'invokables' => array(
+        'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager'
         ),
-        'services' => array(
-            'address' => new \Common\Service\Address\Address()
+        'invokables' => array(
+            'address' => 'Common\Service\Address\Address'
         ),
         'factories' => array(
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
@@ -75,6 +75,11 @@ return array(
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
+            },
+            'vehicleList' => function ($serviceManager) {
+                $vehicleList = new \Common\Service\VehicleList\VehicleList();
+                $vehicleList->setServiceLocator($serviceManager);
+                return $vehicleList;
             },
             'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
@@ -98,6 +103,7 @@ return array(
             'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
+            'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             }
