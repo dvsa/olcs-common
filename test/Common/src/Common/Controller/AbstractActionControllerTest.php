@@ -14,11 +14,6 @@ namespace CommonTest\Controller;
  */
 class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSetPageTitle()
-    {
-
-    }
-
     /**
      * Tests the getters and setters
      */
