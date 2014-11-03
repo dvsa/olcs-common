@@ -20,6 +20,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_TYPE_VARIATION = 1;
 
     const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
+    const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
 
     /**
      * Define entity for default behaviour
@@ -101,6 +102,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     private $overviewBundle = array(
         'properties' => array(
             'id',
+            'version',
             'createdOn'
         ),
         'children' => array(

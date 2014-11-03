@@ -196,9 +196,16 @@ abstract class AbstractAddressesController extends AbstractController
 
         foreach ($contactDetailsMerge as $contactDetails) {
 
-            if (!isset($contactDetails['contactType']['id'])) {
+            $excludedTypes = array(
+                ContactDetailsEntityService::CONTACT_TYPE_REGISTERED
+            );
+
+            if (!isset($contactDetails['contactType']['id']) ||
+                in_array($contactDetails['contactType']['id'], $excludedTypes)
+            ) {
                 continue;
             }
+
 
             $type = $this->mapFormTypeFromDbType($contactDetails['contactType']['id']);
 
@@ -211,7 +218,7 @@ abstract class AbstractAddressesController extends AbstractController
             $returnData[$type . '_address'] = $contactDetails['address'];
             $returnData[$type . '_address']['countryCode'] = $contactDetails['address']['countryCode']['id'];
 
-            if ($contactDetails['contactType']['id'] == ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE) {
+            if ($contactDetails['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE) {
 
                 $returnData['contact']['email'] = $contactDetails['emailAddress'];
 

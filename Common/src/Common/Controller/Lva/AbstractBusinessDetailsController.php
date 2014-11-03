@@ -59,6 +59,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
              */
             $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
 
+            /**
+             * Note that we can't return early here; the first two conditions
+             * still fall out of their respective branches and render the form
+             */
             if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
                 $this->processCompanyLookup($data, $form);
             } elseif (isset($tradingNames['submit_add_trading_name'])) {
@@ -68,8 +72,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 $this->processSave($tradingNames, $orgId, $data);
                 $this->postSave('business_details');
 
-                if (isset($data['table']['action'])) {
-                    return $this->handleCrudAction($data['table']);
+                $crudAction = $this->getCrudAction(array($data['table']));
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 return $this->completeSection('business_details');
@@ -92,7 +98,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ->get('Data\CompaniesHouse')
                 ->search('numberSearch', $data['data']['companyNumber']['company_number']);
 
-            if ($result['Count'] == 1) {
+            if ($result['Count'] === 1) {
 
                 $form->get('data')->get('name')->setValue($result['Results'][0]['CompanyName']);
                 return;
@@ -103,9 +109,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $message = 'company_number.length.validation.error';
         }
 
+        $translator = $this->getServiceLocator()->get('translator');
+
         $form->get('data')->get('companyNumber')->setMessages(
             array(
-                'company_number' => array($message)
+                'company_number' => array($translator->translate($message))
             )
         );
     }
@@ -273,9 +281,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $registeredAddress = array();
 
         foreach ($data['contactDetails'] as $contactDetail) {
-            if ($contactDetail['contactType']['id'] == AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS) {
+            if ($contactDetail['contactType']['id'] === AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS) {
                 $registeredAddress = $contactDetail['address'];
-                continue;
+                break;
             }
         }
 
@@ -330,6 +338,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $fieldset = $form->get('data');
 
+        // have to manually link up the edit button next to
+        // the business type dropdown
         $element = $fieldset->get('editBusinessType');
         $element->setOptions(
             array_merge(
@@ -404,8 +414,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             ->get('Table')
             ->prepareTable('lva-subsidiaries', $tableData);
 
-        $form->get('table')  // fieldset
-            ->get('table')   // element
+        $form->get('table')
+            ->get('table')
             ->setTable($table);
     }
 

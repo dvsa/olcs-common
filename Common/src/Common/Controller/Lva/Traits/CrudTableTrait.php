@@ -124,7 +124,7 @@ trait CrudTableTrait
 
     /**
      * This method needs to exists for deleteAction to work, the method should be overidden, but cannot be declared
-     *  abstract as it's not always required, so by default we throw an exception
+     * abstract as it's not always required, so by default we throw an exception
      *
      * @throws \BadMethodCallException
      */
