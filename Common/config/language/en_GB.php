@@ -134,8 +134,6 @@ return array(
     'application.your-business.business-type' => 'Business type',
     'application.your-business.people' => 'People',
     'application.your-business.sole-trader' => 'People',
-    'application_operating-centres_authorisation-add' => 'Add operating centre',
-    'application_operating-centres_authorisation-edit' => 'Edit operating centre',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'Advertisements',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'Have you advertised your
         application for this operating centre in your local newspaper?',
@@ -905,6 +903,8 @@ return array(
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
     'lva.section.title.void_discs' => 'Are you sure you would like to void these discs?',
+    'lva.section.title.add_operating_centre' => 'Add operating centre',
+    'lva.section.title.edit_operating_centre' => 'Edit operating centre',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
