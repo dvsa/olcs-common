@@ -68,8 +68,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 $this->processSave($tradingNames, $orgId, $data);
                 $this->postSave('business_details');
 
-                if (isset($data['table']['action'])) {
-                    return $this->handleCrudAction($data['table']);
+                $crudAction = $this->getCrudAction(array($data['table']));
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
                 }
 
                 return $this->completeSection('business_details');
@@ -104,6 +106,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         $translator = $this->getServiceLocator()->get('translator');
+
         $form->get('data')->get('companyNumber')->setMessages(
             array(
                 'company_number' => array($translator->translate($message))
