@@ -72,7 +72,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 $this->processSave($tradingNames, $orgId, $data);
                 $this->postSave('business_details');
 
-                $crudAction = $this->getCrudAction(array($data['table']));
+                // we can't always assume this index exists; varies depending on
+                // org type
+                $crudTables = isset($data['table']) ? array($data['table']) : array();
+                $crudAction = $this->getCrudAction($crudTables);
 
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);

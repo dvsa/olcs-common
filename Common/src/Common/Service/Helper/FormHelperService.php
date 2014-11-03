@@ -31,20 +31,58 @@ class FormHelperService extends AbstractHelperService
     const ALTER_LABEL_APPEND = 1;
     const ALTER_LABEL_PREPEND = 2;
 
+    const CSRF_TIMEOUT = 600;
+
     /**
      * Create a form
      *
      * @param string $formName
+     * @param bool $addCsrf
+     * @param bool $addContinue
+     *
      * @return \Zend\Form\Form
      * @throws \Exception
      */
-    public function createForm($formName)
+    public function createForm($formName, $addCsrf = true, $addContinue = true)
     {
         $class = $this->findForm($formName);
 
         $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
-        return $annotationBuilder->createForm($class);
+        $form = $annotationBuilder->createForm($class);
+
+        if ($addCsrf) {
+            $config = array(
+                'type' => 'Zend\Form\Element\Csrf',
+                'name' => 'security',
+                'options' => array(
+                    'csrf_options' => array(
+                        'messageTemplates' => array(
+                            'notSame' => 'csrf-message'
+                        ),
+                        'timeout' => self::CSRF_TIMEOUT
+                    )
+                )
+            );
+            $form->add($config);
+        }
+
+        if ($addContinue) {
+            $config = [
+                'type' => '\Zend\Form\Element\Button',
+                'name' => 'form-actions[submit]',
+                'options' => [
+                    'label' => 'Continue'
+                ],
+                'attributes' => [
+                    'type' => 'submit',
+                    'class' => 'visually-hidden'
+                ]
+            ];
+            $form->add($config);
+        }
+
+        return $form;
     }
 
     /**
