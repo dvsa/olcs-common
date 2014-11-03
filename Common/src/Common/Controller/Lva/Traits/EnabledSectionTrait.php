@@ -23,7 +23,7 @@ trait EnabledSectionTrait
      * @param array $applicationCompletion
      * @return array
      */
-    protected function setEnabledFlagOnSections($accessibleSections, $applicationCompletion)
+    protected function setEnabledAndCompleteFlagOnSections($accessibleSections, $applicationCompletion)
     {
         $restrictionHelper = $this->getServiceLocator()->get('Helper\Restriction');
         $filter = $this->getServiceLocator()->get('Helper\String');
@@ -44,7 +44,12 @@ trait EnabledSectionTrait
                 $enabled = $restrictionHelper->isRestrictionSatisfied($settings['prerequisite'], $completeSections);
             }
 
-            $sections[$section] = array('enabled' => $enabled);
+            $complete = in_array($section, $completeSections);
+
+            $sections[$section] = array(
+                'enabled'  => $enabled,
+                'complete' => $complete
+            );
         }
 
         return $sections;
