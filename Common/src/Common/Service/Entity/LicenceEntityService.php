@@ -173,6 +173,18 @@ class LicenceEntityService extends AbstractLvaEntityService
                                 'properties' => array(
                                     'id'
                                 )
+                            ),
+                            'phoneContacts' => array(
+                                'properties' => array(
+                                    'phoneNumber',
+                                    'version',
+                                    'id'
+                                ),
+                                'children' => array(
+                                    'phoneContactType' => array(
+                                        'properties' => array('id')
+                                    )
+                                )
                             )
                         )
                     ),
