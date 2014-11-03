@@ -25,6 +25,19 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group entity_services
+     */
+    public function testGetApplications()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getApplications($id));
+    }
+
+    /**
+     * @group entity_services
      *
      * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
      * @expectedExceptionMessage Organisation not found
