@@ -13,7 +13,7 @@ $(function() {
         "*": function() {
           return true;
         },
-        "selector:.highlight-box": requiresInformation,
+        "parent:.js-financial-history": requiresInformation,
         "selector:#file": requiresInformation
       }
     }
