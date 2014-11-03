@@ -103,9 +103,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $message = 'company_number.length.validation.error';
         }
 
+        $translator = $this->getServiceLocator()->get('translator');
         $form->get('data')->get('companyNumber')->setMessages(
             array(
-                'company_number' => array($message)
+                'company_number' => array($translator->translate($message))
             )
         );
     }
