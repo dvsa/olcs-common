@@ -108,7 +108,7 @@ abstract class AbstractSafetyController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFiles(['vehicle-safety', 'lva-crud']);
 
         return $this->render('safety', $form);
     }

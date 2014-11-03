@@ -381,6 +381,10 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         $form = $this->alterActionForm($this->getLicenceForm(), $which)->setData($data);
 
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
         if ($request->isPost() && $form->isValid()) {
 
             $this->saveLicence($form->getData());

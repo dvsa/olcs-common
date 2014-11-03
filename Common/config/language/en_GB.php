@@ -238,7 +238,7 @@ return array(
         operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_disqualifiedLicence' => 'e. Been disqualified from holding or
         obtaining an operator\'s licence by any traffic commissioner?',
-    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve month, have you, your
+    'application_previous-history_licence-history_heldLicence' => '3. Within the last twelve months, have you, your
         company or organisation or your partners or directors purchased the assets or shareholding of any company that,
         to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_personsInformation' => '2. Has any person named in the application
@@ -256,7 +256,7 @@ return array(
     'application_previous-history_licence-history_prevHasLicence' => '1. Does any person named in this application
         (including partners, directors and transport managers) currently hold a goods or public service vehicle
         operator\'s licence in any traffic area?',
-    'application_previous-history_licence-history_prevPurchasedAssets' => '3. Within the last twelve month, have you,
+    'application_previous-history_licence-history_prevPurchasedAssets' => '3. Within the last twelve months, have you,
         your company or organisation or your partners or directors purchased the assets or shareholding of any company
         that, to you knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
     'application_previous-history_licence-history_publicInquiryLicence' => 'd. Ever attended a Public Inquiry before a
@@ -1200,7 +1200,7 @@ return array(
     'selfserve-app-subSection-previous-history-licence-history-licNo' => 'Licence number',
     'selfserve-app-subSection-previous-history-licence-history-purchaseDate' => 'Date of purchase',
     'selfserve-app-subSection-previous-history-licence-history-willSurrender' => 'Will this licence be surrendered if
-        this application is granted',
+        this application is granted?',
     'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationDate' => 'Date of disq.',
     'selfserve-app-subSection-previous-history-previous-licence-columnDisqualificationLength' => 'Length of disq.',
     'selfserve-app-subSection-previous-history-previous-licence-columnHolderName' => 'Name of licence holder',

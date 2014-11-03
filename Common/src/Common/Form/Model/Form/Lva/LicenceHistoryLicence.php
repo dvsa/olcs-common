@@ -21,7 +21,7 @@ class LicenceHistoryLicence
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
      */
     public $formActions = null;
 }

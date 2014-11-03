@@ -114,7 +114,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             ) {
 
                 $data = $data = $this->getServiceLocator()->get('Helper\Data')
-                    ->processDataMap($data, $this->vehicleDataMap);
+                    ->processDataMap($form->getData(), $this->vehicleDataMap);
 
                 $this->saveVehicle($data, $mode);
 

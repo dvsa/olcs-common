@@ -148,30 +148,36 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form = $this->alterForm($form)
             ->setData($data);
 
-        if ($request->isPost() && $form->isValid()) {
-
-            $appData = $this->formatDataForSave($data);
-
-            if (isset($appData['trafficArea']) && $appData['trafficArea']) {
-                $this->getServiceLocator()->get('Entity\Licence')
-                    ->setTrafficArea(
-                        $this->getLicenceId(),
-                        $appData['trafficArea']
-                    );
-            }
-
-            $this->getServiceLocator()->get($lvaEntity)
-                ->save($appData);
+        if ($request->isPost()) {
 
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction);
+                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
             }
 
-            $this->postSave('operating_centres');
+            if ($form->isValid()) {
+                $appData = $this->formatDataForSave($data);
 
-            return $this->completeSection('operating_centres');
+                if (isset($appData['trafficArea']) && $appData['trafficArea']) {
+                    $this->getServiceLocator()->get('Entity\Licence')
+                        ->setTrafficArea(
+                            $this->getLicenceId(),
+                            $appData['trafficArea']
+                        );
+                }
+
+                $this->getServiceLocator()->get($lvaEntity)
+                    ->save($appData);
+
+                if ($crudAction !== null) {
+                    return $this->handleCrudAction($crudAction);
+                }
+
+                $this->postSave('operating_centres');
+
+                return $this->completeSection('operating_centres');
+            }
         }
 
         return $this->render('operating_centres', $form);

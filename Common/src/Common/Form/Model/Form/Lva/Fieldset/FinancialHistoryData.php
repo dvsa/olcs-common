@@ -106,7 +106,7 @@ class FinancialHistoryData
      * @Form\Attributes({
      *     "required": false,
      *     "id": "",
-     *     "class": "long",
+     *     "class": "long   js-financial-history",
      *     "placeholder":
      * "application_previous-history_financial-history.insolvencyDetails.placeholder",
      *     "data-container-class": "highlight-box"
