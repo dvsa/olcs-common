@@ -415,7 +415,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testSetTrafficArea()
+    public function testSetTrafficAreaWithoutLicenceData()
     {
         $licenceId = 4;
         $trafficAreaId = 5;
@@ -428,7 +428,186 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
 
-        $this->expectOneRestCall('Licence', 'PUT', $data);
+        $licenceData = array(
+
+        );
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $data);
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+
+    /**
+     * @group entity_services
+     *
+     * @expectedException \Common\Service\Entity\Exceptions\UnexpectedResponseException
+     * @expectedExceptionMessage Error generating licence
+     */
+    public function testSetTrafficAreaEmptyLicenceNoWithFailedGeneration()
+    {
+        $licenceId = 4;
+        $trafficAreaId = 5;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => 5,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $licenceData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => null,
+            'goodsOrPsv' => array(
+                'id' => 1
+            ),
+            'trafficArea' => array(
+                'id' => 2
+            )
+        );
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $data);
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+
+        $mockLicenceNoGenService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceNoGenService->expects($this->once())
+            ->method('save')
+            ->with(array('licence' => $licenceId))
+            ->will($this->returnValue(array()));
+
+        $this->sm->setService('Entity\LicenceNoGen', $mockLicenceNoGenService);
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testSetTrafficAreaEmptyLicenceNo()
+    {
+        $licenceId = 4;
+        $trafficAreaId = 5;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => 5,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $licenceData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => null,
+            'goodsOrPsv' => array(
+                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'trafficArea' => array(
+                'id' => 'A'
+            )
+        );
+
+        $saveData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => 'OA13'
+        );
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $data);
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+        $this->expectedRestCallInOrder('Licence', 'PUT', $saveData);
+
+        $mockLicenceNoGenService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceNoGenService->expects($this->once())
+            ->method('save')
+            ->with(array('licence' => $licenceId))
+            ->will($this->returnValue(array('id' => 13)));
+
+        $this->sm->setService('Entity\LicenceNoGen', $mockLicenceNoGenService);
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testSetTrafficAreaWithLicenceNoWithoutTrafficAreaChange()
+    {
+        $licenceId = 4;
+        $trafficAreaId = 5;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => 5,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $licenceData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => 'OA13',
+            'goodsOrPsv' => array(
+                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'trafficArea' => array(
+                'id' => 'A'
+            )
+        );
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $data);
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testSetTrafficAreaWithLicenceNo()
+    {
+        $licenceId = 4;
+        $trafficAreaId = 5;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => 5,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $licenceData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => 'OA13',
+            'goodsOrPsv' => array(
+                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'trafficArea' => array(
+                'id' => 'B'
+            )
+        );
+
+        $saveData = array(
+            'id' => $licenceId,
+            'version' => 3,
+            'licNo' => 'OB13'
+        );
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $data);
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+        $this->expectedRestCallInOrder('Licence', 'PUT', $saveData);
 
         $this->sut->setTrafficArea($licenceId, $trafficAreaId);
     }

@@ -114,6 +114,57 @@ class OrganisationEntityService extends AbstractEntityService
     );
 
     /**
+     * Holds the applications bundle
+     *
+     * @var array
+     */
+    private $applicationsBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licences' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
+                ),
+                'children' => array(
+                    'applications' => array(
+                        'properties' => array(
+                            'id',
+                            'createdOn',
+                            'receivedDate',
+                            'isVariation'
+                        ),
+                        'children' => array(
+                            'status' => array(
+                                'properties' => array(
+                                    'id'
+                                )
+                            )
+                        )
+                    ),
+                    'licenceType' => array(
+                        'properties' => array(
+                            'id',
+                            'description'
+                        )
+                    ),
+                    'status' => array(
+                        'properties' => array(
+                            'id',
+                            'description'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    public function getApplications($id)
+    {
+        return $this->get($id, $this->applicationsBundle);
+    }
+
+    /**
      * Get the organisation for the given user
      *
      * @param int $userId

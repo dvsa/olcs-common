@@ -9,6 +9,7 @@ namespace Common\Service\Entity;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Exception\ConfigurationException;
 
 /**
  * Abstract Entity Service
@@ -34,7 +35,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     public function save($data)
     {
         if (($entity = $this->getEntity()) === null) {
-            throw new \Exception('Entity is not defined');
+            throw new ConfigurationException('Entity is not defined');
         }
 
         if (isset($data['id']) && !empty($data['id'])) {
@@ -54,7 +55,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     public function delete($id)
     {
         if (($entity = $this->getEntity()) === null) {
-            throw new \Exception('Entity is not defined');
+            throw new ConfigurationException('Entity is not defined');
         }
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', array('id' => $id));

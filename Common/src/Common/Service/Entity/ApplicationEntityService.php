@@ -30,52 +30,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     protected $entity = 'Application';
 
     /**
-     * Holds the applications bundle
-     *
-     * @var array
-     */
-    private $applicationsForOrganisationBundle = array(
-        'properties' => array(),
-        'children' => array(
-            'licences' => array(
-                'properties' => array(
-                    'id',
-                    'licNo'
-                ),
-                'children' => array(
-                    'applications' => array(
-                        'properties' => array(
-                            'id',
-                            'createdOn',
-                            'receivedDate',
-                            'isVariation'
-                        ),
-                        'children' => array(
-                            'status' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
-                        )
-                    ),
-                    'licenceType' => array(
-                        'properties' => array(
-                            'id',
-                            'description'
-                        )
-                    ),
-                    'status' => array(
-                        'properties' => array(
-                            'id',
-                            'description'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    /**
      * Bundle to check whether the application belongs to the organisation
      *
      * @var array
@@ -541,8 +495,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     public function getForOrganisation($organisationId)
     {
-        return $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall('Organisation', 'GET', $organisationId, $this->applicationsForOrganisationBundle);
+        return $this->getServiceLocator()->get('Entity\Organisation')->getApplications($organisationId);
     }
 
     /**
@@ -561,37 +514,22 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         $applicationData = array(
             'licence' => $licence['id'],
-            'status' => 'apsts_not_submitted',
+            'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
             'isVariation' => false
         );
 
         $application = $this->save($applicationData);
 
+        $applicationCompletionData = [
+            'application' => $application['id'],
+        ];
+
+        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
+
         return array(
             'application' => $application['id'],
             'licence' => $licence['id']
         );
-    }
-
-    /**
-     * Create the application, and the completion record
-     *
-     * @param array $data
-     * @return array
-     */
-    public function save($data)
-    {
-        $application = parent::save($data);
-
-        if (!isset($data['id'])) {
-            $applicationCompletionData = [
-                'application' => $application['id'],
-            ];
-
-            $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
-        }
-
-        return $application;
     }
 
     /**
@@ -656,7 +594,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
     {
         $data = $this->get($id, $this->applicationTypeBundle);
 
-        if (isset($data['isVariation']) && $data['isVariation']) {
+        if (!isset($data['isVariation'])) {
+            throw new Exceptions\UnexpectedResponseException('Is variation flag not found');
+        }
+
+        if ($data['isVariation']) {
             return self::APPLICATION_TYPE_VARIATION;
         }
 
