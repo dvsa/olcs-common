@@ -310,7 +310,7 @@ abstract class AbstractVehiclesController extends AbstractController
     {
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-        $translationKey = 'vehicle-belongs-to-another-licence-message-' . $this->lva;
+        $translationKey = 'vehicle-belongs-to-another-licence-message-' . $this->location;
 
         // Internally we can add the licence numbers
         if ($this->location === 'internal') {
