@@ -68,6 +68,7 @@ class PersonEntityService extends AbstractEntityService
             'organisation' => $orgId,
             'limit' => self::ORG_PERSON_LIMIT
         );
+
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('OrganisationPerson', 'GET', $query, $this->organisationBundle);
     }

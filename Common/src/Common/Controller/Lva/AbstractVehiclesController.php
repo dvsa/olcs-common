@@ -166,8 +166,6 @@ abstract class AbstractVehiclesController extends AbstractController
             }
         }
 
-        $data['id'] = $this->params('child_id');
-
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
         if ($mode == 'add') {

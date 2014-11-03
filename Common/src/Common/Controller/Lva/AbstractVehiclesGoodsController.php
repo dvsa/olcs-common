@@ -89,7 +89,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
-        $id = $this->params('id');
+        $id = $this->params('child_id');
         $data = array();
 
         if ($request->isPost()) {

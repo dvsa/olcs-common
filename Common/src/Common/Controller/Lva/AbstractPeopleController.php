@@ -45,7 +45,7 @@ abstract class AbstractPeopleController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
-                return $this->handleCrudAction($crudAction, array('people'));
+                return $this->handleCrudAction($crudAction);
             }
 
             return $this->completeSection('people');
