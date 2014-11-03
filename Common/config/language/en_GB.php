@@ -383,9 +383,7 @@ return array(
         open to passengers to be carried at separate fares.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
-    'application_vehicle-safety_vehicle-add' => 'Add vehicle',
     'application_vehicle-safety_vehicle-delete' => 'Remove vehicle(s)',
-    'application_vehicle-safety_vehicle-edit' => 'Edit vehicle',
     'application_vehicle-safety_vehicle-history.table.disc-no' => 'Disc no',
     'application_vehicle-safety_vehicle-history.table.licence' => 'Licence',
     'application_vehicle-safety_vehicle-history.table.removed' => 'Removed date',
@@ -905,6 +903,8 @@ return array(
     'lva.section.title.edit_operating_centre' => 'Edit operating centre',
     'lva.section.title.add_person' => 'Add person',
     'lva.section.title.edit_person' => 'Edit person',
+    'lva.section.title.add_vehicle' => 'Add vehicle',
+    'lva.section.title.edit_vehicle' => 'Edit vehicle',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
