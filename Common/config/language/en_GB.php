@@ -1317,7 +1317,7 @@ return array(
     'variation.print' => 'Print application',
     'vehicle-and-safety' => 'Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
-    'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
+    'vehicle-belongs-to-another-licence-message-application' => 'This vehicle is specified on another licence. Please
         confirm you would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-internal' => 'This vehicle is specified on another licence: %s. Please
         confirm you would like to continue adding this vehicle',
