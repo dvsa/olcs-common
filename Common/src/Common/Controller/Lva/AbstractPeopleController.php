@@ -310,7 +310,7 @@ abstract class AbstractPeopleController extends AbstractController
                     );
 
                     $this->getServiceLocator()
-                        ->get('Entity\Person')
+                        ->get('Entity\OrganisationPerson')
                         ->save($organisationPersonData);
                 }
             }
