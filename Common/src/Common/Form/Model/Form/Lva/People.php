@@ -20,7 +20,7 @@ class People
 
     /**
      * @Form\Name("guidance")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Guidance")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Guidance")
      */
     public $guidance = null;
 

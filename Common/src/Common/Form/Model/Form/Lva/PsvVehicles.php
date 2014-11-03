@@ -21,19 +21,19 @@ class PsvVehicles
 
     /**
      * @Form\Name("small")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Small")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Small")
      */
     public $small = null;
 
     /**
      * @Form\Name("medium")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Medium")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Medium")
      */
     public $medium = null;
 
     /**
      * @Form\Name("large")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Large")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Large")
      */
     public $large = null;
 

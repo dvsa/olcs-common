@@ -21,7 +21,7 @@ class OperatingCentre
     /**
      * @Form\Name("data")
      * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentreData")
      */
     public $data = null;
 
@@ -31,7 +31,7 @@ class OperatingCentre
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements"
      * })
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Advertisements")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Advertisements")
      */
     public $advertisements = null;
 
@@ -52,7 +52,7 @@ class OperatingCentre
     /**
      * @Form\Name("operatingCentre")
      * @Form\Options({})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\OperatingCentre")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
      */
     public $operatingCentre = null;
 }

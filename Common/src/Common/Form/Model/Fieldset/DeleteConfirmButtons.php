@@ -8,12 +8,12 @@ use Zend\Form\Annotation as Form;
  * @Form\Name("form-actions")
  * @Form\Attributes({"class":"actions-container"})
  */
-class JourneyButtons2
+class DeleteConfirmButtons
 {
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
      * @Form\Options({
-     *     "label": "Ok",
+     *     "label": "Remove",
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },

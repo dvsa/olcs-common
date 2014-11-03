@@ -15,7 +15,7 @@ class GenericConfirmation
     /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\JourneyConfirmButtons")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\ConfirmButtons")
      */
     public $formActions = null;
 }

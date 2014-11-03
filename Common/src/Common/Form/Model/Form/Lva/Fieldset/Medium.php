@@ -1,13 +1,13 @@
 <?php
 
-namespace Common\Form\Model\Fieldset;
+namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
 /**
- * @Form\Name("large")
+ * @Form\Name("medium")
  */
-class Large
+class Medium
 {
     /**
      * @Form\Options({"label":"row"})
