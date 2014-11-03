@@ -42,8 +42,10 @@ abstract class AbstractPeopleController extends AbstractController
             $data = (array)$request->getPost();
             $this->postSave('people');
 
-            if (isset($data['table']['action'])) {
-                return $this->handleCrudAction($data['table'], 'people');
+            $crudAction = $this->getCrudAction(array($data['table']));
+
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction, array('people'));
             }
 
             return $this->completeSection('people');
@@ -53,8 +55,8 @@ abstract class AbstractPeopleController extends AbstractController
 
         $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-people', $this->getTableData($orgId));
 
-        $form->get('table')  // fieldset
-            ->get('table')   // element
+        $form->get('table')
+            ->get('table')
             ->setTable($table);
 
         $this->alterForm($form, $table, $orgData);
@@ -176,7 +178,7 @@ abstract class AbstractPeopleController extends AbstractController
         $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
-            $data = $this->formatCrudDataForSave($data);
+            $data = $this->formatCrudDataForSave($form->getData());
 
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
@@ -229,13 +231,7 @@ abstract class AbstractPeopleController extends AbstractController
      */
     private function formatCrudDataForSave($data)
     {
-        $dob = $data['data']['birthDate'];
-        return array_merge(
-            $data['data'],
-            array(
-                'birthDate' => $dob['year'] . '-' . $dob['month'] . '-' . $dob['day']
-            )
-        );
+        return $data['data'];
     }
 
     /**
