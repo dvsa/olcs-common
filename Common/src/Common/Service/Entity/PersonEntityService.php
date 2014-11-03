@@ -40,9 +40,6 @@ class PersonEntityService extends AbstractEntityService
         )
     );
 
-    /**
-     *
-     */
     private $personBundle = array(
         'properties' => array(
             'version',
@@ -55,7 +52,7 @@ class PersonEntityService extends AbstractEntityService
         )
     );
 
-    public function construct()
+    public function __construct()
     {
         $this->organisationBundle['children']['person'] = $this->personBundle;
     }

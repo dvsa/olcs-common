@@ -14,7 +14,7 @@ namespace Common\Service\Entity;
  */
 class WorkshopEntityService extends AbstractEntityService
 {
-    protected $entity = 'workshop';
+    protected $entity = 'Workshop';
 
     private $licenceWorkshopBundle = array(
         'properties' => array(

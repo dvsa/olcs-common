@@ -9,7 +9,7 @@ namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\TrafficAreaEntityService;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
@@ -76,7 +76,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
             // validate only if postcode is not empty and recognized
             if ($value && $trafficAreaId) {
                 if ($niFlag == 'Y'
-                    && $trafficAreaId !== LicenceEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                    && $trafficAreaId !== TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
                 ) {
                     $this->error('notInNorthernIreland');
                     return false;

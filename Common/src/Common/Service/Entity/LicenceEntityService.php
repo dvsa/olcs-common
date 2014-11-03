@@ -34,31 +34,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
 
     /**
-     * Northern Ireland Traffic Area Code
-     */
-    const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
-
-    /**
      * Define entity for default behaviour
      *
      * @var string
      */
     protected $entity = 'Licence';
-
-    /**
-     * Holds the cached Traffic Area details
-     *
-     * @var string
-     */
-    protected $trafficArea;
-
-    /**
-     * Cache the TA value options
-     *
-     * @var array
-     */
-    private $trafficAreaValueOptions;
-
 
     /**
      * Holds the overview bundle
@@ -334,18 +314,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-    /**
-     * Licence details for traffic area
-     *
-     * @var array
-     */
-    protected $licDetailsForTaBundle = array(
-        'properties' => array(
-            'id',
-            'version'
-        )
-    );
-
     protected $licenceNoGenBundle = array(
         'properties' => array(
             'id',
@@ -535,6 +503,21 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $count;
     }
 
+    public function getTotalAuths($id)
+    {
+        return $this->get($id, $this->totalAuthorisationsBundle);
+    }
+
+    public function getPsvDiscsRequestData($id)
+    {
+        return $this->get($id, $this->psvDiscsBundle);
+    }
+
+    public function getPsvDiscs($id)
+    {
+        return $this->get($id, $this->psvDiscsBundle)['psvDiscs'];
+    }
+
     /**
      * Get traffic area for licence
      *
@@ -543,87 +526,28 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function getTrafficArea($id)
     {
-        if ($this->trafficArea === null) {
-            $licence = $this->get($id, $this->trafficAreaBundle);
+        $licence = $this->get($id, $this->trafficAreaBundle);
 
-            if (isset($licence['trafficArea'])) {
-                $this->trafficArea = $licence['trafficArea'];
-            }
+        if (isset($licence['trafficArea'])) {
+            return $licence['trafficArea'];
         }
 
-        return $this->trafficArea;
+        return null;
     }
 
     /**
      * Set traffic area to application's licence based on area id
      *
-     * @param int $identifier
-     * @param int $id
+     * @param int $licenceId
+     * @param int $trafficAreaId
      */
-    public function setTrafficArea($identifier, $id = null)
+    public function setTrafficArea($licenceId, $trafficAreaId = null)
     {
-        $licenceDetails = $this->getLicenceDetailsToUpdateTrafficArea($identifier);
+        $this->forcePut($licenceId, array('trafficArea' => $trafficAreaId));
 
-        if (isset($licenceDetails['version'])) {
-
-            $data = array(
-                'id' => $licenceDetails['id'],
-                'version' => $licenceDetails['version'],
-                'trafficArea' => $id
-            );
-
-            $this->save($data);
-
-            if ($id) {
-                $this->generateLicence($identifier);
-            }
+        if ($trafficAreaId) {
+            $this->generateLicence($licenceId);
         }
-    }
-
-    /**
-     * Get Traffic Area value options for select element
-     *
-     * @return array
-     */
-    public function getTrafficAreaValueOptions()
-    {
-        if ($this->trafficAreaValueOptions === null) {
-            $trafficArea = $this->get(array(), $this->trafficAreaValuesBundle);
-
-            $this->trafficAreaValueOptions = array();
-            $results = $trafficArea['Results'];
-
-            if (!empty($results)) {
-                usort(
-                    $results,
-                    function ($a, $b) {
-                        return strcmp($a['name'], $b['name']);
-                    }
-                );
-
-                foreach ($results as $key => $value) {
-                    // Skip Northern Ireland Traffic Area
-                    if ($value['id'] == self::NORTHERN_IRELAND_TRAFFIC_AREA_CODE) {
-                        continue;
-                    }
-
-                    $this->trafficAreaValueOptions[$value['id']] = $value['name'];
-                }
-            }
-        }
-
-        return $this->trafficAreaValueOptions;
-    }
-
-    /**
-     * Get licence details to update traffic area
-     *
-     * @params int $id
-     * @return array
-     */
-    protected function getLicenceDetailsToUpdateTrafficArea($id)
-    {
-        return $this->get($id, $this->licDetailsForTaBundle);
     }
 
     /**
@@ -632,7 +556,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @param string $licenceId
      * @return string|bool
      */
-    public function generateLicence($licenceId)
+    protected function generateLicence($licenceId)
     {
         $licence = $this->get($licenceId, $this->licenceNoGenBundle);
 
@@ -649,55 +573,33 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $licenceGen = $this->getServiceLocator()->get('Entity\LicenceNoGen')->save(array('licence' => $licenceId));
 
-            if (isset($licenceGen['id']) ) {
-
-                $saveData['licNo'] = sprintf(
-                    '%s%s%s',
-                    $licence['goodsOrPsv']['id'] === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
-                    $licence['trafficArea']['id'],
-                    $licenceGen['id']
-                );
-
-                $this->save($saveData);
-
-                return $saveData['licNo'];
-
-            } else {
-                throw new \Exception('Error licence generation');
+            if (!isset($licenceGen['id']) ) {
+                throw new Exceptions\UnexpectedResponseException('Error generating licence');
             }
-        } else {
 
-            $previousTrafficAreaCode = substr($licence['licNo'], 1, 1);
+            $saveData['licNo'] = sprintf(
+                '%s%s%s',
+                $licence['goodsOrPsv']['id'] === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
+                $licence['trafficArea']['id'],
+                $licenceGen['id']
+            );
 
-            if ($previousTrafficAreaCode != $licence['trafficArea']['id']) {
-                $saveData['licNo'] = sprintf(
-                    '%s%s%s',
-                    substr($licence['licNo'], 0, 1),
-                    $licence['trafficArea']['id'],
-                    substr($licence['licNo'], 2)
-                );
+            $this->save($saveData);
 
-                $this->save($saveData);
-
-                return $saveData['licNo'];
-            }
+            return;
         }
 
-        return false;
-    }
+        if (substr($licence['licNo'], 1, 1) != $licence['trafficArea']['id']) {
+            $saveData['licNo'] = sprintf(
+                '%s%s%s',
+                substr($licence['licNo'], 0, 1),
+                $licence['trafficArea']['id'],
+                substr($licence['licNo'], 2)
+            );
 
-    public function getTotalAuths($id)
-    {
-        return $this->get($id, $this->totalAuthorisationsBundle);
-    }
+            $this->save($saveData);
+        }
 
-    public function getPsvDiscs($id)
-    {
-        return $this->get($id, $this->psvDiscsBundle)['psvDiscs'];
-    }
-
-    public function getPsvDiscsRequestData($id)
-    {
-        return $this->get($id, $this->psvDiscsBundle);
+        return;
     }
 }

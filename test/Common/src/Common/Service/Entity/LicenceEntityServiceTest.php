@@ -1,0 +1,435 @@
+<?php
+
+/**
+ * Licence Entity Service Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+namespace CommonTest\Service\Entity;
+
+use Common\Service\Entity\LicenceEntityService;
+
+/**
+ * Licence Entity Service Test
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
+class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
+{
+    protected function setUp()
+    {
+        $this->sut = new LicenceEntityService();
+
+        parent::setUp();
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOverview()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getOverview($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetTypeOfLicenceData()
+    {
+        $id = 7;
+
+        $response = array(
+            'version' => 3,
+            'niFlag' => 'Y',
+            'licenceType' => array(
+                'id' => 1
+            ),
+            'goodsOrPsv' => array(
+                'id' => 2
+            )
+        );
+
+        $expected = array(
+            'version' => 3,
+            'niFlag' => 'Y',
+            'licenceType' => 1,
+            'goodsOrPsv' => 2
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetTypeOfLicenceDataWithNulls()
+    {
+        $id = 7;
+
+        $response = array(
+            'version' => 3,
+            'niFlag' => 'Y',
+            'licenceType' => array(),
+            'goodsOrPsv' => array()
+        );
+
+        $expected = array(
+            'version' => 3,
+            'niFlag' => 'Y',
+            'licenceType' => NULL,
+            'goodsOrPsv' => NULL
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDoesBelongToOrganisationWithoutOrgId()
+    {
+        $id = 7;
+        $orgId = 3;
+
+        $response = array(
+
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertFalse($this->sut->doesBelongToOrganisation($id, $orgId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDoesBelongToOrganisationWithMisMatchedOrgId()
+    {
+        $id = 7;
+        $orgId = 3;
+
+        $response = array(
+            'organisation' => array(
+                'id' => 5
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertFalse($this->sut->doesBelongToOrganisation($id, $orgId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDoesBelongToOrganisation()
+    {
+        $id = 7;
+        $orgId = 3;
+
+        $response = array(
+            'organisation' => array(
+                'id' => 3
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertTrue($this->sut->doesBelongToOrganisation($id, $orgId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetHeaderParams()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getHeaderParams($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetAddressesData()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getAddressesData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetSafetyData()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getSafetyData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVehiclesData()
+    {
+        $id = 7;
+
+        $response = array(
+            'licenceVehicles' => 'foo'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getVehiclesData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVehiclesPsvData()
+    {
+        $id = 7;
+
+        $response = array(
+            'licenceVehicles' => 'foo'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getVehiclesPsvData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetCurrentVrms()
+    {
+        $id = 7;
+
+        $mockLicenceVehicleService = $this->getMock('\stdClass', array('getCurrentVrmsForLicence'));
+        $mockLicenceVehicleService->expects($this->once())
+            ->method('getCurrentVrmsForLicence')
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleService);
+
+        $this->assertEquals('RESPONSE', $this->sut->getCurrentVrms($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVehiclesTotal()
+    {
+        $id = 7;
+
+        $response = array(
+            'licenceVehicles' => array(
+                'foo',
+                'bar'
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(2, $this->sut->getVehiclesTotal($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVehiclesPsvTotal()
+    {
+        $id = 7;
+        $type = 1;
+
+        $response = array(
+            'licenceVehicles' => array(
+                array(
+                    'vehicle' => array(
+                        'psvType' => array(
+                            'id' => 1
+                        )
+                    )
+                ),
+                array(
+                    'vehicle' => array(
+                        'psvType' => array(
+                            'id' => 1
+                        )
+                    )
+                ),
+                array(
+                    'vehicle' => array(
+                        'psvType' => array(
+                            'id' => 3
+                        )
+                    )
+                ),
+                array(
+                    'vehicle' => array(
+                        'psvType' => array(
+                            'id' => 4
+                        )
+                    )
+                ),
+                array(
+                    'vehicle' => array(
+                        'psvType' => array()
+                    )
+                )
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(2, $this->sut->getVehiclesPsvTotal($id, $type));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetTrafficAreaWithoutTrafficArea()
+    {
+        $id = 7;
+
+        $response = array(
+            'foo' => 'bar'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(NULL, $this->sut->getTrafficArea($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetTrafficArea()
+    {
+        $id = 7;
+
+        $response = array(
+            'trafficArea' => 'foo'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getTrafficArea($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetTotalAuths()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTotalAuths($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetPsvDiscsRequestData()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getPsvDiscsRequestData($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetPsvDiscs()
+    {
+        $id = 7;
+
+        $response = array(
+            'psvDiscs' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getPsvDiscs($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testSetTrafficAreaWithNullTrafficArea()
+    {
+        $licenceId = 4;
+        $trafficAreaId = null;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => null,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'PUT', $data);
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testSetTrafficArea()
+    {
+        $licenceId = 4;
+        $trafficAreaId = 5;
+
+        $data = array(
+            'id' => $licenceId,
+            'trafficArea' => 5,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'PUT', $data);
+
+        $this->sut->setTrafficArea($licenceId, $trafficAreaId);
+    }
+}

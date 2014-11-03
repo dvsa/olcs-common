@@ -19,7 +19,7 @@ class PrivateHireLicenceEntityService extends AbstractEntityService
      *
      * @var string
      */
-    protected $entity = 'privateHireLicence';
+    protected $entity = 'PrivateHireLicence';
 
     protected $dataBundle = array(
         'properties' => array(

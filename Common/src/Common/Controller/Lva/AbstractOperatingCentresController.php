@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\TrafficAreaEntityService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -503,7 +504,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 ->get('Entity\Licence')
                 ->setTrafficArea(
                     $this->getLicenceId(),
-                    LicenceEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                    TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
                 );
             return;
         }
@@ -696,7 +697,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             return $form;
         }
         $options = $this->getServiceLocator()
-            ->get('Entity\Licence')->getTrafficAreaValueOptions();
+            ->get('Entity\TrafficArea')->getValueOptions();
 
         $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
             ->remove('trafficAreaInfoNameExists')

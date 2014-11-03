@@ -215,7 +215,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
 
             $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
-                $licenceService->getTrafficAreaValueOptions()
+                $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions()
             );
         }
 
