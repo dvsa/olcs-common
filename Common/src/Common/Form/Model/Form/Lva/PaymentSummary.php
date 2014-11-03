@@ -20,7 +20,7 @@ class PaymentSummary
     public $submitDashboard = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary secondary"})
+     * @Form\Attributes({"type":"submit","class":"action--secondary large"})
      * @Form\Options({"label": "summary-overview.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */
