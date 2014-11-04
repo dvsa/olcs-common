@@ -27,7 +27,11 @@ class ConvictionsPenaltiesData
      *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
-     * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator"})
+     * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",
+     *     "options": {
+     *         "name": "noConviction"
+     *      }
+     * })
      */
     public $question = null;
 

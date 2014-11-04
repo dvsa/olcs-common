@@ -76,8 +76,10 @@ trait CrudTableTrait
 
     /**
      * Once the CRUD entity has been saved, handle the necessary redirect
+     *
+     * @param string $prefix - if our actions aren't just 'add', 'edit', provide a prefix
      */
-    protected function handlePostSave()
+    protected function handlePostSave($prefix = null)
     {
         $this->postSave($this->section);
 
@@ -89,10 +91,13 @@ trait CrudTableTrait
         );
 
         if ($this->isButtonPressed('addAnother')) {
-            $routeParams['action'] = 'add';
+            $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
+            $routeParams['action'] = $action;
         }
 
-        // @todo maybe add a flash message in here
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
+            'section.' . $this->params('action') . '.' . $this->section
+        );
 
         return $this->redirect()->toRoute(null, $routeParams);
     }

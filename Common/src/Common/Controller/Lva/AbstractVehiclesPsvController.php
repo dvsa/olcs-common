@@ -284,7 +284,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
                 $this->saveVehicle($data, $mode);
 
-                return $this->handlePostSave();
+                return $this->handlePostSave($type);
             }
         }
 

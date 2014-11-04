@@ -22,8 +22,17 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'noLicence' => 'Please add at least one licence'
+        'noLicence' => 'oneLicenceRequiredError',
+        'noConviction' => 'oneConvictionRequiredError'
     );
+
+    private $name;
+
+    public function __construct($options = array())
+    {
+        $this->name = isset($options['name']) ? $options['name'] : 'noLicence';
+        parent::__construct(array());
+    }
 
     /**
      * Custom validation for licence field
@@ -36,7 +45,7 @@ class LicenceHistoryLicenceValidator extends AbstractValidator
     {
         if ($context['table']['rows'] < 1 && $value == 'Y') {
 
-            $this->error('noLicence');
+            $this->error($this->name);
             return false;
         }
 

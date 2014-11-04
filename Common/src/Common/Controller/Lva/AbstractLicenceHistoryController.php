@@ -389,7 +389,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
             $this->saveLicence($form->getData());
 
-            return $this->handlePostSave();
+            return $this->handlePostSave($which);
         }
 
         return $this->render($mode . '_licence_history', $form);
