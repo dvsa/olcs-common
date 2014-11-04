@@ -14,6 +14,26 @@ namespace CommonTest\Controller;
  */
 class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests the getters and setters
+     */
+    public function testGettersAndSetters()
+    {
+        $methods = [
+            'PageTitle' => 'Page Title',
+            'PageSubTitle' => 'Page Sub Title',
+            'InlineScripts' => 'Inline Scripts',
+            'LoadedData' => ['id' => 1]
+        ];
+
+        $sut = $this->getNewSut();
+
+        foreach ($methods as $methodName => $methodValue) {
+            $sut->{'set' . $methodName}($methodValue);
+            $this->assertSame($methodValue, $sut->{'get' . $methodName}());
+        }
+    }
+
     public function testSetBreadcrumb()
     {
         $navRoutes = [
