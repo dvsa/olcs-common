@@ -151,14 +151,14 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             }
         }
 
-        if ($data['totAuthSmallVehicles'] != 0) {
+        if ($data['totAuthSmallVehicles'] === 0) {
             $formHelper->remove($form, 'smallVehiclesIntention');
             return;
         }
 
         $formHelper->remove($form, 'nineOrMore');
 
-        if ($data['totAuthMediumVehicles'] == 0 && $data['totAuthLargeVehicles'] == 0) {
+        if ($data['totAuthMediumVehicles'] === 0 && $data['totAuthLargeVehicles'] === 0) {
             $formHelper->remove($form, 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmationLabel');
             $formHelper->remove($form, 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmation');
         }
