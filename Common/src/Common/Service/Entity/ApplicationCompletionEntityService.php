@@ -415,6 +415,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
              */
             $totalAuth = $applicationData['totAuth' . ucfirst($type). 'Vehicles'];
 
+            if ($totalAuth === null) {
+                // bail early; a null (as opposed to a zero) means we haven't
+                // answered this question, so how can we be complete?
+                return self::STATUS_INCOMPLETE;
+            }
+
             $totalVehicles = 0;
 
             foreach ($applicationData['licence']['licenceVehicles'] as $vehicle) {
