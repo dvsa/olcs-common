@@ -89,7 +89,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             );
         }
 
-        if ($request->isPost()) {
+        if ($request->isPost() && $form->isValid()) {
+
+            $this->save($form->getData());
+            $this->postSave('vehicles_psv');
 
             $crudAction = $this->getCrudAction($data);
 
@@ -106,18 +109,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 return $this->handleCrudAction($crudAction);
             }
 
-            if ($form->isValid()) {
-
-                $this->save($form->getData());
-
-                $this->postSave('vehicles_psv');
-
-                if ($crudAction !== null) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                return $this->completeSection('vehicles_psv');
-            }
+            return $this->completeSection('vehicles_psv');
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('vehicle-psv');
