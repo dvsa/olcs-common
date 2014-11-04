@@ -60,23 +60,45 @@ class PersonEntityService extends AbstractEntityService
     /**
      * Get all people for a given organisation
      *
-     * @param type $orgId
+     * @param int $orgId
+     * @param int $limit
      */
-    public function getAllForOrganisation($orgId)
+    public function getAllForOrganisation($orgId, $limit = null)
     {
+        if ($limit === null) {
+            $limit = self::ORG_PERSON_LIMIT;
+        }
         $query = array(
             'organisation' => $orgId,
-            'limit' => self::ORG_PERSON_LIMIT
+            'limit' => $limit
         );
 
+        // @TODO move to OrganisationPerson, make wrapper call
         return $this->getServiceLocator()->get('Helper\Rest')
             ->makeRestCall('OrganisationPerson', 'GET', $query, $this->organisationBundle);
     }
 
     /**
+     * Get a single person for a given organisation
+     *
+     * @param int $orgId
+     */
+    public function getFirstForOrganisation($orgId)
+    {
+        $results = $this->getAllForOrganisation($orgId, 1);
+
+        if ($results['Count'] !== 0) {
+            $data = $results['Results'][0]['person'];
+        } else {
+            $data = array();
+        }
+        return $data;
+    }
+
+    /**
      * Get a person by ID
      *
-     * @param type $id
+     * @param int $id
      */
     public function getById($id)
     {

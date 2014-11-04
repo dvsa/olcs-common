@@ -905,6 +905,7 @@ return array(
     'lva.section.title.edit_person' => 'Edit person',
     'lva.section.title.add_vehicle' => 'Add vehicle',
     'lva.section.title.edit_vehicle' => 'Edit vehicle',
+    'lva.section.title.person' => 'Your details',
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',

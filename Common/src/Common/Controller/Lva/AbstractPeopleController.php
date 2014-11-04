@@ -30,11 +30,21 @@ abstract class AbstractPeopleController extends AbstractController
      */
     public function indexAction()
     {
-        $request = $this->getRequest();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
             ->get('Entity\Organisation')
             ->getType($orgId);
+
+        if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
+            return $this->handleSoleTrader($orgId, $orgData);
+        }
+
+        /**
+         * Could bung this in another method, but since it's everything other
+         * than sole trader, it makes no real difference
+         */
+
+        $request = $this->getRequest();
 
         $this->populatePeople($orgId, $orgData);
 
@@ -64,6 +74,35 @@ abstract class AbstractPeopleController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('people', $form);
+    }
+
+    private function handleSoleTrader($orgId, $orgData)
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } else {
+            $person = $this->getServiceLocator()
+                ->get('Entity\Person')
+                ->getFirstForOrganisation($orgId);
+            $data = $this->formatCrudDataForForm($person);
+        }
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $form = $formHelper
+            ->createForm('Lva\SoleTrader')
+            ->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+            $data = $this->formatCrudDataForSave($form->getData());
+            $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
+
+            $this->postSave('people');
+            return $this->completeSection('people');
+        }
+
+        return $this->render('person', $form);
     }
 
     /**
