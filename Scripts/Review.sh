@@ -46,7 +46,7 @@ echo "h2.Run unit tests"
 
 echo "{code}"
 
-cd test && ../vendor/bin/phpunit --coverage-php ../data/review/coverage.cov
+cd test && ../vendor/bin/phpunit --coverage-php `pwd`/review/coverage.cov
 
 echo "{code}"
 
@@ -54,7 +54,7 @@ echo "h2.Checking coverage of diff"
 
 echo "{code}"
 
-#cd .. && git diff origin/develop > data/review/patch.txt && vendor/bin/phpcov patch-coverage --patch data/review/patch.txt data/review/coverage.cov
+cd .. && git diff origin/develop > test/review/patch.txt && vendor/phpunit/phpcov/phpcov patch-coverage --patch test/review/patch.txt --path-prefix `pwd`/ test/review/coverage.cov
 
 echo "{code}"
 
