@@ -22,10 +22,6 @@ return array(
     ),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Checkbox'
-        ),
-        array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
             'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm'),
@@ -46,6 +42,10 @@ return array(
             'title' => $translationPrefix . '.removed',
             'formatter' => 'Date',
             'name' => 'deletedDate'
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
         )
     )
 );
