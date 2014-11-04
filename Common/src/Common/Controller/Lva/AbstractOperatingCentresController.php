@@ -180,6 +180,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
         }
 
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+
         return $this->render('operating_centres', $form);
     }
 
@@ -405,6 +407,12 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         if (!$hasProcessedFiles && !$hasProcessedPostcode && $request->isPost() && $form->isValid()) {
+
+            $fileListData = array();
+            if (isset($data['advertisements']['file']['list'])) {
+                $fileListData = $data['advertisements']['file']['list'];
+            }
+
             $data = $this->formatCrudDataForSave($form->getData());
 
             $saved = $this->getServiceLocator()->get('Entity\OperatingCentre')->save($data['operatingCentre']);
@@ -422,7 +430,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 $operatingCentreId = $data['operatingCentre']['id'];
             }
 
-            $this->saveDocuments($data, $operatingCentreId);
+            if (!empty($fileListData)) {
+                $this->saveDocuments($fileListData ,$operatingCentreId);
+            }
 
             if ($this->isPsv()) {
                 $data['applicationOperatingCentre']['adPlaced'] = 0;
@@ -449,9 +459,13 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $lvaEntity = $this->getLvaOperatingCentreEntity();
 
-        $this->getServiceLocator()
-            ->get($lvaEntity)
-            ->delete($this->params('child_id'));
+        $service = $this->getServiceLocator()->get($lvaEntity);
+
+        $ids = explode(',', $this->params('child_id'));
+
+        foreach ($ids as $id) {
+            $service->delete($id);
+        }
     }
 
     protected function formatCrudDataForSave($data)
@@ -545,11 +559,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function saveDocuments($data, $operatingCentreId)
     {
-        if (!isset($data['applicationOperatingCentre']['file']['list'])) {
-            return;
-        }
-
-        foreach ($data['applicationOperatingCentre']['file']['list'] as $file) {
+        foreach ($data as $file) {
             $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
                 'Document',
                 'PUT',
