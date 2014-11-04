@@ -42,7 +42,7 @@ abstract class CrudAbstract extends AbstractData implements CrudInterface
      */
     public function create(array $data)
     {
-        return $this->getRestClient()->{__FUNCTION__}('', $data);
+        return $this->getRestClient()->{__FUNCTION__}('', array('data' => json_encode($data)));
     }
 
     /**
