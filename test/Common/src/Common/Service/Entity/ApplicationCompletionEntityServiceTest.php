@@ -97,7 +97,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
      * @dataProvider providerForTestUpdateCompletionStatuses
      */
     public function testUpdateCompletionStatuses(
-        $currentSection, $completionData, $applicationData, $expectedCompletionStatusData
+        $currentSection,
+        $completionData,
+        $applicationData,
+        $expectedCompletionStatusData
     ) {
         $applicationId = 3;
 

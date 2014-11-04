@@ -123,6 +123,22 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     );
 
     /**
+     * Vehicle PSV bundle
+     *
+     * @var array
+     */
+    protected $vehiclesPsvBundle = array(
+        'properties' => array(
+            'id',
+            'version',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'hasEnteredReg'
+        )
+    );
+
+    /**
      * Get operating centres data
      *
      * @param int $id
@@ -159,5 +175,10 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     public function getTotalVehicleAuthorisation($id, $type = '')
     {
         return $this->get($id, $this->totalAuthorisationBundle)['totAuth' . $type . 'Vehicles'];
+    }
+
+    public function getDataForVehiclesPsv($id)
+    {
+        return $this->get($id, $this->vehiclesPsvBundle);
     }
 }

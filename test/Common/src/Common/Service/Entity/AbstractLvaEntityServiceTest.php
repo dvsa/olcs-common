@@ -163,4 +163,17 @@ class AbstractLvaEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getDocuments($id, $categoryName, $documentSubCategoryName));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForVehiclesPsv()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForVehiclesPsv($id));
+    }
 }

@@ -207,22 +207,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $this->alterFormForGoodsLicences($form, $fieldsetMap);
         }
 
-        /*
-         * @TODO: re-implement if we do reviews & decs in the same way (unlikely)
-        if ($options['isReview']) {
-            $form->get($fieldsetMap['dataTrafficArea'])->remove('trafficArea');
-
-            $this->getTrafficArea($options['data']['id']);
-
-            if (!isset($trafficArea['name'])) {
-                $trafficArea['name'] = 'unset';
-            }
-
-            $form->get($fieldsetMap['dataTrafficArea'])->get('trafficAreaInfoNameExists')
-                ->setValue($trafficArea['name']);
-        }
-         */
-
         return $form;
     }
 
@@ -431,7 +415,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
 
             if (!empty($fileListData)) {
-                $this->saveDocuments($fileListData ,$operatingCentreId);
+                $this->saveDocuments($fileListData, $operatingCentreId);
             }
 
             if ($this->isPsv()) {

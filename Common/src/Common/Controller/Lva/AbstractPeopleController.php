@@ -199,7 +199,6 @@ abstract class AbstractPeopleController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\Person');
 
-        // @todo this could do with drying up
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }

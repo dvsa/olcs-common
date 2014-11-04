@@ -213,7 +213,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             ->createForm('Lva\BusinessDetailsSubsidiaryCompany')
             ->setData($data);
 
-        // @todo this could do with drying up
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }

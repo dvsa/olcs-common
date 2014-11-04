@@ -399,7 +399,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-
     /**
      * Get data for overview
      *
@@ -611,7 +610,5 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $this->save($saveData);
         }
-
-        return;
     }
 }

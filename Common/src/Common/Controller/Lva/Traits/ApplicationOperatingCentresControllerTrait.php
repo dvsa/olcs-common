@@ -1,13 +1,9 @@
 <?php
 
-/**
- *
- */
 namespace Common\Controller\Lva\Traits;
 
-use Zend\Form\Form;
-
 /**
+ * Application Operating Centres Controller Trait
  */
 trait ApplicationOperatingCentresControllerTrait
 {

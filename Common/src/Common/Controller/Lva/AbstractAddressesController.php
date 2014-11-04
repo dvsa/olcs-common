@@ -206,7 +206,6 @@ abstract class AbstractAddressesController extends AbstractController
                 continue;
             }
 
-
             $type = $this->mapFormTypeFromDbType($contactDetails['contactType']['id']);
 
             $returnData[$type] = array(

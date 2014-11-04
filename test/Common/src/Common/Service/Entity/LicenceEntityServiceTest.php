@@ -84,8 +84,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $expected = array(
             'version' => 3,
             'niFlag' => 'Y',
-            'licenceType' => NULL,
-            'goodsOrPsv' => NULL
+            'licenceType' => null,
+            'goodsOrPsv' => null
         );
 
         $this->expectOneRestCall('Licence', 'GET', $id)
@@ -321,14 +321,12 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $response = array(
-            'foo' => 'bar'
-        );
+        $response = array('foo' => 'bar');
 
         $this->expectOneRestCall('Licence', 'GET', $id)
             ->will($this->returnValue($response));
 
-        $this->assertEquals(NULL, $this->sut->getTrafficArea($id));
+        $this->assertNull($this->sut->getTrafficArea($id));
     }
 
     /**

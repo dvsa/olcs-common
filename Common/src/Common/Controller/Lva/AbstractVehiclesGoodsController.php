@@ -339,7 +339,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected function getTotalNumberOfAuthorisedVehicles()
     {
         if (empty($this->totalAuthorisedVehicles)) {
-            $this->totalAuthorisedVehicles = $this->getLvaEntityService()->getTotalVehicleAuthorisation($this->params('id'));
+            $this->totalAuthorisedVehicles = $this->getLvaEntityService()
+                ->getTotalVehicleAuthorisation($this->params('id'));
         }
 
         return $this->totalAuthorisedVehicles;

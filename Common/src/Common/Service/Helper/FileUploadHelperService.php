@@ -8,6 +8,7 @@
 namespace Common\Service\Helper;
 
 use Zend\Validator\File\FilesSize;
+use Common\Exception\ConfigurationException;
 
 /**
  * File Upload Helper Service
@@ -138,7 +139,7 @@ class FileUploadHelperService extends AbstractHelperService
      * Populate file list
      *
      * @return boolean
-     * @throws \Exception
+     * @throws \Common\Exception\ConfigurationException
      */
     private function populateFileList()
     {
@@ -149,8 +150,7 @@ class FileUploadHelperService extends AbstractHelperService
         }
 
         if (!is_callable($callback)) {
-            // @todo replace with a different exception
-            throw new \Exception('Load data callback is not callable');
+            throw new ConfigurationException('Load data callback is not callable');
         }
 
         $url = $this->getServiceLocator()->get('Helper\Url');

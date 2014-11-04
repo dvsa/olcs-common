@@ -46,9 +46,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         $request = $this->getRequest();
 
         // we always need this basic data
-        // @TODO not in abstract, references 'Application'
-        $entityData = $this->getServiceLocator()
-            ->get('Entity\Application')
+        $entityData = $this->getLvaEntityService()
             ->getDataForVehiclesPsv($this->params('id'));
 
         if ($request->isPost()) {
