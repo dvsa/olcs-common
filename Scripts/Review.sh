@@ -59,5 +59,4 @@ cd .. && git diff origin/develop > test/review/patch.txt && vendor/phpunit/phpco
 echo "{code}"
 
 echo "{panel}"
-
-git diff $BASE_BRANCH
+#git diff $BASE_BRANCH

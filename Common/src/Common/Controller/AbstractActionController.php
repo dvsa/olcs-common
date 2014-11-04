@@ -149,6 +149,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     public function onDispatch(\Zend\Mvc\MvcEvent $e)
     {
+        $routeMatch = $e->getRouteMatch();
+
+        // @todo THIS IS A HACK to map licence route param to id route param for the LVA stuff
+        // It absolutely has to be removed
+        if ($routeMatch->getParam('id') === null && $routeMatch->getParam('licence') !== null) {
+            $routeMatch->setParam('id', $routeMatch->getParam('licence'));
+        }
+
         $this->setupIndexRoute($e);
 
         $this->preOnDispatch();
