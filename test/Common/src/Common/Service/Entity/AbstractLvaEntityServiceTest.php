@@ -171,7 +171,9 @@ class AbstractLvaEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 4;
 
-        $this->expectOneRestCall('Application', 'GET', $id)
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'GET', $id)
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForVehiclesPsv($id));
