@@ -1163,6 +1163,8 @@ return array(
     'section.edit.convictions_penalties' => 'Offence updated',
     'section.add.safety' => 'Safety inspector added',
     'section.edit.safety' => 'Safety inspector updated',
+    'section.add.business_details' => 'Subsidiary company added',
+    'section.edit.business_details' => 'Subsidiary company updated',
     'select' => 'Select',
     'select-option-no' => 'No',
     'select-option-yes' => 'Yes',
