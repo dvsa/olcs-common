@@ -246,9 +246,15 @@ class SectionConfig
         $camelFilter = new UnderscoreToCamelCase();
 
         $types = array(
-            'application' => array(),
-            'licence' => array(),
-            'variation' => array()
+            'application' => array(
+                'identifier' => 'application'
+            ),
+            'licence' => array(
+                'identifier' => 'licence'
+            ),
+            'variation' => array(
+                'identifier' => 'application'
+            )
         );
 
         $routes = array();
@@ -260,9 +266,9 @@ class SectionConfig
             $routes[$baseRouteName] = array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/' . $type . '/:id[/]',
+                    'route' => sprintf('/%s/:%s[/]', $type, $options['identifier']),
                     'constraints' => array(
-                        'id' => '[0-9]+'
+                        $options['identifier'] => '[0-9]+'
                     ),
                     'defaults' => array(
                         'controller' => $typeController,

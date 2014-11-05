@@ -87,7 +87,7 @@ trait CrudTableTrait
         // we might have a child ID if we're editing; if so we *don't*
         // want that in the redirect or we'll end up back on the same page
         $routeParams = array(
-            'id' => $this->params('id')
+            $this->getIdentifierIndex() => $this->getIdentifier()
         );
 
         if ($this->isButtonPressed('addAnother')) {
@@ -117,7 +117,7 @@ trait CrudTableTrait
 
             return $this->redirect()->toRoute(
                 null,
-                array('id' => $this->params('id'))
+                array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 

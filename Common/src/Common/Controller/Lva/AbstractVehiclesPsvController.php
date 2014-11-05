@@ -47,7 +47,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         // we always need this basic data
         $entityData = $this->getLvaEntityService()
-            ->getDataForVehiclesPsv($this->params('id'));
+            ->getDataForVehiclesPsv($this->getIdentifier());
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -139,7 +139,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected function save($data)
     {
         $data = $this->formatDataForSave($data);
-        $data['id'] = $this->params('id');
+        $data['id'] = $this->getIdentifier();
         return $this->getLvaEntityService()->save($data);
     }
 
@@ -454,7 +454,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         if (!isset($this->totalAuthorisedVehicles[$type])) {
             $this->totalAuthorisedVehicles[$type] = $this->getLvaEntityService()->getTotalVehicleAuthorisation(
-                $this->params('id'),
+                $this->getIdentifier(),
                 ucfirst($type)
             );
         }

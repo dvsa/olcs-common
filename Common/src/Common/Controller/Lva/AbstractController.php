@@ -168,10 +168,10 @@ abstract class AbstractController extends AbstractActionController
     protected function goToOverview($lvaId = null)
     {
         if ($lvaId === null) {
-            $lvaId = $this->params('id');
+            $lvaId = $this->getIdentifier();
         }
 
-        return $this->redirect()->toRoute('lva-' . $this->lva, array('id' => $lvaId));
+        return $this->redirect()->toRoute('lva-' . $this->lva, array($this->getIdentifierIndex() => $lvaId));
     }
 
     /**
@@ -208,7 +208,10 @@ abstract class AbstractController extends AbstractActionController
             return $this->goToOverview($this->getApplicationId());
         } else {
             return $this->redirect()
-                ->toRoute('lva-' . $this->lva . '/' . $sections[$index + 1], array('id' => $this->getApplicationId()));
+                ->toRoute(
+                    'lva-' . $this->lva . '/' . $sections[$index + 1],
+                    array($this->getIdentifierIndex() => $this->getApplicationId())
+                );
         }
     }
 
@@ -225,7 +228,7 @@ abstract class AbstractController extends AbstractActionController
             if ($this->params('action') !== 'index') {
                 return $this->redirect()->toRoute(
                     null,
-                    array('id' => $lvaId)
+                    array($this->getIdentifierIndex() => $lvaId)
                 );
             }
 
@@ -361,5 +364,19 @@ abstract class AbstractController extends AbstractActionController
         }
 
         return $this->getServiceLocator()->get('Entity\\' . $service);
+    }
+
+    protected function getIdentifier()
+    {
+        return $this->params($this->getIdentifierIndex());
+    }
+
+    protected function getIdentifierIndex()
+    {
+        if ($this->lva === 'licence') {
+            return 'licence';
+        }
+
+        return 'application';
     }
 }

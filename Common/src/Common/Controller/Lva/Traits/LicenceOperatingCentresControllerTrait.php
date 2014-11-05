@@ -30,7 +30,7 @@ trait LicenceOperatingCentresControllerTrait
             '%s <a href="%s">%s</a>',
             array(
                 'cant-increase-' . $messageSuffix,
-                $this->url()->fromRoute('create_variation', ['id' => $this->getIdentifier()]),
+                $this->url()->fromRoute('create_variation', [$this->getIdentifierIndex() => $this->getIdentifier()]),
                 'create-variation'
             )
         );

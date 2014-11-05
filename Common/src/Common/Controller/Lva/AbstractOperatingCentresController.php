@@ -43,11 +43,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->getTrafficArea($lvaId);
     }
 
-    protected function getIdentifier()
-    {
-        return $this->params('id');
-    }
-
     /**
      * Data map
      *
@@ -786,7 +781,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function addVariationInfoMessage()
     {
         $params = [
-            'id' => $this->getIdentifier()
+            $this->getIdentifierIndex() => $this->getIdentifier()
         ];
 
         $this->addCurrentMessage(

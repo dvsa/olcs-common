@@ -271,7 +271,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
             return $this->redirect()->toRoute(
                 null,
-                array('id' => $this->params('id'))
+                array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 
@@ -340,7 +340,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         if (empty($this->totalAuthorisedVehicles)) {
             $this->totalAuthorisedVehicles = $this->getLvaEntityService()
-                ->getTotalVehicleAuthorisation($this->params('id'));
+                ->getTotalVehicleAuthorisation($this->getIdentifier());
         }
 
         return $this->totalAuthorisedVehicles;

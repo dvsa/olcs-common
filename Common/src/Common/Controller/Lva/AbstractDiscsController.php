@@ -238,7 +238,7 @@ abstract class AbstractDiscsController extends AbstractController
 
             $this->replaceSave();
 
-            return $this->redirect()->toRoute(null, array('id' => $this->params('id')));
+            return $this->redirect()->toRoute(null, array($this->getIdentifierIndex() => $this->getIdentifier()));
         }
 
         $form = $this->getGenericConfirmationForm();
@@ -256,7 +256,7 @@ abstract class AbstractDiscsController extends AbstractController
 
             return $this->redirect()->toRoute(
                 null,
-                array('id' => $this->params('id'))
+                array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 

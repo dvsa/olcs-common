@@ -100,7 +100,7 @@ trait CommonApplicationControllerTrait
      */
     protected function getApplicationId()
     {
-        return $this->params('id');
+        return $this->getIdentifier();
     }
 
     /**
