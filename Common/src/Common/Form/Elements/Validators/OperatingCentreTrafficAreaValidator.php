@@ -9,7 +9,8 @@ namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Common\Controller\Service\TrafficAreaSectionService;
+use Common\Service\Entity\TrafficAreaEntityService;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * OperatingCentreTrafficAreaValidator
@@ -18,11 +19,7 @@ use Common\Controller\Service\TrafficAreaSectionService;
  */
 class OperatingCentreTrafficAreaValidator extends AbstractValidator implements ServiceLocatorAwareInterface
 {
-
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Message templates
@@ -79,7 +76,7 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
             // validate only if postcode is not empty and recognized
             if ($value && $trafficAreaId) {
                 if ($niFlag == 'Y'
-                    && $trafficAreaId !== TrafficAreaSectionService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
+                    && $trafficAreaId !== TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE
                 ) {
                     $this->error('notInNorthernIreland');
                     return false;
@@ -157,25 +154,5 @@ class OperatingCentreTrafficAreaValidator extends AbstractValidator implements S
     public function getTrafficArea()
     {
         return $this->trafficArea;
-    }
-
-    /**
-     * Set service locator
-     *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
     }
 }

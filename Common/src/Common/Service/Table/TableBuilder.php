@@ -593,15 +593,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     }
 
     /**
-     * Build a table from a config file
+     * Prepare the table
      *
-     * @param array $config
+     * @param string|array $config
      * @param array $data
      * @param array $params
-     * @param bool $render
-     * @return string
+     * @return \Common\Service\Table\TableBuilder
      */
-    public function buildTable($config, $data = array(), $params = array(), $render = true)
+    public function prepareTable($config, array $data = array(), array $params = array())
     {
         $this->loadConfig($config);
 
@@ -610,6 +609,22 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $this->loadParams($params);
 
         $this->setupAction();
+
+        return $this;
+    }
+
+    /**
+     * Build a table from a config file
+     *
+     * @param string|array $config
+     * @param array $data
+     * @param array $params
+     * @param boolean $render
+     * @return string
+     */
+    public function buildTable($config, $data = array(), $params = array(), $render = true)
+    {
+        $this->prepareTable($config, $data, $params);
 
         if ($render) {
             return $this->render();
@@ -716,7 +731,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     public function loadParams($array = array())
     {
         if (!isset($array['url'])) {
-            $array['url'] = $this->getServiceLocator()->get('ControllerPluginManager')->get('url');
+            $array['url'] = $this->getServiceLocator()->get('Helper\Url');
         }
 
         $defaults = array(
@@ -1311,7 +1326,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $vars
      * @return string
      */
-    private function replaceContent($content, $vars = array())
+    public function replaceContent($content, $vars = array())
     {
         return $this->getContentHelper()->replaceContent($content, $vars);
     }
@@ -1416,6 +1431,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
 
         return $actions;
+    }
+
+    public function getColumn($name)
+    {
+        return ($this->hasColumn($name) ? $this->columns[$name] : null);
+    }
+
+    public function setColumn($name, $column)
+    {
+        $this->columns[$name] = $column;
     }
 
     public function hasColumn($name)

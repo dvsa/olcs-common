@@ -45,32 +45,32 @@ class OperatingCentreAuthorisationValidatorTest extends PHPUnit_Framework_TestCa
         return array(
             array(
                 0,
-                array('noOfTrailersPossessed' => 1, 'noOfVehiclesPossessed' => 1),
+                array('noOfTrailersRequired' => 1, 'noOfVehiclesRequired' => 1),
                 true
             ),
             array(
                 0,
-                array('noOfTrailersPossessed' => 0, 'noOfVehiclesPossessed' => 1),
+                array('noOfTrailersRequired' => 0, 'noOfVehiclesRequired' => 1),
                 true
             ),
             array(
                 0,
-                array('noOfTrailersPossessed' => 1, 'noOfVehiclesPossessed' => 0),
+                array('noOfTrailersRequired' => 1, 'noOfVehiclesRequired' => 0),
                 true
             ),
             array(
                 0,
-                array('noOfTrailersPossessed' => 0, 'noOfVehiclesPossessed' => 0),
+                array('noOfTrailersRequired' => 0, 'noOfVehiclesRequired' => 0),
                 false
             ),
             array(
                 0,
-                array('noOfVehiclesPossessed' => 1),
+                array('noOfVehiclesRequired' => 1),
                 true
             ),
             array(
                 0,
-                array('noOfVehiclesPossessed' => 0),
+                array('noOfVehiclesRequired' => 0),
                 false
             )
         );

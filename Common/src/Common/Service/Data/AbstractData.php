@@ -78,6 +78,7 @@ abstract class AbstractData implements FactoryInterface, RestClientAwareInterfac
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
+     * @deprecated
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

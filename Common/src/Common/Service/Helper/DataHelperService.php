@@ -90,9 +90,11 @@ class DataHelperService extends AbstractHelperService
 
         unset($data[$addressName]['searchPostcode']);
 
-        $data['addresses'][$addressName] = $data[$addressName];
+        if (isset($data[$addressName])) {
+            $data['addresses'][$addressName] = $data[$addressName];
 
-        unset($data[$addressName]);
+            unset($data[$addressName]);
+        }
 
         return $data;
     }

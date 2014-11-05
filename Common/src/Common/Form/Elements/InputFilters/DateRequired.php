@@ -30,21 +30,7 @@ class DateRequired extends ZendDateSelect implements InputProviderInterface
         $specification = [
             'name' => $this->getName(),
             'required' => $this->required,
-            'filters' => array(
-                array(
-                    'name'    => 'Callback',
-                    'options' => array(
-                        'callback' => function ($date) {
-                        // Convert the date to a specific format
-                            if (!is_array($date) || empty($date['year']) ||
-                                empty($date['month']) || empty($date['day'])) {
-                                return null;
-                            }
-
-                            return $date['year'] . '-' . $date['month'] . '-' . $date['day'];
-                        }
-                    )
-                )
+            'filters' => array(['name' => 'DateSelectNullifier']
             ),
             'validators' => $this->getValidators()
         ];
@@ -55,7 +41,7 @@ class DateRequired extends ZendDateSelect implements InputProviderInterface
     public function getValidators()
     {
         return array(
-            new DateValidator(array('format' => 'Y-m-d'))
+            ['name' => 'Date', 'options'=>array('format' => 'Y-m-d')]
         );
     }
 }

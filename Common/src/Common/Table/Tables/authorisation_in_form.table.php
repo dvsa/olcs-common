@@ -17,30 +17,25 @@ return array(
     'attributes' => array(),
     'columns' => array(
         array(
-            'width' => 'checkbox',
-            'type' => 'Selector'
-        ),
-        array(
             'title' => 'application_operating-centres_authorisation.table.address',
             'formatter' => function ($data, $column) {
 
                 $column['formatter'] = 'Address';
 
                 return '<a href="' . $this->generateUrl(
-                    array('action' => 'edit', 'id' => $data['id']),
-                    null,
-                    true
+                    array('action' => 'edit', 'child_id' => $data['id']),
+                    'lva-' . $column['type'] . '/operating_centres'
                 ) . '">' . $this->callFormatter($column, $data) . '</a>';
             },
             'name' => 'address'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',
-            'name' => 'noOfVehiclesPossessed'
+            'name' => 'noOfVehiclesRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.trailers',
-            'name' => 'noOfTrailersPossessed'
+            'name' => 'noOfTrailersRequired'
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.permission',
@@ -51,6 +46,10 @@ return array(
             'title' => 'application_operating-centres_authorisation.table.advertised',
             'name' => 'adPlaced',
             'formatter' => 'YesNo'
+        ),
+        array(
+            'width' => 'checkbox',
+            'type' => 'Checkbox'
         )
     ),
     'footer' => array(
@@ -58,18 +57,18 @@ return array(
             'type' => 'th',
             'content' => 'application_operating-centres_authorisation.table.footer.total',
             'formatter' => 'Translate',
-            'colspan' => 2
+            'colspan' => 1
         ),
         array(
             'formatter' => 'Sum',
-            'name' => 'noOfVehiclesPossessed'
+            'name' => 'noOfVehiclesRequired'
         ),
         'trailersCol' => array(
             'formatter' => 'Sum',
-            'name' => 'noOfTrailersPossessed'
+            'name' => 'noOfTrailersRequired'
         ),
         'remainingColspan' => array(
-            'colspan' => 2
+            'colspan' => 3
         )
     )
 );

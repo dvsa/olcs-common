@@ -14,13 +14,14 @@ date_default_timezone_set('Europe/London');
  */
 class Bootstrap
 {
-    protected static $serviceManager;
+    protected static $config = array();
 
     public static function init()
     {
         // Setup the autloader
         $loader = static::initAutoloader();
         $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');
+        $loader->addPsr4('CommonComponentTest\\', __DIR__ . '/Component');
 
         // Grab the application config
         $config = array(
@@ -34,15 +35,18 @@ class Bootstrap
             )
         );
 
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
-        static::$serviceManager = $serviceManager;
+        self::$config = $config;
+
+        self::getServiceManager();
     }
 
     public static function getServiceManager()
     {
-        return static::$serviceManager;
+        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager->setService('ApplicationConfig', self::$config);
+        $serviceManager->get('ModuleManager')->loadModules();
+
+        return $serviceManager;
     }
 
     protected static function initAutoloader()

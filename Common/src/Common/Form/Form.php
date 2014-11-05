@@ -1,20 +1,11 @@
 <?php
 
-/**
- * Form
- *
- * @author Someone <someone@valtech.co.uk>
- */
 namespace Common\Form;
 
 use Zend\Form as ZendForm;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Form
- *
- * @author Someone <someone@valtech.co.uk>
  */
 class Form extends ZendForm\Form
 {
@@ -39,7 +30,7 @@ class Form extends ZendForm\Form
     {
         foreach ($data as &$input) {
             if (is_array($input)) {
-                if (!array_filter($input) && 3 == count($input)) {
+                if (!array_filter($input) && count($input) === 3) {
                     $input = null;
                 } else {
                     $input = $this->setEmptyDataselectArraysToNull($input);

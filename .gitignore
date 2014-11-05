@@ -1,3 +1,4 @@
+benephactor
 nbproject
 ._*
 .~lock.*
@@ -15,3 +16,4 @@ config/autoload/local.php
 *.sw?
 coverage/
 node_modules
+data

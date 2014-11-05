@@ -67,7 +67,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkId' => 1
                 ),
                 array(),
-                'licence/details/overview',
+                'lva-licence/overview',
                 'licence',
                 'Unlinked'
             ),
@@ -79,7 +79,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'licence/details/overview',
+                'lva-licence/overview',
                 'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
@@ -91,7 +91,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 2
                 ),
                 array(),
-                'licence/details/overview',
+                'lva-licence/overview',
                 'licence',
                 '<a href="correctUrl">P1234</a> (MLH)'
             ),
@@ -103,7 +103,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'licence/details/overview',
+                'lva-licence/overview',
                 'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
@@ -115,7 +115,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'licence/details/overview',
+                'lva-licence/overview',
                 'licence',
                 '<a href="#">P1234</a>'
             ),
@@ -127,8 +127,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'linkId' => 1
                 ),
                 array(),
-                'Application/Overview/Details',
-                'applicationId',
+                'lva-application/overview',
+                'application',
                 'Unlinked'
             ),
             array(
@@ -139,8 +139,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'Application/Overview/Details',
-                'applicationId',
+                'lva-application/overview',
+                'application',
                 '<a href="correctUrl">P1234</a>'
             ),
             array(
@@ -151,8 +151,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'Application/Overview/Details',
-                'applicationId',
+                'lva-application/overview',
+                'application',
                 '<a href="correctUrl">P1234</a>'
             ),
             array(
@@ -163,8 +163,8 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'Application/Overview/Details',
-                'applicationId',
+                'lva-application/overview',
+                'application',
                 '<a href="#">P1234</a>'
             ),
         );
