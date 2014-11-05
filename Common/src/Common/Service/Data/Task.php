@@ -4,7 +4,6 @@ namespace Common\Service\Data;
 
 use Common\Service\Data\CrudAbstract;
 
-
 /**
  * Service Class Task
  *

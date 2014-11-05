@@ -2,7 +2,8 @@
 
 namespace Common\Service\Data;
 
-use Common\Util\RestClient, Common\Service\Data\AbstractData;
+use Common\Util\RestClient;
+use Common\Service\Data\AbstractData;
 
 /**
  * Interface CrudInterface
@@ -30,7 +31,7 @@ abstract class CrudAbstract extends AbstractData implements CrudInterface
      */
     public function update(array $data)
     {
-        return $this->getRestClient()->{__FUNCTION__}('', $data);
+        return $this->getRestClient()->{__FUNCTION__}('', array('data' => json_encode($data)));
     }
 
     /**
