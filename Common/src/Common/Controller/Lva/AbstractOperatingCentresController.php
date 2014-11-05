@@ -551,7 +551,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $data['data'] = $oldData = $data;
 
-        //$results = $this->getFormTableData($this->getIdentifier(), '');
         $results = $this->getTableData();
 
         $licenceData = $this->getTypeOfLicenceData();
