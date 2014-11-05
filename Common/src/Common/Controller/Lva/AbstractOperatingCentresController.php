@@ -250,8 +250,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form->getInputFilter()->get('address')->get('postcode')->setRequired(false)
             ->getValidatorChain()->attach($trafficAreaValidator);
 
-        if ($licenceData['niFlag'] == 'N' && !$trafficArea) {
-            $form->get('form-actions')->remove('addAnother');
+        $actions = $form->get('form-actions');
+
+        if ($licenceData['niFlag'] == 'N' && !$trafficArea && $actions->has('addAnother')) {
+            $actions->remove('addAnother');
         }
     }
 
@@ -367,6 +369,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentre')
             ->setData($data);
+
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
 
         $form = $this->alterActionForm($form);
 
