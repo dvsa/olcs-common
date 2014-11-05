@@ -121,7 +121,7 @@ abstract class AbstractLicenceDetailsController extends AbstractSectionControlle
     {
         $licence = $this->getLicence();
 
-        $navigationConfig = $this->getHelperService('LicenceNavigationHelper')->getNavigation(
+        $navigationConfig = $this->getServiceLocator()->get('Helper\LicenceNavigation')->getNavigation(
             $licence['id'],
             $licence['goodsOrPsv']['id'],
             $licence['licenceType']['id'],

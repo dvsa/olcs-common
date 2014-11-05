@@ -15,29 +15,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractHelperService implements HelperServiceInterface, ServiceLocatorAwareInterface
+abstract class AbstractHelperService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
-
-    private $serviceFactory;
-
-    /**
-     *
-     * @param \Common\Service\Helper\HelperServiceFactory $factory
-     */
-    public function setHelperServiceFactory(HelperServiceFactory $factory)
-    {
-        $this->serviceFactory = $factory;
-    }
-
-    /**
-     * Get another helper service
-     *
-     * @param string $name
-     * @return \Common\Service\Helper\HelperServiceInterface
-     */
-    protected function getHelperService($name)
-    {
-        return $this->serviceFactory->getHelperService($name);
-    }
 }

@@ -38,14 +38,8 @@ class CategoryDataTest extends PHPUnit_Framework_TestCase
 
         $this->mockRestHelper = $this->getMock('\Common\Service\Helper\RestHelperService', array('makeRestCall'));
 
-        $mockHelperService = $this->getMock('\stdClass', array('getHelperService'));
-        $mockHelperService->expects($this->any())
-            ->method('getHelperService')
-            ->with('RestHelper')
-            ->will($this->returnValue($this->mockRestHelper));
-
         $this->serviceManager->setAllowOverride(true);
-        $this->serviceManager->setService('HelperService', $mockHelperService);
+        $this->serviceManager->setService('Helper\Rest', $this->mockRestHelper);
 
         $this->sut = new CategoryData();
         $this->sut->setServiceLocator($this->serviceManager);

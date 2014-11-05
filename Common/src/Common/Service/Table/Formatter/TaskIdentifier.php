@@ -35,10 +35,10 @@ class TaskIdentifier implements FormatterInterface
         $url = '#';
         switch ($data['linkType']) {
             case 'Licence':
-                $url = $urlHelper->__invoke('licence/details/overview', array('licence' => $data['linkId']));
+                $url = $urlHelper->__invoke('lva-licence/overview', array('licence' => $data['linkId']));
                 break;
             case 'Application':
-                $url = $urlHelper->__invoke('Application/Overview/Details', array('applicationId' => $data['linkId']));
+                $url = $urlHelper->__invoke('lva-application/overview', array('application' => $data['linkId']));
                 break;
             default:
                 break;

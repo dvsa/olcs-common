@@ -35,7 +35,11 @@ class Action extends AbstractType
 
         $class = isset($column['class']) ? $column['class'] : '';
 
-        $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');
+        if (isset($column['value_format'])) {
+            $value = $this->getTable()->replaceContent($column['value_format'], $data);
+        } else {
+            $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');
+        }
 
         $name = 'action';
 
