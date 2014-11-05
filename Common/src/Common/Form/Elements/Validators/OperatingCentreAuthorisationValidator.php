@@ -37,12 +37,12 @@ class OperatingCentreAuthorisationValidator extends AbstractValidator
         $goods = false;
         $trailers = 0;
 
-        if (isset($context['noOfTrailersPossessed'])) {
-            $trailers = (int)$context['noOfTrailersPossessed'];
+        if (isset($context['noOfTrailersRequired'])) {
+            $trailers = (int)$context['noOfTrailersRequired'];
             $goods = true;
         }
 
-        $total = (int)$context['noOfVehiclesPossessed'] + $trailers;
+        $total = (int)$context['noOfVehiclesRequired'] + $trailers;
 
         if ($total < 1) {
             $this->error('too-low' . (!$goods ? '-psv' : ''));

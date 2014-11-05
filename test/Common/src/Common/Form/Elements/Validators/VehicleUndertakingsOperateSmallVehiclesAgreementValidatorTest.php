@@ -45,15 +45,15 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
             // psvSmallVehicles isn't set - comes back true
             array(0, array(), true),
             // psvSmallVehicles = Y, confirmation=blank - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''), true),
+            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
             // psvSmallVehicles = Y, confirmation=1 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => '1'), true),
+            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'), true),
             // psvSmallVehicles = Y, confirmation=0 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'), true),
+            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
             // psvSmallVehicles = N, confirmation=0 - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => '0'), false),
+            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false),
             // psvSmallVehicles = N, confirmation=blank - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''), false)
+            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false)
         );
     }
 }

@@ -2,10 +2,16 @@
     "name": "olcs/OlcsCommon",
     "description": "Common library for the OLCS Project",
     "type": "library",
-    "repositories": [{
-        "type": "vcs",
-        "url": "git@gitlab.clb.npm:sc/jackrabbit.git"
-    }],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@gitlab.clb.npm:sc/jackrabbit.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/MajorCaiger/phpcov.git"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
@@ -13,9 +19,9 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
-        "phpunit/phpunit": "4.0.*",
+        "phpunit/phpunit": "4.*",
         "mockery/mockery": "dev-master",
-        "phpunit/phpcov": "*",
+        "phpunit/phpcov": "dev-master",
         "dvsa/jackrabbit": "v1.1.0"
     },
     "autoload": {

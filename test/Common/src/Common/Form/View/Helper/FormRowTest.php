@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Form\View\Helper;
 
-use Zend\Form\LabelAwareInterface;
 use Zend\View\HelperPluginManager;
 use Zend\Form\View\Helper as ZendHelper;
 use Common\Form\View\Helper as CommonHelper;
@@ -182,7 +181,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/');
+        $this->expectOutputRegex('/^<fieldset data-group=\"\"><legend>(.*)<\/legend><\/fieldset>$/');
     }
 
     private function prepareHelper()

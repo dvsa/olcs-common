@@ -33,7 +33,7 @@ class RestCallTraitTest extends PHPUnit_Framework_TestCase
         );
 
         $mockServiceLocator = \Mockery::mock('\Zend\ServiceManager\ServiceManager');
-        $mockServiceLocator->shouldReceive('get->getHelperService')->andReturn($this->mockHelperService);
+        $mockServiceLocator->shouldReceive('get')->andReturn($this->mockHelperService);
 
         $this->sut = $this->getMockForTrait(
             '\Common\Util\RestCallTrait',

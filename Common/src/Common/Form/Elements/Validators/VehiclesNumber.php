@@ -22,9 +22,9 @@ class VehiclesNumber extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'noOfVehiclesPossessed' => 'noOfVehiclesPossessedError',
-        'noOfVehiclesPossessed-psv' => 'noOfVehiclesPossessedError-psv',
-        'noOfTrailersPossessed' => 'noOfTrailersPossessedError'
+        'noOfVehiclesRequired' => 'noOfVehiclesRequiredError',
+        'noOfVehiclesRequired-psv' => 'noOfVehiclesRequiredError-psv',
+        'noOfTrailersRequired' => 'noOfTrailersRequiredError'
     );
 
     /**
@@ -59,13 +59,13 @@ class VehiclesNumber extends AbstractValidator
 
         $total = 0;
 
-        $total += (isset($context['noOfVehiclesPossessed']) ? $context['noOfVehiclesPossessed'] : 0);
+        $total += (isset($context['noOfVehiclesRequired']) ? $context['noOfVehiclesRequired'] : 0);
 
-        $total += (isset($context['noOfTrailersPossessed']) ? $context['noOfTrailersPossessed'] : 0);
+        $total += (isset($context['noOfTrailersRequired']) ? $context['noOfTrailersRequired'] : 0);
 
         if ($total < 1) {
 
-            if (!isset($context['noOfTrailersPossessed'])) {
+            if (!isset($context['noOfTrailersRequired'])) {
                 $this->error($this->name . '-psv');
                 return false;
             }
