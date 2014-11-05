@@ -15,11 +15,38 @@ namespace Common\Service\Entity;
 class OrganisationPersonEntityService extends AbstractEntityService
 {
     /**
+     * Set a sane limit when fetching people
+     */
+    const ORG_PERSON_LIMIT = 50;
+
+    /**
      * Define entity for default behaviour
      *
      * @var string
      */
     protected $entity = 'OrganisationPerson';
+
+    /**
+     * Holds the organisation people
+     *
+     * @var array
+     */
+    private $peopleBundle = array(
+        'properties' => array('position'),
+        'children' => array(
+            'person' => array(
+                'properties' => array(
+                    'version',
+                    'id',
+                    'title',
+                    'forename',
+                    'familyName',
+                    'birthDate',
+                    'otherName'
+                )
+            )
+        )
+    );
 
     /**
      * Get a record by org *and* person ID
@@ -60,5 +87,25 @@ class OrganisationPersonEntityService extends AbstractEntityService
     public function getByPersonId($id)
     {
         return $this->get(array('person' => $id));
+    }
+
+    /**
+     * Get all people for a given organisation
+     *
+     * @param int $orgId
+     * @param int $limit
+     */
+    public function getAllByOrg($orgId, $limit = null)
+    {
+        if ($limit === null) {
+            $limit = self::ORG_PERSON_LIMIT;
+        }
+
+        $query = array(
+            'organisation' => $orgId,
+            'limit' => $limit
+        );
+
+        return $this->get($query, $this->peopleBundle);
     }
 }
