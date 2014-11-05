@@ -329,28 +329,31 @@ abstract class AbstractPeopleController extends AbstractController
             ->get('Data\CompaniesHouse')
             ->search('currentCompanyOfficers', $orgData['companyOrLlpNo']);
 
-        if (is_array($result) && array_key_exists('Results', $result) && count($result['Results'])) {
+        if (!isset($result['Results'])) {
+            return;
+        }
 
-            // @todo We need a better way to handle this, far too many rest calls could happen
-            foreach ($result['Results'] as $person) {
+        // @todo We need a better way to handle this, far too many rest calls could happen
+        // multi create would help; one call to create all people, another to create
+        // all relations to org person
+        foreach ($result['Results'] as $person) {
 
-                // Create a person
-                $person = $this->getServiceLocator()
-                    ->get('Entity\Person')
-                    ->save($person);
+            // Create a person
+            $person = $this->getServiceLocator()
+                ->get('Entity\Person')
+                ->save($person);
 
-                // If we have a person id
-                if (isset($person['id'])) {
+            // If we have a person id
+            if (isset($person['id'])) {
 
-                    $organisationPersonData = array(
-                        'organisation' => $orgId,
-                        'person' => $person['id']
-                    );
+                $organisationPersonData = array(
+                    'organisation' => $orgId,
+                    'person' => $person['id']
+                );
 
-                    $this->getServiceLocator()
-                        ->get('Entity\OrganisationPerson')
-                        ->save($organisationPersonData);
-                }
+                $this->getServiceLocator()
+                    ->get('Entity\OrganisationPerson')
+                    ->save($organisationPersonData);
             }
         }
     }
@@ -360,7 +363,7 @@ abstract class AbstractPeopleController extends AbstractController
         $orgId = $this->getCurrentOrganisationId();
         $results = $this->getServiceLocator()
             ->get('Entity\Person')
-            ->getAllForOrganisation($orgId);
+            ->getAllForOrganisation($orgId, 1);
 
         return isset($results['Count']) && $results['Count'] > 0;
     }
