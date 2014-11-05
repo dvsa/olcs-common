@@ -350,4 +350,23 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getStatus($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetCategory()
+    {
+        $id = 4;
+
+        $response = array(
+            'status' => array(
+                'id' => 'RESPONSE'
+            )
+        );
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getCategory($id));
+    }
 }
