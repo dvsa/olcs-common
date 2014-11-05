@@ -4,6 +4,7 @@
  * Checks a date is not in the future
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Form\Elements\Validators;
 
@@ -13,6 +14,7 @@ use Zend\Validator\AbstractValidator as AbstractValidator;
  * Checks a date is not in the future
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class DateNotInFuture extends AbstractValidator
 {
@@ -39,7 +41,10 @@ class DateNotInFuture extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (!($value <= date('Y-m-d'))) {
+        $date = strtotime($value);
+        $today = strtotime(date('Y-m-d'));
+
+        if ($date > $today) {
             $this->error(self::IN_FUTURE);
             return false;
         }

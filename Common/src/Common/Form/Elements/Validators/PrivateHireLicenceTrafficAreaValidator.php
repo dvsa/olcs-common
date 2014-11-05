@@ -52,8 +52,9 @@ class PrivateHireLicenceTrafficAreaValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
-        $postcodeService = $this->getServiceLocator()->get('postcode');
         if ($value) {
+
+            $postcodeService = $this->getServiceLocator()->get('postcode');
 
             list($trafficAreaId, $trafficAreaName) = $postcodeService->getTrafficAreaByPostcode($value);
 

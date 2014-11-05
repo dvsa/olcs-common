@@ -1,18 +1,8 @@
 <?php
 
-list($allRoutes, $controllers, $journeys) = include(__DIR__ . '/journeys.config.php');
-
 $release = json_decode(file_get_contents(__DIR__ . '/release.json'), true);
 
-$invokeables = array_merge(
-    $controllers, array(
-        'Common\Controller\File' => 'Common\Controller\FileController',
-        'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
-    )
-);
-
 return array(
-    'journeys' => $journeys,
     'router' => array(
         'routes' => array(
             'application_start' => array(
@@ -34,7 +24,10 @@ return array(
         )
     ),
     'controllers' => array(
-        'invokables' => $invokeables
+        'invokables' => array(
+            'Common\Controller\File' => 'Common\Controller\FileController',
+            'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
+        )
     ),
     'console' => array(
         'router' => array(
@@ -62,15 +55,17 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
+        'shared' => array(
+            'Helper\FileUpload' => false
+        ),
+        'abstract_factories' => array(
+            'Common\Util\AbstractServiceFactory'
+        ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager'
         ),
-        'invokables' => array(
-            'address' => 'Common\Service\Address\Address'
-        ),
         'factories' => array(
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
-            'HelperService' => '\Common\Service\Helper\HelperServiceFactory',
             'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
@@ -86,18 +81,8 @@ return array(
                 $validator->setServiceLocator($serviceManager);
                 return $validator;
             },
-            'postcodePhlTrafficAreaValidator' => function ($serviceManager) {
-                $validator = new \Common\Form\Elements\Validators\PrivateHireLicenceTrafficAreaValidator();
-                $validator->setServiceLocator($serviceManager);
-                return $validator;
-            },
             'goodsDiscStartNumberValidator' => function ($serviceManager) {
                 return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
-            },
-            'licence' => function ($serviceManager) {
-                $licenceService = new \Common\Service\Licence\Licence();
-                $licenceService->setServiceLocator($serviceManager);
-                return $licenceService;
             },
             'category' => '\Common\Service\Data\CategoryData',
             'country' => '\Common\Service\Data\Country',
@@ -126,7 +111,7 @@ return array(
             'formDateTimeSelect' => 'Common\Form\View\Helper\FormDateTimeSelect',
             'version' => 'Common\View\Helper\Version',
             'applicationName' => 'Common\View\Helper\ApplicationName',
-            'formPlainText'     => 'Common\Form\View\Helper\FormPlainText',
+            'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
             'assetPath' => 'Common\View\Helper\AssetPath',
             'addTags' => 'Common\View\Helper\AddTags'
@@ -138,7 +123,7 @@ return array(
         )
     ),
     'local_scripts_path' => [__DIR__ . '/../src/Common/assets/js/inline/'],
-    'forms_path' => __DIR__ .'/../../Common/src/Common/Form/Forms/',
+    'forms_path' => __DIR__ . '/../../Common/src/Common/Form/Forms/',
     'form_elements' => [
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
@@ -185,11 +170,11 @@ return array(
         ),
         'partials' => __DIR__ . '/../view/table/'
     ),
-    'sic_codes_path' => __DIR__ .'/../../Common/config/sic-codes',
-    'fieldsets_path' => __DIR__ .'/../../Common/src/Common/Form/Fieldsets/',
+    'sic_codes_path' => __DIR__ . '/../../Common/config/sic-codes',
+    'fieldsets_path' => __DIR__ . '/../../Common/src/Common/Form/Fieldsets/',
     'static-list-data' => include __DIR__ . '/list-data/static-list-data.php',
     'form' => array(
-        'elements' =>  include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
+        'elements' => include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
     //-------- Start service API mappings -----------------
     'service_api_mapping' => array(
@@ -211,5 +196,5 @@ return array(
             'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
     )
-     //-------- End service API mappings -----------------
+//-------- End service API mappings -----------------
 );

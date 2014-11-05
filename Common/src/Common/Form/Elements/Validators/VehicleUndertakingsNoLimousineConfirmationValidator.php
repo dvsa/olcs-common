@@ -33,12 +33,9 @@ class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValida
      */
     public function isValid($value, $context = null)
     {
-        unset($value);
-
         // This only gets used if psvOperateSmallVhl is shown
         if ( isset($context['psvLimousines']) ) {
-            if ($context['psvLimousines'] === 'N'
-                && $context['psvNoLimousineConfirmation'] !== '1') {
+            if ($context['psvLimousines'] === 'N' && $value !== 'Y') {
                 $this->error('required');
 
                 return false;
