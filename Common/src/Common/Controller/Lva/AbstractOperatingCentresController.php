@@ -781,7 +781,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function addVariationInfoMessage()
     {
         $params = [
-            $this->getIdentifierIndex() => $this->getIdentifier()
+            // variations are *always* created from a licence. Sure, we only expect this message to appear
+            // in the context of a licence, but let's be absolutely sure by hardcoding the key & get method
+            // instead of using the abstract LVA ones
+            'licence' => $this->getLicenceId()
         ];
 
         $this->addCurrentMessage(
