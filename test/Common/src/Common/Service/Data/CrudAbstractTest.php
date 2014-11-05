@@ -50,12 +50,14 @@ class CrudAbstractTest extends PHPUnit_Framework_TestCase
     public function testCreateUpdate($data, $method)
     {
         $rest = $this->getMockRestClient($method);
-        $rest->expects($this->once())->method($method)->with('', $data)->will($this->returnSelf());
+        $rest->expects($this->once())->method($method)
+             ->with('', array('data' => json_encode($data)))
+             ->will($this->returnSelf());
 
         $sut = $this->getSut(null);
         $sut->setRestClient($rest);
 
-        $this->assertSame($rest, $sut->{$method}(array('data' => json_encode($data))));
+        $this->assertSame($rest, $sut->{$method}($data));
     }
 
     public function dataProviderSave()
