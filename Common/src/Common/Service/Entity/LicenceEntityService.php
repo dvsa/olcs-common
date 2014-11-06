@@ -32,6 +32,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
+    const LICENCE_STATUS_GRANTED = 'lsts_granted';
 
     /**
      * Define entity for default behaviour

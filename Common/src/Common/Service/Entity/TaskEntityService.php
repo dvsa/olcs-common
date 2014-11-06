@@ -20,4 +20,8 @@ class TaskEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'Task';
+
+    const STATUS_OPEN = 'tst_open';
+    const STATUS_CLOSED = 'tst_closed';
+    const STATUS_ALL = 'tst_all';
 }

@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

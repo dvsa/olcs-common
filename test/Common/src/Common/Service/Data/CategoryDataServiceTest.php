@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CategoryDataTest
+ * CategoryDataServiceTest
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -9,19 +9,19 @@ namespace CommonTest\Service\Data;
 
 use CommonTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
-use Common\Service\Data\CategoryData;
+use Common\Service\Data\CategoryDataService;
 
 /**
- * CategoryDataTest
+ * CategoryDataServiceTest
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CategoryDataTest extends PHPUnit_Framework_TestCase
+class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Holds the SUT
      *
-     * @var \Common\Service\Data\CategoryData
+     * @var \Common\Service\Data\CategoryDataService
      */
     private $sut;
 
@@ -41,7 +41,7 @@ class CategoryDataTest extends PHPUnit_Framework_TestCase
         $this->serviceManager->setAllowOverride(true);
         $this->serviceManager->setService('Helper\Rest', $this->mockRestHelper);
 
-        $this->sut = new CategoryData();
+        $this->sut = new CategoryDataService();
         $this->sut->setServiceLocator($this->serviceManager);
     }
 

@@ -462,6 +462,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $applicationDateBundle = array(
+        'properties' => array(
+            'receivedDate',
+            'createdOn'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -628,5 +635,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getCategory($id)
     {
         return $this->get($id, $this->categoryBundle)['licence']['goodsOrPsv']['id'];
+    }
+
+    public function getApplicationDate($id)
+    {
+        $data = $this->get($id, $this->applicationDateBundle);
+
+        if ($data['receiveddate'] === null) {
+            return $data['createdOn'];
+        }
+
+        return $data['receivedDate'];
     }
 }
