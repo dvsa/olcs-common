@@ -704,4 +704,81 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $helper->populateFormTable($fieldset, $table, 'fieldset');
     }
+
+    public function testLockElement()
+    {
+        $helper = new FormHelperService();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        $translator = m::mock('\stdClass');
+        $translator->shouldReceive('translate')
+            ->with('message')
+            ->andReturn('translated');
+
+        $renderer = m::mock('\stdClass');
+        $renderer->shouldReceive('render')
+            ->andReturn('template');
+
+        $sm->shouldReceive('get')
+            ->once()
+            ->with('ViewRenderer')
+            ->andReturn($renderer)
+            ->getMock()
+            ->shouldReceive('get')
+            ->with('Helper\Translation')
+            ->andReturn($translator);
+
+        $element = m::mock('Zend\Form\Element');
+        $element->shouldReceive('getLabel')
+            ->andReturn('label')
+            ->getMock()
+            ->shouldReceive('setLabel')
+            ->with('labeltemplate')
+            ->getMock()
+            ->shouldReceive('setLabelOption')
+            ->with('disable_html_escape', true)
+            ->getMock()
+            ->shouldReceive('getLabelAttributes')
+            ->andReturn(['foo' => 'bar'])
+            ->getMock()
+            ->shouldReceive('setLabelAttributes')
+            ->with(
+                [
+                    'foo' => 'bar',
+                    'class' => ''
+                ]
+            );
+
+        $helper->setServiceLocator($sm);
+
+        $helper->lockElement($element, 'message');
+    }
+
+    public function testRemoveFieldLiset()
+    {
+        $helper = new FormHelperService();
+
+        $form = m::mock('Zend\Form\Form');
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturnSelf()
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('bar');
+
+        $filter = m::mock('Zend\InputFilter\InputFilter');
+        $filter->shouldReceive('get')
+            ->with('foo')
+            ->andReturnSelf()
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('bar');
+
+        $form->shouldReceive('getInputFilter')
+            ->andReturn($filter);
+
+        $helper->removeFieldList($form, 'foo', ['bar']);
+    }
 }
