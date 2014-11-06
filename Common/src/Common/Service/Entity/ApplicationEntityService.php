@@ -20,6 +20,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_TYPE_VARIATION = 1;
 
     const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
+    const APPLICATION_STATUS_GRANTED = 'apsts_granted';
     const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
 
     /**
@@ -445,6 +446,22 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $categoryBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(),
+                'children' => array(
+                    'goodsOrPsv' => array(
+                        'properties' => array(
+                            'id'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -606,5 +623,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getStatus($id)
     {
         return $this->get($id, $this->statusBundle)['status']['id'];
+    }
+
+    public function getCategory($id)
+    {
+        return $this->get($id, $this->categoryBundle)['licence']['goodsOrPsv']['id'];
     }
 }

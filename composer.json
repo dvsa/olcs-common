@@ -20,6 +20,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
         "phpunit/phpunit": "4.*",
+        "sebastian/diff": "dev-master",
         "mockery/mockery": "dev-master",
         "phpunit/phpcov": "dev-master",
         "dvsa/jackrabbit": "v1.1.0"
