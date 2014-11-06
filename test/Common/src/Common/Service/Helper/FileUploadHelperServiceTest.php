@@ -268,4 +268,54 @@ class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
             [UPLOAD_ERR_NO_TMP_DIR, 'An unexpected error occurred while uploading the file']
         ];
     }
+
+    public function testProcessWithPostAndFileDeletions()
+    {
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $postData = [
+            'my-file' => [
+                'list' => [
+                    'file1' => [
+                        'remove' => true,
+                        'id' => 123
+                    ]
+                ]
+            ]
+        ];
+
+        $request->shouldReceive('getPost')
+            ->andReturn($postData);
+
+        $fieldset = m::mock('Zend\Form\Fieldset');
+        $fieldset->shouldReceive('getName')
+            ->andReturn('file1');
+
+        $listElement = m::mock('\stdClass');
+        $listElement->shouldReceive('getFieldsets')
+            ->andReturn([$fieldset])
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('file1');
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('get')
+            ->with('list')
+            ->andReturn($listElement);
+
+        $helper->setElement($element);
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setDeleteCallback(
+            function ($id) {
+                $this->assertEquals(123, $id);
+                return true;
+            }
+        );
+
+        $this->assertEquals(true, $helper->process());
+    }
 }
