@@ -7,7 +7,7 @@
 
 namespace Common\Service\Fee;
 
-use Common\Fee\Exception as FeeException;
+use Common\Service\Fee\Exception as FeeException;
 use Common\Util\RestCallTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -93,7 +93,7 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
      * @param string $applicationDate
      * @return array
      */
-    protected function getApplicationFeeType($licenceCategory, $licenceType, $niFlag, $applicationDate)
+    protected function getApplicationFeeType($operatorType, $licenceType, $niFlag, $applicationDate)
     {
         $bundle = [
             'properties' => [
@@ -122,7 +122,7 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
             ]
         ];
         $params = [
-            'goodsOrPsv' => $licenceCategory,
+            'goodsOrPsv' => $operatorType,
             'feeType' => self::FEE_TYPE_APPLICATION,
             'effectiveFrom' => '<= ' . $applicationDate,
             'sort' => 'effectiveFrom',
@@ -138,9 +138,8 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
             foreach ($data['Results'] as $result) {
                 if (
                     (
-                        !isset($result['licenceType']['id']) ||
-                        is_null($result['licenceType']['id']) ||
-                        $result['licenceType']['id'] == $licenceType
+                        !count($result['licenceType']) ||
+                        (isset($result['licenceType']['id']) && $result['licenceType']['id'] == $licenceType)
                     )
                     &&
                     (
