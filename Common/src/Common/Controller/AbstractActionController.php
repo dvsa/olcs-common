@@ -880,7 +880,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
             $data = array_merge(
                 (array)$this->getRequest()->getPost(),
-                $this->getRequest()->getFiles()->toArray(),
                 $this->fieldValues
             );
 
