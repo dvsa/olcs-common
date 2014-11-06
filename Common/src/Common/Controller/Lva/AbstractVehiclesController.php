@@ -344,7 +344,7 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function isDiscPending($licenceVehicleData)
     {
-        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
+        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['removalDate'])) {
             return true;
         }
 
