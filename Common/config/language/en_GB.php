@@ -898,6 +898,8 @@ return array(
     'lva.section.title.people' => 'People',
     'lva.section.title.person' => 'Your details',
     'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
+    'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
+        vehicle(s)?',
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
