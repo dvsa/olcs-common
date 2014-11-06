@@ -318,4 +318,72 @@ class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(true, $helper->process());
     }
+
+    public function testProcessWithPostAndFileDeletionsWithNoDeletionsToDelete()
+    {
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $postData = [
+            'my-file' => [
+                'list' => [
+                    'file1' => [
+                        'remove' => true,
+                        'id' => 123
+                    ]
+                ]
+            ]
+        ];
+
+        $request->shouldReceive('getPost')
+            ->andReturn($postData);
+
+        $listElement = m::mock('\stdClass');
+        $listElement->shouldReceive('getFieldsets')
+            ->andReturn([])
+            ->getMock()
+            ->shouldReceive('remove')
+            ->with('file1');
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('get')
+            ->with('list')
+            ->andReturn($listElement);
+
+        $helper->setElement($element);
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setDeleteCallback(
+            function () {
+            }
+        );
+
+        $this->assertEquals(false, $helper->process());
+    }
+
+    public function testProcessWithPostAndFileDeletionsWithNoList()
+    {
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $postData = [
+            'my-file' => []
+        ];
+
+        $request->shouldReceive('getPost')
+            ->andReturn($postData);
+
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setDeleteCallback(
+            function () {
+            }
+        );
+
+        $this->assertEquals(false, $helper->process());
+    }
 }
