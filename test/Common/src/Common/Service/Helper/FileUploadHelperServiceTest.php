@@ -88,6 +88,27 @@ class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetElementFromFormAndSelector()
+    {
+        $form = m::mock('Zend\Form\Form');
+        $fieldset = m::mock('Zend\Form\Fieldset');
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($fieldset);
+
+        $fieldset->shouldReceive('get')
+            ->with('bar')
+            ->andReturn('fakeElement');
+
+        $helper = new FileUploadHelperService();
+
+        $helper->setForm($form);
+        $helper->setSelector('foo->bar');
+
+        $this->assertEquals('fakeElement', $helper->getElement());
+    }
+
     public function testProcessWithGetRequestAndNoLoadCallback()
     {
         $helper = new FileUploadHelperService();
@@ -98,5 +119,153 @@ class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
         $helper->setRequest($request);
 
         $this->assertFalse($helper->process());
+    }
+
+    public function testProcessWithGetRequestAndNotCallableLoadCallback()
+    {
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(false);
+
+        $helper->setRequest($request);
+        $helper->setLoadCallback(true); // not callable... obviously
+
+        try {
+            $helper->process();
+        }
+        catch (\Common\Exception\ConfigurationException $ex) {
+            $this->assertEquals('Load data callback is not callable', $ex->getMessage());
+            return;
+        }
+        $this->fail('Expected exception not raised');
+    }
+
+    public function testProcessWithPostAndValidFileUpload()
+    {
+        $helper = new FileUploadHelperService();
+
+        $file = tempnam("/tmp", "fuhs");
+        touch($file);
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true
+                ]
+            ]
+        ];
+
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => 0,
+                        'tmp_name' => $file
+                    ]
+                ]
+            ]
+        ];
+        $request->shouldReceive('getPost')
+            ->andReturn($postData);
+
+        $request->shouldReceive('getFiles')
+            ->andReturn($fileData);
+
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setUploadCallback(
+            function ($data) use ($file) {
+                $expected = [
+                    'error' => 0,
+                    'tmp_name' => $file
+                ];
+                $this->assertEquals($expected, $data);
+            }
+        );
+
+        $this->assertEquals(true, $helper->process());
+
+        unlink($file);
+    }
+
+    /**
+     * @dataProvider fileUploadProvider
+     */
+    public function testProcessWithPostAndInvalidFileUpload($error, $message)
+    {
+        $helper = new FileUploadHelperService();
+
+        $file = tempnam("/tmp", "fuhs");
+        touch($file);
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(true);
+
+        $form = m::mock('Zend\Form\Form');
+        $form->shouldReceive('setMessages')
+            ->once()
+            ->with(
+                [
+                    'my-file' => [
+                        '__messages__' => [$message]
+                    ]
+
+                ]
+            );
+
+        $postData = [
+            'my-file' => [
+                'file-controls' => [
+                    'upload' => true
+                ]
+            ]
+        ];
+
+        $fileData = [
+            'my-file' => [
+                'file-controls' => [
+                    'file' => [
+                        'error' => $error,
+                        'tmp_name' => $file
+                    ]
+                ]
+            ]
+        ];
+        $request->shouldReceive('getPost')
+            ->andReturn($postData);
+
+        $request->shouldReceive('getFiles')
+            ->andReturn($fileData);
+
+        $helper->setRequest($request);
+        $helper->setSelector('my-file');
+        $helper->setForm($form);
+        $helper->setUploadCallback(
+            function ($data) use ($file) {
+                $expected = [
+                    'error' => 0,
+                    'tmp_name' => $file
+                ];
+                $this->assertEquals($expected, $data);
+            }
+        );
+
+        $this->assertEquals(true, $helper->process());
+
+        unlink($file);
+    }
+
+    public function fileUploadProvider()
+    {
+        return [
+            [UPLOAD_ERR_PARTIAL, 'File was only partially uploaded'],
+            [UPLOAD_ERR_NO_FILE, 'Please select a file to upload'],
+            [UPLOAD_ERR_INI_SIZE, 'The file was too large to upload'],
+            [UPLOAD_ERR_NO_TMP_DIR, 'An unexpected error occurred while uploading the file']
+        ];
     }
 }
