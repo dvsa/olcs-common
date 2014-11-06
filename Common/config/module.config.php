@@ -92,7 +92,7 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'Common\Service\Fee\Fee' => 'Common\Service\Fee\Fee'
+            'FeeCommon' => 'Common\Service\Fee\FeeCommon'
         )
     ),
     'file_uploader' => array(
