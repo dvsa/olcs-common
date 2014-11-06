@@ -166,8 +166,10 @@ abstract class AbstractVehiclesController extends AbstractController
             }
         }
 
+        // persist the vehicle first...
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
+        // then if this is a new record, store it ID against the licence vehicle
         if ($mode == 'add') {
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
@@ -177,10 +179,8 @@ abstract class AbstractVehiclesController extends AbstractController
 
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
-        if (isset($licenceVehicle['id'])) {
-            return $licenceVehicle['id'];
-        }
-
+        // whatever happens return the licenceVehicle ID; some concretes care about it
+        // and want to perform post save actions on the licence vehicle
         return $saved['id'];
     }
 
