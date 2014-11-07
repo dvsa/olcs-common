@@ -48,6 +48,8 @@ trait ApplicationTypeOfLicenceTrait
 
                 $this->updateCompletionStatuses($ids['application'], 'type_of_licence');
 
+                $this->getServiceLocator()->get('FeeCommon')->generateFee('APP', $ids['application']);
+
                 return $this->goToOverview($ids['application']);
             }
         }
