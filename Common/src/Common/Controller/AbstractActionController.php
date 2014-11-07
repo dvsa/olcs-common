@@ -83,7 +83,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     protected $persist = true;
 
-    private $fieldValues = array();
+    protected $fieldValues = array();
 
     /**
      * Holds the caught response
