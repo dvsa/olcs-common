@@ -293,7 +293,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $trafficAreaValidator->setServiceLocator($this->getServiceLocator());
 
         $trafficAreaValidator->setPrivateHireLicencesCount(
-            $this->getPrivateHireLicencesCount($this->getLicenceId())
+            $this->getPrivateHireLicencesCount()
         );
 
         $trafficAreaValidator->setTrafficArea($trafficArea);
@@ -320,7 +320,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     public function delete()
     {
         $ids = explode(',', $this->params('child_id'));
-        $licCount = $this->getPrivateHireLicencesCount($this->getLicenceId());
+        $licCount = $this->getPrivateHireLicencesCount();
 
         if (count($ids) === $licCount) {
             $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea(null);
@@ -333,8 +333,11 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
     }
 
-    protected function getPrivateHireLicencesCount($licenceId)
+    protected function getPrivateHireLicencesCount($licenceId = null)
     {
+        if ($licenceId === null) {
+            $licenceId = $this->getLicenceId();
+        }
         return $this->getServiceLocator()->get('Entity\PrivateHireLicence')->getCountByLicence($licenceId);
     }
 
@@ -407,7 +410,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             && $data['contactDetails']['addresses']['address']['postcode']
         ) {
 
-            $licencesCount = $this->getPrivateHireLicencesCount($licenceId);
+            $licencesCount = $this->getPrivateHireLicencesCount();
 
             // first Licence was just added or we are editing the first one
             if ($licencesCount === 1) {
