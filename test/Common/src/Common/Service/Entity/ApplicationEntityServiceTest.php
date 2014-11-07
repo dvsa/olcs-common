@@ -51,7 +51,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $orgId = 3;
 
         $licenceData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_NEW,
+            'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
             'organisation' => $orgId
         );
 

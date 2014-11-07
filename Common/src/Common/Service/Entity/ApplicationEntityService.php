@@ -487,7 +487,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function createNew($organisationId)
     {
         $licenceData = array(
-            'status' => LicenceEntityService::LICENCE_STATUS_NEW,
+            'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
             'organisation' => $organisationId,
         );
 
@@ -641,7 +641,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     {
         $data = $this->get($id, $this->applicationDateBundle);
 
-        if ($data['receiveddate'] === null) {
+        if ($data['receivedDate'] === null) {
             return $data['createdOn'];
         }
 

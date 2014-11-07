@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -534,6 +533,8 @@ return array(
     'conditions' => 'Conditions',
     'conditions-and-undertaking-for-licences' => 'Conditions and undertakings for licences',
     'conditions-and-undertakings' => 'Conditions and undertakings',
+    'confirm-grant-application' => 'Are you sure you want to grant this application?',
+    'confirm-undo-grant-application' => 'Are you sure you want to undo the grant?',
     'continue.button' => 'Continue',
     'conv-#' => 'Conv. #',
     'conv-description' => 'Conv. description',
@@ -844,9 +845,9 @@ return array(
     'lookup-transport-manager-id' => 'Transport Manager ID',
     'lookup-vehicle-registration-mark' => 'Vehicle Registration Mark',
     'lsts_cns' => 'Continuation Not Sought',
+    'lsts_consideration' => 'Under consideration',
     'lsts_curtailed' => 'Curtailed',
     'lsts_granted' => 'Granted',
-    'lsts_new' => 'New',
     'lsts_ntu' => 'Not Taken Up',
     'lsts_refused' => 'Refused',
     'lsts_revoked' => 'Revoked',

@@ -28,7 +28,8 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_TYPE_STANDARD_NATIONAL = 'ltyp_sn';
     const LICENCE_TYPE_SPECIAL_RESTRICTED = 'ltyp_sr';
 
-    const LICENCE_STATUS_NEW = 'lsts_new';
+    const LICENCE_STATUS_UNDER_CONSIDERATION = 'lsts_consideration';
+    const LICENCE_STATUS_NOT_SUBMITTED = 'lsts_not_submitted';
     const LICENCE_STATUS_SUSPENDED = 'lsts_suspended';
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
