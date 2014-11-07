@@ -128,7 +128,10 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $form = m::mock('Common\Form\Model\Form\MyFakeFormTest');
 
-        $form->shouldReceive('add')->never();
+        // @NOTE: the below should work according to the docs but it doesn't. However
+        // *not* adding any expectations throws an error if methods are then called,
+        // so not adding this is the same as asking for add to never be called
+        //$form->shouldReceive('add')->never();
 
         $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
 
