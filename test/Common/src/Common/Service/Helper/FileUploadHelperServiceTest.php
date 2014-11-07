@@ -133,8 +133,7 @@ class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
 
         try {
             $helper->process();
-        }
-        catch (\Common\Exception\ConfigurationException $ex) {
+        } catch (\Common\Exception\ConfigurationException $ex) {
             $this->assertEquals('Load data callback is not callable', $ex->getMessage());
             return;
         }

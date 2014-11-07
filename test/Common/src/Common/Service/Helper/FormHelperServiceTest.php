@@ -146,9 +146,7 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $helper->setServiceLocator($sm);
 
-        // @FIXME: should fail with true. Once test is fixed, change
-        // these args to false
-        $result = $helper->createForm('MyFakeFormTest', true, true);
+        $result = $helper->createForm('MyFakeFormTest', false, false);
 
         $this->assertEquals($form, $result);
     }
