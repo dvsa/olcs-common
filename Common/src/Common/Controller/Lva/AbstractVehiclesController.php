@@ -179,9 +179,11 @@ abstract class AbstractVehiclesController extends AbstractController
 
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
-        // whatever happens return the licenceVehicle ID; some concretes care about it
-        // and want to perform post save actions on the licence vehicle
-        return $saved['id'];
+        if (isset($saved['id'])) {
+            return $saved['id'];
+        } elseif (!empty($licenceVehicle['id'])) {
+            return $licenceVehicle['id'];
+        }
     }
 
     /**
