@@ -123,7 +123,9 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         return array(
             'data' => array(
                 'version'       => $data['version'],
-                'hasEnteredReg' => $data['hasEnteredReg']
+                // @NOTE: licences don't have this flag, but we haven't defined their behaviour
+                // on PSV pages yet. As such, this just prevents a PHP error
+                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : null
             )
         );
     }

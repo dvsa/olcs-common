@@ -68,17 +68,17 @@ class FormHelperService extends AbstractHelperService
         }
 
         if ($addContinue) {
-            $config = [
+            $config = array(
                 'type' => '\Zend\Form\Element\Button',
                 'name' => 'form-actions[submit]',
-                'options' => [
+                'options' => array(
                     'label' => 'Continue'
-                ],
-                'attributes' => [
+                ),
+                'attributes' => array(
                     'type' => 'submit',
                     'class' => 'visually-hidden'
-                ]
-            ];
+                )
+            );
             $form->add($config);
         }
 
@@ -102,7 +102,7 @@ class FormHelperService extends AbstractHelperService
             }
         }
 
-        throw new \Exception('Form does not exist: ' . $formName);
+        throw new \RuntimeException('Form does not exist: ' . $formName);
     }
 
     /**

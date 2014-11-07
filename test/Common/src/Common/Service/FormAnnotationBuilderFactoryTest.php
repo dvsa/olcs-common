@@ -17,8 +17,8 @@ class FormAnnotationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
         $mockFormFactory = m::mock('Zend\Form\FormElementManager');
-        $mockValidatorManager =  m::mock('Zend\Validator\ValidatorPluginManager');
-        $mockFilterManager =  m::mock('Zend\Filter\FilterPluginManager');
+        $mockValidatorManager = m::mock('Zend\Validator\ValidatorPluginManager');
+        $mockFilterManager = m::mock('Zend\Filter\FilterPluginManager');
 
         $mockServiceLocator = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
         $mockServiceLocator->shouldReceive('get')->with('FormElementManager')->andReturn($mockFormFactory);

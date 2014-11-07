@@ -31,7 +31,12 @@ class AbstractOperatingCentreEntityServiceTest extends AbstractEntityServiceTest
         $this->setEntity('Foo');
         $this->setProperty('type', 'bar');
 
-        $this->expectOneRestCall('Foo', 'GET', array('bar' => $id))
+        $expectedParams = array(
+            'bar' => $id,
+            'limit' => 'all'
+        );
+
+        $this->expectOneRestCall('Foo', 'GET', $expectedParams)
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getAddressSummaryData($id));

@@ -878,7 +878,10 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         if ($this->getRequest()->isPost()) {
 
-            $data = array_merge((array)$this->getRequest()->getPost(), $this->fieldValues);
+            $data = array_merge(
+                (array)$this->getRequest()->getPost(),
+                $this->fieldValues
+            );
 
             $form->setData($data);
 

@@ -166,8 +166,10 @@ abstract class AbstractVehiclesController extends AbstractController
             }
         }
 
+        // persist the vehicle first...
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
+        // then if this is a new record, store it ID against the licence vehicle
         if ($mode == 'add') {
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
@@ -177,11 +179,11 @@ abstract class AbstractVehiclesController extends AbstractController
 
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
-        if (isset($licenceVehicle['id'])) {
+        if (isset($saved['id'])) {
+            return $saved['id'];
+        } elseif (!empty($licenceVehicle['id'])) {
             return $licenceVehicle['id'];
         }
-
-        return $saved['id'];
     }
 
     /**
@@ -344,7 +346,7 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function isDiscPending($licenceVehicleData)
     {
-        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['deletedDate'])) {
+        if (empty($licenceVehicleData['specifiedDate']) && empty($licenceVehicleData['removalDate'])) {
             return true;
         }
 
