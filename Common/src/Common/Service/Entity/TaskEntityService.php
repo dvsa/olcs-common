@@ -25,12 +25,8 @@ class TaskEntityService extends AbstractEntityService
     const STATUS_CLOSED = 'tst_closed';
     const STATUS_ALL = 'tst_all';
 
-    public function closeByQuery($query)
+    public function closeByQuery(array $query = array())
     {
-        if (!is_array($query)) {
-            $query = array('id' => $query);
-        }
-
         $query['isClosed'] = 'N';
 
         $results = $this->getAll($query, array('properties' => array('id')));

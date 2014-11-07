@@ -371,4 +371,40 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getCategory($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetApplicationDateWithoutReceivedDate()
+    {
+        $id = 4;
+
+        $response = array(
+            'receivedDate' => null,
+            'createdOn' => '2014-01-01'
+        );
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('2014-01-01', $this->sut->getApplicationDate($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetApplicationDate()
+    {
+        $id = 4;
+
+        $response = array(
+            'receivedDate' => '2012-01-01',
+            'createdOn' => '2014-01-01'
+        );
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('2012-01-01', $this->sut->getApplicationDate($id));
+    }
 }
