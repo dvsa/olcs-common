@@ -91,7 +91,8 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
-            }
+            },
+            'FeeCommon' => 'Common\Service\Fee\FeeCommon'
         )
     ),
     'file_uploader' => array(
