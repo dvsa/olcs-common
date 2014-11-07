@@ -26,20 +26,4 @@ trait LicenceGoodsVehiclesControllerTrait
             $this->requestDisc($licenceVehicleId);
         }
     }
-
-    /**
-     * Shared logic between licence vehicle sections
-     *
-     * @param array $data
-     * @param string $mode
-     * @return mixed
-     */
-    protected function preSaveVehicle($data, $mode)
-    {
-        if ($mode === 'add') {
-            $data['licence-vehicle']['specifiedDate'] = date('Y-m-d');
-        }
-
-        return $data;
-    }
 }

@@ -25,4 +25,20 @@ trait LicenceGenericVehiclesControllerTrait
     {
         return (!empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['removalDate']));
     }
+
+    /**
+     * Shared logic between licence vehicle sections
+     *
+     * @param array $data
+     * @param string $mode
+     * @return mixed
+     */
+    protected function preSaveVehicle($data, $mode)
+    {
+        if ($mode === 'add') {
+            $data['licence-vehicle']['specifiedDate'] = date('Y-m-d');
+        }
+
+        return $data;
+    }
 }
