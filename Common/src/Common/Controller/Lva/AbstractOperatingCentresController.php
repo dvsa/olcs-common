@@ -250,8 +250,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form->getInputFilter()->get('address')->get('postcode')->setRequired(false)
             ->getValidatorChain()->attach($trafficAreaValidator);
 
-        if ($licenceData['niFlag'] == 'N' && !$trafficArea) {
-            $form->get('form-actions')->remove('addAnother');
+        $actions = $form->get('form-actions');
+
+        if ($licenceData['niFlag'] == 'N' && !$trafficArea && $actions->has('addAnother')) {
+            $actions->remove('addAnother');
         }
     }
 
@@ -367,6 +369,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\OperatingCentre')
             ->setData($data);
+
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
 
         $form = $this->alterActionForm($form);
 
@@ -551,7 +557,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $data['data'] = $oldData = $data;
 
-        //$results = $this->getFormTableData($this->getIdentifier(), '');
         $results = $this->getTableData();
 
         $licenceData = $this->getTypeOfLicenceData();
@@ -781,7 +786,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function addVariationInfoMessage()
     {
         $params = [
-            $this->getIdentifierIndex() => $this->getIdentifier()
+            // variations are *always* created from a licence. Sure, we only expect this message to appear
+            // in the context of a licence, but let's be absolutely sure by hardcoding the key & get method
+            // instead of using the abstract LVA ones
+            'licence' => $this->getLicenceId()
         ];
 
         $this->addCurrentMessage(

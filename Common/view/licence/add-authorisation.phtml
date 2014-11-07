@@ -1,6 +1,6 @@
 <h3>Adding an operating centre</h3>
 <p>In order to add an additional operating centre on the licence you must create a variation application</p>
-<a href="<?php echo $this->url('create_variation', array('id' => $licence)); ?>" class="action action--primary">Create variation</a>
+<a href="<?php echo $this->url('create_variation', array('licence' => $licence)); ?>" class="action action--primary">Create variation</a>
 <a href="<?php echo $this->url(null, array('action' => 'index'), array(), true); ?>" class="action action--secondary">
     Cancel
 </a>

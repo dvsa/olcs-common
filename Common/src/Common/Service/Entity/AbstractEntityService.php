@@ -74,13 +74,34 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     /**
      * Wrap the rest client
      *
-     * @param int $id
+     * @param mixed $id
      * @param array $bundle
      * @return array
      */
     protected function get($id, $bundle = null)
     {
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $id, $bundle);
+    }
+
+    /**
+     * Wrap the rest client to fetch all records, not just the default backend limit (currently 10)
+     *
+     * @param mixed $query
+     * @param array $bundle
+     * @param mixed $limit
+     * @return array
+     */
+    protected function getAll($query, $bundle = null, $limit = 'all')
+    {
+        if (!is_array($query)) {
+            // assume id => "foo" shorthand
+            $query = array(
+                'id' => $query
+            );
+        }
+        $query['limit'] = $limit;
+
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $query, $bundle);
     }
 
     /**
