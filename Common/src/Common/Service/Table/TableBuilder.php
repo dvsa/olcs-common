@@ -767,8 +767,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function setupAction()
     {
-        if (!isset($this->getVariables()['action'])) {
-            $this->variables['action'] = $this->generateUrl();
+        $variables = $this->getVariables();
+        if (!isset($variables['action'])) {
+            if (isset($variables['action_route'])) {
+                $route = $variables['action_route']['route'];
+                $params = $variables['action_route']['params'];
+                $this->variables['action'] = $this->generateUrl($params,
+                    $route, true);
+            } else {
+                $this->variables['action'] = $this->generateUrl();
+            }
         }
     }
 
