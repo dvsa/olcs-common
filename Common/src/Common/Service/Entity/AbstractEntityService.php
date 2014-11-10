@@ -47,6 +47,19 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, $method, $data);
     }
 
+    public function update($id, $data)
+    {
+        $data['id'] = $id;
+        return $this->put($data);
+    }
+
+    public function forceUpdate($id, $data)
+    {
+        $data['_OPTIONS_']['force'] = true;
+
+        return $this->update($id, $data);
+    }
+
     /**
      * Delete the entity by its ID
      *

@@ -14,6 +14,19 @@ namespace Common\Service\Entity;
  */
 class UserEntityService extends AbstractEntityService
 {
+    protected $currentUserBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'team' => array(
+                'properties' => array('id')
+            )
+        )
+    );
+
+    protected $entity = 'User';
+
     /**
      * Get the current user
      *
@@ -21,6 +34,8 @@ class UserEntityService extends AbstractEntityService
      */
     public function getCurrentUser()
     {
-        return array('id' => 1);
+        $id = 1;
+
+        return $this->get($id, $this->currentUserBundle);
     }
 }
