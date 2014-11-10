@@ -18,13 +18,26 @@ use Common\Util\RestCallTrait;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CategoryData implements FactoryInterface, ServiceLocatorAwareInterface
+class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait,
         RestCallTrait;
 
     const CATEGORY_SERVICE = 'Category';
     const SUB_CATEGORY_SUFFIX = 'SubCategory';
+
+    const CATEGORY_LICENSING = 1;
+    const CATEGORY_COMPLIANCE = 2;
+    const CATEGORY_BUS_REGISTRATION = 3;
+    const CATEGORY_PERMITS = 4;
+    const CATEGORY_TRANSPORT_MANAGER = 5;
+    const CATEGORY_ENVIRONMENTAL = 7;
+    const CATEGORY_IRFO = 8;
+    const CATEGORY_APPLICATION = 9;
+    const CATEGORY_SUBMISSION = 10;
+
+    // @todo Maybe create constants for all sub categories? Unless we start using handle
+    const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 10;
 
     /**
      * Cache the categories

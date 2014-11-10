@@ -537,6 +537,34 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setupAction with action_route set
+     */
+    public function testSetupActionWithActionRouteSet()
+    {
+        $variables = array(
+            'action_route' => array('route' => 'someroute', 'params' => array('foo' => 'bar'))
+        );
+
+        $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+
+        $mockUrl->expects($this->once())
+            ->method('fromRoute')
+            ->will($this->returnValue('/someaction'));
+
+        $table = $this->getMockTableBuilder(array('getVariables', 'getUrl'));
+
+        $table->expects($this->any())
+            ->method('getVariables')
+            ->will($this->returnValue($variables));
+
+        $table->expects($this->once())
+            ->method('getUrl')
+            ->will($this->returnValue($mockUrl));
+
+        $table->setupAction();
+    }
+
+    /**
      * Test render
      */
     public function testRender()

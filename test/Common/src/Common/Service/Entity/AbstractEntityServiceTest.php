@@ -47,7 +47,6 @@ class AbstractEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group entity_services
-     * @group entity_services_current
      */
     public function testDelete()
     {
@@ -58,5 +57,39 @@ class AbstractEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Foo', 'DELETE', array('id' => $id));
 
         $this->sut->delete($id);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testUpdate()
+    {
+        $id = 1;
+        $data = array(
+            'foo' => 'bar'
+        );
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'PUT', array('id' => $id, 'foo' => 'bar'));
+
+        $this->sut->update($id, $data);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testForceUpdate()
+    {
+        $id = 1;
+        $data = array(
+            'foo' => 'bar'
+        );
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'PUT', ['id' => $id, 'foo' => 'bar', '_OPTIONS_' => ['force' => true]]);
+
+        $this->sut->forceUpdate($id, $data);
     }
 }
