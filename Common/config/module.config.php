@@ -84,7 +84,7 @@ return array(
             'goodsDiscStartNumberValidator' => function ($serviceManager) {
                 return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
             },
-            'category' => '\Common\Service\Data\CategoryData',
+            'category' => '\Common\Service\Data\CategoryDataService',
             'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',

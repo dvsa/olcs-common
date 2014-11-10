@@ -668,7 +668,7 @@ return array(
     'lsts_cns' => 'W Continuation Not Sought',
     'lsts_curtailed' => 'W Curtailed',
     'lsts_granted' => 'W Granted',
-    'lsts_new' => 'W New',
+    'lsts_consideration' => 'W Under consideration',
     'lsts_ntu' => 'W Not Taken Up',
     'lsts_refused' => 'W Refused',
     'lsts_revoked' => 'W Revoked',
