@@ -143,8 +143,11 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
                     )
                     &&
                     (
-                       ($niFlag == 'Y' && $result['trafficArea']['id'] == self::NI_TA_CODE) ||
-                       ($niFlag == 'N' && $result['trafficArea']['id'] != self::NI_TA_CODE)
+                       ($niFlag == 'Y' && isset($result['trafficArea']['id'])
+                            && $result['trafficArea']['id'] == self::NI_TA_CODE) ||
+                       ($niFlag == 'N'
+                            && (!isset($result['trafficArea']['id'])
+                                || $result['trafficArea']['id'] != self::NI_TA_CODE))
                     )
                    ) {
                     $results[] = $result;
