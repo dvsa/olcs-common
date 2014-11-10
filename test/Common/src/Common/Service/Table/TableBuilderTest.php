@@ -560,9 +560,8 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->expects($this->once())
             ->method('getUrl')
             ->will($this->returnValue($mockUrl));
-        
-        $table->setupAction();
 
+        $table->setupAction();
     }
 
     /**
