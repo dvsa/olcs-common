@@ -16,4 +16,4 @@ config/autoload/local.php
 *.sw?
 coverage/
 node_modules
-data
+Common/data
