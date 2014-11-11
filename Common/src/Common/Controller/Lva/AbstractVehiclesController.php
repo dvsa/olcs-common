@@ -369,7 +369,8 @@ abstract class AbstractVehiclesController extends AbstractController
      * @param DateTime $currentDate
      * @return Form
      */
-    protected function setDefaultDates($form, $currentDate) {
+    protected function setDefaultDates($form, $currentDate)
+    {
         // default 'Received date' to the current date if it is not set
         $receivedDate = $form->get('licence-vehicle')->get('receivedDate')->getValue();
         $receivedDate = trim($receivedDate, '-'); // date element returns '--' when empty!
@@ -378,5 +379,4 @@ abstract class AbstractVehiclesController extends AbstractController
         }
         return $form;
     }
-
 }
