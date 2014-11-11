@@ -39,4 +39,23 @@ class PsvDiscEntityService extends AbstractEntityService
 
         $this->put($postData);
     }
+
+    /**
+     * Request multiple discs
+     *
+     * @param int $count
+     * @param array $data
+     */
+    public function requestDiscs($count, $data = array())
+    {
+        $defaults = array(
+            'isCopy' => 'N'
+        );
+
+        $postData = $this->getServiceLocator()->get('Helper\Data')->arrayRepeat(array_merge($defaults, $data), $count);
+
+        $postData['_OPTIONS_'] = array('multiple' => true);
+
+        $this->save($postData);
+    }
 }

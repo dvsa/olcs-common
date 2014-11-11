@@ -23,28 +23,99 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     public function validateApplication($id)
     {
+        $licenceId = $this->getLicenceId($id);
+
         $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
 
-        $this->copyApplicationDataToLicence($id);
+        $this->copyApplicationDataToLicence($id, $licenceId);
 
-        $this->processApplicationOperatingCentres($id);
+        $this->processApplicationOperatingCentres($id, $licenceId);
 
-        $this->createDiscRecords($id);
+        $this->createDiscRecords($licenceId);
+
+        $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
     }
 
-    protected function processApplicationOperatingCentres($id)
+    protected function processApplicationOperatingCentres($id, $licenceId)
     {
+        $applicationOperatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+            ->getForApplication($id);
 
+        $new = $updates = $deletions = array();
+
+        foreach ($applicationOperatingCentres as $aoc) {
+            switch ($aoc['action']) {
+                case 'A':
+                    $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
+                    $aoc['licence'] = $licenceId;
+                    $new[] = $aoc;
+                    break;
+            }
+        }
+
+        if (!empty($new)) {
+            $licenceOperatingCentreService = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre');
+            foreach ($new as $aoc) {
+                $licenceOperatingCentreService->save($aoc);
+            }
+        }
+
+        // @todo Process updates and deletions (Out of scope for OLCS-4895)
     }
 
-    protected function createDiscRecords($id)
+    protected function createDiscRecords($licenceId)
     {
+        $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
+            ->getForApplicationValidation($licenceId);
 
+        if (!empty($licenceVehicles)) {
+            $category = $this->getServiceLocator()->get('Entity\Licence')->getCategory($licenceId);
+
+            if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+                $this->createGoodsDiscs($licenceVehicles);
+            } else {
+                $this->createPsvDiscs($licenceId, count($licenceVehicles));
+            }
+        }
     }
 
-    protected function copyApplicationDataToLicence($id)
+    protected function createGoodsDiscs($licenceVehicles)
     {
-        $licenceId = $this->getLicenceId($id);
+        $defaults = array(
+            'ceasedDate' => null,
+            'issuedDate' => null,
+            'discNo' => null,
+            'isCopy' => 'N'
+        );
+
+        $goodsDiscService = $this->getServiceLocator()->get('Entity\GoodsDisc');
+
+        foreach ($licenceVehicles as $licenceVehicle) {
+            $data = array_merge(
+                $defaults,
+                array(
+                    'licenceVehicle' => $licenceVehicle['id']
+                )
+            );
+            $goodsDiscService->save($data);
+        }
+    }
+
+    protected function createPsvDiscs($licenceId, $count)
+    {
+        $data = array(
+            'licence' => $licenceId,
+            'ceasedDate' => null,
+            'issuedDate' => null,
+            'discNo' => null,
+            'isCopy' => 'N'
+        );
+
+        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+    }
+
+    protected function copyApplicationDataToLicence($id, $licenceId)
+    {
         $licenceData = array_merge(
             array(
                 'status' => LicenceEntityService::LICENCE_STATUS_VALID
@@ -52,7 +123,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $this->getImportantLicenceDate(),
             $this->getApplicationDataForValidating($id)
         );
-        $this->getServiceLocator()->get('Entity\Licence')->forcePut($licenceId, $licenceData);
+        $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
     }
 
     protected function getApplicationDataForValidating($id)
@@ -79,7 +150,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     {
         $data = array('status' => $status);
 
-        $this->getServiceLocator()->get('Entity\Application')->forcePut($id, $data);
+        $this->getServiceLocator()->get('Entity\Application')->forceUpdate($id, $data);
     }
 
     protected function getLicenceId($id)

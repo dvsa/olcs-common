@@ -179,15 +179,7 @@ abstract class AbstractDiscsController extends AbstractController
      */
     protected function requestDiscs($count, $data = array())
     {
-        $defaults = array(
-            'isCopy' => 'N'
-        );
-
-        $postData = $this->getServiceLocator()->get('Helper\Data')->arrayRepeat(array_merge($defaults, $data), $count);
-
-        $postData['_OPTIONS_'] = array('multiple' => true);
-
-        $this->getServiceLocator()->get('Entity\PsvDisc')->save($postData);
+        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
     }
 
     /**
