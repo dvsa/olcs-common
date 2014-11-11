@@ -719,9 +719,25 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
         foreach (['Olcs', 'SelfServe', 'Common'] as $namespace) {
             $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
             if (class_exists($class)) {
-                return $annotationBuilder->createForm($class);
+
+                $form =  $annotationBuilder->createForm($class);
+                $form->add([
+                    'name' => 'csrf',
+                    'type' => 'Csrf',
+                    'options' => [
+                        'csrf_options' => [
+                            'messageTemplates' => [
+                                'notSame' => 'csrf-message'
+                            ],
+                            'timeout' => 600
+                        ]
+                    ]
+                ]);
+
+                return $form;
             }
         }
+
         return $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
     }
 
