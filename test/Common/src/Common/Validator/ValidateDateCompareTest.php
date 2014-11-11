@@ -192,6 +192,14 @@ class ValidateDateCompareTest extends \PHPUnit_Framework_TestCase
                 ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
                 [DateCompare::INVALID_OPERATOR => 'Invalid operator']
             ],
+            //Can't compare
+            [
+                false,
+                ['compare_to' => 'other_field', 'operator' => 'invalid', 'compare_to_label' => 'Other field'],
+                '2014-01-',
+                ['other_field'=> ['day' => '09', 'month' => '01', 'year' => '2014']],
+                [DateCompare::NO_COMPARE => "Unable to compare with 'Other field'"]
+            ],
         ];
     }
 }
