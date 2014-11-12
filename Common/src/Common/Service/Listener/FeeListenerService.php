@@ -51,7 +51,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
             return;
         }
 
-        $fees = $feeService->getOutstandingFeesForApplication($application['id'], $id);
+        $fees = $feeService->getOutstandingFeesForApplication($application['id']);
 
         if (!empty($fees)) {
             return;

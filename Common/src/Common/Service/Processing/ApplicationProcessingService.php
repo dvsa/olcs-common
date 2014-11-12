@@ -73,9 +73,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
             if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
                 $this->createGoodsDiscs($licenceVehicles);
-            } else {
-                $this->createPsvDiscs($licenceId, count($licenceVehicles));
             }
+            /*
+             * @todo This is out of scope as part of OLCS-4895
+            else {
+                $this->createPsvDiscs($licenceId, count($licenceVehicles));
+            }*/
         }
     }
 
@@ -101,6 +104,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
+    /**
+     * @todo This is out of scope as part of OLCS-4895, but is something like what is needed
+
     protected function createPsvDiscs($licenceId, $count)
     {
         $data = array(
@@ -113,6 +119,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
     }
+     */
 
     protected function copyApplicationDataToLicence($id, $licenceId)
     {
