@@ -159,6 +159,7 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
         $mockProcessor->expects($this->once())
             ->method('validateApplication')
             ->with(7);
+        $this->sm->setService('Processing\Application', $mockProcessor);
 
         $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
     }

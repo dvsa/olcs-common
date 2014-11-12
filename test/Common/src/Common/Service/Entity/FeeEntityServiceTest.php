@@ -128,11 +128,12 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $id = 3;
 
         $query = array(
-            'application' => 1,
+            'application' => 3,
             'feeStatus' => array(
                 FeeEntityService::STATUS_OUTSTANDING,
                 FeeEntityService::STATUS_WAIVE_RECOMMENDED
-            )
+            ),
+            'limit' => 'all'
         );
 
         $response = array(
