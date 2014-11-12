@@ -112,7 +112,8 @@ class LicenceEntityService extends AbstractLvaEntityService
             ),
             'status' => array(
                 'properties' => array(
-                    'id'
+                    'id',
+                    'description'
                 )
             ),
             'goodsOrPsv' => array(
