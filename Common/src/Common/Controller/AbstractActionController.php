@@ -746,7 +746,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param type $type
      * @return type
      */
-    protected function getForm($type)
+    public function getForm($type)
     {
         $form = $this->getFormClass($type);
 
