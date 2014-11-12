@@ -174,8 +174,8 @@ class FormRow extends ZendFormRow
                 $fieldsetClass = $element->getOption('fieldset-class');
 
                 $markup = sprintf(
-                    '<fieldset '.(is_null($fieldsetClass) ? '' : 'class="' . $fieldsetClass . '"') .
-                    ' data-group="%s"><legend>%s</legend>%s</fieldset>',
+                    '<fieldset '.(is_null($fieldsetClass) ? '' : 'class="' . $fieldsetClass . '" ') .
+                    'data-group="%s"><legend>%s</legend>%s</fieldset>',
                     $dataGroup,
                     $label,
                     $elementString
