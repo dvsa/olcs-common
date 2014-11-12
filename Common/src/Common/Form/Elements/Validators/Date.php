@@ -27,4 +27,27 @@ class Date extends ZendDate
         self::INVALID_DATE   => "The input does not appear to be a valid date",
         self::FALSEFORMAT    => "The input does not fit the date format '%format%'",
     );
+
+    /**
+     * Returns true if $value is a DateTime instance or can be converted into one.
+     *
+     * @param  string|array|int|DateTime $value
+     * @return bool
+     */
+    public function isValid($value)
+    {
+        $this->setValue($value);
+
+        if (empty($value)) {
+            $this->error(self::INVALID);
+            return false;
+        }
+
+        if (!$this->convertToDateTime($value, false)) {
+            $this->error(self::INVALID_DATE);
+            return false;
+        }
+
+        return true;
+    }
 }
