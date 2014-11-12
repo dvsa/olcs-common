@@ -122,6 +122,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
         }
 
+        // set default date values prior to render
+        $today = new \DateTime();
+        $form = $this->setDefaultDates($form, $today);
+
         return $this->render($mode . '_vehicles', $form);
     }
 

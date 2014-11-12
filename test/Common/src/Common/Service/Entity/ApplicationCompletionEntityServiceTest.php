@@ -153,7 +153,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
             'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
             'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
             'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-            'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+            'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+            'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
         );
 
         $dataSets = array(
@@ -197,7 +198,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Complete type of licence data
@@ -240,7 +242,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Missing business type data
@@ -280,7 +283,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Complete business type data
@@ -321,7 +325,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details not started
@@ -361,7 +366,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details incomplete llp
@@ -405,7 +411,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details complete llp
@@ -455,7 +462,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details incomplete partnership
@@ -496,7 +504,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details complete partnership
@@ -538,7 +547,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Business details complete sole trader
@@ -579,7 +589,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Addresses incomplete 1
@@ -635,7 +646,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Addresses complete 1
@@ -696,7 +708,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Addresses complete 2
@@ -752,7 +765,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // People incomplete
@@ -791,7 +805,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // People complete
@@ -832,7 +847,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Taxi PHV incomplete
@@ -870,7 +886,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Taxi PHV complete
@@ -909,7 +926,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // OC incomplete 1
@@ -944,7 +962,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // OC incomplete 2
@@ -992,7 +1011,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // OC incomplete 3
@@ -1043,7 +1063,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // OC incomplete 4
@@ -1094,7 +1115,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // OC complete 1
@@ -1142,7 +1164,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial Evidence placeholder
@@ -1176,7 +1199,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Transport managers placeholder
@@ -1210,7 +1234,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles incomplete
@@ -1245,7 +1270,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles incomplete
@@ -1285,7 +1311,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles incomplete
@@ -1327,7 +1354,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles incomplete (Too many vehicles)
@@ -1372,7 +1400,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles complete
@@ -1417,7 +1446,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles complete
@@ -1462,7 +1492,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations incomplete
@@ -1512,7 +1543,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations incomplete
@@ -1562,7 +1594,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations incomplete
@@ -1612,7 +1645,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations complete
@@ -1661,7 +1695,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations complete
@@ -1710,7 +1745,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles declarations complete
@@ -1760,7 +1796,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety incomplete
@@ -1806,7 +1843,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety complete
@@ -1854,7 +1892,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety incomplete
@@ -1903,7 +1942,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety complete
@@ -1952,7 +1992,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety incomplete
@@ -2002,7 +2043,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Safety complete
@@ -2052,7 +2094,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history incomplete
@@ -2092,7 +2135,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history incomplete
@@ -2132,7 +2176,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history complete
@@ -2172,7 +2217,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history incomplete
@@ -2213,7 +2259,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history incomplete
@@ -2254,7 +2301,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history complete
@@ -2295,7 +2343,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Financial history complete
@@ -2336,7 +2385,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Licence history incomplete
@@ -2378,7 +2428,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Licence history incomplete
@@ -2420,7 +2471,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Licence history incomplete
@@ -2468,7 +2520,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Licence history incomplete
@@ -2516,7 +2569,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Licence history complete
@@ -2564,7 +2618,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Convictions Penalties incomplete
@@ -2601,7 +2656,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Convictions Penalties incomplete
@@ -2638,7 +2694,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Convictions Penalties complete
@@ -2677,7 +2734,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Convictions Penalties incomplete
@@ -2716,7 +2774,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Conditions Undertakings
@@ -2750,7 +2809,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles PSV incomplete: no licence vehicles
@@ -2785,7 +2845,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles PSV incomplete: too many vehicles
@@ -2831,7 +2892,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles PSV incomplete: enough vehicles to satisfy completion, but one total is NULL (not answered)
@@ -2880,7 +2942,8 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
             // Vehicles PSV complete: enough vehicles to satisfy completion
@@ -2930,7 +2993,43 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                )
+            ),
+            // Undertakings
+            'undertakings_1' => array(
+                // Current section
+                'undertakings',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE
                 )
             ),
         );
