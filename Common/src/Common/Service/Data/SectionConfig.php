@@ -218,6 +218,10 @@ class SectionConfig
                     array(
                         'application',
                         'variation'
+                    ),
+                    // and external
+                    array(
+                        'external',
                     )
                 )
             )
