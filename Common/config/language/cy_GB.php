@@ -461,7 +461,7 @@ return array(
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'W Company number',
     'application_your-business_business_details-subsidiaries-columnName' => 'W Company name',
-    'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W Please add subsidiary company',
+    'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W The table is empty',
     'application_your-business_business_details-subsidiaries-tableHeader' => 'W Subsidiary companies (optional)',
     'application_your-business_fao.label' => 'W For attention of (optional)',
     'application_your-business_people-sub-action-formDateOfBirth' => 'W Date of birth',
