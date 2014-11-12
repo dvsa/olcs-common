@@ -210,7 +210,22 @@ class SectionConfig
                     )
                 )
             )
-        )
+        ),
+        'undertakings' => array(
+            'restricted' => array(
+                array(
+                    // Must be variation or application
+                    array(
+                        'application',
+                        'variation'
+                    ),
+                    // and external
+                    array(
+                        'external',
+                    )
+                )
+            )
+        ),
     );
 
     /**
