@@ -634,4 +634,15 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
         return $this->checkCompletion($requiredVars);
     }
+
+    /**
+     * Get undertakings status
+     *
+     * @param array $applicationData
+     * @return int
+     */
+    private function getUndertakingsStatus($applicationData)
+    {
+        return self::STATUS_COMPLETE;
+    }
 }

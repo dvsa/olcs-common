@@ -25,6 +25,7 @@ class DateCompare extends AbstractValidator
     const NOT_LT = 'notLessThan';
     const INVALID_OPERATOR = 'invalidOperator';
     const INVALID_FIELD = 'invalidField';
+    const NO_COMPARE = 'noCompare';
 
     /**
      * Error messages
@@ -36,7 +37,8 @@ class DateCompare extends AbstractValidator
         self::NOT_LTE => "This date must be before or the same as '%compare_to_label%'",
         self::NOT_LT => "This date must be before '%compare_to_label%'",
         self::INVALID_OPERATOR => "Invalid operator",
-        self::INVALID_FIELD => "Input field being compared to doesn't exist"
+        self::INVALID_FIELD => "Input field being compared to doesn't exist",
+        self::NO_COMPARE => "Unable to compare with '%compare_to_label%'"
     );
 
     /**
@@ -200,6 +202,11 @@ class DateCompare extends AbstractValidator
         } else {
             $dateValue = \DateTime::createFromFormat('Y-m-d', $value);
         }
+
+        if (!$dateValue) {
+            $this->error(self::NO_COMPARE); //@TO~DO~
+            return false;
+        };
 
         $dateValue->setTime(0, 0, 0);
 

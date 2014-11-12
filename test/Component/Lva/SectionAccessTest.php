@@ -63,7 +63,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -87,7 +88,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -110,7 +112,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -135,7 +138,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -160,7 +164,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -184,7 +189,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'safety',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings'
                 )
             ),
             array(
@@ -201,7 +207,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'business_details',
                     'addresses',
                     'people',
-                    'taxi_phv'
+                    'taxi_phv',
+                    'undertakings'
                 )
             ),
             // INTERNAL APPLICATION
@@ -688,7 +695,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             array(
@@ -710,7 +718,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles',
                     'community_licences',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             array(
@@ -730,7 +739,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             array(
@@ -752,7 +762,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles_psv',
                     'discs',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             array(
@@ -775,7 +786,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'discs',
                     'community_licences',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             array(
@@ -797,7 +809,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'discs',
                     'community_licences',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings'
                 )
             ),
             // INTERNAL VARIATION
