@@ -15,7 +15,9 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 
     public function testGetIndexAction()
     {
-        $this->mockRender();
+        $form = $this->createMockForm('Lva\BusinessType');
+
+        $form->shouldReceive('setData');
 
         $this->sut
             ->shouldReceive('getCurrentOrganisationId')
@@ -36,6 +38,8 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 
         $this->setService('Entity\Organisation', $oEntity);
 
+        $this->mockRender();
+
         $this->sut->indexAction();
 
         $this->assertEquals('business_type', $this->view);
@@ -43,13 +47,22 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 
     public function testPostWithInvalidData()
     {
-        $this->mockRender();
+        $form = $this->createMockForm('Lva\BusinessType');
+
+        $form->shouldReceive('setData')
+            ->with([])
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(false);
 
         $this->sut
             ->shouldReceive('getCurrentOrganisationId')
             ->andReturn(12);
 
         $this->setPost();
+
+        $this->mockRender();
 
         $this->sut->indexAction();
 
@@ -58,11 +71,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
 
     public function testPostWithValidData()
     {
-        $this->disableCsrf();
+        $form = $this->createMockForm('Lva\BusinessType');
 
-        $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(true);
 
         $this->setPost(
             [
@@ -85,6 +100,10 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ->getMock();
 
         $this->setService('Entity\Organisation', $oEntity);
+
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(12);
 
         $this->sut
             ->shouldReceive('postSave')

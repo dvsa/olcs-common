@@ -11,6 +11,9 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
     protected $sm;
     protected $sut;
     protected $request;
+    protected $form;
+    protected $view;
+    protected $formHelper;
 
     public function setUp()
     {
@@ -39,13 +42,12 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
                 function ($view, $form = null) {
 
                     /**
-                     * assign the variables so we can interrogate them later
+                     * assign the view variable so we can interrogate it later
                      */
                     $this->view = $view;
-                    $this->form = $form;
 
                     /*
-                     * but also return the view, since that's a closer simulation
+                     * but also return it, since that's a closer simulation
                      * of what 'render' would normally do
                      */
 
@@ -65,22 +67,49 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
             ->andReturn($data);
     }
 
-    protected function disableCsrf()
-    {
-        $oldHelper = $this->sm->get('Helper\Form');
-        $formHelper = m::mock('\Common\Service\Helper\FormHelperService');
-        $formHelper
-            ->shouldReceive('createForm')
-            ->andReturnUsing(
-                function($form) use ($oldHelper) {
-                    return $oldHelper->createForm($form, false);
-                }
-            );
-        $this->sm->setService('Helper\Form', $formHelper);
-    }
-
     protected function setService($key, $value)
     {
         $this->sm->setService($key, $value);
     }
+
+    protected function getMockTableBuilder()
+    {
+        return new \Common\Service\Table\TableBuilder($this->sm);
+    }
+
+    protected function shouldRemoveElements($form, $elements)
+    {
+        $helper = $this->getMockFormHelper();
+        foreach ($elements as $e) {
+            $helper->shouldReceive('remove')
+                ->with($form, $e)
+                ->andReturn($helper);
+        }
+
+        $this->setService('Helper\Form', $helper);
+    }
+
+    protected function createMockForm($formName)
+    {
+        $mockForm = m::mock('\Common\Form\Form');
+
+        $formHelper = $this->getMockFormHelper();
+
+        $formHelper
+            ->shouldReceive('createForm')
+            ->with($formName)
+            ->andReturn($mockForm);
+
+        return $mockForm;
+    }
+
+    protected function getMockFormHelper()
+    {
+        if ($this->formHelper === null) {
+            $this->formHelper = m::mock('\Common\Service\Helper\FormHelperService');
+            $this->setService('Helper\Form', $this->formHelper);
+        }
+        return $this->formHelper;
+    }
+
 }

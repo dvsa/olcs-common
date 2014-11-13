@@ -15,7 +15,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
 
     public function testGetIndexAction()
     {
-        $this->mockRender();
+        $form = $this->createMockForm('Lva\TypeOfLicence');
 
         $this->sut
             ->shouldReceive('getTypeOfLicenceData')
@@ -27,6 +27,21 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                     'licenceType' => 'z'
                 ]
             );
+
+        $form->shouldReceive('setData')
+            ->with(
+                [
+                    'version' => 1,
+                    'type-of-licence' => [
+                        'operator-location' => 'x',
+                        'operator-type' => 'y',
+                        'licence-type' => 'z'
+                    ]
+                ]
+            );
+
+        $this->mockRender();
+
         $this->sut->indexAction();
 
         $this->assertEquals('type_of_licence', $this->view);
@@ -34,9 +49,18 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
 
     public function testPostWithInvalidData()
     {
-        $this->mockRender();
+        $form = $this->createMockForm('Lva\TypeOfLicence');
 
         $this->setPost();
+
+        $form->shouldReceive('setData')
+            ->with([])
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(false);
+
+        $this->mockRender();
 
         $this->sut->indexAction();
 
@@ -45,7 +69,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
 
     public function testPostWithValidData()
     {
-        $this->disableCsrf();
+        $form = $this->createMockForm('Lva\TypeOfLicence');
 
         $this->setPost(
             [
@@ -57,6 +81,12 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                 ]
             ]
         );
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(true);
 
         $this->sut
             ->shouldReceive('getLicenceId')
