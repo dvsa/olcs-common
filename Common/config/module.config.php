@@ -62,9 +62,27 @@ return array(
             'Common\Util\AbstractServiceFactory'
         ),
         'aliases' => array(
-            'DataServiceManager' => 'Common\Service\Data\PluginManager'
+            'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'translator' => 'MvcTranslator',
+            'Zend\Log' => 'Logger',
+            'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
+        ),
+        'invokables' => array(
+            'Document' => '\Common\Service\Document\Document',
         ),
         'factories' => array(
+            'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
+            'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
+            'Common\Service\Data\Country' => 'Common\Service\Data\Country',
+
+            'OlcsCustomForm' => function ($sm) {
+                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
+                },
+            'Script' => '\Common\Service\Script\ScriptFactory',
+            'Table' => '\Common\Service\Table\TableFactory',
+            'FileUploader' => '\Common\Service\File\FileUploaderFactory',
+            'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'postcode' => function ($serviceManager) {
                 $postcode = new \Common\Service\Postcode\Postcode();

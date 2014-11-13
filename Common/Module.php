@@ -40,69 +40,6 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
-                'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
-                'Common\Service\Data\Country' => 'Common\Service\Data\Country',
-                'OlcsCustomForm' => function ($sm) {
-                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-                },
-                'Script' => '\Common\Service\Script\ScriptFactory',
-                'Table' => '\Common\Service\Table\TableFactory',
-                'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
-                'FileUploader' => '\Common\Service\File\FileUploaderFactory',
-                'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
-                'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
-                'Zend\Log' => function ($sm) {
-                    $log = new \Zend\Log\Logger();
-
-                    /**
-                     * In development / integration - we log everything.
-                     * In production, our logging
-                     * is restricted to \Zend\Log\Logger::ERR and above.
-                     *
-                     * For logging priorities, see:
-                     * @see http://www.php.net/manual/en/function.syslog.php#refsect1-function.syslog-parameters
-                     */
-                    $filter = new \Zend\Log\Filter\Priority(LOG_DEBUG);
-
-                    try {
-                        // Log file
-                        $fileWriter = new \Zend\Log\Writer\Stream('/tmp/olcsLogfile.log');
-                        $fileWriter->addFilter($filter);
-                        $log->addWriter($fileWriter);
-                        $hasWriter = true;
-                    } catch (\Exception $ex) {
-                        $hasWriter = false;
-                    }
-
-                    try {
-                        // Log to sys log - useful if file logging is not working.
-                        $sysLogWriter = new \Zend\Log\Writer\Syslog();
-                        $sysLogWriter->addFilter($filter);
-                        $log->addWriter($sysLogWriter);
-                    } catch (\Exception $ex) {
-                        // Only throw this exception if we have no writers
-                        if ($hasWriter == false) {
-                            throw $ex;
-                        }
-                    }
-
-                    return $log;
-                }
-            ),
-            'invokables' => array(
-                'Document' => '\Common\Service\Document\Document',
-            ),
-            'aliases' => array(
-                'translator' => 'MvcTranslator',
-            ),
-        );
-    }
-
     /**
      * Method to extract the language preference for a user.
      * At the moment this is taken from a cookie, with a key of lang.
