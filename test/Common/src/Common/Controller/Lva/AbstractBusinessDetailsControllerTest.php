@@ -318,6 +318,81 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $this->assertEquals('business_details', $this->view);
     }
 
+    public function testPostWithCompanyNumberLookup()
+    {
+        $form = $this->createMockForm('Lva\BusinessDetails');
+
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(12);
+
+        $this->setService(
+            'Entity\Organisation',
+            m::mock()
+            ->shouldReceive('getBusinessDetailsData')
+            ->with(12)
+            ->andReturn(
+                [
+                    'version' => 1,
+                    'tradingNames' => [
+                        ['name' => 'tn 1']
+                    ],
+                    'companyOrLlpNo' => '12345678',
+                    'name' => 'An Org',
+                    'type' => [
+                        'id' => 'org_t_rc'
+                    ],
+                    'contactDetails' => []
+                ]
+            )
+            ->getMock()
+        );
+
+        $postData = [
+            'data' => [
+                'companyNumber' => [
+                    'submit_lookup_company' => true
+                ]
+            ]
+        ];
+        $this->setPost($postData);
+
+        $element = m::mock()->shouldReceive('setOptions')
+            ->shouldReceive('getOptions')
+            ->andReturn([])
+            ->getMock();
+
+        $typeElement = m::mock()->shouldReceive('setValue')
+            ->with('org_t_rc')
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('editBusinessType')
+            ->andReturn($element)
+            ->shouldReceive('get')
+            ->with('type')
+            ->andReturn($typeElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $form->shouldReceive('has')
+            ->with('table')
+            ->andReturn(false);
+
+        $form->shouldReceive('setData');
+
+        $formHelper = $this->getMockFormHelper();
+        $formHelper->shouldReceive('processCompanyNumberLookupForm')
+            ->with($form, $postData, 'data');
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+    }
+
     /*
     public function testPostWithInvalidData()
     {
