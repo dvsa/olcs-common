@@ -30,6 +30,7 @@ class Date extends ZendDate
 
     /**
      * Returns true if $value is a DateTime instance or can be converted into one.
+     * Returns false if $value is empty of invalid  and gives an error message
      *
      * @param  string|array|int|DateTime $value
      * @return bool
