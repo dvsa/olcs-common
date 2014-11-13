@@ -217,7 +217,9 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/');
+        $this->expectOutputRegex(
+            '/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/'
+        );
     }
 
     public function renderRadioProvider()
