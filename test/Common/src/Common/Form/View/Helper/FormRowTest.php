@@ -174,14 +174,60 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
-    public function testRenderRadio()
+    public function testRenderRadioNoAttribute()
     {
         $element = $this->prepareElement('Radio');
 
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<fieldset data-group=\"\"><legend>(.*)<\/legend><\/fieldset>$/');
+        $this->expectOutputRegex('/^<fieldset><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderRadioWithDataGroupAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "fieldset-data-group" => 'data-group'
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<fieldset data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    public function testRenderRadioWithInlineAttribute()
+    {
+        $element = $this->prepareElement(
+            'Radio',
+            [
+                "fieldset-attributes" => [
+                    "class" => "inline",
+                    "data-group" => "data-group"
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex(
+            '/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/'
+        );
+    }
+
+    public function renderRadioProvider()
+    {
+        return [
+            [null],
+            [["class" => ""]]
+        ];
     }
 
     private function prepareHelper()

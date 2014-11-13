@@ -50,6 +50,13 @@ class VehicleRowTest extends \PHPUnit_Framework_TestCase
                         'platedWeight' => 12345,
                         'vrm' => 'VRM321'
                     ]
+                ], [
+                    'specifiedDate' => null,
+                    'removalDate' => null,
+                    'vehicle' => [
+                        'platedWeight' => 23456,
+                        'vrm' => 'VRM456'
+                    ]
                 ]
             ]
         ];
@@ -58,6 +65,7 @@ class VehicleRowTest extends \PHPUnit_Framework_TestCase
 
         // note how we don't expect the second row to feature as it has been
         // marked as removed
+        // similarly, the third row has no specified date so should also be omitted
         $expectedRowOne = [
             'SPEC_DATE' => '03-Jul-2014',
             'PLATED_WEIGHT' => 12345,

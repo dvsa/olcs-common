@@ -323,7 +323,9 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $licCount = $this->getPrivateHireLicencesCount();
 
         if (count($ids) === $licCount) {
-            $this->getServiceLocator()->get('Entity\Licence')->setTrafficArea(null);
+            $this->getServiceLocator()
+                ->get('Entity\Licence')
+                ->setTrafficArea($this->getLicenceId(), null);
         }
 
         $service = $this->getServiceLocator()->get('Entity\PrivateHireLicence');

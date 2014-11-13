@@ -69,6 +69,11 @@ class VehicleRow extends DynamicBookmark
                 continue;
             }
 
+            // ignore any vehicles that are not specified
+            if (is_null($vehicle['specifiedDate'])) {
+                 continue;
+            }
+
             $tokens = [
                 'SPEC_DATE'     => date('d-M-Y', strtotime($vehicle['specifiedDate'])),
                 'PLATED_WEIGHT' => $vehicle['vehicle']['platedWeight'],
