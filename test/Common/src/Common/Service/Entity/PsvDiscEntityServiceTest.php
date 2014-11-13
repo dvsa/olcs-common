@@ -59,4 +59,37 @@ class PsvDiscEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->ceaseDiscs($ids);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testRequestDiscs()
+    {
+        $count = 3;
+        $data = array(
+            'foo' => 'bar'
+        );
+
+        $saveData = array(
+            '_OPTIONS_' => array(
+                'multiple' => true
+            ),
+            array(
+                'foo' => 'bar',
+                'isCopy' => 'N'
+            ),
+            array(
+                'foo' => 'bar',
+                'isCopy' => 'N'
+            ),
+            array(
+                'foo' => 'bar',
+                'isCopy' => 'N'
+            )
+        );
+
+        $this->expectOneRestCall('PsvDisc', 'POST', $saveData);
+
+        $this->sut->requestDiscs($count, $data);
+    }
 }

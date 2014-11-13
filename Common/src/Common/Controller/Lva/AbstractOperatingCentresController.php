@@ -410,6 +410,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
                 $data['applicationOperatingCentre']['operatingCentre'] = $saved['id'];
 
+                // @NOTE Mark the OC as being added, for when we are validating
+                // This will only apply to application OCs
+                // We will also need @todo something for variation when editing or deleting.
+                $data['applicationOperatingCentre']['action'] = 'A';
+
                 $operatingCentreId = $saved['id'];
             } else {
                 $operatingCentreId = $data['operatingCentre']['id'];

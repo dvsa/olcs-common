@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'apsts_granted' => 'Granted',
+    'licence-valid-confirmation' => 'The licence is now valid',
+    'apsts_valid' => 'Valid',
+    'lsts_not_submitted' => 'Not submitted',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

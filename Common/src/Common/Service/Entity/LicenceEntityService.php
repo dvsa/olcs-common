@@ -407,6 +407,17 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $categoryBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'goodsOrPsv' => array(
+                'properties' => array(
+                    'id'
+                )
+            )
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -618,5 +629,10 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $this->save($saveData);
         }
+    }
+
+    public function getCategory($id)
+    {
+        return $this->get($id, $this->categoryBundle)['goodsOrPsv']['id'];
     }
 }
