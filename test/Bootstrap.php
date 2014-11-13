@@ -5,7 +5,7 @@ namespace CommonTest;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 
-error_reporting(E_ALL | E_STRICT);
+error_reporting(-1);
 chdir(dirname(__DIR__));
 date_default_timezone_set('Europe/London');
 
@@ -45,6 +45,11 @@ class Bootstrap
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', self::$config);
         $serviceManager->get('ModuleManager')->loadModules();
+        $serviceManager->setAllowOverride(true);
+
+        $config = $serviceManager->get('Config');
+        $config['service_api_mapping']['endpoints']['backend'] = 'http://some-fake-backend/';
+        $serviceManager->setService('Config', $config);
 
         return $serviceManager;
     }
