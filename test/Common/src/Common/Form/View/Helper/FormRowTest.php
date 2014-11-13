@@ -181,7 +181,25 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<fieldset data-group=\"\"><legend>(.*)<\/legend><\/fieldset>$/');
+        $this->expectOutputRegex('/^<fieldset  data-group=\"\"><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    public function testRenderRadioWithInlineAttribute()
+    {
+        $element = $this->prepareElement('Radio', ["fieldset-attributes" => ["class" => "inline"]]);
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<fieldset class="inline" data-group=\"\"><legend>(.*)<\/legend><\/fieldset>$/');
+    }
+
+    public function renderRadioProvider()
+    {
+        return [
+            [null],
+            [["class" => ""]]
+        ];
     }
 
     private function prepareHelper()

@@ -171,11 +171,16 @@ class FormRow extends ZendFormRow
             if ($type === 'multi_checkbox' || $type === 'radio') {
 
                 $dataGroup = $element->getOption('fieldset-data-group');
-                $fieldsetClass = $element->getOption('fieldset-class');
+                $fieldsetAttributes = $element->getOption('fieldset-attributes');
+                $attributesString = '';
+
+                if (is_array($fieldsetAttributes)) {
+                    $attributesString = $this->createAttributesString($fieldsetAttributes);
+                }
 
                 $markup = sprintf(
-                    '<fieldset '.(is_null($fieldsetClass) ? '' : 'class="' . $fieldsetClass . '" ') .
-                    'data-group="%s"><legend>%s</legend>%s</fieldset>',
+                    '<fieldset %s data-group="%s"><legend>%s</legend>%s</fieldset>',
+                    $attributesString,
                     $dataGroup,
                     $label,
                     $elementString
