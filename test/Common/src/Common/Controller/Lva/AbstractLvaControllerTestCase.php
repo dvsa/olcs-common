@@ -37,12 +37,23 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
             ->once()
             ->andReturnUsing(
                 function ($view, $form = null) {
+
+                    /**
+                     * assign the variables so we can interrogate them later
+                     */
                     $this->view = $view;
                     $this->form = $form;
+
+                    /*
+                     * but also return the view, since that's a closer simulation
+                     * of what 'render' would normally do
+                     */
 
                     return $this->view;
                 }
             );
+
+        return $this->sut;
     }
 
     protected function setPost($data = [])
