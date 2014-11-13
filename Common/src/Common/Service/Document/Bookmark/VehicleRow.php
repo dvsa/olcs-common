@@ -70,7 +70,7 @@ class VehicleRow extends DynamicBookmark
             }
 
             // ignore any vehicles that are not specified
-            if ($vehicle['specifiedDate'] == null) {
+            if (is_null($vehicle['specifiedDate'])) {
                  continue;
             }
 
