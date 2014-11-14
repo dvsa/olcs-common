@@ -18,7 +18,7 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
         $form = $this->createMockForm('Lva\Addresses');
 
         $form->shouldReceive('setData')
-            //->with(????????) @TODO
+            //->with([]) <-- maybe?
             ->andReturn($form);
 
         $this->sut
@@ -77,6 +77,10 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
                     'licenceType' => 'ltyp_sn'
                 ]
             );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('processAddressLookupForm')
+            ->andReturn(false);
 
         $this->mockRender();
 

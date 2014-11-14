@@ -72,11 +72,6 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
         $this->sm->setService($key, $value);
     }
 
-    protected function getMockTableBuilder()
-    {
-        return new \Common\Service\Table\TableBuilder($this->sm);
-    }
-
     protected function shouldRemoveElements($form, $elements)
     {
         $helper = $this->getMockFormHelper();
