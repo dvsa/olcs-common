@@ -84,6 +84,6 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockRender();
 
-        $this->sut->indexAction();
+        $this->assertEquals('addresses', $this->sut->indexAction());
     }
 }

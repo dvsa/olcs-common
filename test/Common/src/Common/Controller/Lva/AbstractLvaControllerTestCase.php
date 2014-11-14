@@ -107,4 +107,11 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
         return $this->formHelper;
     }
 
+    protected function mockOrganisationId($id)
+    {
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn($id);
+    }
+
 }
