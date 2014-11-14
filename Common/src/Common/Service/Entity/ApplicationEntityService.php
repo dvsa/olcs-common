@@ -154,7 +154,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => array(
                     'licenceVehicles' => array(
                         'criteria' => array(
-                            'removalDate' => null
+                            'removalDate' => 'NULL'
                         ),
                         'properties' => array(
                             'id'

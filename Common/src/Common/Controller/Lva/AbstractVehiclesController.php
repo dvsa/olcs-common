@@ -170,7 +170,7 @@ abstract class AbstractVehiclesController extends AbstractController
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
         // then if this is a new record, store it ID against the licence vehicle
-        if ($mode == 'add') {
+        if ($mode === 'add') {
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
         } else {
