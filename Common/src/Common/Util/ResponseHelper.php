@@ -38,6 +38,7 @@ class ResponseHelper
         ),
         'POST' => array(
             Response::STATUS_CODE_201,
+            Response::STATUS_CODE_202,
             Response::STATUS_CODE_400
         ),
         'PUT' => array(
