@@ -76,7 +76,7 @@ return array(
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-                },
+            },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
