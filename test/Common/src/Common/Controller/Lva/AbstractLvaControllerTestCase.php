@@ -116,11 +116,15 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
 
     protected function mockEntity($service, $method)
     {
-        $expectation = m::mock('\Common\Service\Entity\\' . $service)
-            ->shouldReceive($method);
+        return $this->mockService('Entity\\' . $service, $method);
+    }
+
+    protected function mockService($service, $method)
+    {
+        $expectation = m::mock()->shouldReceive($method);
 
         $this->setService(
-            'Entity\\' . $service,
+            $service,
             $expectation->getMock()
         );
 
