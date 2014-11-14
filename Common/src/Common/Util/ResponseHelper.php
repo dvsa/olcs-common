@@ -172,7 +172,7 @@ class ResponseHelper
                 $body = "\n" . print_r($data, true);
             }
 
-            // TODO: Replace with a different exception
+            // TO-DO: Replace with a different exception
             throw new \Exception('Unexpected status code: ' . $body);
         }
     }
