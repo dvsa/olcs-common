@@ -932,6 +932,7 @@ return array(
     'lva.section.title.taxi_phv' => 'W Taxi/PHV',
     'lva.section.title.transport_managers' => 'W Transport managers',
     'lva.section.title.type_of_licence' => 'W Type of licence',
+    'lva.section.title.undertakings' => 'W Declarations',
     'lva.section.title.vehicles' => 'W Vehicles',
     'lva.section.title.vehicles_declarations' => 'W Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'W Vehicles',
@@ -1133,6 +1134,7 @@ return array(
     'section.link.add.taxi_phv' => 'W Add taxi/PHV licences',
     'section.link.add.transport_managers' => 'W Add transport managers',
     'section.link.add.type_of_licence' => 'W Add type of licence',
+    'section.link.add.undertakings' => 'W Add declarations',
     'section.link.add.vehicles' => 'W Add vehicles',
     'section.link.add.vehicles_declarations' => 'W Add vehicle declarations',
     'section.link.add.vehicles_psv' => 'W Add vehicles',
@@ -1152,6 +1154,7 @@ return array(
     'section.link.edit.taxi_phv' => 'W Edit taxi/PHV licences',
     'section.link.edit.transport_managers' => 'W Edit transport managers',
     'section.link.edit.type_of_licence' => 'W Edit type of licence',
+    'section.link.edit.undertakings' => 'W Edit declarations',
     'section.link.edit.vehicles' => 'W Edit vehicles',
     'section.link.edit.vehicles_declarations' => 'W Edit vehicle declarations',
     'section.link.edit.vehicles_psv' => 'W Edit vehicles',
@@ -1171,6 +1174,7 @@ return array(
     'section.link.update.taxi_phv' => 'W Update taxi/PHV licences',
     'section.link.update.transport_managers' => 'W Update transport managers',
     'section.link.update.type_of_licence' => 'W Update type of licence',
+    'section.link.update.undertakings' => 'W Update declarations',
     'section.link.update.vehicles' => 'W Update vehicles',
     'section.link.update.vehicles_declarations' => 'W Update vehicle declarations',
     'section.link.update.vehicles_psv' => 'W Update vehicles',
@@ -1193,6 +1197,7 @@ return array(
     'section.name.taxi_phv' => 'W Taxi/PHV',
     'section.name.transport_managers' => 'W Transport managers',
     'section.name.type_of_licence' => 'W Type of licence',
+    'section.name.undertakings' => 'W Declarations',
     'section.name.vehicles' => 'W Vehicles',
     'section.name.vehicles_declarations' => 'W Vehicle declarations',
     'section.name.vehicles_psv' => 'W Vehicles',
@@ -1220,7 +1225,7 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffence' => 'W Offence',
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails' => 'W Offence details',
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock' => 'W Please provide full
-        details of the background circumstances of this offense.',
+        details of the background circumstances of this offence.',
     'selfserve-app-subSection-previous-history-criminal-conviction-formPenalty' => 'W Penalty',
     'selfserve-app-subSection-previous-history-criminal-conviction-formSave' => 'W Save',
     'selfserve-app-subSection-previous-history-criminal-conviction-formSaveAndAddAnother' => 'W Save & add another',
@@ -1232,13 +1237,13 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'W 1. Has any person named in this
         application, (including partners, directors and transport managers); any company of which a person named on this
         application is or has been a director; any parent company if you are a limited company; or any of your employees
-        or agents been convicted of any relevant offense which must be declared to the traffic commissioner? ',
+        or agents been convicted of any relevant offence which must be declared to the traffic commissioner? ',
     'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => 'W Please provide full details of the
-        background circumstances of this offense.',
+        background circumstances of this offence.',
     'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'W Please tick to confirm that you
         are aware that you must tell the traffic commissioner immediately of any relevant convictions that occur between
         the submission of your application and a decision being made on this application.',
-    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'W Offense Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'W Offence Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'W Please add any relevant
         offences which must be declared to the traffic commissioner.',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'W Convictions & penalties (if

@@ -361,4 +361,25 @@ abstract class AbstractVehiclesController extends AbstractController
 
         return false;
     }
+
+    /**
+     * Set appropriate default values on vehicle date fields
+     *
+     * @param Form $form
+     * @param DateTime $currentDate
+     * @return Form
+     */
+    protected function setDefaultDates($form, $currentDate)
+    {
+        $fieldset = $form->get('licence-vehicle');
+        if ($fieldset->has('receivedDate')) { // receivedDate gets removed in some contexts
+            // default 'Received date' to the current date if it is not set
+            $receivedDate = $fieldset->get('receivedDate')->getValue();
+            $receivedDate = trim($receivedDate, '-'); // date element returns '--' when empty!
+            if (empty($receivedDate)) {
+                $fieldset->get('receivedDate')->setValue($currentDate);
+            }
+        }
+        return $form;
+    }
 }
