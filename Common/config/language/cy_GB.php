@@ -1217,7 +1217,7 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffence' => 'W Offence',
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetails' => 'W Offence details',
     'selfserve-app-subSection-previous-history-criminal-conviction-formOffenceDetaisHelpBlock' => 'W Please provide full
-        details of the background circumstances of this offense.',
+        details of the background circumstances of this offence.',
     'selfserve-app-subSection-previous-history-criminal-conviction-formPenalty' => 'W Penalty',
     'selfserve-app-subSection-previous-history-criminal-conviction-formSave' => 'W Save',
     'selfserve-app-subSection-previous-history-criminal-conviction-formSaveAndAddAnother' => 'W Save & add another',
@@ -1229,13 +1229,13 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'W 1. Has any person named in this
         application, (including partners, directors and transport managers); any company of which a person named on this
         application is or has been a director; any parent company if you are a limited company; or any of your employees
-        or agents been convicted of any relevant offense which must be declared to the traffic commissioner? ',
+        or agents been convicted of any relevant offence which must be declared to the traffic commissioner? ',
     'selfserve-app-subSection-previous-history-criminal-conviction-helpBlock' => 'W Please provide full details of the
-        background circumstances of this offense.',
+        background circumstances of this offence.',
     'selfserve-app-subSection-previous-history-criminal-conviction-labelConfirm' => 'W Please tick to confirm that you
         are aware that you must tell the traffic commissioner immediately of any relevant convictions that occur between
         the submission of your application and a decision being made on this application.',
-    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'W Offense Details',
+    'selfserve-app-subSection-previous-history-criminal-conviction-offenseDetails' => 'W Offence Details',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableEmptyMessage' => 'W Please add any relevant
         offences which must be declared to the traffic commissioner.',
     'selfserve-app-subSection-previous-history-criminal-conviction-tableHeader' => 'W Convictions & penalties (if

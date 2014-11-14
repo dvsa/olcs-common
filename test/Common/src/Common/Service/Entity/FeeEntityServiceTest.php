@@ -87,4 +87,62 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->cancelForLicence($id);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetApplication()
+    {
+        $id = 3;
+
+        $response = array(
+            'application' => 1
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(1, $this->sut->getApplication($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetApplicationWithoutApplication()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(null, $this->sut->getApplication($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOutstandingFeesForApplication()
+    {
+        $id = 3;
+
+        $query = array(
+            'application' => 3,
+            'feeStatus' => array(
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED
+            ),
+            'limit' => 'all'
+        );
+
+        $response = array(
+            'Results' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getOutstandingFeesForApplication($id));
+    }
 }
