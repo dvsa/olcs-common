@@ -114,4 +114,17 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
             ->andReturn($id);
     }
 
+    /*
+     * might be worth implementing one day... has the advantage of being
+     * able to get the service and merge the new method rather than
+     * blatting it
+    $this->mockEntity(
+        'Application',
+        'getOperatingCentresData',
+        function ($expectation) {
+            $expectation->with('')->andReturn([]);
+        }
+    );
+     */
+
 }
