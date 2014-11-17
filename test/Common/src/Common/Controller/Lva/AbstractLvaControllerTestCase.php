@@ -14,6 +14,7 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
     protected $form;
     protected $view;
     protected $formHelper;
+    protected $services = [];
 
     public function setUp()
     {
@@ -119,12 +120,14 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
 
     protected function mockService($service, $method)
     {
-        $expectation = m::mock()->shouldReceive($method);
+        if (!isset($this->services[$service])) {
+            $mock = m::mock();
+            $this->services[$service] = $mock;
+            $this->setService($service, $mock);
+        }
 
-        $this->setService(
-            $service,
-            $expectation->getMock()
-        );
+        $mock = $this->services[$service];
+        $expectation = $mock->shouldReceive($method);
 
         return $expectation;
     }
