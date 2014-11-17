@@ -65,7 +65,6 @@ return array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
-            'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
             'Document' => '\Common\Service\Document\Document',
@@ -77,9 +76,10 @@ return array(
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-                },
+            },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
+            'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
