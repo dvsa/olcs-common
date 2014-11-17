@@ -23,7 +23,6 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
         $form = $this->createMockForm('Lva\Addresses');
 
         $form->shouldReceive('setData')
-            //->with([]) <-- maybe?
             ->andReturn($form);
 
         $this->sut

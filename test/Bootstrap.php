@@ -53,6 +53,8 @@ class Bootstrap
         $serviceManager->setService('Config', $config);
 
         /*
+         * NP 17th Nov 2014
+         *
          * Although this is commented out I'd like to leave it in for now;
          * it's a more elegant way to trap unmocked backend requests than
          * setting a fake URL as above. Only trouble is at the moment $path
