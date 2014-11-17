@@ -26,10 +26,7 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockOrganisationId(12);
 
-        $this->setService(
-            'Entity\Organisation',
-            m::mock()
-            ->shouldReceive('getType')
+        $this->mockEntity('Organisation', 'getType')
             ->with(12)
             ->andReturn(
                 [
@@ -37,14 +34,9 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                         'id' => Org::ORG_TYPE_REGISTERED_COMPANY
                     ]
                 ]
-            )
-            ->getMock()
-        );
+            );
 
-        $this->setService(
-            'Entity\Person',
-            m::mock()
-            ->shouldReceive('getAllForOrganisation')
+        $this->mockEntity('Person', 'getAllForOrganisation')
             ->andReturn(
                 [
                     'Count' => 1,
@@ -57,9 +49,7 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                         ]
                     ]
                 ]
-            )
-            ->getMock()
-        );
+            );
 
         $table = m::mock()
             ->shouldReceive('removeColumn')
@@ -75,14 +65,9 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ]
         ];
 
-        $this->setService(
-            'Table',
-            m::mock()
-            ->shouldReceive('prepareTable')
+        $this->mockService('Table', 'prepareTable')
             ->with('lva-people', $people)
-            ->andReturn($table)
-            ->getMock()
-        );
+            ->andReturn($table);
 
         $this->setService(
             'translator',
@@ -128,14 +113,4 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('people', $this->view);
     }
-
-    /*
-    public function testPostWithInvalidData()
-    {
-    }
-
-    public function testPostWithValidData()
-    {
-    }
-     */
 }

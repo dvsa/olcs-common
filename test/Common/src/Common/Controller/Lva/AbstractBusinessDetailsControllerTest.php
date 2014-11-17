@@ -130,25 +130,15 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->with('table')
             ->andReturn(true);
 
-        $this->setService(
-            'Entity\CompanySubsidiary',
-            m::mock()
-            ->shouldReceive('getAllForOrganisation')
+        $this->mockEntity('CompanySubsidiary', 'getAllForOrganisation')
             ->with(12)
-            ->andReturn([])
-            ->getMock()
-        );
+            ->andReturn([]);
 
         $mockTable = m::mock();
 
-        $this->setService(
-            'Table',
-            m::mock()
-            ->shouldReceive('prepareTable')
+        $this->mockService('Table', 'prepareTable')
             ->with('lva-subsidiaries', [])
-            ->andReturn($mockTable)
-            ->getMock()
-        );
+            ->andReturn($mockTable);
 
         $tableElement = m::mock()
             ->shouldReceive('setTable')
@@ -443,7 +433,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
     {
         $form = $this->createMockForm('Lva\BusinessDetails');
 
-        $orgService = $this->mockOrgData('org_t_rc');
+        $this->mockOrgData('org_t_rc');
 
         $postData = [
             'version' => 1,
@@ -497,10 +487,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->shouldReceive('getLicenceId')
             ->andReturn(7);
 
-        $this->setService(
-            'Entity\TradingNames',
-            m::mock()
-            ->shouldReceive('save')
+        $this->mockEntity('TradingNames', 'save')
             ->with(
                 [
                     'organisation' => 12,
@@ -509,34 +496,22 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ['name' => 'tn 1']
                     ]
                 ]
-            )
-            ->getMock()
-        );
+            );
 
-        $this->setService(
-            'Entity\Address',
-            m::mock()
-            ->shouldReceive('save')
+        $this->mockEntity('Address', 'save')
             ->with(['foo' => 'bar'])
-            ->andReturn(['id' => 4321])
-            ->getMock()
-        );
+            ->andReturn(['id' => 4321]);
 
-        $this->setService(
-            'Entity\ContactDetails',
-            m::mock()
-            ->shouldReceive('save')
+        $this->mockEntity('ContactDetails', 'save')
             ->with(
                 [
                     'organisation' => 12,
                     'address' => 4321,
                     'contactType' => 'ct_reg'
                 ]
-            )
-            ->getMock()
-        );
+            );
 
-        $orgService->shouldReceive('save')
+        $this->mockEntity('Organisation', 'save')
             ->with(
                 [
                     'version' => 1,
@@ -564,7 +539,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
     {
         $form = $this->createMockForm('Lva\BusinessDetails');
 
-        $orgService = $this->mockOrgData('org_t_rc');
+        $this->mockOrgData('org_t_rc');
 
         $postData = [
             'version' => 1,
@@ -606,7 +581,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->shouldReceive('isValid')
             ->andReturn(true);
 
-        $orgService->shouldReceive('save')
+        $this->mockEntity('Organisation', 'save')
             ->with(
                 [
                     'version' => 1,
@@ -728,8 +703,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->shouldReceive('getCurrentOrganisationId')
             ->andReturn(12);
 
-        $orgService = m::mock()
-            ->shouldReceive('getBusinessDetailsData')
+        $this->mockEntity('Organisation', 'getBusinessDetailsData')
             ->with(12)
             ->andReturn(
                 [
@@ -753,14 +727,6 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ]
                     ]
                 ]
-            )
-            ->getMock();
-
-        $this->setService(
-            'Entity\Organisation',
-            $orgService
-        );
-
-        return $orgService;
+            );
     }
 }

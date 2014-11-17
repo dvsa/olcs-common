@@ -23,8 +23,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('getCurrentOrganisationId')
             ->andReturn(12);
 
-        $oEntity = m::mock()
-            ->shouldReceive('getType')
+        $this->mockEntity('Organisation', 'getType')
             ->with(12)
             ->andReturn(
                 [
@@ -33,10 +32,7 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
                         'id' => 'x'
                     ]
                 ]
-            )
-            ->getMock();
-
-        $this->setService('Entity\Organisation', $oEntity);
+            );
 
         $this->mockRender();
 
@@ -88,18 +84,14 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ]
         );
 
-        $oEntity = m::mock()
-            ->shouldReceive('save')
+        $this->mockEntity('Organisation', 'save')
             ->with(
                 [
                     'version' => 1,
                     'id' => 12,
                     'type' => 'org_t_rc'
                 ]
-            )
-            ->getMock();
-
-        $this->setService('Entity\Organisation', $oEntity);
+            );
 
         $this->sut
             ->shouldReceive('getCurrentOrganisationId')

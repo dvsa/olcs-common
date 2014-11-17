@@ -25,10 +25,7 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('getLicenceId')
             ->andReturn(7);
 
-        $this->setService(
-            'Entity\Licence',
-            m::mock()
-            ->shouldReceive('getAddressesData')
+        $this->mockEntity('Licence', 'getAddressesData')
             ->with(7)
             ->andReturn(
                 [
@@ -63,9 +60,7 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
                         ]
                     ]
                 ]
-            )
-            ->getMock()
-        );
+            );
 
         $this->sut
             ->shouldReceive('getTypeOfLicenceData')

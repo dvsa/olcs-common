@@ -17,7 +17,6 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
     {
         $form = $this->createMockForm('Lva\FinancialEvidence');
 
-
         $form->shouldReceive('setData')
             ->with(
                 [
@@ -38,14 +37,9 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
                 'type' => 'Accounts'
             ]
         ];
-        $this->setService(
-            'Table',
-            m::mock()
-            ->shouldReceive('prepareTable')
+        $this->mockService('Table', 'prepareTable')
             ->with('lva-financial-evidence', $tableData)
-            ->andReturn($table)
-            ->getMock()
-        );
+            ->andReturn($table);
 
         $tableElement = m::mock()
             ->shouldReceive('setTable')

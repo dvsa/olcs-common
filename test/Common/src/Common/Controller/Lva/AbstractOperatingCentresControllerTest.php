@@ -37,41 +37,26 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
                 ]
             );
 
-        $this->setService(
-            'Entity\Stub',
-            m::mock()
-            ->shouldReceive('getOperatingCentresData')
+        $this->mockEntity('Stub', 'getOperatingCentresData')
             ->with(50)
-            ->andReturn([])
-            ->getMock()
-        );
+            ->andReturn([]);
 
-        $this->setService(
-            'Entity\StubOperatingCentre',
-            m::mock()
-            ->shouldReceive('getAddressSummaryData')
+        $this->mockEntity('StubOperatingCentre', 'getAddressSummaryData')
             ->with(50)
             ->andReturn(
                 [
                     'Results' => []
                 ]
-            )
-            ->getMock()
-        );
+            );
 
         $table = m::mock()
             ->shouldReceive('getColumn')
             ->shouldReceive('setColumn')
             ->getMock();
 
-        $this->setService(
-            'Table',
-            m::mock()
-            ->shouldReceive('prepareTable')
+        $this->mockService('Table', 'prepareTable')
             ->with('authorisation_in_form', [])
-            ->andReturn($table)
-            ->getMock()
-        );
+            ->andReturn($table);
 
         $tableElement = m::mock()
             ->shouldReceive('setTable')
@@ -123,14 +108,4 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
 
         $this->assertEquals('operating_centres', $this->view);
     }
-
-    /*
-    public function testPostWithInvalidData()
-    {
-    }
-
-    public function testPostWithValidData()
-    {
-    }
-    */
 }
