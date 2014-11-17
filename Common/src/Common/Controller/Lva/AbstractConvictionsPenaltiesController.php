@@ -127,7 +127,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $id = $this->getIdentifier();
+            $id = $this->params('child_id');
             $data = $this->getConvictionData($id);
         }
 
@@ -177,7 +177,7 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
         $saveData['application'] = $this->getApplicationId();
 
         if ($mode === 'edit') {
-            $saveData['id'] = $this->getIdentifier();
+            $saveData['id'] = $this->params('child_id');
         }
 
         $this->getServiceLocator()->get('Entity\PreviousConviction')->save($saveData);

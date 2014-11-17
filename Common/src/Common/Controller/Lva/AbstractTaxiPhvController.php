@@ -202,17 +202,19 @@ abstract class AbstractTaxiPhvController extends AbstractController
 
         $trafficAreaId = $trafficArea ? $trafficArea['id'] : '';
 
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
         if (!empty($licenceTableData)) {
-            $form->remove('dataTrafficArea');
+            $formHelper->remove($form, 'dataTrafficArea');
         } elseif ($trafficAreaId) {
-            $form->get('dataTrafficArea')->remove('trafficArea');
+            $formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $template = $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue();
             $newValue = str_replace('%NAME%', $trafficArea['name'], $template);
             $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->setValue($newValue);
         } else {
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoLabelExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoNameExists');
-            $form->get('dataTrafficArea')->remove('trafficAreaInfoHintExists');
+            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoLabelExists');
+            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoNameExists');
+            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoHintExists');
 
             $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
                 $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions()
