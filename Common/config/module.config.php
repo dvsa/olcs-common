@@ -180,9 +180,13 @@ return array(
             'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
             'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
         ],
+        'factories' => [
+            'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmpFactory',
+        ],
         'aliases' => [
             'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
+            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
+            'DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp'
         ]
     ],
     'data_services' => [
