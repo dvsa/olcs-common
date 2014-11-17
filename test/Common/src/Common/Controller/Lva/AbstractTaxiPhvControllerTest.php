@@ -86,4 +86,69 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('taxi_phv', $this->view);
     }
+
+    public function testAddFormPostcodeLookup()
+    {
+        $postData = [
+            'data' => [
+                'address' => [
+                    'searchPostcode' => [
+                        'postcode' => 'ls9 6nf',
+                        'search' => 'search'
+                    ]
+                ]
+            ]
+        ];
+        $this->setPost($postData);
+
+        $form = $this->createMockForm('Lva\TaxiPhv');
+        $form->shouldReceive('setData')
+            ->with($postData)
+            ->andReturn($form); // fluent interface
+        $this->sut->shouldReceive('getLicenceForm')
+            ->andReturn($form);
+
+        // form helper is already mocked so not testing any of its logic
+        $this->formHelper
+            ->shouldReceive('processAddressLookupForm')
+            ->with($form, $this->request)
+            ->andReturn(true);
+
+        $this->mockRender();
+        $this->sut->addAction();
+
+        $this->assertEquals('add_taxi_phv', $this->view);
+
+    }
+
+    public function testAddFormWithAddressPopulated()
+    {
+        $postData = [
+            'data' => [
+                'address' => [
+                    // don't actually need data in here as form helper is mocked
+                ]
+            ]
+        ];
+        $this->setPost($postData);
+
+        $form = $this->createMockForm('Lva\TaxiPhv');
+        $form->shouldReceive('setData')
+            ->with($postData)
+            ->andReturn($form); // fluent interface
+        $this->sut->shouldReceive('getLicenceForm')
+            ->andReturn($form);
+
+        $this->formHelper
+            ->shouldReceive('processAddressLookupForm')
+            ->with($form, $this->request)
+            ->andReturn(false);
+
+        $form->shouldReceive('isValid');
+
+        $this->mockRender();
+        $this->sut->addAction();
+
+        $this->assertEquals('add_taxi_phv', $this->view);
+    }
 }

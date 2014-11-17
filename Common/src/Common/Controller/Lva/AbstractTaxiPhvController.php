@@ -257,7 +257,12 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $form->get('form-actions')->remove('addAnother');
         }
 
-        if ($request->isPost() && $form->isValid()) {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper->processAddressLookupForm($form, $this->getRequest());
+        $hasProcessed = $formHelper->processAddressLookupForm($form, $this->getRequest());
+        // (don't validate or proceed if we're just processing the postcode lookup)
+
+        if (!$hasProcessed && $request->isPost() && $form->isValid()) {
 
             $data = $this->getServiceLocator()->get('Helper\Data')->processDataMap($data, $this->licenceDataMap);
 
@@ -274,9 +279,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         $form = $formHelper->createForm('Lva\TaxiPhvLicence');
-
-        $formHelper->processAddressLookupForm($form, $this->getRequest());
-
         return $this->alterActionForm($form);
     }
 
