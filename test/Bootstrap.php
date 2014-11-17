@@ -53,6 +53,11 @@ class Bootstrap
         $serviceManager->setService('Config', $config);
 
         /*
+         * Although this is commented out I'd like to leave it in for now;
+         * it's a more elegant way to trap unmocked backend requests than
+         * setting a fake URL as above. Only trouble is at the moment $path
+         * always comes through as null... needs a bit of investigation
+         *
         $closure = function ($method, $path, $params) {
             $str = sprintf(
                 "Trapped unmocked backend request: %s %s",
