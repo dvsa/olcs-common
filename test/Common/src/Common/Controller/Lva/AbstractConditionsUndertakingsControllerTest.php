@@ -4,6 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
 
+/**
+ * Test Abstract Conditions & Undertakings Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractConditionsUndertakingsControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()

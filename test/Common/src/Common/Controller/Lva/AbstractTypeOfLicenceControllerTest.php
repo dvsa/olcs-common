@@ -4,6 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
 
+/**
+ * Test Abstract Type of Licence Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()

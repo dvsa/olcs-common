@@ -4,6 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
 
+/**
+ * Test Abstract Vehicles Goods Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()

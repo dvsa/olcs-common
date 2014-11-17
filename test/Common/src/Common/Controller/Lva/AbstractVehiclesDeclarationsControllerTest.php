@@ -4,6 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
 
+/**
+ * Test Abstract Vehicles Declarations Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()
@@ -25,8 +30,10 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                         'psvOperateSmallVhl' => 'x',
                         'psvSmallVhlNotes' => '',
                         'psvSmallVhlConfirmation' => 'y',
-                        'psvSmallVhlUndertakings' => 'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text',
-                        'psvSmallVhlScotland' => 'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
+                        'psvSmallVhlUndertakings' =>
+                            'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text',
+                        'psvSmallVhlScotland' =>
+                            'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
                     ],
                     'nineOrMore' => [
                         'psvNoSmallVhlConfirmation' => 'y',

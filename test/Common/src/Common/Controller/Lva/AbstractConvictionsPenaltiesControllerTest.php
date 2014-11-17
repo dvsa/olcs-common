@@ -4,6 +4,11 @@ namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
 
+/**
+ * Test Abstract Convictions & Penalties Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractConvictionsPenaltiesControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()

@@ -5,6 +5,11 @@ namespace CommonTest\Controller\Lva;
 use Common\Service\Entity\OrganisationEntityService as Org;
 use \Mockery as m;
 
+/**
+ * Test Abstract People Controller
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 {
     public function setUp()
@@ -80,7 +85,6 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->andReturn('Guidance')
             ->getMock()
         );
-
 
         $element = m::mock()
             ->shouldReceive('setValue')

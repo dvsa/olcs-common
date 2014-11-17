@@ -6,6 +6,11 @@ use PHPUnit_Framework_TestCase;
 use CommonTest\Bootstrap;
 use \Mockery as m;
 
+/**
+ * Helper functions for testing LVA controllers
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
 {
     protected $sm;
