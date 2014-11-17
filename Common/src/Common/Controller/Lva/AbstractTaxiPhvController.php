@@ -258,7 +258,6 @@ abstract class AbstractTaxiPhvController extends AbstractController
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $formHelper->processAddressLookupForm($form, $this->getRequest());
         $hasProcessed = $formHelper->processAddressLookupForm($form, $this->getRequest());
         // (don't validate or proceed if we're just processing the postcode lookup)
 
