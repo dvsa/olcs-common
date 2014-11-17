@@ -27,6 +27,11 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
         $this->request = m::mock('\Zend\Http\Request')->makePartial();
     }
 
+    public function tearDown() {
+        parent::tearDown();
+        m::close();
+    }
+
     protected function mockController($className)
     {
         $this->sut = m::mock($className)
