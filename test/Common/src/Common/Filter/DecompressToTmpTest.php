@@ -2,7 +2,7 @@
 
 namespace CommonTest\Filter;
 
-use Common\Filter\DecompressUploadToTmp;
+use Common\Filter\DecompressToTmp;
 use Mockery as m;
 
 /**
@@ -14,33 +14,34 @@ use Mockery as m;
  * @package CommonTest\Filter
  * @group UnsafeMocking
  */
-class DecompressUploadToTmpTest extends \PHPUnit_Framework_TestCase
+class DecompressToTmpTest extends \PHPUnit_Framework_TestCase
 {
     public function testFilter()
     {
         $filename = 'testFile.zip';
         $tmpDir = '/tmp/';
         $extractDir = '/tmp/zipUvf4glz/';
+        $filePath = '/tmp/zipUvf4glz/testFile/';
 
         if (!function_exists('Common\Filter\register_shutdown_function')) {
             eval('namespace Common\Filter; function register_shutdown_function ($callback) { $callback(); }');
         }
 
         $mockFilter = m::mock('\Zend\Filter\Decompress');
-        $mockFilter->shouldReceive('filter')->with($filename);
+        $mockFilter->shouldReceive('filter')->with($filename)->andReturn($filePath);
         $mockFilter->shouldReceive('setOptions')->with(['options' => ['target' => $extractDir]]);
 
         $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);
         $mockFileSystem->shouldReceive('remove')->with($tmpDir);
 
-        $sut = new DecompressUploadToTmp();
+        $sut = new DecompressToTmp();
         $sut->setDecompressFilter($mockFilter);
         $sut->setTempRootDir($tmpDir);
         $sut->setFileSystem($mockFileSystem);
 
-        $result = $sut->filter(['tmp_name' => $filename]);
+        $result = $sut->filter($filename);
 
-        $this->assertEquals(['tmp_name' => $filename, 'extracted_dir' => $extractDir], $result);
+        $this->assertEquals($filePath, $result);
     }
 }

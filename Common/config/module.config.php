@@ -65,9 +65,11 @@ return array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
+            'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
             'Document' => '\Common\Service\Document\Document',
+            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -77,10 +79,9 @@ return array(
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-            },
+                },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
-            'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
@@ -178,15 +179,19 @@ return array(
     'filters' => [
         'invokables' => [
             'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
+            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
+            'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
+            'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
         ],
-        'factories' => [
-            'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmpFactory',
+        'delegators' => [
+            'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
+            'Common\Filter\DecompressToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory']
         ],
         'aliases' => [
             'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
             'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
-            'DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp'
+            'DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
+            'DecompressToTmp' => 'Common\Filter\DecompressToTmp'
         ]
     ],
     'data_services' => [
