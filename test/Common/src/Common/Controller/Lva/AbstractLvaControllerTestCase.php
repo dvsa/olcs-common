@@ -3,6 +3,7 @@
 namespace CommonTest\Controller\Lva;
 
 use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use \Mockery as m;
 
@@ -11,7 +12,7 @@ use \Mockery as m;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractLvaControllerTestCase extends MockeryTestCase
 {
     protected $sm;
     protected $sut;
@@ -25,12 +26,6 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->request = m::mock('\Zend\Http\Request')->makePartial();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-        m::close();
     }
 
     protected function mockController($className)
