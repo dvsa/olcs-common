@@ -103,12 +103,15 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
 
         $form = $this->createMockForm('Lva\TaxiPhv');
         $form->shouldReceive('setData')
-            ->with($postData)
-            ->andReturn($form); // fluent interface
+                ->with($postData)
+                ->andReturn($form);
+        // assert that form isn't validated if we're only doing postcode lookup
+        // (i.e. processAddressLookupForm returns true, below)
+        $form->shouldReceive('isValid')->never();
+
         $this->sut->shouldReceive('getLicenceForm')
             ->andReturn($form);
 
-        // form helper is already mocked so not testing any of its logic
         $this->formHelper
             ->shouldReceive('processAddressLookupForm')
             ->with($form, $this->request)
@@ -134,8 +137,15 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
 
         $form = $this->createMockForm('Lva\TaxiPhv');
         $form->shouldReceive('setData')
-            ->with($postData)
-            ->andReturn($form); // fluent interface
+                ->with($postData)
+                ->andReturn($form);
+
+        // assert that form *is* validated if not doing postcode lookup
+        // (i.e. processAddressLookupForm returns false, below)
+        $form->shouldReceive('isValid')
+                ->once()
+                ->andReturn(false);
+
         $this->sut->shouldReceive('getLicenceForm')
             ->andReturn($form);
 
@@ -144,7 +154,6 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->with($form, $this->request)
             ->andReturn(false);
 
-        $form->shouldReceive('isValid');
 
         $this->mockRender();
         $this->sut->addAction();
