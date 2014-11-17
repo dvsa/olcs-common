@@ -73,6 +73,7 @@ return array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
+            'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
