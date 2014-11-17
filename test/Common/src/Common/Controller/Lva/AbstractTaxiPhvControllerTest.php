@@ -154,7 +154,6 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->with($form, $this->request)
             ->andReturn(false);
 
-
         $this->mockRender();
         $this->sut->addAction();
 
