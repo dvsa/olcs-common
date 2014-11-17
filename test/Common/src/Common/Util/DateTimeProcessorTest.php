@@ -3,6 +3,8 @@ namespace CommonTest\Util;
 
 use PHPUnit_Framework_TestCase;
 use Common\Util\DateTimeProcessor as DateTimeProcessor;
+use Common\Service\Data\PublicHoliday as PublicHolidayService;
+use Mockery as m;
 
 /**
  * Test Api resolver
@@ -20,11 +22,27 @@ class DateTimeProcessorTest extends PHPUnit_Framework_TestCase
      * @param boolean $bh
      * @param \DateTime|string $outDate
      */
-    public function testCalculateDate($inDate, $days, $we, $bh, $outDate)
+    public function testCalculateDate($inDate, $days, $we, $ph, $outDate, $phDates = null)
     {
         $sut = new DateTimeProcessor();
 
-        $this->assertEquals($outDate, $sut->calculateDate($inDate, $days, $we, $bh));
+        $mock = m::mock('Common\Service\Data\PublicHoliday');
+        $mock->shouldReceive('fetchPublicHolidaysArray')
+             ->andReturn($phDates);
+
+        // Dataservice manager
+        $ds = new \Zend\ServiceManager\ServiceManager();
+        $ds->setService('Common\Service\Data\PublicHoliday', $mock);
+
+        // Zend service locator
+        $sl = new \Zend\ServiceManager\ServiceManager();
+        $sl->setService('DataServiceManager', $ds);
+
+        $sut->createService($sl);
+
+        $this->assertSame($mock, $sut->getPublicHolidayService());
+
+        $this->assertEquals($outDate, $sut->calculateDate($inDate, $days, $we, $ph));
     }
 
     public function dpCalculateDate()
@@ -58,13 +76,30 @@ class DateTimeProcessorTest extends PHPUnit_Framework_TestCase
                 false, // public holidays
                 '2014-05-15'
             ],
-            /* [ // no weekends but public holidays are skipped
-                '2014-04-28',
-                '13',
+            [ // no weekends but public holidays are skipped
+                '2014-12-22',
+                '12',
                 false, // weekends
                 true, // public holidays
-                '2014-05-15'
-            ] */
+                '2015-01-06',
+                [
+                    '2014-12-25',
+                    '2014-12-26',
+                    '2015-01-01',
+                ]
+            ],
+            [ // weekends and public holidays are skipped
+                '2014-12-22',
+                '8',
+                true, // weekends
+                true, // public holidays
+                '2015-01-06',
+                [
+                    '2014-12-25',
+                    '2014-12-26',
+                    '2015-01-01',
+                ]
+            ]
         ];
     }
 

@@ -19,8 +19,8 @@ class DateTimeProcessor implements ZendFactoryInterface
      *
      * @param string|PHPDateTime $date Should be
      * @param integer $days The number of days to offset (can be a negative number)
-     * @param boolean $we Should weekend days be excluded
-     * @param boolean $bh Should public holidays be excluded
+     * @param boolean $we Should weekend days be considered/excluded
+     * @param boolean $bh Should public holidays be considered/excluded
      */
     public function calculateDate($date, $days, $we = false, $bh = false)
     {
@@ -52,26 +52,19 @@ class DateTimeProcessor implements ZendFactoryInterface
     {
         $endDate = $this->checkDate($endDate);
 
-        if ($endDate->format('N') == 6) {
-            $this->dateAddDays($endDate, 2);
-        } else if ($endDate->format('N') == 7) {
-            $this->dateAddDays($endDate, 1);
-        }
-
         $workingWeeks = floor($workingDays / 5);
 
         $totalDays = $workingWeeks * 7;
 
         $daysLeft = $workingDays - ($workingWeeks * 5);
 
-        $this->dateAddDays($endDate, $totalDays);
+        $this->dateAddDays($endDate, $totalDays, true);
 
         while ($daysLeft) {
-            $this->dateAddDays($endDate, 1);
 
-            if ($endDate->format('N') < 6) {
-                $daysLeft--;
-            }
+            $this->dateAddDays($endDate, 1, true);
+
+            $daysLeft--;
         }
 
         return $endDate;
@@ -84,11 +77,41 @@ class DateTimeProcessor implements ZendFactoryInterface
      * @param PHPDateTime $endDate
      * @param boolean $we
      *
-     * @return PHPDateTime
+     * @return PHPDateTime Unnecessary as it's passin by reference in the first place.
      */
     public function processPublicHolidays(PHPDateTime $date, PHPDateTime $endDate, $we)
     {
-        return $date;
+        $publicHolidays = $this->getPublicHolidaysArray();
+
+        foreach ($publicHolidays as $publicHoliday) {
+
+            $publicHolidayDateTime = $this->checkDate($publicHoliday);
+
+            if ($publicHolidayDateTime >= $date && $publicHolidayDateTime <= $endDate) {
+
+                $this->dateAddDays($endDate, 1, $we);
+            }
+        }
+
+        return $endDate;
+    }
+
+    /**
+     * Gets a list of bank holidays
+     *
+     * @return multitype:string
+     */
+    public function getPublicHolidaysArray()
+    {
+        return $this->getPublicHolidayService()->fetchpublicHolidaysArray();
+
+        return [
+            '2014-12-25',
+            '2014-12-26',
+            '2015-01-01',
+            '2015-04-03',
+            '2015-04-06',
+        ];
     }
 
     /**
@@ -98,11 +121,24 @@ class DateTimeProcessor implements ZendFactoryInterface
      * @param integer $days
      * @return string
      */
-    public function dateAddDays(PHPDateTime $date, $days)
+    public function dateAddDays(PHPDateTime $date, $days, $considerWeekend = false)
     {
         $dateAddString = $days . ' days';
 
         $date->add(\DateInterval::createFromDateString($dateAddString));
+
+        if ($considerWeekend === true) {
+
+            if ($date->format('N') == 6) {
+
+                $this->dateAddDays($date, 2, false);
+
+            } else if ($date->format('N') == 7) {
+
+                $this->dateAddDays($date, 1, false);
+            }
+
+        }
 
         return $date;
     }
@@ -144,7 +180,7 @@ class DateTimeProcessor implements ZendFactoryInterface
      */
     public function createService(ZendServiceLocatorInterface $serviceLocator)
     {
-        $this->setPublicHolidatService($serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday'));
+        $this->setPublicHolidayService($serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday'));
 
         return $this;
     }
@@ -154,7 +190,7 @@ class DateTimeProcessor implements ZendFactoryInterface
      *
      * @return \Common\Service\Data\PublicHoliday
      */
-    public function getPublicHolidatService()
+    public function getPublicHolidayService()
     {
         return $this->publicHolidayService;
     }
@@ -165,7 +201,7 @@ class DateTimeProcessor implements ZendFactoryInterface
      * @param PublicHolidayService $publicHolidayService
      * @return \Common\Util\DateTime
      */
-    public function setPublicHolidatService(PublicHolidayService $publicHolidayService)
+    public function setPublicHolidayService(PublicHolidayService $publicHolidayService)
     {
         $this->publicHolidayService = $publicHolidayService;
         return $this;
