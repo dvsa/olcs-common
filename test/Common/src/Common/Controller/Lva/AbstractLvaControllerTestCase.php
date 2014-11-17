@@ -3,6 +3,7 @@
 namespace CommonTest\Controller\Lva;
 
 use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use \Mockery as m;
 
@@ -11,7 +12,7 @@ use \Mockery as m;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractLvaControllerTestCase extends MockeryTestCase
 {
     protected $sm;
     protected $sut;
