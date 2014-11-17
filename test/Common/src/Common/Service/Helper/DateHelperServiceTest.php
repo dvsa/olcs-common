@@ -34,4 +34,11 @@ class DateHelperServiceTest extends PHPUnit_Framework_TestCase
         // there's no real way round it here...
         $this->assertEquals(date('m-d'), $helper->getDate('m-d'));
     }
+
+    public function testGetDateObject()
+    {
+        $helper = new DateHelperService();
+
+        $this->assertInstanceOf('DateTime', $helper->getDateObject());
+    }
 }
