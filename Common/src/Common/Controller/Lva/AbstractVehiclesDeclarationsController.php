@@ -93,8 +93,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
         );
 
-        var_dump($data);
-
         return $data;
     }
 

@@ -80,8 +80,6 @@ abstract class AbstractLvaControllerTestCase extends PHPUnit_Framework_TestCase
                 ->with($form, $e)
                 ->andReturn($helper);
         }
-
-        $this->setService('Helper\Form', $helper);
     }
 
     protected function createMockForm($formName)

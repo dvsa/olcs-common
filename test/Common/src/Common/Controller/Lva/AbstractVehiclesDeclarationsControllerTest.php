@@ -37,7 +37,8 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                         'psvOnlyLimousinesConfirmation' => '',
                     ]
                 ]
-            );
+            )
+            ->andReturn($form);
 
         $this->sut->shouldReceive('getApplicationId')
             ->andReturn(13);
@@ -54,8 +55,21 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     'psvLimousines' => '',
                     'psvNoLimousineConfirmation' => '',
                     'psvOnlyLimousinesConfirmation' => '',
+                    'totAuthSmallVehicles' => null,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles' => null
                 ]
             );
+
+        $this->shouldRemoveElements(
+            $form,
+            [
+                'smallVehiclesIntention',
+                'nineOrMore',
+                'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmationLabel',
+                'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmation'
+            ]
+        );
 
         $this->mockRender();
 
