@@ -721,18 +721,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             if (class_exists($class)) {
 
                 $form =  $annotationBuilder->createForm($class);
-                $form->add([
-                    'name' => 'csrf',
-                    'type' => 'Csrf',
-                    'options' => [
-                        'csrf_options' => [
-                            'messageTemplates' => [
-                                'notSame' => 'csrf-message'
-                            ],
-                            'timeout' => 600
+                $form->add(
+                    [
+                        'name' => 'csrf',
+                        'type' => 'Csrf',
+                        'options' => [
+                            'csrf_options' => [
+                                'messageTemplates' => [
+                                    'notSame' => 'csrf-message'
+                                ],
+                                'timeout' => 600
+                            ]
                         ]
                     ]
-                ]);
+                );
 
                 return $form;
             }
@@ -746,7 +748,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * @param type $type
      * @return type
      */
-    protected function getForm($type)
+    public function getForm($type)
     {
         $form = $this->getFormClass($type);
 
@@ -1725,7 +1727,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     /**
      * Process save when we have a table form
      *
-     * @todo at some point we need to trim this down a bit and move the non-controller logic into a service
+     * @to-do at some point we need to trim this down a bit and move the non-controller logic into a service
      *
      * @param array $data
      */

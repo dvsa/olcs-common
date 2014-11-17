@@ -38,6 +38,7 @@ class ResponseHelper
         ),
         'POST' => array(
             Response::STATUS_CODE_201,
+            Response::STATUS_CODE_202,
             Response::STATUS_CODE_400
         ),
         'PUT' => array(
@@ -171,7 +172,7 @@ class ResponseHelper
                 $body = "\n" . print_r($data, true);
             }
 
-            // TODO: Replace with a different exception
+            // TO-DO: Replace with a different exception
             throw new \Exception('Unexpected status code: ' . $body);
         }
     }

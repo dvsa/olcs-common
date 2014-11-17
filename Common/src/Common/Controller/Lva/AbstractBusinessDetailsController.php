@@ -95,30 +95,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     private function processCompanyLookup($data, $form)
     {
-        if (strlen(trim($data['data']['companyNumber']['company_number'])) === 8) {
-
-            $result = $this->getServiceLocator()
-                ->get('Data\CompaniesHouse')
-                ->search('numberSearch', $data['data']['companyNumber']['company_number']);
-
-            if ($result['Count'] === 1) {
-
-                $form->get('data')->get('name')->setValue($result['Results'][0]['CompanyName']);
-                return;
-            }
-
-            $message = 'company_number.search_no_results.error';
-        } else {
-            $message = 'company_number.length.validation.error';
-        }
-
-        $translator = $this->getServiceLocator()->get('translator');
-
-        $form->get('data')->get('companyNumber')->setMessages(
-            array(
-                'company_number' => array($translator->translate($message))
-            )
-        );
+        $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
     /**
