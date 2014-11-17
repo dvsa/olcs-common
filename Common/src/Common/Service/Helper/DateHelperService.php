@@ -18,4 +18,9 @@ class DateHelperService extends AbstractHelperService
     {
         return date($format);
     }
+
+    public function getDateObject($time = "now")
+    {
+        return new \DateTime($time);
+    }
 }

@@ -782,4 +782,166 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $helper->removeFieldList($form, 'foo', ['bar']);
     }
+
+    public function testProcessCompanyLookupValidData()
+    {
+        $helper = new FormHelperService();
+
+        $service = m::mock()
+            ->shouldReceive('search')
+            ->with('numberSearch', '12345678')
+            ->andReturn(
+                [
+                    'Count' => 1,
+                    'Results' => [
+                        ['CompanyName' => 'Looked Up Company']
+                    ]
+                ]
+            )
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->once()
+            ->with('Data\CompaniesHouse')
+            ->andReturn($service)
+            ->getMock();
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $data = [
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ]
+            ]
+        ];
+
+        $nameElement = m::mock()->shouldReceive('setValue')
+            ->with('Looked Up Company')
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('name')
+            ->andReturn($nameElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
+    public function testProcessCompanyLookupWithNoResults()
+    {
+        $helper = new FormHelperService();
+
+        $service = m::mock()
+            ->shouldReceive('search')
+            ->with('numberSearch', '12345678')
+            ->andReturn(
+                [
+                    'Count' => 0,
+                    'Results' => []
+                ]
+            )
+            ->getMock();
+
+        $translator = m::mock()
+            ->shouldReceive('translate')
+            ->with('company_number.search_no_results.error')
+            ->andReturn('No results')
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Data\CompaniesHouse')
+            ->andReturn($service)
+            ->shouldReceive('get')
+            ->with('translator')
+            ->andReturn($translator)
+            ->getMock();
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $data = [
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ]
+            ]
+        ];
+
+        $numberElement = m::mock()->shouldReceive('setMessages')
+            ->with(
+                [
+                    'company_number' => ['No results']
+                ]
+            )
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('companyNumber')
+            ->andReturn($numberElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
+    public function testProcessCompanyLookupInvalidNumber()
+    {
+        $helper = new FormHelperService();
+
+        $translator = m::mock()
+            ->shouldReceive('translate')
+            ->with('company_number.length.validation.error')
+            ->andReturn('Bad length')
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('translator')
+            ->andReturn($translator)
+            ->getMock();
+
+        $helper->setServiceLocator($sm);
+
+        $form = m::mock('Zend\Form\Form');
+
+        $data = [
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '123'
+                ]
+            ]
+        ];
+
+        $numberElement = m::mock()->shouldReceive('setMessages')
+            ->with(
+                [
+                    'company_number' => ['Bad length']
+                ]
+            )
+            ->getMock();
+
+        $fieldset = m::mock()->shouldReceive('get')
+            ->with('companyNumber')
+            ->andReturn($numberElement)
+            ->getMock();
+
+        $form->shouldReceive('get')
+            ->with('data')
+            ->andReturn($fieldset);
+
+        $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
 }
