@@ -54,6 +54,18 @@ class PsvVehicleData
     public $vrm = null;
 
     /**
+     * @Form\Required(true)
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.makeModel",
+     *     "help-block": "Up to 100 characters"
+     * })
+     * @Form\Type("Text")
+     * @Form\Filter({"name":"Zend\Filter\StringTrim"})
+     * @Form\Validator({"name":"Zend\Validator\StringLength","options":{"min":2,"max":100}})
+     */
+    public $makeModel = null;
+
+    /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty",
