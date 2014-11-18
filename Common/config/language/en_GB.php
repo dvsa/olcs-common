@@ -1268,7 +1268,7 @@ return array(
         these licences here',
     'selfserve-app-subSection-previous-history-previous-licence-tableHeader' => 'Licences (if applicable)',
     'selfserve-app-subSection-your-business-people-columnDate' => 'DOB',
-    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other Names',
+    'selfserve-app-subSection-your-business-people-columnHasOtherNames' => 'Other names',
     'selfserve-app-subSection-your-business-people-columnName' => 'Name',
     'selfserve-app-subSection-your-business-people-columnPosition' => 'Position',
     'selfserve-app-subSection-your-business-people-guidanceLC' => 'Please provide details of the company directors. This
