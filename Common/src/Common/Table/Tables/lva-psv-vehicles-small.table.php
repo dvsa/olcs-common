@@ -29,6 +29,10 @@ return array(
             'psv' => true
         ),
         array(
+            'title' => $translationPrefix . '.make',
+            'name' => 'makeModel'
+        ),
+        array(
             'title' => $translationPrefix . '.novelty',
             'name' => 'isNovelty',
             'formatter' => 'YesNo'

@@ -414,6 +414,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-edit' => 'W Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'W Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-small.table.make' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'W Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => 'W Removed',
     'application_vehicle-safety_vehicle-psv-small.table.specified' => 'W Specified',
@@ -421,6 +422,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'W Vehicle registration number',
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'W Is this vehicle a limousine or novelty type
         vehicle?',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration number',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of
         your vehicles?',
@@ -479,8 +481,10 @@ return array(
     'applications' => 'W Applications',
     'apply-changes' => 'W Apply changes',
     'apsts_consideration' => 'W Under Consideration',
+    'apsts_granted' => 'W Granted',
     'apsts_new' => 'W Not Yet Submitted',
     'apsts_not_submitted' => 'W Not submitted',
+    'apsts_valid' => 'W Valid',
     'both' => 'W Both',
     'built-by' => 'W Built by',
     'bus-compliance-issues' => 'W Bus compliance issues',
@@ -833,6 +837,7 @@ return array(
     'licence-start-date' => 'W Licence start date',
     'licence-status' => 'W Licence status',
     'licence-type' => 'W Licence type',
+    'licence-valid-confirmation' => 'W The licence is now valid',
     'licence.overview' => 'W Overview',
     'licence.overview.details' => 'W Overview',
     'licence.overview.licence-no' => 'W Licence no.',
@@ -872,6 +877,7 @@ return array(
     'lsts_consideration' => 'W Under consideration',
     'lsts_curtailed' => 'W Curtailed',
     'lsts_granted' => 'W Granted',
+    'lsts_not_submitted' => 'W Not submitted',
     'lsts_ntu' => 'W Not Taken Up',
     'lsts_refused' => 'W Refused',
     'lsts_revoked' => 'W Revoked',
