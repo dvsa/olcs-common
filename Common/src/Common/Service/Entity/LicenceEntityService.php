@@ -292,7 +292,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'vehicle' => array(
                         'properties' => array(
                             'vrm',
-                            'isNovelty',
+                            'makeModel',
+                            'isNovelty'
                         ),
                         'children' => array(
                             'psvType' => array(

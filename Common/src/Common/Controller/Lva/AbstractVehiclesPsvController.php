@@ -355,6 +355,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         if (!in_array($this->params('action'), array('small-add', 'small-edit'))) {
             $formHelper->remove($form, 'data->isNovelty');
+            $formHelper->remove($form, 'data->makeModel');
         }
 
         $formHelper->remove($form, 'licence-vehicle->discNo');
