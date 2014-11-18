@@ -6,6 +6,10 @@ use Zend\ServiceManager\ServiceLocatorInterface as ZendServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface as ZendFactoryInterface;
 use Common\Service\Data\PublicHoliday as PublicHolidayService;
 
+/**
+ * Date Time Processor
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ */
 class DateTimeProcessor implements ZendFactoryInterface
 {
     /**
@@ -81,7 +85,7 @@ class DateTimeProcessor implements ZendFactoryInterface
      */
     public function processPublicHolidays(PHPDateTime $date, PHPDateTime $endDate, $we)
     {
-        $publicHolidays = $this->getPublicHolidaysArray();
+        $publicHolidays = $this->getPublicHolidaysArray($date, $endDate);
 
         foreach ($publicHolidays as $publicHoliday) {
 
@@ -101,17 +105,9 @@ class DateTimeProcessor implements ZendFactoryInterface
      *
      * @return multitype:string
      */
-    public function getPublicHolidaysArray()
+    public function getPublicHolidaysArray(PHPDateTime $date, PHPDateTime $endDate)
     {
-        return $this->getPublicHolidayService()->fetchpublicHolidaysArray();
-
-        return [
-            '2014-12-25',
-            '2014-12-26',
-            '2015-01-01',
-            '2015-04-03',
-            '2015-04-06',
-        ];
+        return $this->getPublicHolidayService()->fetchpublicHolidaysArray($date, $endDate);
     }
 
     /**
@@ -133,7 +129,7 @@ class DateTimeProcessor implements ZendFactoryInterface
 
                 $this->dateAddDays($date, 2, false);
 
-            } else if ($date->format('N') == 7) {
+            } elseif ($date->format('N') == 7) {
 
                 $this->dateAddDays($date, 1, false);
             }
@@ -180,7 +176,9 @@ class DateTimeProcessor implements ZendFactoryInterface
      */
     public function createService(ZendServiceLocatorInterface $serviceLocator)
     {
-        $this->setPublicHolidayService($serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday'));
+        $this->setPublicHolidayService(
+            $serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday')
+        );
 
         return $this;
     }

@@ -111,7 +111,8 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon'
+            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
         )
     ),
     'file_uploader' => array(
