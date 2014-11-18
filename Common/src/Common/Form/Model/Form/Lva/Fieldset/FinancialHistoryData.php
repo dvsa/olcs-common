@@ -26,6 +26,12 @@ class FinancialHistoryData
     public $version = null;
 
     /**
+     * @Form\Options({"label":"application_previous-history_financial-history.finance.hint"})
+     * @Form\Type("Common\Form\Elements\Types\PlainText")
+     */
+    public $hasAnyPerson = null;
+
+    /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_previous-history_financial-history.finance.bankrupt",

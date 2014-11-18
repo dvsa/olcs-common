@@ -78,7 +78,7 @@ class SafetyLicence
      * @Form\Required(true)
      * @Form\AllowEmpty(true)
      * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\Attributes({"class":"","id":"", "required": false})
+     * @Form\Attributes({"class":"medium","id":"", "required": false})
      * @Form\Options({
      *     "label":
      * "application_vehicle-safety_safety.licence.tachographAnalyserContractor"

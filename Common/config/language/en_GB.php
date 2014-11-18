@@ -191,18 +191,18 @@ return array(
     'application_operating-centres_authorisation.table.vehicles' => 'Vehicles',
     'application_previous-history_convictions-penalties-add' => 'Add offence',
     'application_previous-history_convictions-penalties-edit' => 'Edit offence',
-    'application_previous-history_financial-history.finance.administration' => '4. Involved with a company, or business,
+    'application_previous-history_financial-history.finance.administration' => 'd. Involved with a company, or business,
         that has gone into (or is going into) administration?',
-    'application_previous-history_financial-history.finance.bankrupt' => '1. Declared bankrupt or had their estate
+    'application_previous-history_financial-history.finance.bankrupt' => 'a. Declared bankrupt or had their estate
         seized or confiscated?',
-    'application_previous-history_financial-history.finance.disqualified' => '5. Have you, or have any of your partners,
+    'application_previous-history_financial-history.finance.disqualified' => '2. Have you, or have any of your partners,
         directors, majority shareholders or your transport manager ever been disqualified from acting as a director of a
         company or from taking part in the management of a company?',
-    'application_previous-history_financial-history.finance.hint' => 'Has any person named in this application
+    'application_previous-history_financial-history.finance.hint' => '1. Has any person named in this application
         (including partners, directors or transport managers) ever been:',
-    'application_previous-history_financial-history.finance.liquidation' => '2. Involved with a company, or business,
+    'application_previous-history_financial-history.finance.liquidation' => 'b. Involved with a company, or business,
         that has gone into (or is going into) liquidation, owing money?',
-    'application_previous-history_financial-history.finance.receivership' => '3. Involved with a company, or business,
+    'application_previous-history_financial-history.finance.receivership' => 'c. Involved with a company, or business,
         that has gone into (or is going into) receivership?',
     'application_previous-history_financial-history.insolvencyConfirmation.title' => 'Please tick to confirm that you
         are aware that you must tell the traffic commissioner immediately of any insolvency proceedings that occur
@@ -438,7 +438,7 @@ return array(
     'application_vehicle-safety_vehicle.table.specified' => 'Specified',
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
-    'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (kg)',
+    'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (Kg)',
     'application_your-business_business-details-add' => 'Add subsidiary company',
     'application_your-business_business-details-edit' => 'Edit subsidiary company',
     'application_your-business_business-details-formCompanyNo' => 'Company number',

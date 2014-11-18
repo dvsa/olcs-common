@@ -17,6 +17,9 @@ class LicenceHistoryPublicInquiry
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes" : {
+     *          "class":"subquestion"
      *     }
      * })
      * @Form\Type("radio")
