@@ -28,7 +28,6 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({"id":"","class":"long"})
-     * @Form\AllowEmpty(false)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title",
