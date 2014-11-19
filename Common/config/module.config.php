@@ -83,7 +83,7 @@ return array(
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
-            'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
+            'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'postcode' => function ($serviceManager) {
@@ -212,25 +212,16 @@ return array(
     'form' => array(
         'elements' => include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
-    //-------- Start service API mappings -----------------
+    'rest_services' => [
+        'abstract_factories' => [
+            'Common\Service\Api\AbstractFactory'
+        ]
+    ],
     'service_api_mapping' => array(
-        'apis' => array(
-            'payments' => array(
-                'Vosa\Payment\Token' => 'token',
-                'Vosa\Payment\Db' => 'paymentdb',
-                'Vosa\Payment\Card' => 'cardpayment'
-            ),
-            'document' => array(
-                'Olcs\Template' => 'template',
-                'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
-                'Olcs\Document\Retrieve' => 'document/retrieve/'
-            )
-        ),
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
     )
-//-------- End service API mappings -----------------
 );
