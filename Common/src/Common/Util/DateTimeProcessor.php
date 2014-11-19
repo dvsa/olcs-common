@@ -5,6 +5,9 @@ use DateTime as PHPDateTime;
 use Zend\ServiceManager\ServiceLocatorInterface as ZendServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface as ZendFactoryInterface;
 use Common\Service\Data\PublicHoliday as PublicHolidayService;
+use Common\Util\DateTimeProcessor\DateTimeProcessorAbstract as AbstractProcessor;
+use Common\Util\DateTimeProcessor\Positive as PositiveProcessor;
+use Common\Util\DateTimeProcessor\Negative as NegativeProcessor;
 
 /**
  * Date Time Processor
@@ -12,11 +15,7 @@ use Common\Service\Data\PublicHoliday as PublicHolidayService;
  */
 class DateTimeProcessor implements ZendFactoryInterface
 {
-    /**
-     *
-     * @var \Common\Service\Data\PublicHoliday
-     */
-    protected $publicHolidayService;
+    protected $processors = [];
 
     /**
      * Calculates a date.
@@ -28,144 +27,26 @@ class DateTimeProcessor implements ZendFactoryInterface
      */
     public function calculateDate($date, $days, $we = false, $bh = false)
     {
-        $date = $this->checkDate($date);
+        if ($days > 0) {
+            $processor = $this->getPositiveProcessor();
+        } else {
+            $processor = $this->getNegativeProcessor();
+        }
+
+        $date = $processor->checkDate($date);
         $endDate = clone $date;
 
         if (true === $we) {
-            $this->processWorkingDays($endDate, $days);
+            $processor->processWorkingDays($endDate, $days);
         } else {
-            $this->dateAddDays($endDate, $days);
+            $processor->dateAddDays($endDate, $days);
         }
 
         if (true === $bh) {
-            $this->processPublicHolidays($date, $endDate, $we);
+            $processor->processPublicHolidays($date, $endDate, $we);
         }
 
         return $endDate->format('Y-m-d');
-    }
-
-    /**
-     * Change date to add/subtract working days.
-     *
-     * @param PHPDateTime|string $endDate
-     * @param integer $workingDays
-     *
-     * @return PHPDateTime
-     */
-    public function processWorkingDays($endDate, $workingDays)
-    {
-        $endDate = $this->checkDate($endDate);
-
-        $workingWeeks = floor($workingDays / 5);
-
-        $totalDays = $workingWeeks * 7;
-
-        $daysLeft = $workingDays - ($workingWeeks * 5);
-
-        $this->dateAddDays($endDate, $totalDays, true);
-
-        while ($daysLeft) {
-
-            $this->dateAddDays($endDate, 1, true);
-
-            $daysLeft--;
-        }
-
-        return $endDate;
-    }
-
-    /**
-     * Processes the public holidays.
-     *
-     * @param PHPDateTime $date
-     * @param PHPDateTime $endDate
-     * @param boolean $we
-     *
-     * @return PHPDateTime Unnecessary as it's passin by reference in the first place.
-     */
-    public function processPublicHolidays(PHPDateTime $date, PHPDateTime $endDate, $we)
-    {
-        $publicHolidays = $this->getPublicHolidaysArray($date, $endDate);
-
-        foreach ($publicHolidays as $publicHoliday) {
-
-            $publicHolidayDateTime = $this->checkDate($publicHoliday);
-
-            if ($publicHolidayDateTime >= $date && $publicHolidayDateTime <= $endDate) {
-
-                $this->dateAddDays($endDate, 1, $we);
-            }
-        }
-
-        return $endDate;
-    }
-
-    /**
-     * Gets a list of bank holidays
-     *
-     * @return multitype:string
-     */
-    public function getPublicHolidaysArray(PHPDateTime $date, PHPDateTime $endDate)
-    {
-        return $this->getPublicHolidayService()->fetchpublicHolidaysArray($date, $endDate);
-    }
-
-    /**
-     * Adds days to a date.
-     *
-     * @param PHPDateTime $date
-     * @param integer $days
-     * @return string
-     */
-    public function dateAddDays(PHPDateTime $date, $days, $considerWeekend = false)
-    {
-        $dateAddString = $days . ' days';
-
-        $date->add(\DateInterval::createFromDateString($dateAddString));
-
-        if ($considerWeekend === true) {
-
-            if ($date->format('N') == 6) {
-
-                $this->dateAddDays($date, 2, false);
-
-            } elseif ($date->format('N') == 7) {
-
-                $this->dateAddDays($date, 1, false);
-            }
-
-        }
-
-        return $date;
-    }
-
-    /**
-     * Checks that
-     *
-     * @param unknown $date
-     * @return \DateTime|DateTime
-     */
-    public function checkDate($date)
-    {
-        if ($date instanceof PHPDateTime) {
-            return $date;
-        }
-
-        return $this->createDateTimeFromString($date);
-    }
-
-    /**
-     * Creates a DateTime object from a string containing a date.
-     *
-     * @param string $date String containing an strtotime compatible date.
-     *
-     * @return \DateTime
-     */
-    public function createDateTimeFromString($date)
-    {
-        $dateTime = date(PHPDateTime::ISO8601, strtotime($date));
-
-        return PHPDateTime::createFromFormat(PHPDateTime::ISO8601, $dateTime);
     }
 
     /**
@@ -176,32 +57,50 @@ class DateTimeProcessor implements ZendFactoryInterface
      */
     public function createService(ZendServiceLocatorInterface $serviceLocator)
     {
-        $this->setPublicHolidayService(
-            $serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday')
-        );
+        $publicHolidayService = $serviceLocator->get('DataServiceManager')->get('Common\Service\Data\PublicHoliday');
+
+        $this->setPositiveProcessor(new PositiveProcessor())
+            ->getPositiveProcessor()->setPublicHolidayService($publicHolidayService);
+
+        $this->setNegativeProcessor(new NegativeProcessor())
+            ->getNegativeProcessor()->setPublicHolidayService($publicHolidayService);
 
         return $this;
     }
 
     /**
-     * Getter.
-     *
-     * @return \Common\Service\Data\PublicHoliday
+     * @param PositiveProcessor $processor
+     * @return \Common\Util\DateTimeProcessor
      */
-    public function getPublicHolidayService()
+    public function setPositiveProcessor(PositiveProcessor $processor)
     {
-        return $this->publicHolidayService;
+        $this->processors['positive'] = $processor;
+        return $this;
     }
 
     /**
-     * Setter.
-     *
-     * @param PublicHolidayService $publicHolidayService
-     * @return \Common\Util\DateTime
+     * @return PositiveProcessor
      */
-    public function setPublicHolidayService(PublicHolidayService $publicHolidayService)
+    public function getPositiveProcessor()
     {
-        $this->publicHolidayService = $publicHolidayService;
+        return $this->processors['positive'];
+    }
+
+    /**
+     * @param NegativeProcessor $processor
+     * @return \Common\Util\DateTimeProcessor
+     */
+    public function setNegativeProcessor(NegativeProcessor $processor)
+    {
+        $this->processors['negative'] = $processor;
         return $this;
+    }
+
+    /**
+     * @return NegativeProcessor
+     */
+    public function getNegativeProcessor()
+    {
+        return $this->processors['negative'];
     }
 }
