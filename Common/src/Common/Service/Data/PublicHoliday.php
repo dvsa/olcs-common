@@ -109,8 +109,6 @@ class PublicHoliday extends AbstractData
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        parent::createService($serviceLocator);
-
         $licenceService = $serviceLocator->get('DataServiceManager')->get('Common\Service\Data\Licence');
 
         $this->setLicenceService($licenceService);
