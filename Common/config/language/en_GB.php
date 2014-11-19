@@ -588,7 +588,7 @@ return array(
     'dashboard-table-variations-status' => 'Status',
     'dashboard-table-variations-submittedDate' => 'Submitted',
     'dashboard.link' => 'Home',
-    'dashboard.subtitle' => 'These are your current licences and applications',
+    'dashboard.subtitle' => 'Operator Licensing Ltd.',
     'dashboard.title' => 'Home',
     'date-app-rec' => 'Date app. rec.',
     'date-closed' => 'Date closed',
@@ -1235,7 +1235,7 @@ return array(
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMr' => 'Mr',
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMrs' => 'Mrs',
     'selfserve-app-subSection-previous-history-criminal-conviction-formTitleValueMs' => 'Ms',
-    'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => '1. Has any person named in this
+    'selfserve-app-subSection-previous-history-criminal-conviction-hasConv' => 'Has any person named in this
         application, (including partners, directors and transport managers); any company of which a person named on this
         application is or has been a director; any parent company if you are a limited company; or any of your employees
         or agents been convicted of any relevant offence which must be declared to the traffic commissioner? ',
