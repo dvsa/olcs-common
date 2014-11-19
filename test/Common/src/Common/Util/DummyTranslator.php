@@ -3,9 +3,11 @@
 /**
  * Dummy translator, useful for unit testing
  *
+ * Takes an array of key=>value translations via setMap
+ *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-namespace Common\Util;
+namespace CommonTest\Util;
 
 class DummyTranslator implements \Zend\I18n\Translator\TranslatorInterface
 {

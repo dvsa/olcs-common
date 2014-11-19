@@ -200,7 +200,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
     private function prepareViewHelper($translateMap = null)
     {
-        $translator = new \Common\Util\DummyTranslator();
+        $translator = new \CommonTest\Util\DummyTranslator();
         if (!is_null($translateMap)) {
             $translator->setMap($translateMap);
         }
