@@ -336,7 +336,6 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
-    'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
