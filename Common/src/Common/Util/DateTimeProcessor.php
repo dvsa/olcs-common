@@ -28,10 +28,8 @@ class DateTimeProcessor implements ZendFactoryInterface
     public function calculateDate($date, $days, $we = false, $bh = false)
     {
         if ($days > 0) {
-            //echo 'Positive' . PHP_EOL;
             $processor = $this->getPositiveProcessor();
         } else {
-            //echo 'NEGATIVE' . PHP_EOL;
             $processor = $this->getNegativeProcessor();
         }
 
