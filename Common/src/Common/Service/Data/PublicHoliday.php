@@ -5,6 +5,8 @@ namespace Common\Service\Data;
 use Common\Util\RestClient;
 use DateTime as PHPDateTime;
 use Common\Service\Data\Licence as LicenceService;
+use Common\Service\Data\LicenceServiceTrait;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class PublicHoliday
@@ -13,37 +15,9 @@ use Common\Service\Data\Licence as LicenceService;
  */
 class PublicHoliday extends AbstractData
 {
-    protected $categories = [
-        'isScotland',
-        'isWales',
-        'isNi',
-        'isEngland',
-    ];
+    use LicenceServiceTrait;
 
     protected $serviceName = 'PublicHoliday';
-
-    /**
-     * @var LicenceService
-     */
-    protected $licenceService;
-
-    /**
-     * @param LicenceService $licenceService
-     * @return $this
-     */
-    public function setLicenceService(LicenceService $licenceService)
-    {
-        $this->licenceService = $licenceService;
-        return $this;
-    }
-
-    /**
-     * @return LicenceService
-     */
-    public function getLicenceService()
-    {
-        return $this->licenceService;
-    }
 
     public function getList(array $data = null)
     {
@@ -59,7 +33,6 @@ class PublicHoliday extends AbstractData
     /**
      * Ensures only a single call is made to the backend for each dataset
      *
-     * @param $category
      * @return array
      */
     public function fetchPublicHolidays(PHPDateTime $dateFrom, PHPDateTime $dateTo)
@@ -69,20 +42,40 @@ class PublicHoliday extends AbstractData
         $dateFrom = clone $dateFrom;
         $dateTo = clone $dateTo;
 
-        /* $licenceService = $this->getLicenceService();
-        if ($licenceService !== null && $licenceService->getId() !== null) {
-            $category = $this->categories[$licenceService->fetchLicenceData()['trafficArea']];
-        } else { */
-            $category = 'isEngland';
-        /* } */
+        $licenceService = $this->getLicenceService();
+
+        $fields = [
+            'isScotland',
+            'isWales',
+            'isNi',
+            'isEngland',
+        ];
+
+        $fieldToSearch = 'isEngland';
+
+        $licence = $licenceService->fetchLicenceData();
+
+        if ($licence) {
+
+            $trafficAreaArray = $licence['trafficArea'];
+
+            foreach ($fields as $key) {
+                if (array_key_exists($key, $trafficAreaArray)) {
+                    $fieldToSearch = $key;
+                }
+            }
+        }
 
         $dateTo->add(\DateInterval::createFromDateString('14 Days'));
 
         $params = [
+            $fieldToSearch => '1',
             'publicHolidayDate' => '=>' . $dateFrom->format('Y-m-d'),
             'publicHolidayDate' => '<=' . $dateTo->format('Y-m-d'),
             'limit' => '10000'
         ];
+
+        $category = $fieldToSearch;
 
         if ( (null === $this->getData($category)) && (null !== ($data = $this->getList($params))) ) {
 
@@ -106,5 +99,22 @@ class PublicHoliday extends AbstractData
         }
 
         return $outdata;
+    }
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return PublicHoliday
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        parent::createService($serviceLocator);
+
+        $licenceService = $serviceLocator->get('DataServiceManager')->get('Common\Service\Data\Licence');
+
+        $this->setLicenceService($licenceService);
+
+        return $this;
     }
 }

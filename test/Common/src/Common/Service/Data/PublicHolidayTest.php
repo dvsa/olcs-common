@@ -26,6 +26,7 @@ class PublicHolidayTest extends \PHPUnit_Framework_TestCase
         $endDate = \DateTime::createFromFormat('Y-m-d', '2014-01-14');
 
         $params = [
+            'isEngland' => '1',
             'publicHolidayDate' => '=>2014-01-01',
             'publicHolidayDate' => '<=2014-01-28',
             'limit' => '10000'
@@ -43,6 +44,21 @@ class PublicHolidayTest extends \PHPUnit_Framework_TestCase
             '2014-01-10'
         ];
 
+        $licenceData = [
+            'id' => '1',
+            'trafficArea' => [
+                'isEngland' => '1',
+                'isWales' => '0',
+            ]
+        ];
+
+        $licence = m::mock('Common\Service\Data\Licence');
+        $licence
+            ->shouldReceive('fetchLicenceData')
+            ->once()
+            ->with()
+            ->andReturn($licenceData);
+
         $mockRestClient = m::mock('Common\Util\RestClient');
         $mockRestClient
             ->shouldReceive('get')
@@ -52,6 +68,7 @@ class PublicHolidayTest extends \PHPUnit_Framework_TestCase
 
         $sut = new PublicHoliday();
         $sut->setRestClient($mockRestClient);
+        $sut->setLicenceService($licence);
 
         $this->assertEquals($finalData, $sut->fetchPublicHolidaysArray($startDate, $endDate));
     }
