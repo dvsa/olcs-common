@@ -267,6 +267,103 @@ class ApplicationEntityService extends AbstractLvaEntityService
     );
 
     /**
+     * Bundle to retrieve data for processing page
+     *
+     * (not sure how much of this we actually need, copied from Licence data service)
+     *
+     * @var array
+     */
+    private $processingDataBundle = array(
+        'properties' => 'ALL',
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id',
+                    'description'
+                )
+            ),
+            'operatingCentres' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
+            'previousConvictions' => array(
+                'properties' => array(
+                    'id'
+                )
+            ),
+            'previousLicences' => array(
+                'properties' => array(),
+                'children' => array(
+                    'previousLicenceType' => array(
+                        'properties' => array('id')
+                    )
+                )
+            ),
+            'licence' => array(
+                'properties' => array(
+                    'niFlag',
+                    'safetyInsVehicles',
+                    'safetyInsTrailers',
+                    'safetyInsVaries',
+                    'tachographInsName'
+                ),
+                'children' => array(
+                    'appeals' => array(
+                        'properties' => 'ALL',
+                        'children' => array(
+                            'outcome' => array(
+                                'properties' => array(
+                                    'id',
+                                    'description'
+                                )
+                            ),
+                            'reason' => array(
+                                'properties' => array(
+                                    'id',
+                                    'description'
+                                )
+                            ),
+                        )
+                    ),
+                    'stays' => array(
+                        'properties' => 'ALL',
+                        'children' => array(
+                            'stayType' => array(
+                                'properties' => array(
+                                    'id',
+                                    'description'
+                                )
+                            ),
+                            'outcome' => array(
+                                'properties' => array(
+                                    'id',
+                                    'description'
+                                )
+                            )
+                        )
+                    ),
+                    'status' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'goodsOrPsv' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'licenceType' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'trafficArea' => array(
+                        'properties' => 'ALL'
+                    ),
+                    'organisation' => array(
+                        'properties' => 'ALL'
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Cache the mapping of application ids to licence ids
      *
      * @var array
@@ -580,6 +677,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForCompletionStatus($id)
     {
         return $this->get($id, $this->completionStatusDataBundle);
+    }
+
+    /**
+     * Get data for processing
+     * @param int $id
+     * @return array
+     */
+    public function getDataForProcessing($id)
+    {
+        return $this->get($id, $this->processingDataBundle);
     }
 
     /**
