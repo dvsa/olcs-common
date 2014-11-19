@@ -139,49 +139,4 @@ class DateTimeProcessorTest extends \PHPUnit_Framework_TestCase
             ]
         ];
     }
-
-    /**
-     * @dataProvider dpProcessWorkingDays
-     *
-     * @param \DateTime $inDateTime
-     * @param integer $workingDays
-     * @param \DateTime $outDateTime
-     */
-    /* public function testProcessWorkingDays($inDateTime, $workingDays, $outDateTime)
-    {
-        $sut = new DateTimeProcessor();
-
-        $this->assertEquals($outDateTime, $sut->processWorkingDays($inDateTime, $workingDays));
-    }
-
-    public function dpProcessWorkingDays()
-    {
-        return array(
-            [
-                \DateTime::createFromFormat('Y-m-d', '2014-10-01'),
-                '14',
-                \DateTime::createFromFormat('Y-m-d', '2014-10-21'),
-            ],
-            [
-                \DateTime::createFromFormat('Y-m-d', '2010-01-01'),
-                '1281',
-                \DateTime::createFromFormat('Y-m-d', '2014-12-01'),
-            ],
-            [ // starts on saturday, ends on sunday + 1 day
-                \DateTime::createFromFormat('Y-m-d', '2014-09-06'),
-                '55',
-                \DateTime::createFromFormat('Y-m-d', '2014-11-24'),
-            ],
-            [ // starts on sunday, ends on sunday + 1 day
-                \DateTime::createFromFormat('Y-m-d', '2014-09-07'),
-                '55',
-                \DateTime::createFromFormat('Y-m-d', '2014-11-24'),
-            ],
-            [ // start date on sunday
-                \DateTime::createFromFormat('Y-m-d', '2006-01-01'),
-                '2609',
-                \DateTime::createFromFormat('Y-m-d', '2016-01-01'),
-            ]
-        );
-    } */
 }
