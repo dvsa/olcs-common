@@ -185,6 +185,11 @@ return array(
             'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
         ]
     ],
+    'data_services' => [
+        'factories' => [
+            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday'
+        ]
+    ],
     'tables' => array(
         'config' => array(
             __DIR__ . '/../src/Common/Table/Tables/'
