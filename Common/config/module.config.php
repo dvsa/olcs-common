@@ -59,7 +59,8 @@ return array(
             'Helper\FileUpload' => false
         ),
         'abstract_factories' => array(
-            'Common\Util\AbstractServiceFactory'
+            'Common\Util\AbstractServiceFactory',
+            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
@@ -74,6 +75,8 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
+            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
@@ -112,6 +115,13 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'FeeCommon' => 'Common\Service\Fee\FeeCommon'
+        )
+    ),
+    'publications' => array(
+        'HearingPublicationFilter' => array(
+            'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection'
         )
     ),
     'file_uploader' => array(
