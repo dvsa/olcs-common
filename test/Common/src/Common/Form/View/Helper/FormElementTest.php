@@ -176,6 +176,26 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForHtmlTranslatedElementWithTokensViaOptions()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+        $this->element->setValue('<div>%s and then %s</div>');
+        $this->element->setOptions(['tokens' => ['foo-key', 'bar-key']]);
+
+        $translations = [
+            'foo-key' => 'foo string',
+            'bar-key' => 'bar string'
+        ];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div>foo string and then bar string<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForTableElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\Table');
