@@ -1,4 +1,5 @@
 <?php
+namespace CommonTest\Util;
 
 /**
  * Dummy translator, useful for unit testing
@@ -7,13 +8,12 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-namespace CommonTest\Util;
-
 class DummyTranslator implements \Zend\I18n\Translator\TranslatorInterface
 {
     protected $map = [];
 
-    public function setMap(array $map) {
+    public function setMap(array $map)
+    {
         $this->map = $map;
     }
 
@@ -25,7 +25,8 @@ class DummyTranslator implements \Zend\I18n\Translator\TranslatorInterface
      * @param  string $locale
      * @return string
      */
-    public function translate($message, $textDomain = 'default', $locale = null) {
+    public function translate($message, $textDomain = 'default', $locale = null)
+    {
         if (array_key_exists($message, $this->map)) {
             return $this->map[$message];
         }

@@ -80,7 +80,7 @@ class FormElement extends ZendFormElement
             $tokens = $element->getTokens();
             $translated = [];
             if (is_array($tokens) && count($tokens)) {
-                foreach($tokens as $token) {
+                foreach ($tokens as $token) {
                     $translated[] = $this->getView()->translate($token);
                 }
                 return vsprintf($element->getValue(), $translated);
