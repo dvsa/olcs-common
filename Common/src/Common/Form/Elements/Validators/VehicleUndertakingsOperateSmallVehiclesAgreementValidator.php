@@ -46,7 +46,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
         } else {
 
             // Scotland
-            if  (isset($context['psvSmallVhlScotland'])) {
+            if (isset($context['psvSmallVhlScotland'])) {
                 if ($context['psvSmallVhlConfirmation'] !== 'Y') {
                     $this->error('required');
                     return false;
