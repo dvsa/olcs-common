@@ -126,8 +126,7 @@ class FinancialHistoryData
      *     "id": "",
      *     "class": "long   js-financial-history",
      *     "placeholder":
-     * "application_previous-history_financial-history.insolvencyDetails.placeholder",
-     *     "data-container-class": "highlight-box"
+     * "application_previous-history_financial-history.insolvencyDetails.placeholder"
      * })
      * @Form\Options({
      *     "label":
