@@ -86,7 +86,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
             [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => ''], false],
 
             // psvSmallVhlScotland exists, psvOperateSmallVhl missing,  confirmation = Y - comes back true
-            [0, ['psvOperateSmallVhl' => 'txt', 'psvSmallVhlConfirmation' => 'Y'], true],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => 'Y'], true],
         ];
     }
 }
