@@ -45,23 +45,28 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
             // psvSmallVehicles isn't set - comes back true
             [0, [], true],
 
-            // psvSmallVehicles = Y, confirmation = blank - comes back false
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], false],
+            // if user answers 'yes' radio control, textarea is mandatory and checkbox is optional
+            // psvSmallVehicles = Y, confirmation = blank - comes back true
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], true],
 
-            // psvSmallVehicles = Y, confirmation = N - comes back false
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], false],
+            // psvSmallVehicles = Y, confirmation = N - comes back true
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], true],
 
-            // psvSmallVehicles = Y, confirmation = 0 - comes back false
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], false],
+            // psvSmallVehicles = Y, confirmation = 0 - comes back true
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], true],
 
             // psvSmallVehicles = Y, confirmation = Y - comes back true
             [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
 
-            // psvSmallVehicles = N, confirmation = N - comes back true
-            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], true],
+            // if user answers 'no' in radio control), textarea is optional and checkbox is mandatory
+            // psvSmallVehicles = N, confirmation = N - comes back false
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], false],
 
-            // psvSmallVehicles = N, confirmation = blank - comes back true
-            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], true]
+            // psvSmallVehicles = N, confirmation = blank - comes back false
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], false],
+
+            // psvSmallVehicles = N, confirmation = Y - comes back true
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'], true]
         ];
     }
 }
