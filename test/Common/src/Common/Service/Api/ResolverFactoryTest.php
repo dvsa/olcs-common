@@ -33,4 +33,3 @@ class ResolverFactoryTest extends TestCase
         $this->assertEquals('testService', $instance->get('test'));
     }
 }
- 

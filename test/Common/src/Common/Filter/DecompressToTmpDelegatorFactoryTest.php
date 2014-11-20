@@ -29,7 +29,7 @@ class DecompressToTmpDelegatorFactoryTest extends \PHPUnit_Framework_TestCase
         $sut = new DecompressToTmpDelegatorFactory();
 
         /** @var \Common\Filter\DecompressUploadToTmp $service */
-        $service = $sut->createDelegatorWithName($mockSl, '' , '', $callback);
+        $service = $sut->createDelegatorWithName($mockSl, '', '', $callback);
 
         $this->assertInstanceOf('Common\Filter\DecompressUploadToTmp', $service);
         $this->assertEquals('/tmp/', $service->getTempRootDir());

@@ -82,4 +82,3 @@ class MultiResponseHelperTest extends TestCase
         $this->assertFalse($data);
     }
 }
- 

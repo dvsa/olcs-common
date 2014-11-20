@@ -28,4 +28,3 @@ class ResolverTest extends TestCase
         $this->assertNull($sut->validatePlugin(null));
     }
 }
- 

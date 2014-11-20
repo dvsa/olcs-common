@@ -57,4 +57,3 @@ class AbstractFactoryTest extends TestCase
         $this->assertTrue($passed, 'Expected exception not thrown');
     }
 }
- 

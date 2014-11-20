@@ -9,6 +9,10 @@ use Zend\ServiceManager\Exception\InvalidServiceNameException;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Uri\Http;
 
+/**
+ * Class AbstractFactory
+ * @package Common\Service\Api
+ */
 class AbstractFactory implements AbstractFactoryInterface
 {
     /**
@@ -30,6 +34,7 @@ class AbstractFactory implements AbstractFactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @param $name
      * @param $requestedName
+     * @throws \Zend\ServiceManager\Exception\InvalidServiceNameException
      * @return mixed
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -44,7 +49,7 @@ class AbstractFactory implements AbstractFactoryInterface
         list($endpoint, $uri) = $api;
 
         $config = $serviceLocator->getServiceLocator()->get('Config');
-        if(!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
+        if (!isset($config['service_api_mapping']['endpoints'][$endpoint])) {
             throw new InvalidServiceNameException('No endpoint defined for: ' . $endpoint);
         }
 

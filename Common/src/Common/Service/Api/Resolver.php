@@ -5,6 +5,10 @@ namespace Common\Service\Api;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
 
+/**
+ * Class Resolver
+ * @package Common\Service\Api
+ */
 class Resolver extends AbstractPluginManager
 {
     /**

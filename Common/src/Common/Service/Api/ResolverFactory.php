@@ -7,10 +7,18 @@ use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class ResolverFactory
+ * @package Common\Service\Api
+ */
 class ResolverFactory extends AbstractPluginManagerFactory
 {
     const PLUGIN_MANAGER_CLASS = 'Common\Service\Api\Resolver';
 
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return AbstractPluginManager
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $service = parent::createService($serviceLocator);
@@ -24,5 +32,4 @@ class ResolverFactory extends AbstractPluginManagerFactory
 
         return $service;
     }
-
 }
