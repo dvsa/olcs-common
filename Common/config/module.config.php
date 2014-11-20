@@ -187,7 +187,8 @@ return array(
     ],
     'data_services' => [
         'factories' => [
-            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday'
+            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
+            'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
         ]
     ],
     'tables' => array(
