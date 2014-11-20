@@ -137,8 +137,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         // If this traffic area has no Scottish Rules flag, set it to false.
-        if (!isset($data['licence']['trafficArea']['isScottishRules'])) {
-            $data['licence']['trafficArea']['isScottishRules'] = false;
+        if (!isset($data['licence']['trafficArea']['isScotland'])) {
+            $data['licence']['trafficArea']['isScotland'] = false;
         }
 
         // In some cases, totAuthSmallVhl etc. can be set NULL, and we
@@ -163,7 +163,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             $formHelper->remove($form, 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmation');
         }
 
-        if ($data['licence']['trafficArea']['isScottishRules']) {
+        if ($data['licence']['trafficArea']['isScotland']) {
             $formHelper->remove($form, 'smallVehiclesIntention->psvOperateSmallVhl');
             $formHelper->remove($form, 'smallVehiclesIntention->psvSmallVhlNotes');
         }

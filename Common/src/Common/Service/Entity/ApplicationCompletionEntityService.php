@@ -459,8 +459,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'psvOnlyLimousinesConfirmation' => $this->isYnValue($applicationData['psvOnlyLimousinesConfirmation'])
         );
 
-        if (!isset($applicationData['licence']['trafficArea']['isScottishRules'])) {
-            $applicationData['licence']['trafficArea']['isScottishRules'] = false;
+        if (!isset($applicationData['licence']['trafficArea']['isScotland'])) {
+            $applicationData['licence']['trafficArea']['isScotland'] = false;
         }
 
         if (empty($applicationData['totAuthSmallVehicles'])) {
@@ -475,7 +475,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 unset($requiredVars['psvOnlyLimousinesConfirmation']);
             }
 
-            if ($applicationData['licence']['trafficArea']['isScottishRules']) {
+            if ($applicationData['licence']['trafficArea']['isScotland']) {
                 unset($requiredVars['psvOperateSmallVhl']);
                 unset($requiredVars['psvSmallVhlNotes']);
             }

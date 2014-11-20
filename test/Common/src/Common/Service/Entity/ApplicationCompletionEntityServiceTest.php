@@ -1618,7 +1618,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'psvOnlyLimousinesConfirmation' => null,
                     'licence' => array(
                         'trafficArea' => array(
-                            'isScottishRules' => 1
+                            'isScotland' => 1
                         )
                     )
 
@@ -1769,7 +1769,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'psvOnlyLimousinesConfirmation' => 'N',
                     'licence' => array(
                         'trafficArea' => array(
-                            'isScottishRules' => 1
+                            'isScotland' => 1
                         )
                     )
 

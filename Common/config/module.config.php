@@ -114,7 +114,8 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon'
+            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
         )
     ),
     'publications' => array(
@@ -192,6 +193,12 @@ return array(
         'aliases' => [
             'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
             'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
+        ]
+    ],
+    'data_services' => [
+        'factories' => [
+            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
+            'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
         ]
     ],
     'tables' => array(

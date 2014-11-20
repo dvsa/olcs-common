@@ -41,19 +41,27 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
      */
     public function providerIsValid()
     {
-        return array(
+        return [
             // psvSmallVehicles isn't set - comes back true
-            array(0, array(), true),
-            // psvSmallVehicles = Y, confirmation=blank - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
-            // psvSmallVehicles = Y, confirmation=1 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'), true),
-            // psvSmallVehicles = Y, confirmation=0 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
-            // psvSmallVehicles = N, confirmation=0 - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false),
-            // psvSmallVehicles = N, confirmation=blank - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false)
-        );
+            [0, [], true],
+
+            // psvSmallVehicles = Y, confirmation = blank - comes back false
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], false],
+
+            // psvSmallVehicles = Y, confirmation = N - comes back false
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], false],
+
+            // psvSmallVehicles = Y, confirmation = 0 - comes back false
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], false],
+
+            // psvSmallVehicles = Y, confirmation = Y - comes back true
+            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
+
+            // psvSmallVehicles = N, confirmation = N - comes back true
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], true],
+
+            // psvSmallVehicles = N, confirmation = blank - comes back true
+            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], true]
+        ];
     }
 }
