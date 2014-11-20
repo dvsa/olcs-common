@@ -31,6 +31,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
      */
     public function testIsValid($value, $context, $expected)
     {
+        // validator actually ignores $value and just uses $context
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
 
@@ -42,31 +43,50 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
     public function providerIsValid()
     {
         return [
-            // psvSmallVehicles isn't set - comes back true
+            // psvSmallVehicles and psvSmallVhlScotland aren't set - comes back true
             [0, [], true],
 
-            // if user answers 'yes' radio control, textarea is mandatory and checkbox is optional
+            /**
+             * if user answers 'yes' in radio control, textarea is mandatory
+             * and checkbox is optional
+             */
             // psvSmallVehicles = Y, confirmation = blank - comes back true
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], true],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], true],
 
             // psvSmallVehicles = Y, confirmation = N - comes back true
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], true],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], true],
 
             // psvSmallVehicles = Y, confirmation = 0 - comes back true
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], true],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], true],
 
             // psvSmallVehicles = Y, confirmation = Y - comes back true
-            [0, ['psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
 
-            // if user answers 'no' in radio control), textarea is optional and checkbox is mandatory
+            /**
+             * if user answers 'no' in radio control, textarea is optional and
+             * checkbox is mandatory
+             */
             // psvSmallVehicles = N, confirmation = N - comes back false
-            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], false],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], false],
 
             // psvSmallVehicles = N, confirmation = blank - comes back false
-            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], false],
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], false],
 
             // psvSmallVehicles = N, confirmation = Y - comes back true
-            [0, ['psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'], true]
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'], true],
+
+            /**
+             * for Scotland, radio control is not shown so checkbox is always mandatory
+             * when psvSmallVhlScotland is present
+             */
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing, confirmation = N - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => 'N'], false],
+
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing,  confirmation = blank - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => ''], false],
+
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing,  confirmation = Y - comes back true
+            [0, ['psvOperateSmallVhl' => 'txt', 'psvSmallVhlConfirmation' => 'Y'], true],
         ];
     }
 }
