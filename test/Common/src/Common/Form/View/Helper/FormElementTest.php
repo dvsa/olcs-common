@@ -10,6 +10,7 @@ namespace CommonTest\Form\View\Helper;
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
 use Zend\Form\View\Helper;
+use Mockery as m;
 
 /**
  * FormElement Test
@@ -142,13 +143,54 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     public function testRenderForHtmlTranslatedElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
-        $this->element->setValue('<div></div>');
+        $this->element->setValue('some-translation-key');
 
-        $viewHelper = $this->prepareViewHelper();
+        $translations = ['some-translation-key' => 'actual translated string'];
+        $viewHelper = $this->prepareViewHelper($translations);
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div><\/div>$/');
+        $this->expectOutputRegex('/^actual translated string$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForHtmlTranslatedElementWithTokens()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+        $this->element->setValue('<div>%s and then %s</div>');
+        $this->element->setTokens(['foo-key', 'bar-key']);
+
+        $translations = [
+            'foo-key' => 'foo string',
+            'bar-key' => 'bar string'
+        ];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div>foo string and then bar string<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForHtmlTranslatedElementWithTokensViaOptions()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+        $this->element->setValue('<div>%s and then %s</div>');
+        $this->element->setOptions(['tokens' => ['foo-key', 'bar-key']]);
+
+        $translations = [
+            'foo-key' => 'foo string',
+            'bar-key' => 'bar string'
+        ];
+        $viewHelper = $this->prepareViewHelper($translations);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div>foo string and then bar string<\/div>$/');
     }
 
     /**
@@ -176,9 +218,13 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputRegex('/^<table><\/table>$/');
     }
 
-    private function prepareViewHelper()
+    private function prepareViewHelper($translateMap = null)
     {
-        $translator = new \Zend\I18n\Translator\Translator();
+        $translator = new \CommonTest\Util\DummyTranslator();
+        if (!is_null($translateMap)) {
+            $translator->setMap($translateMap);
+        }
+
         $translateHelper = new \Zend\I18n\View\Helper\Translate();
         $translateHelper->setTranslator($translator);
 

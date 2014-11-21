@@ -3,6 +3,8 @@
 namespace Common\Service\Data;
 
 use Common\Util\RestClient;
+use Common\Util\DateTimeProcessor as DateTimeProcessor;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class Sla
@@ -12,6 +14,11 @@ use Common\Util\RestClient;
 class Sla extends AbstractData
 {
     protected $serviceName = 'Sla';
+
+    /**
+     * @var \Common\Util\DateTimeProcessor
+     */
+    protected $dateTimeProcessor;
 
     protected $context = array();
 
@@ -27,7 +34,7 @@ class Sla extends AbstractData
 
             if ($rule['field'] == $name) {
 
-                if (!array_key_exists($rule['compareTo'], $context)) {
+                if (!array_key_exists($rule['compareTo'], $context) || empty($context[$rule['compareTo']])) {
                     return null;
                 }
 
@@ -38,9 +45,14 @@ class Sla extends AbstractData
 
                 if ($dateToCompare >= $effectiveFrom && (false === $effectiveTo || $dateToCompare <= $effectiveTo)) {
 
-                    $daysFinal = $this->dateAddDays($context[$rule['compareTo']], $rule['days']);
+                    $outputDate = $this->getTimeDateProcessor()->calculateDate(
+                        $context[$rule['compareTo']],
+                        $rule['days'],
+                        (bool)$rule['weekend'],
+                        (bool)$rule['publicHoliday']
+                    );
 
-                    return $daysFinal;
+                    return $outputDate;
                 }
             }
         }
@@ -88,6 +100,28 @@ class Sla extends AbstractData
     }
 
     /**
+     * Setter for DateTimeProcessor.
+     *
+     * @param DateTimeProcessor $dateTimeProcessor
+     * @return \Common\Service\Data\Sla
+     */
+    public function setTimeDateProcessor(DateTimeProcessor $dateTimeProcessor)
+    {
+        $this->dateTimeProcessor = $dateTimeProcessor;
+        return $this;
+    }
+
+    /**
+     * Getter for DateTimeProcessor.
+     *
+     * @return \Common\Util\DateTimeProcessor
+     */
+    public function getTimeDateProcessor()
+    {
+        return $this->dateTimeProcessor;
+    }
+
+    /**
      * Adds days to a date.
      *
      * @param string $input
@@ -109,5 +143,23 @@ class Sla extends AbstractData
         $date->add(\DateInterval::createFromDateString($dateAddString));
 
         return $date->format('Y-m-d');
+    }
+
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @deprecated
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        parent::createService($serviceLocator);
+
+        $this->setTimeDateProcessor(
+            $serviceLocator->get('Common\Util\DateTimeProcessor')
+        );
+
+        return $this;
     }
 }

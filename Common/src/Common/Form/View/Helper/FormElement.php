@@ -77,6 +77,14 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof HtmlTranslated) {
+            $tokens = $element->getTokens();
+            $translated = [];
+            if (is_array($tokens) && count($tokens)) {
+                foreach ($tokens as $token) {
+                    $translated[] = $this->getView()->translate($token);
+                }
+                return vsprintf($element->getValue(), $translated);
+            }
             return $this->getView()->translate($element->getValue());
         }
 

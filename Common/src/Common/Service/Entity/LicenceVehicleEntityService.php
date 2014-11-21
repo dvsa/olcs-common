@@ -106,6 +106,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
                     'id',
                     'version',
                     'vrm',
+                    'makeModel',
                     'isNovelty'
                 ),
                 'children' => array(

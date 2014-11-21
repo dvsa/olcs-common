@@ -1,10 +1,6 @@
 <?php
 
 return array(
-    'apsts_granted' => 'Granted',
-    'licence-valid-confirmation' => 'The licence is now valid',
-    'apsts_valid' => 'Valid',
-    'lsts_not_submitted' => 'Not submitted',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -340,7 +336,6 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
-    'application_vehicle-safety_undertakings.nineOrMore' => 'Vehicles with nine or more passengers',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
@@ -416,6 +411,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small-edit' => 'Edit small vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.empty_message' => 'Please provide us with the vehicle
         registration number and size of your vehicles.',
+    'application_vehicle-safety_vehicle-psv-small.table.make' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-small.table.novelty' => 'Limousine or novelty vehicle',
     'application_vehicle-safety_vehicle-psv-small.table.removed' => 'Removed',
     'application_vehicle-safety_vehicle-psv-small.table.specified' => 'Specified',
@@ -423,6 +419,7 @@ return array(
     'application_vehicle-safety_vehicle-psv-small.table.vrm' => 'Vehicle registration No.',
     'application_vehicle-safety_vehicle-psv-sub-action.data.isNovelty' => 'Is this vehicle a limousine or novelty type
         vehicle?',
+    'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration No.',
     'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
         vehicles?',
@@ -481,8 +478,10 @@ return array(
     'applications' => 'Applications',
     'apply-changes' => 'Apply changes',
     'apsts_consideration' => 'Under Consideration',
+    'apsts_granted' => 'Granted',
     'apsts_new' => 'Not Yet Submitted',
     'apsts_not_submitted' => 'Not submitted',
+    'apsts_valid' => 'Valid',
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',
@@ -834,6 +833,7 @@ return array(
     'licence-start-date' => 'Licence start date',
     'licence-status' => 'Licence status',
     'licence-type' => 'Licence type',
+    'licence-valid-confirmation' => 'The licence is now valid',
     'licence.overview' => 'Overview',
     'licence.overview.details' => 'Overview',
     'licence.overview.licence-no' => 'Licence No.',
@@ -873,6 +873,7 @@ return array(
     'lsts_consideration' => 'Under consideration',
     'lsts_curtailed' => 'Curtailed',
     'lsts_granted' => 'Granted',
+    'lsts_not_submitted' => 'Not submitted',
     'lsts_ntu' => 'Not Taken Up',
     'lsts_refused' => 'Refused',
     'lsts_revoked' => 'Revoked',

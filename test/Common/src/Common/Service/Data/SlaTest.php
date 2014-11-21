@@ -24,6 +24,9 @@ class SlaTest extends \PHPUnit_Framework_TestCase
     {
         $field = 'desisionLetterSentDate';
 
+        $tdp = $this->getMock('Common\Util\DateTimeProcessor', ['calculateDate']);
+        $tdp->expects($this->any())->method('calculateDate')->will($this->returnValue($date));
+
         $busRules = [
             [
                 'field' => $field,
@@ -31,7 +34,9 @@ class SlaTest extends \PHPUnit_Framework_TestCase
                 'days' => '50',
                 'category' => 'pi',
                 'effectiveFrom' => '2010-10-10',
-                'effectiveTo' => '2014-10-09'
+                'effectiveTo' => '2014-10-09',
+                'weekend' => false,
+                'publicHoliday' => false
             ],
             [
                 'field' => $field,
@@ -40,10 +45,13 @@ class SlaTest extends \PHPUnit_Framework_TestCase
                 'category' => 'pi',
                 'effectiveFrom' => '2014-10-10',
                 'effectiveTo' => null,
+                'weekend' => false,
+                'publicHoliday' => false
             ]
         ];
 
         $sut = new Sla();
+        $sut->setTimeDateProcessor($tdp);
         $sut->setData('pi', $busRules);
 
         $passed = !$exception;

@@ -258,7 +258,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea' => array(
                         'properties' => array(
                             'id',
-                            'isScottishRules'
+                            'isScotland'
                         )
                     )
                 )
@@ -411,7 +411,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea' => array(
                         'properties' => array(
                             'id',
-                            'isScottishRules'
+                            'isScotland'
                         )
                     )
                 )

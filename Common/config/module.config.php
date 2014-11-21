@@ -65,9 +65,11 @@ return array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
+            'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
             'Document' => '\Common\Service\Document\Document',
+            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -80,9 +82,8 @@ return array(
             },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
-            'ContentStore' => 'Dvsa\Jackrabbit\Service\ClientFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
-            'ServiceApiResolver' => 'Common\Service\Api\ServiceApiResolver',
+            'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
             'postcode' => function ($serviceManager) {
@@ -111,7 +112,8 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon'
+            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
         )
     ),
     'file_uploader' => array(
@@ -177,11 +179,25 @@ return array(
     'filters' => [
         'invokables' => [
             'Common\Filter\DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
+            'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
+            'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
+            'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
+        ],
+        'delegators' => [
+            'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
+            'Common\Filter\DecompressToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory']
         ],
         'aliases' => [
             'DateSelectNullifier' => 'Common\Filter\DateSelectNullifier',
-            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier'
+            'DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
+            'DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
+            'DecompressToTmp' => 'Common\Filter\DecompressToTmp'
+        ]
+    ],
+    'data_services' => [
+        'factories' => [
+            'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
+            'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
         ]
     ],
     'tables' => array(
@@ -196,25 +212,16 @@ return array(
     'form' => array(
         'elements' => include __DIR__ . '/../src/Common/Form/Elements/getElements.php'
     ),
-    //-------- Start service API mappings -----------------
+    'rest_services' => [
+        'abstract_factories' => [
+            'Common\Service\Api\AbstractFactory'
+        ]
+    ],
     'service_api_mapping' => array(
-        'apis' => array(
-            'payments' => array(
-                'Vosa\Payment\Token' => 'token',
-                'Vosa\Payment\Db' => 'paymentdb',
-                'Vosa\Payment\Card' => 'cardpayment'
-            ),
-            'document' => array(
-                'Olcs\Template' => 'template',
-                'Olcs\Document\GenerateRtf' => 'document/generate/rtf',
-                'Olcs\Document\Retrieve' => 'document/retrieve/'
-            )
-        ),
         'endpoints' => array(
             'payments' => 'http://olcspayment.dev/api/',
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
     )
-//-------- End service API mappings -----------------
 );

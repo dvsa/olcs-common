@@ -20,15 +20,13 @@ class VehiclesDeclarations
 
     /**
      * @Form\Name("smallVehiclesIntention")
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings-smallVehiclesUndertakings"
-     * })
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsSmallVehiclesIntention")
      */
     public $smallVehiclesIntention = null;
 
     /**
      * @Form\Name("nineOrMore")
+     * @Form\Options({"label":"application_vehicle-safety_undertakings-nineOrMore"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsNineOrMore")
      */
     public $nineOrMore = null;

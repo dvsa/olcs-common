@@ -28,7 +28,6 @@ class VehiclesDeclarationsSmallVehiclesIntention
 
     /**
      * @Form\Attributes({"id":"","class":"long"})
-     * @Form\AllowEmpty(false)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title",
@@ -42,6 +41,17 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Type("Textarea")
      */
     public $psvSmallVhlNotes = null;
+
+    /**
+     * @Form\Attributes({"value":"<legend>%s</legend>"})
+     * @Form\Options({
+     *     "tokens": {
+     *        0: "application_vehicle-safety_undertakings-smallVehiclesUndertakings"
+     *     }
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $dummyLegend = null;
 
     /**
      * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
