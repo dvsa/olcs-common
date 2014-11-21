@@ -315,6 +315,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     private function alterForm($form, $data)
     {
+        $this->alterFormForLva($form);
+
         $orgType = $data['type']['id'];
 
         $fieldset = $form->get('data');

@@ -40,6 +40,8 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         $form = $this->getLicenceHistoryForm()->setData($data);
 
+        $this->alterFormForLva($form);
+
         if ($request->isPost()) {
 
             $crudAction = $this->getCrudAction($data);

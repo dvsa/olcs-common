@@ -674,6 +674,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     protected function alterForm(Form $form)
     {
+        $this->alterFormForLva($form);
+
         $tableData = $this->getTableData();
 
         // Make the same form alterations that are required for the summary section

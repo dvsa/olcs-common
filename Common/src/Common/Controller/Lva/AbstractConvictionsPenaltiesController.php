@@ -30,6 +30,8 @@ abstract class AbstractConvictionsPenaltiesController extends AbstractController
 
         $form = $this->getConvictionsPenaltiesForm()->setData($data);
 
+        $this->alterFormForLva($form);
+
         if ($request->isPost()) {
 
             $crudAction = $this->getCrudAction(array($data['data']['table']));
