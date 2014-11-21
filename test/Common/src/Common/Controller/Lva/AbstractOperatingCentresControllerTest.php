@@ -114,30 +114,16 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->assertEquals('operating_centres', $this->view);
     }
 
-    public function testPostEditActionDoesNotSaveNullValues()
+    public function testBasicPostEditAction()
     {
         $form = $this->createMockForm('Lva\OperatingCentre');
 
         $data = [
             'applicationOperatingCentre' => [
-                'id' => '1',
+                'id' => '1'
             ],
             'operatingCentre' => [
-                'id' => '16',
-                'addresses' => [
-                    'address' => [
-                        // we expect all these to be filtered out
-                        'addressLine1' => null,
-                        'addressLine2' => null,
-                        'addressLine3' => null,
-                        'addressLine4' => null,
-                        'town' => null,
-                        'postcode' => null,
-                        'id' => null,
-                        'version' => null,
-                        'countryCode' => null
-                    ]
-                ]
+                'id' => '16'
             ]
         ];
 
@@ -177,7 +163,9 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
             ->shouldReceive('getLicenceId')
             ->andReturn(7)
             ->shouldReceive('getIdentifier')
-            ->andReturn(9);
+            ->andReturn(9)
+            ->shouldReceive('handlePostSave')
+            ->andReturn('saved');
 
         $this->mockEntity('Licence', 'getTrafficArea')
             ->with(7)
@@ -194,12 +182,18 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->mockEntity('OperatingCentre', 'save')
             ->with(
                 [
-                    'id' => '16'
+                    'id' => '16',
+                    'addresses' => []
                 ]
             );
 
-        $this->setPost([]);
+        $this->mockEntity('StubOperatingCentre', 'save');
 
-        $this->sut->editAction();
+        $this->setPost();
+
+        $this->assertEquals(
+            'saved',
+            $this->sut->editAction()
+        );
     }
 }
