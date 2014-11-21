@@ -413,6 +413,25 @@ class ApplicationEntityService extends AbstractLvaEntityService
     );
 
     /**
+     * Task data bundle
+     *
+     * @var array
+     */
+    private $taskDataBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
+                )
+            )
+        )
+    );
+
+    /**
      * Safety Data bundle
      *
      * @var array
@@ -687,6 +706,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForProcessing($id)
     {
         return $this->get($id, $this->processingDataBundle);
+    }
+
+    /**
+     * Get data for task stuff
+     * @param int $id
+     * @return array
+     */
+    public function getDataForTasks($id)
+    {
+        return $this->get($id, $this->taskDataBundle);
     }
 
     /**
