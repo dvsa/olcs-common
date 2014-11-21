@@ -148,7 +148,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
-                $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+                $this->disableConditionalValidation($form);
             }
 
             if ($form->isValid()) {
@@ -836,6 +836,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
         );
     }
 
+    /**
+     * Callback to populate files
+     */
     public function getDocuments()
     {
         $lvaEntity = $this->getLvaEntity();
@@ -863,5 +866,17 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 return $d['operatingCentre']['id'] === $operatingCentreId;
             }
         );
+    }
+
+    /**
+     * By default our conditional validation is the standard
+     * mechanism to not validate empty fields. However, some LVAs
+     * want to extend this behaviour
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function disableConditionalValidation(Form $form)
+    {
+        $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
     }
 }

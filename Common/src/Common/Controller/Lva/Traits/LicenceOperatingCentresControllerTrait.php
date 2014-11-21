@@ -94,6 +94,11 @@ trait LicenceOperatingCentresControllerTrait
         return $form;
     }
 
+    /**
+     * Common form alterations
+     *
+     * @param \Zend\Form\Form $form
+     */
     protected function commonAlterForm(Form $form)
     {
         $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
@@ -115,6 +120,9 @@ trait LicenceOperatingCentresControllerTrait
         return $form;
     }
 
+    /**
+     * Override add action to show variation warning
+     */
     public function addAction()
     {
         $view = new ViewModel(
@@ -127,6 +135,9 @@ trait LicenceOperatingCentresControllerTrait
         return $this->render($view);
     }
 
+    /**
+     * Get extra document properties to save
+     */
     protected function getDocumentProperties()
     {
         return array(
@@ -134,11 +145,46 @@ trait LicenceOperatingCentresControllerTrait
         );
     }
 
+    /**
+     * Format crud data for save
+     *
+     * @param array $data
+     */
     protected function formatCrudDataForSave($data)
     {
         // @see https://jira.i-env.net/browse/OLCS-5555
         unset($data['operatingCentre']['addresses']);
 
         return $data;
+    }
+
+    /**
+     * Disable conditional validation
+     *
+     * For licences, we don't want to validate any auth
+     * totals if they haven't been altered
+     */
+    protected function disableConditionalValidation(Form $form)
+    {
+        $data = $this->getRequest()->getPost();
+
+        $totals = [
+            'LargeVehicles',
+            'MediumVehicles',
+            'SmallVehicles',
+            'Vehicles',
+            'Trailers'
+        ];
+        $totals = array_filter(
+            $totals,
+            function ($v) use ($data) {
+                return (isset($data['data']['totAuth' . $v]));
+            }
+        );
+
+        // by now we've got a filtered list of totals submitted in
+        // the form. We need to fetch our entity details and
+        // as long as all relevant totals match, disable their
+        // validation
     }
 }
