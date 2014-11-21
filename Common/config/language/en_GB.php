@@ -1398,4 +1398,10 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
+    'internal-operator-profile-name' => 'Operator name',
+    'internal-operator-profile-nature-of-business' => 'Nature of Business',
+    'internal-operator-profile-first-name' => 'First name',
+    'internal-operator-profile-last-name' => 'Last name',
+    'internal-operator-profile-business-type' => 'Business type',
+    'internal-operator-profile-business-type-refresh' => 'Refresh'
 );
