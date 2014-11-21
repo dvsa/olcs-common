@@ -22,7 +22,6 @@ return array(
             'title' => $prefix . 'columnLicNo',
             'name' => 'licNo',
             'type' => 'Action',
-            'class' => 'action--tertiary',
             'action' => 'edit'
         ),
         array(

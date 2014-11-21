@@ -12,11 +12,9 @@ use Zend\Form\Annotation as Form;
  */
 class FinancialHistory
 {
+
     /**
      * @Form\Name("data")
-     * @Form\Options({
-     *     "hint": "application_previous-history_financial-history.finance.hint"
-     * })
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialHistoryData")
      */
     public $data = null;

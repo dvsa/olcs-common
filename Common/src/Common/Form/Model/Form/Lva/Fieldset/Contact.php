@@ -29,7 +29,7 @@ class Contact
     public $phoneValidator = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.business-phone"
      * })
@@ -65,7 +65,7 @@ class Contact
     public $phoneBusinessVersion = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({
      *     "label":
      * "application_your-business_business-type.contact-details.home-phone"
@@ -102,7 +102,7 @@ class Contact
     public $phoneHomeVersion = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({
      *     "label":
      * "application_your-business_business-type.contact-details.mobile-phone"
@@ -139,7 +139,7 @@ class Contact
     public $phoneMobileVersion = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.fax-phone"
      * })
@@ -175,7 +175,7 @@ class Contact
     public $phoneFaxVersion = null;
 
     /**
-     * @Form\Attributes({"class":"long"})
+     * @Form\Attributes({"class":"medium"})
      * @Form\Options({"label":"application_your-business_business-type.contact-details.email"})
      * @Form\Required(false)
      * @Form\Type("Text")
