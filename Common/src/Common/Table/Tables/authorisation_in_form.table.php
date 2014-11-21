@@ -38,16 +38,6 @@ return array(
             'name' => 'noOfTrailersRequired'
         ),
         array(
-            'title' => 'application_operating-centres_authorisation.table.permission',
-            'name' => 'permission',
-            'formatter' => 'YesNo'
-        ),
-        array(
-            'title' => 'application_operating-centres_authorisation.table.advertised',
-            'name' => 'adPlaced',
-            'formatter' => 'YesNo'
-        ),
-        array(
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )

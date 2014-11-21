@@ -43,6 +43,17 @@ class VehiclesDeclarationsSmallVehiclesIntention
     public $psvSmallVhlNotes = null;
 
     /**
+     * @Form\Attributes({"value":"<legend>%s</legend>"})
+     * @Form\Options({
+     *     "tokens": {
+     *        0: "application_vehicle-safety_undertakings-smallVehiclesUndertakings"
+     *     }
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $dummyLegend = null;
+
+    /**
      * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title",

@@ -25,7 +25,7 @@ class ResponseHelper
 
     public $method;
 
-    private $responseData;
+    protected $responseData;
 
     private $params;
 
@@ -105,7 +105,10 @@ class ResponseHelper
                 return false;
             case 'POST':
 
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_201) {
+                if (
+                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
+                    $this->response->getStatusCode() === Response::STATUS_CODE_202
+                ) {
 
                     return $this->responseData['Data'];
                 }

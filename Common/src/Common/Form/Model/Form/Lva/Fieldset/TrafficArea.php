@@ -34,7 +34,7 @@ class TrafficArea
     public $trafficAreaInfoLabelExists = null;
 
     /**
-     * @Form\Attributes({"value":"<b>%NAME%</b>"})
+     * @Form\Attributes({"value":"<h3>%NAME%</h3>"})
      * @Form\Type("\Common\Form\Elements\Types\Html")
      */
     public $trafficAreaInfoNameExists = null;

@@ -11,7 +11,7 @@ use Zend\Form\Annotation as Form;
 class SafetyProvidersContactDetails
 {
     /**
-     * @Form\Attributes({"class":"","id":""})
+     * @Form\Attributes({"class":"medium","id":""})
      * @Form\Options({"label":"application_vehicle-safety_safety-sub-action.data.fao"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
