@@ -15,7 +15,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
-        "doctrine/doctrine-orm-module": "0.*"
+        "doctrine/doctrine-orm-module": "0.*",
+        "symfony/Filesystem": "~2.6.0-dev"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",
@@ -23,7 +24,8 @@
         "sebastian/diff": "dev-master",
         "mockery/mockery": "dev-master",
         "phpunit/phpcov": "dev-master",
-        "dvsa/jackrabbit": "v1.1.0"
+        "dvsa/jackrabbit": "v1.1.0",
+        "mikey179/vfsStream": "~1.4.0"
     },
     "autoload": {
         "psr-0": {
