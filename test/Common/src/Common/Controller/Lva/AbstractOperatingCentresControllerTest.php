@@ -113,4 +113,93 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
 
         $this->assertEquals('operating_centres', $this->view);
     }
+
+    public function testPostEditActionDoesNotSaveNullValues()
+    {
+        $form = $this->createMockForm('Lva\OperatingCentre');
+
+        $data = [
+            'applicationOperatingCentre' => [
+                'id' => '1',
+            ],
+            'operatingCentre' => [
+                'id' => '16',
+                'addresses' => [
+                    'address' => [
+                        // we expect all these to be filtered out
+                        'addressLine1' => null,
+                        'addressLine2' => null,
+                        'addressLine3' => null,
+                        'addressLine4' => null,
+                        'town' => null,
+                        'postcode' => null,
+                        'id' => null,
+                        'version' => null,
+                        'countryCode' => null
+                    ]
+                ]
+            ]
+        ];
+
+        $form->shouldReceive('setData')
+            ->with([])
+            ->andReturn($form)
+            ->shouldReceive('has')
+            ->with('advertisements')
+            ->andReturn(false)
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn($data)
+            ->shouldReceive(
+                // yikes. We don't care about these args in this particular test...
+                'getInputFilter->get->get->setRequired->getValidatorChain->attach'
+            );
+
+        $this->shouldRemoveAddAnother($form);
+
+        $this->getMockFormHelper()
+            ->shouldReceive('processAddressLookupForm')
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => 'ltyp_sn'
+                    ],
+                    'niFlag' => 'N'
+                ]
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(4321)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(7)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(9);
+
+        $this->mockEntity('Licence', 'getTrafficArea')
+            ->with(7)
+            ->andReturn(['id' => 'B']);
+
+        $this->mockEntity('StubOperatingCentre', 'getOperatingCentresCount')
+            ->with(9)
+            ->andReturn(
+                [
+                    'Count' => 0
+                ]
+            );
+
+        $this->mockEntity('OperatingCentre', 'save')
+            ->with(
+                [
+                    'id' => '16'
+                ]
+            );
+
+        $this->setPost([]);
+
+        $this->sut->editAction();
+    }
 }

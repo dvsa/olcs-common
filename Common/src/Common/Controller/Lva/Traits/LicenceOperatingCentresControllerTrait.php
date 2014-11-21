@@ -1,7 +1,9 @@
 <?php
 
 /**
+ * Shared logic between Licence Operating Centres controllers
  *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Traits;
 
@@ -10,11 +12,14 @@ use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
 
 /**
+ * Shared logic between Licence Operating Centres controllers
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 trait LicenceOperatingCentresControllerTrait
 {
     /**
-     * Attach a cant increase validator
+     * Attach a can't increase validator
      *
      * @param Input $input
      * @param string $messageSuffix
@@ -127,5 +132,13 @@ trait LicenceOperatingCentresControllerTrait
         return array(
             'licence' => $this->getLicenceId()
         );
+    }
+
+    protected function formatCrudDataForSave($data)
+    {
+        // @see https://jira.i-env.net/browse/OLCS-5555
+        unset($data['operatingCentre']['addresses']);
+
+        return $data;
     }
 }
