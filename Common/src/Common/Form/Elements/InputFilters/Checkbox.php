@@ -10,13 +10,14 @@ namespace Common\Form\Elements\InputFilters;
 use Zend\Form\Element as ZendElement;
 use Zend\Validator as ZendValidator;
 use Zend\InputFilter\InputProviderInterface as InputProviderInterface;
+use Zend\Form\LabelAwareInterface;
 
 /**
  * Checkbox element
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
+class Checkbox extends ZendElement\Checkbox implements InputProviderInterface, LabelAwareInterface
 {
     public function __construct($name = null, $options = array())
     {
