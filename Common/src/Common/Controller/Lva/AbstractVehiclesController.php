@@ -372,7 +372,9 @@ abstract class AbstractVehiclesController extends AbstractController
     protected function setDefaultDates($form, $currentDate)
     {
         $fieldset = $form->get('licence-vehicle');
-        if ($fieldset->has('receivedDate')) { // receivedDate gets removed in some contexts
+
+         // receivedDate gets removed in some contexts
+        if ($fieldset->has('receivedDate')) {
             // default 'Received date' to the current date if it is not set
             $receivedDate = $fieldset->get('receivedDate')->getValue();
             $receivedDate = trim($receivedDate, '-'); // date element returns '--' when empty!
