@@ -167,24 +167,34 @@ trait LicenceOperatingCentresControllerTrait
     protected function disableConditionalValidation(Form $form)
     {
         $data = $this->getRequest()->getPost();
+        $data = isset($data['data']) ? $data['data'] : [];
 
-        $totals = [
-            'LargeVehicles',
-            'MediumVehicles',
-            'SmallVehicles',
-            'Vehicles',
-            'Trailers'
+        // allow for *all* totals to have been submitted; in reality
+        // the values will be a subset of this dependent on goods/psv
+        $submitted = [
+            'totAuthLargeVehicles',
+            'totAuthMediumVehicles',
+            'totAuthSmallVehicles',
+            'totAuthVehicles',
+            'totAuthTrailers'
         ];
-        $totals = array_filter(
-            $totals,
-            function ($v) use ($data) {
-                return (isset($data['data']['totAuth' . $v]));
-            }
-        );
 
-        // by now we've got a filtered list of totals submitted in
-        // the form. We need to fetch our entity details and
+        // we need to fetch our entity details and
         // as long as all relevant totals match, disable their
         // validation
+
+        $totals = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
+
+        $formHelper = $this->getServiceLocator()
+            ->get('Helper\Form');
+        $filter = $form->getInputFilter()->get('data');
+
+        foreach ($submitted as $property) {
+            if (isset($data[$property]) && (int)$data[$property] === (int)$totals[$property]) {
+                $formHelper->disableValidation(
+                    $filter->get($property)
+                );
+            }
+        }
     }
 }
