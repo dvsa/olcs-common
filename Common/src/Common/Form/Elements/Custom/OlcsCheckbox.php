@@ -17,19 +17,9 @@ use Zend\Form\LabelAwareInterface;
  *
  * @author Someone <someone@valtech.co.uk>
  */
-class OlcsCheckbox extends ZendElement\Checkbox implements InputProviderInterface, LabelAwareInterface
+class OlcsCheckbox extends ZendElement\Checkbox implements LabelAwareInterface
 {
     public function __construct($name = null, $options = array())
-    {
-        parent::__construct($name, $options);
-    }
-
-    /**
-     * Provide default input rules for checkbox element.
-     *
-     * @return array
-     */
-    public function getInputSpecification()
     {
         $labelPosition = $this->getLabelOption('label_position');
         if (empty($labelPosition)) {
@@ -41,13 +31,7 @@ class OlcsCheckbox extends ZendElement\Checkbox implements InputProviderInterfac
             $this->setLabelOption('always_wrap', true);
         }
 
-        return [
-            'name' => $this->getName(),
-            'required' => $this->getOption('required'),
-            'validators' => [
-                $this->getValidator()
-            ]
-        ];
-
+        parent::__construct($name, $options);
     }
+
 }

@@ -197,7 +197,6 @@ class FormRow extends ZendFormRow
                     $labelClose = '';
                     $label = $labelHelper($element);
                 } else {
-
                     $labelOpen  = $labelHelper->openTag($labelAttributes);
                     $labelClose = $labelHelper->closeTag();
                 }
@@ -215,10 +214,10 @@ class FormRow extends ZendFormRow
 
                 $labelPosition = $this->labelPosition;
                 if ($element instanceof LabelAwareInterface && $element->getLabelOption('label_position')) {
-                    $labelPosition = $element->getLabelOption('label_position');
+                    $this->labelPosition = $element->getLabelOption('label_position');
                 }
 
-                switch ($labelPosition) {
+                switch ($this->labelPosition) {
                     case self::LABEL_PREPEND:
                         $markup = $labelOpen . $label . $elementString . $labelClose;
                         break;
