@@ -3,7 +3,7 @@
 /**
  * Test Checkbox
  *
- * @author Shaun Lizzio Peshkov <shaun.lizzio@valtech.co.uk>
+ * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
