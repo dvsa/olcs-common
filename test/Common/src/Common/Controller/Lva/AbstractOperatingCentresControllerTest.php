@@ -114,6 +114,95 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->assertEquals('operating_centres', $this->view);
     }
 
+    public function testPostIndexActionWithCrudAction()
+    {
+        $form = $this->createMockForm('Lva\OperatingCentres');
+
+        $this->setPost(
+            [
+                'table' => [
+                    'action' => ''
+                ]
+            ]
+        );
+
+        $this->sut
+            ->shouldReceive('getIdentifier')
+            ->andReturn(9)
+            ->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => 'ltyp_sn'
+                    ],
+                    'niFlag' => 'N'
+                ]
+            )
+            ->shouldReceive('handleCrudAction')
+            ->andReturn('crud');
+
+        $this->mockEntity('Stub', 'getOperatingCentresData')
+            ->with(9)
+            ->andReturn([]);
+
+        $this->mockEntity('StubOperatingCentre', 'getAddressSummaryData')
+            ->with(9)
+            ->andReturn(
+                [
+                    'Results' => []
+                ]
+            );
+
+        $table = m::mock()
+            ->shouldReceive('getColumn')
+            ->shouldReceive('setColumn')
+            ->getMock();
+
+        $this->mockService('Table', 'prepareTable')
+            ->with('authorisation_in_form', [])
+            ->andReturn($table);
+
+        $tableElement = m::mock()
+            ->shouldReceive('setTable')
+            ->with($table)
+            ->getMock();
+
+        $tableFieldset = m::mock()
+            ->shouldReceive('get')
+            ->andReturn($tableElement)
+            ->getMock();
+
+        $removeFields = [
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'totCommunityLicences'
+        ];
+
+        $this->getMockFormHelper()
+            ->shouldReceive('removeFieldList')
+            ->with($form, 'data', $removeFields)
+            ->shouldReceive('remove')
+            ->with($form, 'dataTrafficArea')
+            ->shouldReceive('disableEmptyValidation')
+            ->with($form);
+
+        $form->shouldReceive('get')
+            ->with('table')
+            ->andReturn($tableFieldset)
+            ->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $this->mockEntity('Stub', 'save');
+
+        $this->assertEquals(
+            'crud',
+            $this->sut->indexAction()
+        );
+    }
+
     public function testBasicPostEditAction()
     {
         $form = $this->createMockForm('Lva\OperatingCentre');
