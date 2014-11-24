@@ -74,6 +74,9 @@ class PiVenue extends AbstractData implements ListDataInterface
         return $this->getRestClient()->get('/'.$id, ['bundle' => json_encode($this->getBundle())]);
     }
 
+    /**
+     * @return array
+     */
     private function getBundle()
     {
         return [

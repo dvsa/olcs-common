@@ -85,6 +85,10 @@ class HearingText1 extends AbstractPublicationFilter
         return sprintf(self::PREVIOUS_PUBLICATION, $hearingData['previousPublication']);
     }
 
+    /**
+     * @param array $hearingData
+     * @return string
+     */
     public function getPreviousHearing($hearingData)
     {
         if ($hearingData['previousHearing']['isAdjourned']) {
@@ -92,6 +96,10 @@ class HearingText1 extends AbstractPublicationFilter
         }
     }
 
+    /**
+     * @param array $licenceData
+     * @return string
+     */
     public function getLicenceInfo($licenceData)
     {
         $licence = "\n" . sprintf(
@@ -109,6 +117,10 @@ class HearingText1 extends AbstractPublicationFilter
         return $licence;
     }
 
+    /**
+     * @param array $organisationData
+     * @return string
+     */
     public function getPersonInfo($organisationData)
     {
         $personData = $organisationData['organisationPersons'];

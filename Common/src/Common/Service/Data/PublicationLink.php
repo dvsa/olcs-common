@@ -22,13 +22,23 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $serviceName = 'PublicationLink';
 
+    /**
+     * @return ArrayObject
+     */
     public function createEmpty()
     {
         return new ArrayObject(new PublicationObject());
     }
 
+    /**
+     * @param ArrayObject $publication
+     * @return mixed
+     */
     public function save(ArrayObject $publication)
     {
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
@@ -38,18 +48,30 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
         );
     }
 
+    /**
+     * @param ArrayObject $publication
+     * @param string $service
+     * @return mixed
+     */
     public function createPublicationLink(ArrayObject $publication, $service)
     {
         $publication = $this->getServiceLocator()->get($service)->filter($publication);
         return $this->save($publication);
     }
 
+    /**
+     * @param array $params
+     * @return mixed
+     */
     public function fetchPublicationLinkData($params)
     {
         $params['bundle'] = json_encode($this->getBundle());
         return $this->getRestClient()->get($params);
     }
 
+    /**
+     * @return array
+     */
     private function getBundle()
     {
         return [
