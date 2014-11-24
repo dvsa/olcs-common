@@ -20,7 +20,6 @@ class HearingText1 extends AbstractPublicationFilter
     const TRADING_AS = 'T/A %s';
     const ORG_TYPE_LTD = 'org_t_rc';
     const ORG_TYPE_LLP = 'org_t_llp';
-    //const PREVIOUS_HEARING_CANCELLED = 'Previous hearing on %s was cancelled.';
 
     /**
      * @param \Zend\Stdlib\ArrayObject $publication
@@ -56,12 +55,6 @@ class HearingText1 extends AbstractPublicationFilter
             $hearingText[] = "\n" . $publication->offsetGet('licenceAddress');
         }
 
-        echo'<pre>';
-        print_r($publication);
-
-
-        echo implode(' ', $hearingText);
-        die();
         $publication->offsetSet('text1', implode(' ', $hearingText));
 
         return $publication;
