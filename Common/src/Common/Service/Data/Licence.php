@@ -89,13 +89,21 @@ class Licence extends AbstractData
                     'properties' => array('id', 'description')
                 ),
                 'licenceType' => array(
-                    'properties' => array('id', 'description')
+                    'properties' => 'ALL'
                 ),
                 'trafficArea' => array(
                     'properties' => 'ALL'
                 ),
                 'organisation' => array(
-                    'properties' => 'ALL'
+                    'properties' => 'ALL',
+                    'children' => array(
+                        'organisationPersons' => array(
+                            'properties' => 'ALL'
+                        ),
+                        'tradingNames' => array(
+                            'properties' => 'ALL'
+                        )
+                    )
                 )
             )
         );
