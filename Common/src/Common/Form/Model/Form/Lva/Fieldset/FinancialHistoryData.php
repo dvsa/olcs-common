@@ -26,6 +26,12 @@ class FinancialHistoryData
     public $version = null;
 
     /**
+     * @Form\Options({"label":"application_previous-history_financial-history.finance.hint"})
+     * @Form\Type("Common\Form\Elements\Types\PlainText")
+     */
+    public $hasAnyPerson = null;
+
+    /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
@@ -33,9 +39,12 @@ class FinancialHistoryData
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes" : {
+     *          "class":"subquestion"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("radio")
      */
     public $bankrupt = null;
 
@@ -48,9 +57,12 @@ class FinancialHistoryData
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes" : {
+     *          "class":"subquestion"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("radio")
      */
     public $liquidation = null;
 
@@ -63,9 +75,12 @@ class FinancialHistoryData
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes" : {
+     *          "class":"subquestion"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("radio")
      */
     public $receivership = null;
 
@@ -78,9 +93,12 @@ class FinancialHistoryData
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
+     *     },
+     *     "fieldset-attributes" : {
+     *          "class":"subquestion"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("radio")
      */
     public $administration = null;
 
@@ -95,7 +113,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     }
      * })
-     * @Form\Type("\Zend\Form\Element\Radio")
+     * @Form\Type("radio")
      */
     public $disqualified = null;
 
@@ -108,8 +126,7 @@ class FinancialHistoryData
      *     "id": "",
      *     "class": "long   js-financial-history",
      *     "placeholder":
-     * "application_previous-history_financial-history.insolvencyDetails.placeholder",
-     *     "data-container-class": "highlight-box"
+     * "application_previous-history_financial-history.insolvencyDetails.placeholder"
      * })
      * @Form\Options({
      *     "label":

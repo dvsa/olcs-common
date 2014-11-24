@@ -40,6 +40,11 @@ class RestClient
     public $language = 'en-gb';
 
     /**
+     * @var
+     */
+    protected $responseHelper;
+
+    /**
      * @param \Zend\Uri\Http $url
      * @internal param \Common\Util\The $HttpUri URL of the resource that this client is meant to act on
      */
@@ -214,9 +219,18 @@ class RestClient
         return $responseHelper->handleResponse();
     }
 
+    public function setResponseHelper($helper)
+    {
+        $this->responseHelper = $helper;
+        return $this;
+    }
+
     public function getResponseHelper()
     {
-        return new ResponseHelper();
+        if (null === $this->responseHelper) {
+            $this->setResponseHelper(new ResponseHelper());
+        }
+        return $this->responseHelper;
     }
 
     /**

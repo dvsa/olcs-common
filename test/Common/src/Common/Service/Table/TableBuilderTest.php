@@ -842,7 +842,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $total = 10;
 
-        $expectedTotal = $total . ' results';
+        $expectedTotal = 10;
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
@@ -869,9 +869,9 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenderTotalWithPaginationWith1()
     {
-        $total = 1;
+        $total  = 1;
 
-        $expectedTotal = $total . ' result';
+        $expectedTotal = 1;
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 

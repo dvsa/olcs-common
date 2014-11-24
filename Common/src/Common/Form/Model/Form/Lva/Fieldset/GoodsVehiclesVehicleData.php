@@ -22,13 +22,9 @@ class GoodsVehiclesVehicleData
     public $version = null;
 
     /**
-     * @Form\Attributes({"id":"vrm","placeholder":""})
+     * @Form\Attributes({"class":"medium","id":"vrm","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.vrm",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-5",
      *     "help-block": "Between 2 and 50 characters."
      * })
      * @Form\Type("Text")
@@ -47,13 +43,9 @@ class GoodsVehiclesVehicleData
     public $vrm = null;
 
     /**
-     * @Form\Attributes({"id":"plated_weight","placeholder":""})
+     * @Form\Attributes({"class":"small","id":"plated_weight","placeholder":""})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-sub-action.data.weight",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-5",
      *     "help-block": "Between 2 and 50 characters."
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\VehicleWeight")

@@ -10,12 +10,6 @@ use Zend\Form\Annotation as Form;
  */
 class FormActions
 {
-    /**
-     * @Form\Attributes({"type":"submit","class":"action--primary large"})
-     * @Form\Options({"label": "save.button"})
-     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
-     */
-    public $save = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
@@ -26,6 +20,13 @@ class FormActions
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--secondary large"})
+     * @Form\Options({"label": "save.button"})
+     * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
+     */
+    public $save = null;
+
+    /**
+     * @Form\Attributes({"type":"submit","class":"action--tertiary"})
      * @Form\Options({"label": "cancel.button"})
      * @Form\Type("\Common\Form\Elements\InputFilters\ActionButton")
      */

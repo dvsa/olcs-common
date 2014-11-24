@@ -993,7 +993,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return '';
         }
 
-        $total = $this->total . ' result' . ($this->total !== 1 ? 's' : '');
+        $total = $this->total;
 
         return $this->replaceContent(' {{[elements/total]}}', array('total' => $total));
     }
