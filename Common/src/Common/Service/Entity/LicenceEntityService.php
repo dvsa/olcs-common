@@ -292,7 +292,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'vehicle' => array(
                         'properties' => array(
                             'vrm',
-                            'isNovelty',
+                            'makeModel',
+                            'isNovelty'
                         ),
                         'children' => array(
                             'psvType' => array(
@@ -402,6 +403,17 @@ class LicenceEntityService extends AbstractLvaEntityService
                             )
                         )
                     )
+                )
+            )
+        )
+    );
+
+    protected $categoryBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'goodsOrPsv' => array(
+                'properties' => array(
+                    'id'
                 )
             )
         )
@@ -618,5 +630,10 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $this->save($saveData);
         }
+    }
+
+    public function getCategory($id)
+    {
+        return $this->get($id, $this->categoryBundle)['goodsOrPsv']['id'];
     }
 }

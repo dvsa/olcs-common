@@ -4,8 +4,9 @@ namespace CommonTest;
 
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
+use \Mockery as m;
 
-error_reporting(E_ALL | E_STRICT);
+error_reporting(-1);
 chdir(dirname(__DIR__));
 date_default_timezone_set('Europe/London');
 
@@ -18,6 +19,7 @@ class Bootstrap
 
     public static function init()
     {
+        ini_set('memory_limit', '512M');
         // Setup the autloader
         $loader = static::initAutoloader();
         $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');
@@ -45,6 +47,41 @@ class Bootstrap
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', self::$config);
         $serviceManager->get('ModuleManager')->loadModules();
+        $serviceManager->setAllowOverride(true);
+
+        $config = $serviceManager->get('Config');
+        $config['service_api_mapping']['endpoints']['backend'] = 'http://some-fake-backend/';
+        $serviceManager->setService('Config', $config);
+
+        /*
+         * NP 17th Nov 2014
+         *
+         * Although this is commented out I'd like to leave it in for now;
+         * it's a more elegant way to trap unmocked backend requests than
+         * setting a fake URL as above. Only trouble is at the moment $path
+         * always comes through as null... needs a bit of investigation
+         *
+        $closure = function ($method, $path, $params) {
+            $str = sprintf(
+                "Trapped unmocked backend request: %s %s",
+                $method, $path
+            );
+            throw new \Exception($str);
+        };
+
+        $serviceManager->setService(
+            'ServiceApiResolver',
+            m::mock()
+            ->shouldReceive('getClient')
+            ->andReturn(
+                m::mock('\Common\Util\RestClient[request]', [new \Zend\Uri\Http])
+                ->shouldReceive('request')
+                ->andReturnUsing($closure)
+                ->getMock()
+            )
+            ->getMock()
+        );
+         */
 
         return $serviceManager;
     }

@@ -27,6 +27,45 @@ class FeeEntityService extends AbstractLvaEntityService
     const STATUS_WAIVED = 'lfs_w';
     const STATUS_CANCELLED = 'lfs_cn';
 
+    protected $applicationIdBundle = array(
+        'properties' => array(),
+        'children' => array(
+            'application' => array(
+                'properties' => array(
+                    'id',
+                    'isVariation'
+                ),
+                'children' => array(
+                    'status' => array(
+                        'properties' => array('id')
+                    )
+                )
+            )
+        )
+    );
+
+    public function getApplication($id)
+    {
+        $data = $this->get($id, $this->applicationIdBundle);
+
+        return isset($data['application']) ? $data['application'] : null;
+    }
+
+    public function getOutstandingFeesForApplication($applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => array(
+                self::STATUS_OUTSTANDING,
+                self::STATUS_WAIVE_RECOMMENDED
+            )
+        );
+
+        $data = $this->getAll($query, array('properties' => array('id')));
+
+        return $data['Results'];
+    }
+
     public function cancelForLicence($licenceId)
     {
         $query = array(

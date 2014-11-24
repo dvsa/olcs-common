@@ -31,6 +31,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
      */
     public function testIsValid($value, $context, $expected)
     {
+        // validator actually ignores $value and just uses $context
         $this->assertEquals($expected, $this->validator->isValid($value, $context));
     }
 
@@ -41,19 +42,51 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
      */
     public function providerIsValid()
     {
-        return array(
-            // psvSmallVehicles isn't set - comes back true
-            array(0, array(), true),
-            // psvSmallVehicles = Y, confirmation=blank - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
-            // psvSmallVehicles = Y, confirmation=1 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'), true),
-            // psvSmallVehicles = Y, confirmation=0 - comes back true
-            array(0, array('psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'), true),
-            // psvSmallVehicles = N, confirmation=0 - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false),
-            // psvSmallVehicles = N, confirmation=blank - comes back false
-            array(0, array('psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'), false)
-        );
+        return [
+            // psvSmallVehicles and psvSmallVhlScotland aren't set - comes back true
+            [0, [], true],
+
+            /**
+             * if user answers 'yes' in radio control, textarea is mandatory
+             * and checkbox is optional
+             */
+            // psvSmallVehicles = Y, confirmation = blank - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => ''], true],
+
+            // psvSmallVehicles = Y, confirmation = N - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'N'], true],
+
+            // psvSmallVehicles = Y, confirmation = 0 - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => '0'], true],
+
+            // psvSmallVehicles = Y, confirmation = Y - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
+
+            /**
+             * if user answers 'no' in radio control, textarea is optional and
+             * checkbox is mandatory
+             */
+            // psvSmallVehicles = N, confirmation = N - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'N'], false],
+
+            // psvSmallVehicles = N, confirmation = blank - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => ''], false],
+
+            // psvSmallVehicles = N, confirmation = Y - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'N', 'psvSmallVhlConfirmation' => 'Y'], true],
+
+            /**
+             * for Scotland, radio control is not shown so checkbox is always mandatory
+             * when psvSmallVhlScotland is present
+             */
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing, confirmation = N - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => 'N'], false],
+
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing,  confirmation = blank - comes back false
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => ''], false],
+
+            // psvSmallVhlScotland exists, psvOperateSmallVhl missing,  confirmation = Y - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvSmallVhlConfirmation' => 'Y'], true],
+        ];
     }
 }

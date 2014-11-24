@@ -467,4 +467,44 @@ class FormHelperService extends AbstractHelperService
             $this->remove($form, $fieldset . '->' . $field);
         }
     }
+
+    /**
+     * Check for company number lookups
+     *
+     * @NOTE Doesn't quite adhere to the same interface as the other process*LookupForm
+     * methods as it already expects the presence of a company number field to have been
+     * determined, and it expects an array of data rather than a request
+     *
+     * @param Form $form
+     * @param array $data
+     * @param string $fieldset
+     * @return boolean
+     */
+    public function processCompanyNumberLookupForm(Form $form, $data, $fieldset)
+    {
+        if (strlen(trim($data[$fieldset]['companyNumber']['company_number'])) === 8) {
+
+            $result = $this->getServiceLocator()
+                ->get('Data\CompaniesHouse')
+                ->search('numberSearch', $data[$fieldset]['companyNumber']['company_number']);
+
+            if ($result['Count'] === 1) {
+
+                $form->get($fieldset)->get('name')->setValue($result['Results'][0]['CompanyName']);
+                return;
+            }
+
+            $message = 'company_number.search_no_results.error';
+        } else {
+            $message = 'company_number.length.validation.error';
+        }
+
+        $translator = $this->getServiceLocator()->get('translator');
+
+        $form->get($fieldset)->get('companyNumber')->setMessages(
+            array(
+                'company_number' => array($translator->translate($message))
+            )
+        );
+    }
 }

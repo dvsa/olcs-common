@@ -106,6 +106,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
                     'id',
                     'version',
                     'vrm',
+                    'makeModel',
                     'isNovelty'
                 ),
                 'children' => array(
@@ -129,6 +130,8 @@ class LicenceVehicleEntityService extends AbstractEntityService
             )
         )
     );
+
+    protected $applicationValidationBundle = array('properties' => array('id'));
 
     public function getVehicle($id)
     {
@@ -188,11 +191,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
     {
         $data = array(
             'licence' => $licenceId,
-            'removalDate' => 'NULL',
-            'limit' => 'all'
+            'removalDate' => 'NULL'
         );
 
-        $results = $this->get($data, $this->currentVrmBundle);
+        $results = $this->getAll($data, $this->currentVrmBundle);
 
         $vrms = array();
 
@@ -201,5 +203,17 @@ class LicenceVehicleEntityService extends AbstractEntityService
         }
 
         return $vrms;
+    }
+
+    public function getForApplicationValidation($licenceId)
+    {
+        $query = array(
+            'licence' => $licenceId,
+            'removalDate' => 'NULL'
+        );
+
+        $results = $this->getAll($query, $this->applicationValidationBundle);
+
+        return $results['Results'];
     }
 }

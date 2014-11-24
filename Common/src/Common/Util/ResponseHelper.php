@@ -25,7 +25,7 @@ class ResponseHelper
 
     public $method;
 
-    private $responseData;
+    protected $responseData;
 
     private $params;
 
@@ -38,6 +38,7 @@ class ResponseHelper
         ),
         'POST' => array(
             Response::STATUS_CODE_201,
+            Response::STATUS_CODE_202,
             Response::STATUS_CODE_400
         ),
         'PUT' => array(
@@ -104,7 +105,10 @@ class ResponseHelper
                 return false;
             case 'POST':
 
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_201) {
+                if (
+                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
+                    $this->response->getStatusCode() === Response::STATUS_CODE_202
+                ) {
 
                     return $this->responseData['Data'];
                 }
@@ -171,7 +175,7 @@ class ResponseHelper
                 $body = "\n" . print_r($data, true);
             }
 
-            // TODO: Replace with a different exception
+            // TO-DO: Replace with a different exception
             throw new \Exception('Unexpected status code: ' . $body);
         }
     }

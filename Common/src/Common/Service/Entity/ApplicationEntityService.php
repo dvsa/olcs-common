@@ -22,6 +22,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_STATUS_NOT_SUBMITTED = 'apsts_not_submitted';
     const APPLICATION_STATUS_GRANTED = 'apsts_granted';
     const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
+    const APPLICATION_STATUS_VALID = 'apsts_valid';
 
     /**
      * Define entity for default behaviour
@@ -257,7 +258,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea' => array(
                         'properties' => array(
                             'id',
-                            'isScottishRules'
+                            'isScotland'
                         )
                     )
                 )
@@ -410,7 +411,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'trafficArea' => array(
                         'properties' => array(
                             'id',
-                            'isScottishRules'
+                            'isScotland'
                         )
                     )
                 )
@@ -466,6 +467,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'properties' => array(
             'receivedDate',
             'createdOn'
+        )
+    );
+
+    protected $validatingDataBundle = array(
+        'properties' => array(
+            'totAuthTrailers',
+            'totAuthVehicles',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+        ),
+        'children' => array(
+            'licenceType' => array(
+                'properties' => array('id')
+            )
         )
     );
 
@@ -646,5 +662,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         return $data['receivedDate'];
+    }
+
+    public function getDataForValidating($id)
+    {
+        $data = $this->get($id, $this->validatingDataBundle);
+
+        $data['licenceType'] = $data['licenceType']['id'];
+
+        return $data;
     }
 }

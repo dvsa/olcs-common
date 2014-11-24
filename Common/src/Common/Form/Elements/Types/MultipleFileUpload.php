@@ -29,7 +29,6 @@ class MultipleFileUpload extends Fieldset
         parent::__construct($name, $options);
 
         $this->setLabel('Upload file');
-        $this->setAttribute('class', 'file-upload');
 
         $list = new FileUploadList('list');
         $this->add($list);
@@ -41,7 +40,7 @@ class MultipleFileUpload extends Fieldset
         $fileControlFieldset->setAttribute('class', 'field');
 
         $uploader = new File('file', array('render-container' => false));
-        $uploader->setAttribute('class', 'inline');
+        $uploader->setAttribute('class', 'file-upload');
 
         $button = new Element\Submit('upload', array('render-container' => false));
         $button->setValue('Upload');
