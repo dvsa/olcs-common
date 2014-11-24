@@ -59,7 +59,8 @@ return array(
             'Helper\FileUpload' => false
         ),
         'abstract_factories' => array(
-            'Common\Util\AbstractServiceFactory'
+            'Common\Util\AbstractServiceFactory',
+            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
@@ -76,6 +77,8 @@ return array(
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
+            'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
+            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
@@ -114,6 +117,19 @@ return array(
             },
             'FeeCommon' => 'Common\Service\Fee\FeeCommon',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
+        )
+    ),
+    'publications' => array(
+        'HearingPublicationFilter' => array(
+            'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\HearingText1'
         )
     ),
     'file_uploader' => array(
@@ -200,6 +216,7 @@ return array(
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
+            'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
         ]
     ],
     'tables' => array(
