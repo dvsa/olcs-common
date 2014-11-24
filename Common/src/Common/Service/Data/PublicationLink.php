@@ -46,6 +46,19 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
 
     public function fetchPublicationLinkData($params)
     {
+        $params['bundle'] = json_encode($this->getBundle());
         return $this->getRestClient()->get($params);
+    }
+
+    private function getBundle()
+    {
+        return [
+            'properties' => 'ALL',
+            'children' => [
+                'publication' => [
+                    'properties' => 'ALL'
+                ]
+            ]
+        ];
     }
 }
