@@ -1,12 +1,18 @@
 <?php
 
+/**
+ * Publication info filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ */
 namespace Common\Filter\Publication;
 
 use Common\Exception\ResourceNotFoundException;
 
 /**
- * Publication filter
- * @package Common\Filter
+ * Publication info filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 class Publication extends AbstractPublicationFilter
 {

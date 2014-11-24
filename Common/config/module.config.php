@@ -121,8 +121,14 @@ return array(
     'publications' => array(
         'HearingPublicationFilter' => array(
             'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
-            'Common\Filter\Publication\PublicationSection'
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\HearingText1'
         )
     ),
     'file_uploader' => array(
@@ -199,6 +205,7 @@ return array(
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
+            'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
         ]
     ],
     'tables' => array(

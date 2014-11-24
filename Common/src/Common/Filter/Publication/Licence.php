@@ -19,8 +19,6 @@ class Licence extends AbstractPublicationFilter
      */
     public function filter($publication)
     {
-        //var_dump($this->getServiceLocator()); die();
-//var_dump($this->getPluginManager()->getServiceLocator()); die();
         $licence = $this->getServiceLocator()->get('\Common\Service\Data\Licence')->fetchLicenceData();
 
         if (!isset($licence['id'])) {
@@ -30,7 +28,8 @@ class Licence extends AbstractPublicationFilter
         $newData = [
             'pubType' => $licence['goodsOrPsv']['id'] == self::GV_LIC_TYPE ? 'A&D' : 'N&P',
             'licence' => $licence['id'],
-            'trafficArea' => $licence['trafficArea']['id']
+            'trafficArea' => $licence['trafficArea']['id'],
+            'licenceData' => $licence
         ];
 
         $publication = $this->mergeData($publication, $newData);

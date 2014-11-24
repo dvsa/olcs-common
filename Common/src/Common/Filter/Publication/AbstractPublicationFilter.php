@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Abstract publication filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ */
 namespace Common\Filter\Publication;
 
 use Zend\Filter\AbstractFilter;
@@ -7,8 +12,9 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
- * Publication filter
- * @package Common\Filter
+ * Abstract publication filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 class AbstractPublicationFilter extends AbstractFilter implements ServiceLocatorAwareInterface
 {
@@ -18,6 +24,7 @@ class AbstractPublicationFilter extends AbstractFilter implements ServiceLocator
      * Merges the new data with the existing ArrayObject
      *
      * @param \Zend\Stdlib\ArrayObject $publication
+     * @param array $newData
      * @return \Zend\Stdlib\ArrayObject
      */
     public function mergeData($publication, $newData)

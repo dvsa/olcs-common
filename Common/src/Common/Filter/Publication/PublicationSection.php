@@ -7,10 +7,8 @@
  */
 namespace Common\Filter\Publication;
 
-use Common\Exception\ResourceNotFoundException;
-
 /**
- * Publication Section filter
+ * Publication Section Id filter
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
