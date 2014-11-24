@@ -45,7 +45,7 @@ trait LicenceServiceTrait
         $licence = $this->getLicenceService()->fetchLicenceData();
 
         return [
-            'isNi' => $licence['niFlag'],
+            'isNi' => (int) ($licence['niFlag'] == 'Y'),
             'goodsOrPsv' => $licence['goodsOrPsv']['id'],
             'trafficArea' => $licence['trafficArea']['id']
         ];
