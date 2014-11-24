@@ -33,5 +33,4 @@ class OlcsCheckbox extends ZendElement\Checkbox implements LabelAwareInterface
 
         parent::__construct($name, $options);
     }
-
 }
