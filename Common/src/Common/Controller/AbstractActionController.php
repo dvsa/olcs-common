@@ -645,6 +645,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Get enableCsrf flag
+     * 
+     * @return bool
+     */
+    public function getEnabledCsrf()
+    {
+        return $this->enableCsrf;
+    }
+
+    /**
      * Switch form validation on or off
      *
      * @param boolean $validateForm
