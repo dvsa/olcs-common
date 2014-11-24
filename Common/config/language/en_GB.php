@@ -808,6 +808,12 @@ return array(
     'internal-navigation-transport-manager-processing-tasks' => 'Tasks',
     'internal-operator-create-new-operator' => 'Create New Operator',
     'internal-operator-new-application' => 'New application',
+    'internal-operator-profile-business-type' => 'Business type',
+    'internal-operator-profile-business-type-refresh' => 'Refresh',
+    'internal-operator-profile-first-name' => 'First name',
+    'internal-operator-profile-last-name' => 'Last name',
+    'internal-operator-profile-name' => 'Operator name',
+    'internal-operator-profile-nature-of-business' => 'Nature of Business',
     'internal-operator-quick-actions' => 'Quick actions',
     'internal-pi-hearing-add' => 'Add hearing',
     'internal-pi-hearing-edit' => 'Edit hearing',
@@ -1397,10 +1403,4 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     // Potentially unused (Not found with grep)
-    'internal-operator-profile-name' => 'Operator name',
-    'internal-operator-profile-nature-of-business' => 'Nature of Business',
-    'internal-operator-profile-first-name' => 'First name',
-    'internal-operator-profile-last-name' => 'Last name',
-    'internal-operator-profile-business-type' => 'Business type',
-    'internal-operator-profile-business-type-refresh' => 'Refresh'
 );
