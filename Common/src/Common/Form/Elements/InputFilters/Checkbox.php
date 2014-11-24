@@ -33,6 +33,16 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface, L
     {
         $options = $this->getOptions();
 
+        $labelPosition = $this->getLabelOption('label_position');
+        if (empty($labelPosition)) {
+            $this->setLabelOption('label_position', \Zend\Form\View\Helper\FormRow::LABEL_APPEND);
+        }
+
+        $alwaysWrap = $this->getLabelOption('always_wrap');
+        if (empty($alwaysWrap)) {
+            $this->setLabelOption('always_wrap', true);
+        }
+
         if (!isset($options['must_be_value'])
             || $options['must_be_value'] === false
             || $options['must_be_value'] === null) {
