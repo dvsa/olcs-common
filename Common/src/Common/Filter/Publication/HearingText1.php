@@ -52,7 +52,7 @@ class HearingText1 extends AbstractPublicationFilter
 
         //licence address
         if ($publication->offsetExists('licenceAddress')) {
-            $hearingText[] = "\n" . $publication->offsetGet('licenceAddress');
+            $hearingText[] = "\n" . strtoupper($publication->offsetGet('licenceAddress'));
         }
 
         $publication->offsetSet('text1', implode(' ', $hearingText));
@@ -114,7 +114,7 @@ class HearingText1 extends AbstractPublicationFilter
             $licence .= "\n" . sprintf(self::TRADING_AS, $latestTradingName['name']);
         }
 
-        return $licence;
+        return strtoupper($licence);
     }
 
     /**
@@ -138,7 +138,7 @@ class HearingText1 extends AbstractPublicationFilter
         }
 
         foreach ($personData as $person) {
-            $persons[] = sprintf('%s %s', $person['person']['forename'], $person['person']['familyName']);
+            $persons[] = strtoupper(sprintf('%s %s', $person['person']['forename'], $person['person']['familyName']));
         }
 
         return "\n" . $prefix . implode(', ', $persons);
