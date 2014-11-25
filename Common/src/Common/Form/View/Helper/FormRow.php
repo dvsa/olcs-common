@@ -197,7 +197,6 @@ class FormRow extends ZendFormRow
                     $labelClose = '';
                     $label = $labelHelper($element);
                 } else {
-
                     $labelOpen  = $labelHelper->openTag($labelAttributes);
                     $labelClose = $labelHelper->closeTag();
                 }
@@ -205,12 +204,17 @@ class FormRow extends ZendFormRow
                 if ($label !== '' && (!$element->hasAttribute('id'))
                     || ($element instanceof LabelAwareInterface && $element->getLabelOption('always_wrap'))
                 ) {
-                    $label = '<span>' . $label . '</span>';
+                    $label = $label;
                 }
 
                 // Button element is a special case, because label is always rendered inside it
                 if ($element instanceof Button) {
                     $labelOpen = $labelClose = $label = '';
+                }
+
+                $labelPosition = $this->labelPosition;
+                if ($element instanceof LabelAwareInterface && $element->getLabelOption('label_position')) {
+                    $this->labelPosition = $element->getLabelOption('label_position');
                 }
 
                 switch ($this->labelPosition) {

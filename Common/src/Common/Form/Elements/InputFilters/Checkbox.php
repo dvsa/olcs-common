@@ -47,7 +47,7 @@ class Checkbox extends ZendElement\Checkbox implements InputProviderInterface
                     'options' => array(
                         'token' => $options['must_be_value'],
                         'messages' => array(
-                             ZendValidator\Identical::NOT_SAME =>
+                            ZendValidator\Identical::NOT_SAME =>
                                 isset($this->getOptions()['not_checked_message'])
                                     ? $this->getOptions()['not_checked_message']
                                     : 'You must check this box to continue',

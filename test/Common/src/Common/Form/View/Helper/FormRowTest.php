@@ -59,7 +59,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $this->expectOutputRegex(
             '/^<div class="validation-wrapper"><div class="field ">'.
-            '<ul><li>(.*)<\/li><\/ul><label><span>(.*)<\/span><\/label>(.*)<\/div><\/div>$/'
+            '<ul><li>(.*)<\/li><\/ul><label>(.*)<\/label>(.*)<\/div><\/div>$/'
         );
     }
 
@@ -168,7 +168,27 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field "><label><span>(.*)<\/span><\/label>(.*)<\/div>$/');
+        $this->expectOutputRegex('/^<div class="field "><label>(.*)<\/label>(.*)<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderCheckbox()
+    {
+        $element = $this->prepareElement(
+            'Common\Form\Elements\InputFilters\Checkbox',
+            [
+                'label_options' => [
+                    'label_position' => 'append'
+                ]
+            ]
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field "><label for="test">(.*)<\/label>(.*)<\/div>$/');
     }
 
     /**
