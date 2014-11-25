@@ -214,10 +214,10 @@ class FormRow extends ZendFormRow
 
                 $labelPosition = $this->labelPosition;
                 if ($element instanceof LabelAwareInterface && $element->getLabelOption('label_position')) {
-                    $this->labelPosition = $element->getLabelOption('label_position');
+                    $labelPosition = $element->getLabelOption('label_position');
                 }
 
-                switch ($this->labelPosition) {
+                switch ($labelPosition) {
                     case self::LABEL_PREPEND:
                         $markup = $labelOpen . $label . $elementString . $labelClose;
                         break;
