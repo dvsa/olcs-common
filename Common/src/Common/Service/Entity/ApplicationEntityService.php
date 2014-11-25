@@ -269,8 +269,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
     /**
      * Bundle to retrieve data for processing page
      *
-     * (not sure how much of this we actually need, copied from Licence data service)
-     *
      * @var array
      */
     private $processingDataBundle = array(
@@ -282,67 +280,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'description'
                 )
             ),
-            'operatingCentres' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
-            'previousConvictions' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
-            'previousLicences' => array(
-                'properties' => array(),
-                'children' => array(
-                    'previousLicenceType' => array(
-                        'properties' => array('id')
-                    )
-                )
-            ),
             'licence' => array(
                 'properties' => array(
-                    'niFlag',
-                    'safetyInsVehicles',
-                    'safetyInsTrailers',
-                    'safetyInsVaries',
-                    'tachographInsName'
+                    'id',
+                    'licNo'
                 ),
                 'children' => array(
-                    'appeals' => array(
-                        'properties' => 'ALL',
-                        'children' => array(
-                            'outcome' => array(
-                                'properties' => array(
-                                    'id',
-                                    'description'
-                                )
-                            ),
-                            'reason' => array(
-                                'properties' => array(
-                                    'id',
-                                    'description'
-                                )
-                            ),
-                        )
-                    ),
-                    'stays' => array(
-                        'properties' => 'ALL',
-                        'children' => array(
-                            'stayType' => array(
-                                'properties' => array(
-                                    'id',
-                                    'description'
-                                )
-                            ),
-                            'outcome' => array(
-                                'properties' => array(
-                                    'id',
-                                    'description'
-                                )
-                            )
-                        )
-                    ),
                     'status' => array(
                         'properties' => array('id', 'description')
                     ),
