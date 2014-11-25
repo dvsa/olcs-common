@@ -165,7 +165,8 @@ return array(
     'form_elements' => [
         'invokables' => [
             'DateSelect' => 'Common\Form\Elements\Custom\DateSelect',
-            'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect'
+            'DateTimeSelect' => 'Common\Form\Elements\Custom\DateTimeSelect',
+            'Common\Form\Elements\Custom\OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ],
         'factories' => [
             'Common\Form\Element\DynamicSelect' => 'Common\Form\Element\DynamicSelectFactory',
@@ -178,6 +179,7 @@ return array(
             'DynamicMultiSelect' => 'Common\Form\Element\DynamicMultiSelect',
             'DynamicMultiCheckbox' => 'Common\Form\Element\DynamicMultiCheckbox',
             'DynamicRadio' => 'Common\Form\Element\DynamicRadio',
+            'OlcsCheckbox' => 'Common\Form\Elements\Custom\OlcsCheckbox'
         ]
     ],
     'validators' => [
