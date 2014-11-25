@@ -23,7 +23,8 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
             'PageTitle' => 'Page Title',
             'PageSubTitle' => 'Page Sub Title',
             'InlineScripts' => 'Inline Scripts',
-            'LoadedData' => ['id' => 1]
+            'LoadedData' => ['id' => 1],
+            'EnabledCsrf' => true
         ];
 
         $sut = $this->getNewSut();
