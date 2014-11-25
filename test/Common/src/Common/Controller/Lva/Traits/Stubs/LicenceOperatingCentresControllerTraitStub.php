@@ -6,7 +6,7 @@ use Common\Controller\Lva\Traits\LicenceOperatingCentresControllerTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class LicenceOperatingCentresControllerTraitStub extends AbstractActionController
-{ 
+{
     use LicenceOperatingCentresControllerTrait;
 
     public function callDisableConditionalValidation($form)
