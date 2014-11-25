@@ -9,9 +9,8 @@ namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\Stdlib\ArrayObject;
 use Common\Util\RestClient;
-use Common\Data\Object\Publication as PublicationObject;
+use Common\Data\Object\Publication;
 
 /**
  * Publication Link service
@@ -32,14 +31,14 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      */
     public function createEmpty()
     {
-        return new ArrayObject(new PublicationObject());
+        return new Publication();
     }
 
     /**
-     * @param ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @return mixed
      */
-    public function save(ArrayObject $publication)
+    public function save(Publication $publication)
     {
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
             'PublicationLink',
@@ -49,11 +48,11 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     }
 
     /**
-     * @param ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @param string $service
      * @return mixed
      */
-    public function createPublicationLink(ArrayObject $publication, $service)
+    public function createPublicationLink(Publication $publication, $service)
     {
         $publication = $this->getServiceLocator()->get($service)->filter($publication);
         return $this->save($publication);

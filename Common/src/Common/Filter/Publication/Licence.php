@@ -1,20 +1,26 @@
 <?php
 
+/**
+ * Licence filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ */
 namespace Common\Filter\Publication;
 
 use Common\Exception\ResourceNotFoundException;
 
 /**
- * Class DateTimeSelectNullifier
- * @package Common\Filter
+ * Licence filter
+ *
+ * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
 class Licence extends AbstractPublicationFilter
 {
     const GV_LIC_TYPE = 'lcat_gv';
 
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      * @throws ResourceNotFoundException
      */
     public function filter($publication)

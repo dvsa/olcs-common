@@ -19,8 +19,8 @@ class Publication extends AbstractPublicationFilter
     const NEW_STATUS = 'pub_s_new';
 
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      * @throws ResourceNotFoundException
      */
     public function filter($publication)

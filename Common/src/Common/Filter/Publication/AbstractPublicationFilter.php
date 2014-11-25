@@ -23,9 +23,9 @@ class AbstractPublicationFilter extends AbstractFilter implements ServiceLocator
     /**
      * Merges the new data with the existing ArrayObject
      *
-     * @param \Zend\Stdlib\ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @param array $newData
-     * @return \Zend\Stdlib\ArrayObject
+     * @return \Common\Data\Object\Publication
      */
     public function mergeData($publication, $newData)
     {
