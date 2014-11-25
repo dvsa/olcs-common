@@ -81,5 +81,4 @@ trait GenericBusinessDetails
             ->get('Helper\Form')
             ->processCompanyNumberLookupForm($form, $data, $fieldset);
     }
-
 }

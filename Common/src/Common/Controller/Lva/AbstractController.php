@@ -381,7 +381,7 @@ abstract class AbstractController extends AbstractActionController
 
         return 'application';
     }
-    
+
     public function getLoggedInUser()
     {
         return $this->loggedInUser;

@@ -37,11 +37,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
         $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+        $natureOfBusiness = $this->getServiceLocator()
+            ->get('Entity\OrganisationNatureOfBusiness')
+            ->getAllForOrganisationForSelect($orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($orgData);
+            $data = $this->formatDataForForm($orgData, $natureOfBusiness);
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -222,9 +225,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * Format data for form
      *
      * @param array $data
+     * @param array $data
      * @return array
      */
-    private function formatDataForForm($data)
+    private function formatDataForForm($data, $natureOfBusiness)
     {
         $tradingNames = array();
         foreach ($data['tradingNames'] as $tradingName) {
@@ -251,7 +255,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'registeredAddress' => $registeredAddress
+                'registeredAddress' => $registeredAddress,
+                'natureOfBusiness' => $natureOfBusiness
             )
         );
     }
