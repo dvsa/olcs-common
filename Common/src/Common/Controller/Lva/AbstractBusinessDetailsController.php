@@ -11,6 +11,7 @@ use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\AddressEntityService;
 use Common\Service\Helper\FormHelperService;
 use Common\Controller\Lva\Traits\CrudTableTrait;
+use Common\Controller\Traits\GenericBusinessDetails;
 
 /**
  * Shared logic between Business Details Controller
@@ -20,6 +21,7 @@ use Common\Controller\Lva\Traits\CrudTableTrait;
 abstract class AbstractBusinessDetailsController extends AbstractController
 {
     use CrudTableTrait;
+    use GenericBusinessDetails;
 
     protected $section = 'business_details';
 
@@ -35,11 +37,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
         $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+        $natureOfBusiness = $this->getServiceLocator()
+            ->get('Entity\OrganisationNatureOfBusiness')
+            ->getAllForOrganisationForSelect($orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($orgData);
+            $data = $this->formatDataForForm($orgData, $natureOfBusiness);
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -64,7 +69,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
              * still fall out of their respective branches and render the form
              */
             if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-                $this->processCompanyLookup($data, $form);
+                $this->processCompanyLookup($data, $form, 'data');
             } elseif (isset($tradingNames['submit_add_trading_name'])) {
                 $this->processTradingNames($tradingNames, $form);
             } elseif ($form->isValid()) {
@@ -88,16 +93,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('business_details', $form);
-    }
-
-    /**
-     * User has pressed 'Find company' on registered company number
-     */
-    private function processCompanyLookup($data, $form)
-    {
-        $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->processCompanyNumberLookupForm($form, $data, 'data');
     }
 
     /**
@@ -137,31 +132,11 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
         }
 
+        $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
+
         $saveData = $this->formatDataForSave($data);
         $saveData['id'] = $orgId;
         $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
-    }
-
-    /**
-     * Save the organisations registered address
-     *
-     * @param int $orgId
-     * @param array $address
-     */
-    private function saveRegisteredAddress($orgId, $address)
-    {
-        $saved = $this->getServiceLocator()->get('Entity\Address')->save($address);
-
-        // If we didn't have an address id, then we need to link it to the organisation
-        if (!isset($address['id']) || empty($address['id'])) {
-            $contactDetailsData = array(
-                'organisation' => $orgId,
-                'address' => $saved['id'],
-                'contactType' => AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS
-            );
-
-            $this->getServiceLocator()->get('Entity\ContactDetails')->save($contactDetailsData);
-        }
     }
 
     public function addAction()
@@ -250,9 +225,10 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * Format data for form
      *
      * @param array $data
+     * @param array $data
      * @return array
      */
-    private function formatDataForForm($data)
+    private function formatDataForForm($data, $natureOfBusiness)
     {
         $tradingNames = array();
         foreach ($data['tradingNames'] as $tradingName) {
@@ -279,7 +255,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'registeredAddress' => $registeredAddress
+                'registeredAddress' => $registeredAddress,
+                'natureOfBusiness' => $natureOfBusiness
             )
         );
     }

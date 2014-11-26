@@ -60,6 +60,27 @@ class BusinessDetails
     public $tradingNames = null;
 
     /**
+     * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-medium",  "multiple" : true})
+     * @Form\Options({
+     *     "label": "Nature of Business",
+     *     "help-block": "Please select a nature of business",
+     *     "category":"SIC_CODE"
+     * })
+     * @Form\Type("DynamicSelect")
+     * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
+     */
+    public $natureOfBusiness = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\Html")
+     * @Form\Attributes({
+     *      "value":
+     *      "Please enter your business type. You can find a list of business types at Companies House 
+     *      <a href=""http://www.companieshouse.gov.uk/infoAndGuide/faq/sicCode.shtml"" target=""_blank"">here</a>"})
+     */
+    public $information = null;
+
+    /**
      * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
      */
