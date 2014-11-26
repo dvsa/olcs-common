@@ -191,7 +191,6 @@ trait DynamicTrait
         if (isset($this->options['other_option'])) {
             $this->setOtherOption($this->options['other_option']);
         }
-
         return $this;
     }
 

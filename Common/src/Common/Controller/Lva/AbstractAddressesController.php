@@ -161,6 +161,8 @@ abstract class AbstractAddressesController extends AbstractController
      */
     private function alterForm($form)
     {
+        $this->alterFormForLva($form);
+
         $allowedLicTypes = array(
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL

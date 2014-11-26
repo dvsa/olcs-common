@@ -34,6 +34,8 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         $form = $this->getFinancialEvidenceForm();
 
+        $this->alterFormForLva($form);
+
         return $this->render('financial_evidence', $form);
     }
 

@@ -1,7 +1,9 @@
 <?php
 
 /**
+ * Shared logic between Licence Operating Centres controllers
  *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Traits;
 
@@ -10,11 +12,14 @@ use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
 
 /**
+ * Shared logic between Licence Operating Centres controllers
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 trait LicenceOperatingCentresControllerTrait
 {
     /**
-     * Attach a cant increase validator
+     * Attach a can't increase validator
      *
      * @param Input $input
      * @param string $messageSuffix
@@ -89,6 +94,11 @@ trait LicenceOperatingCentresControllerTrait
         return $form;
     }
 
+    /**
+     * Common form alterations
+     *
+     * @param \Zend\Form\Form $form
+     */
     protected function commonAlterForm(Form $form)
     {
         $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
@@ -110,6 +120,9 @@ trait LicenceOperatingCentresControllerTrait
         return $form;
     }
 
+    /**
+     * Override add action to show variation warning
+     */
     public function addAction()
     {
         $view = new ViewModel(
@@ -122,10 +135,66 @@ trait LicenceOperatingCentresControllerTrait
         return $this->render($view);
     }
 
+    /**
+     * Get extra document properties to save
+     */
     protected function getDocumentProperties()
     {
         return array(
             'licence' => $this->getLicenceId()
         );
+    }
+
+    /**
+     * Format crud data for save
+     *
+     * @param array $data
+     */
+    protected function formatCrudDataForSave($data)
+    {
+        // @see https://jira.i-env.net/browse/OLCS-5555
+        unset($data['operatingCentre']['addresses']);
+
+        return $data;
+    }
+
+    /**
+     * Disable conditional validation
+     *
+     * For licences, we don't want to validate any auth
+     * totals if they haven't been altered
+     */
+    protected function disableConditionalValidation(Form $form)
+    {
+        $data = $this->getRequest()->getPost();
+        $data = isset($data['data']) ? $data['data'] : [];
+
+        // allow for *all* totals to have been submitted; in reality
+        // the values will be a subset of this dependent on goods/psv
+        $submitted = [
+            'totAuthLargeVehicles',
+            'totAuthMediumVehicles',
+            'totAuthSmallVehicles',
+            'totAuthVehicles',
+            'totAuthTrailers'
+        ];
+
+        // we need to fetch our entity details and
+        // as long as all relevant totals match, disable their
+        // validation
+
+        $totals = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
+
+        $formHelper = $this->getServiceLocator()
+            ->get('Helper\Form');
+        $filter = $form->getInputFilter()->get('data');
+
+        foreach ($submitted as $property) {
+            if (isset($data[$property]) && (int)$data[$property] === (int)$totals[$property]) {
+                $formHelper->disableValidation(
+                    $filter->get($property)
+                );
+            }
+        }
     }
 }

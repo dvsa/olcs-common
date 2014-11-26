@@ -30,6 +30,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController
 
         $form = $this->getForm();
 
+        $this->alterFormForLva($form);
+
         $this->alterFormForLocation($form);
         $this->alterFormForLva($form);
 

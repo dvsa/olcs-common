@@ -39,6 +39,8 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 
         $form = $this->getFinancialHistoryForm()->setData($data);
 
+        $this->alterFormForLva($form);
+
         $hasProcessedFiles = $this->processFiles(
             $form,
             'data->file',
