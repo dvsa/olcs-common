@@ -311,7 +311,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
-                    'removalDate' => null
+                    'removalDate' => 'NULL'
                 ),
                 'properties' => array('id')
             )
@@ -395,7 +395,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
-                    'removalDate' => null
+                    'removalDate' => 'NULL'
                 ),
                 'properties' => array(),
                 'children' => array(
