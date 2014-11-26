@@ -556,8 +556,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             [
                     'organisation' => 12,
                     'refData' => 2,
-                    'createdBy' => '',
-                    'createdOn' => date('d-m-Y H:s:i')
+                    'createdBy' => ''
             ]
         )
         ->andReturn();

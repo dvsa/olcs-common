@@ -39,8 +39,7 @@ trait GenericBusinessDetails
             $natureOfBusiness = [
                 'organisation' => $orgId,
                 'refData' => $id,
-                'createdBy' => $this->getLoggedInUser(),
-                'createdOn' => date('d-m-Y H:s:i')
+                'createdBy' => $this->getLoggedInUser()
             ];
             $organisationNatureOfBusinessService->save($natureOfBusiness);
         }
