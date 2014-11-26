@@ -5,6 +5,11 @@ namespace CommonTest\Controller\Lva\Traits;
 use CommonTest\Controller\Lva\AbstractLvaControllerTestCase;
 use \Mockery as m;
 
+/**
+ * Licence LVA trait tests
+ *
+ * @author Nick Payne <nick.payne@valtech.co.uk>
+ */
 class LicenceOperatingCentresControllerTraitTest extends AbstractLvaControllerTestCase
 {
     public function setUp()
