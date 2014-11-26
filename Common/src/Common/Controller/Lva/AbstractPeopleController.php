@@ -94,6 +94,8 @@ abstract class AbstractPeopleController extends AbstractController
             ->createForm('Lva\SoleTrader')
             ->setData($data);
 
+        $this->alterFormForLva($form);
+
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
@@ -110,6 +112,8 @@ abstract class AbstractPeopleController extends AbstractController
      */
     private function alterForm($form, $table, $orgData)
     {
+        $this->alterFormForLva($form);
+
         $tableHeader = 'selfserve-app-subSection-your-business-people-tableHeader';
         $guidanceLabel = 'selfserve-app-subSection-your-business-people-guidance';
 

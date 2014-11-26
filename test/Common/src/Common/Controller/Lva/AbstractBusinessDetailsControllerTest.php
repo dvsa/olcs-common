@@ -39,7 +39,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_st',
-                        'registeredAddress' => ['foo' => 'bar']
+                        'registeredAddress' => ['foo' => 'bar'],
+                        'natureOfBusiness' => [1]
                     ]
                 ]
             );
@@ -105,7 +106,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_rc',
-                        'registeredAddress' => ['foo' => 'bar']
+                        'registeredAddress' => ['foo' => 'bar'],
+                        'natureOfBusiness' => [1]
                     ]
                 ]
             );
@@ -186,7 +188,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_p',
-                        'registeredAddress' => ['foo' => 'bar']
+                        'registeredAddress' => ['foo' => 'bar'],
+                        'natureOfBusiness' => [1]
                     ]
                 ]
             );
@@ -262,7 +265,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_pa',
-                        'registeredAddress' => ['foo' => 'bar']
+                        'registeredAddress' => ['foo' => 'bar'],
+                        'natureOfBusiness' => [1]
                     ]
                 ]
             );
@@ -454,7 +458,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                 ],
                 'registeredAddress' => [
                     'foo' => 'bar'
-                ]
+                ],
+                'natureOfBusiness' => [1,2]
             ],
         ];
         $this->setPost($postData);
@@ -526,6 +531,36 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                 ]
             );
 
+        $this->mockEntity('OrganisationNatureOfBusiness', 'save')
+            ->with(['foo' => 'bar'])
+            ->andReturn(['id' => 4321]);
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisation')
+            ->with(12)
+            ->andReturn(
+                [
+                    [
+                    'id' => 1,
+                    'version' => 1,
+                    'organisation' => ['id' => 1],
+                    'refData' => ['id' => '1', 'description' => 'desc1']
+                    ]
+                ]
+            );
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'deleteByOrganisationAndIds')
+            ->with(12, [])
+            ->andReturn();
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'save')->with(
+            [
+                    'organisation' => 12,
+                    'refData' => 2,
+                    'createdBy' => ''
+            ]
+        )
+        ->andReturn();
+
         $this->sut->shouldReceive('getCrudAction')
             ->andReturn('add');
 
@@ -552,7 +587,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                 'companyNumber' => [
                     'company_number' => '12345678'
                 ],
-                'name' => 'Company Name'
+                'name' => 'Company Name',
+                'natureOfBusiness' => [1]
             ],
         ];
         $this->setPost($postData);
@@ -595,6 +631,27 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                     'id' => 12
                 ]
             );
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'save')
+            ->with(['foo' => 'bar'])
+            ->andReturn(['id' => 4321]);
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisation')
+            ->with(12)
+            ->andReturn(
+                [
+                    [
+                    'id' => 1,
+                    'version' => 1,
+                    'organisation' => ['id' => 1],
+                    'refData' => ['id' => '1', 'description' => 'desc1']
+                    ]
+                ]
+            );
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'deleteByOrganisationAndIds')
+            ->with(12, [])
+            ->andReturn();
 
         $this->sut
             ->shouldReceive('postSave')
@@ -733,5 +790,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                     ]
                 ]
             );
+
+        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisationForSelect')
+            ->with(12)
+            ->andReturn([1]);
     }
 }

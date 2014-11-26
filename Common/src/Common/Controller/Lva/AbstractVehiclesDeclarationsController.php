@@ -131,6 +131,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      */
     protected function alterForm($form)
     {
+        $this->alterFormForLva($form);
+
         // We always need to load data, even if we have posted, so we know how to alter the form
         $data = $this->loadData();
 

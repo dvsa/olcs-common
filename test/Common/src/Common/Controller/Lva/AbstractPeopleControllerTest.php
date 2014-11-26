@@ -23,9 +23,7 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
     {
         $form = $this->createMockForm('Lva\People');
 
-        $form->shouldReceive('setData')
-            ->with(
-            );
+        $form->shouldReceive('setData');
 
         $this->mockRender();
 
@@ -116,5 +114,47 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
         $this->sut->indexAction();
 
         $this->assertEquals('people', $this->view);
+    }
+
+    public function testGetIndexActionForSoleTrader()
+    {
+        $form = $this->createMockForm('Lva\SoleTrader');
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $this->mockRender();
+
+        $this->mockOrganisationId(12);
+
+        $this->mockEntity('Organisation', 'getType')
+            ->with(12)
+            ->andReturn(
+                [
+                    'type' => [
+                        'id' => Org::ORG_TYPE_SOLE_TRADER
+                    ]
+                ]
+            );
+
+        $this->mockEntity('Person', 'getFirstForOrganisation')
+            ->with(12)
+            ->andReturn(
+                [
+                    'Count' => 1,
+                    'Results' => [
+                        [
+                            'position' => 'x',
+                            'person' => [
+                                'x' => 'y'
+                            ]
+                        ]
+                    ]
+                ]
+            );
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('person', $this->view);
     }
 }
