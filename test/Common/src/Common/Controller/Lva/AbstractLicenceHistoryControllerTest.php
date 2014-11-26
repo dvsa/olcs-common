@@ -58,7 +58,8 @@ class AbstractLicenceHistoryControllerTest extends AbstractLvaControllerTestCase
                         'question' => 'N',
                     ]
                 ]
-            );
+            )
+            ->andReturn($form);
 
         $this->getMockFormHelper()
             ->shouldReceive('populateFormTable');

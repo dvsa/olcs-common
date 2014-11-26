@@ -19,7 +19,6 @@ return array(
         array(
             'title' => 'application_your-business_business_details-subsidiaries-columnName',
             'name' => 'name',
-            'class' => 'action--tertiary',
             'action' => 'edit',
             'type' => 'Action'
         ),

@@ -10,6 +10,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/MajorCaiger/phpcov.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@gitlab.clb.npm:olcs/olcs-testhelpers.git"
         }
     ],
     "require": {
@@ -25,7 +29,8 @@
         "mockery/mockery": "dev-master",
         "phpunit/phpcov": "dev-master",
         "dvsa/jackrabbit": "v1.1.0",
-        "mikey179/vfsStream": "~1.4.0"
+        "mikey179/vfsStream": "~1.4.0",
+        "olcs/olcs-testhelpers": "dev-develop"
     },
     "autoload": {
         "psr-0": {

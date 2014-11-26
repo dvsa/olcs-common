@@ -113,4 +113,176 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
 
         $this->assertEquals('operating_centres', $this->view);
     }
+
+    public function testPostIndexActionWithCrudAction()
+    {
+        $form = $this->createMockForm('Lva\OperatingCentres');
+
+        $this->setPost(
+            [
+                'table' => [
+                    'action' => ''
+                ]
+            ]
+        );
+
+        $this->sut
+            ->shouldReceive('getIdentifier')
+            ->andReturn(9)
+            ->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => 'ltyp_sn'
+                    ],
+                    'niFlag' => 'N'
+                ]
+            )
+            ->shouldReceive('handleCrudAction')
+            ->andReturn('crud');
+
+        $this->mockEntity('Stub', 'getOperatingCentresData')
+            ->with(9)
+            ->andReturn([]);
+
+        $this->mockEntity('StubOperatingCentre', 'getAddressSummaryData')
+            ->with(9)
+            ->andReturn(
+                [
+                    'Results' => []
+                ]
+            );
+
+        $table = m::mock()
+            ->shouldReceive('getColumn')
+            ->shouldReceive('setColumn')
+            ->getMock();
+
+        $this->mockService('Table', 'prepareTable')
+            ->with('authorisation_in_form', [])
+            ->andReturn($table);
+
+        $tableElement = m::mock()
+            ->shouldReceive('setTable')
+            ->with($table)
+            ->getMock();
+
+        $tableFieldset = m::mock()
+            ->shouldReceive('get')
+            ->andReturn($tableElement)
+            ->getMock();
+
+        $removeFields = [
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'totCommunityLicences'
+        ];
+
+        $this->getMockFormHelper()
+            ->shouldReceive('removeFieldList')
+            ->with($form, 'data', $removeFields)
+            ->shouldReceive('remove')
+            ->with($form, 'dataTrafficArea')
+            ->shouldReceive('disableEmptyValidation')
+            ->with($form);
+
+        $form->shouldReceive('get')
+            ->with('table')
+            ->andReturn($tableFieldset)
+            ->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $this->mockEntity('Stub', 'save');
+
+        $this->assertEquals(
+            'crud',
+            $this->sut->indexAction()
+        );
+    }
+
+    public function testBasicPostEditAction()
+    {
+        $form = $this->createMockForm('Lva\OperatingCentre');
+
+        $data = [
+            'applicationOperatingCentre' => [
+                'id' => '1'
+            ],
+            'operatingCentre' => [
+                'id' => '16'
+            ]
+        ];
+
+        $form->shouldReceive('setData')
+            ->with([])
+            ->andReturn($form)
+            ->shouldReceive('has')
+            ->with('advertisements')
+            ->andReturn(false)
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn($data)
+            ->shouldReceive(
+                // yikes. We don't care about these args in this particular test...
+                'getInputFilter->get->get->setRequired->getValidatorChain->attach'
+            );
+
+        $this->shouldRemoveAddAnother($form);
+
+        $this->getMockFormHelper()
+            ->shouldReceive('processAddressLookupForm')
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => 'ltyp_sn'
+                    ],
+                    'niFlag' => 'N'
+                ]
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(4321)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(7)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(9)
+            ->shouldReceive('handlePostSave')
+            ->andReturn('saved');
+
+        $this->mockEntity('Licence', 'getTrafficArea')
+            ->with(7)
+            ->andReturn(['id' => 'B']);
+
+        $this->mockEntity('StubOperatingCentre', 'getOperatingCentresCount')
+            ->with(9)
+            ->andReturn(
+                [
+                    'Count' => 0
+                ]
+            );
+
+        $this->mockEntity('OperatingCentre', 'save')
+            ->with(
+                [
+                    'id' => '16',
+                    'addresses' => []
+                ]
+            );
+
+        $this->mockEntity('StubOperatingCentre', 'save');
+
+        $this->setPost();
+
+        $this->assertEquals(
+            'saved',
+            $this->sut->editAction()
+        );
+    }
 }
