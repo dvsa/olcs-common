@@ -21,7 +21,6 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.providerName',
-            'class' => 'action--tertiary',
             'action' => 'edit',
             'name' => 'fao',
             'type' => 'Action'

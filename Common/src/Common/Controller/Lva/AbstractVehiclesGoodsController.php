@@ -54,6 +54,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $form = $this->getForm();
 
+        $this->alterFormForLva($form);
+
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         // *always* check if the user has exceeded their authority

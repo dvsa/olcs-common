@@ -31,6 +31,8 @@ abstract class AbstractBusinessTypeController extends AbstractController
 
         $form = $this->getBusinessTypeForm()->setData($data);
 
+        $this->alterFormForLva($form);
+
         if ($request->isPost() && $form->isValid()) {
             $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));
 

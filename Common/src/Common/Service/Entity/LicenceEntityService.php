@@ -311,7 +311,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
-                    'removalDate' => null
+                    'removalDate' => 'NULL'
                 ),
                 'properties' => array('id')
             )
@@ -357,8 +357,16 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     private $totalAuthorisationsBundle = array(
         'properties' => array(
+            // a licence will never have all these totals set but they're used to
+            // compare against form data; easier to have all data available so
+            // we can always compare against whatever was submitted in the form
+            // Goods
             'totAuthVehicles',
-            'totAuthTrailers'
+            'totAuthTrailers',
+            // PSV
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles'
         )
     );
 
@@ -387,7 +395,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
-                    'removalDate' => null
+                    'removalDate' => 'NULL'
                 ),
                 'properties' => array(),
                 'children' => array(

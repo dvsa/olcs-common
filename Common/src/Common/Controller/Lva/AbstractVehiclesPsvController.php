@@ -303,6 +303,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function alterForm($form, $data)
     {
+        $this->alterFormForLva($form);
+
         $isPost = $this->getRequest()->isPost();
         $post   = $this->getRequest()->getPost();
 

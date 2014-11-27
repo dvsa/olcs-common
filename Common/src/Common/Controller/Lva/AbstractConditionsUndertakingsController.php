@@ -28,6 +28,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $form = $this->getForm();
 
+        $this->alterFormForLva($form);
+
         return $this->render('conditions_undertakings', $form);
     }
 

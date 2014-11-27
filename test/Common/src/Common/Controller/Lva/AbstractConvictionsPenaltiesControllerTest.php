@@ -55,7 +55,8 @@ class AbstractConvictionsPenaltiesControllerTest extends AbstractLvaControllerTe
                         'convictionsConfirmation' => 'y'
                     ]
                 ]
-            );
+            )
+            ->andReturn($form);
 
         $this->setService(
             'Table',

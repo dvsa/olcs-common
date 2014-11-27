@@ -22,7 +22,8 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
     {
         $form = $this->createMockForm('Lva\BusinessType');
 
-        $form->shouldReceive('setData');
+        $form->shouldReceive('setData')
+            ->andReturn($form);
 
         $this->sut
             ->shouldReceive('getCurrentOrganisationId')

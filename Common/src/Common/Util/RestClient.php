@@ -51,7 +51,7 @@ class RestClient
     public function __construct(HttpUri $url)
     {
         $this->url = $url;
-        $this->client = new HttpClient();
+        $this->client = new HttpClient(null, array('keepalive' => true));
     }
 
     /**

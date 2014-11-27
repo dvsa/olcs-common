@@ -191,9 +191,6 @@ trait DynamicTrait
         if (isset($this->options['other_option'])) {
             $this->setOtherOption($this->options['other_option']);
         }
-        if (isset($this->options['chosen-size'])) {
-            parent::setAttribute('class', 'chosen-select-' . $this->options['chosen-size']);
-        }
         return $this;
     }
 

@@ -28,6 +28,8 @@ abstract class AbstractTransportManagersController extends AbstractController
 
         $form = $this->getTransportManagersForm();
 
+        $this->alterFormForLva($form);
+
         return $this->render('transport_managers', $form);
     }
 
