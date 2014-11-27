@@ -33,7 +33,9 @@ class Postcode implements ServiceLocatorAwareInterface
     {
         $retv = array(null, null);
         if ($postcode) {
+
             $response = $this->sendGet('postcode\address', array('postcode' => $postcode), true);
+
             if (is_array($response) && count($response)) {
                 $adminArea = $response[0]['administritive_area'];
                 if ($adminArea) {
