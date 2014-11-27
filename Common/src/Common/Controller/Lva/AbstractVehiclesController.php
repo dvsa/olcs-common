@@ -170,7 +170,7 @@ abstract class AbstractVehiclesController extends AbstractController
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
 
         // then if this is a new record, store it ID against the licence vehicle
-        if ($mode == 'add') {
+        if ($mode === 'add') {
             $licenceVehicle['vehicle'] = $saved['id'];
             $licenceVehicle['licence'] = $this->getLicenceId();
         } else {
@@ -372,7 +372,9 @@ abstract class AbstractVehiclesController extends AbstractController
     protected function setDefaultDates($form, $currentDate)
     {
         $fieldset = $form->get('licence-vehicle');
-        if ($fieldset->has('receivedDate')) { // receivedDate gets removed in some contexts
+
+        // receivedDate gets removed in some contexts
+        if ($fieldset->has('receivedDate')) {
             // default 'Received date' to the current date if it is not set
             $receivedDate = $fieldset->get('receivedDate')->getValue();
             $receivedDate = trim($receivedDate, '-'); // date element returns '--' when empty!

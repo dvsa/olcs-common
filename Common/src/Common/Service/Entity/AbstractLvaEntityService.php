@@ -41,40 +41,6 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
                         )
                     )
                 )
-            ),
-            'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
-                'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
-                        'children' => array(
-                            'countryCode' => array(
-                                'properties' => array('id')
-                            )
-                        )
-                    ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
-                )
             )
         )
     );
@@ -159,10 +125,6 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
 
         $documentBundle['children']['documents']['criteria'] = array(
-            '_OPTIONS_' => array(
-                // @NOTE: doctrine is borking on these particular queries; go manual instead
-                'manualSearch' => true,
-            ),
             'category' => $category['id'],
             'documentSubCategory' => $subCategory['id']
         );

@@ -15,6 +15,8 @@ use Common\Service\Entity\TrafficAreaEntityService;
 /**
  * Shared logic between Operating Centres controllers
  *
+ * @TODO This section needs a looking over, especially regarding traffic area stuff/postcode lookup
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 abstract class AbstractOperatingCentresController extends AbstractController
