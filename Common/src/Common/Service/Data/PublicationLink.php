@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Data;
 
+use Common\Exception\DataServiceException;
+use Common\Exception\ResourceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Stdlib\ArrayObject;
@@ -20,6 +22,8 @@ use Common\Data\Object\Publication as PublicationObject;
  */
 class PublicationLink extends AbstractData implements ServiceLocatorAwareInterface
 {
+    const NEW_PUBLICATION_STATUS = 'pub_s_new';
+
     use ServiceLocatorAwareTrait;
 
     /**
@@ -63,10 +67,36 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * @param array $params
      * @return mixed
      */
-    public function fetchPublicationLinkData($params)
+    public function fetchList($params = [], $bundle = null)
     {
-        $params['bundle'] = json_encode($this->getBundle());
+        $params['bundle'] = json_encode(empty($bundle) ? $this->getBundle() : $bundle);
         return $this->getRestClient()->get($params);
+    }
+
+    /**
+     * @param int $id
+     * @param bool $checkStatus
+     * @return array
+     * @throws ResourceNotFoundException
+     * @throws DataServiceException
+     */
+    public function delete($id, $checkStatus = true)
+    {
+        $params = ['id' => $id];
+
+        if ($checkStatus) {
+            $existing = $this->fetchList($params);
+
+            if (empty($existing)) {
+                throw new ResourceNotFoundException('Publication record could not be found');
+            }
+
+            if($existing['publication']['pubStatus']['id'] != self::NEW_PUBLICATION_STATUS){
+                throw new DataServiceException('Only unpublished entries may be deleted');
+            };
+        }
+
+        return parent::delete($id);
     }
 
     /**
@@ -78,6 +108,17 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
             'properties' => 'ALL',
             'children' => [
                 'publication' => [
+                    'properties' => 'ALL',
+                    'children' => [
+                        'pubStatus' => [
+                            'properties' => 'ALL'
+                        ],
+                        'trafficArea' => [
+                            'properties' => 'ALL'
+                        ]
+                    ]
+                ],
+                'publicationSection' => [
                     'properties' => 'ALL'
                 ]
             ]
