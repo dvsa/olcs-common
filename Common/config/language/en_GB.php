@@ -1419,6 +1419,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'transport-manager-details-home-address' => 'Home Addess'
+    'transport-manager-details-home-address' => 'Home Addess',
+    'internal-transport-manager-new-transport-manager' => 'Create New Transport Manager'
     // Potentially unused (Not found with grep)
 );
