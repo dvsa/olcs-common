@@ -21,9 +21,13 @@ class TransportManagerEntityService extends AbstractEntityService
      */
     protected $entity = 'TransportManager';
     
+    const TRANSPORT_MANAGER_STATUS_ACTIVE = 'tm_st_A';
+
+    const TRANSPORT_MANAGER_STATUS_DISABLED = 'tm_st_D';
+    
     protected $tmDetailsBundle = [
         'properties' => [
-            'version'
+            'version',
         ],
         'children' => [
             'contactDetails' => [
@@ -64,6 +68,11 @@ class TransportManagerEntityService extends AbstractEntityService
                 ]
             ],
             'tmType' => [
+                'properties' => [
+                    'id'
+                ]
+            ],
+            'tmStatus' => [
                 'properties' => [
                     'id'
                 ]
