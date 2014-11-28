@@ -84,6 +84,9 @@ class Sla extends AbstractData
     public function fetchBusRules($category)
     {
         if (is_null($this->getData($category))) {
+
+            $this->setData($category, false);
+
             $data = $this->getRestClient()->get('', ['limit' => 1000, 'category' => $category]);
             if (empty($data)) {
                 return null;

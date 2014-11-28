@@ -2,8 +2,6 @@
 
 namespace CommonTest\Service\Data;
 
-use Common\Service\Data\CrudAbstract;
-use Mockery as m;
 use PHPUnit_Framework_TestCase;
 
 /**

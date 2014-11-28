@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FlashMessengerHelperService;
 
 /**
@@ -15,7 +15,7 @@ use Common\Service\Helper\FlashMessengerHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerHelperServiceTest extends PHPUnit_Framework_TestCase
+class FlashMessengerHelperServiceTest extends MockeryTestCase
 {
     /**
      * Holds the SUT
