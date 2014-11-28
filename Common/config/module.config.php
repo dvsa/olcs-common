@@ -78,7 +78,6 @@ return array(
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
-            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
@@ -217,6 +216,7 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
+            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
         ]
     ],
     'tables' => array(

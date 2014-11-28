@@ -34,8 +34,9 @@ class PreviousPublication extends AbstractPublicationFilter
         $previousPublications = [];
 
         $data = $this->getServiceLocator()
-            ->get('\Common\Service\Data\PublicationLink')
-            ->fetchPublicationLinkData($params);
+            ->get('DataServiceManager')
+            ->get('Common\Service\Data\PublicationLink')
+            ->fetchList($params);
 
         //not possible to get what we need from the current API,
         //but there will never be more than a few records to sort through
