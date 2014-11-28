@@ -18,12 +18,14 @@ class ValidateIfTest extends MockeryTestCase
     public function testSetOptions()
     {
         $sut = new ValidateIf();
-        $sut->setOptions([
-            'context_field' =>'test',
-            'context_truth' => false,
-            'context_values' => [null],
-            'allow_empty' => true
-        ]);
+        $sut->setOptions(
+            [
+                'context_field' =>'test',
+                'context_truth' => false,
+                'context_values' => [null],
+                'allow_empty' => true
+            ]
+        );
 
         $this->assertEquals('test', $sut->getContextField());
         $this->assertEquals([null], $sut->getContextValues());
