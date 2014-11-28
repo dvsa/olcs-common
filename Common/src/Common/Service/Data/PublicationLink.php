@@ -91,7 +91,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
                 throw new ResourceNotFoundException('Publication record could not be found');
             }
 
-            if($existing['publication']['pubStatus']['id'] != self::NEW_PUBLICATION_STATUS){
+            if ($existing['publication']['pubStatus']['id'] != self::NEW_PUBLICATION_STATUS) {
                 throw new DataServiceException('Only unpublished entries may be deleted');
             };
         }
