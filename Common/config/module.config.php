@@ -61,6 +61,7 @@ return array(
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
             'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
+
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
@@ -116,7 +117,8 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'FeeCommon' => 'Common\Service\Fee\FeeCommon',
-            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
     ),
     'publications' => array(
