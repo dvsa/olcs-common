@@ -29,6 +29,11 @@ return array(
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'redirect' => 'Common\Controller\Plugin\Redirect',
+        )
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(

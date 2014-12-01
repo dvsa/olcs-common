@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Common\Service\FormAnnotationBuilderFactory;
 
@@ -9,7 +10,7 @@ use Common\Service\FormAnnotationBuilderFactory;
  * Class FormAnnotationBuilderFactoryTest
  * @package CommonTest\Service
  */
-class FormAnnotationBuilderFactoryTest extends \PHPUnit_Framework_TestCase
+class FormAnnotationBuilderFactoryTest extends MockeryTestCase
 {
     /**
      *

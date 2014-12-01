@@ -500,7 +500,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param int $organisationId
      */
-    public function createNew($organisationId)
+    public function createNew($organisationId, $applicationData = array())
     {
         $licenceData = array(
             'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
@@ -509,10 +509,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         $licence = $this->getServiceLocator()->get('Entity\Licence')->save($licenceData);
 
-        $applicationData = array(
-            'licence' => $licence['id'],
-            'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
-            'isVariation' => false
+        $applicationData = array_merge(
+            $applicationData,
+            array(
+                'licence' => $licence['id'],
+                'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
+                'isVariation' => false
+            )
         );
 
         $application = $this->save($applicationData);

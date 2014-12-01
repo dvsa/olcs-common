@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\Sla;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class Sla Test
  * @package CommonTest\Service
  */
-class SlaTest extends \PHPUnit_Framework_TestCase
+class SlaTest extends MockeryTestCase
 {
     public function testGetServiceName()
     {
@@ -109,9 +110,9 @@ class SlaTest extends \PHPUnit_Framework_TestCase
         $sut = new Sla();
         $sut->setRestClient($mockRestClient);
 
-        $this->assertEquals($expected, $sut->fetchBusRules($category));
-        $this->assertEquals($expected, $sut->fetchBusRules($category));
         //ensure data is cached
+        $this->assertEquals($expected, $sut->fetchBusRules($category));
+        $this->assertEquals($expected, $sut->fetchBusRules($category));
     }
 
     public function provideFetchBusRulesData()
