@@ -156,7 +156,11 @@ return array(
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
             'assetPath' => 'Common\View\Helper\AssetPath',
-            'addTags' => 'Common\View\Helper\AddTags'
+            'addTags' => 'Common\View\Helper\AddTags',
+            'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
+            'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
+            'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
+            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow'
         )
     ),
     'view_manager' => array(

@@ -8,10 +8,13 @@
  */
 namespace CommonTest\Form\View\Helper;
 
+use Zend\Stdlib\PriorityQueue;
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\Form\View\Helper;
+use Common\Form\View\Helper\FormCollection as formCollectionViewHelper;
+use Mockery as m;
 
 /**
  * FormCollection Test
@@ -21,7 +24,6 @@ use Zend\Form\View\Helper;
  */
 class FormCollectionTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $element;
 
     private function prepareElement($targetElement = 'Text')
@@ -141,5 +143,35 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $viewHelper->setTranslator($translator);
 
         return $viewHelper;
+    }
+
+    public function testReadOnly()
+    {
+        $mockElement = m::mock('Zend\Form\ElementInterface');
+        $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
+
+        $mockHelper = m::mock('Common\Form\View\Helper\Readonly\FormRow');
+        $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
+
+        $iterator = new PriorityQueue();
+        $iterator->insert($mockElement);
+
+        $mockFieldset = m::mock('Zend\Form\FieldsetInterface');
+        $mockFieldset->shouldReceive('getMessages')->andReturn([]);
+        $mockFieldset->shouldReceive('getAttributes')->andReturn([]);
+        $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
+        $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
+        $mockFieldset->shouldReceive('getOption')->with('hint')->andReturnNull();
+
+        $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
+        $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
+        $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
+
+
+        $sut = new formCollectionViewHelper();
+        $sut->setView($mockView);
+
+        $markup = $sut->__invoke($mockFieldset);
+        $this->assertEquals('<ul class="definition-list">element</ul>', $markup);
     }
 }
