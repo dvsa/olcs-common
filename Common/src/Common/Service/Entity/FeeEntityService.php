@@ -51,7 +51,16 @@ class FeeEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
-            'feeStatus'
+            'feeStatus',
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            )
         )
     );
 
