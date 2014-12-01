@@ -21,7 +21,6 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.licence-number',
-            'class' => 'action--tertiary',
             'action' => 'edit',
             'name' => 'privateHireLicenceNo',
             'type' => 'Action'

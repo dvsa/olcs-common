@@ -87,7 +87,7 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
     /**
      * Get application fee type
      *
-     * @param string $licenceCategory
+     * @param string $operatorType
      * @param string $licenceType
      * @param string $niFlag
      * @param string $applicationDate
@@ -96,31 +96,13 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
     protected function getApplicationFeeType($operatorType, $licenceType, $niFlag, $applicationDate)
     {
         $bundle = [
-            'properties' => [
-                'id',
-                'description',
-                'fixedValue',
-                'fiveYearValue',
-                'effectiveFrom'
-            ],
             'children' => [
-                'trafficArea' => [
-                    'properties' => [
-                        'id'
-                    ]
-                ],
-                'licenceType' => [
-                    'properties' => [
-                        'id'
-                    ]
-                ],
-                'goodsOrPsv' => [
-                    'properties' => [
-                        'id'
-                    ]
-                ]
+                'trafficArea',
+                'licenceType',
+                'goodsOrPsv'
             ]
         ];
+
         $params = [
             'goodsOrPsv' => $operatorType,
             'feeType' => self::FEE_TYPE_APPLICATION,
@@ -128,6 +110,7 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
             'sort' => 'effectiveFrom',
             'order' => 'DESC'
         ];
+
         $data = $this->makeRestCall('FeeType', 'GET', $params, $bundle);
 
         // filter results by licence type && niFlag
@@ -154,7 +137,8 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
                 }
             }
         }
-        if (!count($results)) {
+
+        if (count($results) === 0) {
             throw new Exception('No fee type found for the new application');
         }
 
@@ -170,42 +154,23 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
     protected function getApplicationDetails($applicationId)
     {
         $bundle = [
-            'properties' => [
-                'receivedDate',
-                'createdOn'
-            ],
             'children' => [
-                'licence' => [
-                    'properties' => [
-                        'id',
-                        'niFlag'
-                    ],
-                    'children' => [
-                        'licenceType' => [
-                            'properties' => [
-                                'id'
-                            ]
-                        ],
-                        'goodsOrPsv' => [
-                            'properties' => [
-                                'id'
-                            ]
-                        ]
-                    ]
-                ]
+                'licence',
+                'licenceType',
+                'goodsOrPsv'
             ]
-
         ];
         $data = $this->makeRestCall('Application', 'GET', $applicationId, $bundle);
         $retv = [
-            'id' => $data['licence']['id'],
-            'niFlag' => $data['licence']['niFlag'],
-            'licenceType' => $data['licence']['licenceType']['id'],
-            'goodsOrPsv' => $data['licence']['goodsOrPsv']['id'],
+            'id' => $data['id'],
+            'niFlag' => $data['niFlag'],
+            'licenceType' => $data['licenceType']['id'],
+            'goodsOrPsv' => $data['goodsOrPsv']['id'],
             'applicationDate' => (isset($data['receivedDate']) && $data['receivedDate']) ?
                 $data['receivedDate'] : $data['createdOn'],
             'licenceId' => $data['licence']['id']
         ];
+
         return $retv;
     }
 

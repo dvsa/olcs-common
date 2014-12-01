@@ -119,18 +119,6 @@ trait CommonApplicationControllerTrait
     }
 
     /**
-     * Get type of licence data
-     *
-     * @return array
-     */
-    protected function getTypeOfLicenceData()
-    {
-        $licenceId = $this->getLicenceId($this->getApplicationId());
-
-        return $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($licenceId);
-    }
-
-    /**
      * Complete a section and potentially redirect to the next
      * one depending on the user's choice
      *
