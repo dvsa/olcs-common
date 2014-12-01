@@ -670,6 +670,7 @@ return array(
     'helpdesk' => 'W Helpdesk',
     'impo_not' => 'W Vehicle Not Returned',
     'impo_returned' => 'W Vehicle Returned',
+    'impo_wd' => 'W Application Withdrawn',
     'impt_hearing' => 'W Hearing',
     'impt_paper' => 'W Paperwork',
     'internal' => 'W Internal',
