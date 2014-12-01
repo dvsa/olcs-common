@@ -825,7 +825,9 @@ return array(
     'internal-operator-quick-actions' => 'W Quick actions',
     'internal-pi-hearing-add' => 'W Add hearing',
     'internal-pi-hearing-edit' => 'W Edit hearing',
+    'internal-transport-manager-new-transport-manager' => 'W Create New Transport Manager',
     'internal-transport-manager-quick-actions' => 'W Quick actions',
+    'internal-transport-manager-tm-details' => 'W TM Details',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1379,6 +1381,7 @@ return array(
     'transport-manager-details-dob' => 'W Date of Birth',
     'transport-manager-details-email' => 'W Email',
     'transport-manager-details-first-name' => 'W First name',
+    'transport-manager-details-home-address' => 'W Home Addess',
     'transport-manager-details-last-name' => 'W Last name',
     'transport-manager-details-place-of-birth' => 'W Place of Birth',
     'transport-manager-details-please-select' => 'W Please select',

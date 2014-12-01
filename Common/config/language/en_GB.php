@@ -823,7 +823,9 @@ return array(
     'internal-operator-quick-actions' => 'Quick actions',
     'internal-pi-hearing-add' => 'Add hearing',
     'internal-pi-hearing-edit' => 'Edit hearing',
+    'internal-transport-manager-new-transport-manager' => 'Create New Transport Manager',
     'internal-transport-manager-quick-actions' => 'Quick actions',
+    'internal-transport-manager-tm-details' => 'TM Details',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1375,6 +1377,7 @@ return array(
     'transport-manager-details-dob' => 'Date of Birth',
     'transport-manager-details-email' => 'Email',
     'transport-manager-details-first-name' => 'First name',
+    'transport-manager-details-home-address' => 'Home Addess',
     'transport-manager-details-last-name' => 'Last name',
     'transport-manager-details-place-of-birth' => 'Place of Birth',
     'transport-manager-details-please-select' => 'Please select',
@@ -1425,7 +1428,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'transport-manager-details-home-address' => 'Home Addess',
-    'internal-transport-manager-new-transport-manager' => 'Create New Transport Manager'
     // Potentially unused (Not found with grep)
 );
