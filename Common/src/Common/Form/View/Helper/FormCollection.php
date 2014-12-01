@@ -24,11 +24,35 @@ use Zend\Form\LabelAwareInterface;
 class FormCollection extends ZendFormCollection
 {
     /**
+     * @var bool
+     */
+    protected $readOnly = false;
+
+    /**
      * Hint format
      *
      * @var string
      */
     private $hintFormat = "<p class=\"hint\">%s</p>";
+
+
+    /**
+     * @param boolean $readOnly
+     * @return $this
+     */
+    public function setReadOnly($readOnly)
+    {
+        $this->readOnly = $readOnly;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isReadOnly()
+    {
+        return $this->readOnly;
+    }
 
     /**
      * Render a collection by iterating through all fieldsets and elements
@@ -56,7 +80,13 @@ class FormCollection extends ZendFormCollection
         $attributes       = $element->getAttributes();
         $markup           = '';
         $templateMarkup   = '';
-        $elementHelper    = $this->getElementHelper();
+        $readOnly = $this->isReadOnly() || $element->getOption('readonly');
+        $elementHelper    = (
+            $readOnly ?
+            $this->getView()->plugin('readonlyformrow') :
+            $this->getElementHelper()
+        );
+
         $fieldsetHelper   = $this->getFieldsetHelper();
 
         if ($element instanceof CollectionElement && $element->shouldCreateTemplate()) {
@@ -73,6 +103,13 @@ class FormCollection extends ZendFormCollection
             } elseif ($elementOrFieldset instanceof ElementInterface) {
                 $markup .= $elementHelper($elementOrFieldset);
             }
+        }
+
+        if ($readOnly) {
+            if ($markup == '') {
+                return '';
+            }
+            return '<ul class="definition-list">' . $markup . '</ul>';
         }
 
         // If $templateMarkup is not empty, use it for simplify adding new element in JavaScript
