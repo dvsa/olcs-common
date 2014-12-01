@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\Country;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class Country Test
  * @package CommonTest\Service
  */
-class CountryTest extends \PHPUnit_Framework_TestCase
+class CountryTest extends MockeryTestCase
 {
     public function testGetServiceName()
     {

@@ -1,7 +1,7 @@
 <?php
 namespace CommonTest\Util;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Util\DateTimeProcessor as DateTimeProcessor;
 use Common\Service\Data\PublicHoliday as PublicHolidayService;
 use Mockery as m;
@@ -11,7 +11,7 @@ use Mockery as m;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class DateTimeProcessorTest extends \PHPUnit_Framework_TestCase
+class DateTimeProcessorTest extends MockeryTestCase
 {
     /**
      * @dataProvider dpCalculateDate

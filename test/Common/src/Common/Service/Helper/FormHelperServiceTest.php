@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FormHelperService;
 use Mockery as m;
 
@@ -16,19 +16,8 @@ use Mockery as m;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class FormHelperServiceTest extends PHPUnit_Framework_TestCase
+class FormHelperServiceTest extends MockeryTestCase
 {
-    public function testAlterElementLabelWithNoType()
-    {
-        $helper = new FormHelperService();
-
-        $element = m::mock('\stdClass');
-        $element->shouldReceive('getLabel')->andReturn('My label');
-        $element->shouldReceive('setLabel')->with('Replaced label');
-
-        $helper->alterElementLabel($element, 'Replaced label');
-    }
-
     public function testAlterElementLabelWithAppend()
     {
         $helper = new FormHelperService();
@@ -38,6 +27,17 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
         $element->shouldReceive('setLabel')->with('My labelAppended label');
 
         $helper->alterElementLabel($element, 'Appended label', 1);
+    }
+
+    public function testAlterElementLabelWithNoType()
+    {
+        $helper = new FormHelperService();
+
+        $element = m::mock('\stdClass');
+        $element->shouldReceive('getLabel')->andReturn('My label');
+        $element->shouldReceive('setLabel')->with('Replaced label');
+
+        $helper->alterElementLabel($element, 'Replaced label');
     }
 
     public function testAlterElementLabelWithPrepend()
@@ -684,7 +684,7 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $table = m::mock('Common\Service\Table\TableBuilder');
         $table->shouldReceive('getRows')
-            ->andReturn([1,2,3,4]);
+            ->andReturn([1, 2, 3, 4]);
 
         $tableInput = m::mock('\stdClass');
         $tableInput->shouldReceive('setTable')
@@ -943,5 +943,42 @@ class FormHelperServiceTest extends PHPUnit_Framework_TestCase
             ->andReturn($fieldset);
 
         $helper->processCompanyNumberLookupForm($form, $data, 'data');
+    }
+
+    public function testSetFormActionFromRequestWhenFormHasAction()
+    {
+        $helper = new FormHelperService();
+
+        $form = m::mock()
+            ->shouldReceive('hasAttribute')
+            ->with('action')
+            ->andReturn(true)
+            ->getMock();
+
+        $request = m::mock()
+            ->shouldReceive('getUri')->never()
+            ->getMock();
+
+        $helper->setFormActionFromRequest($form, $request);
+    }
+
+    public function testSetFormActionFromRequest()
+    {
+        $helper = new FormHelperService();
+
+        $form = m::mock()
+            ->shouldReceive('hasAttribute')
+            ->with('action')
+            ->andReturn(false)
+            ->shouldReceive('setAttribute')
+            ->with('action', 'URI')
+            ->getMock();
+
+        $request = m::mock();
+
+        $request->shouldReceive('getUri->getPath')
+            ->andReturn('URI');
+
+        $helper->setFormActionFromRequest($form, $request);
     }
 }

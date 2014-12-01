@@ -22,7 +22,7 @@ class FeeEntityService extends AbstractLvaEntityService
     protected $entity = 'Fee';
 
     const STATUS_OUTSTANDING = 'lfs_ot';
-    const STATUS_PAID = 'Paid';
+    const STATUS_PAID = 'lfs_pd';
     const STATUS_WAIVE_RECOMMENDED = 'lfs_wr';
     const STATUS_WAIVED = 'lfs_w';
     const STATUS_CANCELLED = 'lfs_cn';
@@ -41,6 +41,17 @@ class FeeEntityService extends AbstractLvaEntityService
                     )
                 )
             )
+        )
+    );
+
+    /**
+     * Holds the overview bundle
+     *
+     * @var array
+     */
+    private $overviewBundle = array(
+        'children' => array(
+            'feeStatus'
         )
     );
 
@@ -95,5 +106,16 @@ class FeeEntityService extends AbstractLvaEntityService
         $updates['_OPTIONS_']['multiple'] = true;
 
         $this->put($updates);
+    }
+
+    /**
+     * Get data for overview
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getOverview($id)
+    {
+        return $this->get($id, $this->overviewBundle);
     }
 }

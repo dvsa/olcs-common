@@ -2,6 +2,7 @@
 
 namespace CommonTest\Filter;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Filter\DecompressToTmpDelegatorFactory;
 use Mockery as m;
 use Common\Filter\DecompressUploadToTmp;
@@ -10,7 +11,7 @@ use Common\Filter\DecompressUploadToTmp;
  * Class DecompressToTmpDelegatorFactoryTest
  * @package CommonTest\Filter
  */
-class DecompressToTmpDelegatorFactoryTest extends \PHPUnit_Framework_TestCase
+class DecompressToTmpDelegatorFactoryTest extends MockeryTestCase
 {
     public function testCreateDelegatorWithName()
     {

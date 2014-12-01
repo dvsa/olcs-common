@@ -145,4 +145,16 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getOutstandingFeesForApplication($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOverview()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Fee', 'GET', $id);
+
+        $this->sut->getOverview($id);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManager;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class PluginManagerTest
  * @package CommonTest\Service\Data
  */
-class PluginManagerTest extends \PHPUnit_Framework_TestCase
+class PluginManagerTest extends MockeryTestCase
 {
     public function testValidatePlugin()
     {

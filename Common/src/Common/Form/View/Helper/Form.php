@@ -35,18 +35,23 @@ class Form extends \Zend\Form\View\Helper\Form
         $fieldsets = $elements = array();
         $hiddenSubmitElement = '';
 
-        $tagDecorator = $this->getView()->plugin('addTags');
+        $this->getView()->formCollection()->setReadOnly($form->getOption('readonly'));
+        $rowHelper = (
+            $form->getOption('readonly') ?
+            $this->getView()->plugin('readonlyformrow') :
+            $this->getView()->plugin('formrow')
+        );
 
         foreach ($form as $element) {
 
             if ($element instanceof FieldsetInterface) {
-                $fieldsets[] = $tagDecorator(
+                $fieldsets[] = $this->getView()->addTags(
                     $this->getView()->formCollection($element)
                 );
             } elseif ($element->getName() == 'form-actions[submit]') {
-                $hiddenSubmitElement = $this->getView()->formRow($element);
+                $hiddenSubmitElement = $rowHelper($element);
             } else {
-                $elements[] = $this->getView()->formRow($element);
+                $elements[] = $rowHelper($element);
             }
         }
 
