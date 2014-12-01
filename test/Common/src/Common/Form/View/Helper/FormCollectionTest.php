@@ -167,7 +167,6 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
 
-
         $sut = new formCollectionViewHelper();
         $sut->setView($mockView);
 

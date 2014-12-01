@@ -6,6 +6,10 @@ use Zend\Form\Element\Select;
 use Zend\Form\ElementInterface;
 use Zend\View\Helper\AbstractHelper;
 
+/**
+ * Class FormSelect
+ * @package Common\Form\View\Helper\Readonly
+ */
 class FormSelect extends AbstractHelper
 {
     /**
@@ -25,6 +29,10 @@ class FormSelect extends AbstractHelper
         return $this->render($element);
     }
 
+    /**
+     * @param $input
+     * @return array
+     */
     public function processOptions($input)
     {
         $return = [];
@@ -44,6 +52,10 @@ class FormSelect extends AbstractHelper
         return $return;
     }
 
+    /**
+     * @param ElementInterface $element
+     * @return string
+     */
     public function render(ElementInterface $element)
     {
         if (!($element instanceof Select)) {

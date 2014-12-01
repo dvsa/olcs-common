@@ -27,7 +27,11 @@ class FormRowTest extends TestCase
         $mockHtmlHelper = m::mock('Zend\View\Helper\EscapeHtml');
         $mockHtmlHelper->shouldReceive('__invoke')->andReturnUsing($callback);
         $mockElementHelper = m::mock('Common\Form\View\Helper\Readonly\FormItem');
-        $mockElementHelper->shouldReceive('__invoke')->andReturnUsing(function ($v) { return $v->getValue();});
+        $mockElementHelper->shouldReceive('__invoke')->andReturnUsing(
+            function ($v) {
+                return $v->getValue();
+            }
+        );
 
         $mockTranslater = m::mock('Zend\I18n\Translator\TranslatorInterface');
         $mockTranslater->shouldReceive('translate')->andReturnUsing($callback);
@@ -73,4 +77,3 @@ class FormRowTest extends TestCase
         ];
     }
 }
- 

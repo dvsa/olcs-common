@@ -97,7 +97,6 @@ class FormTest extends m\Adapter\Phpunit\MockeryTestCase
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);
         $mockView->shouldReceive('plugin')->with('readonlyformrow')->andReturn($mockHelper);
 
-
         $sut = new FormViewHelper();
         $sut->setView($mockView);
 

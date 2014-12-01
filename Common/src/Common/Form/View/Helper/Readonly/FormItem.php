@@ -5,6 +5,10 @@ namespace Common\Form\View\Helper\Readonly;
 use Zend\Form\ElementInterface;
 use Zend\View\Helper\AbstractHelper;
 
+/**
+ * Class FormItem
+ * @package Common\Form\View\Helper\Readonly
+ */
 class FormItem extends AbstractHelper
 {
     /**
@@ -24,6 +28,10 @@ class FormItem extends AbstractHelper
         return $this->render($element);
     }
 
+    /**
+     * @param ElementInterface $element
+     * @return mixed
+     */
     public function render(ElementInterface $element)
     {
         return $element->getValue();

@@ -16,7 +16,7 @@ class FormItemTest extends TestCase
     public function testInvoke()
     {
         $sut = new FormItem();
-        $element = m::mock('Zend\Form\EleementInterface');
+        $element = m::mock('Zend\Form\ElementInterface');
         $element->shouldReceive('getValue')->andReturn('test');
 
         $markup = $sut($element);
@@ -24,4 +24,3 @@ class FormItemTest extends TestCase
         $this->assertEquals('test', $markup);
     }
 }
- 

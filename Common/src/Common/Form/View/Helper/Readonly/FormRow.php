@@ -7,15 +7,28 @@ use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\AbstractHelper;
 
+/**
+ * Class FormRow
+ * @package Common\Form\View\Helper\Readonly
+ */
 class FormRow extends AbstractHelper
 {
+    /**
+     * @var string
+     */
     protected $defaultHelper = 'readonlyformitem';
 
+    /**
+     * @var array
+     */
     protected $classMap = [
         'Zend\Form\Element\Select' => 'readonlyformselect',
         'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
     ];
 
+    /**
+     * @var string
+     */
     protected $format = '<li class="%s"><dt>%s</dt><dd>%s</dd></li>';
 
     /**
@@ -52,6 +65,10 @@ class FormRow extends AbstractHelper
         return $this->getView()->plugin($this->defaultHelper);
     }
 
+    /**
+     * @param ElementInterface $element
+     * @return string
+     */
     public function render(ElementInterface $element)
     {
         if (in_array($element->getAttribute('type'), ['hidden', 'submit']) || $element instanceof Button) {
@@ -82,6 +99,10 @@ class FormRow extends AbstractHelper
         return sprintf($this->format, $class, $label, $value);
     }
 
+    /**
+     * @param $element
+     * @return string
+     */
     public function getClass($element)
     {
         $class = 'definition-list__item';

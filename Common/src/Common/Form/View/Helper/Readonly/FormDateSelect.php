@@ -50,7 +50,7 @@ class FormDateSelect extends AbstractHelper
             $element->getMonthElement()->getValue(),
             $element->getDayElement()->getValue()
         );
-        
+
         return $dateTime->format($this->format);
     }
 }
