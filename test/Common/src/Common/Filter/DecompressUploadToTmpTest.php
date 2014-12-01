@@ -2,6 +2,7 @@
 
 namespace CommonTest\Filter;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Filter\DecompressUploadToTmp;
 use Mockery as m;
 
@@ -14,7 +15,7 @@ use Mockery as m;
  * @package CommonTest\Filter
  * @group UnsafeMocking
  */
-class DecompressUploadToTmpTest extends \PHPUnit_Framework_TestCase
+class DecompressUploadToTmpTest extends MockeryTestCase
 {
     public function testFilter()
     {

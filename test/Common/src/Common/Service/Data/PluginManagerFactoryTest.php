@@ -3,7 +3,7 @@
 
 namespace CommonTest\Service\Data;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PluginManagerFactory;
 use Mockery as m;
 
@@ -11,7 +11,7 @@ use Mockery as m;
  * Class PluginManagerFactoryTest
  * @package CommonTest\Service\Data
  */
-class PluginManagerFactoryTest extends TestCase
+class PluginManagerFactoryTest extends MockeryTestCase
 {
     public function testCreateService()
     {
@@ -24,7 +24,7 @@ class PluginManagerFactoryTest extends TestCase
         ];
 
         $mockSl = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
-        $mockSl->shouldReceive('get')->once()->with('Config')->andReturn($config);
+        $mockSl->shouldReceive('get')->with('Config')->andReturn($config);
         $mockSl->shouldIgnoreMissing();
 
         $sut = new PluginManagerFactory();

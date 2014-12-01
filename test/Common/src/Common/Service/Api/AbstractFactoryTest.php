@@ -3,7 +3,7 @@
 
 namespace CommonTest\Service\Api;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Api\AbstractFactory;
 use Mockery as m;
 
@@ -11,7 +11,7 @@ use Mockery as m;
  * Class AbstractFactoryTest
  * @package CommonTest\Service\Api
  */
-class AbstractFactoryTest extends TestCase
+class AbstractFactoryTest extends MockeryTestCase
 {
     public function testCanCreateServiceWithName()
     {

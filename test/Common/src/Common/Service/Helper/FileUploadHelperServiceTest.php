@@ -7,7 +7,7 @@
  */
 namespace CommonTest\Service\Helper;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Helper\FileUploadHelperService;
 use Mockery as m;
 
@@ -16,7 +16,7 @@ use Mockery as m;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class FileUploadHelperServiceTest extends PHPUnit_Framework_TestCase
+class FileUploadHelperServiceTest extends MockeryTestCase
 {
     public function testSetGetForm()
     {

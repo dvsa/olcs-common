@@ -7,14 +7,14 @@
  */
 namespace CommonTest\Util;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Test rest call trait
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class RestCallTraitTest extends PHPUnit_Framework_TestCase
+class RestCallTraitTest extends MockeryTestCase
 {
     /**
      * Subject under test

@@ -2,6 +2,7 @@
 
 namespace CommonTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PublicHoliday;
 use Mockery as m;
 use Common\Service\Data\Licence as LicenceService;
@@ -12,7 +13,7 @@ use Common\Service\Data\Licence as LicenceService;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class PublicHolidayTest extends \PHPUnit_Framework_TestCase
+class PublicHolidayTest extends MockeryTestCase
 {
     public function testGetServiceName()
     {
