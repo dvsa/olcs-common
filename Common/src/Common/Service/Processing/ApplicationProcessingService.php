@@ -40,7 +40,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->processApplicationOperatingCentres($id, $licenceId);
 
-        $this->createDiscRecords($licenceId);
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+
+        $this->createDiscRecords($licenceId, $category);
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
     }
@@ -248,16 +250,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         // @todo Process updates and deletions (Out of scope for OLCS-4895)
     }
 
-    protected function createDiscRecords($licenceId, $category = null)
+    protected function createDiscRecords($licenceId, $category)
     {
         $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
             ->getForApplicationValidation($licenceId);
 
         if (!empty($licenceVehicles)) {
-            if ($category === null) {
-                $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($licenceId);
-            }
-
             if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
                 $this->createGoodsDiscs($licenceVehicles);
             } else {

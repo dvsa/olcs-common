@@ -115,9 +115,9 @@ class ApplicationProcessingServiceTest extends PHPUnit_Framework_TestCase
             'feeDate' => '2019-05-31'
         );
 
-        $this->mockApplicationService($id, $licenceId, $validationData);
+        $mockApplicationService = $this->mockApplicationService($id, $licenceId, $validationData);
 
-        $mockLicenceService = $this->mockLicenceService($licenceId, $expectedLicenceData);
+        $this->mockLicenceService($licenceId, $expectedLicenceData);
 
         $this->mockApplicationOperatingCentre($id);
 
@@ -133,9 +133,9 @@ class ApplicationProcessingServiceTest extends PHPUnit_Framework_TestCase
         );
         $this->mockLicenceVehicles($licenceId, $mockLicenceVehicles);
 
-        $mockLicenceService->expects($this->once())
+        $mockApplicationService->expects($this->once())
             ->method('getCategory')
-            ->with($licenceId)
+            ->with($id)
             ->will($this->returnValue(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE));
 
         $goodsDiscMock = $this->getMock('\stdClass', ['save']);
@@ -172,7 +172,7 @@ class ApplicationProcessingServiceTest extends PHPUnit_Framework_TestCase
     {
         $mockApplicationService = $this->getMock(
             '\stdClass',
-            ['getLicenceIdForApplication', 'forceUpdate', 'getDataForValidating']
+            ['getLicenceIdForApplication', 'forceUpdate', 'getDataForValidating', 'getCategory']
         );
         $mockApplicationService->expects($this->once())
             ->method('getLicenceIdForApplication')
@@ -189,11 +189,13 @@ class ApplicationProcessingServiceTest extends PHPUnit_Framework_TestCase
             ->with($id)
             ->will($this->returnValue($validationData));
         $this->sm->setService('Entity\Application', $mockApplicationService);
+
+        return $mockApplicationService;
     }
 
     protected function mockLicenceService($licenceId, $expectedLicenceData)
     {
-        $mockLicenceService = $this->getMock('\stdClass', ['forceUpdate', 'getCategory']);
+        $mockLicenceService = $this->getMock('\stdClass', ['forceUpdate']);
         $mockLicenceService->expects($this->once())
             ->method('forceUpdate')
             ->with($licenceId, $expectedLicenceData);
