@@ -651,7 +651,7 @@ return array(
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
-    'fees.max_amount' => 'Maximum amount',
+    'fees.max_amount' => 'Fee amount',
     'fees.payment_method' => 'Payment method',
     'fees.received' => 'Amount received',
     'filters' => 'Filters',
