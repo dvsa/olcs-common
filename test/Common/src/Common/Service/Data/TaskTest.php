@@ -3,7 +3,6 @@
 namespace CommonTest\Service\Data;
 
 use Common\Service\Data\Task;
-use Mockery as m;
 use PHPUnit_Framework_TestCase;
 
 /**

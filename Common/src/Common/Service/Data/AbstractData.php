@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Common\Exception\BadRequestException;
 use Common\Util\RestClient;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface;
@@ -54,7 +55,9 @@ abstract class AbstractData implements FactoryInterface, RestClientAwareInterfac
     }
 
     /**
-     * @param array $data
+     * @param $key
+     * @param $data
+     * @return $this
      */
     public function setData($key, $data)
     {
@@ -72,6 +75,18 @@ abstract class AbstractData implements FactoryInterface, RestClientAwareInterfac
         }
 
         return null;
+    }
+
+    public function delete($id)
+    {
+        $delete = $this->getRestClient()->delete($id);
+
+        //rest client returns empty array on success
+        if (!is_array($delete)) {
+            throw new BadRequestException('Record could not be deleted');
+        }
+
+        return true;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace CommonTest\Validator;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Validator\ValidateIf;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class ValidateIfTest
  * @package CommonTest\Validator
  */
-class ValidateIfTest extends \PHPUnit_Framework_TestCase
+class ValidateIfTest extends MockeryTestCase
 {
     /**
      *
@@ -17,12 +18,14 @@ class ValidateIfTest extends \PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $sut = new ValidateIf();
-        $sut->setOptions([
-            'context_field' =>'test',
-            'context_truth' => false,
-            'context_values' => [null],
-            'allow_empty' => true
-        ]);
+        $sut->setOptions(
+            [
+                'context_field' =>'test',
+                'context_truth' => false,
+                'context_values' => [null],
+                'allow_empty' => true
+            ]
+        );
 
         $this->assertEquals('test', $sut->getContextField());
         $this->assertEquals([null], $sut->getContextValues());

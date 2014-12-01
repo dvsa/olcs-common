@@ -29,6 +29,11 @@ return array(
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'redirect' => 'Common\Controller\Plugin\Redirect',
+        )
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(
@@ -78,7 +83,6 @@ return array(
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
-            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
@@ -152,7 +156,11 @@ return array(
             'formPlainText' => 'Common\Form\View\Helper\FormPlainText',
             'flashMessengerAll' => 'Common\View\Helper\FlashMessenger',
             'assetPath' => 'Common\View\Helper\AssetPath',
-            'addTags' => 'Common\View\Helper\AddTags'
+            'addTags' => 'Common\View\Helper\AddTags',
+            'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
+            'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
+            'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
+            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow'
         )
     ),
     'view_manager' => array(
@@ -217,6 +225,7 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
+            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
         ]
     ],
     'tables' => array(
