@@ -185,7 +185,7 @@ class FeeCommonTest extends \PHPUnit_Framework_TestCase
             'feeStatus' => 'lfs_ot',
             'createdBy' => 2,
             'lastModifiedBy' => 2,
-            'lastModifiedOn' => date('Y-m-d H:s:i')
+            'lastModifiedOn' => date('Y-m-d H:i:s')
         ];
         $this->fee->expects($this->at(2))
             ->method('makeRestCall')

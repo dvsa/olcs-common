@@ -77,7 +77,7 @@ class FeeCommon implements ServiceLocatorAwareInterface, FactoryInterface
             'createdBy' => self::CURRENT_USER_ID,
             // @TODO: change to real user id when implemented
             'lastModifiedBy' => self::CURRENT_USER_ID,
-            'lastModifiedOn' => date('Y-m-d H:s:i')
+            'lastModifiedOn' => date('Y-m-d H:i:s')
         ];
 
         $this->makeRestCall('Fee', 'POST', $params);
