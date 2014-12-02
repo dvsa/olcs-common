@@ -37,11 +37,10 @@ class Sla extends AbstractData
                     return null;
                 }
 
-                $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
-
-                if ($dateToCompare == false) {
-                    $dateToCompare = \DateTime::createFromFormat(\DateTime::ISO8601, $context[$rule['compareTo']]);
-                }
+                $dateToCompare = \DateTime::createFromFormat(
+                    'Y-m-d',
+                    date('Y-m-d', strtotime($context[$rule['compareTo']]))
+                );
 
                 $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
                 $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
