@@ -7,8 +7,6 @@
  */
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Util\RestClient;
 
 /**
@@ -16,9 +14,7 @@ use Common\Util\RestClient;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class Publication extends AbstractData implements ServiceLocatorAwareInterface
+class Publication extends AbstractData
 {
-    use ServiceLocatorAwareTrait;
-
     protected $serviceName = 'Publication';
 }
