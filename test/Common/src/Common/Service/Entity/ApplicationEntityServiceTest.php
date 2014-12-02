@@ -359,10 +359,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $id = 4;
 
         $response = array(
-            'licence' => array(
-                'goodsOrPsv' => array(
-                    'id' => 'RESPONSE'
-                )
+            'goodsOrPsv' => array(
+                'id' => 'RESPONSE'
             )
         );
 

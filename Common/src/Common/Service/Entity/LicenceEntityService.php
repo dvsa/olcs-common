@@ -62,26 +62,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     );
 
     /**
-     * Holds the bundle to retrieve type of licence bundle
-     *
-     * @var array
-     */
-    private $typeOfLicenceBundle = array(
-        'properties' => array(
-            'version',
-            'niFlag'
-        ),
-        'children' => array(
-            'goodsOrPsv' => array(
-                'properties' => array('id')
-            ),
-            'licenceType' => array(
-                'properties' => array('id')
-            )
-        )
-    );
-
-    /**
      * Bundle to check whether the application belongs to the organisation
      *
      * @var array
@@ -336,20 +316,14 @@ class LicenceEntityService extends AbstractLvaEntityService
     );
 
     protected $licenceNoGenBundle = array(
-        'properties' => array(
-            'id',
-            'licNo',
-            'version'
-        ),
         'children' => array(
-            'trafficArea' => array(
-                'properties' => array(
-                    'id',
-                )
-            ),
-            'goodsOrPsv' => array(
-                'properties' => array(
-                    'id'
+            'trafficArea',
+            'applications' => array(
+                'criteria' => array(
+                    'isVariation' => false
+                ),
+                'children' => array(
+                    'goodsOrPsv'
                 )
             )
         )
@@ -436,24 +410,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function getOverview($id)
     {
         return $this->get($id, $this->overviewBundle);
-    }
-
-    /**
-     * Get type of licence data
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getTypeOfLicenceData($id)
-    {
-        $data = $this->get($id, $this->typeOfLicenceBundle);
-
-        return array(
-            'version' => $data['version'],
-            'niFlag' => $data['niFlag'],
-            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
-            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
-        );
     }
 
     /**
@@ -599,9 +555,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         $licence = $this->get($licenceId, $this->licenceNoGenBundle);
 
-        if (!isset($licence['goodsOrPsv']['id']) || !isset($licence['trafficArea']['id'])) {
+        if (!isset($licence['applications'][0]['goodsOrPsv']['id']) || !isset($licence['trafficArea']['id'])) {
             return;
         }
+
+        $licenceCat = $licence['applications'][0]['goodsOrPsv']['id'];
 
         $saveData = array(
             'id' => $licence['id'],
@@ -618,7 +576,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $saveData['licNo'] = sprintf(
                 '%s%s%s',
-                $licence['goodsOrPsv']['id'] === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
+                $licenceCat === self::LICENCE_CATEGORY_PSV ? 'P' : 'O',
                 $licence['trafficArea']['id'],
                 $licenceGen['id']
             );
@@ -638,10 +596,5 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $this->save($saveData);
         }
-    }
-
-    public function getCategory($id)
-    {
-        return $this->get($id, $this->categoryBundle)['goodsOrPsv']['id'];
     }
 }

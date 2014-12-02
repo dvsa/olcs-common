@@ -148,7 +148,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function getTypeOfLicenceData()
     {
-        throw new \Exception('getTypeOfLicenceData must be implemented');
+        return $this->getLvaEntityService()->getTypeOfLicenceData($this->getIdentifier());
     }
 
     /**

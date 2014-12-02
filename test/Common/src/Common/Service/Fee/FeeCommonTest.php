@@ -7,9 +7,6 @@
  */
 namespace CommonTest\Service\Fee;
 
-use Common\Service\Fee\FeeCommon;
-use CommonTest\Bootstrap;
-
 /**
  * Fee common service test
  *
@@ -106,7 +103,7 @@ class FeeCommonTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate application fee - no fee found
-     * 
+     *
      * @expectedException \Common\Service\Fee\Exception
      * @dataProvider providerGenerateFeeNoFeeFoundData
      * @group feeService
@@ -152,7 +149,7 @@ class FeeCommonTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate application fee
-     * 
+     *
      * @dataProvider providerGenerateFeeData
      * @group feeService
      */
@@ -223,17 +220,18 @@ class FeeCommonTest extends \PHPUnit_Framework_TestCase
     {
         if ($service == 'Application' && $method == 'GET') {
             return [
+                'id' => 7,
                 'receivedDate' => '2014-01-01',
                 'createdOn' => '2014-01-01',
+                'niFlag' => $this->niFlag,
+                'licenceType' => [
+                    'id' => $this->licenceType
+                ],
+                'goodsOrPsv' => [
+                    'id' => $this->goodsOrPsv
+                ],
                 'licence' => [
-                    'id' => 1,
-                    'niFlag' => $this->niFlag,
-                    'licenceType' => [
-                        'id' => $this->licenceType
-                    ],
-                    'goodsOrPsv' => [
-                        'id' => $this->goodsOrPsv
-                    ]
+                    'id' => 1
                 ]
             ];
         }

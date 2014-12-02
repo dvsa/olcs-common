@@ -88,19 +88,9 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
         );
 
         $form->shouldReceive('setData')
-            ->andReturn($form);
-
-        $form->shouldReceive('isValid')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
             ->andReturn(true);
-
-        $this->sut
-            ->shouldReceive('getLicenceId')
-            ->andReturn(7)
-            ->shouldReceive('postSave')
-            ->with('type_of_licence')
-            ->shouldReceive('completeSection')
-            ->with('type_of_licence')
-            ->andReturn('complete');
 
         $lEntity = m::mock()
             ->shouldReceive('save')
@@ -115,7 +105,16 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             )
             ->getMock();
 
-        $this->setService('Entity\Licence', $lEntity);
+        $this->sut
+            ->shouldReceive('getIdentifier')
+            ->andReturn(7)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($lEntity)
+            ->shouldReceive('postSave')
+            ->with('type_of_licence')
+            ->shouldReceive('completeSection')
+            ->with('type_of_licence')
+            ->andReturn('complete');
 
         $this->assertEquals(
             'complete',
