@@ -33,12 +33,15 @@ class Sla extends AbstractData
         foreach ($rules as $rule) {
 
             if ($rule['field'] == $name) {
-
                 if (!array_key_exists($rule['compareTo'], $context) || empty($context[$rule['compareTo']])) {
                     return null;
                 }
 
                 $dateToCompare = \DateTime::createFromFormat('Y-m-d', $context[$rule['compareTo']]);
+
+                if ($dateToCompare == false) {
+                    $dateToCompare = \DateTime::createFromFormat(\DateTime::ISO8601, $context[$rule['compareTo']]);
+                }
 
                 $effectiveFrom = \DateTime::createFromFormat('Y-m-d', $rule['effectiveFrom']);
                 $effectiveTo = \DateTime::createFromFormat('Y-m-d', $rule['effectiveTo']);
@@ -127,7 +130,7 @@ class Sla extends AbstractData
     /**
      * Adds days to a date.
      *
-     * @param string $input
+     * @param string $date
      * @param integer $days
      * @return string
      */
