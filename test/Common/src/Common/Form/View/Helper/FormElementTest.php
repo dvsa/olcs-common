@@ -10,7 +10,6 @@ namespace CommonTest\Form\View\Helper;
 use Zend\View\HelperPluginManager;
 use Zend\View\Renderer\JsonRenderer;
 use Zend\Form\View\Helper;
-use Mockery as m;
 
 /**
  * FormElement Test

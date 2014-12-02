@@ -2,6 +2,7 @@
 
 namespace CommonTest\Validator;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Validator\DateCompare;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class ValidateDateCompare
  * @package CommonTest\Validator
  */
-class ValidateDateCompareTest extends \PHPUnit_Framework_TestCase
+class ValidateDateCompareTest extends MockeryTestCase
 {
     /**
      * test setOptions

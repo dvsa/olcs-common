@@ -2,6 +2,7 @@
 
 namespace OlcsTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\PiVenue;
 use Mockery as m;
 
@@ -9,7 +10,7 @@ use Mockery as m;
  * Class PiVenue Test
  * @package CommonTest\Service
  */
-class PiVenueTest extends \PHPUnit_Framework_TestCase
+class PiVenueTest extends MockeryTestCase
 {
     public function testGetServiceName()
     {
