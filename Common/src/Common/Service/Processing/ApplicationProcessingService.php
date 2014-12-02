@@ -50,11 +50,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     public function processGrantApplication($id)
     {
-        $applicationService = $this->getServiceLocator()->get('Entity\Application');
+        $licenceId = $this->getLicenceId($id);
 
-        $licenceId = $applicationService->getLicenceIdForApplication($id);
-
-        $category = $applicationService->getCategory($id);
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
 
         if ($category === LicenceEntityService::LICENCE_CATEGORY_PSV) {
             $this->processGrantPsvApplication($id, $licenceId);
@@ -93,7 +91,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     public function processUnGrantApplication($id)
     {
-        $licenceId = $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($id);
+        $licenceId = $this->getLicenceId($id);
 
         $this->undoGrantApplication($id);
         $this->undoGrantLicence($licenceId);
@@ -184,7 +182,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function createGrantFee($applicationId, $licenceId, $taskId)
     {
-        $feeType = $this->getFeeTypeForLicence($applicationId, $licenceId);
+        $feeType = $this->getFeeTypeForApplication($applicationId, $licenceId);
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
         $feeData = array(
@@ -202,18 +200,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Get the latest fee type for a licence
+     * Get the latest fee type for a application
      *
-     * @todo Maybe move this so it can be re-used
-     *
-     * @param int $licenceId
+     * @param int $applicationId
      * @return int
      */
-    protected function getFeeTypeForLicence($applicationId, $licenceId)
+    protected function getFeeTypeForApplication($applicationId)
     {
-        $data = $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($licenceId);
+        $applicationService = $this->getServiceLocator()->get('Entity\Application');
 
-        $date = $this->getServiceLocator()->get('Entity\Application')->getApplicationDate($applicationId);
+        $data = $applicationService->getTypeOfLicenceData($applicationId);
+        $date = $applicationService->getApplicationDate($applicationId);
 
         return $this->getServiceLocator()->get('Data\FeeType')->getLatest(
             FeeTypeDataService::FEE_TYPE_GRANT,
@@ -234,6 +231,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         foreach ($applicationOperatingCentres as $aoc) {
             switch ($aoc['action']) {
                 case 'A':
+                    unset($aoc['action']);
                     $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
                     $aoc['licence'] = $licenceId;
                     $new[] = $aoc;
