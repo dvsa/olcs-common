@@ -143,6 +143,14 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected $sectionServiceName;
     protected $sectionServices = array();
 
+
+    /**
+     * Holds the header view template name
+     *
+     * @var string
+     */
+    protected $headerViewTemplate = 'layout/partials/header'; //default
+
     /**
      * @codeCoverageIgnore
      * @param \Zend\Mvc\MvcEvent $e
@@ -558,7 +566,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
         // every page has a header, so no conditional logic needed here
         $header = new ViewModel($viewVariables);
-        $header->setTemplate('layout/partials/header');
+        $header->setTemplate($this->headerViewTemplate);
 
         // allow a controller to specify a more specific page layout to use
         // in addition to the base one all views inherit from

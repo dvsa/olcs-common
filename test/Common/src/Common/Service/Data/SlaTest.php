@@ -76,6 +76,10 @@ class SlaTest extends MockeryTestCase
     {
         return [
             [
+                '2014-11-19 00:00:00',
+                ['agreedDate' => '2014-10-15T00:00:00+0000']
+            ],
+            [
                 '2014-11-19',
                 ['agreedDate' => '2014-10-15']
             ],

@@ -267,6 +267,46 @@ class ApplicationEntityService extends AbstractLvaEntityService
     );
 
     /**
+     * Bundle to retrieve data for processing page
+     *
+     * @var array
+     */
+    private $processingDataBundle = array(
+        'properties' => 'ALL',
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id',
+                    'description'
+                )
+            ),
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
+                ),
+                'children' => array(
+                    'status' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'goodsOrPsv' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'licenceType' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'trafficArea' => array(
+                        'properties' => 'ALL'
+                    ),
+                    'organisation' => array(
+                        'properties' => 'ALL'
+                    )
+                )
+            )
+        )
+    );
+
+    /**
      * Cache the mapping of application ids to licence ids
      *
      * @var array
@@ -310,6 +350,25 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'name'
                         )
                     )
+                )
+            )
+        )
+    );
+
+    /**
+     * Task data bundle
+     *
+     * @var array
+     */
+    private $taskDataBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
                 )
             )
         )
@@ -583,6 +642,26 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForCompletionStatus($id)
     {
         return $this->get($id, $this->completionStatusDataBundle);
+    }
+
+    /**
+     * Get data for processing
+     * @param int $id
+     * @return array
+     */
+    public function getDataForProcessing($id)
+    {
+        return $this->get($id, $this->processingDataBundle);
+    }
+
+    /**
+     * Get data for task stuff
+     * @param int $id
+     * @return array
+     */
+    public function getDataForTasks($id)
+    {
+        return $this->get($id, $this->taskDataBundle);
     }
 
     /**
