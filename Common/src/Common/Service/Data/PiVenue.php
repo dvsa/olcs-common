@@ -1,12 +1,13 @@
 <?php
 
 namespace Common\Service\Data;
+use Common\Service\Data\Interfaces\ListData;
 
 /**
  * Class PiVenue
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class PiVenue extends AbstractData implements ListDataInterface
+class PiVenue extends AbstractData implements ListData
 {
     use LicenceServiceTrait;
 

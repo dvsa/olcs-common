@@ -6,6 +6,7 @@ namespace Common\Service\Data;
  * Interface CrudInterface
  *
  * @package Common\Service\Data
+ * @deprecated
  */
 interface CrudInterface
 {
