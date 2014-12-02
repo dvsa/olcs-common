@@ -66,7 +66,6 @@ return array(
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
             'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
-
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
