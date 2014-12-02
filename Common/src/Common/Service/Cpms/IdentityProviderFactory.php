@@ -1,7 +1,5 @@
 <?php
 
-namespace Common\Service\Cpms;
-
 /**
  * CPMS Identity Provider Service Factory
  *
