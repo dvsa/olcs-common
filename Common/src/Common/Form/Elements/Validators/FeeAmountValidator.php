@@ -22,7 +22,7 @@ class FeeAmountValidator extends LessThan
      * @var array
      */
     protected $messageTemplates = array(
-        'notLessThan' => 'fees.foo.baz',
-        'notLessThanInclusive' => 'fees.foo.baz',
+        'notLessThan' => 'fees.amount_too_large',
+        'notLessThanInclusive' => 'fees.amount_too_large',
     );
 }

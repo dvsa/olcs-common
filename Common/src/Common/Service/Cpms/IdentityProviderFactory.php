@@ -47,7 +47,6 @@ class IdentityProviderFactory implements FactoryInterface
         $service->setUserId($config['user_id']);
         $service->setClientId($config['client_id']);
         $service->setClientSecret($config['client_secret']);
-        $service->setCustomerReference('TODO');
 
         return $service;
     }

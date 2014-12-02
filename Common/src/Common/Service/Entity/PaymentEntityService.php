@@ -41,4 +41,9 @@ class PaymentEntityService extends AbstractEntityService
         $result = $this->get($query, $this->detailsBundle);
         return $result['Count'] === 1 ? $result['Results'][0] : false;
     }
+
+    public function setStatus($id, $status)
+    {
+        return $this->forceUpdate($id, ['status' => $status]);
+    }
 }

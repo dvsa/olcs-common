@@ -654,6 +654,7 @@ return array(
     'fees.max_amount' => 'Fee amount',
     'fees.payment_method' => 'Payment method',
     'fees.received' => 'Amount received',
+    'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'filters' => 'Filters',
     'finance' => 'Finance',
     'first-name' => 'First name(s)',
