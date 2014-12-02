@@ -105,6 +105,18 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     );
 
     /**
+     * Holds the bundle to retrieve type of licence bundle
+     *
+     * @var array
+     */
+    protected $typeOfLicenceBundle = array(
+        'children' => array(
+            'goodsOrPsv',
+            'licenceType'
+        )
+    );
+
+    /**
      * Get operating centres data
      *
      * @param int $id
@@ -142,5 +154,23 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     public function getDataForVehiclesPsv($id)
     {
         return $this->get($id, $this->vehiclesPsvBundle);
+    }
+
+    /**
+     * Get type of licence data
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getTypeOfLicenceData($id)
+    {
+        $data = $this->get($id, $this->typeOfLicenceBundle);
+
+        return array(
+            'version' => $data['version'],
+            'niFlag' => $data['niFlag'],
+            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
+            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+        );
     }
 }

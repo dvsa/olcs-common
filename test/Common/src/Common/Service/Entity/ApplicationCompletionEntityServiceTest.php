@@ -166,14 +166,12 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
-                    'licence' => array(
-                        'niFlag' => null,
-                        'goodsOrPsv' => array(
-                            'id' => 1
-                        ),
-                        'licenceType' => array(
-                            'id' => 1
-                        )
+                    'niFlag' => null,
+                    'goodsOrPsv' => array(
+                        'id' => 1
+                    ),
+                    'licenceType' => array(
+                        'id' => 1
                     )
                 ),
                 // Expected completion data
@@ -210,14 +208,12 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
-                    'licence' => array(
-                        'niFlag' => 'Y',
-                        'goodsOrPsv' => array(
-                            'id' => 1
-                        ),
-                        'licenceType' => array(
-                            'id' => 1
-                        )
+                    'niFlag' => 'Y',
+                    'goodsOrPsv' => array(
+                        'id' => 1
+                    ),
+                    'licenceType' => array(
+                        'id' => 1
                     )
                 ),
                 // Expected completion data

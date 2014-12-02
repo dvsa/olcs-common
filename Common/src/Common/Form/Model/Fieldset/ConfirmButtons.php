@@ -24,7 +24,7 @@ class ConfirmButtons
     public $submit = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--secondary large"})
+     * @Form\Attributes({"id":"cancel","type":"submit","class":"action--secondary large"})
      * @Form\Options({
      *     "label": "Cancel",
      *     "label_attributes": {
