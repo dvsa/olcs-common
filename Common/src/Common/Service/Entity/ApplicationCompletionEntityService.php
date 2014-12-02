@@ -126,13 +126,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getTypeOfLicenceStatus($applicationData)
     {
-        $licence = $applicationData['licence'];
-
         return $this->checkCompletion(
             array(
-                'niFlag' => $this->isYnValue($licence['niFlag']),
-                'goodsOrPsv' => isset($licence['goodsOrPsv']['id']),
-                'licenceType' => isset($licence['licenceType']['id'])
+                'niFlag' => $this->isYnValue($applicationData['niFlag']),
+                'goodsOrPsv' => isset($applicationData['goodsOrPsv']['id']),
+                'licenceType' => isset($applicationData['licenceType']['id'])
             )
         );
     }

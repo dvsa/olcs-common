@@ -31,13 +31,11 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $licenceId = $this->getLicenceId();
-
             $data = $this->formatDataForSave($data);
 
-            $data['id'] = $licenceId;
+            $data['id'] = $this->getIdentifier();
 
-            $this->getServiceLocator()->get('Entity\Licence')->save($data);
+            $this->getLvaEntityService()->save($data);
 
             $this->postSave('type_of_licence');
 

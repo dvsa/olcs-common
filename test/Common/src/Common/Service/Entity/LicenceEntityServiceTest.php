@@ -460,8 +460,12 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'id' => $licenceId,
             'version' => 3,
             'licNo' => null,
-            'goodsOrPsv' => array(
-                'id' => 1
+            'applications' => array(
+                array(
+                    'goodsOrPsv' => array(
+                        'id' => 1
+                    )
+                )
             ),
             'trafficArea' => array(
                 'id' => 2
@@ -503,8 +507,12 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'id' => $licenceId,
             'version' => 3,
             'licNo' => null,
-            'goodsOrPsv' => array(
-                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            'applications' => array(
+                array(
+                    'goodsOrPsv' => array(
+                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                    )
+                )
             ),
             'trafficArea' => array(
                 'id' => 'A'
@@ -588,8 +596,12 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'id' => $licenceId,
             'version' => 3,
             'licNo' => 'OA13',
-            'goodsOrPsv' => array(
-                'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            'applications' => array(
+                array(
+                    'goodsOrPsv' => array(
+                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                    ),
+                )
             ),
             'trafficArea' => array(
                 'id' => 'B'
