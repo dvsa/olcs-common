@@ -14,10 +14,6 @@ namespace Common\Service\Entity;
  */
 abstract class AbstractLvaEntityService extends AbstractEntityService
 {
-    /**
-     * Operating Centres bundle
-     */
-    protected $ocBundle = array();
 
     /**
      * Document Bundle
@@ -98,7 +94,9 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
      */
     public function getOperatingCentresData($id)
     {
-        return $this->get($id, $this->ocBundle);
+        // @NOTE: we're going to be consolidating calls which
+        // no longer need to define a bundle
+        return $this->get($id, []);
     }
 
     public function getDocuments($id, $categoryName, $documentSubCategoryName)
