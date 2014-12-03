@@ -17,33 +17,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     /**
      * Operating Centres bundle
      */
-    protected $ocBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totCommunityLicences',
-            'totAuthVehicles',
-            'totAuthTrailers',
-        ),
-        'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                ),
-                'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'name'
-                        )
-                    )
-                )
-            )
-        )
-    );
+    protected $ocBundle = array();
 
     /**
      * Document Bundle
