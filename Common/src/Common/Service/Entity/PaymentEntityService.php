@@ -21,10 +21,11 @@ class PaymentEntityService extends AbstractEntityService
      */
     protected $entity = 'Payment';
 
-    const STATUS_OUTSTANDING = 'payment_outstanding';
-    const STATUS_CANCELLED = 'payment_cancelled';
-    const STATUS_FAILED = 'payment_failed';
-    const STATUS_PAID = 'payment_paid';
+    const STATUS_OUTSTANDING = 'pay_s_os';
+    const STATUS_CANCELLED = 'pay_s_cn';
+    const STATUS_LEGACY = 'pay_s_leg';
+    const STATUS_FAILED = 'pay_s_fail';
+    const STATUS_PAID = 'pay_s_pd';
 
     protected $detailsBundle = [
         'children' => [
