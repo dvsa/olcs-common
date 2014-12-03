@@ -407,6 +407,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
      * @param array $filters
      * @return boolean
      */
+
     protected function showVehicle(array $licenceVehicle, array $filters = [])
     {
         $retv = true;
