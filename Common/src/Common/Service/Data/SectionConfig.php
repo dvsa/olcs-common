@@ -25,9 +25,14 @@ class SectionConfig
      */
     private $sections = array(
         'type_of_licence' => array(),
-        'business_type' => array(),
+        'business_type' => array(
+            'prerequisite' => array(
+                'type_of_licence'
+            )
+        ),
         'business_details' => array(
             'prerequisite' => array(
+                'type_of_licence',
                 'business_type'
             )
         ),
