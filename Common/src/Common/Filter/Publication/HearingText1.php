@@ -22,8 +22,8 @@ class HearingText1 extends AbstractPublicationFilter
     const ORG_TYPE_LLP = 'org_t_llp';
 
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
+     * @param \Common\Data\Object\Publication  $publication
+     * @return \Common\Data\Object\Publication
      * @throws ResourceNotFoundException
      */
     public function filter($publication)
@@ -61,7 +61,7 @@ class HearingText1 extends AbstractPublicationFilter
     }
 
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @param array $hearingData
      * @return string
      */

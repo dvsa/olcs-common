@@ -17,9 +17,8 @@ class PublicationSection extends AbstractPublicationFilter
     const HEARING_SECTION_ID = 13;
 
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
-     * @throws ResourceNotFoundException
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      */
     public function filter($publication)
     {

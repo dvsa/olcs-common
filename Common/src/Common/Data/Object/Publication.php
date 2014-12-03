@@ -1,12 +1,13 @@
 <?php
 
 namespace Common\Data\Object;
+use Zend\Stdlib\ArrayObject;
 
 /**
  * Class Publication
  * @package Common\Data\Object\Publication
  */
-class Publication
+class Publication extends ArrayObject
 {
     /**
      * @var int
