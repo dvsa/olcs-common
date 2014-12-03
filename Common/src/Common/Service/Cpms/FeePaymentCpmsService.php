@@ -113,11 +113,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
          * We have to bundle up the response data verbatim as it can
          * vary per gateway implementation
          */
-        $apiResponse = $client->put(
-            '/api/gateway/' . $reference . '/complete',
-            'CARD',
-            $data
-        );
+        $client->put('/api/gateway/' . $reference . '/complete', 'CARD', $data);
 
         // do we need to handle an unexpected response here?
 
@@ -136,7 +132,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $apiResponse = $client->get('/api/payment/' . $reference, 'QUERY_TXN', $params);
 
         switch ($apiResponse['payment_status']['code']) {
-        case self::PAYMENT_SUCCESS:
+            case self::PAYMENT_SUCCESS:
                 foreach ($fees as $fee) {
                     $data = [
                         'feeStatus'      => FeeEntityService::STATUS_PAID,
