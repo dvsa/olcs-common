@@ -93,176 +93,98 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $completionStatusDataBundle = array(
-        'properties' => array(
-            'safetyConfirmation',
-            'bankrupt',
-            'liquidation',
-            'receivership',
-            'administration',
-            'disqualified',
-            'insolvencyDetails',
-            'insolvencyConfirmation',
-            'prevHasLicence',
-            'prevHadLicence',
-            'prevBeenRefused',
-            'prevBeenRevoked',
-            'prevBeenDisqualifiedTc',
-            'prevBeenAtPi',
-            'prevPurchasedAssets',
-            'prevConviction',
-            'convictionsConfirmation',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totAuthVehicles',
-            'totAuthTrailers',
-            'totCommunityLicences',
-            'psvOperateSmallVhl',
-            'psvSmallVhlNotes',
-            'psvSmallVhlConfirmation',
-            'psvNoSmallVhlConfirmation',
-            'psvLimousines',
-            'psvNoLimousineConfirmation',
-            'psvOnlyLimousinesConfirmation'
-        ),
         'children' => array(
-            'operatingCentres' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
-            'previousConvictions' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
+            'goodsOrPsv',
+            'licenceType',
+            'operatingCentres',
+            'previousConvictions',
             'previousLicences' => array(
-                'properties' => array(),
                 'children' => array(
-                    'previousLicenceType' => array(
-                        'properties' => array('id')
-                    )
+                    'previousLicenceType'
                 )
             ),
             'licence' => array(
-                'properties' => array(
-                    'niFlag',
-                    'safetyInsVehicles',
-                    'safetyInsTrailers',
-                    'safetyInsVaries',
-                    'tachographInsName'
-                ),
                 'children' => array(
                     'licenceVehicles' => array(
                         'criteria' => array(
                             'removalDate' => 'NULL'
                         ),
-                        'properties' => array(
-                            'id'
-                        ),
                         'children' => array(
                             'vehicle' => array(
-                                'properties' => array(),
                                 'children' => array(
-                                    'psvType' => array(
-                                        'properties' => array('id')
-                                    )
+                                    'psvType'
                                 )
                             )
                         )
                     ),
-                    'privateHireLicences' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    ),
+                    'privateHireLicences',
                     'organisation' => array(
-                        'properties' => array(
-                            'companyOrLlpNo',
-                            'name',
-                            'type',
-                            'tradingNames'
-                        ),
                         'children' => array(
-                            'type' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
-                            'tradingNames' => array(
-                                'properties' => array(
-                                    'id',
-                                    'name'
-                                )
-                            ),
-                            'organisationPersons' => array(
-                                'properties' => array('id')
-                            ),
+                            'type',
+                            'tradingNames',
+                            'organisationPersons',
                             'contactDetails' => array(
-                                'properties' => array(
-                                    'id',
-                                    'fao'
-                                ),
                                 'children' => array(
-                                    'contactType' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
+                                    'contactType'
                                 )
                             )
                         )
                     ),
                     'contactDetails' => array(
-                        'properties' => array(
-                            'id',
-                            'fao'
-                        ),
                         'children' => array(
                             'phoneContacts' => array(
-                                'properties' => array(
-                                    'id',
-                                    'phoneNumber'
-                                ),
                                 'children' => array(
-                                    'phoneContactType' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
+                                    'phoneContactType'
                                 )
                             ),
-                            'contactType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'contactType'
                         )
                     ),
-                    'goodsOrPsv' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    ),
-                    'licenceType' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    ),
-                    'tachographIns' => array(
-                        'properties' => array('id')
-                    ),
-                    'workshops' => array(
-                        'properties' => array('id')
-                    ),
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'isScotland'
-                        )
-                    )
+                    'tachographIns',
+                    'workshops',
+                    'trafficArea'
                 )
             ),
+        )
+    );
+
+    /**
+     * Bundle to retrieve data for processing page
+     *
+     * @var array
+     */
+    private $processingDataBundle = array(
+        'properties' => 'ALL',
+        'children' => array(
+            'status' => array(
+                'properties' => array(
+                    'id',
+                    'description'
+                )
+            ),
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
+                ),
+                'children' => array(
+                    'status' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'goodsOrPsv' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'licenceType' => array(
+                        'properties' => array('id', 'description')
+                    ),
+                    'trafficArea' => array(
+                        'properties' => 'ALL'
+                    ),
+                    'organisation' => array(
+                        'properties' => 'ALL'
+                    )
+                )
+            )
         )
     );
 
@@ -310,6 +232,25 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'name'
                         )
                     )
+                )
+            )
+        )
+    );
+
+    /**
+     * Task data bundle
+     *
+     * @var array
+     */
+    private $taskDataBundle = array(
+        'properties' => array(
+            'id'
+        ),
+        'children' => array(
+            'licence' => array(
+                'properties' => array(
+                    'id',
+                    'licNo'
                 )
             )
         )
@@ -448,18 +389,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
     );
 
     protected $categoryBundle = array(
-        'properties' => array(),
         'children' => array(
-            'licence' => array(
-                'properties' => array(),
-                'children' => array(
-                    'goodsOrPsv' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    )
-                )
-            )
+            'goodsOrPsv'
         )
     );
 
@@ -477,11 +408,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'totAuthSmallVehicles',
             'totAuthMediumVehicles',
             'totAuthLargeVehicles',
+            'niFlag'
         ),
         'children' => array(
-            'licenceType' => array(
-                'properties' => array('id')
-            )
+            'goodsOrPsv',
+            'licenceType'
         )
     );
 
@@ -586,6 +517,26 @@ class ApplicationEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Get data for processing
+     * @param int $id
+     * @return array
+     */
+    public function getDataForProcessing($id)
+    {
+        return $this->get($id, $this->processingDataBundle);
+    }
+
+    /**
+     * Get data for task stuff
+     * @param int $id
+     * @return array
+     */
+    public function getDataForTasks($id)
+    {
+        return $this->get($id, $this->taskDataBundle);
+    }
+
+    /**
      * Get application type
      *
      * @param type $id
@@ -653,7 +604,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getCategory($id)
     {
-        return $this->get($id, $this->categoryBundle)['licence']['goodsOrPsv']['id'];
+        return $this->get($id, $this->categoryBundle)['goodsOrPsv']['id'];
     }
 
     public function getApplicationDate($id)
@@ -672,7 +623,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $data = $this->get($id, $this->validatingDataBundle);
 
         $data['licenceType'] = $data['licenceType']['id'];
+        $data['goodsOrPsv'] = $data['goodsOrPsv']['id'];
 
-        return $data;
+        return array_intersect_key(
+            $data,
+            [
+                'totAuthTrailers' => null,
+                'totAuthVehicles' => null,
+                'totAuthSmallVehicles' => null,
+                'totAuthMediumVehicles' => null,
+                'totAuthLargeVehicles' => null,
+                'licenceType' => null,
+                'goodsOrPsv' => null,
+                'niFlag' => null
+            ]
+        );
     }
 }

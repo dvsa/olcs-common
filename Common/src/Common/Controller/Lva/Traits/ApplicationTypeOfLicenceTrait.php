@@ -41,10 +41,10 @@ trait ApplicationTypeOfLicenceTrait
 
                 $data = $this->formatDataForSave($data);
 
-                $data['id'] = $ids['licence'];
+                $data['id'] = $ids['application'];
                 $data['version'] = 1;
 
-                $this->getServiceLocator()->get('Entity\Licence')->save($data);
+                $this->getServiceLocator()->get('Entity\Application')->save($data);
 
                 $this->updateCompletionStatuses($ids['application'], 'type_of_licence');
 

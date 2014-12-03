@@ -94,8 +94,10 @@ class PublicHoliday extends AbstractData
     {
         $outdata = [];
 
-        foreach ($data as $item) {
-            $outdata[] = $item['publicHolidayDate'];
+        if (is_array($data)) {
+            foreach ($data as $item) {
+                $outdata[] = $item['publicHolidayDate'];
+            }
         }
 
         return $outdata;
