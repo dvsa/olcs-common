@@ -13,6 +13,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Entity\FeePaymentEntityService;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
+use Common\Util\LoggerTrait;
 
 /**
  * Fee Payment Helper Service
@@ -21,7 +22,8 @@ use Common\Service\Entity\FeeEntityService;
  */
 class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 {
-    use ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait,
+        LoggerTrait;
 
     const PAYMENT_SUCCESS      = 801;
     const PAYMENT_FAILURE      = 802;
@@ -162,6 +164,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 break;
 
             default:
+                $this->log('Unknown CPMS payment_status: ' . $apiResponse['payment_status']['code']);
                 $status = null;
                 // @TODO log?
                 break;
