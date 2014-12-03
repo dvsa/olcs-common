@@ -826,6 +826,11 @@ return array(
     'internal-pi-hearing-add' => 'W Add hearing',
     'internal-pi-hearing-edit' => 'W Edit hearing',
     'internal-transport-manager-quick-actions' => 'W Quick actions',
+    'internal-vehicle-filter-disc' => 'W Disc',
+    'internal-vehicle-filter-filter' => 'W Filter',
+    'internal-vehicle-filter-include-removed' => 'W Include removed',
+    'internal-vehicle-filter-specified' => 'W Specified',
+    'internal-vehicle-filter-vrm' => 'W VRM',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',

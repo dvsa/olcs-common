@@ -15,18 +15,6 @@ namespace Common\Controller\Lva\Traits;
 trait LicenceGenericVehiclesControllerTrait
 {
     /**
-     * We only want to show active vehicles which
-     * haven't been marked as removed
-     *
-     * @param array $licenceVehicle
-     * @return boolean
-     */
-    protected function showVehicle(array $licenceVehicle)
-    {
-        return (!empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['removalDate']));
-    }
-
-    /**
      * Shared logic between licence vehicle sections
      *
      * @param array $data
