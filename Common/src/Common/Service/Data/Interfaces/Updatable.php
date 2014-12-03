@@ -14,7 +14,7 @@ interface Updatable
      * !! subject to change !!
      *
      * @param array $data
-     * @return Updatable
+     * @return int
      */
     public function save(array $data);
 }

@@ -14,9 +14,9 @@ interface BundleAware
      * A setter for the default bundle, used when one isn't explicitly passed
      *
      * @param Bundle $bundle
-     * @return DataService
+     * @return BundleAware
      */
-    public function setBundle(Bundle $bundle);
+    public function setDefaultBundle(Bundle $bundle);
 
     /**
      * Should return the name of the default bundle that this service uses, this can then be retrieved from the bundle

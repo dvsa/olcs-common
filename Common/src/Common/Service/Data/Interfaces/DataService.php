@@ -16,7 +16,7 @@ interface DataService
      * @param Bundle $bundle
      * @return DataService
      */
-    public function setBundle(Bundle $bundle);
+    public function setDefaultBundle(Bundle $bundle);
 
     /**
      * Fetch one result from backend and return as an array
