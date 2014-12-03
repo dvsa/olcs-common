@@ -166,7 +166,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             default:
                 $this->log('Unknown CPMS payment_status: ' . $apiResponse['payment_status']['code']);
                 $status = null;
-                // @TODO log?
                 break;
         }
 
