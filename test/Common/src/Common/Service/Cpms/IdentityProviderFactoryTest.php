@@ -3,7 +3,7 @@
 /**
  * CPMS Identity Provider Test
  *
- * @author Nick Payne
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace CommonTest\Service\Processing;
 
@@ -15,7 +15,7 @@ use Mockery as m;
 /**
  * CPMS Identity Provider Test
  *
- * @author Nick Payne
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class IdentityProviderFactoryTest extends MockeryTestCase
 {
