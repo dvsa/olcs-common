@@ -310,7 +310,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'totCommunityLicences' => $applicationData['totCommunityLicences'] !== null,
         );
 
-        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
 
             unset($requiredVars['totAuthSmallVehicles']);
             unset($requiredVars['totAuthMediumVehicles']);
@@ -512,7 +512,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $requiredVars[] = !empty($applicationData['licence']['tachographInsName']);
         }
 
-        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
             $requiredVars[] = $this->isAtLeast1($applicationData['licence']['safetyInsTrailers']);
         }
 
