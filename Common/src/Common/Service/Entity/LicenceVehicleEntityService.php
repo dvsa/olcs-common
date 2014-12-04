@@ -71,8 +71,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
-    protected $applicationValidationBundle = array('properties' => array('id'));
-
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
@@ -92,7 +90,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
     {
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
-        $this->forcePut($id, array('removalDate' => $date));
+        $this->forceUpdate($id, array('removalDate' => $date));
     }
 
     /**
@@ -152,7 +150,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
             'removalDate' => 'NULL'
         );
 
-        $results = $this->getAll($query, $this->applicationValidationBundle);
+        $results = $this->getAll($query);
 
         return $results['Results'];
     }
