@@ -19,7 +19,16 @@ abstract class CrudAbstract extends AbstractData implements CrudInterface
      */
     public function get($id)
     {
-        return $this->getRestClient()->get('', ['id' => $id]);
+        if (!$this->getData($id)) {
+
+            $data = $this->getRestClient()->get('', ['id' => $id]);
+
+            if ($data) {
+                $this->setData($id, $data);
+            }
+        }
+
+        return $this->getData($id);
     }
 
     /**
