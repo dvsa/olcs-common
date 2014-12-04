@@ -31,7 +31,7 @@ class PreviousHearing extends AbstractPublicationFilter
         $data = $this->getServiceLocator()
             ->get('DataServiceManager')
             ->get('\Common\Service\Data\PiHearing')
-            ->fetchPiHearingData($params);
+            ->fetchList($params);
 
         //not possible to get what we need from the current API,
         //but there will never be more than a few records to sort through
@@ -42,7 +42,6 @@ class PreviousHearing extends AbstractPublicationFilter
             if ($compareDate < $hearingData['hearingDate']) {
                 $previousHearings[$compareDate] = [
                     'isAdjourned' => $record['isAdjourned'] == 'Y' ? true : false,
-                    'isCancelled' => $record['isCancelled'] == 'Y' ? true : false,
                     'date' => $oldHearingDate->format('d F Y')
                 ];
             }
