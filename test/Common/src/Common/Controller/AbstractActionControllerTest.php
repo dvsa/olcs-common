@@ -213,6 +213,29 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($return, $sut->redirectToRoute($route, $params, $options, $reuse));
     }
 
+    public function testRedirectToRouteAjax()
+    {
+        $route   = 'dan-route';
+        $params  = ['foo'=>'bar'];
+        $options = ['baz'=>'qux'];
+        $reuse   = true;
+
+        $return = 'yeah';
+
+        $redirectMock = $this->getMock('stdClass', ['toRouteAjax']);
+        $redirectMock->expects($this->once())
+                     ->method('toRouteAjax')
+                     ->with($route, $params, $options, $reuse)
+                     ->will($this->returnValue($return));
+
+        $sut = $this->getNewSut(['redirect']);
+        $sut->expects($this->once())
+            ->method('redirect')
+            ->will($this->returnValue($redirectMock));
+
+        $this->assertSame($return, $sut->redirectToRouteAjax($route, $params, $options, $reuse));
+    }
+
     public function testGetFromRoute()
     {
         $param = 'foo';

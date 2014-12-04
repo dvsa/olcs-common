@@ -479,6 +479,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     }
 
     /**
+     * Wraps the redirect()->toRouteAjax method to help with unit testing
+     *
+     * @param string $route
+     * @param array $params
+     * @param array $options
+     * @param bool $reuse
+     * @return \Zend\Http\Response
+     */
+    public function redirectToRouteAjax($route = null, $params = array(), $options = array(), $reuse = false)
+    {
+        return $this->redirect()->toRouteAjax($route, $params, $options, $reuse);
+    }
+
+    /**
      * Get param from route
      *
      * @param string $name

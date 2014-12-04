@@ -597,10 +597,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
+                    'licenceType' => array(
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ),
                     'licence' => array(
-                        'licenceType' => array(
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
-                        ),
                         'organisation'=> array(
                             'contactDetails' => array(
 
@@ -654,10 +654,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
+                    'licenceType' => array(
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ),
                     'licence' => array(
-                        'licenceType' => array(
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
-                        ),
                         'organisation'=> array(
                             'contactDetails' => array(
                                 array(
@@ -716,10 +716,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
+                    'licenceType' => array(
+                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                    ),
                     'licence' => array(
-                        'licenceType' => array(
-                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
-                        ),
                         'organisation'=> array(
                             'contactDetails' => array(
 
@@ -1028,12 +1028,12 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'operatingCentres' => array(
                         'foo'
                     ),
+                    'licenceType' => array(
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ),
                     'licence' => array(
                         'goodsOrPsv' => array(
                             'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
-                        ),
-                        'licenceType' => array(
-                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                         )
                     )
                 ),
@@ -1080,13 +1080,13 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'operatingCentres' => array(
                         'foo'
                     ),
+                    'licenceType' => array(
+                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                    ),
                     'licence' => array(
                         'goodsOrPsv' => array(
                             'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
                         ),
-                        'licenceType' => array(
-                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
-                        )
                     )
                 ),
                 // Expected completion data
