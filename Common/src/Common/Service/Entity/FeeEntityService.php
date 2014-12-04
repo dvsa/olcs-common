@@ -28,17 +28,10 @@ class FeeEntityService extends AbstractLvaEntityService
     const STATUS_CANCELLED = 'lfs_cn';
 
     protected $applicationIdBundle = array(
-        'properties' => array(),
         'children' => array(
             'application' => array(
-                'properties' => array(
-                    'id',
-                    'isVariation'
-                ),
                 'children' => array(
-                    'status' => array(
-                        'properties' => array('id')
-                    )
+                    'status'
                 )
             )
         )

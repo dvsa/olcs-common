@@ -21,10 +21,6 @@ class DocumentEntityService extends AbstractEntityService
      */
     protected $entity = 'Document';
 
-    protected $identifierBundle = array(
-        'properties' => array('identifier')
-    );
-
     /**
      * Get a documents identifier
      *
@@ -33,7 +29,7 @@ class DocumentEntityService extends AbstractEntityService
      */
     public function getIdentifier($id)
     {
-        $data = $this->get($id, $this->identifierBundle);
+        $data = $this->get($id);
 
         return (isset($data['identifier']) && !empty($data['identifier'])) ? $data['identifier'] : null;
     }

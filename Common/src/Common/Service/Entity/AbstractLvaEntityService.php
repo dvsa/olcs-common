@@ -14,63 +14,21 @@ namespace Common\Service\Entity;
  */
 abstract class AbstractLvaEntityService extends AbstractEntityService
 {
-
     /**
      * Document Bundle
      *
      * @var array
      */
     protected $documentBundle = array(
-        'properties' => array(),
         'children' => array(
             'documents' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'filename',
-                    'identifier',
-                    'size',
-                    'category',
-                    'documentSubCategory'
-                ),
                 // granted, not everything needs this, but it saves another bundle
                 'children' => array(
-                    'operatingCentre' => array(
-                        'properties' => array('id')
-                    ),
-                    'category' => array(
-                        'properties' => array('id')
-                    ),
-                    'documentSubCategory' => array(
-                        'properties' => array('id')
-                    )
+                    'operatingCentre',
+                    'category',
+                    'documentSubCategory'
                 )
             )
-        )
-    );
-
-    protected $totalAuthorisationBundle = array(
-        'properties' => array(
-            'totAuthVehicles',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
-        )
-    );
-
-    /**
-     * Vehicle PSV bundle
-     *
-     * @var array
-     */
-    protected $vehiclesPsvBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'hasEnteredReg'
         )
     );
 
@@ -96,7 +54,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
     {
         // @NOTE: we're going to be consolidating calls which
         // no longer need to define a bundle
-        return $this->get($id, []);
+        return $this->get($id);
     }
 
     public function getDocuments($id, $categoryName, $documentSubCategoryName)
@@ -120,12 +78,12 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
 
     public function getTotalVehicleAuthorisation($id, $type = '')
     {
-        return $this->get($id, $this->totalAuthorisationBundle)['totAuth' . $type . 'Vehicles'];
+        return $this->get($id)['totAuth' . $type . 'Vehicles'];
     }
 
     public function getDataForVehiclesPsv($id)
     {
-        return $this->get($id, $this->vehiclesPsvBundle);
+        return $this->get($id);
     }
 
     /**

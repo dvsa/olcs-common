@@ -37,14 +37,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $doesBelongToOrgBundle = array(
-        'properties' => array(),
         'children' => array(
             'licence' => array(
-                'properties' => array(),
                 'children' => array(
-                    'organisation' => array(
-                        'properties' => array('id')
-                    )
+                    'organisation'
                 )
             )
         )
@@ -56,18 +52,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $overviewBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'createdOn'
-        ),
         'children' => array(
-            'applicationCompletions' => array(
-                'properties' => 'ALL'
-            ),
-            'status' => array(
-                'properties' => array('id')
-            )
+            'applicationCompletions',
+            'status'
         )
     );
 
@@ -77,13 +64,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $licenceIdForApplicationBundle = array(
-        'properties' => array(),
         'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id'
-                )
-            )
+            'licence'
         )
     );
 
@@ -154,35 +136,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $processingDataBundle = array(
-        'properties' => 'ALL',
         'children' => array(
-            'status' => array(
-                'properties' => array(
-                    'id',
-                    'description'
-                )
-            ),
+            'status',
             'licence' => array(
-                'properties' => array(
-                    'id',
-                    'licNo'
-                ),
                 'children' => array(
-                    'status' => array(
-                        'properties' => array('id', 'description')
-                    ),
-                    'goodsOrPsv' => array(
-                        'properties' => array('id', 'description')
-                    ),
-                    'licenceType' => array(
-                        'properties' => array('id', 'description')
-                    ),
-                    'trafficArea' => array(
-                        'properties' => 'ALL'
-                    ),
-                    'organisation' => array(
-                        'properties' => 'ALL'
-                    )
+                    'status',
+                    'goodsOrPsv',
+                    'licenceType',
+                    'trafficArea',
+                    'organisation'
                 )
             )
         )
@@ -196,42 +158,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
     private $licenceIds = array();
 
     /**
-     * Application type bundle
-     *
-     * @var array
-     */
-    private $applicationTypeBundle = array(
-        'properties' => array(
-            'isVariation'
-        )
-    );
-
-    /**
      * Header data bundle
      *
      * @var array
      */
     private $headerDataBundle = array(
-        'properties' => array(
-            'id'
-        ),
         'children' => array(
-            'status' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
+            'status',
             'licence' => array(
-                'properties' => array(
-                    'id',
-                    'licNo'
-                ),
                 'children' => array(
-                    'organisation' => array(
-                        'properties' => array(
-                            'name'
-                        )
-                    )
+                    'organisation'
                 )
             )
         )
@@ -243,16 +179,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $taskDataBundle = array(
-        'properties' => array(
-            'id'
-        ),
         'children' => array(
-            'licence' => array(
-                'properties' => array(
-                    'id',
-                    'licNo'
-                )
-            )
+            'licence'
         )
     );
 
@@ -262,123 +190,40 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     protected $safetyDataBundle = array(
-        'properties' => array(
-            'version',
-            'safetyConfirmation',
-            'isMaintenanceSuitable'
-        ),
         'children' => array(
             'licence' => array(
-                'properties' => array(
-                    'version',
-                    'safetyInsVehicles',
-                    'safetyInsTrailers',
-                    'safetyInsVaries',
-                    'tachographInsName'
-                ),
                 'children' => array(
-                    'tachographIns' => array(
-                        'properties' => array('id')
-                    )
+                    'tachographIns'
                 )
             )
         )
     );
 
     protected $statusBundle = array(
-        'properties' => array(),
         'children' => array(
-            'status' => array(
-                'properties' => array('id')
-            )
-        )
-    );
-
-    protected $financialHistoryBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'bankrupt',
-            'liquidation',
-            'receivership',
-            'administration',
-            'disqualified',
-            'insolvencyDetails',
-            'insolvencyConfirmation'
-        )
-    );
-
-    protected $licenceHistoryBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'prevHasLicence',
-            'prevHadLicence',
-            'prevBeenRefused',
-            'prevBeenRevoked',
-            'prevBeenDisqualifiedTc',
-            'prevBeenAtPi',
-            'prevPurchasedAssets'
-        )
-    );
-
-    protected $convictionsPenaltiesData = array(
-        'properties' => array(
-            'version',
-            'prevConviction',
-            'convictionsConfirmation'
+            'status'
         )
     );
 
     protected $vehicleDeclarationDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'psvOperateSmallVhl',
-            'psvSmallVhlNotes',
-            'psvSmallVhlConfirmation',
-            'psvNoSmallVhlConfirmation',
-            'psvLimousines',
-            'psvNoLimousineConfirmation',
-            'psvOnlyLimousinesConfirmation'
-        ),
         'children' => array(
             'licence' => array(
-                'properties' => array(),
                 'children' => array(
-                    'trafficArea' => array(
-                        'properties' => array(
-                            'id',
-                            'isScotland'
-                        )
-                    )
+                    'trafficArea'
                 )
             )
         )
     );
 
     protected $totalNumberOfVehiclesBundle = array(
-        'properties' => array(),
         'children' => array(
             'licence' => array(
-                'properties' => array(),
                 'children' => array(
                     'licenceVehicles' => array(
-                        'properties' => array(),
                         'children' => array(
                             'vehicle' => array(
-                                'properties' => array(
-                                    'id'
-                                ),
                                 'children' => array(
-                                    'psvType' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
+                                    'psvType'
                                 )
                             )
                         )
@@ -394,22 +239,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
-    protected $applicationDateBundle = array(
-        'properties' => array(
-            'receivedDate',
-            'createdOn'
-        )
-    );
-
     protected $validatingDataBundle = array(
-        'properties' => array(
-            'totAuthTrailers',
-            'totAuthVehicles',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'niFlag'
-        ),
         'children' => array(
             'goodsOrPsv',
             'licenceType'
@@ -543,7 +373,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     public function getApplicationType($id)
     {
-        $data = $this->get($id, $this->applicationTypeBundle);
+        $data = $this->get($id);
 
         if (!isset($data['isVariation'])) {
             throw new Exceptions\UnexpectedResponseException('Is variation flag not found');
@@ -579,17 +409,17 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getFinancialHistoryData($id)
     {
-        return $this->get($id, $this->financialHistoryBundle);
+        return $this->get($id);
     }
 
     public function getLicenceHistoryData($id)
     {
-        return $this->get($id, $this->licenceHistoryBundle);
+        return $this->get($id);
     }
 
     public function getConvictionsPenaltiesData($id)
     {
-        return $this->get($id, $this->convictionsPenaltiesData);
+        return $this->get($id);
     }
 
     public function getDataForVehiclesDeclarations($id)
@@ -609,7 +439,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getApplicationDate($id)
     {
-        $data = $this->get($id, $this->applicationDateBundle);
+        $data = $this->get($id);
 
         if ($data['receivedDate'] === null) {
             return $data['createdOn'];

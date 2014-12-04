@@ -21,48 +21,15 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
      * @var array
      */
     protected $addressSummaryBundle = array(
-        'properties' => array(
-            'id',
-            'permission',
-            'adPlaced',
-            'noOfVehiclesRequired',
-            'noOfTrailersRequired'
-        ),
         'children' => array(
             'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
                 'children' => array(
                     'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
                         'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'countryCode'
                         )
                     ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
+                    'adDocuments'
                 )
             )
         )
@@ -74,64 +41,18 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
      * @var array
      */
     protected $addressBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'noOfTrailersRequired',
-            'noOfVehiclesRequired',
-            'sufficientParking',
-            'permission',
-            'adPlaced',
-            'adPlacedIn',
-            'adPlacedDate'
-        ),
         'children' => array(
             'operatingCentre' => array(
-                'properties' => array(
-                    'id',
-                    'version'
-                ),
                 'children' => array(
                     'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
                         'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'countryCode'
                         )
                     ),
-                    'adDocuments' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'filename',
-                            'identifier',
-                            'size'
-                        )
-                    )
+                    'adDocuments'
                 )
             )
         )
-    );
-
-    /**
-     * OC Count Bundle
-     *
-     * @var array
-     */
-    protected $ocCountBundle = array(
-        'properties' => array('id')
     );
 
     public function getAddressSummaryData($lvaId)
@@ -146,6 +67,6 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
 
     public function getOperatingCentresCount($lvaId)
     {
-        return $this->get(array($this->type => $lvaId), $this->ocCountBundle);
+        return $this->get(array($this->type => $lvaId));
     }
 }

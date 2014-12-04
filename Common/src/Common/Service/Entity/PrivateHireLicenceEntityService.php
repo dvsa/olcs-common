@@ -22,46 +22,16 @@ class PrivateHireLicenceEntityService extends AbstractEntityService
     protected $entity = 'PrivateHireLicence';
 
     protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'privateHireLicenceNo',
-        ),
         'children' => array(
             'contactDetails' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'description'
-                ),
                 'children' => array(
                     'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
                         'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'countryCode'
                         )
                     )
                 )
             )
-        )
-    );
-
-    protected $countBundle = array(
-        'properties' => array(
-            'id'
         )
     );
 
@@ -72,7 +42,7 @@ class PrivateHireLicenceEntityService extends AbstractEntityService
 
     public function getCountByLicence($licenceId)
     {
-        return $this->get(array('licence' => $licenceId), $this->countBundle)['Count'];
+        return $this->get(array('licence' => $licenceId))['Count'];
     }
 
     public function getById($id)

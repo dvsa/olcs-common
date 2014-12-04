@@ -19,19 +19,8 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
     protected $type = 'application';
 
     protected $dataBundle = array(
-        'properties' => array(
-            'action',
-            'adPlaced',
-            'adPlacedIn',
-            'sufficientParking',
-            'permission',
-            'noOfTrailersRequired',
-            'noOfVehiclesRequired'
-        ),
         'children' => array(
-            'operatingCentre' => array(
-                'properties' => array('id')
-            )
+            'operatingCentre'
         )
     );
 
