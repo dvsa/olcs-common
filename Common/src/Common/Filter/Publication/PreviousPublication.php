@@ -7,8 +7,6 @@
  */
 namespace Common\Filter\Publication;
 
-use Common\Exception\ResourceNotFoundException;
-
 /**
  * Previous publication filter
  *
