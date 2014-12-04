@@ -21,8 +21,6 @@ use Common\Data\Object\Publication;
  */
 class PublicationLink extends AbstractData implements ServiceLocatorAwareInterface
 {
-    const NEW_PUBLICATION_STATUS = 'pub_s_new';
-
     use ServiceLocatorAwareTrait;
 
     /**
@@ -31,11 +29,22 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     protected $serviceName = 'PublicationLink';
 
     /**
-     * @return ArrayObject
+     * @return \Common\Data\Object\Publication
      */
     public function createEmpty()
     {
         return new Publication();
+    }
+
+    public function createWithData($data)
+    {
+        $publicationLink = $this->createEmpty();
+
+        foreach ($data as $key => $value) {
+            $publicationLink->offsetSet($key, $value);
+        }
+
+        return $publicationLink;
     }
 
     /**
@@ -64,6 +73,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
 
     /**
      * @param array $params
+     * @param null $bundle
      * @return mixed
      */
     public function fetchList($params = [], $bundle = null)
