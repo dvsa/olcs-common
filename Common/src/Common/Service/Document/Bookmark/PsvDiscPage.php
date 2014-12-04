@@ -12,11 +12,6 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 class PsvDiscPage extends AbstractDiscList
 {
     /**
-     * Discs per page - any shortfall will be voided with placeholders
-     */
-    const PER_PAGE = 6;
-
-    /**
      * Discs per row in a page
      */
     const PER_ROW = 6;
