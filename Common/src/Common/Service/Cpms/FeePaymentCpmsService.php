@@ -3,6 +3,12 @@
 /**
  * Fee Payment Helper Service
  *
+ * This exists as a fairly thin wrapper around CPMS’ own SDK
+ * because it's otherwise still a *bit* verbose to just dump
+ * in controllers. Also, logically we’re probably always going
+ * to be paying fee objects, so tieing CPMS + fees together makes
+ * sense from an OLCS perspective
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Service\Cpms;
@@ -14,6 +20,8 @@ use Common\Service\Entity\FeePaymentEntityService;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Util\LoggerTrait;
+
+use CpmsClient\Service\ApiService;
 
 /**
  * Fee Payment Helper Service
@@ -49,7 +57,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'customer_reference' => (string)$customerReference,
             'sales_reference' => $salesReference,
             'product_reference' => $productReference,
-            'scope' => 'CARD',
+            'scope' => ApiService::SCOPE_CARD,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
             'payment_data' => [
@@ -61,7 +69,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $response = $client->post('/api/payment/card', 'CARD', $params);
+        $response = $client->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
 
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
@@ -113,7 +121,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
          * We have to bundle up the response data verbatim as it can
          * vary per gateway implementation
          */
-        $client->put('/api/gateway/' . $reference . '/complete', 'CARD', $data);
+        $client->put('/api/gateway/' . $reference . '/complete', ApiService::SCOPE_CARD, $data);
 
         // do we need to handle an unexpected response here?
 
@@ -129,7 +137,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $apiResponse = $client->get('/api/payment/' . $reference, 'QUERY_TXN', $params);
+        $apiResponse = $client->get('/api/payment/' . $reference, ApiService::SCOPE_QUERY_TXN, $params);
 
         switch ($apiResponse['payment_status']['code']) {
             case self::PAYMENT_SUCCESS:
