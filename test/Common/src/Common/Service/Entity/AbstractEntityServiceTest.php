@@ -92,4 +92,29 @@ class AbstractEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->forceUpdate($id, $data);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testMultiUpdate()
+    {
+        $data = array(
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'bar' => 'cake'
+            )
+        );
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall(
+            'Foo',
+            'PUT',
+            [['foo' => 'bar'], ['bar' => 'cake'], '_OPTIONS_' => ['multiple' => true]]
+        );
+
+        $this->sut->multiUpdate($data);
+    }
 }

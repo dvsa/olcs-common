@@ -353,7 +353,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function setTrafficArea($licenceId, $trafficAreaId = null)
     {
-        $this->forcePut($licenceId, array('trafficArea' => $trafficAreaId));
+        $this->forceUpdate($licenceId, array('trafficArea' => $trafficAreaId));
 
         if ($trafficAreaId) {
             $this->generateLicence($licenceId);
