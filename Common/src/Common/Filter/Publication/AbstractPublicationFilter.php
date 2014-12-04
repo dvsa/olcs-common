@@ -20,6 +20,10 @@ class AbstractPublicationFilter extends AbstractFilter implements ServiceLocator
 {
     use ServiceLocatorAwareTrait;
 
+    protected $publicationNewStatus = 'pub_s_new';
+    protected $hearingSectionId = 13;
+    protected $decisionSectionId = 14;
+
     /**
      * Merges the new data with the existing ArrayObject
      *
