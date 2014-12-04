@@ -100,9 +100,33 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->closeGrantTask($id, $licenceId);
     }
 
-    protected function cancelFees($licenceId)
+    public function cancelFees($licenceId)
     {
         $this->getServiceLocator()->get('Entity\Fee')->cancelForLicence($licenceId);
+    }
+
+    public function createFee($applicationId, $licenceId, $feeTypeName, $taskId = null)
+    {
+        $feeType = $this->getFeeTypeForApplication($applicationId, $feeTypeName);
+        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
+
+        $feeData = array(
+            'amount' => (float)($feeType['fixedValue'] === '0.00' ? $feeType['fiveYearValue'] : $feeType['fixedValue']),
+            'application' => $applicationId,
+            'licence' => $licenceId,
+            'invoicedDate' => $date,
+            'feeType' => $feeType['id'],
+            'description' => $feeType['description'] . ' for application ' . $applicationId,
+            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
+            'task' => $taskId
+        );
+
+        $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+    }
+
+    protected function createGrantFee($applicationId, $licenceId, $taskId)
+    {
+        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_GRANT, $taskId);
     }
 
     protected function closeGrantTask($id, $licenceId)
@@ -180,32 +204,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return $saved['id'];
     }
 
-    protected function createGrantFee($applicationId, $licenceId, $taskId)
-    {
-        $feeType = $this->getFeeTypeForApplication($applicationId, $licenceId);
-        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
-
-        $feeData = array(
-            'amount' => (float)($feeType['fixedValue'] === '0.00' ? $feeType['fiveYearValue'] : $feeType['fixedValue']),
-            'application' => $applicationId,
-            'licence' => $licenceId,
-            'invoicedDate' => $date,
-            'feeType' => $feeType['id'],
-            'description' => $feeType['description'] . ' for application ' . $applicationId,
-            'feeStatus' => FeeEntityService::STATUS_OUTSTANDING,
-            'task' => $taskId
-        );
-
-        $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
-    }
-
     /**
      * Get the latest fee type for a application
      *
      * @param int $applicationId
+     * @param string $feeType
      * @return int
      */
-    protected function getFeeTypeForApplication($applicationId)
+    protected function getFeeTypeForApplication($applicationId, $feeType)
     {
         $applicationService = $this->getServiceLocator()->get('Entity\Application');
 
@@ -213,7 +219,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $date = $applicationService->getApplicationDate($applicationId);
 
         return $this->getServiceLocator()->get('Data\FeeType')->getLatest(
-            FeeTypeDataService::FEE_TYPE_GRANT,
+            $feeType,
             $data['goodsOrPsv'],
             $data['licenceType'],
             $date,

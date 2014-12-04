@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'lva.section.title.type_of_licence_confirmation' => 'Are you sure you want to make this change?',
+    'application_type_of_licence_confirmation_subtitle' => 'The application will be reset and all the information entered will be lost!',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

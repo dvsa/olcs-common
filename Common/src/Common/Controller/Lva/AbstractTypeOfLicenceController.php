@@ -7,13 +7,32 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
+use Zend\Http\Response;
+
 /**
  * Common Lva Abstract Type Of Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 abstract class AbstractTypeOfLicenceController extends AbstractController
+implements Interfaces\TypeOfLicenceAdapterAwareInterface
 {
+    protected $typeOfLicenceAdapter;
+
+    /**
+     * @return TypeOfLicenceAdapterInterface
+     */
+    public function getTypeOfLicenceAdapter()
+    {
+        return $this->typeOfLicenceAdapter;
+    }
+
+    public function setTypeOfLicenceAdapter(TypeOfLicenceAdapterInterface $adapter)
+    {
+        $this->typeOfLicenceAdapter = $adapter;
+    }
+
     /**
      * Type of licence section
      */
@@ -22,7 +41,15 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
             $data = (array)$request->getPost();
+
+            $response = $this->processPostAdapter($data);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
         } else {
             $data = $this->formatDataForForm($this->getTypeOfLicenceData());
         }
@@ -45,6 +72,24 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
 
         return $this->render('type_of_licence', $form);
+    }
+
+    protected function processPostAdapter($data)
+    {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
+        if ($adapter === null) {
+            return;
+        }
+
+        if ($adapter->doesChangeRequireConfirmation($data['type-of-licence'], $this->getTypeOfLicenceData())) {
+
+            return $this->redirect()->toRoute(null, $adapter->getRouteParams(), $adapter->getQueryParams(), true);
+        }
+
+        if ($adapter->processChange($data['type-of-licence'], $this->getTypeOfLicenceData())) {
+            return $this->completeSection('tyoe_of_licence');
+        }
     }
 
     /**
