@@ -54,7 +54,6 @@ class PsvVehicleData
     public $vrm = null;
 
     /**
-     * @Form\Required(true)
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-psv-sub-action.data.makeModel",
      *     "help-block": "Up to 100 characters"
