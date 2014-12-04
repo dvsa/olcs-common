@@ -814,6 +814,7 @@ return array(
     'internal-licence-processing-tasks' => 'Tasks',
     'internal-licence-processing-tasks-label' => 'Tasks',
     'internal-licence-processing-tasks-title' => 'Tasks',
+    'internal-licence-register-service' => 'Register service',
     'internal-navigation-operator' => 'Operator',
     'internal-navigation-operator-business_details' => 'Business details',
     'internal-navigation-operator-licences_applications' => 'Licences & applications',
