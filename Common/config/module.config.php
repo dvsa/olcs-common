@@ -120,7 +120,8 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'FeeCommon' => 'Common\Service\Fee\FeeCommon',
-            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
     ),
     'publications' => array(
