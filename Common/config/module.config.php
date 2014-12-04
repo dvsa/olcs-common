@@ -133,7 +133,20 @@ return array(
             'Common\Filter\Publication\HearingDateTime',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\HearingText1'
+        ),
+        'DecisionPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\DecisionText1'
         )
     ),
     'file_uploader' => array(
