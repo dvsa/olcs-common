@@ -21,6 +21,11 @@ class PsvDiscPage extends AbstractDiscList
      */
     const PER_ROW = 6;
 
+    /**
+     * Bookmark variable prefix
+     */
+    const BOOKMARK_PREFIX = 'PSV';
+
     protected $service = 'PsvDisc';
 
     protected $discBundle = [

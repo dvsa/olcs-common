@@ -26,6 +26,11 @@ class DiscList extends AbstractDiscList
      */
     const LAST_ROW_HEIGHT = 359;
 
+    /**
+     * Bookmark variable prefix
+     */
+    const BOOKMARK_PREFIX = 'DISC';
+
     protected $service = 'GoodsDisc';
 
     protected $discBundle = [

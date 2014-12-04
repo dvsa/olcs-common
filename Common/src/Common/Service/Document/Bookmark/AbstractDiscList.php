@@ -27,11 +27,6 @@ abstract class AbstractDiscList extends DynamicBookmark
     const PER_PAGE = 6;
 
     /**
-     * Bookmark variable prefix
-     */
-    const BOOKMARK_PREFIX = 'DISC';
-
-    /**
      * Let the parser know we've already formatted our content by the
      * time it has been rendered
      */
