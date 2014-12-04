@@ -9,30 +9,21 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class PsvDiscPage extends DynamicBookmark
+class PsvDiscPage extends AbstractDiscList
 {
-    /**
-     * We have to split some fields if they exceed this length
-     */
-    const MAX_LINE_LENGTH = 23;
-
-    /**
-     * No disc content? No problem
-     */
-    const PLACEHOLDER = 'XXXXXXXXXX';
-
     /**
      * Discs per page - any shortfall will be voided with placeholders
      */
     const PER_PAGE = 6;
 
     /**
-     * Let the parser know we've already formatted our content by the
-     * time it has been rendered
+     * Discs per row in a page
      */
-    const PREFORMATTED = true;
+    const PER_ROW = 6;
 
-    private $discBundle = [
+    protected $service = 'PsvDisc';
+
+    protected $discBundle = [
         'children' => [
             'licence' => [
                 'children' => [
@@ -42,23 +33,6 @@ class PsvDiscPage extends DynamicBookmark
             ],
         ]
     ];
-
-    public function getQuery(array $data)
-    {
-        $query = [];
-
-        foreach ($data as $id) {
-            $query[] = [
-                'service' => 'PsvDisc',
-                'data' => [
-                    'id' => $id
-                ],
-                'bundle' => $this->discBundle
-            ];
-        }
-
-        return $query;
-    }
 
     public function render()
     {
@@ -83,7 +57,7 @@ class PsvDiscPage extends DynamicBookmark
                 $prefix . 'LINE2'       => isset($orgParts[1]) ? $orgParts[1] : '',
                 $prefix . 'LINE3'       => isset($orgParts[2]) ? $orgParts[2] : '',
                 $prefix . 'LICENCE'     => $licence['licNo'],
-                $prefix . 'VALID_DATE'  => isset($licence['grantedDate']) ? $licence['grantedDate'] : 'N/A',
+                $prefix . 'VALID_DATE'  => isset($licence['inForceDate']) ? $licence['inForceDate'] : 'N/A',
                 $prefix . 'EXPIRY_DATE' => isset($licence['expiryDate']) ? $licence['expiryDate'] : 'N/A'
             ];
         }
@@ -120,33 +94,6 @@ class PsvDiscPage extends DynamicBookmark
             $discGroups[] = $pageDiscs;
         }
 
-        $snippet = $this->getSnippet();
-        $parser  = $this->getParser();
-
-        // at last, we can loop through each group and run a sub
-        // replacement on its tokens
-        $str = '';
-        foreach ($discGroups as $tokens) {
-            $str .= $parser->replace($snippet, $tokens);
-        }
-        return $str;
-    }
-
-    /**
-     * Split a string into N array parts based on a predefined
-     * constant max line length
-     */
-    private function splitString($str)
-    {
-        return str_split($str, self::MAX_LINE_LENGTH);
-    }
-
-    /**
-     * Return either DISC1_ or DISC2_ based on a given index
-     */
-    private function getPrefix($index)
-    {
-        $prefix = ($index % self::PER_PAGE) + 1;
-        return 'PSV' . $prefix . '_';
+        return $this->renderSnippets($discGroups);
     }
 }

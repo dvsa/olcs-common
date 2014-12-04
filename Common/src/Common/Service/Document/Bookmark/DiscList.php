@@ -5,37 +5,16 @@ namespace Common\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
 /**
- * Disc list bookmark
+ * Goods Disc list bookmark
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class DiscList extends DynamicBookmark
+class DiscList extends AbstractDiscList
 {
-    /**
-     * We have to split some fields if they exceed this length
-     */
-    const MAX_LINE_LENGTH = 23;
-
-    /**
-     * No disc content? No problem
-     */
-    const PLACEHOLDER = 'XXXXXXXXXX';
-
-    /**
-     * Discs per page - any shortfall will be voided with placeholders
-     */
-    const PER_PAGE = 6;
-
     /**
      * Discs per row in a page
      */
     const PER_ROW = 2;
-
-    /**
-     * Let the parser know we've already formatted our content by the
-     * time it has been rendered
-     */
-    const PREFORMATTED = true;
 
     /**
      * Typical row spacer. Magic number gleaned from old codebase
@@ -47,7 +26,9 @@ class DiscList extends DynamicBookmark
      */
     const LAST_ROW_HEIGHT = 359;
 
-    private $discBundle = [
+    protected $service = 'GoodsDisc';
+
+    protected $discBundle = [
         'properties' => [
             'id',
             'isCopy'
@@ -83,23 +64,6 @@ class DiscList extends DynamicBookmark
             ]
         ]
     ];
-
-    public function getQuery(array $data)
-    {
-        $query = [];
-
-        foreach ($data as $id) {
-            $query[] = [
-                'service' => 'GoodsDisc',
-                'data' => [
-                    'id' => $id
-                ],
-                'bundle' => $this->discBundle
-            ];
-        }
-
-        return $query;
-    }
 
     public function render()
     {
@@ -170,25 +134,7 @@ class DiscList extends DynamicBookmark
             );
         }
 
-        $snippet = $this->getSnippet();
-        $parser  = $this->getParser();
-
-        // at last, we can loop through each group and run a sub
-        // replacement on its tokens
-        $str = '';
-        foreach ($discGroups as $tokens) {
-            $str .= $parser->replace($snippet, $tokens);
-        }
-        return $str;
-    }
-
-    /**
-     * Split a string into N array parts based on a predefined
-     * constant max line length
-     */
-    private function splitString($str)
-    {
-        return str_split($str, self::MAX_LINE_LENGTH);
+        return $this->renderSnippets($discGroups);
     }
 
     /*
@@ -206,15 +152,6 @@ class DiscList extends DynamicBookmark
                 $names
             )
         );
-    }
-
-    /**
-     * Return either DISC1_ or DISC2_ based on a given index
-     */
-    private function getPrefix($index)
-    {
-        $prefix = ($index % 2) + 1;
-        return 'DISC' . $prefix . '_';
     }
 
     /**
