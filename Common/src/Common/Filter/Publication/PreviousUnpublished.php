@@ -34,12 +34,17 @@ class PreviousUnpublished extends AbstractPublicationFilter
             ->fetchList($params);
 
         if (isset($data['Results'])) {
-           foreach ($data['Results'] as $result) {
-               if ($result['publication']['pubStatus']['id'] == $this->publicationNewStatus) {
-                   $publication->offsetSet('id', $result['id']);
-                   break;
-               }
-           }
+            foreach ($data['Results'] as $result) {
+                if ($result['publication']['pubStatus']['id'] == $this->publicationNewStatus) {
+                    $newData = [
+                        'id' => $result['id'],
+                        'version' => $result['version']
+                    ];
+
+                    $publication = $this->mergeData($publication, $newData);
+                    break;
+                }
+            }
         }
 
         return $publication;
