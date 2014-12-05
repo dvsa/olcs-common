@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Data\Object;
+
 use Zend\Stdlib\ArrayObject;
 
 /**
@@ -20,19 +21,9 @@ class Publication extends ArrayObject
     public $publication;
 
     /**
-     * @var int
-     */
-    public $publicationNo;
-
-    /**
      * @var string
      */
     public $trafficArea;
-
-    /**
-     * @var string
-     */
-    public $pubType;
 
     /**
      * @var int
@@ -78,9 +69,4 @@ class Publication extends ArrayObject
      * @var int
      */
     public $publicationSection;
-
-    /**
-     * @var string
-     */
-    public $origPubDate;
 }
