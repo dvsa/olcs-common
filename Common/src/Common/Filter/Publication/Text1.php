@@ -91,11 +91,11 @@ class Text1 extends AbstractPublicationFilter
     public function getLicenceInfo($licenceData)
     {
         $licence = "\n" . sprintf(
-                '%s %s '. "\n" . '%s',
-                $licenceData['licNo'],
-                $licenceData['licenceType']['olbsKey'],
-                $licenceData['organisation']['name']
-            );
+            '%s %s '. "\n" . '%s',
+            $licenceData['licNo'],
+            $licenceData['licenceType']['olbsKey'],
+            $licenceData['organisation']['name']
+        );
 
         if (!empty($licenceData['organisation']['tradingNames'])) {
             $latestTradingName = end($licenceData['organisation']['tradingNames']);
