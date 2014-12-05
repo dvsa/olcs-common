@@ -11,9 +11,8 @@ use Common\Exception\DataServiceException;
 use Common\Exception\ResourceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\Stdlib\ArrayObject;
 use Common\Util\RestClient;
-use Common\Data\Object\Publication as PublicationObject;
+use Common\Data\Object\Publication;
 
 /**
  * Publication Link service
@@ -22,8 +21,6 @@ use Common\Data\Object\Publication as PublicationObject;
  */
 class PublicationLink extends AbstractData implements ServiceLocatorAwareInterface
 {
-    const NEW_PUBLICATION_STATUS = 'pub_s_new';
-
     use ServiceLocatorAwareTrait;
 
     /**
@@ -32,32 +29,49 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     protected $serviceName = 'PublicationLink';
 
     /**
-     * @return ArrayObject
+     * @return \Common\Data\Object\Publication
      */
     public function createEmpty()
     {
-        return new ArrayObject(new PublicationObject());
+        return new Publication();
+    }
+
+    public function createWithData($data)
+    {
+        $publicationLink = $this->createEmpty();
+
+        foreach ($data as $key => $value) {
+            $publicationLink->offsetSet($key, $value);
+        }
+
+        return $publicationLink;
     }
 
     /**
-     * @param ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @return mixed
      */
-    public function save(ArrayObject $publication)
+    public function save(Publication $publication)
     {
+        $method = 'POST';
+
+        if ($publication->offsetGet('id')) {
+            $method = 'PUT';
+        }
+
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
             'PublicationLink',
-            'POST',
+            $method,
             $publication->getArrayCopy()
         );
     }
 
     /**
-     * @param ArrayObject $publication
+     * @param \Common\Data\Object\Publication $publication
      * @param string $service
      * @return mixed
      */
-    public function createPublicationLink(ArrayObject $publication, $service)
+    public function createPublicationLink(Publication $publication, $service)
     {
         $publication = $this->getServiceLocator()->get($service)->filter($publication);
         return $this->save($publication);
@@ -65,6 +79,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
 
     /**
      * @param array $params
+     * @param null $bundle
      * @return mixed
      */
     public function fetchList($params = [], $bundle = null)

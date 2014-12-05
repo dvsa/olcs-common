@@ -29,6 +29,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
+        $filterForm = $this->getFilterForm();
+
         if ($request->isPost()) {
 
             $this->postSave('vehicles');
@@ -56,7 +58,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $this->alterFormForLva($form);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'forms/filter', 'table-actions']);
 
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
@@ -66,7 +68,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             );
         }
 
-        return $this->render('vehicles', $form);
+        return $this->render('vehicles', $form, array('filterForm' => $filterForm));
     }
 
     /**
@@ -185,6 +187,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected function getTableData()
     {
         $licenceId = $this->getLicenceId();
+        $filters = $this->getGoodsVehicleFilters();
 
         $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($licenceId);
 
@@ -192,7 +195,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         foreach ($licenceVehicles as $licenceVehicle) {
 
-            if (!$this->showVehicle($licenceVehicle)) {
+            if (!$this->showVehicle($licenceVehicle, $filters)) {
                 continue;
             }
 
@@ -207,6 +210,21 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return $results;
+    }
+
+    /**
+     * Get goods vehicle filters
+     *
+     * @return array
+     */
+    protected function getGoodsVehicleFilters()
+    {
+        $filters = [];
+        $filters['vrm'] = $this->params()->fromQuery('vrm', 'All');
+        $filters['specified'] = $this->params()->fromQuery('specified', 'A');
+        $filters['includeRemoved'] = $this->params()->fromQuery('includeRemoved', 0);
+        $filters['disc'] = $this->params()->fromQuery('disc', 'A');
+        return $filters;
     }
 
     /**
@@ -365,5 +383,69 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return $this->totalVehicles;
+    }
+
+    /**
+     * Get filter vehicle form
+     *
+     * @return Zend\Form\Form
+     */
+    protected function getFilterForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\VehicleFilter');
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $form->get('vrm')->setValueOptions($vrmOptions);
+        return $form;
+    }
+
+    /**
+     * We only want to show active vehicles which
+     * haven't been marked as removed
+     *
+     * @param array $licenceVehicle
+     * @param array $filters
+     * @return boolean
+     */
+
+    protected function showVehicle(array $licenceVehicle, array $filters = [])
+    {
+        if ($filters['vrm'] !== 'All' && substr($licenceVehicle['vehicle']['vrm'], 0, 1) !== $filters['vrm']) {
+            return false;
+        }
+        if ($filters['specified'] == 'Y' && empty($licenceVehicle['specifiedDate'])) {
+            return false;
+        }
+        if ($filters['specified'] == 'N' && !empty($licenceVehicle['specifiedDate'])) {
+            return false;
+        }
+        if (empty($filters['includeRemoved']) && !empty($licenceVehicle['removalDate'])) {
+            return false;
+        }
+        if ($filters['disc'] == 'Y' && !$this->hasActiveDisc($licenceVehicle)) {
+            return false;
+        }
+        if ($filters['disc'] == 'N' && $this->hasActiveDisc($licenceVehicle)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the vehicle has an active disc
+     *
+     * @param array $licenceVehicle
+     * @return boolean
+     */
+    public function hasActiveDisc($licenceVehicle = [])
+    {
+        $hasDisc = false;
+        foreach ($licenceVehicle['goodsDiscs'] as $goodsDisc) {
+            if (!empty($goodsDisc['discNo'])) {
+                $hasDisc = true;
+                break;
+            }
+        }
+        return $hasDisc;
     }
 }

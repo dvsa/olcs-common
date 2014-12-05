@@ -2,11 +2,13 @@
 
 namespace Common\Data\Object;
 
+use Zend\Stdlib\ArrayObject;
+
 /**
  * Class Publication
  * @package Common\Data\Object\Publication
  */
-class Publication
+class Publication extends ArrayObject
 {
     /**
      * @var int
@@ -19,19 +21,9 @@ class Publication
     public $publication;
 
     /**
-     * @var int
-     */
-    public $publicationNo;
-
-    /**
      * @var string
      */
     public $trafficArea;
-
-    /**
-     * @var string
-     */
-    public $pubType;
 
     /**
      * @var int
@@ -77,9 +69,4 @@ class Publication
      * @var int
      */
     public $publicationSection;
-
-    /**
-     * @var string
-     */
-    public $origPubDate;
 }

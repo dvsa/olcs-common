@@ -19,17 +19,6 @@ trait ApplicationGenericVehiclesControllerTrait
     abstract function getApplicationId();
 
     /**
-     * Whether to display the vehicle
-     *
-     * @param array $licenceVehicle
-     * @return boolean
-     */
-    protected function showVehicle(array $licenceVehicle)
-    {
-        return empty($licenceVehicle['removalDate']);
-    }
-
-    /**
      * For applications we need to set the application id
      *
      * @param array $data

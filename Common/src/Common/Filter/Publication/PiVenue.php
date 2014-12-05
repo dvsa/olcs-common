@@ -15,8 +15,8 @@ namespace Common\Filter\Publication;
 class PiVenue extends AbstractPublicationFilter
 {
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      */
     public function filter($publication)
     {
