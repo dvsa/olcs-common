@@ -231,7 +231,15 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         foreach ($applicationOperatingCentres as $aoc) {
             switch ($aoc['action']) {
                 case 'A':
+
+                    unset($aoc['id']);
                     unset($aoc['action']);
+                    unset($aoc['version']);
+                    unset($aoc['createdOn']);
+                    unset($aoc['createdBy']);
+                    unset($aoc['modifiedOn']);
+                    unset($aoc['modifiedBy']);
+
                     $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
                     $aoc['licence'] = $licenceId;
                     $new[] = $aoc;
@@ -260,7 +268,21 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             } else {
                 $this->createPsvDiscs($licenceId, count($licenceVehicles));
             }
+
+            $this->specifyVehicles($licenceVehicles);
         }
+    }
+
+    protected function specifyVehicles($licenceVehicles)
+    {
+        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
+
+        // @NOTE passing licenceVehicle by reference
+        foreach ($licenceVehicles as &$licenceVehicle) {
+            $licenceVehicle['specifiedDate'] = $date;
+        }
+
+        $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);
     }
 
     protected function createGoodsDiscs($licenceVehicles)

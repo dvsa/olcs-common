@@ -50,6 +50,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     public function update($id, $data)
     {
         $data['id'] = $id;
+
         return $this->put($data);
     }
 
@@ -58,6 +59,13 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         $data['_OPTIONS_']['force'] = true;
 
         return $this->update($id, $data);
+    }
+
+    public function multiUpdate($data)
+    {
+        $data['_OPTIONS_']['multiple'] = true;
+
+        return $this->put($data);
     }
 
     /**
@@ -82,6 +90,16 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Put data
+     *
+     * @param array $data
+     */
+    protected function put(array $data)
+    {
+        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
     }
 
     /**
@@ -115,29 +133,5 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         $query['limit'] = $limit;
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $query, $bundle);
-    }
-
-    /**
-     * Put data
-     *
-     * @param array $data
-     */
-    protected function put(array $data)
-    {
-        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
-    }
-
-    /**
-     * Forces a put, without the need for version
-     *
-     * @param int $id
-     * @param array $data
-     */
-    protected function forcePut($id, array $data)
-    {
-        $data['id'] = $id;
-        $data['_OPTIONS_']['force'] = true;
-
-        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
     }
 }
