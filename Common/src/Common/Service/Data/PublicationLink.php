@@ -53,9 +53,15 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      */
     public function save(Publication $publication)
     {
+        $method = 'POST';
+
+        if ($publication->offsetGet('id')) {
+            $method = 'PUT';
+        }
+
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
             'PublicationLink',
-            'POST',
+            $method,
             $publication->getArrayCopy()
         );
     }
