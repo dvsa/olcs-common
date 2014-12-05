@@ -187,7 +187,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     protected function getTableData()
     {
         $licenceId = $this->getLicenceId();
-        $filters = $this->getGoodsVehcileFilters();
+        $filters = $this->getGoodsVehicleFilters();
 
         $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($licenceId);
 
@@ -217,7 +217,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
      *
      * @return array
      */
-    protected function getGoodsVehcileFilters()
+    protected function getGoodsVehicleFilters()
     {
         $filters = [];
         $filters['vrm'] = $this->params()->fromQuery('vrm', 'All');
@@ -410,26 +410,25 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function showVehicle(array $licenceVehicle, array $filters = [])
     {
-        $retv = true;
         if ($filters['vrm'] !== 'All' && substr($licenceVehicle['vehicle']['vrm'], 0, 1) !== $filters['vrm']) {
-            $retv = false;
+            return false;
         }
         if ($filters['specified'] == 'Y' && empty($licenceVehicle['specifiedDate'])) {
-            $retv = false;
+            return false;
         }
         if ($filters['specified'] == 'N' && !empty($licenceVehicle['specifiedDate'])) {
-            $retv = false;
+            return false;
         }
         if (empty($filters['includeRemoved']) && !empty($licenceVehicle['removalDate'])) {
-            $retv = false;
+            return false;
         }
         if ($filters['disc'] == 'Y' && !$this->hasActiveDisc($licenceVehicle)) {
-            $retv = false;
+            return false;
         }
         if ($filters['disc'] == 'N' && $this->hasActiveDisc($licenceVehicle)) {
-            $retv = false;
+            return false;
         }
-        return $retv;
+        return true;
     }
 
     /**

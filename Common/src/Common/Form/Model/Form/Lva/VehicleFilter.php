@@ -5,7 +5,6 @@ namespace Common\Form\Model\Form\Lva;
 use Zend\Form\Annotation as Form;
 
 /**
- * @codeCoverageIgnore Auto-generated file with no methods
  * @Form\Name("vehicle-filter")
  * @Form\Attributes({"method":"get","class":"form__filter"})
  * @Form\Type("Common\Form\Form")
