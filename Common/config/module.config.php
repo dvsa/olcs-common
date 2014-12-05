@@ -120,7 +120,8 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'FeeCommon' => 'Common\Service\Fee\FeeCommon',
-            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor'
+            'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
     ),
     'publications' => array(
@@ -194,12 +195,14 @@ return array(
             'Common\Validator\DateCompare' => 'Common\Validator\DateCompare',
             'Common\Form\Elements\Validators\DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
             'Common\Validator\OneOf' => 'Common\Validator\OneOf',
+            'Common\Form\Elements\Validators\Date' => 'Common\Form\Elements\Validators\Date'
         ],
         'aliases' => [
             'ValidateIf' => 'Common\Validator\ValidateIf',
             'DateCompare' => 'Common\Validator\DateCompare',
             'DateNotInFuture' => 'Common\Form\Elements\Validators\DateNotInFuture',
-            'OneOf' => 'Common\Validator\OneOf'
+            'OneOf' => 'Common\Validator\OneOf',
+            'Date' => 'Common\Form\Elements\Validators\Date'
         ]
     ],
     'filters' => [

@@ -22,20 +22,8 @@ class PreviousLicenceEntityService extends AbstractEntityService
     protected $entity = 'PreviousLicence';
 
     protected $licenceTableBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'licNo',
-            'holderName',
-            'willSurrender',
-            'purchaseDate',
-            'disqualificationDate',
-            'disqualificationLength'
-        ),
         'children' => array(
-            'previousLicenceType' => array(
-                'properties' => array('id')
-            )
+            'previousLicenceType'
         )
     );
 
@@ -45,20 +33,8 @@ class PreviousLicenceEntityService extends AbstractEntityService
      * @var array
      */
     protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'licNo',
-            'holderName',
-            'willSurrender',
-            'purchaseDate',
-            'disqualificationDate',
-            'disqualificationLength'
-        ),
         'children' => array(
-            'previousLicenceType' => array(
-                'properties' => array('id')
-            )
+            'previousLicenceType'
         )
     );
 

@@ -226,8 +226,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         // For PSV we only care about the count
         $stubbedLicenceVehicles = array(
-            'foo',
-            'bar'
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'foo' => 'bar'
+            )
         );
 
         $expectedPsvDiscData = array(
@@ -287,7 +291,20 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockLicenceVehicleService = m::mock();
         $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
             ->with($licenceId)
-            ->andReturn($stubbedLicenceVehicles);
+            ->andReturn($stubbedLicenceVehicles)
+            ->shouldReceive('multiUpdate')
+            ->with(
+                array(
+                    array(
+                        'foo' => 'bar',
+                        'specifiedDate' => '2012-01-01'
+                    ),
+                    array(
+                        'foo' => 'bar',
+                        'specifiedDate' => '2012-01-01'
+                    )
+                )
+            );
 
         // createPsvDiscs
         $mockPsvDiscService = m::mock();
@@ -356,8 +373,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         // For PSV we only care about the count
         $stubbedLicenceVehicles = array(
-            'foo',
-            'bar'
+            array(
+                'foo' => 'bar'
+            ),
+            array(
+                'foo' => 'bar'
+            )
         );
 
         $expectedPsvDiscData = array(
@@ -402,7 +423,20 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockLicenceVehicleService = m::mock();
         $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
             ->with($licenceId)
-            ->andReturn($stubbedLicenceVehicles);
+            ->andReturn($stubbedLicenceVehicles)
+            ->shouldReceive('multiUpdate')
+            ->with(
+                array(
+                    array(
+                        'foo' => 'bar',
+                        'specifiedDate' => '2012-01-01'
+                    ),
+                    array(
+                        'foo' => 'bar',
+                        'specifiedDate' => '2012-01-01'
+                    )
+                )
+            );
 
         // createPsvDiscs
         $mockPsvDiscService = m::mock();
@@ -571,7 +605,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 'id' => 2
             )
         );
-        $this->mockLicenceVehicles($licenceId, $mockLicenceVehicles);
+        $mockLicenceVehicleService = $this->mockLicenceVehicles($licenceId, $mockLicenceVehicles);
+
+        $mockLicenceVehicleService->expects($this->once())
+            ->method('multiUpdate')
+            ->with(
+                array(
+                    array(
+                        'id' => 1,
+                        'specifiedDate' => $date
+                    ),
+                    array(
+                        'id' => 2,
+                        'specifiedDate' => $date
+                    )
+                )
+            );
 
         $mockApplicationService->expects($this->once())
             ->method('getCategory')
@@ -693,12 +742,14 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
     protected function mockLicenceVehicles($licenceId, $mockLicenceVehicles)
     {
-        $mockLicenceVehicle = $this->getMock('\stdClass', ['getForApplicationValidation']);
+        $mockLicenceVehicle = $this->getMock('\stdClass', ['getForApplicationValidation', 'multiUpdate']);
         $mockLicenceVehicle->expects($this->once())
             ->method('getForApplicationValidation')
             ->with($licenceId)
             ->will($this->returnValue($mockLicenceVehicles));
         $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
+
+        return $mockLicenceVehicle;
     }
 
     protected function expectSuccessMessage()

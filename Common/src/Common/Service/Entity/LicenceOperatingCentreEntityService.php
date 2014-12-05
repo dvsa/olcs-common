@@ -18,15 +18,8 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
     protected $type = 'licence';
 
-    private $ocAuthorisationsBundle = array(
-        'properties' => array(
-            'noOfVehiclesRequired',
-            'noOfTrailersRequired'
-        )
-    );
-
     public function getVehicleAuths($id)
     {
-        return $this->get($id, $this->ocAuthorisationsBundle);
+        return $this->get($id);
     }
 }

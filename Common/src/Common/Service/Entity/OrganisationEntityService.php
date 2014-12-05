@@ -36,11 +36,8 @@ class OrganisationEntityService extends AbstractEntityService
      * @var array
      */
     private $organisationFromUserBundle = array(
-        'properties' => array(),
         'children' => array(
-            'organisation' => array(
-                'properties' => array('id')
-            )
+            'organisation'
         )
     );
 
@@ -50,16 +47,8 @@ class OrganisationEntityService extends AbstractEntityService
      * @var array
      */
     private $typeBundle = array(
-        'properties' => array(
-            'version',
-            'companyOrLlpNo'
-        ),
         'children' => array(
-            'type' => array(
-                'properties' => array(
-                    'id'
-                )
-            )
+            'type'
         )
     );
 
@@ -69,47 +58,15 @@ class OrganisationEntityService extends AbstractEntityService
      * @var array
      */
     private $businessDetailsBundle = array(
-        'properties' => array(
-            'version',
-            'companyOrLlpNo',
-            'name',
-            'type',
-            'tradingNames'
-        ),
         'children' => array(
             'contactDetails' => array(
-                'properties' => array(),
                 'children' => array(
-                    'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'town',
-                            'postcode'
-                        )
-                    ),
-                    'contactType' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    )
+                    'address',
+                    'contactType'
                 )
             ),
-            'type' => array(
-                'properties' => array(
-                    'id'
-                )
-            ),
-            'tradingNames' => array(
-                'properties' => array(
-                    'id',
-                    'name'
-                )
-            )
+            'type',
+            'tradingNames'
         )
     );
 
@@ -119,41 +76,16 @@ class OrganisationEntityService extends AbstractEntityService
      * @var array
      */
     private $applicationsBundle = array(
-        'properties' => array(),
         'children' => array(
             'licences' => array(
-                'properties' => array(
-                    'id',
-                    'licNo'
-                ),
                 'children' => array(
                     'applications' => array(
-                        'properties' => array(
-                            'id',
-                            'createdOn',
-                            'receivedDate',
-                            'isVariation'
-                        ),
                         'children' => array(
-                            'status' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'status'
                         )
                     ),
-                    'licenceType' => array(
-                        'properties' => array(
-                            'id',
-                            'description'
-                        )
-                    ),
-                    'status' => array(
-                        'properties' => array(
-                            'id',
-                            'description'
-                        )
-                    )
+                    'licenceType',
+                    'status'
                 )
             )
         )

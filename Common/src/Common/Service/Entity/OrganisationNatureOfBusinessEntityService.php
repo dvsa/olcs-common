@@ -27,17 +27,9 @@ class OrganisationNatureOfBusinessEntityService extends AbstractEntityService
      * @var array
      */
     protected $dataBundle = [
-        'properties' => [
-            'id',
-            'version'
-        ],
         'children' => [
-            'organisation' => [
-                'properties' => ['id']
-            ],
-            'refData' => [
-                'properties' => ['id', 'description']
-            ]
+            'organisation',
+            'refData'
         ]
     ];
 
