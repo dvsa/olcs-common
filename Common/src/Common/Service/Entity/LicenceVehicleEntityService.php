@@ -22,40 +22,15 @@ class LicenceVehicleEntityService extends AbstractEntityService
     protected $entity = 'LicenceVehicle';
 
     protected $vehicleBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'receivedDate',
-            'deletedDate',
-            'specifiedDate'
-        ),
         'children' => array(
-            'goodsDiscs' => array(
-                'properties' => array(
-                    'discNo'
-                )
-            ),
-            'vehicle' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'platedWeight',
-                    'vrm'
-                )
-            )
+            'goodsDiscs',
+            'vehicle'
         )
     );
 
     protected $ceaseActiveDiscBundle = array(
-        'properties' => array(),
         'children' => array(
-            'goodsDiscs' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'ceasedDate'
-                )
-            )
+            'goodsDiscs'
         )
     );
 
@@ -63,16 +38,8 @@ class LicenceVehicleEntityService extends AbstractEntityService
      * Disc pending bundle
      */
     protected $discPendingBundle = array(
-        'properties' => array(
-            'id',
-            'specifiedDate',
-            'deletedDate'
-        ),
         'children' => array(
-            'goodsDiscs' => array(
-                'ceasedDate',
-                'discNo'
-            )
+            'goodsDiscs'
         )
     );
 
@@ -82,56 +49,27 @@ class LicenceVehicleEntityService extends AbstractEntityService
      * @var array
      */
     protected $vrmBundle = array(
-        'properties' => array(),
         'children' => array(
-            'vehicle' => array(
-                'properties' => array(
-                    'vrm'
-                )
-            )
+            'vehicle'
+        )
+    );
+
+
+    protected $currentVrmBundle = array(
+        'children' => array(
+            'vehicle'
         )
     );
 
     protected $vehiclePsvBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'receivedDate',
-            'deletedDate',
-            'specifiedDate'
-        ),
         'children' => array(
             'vehicle' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'vrm',
-                    'makeModel',
-                    'isNovelty'
-                ),
                 'children' => array(
-                    'psvType' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    )
+                    'psvType'
                 )
             )
         )
     );
-
-    protected $currentVrmBundle = array(
-        'properties' => array('vehicle'),
-        'children' => array(
-            'vehicle' => array(
-                'properties' => array(
-                    'vrm'
-                )
-            )
-        )
-    );
-
-    protected $applicationValidationBundle = array('properties' => array('id'));
 
     public function getVehicle($id)
     {
@@ -152,7 +90,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
     {
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
-        $this->forcePut($id, array('removalDate' => $date));
+        $this->forceUpdate($id, array('removalDate' => $date));
     }
 
     /**
@@ -212,7 +150,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
             'removalDate' => 'NULL'
         );
 
-        $results = $this->getAll($query, $this->applicationValidationBundle);
+        $results = $this->getAll($query);
 
         return $results['Results'];
     }

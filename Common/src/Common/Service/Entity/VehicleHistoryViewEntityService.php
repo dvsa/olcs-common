@@ -21,17 +21,6 @@ class VehicleHistoryViewEntityService extends AbstractLvaEntityService
      */
     protected $entity = 'VehicleHistoryView';
 
-    protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'vrm',
-            'licenceNo',
-            'specifiedDate',
-            'removalDate',
-            'discNo'
-        )
-    );
-
     public function getDataForVrm($vrm)
     {
         return $this->get(
@@ -39,8 +28,7 @@ class VehicleHistoryViewEntityService extends AbstractLvaEntityService
                 'vrm' => $vrm,
                 'sort' => 'specifiedDate',
                 'order' => 'DESC'
-            ),
-            $this->dataBundle
+            )
         );
     }
 }

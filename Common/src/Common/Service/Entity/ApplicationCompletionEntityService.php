@@ -223,7 +223,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
         );
 
-        if (!in_array($applicationData['licence']['licenceType']['id'], $allowedLicTypes)) {
+        if (!in_array($applicationData['licenceType']['id'], $allowedLicTypes)) {
             $skipEstablishmentAddress = true;
             $establishmentAddress = true;
         }
@@ -310,7 +310,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'totCommunityLicences' => $applicationData['totCommunityLicences'] !== null,
         );
 
-        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
 
             unset($requiredVars['totAuthSmallVehicles']);
             unset($requiredVars['totAuthMediumVehicles']);
@@ -332,7 +332,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 LicenceEntityService::LICENCE_TYPE_RESTRICTED
             );
 
-            $licType = $applicationData['licence']['licenceType']['id'];
+            $licType = $applicationData['licenceType']['id'];
 
             if (!in_array($licType, $allowLargeVehicles)) {
                 unset($requiredVars['totAuthLargeVehicles']);
@@ -512,7 +512,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $requiredVars[] = !empty($applicationData['licence']['tachographInsName']);
         }
 
-        if ($applicationData['licence']['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
             $requiredVars[] = $this->isAtLeast1($applicationData['licence']['safetyInsTrailers']);
         }
 

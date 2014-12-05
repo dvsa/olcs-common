@@ -28,63 +28,7 @@ class TransportManagerEntityServiceTest extends AbstractEntityServiceTestCase
      */
     public function testGetTmDetails()
     {
-
-        $bundle = [
-            'properties' => [
-                'version',
-            ],
-            'children' => [
-                'contactDetails' => [
-                    'properties' => [
-                        'id',
-                        'version',
-                        'emailAddress'
-                    ],
-                    'children' => [
-                        'person' => [
-                            'properties' => [
-                                'id',
-                                'version',
-                                'forename',
-                                'familyName',
-                                'title',
-                                'birthDate',
-                                'birthPlace'
-                            ]
-                        ],
-                        'address' => [
-                            'properties' => [
-                                'id',
-                                'version',
-                                'addressLine1',
-                                'addressLine2',
-                                'addressLine3',
-                                'addressLine4',
-                                'town',
-                                'postcode'
-                            ]
-                        ],
-                        'contactType' => [
-                            'properties' => [
-                                'id'
-                            ]
-                        ]
-                    ]
-                ],
-                'tmType' => [
-                    'properties' => [
-                        'id'
-                    ]
-                ],
-                'tmStatus' => [
-                    'properties' => [
-                        'id'
-                    ]
-                ],
-            ]
-        ];
-
-        $this->expectOneRestCall('TransportManager', 'GET', 1, $bundle)
+        $this->expectOneRestCall('TransportManager', 'GET', 1)
             ->will($this->returnValue([]));
 
         $this->assertEquals([], $this->sut->getTmDetails(1));

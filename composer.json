@@ -14,13 +14,18 @@
         {
             "type": "vcs",
             "url": "git@gitlab.clb.npm:olcs/olcs-testhelpers.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@gitlab.clb.npm:cpms/cpms-client.git"
         }
     ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
         "doctrine/doctrine-orm-module": "0.*",
-        "symfony/Filesystem": "~2.6.0-dev"
+        "symfony/Filesystem": "~2.6.0-dev",
+        "cpms/client": "0.1.x-dev"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~1.5.3",

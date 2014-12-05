@@ -21,18 +21,6 @@ class PersonEntityService extends AbstractEntityService
      */
     protected $entity = 'Person';
 
-    private $personBundle = array(
-        'properties' => array(
-            'version',
-            'id',
-            'title',
-            'forename',
-            'familyName',
-            'birthDate',
-            'otherName'
-        )
-    );
-
     /**
      * Get all people for a given organisation
      *
@@ -69,6 +57,6 @@ class PersonEntityService extends AbstractEntityService
      */
     public function getById($id)
     {
-        return $this->get($id, $this->personBundle);
+        return $this->get($id);
     }
 }

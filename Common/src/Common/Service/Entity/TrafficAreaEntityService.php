@@ -22,25 +22,13 @@ class TrafficAreaEntityService extends AbstractEntityService
     protected $entity = 'TrafficArea';
 
     /**
-     * Traffic area values
-     *
-     * @var array
-     */
-    protected $dataBundle = array(
-        'properties' => array(
-            'id',
-            'name'
-        )
-    );
-
-    /**
      * Get Traffic Area value options for select element
      *
      * @return array
      */
     public function getValueOptions()
     {
-        $trafficArea = $this->get(array(), $this->dataBundle);
+        $trafficArea = $this->get(array());
 
         $valueOptions = array();
         $results = $trafficArea['Results'];

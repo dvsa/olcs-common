@@ -48,16 +48,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $overviewBundle = array(
-        'properties' => array(
-            'id',
-            'grantedDate',
-            'expiryDate',
-            'licNo'
-        ),
         'children' => array(
-            'status' => array(
-                'properties' => array('id')
-            )
+            'status'
         )
     );
 
@@ -67,11 +59,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $doesBelongToOrgBundle = array(
-        'properties' => array(),
         'children' => array(
-            'organisation' => array(
-                'properties' => array('id')
-            )
+            'organisation'
         )
     );
 
@@ -81,77 +70,28 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @var array
      */
     private $headerDataBundle = array(
-        'properties' => array(
-            'licNo'
-        ),
         'children' => array(
-            'organisation' => array(
-                'properties' => array(
-                    'name'
-                )
-            ),
-            'status' => array(
-                'properties' => array(
-                    'id',
-                    'description'
-                )
-            ),
-            'goodsOrPsv' => array(
-                'properties' => array(
-                    'id'
-                )
-            )
+            'organisation',
+            'status',
+            'goodsOrPsv'
         )
     );
 
     protected $addressesDataBundle = array(
-        'properties' => array(),
         'children' => array(
             'organisation' => array(
-                'properties' => array(),
                 'children' => array(
                     'contactDetails' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'fao',
-                            'emailAddress'
-                        ),
                         'children' => array(
                             'address' => array(
-                                'properties' => array(
-                                    'id',
-                                    'version',
-                                    'addressLine1',
-                                    'addressLine2',
-                                    'addressLine3',
-                                    'addressLine4',
-                                    'town',
-                                    'postcode'
-                                ),
                                 'children' => array(
-                                    'countryCode' => array(
-                                        'properties' => array(
-                                            'id'
-                                        )
-                                    )
+                                    'countryCode'
                                 )
                             ),
-                            'contactType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            ),
+                            'contactType',
                             'phoneContacts' => array(
-                                'properties' => array(
-                                    'phoneNumber',
-                                    'version',
-                                    'id'
-                                ),
                                 'children' => array(
-                                    'phoneContactType' => array(
-                                        'properties' => array('id')
-                                    )
+                                    'phoneContactType'
                                 )
                             )
                         )
@@ -159,51 +99,18 @@ class LicenceEntityService extends AbstractLvaEntityService
                 )
             ),
             'contactDetails' => array(
-                'properties' => array(
-                    'id',
-                    'version',
-                    'fao',
-                    'emailAddress'
-                ),
                 'children' => array(
                     'phoneContacts' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'phoneNumber'
-                        ),
                         'children' => array(
-                            'phoneContactType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'phoneContactType'
                         )
                     ),
                     'address' => array(
-                        'properties' => array(
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'postcode',
-                            'town'
-                        ),
                         'children' => array(
-                            'countryCode' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'countryCode'
                         )
                     ),
-                    'contactType' => array(
-                        'properties' => array(
-                            'id'
-                        )
-                    )
+                    'contactType'
                 )
             )
         )
@@ -215,70 +122,29 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @var array
      */
     protected $safetyDataBundle = array(
-        'properties' => array(
-            'id',
-            'version',
-            'safetyInsVehicles',
-            'safetyInsTrailers',
-            'safetyInsVaries',
-            'tachographInsName',
-            'isMaintenanceSuitable',
-        ),
         'children' => array(
-            'tachographIns' => array(
-                'properties' => array('id')
-            )
+            'tachographIns'
         )
     );
 
     protected $vehicleDataBundle = array(
-        'properties' => null,
         'children' => array(
             'licenceVehicles' => array(
-                'properties' => array(
-                    'id',
-                    'receivedDate',
-                    'specifiedDate',
-                    'deletedDate',
-                    'removalDate'
-                ),
                 'children' => array(
-                    'goodsDiscs' => array(
-                        'ceasedDate',
-                        'discNo'
-                    ),
-                    'vehicle' => array(
-                        'properties' => array(
-                            'vrm',
-                            'platedWeight'
-                        )
-                    )
+                    'goodsDiscs',
+                    'vehicle'
                 )
             )
         )
     );
 
     protected $vehiclePsvDataBundle = array(
-        'properties' => null,
         'children' => array(
             'licenceVehicles' => array(
-                'properties' => array(
-                    'id',
-                    'specifiedDate',
-                    'deletedDate',
-                    'removalDate'
-                ),
                 'children' => array(
                     'vehicle' => array(
-                        'properties' => array(
-                            'vrm',
-                            'makeModel',
-                            'isNovelty'
-                        ),
                         'children' => array(
-                            'psvType' => array(
-                                'properties' => array('id')
-                            )
+                            'psvType'
                         )
                     )
                 )
@@ -287,13 +153,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     );
 
     protected $vehiclesTotalBundle = array(
-        'properties' => array(),
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
                     'removalDate' => 'NULL'
-                ),
-                'properties' => array('id')
+                )
             )
         )
     );
@@ -304,14 +168,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      * @var array
      */
     protected $trafficAreaBundle = array(
-        'properties' => array(),
         'children' => array(
-            'trafficArea' => array(
-                'properties' => array(
-                    'id',
-                    'name'
-                )
-            )
+            'trafficArea'
         )
     );
 
@@ -329,60 +187,22 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
-    private $totalAuthorisationsBundle = array(
-        'properties' => array(
-            // a licence will never have all these totals set but they're used to
-            // compare against form data; easier to have all data available so
-            // we can always compare against whatever was submitted in the form
-            // Goods
-            'totAuthVehicles',
-            'totAuthTrailers',
-            // PSV
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
-        )
-    );
-
     protected $psvDiscsBundle = array(
-        'properties' => array(
-            'id',
-            'totAuthSmallVehicles',
-            'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
-        ),
         'children' => array(
-            'psvDiscs' => array(
-                'properties' => array(
-                    'id',
-                    'discNo',
-                    'issuedDate',
-                    'ceasedDate',
-                    'isCopy'
-                )
-            )
+            'psvDiscs'
         )
     );
 
     protected $vehiclesPsvTotalBundle = array(
-        'properties' => array(),
         'children' => array(
             'licenceVehicles' => array(
                 'criteria' => array(
                     'removalDate' => 'NULL'
                 ),
-                'properties' => array(),
                 'children' => array(
                     'vehicle' => array(
-                        'properties' => array(
-                            'id'
-                        ),
                         'children' => array(
-                            'psvType' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'psvType'
                         )
                     )
                 )
@@ -391,13 +211,8 @@ class LicenceEntityService extends AbstractLvaEntityService
     );
 
     protected $categoryBundle = array(
-        'properties' => array(),
         'children' => array(
-            'goodsOrPsv' => array(
-                'properties' => array(
-                    'id'
-                )
-            )
+            'goodsOrPsv'
         )
     );
 
@@ -500,7 +315,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getTotalAuths($id)
     {
-        return $this->get($id, $this->totalAuthorisationsBundle);
+        return $this->get($id);
     }
 
     public function getPsvDiscsRequestData($id)
@@ -538,7 +353,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function setTrafficArea($licenceId, $trafficAreaId = null)
     {
-        $this->forcePut($licenceId, array('trafficArea' => $trafficAreaId));
+        $this->forceUpdate($licenceId, array('trafficArea' => $trafficAreaId));
 
         if ($trafficAreaId) {
             $this->generateLicence($licenceId);

@@ -26,57 +26,16 @@ class TransportManagerEntityService extends AbstractEntityService
     const TRANSPORT_MANAGER_STATUS_DISABLED = 'tm_st_D';
 
     protected $tmDetailsBundle = [
-        'properties' => [
-            'version',
-        ],
         'children' => [
             'contactDetails' => [
-                'properties' => [
-                    'id',
-                    'version',
-                    'emailAddress'
-                ],
                 'children' => [
-                    'person' => [
-                        'properties' => [
-                            'id',
-                            'version',
-                            'forename',
-                            'familyName',
-                            'title',
-                            'birthDate',
-                            'birthPlace'
-                        ]
-                    ],
-                    'address' => [
-                        'properties' => [
-                            'id',
-                            'version',
-                            'addressLine1',
-                            'addressLine2',
-                            'addressLine3',
-                            'addressLine4',
-                            'town',
-                            'postcode'
-                        ]
-                    ],
-                    'contactType' => [
-                        'properties' => [
-                            'id'
-                        ]
-                    ]
+                    'person',
+                    'address',
+                    'contactType'
                 ]
             ],
-            'tmType' => [
-                'properties' => [
-                    'id'
-                ]
-            ],
-            'tmStatus' => [
-                'properties' => [
-                    'id'
-                ]
-            ],
+            'tmType',
+            'tmStatus'
         ]
     ];
 

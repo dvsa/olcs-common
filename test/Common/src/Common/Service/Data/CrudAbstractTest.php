@@ -40,6 +40,21 @@ class CrudAbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $this->getSut()->getServiceName());
     }
 
+    public function testGet()
+    {
+        $rest = $this->getMockRestClient('get');
+        $rest->expects($this->once())->method('get')
+             ->with('', array('id' => '1'))
+             ->will($this->returnValue('once'));
+
+        $sut = $this->getSut(null);
+        $sut->setRestClient($rest);
+
+        $this->assertEquals('once', $sut->get('1'));
+
+        $this->assertEquals('once', $sut->getData('1'));
+    }
+
     /**
      * @dataProvider dataProviderSave
      * @param array $data

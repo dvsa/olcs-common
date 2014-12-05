@@ -29,22 +29,12 @@ class VehicleEntityService extends AbstractEntityService
     protected $entity = 'Vehicle';
 
     protected $licencesForVehicleBundle = array(
-        'properties' => array(),
         'children' => array(
             'licenceVehicles' => array(
-                'properties' => array(),
                 'children' => array(
                     'licence' => array(
-                        'properties' => array(
-                            'id',
-                            'licNo'
-                        ),
                         'children' => array(
-                            'applications' => array(
-                                'properties' => array(
-                                    'id'
-                                )
-                            )
+                            'applications'
                         )
                     )
                 )
