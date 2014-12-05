@@ -20,7 +20,6 @@ return array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
             'type' => 'Action',
-            'class' => 'action--tertiary',
             'action' => 'edit',
             'value_format' => '{{title}} {{forename}} {{familyName}}'
         ),
