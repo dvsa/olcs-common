@@ -16,11 +16,9 @@ use Common\Exception\ResourceNotFoundException;
  */
 class Publication extends AbstractPublicationFilter
 {
-    const NEW_STATUS = 'pub_s_new';
-
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      * @throws ResourceNotFoundException
      */
     public function filter($publication)
@@ -28,19 +26,17 @@ class Publication extends AbstractPublicationFilter
         $params = [
             'pubType' => $publication->offsetGet('pubType'),
             'trafficArea' => $publication->offsetGet('trafficArea'),
-            'pubStatus' => self::NEW_STATUS
+            'pubStatus' => $this->publicationNewStatus
         ];
 
-        $data = $this->getServiceLocator()->get('\Common\Service\Data\Publication')->fetchPublicationData($params);
+        $data = $this->getServiceLocator()->get('\Common\Service\Data\Publication')->fetchList($params);
 
         if (!isset($data['Results'][0]['id'])) {
             throw new ResourceNotFoundException('No publication found');
         }
 
         $newData = [
-            'publication' => $data['Results'][0]['id'],
-            'publicationNo' => $data['Results'][0]['publicationNo'],
-            'origPubDate' => $data['Results'][0]['pubDate']
+            'publication' => $data['Results'][0]['id']
         ];
 
         $publication = $this->mergeData($publication, $newData);

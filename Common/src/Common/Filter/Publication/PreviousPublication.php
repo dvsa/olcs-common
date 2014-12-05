@@ -7,8 +7,6 @@
  */
 namespace Common\Filter\Publication;
 
-use Common\Exception\ResourceNotFoundException;
-
 /**
  * Previous publication filter
  *
@@ -17,9 +15,8 @@ use Common\Exception\ResourceNotFoundException;
 class PreviousPublication extends AbstractPublicationFilter
 {
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
-     * @throws ResourceNotFoundException
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      */
     public function filter($publication)
     {

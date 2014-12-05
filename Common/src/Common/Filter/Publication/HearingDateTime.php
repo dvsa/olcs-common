@@ -15,9 +15,8 @@ namespace Common\Filter\Publication;
 class HearingDateTime extends AbstractPublicationFilter
 {
     /**
-     * @param \Zend\Stdlib\ArrayObject $publication
-     * @return \Zend\Stdlib\ArrayObject
-     * @throws ResourceNotFoundException
+     * @param \Common\Data\Object\Publication $publication
+     * @return \Common\Data\Object\Publication
      */
     public function filter($publication)
     {
