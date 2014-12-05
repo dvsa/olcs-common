@@ -846,6 +846,11 @@ return array(
     'internal-pi-hearing-edit' => 'W Edit hearing',
     'internal-transport-manager-new-transport-manager' => 'W Create New Transport Manager',
     'internal-transport-manager-quick-actions' => 'W Quick actions',
+    'internal-vehicle-filter-disc' => 'W Disc',
+    'internal-vehicle-filter-filter' => 'W Filter',
+    'internal-vehicle-filter-include-removed' => 'W Include removed',
+    'internal-vehicle-filter-specified' => 'W Specified',
+    'internal-vehicle-filter-vrm' => 'W VRM',
     'internal-transport-manager-tm-details' => 'W TM Details',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',

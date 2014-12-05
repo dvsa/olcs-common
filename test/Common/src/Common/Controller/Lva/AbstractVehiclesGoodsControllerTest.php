@@ -18,8 +18,49 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
     }
 
+    /**
+     * Get index
+     * 
+     * @group abstractVehicleGoodsController
+     */
     public function testGetIndexAction()
     {
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $filterForm = m::mock()
+                ->shouldReceive('get')
+                ->with('vrm')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setValueOptions')
+                    ->with($vrmOptions)
+                    ->getMock()
+                )
+                ->getMock();
+
+        $this->getMockFormHelper()
+            ->shouldReceive('createForm')
+            ->with('Lva\VehicleFilter')
+            ->andReturn($filterForm);
+
+        $this->sut
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('vrm', 'All')
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('specified', 'A')
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('includeRemoved', 0)
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('disc', 'A')
+                ->andReturn('A')
+                ->getMock()
+            );
+
         $form = $this->createMockForm('Lva\GoodsVehicles');
 
         $form->shouldReceive('setData')
@@ -63,5 +104,215 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->indexAction();
 
         $this->assertEquals('vehicles', $this->view);
+    }
+
+    /**
+     * Get index with filters
+     * 
+     * @group abstractVehicleGoodsController1
+     * @dataProvider filtersForIndexDataProvider
+     */
+    public function testIndexActionWithFilters($filters, $licenceVehicle, $rows)
+    {
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $filterForm = m::mock()
+                ->shouldReceive('get')
+                ->with('vrm')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setValueOptions')
+                    ->with($vrmOptions)
+                    ->getMock()
+                )
+                ->getMock();
+
+        $this->getMockFormHelper()
+            ->shouldReceive('createForm')
+            ->with('Lva\VehicleFilter')
+            ->andReturn($filterForm);
+
+        $this->sut
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('vrm', 'All')
+                ->andReturn($filters['vrm'])
+                ->shouldReceive('fromQuery')
+                ->with('specified', 'A')
+                ->andReturn($filters['specified'])
+                ->shouldReceive('fromQuery')
+                ->with('includeRemoved', 0)
+                ->andReturn($filters['includeRemoved'])
+                ->shouldReceive('fromQuery')
+                ->with('disc', 'A')
+                ->andReturn($filters['disc'])
+                ->getMock()
+            );
+
+        $form = $this->createMockForm('Lva\GoodsVehicles');
+
+        $form->shouldReceive('setData')
+            ->with(
+                []
+            )
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('table')
+            ->andReturn(m::mock('\Zend\Form\Fieldset'));
+
+        $this->getMockFormHelper()
+            ->shouldReceive('populateFormTable');
+
+        $this->mockService('Table', 'prepareTable')
+            ->with('lva-vehicles', $rows)
+            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn(123)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(321)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getTotalVehicleAuthorisation')
+                ->with(321)
+                ->getMock()
+            );
+
+        $this->mockEntity('Licence', 'getVehiclesData')
+            ->with(123)
+            ->andReturn([$licenceVehicle]);
+
+        $this->mockEntity('Licence', 'getVehiclesTotal')
+            ->with(123)
+            ->andReturn(0);
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('vehicles', $this->view);
+
+    }
+
+    /**
+     * Data provider for testIndexActionWithFilters
+     */
+    public function filtersForIndexDataProvider()
+    {
+        $result = [[
+            'id' => 1,
+            'specifiedDate' => '2014-01-01',
+            'removalDate' => '',
+            'vrm' => 'VRM123',
+            'discNo' => '1234'
+        ]];
+        return
+            [
+                [
+                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'All'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => null,
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    $result
+                ],
+                [
+                    ['vrm' => 'X', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'All'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => null,
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    []
+                ],
+                [
+                    ['vrm' => 'All', 'specified' => 'Y', 'includeRemoved' => 0, 'disc' => 'All'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => null,
+                        'removalDate' => null,
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    []
+                ],
+                [
+                    ['vrm' => 'All', 'specified' => 'N', 'includeRemoved' => 0, 'disc' => 'All'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => null,
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    null
+                ],
+                [
+                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => '', 'disc' => 'All'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => '2014-01-01',
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    []
+                ],
+                [
+                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'Y'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => null,
+                        'goodsDiscs' => [],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    []
+                ],
+                [
+                    ['vrm' => 'All', 'specified' => 'A', 'includeRemoved' => 0, 'disc' => 'N'],
+                    [
+                        'id' => 1,
+                        'specifiedDate' => '2014-01-01',
+                        'removalDate' => null,
+                        'goodsDiscs' => [[
+                            'discNo' => '1234'
+                        ]],
+                        'vehicle' => [
+                            'vrm' => 'VRM123'
+                        ]
+                    ],
+                    []
+                ]
+            ];
     }
 }

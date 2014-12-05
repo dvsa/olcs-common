@@ -58,9 +58,10 @@ abstract class AbstractVehiclesController extends AbstractController
      * We need to know which vehicles to show
      *
      * @param array $licenceVehicle
+     * @param array $filters
      * @return boolean
      */
-    abstract protected function showVehicle(array $licenceVehicle);
+    abstract protected function showVehicle(array $licenceVehicle, array $filters = []);
 
     protected function alterVehicleFormForLocation($form, $mode)
     {
