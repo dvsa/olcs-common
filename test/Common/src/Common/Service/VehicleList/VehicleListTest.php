@@ -120,6 +120,17 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test set bookmark data
+     *
+     * @group vehicleList
+     */
+    public function testSetBookmarkData()
+    {
+        $this->vehicleList->setBookmarkData('bar');
+        $this->assertEquals($this->vehicleList->getBookmarkData(), 'bar');
+    }
+
+    /**
      * Test generate vehicle list with no query data provided
      *
      * @group vehicleList
