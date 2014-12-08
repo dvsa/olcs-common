@@ -75,7 +75,8 @@ return array(
         ),
         'invokables' => array(
             'Document' => '\Common\Service\Document\Document',
-            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem'
+            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
+            'VehicleList' => '\Common\Service\VehicleList\VehicleList'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -98,7 +99,6 @@ return array(
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
             },
-            'VehicleList' => '\Common\Service\VehicleList\VehicleList',
             'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
                 $validator->setServiceLocator($serviceManager);

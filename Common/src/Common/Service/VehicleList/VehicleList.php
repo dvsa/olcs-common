@@ -59,7 +59,9 @@ class VehicleList implements ServiceLocatorAwareInterface
             throw new Exception('Error getting template file');
         }
 
-        foreach ($this->getQueryData() as $queryData) {
+        $bookmarkData = $this->getBookmarkData();
+
+        foreach ($this->getQueryData() as $key => $queryData) {
             $query = $documentService->getBookmarkQueries($file, $queryData);
 
             if (!is_array($query) || empty($query)) {
@@ -69,6 +71,13 @@ class VehicleList implements ServiceLocatorAwareInterface
             $result = $this->makeRestCall('BookmarkSearch', 'GET', [], $query);
             if (!is_array($result) || empty($result)) {
                 throw new Exception('Error getting bookmarks');
+            }
+
+            if (isset($bookmarkData[$key])) {
+                $result = array_merge(
+                    $result,
+                    $bookmarkData[$key]
+                );
             }
 
             $content = $documentService->populateBookmarks($file, $result);
@@ -198,5 +207,26 @@ class VehicleList implements ServiceLocatorAwareInterface
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * Set bookmark data
+     *
+     * @param array $bookmarkData
+     */
+    public function setBookmarkData($bookmarkData = [])
+    {
+        $this->bookmarkData = $bookmarkData;
+        return $this;
+    }
+
+    /**
+     * Get bookmark data
+     *
+     * @return array
+     */
+    public function getBookmarkData()
+    {
+        return $this->bookmarkData;
     }
 }
