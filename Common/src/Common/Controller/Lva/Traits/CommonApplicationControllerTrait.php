@@ -18,7 +18,7 @@ trait CommonApplicationControllerTrait
 {
     use EnabledSectionTrait;
 
-    abstract protected function notFoundAction();
+    abstract public function notFoundAction();
     abstract protected function checkForRedirect($lvaId);
 
     /**
