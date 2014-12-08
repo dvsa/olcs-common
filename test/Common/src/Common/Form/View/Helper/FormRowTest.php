@@ -23,7 +23,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
      * @param array $options
      * @return \Zend\Form\Element
      */
-    private function prepareElement($type = 'Text', $options = array())
+    private function prepareElement($type = 'Text', $options = array(), $attributes = array('class' => 'class'))
     {
         if (strpos($type, '\\') === false) {
             $type = '\Zend\Form\Element\\' . ucfirst($type);
@@ -40,7 +40,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         $element = new $type('test');
         $element->setOptions($options);
-        $element->setAttribute('class', 'class');
+        $element->setAttributes($attributes);
 
         return $element;
     }
@@ -240,6 +240,72 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputRegex(
             '/^<fieldset class="inline" data-group="data-group"><legend>(.*)<\/legend><\/fieldset>$/'
         );
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderCsrfElement()
+    {
+        $element = $this->prepareElement(
+            'Csrf',
+            [
+                'csrf_options' => [
+                    'messageTemplates' => [
+                        'notSame' => 'csrf-message'
+                    ],
+                    'timeout' => 600
+                ],
+                'name' => 'security'
+            ],
+            ['id' => 'security']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderVisuallyHiddenElement()
+    {
+        $element = $this->prepareElement(
+            'Text',
+            [
+                'name' => 'text'
+            ],
+            ['class' => 'visually-hidden']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     * @group formRow
+     */
+    public function testRenderHiddenElement()
+    {
+        $element = $this->prepareElement(
+            'Hidden',
+            [
+                'name' => 'hidden'
+            ],
+            ['class' => 'visually-hidden']
+        );
+
+        $viewHelper = $this->prepareHelper();
+        echo $viewHelper($element);
+
+        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
     }
 
     public function renderRadioProvider()

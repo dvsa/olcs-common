@@ -97,9 +97,16 @@ class FormRow extends ZendFormRow
                 $class = $element->getAttribute('data-container-class');
             }
 
-            if ($element->getOption('render-container') !== false) {
+            if ($element->getAttribute('class') == 'visually-hidden') {
+                $markup = sprintf(self::$format, 'visually-hidden', $markup);
+            } elseif ($element->getAttribute('id') == 'security') {
+                $markup = sprintf(self::$format, 'visually-hidden', $markup);
+            } elseif ($element->getOption('render-container') !== false) {
                 $markup = sprintf(self::$format, $class, $markup);
             }
+        }
+        if ($element instanceof Hidden) {
+            $markup = sprintf(self::$format, 'visually-hidden', $markup);
         }
 
         if ($oldRenderErrors && $elementErrors != '') {
