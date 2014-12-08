@@ -201,7 +201,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function goToNextSection($currentSection)
     {
-        $sections = $this->getAccessibleSections(true);
+        $sections = $this->getAccessibleSections();
 
         $index = array_search($currentSection, $sections);
 
