@@ -23,6 +23,8 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
 {
     use ServiceLocatorAwareTrait;
 
+    const NEW_PUBLICATION_STATUS = 'pub_s_new';
+
     /**
      * @var string
      */
