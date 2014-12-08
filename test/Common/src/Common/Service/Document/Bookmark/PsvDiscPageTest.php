@@ -34,7 +34,7 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $result);
     }
 
-    public function testRenderWithTwoDiscsStillReturnsFullPage()
+    public function testRenderWithSixDiscsStillReturnsFullPage()
     {
         $data = [
             [
@@ -88,7 +88,7 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
             'PSV2_EXPIRY_DATE' => 'N/A',
 
             'PSV3_TITLE' => 'XXXXXXXXXX',
-            'PSV3_DISC_NO' => 'XXXXXXXXXX',
+            'PSV3_DISC_NO' => 'XXXXXX',
             'PSV3_LINE1' => 'XXXXXXXXXX',
             'PSV3_LINE2' => 'XXXXXXXXXX',
             'PSV3_LINE3' => 'XXXXXXXXXX',
@@ -97,7 +97,7 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
             'PSV3_EXPIRY_DATE' => 'XXXXXXXXXX',
 
             'PSV4_TITLE' => 'XXXXXXXXXX',
-            'PSV4_DISC_NO' => 'XXXXXXXXXX',
+            'PSV4_DISC_NO' => 'XXXXXX',
             'PSV4_LINE1' => 'XXXXXXXXXX',
             'PSV4_LINE2' => 'XXXXXXXXXX',
             'PSV4_LINE3' => 'XXXXXXXXXX',
@@ -106,7 +106,7 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
             'PSV4_EXPIRY_DATE' => 'XXXXXXXXXX',
 
             'PSV5_TITLE' => 'XXXXXXXXXX',
-            'PSV5_DISC_NO' => 'XXXXXXXXXX',
+            'PSV5_DISC_NO' => 'XXXXXX',
             'PSV5_LINE1' => 'XXXXXXXXXX',
             'PSV5_LINE2' => 'XXXXXXXXXX',
             'PSV5_LINE3' => 'XXXXXXXXXX',
@@ -115,7 +115,7 @@ class PsvDiscPageTest extends \PHPUnit_Framework_TestCase
             'PSV5_EXPIRY_DATE' => 'XXXXXXXXXX',
 
             'PSV6_TITLE' => 'XXXXXXXXXX',
-            'PSV6_DISC_NO' => 'XXXXXXXXXX',
+            'PSV6_DISC_NO' => 'XXXXXX',
             'PSV6_LINE1' => 'XXXXXXXXXX',
             'PSV6_LINE2' => 'XXXXXXXXXX',
             'PSV6_LINE3' => 'XXXXXXXXXX',
