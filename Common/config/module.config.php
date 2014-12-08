@@ -148,6 +148,9 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\DecisionText1'
+        ),
+        'PolicePublicationFilter' => array(
+
         )
     ),
     'file_uploader' => array(
