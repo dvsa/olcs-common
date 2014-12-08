@@ -396,6 +396,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesPsvStatus($applicationData)
     {
+        if ($applicationData['hasEnteredReg'] === 'N') {
+            return self::STATUS_COMPLETE;
+        }
+
         if (!isset($applicationData['licence']['licenceVehicles'])) {
             return self::STATUS_INCOMPLETE;
         }

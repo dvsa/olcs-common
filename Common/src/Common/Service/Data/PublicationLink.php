@@ -12,7 +12,7 @@ use Common\Exception\ResourceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Util\RestClient;
-use Common\Data\Object\Publication;
+use Common\Data\Object\Publication as PublicationObject;
 
 /**
  * Publication Link service
@@ -22,6 +22,8 @@ use Common\Data\Object\Publication;
 class PublicationLink extends AbstractData implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
+
+    const NEW_PUBLICATION_STATUS = 'pub_s_new';
 
     /**
      * @var string
@@ -33,7 +35,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      */
     public function createEmpty()
     {
-        return new Publication();
+        return new PublicationObject();
     }
 
     public function createWithData($data)
@@ -51,7 +53,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * @param \Common\Data\Object\Publication $publication
      * @return mixed
      */
-    public function save(Publication $publication)
+    public function save(PublicationObject $publication)
     {
         $method = 'POST';
 
@@ -71,7 +73,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * @param string $service
      * @return mixed
      */
-    public function createPublicationLink(Publication $publication, $service)
+    public function createPublicationLink(PublicationObject $publication, $service)
     {
         $publication = $this->getServiceLocator()->get($service)->filter($publication);
         return $this->save($publication);

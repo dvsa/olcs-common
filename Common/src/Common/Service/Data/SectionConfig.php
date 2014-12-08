@@ -91,6 +91,9 @@ class SectionConfig
             )
         ),
         'vehicles_psv' => array(
+            'prerequisite' => array(
+                'operating_centres'
+            ),
             'restricted' => array(
                 array(
                     LicenceEntityService::LICENCE_CATEGORY_PSV,

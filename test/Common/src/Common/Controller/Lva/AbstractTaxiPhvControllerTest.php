@@ -51,7 +51,9 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             );
 
         $this->getMockFormHelper()
-            ->shouldReceive('populateFormTable');
+            ->shouldReceive('populateFormTable')
+            ->shouldReceive('remove')
+            ->with($form, 'dataTrafficArea');
 
         $this->shouldRemoveElements(
             $form,
