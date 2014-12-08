@@ -26,6 +26,21 @@ class VehicleList implements ServiceLocatorAwareInterface
     protected $queryData = [];
 
     /**
+     * @var array
+     */
+    protected $bookmarkData = [];
+
+    /**
+     * @var string
+     */
+    protected $template;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
      * Generate vehicle list
      * $serveFile param will work if we need to generate one file only
      * 
@@ -90,8 +105,7 @@ class VehicleList implements ServiceLocatorAwareInterface
 
             $uploadedFile = $uploader->upload();
 
-            // @TODO injected
-            $filename = 'Goods_Vehicle_List.rtf';
+            $filename = $this->getFilename() . '.rtf';
             $fileName = $this->getServiceLocator()
                 ->get('Helper\Date')
                 ->getDate('YmdHis') . '_' . $filename;
@@ -99,8 +113,7 @@ class VehicleList implements ServiceLocatorAwareInterface
             $data = [
                 'licence'             => $queryData['licence'],
                 'identifier'          => $uploadedFile->getIdentifier(),
-                // @TODO injected
-                'description'         => 'Goods Vehicle List',
+                'description'         => $this->getDescription(),
                 'filename'            => $fileName,
                 'fileExtension'       => 'doc_rtf',
                 'category'            => $category['id'],
@@ -210,6 +223,27 @@ class VehicleList implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set bookmark data
      *
      * @param array $bookmarkData
@@ -228,5 +262,10 @@ class VehicleList implements ServiceLocatorAwareInterface
     public function getBookmarkData()
     {
         return $this->bookmarkData;
+    }
+
+    protected function getFilename()
+    {
+        return str_replace(" ", "_", $this->getDescription());
     }
 }
