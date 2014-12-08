@@ -160,27 +160,6 @@ class VehicleList implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Set logged in user
-     *
-     * @param mixed $loggedInUser
-     */
-    public function setLoggedInUser($loggedInUser)
-    {
-        $this->loggedInUser = $loggedInUser;
-        return $this;
-    }
-
-    /**
-     * Get logged in user
-     *
-     * @return mixed
-     */
-    public function getLoggedInUser()
-    {
-        return $this->loggedInUser;
-    }
-
-    /**
      * Set query data
      *
      * @param array $queryData
