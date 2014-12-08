@@ -45,7 +45,7 @@ class VehicleFilter
      *     },
      *     "must_be_checked": true
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\Checkbox")
+     * @Form\Type("OlcsCheckbox")
      */
     public $includeRemoved = null;
 
@@ -61,7 +61,7 @@ class VehicleFilter
     public $disc = null;
 
     /**
-     * @Form\Attributes({"type":"submit","class":"action--primary"})
+     * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
      * @Form\Options({
      *     "label": "internal-vehicle-filter-filter",
      *     "label_attributes": {
