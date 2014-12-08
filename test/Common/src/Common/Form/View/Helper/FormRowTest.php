@@ -265,7 +265,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
+        $this->expectOutputString('<label for="security">Label</label>');
     }
 
     /**
@@ -305,7 +305,7 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
         $viewHelper = $this->prepareHelper();
         echo $viewHelper($element);
 
-        $this->expectOutputRegex('/^<div class="field visually-hidden">(.*)<\/div>$/');
+        $this->expectOutputString('<label for="test">Label</label>');
     }
 
     public function renderRadioProvider()
