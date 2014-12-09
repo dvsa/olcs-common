@@ -732,6 +732,7 @@ return array(
     'internal-licence-bus-processing-notes-modify-title' => 'Edit note',
     'internal-licence-bus-processing-notes-title' => 'Notes',
     'internal-licence-bus-processing-title' => 'Processing',
+    'internal-licence-bus-processing-registration-history' => 'Registration history',
     'internal-licence-bus-route' => 'Timetables & routes',
     'internal-licence-bus-route-label' => 'Timetables & routes',
     'internal-licence-bus-route-placeholder' => 'Timetables & routes 1',
