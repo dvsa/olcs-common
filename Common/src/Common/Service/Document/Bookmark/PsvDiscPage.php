@@ -21,6 +21,12 @@ class PsvDiscPage extends AbstractDiscList
      */
     const BOOKMARK_PREFIX = 'PSV';
 
+    /**
+     * Short version of standard placeholder
+     * @see https://jira.i-env.net/browse/OLCS-5988
+     */
+    const SHORT_PLACEHOLDER = 'XXXXXX';
+
     protected $service = 'PsvDisc';
 
     protected $discBundle = [
@@ -71,7 +77,7 @@ class PsvDiscPage extends AbstractDiscList
             $prefix = $this->getPrefix($length);
             $discs[] = [
                 $prefix . 'TITLE'       => self::PLACEHOLDER,
-                $prefix . 'DISC_NO'     => self::PLACEHOLDER,
+                $prefix . 'DISC_NO'     => self::SHORT_PLACEHOLDER,
                 $prefix . 'LINE1'       => self::PLACEHOLDER,
                 $prefix . 'LINE2'       => self::PLACEHOLDER,
                 $prefix . 'LINE3'       => self::PLACEHOLDER,

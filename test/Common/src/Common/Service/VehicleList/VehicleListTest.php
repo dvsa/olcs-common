@@ -18,6 +18,7 @@ use CommonTest\Bootstrap;
  */
 class VehicleListTest extends \PHPUnit_Framework_TestCase
 {
+    use \CommonTest\Traits\MockDateTrait;
 
     /**
      * @var Common\Service\VehicleList\VehicleList
@@ -30,12 +31,12 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     public $serviceLocator;
 
     /**
-     * @var bool 
+     * @var bool
      */
     public $bookmarksFound = true;
 
     /**
-     * @var bool 
+     * @var bool
      */
     public $raiseExceptionWhileSavingDocument = false;
 
@@ -50,7 +51,8 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->method('makeRestCall')
             ->will($this->returnCallback(array($this, 'mockRestCalls')));
 
-        $this->serviceLocator = Bootstrap::getServiceManager();
+        // the MockDateTrait expects `sm` instead of `serviceLocator`; this is just a quick fix
+        $this->sm = $this->serviceLocator = Bootstrap::getServiceManager();
         $this->serviceLocator->setAllowOverride(true);
 
     }
@@ -86,50 +88,72 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test set licence ids
-     * 
+     * Test set template
+     *
      * @group vehicleList
      */
-    public function testSetLicenceIds()
+    public function testSetTemplate()
     {
-        $licenceIds = [1,2,3];
-        $this->vehicleList->setLicenceIds($licenceIds);
-        $this->assertEquals($this->vehicleList->getLicenceIds(), $licenceIds);
+        $this->vehicleList->setTemplate('foo');
+        $this->assertEquals('foo', $this->vehicleList->getTemplate());
     }
 
     /**
-     * Test set logged in user
-     * 
+     * Test set description
+     *
      * @group vehicleList
      */
-    public function testSetLoggedInUser()
+    public function testSetDescription()
     {
-        $loggedInUser = 1;
-        $this->vehicleList->setLoggedInUser($loggedInUser);
-        $this->assertEquals($this->vehicleList->getLoggedInUser(), $loggedInUser);
+        $this->vehicleList->setDescription('bar');
+        $this->assertEquals('bar', $this->vehicleList->getDescription());
     }
 
     /**
-     * Test generate vehicle list with no licence ids provided
-     * 
+     * Test set query data
+     *
      * @group vehicleList
      */
-    public function testGenerateVehicleListNoLicenceIds()
+    public function testSetQueryData()
     {
-        $this->vehicleList->setLicenceIds([]);
-        $retv = $this->vehicleList->generateVehicleList();
-        $this->assertEquals($retv, false);
+        $this->vehicleList->setQueryData([1, 2]);
+        $this->assertEquals([1, 2], $this->vehicleList->getQueryData());
+    }
+
+    /**
+     * Test set bookmark data
+     *
+     * @group vehicleList
+     */
+    public function testSetBookmarkData()
+    {
+        $this->vehicleList->setBookmarkData('bar');
+        $this->assertEquals('bar', $this->vehicleList->getBookmarkData());
+    }
+
+    /**
+     * Test generate vehicle list with no query data provided
+     *
+     * @group vehicleList
+     */
+    public function testGenerateVehicleListNoQueryData()
+    {
+        $this->assertFalse(
+            $this->vehicleList->generateVehicleList()
+        );
     }
 
     /**
      * Test generate vehicle list with no template received
-     * 
+     *
      * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoTemplate()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([1])
+            ->setTemplate('GVVehiclesList');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -161,13 +185,15 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate vehicle list with no bookmarks queries received
-     * 
+     *
      * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoBookmarkQueries()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([[1]])
+            ->setTemplate('GVVehiclesList');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -191,7 +217,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $mockDocument->expects($this->once())
             ->method('getBookmarkQueries')
-            ->with('file content', ['licence' => 1, 'user' => null])
+            ->with('file content', [1])
             ->will($this->returnValue(false));
 
         $this->serviceLocator->setService('Document', $mockDocument);
@@ -204,13 +230,15 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate vehicle list with no bookmarks received
-     * 
+     *
      * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListNoBookmarks()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([[1]])
+            ->setTemplate('GVVehiclesList');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -234,7 +262,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $mockDocument->expects($this->once())
             ->method('getBookmarkQueries')
-            ->with('file content', ['licence' => 1, 'user' => null])
+            ->with('file content', [1])
             ->will($this->returnValue(['Results' => ['some queries here']]));
 
         $this->bookmarksFound = false;
@@ -249,13 +277,15 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate vehicle list with exception while saving document
-     * 
+     *
      * @expectedException Common\Service\VehicleList\Exception
      * @group vehicleList
      */
     public function testGenerateVehicleListWithExceptionWhilteSavingDocument()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([['licence' => 1]])
+            ->setTemplate('GVVehiclesList');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -284,7 +314,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $mockDocument->expects($this->once())
             ->method('getBookmarkQueries')
-            ->with('file content', ['licence' => 1, 'user' => null])
+            ->with('file content', ['licence' => 1])
             ->will($this->returnValue(['Results' => ['some queries here']]));
 
         $mockFileUploader = $this->getMock('\StdClass', ['getUploader', 'setFile', 'upload']);
@@ -323,12 +353,15 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate vehicle list with serve file
-     * 
+     *
      * @group vehicleList
      */
     public function testGenerateVehicleListWithServeFile()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([['licence' => 1]])
+            ->setTemplate('GVVehiclesList')
+            ->setDescription('Goods Vehicle List');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -364,7 +397,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $mockDocument->expects($this->once())
             ->method('getBookmarkQueries')
-            ->with($mockFile, ['licence' => 1, 'user' => null])
+            ->with($mockFile, ['licence' => 1])
             ->will($this->returnValue(['Results' => ['some queries here']]));
 
         $mockFileUploader = $this->getMock('\StdClass', ['getUploader', 'setFile', 'upload', 'serveFile']);
@@ -377,9 +410,11 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->with(['content' => 'some content'])
             ->will($this->returnValue(true));
 
+        $this->mockDate('20141208114500');
+
         $mockFileUploader->expects($this->once())
             ->method('serveFile')
-            ->with($mockFile, date('YmdHi') . '_' . 'Goods_Vehicle_List.rtf')
+            ->with($mockFile, '20141208114500_Goods_Vehicle_List.rtf')
             ->will($this->returnValue(true));
 
         $mockUploadedFile = $this->getMock('\StdClass', ['getIdentifier', 'getSize']);
@@ -406,12 +441,15 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test generate vehicle list
-     * 
+     *
      * @group vehicleList
      */
     public function testGenerateVehicleList()
     {
-        $this->vehicleList->setLicenceIds([1]);
+        $this->vehicleList
+            ->setQueryData([['licence' => 1]])
+            ->setTemplate('GVVehiclesList')
+            ->setDescription('Goods Vehicle List');
 
         $mockCategory = $this->getMock('\StdClass', ['getCategoryByDescription']);
         $mockDocument = $this->getMock('\StdClass', ['getBookmarkQueries', 'populateBookmarks']);
@@ -442,7 +480,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $mockDocument->expects($this->once())
             ->method('getBookmarkQueries')
-            ->with($mockFile, ['licence' => 1, 'user' => null])
+            ->with($mockFile, ['licence' => 1])
             ->will($this->returnValue(['Results' => ['some queries here']]));
 
         $mockFileUploader = $this->getMock('\StdClass', ['getUploader', 'setFile', 'upload', 'serveFile']);
@@ -479,7 +517,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Create content store mock
-     * 
+     *
      * @return Mock
      */
     public function getMockContentStore()

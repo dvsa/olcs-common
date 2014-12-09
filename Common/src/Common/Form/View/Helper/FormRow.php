@@ -79,17 +79,20 @@ class FormRow extends ZendFormRow
                 $this->labelPosition = self::LABEL_PREPEND;
             }
         }
+        
+        $wrap = true;
 
         $type = $element->getAttribute('type');
-        if ($type === 'multi_checkbox' || $type === 'radio') {
-            $noWrap = true;
+        if ($type === 'multi_checkbox' || $type === 'radio'
+            || $element->getAttribute('id') == 'security') {
+            $wrap = false;
         }
 
         if ($oldRenderErrors && $elementErrors != '') {
             $markup = $elementErrors . $markup;
         }
 
-        if (! ($element instanceof Hidden) && !isset($noWrap)) {
+        if (! ($element instanceof Hidden) && $wrap) {
 
             if ($elementErrors != '') {
                 $class = '';
@@ -97,7 +100,9 @@ class FormRow extends ZendFormRow
                 $class = $element->getAttribute('data-container-class');
             }
 
-            if ($element->getOption('render-container') !== false) {
+            if (strpos($element->getAttribute('class'), 'visually-hidden') !== false) {
+                $markup = sprintf(self::$format, 'visually-hidden', $markup);
+            } elseif ($element->getOption('render-container') !== false) {
                 $markup = sprintf(self::$format, $class, $markup);
             }
         }
