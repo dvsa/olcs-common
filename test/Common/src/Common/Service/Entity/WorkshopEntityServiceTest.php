@@ -30,7 +30,7 @@ class WorkshopEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $data = array('licence' => $id);
+        $data = array('licence' => $id, 'limit' => 'all');
         $expected = array('foo' => 'bar');
         $response = array('Results' => $expected);
 
