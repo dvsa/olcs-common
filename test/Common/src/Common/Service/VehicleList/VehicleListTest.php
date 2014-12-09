@@ -51,6 +51,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->method('makeRestCall')
             ->will($this->returnCallback(array($this, 'mockRestCalls')));
 
+        // the MockDateTrait expects `sm` instead of `serviceLocator`; this is just a quick fix
         $this->sm = $this->serviceLocator = Bootstrap::getServiceManager();
         $this->serviceLocator->setAllowOverride(true);
 
@@ -94,7 +95,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     public function testSetTemplate()
     {
         $this->vehicleList->setTemplate('foo');
-        $this->assertEquals($this->vehicleList->getTemplate(), 'foo');
+        $this->assertEquals('foo', $this->vehicleList->getTemplate());
     }
 
     /**
@@ -105,7 +106,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     public function testSetDescription()
     {
         $this->vehicleList->setDescription('bar');
-        $this->assertEquals($this->vehicleList->getDescription(), 'bar');
+        $this->assertEquals('bar', $this->vehicleList->getDescription());
     }
 
     /**
@@ -116,7 +117,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     public function testSetQueryData()
     {
         $this->vehicleList->setQueryData([1, 2]);
-        $this->assertEquals($this->vehicleList->getQueryData(), [1, 2]);
+        $this->assertEquals([1, 2], $this->vehicleList->getQueryData());
     }
 
     /**
@@ -127,7 +128,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     public function testSetBookmarkData()
     {
         $this->vehicleList->setBookmarkData('bar');
-        $this->assertEquals($this->vehicleList->getBookmarkData(), 'bar');
+        $this->assertEquals('bar', $this->vehicleList->getBookmarkData());
     }
 
     /**
@@ -137,8 +138,9 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateVehicleListNoQueryData()
     {
-        $retv = $this->vehicleList->generateVehicleList();
-        $this->assertEquals($retv, false);
+        $this->assertFalse(
+            $this->vehicleList->generateVehicleList()
+        );
     }
 
     /**
