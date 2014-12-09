@@ -75,7 +75,8 @@ return array(
         ),
         'invokables' => array(
             'Document' => '\Common\Service\Document\Document',
-            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem'
+            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
+            'VehicleList' => '\Common\Service\VehicleList\VehicleList'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -97,11 +98,6 @@ return array(
                 $postcode = new \Common\Service\Postcode\Postcode();
                 $postcode->setServiceLocator($serviceManager);
                 return $postcode;
-            },
-            'vehicleList' => function ($serviceManager) {
-                $vehicleList = new \Common\Service\VehicleList\VehicleList();
-                $vehicleList->setServiceLocator($serviceManager);
-                return $vehicleList;
             },
             'postcodeTrafficAreaValidator' => function ($serviceManager) {
                 $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
