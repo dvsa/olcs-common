@@ -32,6 +32,9 @@ class MultiResponseHelper extends ResponseHelper
             if (count($return)) {
                 return $return;
             }
+        } else {
+            $this->checkForUnexpectedResponseCode($this->body);
+            return $this->processResponse();
         }
 
         return false;

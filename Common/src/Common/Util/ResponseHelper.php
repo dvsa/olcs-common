@@ -94,45 +94,7 @@ class ResponseHelper
 
         $this->checkForUnexpectedResponseCode($this->body);
 
-        switch ($this->method) {
-            case 'GET':
-
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
-                    return isset($this->responseData['Data']) ? $this->responseData['Data'] : $this->responseData;
-                }
-
-                return false;
-            case 'POST':
-
-                if (
-                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
-                    $this->response->getStatusCode() === Response::STATUS_CODE_202
-                ) {
-
-                    return $this->responseData['Data'];
-                }
-
-                return false;
-            // These currently do the same thing
-            case 'PUT':
-            case 'PATCH':
-
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
-                    return $this->responseData['Data'];
-                }
-
-                return $this->response->getStatusCode();
-            case 'DELETE':
-
-                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
-
-                    return $this->responseData['Data'];
-                }
-
-                return false;
-        }
+        return $this->processResponse();
     }
 
     public function checkForValidResponseBody($body)
@@ -177,6 +139,52 @@ class ResponseHelper
 
             // TO-DO: Replace with a different exception
             throw new \Exception('Unexpected status code: ' . $body);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function processResponse()
+    {
+        switch ($this->method) {
+            case 'GET':
+
+                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
+
+                    return isset($this->responseData['Data']) ? $this->responseData['Data'] : $this->responseData;
+                }
+
+                return false;
+            case 'POST':
+
+                if (
+                    $this->response->getStatusCode() === Response::STATUS_CODE_201 ||
+                    $this->response->getStatusCode() === Response::STATUS_CODE_202
+                ) {
+
+                    return $this->responseData['Data'];
+                }
+
+                return false;
+            // These currently do the same thing
+            case 'PUT':
+            case 'PATCH':
+
+                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
+
+                    return $this->responseData['Data'];
+                }
+
+                return $this->response->getStatusCode();
+            case 'DELETE':
+
+                if ($this->response->getStatusCode() === Response::STATUS_CODE_200) {
+
+                    return $this->responseData['Data'];
+                }
+
+                return false;
         }
     }
 }
