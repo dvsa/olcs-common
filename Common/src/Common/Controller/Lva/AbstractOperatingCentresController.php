@@ -830,8 +830,8 @@ abstract class AbstractOperatingCentresController extends AbstractController
             array_merge(
                 array(
                     'description' => 'Advertisement',
-                    'category' => $category['id'],
-                    'documentSubCategory' => $subCategory['id'],
+                    'category'    => $category['id'],
+                    'subCategory' => $subCategory['id'],
                 ),
                 $this->getDocumentProperties()
             )

@@ -108,20 +108,20 @@ class VehicleList implements ServiceLocatorAwareInterface
             $filename = $this->getFilename() . '.rtf';
             $fileName = $this->getServiceLocator()
                 ->get('Helper\Date')
-                ->getDate('YmdHis') . '_' . $filename;
+                ->getDate('YmdHi') . '_' . $filename;
 
             $data = [
-                'licence'             => $queryData['licence'],
-                'identifier'          => $uploadedFile->getIdentifier(),
-                'description'         => $this->getDescription(),
-                'filename'            => $fileName,
-                'fileExtension'       => 'doc_rtf',
-                'category'            => $category['id'],
-                'documentSubCategory' => $subCategory['id'],
-                'isDigital'           => true,
-                'isReadOnly'          => true,
-                'issuedDate'          => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
-                'size'                => $uploadedFile->getSize()
+                'licence'       => $queryData['licence'],
+                'identifier'    => $uploadedFile->getIdentifier(),
+                'description'   => $this->getDescription(),
+                'filename'      => $fileName,
+                'fileExtension' => 'doc_rtf',
+                'category'      => $category['id'],
+                'subCategory'   => $subCategory['id'],
+                'isDigital'     => true,
+                'isReadOnly'    => true,
+                'issuedDate'    => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+                'size'          => $uploadedFile->getSize()
             ];
 
             $this->makeRestCall(
