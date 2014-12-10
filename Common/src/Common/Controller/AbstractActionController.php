@@ -668,7 +668,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
 
     /**
      * Get enableCsrf flag
-     * 
+     *
      * @return bool
      */
     public function getEnabledCsrf()
@@ -746,11 +746,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFormClass($type)
     {
-        $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
-
-        foreach (['Olcs', 'SelfServe', 'Common'] as $namespace) {
+        foreach (['Olcs', 'Common'] as $namespace) {
             $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
             if (class_exists($class)) {
+
+                $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
 
                 $form =  $annotationBuilder->createForm($class);
                 $form->add(
