@@ -8,7 +8,7 @@
 namespace Common\Controller\Lva\Traits;
 
 /**
- * PSV Licence Controller Trait
+ * PSV Application Controller Trait
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
