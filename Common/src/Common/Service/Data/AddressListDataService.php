@@ -24,8 +24,14 @@ class AddressListDataService implements ServiceLocatorAwareInterface, ListDataIn
      * @param bool $useGroups
      * @return array
      */
-    public function fetchListOptions($category, $useGroups = false)
+    public function fetchListOptions($context, $useGroups = false)
     {
+        $data = array();
+        if (is_array($context)) {
+            foreach ($context as $entity) {
+
+            }
+        }
         $data[1] = 'Test address 1, testTown';
         $data[2] = 'Test address 2, testTown';
         $data[3] = 'Test address 3, testTown';
