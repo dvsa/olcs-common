@@ -822,8 +822,9 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $categoryService = $this->getServiceLocator()->get('category');
 
-        $category = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
+        // The top-level category is *always* application; this is correct
+        $category = $categoryService->getCategoryByDescription('Application');
+        $subCategory = $categoryService->getCategoryByDescription('Advert Digital', 'Document');
 
         $this->uploadFile(
             $file,

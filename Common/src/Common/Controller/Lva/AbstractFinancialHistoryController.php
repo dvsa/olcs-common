@@ -16,6 +16,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
 {
     // @TODO incorrect: awaiting confirmation from Steve L
     const DOCUMENT_SUBCATEGORY = 'Sur 1 Digital';
+
     /**
      * Map the data
      *
