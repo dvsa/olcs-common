@@ -43,13 +43,15 @@ class VehicleList implements ServiceLocatorAwareInterface
     /**
      * Generate vehicle list
      * $serveFile param will work if we need to generate one file only
-     * 
+     *
      * @param bool $serveFile
      * @return string|bool
      */
     public function generateVehicleList($serveFile = false)
     {
-        if (empty($this->getQueryData())) {
+        $queryData = $this->getQueryData();
+
+        if (empty($queryData)) {
             return false;
         }
 
