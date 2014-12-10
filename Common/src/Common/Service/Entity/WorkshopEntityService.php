@@ -32,7 +32,7 @@ class WorkshopEntityService extends AbstractEntityService
 
     public function getForLicence($licenceId)
     {
-        $results = $this->get(['licence' => $licenceId], $this->workshopDataBundle);
+        $results = $this->getAll(['licence' => $licenceId], $this->workshopDataBundle);
 
         return $results['Results'];
     }
