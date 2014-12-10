@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
+use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterAwareInterface;
 use Zend\Http\Response;
 
 /**
