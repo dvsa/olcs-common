@@ -1,17 +1,13 @@
 <?php
 
 /**
- * YesNo formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * RefData formatter
  */
 
 namespace Common\Service\Table\Formatter;
 
 /**
- * YesNo formatter
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * RefData formatter
  */
 class RefData implements FormatterInterface
 {
