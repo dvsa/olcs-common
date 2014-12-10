@@ -40,7 +40,7 @@ class PreviousLicenceEntityService extends AbstractEntityService
 
     public function getForApplicationAndType($applicationId, $prevLicenceType)
     {
-        $data = $this->get(
+        $data = $this->getAll(
             array('application' => $applicationId, 'previousLicenceType' => $prevLicenceType),
             $this->licenceTableBundle
         );
