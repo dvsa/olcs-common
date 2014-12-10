@@ -22,8 +22,10 @@ use Common\Service\Entity\ApplicationCompletionEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationTypeOfLicenceAdapter
-implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, ControllerAwareInterface
+class ApplicationTypeOfLicenceAdapter implements
+    TypeOfLicenceAdapterInterface,
+    ServiceLocatorAwareInterface,
+    ControllerAwareInterface
 {
     use ServiceLocatorAwareTrait,
         ControllerAwareTrait;

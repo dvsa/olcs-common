@@ -15,8 +15,7 @@ use Zend\Http\Response;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicenceController extends AbstractController
-implements Interfaces\TypeOfLicenceAdapterAwareInterface
+abstract class AbstractTypeOfLicenceController extends AbstractController implements TypeOfLicenceAdapterAwareInterface
 {
     protected $typeOfLicenceAdapter;
 
