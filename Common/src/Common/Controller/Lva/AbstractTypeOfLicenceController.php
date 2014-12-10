@@ -58,11 +58,22 @@ implements Interfaces\TypeOfLicenceAdapterAwareInterface
 
         if ($request->isPost() && $form->isValid()) {
 
+            // If we have an adapter, we need to grab the previous data as we need to check this later
+            $adapter = $this->getTypeOfLicenceAdapter();
+            $previousData = null;
+            if ($adapter !== null) {
+                $previousData = $this->getTypeOfLicenceData();
+            }
+
+            // Update the record
             $data = $this->formatDataForSave($data);
-
             $data['id'] = $this->getIdentifier();
-
             $this->getLvaEntityService()->save($data);
+
+            // If we have the adapter, check if we are updating this record for the first time
+            if ($adapter !== null && $previousData !== null && !$adapter->isCurrentDataSet($previousData)) {
+                $adapter->processFirstSave($data['id']);
+            }
 
             $this->postSave('type_of_licence');
 
@@ -82,12 +93,13 @@ implements Interfaces\TypeOfLicenceAdapterAwareInterface
             return;
         }
 
-        if ($adapter->doesChangeRequireConfirmation($data['type-of-licence'], $this->getTypeOfLicenceData())) {
+        $currentData = $this->getTypeOfLicenceData();
 
+        if ($adapter->doesChangeRequireConfirmation($data['type-of-licence'], $currentData)) {
             return $this->redirect()->toRoute(null, $adapter->getRouteParams(), $adapter->getQueryParams(), true);
         }
 
-        if ($adapter->processChange($data['type-of-licence'], $this->getTypeOfLicenceData())) {
+        if ($adapter->processChange($data['type-of-licence'], $currentData)) {
             return $this->completeSection('tyoe_of_licence');
         }
     }

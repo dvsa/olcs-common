@@ -42,6 +42,10 @@ implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, Controll
 
     public function doesChangeRequireConfirmation(array $postData, array $currentData)
     {
+        if (!$this->isCurrentDataSet($currentData)) {
+            return false;
+        }
+
         $this->queryParams = $postData;
 
         if ($this->queryParams['operator-location'] !== $currentData['niFlag']) {
@@ -63,8 +67,19 @@ implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, Controll
         return false;
     }
 
+    public function isCurrentDataSet($currentData)
+    {
+        return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
+            && !empty($currentData['licenceType']);
+    }
+
     public function processChange(array $postData, array $currentData)
     {
+        if (!$this->isCurrentDataSet($currentData)) {
+            return false;
+        }
+
+        // If we haven't changed anything, do nothing
         if ($postData['licence-type'] === $currentData['licenceType']) {
             return false;
         }
@@ -83,6 +98,11 @@ implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, Controll
         return true;
     }
 
+    public function processFirstSave($applicationId)
+    {
+        $this->createFee($applicationId);
+    }
+
     public function createFee($applicationId)
     {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
@@ -90,24 +110,6 @@ implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, Controll
 
         $this->getServiceLocator()->get('Processing\Application')
             ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_APP);
-    }
-
-    protected function resetSectionStatuses($applicationId)
-    {
-        $applicationCompletionService = $this->getServiceLocator()->get('Entity\ApplicationCompletion');
-
-        $applicationCompletion = $applicationCompletionService->getCompletionStatuses($applicationId);
-
-        foreach ($applicationCompletion as $field => $value) {
-            if ($value === ApplicationCompletionEntityService::STATUS_COMPLETE
-                && preg_match('/[a-zA-Z]+Status/', $field)) {
-                $applicationCompletion[$field] = ApplicationCompletionEntityService::STATUS_INCOMPLETE;
-            }
-        }
-
-        $applicationCompletion['typeOfLicenceStatus'] = ApplicationCompletionEntityService::STATUS_COMPLETE;
-
-        $applicationCompletionService->save($applicationCompletion);
     }
 
     public function confirmationAction()
@@ -142,6 +144,24 @@ implements TypeOfLicenceAdapterInterface, ServiceLocatorAwareInterface, Controll
         }
 
         return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+    }
+
+    protected function resetSectionStatuses($applicationId)
+    {
+        $applicationCompletionService = $this->getServiceLocator()->get('Entity\ApplicationCompletion');
+
+        $applicationCompletion = $applicationCompletionService->getCompletionStatuses($applicationId);
+
+        foreach ($applicationCompletion as $field => $value) {
+            if ($value === ApplicationCompletionEntityService::STATUS_COMPLETE
+                && preg_match('/[a-zA-Z]+Status/', $field)) {
+                $applicationCompletion[$field] = ApplicationCompletionEntityService::STATUS_INCOMPLETE;
+            }
+        }
+
+        $applicationCompletion['typeOfLicenceStatus'] = ApplicationCompletionEntityService::STATUS_COMPLETE;
+
+        $applicationCompletionService->save($applicationCompletion);
     }
 
     protected function removeApplication($applicationId)

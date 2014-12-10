@@ -21,4 +21,6 @@ interface TypeOfLicenceAdapterInterface
     public function doesChangeRequireConfirmation(array $postData, array $currentData);
 
     public function processChange(array $postData, array $currentData);
+
+    public function processFirstSave($applicationId);
 }
