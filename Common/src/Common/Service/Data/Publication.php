@@ -21,9 +21,4 @@ class Publication extends AbstractData implements ServiceLocatorAwareInterface
     use ServiceLocatorAwareTrait;
 
     protected $serviceName = 'Publication';
-
-    public function fetchList($params)
-    {
-        return $this->getRestClient()->get($params);
-    }
 }

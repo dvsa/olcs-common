@@ -77,7 +77,7 @@ class PiVenue extends AbstractData implements ListDataInterface
     /**
      * @return array
      */
-    private function getBundle()
+    protected function getBundle()
     {
         return [
             'properties' => 'ALL',
