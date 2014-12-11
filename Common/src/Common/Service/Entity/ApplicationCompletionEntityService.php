@@ -411,11 +411,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         ];
 
         foreach ($psvTypes as $type => $val) {
-            /*
+            /**
              * This loop looks *similar* to normal vehicles but it's inverted;
              * we want to bail as early as possible if things don't look right
              */
-            $totalAuth = $applicationData['totAuth' . ucfirst($type). 'Vehicles'];
+            $totalAuth = $applicationData['totAuth' . ucfirst($type) . 'Vehicles'];
 
             if ($totalAuth === null) {
                 // bail early; a null (as opposed to a zero) means we haven't
