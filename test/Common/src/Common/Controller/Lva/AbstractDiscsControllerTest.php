@@ -18,6 +18,9 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractDiscsController');
     }
 
+    /**
+     * @group abstractDiscsController
+     */
     public function testGetIndexAction()
     {
         $form = $this->createMockForm('Lva\PsvDiscs');
@@ -29,7 +32,19 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
             ->with(7)
             ->andReturn([]);
 
+        $this->sut
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('includeCeased', 0)
+                ->andReturn(0)
+                ->getMock()
+            );
+
         $this->getMockFormHelper()
+            ->shouldReceive('createForm')
+            ->with('Lva\DiscFilter')
             ->shouldReceive('populateFormTable');
 
         $this->setService(
@@ -51,6 +66,84 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
                 [
                     'data' => [
                         'validDiscs' => 0,
+                        'pendingDiscs' => 0
+                    ]
+                ]
+            )
+            ->andReturn($form);
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('discs', $this->view);
+    }
+
+    /**
+     * @group abstractDiscsController
+     */
+    public function testIndexActionWithFilter()
+    {
+        $form = $this->createMockForm('Lva\PsvDiscs');
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn(7);
+
+        $this->mockEntity('Licence', 'getPsvDiscs')
+            ->with(7)
+            ->andReturn(
+                [
+                    ['ceasedDate' => null, 'discNo' => '123', 'issuedDate' => '2014-01-01'],
+                    ['ceasedDate' => '2014-01-01', 'discNo' => '456', 'issuedDate' => '2014-01-01']
+                ]
+            );
+
+        $this->sut
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('includeCeased', 0)
+                ->andReturn(1)
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('createForm')
+            ->with('Lva\DiscFilter')
+            ->shouldReceive('populateFormTable');
+
+        $this->setService(
+            'Table',
+            m::mock()
+            ->shouldReceive('prepareTable')
+            ->with(
+                'lva-psv-discs',
+                [
+                    [
+                        'ceasedDate' => null,
+                        'discNo' => '123',
+                        'issuedDate' => '2014-01-01'
+                    ],
+                    [
+                        'ceasedDate' => '2014-01-01',
+                        'discNo' => '456',
+                        'issuedDate' => '2014-01-01'
+                    ]
+                ]
+            )
+            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'))
+            ->getMock()
+        );
+
+        $this->mockRender();
+
+        $form->shouldReceive('get')
+            ->with('table')
+            ->andReturn(m::mock('\Zend\Form\Fieldset'))
+            ->shouldReceive('setData')
+            ->with(
+                [
+                    'data' => [
+                        'validDiscs' => 2,
                         'pendingDiscs' => 0
                     ]
                 ]

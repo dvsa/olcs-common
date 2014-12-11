@@ -38,7 +38,7 @@ class MultiResponseHelperTest extends TestCase
         $this->assertEquals(['resp1' => 'some data', 'resp2' => 'some more data'], $data);
     }
 
-    public function testHandleResponseNoneValid()
+    public function testHandleNone207Response()
     {
         $responseData = [
             'Data' => [
@@ -53,14 +53,14 @@ class MultiResponseHelperTest extends TestCase
 
         $response = new Response();
         $response->setContent(json_encode($responseData));
-        $response->setStatusCode(Response::STATUS_CODE_200);
+        $response->setStatusCode(Response::STATUS_CODE_201);
 
         $sut = new MultiResponseHelper();
         $sut->setMethod('POST');
         $sut->setResponse($response);
         $data = $sut->handleResponse();
 
-        $this->assertFalse($data);
+        $this->assertInternalType('array', $data);
     }
 
     public function testHandleResponseNoneValid2()
