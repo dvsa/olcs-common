@@ -855,7 +855,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $documents = $this->getServiceLocator()->get($lvaEntity)
-            ->getDocuments($this->getIdentifier(), 'Licensing', 'Advertisement');
+            ->getDocuments($this->getIdentifier(), 'Application', 'Advert Digital');
 
         return array_filter(
             $documents,
