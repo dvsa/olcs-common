@@ -38,6 +38,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
 
     // @todo Maybe create constants for all sub categories? Unless we start using handle
     const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
+    const DOC_SUB_CATEGORY_LICENCE_VEHICLE_LIST = 91;
 
     /**
      * Cache the categories

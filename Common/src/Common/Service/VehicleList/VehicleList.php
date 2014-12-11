@@ -9,6 +9,7 @@ namespace Common\Service\VehicleList;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Service\Data\CategoryDataService;
 
 /**
  * Service to get create vehicle list and save it to JackRabbit
@@ -56,11 +57,6 @@ class VehicleList implements ServiceLocatorAwareInterface
         }
 
         $documentService = $this->getServiceLocator()->get('Document');
-
-        $categoryService = $this->getServiceLocator()->get('category');
-
-        $category    = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription('Vehicle List', 'Document');
 
         /* ContentStore service doesn't clear
          * previous request method so we need to be sure
@@ -118,8 +114,8 @@ class VehicleList implements ServiceLocatorAwareInterface
                 'description'   => $this->getDescription(),
                 'filename'      => $fileName,
                 'fileExtension' => 'doc_rtf',
-                'category'      => $category['id'],
-                'subCategory'   => $subCategory['id'],
+                'category'      => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory'   => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_VEHICLE_LIST,
                 'isDigital'     => true,
                 'isReadOnly'    => true,
                 'issuedDate'    => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
