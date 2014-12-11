@@ -26,7 +26,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
                 'children' => array(
                     'operatingCentre',
                     'category',
-                    'documentSubCategory'
+                    'subCategory'
                 )
             )
         )
@@ -68,7 +68,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
 
         $documentBundle['children']['documents']['criteria'] = array(
             'category' => $category['id'],
-            'documentSubCategory' => $subCategory['id']
+            'subCategory' => $subCategory['id']
         );
 
         $data = $this->get($id, $documentBundle);

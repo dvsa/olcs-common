@@ -161,9 +161,14 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
             'Results' => $expected
         );
 
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isDoc' => true
+        ];
+
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->with('DocumentSubCategory', 'GET', array('description' => $description))
+            ->with('SubCategory', 'GET', $params)
             ->will($this->returnValue($response));
 
         $output = $this->sut->getCategoryByDescription($description, 'Document');
@@ -190,12 +195,51 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
             )
         );
 
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isTask' => true
+        ];
+
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->with('DocumentSubCategory', 'GET', array('description' => $description))
+            ->with('SubCategory', 'GET', $params)
             ->will($this->returnValue($response));
 
-        $output = $this->sut->getCategoryByDescription($description, 'Document');
+        $output = $this->sut->getCategoryByDescription($description, 'Task');
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * @group data_service
+     * @group category_data_service
+     */
+    public function testGetSubCategoryByDescriptionWith1ResultScan()
+    {
+        $description = 'SomeCategory';
+
+        $expected = array(
+            'description' => $description
+        );
+
+        $response = array(
+            'Count' => 1,
+            'Results' => array(
+                $expected
+            )
+        );
+
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isScan' => true
+        ];
+
+        $this->mockRestHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->with('SubCategory', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $output = $this->sut->getCategoryByDescription($description, 'Scan');
 
         $this->assertEquals($expected, $output);
     }
@@ -219,9 +263,14 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
             )
         );
 
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isDoc' => true
+        ];
+
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->with('DocumentSubCategory', 'GET', array('description' => $description))
+            ->with('SubCategory', 'GET', $params)
             ->will($this->returnValue($response));
 
         $output = $this->sut->getCategoryByDescription($description, 'Document');
@@ -244,9 +293,14 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
             'Results' => array()
         );
 
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isDoc' => true
+        ];
+
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->with('DocumentSubCategory', 'GET', array('description' => $description))
+            ->with('SubCategory', 'GET', $params)
             ->will($this->returnValue($response));
 
         $output = $this->sut->getCategoryByDescription($description, 'Document');
@@ -271,6 +325,11 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
             )
         );
 
+        $params = [
+            'subCategoryName' => 'SomeCategory',
+            'isDoc' => true
+        ];
+
         $response = array(
             'Count' => 2,
             'Results' => $expected
@@ -278,7 +337,7 @@ class CategoryDataServiceTest extends PHPUnit_Framework_TestCase
 
         $this->mockRestHelper->expects($this->once())
             ->method('makeRestCall')
-            ->with('DocumentSubCategory', 'GET', array('description' => $description))
+            ->with('SubCategory', 'GET', $params)
             ->will($this->returnValue($response));
 
         $output = $this->sut->getCategoryByDescription($description, 'Document');
