@@ -7,7 +7,7 @@
 namespace Common;
 
 use Zend\EventManager\EventManager;
-use Common\Exception\ResourceNotFoundException
+use Common\Exception\ResourceNotFoundException;
 
 /**
  * ZF2 Module
@@ -37,25 +37,23 @@ class Module
 
         $events->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
-            function(MvcEvent $e) {
+            function (MvcEvent $e) {
                 $exception = $e->getParam('exception');
-                if (!$exception instanceof ResourceNotFoundException) {
-                    return;
+                // If something throws an uncaught ResourceNotFoundException, return a 404
+                if ($exception instanceof ResourceNotFoundException) {
+                    $model = new ViewModel(
+                        [
+                            'message'   => $exception->getMessage(),
+                            'reason'    => 'error-resource-not-found',
+                            'exception' => $exception,
+                        ]
+                    );
+                    $model->setTemplate('error/application_error');
+                    $e->getViewModel()->addChild($model);
+                    $e->getResponse()->setStatusCode(404);
+                    $e->stopPropagation();
+                    return $model;
                 }
-                $model = new ViewModel(array(
-                    'message' => $exception->getMessage(),
-                    'reason' => 'error-resource-not-found',
-                    'exception' => $exception,
-                ));
-                $model->setTemplate('error/application_error');
-                $e->getViewModel()->addChild($model);
-
-                $response = $e->getResponse();
-                $response->setStatusCode(404);
-
-                $e->stopPropagation();
-
-                return $model;
             }
         );
     }
