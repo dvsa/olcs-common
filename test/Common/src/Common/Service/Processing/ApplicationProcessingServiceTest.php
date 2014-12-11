@@ -64,7 +64,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $expectedTaskData = array(
             'category' => CategoryDataService::CATEGORY_APPLICATION,
-            'taskSubCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
             'description' => 'Grant fee due',
             'actionDate' => '2012-01-01',
             'assignedToUser' => 1,
@@ -471,7 +471,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $expectedTaskQuery = array(
             'category' => CategoryDataService::CATEGORY_APPLICATION,
-            'taskSubCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
             'licence' => $licenceId,
             'application' => $id
         );

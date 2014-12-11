@@ -110,7 +110,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Task')->closeByQuery(
             array(
                 'category' => CategoryDataService::CATEGORY_APPLICATION,
-                'taskSubCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
+                'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
                 'licence' => $licenceId,
                 'application' => $id
             )
@@ -164,7 +164,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $data = array(
             'category' => CategoryDataService::CATEGORY_APPLICATION,
-            'taskSubCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
+            'subCategory' => CategoryDataService::TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE,
             'description' => 'Grant fee due',
             'actionDate' => $date,
             'assignedToUser' => $user['id'],
