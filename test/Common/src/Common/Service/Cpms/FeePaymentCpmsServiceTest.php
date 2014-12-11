@@ -29,8 +29,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
         $params = [
             'customer_reference' => 'cust_ref',
-            'sales_reference' => 'sales_ref',
-            'product_reference' => 'GVR_APPLICATION_FEE',
             'scope' => 'CARD',
             'disable_redirection' => true,
             'redirect_uri' => 'redirect_url',
