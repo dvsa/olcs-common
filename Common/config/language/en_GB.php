@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'tol-no-changes-message' => 'No changes to the type of licence detected',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1401,6 +1400,7 @@ return array(
     'testProperty' => 'the test',
     'testPropertyPlaceHolder' => 'test @placeHolder is @here',
     'tic' => 'TIC',
+    'tol-no-changes-message' => 'No changes to the type of licence detected',
     'traffic-area' => 'Traffic area',
     'trailer' => 'Trailer',
     'trailer-count' => '%s trailers',

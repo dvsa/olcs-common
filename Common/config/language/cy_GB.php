@@ -1404,6 +1404,7 @@ return array(
     'testProperty' => 'W the test',
     'testPropertyPlaceHolder' => 'W test @placeHolder is @here',
     'tic' => 'W TIC',
+    'tol-no-changes-message' => 'W No changes to the type of licence detected',
     'traffic-area' => 'W Traffic area',
     'trailer' => 'W Trailer',
     'trailer-count' => 'W %s trailers',
