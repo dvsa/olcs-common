@@ -7,7 +7,7 @@
  */
 namespace Common\Controller\Lva\Traits;
 
-use \Zend\Mvc\Controller\AbstractController;
+use Zend\Mvc\Controller\AbstractController;
 
 /**
  * Controller Aware Trait
