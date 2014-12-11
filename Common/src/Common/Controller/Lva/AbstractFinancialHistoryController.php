@@ -14,6 +14,9 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractFinancialHistoryController extends AbstractController
 {
+    // @TODO incorrect: awaiting confirmation from Steve L
+    const DOCUMENT_SUBCATEGORY = 'Sur 1 Digital';
+
     /**
      * Map the data
      *
@@ -83,7 +86,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     public function getDocuments()
     {
         return $this->getServiceLocator()->get('Entity\Application')
-            ->getDocuments($this->getApplicationId(), 'Licensing', 'Insolvency History');
+            ->getDocuments($this->getApplicationId(), 'Licensing', static::DOCUMENT_SUBCATEGORY);
     }
 
     /**
@@ -96,7 +99,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
         $categoryService = $this->getServiceLocator()->get('category');
 
         $category = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription('Insolvency History', 'Document');
+        $subCategory = $categoryService->getCategoryByDescription(static::DOCUMENT_SUBCATEGORY, 'Document');
 
         $this->uploadFile(
             $file,
@@ -104,7 +107,7 @@ abstract class AbstractFinancialHistoryController extends AbstractController
                 'application' => $this->getApplicationId(),
                 'description' => 'Insolvency document',
                 'category' => $category['id'],
-                'documentSubCategory' => $subCategory['id'],
+                'subCategory' => $subCategory['id'],
                 'licence' => $this->getLicenceId()
             )
         );
