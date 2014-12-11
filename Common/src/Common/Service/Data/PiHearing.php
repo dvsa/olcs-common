@@ -17,19 +17,9 @@ class PiHearing extends AbstractData
     protected $serviceName = 'PiHearing';
 
     /**
-     * @param array $params
-     * @return mixed
-     */
-    public function fetchList($params)
-    {
-        $params['bundle'] = json_encode(empty($bundle) ? $this->getBundle() : $bundle);
-        return $this->getRestClient()->get($params);
-    }
-
-    /**
      * @return array
      */
-    public function getBundle()
+    protected function getBundle()
     {
         return [
             'children' => [
