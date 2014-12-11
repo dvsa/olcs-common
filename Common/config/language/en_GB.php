@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'tol-no-changes-message' => 'No changes to the type of licence detected',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

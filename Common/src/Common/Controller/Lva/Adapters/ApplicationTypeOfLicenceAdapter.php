@@ -81,7 +81,7 @@ class ApplicationTypeOfLicenceAdapter implements
             return false;
         }
 
-        // If we haven't changed anything, do nothing
+        // If we haven't changed licence type, do nothing
         if ($postData['licence-type'] === $currentData['licenceType']) {
             return false;
         }
@@ -129,7 +129,7 @@ class ApplicationTypeOfLicenceAdapter implements
             if (!$this->doesChangeRequireConfirmation($query, $currentData)) {
 
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addWarningMessage('No changes to the type of licence detected');
+                    ->addWarningMessage('tol-no-changes-message');
 
                 return $this->getController()->redirect()->toRoute(null, ['action' => null], [], true);
             }
@@ -168,10 +168,7 @@ class ApplicationTypeOfLicenceAdapter implements
 
     protected function removeApplication($applicationId)
     {
-        if ($applicationId !== null) {
-            $this->getServiceLocator()->get('Entity\Task')->deleteList(['application' => $applicationId]);
-        }
-
+        $this->getServiceLocator()->get('Entity\Task')->deleteList(['application' => $applicationId]);
         $this->getServiceLocator()->get('Entity\Application')->delete($applicationId);
     }
 
