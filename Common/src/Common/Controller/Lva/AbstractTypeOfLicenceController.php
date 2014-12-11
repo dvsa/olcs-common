@@ -100,7 +100,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         }
 
         if ($adapter->processChange($data['type-of-licence'], $currentData)) {
-            return $this->completeSection('tyoe_of_licence');
+            return $this->completeSection('type_of_licence');
         }
     }
 
