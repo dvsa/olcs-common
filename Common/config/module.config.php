@@ -131,7 +131,9 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousHearing',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\HearingText1'
+            'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
         ),
         'DecisionPublicationFilter' => array(
             'Common\Filter\Publication\LastHearing',
@@ -143,11 +145,10 @@ return array(
             'Common\Filter\Publication\HearingDateTime',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\DecisionText1'
+            'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
         ),
-        'PolicePublicationFilter' => array(
-
-        )
     ),
     'file_uploader' => array(
         'default' => 'ContentStore',
@@ -223,6 +224,18 @@ return array(
             'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
             'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
             'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
+            'Common\Filter\Publication\Licence' => 'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress' => 'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Publication' => 'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection' => 'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue' => 'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime' => 'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication' => 'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousHearing' => 'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\PreviousUnpublished' => 'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\HearingText1' => 'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData' => 'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean' => 'Common\Filter\Publication\Clean'
         ],
         'delegators' => [
             'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
