@@ -410,6 +410,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'large'  => VehicleEntityService::PSV_TYPE_LARGE
         ];
 
+        if ($applicationData['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            unset($psvTypes['large']);
+        }
+
         foreach ($psvTypes as $type => $val) {
             /**
              * This loop looks *similar* to normal vehicles but it's inverted;
@@ -425,8 +429,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             $totalVehicles = 0;
 
-            foreach ($applicationData['licence']['licenceVehicles'] as $vehicle) {
-                if (isset($vehicle['psvType']['id']) && $vehicle['psvType']['id'] === $val) {
+            foreach ($applicationData['licence']['licenceVehicles'] as $licenceVehicle) {
+                if (isset($licenceVehicle['vehicle']['psvType']['id'])
+                    && $licenceVehicle['vehicle']['psvType']['id'] === $val
+                ) {
                     $totalVehicles++;
                 }
             }
