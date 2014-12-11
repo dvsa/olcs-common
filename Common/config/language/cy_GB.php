@@ -854,6 +854,7 @@ return array(
     'internal-transport-manager-tm-details' => 'W TM Details',
     'internal-vehicle-filter-disc' => 'W Disc',
     'internal-vehicle-filter-filter' => 'W Filter',
+    'internal-vehicle-filter-include-ceased-discs' => 'W Include ceased discs',
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',

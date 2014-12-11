@@ -853,6 +853,7 @@ return array(
     'internal-transport-manager-tm-details' => 'TM Details',
     'internal-vehicle-filter-disc' => 'Disc',
     'internal-vehicle-filter-filter' => 'Filter',
+    'internal-vehicle-filter-include-ceased-discs' => 'Include ceased discs',
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
