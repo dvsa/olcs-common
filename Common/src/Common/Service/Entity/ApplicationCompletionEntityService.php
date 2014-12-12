@@ -170,14 +170,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
-                $registeredAddress = false;
 
-                foreach ($orgData['contactDetails'] as $contactDetail) {
-                    if ($contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
-                        $registeredAddress =  true;
-                        break;
-                    }
-                }
+                $registeredAddress = !empty($orgData['contactDetails']);
 
                 $requiredVars = array(
                     'name' => isset($orgData['name']),
@@ -209,14 +203,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     private function getAddressesStatus($applicationData)
     {
         $phoneNumber = false;
-        $correspondenceAddress = false;
+        $correspondenceAddress = isset($applicationData['licence']['correspondenceCd'])
+            && !empty($applicationData['licence']['correspondenceCd']);
         $establishmentAddress = false;
         $skipEstablishmentAddress = false;
-
-        $contactDetails = array_merge(
-            $applicationData['licence']['contactDetails'],
-            $applicationData['licence']['organisation']['contactDetails']
-        );
 
         $allowedLicTypes = array(
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -228,26 +218,17 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $establishmentAddress = true;
         }
 
-        foreach ($contactDetails as $contactDetail) {
-            if (isset($contactDetail['phoneContacts'][0])) {
-                $phoneNumber = !empty($contactDetail['phoneContacts'][0]['phoneNumber']);
-            }
+        $corAdd = $applicationData['licence']['correspondenceCd'];
 
-            if (isset($contactDetail['contactType']['id'])
-                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
-            ) {
-                $correspondenceAddress = true;
+        if (isset($corAdd['phoneContacts'][0])) {
+            $phoneNumber = !empty($corAdd['phoneContacts'][0]['phoneNumber']);
+        }
 
-                if ($skipEstablishmentAddress) {
-                    break;
-                }
-            }
-
-            if (isset($contactDetail['contactType']['id'])
-                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT) {
-                $establishmentAddress = true;
-                break;
-            }
+        if (!$skipEstablishmentAddress
+            && isset($applicationData['licence']['establishmentCd'])
+            && !empty($applicationData['licence']['establishmentCd'])
+        ) {
+            $establishmentAddress = true;
         }
 
         $requiredVars = array(

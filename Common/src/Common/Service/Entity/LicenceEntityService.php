@@ -79,38 +79,27 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     protected $addressesDataBundle = array(
         'children' => array(
-            'organisation' => array(
+            'correspondenceCd' => array(
                 'children' => array(
-                    'contactDetails' => array(
-                        'children' => array(
-                            'address' => array(
-                                'children' => array(
-                                    'countryCode'
-                                )
-                            ),
-                            'contactType',
-                            'phoneContacts' => array(
-                                'children' => array(
-                                    'phoneContactType'
-                                )
-                            )
-                        )
-                    ),
-                )
-            ),
-            'contactDetails' => array(
-                'children' => array(
-                    'phoneContacts' => array(
-                        'children' => array(
-                            'phoneContactType'
-                        )
-                    ),
                     'address' => array(
                         'children' => array(
                             'countryCode'
                         )
                     ),
-                    'contactType'
+                    'phoneContacts' => array(
+                        'children' => array(
+                            'phoneContactType'
+                        )
+                    )
+                )
+            ),
+            'establishmentCd' => array(
+                'children' => array(
+                    'address' => array(
+                        'children' => array(
+                            'countryCode'
+                        )
+                    )
                 )
             )
         )
