@@ -68,7 +68,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         ];
 
         $response = $client->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
-
+        
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
             ->save(
