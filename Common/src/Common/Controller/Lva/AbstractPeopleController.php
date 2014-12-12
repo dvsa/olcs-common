@@ -55,6 +55,7 @@ abstract class AbstractPeopleController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
+                //die('are we in');
                 return $this->handleCrudAction($crudAction);
             }
 
@@ -99,6 +100,10 @@ abstract class AbstractPeopleController extends AbstractController
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
+
+            if (!$data['id']) {
+                $this->addOrganisationPerson('add', $orgId, $orgData, $person, $data);
+            }
 
             $this->postSave('people');
             return $this->completeSection('people');
