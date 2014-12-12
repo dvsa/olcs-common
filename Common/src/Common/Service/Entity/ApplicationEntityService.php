@@ -150,6 +150,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    private $organisationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation'
+                )
+            )
+        )
+    );
+
     /**
      * Cache the mapping of application ids to licence ids
      *
@@ -468,5 +478,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'niFlag' => null
             ]
         );
+    }
+
+    public function getOrganisation($applicationId)
+    {
+        $response = $this->get($applicationId, $this->organisationBundle);
+
+        return $response['licence']['organisation'];
+    }
+
+    public function delete($id)
+    {
+        $licenceId = $this->getLicenceIdForApplication($id);
+
+        $this->getServiceLocator()->get('Entity\Licence')->delete($licenceId);
+
+        parent::delete($id);
     }
 }
