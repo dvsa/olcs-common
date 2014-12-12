@@ -16,6 +16,7 @@ use Common\Service\Table\Formatter\TaskIdentifier;
  *
  * @author Nick payne <nick.payne@valtech.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,15 +26,24 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
      * @group taskIdentifier
      * @dataProvider provider
      */
-    public function testFormat($data, $column, $routeName, $param, $expected)
-    {
+    public function testFormat(
+        $data,
+        $column,
+        $routeName,
+        $param,
+        $expected,
+        $routeParams = array()
+    ) {
+
+        $routeParams = array_merge($routeParams, [$param => $data['linkId']]);
+
         $sm = $this->getMock('\stdClass', array('get'));
 
         $mockUrlHelper = $this->getMock('\stdClass', array('__invoke'));
 
         $mockUrlHelper->expects($this->any())
             ->method('__invoke')
-            ->with($routeName, array($param => $data['linkId']))
+            ->with($routeName, $routeParams)
             ->will($this->returnValue('correctUrl'));
 
         $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
@@ -48,7 +58,9 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
             ->with('viewhelpermanager')
             ->will($this->returnValue($mockViewHelperManager));
 
-        $this->assertEquals($expected, TaskIdentifier::format($data, $column, $sm));
+        $result = TaskIdentifier::format($data, $column, $sm);
+
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -60,18 +72,18 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             // Licence
-            array(
+            0 => array(
                 array(
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Licence',
-                    'linkId' => 1
+                    'linkId' => null
                 ),
                 array(),
                 'lva-licence/overview',
                 'licence',
                 'Unlinked'
             ),
-            array(
+            1 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
@@ -83,7 +95,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
-            array(
+            2 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
@@ -95,7 +107,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'licence',
                 '<a href="correctUrl">P1234</a> (MLH)'
             ),
-            array(
+            3 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Licence',
@@ -107,7 +119,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'licence',
                 '<a href="correctUrl">P1234</a>'
             ),
-            array(
+            4 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
@@ -120,18 +132,18 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 '<a href="#">P1234</a>'
             ),
             // Application
-            array(
+            5 => array(
                 array(
                     'linkDisplay' => 'Unlinked',
                     'linkType' => 'Application',
-                    'linkId' => 1
+                    'linkId' => null
                 ),
                 array(),
                 'lva-application/overview',
                 'application',
                 'Unlinked'
             ),
-            array(
+            6 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => 'Application',
@@ -143,19 +155,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'application',
                 '<a href="correctUrl">P1234</a>'
             ),
-            array(
-                array(
-                    'linkDisplay' => 'P1234',
-                    'linkType' => 'Application',
-                    'linkId' => 1,
-                    'licenceCount' => 1
-                ),
-                array(),
-                'lva-application/overview',
-                'application',
-                '<a href="correctUrl">P1234</a>'
-            ),
-            array(
+            7 => array(
                 array(
                     'linkDisplay' => 'P1234',
                     'linkType' => '',
@@ -166,6 +166,121 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                 'lva-application/overview',
                 'application',
                 '<a href="#">P1234</a>'
+            ),
+            // Transport Manager
+            8 => array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'Transport Manager',
+                    'linkId' => null,
+                    'licenceCount' => 0
+                ),
+                array(),
+                'lva-application/overview',
+                'application',
+                'Unlinked'
+            ),
+            9 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => 'Transport Manager',
+                    'linkId' => 1,
+                    'licenceCount' => 0
+                ),
+                array(),
+                'transport-manager',
+                'transportManager',
+                '<a href="correctUrl">1234</a>'
+            ),
+            10 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => '',
+                    'linkId' => 1,
+                    'licenceCount' => 0
+                ),
+                array(),
+                'transport-manager',
+                'transportManager',
+                '<a href="#">1234</a>'
+            ),
+            // Bus Registration
+            11 => array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'Bus Registration',
+                    'linkId' => null,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'licence/bus-processing/tasks',
+                'busRegId',
+                'Unlinked'
+            ),
+            12 => array(
+                array(
+                    'linkDisplay' => 'P1234/123',
+                    'linkType' => 'Bus Registration',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                    'licenceId' => 110
+                ),
+                array(),
+                'licence/bus-processing/tasks',
+                'busRegId',
+                '<a href="correctUrl">P1234/123</a>',
+                array('licence' => 110) // additional route param needed
+            ),
+            13 => array(
+                array(
+                    'linkDisplay' => 'P1234/123',
+                    'linkType' => '',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                    'licenceId' => 110
+                ),
+                array(),
+                'licence/bus-processing/tasks',
+                'busRegId',
+                '<a href="#">P1234/123</a>',
+                array('licence' => 110)
+            ),
+            // Case
+            14 => array(
+                array(
+                    'linkDisplay' => 'Unlinked',
+                    'linkType' => 'Case',
+                    'linkId' => null,
+                    'licenceCount' => 1
+                ),
+                array(),
+                'case',
+                'case',
+                'Unlinked'
+            ),
+            15 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => 'Case',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                ),
+                array(),
+                'case',
+                'case',
+                '<a href="correctUrl">1234</a>',
+            ),
+            16 => array(
+                array(
+                    'linkDisplay' => '1234',
+                    'linkType' => '',
+                    'linkId' => 99,
+                    'licenceCount' => 1,
+                ),
+                array(),
+                'case',
+                'case',
+                '<a href="#">1234</a>',
             ),
         );
     }

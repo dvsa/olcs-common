@@ -40,6 +40,18 @@ class TaskIdentifier implements FormatterInterface
             case 'Application':
                 $url = $urlHelper->__invoke('lva-application/overview', array('application' => $data['linkId']));
                 break;
+            case 'Transport Manager':
+                $url = $urlHelper->__invoke('transport-manager', array('transportManager' => $data['linkId']));
+                break;
+            case 'Case':
+                $url = $urlHelper->__invoke('case', array('case' => $data['linkId']));
+                break;
+            case 'Bus Registration':
+                $url = $urlHelper->__invoke(
+                    'licence/bus-processing/tasks',
+                    array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
+                );
+                break;
             default:
                 break;
         }
