@@ -44,6 +44,7 @@ if ($handle = opendir($directory)) {
 
                     echo "\n" . 'Update the current branch' . "\n";
                     echo shell_exec('cd ' . $directory . '/' . $entry . ' && git pull origin ' . $oldBranch);
+                    echo shell_exec('cd ' . $directory . '/' . $entry . ' && composer update');
 
                 } else {
 

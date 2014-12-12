@@ -120,7 +120,11 @@ abstract class AbstractFileUploader implements FileUploaderInterface
      */
     protected function generateKey()
     {
-        return sha1(microtime() . uniqid());
+        return str_replace(
+            ['+', '/', '='],
+            ['_', '-', ''],
+            base64_encode(hash('sha256', openssl_random_pseudo_bytes(64), true))
+        );
     }
 
     protected function getPath($identifier, $namespace = null)
