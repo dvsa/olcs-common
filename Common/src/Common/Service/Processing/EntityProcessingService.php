@@ -22,12 +22,12 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
 
     private $serviceMap = [
         CategoryDataService::CATEGORY_APPLICATION       => 'Licence',
-        CategoryDataService::CATEGORY_BUS_REGISTRATION  => 'BusRegistration',
+        CategoryDataService::CATEGORY_BUS_REGISTRATION  => 'BusReg',
         CategoryDataService::CATEGORY_COMPLIANCE        => 'Cases',
         CategoryDataService::CATEGORY_LICENSING         => 'Licence',
-        CategoryDataService::CATEGORY_ENVIRONMENTAL     => '???',
-        CategoryDataService::CATEGORY_IRFO              => 'IRFO',
-        CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'TM'
+        CategoryDataService::CATEGORY_ENVIRONMENTAL     => 'Licence',
+        CategoryDataService::CATEGORY_IRFO              => 'Organisation',
+        CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'TransportManager'
     ];
 
     public function findEntityForCategory($category, $identifier)
