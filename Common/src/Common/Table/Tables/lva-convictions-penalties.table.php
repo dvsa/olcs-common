@@ -20,7 +20,6 @@ return array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnName',
             'value_format' => '{{title}} {{forename}} {{familyName}}',
             'type' => 'Action',
-            'class' => 'action--tertiary',
             'action' => 'edit'
         ),
         array(

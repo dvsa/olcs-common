@@ -8,6 +8,8 @@ namespace Common;
 
 use Zend\EventManager\EventManager;
 use Common\Exception\ResourceNotFoundException;
+use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -94,6 +96,7 @@ class Module
      * Format an AcceptLanguage into a locale for our translations
      *
      * @param string $language
+     * @return string
      */
     private function formatLanguage($language)
     {
