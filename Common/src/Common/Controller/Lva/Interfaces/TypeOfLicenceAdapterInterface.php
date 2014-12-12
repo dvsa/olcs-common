@@ -23,4 +23,8 @@ interface TypeOfLicenceAdapterInterface
     public function processChange(array $postData, array $currentData);
 
     public function processFirstSave($applicationId);
+
+    public function alterForm(\Zend\Form\Form $form);
+
+    public function setMessages();
 }

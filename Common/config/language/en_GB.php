@@ -1434,6 +1434,7 @@ return array(
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
+    'variation-application-text2' => 'Changes within this section will require a',
     'variation-details-nav' => 'Variation details',
     'variation.delete' => 'Delete application',
     'variation.overview.application-no' => 'Application No.',

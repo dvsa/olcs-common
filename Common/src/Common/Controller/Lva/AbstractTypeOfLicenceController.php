@@ -38,6 +38,12 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
      */
     public function indexAction()
     {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
+        if ($adapter !== null) {
+            $adapter->setMessages();
+        }
+
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -54,12 +60,17 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
             $data = $this->formatDataForForm($this->getTypeOfLicenceData());
         }
 
-        $form = $this->getTypeOfLicenceForm()->setData($data);
+        $form = $this->getTypeOfLicenceForm();
+
+        if ($adapter !== null) {
+            $form = $adapter->alterForm($form);
+        }
+
+        $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
 
             // If we have an adapter, we need to grab the previous data as we need to check this later
-            $adapter = $this->getTypeOfLicenceAdapter();
             $previousData = null;
             if ($adapter !== null) {
                 $previousData = $this->getTypeOfLicenceData();

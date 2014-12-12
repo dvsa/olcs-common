@@ -32,6 +32,16 @@ class ApplicationTypeOfLicenceAdapter implements
 
     protected $queryParams = [];
 
+    public function alterForm(\Zend\Form\Form $form)
+    {
+        return $form;
+    }
+
+    public function setMessages()
+    {
+        
+    }
+
     public function getQueryParams()
     {
         return ['query' => $this->queryParams];

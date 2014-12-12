@@ -29,6 +29,9 @@ return array(
         'delegators' => array(
             'LvaApplication/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
+            ),
+            'LvaLicence/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
             )
         ),
         'abstract_factories' => array(
@@ -84,6 +87,8 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
