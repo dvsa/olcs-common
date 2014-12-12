@@ -405,4 +405,117 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('2012-01-01', $this->sut->getApplicationDate($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForProcessing()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForProcessing($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForTasks()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForTasks($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisation()
+    {
+        $id = 4;
+
+        $response = array(
+            'licence' => array(
+                'organisation' => 'foo'
+            )
+        );
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getOrganisation($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDelete()
+    {
+        $id = 3;
+        $response = array(
+            'licence' => array(
+                'id' => 5
+            )
+        );
+
+        $this->expectedRestCallInOrder('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->expectedRestCallInOrder('Application', 'DELETE', ['id' => $id]);
+
+        $mockLicenceService = $this->getMock('\stdClass', ['delete']);
+        $mockLicenceService->expects($this->once())
+            ->method('delete')
+            ->with(5);
+
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $this->sut->delete($id);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForValidating()
+    {
+        $id = 3;
+
+        $response = array(
+            'licenceType' => array(
+                'id' => 'xxx'
+            ),
+            'goodsOrPsv' => array(
+                'id' => 'yyy'
+            ),
+            'totAuthTrailers' => 50,
+            'totAuthVehicles' => 50,
+            'totAuthSmallVehicles' => 10,
+            'totAuthMediumVehicles' => 20,
+            'totAuthLargeVehicles' => 20,
+            'niFlag' => 'Y',
+            'foo' => 'bar',
+            'cake' => 'here'
+        );
+
+        $expected = array(
+            'licenceType' => 'xxx',
+            'goodsOrPsv' => 'yyy',
+            'totAuthTrailers' => 50,
+            'totAuthVehicles' => 50,
+            'totAuthSmallVehicles' => 10,
+            'totAuthMediumVehicles' => 20,
+            'totAuthLargeVehicles' => 20,
+            'niFlag' => 'Y'
+        );
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($expected, $this->sut->getDataForValidating($id));
+    }
 }
