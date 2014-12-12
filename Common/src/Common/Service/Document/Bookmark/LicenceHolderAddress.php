@@ -36,6 +36,8 @@ class LicenceHolderAddress extends DynamicBookmark
 
     public function render()
     {
-        return Formatter\Address::format($this->data['organisation']['contactDetails']['address']);
+        if (isset($this->data['organisation']['contactDetails']['address'])) {
+            return Formatter\Address::format($this->data['organisation']['contactDetails']['address']);
+        }
     }
 }

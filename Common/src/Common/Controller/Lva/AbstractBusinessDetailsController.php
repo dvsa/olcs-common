@@ -139,7 +139,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $saveData['id'] = $orgId;
 
         if ($registeredAddressId !== null) {
-            $saveDate['contactDetails'] = $registeredAddressId;
+            $saveData['contactDetails'] = $registeredAddressId;
         }
 
         $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
