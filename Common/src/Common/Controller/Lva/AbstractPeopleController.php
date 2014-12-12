@@ -55,7 +55,6 @@ abstract class AbstractPeopleController extends AbstractController
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
-                //die('are we in');
                 return $this->handleCrudAction($crudAction);
             }
 
