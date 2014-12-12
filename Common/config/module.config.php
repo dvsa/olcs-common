@@ -24,6 +24,16 @@ return array(
         )
     ),
     'controllers' => array(
+        // @NOTE This delegator can live in common as both internal and external app type of licence controllers
+        // currently use the same adaptor
+        'delegators' => array(
+            'LvaApplication/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
+            )
+        ),
+        'abstract_factories' => array(
+            'Common\Controller\Lva\AbstractControllerFactory',
+        ),
         'invokables' => array(
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
@@ -74,6 +84,8 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'ApplicationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList'
@@ -115,7 +127,6 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -131,7 +142,9 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousHearing',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\HearingText1'
+            'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
         ),
         'DecisionPublicationFilter' => array(
             'Common\Filter\Publication\LastHearing',
@@ -143,8 +156,10 @@ return array(
             'Common\Filter\Publication\HearingDateTime',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\DecisionText1'
-        )
+            'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'file_uploader' => array(
         'default' => 'ContentStore',
@@ -220,6 +235,18 @@ return array(
             'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
             'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
             'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
+            'Common\Filter\Publication\Licence' => 'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress' => 'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Publication' => 'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection' => 'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue' => 'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime' => 'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication' => 'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousHearing' => 'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\PreviousUnpublished' => 'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\HearingText1' => 'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData' => 'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean' => 'Common\Filter\Publication\Clean'
         ],
         'delegators' => [
             'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],

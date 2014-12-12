@@ -269,7 +269,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function reload()
     {
-        return $this->redirect()->toRoute(null, array(), array(), true);
+        return $this->redirect()->refresh();
     }
 
     /**

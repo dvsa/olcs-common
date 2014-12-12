@@ -199,6 +199,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
                 continue;
             }
 
+            // watch out! Now we get *all* data back, this was overrriding
+            // the licence vehicle ID incorrectly
+            unset($licenceVehicle['vehicle']['id']);
+
             $row = array_merge($licenceVehicle, $licenceVehicle['vehicle']);
 
             unset($row['vehicle']);

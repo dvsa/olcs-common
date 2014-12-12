@@ -822,16 +822,17 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $categoryService = $this->getServiceLocator()->get('category');
 
-        $category = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
+        // The top-level category is *always* application; this is correct
+        $category = $categoryService->getCategoryByDescription('Application');
+        $subCategory = $categoryService->getCategoryByDescription('Advert Digital', 'Document');
 
         $this->uploadFile(
             $file,
             array_merge(
                 array(
                     'description' => 'Advertisement',
-                    'category' => $category['id'],
-                    'documentSubCategory' => $subCategory['id'],
+                    'category'    => $category['id'],
+                    'subCategory' => $subCategory['id'],
                 ),
                 $this->getDocumentProperties()
             )
@@ -854,7 +855,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $documents = $this->getServiceLocator()->get($lvaEntity)
-            ->getDocuments($this->getIdentifier(), 'Licensing', 'Advertisement');
+            ->getDocuments($this->getIdentifier(), 'Application', 'Advert Digital');
 
         return array_filter(
             $documents,

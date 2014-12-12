@@ -55,8 +55,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
-            'sales_reference' => $salesReference,
-            'product_reference' => $productReference,
             'scope' => ApiService::SCOPE_CARD,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,

@@ -29,6 +29,8 @@ abstract class AbstractDiscsController extends AbstractController
     {
         $request = $this->getRequest();
 
+        $filterForm = $this->getDiscFilterForm();
+
         if ($request->isPost()) {
 
             $data = (array)$request->getPost();
@@ -48,9 +50,9 @@ abstract class AbstractDiscsController extends AbstractController
 
         $this->alterFormForLva($form);
 
-        $this->getServiceLocator()->get('Script')->loadFile('discs');
+        $this->getServiceLocator()->get('Script')->loadFiles(['discs', 'forms/filter']);
 
-        return $this->render('discs', $form);
+        return $this->render('discs', $form, array('filterForm' => $filterForm));
     }
 
     /**
@@ -100,13 +102,16 @@ abstract class AbstractDiscsController extends AbstractController
     protected function getTableData()
     {
         if ($this->formTableData === null) {
+
+            $includeCeased = $this->params()->fromQuery('includeCeased', 0);
+
             $data = $this->getServiceLocator()->get('Entity\Licence')
                 ->getPsvDiscs($this->getLicenceId());
 
             $this->formTableData = array();
 
             foreach ($data as $disc) {
-                if (!empty($disc['ceasedDate'])) {
+                if (!$includeCeased && !empty($disc['ceasedDate'])) {
                     continue;
                 }
 
@@ -304,5 +309,17 @@ abstract class AbstractDiscsController extends AbstractController
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')
             ->addSuccessMessage('psv-discs-voided-successfully');
+    }
+
+    /**
+     * Get discs filter form
+     *
+     * @return Zend\Form\Form
+     */
+    protected function getDiscFilterForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\DiscFilter');
+        return $form;
     }
 }
