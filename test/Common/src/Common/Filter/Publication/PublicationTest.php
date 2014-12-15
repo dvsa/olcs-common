@@ -16,6 +16,8 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
      * Tests exception thrown if there is no publication found
      *
      * @expectedException \Common\Exception\ResourceNotFoundException
+     *
+     * @group publicationFilter
      */
     public function testNoPublicationException()
     {
@@ -26,7 +28,9 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
         $mockPublicationService->shouldReceive('fetchList')->andReturn(false);
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
-        $mockServiceManager->shouldReceive('get')->with('\Common\Service\Data\Publication')->andReturn($mockPublicationService);
+        $mockServiceManager->shouldReceive('get')
+            ->with('\Common\Service\Data\Publication')
+            ->andReturn($mockPublicationService);
 
         $sut->setServiceLocator($mockServiceManager);
 
@@ -35,6 +39,8 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the filter
+     *
+     * @group publicationFilter
      */
     public function testFilter()
     {
