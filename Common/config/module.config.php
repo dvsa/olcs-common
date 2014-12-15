@@ -128,8 +128,7 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
-            'Common\Service\Data\AddressListDataService' => 'Common\Service\Data\AddressListDataFactory'
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
     ),
     'publications' => array(
