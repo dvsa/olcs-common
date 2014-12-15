@@ -24,11 +24,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
     {
         $this->queryParams = $postData;
 
-        if ($this->queryParams['licence-type'] !== $currentData['licenceType']) {
-            return true;
-        }
-
-        return false;
+        return $this->queryParams['licence-type'] !== $currentData['licenceType'];
     }
 
     public function alterForm(\Zend\Form\Form $form, $id = null, $applicationType = null)
@@ -36,7 +32,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         // Generic alteration
-        $form->get('form-actions')->get('save')->setLabel('Save');
+        $form->get('form-actions')->get('save')->setLabel('save');
 
         $typeOfLicenceFieldset = $form->get('type-of-licence');
 
@@ -64,35 +60,6 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         }
 
         return $form;
-    }
-
-    protected function shouldDisableLicenceType($id, $applicationType = null)
-    {
-        $typeOfLicence = $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($id);
-
-        if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            return false;
-        }
-
-        $enabled = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        ];
-
-        if (in_array($typeOfLicence['licenceType'], $enabled)) {
-            return false;
-        }
-
-        if ($typeOfLicence['licenceType'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-            return true;
-        }
-
-        if ($typeOfLicence['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
-            && $applicationType === 'external') {
-            return true;
-        }
-
-        return false;
     }
 
     public function setMessages($id = null, $applicationType = null)
@@ -143,5 +110,34 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $form->get('form-actions')->get('submit')->setLabel('create-variation-button');
 
         return $form;
+    }
+
+    public function shouldDisableLicenceType($id, $applicationType = null)
+    {
+        $typeOfLicence = $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($id);
+
+        if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            return false;
+        }
+
+        $enabled = [
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        if (in_array($typeOfLicence['licenceType'], $enabled)) {
+            return false;
+        }
+
+        if ($typeOfLicence['licenceType'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            return true;
+        }
+
+        if ($typeOfLicence['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            && $applicationType === 'external') {
+            return true;
+        }
+
+        return false;
     }
 }
