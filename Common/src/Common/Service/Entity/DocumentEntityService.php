@@ -22,7 +22,7 @@ class DocumentEntityService extends AbstractEntityService
     protected $entity = 'Document';
 
     /**
-     * Get a documents identifier
+     * Get a document's identifier
      *
      * @param int $id
      * @return string

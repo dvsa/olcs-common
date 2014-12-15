@@ -412,4 +412,13 @@ class LicenceEntityService extends AbstractLvaEntityService
             $this->save($saveData);
         }
     }
+
+    public function findByIdentifier($identifier)
+    {
+        $result = $this->get(['licNo' => $identifier]);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+        return $result['Results'][0];
+    }
 }

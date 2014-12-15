@@ -133,4 +133,9 @@ class OrganisationEntityService extends AbstractEntityService
     {
         return $this->get($id, $this->businessDetailsBundle);
     }
+
+    public function findByIdentifier($identifier)
+    {
+        return $this->get($identifier);
+    }
 }
