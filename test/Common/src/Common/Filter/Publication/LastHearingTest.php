@@ -16,6 +16,7 @@ class LastHearingTest extends \PHPUnit_Framework_TestCase
      * Tests exception thrown if there is no hearing is found
      *
      * @expectedException \Common\Exception\ResourceNotFoundException
+     * @group publicationFilter
      */
     public function testNoPublicationException()
     {
@@ -37,6 +38,8 @@ class LastHearingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the filter
+     *
+     * @group publicationFilter
      */
     public function testFilter()
     {

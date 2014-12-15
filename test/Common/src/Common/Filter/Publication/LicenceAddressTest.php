@@ -12,6 +12,8 @@ use Common\Data\Object\Publication;
 class LicenceAddressTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @group publicationFilter
+     *
      * @dataProvider filterProvider
      *
      * @param array $addressData
@@ -35,6 +37,11 @@ class LicenceAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($output->offsetGet('licenceAddress'), $expectedOutput);
     }
 
+    /**
+     * Data provider for testFilter
+     *
+     * @return array
+     */
     public function filterProvider()
     {
         return [

@@ -14,6 +14,8 @@ class PreviousUnpublishedTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the filter returns the correct data
+     *
+     * @group publicationFilter
      */
     public function testFilter()
     {

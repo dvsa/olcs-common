@@ -15,6 +15,8 @@ class PiVenueTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filterProvider
      *
+     * @group publicationFilter
+     *
      * @param $piVenueId
      * @param $piVenueOther
      * @param $venueDetails
@@ -46,6 +48,11 @@ class PiVenueTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($outputHearingData['piVenueOther'], $expectedVenueInfo);
     }
 
+    /**
+     * Provider for testFilter
+     *
+     * @return array
+     */
     public function filterProvider()
     {
         return [

@@ -79,7 +79,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * Calls the police data service to save related police data
      *
      * @param $dataObject
-     * $param int $publicationLinkId
+     * @param int $publicationLinkId
      *
      * @return bool
      */

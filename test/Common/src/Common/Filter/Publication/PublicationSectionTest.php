@@ -15,6 +15,8 @@ class PublicationSectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider filterProvider
      *
+     * @group publicationFilter
+     *
      * @param $section
      * @param $expectedOutput
      */

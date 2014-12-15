@@ -13,6 +13,8 @@ class HearingDateTimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the date and time are set correctly
+     *
+     * @group publicationFilter
      */
     public function testFilter()
     {

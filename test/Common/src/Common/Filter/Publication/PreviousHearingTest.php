@@ -15,6 +15,8 @@ class PreviousHearingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the filter
+     *
+     * @group publicationFilter
      */
     public function testFilter()
     {

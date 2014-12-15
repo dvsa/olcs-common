@@ -15,6 +15,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests exception thrown if there is no licence
      *
+     * @group publicationFilter
+     *
      * @expectedException \Common\Exception\ResourceNotFoundException
      */
     public function testNoLicenceException()
@@ -35,6 +37,8 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider filterProvider
+     *
+     * @group publicationFilter
      *
      * @param string $goodsOrPsv
      * @param string $expectedPubType
@@ -77,6 +81,11 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($output->getArrayCopy(), $expectedOutput);
     }
 
+    /**
+     * Provider for testFilter
+     *
+     * @return array
+     */
     public function filterProvider()
     {
         return [
