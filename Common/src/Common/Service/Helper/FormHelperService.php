@@ -101,7 +101,7 @@ class FormHelperService extends AbstractHelperService
      */
     private function findForm($formName)
     {
-        foreach (['Olcs', 'Common'] as $namespace) {
+        foreach (['Olcs', 'Common', 'Admin'] as $namespace) {
             $class = $namespace . '\Form\Model\Form\\' . $formName;
 
             if (class_exists($class)) {

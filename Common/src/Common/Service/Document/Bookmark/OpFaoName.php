@@ -19,19 +19,10 @@ class OpFaoName extends DynamicBookmark
                 'id' => $data['licence']
             ],
             'bundle' => [
-                'properties' => ['organisation'],
                 'children' => [
                     'organisation' => [
-                        'properties' => ['contactDetails'],
                         'children' => [
-                            'contactDetails' => [
-                                'properties' => ['contactType', 'fao'],
-                                'children' => [
-                                    'contactType' => [
-                                        'properties' => ['id']
-                                    ]
-                                ]
-                            ]
+                            'contactDetails'
                         ]
                     ]
                 ]
@@ -41,10 +32,6 @@ class OpFaoName extends DynamicBookmark
 
     public function render()
     {
-        foreach ($this->data['organisation']['contactDetails'] as $contactDetail) {
-            if ($contactDetail['contactType']['id'] === 'ct_corr') {
-                return $contactDetail['fao'];
-            }
-        }
+        return $this->data['organisation']['contactDetails']['fao'];
     }
 }

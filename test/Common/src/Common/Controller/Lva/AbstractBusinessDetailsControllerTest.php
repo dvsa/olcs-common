@@ -515,11 +515,11 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $this->mockEntity('ContactDetails', 'save')
             ->with(
                 [
-                    'organisation' => 12,
                     'address' => 4321,
                     'contactType' => 'ct_reg'
                 ]
-            );
+            )
+            ->andReturn(['id' => 3]);
 
         $this->mockEntity('Organisation', 'save')
             ->with(
@@ -527,7 +527,8 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                     'version' => 1,
                     'companyOrLlpNo' => '12345678',
                     'name' => 'Company Name',
-                    'id' => 12
+                    'id' => 12,
+                    'contactDetails' => 3
                 ]
             );
 
@@ -779,13 +780,11 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         'id' => $type
                     ],
                     'contactDetails' => [
-                        [
-                            'contactType' => [
-                                'id' => 'ct_reg'
-                            ],
-                            'address' => [
-                                'foo' => 'bar'
-                            ]
+                        'contactType' => [
+                            'id' => 'ct_reg'
+                        ],
+                        'address' => [
+                            'foo' => 'bar'
                         ]
                     ]
                 ]
