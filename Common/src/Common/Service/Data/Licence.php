@@ -37,13 +37,14 @@ class Licence extends AbstractData implements AddressProviderInterface
 
     /**
      * Fetches an array of addresses for the licence. Queries the ContactDetails table
+     * @param null $id
+     * @param null $bundle
      * @return array
-     * @throws UnexpectedResponseException
      */
     public function fetchAddressListData($id = null, $bundle = null)
     {
         $id = is_null($id) ? $this->getId() : $id;
-$id = 110;
+
         if (is_null($this->getData('addr_' .$id))) {
             $data = array();
             $bundle = is_null($bundle) ? $this->getAddressBundle() : $bundle;
