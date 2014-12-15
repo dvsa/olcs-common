@@ -44,8 +44,9 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @group listener_services
+     * @dataProvider providerEventType
      */
-    public function testTriggerWaiveWithoutApplicationFee()
+    public function testTriggerPayOrWaiveWithoutApplicationFee($eventType)
     {
         $mockFeeService = $this->getMock('\stdClass', ['getApplication']);
         $mockFeeService->expects($this->once())
@@ -54,13 +55,14 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->sm->setService('Entity\Fee', $mockFeeService);
 
-        $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
+        $this->assertNull($this->sut->trigger(3, $eventType));
     }
 
     /**
      * @group listener_services
+     * @dataProvider providerEventType
      */
-    public function testTriggerWaiveWithVariation()
+    public function testTriggerPayOrWaiveWithVariation($eventType)
     {
         $application = array(
             'isVariation' => true
@@ -73,13 +75,14 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->sm->setService('Entity\Fee', $mockFeeService);
 
-        $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
+        $this->assertNull($this->sut->trigger(3, $eventType));
     }
 
     /**
      * @group listener_services
+     * @dataProvider providerEventType
      */
-    public function testTriggerWaiveWithoutGrantedApplication()
+    public function testTriggerPayOrWaiveWithoutGrantedApplication($eventType)
     {
         $application = array(
             'isVariation' => false,
@@ -95,13 +98,14 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->sm->setService('Entity\Fee', $mockFeeService);
 
-        $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
+        $this->assertNull($this->sut->trigger(3, $eventType));
     }
 
     /**
      * @group listener_services
+     * @dataProvider providerEventType
      */
-    public function testTriggerWaiveWithOutstandingFees()
+    public function testTriggerPayOrWaiveWithOutstandingFees($eventType)
     {
         $application = array(
             'id' => 7,
@@ -126,13 +130,14 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->sm->setService('Entity\Fee', $mockFeeService);
 
-        $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
+        $this->assertNull($this->sut->trigger(3, $eventType));
     }
 
     /**
      * @group listener_services
+     * @dataProvider providerEventType
      */
-    public function testTriggerWaive()
+    public function testTriggerPayOrWaive($eventType)
     {
         $application = array(
             'id' => 7,
@@ -161,6 +166,14 @@ class FeeListenerServiceTest extends PHPUnit_Framework_TestCase
             ->with(7);
         $this->sm->setService('Processing\Application', $mockProcessor);
 
-        $this->assertNull($this->sut->trigger(3, FeeListenerService::EVENT_WAIVE));
+        $this->assertNull($this->sut->trigger(3, $eventType));
+    }
+
+    public function providerEventType()
+    {
+        return [
+            [FeeListenerService::EVENT_WAIVE],
+            [FeeListenerService::EVENT_PAY]
+        ];
     }
 }

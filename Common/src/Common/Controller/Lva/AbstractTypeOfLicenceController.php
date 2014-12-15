@@ -7,13 +7,32 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
+use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterAwareInterface;
+use Zend\Http\Response;
+
 /**
  * Common Lva Abstract Type Of Licence Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicenceController extends AbstractController
+abstract class AbstractTypeOfLicenceController extends AbstractController implements TypeOfLicenceAdapterAwareInterface
 {
+    protected $typeOfLicenceAdapter;
+
+    /**
+     * @return TypeOfLicenceAdapterInterface
+     */
+    public function getTypeOfLicenceAdapter()
+    {
+        return $this->typeOfLicenceAdapter;
+    }
+
+    public function setTypeOfLicenceAdapter(TypeOfLicenceAdapterInterface $adapter)
+    {
+        $this->typeOfLicenceAdapter = $adapter;
+    }
+
     /**
      * Type of licence section
      */
@@ -22,7 +41,15 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
             $data = (array)$request->getPost();
+
+            $response = $this->processPostAdapter($data);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
         } else {
             $data = $this->formatDataForForm($this->getTypeOfLicenceData());
         }
@@ -31,11 +58,22 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
 
         if ($request->isPost() && $form->isValid()) {
 
+            // If we have an adapter, we need to grab the previous data as we need to check this later
+            $adapter = $this->getTypeOfLicenceAdapter();
+            $previousData = null;
+            if ($adapter !== null) {
+                $previousData = $this->getTypeOfLicenceData();
+            }
+
+            // Update the record
             $data = $this->formatDataForSave($data);
-
             $data['id'] = $this->getIdentifier();
-
             $this->getLvaEntityService()->save($data);
+
+            // If we have the adapter, check if we are updating this record for the first time
+            if ($adapter !== null && $previousData !== null && !$adapter->isCurrentDataSet($previousData)) {
+                $adapter->processFirstSave($data['id']);
+            }
 
             $this->postSave('type_of_licence');
 
@@ -45,6 +83,25 @@ abstract class AbstractTypeOfLicenceController extends AbstractController
         $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
 
         return $this->render('type_of_licence', $form);
+    }
+
+    protected function processPostAdapter($data)
+    {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
+        if ($adapter === null) {
+            return;
+        }
+
+        $currentData = $this->getTypeOfLicenceData();
+
+        if ($adapter->doesChangeRequireConfirmation($data['type-of-licence'], $currentData)) {
+            return $this->redirect()->toRoute(null, $adapter->getRouteParams(), $adapter->getQueryParams(), true);
+        }
+
+        if ($adapter->processChange($data['type-of-licence'], $currentData)) {
+            return $this->completeSection('type_of_licence');
+        }
     }
 
     /**

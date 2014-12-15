@@ -112,16 +112,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             )
                         )
                     ),
-                    'contactDetails' => array(
+                    'correspondenceCd' => array(
                         'children' => array(
-                            'phoneContacts' => array(
-                                'children' => array(
-                                    'phoneContactType'
-                                )
-                            ),
-                            'contactType'
+                            'phoneContacts'
                         )
                     ),
+                    'establishmentCd',
                     'tachographIns',
                     'workshops',
                     'trafficArea'
@@ -144,6 +140,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'goodsOrPsv',
                     'licenceType',
                     'trafficArea',
+                    'organisation'
+                )
+            )
+        )
+    );
+
+    private $organisationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
                     'organisation'
                 )
             )
@@ -468,5 +474,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'niFlag' => null
             ]
         );
+    }
+
+    public function getOrganisation($applicationId)
+    {
+        $response = $this->get($applicationId, $this->organisationBundle);
+
+        return $response['licence']['organisation'];
+    }
+
+    public function delete($id)
+    {
+        $licenceId = $this->getLicenceIdForApplication($id);
+
+        $this->getServiceLocator()->get('Entity\Licence')->delete($licenceId);
+
+        parent::delete($id);
     }
 }
