@@ -19,27 +19,12 @@ class LicenceHolderAddress extends DynamicBookmark
                 'id' => $data['licence']
             ],
             'bundle' => [
-                'properties' => ['organisation'],
                 'children' => [
                     'organisation' => [
-                        'properties' => ['contactDetails'],
                         'children' => [
                             'contactDetails' => [
-                                'properties' => ['contactType', 'address'],
                                 'children' => [
-                                    'contactType' => [
-                                        'properties' => ['id']
-                                    ],
-                                    'address' => [
-                                        'properties' => [
-                                            'addressLine1',
-                                            'addressLine2',
-                                            'addressLine3',
-                                            'addressLine4',
-                                            'town',
-                                            'postcode'
-                                        ],
-                                    ]
+                                    'address'
                                 ]
                             ]
                         ]
@@ -51,10 +36,8 @@ class LicenceHolderAddress extends DynamicBookmark
 
     public function render()
     {
-        foreach ($this->data['organisation']['contactDetails'] as $contactDetail) {
-            if ($contactDetail['contactType']['id'] === 'ct_corr') {
-                return Formatter\Address::format($contactDetail['address']);
-            }
+        if (isset($this->data['organisation']['contactDetails']['address'])) {
+            return Formatter\Address::format($this->data['organisation']['contactDetails']['address']);
         }
     }
 }
