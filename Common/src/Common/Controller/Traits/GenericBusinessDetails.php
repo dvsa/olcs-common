@@ -58,18 +58,18 @@ trait GenericBusinessDetails
         // If we didn't have an address id, then we need to link it to the organisation
         if (!isset($address['id']) || empty($address['id'])) {
             $contactDetailsData = array(
-                'organisation' => $orgId,
                 'address' => $saved['id'],
                 'contactType' => AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS
             );
 
-            $this->getServiceLocator()->get('Entity\ContactDetails')->save($contactDetailsData);
+            $saved = $this->getServiceLocator()->get('Entity\ContactDetails')->save($contactDetailsData);
+            return $saved['id'];
         }
     }
 
     /**
      * User has pressed 'Find company' on registered company number
-     * 
+     *
      * @param array $data
      * @param Zend\Form\Form $form
      * @param string $fieldset
