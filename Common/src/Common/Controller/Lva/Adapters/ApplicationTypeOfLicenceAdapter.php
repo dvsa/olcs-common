@@ -7,12 +7,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
-use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
-use Common\Controller\Lva\Traits\ControllerAwareTrait;
 use Common\Service\Entity\LicenceEntityService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\ApplicationCompletionEntityService;
 
@@ -22,35 +17,10 @@ use Common\Service\Entity\ApplicationCompletionEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationTypeOfLicenceAdapter implements
-    TypeOfLicenceAdapterInterface,
-    ServiceLocatorAwareInterface,
-    ControllerAwareInterface
+class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 {
-    use ServiceLocatorAwareTrait,
-        ControllerAwareTrait;
-
-    protected $queryParams = [];
-
-    public function alterForm(\Zend\Form\Form $form)
-    {
-        return $form;
-    }
-
-    public function setMessages()
-    {
-        
-    }
-
-    public function getQueryParams()
-    {
-        return ['query' => $this->queryParams];
-    }
-
-    public function getRouteParams()
-    {
-        return ['action' => 'confirmation'];
-    }
+    protected $confirmationMessage = 'application_type_of_licence_confirmation';
+    protected $extraConfirmationMessage = 'application_type_of_licence_confirmation_subtitle';
 
     public function doesChangeRequireConfirmation(array $postData, array $currentData)
     {

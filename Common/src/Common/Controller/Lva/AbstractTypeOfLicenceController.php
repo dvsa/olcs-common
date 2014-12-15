@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
 use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterAwareInterface;
 use Zend\Http\Response;
+use Zend\Stdlib\ResponseInterface;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -40,10 +41,6 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
     {
         $adapter = $this->getTypeOfLicenceAdapter();
 
-        if ($adapter !== null) {
-            $adapter->setMessages();
-        }
-
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -63,7 +60,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         $form = $this->getTypeOfLicenceForm();
 
         if ($adapter !== null) {
-            $form = $adapter->alterForm($form);
+            $form = $adapter->alterForm($form, $this->getIdentifier(), $this->location);
         }
 
         $form->setData($data);
@@ -89,6 +86,10 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
             $this->postSave('type_of_licence');
 
             return $this->completeSection('type_of_licence');
+        }
+
+        if ($adapter !== null) {
+            $adapter->setMessages($this->getIdentifier(), $this->location);
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
@@ -162,5 +163,27 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         $this->alterFormForLva($form);
 
         return $form;
+    }
+
+    public function confirmationAction()
+    {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
+        if ($adapter === null) {
+            return $this->notFoundAction();
+        }
+
+        // @NOTE will either return a redirect, or a form
+        $response = $adapter->confirmationAction();
+
+        if ($response instanceof ResponseInterface) {
+            return $response;
+        }
+
+        return $this->render(
+            $adapter->getConfirmationMessage(),
+            $response,
+            array('sectionText' => $adapter->getExtraConfirmationMessage())
+        );
     }
 }

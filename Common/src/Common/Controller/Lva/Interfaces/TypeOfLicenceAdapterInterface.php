@@ -24,7 +24,13 @@ interface TypeOfLicenceAdapterInterface
 
     public function processFirstSave($applicationId);
 
-    public function alterForm(\Zend\Form\Form $form);
+    public function alterForm(\Zend\Form\Form $form, $id = null, $applicationType = null);
 
-    public function setMessages();
+    public function setMessages($id = null, $applicationType = null);
+
+    public function getConfirmationMessage();
+
+    public function getExtraConfirmationMessage();
+
+    public function confirmationAction();
 }
