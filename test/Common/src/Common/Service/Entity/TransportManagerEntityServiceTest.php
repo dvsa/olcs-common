@@ -33,4 +33,15 @@ class TransportManagerEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals([], $this->sut->getTmDetails(1));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByIdentifier()
+    {
+        $this->expectOneRestCall('TransportManager', 'GET', 123)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
+    }
 }

@@ -112,16 +112,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             )
                         )
                     ),
-                    'contactDetails' => array(
+                    'correspondenceCd' => array(
                         'children' => array(
-                            'phoneContacts' => array(
-                                'children' => array(
-                                    'phoneContactType'
-                                )
-                            ),
-                            'contactType'
+                            'phoneContacts'
                         )
                     ),
+                    'establishmentCd',
                     'tachographIns',
                     'workshops',
                     'trafficArea'

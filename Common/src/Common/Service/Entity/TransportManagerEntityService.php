@@ -48,4 +48,9 @@ class TransportManagerEntityService extends AbstractEntityService
     {
         return $this->get($id, $this->tmDetailsBundle);
     }
+
+    public function findByIdentifier($identifier)
+    {
+        return $this->get($identifier);
+    }
 }
