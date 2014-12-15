@@ -1332,6 +1332,11 @@ return array(
     'selfserve-app-subSection-your-business-people-tableHeaderPeople' => 'Responsible people',
     'selfserve-business-registered-company-description' => 'If you don\'t have your company number to hand, or are
         having problems retrieving your company details, please enter them manually below.',
+    'selfserve-dashboard-submission-date' => 'Submission date',
+    'selfserve-dashboard-target-completion-date' => 'Target completion date',
+    'selfserve-dashboard-target-not-yet-submitted' => 'Not yet submitted',
+    'selfserve-dashboard-target-renewal-date' => 'Renewal date',
+    'selfserve-dashboard-target-start-date' => 'Start date',
     'selfserve-licence-licence_type' => 'Licence type',
     'selfserve-licence-operating_centres' => 'Operating centres',
     'selfserve-licence-operating_centres_authorisation' => 'Operating centres & authorisation',
