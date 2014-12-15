@@ -228,7 +228,10 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(false)
             ->shouldReceive('isCurrentDataSet')
             ->with($stubbedCurrentData)
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('alterForm')
+            ->with($form, 7, "")
+            ->andReturn($form);
 
         $this->assertEquals(
             'complete',
@@ -433,7 +436,10 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->with($stubbedCurrentData)
             ->andReturn(false)
             ->shouldReceive('processFirstSave')
-            ->with(7);
+            ->with(7)
+            ->shouldReceive('alterForm')
+            ->with($form, 7, '')
+            ->andReturn($form);
 
         $this->assertEquals(
             'complete',
@@ -446,9 +452,12 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
      */
     public function testConfirmationActionWithRedirect()
     {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
         $response = m::mock('\Zend\Http\Response');
 
-        $this->adapter->shouldReceive('confirmationAction')
+        $adapter->shouldReceive('confirmationAction')
             ->andReturn($response);
 
         $this->assertSame($response, $this->sut->confirmationAction());
@@ -459,10 +468,17 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
      */
     public function testConfirmationAction()
     {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
         $response = m::mock('\Zend\Form\Form');
 
-        $this->adapter->shouldReceive('confirmationAction')
-            ->andReturn($response);
+        $adapter->shouldReceive('confirmationAction')
+            ->andReturn($response)
+            ->shouldReceive('getConfirmationMessage')
+            ->andReturn('type_of_licence_confirmation')
+            ->shouldReceive('getExtraConfirmationMessage')
+            ->andReturn('application_type_of_licence_confirmation_subtitle');
 
         $this->sut->shouldReceive('render')
             ->with(

@@ -116,7 +116,10 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
             $this->createFee($newApplicationId);
 
-            return $this->getController()->redirect()->toRouteAjax('lva-application', ['application' => $newApplicationId]);
+            return $this->getController()->redirect()->toRouteAjax(
+                'lva-application',
+                ['application' => $newApplicationId]
+            );
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
