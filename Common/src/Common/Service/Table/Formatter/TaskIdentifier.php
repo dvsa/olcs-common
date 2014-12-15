@@ -48,7 +48,7 @@ class TaskIdentifier implements FormatterInterface
                 break;
             case 'Bus Registration':
                 $url = $urlHelper->__invoke(
-                    'licence/bus-processing/tasks',
+                    'licence/bus-details',
                     array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
                 );
                 break;
