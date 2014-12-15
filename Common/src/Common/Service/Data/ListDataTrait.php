@@ -72,6 +72,27 @@ trait ListDataTrait
     }
 
     /**
+     * Look up a property based on a key with a known value
+     *
+     * @param string $key
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
+    private function getPropertyFromKey($key, $property, $value)
+    {
+        $data = $this->fetchListData([]);
+        foreach ($data as $datum) {
+            if ($datum[$key] == $value) {
+                return $datum[$property];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param $context
      * @return array
      */
