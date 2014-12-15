@@ -601,20 +601,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'licence' => array(
-                        'organisation'=> array(
-                            'contactDetails' => array(
-
-                            )
-                        ),
-                        'contactDetails' => array(
-                            array(
-                                'contactType' => array(
-                                    'id' => ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
-                                ),
-                                'phoneContacts' => array(
-                                    array(
-                                        'phoneNumber' => '00000111222'
-                                    )
+                        'correspondenceCd' => array(
+                            'phoneContacts' => array(
+                                array(
+                                    'phoneNumber' => '00000111222'
                                 )
                             )
                         )
@@ -658,27 +648,15 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
                     ),
                     'licence' => array(
-                        'organisation'=> array(
-                            'contactDetails' => array(
+                        'correspondenceCd' => array(
+                            'phoneContacts' => array(
                                 array(
-                                    'contactType' => array(
-                                        'id' => ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT
-                                    )
+                                    'phoneNumber' => '00000111222'
                                 )
-
                             )
                         ),
-                        'contactDetails' => array(
-                            array(
-                                'contactType' => array(
-                                    'id' => ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
-                                ),
-                                'phoneContacts' => array(
-                                    array(
-                                        'phoneNumber' => '00000111222'
-                                    )
-                                )
-                            )
+                        'establishmentCd' => array(
+                            'foo' => 'bar'
                         )
                     )
                 ),
@@ -720,20 +698,10 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                         'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
                     ),
                     'licence' => array(
-                        'organisation'=> array(
-                            'contactDetails' => array(
-
-                            )
-                        ),
-                        'contactDetails' => array(
-                            array(
-                                'contactType' => array(
-                                    'id' => ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
-                                ),
-                                'phoneContacts' => array(
-                                    array(
-                                        'phoneNumber' => '00000111222'
-                                    )
+                        'correspondenceCd' => array(
+                            'phoneContacts' => array(
+                                array(
+                                    'phoneNumber' => '00000111222'
                                 )
                             )
                         )

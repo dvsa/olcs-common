@@ -31,16 +31,7 @@ class LicenceHolderAddressTest extends \PHPUnit_Framework_TestCase
         $bookmark->setData(
             [
                 'organisation' => [
-                    'contactDetails' => [
-                        [
-                            'contactType' => [
-                                'id' => 'foo'
-                            ],
-                            'address' => [
-                                'addressLine1' => 'Line 1'
-                            ]
-                        ]
-                    ]
+                    'contactDetails' => null
                 ]
             ]
         );
@@ -58,13 +49,8 @@ class LicenceHolderAddressTest extends \PHPUnit_Framework_TestCase
             [
                 'organisation' => [
                     'contactDetails' => [
-                        [
-                            'contactType' => [
-                                'id' => 'ct_corr'
-                            ],
-                            'address' => [
-                                'addressLine1' => 'Line 1'
-                            ]
+                        'address' => [
+                            'addressLine1' => 'Line 1'
                         ]
                     ]
                 ]
