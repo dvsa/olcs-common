@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Entity\AddressEntityService;
 use Common\Service\Helper\FormHelperService;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Controller\Traits\GenericBusinessDetails;
@@ -128,14 +127,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
         }
 
+        $registeredAddressId = null;
+
         if (isset($data['data']['registeredAddress'])) {
-            $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
+            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
         }
 
         $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
 
         $saveData = $this->formatDataForSave($data);
         $saveData['id'] = $orgId;
+
+        if ($registeredAddressId !== null) {
+            $saveData['contactDetails'] = $registeredAddressId;
+        }
+
         $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
     }
 
@@ -225,7 +231,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      * Format data for form
      *
      * @param array $data
-     * @param array $data
+     * @param array $natureOfBusiness
      * @return array
      */
     private function formatDataForForm($data, $natureOfBusiness)
@@ -233,15 +239,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $tradingNames = array();
         foreach ($data['tradingNames'] as $tradingName) {
             $tradingNames[] = $tradingName['name'];
-        }
-
-        $registeredAddress = array();
-
-        foreach ($data['contactDetails'] as $contactDetail) {
-            if ($contactDetail['contactType']['id'] === AddressEntityService::CONTACT_TYPE_REGISTERED_ADDRESS) {
-                $registeredAddress = $contactDetail['address'];
-                break;
-            }
         }
 
         return array(
@@ -255,7 +252,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'registeredAddress' => $registeredAddress,
+                'registeredAddress' => $data['contactDetails']['address'],
                 'natureOfBusiness' => $natureOfBusiness
             )
         );
