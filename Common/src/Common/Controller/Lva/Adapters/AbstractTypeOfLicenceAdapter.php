@@ -69,4 +69,10 @@ abstract class AbstractTypeOfLicenceAdapter implements
     {
 
     }
+
+    public function isCurrentDataSet($currentData)
+    {
+        return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
+            && !empty($currentData['licenceType']);
+    }
 }

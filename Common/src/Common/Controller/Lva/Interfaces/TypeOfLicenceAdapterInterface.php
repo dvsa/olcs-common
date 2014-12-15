@@ -33,4 +33,6 @@ interface TypeOfLicenceAdapterInterface
     public function getExtraConfirmationMessage();
 
     public function confirmationAction();
+
+    public function isCurrentDataSet($currentData);
 }

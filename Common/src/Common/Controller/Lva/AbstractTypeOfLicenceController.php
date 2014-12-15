@@ -124,12 +124,23 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
      */
     protected function formatDataForSave($data)
     {
-        return array(
-            'version' => $data['version'],
-            'niFlag' => $data['type-of-licence']['operator-location'],
-            'goodsOrPsv' => $data['type-of-licence']['operator-type'],
-            'licenceType' => $data['type-of-licence']['licence-type']
+        $formattedData = array(
+            'version' => $data['version']
         );
+
+        if (isset($data['type-of-licence']['operator-location'])) {
+            $formattedData['niFlag'] = $data['type-of-licence']['operator-location'];
+        }
+
+        if (isset($data['type-of-licence']['operator-type'])) {
+            $formattedData['goodsOrPsv'] = $data['type-of-licence']['operator-type'];
+        }
+
+        if (isset($data['type-of-licence']['licence-type'])) {
+            $formattedData['licenceType'] = $data['type-of-licence']['licence-type'];
+        }
+
+        return $formattedData;
     }
 
     /**

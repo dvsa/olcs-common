@@ -88,7 +88,10 @@ class FormHelperService extends AbstractHelperService
     public function setFormActionFromRequest($form, $request)
     {
         if (!$form->hasAttribute('action')) {
-            $form->setAttribute('action', $request->getUri()->getPath());
+
+            $url = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
+
+            $form->setAttribute('action', $url);
         }
     }
 

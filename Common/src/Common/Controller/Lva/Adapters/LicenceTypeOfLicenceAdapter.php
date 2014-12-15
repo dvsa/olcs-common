@@ -133,10 +133,12 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
             $appId = $this->getServiceLocator()->get('Entity\Application')->createVariation($licenceId, $data);
 
-            return $this->getController()->redirect()->toRoute('lva-variation', ['application' => $appId]);
+            return $this->getController()->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getController()->getRequest());
 
         $form->get('form-actions')->get('submit')->setLabel('create-variation-button');
 

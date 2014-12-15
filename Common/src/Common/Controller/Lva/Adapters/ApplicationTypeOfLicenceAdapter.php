@@ -49,12 +49,6 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         return false;
     }
 
-    public function isCurrentDataSet($currentData)
-    {
-        return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
-            && !empty($currentData['licenceType']);
-    }
-
     public function processChange(array $postData, array $currentData)
     {
         if (!$this->isCurrentDataSet($currentData)) {
@@ -122,10 +116,14 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
             $this->createFee($newApplicationId);
 
-            return $this->getController()->redirect()->toRoute('lva-application', ['application' => $newApplicationId]);
+            return $this->getController()->redirect()->toRouteAjax('lva-application', ['application' => $newApplicationId]);
         }
 
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getController()->getRequest());
+
+        return $form;
     }
 
     protected function resetSectionStatuses($applicationId)

@@ -440,4 +440,38 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             $this->sut->indexAction()
         );
     }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationActionWithRedirect()
+    {
+        $response = m::mock('\Zend\Http\Response');
+
+        $this->adapter->shouldReceive('confirmationAction')
+            ->andReturn($response);
+
+        $this->assertSame($response, $this->sut->confirmationAction());
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationAction()
+    {
+        $response = m::mock('\Zend\Form\Form');
+
+        $this->adapter->shouldReceive('confirmationAction')
+            ->andReturn($response);
+
+        $this->sut->shouldReceive('render')
+            ->with(
+                'type_of_licence_confirmation',
+                $response,
+                ['sectionText' => 'application_type_of_licence_confirmation_subtitle']
+            )
+            ->andReturn('RESPONSE');
+
+        $this->assertSame('RESPONSE', $this->sut->confirmationAction());
+    }
 }
