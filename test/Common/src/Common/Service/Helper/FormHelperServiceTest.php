@@ -715,7 +715,10 @@ class FormHelperServiceTest extends MockeryTestCase
         $translator = m::mock('\stdClass');
         $translator->shouldReceive('translate')
             ->with('message')
-            ->andReturn('translated');
+            ->andReturn('translated')
+            ->shouldReceive('translate')
+            ->with('label')
+            ->andReturn('label');
 
         $renderer = m::mock('\stdClass');
         $renderer->shouldReceive('render')
@@ -971,13 +974,16 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with('action')
             ->andReturn(false)
             ->shouldReceive('setAttribute')
-            ->with('action', 'URI')
+            ->with('action', 'URI?QUERY')
             ->getMock();
 
         $request = m::mock();
 
         $request->shouldReceive('getUri->getPath')
             ->andReturn('URI');
+
+        $request->shouldReceive('getUri->getQuery')
+            ->andReturn('QUERY');
 
         $helper->setFormActionFromRequest($form, $request);
     }

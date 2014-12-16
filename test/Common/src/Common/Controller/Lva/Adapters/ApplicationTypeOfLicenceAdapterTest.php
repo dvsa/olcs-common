@@ -337,7 +337,9 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
         $mockFormHelper = m::mock();
         $mockFormHelper->shouldReceive('createForm')
             ->with('GenericConfirmation')
-            ->andReturn('FORM');
+            ->andReturn('FORM')
+            ->shouldReceive('setFormActionFromRequest')
+            ->with('FORM', $mockRequest);
 
         $this->sm->setService('Helper\Form', $mockFormHelper);
 
@@ -447,7 +449,7 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
             ->with()
             ->andReturn($mockParams);
 
-        $this->controller->shouldReceive('redirect->toRoute')
+        $this->controller->shouldReceive('redirect->toRouteAjax')
             ->with('lva-application', ['application' => 8])
             ->andReturn('REDIRECT');
 
