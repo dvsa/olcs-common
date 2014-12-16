@@ -36,11 +36,10 @@ class AddressListDataService implements ListDataInterface, ServiceLocatorAwareIn
     {
         $data = array();
         if (is_array($context['services'])) {
-            $dataServiceManager = $this->getServiceLocator()->get('DataServiceManager');
             $formatter = new \Common\Service\Table\Formatter\Address();
             foreach ($context['services'] as $service) {
                 $serviceName = 'Common\Service\Data\\' . ucfirst($service);
-                $dataService = $dataServiceManager->get($serviceName);
+                $dataService = $this->getServiceLocator()->get($serviceName);
 
                 if (!($dataService instanceof AddressProviderInterface)) {
                     throw new \LogicException($serviceName . ' does not implement AddressProviderInterface');
