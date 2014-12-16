@@ -95,6 +95,15 @@ class FormHelperService extends AbstractHelperService
         }
     }
 
+    public function createFormWithRequest($formName, $request)
+    {
+        $form = $this->createForm($formName);
+
+        $this->setFormActionFromRequest($form, $request);
+
+        return $form;
+    }
+
     /**
      * Find form
      *

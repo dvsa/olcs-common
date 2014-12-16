@@ -93,13 +93,16 @@ trait CrudTableTrait
         if ($this->isButtonPressed('addAnother')) {
             $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
             $routeParams['action'] = $action;
+            $method = 'toRoute';
+        } else {
+            $method = 'toRouteAjax';
         }
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
             'section.' . $this->params('action') . '.' . $this->section
         );
 
-        return $this->redirect()->toRoute(null, $routeParams);
+        return $this->redirect()->$method(null, $routeParams);
     }
 
     /**
