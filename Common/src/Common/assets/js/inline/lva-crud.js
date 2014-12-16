@@ -79,6 +79,10 @@ OLCS.ready(function() {
       }
 
       $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
+        // @TODO this won't always cut it:
+        // 1) Some pages update more than the table on submit (i.e. OC -> traffic area)
+        // 2) I think it's messing with CSRF stuff, since each token is only used
+        // once
         $(container).html(
           $(inner.body).find("fieldset[data-group=" + group + "]").html()
         );
