@@ -68,7 +68,9 @@ class AddressListDataServiceTest extends MockeryTestCase
             ->andReturn($addressData);
 
         $mockDataServiceManager = m::mock('Common\Service\Data\PluginManager');
-        $mockDataServiceManager->shouldReceive('get')->with('Common\Service\Data\Licence')->andReturn($mockLicenceService);
+        $mockDataServiceManager->shouldReceive('get')->with(
+            'Common\Service\Data\Licence'
+        )->andReturn($mockLicenceService);
 
         $mockSL = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSL->shouldReceive('get')->with('DataServiceManager')->andReturn($mockDataServiceManager);
@@ -98,7 +100,9 @@ class AddressListDataServiceTest extends MockeryTestCase
             ->andReturn($addressData);
 
         $mockDataServiceManager = m::mock('Common\Service\Data\PluginManager');
-        $mockDataServiceManager->shouldReceive('get')->with('Common\Service\Data\Licence')->andReturn($mockLicenceService);
+        $mockDataServiceManager->shouldReceive('get')->with(
+            'Common\Service\Data\Licence'
+        )->andReturn($mockLicenceService);
 
         $mockSL = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
         $mockSL->shouldReceive('get')->with('DataServiceManager')->andReturn($mockDataServiceManager);

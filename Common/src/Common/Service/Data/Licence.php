@@ -53,8 +53,8 @@ class Licence extends AbstractData implements AddressProviderInterface
             if (isset($addressData['correspondenceCd']['address'])) {
                 $data[] = $addressData['correspondenceCd']['address'];
             }
-            if (isset($addressData['establishementCd']['address'])) {
-                $data[] = $addressData['establishementCd']['address'];
+            if (isset($addressData['establishmentCd']['address'])) {
+                $data[] = $addressData['establishmentCd']['address'];
             }
             if (isset($addressData['transportConsultantCd']['address'])) {
                 $data[] = $addressData['transportConsultantCd']['address'];
