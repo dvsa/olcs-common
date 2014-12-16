@@ -518,4 +518,26 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getDataForValidating($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testCreateVariation()
+    {
+        $licenceId = 3;
+        $applicationData = [
+            'foo' => 'bar'
+        ];
+        $expectedData = [
+            'licence' => 3,
+            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'isVariation' => true,
+            'foo' => 'bar'
+        ];
+
+        $this->expectOneRestCall('Application', 'POST', $expectedData)
+            ->will($this->returnValue(['id' => 5]));
+
+        $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
+    }
 }

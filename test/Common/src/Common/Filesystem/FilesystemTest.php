@@ -20,4 +20,14 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_dir($dir));
     }
+
+    public function testCreateTmpFile()
+    {
+        vfsStream::setup('tmp');
+        $sut = new Filesystem();
+
+        $dir = $sut->createTmpFile(vfsStream::url('tmp/'));
+
+        $this->assertTrue(file_exists($dir));
+    }
 }

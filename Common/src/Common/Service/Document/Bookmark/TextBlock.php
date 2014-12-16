@@ -41,6 +41,18 @@ class TextBlock extends DynamicBookmark
 
     public function render()
     {
+        /**
+         * At render time, we might have an array or a string. If we've got
+         * a string then just dump that out verbatim
+         */
+        if (!is_array($this->data)) {
+            return $this->data;
+        }
+
+        /**
+         * Otherwise, if we've got an array we assume it has a known 'paraText' key
+         * because it was populated by a backend entity
+         */
         $result = "";
         foreach ($this->data as $paragraph) {
             $result .= $paragraph['paraText'] . "\n";

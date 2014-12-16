@@ -39,7 +39,7 @@ class Text1 extends AbstractPublicationFilter
         }
 
         //previous hearing, only present on hearing publication, not on decision
-        if (isset($hearingData['previousHearing'])) {
+        if (isset($hearingData['previousHearing']) && $hearingData['previousHearing']['isAdjourned']) {
             $hearingText[] = $this->getPreviousHearing($hearingData);
         }
 
@@ -138,8 +138,6 @@ class Text1 extends AbstractPublicationFilter
      */
     public function getPreviousHearing($hearingData)
     {
-        if ($hearingData['previousHearing']['isAdjourned']) {
-            return sprintf($this->previousHearingAdjourned, $hearingData['previousHearing']['date']);
-        }
+        return sprintf($this->previousHearingAdjourned, $hearingData['previousHearing']['date']);
     }
 }

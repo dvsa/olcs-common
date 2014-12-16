@@ -30,10 +30,25 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
         CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'TransportManager'
     ];
 
+    private $descriptionMap = [
+        CategoryDataService::CATEGORY_APPLICATION       => 'Licence',
+        CategoryDataService::CATEGORY_BUS_REGISTRATION  => 'Bus route',
+        CategoryDataService::CATEGORY_COMPLIANCE        => 'Case',
+        CategoryDataService::CATEGORY_LICENSING         => 'Licence',
+        CategoryDataService::CATEGORY_ENVIRONMENTAL     => 'Licence',
+        CategoryDataService::CATEGORY_IRFO              => 'IRFO',
+        CategoryDataService::CATEGORY_TRANSPORT_MANAGER => 'Transport manager'
+    ];
+
     public function findEntityForCategory($category, $identifier)
     {
         return $this->getServiceLocator()
             ->get('Entity\\' . $this->serviceMap[$category])
             ->findByIdentifier($identifier);
+    }
+
+    public function findEntityNameForCategory($category)
+    {
+        return $this->descriptionMap[$category];
     }
 }

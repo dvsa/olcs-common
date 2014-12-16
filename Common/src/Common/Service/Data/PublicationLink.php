@@ -67,7 +67,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * @param ArrayObject $dataObject
      * @return int
      */
-    public function save(ArrayObject $dataObject)
+    public function save($dataObject)
     {
         $publicationLinkId = parent::save($dataObject);
         $this->savePoliceData($dataObject, $publicationLinkId);
@@ -79,7 +79,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * Calls the police data service to save related police data
      *
      * @param $dataObject
-     * $param int $publicationLinkId
+     * @param int $publicationLinkId
      *
      * @return bool
      */
