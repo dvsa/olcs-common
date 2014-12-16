@@ -55,6 +55,55 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals('type_of_licence', $this->view);
     }
 
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testGetIndexActionWithAdapter()
+    {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
+        $form = $this->createMockForm('Lva\TypeOfLicence');
+
+        $this->sut
+            ->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'version' => 1,
+                    'niFlag' => 'x',
+                    'goodsOrPsv' => 'y',
+                    'licenceType' => 'z'
+                ]
+            );
+
+        $form->shouldReceive('setData')
+            ->with(
+                [
+                    'version' => 1,
+                    'type-of-licence' => [
+                        'operator-location' => 'x',
+                        'operator-type' => 'y',
+                        'licence-type' => 'z'
+                    ]
+                ]
+            );
+
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(2);
+
+        $adapter->shouldReceive('alterForm')
+            ->with($form, 2, '')
+            ->andReturn($form)
+            ->shouldReceive('setMessages');
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('type_of_licence', $this->view);
+    }
+
     /**
      * @group lva-type-of-licence
      */
@@ -489,5 +538,16 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->andReturn('RESPONSE');
 
         $this->assertSame('RESPONSE', $this->sut->confirmationAction());
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationActionWithoutAdapter()
+    {
+        $this->sut->shouldReceive('notFoundAction')
+            ->andReturn(404);
+
+        $this->assertSame(404, $this->sut->confirmationAction());
     }
 }
