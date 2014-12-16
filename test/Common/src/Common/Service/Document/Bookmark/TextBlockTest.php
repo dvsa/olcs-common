@@ -29,4 +29,14 @@ class TextBlockTest extends \PHPUnit_Framework_TestCase
             $result
         );
     }
+
+    public function testRenderWithStringDataJustReturnsString()
+    {
+        $bookmark = new TextBlock();
+        $bookmark->setData('foo bar');
+
+        $result = $bookmark->render();
+
+        $this->assertEquals('foo bar', $result);
+    }
 }
