@@ -118,14 +118,14 @@ trait CrudTableTrait
             $this->delete();
             $this->postSave($this->section);
 
-            return $this->redirect()->toRoute(
+            return $this->redirect()->toRouteAjax(
                 null,
                 array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('GenericDeleteConfirmation');
+            ->createFormWithRequest('GenericDeleteConfirmation', $request);
 
         return $this->render('delete', $form);
     }
