@@ -46,6 +46,6 @@ class AbstractPublicationFilter extends AbstractFilter implements ServiceLocator
      */
     public function filter($value)
     {
-
+        return $value;
     }
 }
