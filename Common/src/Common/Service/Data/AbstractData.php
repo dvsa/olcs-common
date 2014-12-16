@@ -129,7 +129,7 @@ abstract class AbstractData implements FactoryInterface, RestClientAwareInterfac
      * @param \Zend\Stdlib\ArrayObject $dataObject
      * @return mixed
      */
-    public function save($dataObject)
+    public function save(ArrayObject $dataObject)
     {
         $params = ['data' => json_encode($dataObject->getArrayCopy())];
         $id = $dataObject->offsetGet('id');
