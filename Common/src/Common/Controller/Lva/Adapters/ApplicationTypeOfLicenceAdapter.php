@@ -7,12 +7,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
-use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
-use Common\Controller\Lva\Traits\ControllerAwareTrait;
 use Common\Service\Entity\LicenceEntityService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\ApplicationCompletionEntityService;
 
@@ -22,25 +17,10 @@ use Common\Service\Entity\ApplicationCompletionEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationTypeOfLicenceAdapter implements
-    TypeOfLicenceAdapterInterface,
-    ServiceLocatorAwareInterface,
-    ControllerAwareInterface
+class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 {
-    use ServiceLocatorAwareTrait,
-        ControllerAwareTrait;
-
-    protected $queryParams = [];
-
-    public function getQueryParams()
-    {
-        return ['query' => $this->queryParams];
-    }
-
-    public function getRouteParams()
-    {
-        return ['action' => 'confirmation'];
-    }
+    protected $confirmationMessage = 'application_type_of_licence_confirmation';
+    protected $extraConfirmationMessage = 'application_type_of_licence_confirmation_subtitle';
 
     public function doesChangeRequireConfirmation(array $postData, array $currentData)
     {
@@ -67,12 +47,6 @@ class ApplicationTypeOfLicenceAdapter implements
         }
 
         return false;
-    }
-
-    public function isCurrentDataSet($currentData)
-    {
-        return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
-            && !empty($currentData['licenceType']);
     }
 
     public function processChange(array $postData, array $currentData)
@@ -142,10 +116,17 @@ class ApplicationTypeOfLicenceAdapter implements
 
             $this->createFee($newApplicationId);
 
-            return $this->getController()->redirect()->toRoute('lva-application', ['application' => $newApplicationId]);
+            return $this->getController()->redirect()->toRouteAjax(
+                'lva-application',
+                ['application' => $newApplicationId]
+            );
         }
 
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('GenericConfirmation');
+        $formHelper->setFormActionFromRequest($form, $this->getController()->getRequest());
+
+        return $form;
     }
 
     protected function resetSectionStatuses($applicationId)

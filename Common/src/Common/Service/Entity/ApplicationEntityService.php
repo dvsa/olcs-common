@@ -266,6 +266,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * Create a new application for a given organisation
      *
      * @param int $organisationId
+     * @param array $applicationData
      */
     public function createNew($organisationId, $applicationData = array())
     {
@@ -297,6 +298,28 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'application' => $application['id'],
             'licence' => $licence['id']
         );
+    }
+
+    /**
+     * Create a variation application for a given organisation
+     *
+     * @param int $licenceId
+     * @param array $applicationData
+     */
+    public function createVariation($licenceId, $applicationData = array())
+    {
+        $applicationData = array_merge(
+            $applicationData,
+            array(
+                'licence' => $licenceId,
+                'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
+                'isVariation' => true
+            )
+        );
+
+        $application = $this->save($applicationData);
+
+        return $application['id'];
     }
 
     /**

@@ -17,6 +17,11 @@ use Zend\Mvc\Controller\Plugin\Redirect as ZendRedirect;
  */
 class Redirect extends ZendRedirect
 {
+    public function refreshAjax()
+    {
+        return $this->toRouteAjax(null, array(), array(), true);
+    }
+
     public function toRouteAjax($route = null, $params = array(), $options = array(), $reuseMatchedParams = false)
     {
         $controller = $this->getController();

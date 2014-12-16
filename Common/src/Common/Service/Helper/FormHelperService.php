@@ -88,7 +88,10 @@ class FormHelperService extends AbstractHelperService
     public function setFormActionFromRequest($form, $request)
     {
         if (!$form->hasAttribute('action')) {
-            $form->setAttribute('action', $request->getUri()->getPath());
+
+            $url = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
+
+            $form->setAttribute('action', $url);
         }
     }
 
@@ -440,14 +443,18 @@ class FormHelperService extends AbstractHelperService
      */
     public function lockElement(Element $element, $message)
     {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
         $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
 
         $lockView = new ViewModel(
-            array('message' => $this->getServiceLocator()->get('Helper\Translation')->translate($message))
+            array('message' => $translator->translate($message))
         );
         $lockView->setTemplate('partials/lock');
 
-        $element->setLabel($element->getLabel() . $viewRenderer->render($lockView));
+        $label = $translator->translate($element->getLabel());
+
+        $element->setLabel($label . $viewRenderer->render($lockView));
         $element->setLabelOption('disable_html_escape', true);
 
         $attributes = $element->getLabelAttributes();
