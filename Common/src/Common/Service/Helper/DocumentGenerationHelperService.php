@@ -61,6 +61,6 @@ class DocumentGenerationHelperService extends AbstractHelperService
             ->get('Helper\Date')
             ->getDate('YmdHi') . '_' . $filename . '.rtf';
 
-        return $uploader->upload('documents', $filePath);
+        return $uploader->upload($folder, $filePath);
     }
 }
