@@ -213,7 +213,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceCount' => 1
                 ),
                 array(),
-                'licence/bus-processing/tasks',
+                'licence/bus-details',
                 'busRegId',
                 'Unlinked'
             ),
@@ -226,7 +226,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceId' => 110
                 ),
                 array(),
-                'licence/bus-processing/tasks',
+                'licence/bus-details',
                 'busRegId',
                 '<a href="correctUrl">P1234/123</a>',
                 array('licence' => 110) // additional route param needed
@@ -240,7 +240,7 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
                     'licenceId' => 110
                 ),
                 array(),
-                'licence/bus-processing/tasks',
+                'licence/bus-details',
                 'busRegId',
                 '<a href="#">P1234/123</a>',
                 array('licence' => 110)
