@@ -5,7 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-namespace CommonTest\Service\Processing;
+namespace CommonTest\Service\Cpms;
 
 use CommonTest\Bootstrap;
 use Common\Service\Cpms\IdentityProviderFactory;

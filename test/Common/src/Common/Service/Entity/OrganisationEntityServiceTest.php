@@ -103,4 +103,15 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getBusinessDetailsData($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByIdentifier()
+    {
+        $this->expectOneRestCall('Organisation', 'GET', 123)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
+    }
 }

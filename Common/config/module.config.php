@@ -24,6 +24,16 @@ return array(
         )
     ),
     'controllers' => array(
+        // @NOTE This delegator can live in common as both internal and external app type of licence controllers
+        // currently use the same adaptor
+        'delegators' => array(
+            'LvaApplication/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
+            )
+        ),
+        'abstract_factories' => array(
+            'Common\Controller\Lva\AbstractControllerFactory',
+        ),
         'invokables' => array(
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
@@ -74,9 +84,12 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'ApplicationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
-            'VehicleList' => '\Common\Service\VehicleList\VehicleList'
+            'VehicleList' => '\Common\Service\VehicleList\VehicleList',
+            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -115,7 +128,6 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )

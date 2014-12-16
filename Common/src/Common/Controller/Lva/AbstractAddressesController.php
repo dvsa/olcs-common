@@ -23,8 +23,6 @@ abstract class AbstractAddressesController extends AbstractController
      * @var array
      */
     protected $typeMap = array(
-        ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE => 'correspondence',
-        ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT => 'establishment',
         'phone_t_tel' => 'phone_business',
         'phone_t_home' => 'phone_home',
         'phone_t_mobile' => 'phone_mobile',
@@ -121,36 +119,53 @@ abstract class AbstractAddressesController extends AbstractController
      */
     private function saveCorrespondenceDetails($data)
     {
-        $data = array(
-            'id' => $data['correspondence']['id'],
-            'version' => $data['correspondence']['version'],
-            'fao' => $data['correspondence']['fao'],
-            'contactType' => ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE,
-            'licence' => $this->getLicenceId(),
-            'emailAddress' => $data['contact']['email'],
-            'addresses' => array(
-                'address' => $data['correspondence_address'],
-            )
+        return $this->saveAddressToLicence(
+            $data,
+            ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE,
+            'correspondence',
+            [
+                'fao' => $data['correspondence']['fao'],
+                'emailAddress' => $data['contact']['email'],
+            ]
         );
-
-        return $this->getServiceLocator()->get('Entity\ContactDetails')->save($data);
     }
 
     protected function maybeSaveEstablishmentAddress($data)
     {
         if (!empty($data['establishment'])) {
-            $address = array(
-                'id' => $data['establishment']['id'],
-                'version' => $data['establishment']['version'],
-                'contactType' => ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT,
-                'licence' => $this->getLicenceId(),
-                'addresses' => array(
-                    'address' => $data['establishment_address'],
-                )
-            );
 
-            $this->getServiceLocator()->get('Entity\ContactDetails')->save($address);
+            return $this->saveAddressToLicence(
+                $data,
+                ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT,
+                'establishment'
+            );
         }
+    }
+
+    protected function saveAddressToLicence($data, $contactType, $type, $additionalData = array())
+    {
+        $address = array(
+            'id' => $data[$type]['id'],
+            'version' => $data[$type]['version'],
+            'contactType' => $contactType,
+            'addresses' => array(
+                'address' => $data[$type . '_address'],
+            )
+        );
+
+        $address = array_merge($address, $additionalData);
+
+        $saved = $this->getServiceLocator()->get('Entity\ContactDetails')->save($address);
+
+        // If we are creating a new contactDetails item, we need to link it to the licence
+        if (!isset($data[$type]['id']) || empty($data[$type]['id'])) {
+
+            $licenceData = [$type . 'Cd' => $saved['id']];
+
+            $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($this->getLicenceId(), $licenceData);
+        }
+
+        return $saved;
     }
 
     /**
@@ -194,45 +209,39 @@ abstract class AbstractAddressesController extends AbstractController
             )
         );
 
-        $contactDetailsMerge = array_merge($data['contactDetails'], $data['organisation']['contactDetails']);
+        if (!empty($data['correspondenceCd'])) {
+            $returnData = $this->formatAddressDataForForm($returnData, $data, 'correspondence');
+            $returnData['contact']['email'] = $data['correspondenceCd']['emailAddress'];
 
-        foreach ($contactDetailsMerge as $contactDetails) {
+            foreach ($data['correspondenceCd']['phoneContacts'] as $phoneContact) {
 
-            $excludedTypes = array(
-                ContactDetailsEntityService::CONTACT_TYPE_REGISTERED
-            );
+                $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
 
-            if (!isset($contactDetails['contactType']['id']) ||
-                in_array($contactDetails['contactType']['id'], $excludedTypes)
-            ) {
-                continue;
-            }
-
-            $type = $this->mapFormTypeFromDbType($contactDetails['contactType']['id']);
-
-            $returnData[$type] = array(
-                'id' => $contactDetails['id'],
-                'version' => $contactDetails['version'],
-                'fao' => $contactDetails['fao']
-            );
-
-            $returnData[$type . '_address'] = $contactDetails['address'];
-            $returnData[$type . '_address']['countryCode'] = $contactDetails['address']['countryCode']['id'];
-
-            if ($contactDetails['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE) {
-
-                $returnData['contact']['email'] = $contactDetails['emailAddress'];
-
-                foreach ($contactDetails['phoneContacts'] as $phoneContact) {
-
-                    $phoneType = $this->mapFormTypeFromDbType($phoneContact['phoneContactType']['id']);
-
-                    $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
-                    $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
-                    $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
-                }
+                $returnData['contact'][$phoneType] = $phoneContact['phoneNumber'];
+                $returnData['contact'][$phoneType . '_id'] = $phoneContact['id'];
+                $returnData['contact'][$phoneType . '_version'] = $phoneContact['version'];
             }
         }
+
+        if (!empty($data['establishmentCd'])) {
+            $returnData = $this->formatAddressDataForForm($returnData, $data, 'establishment');
+        }
+
+        return $returnData;
+    }
+
+    protected function formatAddressDataForForm($returnData, $data, $type)
+    {
+        $address = $data[$type . 'Cd'];
+
+        $returnData[$type] = array(
+            'id' => $address['id'],
+            'version' => $address['version'],
+            'fao' => $address['fao']
+        );
+
+        $returnData[$type . '_address'] = $address['address'];
+        $returnData[$type . '_address']['countryCode'] = $address['address']['countryCode']['id'];
 
         return $returnData;
     }

@@ -21,6 +21,7 @@ class FeeListenerService implements ServiceLocatorAwareInterface
     use ServiceLocatorAwareTrait;
 
     const EVENT_WAIVE = 'Waive';
+    const EVENT_PAY = 'Pay';
 
     public function trigger($id, $eventType)
     {
@@ -32,13 +33,23 @@ class FeeListenerService implements ServiceLocatorAwareInterface
         throw new Exception('Event type not found');
     }
 
+    protected function triggerPay($id)
+    {
+        $this->maybeProcessApplicationFee($id);
+    }
+
+    protected function triggerWaive($id)
+    {
+        $this->maybeProcessApplicationFee($id);
+    }
+
     /**
      * @NOTE When waiving or paying an application fee, we need to check if there are any outstanding fees, if not then
      *  we can make the application valid
      *
      * @param int $id
      */
-    protected function triggerWaive($id)
+    protected function maybeProcessApplicationFee($id)
     {
         $feeService = $this->getServiceLocator()->get('Entity\Fee');
 

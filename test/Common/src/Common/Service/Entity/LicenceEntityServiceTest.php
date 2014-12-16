@@ -621,4 +621,36 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->setTrafficArea($licenceId, $trafficAreaId);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByIdentifierWithResult()
+    {
+        $response = [
+            'Count' => 1,
+            'Results' => [
+                'RESPONSE'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 123])
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByIdentifierWithNoResult()
+    {
+        $response = [
+            'Count' => 0,
+            'Results' => []
+        ];
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 123])
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(false, $this->sut->findByIdentifier(123));
+    }
 }
