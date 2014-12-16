@@ -102,7 +102,7 @@ class HearingText1Test extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->offsetGet('text1'), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->offsetGet('text1'));
     }
 
     public function filterProvider()

@@ -55,6 +55,6 @@ class PoliceDataTest extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->offsetGet('policeData'), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->offsetGet('policeData'));
     }
 }

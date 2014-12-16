@@ -78,7 +78,7 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->getArrayCopy(), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->getArrayCopy());
     }
 
     /**

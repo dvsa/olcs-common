@@ -34,7 +34,7 @@ class LicenceAddressTest extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->offsetGet('licenceAddress'), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->offsetGet('licenceAddress'));
     }
 
     /**

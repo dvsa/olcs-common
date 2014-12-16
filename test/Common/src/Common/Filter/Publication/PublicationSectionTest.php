@@ -27,7 +27,7 @@ class PublicationSectionTest extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->offsetGet('publicationSection'), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->offsetGet('publicationSection'));
     }
 
     /**

@@ -33,6 +33,6 @@ class HearingDateTimeTest extends \PHPUnit_Framework_TestCase
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($output->offsetGet('hearingData'), $expectedOutput);
+        $this->assertEquals($expectedOutput, $output->offsetGet('hearingData'));
     }
 }

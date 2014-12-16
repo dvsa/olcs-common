@@ -45,7 +45,7 @@ class PiVenueTest extends \PHPUnit_Framework_TestCase
 
         $outputHearingData = $output->offsetGet('hearingData');
 
-        $this->assertEquals($outputHearingData['piVenueOther'], $expectedVenueInfo);
+        $this->assertEquals($expectedVenueInfo, $outputHearingData['piVenueOther']);
     }
 
     /**
