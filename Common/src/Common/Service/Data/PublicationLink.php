@@ -67,7 +67,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      * @param ArrayObject $dataObject
      * @return int
      */
-    public function save(ArrayObject $dataObject)
+    public function save($dataObject)
     {
         $publicationLinkId = parent::save($dataObject);
         $this->savePoliceData($dataObject, $publicationLinkId);
