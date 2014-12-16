@@ -352,7 +352,6 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $this->sm->setService('Entity\Application', $mockAppService);
 
-
         $this->assertEquals('REDIRECT', $this->sut->confirmationAction());
     }
 
