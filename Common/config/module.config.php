@@ -88,7 +88,8 @@ return array(
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
-            'VehicleList' => '\Common\Service\VehicleList\VehicleList'
+            'VehicleList' => '\Common\Service\VehicleList\VehicleList',
+            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -128,8 +129,7 @@ return array(
                 return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
             },
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
-            'PrintScheduler' => '\Common\Service\Printing\PrintSchedulerFactory'
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
     ),
     'publications' => array(
