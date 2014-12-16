@@ -68,6 +68,27 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->getValueOptions();
     }
 
+    public function testGetValueOptionsWithEmptyOption()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key'=>'value']);
+
+        $sut = new DynamicSelect();
+        $sut->setOtherOption(false);
+        $sut->setEmptyOption('choose one');
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(
+            ['' => 'choose one', 'key'=>'value'],
+            $sut->getValueOptions()
+        );
+    }
+
     /**
      * @param $value
      * @param $expected
