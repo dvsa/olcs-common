@@ -49,4 +49,12 @@ class EntityProcessingServiceTest extends MockeryTestCase
             )
         );
     }
+
+    public function testFindEntityNameForCategory()
+    {
+        $this->assertEquals(
+            'Licence',
+            $this->sut->findEntityNameForCategory(1)
+        );
+    }
 }

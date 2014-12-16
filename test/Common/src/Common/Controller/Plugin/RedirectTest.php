@@ -30,6 +30,9 @@ class RedirectTest extends MockeryTestCase
         $this->mockResponse = m::mock();
     }
 
+    /**
+     * @group controller_plugin
+     */
     public function testToRouteAjaxWithoutAjax()
     {
         $route = 'foo';
@@ -48,6 +51,9 @@ class RedirectTest extends MockeryTestCase
         $this->assertEquals('REDIRECT', $this->sut->toRouteAjax($route, $params));
     }
 
+    /**
+     * @group controller_plugin
+     */
     public function testToRouteAjaxWithAjax()
     {
         $route = 'foo';
@@ -81,5 +87,17 @@ class RedirectTest extends MockeryTestCase
             ->with($route, $params, array(), false);
 
         $this->assertEquals($mockResponse, $this->sut->toRouteAjax($route, $params));
+    }
+
+    /**
+     * @group controller_plugin
+     */
+    public function testRefreshAjax()
+    {
+        $this->sut->shouldReceive('toRouteAjax')
+            ->with(null, [], [], true)
+            ->andReturn('REDIRECT');
+
+        $this->assertEquals('REDIRECT', $this->sut->refreshAjax());
     }
 }

@@ -173,7 +173,7 @@ abstract class AbstractController extends AbstractActionController
             $lvaId = $this->getIdentifier();
         }
 
-        return $this->redirect()->toRoute('lva-' . $this->lva, array($this->getIdentifierIndex() => $lvaId));
+        return $this->redirect()->toRouteAjax('lva-' . $this->lva, array($this->getIdentifierIndex() => $lvaId));
     }
 
     /**
@@ -269,7 +269,7 @@ abstract class AbstractController extends AbstractActionController
      */
     protected function reload()
     {
-        return $this->redirect()->refresh();
+        return $this->redirect()->refreshAjax();
     }
 
     /**
