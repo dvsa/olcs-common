@@ -55,6 +55,55 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals('type_of_licence', $this->view);
     }
 
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testGetIndexActionWithAdapter()
+    {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
+        $form = $this->createMockForm('Lva\TypeOfLicence');
+
+        $this->sut
+            ->shouldReceive('getTypeOfLicenceData')
+            ->andReturn(
+                [
+                    'version' => 1,
+                    'niFlag' => 'x',
+                    'goodsOrPsv' => 'y',
+                    'licenceType' => 'z'
+                ]
+            );
+
+        $form->shouldReceive('setData')
+            ->with(
+                [
+                    'version' => 1,
+                    'type-of-licence' => [
+                        'operator-location' => 'x',
+                        'operator-type' => 'y',
+                        'licence-type' => 'z'
+                    ]
+                ]
+            );
+
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(2);
+
+        $adapter->shouldReceive('alterForm')
+            ->with($form, 2, '')
+            ->andReturn($form)
+            ->shouldReceive('setMessages');
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('type_of_licence', $this->view);
+    }
+
     /**
      * @group lva-type-of-licence
      */
@@ -228,7 +277,10 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(false)
             ->shouldReceive('isCurrentDataSet')
             ->with($stubbedCurrentData)
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('alterForm')
+            ->with($form, 7, "")
+            ->andReturn($form);
 
         $this->assertEquals(
             'complete',
@@ -433,11 +485,69 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->with($stubbedCurrentData)
             ->andReturn(false)
             ->shouldReceive('processFirstSave')
-            ->with(7);
+            ->with(7)
+            ->shouldReceive('alterForm')
+            ->with($form, 7, '')
+            ->andReturn($form);
 
         $this->assertEquals(
             'complete',
             $this->sut->indexAction()
         );
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationActionWithRedirect()
+    {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
+        $response = m::mock('\Zend\Http\Response');
+
+        $adapter->shouldReceive('confirmationAction')
+            ->andReturn($response);
+
+        $this->assertSame($response, $this->sut->confirmationAction());
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationAction()
+    {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setTypeOfLicenceAdapter($adapter);
+
+        $response = m::mock('\Zend\Form\Form');
+
+        $adapter->shouldReceive('confirmationAction')
+            ->andReturn($response)
+            ->shouldReceive('getConfirmationMessage')
+            ->andReturn('type_of_licence_confirmation')
+            ->shouldReceive('getExtraConfirmationMessage')
+            ->andReturn('application_type_of_licence_confirmation_subtitle');
+
+        $this->sut->shouldReceive('render')
+            ->with(
+                'type_of_licence_confirmation',
+                $response,
+                ['sectionText' => 'application_type_of_licence_confirmation_subtitle']
+            )
+            ->andReturn('RESPONSE');
+
+        $this->assertSame('RESPONSE', $this->sut->confirmationAction());
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
+    public function testConfirmationActionWithoutAdapter()
+    {
+        $this->sut->shouldReceive('notFoundAction')
+            ->andReturn(404);
+
+        $this->assertSame(404, $this->sut->confirmationAction());
     }
 }

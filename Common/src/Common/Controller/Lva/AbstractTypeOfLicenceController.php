@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
 use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterAwareInterface;
 use Zend\Http\Response;
+use Zend\Stdlib\ResponseInterface;
 
 /**
  * Common Lva Abstract Type Of Licence Controller
@@ -38,6 +39,8 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
      */
     public function indexAction()
     {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -54,12 +57,17 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
             $data = $this->formatDataForForm($this->getTypeOfLicenceData());
         }
 
-        $form = $this->getTypeOfLicenceForm()->setData($data);
+        $form = $this->getTypeOfLicenceForm();
+
+        if ($adapter !== null) {
+            $form = $adapter->alterForm($form, $this->getIdentifier(), $this->location);
+        }
+
+        $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
 
             // If we have an adapter, we need to grab the previous data as we need to check this later
-            $adapter = $this->getTypeOfLicenceAdapter();
             $previousData = null;
             if ($adapter !== null) {
                 $previousData = $this->getTypeOfLicenceData();
@@ -78,6 +86,10 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
             $this->postSave('type_of_licence');
 
             return $this->completeSection('type_of_licence');
+        }
+
+        if ($adapter !== null) {
+            $adapter->setMessages($this->getIdentifier(), $this->location);
         }
 
         $this->getServiceLocator()->get('Script')->loadFile('type-of-licence');
@@ -112,12 +124,23 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
      */
     protected function formatDataForSave($data)
     {
-        return array(
-            'version' => $data['version'],
-            'niFlag' => $data['type-of-licence']['operator-location'],
-            'goodsOrPsv' => $data['type-of-licence']['operator-type'],
-            'licenceType' => $data['type-of-licence']['licence-type']
+        $formattedData = array(
+            'version' => $data['version']
         );
+
+        if (isset($data['type-of-licence']['operator-location'])) {
+            $formattedData['niFlag'] = $data['type-of-licence']['operator-location'];
+        }
+
+        if (isset($data['type-of-licence']['operator-type'])) {
+            $formattedData['goodsOrPsv'] = $data['type-of-licence']['operator-type'];
+        }
+
+        if (isset($data['type-of-licence']['licence-type'])) {
+            $formattedData['licenceType'] = $data['type-of-licence']['licence-type'];
+        }
+
+        return $formattedData;
     }
 
     /**
@@ -151,5 +174,27 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         $this->alterFormForLva($form);
 
         return $form;
+    }
+
+    public function confirmationAction()
+    {
+        $adapter = $this->getTypeOfLicenceAdapter();
+
+        if ($adapter === null) {
+            return $this->notFoundAction();
+        }
+
+        // @NOTE will either return a redirect, or a form
+        $response = $adapter->confirmationAction();
+
+        if ($response instanceof ResponseInterface) {
+            return $response;
+        }
+
+        return $this->render(
+            $adapter->getConfirmationMessage(),
+            $response,
+            array('sectionText' => $adapter->getExtraConfirmationMessage())
+        );
     }
 }
