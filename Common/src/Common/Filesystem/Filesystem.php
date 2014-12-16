@@ -31,4 +31,25 @@ class Filesystem extends BaseFileSystem
 
         return $dirname;
     }
+
+    /**
+     * @param $path
+     * @param string $prefix
+     * @return string
+     */
+    public function createTmpFile($path, $prefix = '')
+    {
+        $lock = new LockHandler(hash('sha256', $path));
+        $lock->lock(true);
+
+        do {
+            $filename = $path . DIRECTORY_SEPARATOR . uniqid($prefix);
+        } while ($this->exists($filename));
+
+        $this->touch($filename);
+
+        $lock->release();
+
+        return $filename;
+    }
 }
