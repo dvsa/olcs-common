@@ -125,7 +125,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 'version'       => $data['version'],
                 // @NOTE: licences don't have this flag, but we haven't defined their behaviour
                 // on PSV pages yet. As such, this just prevents a PHP error
-                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : null
+                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : 'Y'
             )
         );
     }
@@ -311,19 +311,20 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         $formHelper = $this->getServiceLocator()
             ->get('Helper\Form');
 
-        $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
+/*        $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
             || (isset($post['medium']['action']) && !empty($post['medium']['action']))
             || (isset($post['small']['action']) && !empty($post['small']['action']));
-
+*/
         foreach ($this->getTables() as $table) {
 
             $ucTable = ucwords($table);
 
-            if (isset($data['totAuth' . $ucTable . 'Vehicles']) && $data['totAuth' . $ucTable . 'Vehicles'] < 1) {
+            if (!isset($data['totAuth' . $ucTable . 'Vehicles']) || $data['totAuth' . $ucTable . 'Vehicles'] < 1) {
 
                 $form->remove($table);
 
-            } elseif (
+            }
+            /*elseif (
                 !$isCrudPressed && $isPost
                 && isset($post['data']['hasEnteredReg']) && $post['data']['hasEnteredReg'] == 'Y'
             ) {
@@ -333,6 +334,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $validatorChain = $input->getValidatorChain();
                 $validatorChain->attach(new TableRequiredValidator(array('label' => $table . ' vehicle')));
             }
+             */
         }
 
         $licenceData = $this->getTypeOfLicenceData();

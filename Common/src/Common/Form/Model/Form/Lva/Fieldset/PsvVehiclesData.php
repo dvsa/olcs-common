@@ -16,7 +16,7 @@ class PsvVehiclesData
     public $version = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
      *     "value_options": {"Y": "Yes", "N": "No"},
