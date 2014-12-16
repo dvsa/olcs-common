@@ -46,4 +46,47 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
         //test data is cached
         $this->assertEquals($licence, $sut->fetchLicenceData(78));
     }
+
+    public function testGetAddressBundle()
+    {
+        $sut = new Licence();
+        $addressBundle = $sut->getAddressBundle();
+        $this->assertArrayHasKey('correspondenceCd', $addressBundle['children']);
+        $this->assertArrayHasKey(
+            'address',
+            $addressBundle['children']['correspondenceCd']['children']
+        );
+
+        $this->assertInternalType('array', $addressBundle);
+    }
+
+    public function testFetchAddressListData()
+    {
+        $licence = [
+            'id' => 110,
+            'correspondenceCd' => [
+                'address' => 'c_address'
+            ],
+            'establishmentCd' => [
+                'address' => 'e_address'
+            ],
+            'transportConsultantCd' => [
+                'address' => 'tc_address'
+            ]
+        ];
+
+        $sut = new Licence();
+
+        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
+        $mockRestClient->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/110'), $this->isType('array'))
+            ->willReturn($licence);
+
+        $sut->setRestClient($mockRestClient);
+
+        $result = $sut->fetchAddressListData(110);
+
+        $this->assertCount(3, $result);
+    }
 }
