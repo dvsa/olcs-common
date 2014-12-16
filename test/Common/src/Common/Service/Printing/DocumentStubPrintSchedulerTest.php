@@ -31,7 +31,7 @@ class DocumentStubPrintSchedulerTest extends MockeryTestCase
         $data = [
             'identifier'    => 'f123',
             'description'   => 'A Test Job',
-            'filename'      => 'A Test Job.rtf',
+            'filename'      => 'A_Test_Job.rtf',
             'fileExtension' => 'doc_rtf',
             'licence'       => 7,
             'category'      => 1,

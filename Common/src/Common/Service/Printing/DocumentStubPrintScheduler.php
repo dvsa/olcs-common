@@ -25,7 +25,7 @@ class DocumentStubPrintScheduler implements PrintSchedulerInterface
         $data = [
             'identifier'    => $file->getIdentifier(),
             'description'   => $jobName,
-            'filename'      => $jobName . '.rtf',
+            'filename'      => str_replace(" ", "_", $jobName) . '.rtf',
             'fileExtension' => 'doc_rtf',
             'licence'       => 7, // hard coded simply so we can demo against *something*
             'category'      => CategoryDataService::CATEGORY_LICENSING,

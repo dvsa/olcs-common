@@ -20,11 +20,11 @@ class DocumentGenerationHelperService extends AbstractHelperService
      *
      * @param string $template
      * @param array $queryData
-     * @param array $extraParams
+     * @param array $knownValues
      *
      * @return string
      */
-    public function generateFromTemplate($template, $queryData = [], $extraParams = [])
+    public function generateFromTemplate($template, $queryData = [], $knownValues = [])
     {
         $documentService = $this->getServiceLocator()->get('Document');
 
@@ -42,7 +42,7 @@ class DocumentGenerationHelperService extends AbstractHelperService
             $result = [];
         }
 
-        $result = array_merge($result, $extraParams);
+        $result = array_merge($result, $knownValues);
 
         return $documentService->populateBookmarks($file, $result);
     }
