@@ -39,9 +39,17 @@ OLCS.ready(function() {
      */
     function renderModal(data) {
       // if we find any errors, completely re-render our main body
+      // @TODO first class 'errors' component maybe?
+      // F.hasErrors(data);
+      // F.formErrors(form)
+      // F.clearErrors(form)
       if ($("<div>").html(data.body).find(".validation-summary").length) {
         return $(".js-body").html(data.body);
       }
+
+      $(".validation-summary").remove();
+      $(".validation-wrapper ul:first").remove();
+      $(".validation-wrapper").removeClass("validation-wrapper");
 
       var options = {
         success: OLCS.normaliseResponse({
@@ -60,16 +68,26 @@ OLCS.ready(function() {
      * we need
      */
     function handleCrudResponse(response) {
-      if (response.status !== 302) {
-        return $(".modal__content").html(response.body);
+      if (response.status === 200) {
+        $(".modal__content").html(response.body);
+
+        // if we have errors then there's no need to go any further; there's
+        // no chance we need to refresh our parent page
+        if ($("<div>").html(response.body).find(".validation-summary").length) {
+          return;
+        }
       }
 
-      $.get(response.location, OLCS.normaliseResponse(function(response) {
+      $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
         $(container).html(
-          $(response.body).find("fieldset[data-group=" + group + "]").html()
+          $(inner.body).find("fieldset[data-group=" + group + "]").html()
         );
 
-        OLCS.modal.hide();
+        // if the original response was a redirect then be sure to respect
+        // that by closing the modal
+        if (response.status === 302) {
+          OLCS.modal.hide();
+        }
       }));
     }
 
