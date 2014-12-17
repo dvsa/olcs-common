@@ -4,6 +4,7 @@
 OLCS.ready(function() {
   "use strict";
 
+  // @TODO OLCS.crudTableHandler(); ???
   var editButton = OLCS.conditionalButton({
     container: "form [data-group*='table']",
     label: "Edit",
@@ -25,10 +26,8 @@ OLCS.ready(function() {
   $(document).on("click", ".table__header button", function(e) {
     e.preventDefault();
 
-    var button    = $(this);
-    var form      = $(this).parents("form");
-    var container = $(this).parents("fieldset");
-    var group     = container.attr("data-group");
+    var button = $(this);
+    var form   = $(this).parents("form");
 
     /**
      * We manually handle rendering the modal because we need to intercept
