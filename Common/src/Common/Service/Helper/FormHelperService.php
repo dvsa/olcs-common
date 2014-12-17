@@ -70,7 +70,7 @@ class FormHelperService extends AbstractHelperService
         if ($addContinue) {
             $config = array(
                 'type' => '\Zend\Form\Element\Button',
-                'name' => 'form-actions[submit]',
+                'name' => 'form-actions[continue]',
                 'options' => array(
                     'label' => 'Continue'
                 ),
