@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class LicenceListDataService
  * @package Common\Service\Data
  */
-class LicenceListDataService extends AbstractData implements ListDataInterface, ServiceLocatorAwareInterface
+class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -22,6 +22,7 @@ class LicenceListDataService extends AbstractData implements ListDataInterface, 
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        echo 'jere';exit;
         $this->setServiceLocator($serviceLocator);
 
         return $this;
