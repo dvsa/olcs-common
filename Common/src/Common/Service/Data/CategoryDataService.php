@@ -38,10 +38,13 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
 
     // @NOTE create constants for all sub categories as required. Only a subset
     // will ever be needed programatically so this list should be manageable
+    const DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL = 5;
     const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
+    const TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL = 15;
     const TASK_SUB_CATEGORY_HEARINGS_APPEALS = 49;
     const SCAN_SUB_CATEGORY_CHANGE_OF_ENTITY = 85;
     const DOC_SUB_CATEGORY_LICENCE_VEHICLE_LIST = 91;
+    const DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL = 112;
 
     /**
      * Cache the categories
