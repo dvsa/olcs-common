@@ -80,8 +80,10 @@ OLCS.ready(function() {
         OLCS.modal.hide();
       }
 
+      var scrollTop = $(window).scrollTop();
       $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
         F.render(".js-body", inner.body);
+        $(window).scrollTop(scrollTop);
       }));
     }
 
