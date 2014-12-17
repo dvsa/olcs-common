@@ -540,9 +540,8 @@ class FormHelperService extends AbstractHelperService
 
         if (isset($options[$index])) {
             unset($options[$index]);
+            $element->setValueOptions($options);
         }
-
-        $element->setValueOptions($options);
     }
 
     public function setCurrentOption($element, $index)
@@ -554,8 +553,8 @@ class FormHelperService extends AbstractHelperService
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
             $options[$index] .= ' ' . $translator->translate('current.option.suffix');
-        }
 
-        $element->setValueOptions($options);
+            $element->setValueOptions($options);
+        }
     }
 }
