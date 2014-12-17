@@ -9,7 +9,7 @@ use Common\Service\Data\AbstractData;
  * Interface CrudInterface
  *
  * @package Common\Service\Data.
- * @deprecated
+ * @deprecated use generic instead
  */
 abstract class CrudAbstract extends AbstractData implements CrudInterface
 {

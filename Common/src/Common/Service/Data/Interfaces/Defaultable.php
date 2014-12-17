@@ -26,5 +26,5 @@ interface Defaultable extends DataService
      * @param Bundle $bundle
      * @return mixed
      */
-    public function fetchOne($id = null, Bundle $bundle = null);
+    public function fetchOne($id = null, $bundle = null);
 }

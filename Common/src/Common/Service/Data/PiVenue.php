@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\Service\Data;
+
 use Common\Service\Data\Interfaces\ListData;
 
 /**

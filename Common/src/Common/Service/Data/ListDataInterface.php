@@ -7,7 +7,7 @@ use Common\Service\Data\Interfaces\ListData;
 /**
  * Interface ListDataInterface
  * @package Common\Service\Data
- * @deprecated
+ * @deprecated use interfaces\ListData instead
  */
 interface ListDataInterface extends ListData
 {

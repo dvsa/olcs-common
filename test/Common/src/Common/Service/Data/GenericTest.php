@@ -159,7 +159,6 @@ class GenericTest extends TestCase
         $sut->setRestClient($mockClient);
         $sut->setDefaultBundle($bundle);
 
-
         $sut->fetchOne(78);
     }
 }

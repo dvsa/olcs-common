@@ -8,6 +8,10 @@ use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class BundleManager
+ * @package Common\Service\Data
+ */
 class BundleManager extends AbstractPluginManager implements AbstractFactoryInterface
 {
     public function __construct()

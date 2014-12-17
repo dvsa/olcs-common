@@ -1,13 +1,11 @@
 <?php
 
-
 namespace CommonTest\Service\Data;
 
 use Common\Data\Object\Bundle;
 use Common\Service\Data\BundleManagerFactory;
 use Mockery\Adapter\Phpunit\MockeryTestCase as TestCase;
 use Mockery as m;
-
 
 /**
  * Class BundleManagerFactoryTest
