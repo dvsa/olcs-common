@@ -3,68 +3,36 @@
 namespace Common\Data\Object\Bundle;
 
 use Common\Data\Object\Bundle;
+use Zend\Di\ServiceLocatorInterface;
 
+/**
+ * Class Licence
+ * @package Common\Data\Object\Bundle
+ */
 class Licence extends Bundle
 {
-    protected $bundle = array(
-        'children' => array(
-            'cases' => array(
-                'children' => array(
-                    'appeals' => array(
-                        'children' => array(
-                            'outcome' => array(
-                                'children' => array(
-                                    'reason'
-                                )
-                            )
-                        )
-                    ),
-                    'stays' => array(
-                        'children' => array(
-                            'stayType' => array(
-                                'children' => array(
-                                    'outcome'
-                                )
-                            ),
-                            'foo'
-                        )
-                    )
-                )
-            ),
-            'status',
-            'goodsOrPsv',
-            'licenceType',
-            'trafficArea',
-            'organisation' => array(
-                'children' => array(
-                    'organisationPersons' => array(
-                        'children' => array(
-                            'tradingNames'
-                        )
-                    )
-                )
-            )
-        )
-    );
-
-    public function __construct()
+    /**
+     * @TODO over time move these child bundles into separate classes and pull in via SL
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     */
+    public function init(ServiceLocatorInterface $serviceLocator)
     {
         $appeals = new Bundle();
-        $appeals->addChild('outcome')->addChild('reason');
-
-        $outcome = new Bundle();
-        $outcome->addChild('foo');
+        $appeals->addChild('outcome')
+                ->addChild('reason');
 
         $stays = new Bundle();
-        $stays->addChild('stayType')->addChild('outcome', $outcome);
-        $stays->addChild('foo');
+        $stays->addChild('stayType')
+              ->addChild('outcome');
 
         $cases = new Bundle();
-        $cases->addChild('appeals', $appeals);
-        $cases->addChild('stays', $stays);
+        $cases->addChild('appeals', $appeals)
+              ->addChild('stays', $stays);
 
         $organisation = new Bundle();
-        $organisation->addChild('organisationPersons')->addChild('tradingNames');
+        $organisation->addChild('organisationPersons')
+                     ->addChild('tradingNames');
 
         $this->addChild('cases', $cases)
              ->addChild('status')

@@ -18,6 +18,14 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
     {
         parent::__construct();
         $this->addAbstractFactory($this);
+        $this->addInitializer(array($this, 'initBundle'));
+    }
+
+    public function initBundle($instance, $serviceLocator)
+    {
+        if ($instance instanceof Bundle) {
+            $instance->init($serviceLocator);
+        }
     }
 
     /**

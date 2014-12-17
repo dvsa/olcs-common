@@ -48,4 +48,15 @@ class BundleManagerTest extends TestCase
 
         $this->assertInstanceOf('Common\Data\Object\Bundle', $service);
     }
+
+    public function testInitBundle()
+    {
+        $mockBundle = m::mock('Common\Data\Object\Bundle');
+
+        $sut = new BundleManager();
+
+        $mockBundle->shouldReceive('init')->with($sut);
+
+        $sut->initBundle($mockBundle, $sut);
+    }
 }

@@ -6,6 +6,8 @@ namespace Common\Data\Object;
  * Class Bundle
  * @package Common\Data\Object
  */
+use Zend\ServiceManager\ServiceLocatorInterface;
+
 /**
  * Class Bundle
  * @package Common\Data\Object
@@ -21,6 +23,16 @@ class Bundle implements \JsonSerializable
      * @var array
      */
     protected $criteria = [];
+
+    /**
+     * Override in child classes to provide initialization
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     */
+    public function init(ServiceLocatorInterface $serviceLocator)
+    {
+        //
+    }
 
     /**
      * Addsa a child to the bundle
