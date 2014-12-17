@@ -32,6 +32,9 @@ return array(
             ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
+            ),
+            'LvaVariation/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             )
         ),
         'abstract_factories' => array(
@@ -87,10 +90,12 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
+            'VariationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
