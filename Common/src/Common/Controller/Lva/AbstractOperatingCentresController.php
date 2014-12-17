@@ -11,6 +11,7 @@ namespace Common\Controller\Lva;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
+use Common\Service\Data\CategoryDataService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -855,7 +856,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $documents = $this->getServiceLocator()->get($lvaEntity)
-            ->getDocuments($this->getIdentifier(), 'Application', 'Advert Digital');
+            ->getDocuments(
+                $this->getIdentifier(),
+                CategoryDataService::CATEGORY_APPLICATION,
+                CategoryDataService::DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL
+            );
 
         return array_filter(
             $documents,
