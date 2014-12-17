@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class LicenceListDataService
  * @package Common\Service\Data
  */
-class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareInterface
+class LicenceListDataService extends AbstractData implements ListDataInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -44,6 +44,7 @@ class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareIn
 
     protected function fetchOperatingCentreListOptions()
     {
+        return ['4' => 'test OC'];
         $data = array();
         $serviceName = 'Common\Service\Data\LicenceOperatingCentre';
         $dataService = $this->getServiceLocator()->get($serviceName);
