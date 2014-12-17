@@ -9,6 +9,7 @@ namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
+use Mockery as m;
 
 /**
  * Application Entity Service Test
@@ -524,7 +525,12 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
      */
     public function testCreateVariation()
     {
+        $this->mockDate('2014-01-01');
+
         $licenceId = 3;
+        $stubbedLicenceData = [
+            'bar' => 'foo'
+        ];
         $applicationData = [
             'foo' => 'bar'
         ];
@@ -532,11 +538,20 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'licence' => 3,
             'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
             'isVariation' => true,
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'bar' => 'foo',
+            'receivedDate' => '2014-01-01'
         ];
+
+        $mockLicenceEntity = m::mock();
+        $mockLicenceEntity->shouldReceive('getVariationData')
+            ->with($licenceId)
+            ->andReturn($stubbedLicenceData);
 
         $this->expectOneRestCall('Application', 'POST', $expectedData)
             ->will($this->returnValue(['id' => 5]));
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }

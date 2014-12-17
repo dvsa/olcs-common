@@ -9,14 +9,14 @@ namespace CommonTest\Service\Entity;
 
 use CommonTest\Bootstrap;
 use CommonTest\Traits\MockDateTrait;
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Abstract Entity Service TestCase
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractEntityServiceTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractEntityServiceTestCase extends MockeryTestCase
 {
     use MockDateTrait;
 

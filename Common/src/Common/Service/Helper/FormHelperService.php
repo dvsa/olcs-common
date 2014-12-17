@@ -89,7 +89,13 @@ class FormHelperService extends AbstractHelperService
     {
         if (!$form->hasAttribute('action')) {
 
-            $url = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
+            $url = $request->getUri()->getPath();
+
+            $query = $request->getUri()->getQuery();
+
+            if ($query !== '') {
+                $url .= '?' . $query;
+            }
 
             $form->setAttribute('action', $url);
         }
