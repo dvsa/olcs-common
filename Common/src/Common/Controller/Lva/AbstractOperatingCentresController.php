@@ -370,7 +370,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\OperatingCentre')
+            ->createFormWithRequest('Lva\OperatingCentre', $request)
             ->setData($data);
 
         if ($mode !== 'add') {

@@ -23,7 +23,7 @@ OLCS.ready(function() {
 
   var F = OLCS.formHelper;
 
-  $(document).on("click", ".table__header button", function(e) {
+  $(document).on("click", ".table__header button, .table__wrapper input[type=submit]", function(e) {
     e.preventDefault();
 
     var button = $(this);
