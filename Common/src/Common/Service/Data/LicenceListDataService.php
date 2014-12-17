@@ -5,12 +5,13 @@ namespace Common\Service\Data;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\FactoryInterface;
 
 /**
  * Class LicenceListDataService
  * @package Common\Service\Data
  */
-class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareInterface
+class LicenceListDataService implements FactoryInterface, ListDataInterface, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -22,7 +23,6 @@ class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareIn
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        echo 'jere';exit;
         $this->setServiceLocator($serviceLocator);
 
         return $this;
@@ -36,6 +36,7 @@ class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareIn
     public function fetchListOptions($context, $useGroups = false)
     {
         $data = array();
+
         if ($context == 'operatingCentre') {
             $data = $this->fetchOperatingCentreListOptions();
         }
@@ -45,14 +46,14 @@ class LicenceListDataService implements ListDataInterface, ServiceLocatorAwareIn
 
     protected function fetchOperatingCentreListOptions()
     {
-        return ['4' => 'test OC'];
         $data = array();
         $serviceName = 'Common\Service\Data\LicenceOperatingCentre';
         $dataService = $this->getServiceLocator()->get($serviceName);
+        echo 'jere';exit;
         $rawData = $dataService->fetchLicenceOperatingCentreData();
 
-        foreach ($rawData as $operatingCentre) {
-            $data[$operatingCentre['id']] = $operatingCentre;
+        foreach ($rawData as $id => $operatingCentre) {
+            $data[$id] = $operatingCentre;
         }
 
         return $data;

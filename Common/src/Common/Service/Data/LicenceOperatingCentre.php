@@ -2,10 +2,8 @@
 
 namespace Common\Service\Data;
 
-use Common\Service\Data\AbstractData;
-
 /**
- * Class LicenceOperatingCentreDataService
+ * Class LicenceOperatingCentre
  * @package Olcs\Service
  */
 class LicenceOperatingCentre extends AbstractData
@@ -21,13 +19,26 @@ class LicenceOperatingCentre extends AbstractData
     protected $serviceName = 'LicenceOperatingCentre';
 
     /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->setServiceLocator($serviceLocator);
+
+        return $this;
+    }
+
+    /**
      * @param integer|null $id
      * @param array|null $bundle
      * @return array
      */
     public function fetchLicenceOperatingCentreData($id = null, $bundle = null)
     {
-        return [4 => 'test OC'];
+        return [4 => 'test OC4'];
         $id = is_null($id) ? $this->getId() : $id;
 
         if (is_null($this->getData($id))) {

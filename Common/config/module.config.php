@@ -259,9 +259,10 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
-            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink'
-        ],
-
+            'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
+            'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
+        ]
+        
     ],
     'tables' => array(
         'config' => array(
