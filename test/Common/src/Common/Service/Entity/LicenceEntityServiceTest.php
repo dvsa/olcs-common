@@ -65,6 +65,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
+        // Test the cache
+        $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
     }
 
     /**
