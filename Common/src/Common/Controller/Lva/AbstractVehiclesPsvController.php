@@ -131,21 +131,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     }
 
     /**
-     * Format data for save on the main form
-     */
-    protected function formatDataForSave($data)
-    {
-        return $data['data'];
-    }
-
-    protected function save($data)
-    {
-        $data = $this->formatDataForSave($data);
-        $data['id'] = $this->getIdentifier();
-        return $this->getLvaEntityService()->save($data);
-    }
-
-    /**
      * Override the get crud action method
      *
      * @param array $formTables
@@ -303,18 +288,31 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     public function alterForm($form, $data)
     {
-        $this->alterFormForLva($form);
-
-        $isPost = $this->getRequest()->isPost();
         $post   = $this->getRequest()->getPost();
+
+        $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
+            || (isset($post['medium']['action']) && !empty($post['medium']['action']))
+            || (isset($post['small']['action']) && !empty($post['small']['action']));
+
+        $rows = [
+            $form->get('small')->get('rows')->getValue(),
+            $form->get('medium')->get('rows')->getValue(),
+            $form->get('large')->get('rows')->getValue()
+        ];
+        $oneRowInTablesRequiredValidator = $this->getServiceLocator()->get('oneRowInTablesRequired');
+        $oneRowInTablesRequiredValidator->setRows($rows);
+        $oneRowInTablesRequiredValidator->setCrud($isCrudPressed);
+
+        $form->getInputFilter()->get('data')->get('hasEnteredReg')
+            ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
+
+        $this->alterFormForLva($form);
 
         $formHelper = $this->getServiceLocator()
             ->get('Helper\Form');
 
-/*        $isCrudPressed = (isset($post['large']['action']) && !empty($post['large']['action']))
-            || (isset($post['medium']['action']) && !empty($post['medium']['action']))
-            || (isset($post['small']['action']) && !empty($post['small']['action']));
-*/
+        $formHelper->remove($form, 'data->notice');
+
         foreach ($this->getTables() as $table) {
 
             $ucTable = ucwords($table);
@@ -324,17 +322,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $form->remove($table);
 
             }
-            /*elseif (
-                !$isCrudPressed && $isPost
-                && isset($post['data']['hasEnteredReg']) && $post['data']['hasEnteredReg'] == 'Y'
-            ) {
-                $input = $form->getInputFilter()->get($table)->get('table');
-                $input->setRequired(true)->setAllowEmpty(false)->setContinueIfEmpty(true);
-
-                $validatorChain = $input->getValidatorChain();
-                $validatorChain->attach(new TableRequiredValidator(array('label' => $table . ' vehicle')));
-            }
-             */
         }
 
         $licenceData = $this->getTypeOfLicenceData();

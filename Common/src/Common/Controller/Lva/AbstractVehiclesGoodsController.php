@@ -31,8 +31,26 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $filterForm = $this->getFilterForm();
 
-        if ($request->isPost()) {
+        $form = $this->alterForm($this->getForm());
 
+        if ($this->lva == 'application') {
+            $entityData = $this->getLvaEntityService()
+                ->getHeaderData($this->getIdentifier());
+
+            if ($request->isPost()) {
+                $data = (array)$request->getPost();
+            } else {
+                $data = $this->formatDataForForm($entityData);
+            }
+            $form->setData($data);
+        }
+        $this->maybeRemoveNotice($form);
+
+        if ($request->isPost() && ($this->lva !== 'application' ||
+            $this->lva == 'application' && $form->isValid())) {
+            if ($this->lva == 'application') {
+                $this->save($form->getData());
+            }
             $this->postSave('vehicles');
 
             $data = (array)$request->getPost();
@@ -54,11 +72,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $form = $this->getForm();
-
         $this->alterFormForLva($form);
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'forms/filter', 'table-actions']);
+        $this->getServiceLocator()->get('Script')->loadFiles(
+            ['lva-crud', 'forms/filter', 'table-actions', 'vehicle-goods']
+        );
 
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
@@ -85,6 +103,54 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     public function editAction()
     {
         return $this->addOrEdit('edit');
+    }
+
+    protected function alterForm($form)
+    {
+        $post   = $this->getRequest()->getPost();
+
+        $isCrudPressed = (isset($post['table']['action']) && !empty($post['table']['action']));
+
+        $rows = [
+            $form->get('table')->get('rows')->getValue()
+        ];
+        $oneRowInTablesRequiredValidator = $this->getServiceLocator()->get('oneRowInTablesRequired');
+        $oneRowInTablesRequiredValidator->setRows($rows);
+        $oneRowInTablesRequiredValidator->setCrud($isCrudPressed);
+
+        $form->getInputFilter()->get('data')->get('hasEnteredReg')
+            ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
+
+        return $form;
+    }
+
+    /**
+     * Remove notice if we already have rows in the table
+     * 
+     * @param Zend\Form\Form $form
+     * @return Zend\Form\Form
+     */
+    protected function maybeRemoveNotice($form)
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        if ($form->get('table')->get('rows')->getValue() > 0) {
+            $formHelper->remove($form, 'data->notice');
+        }
+        return $form;
+    }
+
+    /**
+     * Format data for the main form; not a lot to it
+     */
+    protected function formatDataForForm($data)
+    {
+        return array(
+            'data' => array(
+                'version'       => $data['version'],
+                'hasEnteredReg' => isset($data['hasEnteredReg']) && ($data['hasEnteredReg'] == 'Y' ||
+                    $data['hasEnteredReg'] == 'N') ? $data['hasEnteredReg'] : 'Y'
+            )
+        );
     }
 
     /**

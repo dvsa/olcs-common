@@ -5,9 +5,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * Psv Vehicle Data
+ * Vehicle Data
  */
-class PsvVehiclesData
+class VehiclesData
 {
     /**
      * @Form\Attributes({"value":""})
@@ -28,4 +28,13 @@ class PsvVehiclesData
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $hasEnteredReg = null;
+
+    /**
+     * @Form\Type("Common\Form\Elements\Types\Html")
+     * @Form\Attributes({
+     *      "value":
+     *      "<div id=""notice"">If the vehicle details are not available at this time you <b>must</b>
+     *       inform the central licensing office when the details are available</div>"})
+     */
+    public $notice = null;
 }

@@ -24,7 +24,9 @@ trait PsvGoodsLicenceVariationControllerTrait
 
     protected function alterFormForLva(Form $form)
     {
-        $form->get('data')->remove('hasEnteredReg');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $formHelper->remove($form, 'data->hasEnteredReg');
+        $formHelper->remove($form, 'data->notice');
         return $form;
     }
 }
