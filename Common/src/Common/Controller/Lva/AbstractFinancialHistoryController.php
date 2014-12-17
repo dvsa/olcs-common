@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Data\CategoryDataService;
+
 /**
  * Financial History Trait
  *
@@ -14,9 +16,6 @@ namespace Common\Controller\Lva;
  */
 abstract class AbstractFinancialHistoryController extends AbstractController
 {
-    // @TODO incorrect: awaiting confirmation from Steve L
-    const DOCUMENT_SUBCATEGORY = 'Sur 1 Digital';
-
     /**
      * Map the data
      *
@@ -86,7 +85,11 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     public function getDocuments()
     {
         return $this->getServiceLocator()->get('Entity\Application')
-            ->getDocuments($this->getApplicationId(), 'Licensing', static::DOCUMENT_SUBCATEGORY);
+            ->getDocuments(
+                $this->getApplicationId(),
+                CategoryDataService::CATEGORY_LICENSING,
+                CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL
+            );
     }
 
     /**
@@ -98,17 +101,14 @@ abstract class AbstractFinancialHistoryController extends AbstractController
     {
         $categoryService = $this->getServiceLocator()->get('category');
 
-        $category = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription(static::DOCUMENT_SUBCATEGORY, 'Document');
-
         $this->uploadFile(
             $file,
             array(
                 'application' => $this->getApplicationId(),
                 'description' => 'Insolvency document',
-                'category' => $category['id'],
-                'subCategory' => $subCategory['id'],
-                'licence' => $this->getLicenceId()
+                'category'    => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL,
+                'licence'     => $this->getLicenceId()
             )
         );
     }

@@ -57,18 +57,13 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         return $this->get($id);
     }
 
-    public function getDocuments($id, $categoryName, $documentSubCategoryName)
+    public function getDocuments($id, $categoryId, $documentSubCategoryId)
     {
         $documentBundle = $this->documentBundle;
 
-        $categoryService = $this->getServiceLocator()->get('category');
-
-        $category = $categoryService->getCategoryByDescription($categoryName);
-        $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
-
         $documentBundle['children']['documents']['criteria'] = array(
-            'category' => $category['id'],
-            'subCategory' => $subCategory['id']
+            'category'    => $categoryId,
+            'subCategory' => $documentSubCategoryId
         );
 
         $data = $this->get($id, $documentBundle);

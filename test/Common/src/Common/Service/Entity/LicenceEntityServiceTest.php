@@ -653,4 +653,35 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(false, $this->sut->findByIdentifier(123));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVariationData()
+    {
+        $id = 4;
+        $stubbedData = [
+            'foo' => 'bar',
+            'ignore' => 'this',
+            'totAuthTrailers' => 1,
+            'totAuthVehicles' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licenceType' => ['id' => 6]
+        ];
+        $expected = [
+            'totAuthTrailers' => 1,
+            'totAuthVehicles' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licenceType' => 6
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($stubbedData));
+
+        $this->assertEquals($expected, $this->sut->getVariationData($id));
+    }
 }

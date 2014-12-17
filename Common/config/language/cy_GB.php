@@ -889,6 +889,8 @@ return array(
     'licence.overview.title' => 'W Licence overview',
     'licence.print' => 'W Print licence',
     'licence.surrender' => 'W Surrender licence',
+    'licence.variation' => 'W Create variation',
+    'licence.variation.confirmation.text' => 'W Are you sure you want to create a variation application?',
     'licence_type_of_licence_confirmation' => 'W In order to change your type of licence you must create a variation
         application, Would you like to proceed?',
     'list-of-convictions' => 'W List of convictions',
