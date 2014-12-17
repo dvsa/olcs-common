@@ -33,23 +33,18 @@ OLCS.ready(function() {
     /**
      * We manually handle rendering the modal because we need to intercept
      * any errors triggered when the user clicks a CRUD button. This isn't
-     * ideal because we have to inspect the HTML (yuck) but in the absence
+     * ideal because we have to inspect the HTML (nasty) but in the absence
      * of a proper JSON payload or a better status code, it's our only
      * choice
      */
-    function renderModal(data) {
+    function handleCrudAction(data) {
       // if we find any errors, completely re-render our main body
-      // @TODO first class 'errors' component maybe?
-      // F.hasErrors(data);
-      // F.formErrors(form)
-      // F.clearErrors(form)
-      if ($("<div>").html(data.body).find(".validation-summary").length) {
-        return $(".js-body").html(data.body);
+      if (F.containsErrors(data.body)) {
+        return F.render(".js-body", data.body);
       }
 
-      $(".validation-summary").remove();
-      $(".validation-wrapper ul:first").remove();
-      $(".validation-wrapper").removeClass("validation-wrapper");
+      // otherwise clear any we might have had previouosly
+      F.clearErrors();
 
       var options = {
         success: OLCS.normaliseResponse({
@@ -69,29 +64,25 @@ OLCS.ready(function() {
      */
     function handleCrudResponse(response) {
       if (response.status === 200) {
-        $(".modal__content").html(response.body);
+        // always render; could be a clean form (if we clicked add another),
+        // could be riddled with errors
+        F.render(".modal__content", response.body);
 
-        // if we have errors then there's no need to go any further; there's
-        // no chance we need to refresh our parent page
-        if ($("<div>").html(response.body).find(".validation-summary").length) {
+        if (F.containsErrors(response.body)) {
+          // if we have errors then there's no need to go any further; there's
+          // no chance we need to refresh our parent page
           return;
         }
       }
 
-      $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
-        // @TODO this won't always cut it:
-        // 1) Some pages update more than the table on submit (i.e. OC -> traffic area)
-        // 2) I think it's messing with CSRF stuff, since each token is only used
-        // once
-        $(container).html(
-          $(inner.body).find("fieldset[data-group=" + group + "]").html()
-        );
+      // if the original response was a redirect then be sure to respect
+      // that by closing the modal
+      if (response.status === 302) {
+        OLCS.modal.hide();
+      }
 
-        // if the original response was a redirect then be sure to respect
-        // that by closing the modal
-        if (response.status === 302) {
-          OLCS.modal.hide();
-        }
+      $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
+        F.render(".js-body", inner.body);
       }));
     }
 
@@ -101,12 +92,13 @@ OLCS.ready(function() {
     // hook everything up and submit the form
     OLCS.formAjax({
       form: form,
-      success: OLCS.normaliseResponse(renderModal)
+      success: OLCS.normaliseResponse(handleCrudAction)
     });
   });
 
-  OLCS.eventEmitter.on("hide:modal", function() {
+  OLCS.eventEmitter.on("render", function() {
     editButton.check();
     deleteButton.check();
+    OLCS.formInit();
   });
 });
