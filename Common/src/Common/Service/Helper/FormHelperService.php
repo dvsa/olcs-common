@@ -95,6 +95,14 @@ class FormHelperService extends AbstractHelperService
 
             if ($query !== '') {
                 $url .= '?' . $query;
+            } else {
+                // WARNING: As rubbish as this looks, do *not* remove
+                // the trailing space. When rendering forms in modals,
+                // IE strips quote marks off attributes wherever possible.
+                // This means that an action of /foo/bar/baz/ will render
+                // without quotes, and the trailing slash will self-close
+                // and completely destroy the form
+                $url .= ' ';
             }
 
             $form->setAttribute('action', $url);
