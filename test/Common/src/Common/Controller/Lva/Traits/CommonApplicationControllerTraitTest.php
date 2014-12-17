@@ -350,7 +350,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
             ->andReturn($stubbedSectionStatus)
             ->shouldReceive('getIdentifierIndex')
             ->andReturn('application')
-            ->shouldReceive('redirect->toRoute')
+            ->shouldReceive('redirect->toRouteAjax')
             ->with('lva-application/foo', ['application' => $id])
             ->andReturn('SECTION');
 
@@ -403,7 +403,7 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
             ->andReturn($stubbedSectionStatus)
             ->shouldReceive('getIdentifierIndex')
             ->andReturn('application')
-            ->shouldReceive('redirect->toRoute')
+            ->shouldReceive('redirect->toRouteAjax')
             ->with('lva-application/foo', ['application' => $id])
             ->andReturn('SECTION');
 
