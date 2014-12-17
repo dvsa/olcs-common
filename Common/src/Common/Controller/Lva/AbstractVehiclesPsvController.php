@@ -264,7 +264,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $form = $this->getServiceLocator()
             ->get('Helper\Form')
-            ->createForm('Lva\PsvVehiclesVehicle');
+            ->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
 
         $form = $this->alterVehicleForm($form, $mode)
             ->setData($data);
