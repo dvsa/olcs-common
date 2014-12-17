@@ -83,10 +83,11 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->setDataService($mockRefDataService);
         $sut->setContext('category');
 
-        $this->assertEquals(
-            ['' => 'choose one', 'key'=>'value'],
-            $sut->getValueOptions()
-        );
+        $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
+
+        // empty option does not get returned from getValueOptions,
+        // it's appended in the view helper - @see Zend\Form\View\Helper\FormSelect::render
+        $this->assertEquals('choose one', $sut->getEmptyOption());
     }
 
     /**
