@@ -39,24 +39,17 @@ class TaskIdentifierTest extends \PHPUnit_Framework_TestCase
 
         $sm = $this->getMock('\stdClass', array('get'));
 
-        $mockUrlHelper = $this->getMock('\stdClass', array('__invoke'));
+        $mockUrlHelper = $this->getMock('\stdClass', array('fromRoute'));
 
         $mockUrlHelper->expects($this->any())
-            ->method('__invoke')
+            ->method('fromRoute')
             ->with($routeName, $routeParams)
             ->will($this->returnValue('correctUrl'));
 
-        $mockViewHelperManager = $this->getMock('\stdClass', array('get'));
-
-        $mockViewHelperManager->expects($this->any())
-            ->method('get')
-            ->with('url')
-            ->will($this->returnValue($mockUrlHelper));
-
         $sm->expects($this->any())
             ->method('get')
-            ->with('viewhelpermanager')
-            ->will($this->returnValue($mockViewHelperManager));
+            ->with('Helper\Url')
+            ->will($this->returnValue($mockUrlHelper));
 
         $result = TaskIdentifier::format($data, $column, $sm);
 
