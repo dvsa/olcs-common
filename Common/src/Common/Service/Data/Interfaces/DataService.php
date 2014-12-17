@@ -25,7 +25,7 @@ interface DataService
      * @param Bundle $bundle
      * @return array
      */
-    public function fetchOne($id, Bundle $bundle = null);
+    public function fetchOne($id, $bundle = null);
 
     /**
      * Fetch a list of results from backend and return as an array of arrays.
@@ -34,5 +34,5 @@ interface DataService
      * @param Bundle $bundle
      * @return array
      */
-    public function fetchList(array $params, Bundle $bundle = null);
+    public function fetchList($params = [], $bundle = null);
 }

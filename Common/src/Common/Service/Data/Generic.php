@@ -85,11 +85,11 @@ class Generic extends AbstractData implements
      * @param Bundle $bundle
      * @return array
      */
-    public function fetchOne($id, Bundle $bundle = null)
+    public function fetchOne($id, $bundle = null)
     {
         $bundle = $bundle ?: $this->getBundle();
         if ($this->getData($id) === null) {
-            $data = $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+            $data = $this->getRestClient()->get($this->buildPath($id), ['bundle' => json_encode($bundle)]);
             $this->setData($id, $data);
         }
 
@@ -106,7 +106,7 @@ class Generic extends AbstractData implements
      * @param Bundle $bundle
      * @return array
      */
-    public function fetchList(array $params, Bundle $bundle = null)
+    public function fetchList($params = [], $bundle = null)
     {
         if ($this->getData('list') === null) {
 
@@ -129,9 +129,13 @@ class Generic extends AbstractData implements
      * @throws \Common\Exception\BadRequestException
      * @return int
      */
-    public function save(array $data)
+    public function save($data)
     {
-        $result = $this->getRestClient()->post($data);
+        if (isset($data['id'])) {
+            $result = $this->getRestClient()->put($this->buildPath($data['id']), ['data' => json_encode($data)]);
+        } else {
+            $result = $this->getRestClient()->post('', ['data' => json_encode($data)]);
+        }
 
         if ($result === false) {
             throw new BadRequestException('Record could not be saved');
@@ -155,12 +159,21 @@ class Generic extends AbstractData implements
      */
     public function delete($id)
     {
-        $result = $this->getRestClient()->delete($id);
+        $result = $this->getRestClient()->delete($this->buildPath($id));
 
         if ($result === false) {
             throw new BadRequestException('Record could not be deleted');
         }
 
         return true;
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    protected function buildPath($id)
+    {
+        return sprintf('/%d', $id);
     }
 }
