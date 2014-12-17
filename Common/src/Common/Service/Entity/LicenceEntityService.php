@@ -49,6 +49,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
+            'licenceType',
             'status'
         )
     );
@@ -409,5 +410,24 @@ class LicenceEntityService extends AbstractLvaEntityService
             return false;
         }
         return $result['Results'][0];
+    }
+
+    public function getVariationData($id)
+    {
+        $data = $this->get($id, $this->overviewBundle);
+
+        $keys = [
+            'totAuthTrailers',
+            'totAuthVehicles',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles'
+        ];
+
+        $variationData = array_intersect_key($data, array_flip($keys));
+
+        $variationData['licenceType'] = $data['licenceType']['id'];
+
+        return $variationData;
     }
 }
