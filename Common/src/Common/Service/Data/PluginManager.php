@@ -2,6 +2,7 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Data\Interfaces\RestClientAware;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
 
@@ -19,7 +20,7 @@ class PluginManager extends AbstractPluginManager
 
     public function initializeRestClientInterface($instance)
     {
-        if ($instance instanceof RestClientAwareInterface) {
+        if ($instance instanceof RestClientAware) {
             $serviceLocator = $this->getServiceLocator();
 
             /** @var \Common\Util\ResolveApi $apiResolver */

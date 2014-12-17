@@ -82,6 +82,7 @@ return array(
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
@@ -122,6 +123,7 @@ return array(
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
+            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -255,6 +257,9 @@ return array(
         ]
     ],
     'data_services' => [
+        'abstract_factories' => [
+            'Common\Service\Data\DataServiceAbstractFactory'
+        ],
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',

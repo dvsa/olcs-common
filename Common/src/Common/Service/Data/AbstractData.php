@@ -3,6 +3,7 @@
 namespace Common\Service\Data;
 
 use Common\Exception\BadRequestException;
+use Common\Service\Data\Interfaces\RestClientAware;
 use Common\Util\RestClient;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface;
@@ -12,7 +13,7 @@ use Zend\Stdlib\ArrayObject;
  * Class AbstractData
  * @package Olcs\Service\Data
  */
-abstract class AbstractData implements FactoryInterface, RestClientAwareInterface
+abstract class AbstractData implements FactoryInterface, RestClientAware
 {
     /**
      * @var RestClient
