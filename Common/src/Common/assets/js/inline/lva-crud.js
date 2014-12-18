@@ -23,6 +23,14 @@ OLCS.ready(function() {
 
   var F = OLCS.formHelper;
 
+  function reloadParent() {
+    var scrollTop = $(window).scrollTop();
+    $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
+      F.render(".js-body", inner.body);
+      $(window).scrollTop(scrollTop);
+    }));
+  }
+
   $(document).on("click", ".table__header button, .table__wrapper input[type=submit]", function(e) {
     e.preventDefault();
 
@@ -53,6 +61,10 @@ OLCS.ready(function() {
       };
 
       OLCS.formModal($.extend(data, options));
+
+      form.find(".js-csrf-token").val(
+        $(".modal__content .js-csrf-token").val()
+      );
     }
 
     /**
@@ -80,11 +92,7 @@ OLCS.ready(function() {
         OLCS.modal.hide();
       }
 
-      var scrollTop = $(window).scrollTop();
-      $.get(window.location.href, OLCS.normaliseResponse(function(inner) {
-        F.render(".js-body", inner.body);
-        $(window).scrollTop(scrollTop);
-      }));
+      reloadParent();
     }
 
     // make sure any backend code sniffing button presses isn't disappointed
@@ -102,4 +110,6 @@ OLCS.ready(function() {
     deleteButton.check();
     OLCS.formInit();
   });
+
+  OLCS.eventEmitter.on("close:modal", reloadParent);
 });
