@@ -27,7 +27,9 @@ return array(
     'columns' => array(
         array(
             'title' => $translationPrefix . '.vrm',
-            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm')
+            'name' => 'vrm',
+            'action' => 'edit',
+            'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.weight',
