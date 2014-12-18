@@ -44,7 +44,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
             $form->setData($data);
         }
-        $this->maybeRemoveNotice($form);
 
         if ($request->isPost() && ($this->lva !== 'application' ||
             $this->lva == 'application' && $form->isValid())) {
@@ -121,21 +120,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         $form->getInputFilter()->get('data')->get('hasEnteredReg')
             ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
 
-        return $form;
-    }
-
-    /**
-     * Remove notice if we already have rows in the table
-     * 
-     * @param Zend\Form\Form $form
-     * @return Zend\Form\Form
-     */
-    protected function maybeRemoveNotice($form)
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        if ($form->get('table')->get('rows')->getValue() > 0) {
-            $formHelper->remove($form, 'data->notice');
-        }
         return $form;
     }
 
