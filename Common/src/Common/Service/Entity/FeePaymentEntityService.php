@@ -26,4 +26,5 @@ class FeePaymentEntityService extends AbstractEntityService
     const METHOD_CASH = 'fpm_cash';
     const METHOD_CHEQUE = 'fpm_cheque';
     const METHOD_POSTAL_ORDER = 'fpm_po';
+    const METHOD_WAIVE = 'fpm_waive';
 }
