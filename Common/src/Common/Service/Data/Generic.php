@@ -133,16 +133,16 @@ class Generic extends AbstractData implements
     {
         if (isset($data['id'])) {
             $result = $this->getRestClient()->put($this->buildPath($data['id']), ['data' => json_encode($data)]);
+
+            if ($result === []) {
+                $result['id'] = $data['id'];
+            }
         } else {
             $result = $this->getRestClient()->post('', ['data' => json_encode($data)]);
         }
 
         if ($result === false) {
             throw new BadRequestException('Record could not be saved');
-        }
-
-        if (!isset($result['id'])) {
-            throw new BadRequestException('Saved record contained no id');
         }
 
         $this->setData($result['id'], $result);

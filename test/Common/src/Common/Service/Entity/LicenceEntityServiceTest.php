@@ -670,7 +670,9 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'totAuthSmallVehicles' => 3,
             'totAuthMediumVehicles' => 4,
             'totAuthLargeVehicles' => 5,
-            'licenceType' => ['id' => 6]
+            'licenceType' => ['id' => 6],
+            'niFlag' => 'N',
+            'goodsOrPsv' => ['id' => 'xyz']
         ];
         $expected = [
             'totAuthTrailers' => 1,
@@ -678,7 +680,9 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'totAuthSmallVehicles' => 3,
             'totAuthMediumVehicles' => 4,
             'totAuthLargeVehicles' => 5,
-            'licenceType' => 6
+            'licenceType' => 6,
+            'niFlag' => 'N',
+            'goodsOrPsv' => 'xyz'
         ];
 
         $this->expectOneRestCall('Licence', 'GET', $id)
