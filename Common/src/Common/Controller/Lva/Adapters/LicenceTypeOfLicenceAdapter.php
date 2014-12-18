@@ -59,6 +59,17 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
             $formHelper->disableElement($form, 'form-actions->save');
         }
 
+        $typeOfLicence = $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($id);
+
+        if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV
+            && $typeOfLicence['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+        ) {
+            $formHelper->removeOption(
+                $typeOfLicenceFieldset->get('licence-type'),
+                LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+            );
+        }
+
         return $form;
     }
 

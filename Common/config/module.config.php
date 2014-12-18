@@ -32,6 +32,9 @@ return array(
             ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
+            ),
+            'LvaVariation/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             )
         ),
         'abstract_factories' => array(
@@ -82,15 +85,18 @@ return array(
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
+            'VariationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -122,6 +128,7 @@ return array(
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
+            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -255,6 +262,9 @@ return array(
         ]
     ],
     'data_services' => [
+        'abstract_factories' => [
+            'Common\Service\Data\DataServiceAbstractFactory'
+        ],
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',

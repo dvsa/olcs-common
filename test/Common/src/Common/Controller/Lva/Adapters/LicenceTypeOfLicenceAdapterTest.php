@@ -83,7 +83,8 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
         $id = 4;
         $applicationType = 'internal';
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
         ];
 
         $mockAppEntityService = m::mock();
@@ -217,7 +218,9 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
             ->shouldReceive('lockElement')
             ->with($licenceType, 'licence-type-lock-message')
             ->shouldReceive('disableElement')
-            ->with($form, 'form-actions->save');
+            ->with($form, 'form-actions->save')
+            ->shouldReceive('removeOption')
+            ->with($licenceType, LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED);
 
         $this->sm->setService('Helper\Form', $mockFormHelper);
         $this->sm->setService('Entity\Licence', $mockAppEntityService);

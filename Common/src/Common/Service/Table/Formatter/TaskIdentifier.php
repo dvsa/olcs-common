@@ -30,15 +30,27 @@ class TaskIdentifier implements FormatterInterface
         if ($identifier === 'Unlinked') {
             return 'Unlinked';
         }
-        $viewHelperManager = $sm->get('viewhelpermanager');
-        $urlHelper = $viewHelperManager->get('url');
+
+        $urlHelper = $sm->get('Helper\Url');
         $url = '#';
         switch ($data['linkType']) {
             case 'Licence':
-                $url = $urlHelper->__invoke('lva-licence/overview', array('licence' => $data['linkId']));
+                $url = $urlHelper->fromRoute('lva-licence/overview', array('licence' => $data['linkId']));
                 break;
             case 'Application':
-                $url = $urlHelper->__invoke('lva-application/overview', array('application' => $data['linkId']));
+                $url = $urlHelper->fromRoute('lva-application/overview', array('application' => $data['linkId']));
+                break;
+            case 'Transport Manager':
+                $url = $urlHelper->fromRoute('transport-manager', array('transportManager' => $data['linkId']));
+                break;
+            case 'Case':
+                $url = $urlHelper->fromRoute('case', array('case' => $data['linkId']));
+                break;
+            case 'Bus Registration':
+                $url = $urlHelper->fromRoute(
+                    'licence/bus-details',
+                    array('busRegId' => $data['linkId'], 'licence' => $data['licenceId'])
+                );
                 break;
             default:
                 break;
