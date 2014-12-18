@@ -89,13 +89,22 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
      */
     public function getTypeOfLicenceData($id)
     {
-        $data = $this->get($id, $this->typeOfLicenceBundle);
+        if (!$this->isCached('typeOfLicence', $id)) {
 
-        return array(
-            'version' => $data['version'],
-            'niFlag' => $data['niFlag'],
-            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
-            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
-        );
+            $data = $this->get($id, $this->typeOfLicenceBundle);
+
+            $this->setCache(
+                'typeOfLicence',
+                $id,
+                array(
+                    'version' => $data['version'],
+                    'niFlag' => $data['niFlag'],
+                    'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
+                    'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+                )
+            );
+        }
+
+        return $this->getCache('typeOfLicence', $id);
     }
 }

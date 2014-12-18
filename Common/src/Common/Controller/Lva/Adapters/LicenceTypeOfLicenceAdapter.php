@@ -59,6 +59,17 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
             $formHelper->disableElement($form, 'form-actions->save');
         }
 
+        $typeOfLicence = $this->getServiceLocator()->get('Entity\Licence')->getTypeOfLicenceData($id);
+
+        if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV
+            && $typeOfLicence['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+        ) {
+            $formHelper->removeOption(
+                $typeOfLicenceFieldset->get('licence-type'),
+                LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED
+            );
+        }
+
         return $form;
     }
 
@@ -67,7 +78,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $flashMessenger = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
         if ($this->shouldDisableLicenceType($id, $applicationType)) {
-            $flashMessenger->addInfoMessage('variation-application-text3');
+            $flashMessenger->addCurrentInfoMessage('variation-application-text3');
         } else {
             // If some fields are editable
             $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
@@ -82,7 +93,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
                 )
             );
-            $flashMessenger->addInfoMessage($message);
+            $flashMessenger->addCurrentInfoMessage($message);
         }
     }
 

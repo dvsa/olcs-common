@@ -51,11 +51,25 @@ class BundleManager extends AbstractPluginManager implements AbstractFactoryInte
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if ($this->has('Olcs\Data\Object\Bundle\\' . $requestedName, false, false)) {
+        if (
+            $this->has('Olcs\Data\Object\Bundle\\' . $requestedName, false, false) ||
+            ($this->autoAddInvokableClass && class_exists('Olcs\Data\Object\Bundle\\' . $requestedName))
+        ) {
+            $this->setInvokableClass(
+                'Olcs\Data\Object\Bundle\\' . $requestedName,
+                'Olcs\Data\Object\Bundle\\' . $requestedName
+            );
             return $this->get('Olcs\Data\Object\Bundle\\' . $requestedName);
         }
 
-        if ($this->has('Common\Data\Object\Bundle\\' . $requestedName, false, false)) {
+        if (
+            $this->has('Common\Data\Object\Bundle\\' . $requestedName, false, false) ||
+            ($this->autoAddInvokableClass && class_exists('Common\Data\Object\Bundle\\' . $requestedName))
+        ) {
+            $this->setInvokableClass(
+                'Common\Data\Object\Bundle\\' . $requestedName,
+                'Common\Data\Object\Bundle\\' . $requestedName
+            );
             return $this->get('Common\Data\Object\Bundle\\' . $requestedName);
         }
 

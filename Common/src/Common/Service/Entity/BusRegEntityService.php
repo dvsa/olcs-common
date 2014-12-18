@@ -21,6 +21,28 @@ class BusRegEntityService extends AbstractEntityService
      */
     protected $entity = 'BusReg';
 
+    /**
+     * Task data bundle
+     *
+     * @var array
+     */
+    private $taskDataBundle = array(
+        'children' => array(
+            'licence'
+        )
+    );
+
+    /**
+     * Get data for task processing
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForTasks($id)
+    {
+        return $this->get($id, $this->taskDataBundle);
+    }
+
     public function findByIdentifier($identifier)
     {
         $result = $this->get(['regNo' => $identifier]);

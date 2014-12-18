@@ -414,19 +414,21 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getVariationData($id)
     {
-        $data = $this->get($id, $this->overviewBundle);
+        $data = $this->get($id, $this->typeOfLicenceBundle);
 
         $keys = [
             'totAuthTrailers',
             'totAuthVehicles',
             'totAuthSmallVehicles',
             'totAuthMediumVehicles',
-            'totAuthLargeVehicles'
+            'totAuthLargeVehicles',
+            'niFlag'
         ];
 
         $variationData = array_intersect_key($data, array_flip($keys));
 
         $variationData['licenceType'] = $data['licenceType']['id'];
+        $variationData['goodsOrPsv'] = $data['goodsOrPsv']['id'];
 
         return $variationData;
     }

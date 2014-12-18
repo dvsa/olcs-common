@@ -30,6 +30,11 @@ abstract class AbstractTypeOfLicenceAdapter implements
     protected $confirmationMessage;
     protected $extraConfirmationMessage;
 
+    public function doesChangeRequireConfirmation(array $postData, array $currentData)
+    {
+        return false;
+    }
+
     public function getConfirmationMessage()
     {
         return $this->confirmationMessage;
@@ -74,5 +79,10 @@ abstract class AbstractTypeOfLicenceAdapter implements
     {
         return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
             && !empty($currentData['licenceType']);
+    }
+
+    public function confirmationAction()
+    {
+        return $this->getController()->notFoundAction();
     }
 }

@@ -73,6 +73,24 @@ class FlashMessenger extends ZendFlashMessenger
     }
 
     /**
+     * Render Current Messages
+     *
+     * @param  string $namespace
+     * @param  array  $classes
+     * @return string
+     */
+    public function renderCurrent($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
+    {
+        $content = parent::renderCurrent($namespace, $classes);
+
+        $fmHelper = $this->getServiceLocator()->getServiceLocator()->get('Helper\FlashMessenger');
+
+        $content .= $this->renderMessages($namespace, $fmHelper->getCurrentMessages($namespace), $classes);
+
+        return $content;
+    }
+
+    /**
      * Majority of this is copied from Zend's however I have removed the code to escape html, as we need to display HTML
      *  in our flash messengers, and we shouldn't ever need to escape it as our messages will never contain user entered
      *  info
@@ -106,9 +124,9 @@ class FlashMessenger extends ZendFlashMessenger
             return '';
         }
         // Generate markup
-        $markup  = sprintf($this->getMessageOpenFormat(), ' class="' . implode(' ', $classes) . '"');
+        $markup  = sprintf($this->getMessageOpenFormat(), 'class="' . implode(' ', $classes) . '"');
         $markup .= implode(
-            sprintf($this->getMessageSeparatorString(), ' class="' . implode(' ', $classes) . '"'),
+            sprintf($this->getMessageSeparatorString(), 'class="' . implode(' ', $classes) . '"'),
             $messagesToPrint
         );
         $markup .= $this->getMessageCloseString();
