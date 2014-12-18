@@ -539,8 +539,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
             'isVariation' => true,
             'foo' => 'bar',
-            'bar' => 'foo',
-            'receivedDate' => '2014-01-01'
+            'bar' => 'foo'
         ];
 
         $mockLicenceEntity = m::mock();
