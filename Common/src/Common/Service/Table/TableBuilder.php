@@ -1234,12 +1234,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return;
         }
 
-        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
-            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
-            $type = new $typeClass($this);
-            $content = $type->render($row, $column);
-        }
-
         if (isset($column['formatter'])) {
 
             $return = $this->callFormatter($column, $row);
@@ -1250,6 +1244,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $content = $return;
                 $row['content'] = $content;
             }
+        }
+
+        if (isset($column['type']) && class_exists(__NAMESPACE__ . '\\Type\\' . $column['type'])) {
+            $typeClass = __NAMESPACE__ . '\\Type\\' . $column['type'];
+            $type = new $typeClass($this);
+
+            // allow for the fact a formatter may have already set some content
+            // which the type should respect
+            $formattedContent = isset($row['content']) ? $row['content'] : null;
+            $content = $type->render($row, $column, $formattedContent);
         }
 
         if (isset($column['format'])) {

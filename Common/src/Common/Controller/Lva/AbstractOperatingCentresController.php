@@ -135,10 +135,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->get('Table')
             ->prepareTable('authorisation_in_form', $this->getTableData());
 
-        $column = $table->getColumn('address');
-        $column['type'] = $this->lva;
-        $table->setColumn('address', $column);
-
         $form->get('table')
             ->get('table')
             ->setTable($table);

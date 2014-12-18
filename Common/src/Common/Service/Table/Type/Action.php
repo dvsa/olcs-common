@@ -29,13 +29,15 @@ class Action extends AbstractType
      * @param array $column
      * @return string
      */
-    public function render($data, $column)
+    public function render($data, $column, $formattedContent = null)
     {
         $fieldset = $this->getTable()->getFieldset();
 
         $class = isset($column['class']) ? $column['class'] : '';
 
-        if (isset($column['value_format'])) {
+        if ($formattedContent !== null) {
+            $value = $formattedContent;
+        } else if (isset($column['value_format'])) {
             $value = $this->getTable()->replaceContent($column['value_format'], $data);
         } else {
             $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');

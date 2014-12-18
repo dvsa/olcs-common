@@ -22,9 +22,11 @@ class Selector extends AbstractType
      *
      * @param array $data
      * @param array $column
+     * @param string $formattedContent
+     *
      * @return string
      */
-    public function render($data, $column)
+    public function render($data, $column, $formattedContent = null)
     {
         $fieldset = $this->getTable()->getFieldset();
 
