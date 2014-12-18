@@ -120,4 +120,20 @@ class AbstractTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $this->assertTrue($this->sut->isCurrentDataSet($data));
     }
+
+    public function testDoesChangeRequireConfirmation()
+    {
+        $this->assertFalse($this->sut->doesChangeRequireConfirmation([], []));
+    }
+
+    public function testConfirmationAction()
+    {
+        $controller = m::mock('\Zend\Mvc\Controller\AbstractController');
+        $controller->shouldReceive('notFoundAction')
+            ->andReturn(404);
+
+        $this->sut->setController($controller);
+
+        $this->assertEquals(404, $this->sut->confirmationAction());
+    }
 }

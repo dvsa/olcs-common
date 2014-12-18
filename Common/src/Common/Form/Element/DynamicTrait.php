@@ -2,7 +2,7 @@
 
 namespace Common\Form\Element;
 
-use Common\Service\Data\ListDataInterface;
+use Common\Service\Data\Interfaces\ListData;
 
 trait DynamicTrait
 {
@@ -28,7 +28,7 @@ trait DynamicTrait
     protected $otherOption = false;
 
     /**
-     * @var \Common\Service\Data\ListDataInterface
+     * @var \Common\Service\Data\Interfaces\ListData
      */
     protected $dataService;
 
@@ -117,7 +117,7 @@ trait DynamicTrait
     }
 
     /**
-     * @param \Common\Service\Data\ListDataInterface $dataService
+     * @param \Common\Service\Data\Interfaces\ListData $dataService
      * @return $this
      */
     public function setDataService($dataService)
@@ -127,14 +127,14 @@ trait DynamicTrait
     }
 
     /**
-     * @throws \Exception If service doesn't implement ListDataInterface
-     * @return \Common\Service\Data\ListDataInterface
+     * @throws \Exception If service doesn't implement ListData
+     * @return \Common\Service\Data\Interfaces\ListData
      */
     public function getDataService()
     {
         if (is_null($this->dataService)) {
             $this->dataService = $this->getServiceLocator()->get($this->getServiceName());
-            if (!($this->dataService instanceof ListDataInterface)) {
+            if (!($this->dataService instanceof ListData)) {
                 throw new \Exception(
                     sprintf(
                         'Class %s does not implement \Common\Service\Data\ListDataInterface',

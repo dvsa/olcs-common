@@ -27,6 +27,18 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
      */
     protected $entity;
 
+    protected $cache = [];
+
+    /**
+     * Get the defined entity name
+     *
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
     /**
      * Save the entity
      *
@@ -43,6 +55,8 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         } else {
             $method = 'POST';
         }
+
+        $this->clearCache();
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, $method, $data);
     }
@@ -89,17 +103,9 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
             throw new ConfigurationException('Entity is not defined');
         }
 
-        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', $data);
-    }
+        $this->clearCache();
 
-    /**
-     * Get the defined entity name
-     *
-     * @return string
-     */
-    public function getEntity()
-    {
-        return $this->entity;
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', $data);
     }
 
     /**
@@ -109,6 +115,8 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
      */
     protected function put(array $data)
     {
+        $this->clearCache();
+
         $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
     }
 
@@ -143,5 +151,25 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         $query['limit'] = $limit;
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'GET', $query, $bundle);
+    }
+
+    protected function setCache($reference, $id, $data)
+    {
+        $this->cache[$reference][$id] = $data;
+    }
+
+    protected function getCache($reference, $id)
+    {
+        return $this->cache[$reference][$id];
+    }
+
+    protected function isCached($reference, $id)
+    {
+        return isset($this->cache[$reference][$id]);
+    }
+
+    protected function clearCache()
+    {
+        $this->cache = [];
     }
 }

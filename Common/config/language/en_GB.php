@@ -570,6 +570,7 @@ return array(
     'crown-copyright' => 'Crown Copyright',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-submission' => 'Current submission',
+    'current.option.suffix' => '(current)',
     'currently-with' => 'Currently with',
     'dangerous-goods-hazchem-carriers' => 'Dangerous Goods / Hazchem Carriers',
     'dashboard-table-applications' => 'New applications',
@@ -885,6 +886,8 @@ return array(
     'licence.overview.title' => 'Licence overview',
     'licence.print' => 'Print licence',
     'licence.surrender' => 'Surrender licence',
+    'licence.variation' => 'Create variation',
+    'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
     'licence_type_of_licence_confirmation' => 'In order to change your type of licence you must create a variation
         application, Would you like to proceed?',
     'list-of-convictions' => 'List of convictions',
