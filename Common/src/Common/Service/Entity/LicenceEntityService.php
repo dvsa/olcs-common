@@ -206,6 +206,12 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $organisationBundle = array(
+        'children' => array(
+            'organisation'
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -429,5 +435,12 @@ class LicenceEntityService extends AbstractLvaEntityService
         $variationData['licenceType'] = $data['licenceType']['id'];
 
         return $variationData;
+    }
+
+    public function getOrganisation($licenceId)
+    {
+        $response = $this->get($licenceId, $this->organisationBundle);
+
+        return $response['organisation'];
     }
 }

@@ -146,16 +146,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
-    private $organisationBundle = array(
-        'children' => array(
-            'licence' => array(
-                'children' => array(
-                    'organisation'
-                )
-            )
-        )
-    );
-
     /**
      * Cache the mapping of application ids to licence ids
      *
@@ -504,9 +494,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getOrganisation($applicationId)
     {
-        $response = $this->get($applicationId, $this->organisationBundle);
+        $licenceId = $this->getLicenceIdForApplication($applicationId);
 
-        return $response['licence']['organisation'];
+        return $this->getServiceLocator()->get('Entity\Licence')->getOrganisation($licenceId);
     }
 
     public function delete($id)

@@ -686,4 +686,18 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getVariationData($id));
     }
+
+    public function testGetOrganisation()
+    {
+        $id = 4;
+
+        $response = array(
+            'organisation' => 'foo'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getOrganisation($id));
+    }
 }
