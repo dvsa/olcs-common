@@ -3,11 +3,13 @@
 namespace CommonTest\Controller\Lva;
 
 use \Mockery as m;
+use Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter;
 
 /**
  * Test Abstract Vehicles Goods Controller
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 {
@@ -61,6 +63,12 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
+        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
+            ->with([0])
+            ->shouldReceive('setCrud')
+            ->with(false)
+            ->getMock();
+
         $form = $this->createMockForm('Lva\GoodsVehicles');
 
         $form->shouldReceive('setData')
@@ -70,7 +78,42 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn($form)
             ->shouldReceive('get')
             ->with('table')
-            ->andReturn(m::mock('\Zend\Form\Fieldset'));
+            ->andReturn(
+                m::mock('\Zend\Form\Fieldset')
+                ->shouldReceive('get')
+                ->with('rows')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('getValue')
+                    ->andReturn(0)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->shouldReceive('getInputFilter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('data')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('get')
+                    ->with('hasEnteredReg')
+                    ->andReturn(
+                        m::mock()
+                        ->shouldReceive('getValidatorChain')
+                        ->andReturn(
+                            m::mock()
+                            ->shouldReceive('attach')
+                            ->with($mockValidator)
+                            ->getMock()
+                        )
+                        ->getMock()
+                    )
+                    ->getMock()
+                )
+                ->getMock()
+            );
 
         $this->getMockFormHelper()
             ->shouldReceive('populateFormTable');
@@ -109,7 +152,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
     /**
      * Get index with filters
      * 
-     * @group abstractVehicleGoodsController1
+     * @group abstractVehicleGoodsController
      * @dataProvider filtersForIndexDataProvider
      */
     public function testIndexActionWithFilters($filters, $licenceVehicle, $rows)
@@ -150,6 +193,12 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
+        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
+            ->with([0])
+            ->shouldReceive('setCrud')
+            ->with(false)
+            ->getMock();
+
         $form = $this->createMockForm('Lva\GoodsVehicles');
 
         $form->shouldReceive('setData')
@@ -159,7 +208,42 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn($form)
             ->shouldReceive('get')
             ->with('table')
-            ->andReturn(m::mock('\Zend\Form\Fieldset'));
+            ->andReturn(
+                m::mock('\Zend\Form\Fieldset')
+                ->shouldReceive('get')
+                ->with('rows')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('getValue')
+                    ->andReturn(0)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->shouldReceive('getInputFilter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('data')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('get')
+                    ->with('hasEnteredReg')
+                    ->andReturn(
+                        m::mock()
+                        ->shouldReceive('getValidatorChain')
+                        ->andReturn(
+                            m::mock()
+                            ->shouldReceive('attach')
+                            ->with($mockValidator)
+                            ->getMock()
+                        )
+                        ->getMock()
+                    )
+                    ->getMock()
+                )
+                ->getMock()
+            );
 
         $this->getMockFormHelper()
             ->shouldReceive('populateFormTable');
@@ -314,5 +398,178 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                     []
                 ]
             ];
+    }
+
+    /**
+     * Test index action with post
+     * 
+     * @group abstractVehicleGoodsController1
+     */
+    public function testIndexeActionWithPost()
+    {
+        $formData = ['data' => ['hasEnteredReg' => 'Y', 'version' => 1], 'table' => ['rows' => 1]];
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $filterForm = m::mock()
+                ->shouldReceive('get')
+                ->with('vrm')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setValueOptions')
+                    ->with($vrmOptions)
+                    ->getMock()
+                )
+                ->getMock();
+
+        $this->getMockFormHelper()
+            ->shouldReceive('createForm')
+            ->with('Lva\VehicleFilter')
+            ->andReturn($filterForm);
+
+        $this->request
+            ->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn(
+                $formData
+            )
+            ->getMock();
+
+        $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
+            ->with([1])
+            ->shouldReceive('setCrud')
+            ->with(false)
+            ->getMock();
+
+        $form = $this->createMockForm('Lva\GoodsVehicles');
+
+        $form->shouldReceive('setData')
+            ->with(
+                []
+            )
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('table')
+            ->andReturn(
+                m::mock('\Zend\Form\Fieldset')
+                ->shouldReceive('get')
+                ->with('rows')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('getValue')
+                    ->andReturn(1)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->shouldReceive('getInputFilter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('data')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('get')
+                    ->with('hasEnteredReg')
+                    ->andReturn(
+                        m::mock()
+                        ->shouldReceive('getValidatorChain')
+                        ->andReturn(
+                            m::mock()
+                            ->shouldReceive('attach')
+                            ->with($mockValidator)
+                            ->getMock()
+                        )
+                        ->getMock()
+                    )
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn($formData);
+
+        $this->sut
+            ->shouldReceive('getVehicleGoodsAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('populateForm')
+                ->with($this->request, ['hasEnteredReg' => 'Y', 'version' => 1], $form)
+                ->andReturn($form)
+                ->getMock()
+            )
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getHeaderData')
+                ->with(1)
+                ->andReturn(['hasEnteredReg' => 'Y', 'version' => 1])
+                ->shouldReceive('save')
+                ->with(['hasEnteredReg' => 'Y', 'version' => 1, 'id' => 1])
+                ->getMock()
+            )
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('vrm', 'All')
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('specified', 'A')
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('includeRemoved', 0)
+                ->andReturn('A')
+                ->shouldReceive('fromQuery')
+                ->with('disc', 'A')
+                ->andReturn('A')
+                ->getMock()
+            )
+            ->shouldReceive('completeSection')
+            ->with('vehicles');
+
+        $this->getMockFormHelper()
+            ->shouldReceive('populateFormTable');
+
+        $this->mockService('Table', 'prepareTable')
+            ->with('lva-vehicles', [])
+            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn(123)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(321)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getTotalVehicleAuthorisation')
+                ->with(321)
+                ->getMock()
+            );
+
+        $this->mockEntity('Licence', 'getVehiclesData')
+            ->with(123)
+            ->andReturn([]);
+
+        $this->mockEntity('Licence', 'getVehiclesTotal')
+            ->with(123)
+            ->andReturn(0);
+
+        $this->sut->indexAction();
+    }
+
+    /**
+     * Test set / get vehicle goods adapter
+     * 
+     * @group abstractVehicleGoodsController1
+     */
+    public function testSetVehicleGoodsAdapter()
+    {
+        $adapter = new ApplicationVehicleGoodsAdapter();
+        $this->sut->setVehicleGoodsAdapter($adapter);
+        $this->assertSame($this->sut->getVehicleGoodsAdapter(), $adapter);
     }
 }
