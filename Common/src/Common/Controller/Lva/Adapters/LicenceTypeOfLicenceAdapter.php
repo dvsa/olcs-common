@@ -67,7 +67,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $flashMessenger = $this->getServiceLocator()->get('Helper\FlashMessenger');
 
         if ($this->shouldDisableLicenceType($id, $applicationType)) {
-            $flashMessenger->addInfoMessage('variation-application-text3');
+            $flashMessenger->addCurrentInfoMessage('variation-application-text3');
         } else {
             // If some fields are editable
             $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
@@ -82,7 +82,7 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
                 )
             );
-            $flashMessenger->addInfoMessage($message);
+            $flashMessenger->addCurrentInfoMessage($message);
         }
     }
 
