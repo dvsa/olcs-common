@@ -241,7 +241,7 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
         ];
 
         $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('addInfoMessage')
+        $mockFlashMessenger->shouldReceive('addCurrentInfoMessage')
             ->with('variation-application-text3');
 
         $mockAppEntityService = m::mock();
@@ -268,7 +268,7 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
         ];
 
         $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('addInfoMessage')
+        $mockFlashMessenger->shouldReceive('addCurrentInfoMessage')
             ->with('MESSAGE');
 
         $mockAppEntityService = m::mock();
