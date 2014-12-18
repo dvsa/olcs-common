@@ -571,6 +571,7 @@ return array(
     'crown-copyright' => 'Crown Copyright',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-submission' => 'Current submission',
+    'current.option.suffix' => '(current)',
     'currently-with' => 'Currently with',
     'dangerous-goods-hazchem-carriers' => 'Dangerous Goods / Hazchem Carriers',
     'dashboard-table-applications' => 'New applications',
