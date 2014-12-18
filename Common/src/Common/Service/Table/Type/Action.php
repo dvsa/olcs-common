@@ -37,7 +37,7 @@ class Action extends AbstractType
 
         if ($formattedContent !== null) {
             $value = $formattedContent;
-        } else if (isset($column['value_format'])) {
+        } elseif (isset($column['value_format'])) {
             $value = $this->getTable()->replaceContent($column['value_format'], $data);
         } else {
             $value = (isset($column['name']) && isset($data[$column['name']]) ? $data[$column['name']] : '');
