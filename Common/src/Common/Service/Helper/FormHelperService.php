@@ -55,6 +55,9 @@ class FormHelperService extends AbstractHelperService
             $config = array(
                 'type' => 'Zend\Form\Element\Csrf',
                 'name' => 'security',
+                'attributes' => array(
+                    'class' => 'js-csrf-token',
+                ),
                 'options' => array(
                     'csrf_options' => array(
                         'messageTemplates' => array(
