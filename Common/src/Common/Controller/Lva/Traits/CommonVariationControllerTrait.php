@@ -27,4 +27,32 @@ trait CommonVariationControllerTrait
 
         return $this->checkForRedirect($applicationId);
     }
+
+    protected function postSave($section)
+    {
+
+    }
+
+    /**
+     * Redirect to the next section
+     *
+     * @param string $currentSection
+     */
+    protected function goToNextSection($currentSection)
+    {
+        $sections = $this->getAccessibleSections();
+
+        $index = array_search($currentSection, $sections);
+
+        // If there is no next section, or the next section is disabled
+        if (!isset($sections[$index + 1])) {
+            return $this->goToOverview($this->getApplicationId());
+        } else {
+            return $this->redirect()
+                ->toRouteAjax(
+                    'lva-variation/' . $sections[$index + 1],
+                    array($this->getIdentifierIndex() => $this->getApplicationId())
+                );
+        }
+    }
 }
