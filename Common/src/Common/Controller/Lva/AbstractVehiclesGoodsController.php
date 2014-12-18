@@ -8,17 +8,35 @@
 namespace Common\Controller\Lva;
 
 use Common\Form\Elements\Validators\NewVrm;
+use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
+use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterAwareInterface;
 
 /**
  * Goods Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
+abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements
+    VehicleGoodsAdapterAwareInterface
 {
     use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
+
+    protected $vehicleGoodsAdapter;
+
+    /**
+     * @return VehicleGoodsAdapterInterface
+     */
+    public function getVehicleGoodsAdapter()
+    {
+        return $this->vehicleGoodsAdapter;
+    }
+
+    public function setVehicleGoodsAdapter(VehicleGoodsAdapterInterface $adapter)
+    {
+        $this->vehicleGoodsAdapter = $adapter;
+    }
 
     /**
      * Index action
@@ -29,27 +47,27 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
+        $adapter = $this->getVehicleGoodsAdapter();
+
         $filterForm = $this->getFilterForm();
 
         $form = $this->alterForm($this->getForm());
 
-        if ($this->lva == 'application') {
-            $entityData = $this->getLvaEntityService()
-                ->getHeaderData($this->getIdentifier());
-
-            if ($request->isPost()) {
-                $data = (array)$request->getPost();
-            } else {
-                $data = $this->formatDataForForm($entityData);
-            }
-            $form->setData($data);
+        if ($adapter !== null) {
+            $form = $adapter->populateForm(
+                $request,
+                $this->getLvaEntityService()->getHeaderData($this->getIdentifier()),
+                $form
+            );
         }
 
-        if ($request->isPost() && ($this->lva !== 'application' ||
-            $this->lva == 'application' && $form->isValid())) {
-            if ($this->lva == 'application') {
+        if ($request->isPost() && ($adapter === null ||
+            $adapter !== null && $form->isValid())) {
+
+            if ($adapter !== null) {
                 $this->save($form->getData());
             }
+
             $this->postSave('vehicles');
 
             $data = (array)$request->getPost();
@@ -121,20 +139,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
 
         return $form;
-    }
-
-    /**
-     * Format data for the main form; not a lot to it
-     */
-    protected function formatDataForForm($data)
-    {
-        return array(
-            'data' => array(
-                'version'       => $data['version'],
-                'hasEnteredReg' => isset($data['hasEnteredReg']) && ($data['hasEnteredReg'] == 'Y' ||
-                    $data['hasEnteredReg'] == 'N') ? $data['hasEnteredReg'] : 'Y'
-            )
-        );
     }
 
     /**

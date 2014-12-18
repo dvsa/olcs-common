@@ -1,88 +1,57 @@
 <?php
 
 /**
- * Abstract Type Of Licence Adapter
+ * Application Vehicle Goods Adapter
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Adapters;
 
-use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
-use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
-use Common\Controller\Lva\Traits\ControllerAwareTrait;
+use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
- * Abstract Type Of Licence Adapter
+ * Application Vehicle Goods Adapter
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.pehkov@valtech.co.uk>
  */
-abstract class AbstractTypeOfLicenceAdapter implements
-    TypeOfLicenceAdapterInterface,
-    ServiceLocatorAwareInterface,
-    ControllerAwareInterface
+class ApplicationVehicleGoodsAdapter implements
+    VehicleGoodsAdapterInterface,
+    ServiceLocatorAwareInterface
 {
-    use ServiceLocatorAwareTrait,
-        ControllerAwareTrait;
+    use ServiceLocatorAwareTrait;
 
-    protected $queryParams = [];
-    protected $confirmationMessage;
-    protected $extraConfirmationMessage;
-
-    public function doesChangeRequireConfirmation(array $postData, array $currentData)
+    /**
+     * Format data for the main form; not a lot to it
+     */
+    protected function formatDataForForm($data)
     {
-        return false;
+        return array(
+            'data' => array(
+                'version'       => $data['version'],
+                'hasEnteredReg' => isset($data['hasEnteredReg']) && ($data['hasEnteredReg'] == 'Y' ||
+                    $data['hasEnteredReg'] == 'N') ? $data['hasEnteredReg'] : 'Y'
+            )
+        );
     }
 
-    public function getConfirmationMessage()
+    /**
+     * Populate form with data
+     * 
+     * @param Request $request
+     * @param array $entityData
+     * @param Zend\Form\Form
+     * @return Zend\Form\Form
+     */
+    public function populateForm($request, $entityData, $form)
     {
-        return $this->confirmationMessage;
-    }
-
-    public function getExtraConfirmationMessage()
-    {
-        return $this->extraConfirmationMessage;
-    }
-
-    public function getQueryParams()
-    {
-        return ['query' => $this->queryParams];
-    }
-
-    public function getRouteParams()
-    {
-        return ['action' => 'confirmation'];
-    }
-
-    public function alterForm(\Zend\Form\Form $form, $id = null, $applicationType = null)
-    {
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } else {
+            $data = $this->formatDataForForm($entityData);
+        }
+        $form->setData($data);
         return $form;
-    }
-
-    public function setMessages($id = null, $applicationType = null)
-    {
-
-    }
-
-    public function processChange(array $postData, array $currentData)
-    {
-        return false;
-    }
-
-    public function processFirstSave($applicationId)
-    {
-
-    }
-
-    public function isCurrentDataSet($currentData)
-    {
-        return !empty($currentData['niFlag']) && !empty($currentData['goodsOrPsv'])
-            && !empty($currentData['licenceType']);
-    }
-
-    public function confirmationAction()
-    {
-        return $this->getController()->notFoundAction();
     }
 }

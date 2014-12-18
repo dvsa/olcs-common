@@ -60,9 +60,19 @@ class OneRowInTablesRequiredValidator extends AbstractValidator
      *
      * @param string $label
      */
-    protected function setLabel($label)
+    public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * Get the label variable
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**

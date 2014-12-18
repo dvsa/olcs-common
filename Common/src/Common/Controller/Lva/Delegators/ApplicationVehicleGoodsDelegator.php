@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Abstract Type Of Licence Delegator
+ * Application Vehicle Goods Delegator
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Delegators;
 
@@ -12,14 +12,12 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
 
 /**
- * Abstract Type Of Licence Delegator
+ * Application Vehicle Goods Delegator
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-abstract class AbstractTypeOfLicenceDelegator implements DelegatorFactoryInterface
+class ApplicationVehicleGoodsDelegator implements DelegatorFactoryInterface
 {
-    protected $adapter;
-
     /**
      * A factory that creates delegates of a given service
      *
@@ -34,13 +32,9 @@ abstract class AbstractTypeOfLicenceDelegator implements DelegatorFactoryInterfa
     {
         $controller = $callback();
 
-        $adapter = $serviceLocator->getServiceLocator()->get($this->adapter);
+        $adapter = $serviceLocator->getServiceLocator()->get('ApplicationVehicleGoodsAdapter');
 
-        if ($adapter instanceof ControllerAwareInterface) {
-            $adapter->setController($controller);
-        }
-
-        $controller->setTypeOfLicenceAdapter($adapter);
+        $controller->setVehicleGoodsAdapter($adapter);
 
         return $controller;
     }

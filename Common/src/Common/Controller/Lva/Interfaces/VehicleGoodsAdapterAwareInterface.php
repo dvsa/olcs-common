@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Type Of Licence Adapter Aware Interface
+ * Vehicle Goods Adapter Aware Interface
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Interfaces;
 
 /**
- * Type Of Licence Adapter Aware Interface
+ * Vehicle Goods Adapter Aware Interface
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-interface TypeOfLicenceAdapterAwareInterface
+interface VehicleGoodsAdapterAwareInterface
 {
     /**
      * @return TypeOfLicenceAdapterInterface
      */
-    public function getTypeOfLicenceAdapter();
+    public function getVehicleGoodsAdapter();
 
-    public function setTypeOfLicenceAdapter(TypeOfLicenceAdapterInterface $adapter);
+    public function setVehicleGoodsAdapter(VehicleGoodsAdapterInterface $adapter);
 }
