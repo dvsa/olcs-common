@@ -83,6 +83,9 @@ class FormHelperServiceTest extends MockeryTestCase
                             ),
                             'timeout' => 600
                         )
+                    ),
+                    'attributes' => array(
+                        'class' => 'js-csrf-token'
                     )
                 )
             )
@@ -90,7 +93,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(
                 array(
                     'type' => '\Zend\Form\Element\Button',
-                    'name' => 'form-actions[submit]',
+                    'name' => 'form-actions[continue]',
                     'options' => array(
                         'label' => 'Continue'
                     ),
