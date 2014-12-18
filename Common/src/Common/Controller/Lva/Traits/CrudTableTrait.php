@@ -127,7 +127,9 @@ trait CrudTableTrait
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericDeleteConfirmation', $request);
 
-        return $this->render('delete', $form);
+        $params = ['sectionText' => 'delete.confirmation.text'];
+
+        return $this->render('delete', $form, $params);
     }
 
     /**
