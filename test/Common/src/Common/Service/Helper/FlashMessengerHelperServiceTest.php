@@ -111,4 +111,19 @@ class FlashMessengerHelperServiceTest extends MockeryTestCase
 
         $this->assertSame($this->mockFlashMessenger, $this->sut->addInfoMessage($message));
     }
+
+    public function testCurrentMessages()
+    {
+        $this->sut->addCurrentInfoMessage('info message');
+        $this->sut->addCurrentInfoMessage('info message 2');
+        $this->sut->addCurrentErrorMessage('error message');
+        $this->sut->addCurrentWarningMessage('warning message');
+        $this->sut->addCurrentSuccessMessage('success message');
+        $this->sut->addCurrentMessage('success', 'success message 2');
+
+        $this->assertEquals(['info message', 'info message 2'], $this->sut->getCurrentMessages('info'));
+        $this->assertEquals(['success message', 'success message 2'], $this->sut->getCurrentMessages('success'));
+        $this->assertEquals(['error message'], $this->sut->getCurrentMessages('error'));
+        $this->assertEquals(['warning message'], $this->sut->getCurrentMessages('warning'));
+    }
 }
