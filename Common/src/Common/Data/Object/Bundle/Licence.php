@@ -3,7 +3,7 @@
 namespace Common\Data\Object\Bundle;
 
 use Common\Data\Object\Bundle;
-use Zend\Di\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class Licence
@@ -36,9 +36,9 @@ class Licence extends Bundle
 
         $this->addChild('cases', $cases)
              ->addChild('status')
-             ->addChild('goodsOrPSv')
+             ->addChild('goodsOrPsv')
              ->addChild('licenceType')
-             ->addChild('trafficeArea')
+             ->addChild('trafficArea')
              ->addChild('organisation', $organisation);
     }
 }

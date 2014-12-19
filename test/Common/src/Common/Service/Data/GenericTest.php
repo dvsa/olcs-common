@@ -63,7 +63,7 @@ class GenericTest extends TestCase
     public function testSaveExisting()
     {
         $mockClient = m::mock('Common\Util\RestClient');
-        $mockClient->shouldReceive('put')->once()->with('/78', m::type('array'))->andReturn(['id' => 78]);
+        $mockClient->shouldReceive('put')->once()->with('/78', m::type('array'))->andReturn([]);
         $sut = new Generic();
         $sut->setRestClient($mockClient);
 
@@ -95,8 +95,7 @@ class GenericTest extends TestCase
     public function saveExceptionsProvider()
     {
         return [
-            [false, new \Common\Exception\BadRequestException('Record could not be saved')],
-            [[], new \Common\Exception\BadRequestException('Saved record contained no id')],
+            [false, new \Common\Exception\BadRequestException('Record could not be saved')]
         ];
     }
 

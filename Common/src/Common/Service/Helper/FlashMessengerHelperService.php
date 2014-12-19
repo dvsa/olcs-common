@@ -14,6 +14,44 @@ namespace Common\Service\Helper;
  */
 class FlashMessengerHelperService extends AbstractHelperService
 {
+    protected $currentMessages = [
+        'default' => [],
+        'success' => [],
+        'error' => [],
+        'warning' => [],
+        'info' => []
+    ];
+
+    public function addCurrentMessage($namespace, $message)
+    {
+        $this->currentMessages[$namespace][] = $message;
+    }
+
+    public function getCurrentMessages($namespace)
+    {
+        return $this->currentMessages[$namespace];
+    }
+
+    public function addCurrentSuccessMessage($message)
+    {
+        $this->addCurrentMessage('success', $message);
+    }
+
+    public function addCurrentErrorMessage($message)
+    {
+        $this->addCurrentMessage('error', $message);
+    }
+
+    public function addCurrentWarningMessage($message)
+    {
+        $this->addCurrentMessage('warning', $message);
+    }
+
+    public function addCurrentInfoMessage($message)
+    {
+        $this->addCurrentMessage('info', $message);
+    }
+
     /**
      * Add a success message
      *

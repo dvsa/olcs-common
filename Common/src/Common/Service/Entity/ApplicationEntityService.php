@@ -146,16 +146,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
-    private $organisationBundle = array(
-        'children' => array(
-            'licence' => array(
-                'children' => array(
-                    'organisation'
-                )
-            )
-        )
-    );
-
     /**
      * Cache the mapping of application ids to licence ids
      *
@@ -308,8 +298,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     public function createVariation($licenceId, $applicationData = array())
     {
-        $dateHelper = $this->getServiceLocator()->get('Helper\Date');
-
         $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getVariationData($licenceId);
 
         $applicationData = array_merge(
@@ -318,8 +306,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             array(
                 'licence' => $licenceId,
                 'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
-                'isVariation' => true,
-                'receivedDate' => $dateHelper->getDate()
+                'isVariation' => true
             )
         );
 
@@ -507,9 +494,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getOrganisation($applicationId)
     {
-        $response = $this->get($applicationId, $this->organisationBundle);
+        $licenceId = $this->getLicenceIdForApplication($applicationId);
 
-        return $response['licence']['organisation'];
+        return $this->getServiceLocator()->get('Entity\Licence')->getOrganisation($licenceId);
     }
 
     public function delete($id)

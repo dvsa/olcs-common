@@ -670,7 +670,9 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'totAuthSmallVehicles' => 3,
             'totAuthMediumVehicles' => 4,
             'totAuthLargeVehicles' => 5,
-            'licenceType' => ['id' => 6]
+            'licenceType' => ['id' => 6],
+            'niFlag' => 'N',
+            'goodsOrPsv' => ['id' => 'xyz']
         ];
         $expected = [
             'totAuthTrailers' => 1,
@@ -678,12 +680,28 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             'totAuthSmallVehicles' => 3,
             'totAuthMediumVehicles' => 4,
             'totAuthLargeVehicles' => 5,
-            'licenceType' => 6
+            'licenceType' => 6,
+            'niFlag' => 'N',
+            'goodsOrPsv' => 'xyz'
         ];
 
         $this->expectOneRestCall('Licence', 'GET', $id)
             ->will($this->returnValue($stubbedData));
 
         $this->assertEquals($expected, $this->sut->getVariationData($id));
+    }
+
+    public function testGetOrganisation()
+    {
+        $id = 4;
+
+        $response = array(
+            'organisation' => 'foo'
+        );
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('foo', $this->sut->getOrganisation($id));
     }
 }
