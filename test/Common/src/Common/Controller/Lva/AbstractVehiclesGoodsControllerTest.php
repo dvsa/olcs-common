@@ -572,7 +572,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $adapter = new ApplicationVehicleGoodsAdapter();
         $this->sut->setVehicleGoodsAdapter($adapter);
         $this->assertSame($this->sut->getVehicleGoodsAdapter(), $adapter);
-    }    
+    }
 
     public function testBasicAddAction()
     {
