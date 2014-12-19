@@ -315,4 +315,54 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ]
             ];
     }
+
+    public function testBasicAddAction()
+    {
+        $form = $this->createMockForm('Lva\GoodsVehiclesVehicle');
+
+        $specifiedDate = m::mock();
+        $removalDate = m::mock();
+
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('discNo')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setAttribute')
+                    ->with('disabled', 'disabled')
+                    ->getMock()
+                )
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn($specifiedDate)
+                ->shouldReceive('get')
+                ->with('removalDate')
+                ->andReturn($removalDate)
+                ->shouldReceive('has')
+                ->with('receivedDate')
+                ->andReturn(false)
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('disableDateElement')
+            ->with($specifiedDate)
+            ->shouldReceive('disableDateElement')
+            ->with($removalDate);
+
+        $this->mockRender();
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(50);
+
+        $this->sut->addAction();
+
+        $this->assertEquals('add_vehicles', $this->view);
+    }
 }

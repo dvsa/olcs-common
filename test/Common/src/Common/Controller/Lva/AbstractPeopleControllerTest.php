@@ -228,4 +228,32 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 
         $this->sut->indexAction();
     }
+
+    public function testBasicAddAction()
+    {
+        $form = $this->createMockForm('Lva\Person');
+
+        $form->shouldReceive('setData')
+            ->with([]);
+
+        $this->mockOrganisationId(12);
+
+        $this->mockRender();
+
+        $this->mockEntity('Organisation', 'getType')
+            ->with(12)
+            ->andReturn(
+                [
+                    'type' => [
+                        'id' => Org::ORG_TYPE_REGISTERED_COMPANY
+                    ]
+                ]
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('remove')
+            ->with($form, 'data->position');
+
+        $this->sut->addAction();
+    }
 }
