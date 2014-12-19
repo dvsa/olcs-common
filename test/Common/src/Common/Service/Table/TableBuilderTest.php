@@ -1875,6 +1875,42 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test renderBodyColumn With Formatter And Action Type
+     */
+    public function testRenderBodyColumnWithFormatterAndActionType()
+    {
+        $row = array(
+            'id' => 1,
+            'date' => date('Y-m-d')
+        );
+
+        $column = array(
+            'type' => 'Action',
+            'class' => '',
+            'action' => 'edit',
+            'formatter' => 'Date',
+            'name' => 'date'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->once())
+            ->method('replaceContent')
+            ->with(
+                '{{[elements/td]}}',
+                array('content' => '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '" />')
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper'));
+
+        $table->expects($this->any())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->renderBodyColumn($row, $column);
+    }
+
+    /**
      * Test renderBodyColumn With Invalid Formatter
      */
     public function testRenderBodyColumnWithInvalidFormatter()

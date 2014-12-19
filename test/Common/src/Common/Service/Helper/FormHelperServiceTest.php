@@ -991,6 +991,29 @@ class FormHelperServiceTest extends MockeryTestCase
         $helper->setFormActionFromRequest($form, $request);
     }
 
+    public function testSetFormActionFromRequestWithNoQuery()
+    {
+        $helper = new FormHelperService();
+
+        $form = m::mock()
+            ->shouldReceive('hasAttribute')
+            ->with('action')
+            ->andReturn(false)
+            ->shouldReceive('setAttribute')
+            ->with('action', 'URI ')
+            ->getMock();
+
+        $request = m::mock();
+
+        $request->shouldReceive('getUri->getPath')
+            ->andReturn('URI');
+
+        $request->shouldReceive('getUri->getQuery')
+            ->andReturn('');
+
+        $helper->setFormActionFromRequest($form, $request);
+    }
+
     public function testRemoveOptionWithoutOption()
     {
         $helper = new FormHelperService();
@@ -1075,5 +1098,26 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(['foo' => 'bar', 'bar' => 'baz (current)']);
 
         $helper->setCurrentOption($element, $index);
+    }
+
+    public function testCreateFormWithRequest()
+    {
+        // since the method we're testing just composes two other public ones, making
+        // a partial mock is fine
+        $helper = m::mock('Common\Service\Helper\FormHelperService')->makePartial();
+
+        $form = m::mock();
+
+        $helper->shouldReceive('createForm')
+            ->with('MyForm')
+            ->andReturn($form)
+            ->shouldReceive('setFormActionFromRequest')
+            ->with($form, 'request');
+
+
+        $this->assertEquals(
+            $form,
+            $helper->createFormWithRequest('MyForm', 'request')
+        );
     }
 }
