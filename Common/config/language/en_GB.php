@@ -1493,5 +1493,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );

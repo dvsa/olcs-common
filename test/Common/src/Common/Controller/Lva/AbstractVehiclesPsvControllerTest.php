@@ -73,4 +73,70 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('vehicles_psv', $this->view);
     }
+
+    public function testBasicSmallAddAction()
+    {
+        $form = $this->createMockForm('Lva\PsvVehiclesVehicle');
+
+        $specifiedDate = m::mock();
+        $removalDate = m::mock();
+
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('discNo')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setAttribute')
+                    ->with('disabled', 'disabled')
+                    ->getMock()
+                )
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn($specifiedDate)
+                ->shouldReceive('get')
+                ->with('removalDate')
+                ->andReturn($removalDate)
+                ->shouldReceive('has')
+                ->with('receivedDate')
+                ->andReturn(false)
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('disableDateElement')
+            ->with($specifiedDate)
+            ->shouldReceive('disableDateElement')
+            ->with($removalDate);
+
+        $this->shouldRemoveElements(
+            $form,
+            [
+                'data->isNovelty',
+                'data->makeModel',
+                'licence-vehicle->discNo'
+            ]
+        );
+
+        $this->mockRender();
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(50)
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('small-add');
+
+        $this->mockEntity('LicenceVehicle', 'getVehiclePsv')
+            ->with(50)
+            ->andReturn([]);
+
+        $this->sut->smallAddAction();
+
+        $this->assertEquals('add_vehicle', $this->view);
+    }
 }

@@ -47,7 +47,9 @@ abstract class AbstractType
      *
      * @param array $data
      * @param array $column
+     * @param string $formattedContent
+     *
      * @return string
      */
-    abstract public function render($data, $column);
+    abstract public function render($data, $column, $formattedContent = null);
 }
