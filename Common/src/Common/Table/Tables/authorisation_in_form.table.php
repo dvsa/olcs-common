@@ -18,16 +18,9 @@ return array(
     'columns' => array(
         array(
             'title' => 'application_operating-centres_authorisation.table.address',
-            'formatter' => function ($data, $column) {
-
-                $column['formatter'] = 'Address';
-
-                return '<a href="' . $this->generateUrl(
-                    array('action' => 'edit', 'child_id' => $data['id']),
-                    'lva-' . $column['type'] . '/operating_centres'
-                ) . '">' . $this->callFormatter($column, $data) . '</a>';
-            },
-            'name' => 'address'
+            'type' => 'Action',
+            'action' => 'edit',
+            'formatter' => 'Address',
         ),
         array(
             'title' => 'application_operating-centres_authorisation.table.vehicles',

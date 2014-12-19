@@ -1,22 +1,11 @@
-/**
- * @NOTE This could potentially be DRYed up, as this is going to be fairly common behaviour throughout LVA
- */
 OLCS.ready(function() {
   "use strict";
-
-  OLCS.conditionalButton({
-    container: 'form [data-group*="table"]',
-    label: 'Edit',
-    predicate: function (length, callback) {
-      callback(length != 1);
-    }
-  });
-
-  OLCS.conditionalButton({
-    container: 'form [data-group*="table"]',
-    label: 'Delete',
-    predicate: function (length, callback) {
-      callback(length < 1);
-    }
-  });
+  // @TODO: there is a later story to modalise LVA behaviour
+  // internally. For now, the easiest way to suppress it
+  // is to short circuit based on the app class. Not pretty,
+  // but will be removed early 2015
+  if (document.body.className.search("selfserve") === -1) {
+    return;
+  }
+  OLCS.crudTableHandler();
 });

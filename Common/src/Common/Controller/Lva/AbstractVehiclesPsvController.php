@@ -87,6 +87,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             );
         }
 
+        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud']);
+
         if ($request->isPost() && $form->isValid()) {
 
             $this->save($form->getData());
@@ -249,7 +251,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $form = $this->getServiceLocator()
             ->get('Helper\Form')
-            ->createForm('Lva\PsvVehiclesVehicle');
+            ->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
 
         $form = $this->alterVehicleForm($form, $mode)
             ->setData($data);

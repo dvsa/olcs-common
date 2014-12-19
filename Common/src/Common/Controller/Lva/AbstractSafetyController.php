@@ -275,7 +275,9 @@ abstract class AbstractSafetyController extends AbstractController
      */
     protected function getSafetyProviderForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\SafetyProviders');
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('Lva\SafetyProviders', $this->getRequest());
     }
 
     /**

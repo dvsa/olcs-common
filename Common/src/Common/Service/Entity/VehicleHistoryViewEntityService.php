@@ -23,7 +23,7 @@ class VehicleHistoryViewEntityService extends AbstractLvaEntityService
 
     public function getDataForVrm($vrm)
     {
-        return $this->get(
+        return $this->getAll(
             array(
                 'vrm' => $vrm,
                 'sort' => 'specifiedDate',

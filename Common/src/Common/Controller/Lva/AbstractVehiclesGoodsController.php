@@ -209,7 +209,9 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function getVehicleForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\GoodsVehiclesVehicle');
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('Lva\GoodsVehiclesVehicle', $this->getRequest());
     }
 
     protected function getForm()

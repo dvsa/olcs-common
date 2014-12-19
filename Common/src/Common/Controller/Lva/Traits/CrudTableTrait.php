@@ -93,13 +93,16 @@ trait CrudTableTrait
         if ($this->isButtonPressed('addAnother')) {
             $action = $prefix !== null ? $prefix . '-' . 'add' : 'add';
             $routeParams['action'] = $action;
+            $method = 'toRoute';
+        } else {
+            $method = 'toRouteAjax';
         }
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage(
             'section.' . $this->params('action') . '.' . $this->section
         );
 
-        return $this->redirect()->toRoute(null, $routeParams);
+        return $this->redirect()->$method(null, $routeParams);
     }
 
     /**
@@ -115,16 +118,18 @@ trait CrudTableTrait
             $this->delete();
             $this->postSave($this->section);
 
-            return $this->redirect()->toRoute(
+            return $this->redirect()->toRouteAjax(
                 null,
                 array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('GenericDeleteConfirmation');
+            ->createFormWithRequest('GenericDeleteConfirmation', $request);
 
-        return $this->render('delete', $form);
+        $params = ['sectionText' => 'delete.confirmation.text'];
+
+        return $this->render('delete', $form, $params);
     }
 
     /**
