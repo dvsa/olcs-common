@@ -51,7 +51,7 @@ class OneRowInTablesRequiredValidator extends AbstractValidator
     /**
      * Crud action flag
      *
-     * @var string
+     * @var bool
      */
     protected $crud = false;
 
@@ -78,7 +78,7 @@ class OneRowInTablesRequiredValidator extends AbstractValidator
     /**
      * Set the rows
      *
-     * @param array $rowx
+     * @param array $rows
      */
     public function setRows($rows = [])
     {
@@ -88,7 +88,7 @@ class OneRowInTablesRequiredValidator extends AbstractValidator
     /**
      * Get the rows
      *
-     * @param array $rowx
+     * @return array
      */
     public function getRows()
     {
