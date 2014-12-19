@@ -423,8 +423,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration No.',
-    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
-        vehicles?',
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Are you submitting vehicle details?',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
@@ -1493,5 +1492,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );

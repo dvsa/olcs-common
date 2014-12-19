@@ -48,7 +48,7 @@ class Form extends \Zend\Form\View\Helper\Form
                 $fieldsets[] = $this->getView()->addTags(
                     $this->getView()->formCollection($element)
                 );
-            } elseif ($element->getName() == 'form-actions[submit]') {
+            } elseif ($element->getName() == 'form-actions[continue]') {
                 $hiddenSubmitElement = $rowHelper($element);
             } else {
                 $elements[] = $rowHelper($element);

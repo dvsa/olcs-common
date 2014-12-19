@@ -425,8 +425,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'W Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'W Vehicle registration No.',
-    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Would you like to enter the registration numbers of
-        your vehicles?',
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'W Are you submitting vehicle details?',
     'application_vehicle-safety_vehicle-reprint' => 'W Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'W Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'W Gross plated weight (Kg)',

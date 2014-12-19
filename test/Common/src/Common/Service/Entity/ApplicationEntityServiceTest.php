@@ -439,15 +439,23 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetOrganisation()
     {
         $id = 4;
+        $licenceId = 6;
+
+        $mockLicenceEntity = m::mock();
+        $mockLicenceEntity->shouldReceive('getOrganisation')
+            ->with($licenceId)
+            ->andReturn('foo');
 
         $response = array(
             'licence' => array(
-                'organisation' => 'foo'
+                'id' => 6
             )
         );
 
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue($response));
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
         $this->assertEquals('foo', $this->sut->getOrganisation($id));
     }

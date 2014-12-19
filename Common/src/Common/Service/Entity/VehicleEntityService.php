@@ -50,7 +50,11 @@ class VehicleEntityService extends AbstractEntityService
 
         foreach ($results['Results'] as $result) {
 
-            $return = array_merge($return, $result['licenceVehicles']);
+            foreach ($result['licenceVehicles'] as $licenceVehicle) {
+                if (isset($licenceVehicle['removalDate']) && !empty($licenceVehicle['removalDate'])) {
+                    $return[] = $licenceVehicle;
+                }
+            }
         }
 
         return $return;

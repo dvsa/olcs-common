@@ -33,7 +33,8 @@ class VehicleHistoryViewEntityServiceTest extends AbstractEntityServiceTestCase
         $data = array(
             'vrm' => $vrm,
             'sort' => 'specifiedDate',
-            'order' => 'DESC'
+            'order' => 'DESC',
+            'limit' => 'all'
         );
 
         $this->expectOneRestCall('VehicleHistoryView', 'GET', $data)

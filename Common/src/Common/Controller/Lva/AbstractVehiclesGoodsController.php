@@ -8,17 +8,35 @@
 namespace Common\Controller\Lva;
 
 use Common\Form\Elements\Validators\NewVrm;
+use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
+use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterAwareInterface;
 
 /**
  * Goods Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
+abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements
+    VehicleGoodsAdapterAwareInterface
 {
     use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
+
+    protected $vehicleGoodsAdapter;
+
+    /**
+     * @return VehicleGoodsAdapterInterface
+     */
+    public function getVehicleGoodsAdapter()
+    {
+        return $this->vehicleGoodsAdapter;
+    }
+
+    public function setVehicleGoodsAdapter(VehicleGoodsAdapterInterface $adapter)
+    {
+        $this->vehicleGoodsAdapter = $adapter;
+    }
 
     /**
      * Index action
@@ -29,9 +47,26 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
+        $adapter = $this->getVehicleGoodsAdapter();
+
         $filterForm = $this->getFilterForm();
 
-        if ($request->isPost()) {
+        $form = $this->alterForm($this->getForm());
+
+        if ($adapter !== null) {
+            $form = $adapter->populateForm(
+                $request,
+                $this->getLvaEntityService()->getHeaderData($this->getIdentifier()),
+                $form
+            );
+        }
+
+        if ($request->isPost() && ($adapter === null ||
+            $adapter !== null && $form->isValid())) {
+
+            if ($adapter !== null) {
+                $this->save($form->getData());
+            }
 
             $this->postSave('vehicles');
 
@@ -54,11 +89,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $form = $this->getForm();
-
         $this->alterFormForLva($form);
 
-        $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'forms/filter', 'table-actions']);
+        $this->getServiceLocator()->get('Script')->loadFiles(
+            ['lva-crud', 'forms/filter', 'table-actions', 'vehicle-goods']
+        );
 
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
@@ -85,6 +120,25 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     public function editAction()
     {
         return $this->addOrEdit('edit');
+    }
+
+    protected function alterForm($form)
+    {
+        $post   = $this->getRequest()->getPost();
+
+        $isCrudPressed = (isset($post['table']['action']) && !empty($post['table']['action']));
+
+        $rows = [
+            $form->get('table')->get('rows')->getValue()
+        ];
+        $oneRowInTablesRequiredValidator = $this->getServiceLocator()->get('oneRowInTablesRequired');
+        $oneRowInTablesRequiredValidator->setRows($rows);
+        $oneRowInTablesRequiredValidator->setCrud($isCrudPressed);
+
+        $form->getInputFilter()->get('data')->get('hasEnteredReg')
+            ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
+
+        return $form;
     }
 
     /**
@@ -155,7 +209,9 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function getVehicleForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\GoodsVehiclesVehicle');
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('Lva\GoodsVehiclesVehicle', $this->getRequest());
     }
 
     protected function getForm()
