@@ -29,6 +29,12 @@ trait ApplicationOperatingCentresControllerTrait
      */
     protected function checkTrafficAreaAfterCrudAction($data)
     {
+        if (is_array($data['action'])) {
+            // in this scenario we can safely assume the action is 'edit',
+            // in which case we can bail out nice and early
+            return;
+        }
+
         $action = strtolower($data['action']);
 
         $data = (array)$this->getRequest()->getPost();
