@@ -110,4 +110,69 @@ class CrudTableTraitTest extends MockeryTestCase
             $this->sut->callHandlePostSave()
         );
     }
+
+    public function testDeleteAction()
+    {
+        $request = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(false)
+            ->getMock();
+
+        $form = m::mock();
+
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($request)
+            ->shouldReceive('render')
+            ->with('delete', $form, ['sectionText' => 'delete.confirmation.text'])
+            ->andReturn('render');
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+            ->shouldReceive('createFormWithRequest')
+            ->with('GenericDeleteConfirmation', $request)
+            ->andReturn($form)
+            ->getMock()
+        );
+
+        $this->assertEquals(
+            'render',
+            $this->sut->deleteAction()
+        );
+    }
+
+    public function testDeleteActionWithPost()
+    {
+        $redirectMock = m::mock()
+            ->shouldReceive('toRouteAjax')
+            ->with(
+                null,
+                [
+                    'application' => 123
+                ]
+            )
+            ->andReturn('redirect')
+            ->getMock();
+
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('isPost')
+                ->andReturn(true)
+                ->getMock()
+            )
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('application')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(123)
+            ->shouldReceive('delete')
+            ->shouldReceive('postSave')
+            ->shouldReceive('redirect')
+            ->andReturn($redirectMock);
+
+        $this->assertEquals(
+            'redirect',
+            $this->sut->deleteAction()
+        );
+    }
 }

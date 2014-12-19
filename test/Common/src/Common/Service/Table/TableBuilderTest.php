@@ -1894,11 +1894,12 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
+        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '" />';
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '" />')
+                array('content' => $expected)
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));

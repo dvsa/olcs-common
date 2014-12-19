@@ -1114,7 +1114,6 @@ class FormHelperServiceTest extends MockeryTestCase
             ->shouldReceive('setFormActionFromRequest')
             ->with($form, 'request');
 
-
         $this->assertEquals(
             $form,
             $helper->createFormWithRequest('MyForm', 'request')
