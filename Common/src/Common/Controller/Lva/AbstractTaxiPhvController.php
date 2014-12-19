@@ -277,7 +277,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper->createForm('Lva\TaxiPhvLicence');
+        $form = $formHelper->createFormWithRequest('Lva\TaxiPhvLicence', $this->getRequest());
         return $this->alterActionForm($form);
     }
 
