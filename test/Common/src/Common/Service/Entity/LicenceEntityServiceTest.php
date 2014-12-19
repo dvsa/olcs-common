@@ -65,6 +65,8 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
+        // Test the cache
+        $this->assertEquals($expected, $this->sut->getTypeOfLicenceData($id));
     }
 
     /**
@@ -652,5 +654,40 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals(false, $this->sut->findByIdentifier(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetVariationData()
+    {
+        $id = 4;
+        $stubbedData = [
+            'foo' => 'bar',
+            'ignore' => 'this',
+            'totAuthTrailers' => 1,
+            'totAuthVehicles' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licenceType' => ['id' => 6],
+            'niFlag' => 'N',
+            'goodsOrPsv' => ['id' => 'xyz']
+        ];
+        $expected = [
+            'totAuthTrailers' => 1,
+            'totAuthVehicles' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licenceType' => 6,
+            'niFlag' => 'N',
+            'goodsOrPsv' => 'xyz'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue($stubbedData));
+
+        $this->assertEquals($expected, $this->sut->getVariationData($id));
     }
 }

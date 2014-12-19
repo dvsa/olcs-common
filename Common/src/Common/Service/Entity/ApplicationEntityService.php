@@ -308,8 +308,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     public function createVariation($licenceId, $applicationData = array())
     {
+        $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getVariationData($licenceId);
+
         $applicationData = array_merge(
             $applicationData,
+            $licenceData,
             array(
                 'licence' => $licenceId,
                 'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,

@@ -89,7 +89,13 @@ class FormHelperService extends AbstractHelperService
     {
         if (!$form->hasAttribute('action')) {
 
-            $url = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
+            $url = $request->getUri()->getPath();
+
+            $query = $request->getUri()->getQuery();
+
+            if ($query !== '') {
+                $url .= '?' . $query;
+            }
 
             $form->setAttribute('action', $url);
         }
@@ -520,5 +526,35 @@ class FormHelperService extends AbstractHelperService
                 'company_number' => array($translator->translate($message))
             )
         );
+    }
+
+    /**
+     * Remove a value option from an element
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $index
+     */
+    public function removeOption($element, $index)
+    {
+        $options = $element->getValueOptions();
+
+        if (isset($options[$index])) {
+            unset($options[$index]);
+            $element->setValueOptions($options);
+        }
+    }
+
+    public function setCurrentOption($element, $index)
+    {
+        $options = $element->getValueOptions();
+
+        if (isset($options[$index])) {
+
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+            $options[$index] .= ' ' . $translator->translate('current.option.suffix');
+
+            $element->setValueOptions($options);
+        }
     }
 }

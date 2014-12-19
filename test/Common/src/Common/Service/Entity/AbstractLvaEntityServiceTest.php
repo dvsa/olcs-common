@@ -134,34 +134,19 @@ class AbstractLvaEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetDocuments()
     {
         $id = 3;
-        $categoryName = 'Bar';
-        $documentSubCategoryName = 'Cake';
-
-        $cat1 = array('id' => 2);
-        $cat2 = array('id' => 5);
+        $categoryId = 2;
+        $documentSubCategoryId = 5;
 
         $response = array(
             'documents' => 'RESPONSE'
         );
-
-        $mockCategory = $this->getMock('\stdClass', array('getCategoryByDescription'));
-        $mockCategory->expects($this->at(0))
-            ->method('getCategoryByDescription')
-            ->with($categoryName)
-            ->will($this->returnValue($cat1));
-        $mockCategory->expects($this->at(1))
-            ->method('getCategoryByDescription')
-            ->with($documentSubCategoryName)
-            ->will($this->returnValue($cat2));
-
-        $this->sm->setService('category', $mockCategory);
 
         $this->expectOneRestCall('Foo', 'GET', $id)
             ->will($this->returnValue($response));
 
         $this->setEntity('Foo');
 
-        $this->assertEquals('RESPONSE', $this->sut->getDocuments($id, $categoryName, $documentSubCategoryName));
+        $this->assertEquals('RESPONSE', $this->sut->getDocuments($id, $categoryId, $documentSubCategoryId));
     }
 
     /**

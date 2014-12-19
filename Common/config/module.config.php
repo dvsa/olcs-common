@@ -32,6 +32,9 @@ return array(
             ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
+            ),
+            'LvaVariation/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             )
         ),
         'abstract_factories' => array(
@@ -82,19 +85,27 @@ return array(
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
+            'VariationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
-            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler'
+            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
+            'postcode' => 'Common\Service\Postcode\Postcode',
+            'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
+            'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
+            'section.vehicle-safety.vehicle.formatter.vrm' =>
+                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -112,27 +123,12 @@ return array(
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
-            'postcode' => function ($serviceManager) {
-                $postcode = new \Common\Service\Postcode\Postcode();
-                $postcode->setServiceLocator($serviceManager);
-                return $postcode;
-            },
-            'postcodeTrafficAreaValidator' => function ($serviceManager) {
-                $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
-                $validator->setServiceLocator($serviceManager);
-                return $validator;
-            },
-            'goodsDiscStartNumberValidator' => function ($serviceManager) {
-                return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
-            },
             'category' => '\Common\Service\Data\CategoryDataService',
             'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
-            'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
-                return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
-            },
+            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -266,6 +262,9 @@ return array(
         ]
     ],
     'data_services' => [
+        'abstract_factories' => [
+            'Common\Service\Data\DataServiceAbstractFactory'
+        ],
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',

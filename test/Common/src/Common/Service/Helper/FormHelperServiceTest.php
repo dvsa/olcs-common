@@ -987,4 +987,90 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $helper->setFormActionFromRequest($form, $request);
     }
+
+    public function testRemoveOptionWithoutOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'blap';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options);
+
+        $helper->removeOption($element, $index);
+    }
+
+    public function testRemoveOptionWithOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'foo';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options)
+            ->shouldReceive('setValueOptions')
+            ->with(['bar' => 'baz']);
+
+        $helper->removeOption($element, $index);
+    }
+
+    public function testSetCurrentOptionWithoutCurrentOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'blap';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options);
+
+        $helper->setCurrentOption($element, $index);
+    }
+
+    public function testSetCurrentOptionWithCurrentOption()
+    {
+        $sm = \CommonTest\Bootstrap::getServiceManager();
+
+        $helper = new FormHelperService();
+        $helper->setServiceLocator($sm);
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with('current.option.suffix')
+            ->andReturn('(current)');
+
+        $sm->setService('Helper\Translation', $mockTranslator);
+
+        $index = 'bar';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options)
+            ->shouldReceive('setValueOptions')
+            ->with(['foo' => 'bar', 'bar' => 'baz (current)']);
+
+        $helper->setCurrentOption($element, $index);
+    }
 }

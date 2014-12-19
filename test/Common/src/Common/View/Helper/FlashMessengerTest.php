@@ -8,15 +8,16 @@
 
 namespace CommonTest\View\Helper;
 
-use PHPUnit_Framework_TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\View\Helper\FlashMessenger;
+use Mockery as m;
 
 /**
  * Flash Messenger View Helper Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FlashMessengerTest extends PHPUnit_Framework_TestCase
+class FlashMessengerTest extends MockeryTestCase
 {
     /**
      * Subject under test
@@ -25,23 +26,23 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
      */
     private $sut;
 
+    private $sm;
+
     private $mockPluginManager;
 
     public function setUp()
     {
-        $this->mockPluginManager = $this->getMock(
-            '\Zend\Mvc\Controller\Plugin\FlashMessenger',
-            array('getMessagesFromNamespace')
-        );
+        $this->mockPluginManager = m::mock('\Zend\Mvc\Controller\Plugin\FlashMessenger');
+        $this->sm = m::mock('\Zend\ServiceManager\ServiceLocatorInterface');
 
-        $mockTranslator = $this->getMock('\Zend\I18n\Translator\Translator', array('translate'));
-        $mockTranslator->expects($this->any())
-            ->method('translate')
-            ->will($this->returnCallback(array($this, 'translate')));
+        $mockTranslator = m::mock('\Zend\I18n\Translator\Translator');
+        $mockTranslator->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'translate'));
 
         $this->sut = new FlashMessenger();
         $this->sut->setPluginFlashMessenger($this->mockPluginManager);
         $this->sut->setTranslator($mockTranslator);
+        $this->sut->setServiceLocator($this->sm);
     }
 
     /**
@@ -61,9 +62,20 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
      */
     public function testRenderWithoutMessages()
     {
-        $this->mockPluginManager->expects($this->any())
-            ->method('getMessagesFromNamespace')
-            ->will($this->returnValue(array()));
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+            ->andReturn([]);
+
+        $this->sm->shouldReceive('getServiceLocator')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('Helper\FlashMessenger')
+            ->andReturn($mockFlashMessenger);
+
+        $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
+            ->andReturn([])
+            ->shouldReceive('getCurrentMessagesFromNamespace')
+            ->andReturn([]);
 
         $markup = $this->sut->render();
 
@@ -76,9 +88,20 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
      */
     public function testInvokeWithoutMessages()
     {
-        $this->mockPluginManager->expects($this->any())
-            ->method('getMessagesFromNamespace')
-            ->will($this->returnValue(array()));
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+            ->andReturn([]);
+
+        $this->sm->shouldReceive('getServiceLocator')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('Helper\FlashMessenger')
+            ->andReturn($mockFlashMessenger);
+
+        $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
+            ->andReturn([])
+            ->shouldReceive('getCurrentMessagesFromNamespace')
+            ->andReturn([]);
 
         $obj = $this->sut;
 
@@ -93,17 +116,37 @@ class FlashMessengerTest extends PHPUnit_Framework_TestCase
      */
     public function testRenderWithMessages()
     {
-        // Return a message from each namespace
-        $this->mockPluginManager->expects($this->any())
-            ->method('getMessagesFromNamespace')
-            ->will($this->returnValue(array('foo')));
+        $mockFlashMessenger = m::mock();
+        $mockFlashMessenger->shouldReceive('getCurrentMessages')
+            ->andReturn(['foo']);
+
+        $this->sm->shouldReceive('getServiceLocator')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('Helper\FlashMessenger')
+            ->andReturn($mockFlashMessenger);
+
+        $this->mockPluginManager->shouldReceive('getMessagesFromNamespace')
+            ->andReturn(['bar'])
+            ->shouldReceive('getCurrentMessagesFromNamespace')
+            ->andReturn(['baz']);
 
         $expected = '<div class="notice-container">'
-            . '<div  class="notice--danger"><p>*foo*</p></div>'
-            . '<div  class="notice--success"><p>*foo*</p></div>'
-            . '<div  class="notice--warning"><p>*foo*</p></div>'
-            . '<div  class="notice--info"><p>*foo*</p></div>'
-            . '<div  class="notice--info"><p>*foo*</p></div>'
+            . '<div class="notice--danger"><p>*bar*</p></div>'
+            . '<div class="notice--danger"><p>*baz*</p></div>'
+            . '<div class="notice--danger"><p>*foo*</p></div>'
+            . '<div class="notice--success"><p>*bar*</p></div>'
+            . '<div class="notice--success"><p>*baz*</p></div>'
+            . '<div class="notice--success"><p>*foo*</p></div>'
+            . '<div class="notice--warning"><p>*bar*</p></div>'
+            . '<div class="notice--warning"><p>*baz*</p></div>'
+            . '<div class="notice--warning"><p>*foo*</p></div>'
+            . '<div class="notice--info"><p>*bar*</p></div>'
+            . '<div class="notice--info"><p>*baz*</p></div>'
+            . '<div class="notice--info"><p>*foo*</p></div>'
+            . '<div class="notice--info"><p>*bar*</p></div>'
+            . '<div class="notice--info"><p>*baz*</p></div>'
+            . '<div class="notice--info"><p>*foo*</p></div>'
             . '</div>';
 
         $markup = $this->sut->render();
