@@ -25,6 +25,7 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group entity_services
+     * @group vehicle_entity_service
      */
     public function testGetLicencesForVrm()
     {
@@ -35,24 +36,41 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
             'Results' => array(
                 array(
                     'licenceVehicles' => array(
-                        array('foo'),
+                        array(
+                            'foo',
+                            'removalDate' => 'xxx'
+                        ),
                         array('bar')
                     )
                 ),
                 array(
                     'licenceVehicles' => array(
-                        array('cake'),
-                        array('jazz')
+                        array(
+                            'cake',
+                            'removalDate' => 'xxx'
+                        ),
+                        array(
+                            'jazz',
+                            'removalDate' => 'xxx'
+                        )
                     )
                 )
             )
         );
 
         $expected = array(
-            array('foo'),
-            array('bar'),
-            array('cake'),
-            array('jazz')
+            array(
+                'foo',
+                'removalDate' => 'xxx'
+            ),
+            array(
+                'cake',
+                'removalDate' => 'xxx'
+            ),
+            array(
+                'jazz',
+                'removalDate' => 'xxx'
+            )
         );
 
         $this->expectOneRestCall('Vehicle', 'GET', $data)
