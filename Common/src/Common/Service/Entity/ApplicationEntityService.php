@@ -311,13 +311,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getVariationData($licenceId);
 
         $applicationData = array_merge(
-            $applicationData,
             $licenceData,
             array(
                 'licence' => $licenceId,
                 'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
                 'isVariation' => true
-            )
+            ),
+            // @NOTE The passed in application data has priority, so is last to merge
+            $applicationData
         );
 
         $application = $this->save($applicationData);
