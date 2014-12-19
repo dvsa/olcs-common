@@ -31,6 +31,10 @@ class VehicleEntityService extends AbstractEntityService
     protected $licencesForVehicleBundle = array(
         'children' => array(
             'licenceVehicles' => array(
+                'required' => true,
+                'criteria' => array(
+                    'removalDate' => 'NULL'
+                ),
                 'children' => array(
                     'licence' => array(
                         'children' => array(
@@ -51,6 +55,12 @@ class VehicleEntityService extends AbstractEntityService
         foreach ($results['Results'] as $result) {
 
             $return = array_merge($return, $result['licenceVehicles']);
+        }
+
+        foreach ($return as $key => $licenceVehicle) {
+            if (isset($licenceVehicle['removalDate']) && empty($licenceVehicle['removalDate'])) {
+                unset($return[$key]);
+            }
         }
 
         return $return;
