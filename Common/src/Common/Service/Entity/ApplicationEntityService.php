@@ -112,16 +112,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             )
                         )
                     ),
-                    'contactDetails' => array(
+                    'correspondenceCd' => array(
                         'children' => array(
-                            'phoneContacts' => array(
-                                'children' => array(
-                                    'phoneContactType'
-                                )
-                            ),
-                            'contactType'
+                            'phoneContacts'
                         )
                     ),
+                    'establishmentCd',
                     'tachographIns',
                     'workshops',
                     'trafficArea'
@@ -260,6 +256,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * Create a new application for a given organisation
      *
      * @param int $organisationId
+     * @param array $applicationData
      */
     public function createNew($organisationId, $applicationData = array())
     {
@@ -291,6 +288,32 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'application' => $application['id'],
             'licence' => $licence['id']
         );
+    }
+
+    /**
+     * Create a variation application for a given organisation
+     *
+     * @param int $licenceId
+     * @param array $applicationData
+     */
+    public function createVariation($licenceId, $applicationData = array())
+    {
+        $licenceData = $this->getServiceLocator()->get('Entity\Licence')->getVariationData($licenceId);
+
+        $applicationData = array_merge(
+            $licenceData,
+            array(
+                'licence' => $licenceId,
+                'status' => self::APPLICATION_STATUS_NOT_SUBMITTED,
+                'isVariation' => true
+            ),
+            // @NOTE The passed in application data has priority, so is last to merge
+            $applicationData
+        );
+
+        $application = $this->save($applicationData);
+
+        return $application['id'];
     }
 
     /**
@@ -468,5 +491,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'niFlag' => null
             ]
         );
+    }
+
+    public function getOrganisation($applicationId)
+    {
+        $licenceId = $this->getLicenceIdForApplication($applicationId);
+
+        return $this->getServiceLocator()->get('Entity\Licence')->getOrganisation($licenceId);
+    }
+
+    public function delete($id)
+    {
+        $licenceId = $this->getLicenceIdForApplication($id);
+
+        $this->getServiceLocator()->get('Entity\Licence')->delete($licenceId);
+
+        parent::delete($id);
     }
 }

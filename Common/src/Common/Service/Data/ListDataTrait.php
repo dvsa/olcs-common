@@ -5,7 +5,7 @@ namespace Common\Service\Data;
 /**
  * Trait ListDataTrait
  *
- * Provides a default implementation of ListDataInterface requires defining one method for handling fetching data
+ * Provides a default implementation of ListData requires defining one method for handling fetching data
  *
  * @package Common\Service\Data
  */
@@ -69,6 +69,27 @@ trait ListDataTrait
         }
 
         return $this->formatData($data);
+    }
+
+    /**
+     * Look up a property based on a key with a known value
+     *
+     * @param string $key
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
+    private function getPropertyFromKey($key, $property, $value)
+    {
+        $data = $this->fetchListData([]);
+        foreach ($data as $datum) {
+            if ($datum[$key] == $value) {
+                return $datum[$property];
+            }
+        }
+
+        return null;
     }
 
     /**

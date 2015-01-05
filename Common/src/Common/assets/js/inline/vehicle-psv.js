@@ -2,7 +2,7 @@ $(function() {
   "use strict";
 
   function showTables() {
-    return OLCS.formHelper.isChecked("data", "hasEnteredReg");
+    return OLCS.formHelper.isChecked("data", "hasEnteredReg") || !OLCS.formHelper.findInput("data", "hasEnteredReg").length;
   }
 
   OLCS.cascadeForm({

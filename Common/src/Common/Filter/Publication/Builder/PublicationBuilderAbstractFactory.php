@@ -4,7 +4,7 @@ namespace Common\Filter\Publication\Builder;
 
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Filter\FilterChain;
+use Zend\InputFilter\Input;
 
 /**
  * Class PublicationBuilderAbstractFactory
@@ -21,7 +21,7 @@ class PublicationBuilderAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $config =  $serviceLocator->get('Config');
+        $config = $serviceLocator->get('Config');
         return isset($config['publications'][$requestedName]);
     }
 
@@ -35,15 +35,16 @@ class PublicationBuilderAbstractFactory implements AbstractFactoryInterface
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $config =  $serviceLocator->get('Config');
+        $config = $serviceLocator->get('Config');
 
-        // Create a filter chain and add filters to the chain
-        $filterChain = new FilterChain();
+        $input = new Input();
+
+        $filterChain = $input->getFilterChain();
 
         if (isset($config['publications'][$requestedName])) {
             foreach ($config['publications'][$requestedName] as $filter) {
-                $newFilter = new $filter();
-                $newFilter->setServiceLocator($serviceLocator);
+                $newFilter = $serviceLocator->get('FilterManager')->get($filter);
+                $newFilter->setServiceLocator($serviceLocator->get('DataServiceManager'));
                 $filterChain->attach($newFilter);
                 $filterChain->getPluginManager()->setInvokableClass($filter, $filter);
             }

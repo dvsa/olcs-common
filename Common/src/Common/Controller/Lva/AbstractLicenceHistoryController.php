@@ -405,7 +405,9 @@ abstract class AbstractLicenceHistoryController extends AbstractController
      */
     protected function getLicenceForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\LicenceHistoryLicence');
+        return $this->getServiceLocator()
+            ->get('Helper\Form')
+            ->createFormWithRequest('Lva\LicenceHistoryLicence', $this->getRequest());
     }
 
     /**

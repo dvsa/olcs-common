@@ -15,6 +15,7 @@ use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\FeePaymentEntityService;
 use Mockery as m;
+use Common\Service\Listener\FeeListenerService;
 
 /**
  * CPMS Fee Payment Service Test
@@ -29,8 +30,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
         $params = [
             'customer_reference' => 'cust_ref',
-            'sales_reference' => 'sales_ref',
-            'product_reference' => 'GVR_APPLICATION_FEE',
             'scope' => 'CARD',
             'disable_redirection' => true,
             'redirect_uri' => 'redirect_url',
@@ -215,6 +214,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'receivedAmount' => 525.33
         ];
 
+        $mockFeeListener = m::mock();
+        $mockFeeListener->shouldReceive('trigger')
+            ->with(1, FeeListenerService::EVENT_PAY);
+
         $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
             ->with('cpms\service\api')
@@ -254,6 +257,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->with(1, $saveData)
                 ->getMock()
             )
+            ->shouldReceive('get')
+            ->with('Listener\Fee')
+            ->andReturn($mockFeeListener)
             ->getMock();
 
         $sut->setServiceLocator($sl);

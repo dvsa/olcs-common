@@ -33,7 +33,8 @@ class PreviousLicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $data = array(
             'application' => $id,
-            'previousLicenceType' => $prevLicType
+            'previousLicenceType' => $prevLicType,
+            'limit' => 'all'
         );
 
         $expected = array('foo');

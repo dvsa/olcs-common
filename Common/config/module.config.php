@@ -24,6 +24,25 @@ return array(
         )
     ),
     'controllers' => array(
+        // @NOTE This delegator can live in common as both internal and external app type of licence controllers
+        // currently use the same adaptor
+        'delegators' => array(
+            'LvaApplication/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
+            ),
+            'LvaLicence/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
+            ),
+            'LvaVariation/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
+            ),
+            'LvaApplication/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+            ),
+        ),
+        'abstract_factories' => array(
+            'Common\Controller\Lva\AbstractControllerFactory',
+        ),
         'invokables' => array(
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
@@ -69,13 +88,30 @@ return array(
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'ApplicationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'ApplicationVehicleGoodsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
+            'VariationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
-            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem'
+            'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
+            'VehicleList' => '\Common\Service\VehicleList\VehicleList',
+            'PrintScheduler' => '\Common\Service\Printing\DocumentStubPrintScheduler',
+            'postcode' => 'Common\Service\Postcode\Postcode',
+            'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
+            'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
+            'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
+            'section.vehicle-safety.vehicle.formatter.vrm' =>
+                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
         ),
         'factories' => array(
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
@@ -93,33 +129,12 @@ return array(
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'SectionService' => '\Common\Controller\Service\SectionServiceFactory',
-            'postcode' => function ($serviceManager) {
-                $postcode = new \Common\Service\Postcode\Postcode();
-                $postcode->setServiceLocator($serviceManager);
-                return $postcode;
-            },
-            'vehicleList' => function ($serviceManager) {
-                $vehicleList = new \Common\Service\VehicleList\VehicleList();
-                $vehicleList->setServiceLocator($serviceManager);
-                return $vehicleList;
-            },
-            'postcodeTrafficAreaValidator' => function ($serviceManager) {
-                $validator = new \Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator();
-                $validator->setServiceLocator($serviceManager);
-                return $validator;
-            },
-            'goodsDiscStartNumberValidator' => function ($serviceManager) {
-                return new \Common\Form\Elements\Validators\GoodsDiscStartNumberValidator();
-            },
             'category' => '\Common\Service\Data\CategoryDataService',
             'country' => '\Common\Service\Data\Country',
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
-            'section.vehicle-safety.vehicle.formatter.vrm' => function ($serviceManager) {
-                return new \Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm();
-            },
-            'FeeCommon' => 'Common\Service\Fee\FeeCommon',
+            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -135,7 +150,9 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousHearing',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\HearingText1'
+            'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
         ),
         'DecisionPublicationFilter' => array(
             'Common\Filter\Publication\LastHearing',
@@ -147,8 +164,10 @@ return array(
             'Common\Filter\Publication\HearingDateTime',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\DecisionText1'
-        )
+            'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'file_uploader' => array(
         'default' => 'ContentStore',
@@ -224,6 +243,18 @@ return array(
             'Common\Filter\DateTimeSelectNullifier' => 'Common\Filter\DateTimeSelectNullifier',
             'Common\Filter\DecompressUploadToTmp' => 'Common\Filter\DecompressUploadToTmp',
             'Common\Filter\DecompressToTmp' => 'Common\Filter\DecompressToTmp',
+            'Common\Filter\Publication\Licence' => 'Common\Filter\Publication\Licence',
+            'Common\Filter\Publication\LicenceAddress' => 'Common\Filter\Publication\LicenceAddress',
+            'Common\Filter\Publication\Publication' => 'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection' => 'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PiVenue' => 'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime' => 'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PreviousPublication' => 'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousHearing' => 'Common\Filter\Publication\PreviousHearing',
+            'Common\Filter\Publication\PreviousUnpublished' => 'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\HearingText1' => 'Common\Filter\Publication\HearingText1',
+            'Common\Filter\Publication\PoliceData' => 'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean' => 'Common\Filter\Publication\Clean'
         ],
         'delegators' => [
             'Common\Filter\DecompressUploadToTmp' => ['Common\Filter\DecompressToTmpDelegatorFactory'],
@@ -237,6 +268,9 @@ return array(
         ]
     ],
     'data_services' => [
+        'abstract_factories' => [
+            'Common\Service\Data\DataServiceAbstractFactory'
+        ],
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',

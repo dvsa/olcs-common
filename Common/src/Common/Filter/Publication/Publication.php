@@ -36,7 +36,8 @@ class Publication extends AbstractPublicationFilter
         }
 
         $newData = [
-            'publication' => $data['Results'][0]['id']
+            'publication' => $data['Results'][0]['id'],
+            'publicationNo' => $data['Results'][0]['publicationNo']
         ];
 
         $publication = $this->mergeData($publication, $newData);

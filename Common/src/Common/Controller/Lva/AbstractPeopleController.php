@@ -100,6 +100,10 @@ abstract class AbstractPeopleController extends AbstractController
             $data = $this->formatCrudDataForSave($form->getData());
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
+            if (!$data['id']) {
+                $this->addOrganisationPerson('add', $orgId, $orgData, $person, $data);
+            }
+
             $this->postSave('people');
             return $this->completeSection('people');
         }
@@ -201,7 +205,7 @@ abstract class AbstractPeopleController extends AbstractController
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\Person');
+            ->createFormWithRequest('Lva\Person', $request);
 
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');

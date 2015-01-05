@@ -11,6 +11,7 @@ namespace Common\Controller\Lva;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
+use Common\Service\Data\CategoryDataService;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -133,10 +134,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $table = $this->getServiceLocator()
             ->get('Table')
             ->prepareTable('authorisation_in_form', $this->getTableData());
-
-        $column = $table->getColumn('address');
-        $column['type'] = $this->lva;
-        $table->setColumn('address', $column);
 
         $form->get('table')
             ->get('table')
@@ -369,7 +366,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\OperatingCentre')
+            ->createFormWithRequest('Lva\OperatingCentre', $request)
             ->setData($data);
 
         if ($mode !== 'add') {
@@ -822,16 +819,17 @@ abstract class AbstractOperatingCentresController extends AbstractController
     {
         $categoryService = $this->getServiceLocator()->get('category');
 
-        $category = $categoryService->getCategoryByDescription('Licensing');
-        $subCategory = $categoryService->getCategoryByDescription('Advertisement', 'Document');
+        // The top-level category is *always* application; this is correct
+        $category = $categoryService->getCategoryByDescription('Application');
+        $subCategory = $categoryService->getCategoryByDescription('Advert Digital', 'Document');
 
         $this->uploadFile(
             $file,
             array_merge(
                 array(
                     'description' => 'Advertisement',
-                    'category' => $category['id'],
-                    'documentSubCategory' => $subCategory['id'],
+                    'category'    => $category['id'],
+                    'subCategory' => $subCategory['id'],
                 ),
                 $this->getDocumentProperties()
             )
@@ -854,7 +852,11 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
 
         $documents = $this->getServiceLocator()->get($lvaEntity)
-            ->getDocuments($this->getIdentifier(), 'Licensing', 'Advertisement');
+            ->getDocuments(
+                $this->getIdentifier(),
+                CategoryDataService::CATEGORY_APPLICATION,
+                CategoryDataService::DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL
+            );
 
         return array_filter(
             $documents,

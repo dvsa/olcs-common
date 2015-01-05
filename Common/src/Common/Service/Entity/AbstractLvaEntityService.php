@@ -26,7 +26,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
                 'children' => array(
                     'operatingCentre',
                     'category',
-                    'documentSubCategory'
+                    'subCategory'
                 )
             )
         )
@@ -57,18 +57,13 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         return $this->get($id);
     }
 
-    public function getDocuments($id, $categoryName, $documentSubCategoryName)
+    public function getDocuments($id, $categoryId, $documentSubCategoryId)
     {
         $documentBundle = $this->documentBundle;
 
-        $categoryService = $this->getServiceLocator()->get('category');
-
-        $category = $categoryService->getCategoryByDescription($categoryName);
-        $subCategory = $categoryService->getCategoryByDescription($documentSubCategoryName, 'Document');
-
         $documentBundle['children']['documents']['criteria'] = array(
-            'category' => $category['id'],
-            'documentSubCategory' => $subCategory['id']
+            'category'    => $categoryId,
+            'subCategory' => $documentSubCategoryId
         );
 
         $data = $this->get($id, $documentBundle);
@@ -94,13 +89,22 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
      */
     public function getTypeOfLicenceData($id)
     {
-        $data = $this->get($id, $this->typeOfLicenceBundle);
+        if (!$this->isCached('typeOfLicence', $id)) {
 
-        return array(
-            'version' => $data['version'],
-            'niFlag' => $data['niFlag'],
-            'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
-            'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
-        );
+            $data = $this->get($id, $this->typeOfLicenceBundle);
+
+            $this->setCache(
+                'typeOfLicence',
+                $id,
+                array(
+                    'version' => $data['version'],
+                    'niFlag' => $data['niFlag'],
+                    'licenceType' => isset($data['licenceType']['id']) ? $data['licenceType']['id'] : null,
+                    'goodsOrPsv' => isset($data['goodsOrPsv']['id']) ? $data['goodsOrPsv']['id'] : null
+                )
+            );
+        }
+
+        return $this->getCache('typeOfLicence', $id);
     }
 }

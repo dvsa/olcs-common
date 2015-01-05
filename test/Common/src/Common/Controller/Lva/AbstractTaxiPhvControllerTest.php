@@ -51,7 +51,9 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             );
 
         $this->getMockFormHelper()
-            ->shouldReceive('populateFormTable');
+            ->shouldReceive('populateFormTable')
+            ->shouldReceive('remove')
+            ->with($form, 'dataTrafficArea');
 
         $this->shouldRemoveElements(
             $form,
@@ -101,16 +103,14 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
         ];
         $this->setPost($postData);
 
-        $form = $this->createMockForm('Lva\TaxiPhv');
+        $form = $this->createMockForm('Lva\TaxiPhvLicence');
         $form->shouldReceive('setData')
-                ->with($postData)
-                ->andReturn($form);
+            ->with($postData)
+            ->andReturn($form);
+
         // assert that form isn't validated if we're only doing postcode lookup
         // (i.e. processAddressLookupForm returns true, below)
         $form->shouldReceive('isValid')->never();
-
-        $this->sut->shouldReceive('getLicenceForm')
-            ->andReturn($form);
 
         $this->formHelper
             ->shouldReceive('processAddressLookupForm')
@@ -118,6 +118,13 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(true);
 
         $this->mockRender();
+
+        // @NOTE: alterActionForm shouldn't really be mocked here, it needs
+        // testing properly
+        $this->sut->shouldReceive('alterActionForm')
+            ->with($form)
+            ->andReturn($form);
+
         $this->sut->addAction();
 
         $this->assertEquals('add_taxi_phv', $this->view);
@@ -135,19 +142,16 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
         ];
         $this->setPost($postData);
 
-        $form = $this->createMockForm('Lva\TaxiPhv');
+        $form = $this->createMockForm('Lva\TaxiPhvLicence');
         $form->shouldReceive('setData')
-                ->with($postData)
-                ->andReturn($form);
+            ->with($postData)
+            ->andReturn($form);
 
         // assert that form *is* validated if not doing postcode lookup
         // (i.e. processAddressLookupForm returns false, below)
         $form->shouldReceive('isValid')
-                ->once()
-                ->andReturn(false);
-
-        $this->sut->shouldReceive('getLicenceForm')
-            ->andReturn($form);
+            ->once()
+            ->andReturn(false);
 
         $this->formHelper
             ->shouldReceive('processAddressLookupForm')
@@ -155,6 +159,11 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(false);
 
         $this->mockRender();
+
+        $this->sut->shouldReceive('alterActionForm')
+            ->with($form)
+            ->andReturn($form);
+
         $this->sut->addAction();
 
         $this->assertEquals('add_taxi_phv', $this->view);

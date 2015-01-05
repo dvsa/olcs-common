@@ -6,7 +6,7 @@ namespace Common\Service\Data;
  * Class Licence
  * @package Olcs\Service
  */
-class Licence extends AbstractData
+class Licence extends AbstractData implements AddressProviderInterface
 {
     /**
      * @var integer
@@ -33,6 +33,74 @@ class Licence extends AbstractData
             $this->setData($id, $data);
         }
         return $this->getData($id);
+    }
+
+    /**
+     * Fetches an array of addresses for the licence. Queries the ContactDetails table
+     * @param null $id
+     * @param null $bundle
+     * @return array
+     */
+    public function fetchAddressListData($id = null, $bundle = null)
+    {
+        $id = is_null($id) ? $this->getId() : $id;
+
+        if (is_null($this->getData('addr_' .$id))) {
+            $data = array();
+            $bundle = is_null($bundle) ? $this->getAddressBundle() : $bundle;
+            $addressData =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+
+            if (isset($addressData['correspondenceCd']['address'])) {
+                $data[] = $addressData['correspondenceCd']['address'];
+            }
+            if (isset($addressData['establishmentCd']['address'])) {
+                $data[] = $addressData['establishmentCd']['address'];
+            }
+            if (isset($addressData['transportConsultantCd']['address'])) {
+                $data[] = $addressData['transportConsultantCd']['address'];
+            }
+
+            $this->setData('addr_' .$id, $data);
+        }
+        return $this->getData('addr_' .$id);
+    }
+
+    /**
+     * Bundle to fetch all addresses for licence
+     * @return array
+     */
+    public function getAddressBundle()
+    {
+        $bundle = array(
+            'children' => array(
+                'correspondenceCd' => array(
+                    'properties' => 'ALL',
+                    'children' => array(
+                        'address' => array(
+                            'properties' => 'ALL'
+                        )
+                    )
+                ),
+                'establishmentCd' => array(
+                    'properties' => 'ALL',
+                    'children' => array(
+                        'address' => array(
+                            'properties' => 'ALL'
+                        )
+                    )
+                ),
+                'transportConsultantCd' => array(
+                    'properties' => 'ALL',
+                    'children' => array(
+                        'address' => array(
+                            'properties' => 'ALL'
+                        )
+                    )
+                )
+            )
+        );
+
+        return $bundle;
     }
 
     /**

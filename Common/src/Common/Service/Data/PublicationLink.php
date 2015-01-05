@@ -11,8 +11,8 @@ use Common\Exception\DataServiceException;
 use Common\Exception\ResourceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Common\Util\RestClient;
-use Common\Data\Object\Publication;
+use Common\Data\Object\Publication as PublicationObject;
+use Zend\Stdlib\ArrayObject;
 
 /**
  * Publication Link service
@@ -35,59 +35,7 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      */
     public function createEmpty()
     {
-        return new Publication();
-    }
-
-    public function createWithData($data)
-    {
-        $publicationLink = $this->createEmpty();
-
-        foreach ($data as $key => $value) {
-            $publicationLink->offsetSet($key, $value);
-        }
-
-        return $publicationLink;
-    }
-
-    /**
-     * @param \Common\Data\Object\Publication $publication
-     * @return mixed
-     */
-    public function save(Publication $publication)
-    {
-        $method = 'POST';
-
-        if ($publication->offsetGet('id')) {
-            $method = 'PUT';
-        }
-
-        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall(
-            'PublicationLink',
-            $method,
-            $publication->getArrayCopy()
-        );
-    }
-
-    /**
-     * @param \Common\Data\Object\Publication $publication
-     * @param string $service
-     * @return mixed
-     */
-    public function createPublicationLink(Publication $publication, $service)
-    {
-        $publication = $this->getServiceLocator()->get($service)->filter($publication);
-        return $this->save($publication);
-    }
-
-    /**
-     * @param array $params
-     * @param null $bundle
-     * @return mixed
-     */
-    public function fetchList($params = [], $bundle = null)
-    {
-        $params['bundle'] = json_encode(empty($bundle) ? $this->getBundle() : $bundle);
-        return $this->getRestClient()->get($params);
+        return new PublicationObject();
     }
 
     /**
@@ -99,9 +47,8 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
      */
     public function delete($id, $checkStatus = true)
     {
-        $params = ['id' => $id];
-
         if ($checkStatus) {
+            $params = ['id' => $id];
             $existing = $this->fetchList($params);
 
             if (empty($existing)) {
@@ -117,9 +64,53 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     }
 
     /**
+     * @param ArrayObject $dataObject
+     * @return int
+     */
+    public function save($dataObject)
+    {
+        $publicationLinkId = parent::save($dataObject);
+        $this->savePoliceData($dataObject, $publicationLinkId);
+
+        return $publicationLinkId;
+    }
+
+    /**
+     * Calls the police data service to save related police data
+     *
+     * @param $dataObject
+     * @param int $publicationLinkId
+     *
+     * @return bool
+     */
+    public function savePoliceData($dataObject, $publicationLinkId)
+    {
+        $policeData = $dataObject->offsetGet('policeData');
+
+        //there isn't a person id in the schema and Paul doesn't want to add one.
+        //So we're deleting and replacing any existing data.
+        $policeDataService = $this->getServiceLocator()->get('Common\Service\Data\PublicationPolice');
+        $policeDataService->deleteList(['publicationLink' => $publicationLinkId]);
+
+        if (!empty($policeData)) {
+            $policeDataObject = $policeDataService->createEmpty();
+
+            foreach ($policeData as $data) {
+                $policeDataObject->offsetSet('publicationLink', $publicationLinkId);
+                $policeDataObject->offsetSet('forename', $data['forename']);
+                $policeDataObject->offsetSet('familyName', $data['familyName']);
+                $policeDataObject->offsetSet('birthDate', $data['birthDate']);
+                $policeDataService->save($policeDataObject);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @return array
      */
-    private function getBundle()
+    protected function getBundle()
     {
         return [
             'properties' => 'ALL',

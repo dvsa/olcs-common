@@ -9,7 +9,6 @@ namespace Common\Service\Entity;
 
 use Common\Service\Data\SectionConfig;
 use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Entity\ContactDetailsEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\VehicleEntityService;
 
@@ -170,14 +169,8 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         switch ($orgData['type']['id']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
-                $registeredAddress = false;
 
-                foreach ($orgData['contactDetails'] as $contactDetail) {
-                    if ($contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_REGISTERED) {
-                        $registeredAddress =  true;
-                        break;
-                    }
-                }
+                $registeredAddress = !empty($orgData['contactDetails']);
 
                 $requiredVars = array(
                     'name' => isset($orgData['name']),
@@ -209,14 +202,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     private function getAddressesStatus($applicationData)
     {
         $phoneNumber = false;
-        $correspondenceAddress = false;
+        $correspondenceAddress = isset($applicationData['licence']['correspondenceCd'])
+            && !empty($applicationData['licence']['correspondenceCd']);
         $establishmentAddress = false;
         $skipEstablishmentAddress = false;
-
-        $contactDetails = array_merge(
-            $applicationData['licence']['contactDetails'],
-            $applicationData['licence']['organisation']['contactDetails']
-        );
 
         $allowedLicTypes = array(
             LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
@@ -228,26 +217,17 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $establishmentAddress = true;
         }
 
-        foreach ($contactDetails as $contactDetail) {
-            if (isset($contactDetail['phoneContacts'][0])) {
-                $phoneNumber = !empty($contactDetail['phoneContacts'][0]['phoneNumber']);
-            }
+        $corAdd = $applicationData['licence']['correspondenceCd'];
 
-            if (isset($contactDetail['contactType']['id'])
-                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE
-            ) {
-                $correspondenceAddress = true;
+        if (isset($corAdd['phoneContacts'][0])) {
+            $phoneNumber = !empty($corAdd['phoneContacts'][0]['phoneNumber']);
+        }
 
-                if ($skipEstablishmentAddress) {
-                    break;
-                }
-            }
-
-            if (isset($contactDetail['contactType']['id'])
-                && $contactDetail['contactType']['id'] === ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT) {
-                $establishmentAddress = true;
-                break;
-            }
+        if (!$skipEstablishmentAddress
+            && isset($applicationData['licence']['establishmentCd'])
+            && !empty($applicationData['licence']['establishmentCd'])
+        ) {
+            $establishmentAddress = true;
         }
 
         $requiredVars = array(
@@ -377,6 +357,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesStatus($applicationData)
     {
+        if ($applicationData['hasEnteredReg'] === 'N') {
+            return self::STATUS_COMPLETE;
+        }
+
         $totalAuth = $applicationData['totAuthVehicles'];
 
         return $this->checkCompletion(
@@ -396,6 +380,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesPsvStatus($applicationData)
     {
+        if ($applicationData['hasEnteredReg'] === 'N') {
+            return self::STATUS_COMPLETE;
+        }
+
         if (!isset($applicationData['licence']['licenceVehicles'])) {
             return self::STATUS_INCOMPLETE;
         }
@@ -406,12 +394,16 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             'large'  => VehicleEntityService::PSV_TYPE_LARGE
         ];
 
+        if ($applicationData['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            unset($psvTypes['large']);
+        }
+
         foreach ($psvTypes as $type => $val) {
-            /*
+            /**
              * This loop looks *similar* to normal vehicles but it's inverted;
              * we want to bail as early as possible if things don't look right
              */
-            $totalAuth = $applicationData['totAuth' . ucfirst($type). 'Vehicles'];
+            $totalAuth = $applicationData['totAuth' . ucfirst($type) . 'Vehicles'];
 
             if ($totalAuth === null) {
                 // bail early; a null (as opposed to a zero) means we haven't
@@ -421,8 +413,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             $totalVehicles = 0;
 
-            foreach ($applicationData['licence']['licenceVehicles'] as $vehicle) {
-                if (isset($vehicle['psvType']['id']) && $vehicle['psvType']['id'] === $val) {
+            foreach ($applicationData['licence']['licenceVehicles'] as $licenceVehicle) {
+                if (isset($licenceVehicle['vehicle']['psvType']['id'])
+                    && $licenceVehicle['vehicle']['psvType']['id'] === $val
+                ) {
                     $totalVehicles++;
                 }
             }

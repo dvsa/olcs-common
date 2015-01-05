@@ -54,4 +54,12 @@ $(function() {
       }
     }
   });
+
+  OLCS.formHandler({
+    form: "#lva-type-of-licence",
+    onChange: false,
+    success: OLCS.normaliseResponse(function(data) {
+      OLCS.formModal(data);
+    })
+  });
 });

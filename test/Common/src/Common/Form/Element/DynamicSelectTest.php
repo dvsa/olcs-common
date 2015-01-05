@@ -68,6 +68,28 @@ class DynamicSelectTest extends \PHPUnit_Framework_TestCase
         $sut->getValueOptions();
     }
 
+    public function testGetValueOptionsWithEmptyOption()
+    {
+        $mockRefDataService = $this->getMock('\Common\Service\Data\RefData');
+        $mockRefDataService
+            ->expects($this->once())
+            ->method('fetchListOptions')
+            ->with($this->equalTo('category'), $this->equalTo(false))
+            ->willReturn(['key'=>'value']);
+
+        $sut = new DynamicSelect();
+        $sut->setOtherOption(false);
+        $sut->setEmptyOption('choose one');
+        $sut->setDataService($mockRefDataService);
+        $sut->setContext('category');
+
+        $this->assertEquals(['key'=>'value'], $sut->getValueOptions());
+
+        // empty option does not get returned from getValueOptions,
+        // it's appended in the view helper - @see Zend\Form\View\Helper\FormSelect::render
+        $this->assertEquals('choose one', $sut->getEmptyOption());
+    }
+
     /**
      * @param $value
      * @param $expected

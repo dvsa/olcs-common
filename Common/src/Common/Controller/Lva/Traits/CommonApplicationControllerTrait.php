@@ -16,7 +16,9 @@ use Common\Service\Entity\ApplicationEntityService;
  */
 trait CommonApplicationControllerTrait
 {
-    abstract protected function notFoundAction();
+    use EnabledSectionTrait;
+
+    abstract public function notFoundAction();
     abstract protected function checkForRedirect($lvaId);
 
     /**
@@ -138,5 +140,36 @@ trait CommonApplicationControllerTrait
     protected function postSave($section)
     {
         $this->updateCompletionStatuses($this->getApplicationId(), $section);
+    }
+
+    /**
+     * Redirect to the next section
+     *
+     * @param string $currentSection
+     */
+    protected function goToNextSection($currentSection)
+    {
+        $data = $this->getServiceLocator()->get('Entity\Application')
+            ->getOverview($this->getApplicationId());
+
+        $sectionStatus = $this->setEnabledAndCompleteFlagOnSections(
+            $this->getAccessibleSections(false),
+            $data['applicationCompletions'][0]
+        );
+
+        $sections = array_keys($sectionStatus);
+
+        $index = array_search($currentSection, $sections);
+
+        // If there is no next section, or the next section is disabled
+        if (!isset($sections[$index + 1]) || !$sectionStatus[$sections[$index + 1]]['enabled']) {
+            return $this->goToOverview($this->getApplicationId());
+        } else {
+            return $this->redirect()
+                ->toRouteAjax(
+                    'lva-' . $this->lva . '/' . $sections[$index + 1],
+                    array($this->getIdentifierIndex() => $this->getApplicationId())
+                );
+        }
     }
 }

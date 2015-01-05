@@ -55,6 +55,9 @@ class FormHelperService extends AbstractHelperService
             $config = array(
                 'type' => 'Zend\Form\Element\Csrf',
                 'name' => 'security',
+                'attributes' => array(
+                    'class' => 'js-csrf-token',
+                ),
                 'options' => array(
                     'csrf_options' => array(
                         'messageTemplates' => array(
@@ -70,7 +73,7 @@ class FormHelperService extends AbstractHelperService
         if ($addContinue) {
             $config = array(
                 'type' => '\Zend\Form\Element\Button',
-                'name' => 'form-actions[submit]',
+                'name' => 'form-actions[continue]',
                 'options' => array(
                     'label' => 'Continue'
                 ),
@@ -88,8 +91,34 @@ class FormHelperService extends AbstractHelperService
     public function setFormActionFromRequest($form, $request)
     {
         if (!$form->hasAttribute('action')) {
-            $form->setAttribute('action', $request->getUri()->getPath());
+
+            $url = $request->getUri()->getPath();
+
+            $query = $request->getUri()->getQuery();
+
+            if ($query !== '') {
+                $url .= '?' . $query;
+            } else {
+                // WARNING: As rubbish as this looks, do *not* remove
+                // the trailing space. When rendering forms in modals,
+                // IE strips quote marks off attributes wherever possible.
+                // This means that an action of /foo/bar/baz/ will render
+                // without quotes, and the trailing slash will self-close
+                // and completely destroy the form
+                $url .= ' ';
+            }
+
+            $form->setAttribute('action', $url);
         }
+    }
+
+    public function createFormWithRequest($formName, $request)
+    {
+        $form = $this->createForm($formName);
+
+        $this->setFormActionFromRequest($form, $request);
+
+        return $form;
     }
 
     /**
@@ -101,7 +130,7 @@ class FormHelperService extends AbstractHelperService
      */
     private function findForm($formName)
     {
-        foreach (['Olcs', 'Common'] as $namespace) {
+        foreach (['Olcs', 'Common', 'Admin'] as $namespace) {
             $class = $namespace . '\Form\Model\Form\\' . $formName;
 
             if (class_exists($class)) {
@@ -440,14 +469,18 @@ class FormHelperService extends AbstractHelperService
      */
     public function lockElement(Element $element, $message)
     {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
         $viewRenderer = $this->getServiceLocator()->get('ViewRenderer');
 
         $lockView = new ViewModel(
-            array('message' => $this->getServiceLocator()->get('Helper\Translation')->translate($message))
+            array('message' => $translator->translate($message))
         );
         $lockView->setTemplate('partials/lock');
 
-        $element->setLabel($element->getLabel() . $viewRenderer->render($lockView));
+        $label = $translator->translate($element->getLabel());
+
+        $element->setLabel($label . $viewRenderer->render($lockView));
         $element->setLabelOption('disable_html_escape', true);
 
         $attributes = $element->getLabelAttributes();
@@ -513,5 +546,35 @@ class FormHelperService extends AbstractHelperService
                 'company_number' => array($translator->translate($message))
             )
         );
+    }
+
+    /**
+     * Remove a value option from an element
+     *
+     * @param \Zend\Form\Element $element
+     * @param string $index
+     */
+    public function removeOption($element, $index)
+    {
+        $options = $element->getValueOptions();
+
+        if (isset($options[$index])) {
+            unset($options[$index]);
+            $element->setValueOptions($options);
+        }
+    }
+
+    public function setCurrentOption($element, $index)
+    {
+        $options = $element->getValueOptions();
+
+        if (isset($options[$index])) {
+
+            $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+            $options[$index] .= ' ' . $translator->translate('current.option.suffix');
+
+            $element->setValueOptions($options);
+        }
     }
 }

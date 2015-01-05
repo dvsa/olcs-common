@@ -2,11 +2,13 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Data\Interfaces\ListData;
+
 /**
  * Class RefData
  * @package Common\Service
  */
-class RefData extends AbstractData implements ListDataInterface
+class RefData extends AbstractData implements ListData
 {
     use ListDataTrait;
 

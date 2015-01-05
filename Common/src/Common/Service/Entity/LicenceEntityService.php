@@ -49,6 +49,7 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     private $overviewBundle = array(
         'children' => array(
+            'licenceType',
             'status'
         )
     );
@@ -79,38 +80,27 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     protected $addressesDataBundle = array(
         'children' => array(
-            'organisation' => array(
+            'correspondenceCd' => array(
                 'children' => array(
-                    'contactDetails' => array(
-                        'children' => array(
-                            'address' => array(
-                                'children' => array(
-                                    'countryCode'
-                                )
-                            ),
-                            'contactType',
-                            'phoneContacts' => array(
-                                'children' => array(
-                                    'phoneContactType'
-                                )
-                            )
-                        )
-                    ),
-                )
-            ),
-            'contactDetails' => array(
-                'children' => array(
-                    'phoneContacts' => array(
-                        'children' => array(
-                            'phoneContactType'
-                        )
-                    ),
                     'address' => array(
                         'children' => array(
                             'countryCode'
                         )
                     ),
-                    'contactType'
+                    'phoneContacts' => array(
+                        'children' => array(
+                            'phoneContactType'
+                        )
+                    )
+                )
+            ),
+            'establishmentCd' => array(
+                'children' => array(
+                    'address' => array(
+                        'children' => array(
+                            'countryCode'
+                        )
+                    )
                 )
             )
         )
@@ -213,6 +203,12 @@ class LicenceEntityService extends AbstractLvaEntityService
     protected $categoryBundle = array(
         'children' => array(
             'goodsOrPsv'
+        )
+    );
+
+    protected $organisationBundle = array(
+        'children' => array(
+            'organisation'
         )
     );
 
@@ -411,5 +407,42 @@ class LicenceEntityService extends AbstractLvaEntityService
 
             $this->save($saveData);
         }
+    }
+
+    public function findByIdentifier($identifier)
+    {
+        $result = $this->get(['licNo' => $identifier]);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+        return $result['Results'][0];
+    }
+
+    public function getVariationData($id)
+    {
+        $data = $this->get($id, $this->typeOfLicenceBundle);
+
+        $keys = [
+            'totAuthTrailers',
+            'totAuthVehicles',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles',
+            'niFlag'
+        ];
+
+        $variationData = array_intersect_key($data, array_flip($keys));
+
+        $variationData['licenceType'] = $data['licenceType']['id'];
+        $variationData['goodsOrPsv'] = $data['goodsOrPsv']['id'];
+
+        return $variationData;
+    }
+
+    public function getOrganisation($licenceId)
+    {
+        $response = $this->get($licenceId, $this->organisationBundle);
+
+        return $response['organisation'];
     }
 }

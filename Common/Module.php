@@ -7,6 +7,9 @@
 namespace Common;
 
 use Zend\EventManager\EventManager;
+use Common\Exception\ResourceNotFoundException;
+use Zend\Mvc\MvcEvent;
+use Zend\View\Model\ViewModel;
 
 /**
  * ZF2 Module
@@ -24,15 +27,37 @@ class Module
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/language/', '%s.php');
         $translator->addTranslationFilePattern('phparray', __DIR__ . '/config/sic-codes/', 'sicCodes_%s.php');
 
-        $events = new EventManager();
+        $events = $e->getApplication()->getEventManager();
+
         $events->attach(
             'missingTranslation',
             '\Common\Service\Translator\MissingTranslationProcessor::processEvent'
         );
 
         $translator->enableEventManager();
-
         $translator->setEventManager($events);
+
+        $events->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            function (MvcEvent $e) {
+                $exception = $e->getParam('exception');
+                // If something throws an uncaught ResourceNotFoundException, return a 404
+                if ($exception instanceof ResourceNotFoundException) {
+                    $model = new ViewModel(
+                        [
+                            'message'   => $exception->getMessage(),
+                            'reason'    => 'error-resource-not-found',
+                            'exception' => $exception,
+                        ]
+                    );
+                    $model->setTemplate('error/application_error');
+                    $e->getViewModel()->addChild($model);
+                    $e->getResponse()->setStatusCode(404);
+                    $e->stopPropagation();
+                    return $model;
+                }
+            }
+        );
     }
 
     public function getConfig()
@@ -71,6 +96,7 @@ class Module
      * Format an AcceptLanguage into a locale for our translations
      *
      * @param string $language
+     * @return string
      */
     private function formatLanguage($language)
     {

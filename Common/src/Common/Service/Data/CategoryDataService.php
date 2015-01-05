@@ -24,7 +24,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
         RestCallTrait;
 
     const CATEGORY_SERVICE = 'Category';
-    const SUB_CATEGORY_SUFFIX = 'SubCategory';
+    const SUB_CATEGORY_SERVICE = 'SubCategory';
 
     const CATEGORY_LICENSING = 1;
     const CATEGORY_COMPLIANCE = 2;
@@ -36,8 +36,15 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const CATEGORY_APPLICATION = 9;
     const CATEGORY_SUBMISSION = 10;
 
-    // @todo Maybe create constants for all sub categories? Unless we start using handle
-    const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 10;
+    // @NOTE create constants for all sub categories as required. Only a subset
+    // will ever be needed programatically so this list should be manageable
+    const DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL = 5;
+    const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
+    const TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL = 15;
+    const TASK_SUB_CATEGORY_HEARINGS_APPEALS = 49;
+    const SCAN_SUB_CATEGORY_CHANGE_OF_ENTITY = 85;
+    const DOC_SUB_CATEGORY_LICENCE_VEHICLE_LIST = 91;
+    const DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL = 112;
 
     /**
      * Cache the categories
@@ -70,25 +77,27 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     {
         $service = $this->getServiceFromSubCategoryType($subCategoryType);
 
-        $cached = $this->getFromCache($service, $description);
+        $params = $this->getParams($description, $subCategoryType);
+
+        $cached = $this->getFromCache($service, $params);
 
         if ($cached) {
             return $cached;
         }
 
-        return $this->fetchCategory($service, $description);
+        return $this->fetchCategory($service, $params);
     }
 
     /**
      * Fetch and cache the category
      *
      * @param string $service
-     * @param string $description
+     * @param array $params
      * @return string
      */
-    private function fetchCategory($service, $description)
+    private function fetchCategory($service, $params)
     {
-        $data = $this->makeRestCall($service, 'GET', array('description' => $description));
+        $data = $this->makeRestCall($service, 'GET', $params);
 
         if ($data['Count'] > 1) {
             $category = $data['Results'];
@@ -98,13 +107,13 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
             $category = null;
         }
 
-        $this->addToCache($service, $description, $category);
+        $this->addToCache($service, $params, $category);
 
         return $category;
     }
 
     /**
-     * Get service form sub category
+     * Get service from sub category
      *
      * @param string $subCategoryType
      * @return string
@@ -115,18 +124,54 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
             return self::CATEGORY_SERVICE;
         }
 
-        return ucfirst($subCategoryType) . self::SUB_CATEGORY_SUFFIX;
+        return self::SUB_CATEGORY_SERVICE;
+    }
+
+    /**
+     * Get query params from sub category
+     *
+     * @param string $subCategoryType
+     * @return string
+     */
+    private function getParams($description, $subCategoryType = null)
+    {
+        if ($subCategoryType === null) {
+            return ['description' => $description];
+        }
+
+        return [
+            'subCategoryName' => $description,
+            $this->getRestriction($subCategoryType) => true
+        ];
+    }
+
+    /**
+     * Map a user friendly description to a query restriction
+     */
+    private function getRestriction($subCategoryType)
+    {
+        switch ($subCategoryType) {
+            case 'Document':
+                return 'isDoc';
+            case 'Task':
+                return 'isTask';
+            case 'Scan':
+                return 'isScan';
+            default:
+                return null;
+        }
     }
 
     /**
      * Check if we have this category cached
      *
      * @param string $service
-     * @param string $description
+     * @param array $params
      * @return string|null
      */
-    private function getFromCache($service, $description)
+    private function getFromCache($service, $params)
     {
+        $description = implode("|", $params);
         return (isset($this->cache[$service][$description]) ? $this->cache[$service][$description] : null);
     }
 
@@ -134,11 +179,12 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
      * Check if we have this category cached
      *
      * @param string $service
-     * @param string $description
+     * @param array $params
      * @param array $category
      */
-    private function addToCache($service, $description, $category)
+    private function addToCache($service, $params, $category)
     {
+        $description = implode("|", $params);
         $this->cache[$service][$description] = $category;
     }
 }

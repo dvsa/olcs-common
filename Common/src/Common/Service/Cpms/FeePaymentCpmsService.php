@@ -20,8 +20,8 @@ use Common\Service\Entity\FeePaymentEntityService;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Util\LoggerTrait;
-
 use CpmsClient\Service\ApiService;
+use Common\Service\Listener\FeeListenerService;
 
 /**
  * Fee Payment Helper Service
@@ -55,8 +55,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
-            'sales_reference' => $salesReference,
-            'product_reference' => $productReference,
             'scope' => ApiService::SCOPE_CARD,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
@@ -153,6 +151,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     $this->getServiceLocator()
                         ->get('Entity\Fee')
                         ->forceUpdate($fee['id'], $data);
+
+                    $this->getServiceLocator()->get('Listener\Fee')->trigger(
+                        $fee['id'],
+                        FeeListenerService::EVENT_PAY
+                    );
                 }
 
                 $paymentService->setStatus($payment['id'], PaymentEntityService::STATUS_PAID);

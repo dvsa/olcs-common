@@ -3,6 +3,7 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Data\Interfaces\ListData;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -10,7 +11,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class StaticList
  * @package Common\Service
  */
-class StaticList extends AbstractData implements ListDataInterface, ServiceLocatorAwareInterface
+class StaticList extends AbstractData implements ListData, ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
