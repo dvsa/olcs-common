@@ -21,9 +21,15 @@ class CasesEntityService extends AbstractEntityService
      */
     protected $entity = 'Cases';
 
+    private $identifierBundle = [
+        'children' => [
+            'licence'
+        ]
+    ];
+
     public function findByIdentifier($identifier)
     {
-        // a case's identifier is also its primary key
-        return $this->get($identifier);
+        // a case's identifier is also its primary key...
+        return $this->get($identifier, $this->identifierBundle);
     }
 }

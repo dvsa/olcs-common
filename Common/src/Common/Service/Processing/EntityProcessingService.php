@@ -42,9 +42,17 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
 
     public function findEntityForCategory($category, $identifier)
     {
-        return $this->getServiceLocator()
+        $entity = $this->getServiceLocator()
             ->get('Entity\\' . $this->serviceMap[$category])
             ->findByIdentifier($identifier);
+
+        // if the entity has a licence relationship, map the number onto the
+        // top-level of the array
+        if (isset($entity['licence']['licNo'])) {
+            $entity['licNo'] = $entity['licence']['licNo'];
+        }
+
+        return $entity;
     }
 
     public function findEntityNameForCategory($category)
