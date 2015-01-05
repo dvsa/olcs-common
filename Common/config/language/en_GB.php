@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'could-not-remove-message' => 'The selected record could not be removed.',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

@@ -1479,4 +1479,15 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
     }
+
+    public function isRowDisabled($row)
+    {
+        if (!isset($this->settings['row-disabled-callback'])) {
+            return false;
+        }
+
+        $callback = $this->settings['row-disabled-callback'];
+
+        return $callback($row);
+    }
 }

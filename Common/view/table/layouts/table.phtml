@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             <?php foreach ($this->object->getRows() as $row) { ?>
-                <tr>
+                <tr <?php if ($this->object->isRowDisabled($row)): ?>class="disabled"<?php endif; ?>>
                     <?php
                     foreach ($this->object->getColumns() as $column) {
                         echo $this->object->renderBodyColumn($row, $column, '{{[elements/td]}}');

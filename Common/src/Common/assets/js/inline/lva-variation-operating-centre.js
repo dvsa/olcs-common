@@ -10,24 +10,34 @@ OLCS.ready(function() {
   
   var tableSelector = "form [data-group*='table']";
   
-  /**
-   * Always bind some generic edit and delete buttons as they're
-   * common across most (all?) CRUD forms
-   */
+  function checkAction(allowedActions) {
+    return function (length, callback, selectedInputs) {
+      if (length < 1) {
+        return callback(true);
+      }
+
+      var action = $(selectedInputs[0]).data('action');
+      
+      callback(allowedActions.indexOf(action) === -1);
+    };
+  };
+  
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Edit",
-    predicate: function (length, callback) {
-      callback(length !== 1);
-    }
+    predicate: checkAction(['E', 'U', 'A'])
   });
 
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Delete",
-    predicate: function (length, callback) {
-      callback(length < 1);
-    }
+    predicate: checkAction(['A', 'E', 'U'])
+  });
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Restore",
+    predicate: checkAction(['C', 'D'])
   });
   
   OLCS.crudTableHandler();

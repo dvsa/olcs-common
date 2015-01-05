@@ -5,7 +5,6 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-
 namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
@@ -26,10 +25,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
     protected $tableData = array();
 
-    /**
-     * Needed by the Crud Table Trait
-     */
-    private $section = 'operating_centres';
+    protected $section = 'operating_centre';
 
     /**
      * These vary depending on licence or application
@@ -94,35 +90,16 @@ abstract class AbstractOperatingCentresController extends AbstractController
     );
 
     /**
-     * Get the entity name representing this LVA type. By default
-     * we can work this out, but child controllers can override
-     * if needs be
-     */
-    protected function getLvaEntity()
-    {
-        return 'Entity\\' . ucfirst($this->lva);
-    }
-
-    /**
-     * Get the entity name representing this LVA's Operating Centres
-     */
-    protected function getLvaOperatingCentreEntity()
-    {
-        return 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
-    }
-
-    /**
      * Index action
      */
     public function indexAction()
     {
-        $lvaEntity = $this->getLvaEntity();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->getServiceLocator()->get($lvaEntity)
+            $data = $this->getLvaEntityService()
                 ->getOperatingCentresData($this->getIdentifier());
 
             $data = $this->formatDataForForm($data);
@@ -133,7 +110,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
 
         $table = $this->getServiceLocator()
             ->get('Table')
-            ->prepareTable('authorisation_in_form', $this->getTableData());
+            ->prepareTable($this->getTableConfigName(), $this->getTableData());
 
         $form->get('table')
             ->get('table')
@@ -161,8 +138,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                         );
                 }
 
-                $this->getServiceLocator()->get($lvaEntity)
-                    ->save($appData);
+                $this->getLvaEntityService()->save($appData);
 
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);
@@ -174,9 +150,27 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->attachScripts();
 
         return $this->render('operating_centres', $form);
+    }
+
+    protected function attachScripts()
+    {
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+    }
+
+    /**
+     * Get the entity name representing this LVA's Operating Centres
+     */
+    protected function getLvaOperatingCentreEntity()
+    {
+        return 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
+    }
+
+    protected function getTableConfigName()
+    {
+        return 'lva-operating-centres';
     }
 
     /**
@@ -301,38 +295,44 @@ abstract class AbstractOperatingCentresController extends AbstractController
      *
      * @return array
      */
-    private function getTableData()
+    protected function getTableData()
     {
-        $lvaEntity = $this->getLvaOperatingCentreEntity();
-
         if (empty($this->tableData)) {
+            $lvaEntity = $this->getLvaOperatingCentreEntity();
+
             $id = $this->getIdentifier();
 
             $data = $this->getServiceLocator()->get($lvaEntity)
                 ->getAddressSummaryData($id);
 
-            $newData = array();
-
-            foreach ($data['Results'] as $row) {
-
-                $newRow = $row;
-
-                if (isset($row['operatingCentre']['address'])) {
-
-                    unset($row['operatingCentre']['address']['id']);
-                    unset($row['operatingCentre']['address']['version']);
-
-                    $newRow = array_merge($newRow, $row['operatingCentre']['address']);
-                }
-
-                unset($newRow['operatingCentre']);
-
-                $newData[] = $newRow;
-            }
-            $this->tableData = $newData;
+            $this->tableData = $this->formatTableData($data['Results']);
         }
 
         return $this->tableData;
+    }
+
+    protected function formatTableData($results)
+    {
+        $newData = array();
+
+        foreach ($results as $row) {
+
+            $newRow = $row;
+
+            if (isset($row['operatingCentre']['address'])) {
+
+                unset($row['operatingCentre']['address']['id']);
+                unset($row['operatingCentre']['address']['version']);
+
+                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
+            }
+
+            unset($newRow['operatingCentre']);
+
+            $newData[] = $newRow;
+        }
+
+        return $newData;
     }
 
     public function addAction()
@@ -345,7 +345,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->addOrEdit('edit');
     }
 
-    private function addOrEdit($mode)
+    protected function addOrEdit($mode)
     {
         $lvaEntity = $this->getLvaOperatingCentreEntity();
 
@@ -463,8 +463,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
             ->get('Helper\Data')
             ->processDataMap($data, $this->actionDataMap);
 
+        $type = $this->lva === 'variation' ? 'application' : $this->lva;
+
         // we no longer store this in the form...
-        $data['applicationOperatingCentre'][$this->lva] = $this->getIdentifier();
+        $data['applicationOperatingCentre'][$type] = $this->getIdentifier();
 
         return $data;
     }
@@ -557,7 +559,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         }
     }
 
-    private function formatDataForForm($data)
+    protected function formatDataForForm($data)
     {
         $data['data'] = $oldData = $data;
 
@@ -593,7 +595,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $data;
     }
 
-    private function formatDataForSave($data)
+    protected function formatDataForSave($data)
     {
         return $this->getServiceLocator()
             ->get('Helper\Data')
@@ -841,7 +843,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
      */
     public function getDocuments()
     {
-        $lvaEntity = $this->getLvaEntity();
         $lvaOcEntity = $this->getLvaOperatingCentreEntity();
 
         if (($id = $this->params('child_id')) !== null) {
@@ -851,7 +852,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
             $operatingCentreId = null;
         }
 
-        $documents = $this->getServiceLocator()->get($lvaEntity)
+        $documents = $this->getLvaEntityService()
             ->getDocuments(
                 $this->getIdentifier(),
                 CategoryDataService::CATEGORY_APPLICATION,

@@ -60,7 +60,7 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
             ->getMock();
 
         $this->mockService('Table', 'prepareTable')
-            ->with('authorisation_in_form', [])
+            ->with('lva-operating-centres', [])
             ->andReturn($table);
 
         $tableElement = m::mock()
@@ -159,7 +159,7 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
             ->getMock();
 
         $this->mockService('Table', 'prepareTable')
-            ->with('authorisation_in_form', [])
+            ->with('lva-operating-centres', [])
             ->andReturn($table);
 
         $tableElement = m::mock()

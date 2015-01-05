@@ -22,4 +22,20 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
     {
         return $this->get($id);
     }
+
+    public function variationDelete($id, $applicationId)
+    {
+        $addressData = $this->getAddressData($id);
+        $addressData['action'] = 'D';
+        $addressData['application'] = $applicationId;
+
+        unset($addressData['id']);
+        unset($addressData['version']);
+        unset($addressData['createdOn']);
+        unset($addressData['lastModifiedOn']);
+
+        $addressData['operatingCentre'] = $addressData['operatingCentre']['id'];
+
+        return $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->save($addressData);
+    }
 }
