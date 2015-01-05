@@ -328,6 +328,7 @@ return array(
     'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'W Intention',
     'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'W Small vehicle conditions and undertakings
         (if applicable)',
+    'application_vehicle-safety_undertakings.limousines.required' => 'W You must check this box to continue',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'W Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'W Do you agree to the following
