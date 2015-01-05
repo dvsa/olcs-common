@@ -22,11 +22,11 @@ class BusRegEntityService extends AbstractEntityService
     protected $entity = 'BusReg';
 
     /**
-     * Task data bundle
+     * Main data bundle
      *
      * @var array
      */
-    private $taskDataBundle = array(
+    private $mainDataBundle = array(
         'children' => array(
             'licence'
         )
@@ -40,12 +40,12 @@ class BusRegEntityService extends AbstractEntityService
      */
     public function getDataForTasks($id)
     {
-        return $this->get($id, $this->taskDataBundle);
+        return $this->get($id, $this->mainDataBundle);
     }
 
     public function findByIdentifier($identifier)
     {
-        $result = $this->get(['regNo' => $identifier]);
+        $result = $this->get(['regNo' => $identifier], $this->mainDataBundle);
         if ($result['Count'] === 0) {
             return false;
         }
