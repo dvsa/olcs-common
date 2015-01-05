@@ -83,6 +83,9 @@ class FormHelperServiceTest extends MockeryTestCase
                             ),
                             'timeout' => 600
                         )
+                    ),
+                    'attributes' => array(
+                        'class' => 'js-csrf-token'
                     )
                 )
             )
@@ -90,7 +93,7 @@ class FormHelperServiceTest extends MockeryTestCase
             ->with(
                 array(
                     'type' => '\Zend\Form\Element\Button',
-                    'name' => 'form-actions[submit]',
+                    'name' => 'form-actions[continue]',
                     'options' => array(
                         'label' => 'Continue'
                     ),
@@ -986,5 +989,134 @@ class FormHelperServiceTest extends MockeryTestCase
             ->andReturn('QUERY');
 
         $helper->setFormActionFromRequest($form, $request);
+    }
+
+    public function testSetFormActionFromRequestWithNoQuery()
+    {
+        $helper = new FormHelperService();
+
+        $form = m::mock()
+            ->shouldReceive('hasAttribute')
+            ->with('action')
+            ->andReturn(false)
+            ->shouldReceive('setAttribute')
+            ->with('action', 'URI ')
+            ->getMock();
+
+        $request = m::mock();
+
+        $request->shouldReceive('getUri->getPath')
+            ->andReturn('URI');
+
+        $request->shouldReceive('getUri->getQuery')
+            ->andReturn('');
+
+        $helper->setFormActionFromRequest($form, $request);
+    }
+
+    public function testRemoveOptionWithoutOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'blap';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options);
+
+        $helper->removeOption($element, $index);
+    }
+
+    public function testRemoveOptionWithOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'foo';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options)
+            ->shouldReceive('setValueOptions')
+            ->with(['bar' => 'baz']);
+
+        $helper->removeOption($element, $index);
+    }
+
+    public function testSetCurrentOptionWithoutCurrentOption()
+    {
+        $helper = new FormHelperService();
+
+        $index = 'blap';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options);
+
+        $helper->setCurrentOption($element, $index);
+    }
+
+    public function testSetCurrentOptionWithCurrentOption()
+    {
+        $sm = \CommonTest\Bootstrap::getServiceManager();
+
+        $helper = new FormHelperService();
+        $helper->setServiceLocator($sm);
+
+        $mockTranslator = m::mock();
+        $mockTranslator->shouldReceive('translate')
+            ->with('current.option.suffix')
+            ->andReturn('(current)');
+
+        $sm->setService('Helper\Translation', $mockTranslator);
+
+        $index = 'bar';
+
+        $options = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $element = m::mock();
+        $element->shouldReceive('getValueOptions')
+            ->andReturn($options)
+            ->shouldReceive('setValueOptions')
+            ->with(['foo' => 'bar', 'bar' => 'baz (current)']);
+
+        $helper->setCurrentOption($element, $index);
+    }
+
+    public function testCreateFormWithRequest()
+    {
+        // since the method we're testing just composes two other public ones, making
+        // a partial mock is fine
+        $helper = m::mock('Common\Service\Helper\FormHelperService')->makePartial();
+
+        $form = m::mock();
+
+        $helper->shouldReceive('createForm')
+            ->with('MyForm')
+            ->andReturn($form)
+            ->shouldReceive('setFormActionFromRequest')
+            ->with($form, 'request');
+
+        $this->assertEquals(
+            $form,
+            $helper->createFormWithRequest('MyForm', 'request')
+        );
     }
 }

@@ -166,7 +166,7 @@ trait CommonApplicationControllerTrait
             return $this->goToOverview($this->getApplicationId());
         } else {
             return $this->redirect()
-                ->toRoute(
+                ->toRouteAjax(
                     'lva-' . $this->lva . '/' . $sections[$index + 1],
                     array($this->getIdentifierIndex() => $this->getApplicationId())
                 );

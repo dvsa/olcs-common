@@ -5,7 +5,7 @@ namespace Common\Service\Data;
 /**
  * Trait ListDataTrait
  *
- * Provides a default implementation of ListDataInterface requires defining one method for handling fetching data
+ * Provides a default implementation of ListData requires defining one method for handling fetching data
  *
  * @package Common\Service\Data
  */

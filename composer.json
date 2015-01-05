@@ -24,6 +24,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
         "doctrine/doctrine-orm-module": "0.*",
+        "doctrine/annotations": "1.2.1",
         "symfony/Filesystem": "~2.6.0-dev",
         "cpms/client": "0.1.x-dev"
     },

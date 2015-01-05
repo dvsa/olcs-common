@@ -32,7 +32,13 @@ return array(
             ),
             'LvaLicence/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\LicenceTypeOfLicenceDelegator'
-            )
+            ),
+            'LvaVariation/TypeOfLicence' => array(
+                'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
+            ),
+            'LvaApplication/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -82,15 +88,20 @@ return array(
         ),
         'aliases' => array(
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
+            'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
-            'LicenceTypeOfLicenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'ApplicationVehicleGoodsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
+            'LicenceTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
+            'VariationTypeOfLicenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -98,6 +109,7 @@ return array(
             'postcode' => 'Common\Service\Postcode\Postcode',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
+            'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
         ),
@@ -122,6 +134,7 @@ return array(
             'staticList' => 'Common\Service\Data\StaticList',
             'FormAnnotationBuilder' => '\Common\Service\FormAnnotationBuilderFactory',
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
+            'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
         )
@@ -255,6 +268,9 @@ return array(
         ]
     ],
     'data_services' => [
+        'abstract_factories' => [
+            'Common\Service\Data\DataServiceAbstractFactory'
+        ],
         'factories' => [
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',

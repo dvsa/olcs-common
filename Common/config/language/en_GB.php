@@ -423,8 +423,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration No.',
-    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
-        vehicles?',
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Are you submitting vehicle details?',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
@@ -571,6 +570,7 @@ return array(
     'crown-copyright' => 'Crown Copyright',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-submission' => 'Current submission',
+    'current.option.suffix' => '(current)',
     'currently-with' => 'Currently with',
     'dangerous-goods-hazchem-carriers' => 'Dangerous Goods / Hazchem Carriers',
     'dashboard-table-applications' => 'New applications',
@@ -735,6 +735,9 @@ return array(
     'internal-licence-bus-processing-notes-modify-title' => 'Edit note',
     'internal-licence-bus-processing-notes-title' => 'Notes',
     'internal-licence-bus-processing-registration-history' => 'Registration history',
+    'internal-licence-bus-processing-tasks' => 'Tasks',
+    'internal-licence-bus-processing-tasks-label' => 'Tasks',
+    'internal-licence-bus-processing-tasks-title' => 'Tasks',
     'internal-licence-bus-processing-title' => 'Processing',
     'internal-licence-bus-route' => 'Timetables & routes',
     'internal-licence-bus-route-label' => 'Timetables & routes',
@@ -1489,5 +1492,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );

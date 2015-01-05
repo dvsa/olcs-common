@@ -4,7 +4,6 @@ namespace CommonTest;
 
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
-use \Mockery as m;
 
 error_reporting(-1);
 chdir(dirname(__DIR__));
@@ -19,7 +18,7 @@ class Bootstrap
 
     public static function init()
     {
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit', '1G');
         // Setup the autloader
         $loader = static::initAutoloader();
         $loader->addPsr4('CommonTest\\', __DIR__ . '/Common/src/Common');

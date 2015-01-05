@@ -2,13 +2,14 @@
 
 namespace Common\Service\Data;
 
+use Common\Service\Data\Interfaces\ListData;
 use Common\Util\RestClient;
 
 /**
  * Class RefData
  * @package Common\Service
  */
-class Country extends AbstractData implements ListDataInterface
+class Country extends AbstractData implements ListData
 {
     protected $serviceName = 'Country';
 
