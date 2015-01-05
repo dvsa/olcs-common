@@ -357,6 +357,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesStatus($applicationData)
     {
+        if ($applicationData['hasEnteredReg'] === 'N') {
+            return self::STATUS_COMPLETE;
+        }
+
         $totalAuth = $applicationData['totAuthVehicles'];
 
         return $this->checkCompletion(
