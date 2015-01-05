@@ -334,8 +334,8 @@ return array(
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'W Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
-    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Limousines and novelty type vehicles with
-        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Only limousines and novelty type vehicles
+        with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'W If you intend to operate limousines
         or novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
         to be specified on your licence, if granted? (if applicable)',
@@ -611,6 +611,7 @@ return array(
     'defendant-type' => 'W Defendant type',
     'definition' => 'W Definition',
     'delete' => 'W Delete',
+    'delete.confirmation.text' => 'W This action is permanent and cannot be undone.',
     'description' => 'W Description',
     'director' => 'W Director',
     'disagree' => 'W Disagree',
