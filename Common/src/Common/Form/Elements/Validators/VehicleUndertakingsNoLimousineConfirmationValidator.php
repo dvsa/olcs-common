@@ -10,7 +10,7 @@ namespace Common\Form\Elements\Validators;
 use Zend\Validator\AbstractValidator;
 
 /**
- * VehicleUndertakingsOperateSmallVehiclesAgreementValidator
+ * VehicleUndertakingsNoLimousineConfirmationValidator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
