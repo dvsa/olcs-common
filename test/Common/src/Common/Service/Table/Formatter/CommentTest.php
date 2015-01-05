@@ -21,5 +21,13 @@ class CommentTest extends TestCase
         );
 
         $this->assertEquals("Test <br />\nnote", $result);
+
+        // test empty comment
+        $result = $sut->format(
+            ['statusField' => null],
+            ['name' => 'statusField', 'formatter' => 'comment']
+        );
+
+        $this->assertEquals('', $result);
     }
 }
