@@ -609,6 +609,7 @@ return array(
     'defendant-type' => 'Defendant type',
     'definition' => 'Definition',
     'delete' => 'Delete',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
     'description' => 'Description',
     'director' => 'Director',
     'disagree' => 'Disagree',
@@ -655,9 +656,14 @@ return array(
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
+    'fees.cheque' => 'Cheque Number',
     'fees.max_amount' => 'Fee amount',
+    'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
+    'fees.po' => 'PO Number',
+    'fees.receipt_date' => 'Receipt date',
     'fees.received' => 'Amount received',
+    'fees.slip' => 'Slip No.',
     'filters' => 'Filters',
     'finance' => 'Finance',
     'first-name' => 'First name(s)',
@@ -1492,6 +1498,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );
