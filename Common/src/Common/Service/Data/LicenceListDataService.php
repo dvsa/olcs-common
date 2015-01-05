@@ -48,9 +48,8 @@ class LicenceListDataService implements FactoryInterface, ListDataInterface, Ser
     {
         $data = array();
         $serviceName = 'Common\Service\Data\LicenceOperatingCentre';
-        $dataService = $this->getServiceLocator()->get($serviceName);
-        echo 'jere';exit;
-        $rawData = $dataService->fetchLicenceOperatingCentreData();
+        $licenceOcDataService = $this->getServiceLocator()->get($serviceName);
+        $rawData = $licenceOcDataService->fetchData();
 
         foreach ($rawData as $id => $operatingCentre) {
             $data[$id] = $operatingCentre;

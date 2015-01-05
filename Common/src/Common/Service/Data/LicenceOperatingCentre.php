@@ -2,12 +2,19 @@
 
 namespace Common\Service\Data;
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\FactoryInterface;
+
 /**
  * Class LicenceOperatingCentre
  * @package Olcs\Service
  */
-class LicenceOperatingCentre extends AbstractData
+class LicenceOperatingCentre extends AbstractData implements FactoryInterface, ListDataInterface
 {
+    use LicenceServiceTrait;
+
     /**
      * @var integer
      */
@@ -19,31 +26,27 @@ class LicenceOperatingCentre extends AbstractData
     protected $serviceName = 'LicenceOperatingCentre';
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->setServiceLocator($serviceLocator);
-
-        return $this;
-    }
-
-    /**
      * @param integer|null $id
      * @param array|null $bundle
      * @return array
      */
-    public function fetchLicenceOperatingCentreData($id = null, $bundle = null)
+    public function fetchListOptions($context = null, $useGroups = false)
     {
-        return [4 => 'test OC4'];
-        $id = is_null($id) ? $this->getId() : $id;
+        $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-            $bundle = is_null($bundle) ? $this->getBundle() : $bundle;
-            $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
+
+            $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
+            if (is_array($rawData['operatingCentres'])) {
+                foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
+                    $data[$licenceOperatingCentre['operatingCentre']['id']] =
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] .
+                        $licenceOperatingCentre['operatingCentre']['address']['postcode'];
+                }
+            }
             $this->setData($id, $data);
         }
         return $this->getData($id);
@@ -55,20 +58,20 @@ class LicenceOperatingCentre extends AbstractData
     public function getBundle()
     {
         $bundle = array(
-            'properties' => 'ALL',
+            'children' => array(
+                'operatingCentres' => array(
+                    'children' => array(
+                        'operatingCentre' => array(
+                            'children' => array(
+                                'address'
+                            )
+                        )
+                    )
+                )
+            )
         );
 
         return $bundle;
-    }
-
-    /**
-     * @param integer $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -76,6 +79,6 @@ class LicenceOperatingCentre extends AbstractData
      */
     public function getId()
     {
-        return $this->id;
+        return $this->getLicenceService()->getId();
     }
 }
