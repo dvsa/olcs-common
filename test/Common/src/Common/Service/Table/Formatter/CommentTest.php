@@ -29,5 +29,21 @@ class CommentTest extends TestCase
         );
 
         $this->assertEquals('', $result);
+
+        // test comment with maxlength
+        $result = $sut->format(
+            ['statusField' =>  "Test \nnote"],
+            ['name' => 'statusField', 'formatter' => 'comment', 'maxlength' => 8]
+        );
+
+        $this->assertEquals("Test <br />\nno...", $result);
+
+        // test comment with maxlength and custom append
+        $result = $sut->format(
+            ['statusField' =>  "Test \nnote"],
+            ['name' => 'statusField', 'formatter' => 'comment', 'maxlength' => 8, 'append' => '[cont]']
+        );
+
+        $this->assertEquals("Test <br />\nno[cont]", $result);
     }
 }
