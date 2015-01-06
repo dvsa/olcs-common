@@ -15,7 +15,7 @@ class PsvVehicles
     /**
      * @Form\Name("data")
      * @Form\Options({})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\PsvVehiclesData")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
      */
     public $data = null;
 

@@ -385,4 +385,25 @@ abstract class AbstractVehiclesController extends AbstractController
         }
         return $form;
     }
+
+    /**
+     * Save data
+     *
+     * @param array $data
+     * @return mixed
+     */
+    protected function save($data)
+    {
+        $data = $this->formatDataForSave($data);
+        $data['id'] = $this->getIdentifier();
+        return $this->getLvaEntityService()->save($data);
+    }
+
+    /**
+     * Format data for save on the main form
+     */
+    protected function formatDataForSave($data)
+    {
+        return $data['data'];
+    }
 }
