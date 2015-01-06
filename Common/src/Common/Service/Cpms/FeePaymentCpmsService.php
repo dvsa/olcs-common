@@ -37,7 +37,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     const PAYMENT_FAILURE      = 802;
     const PAYMENT_CANCELLATION = 807;
 
-    public function initiateRequest($customerReference, $salesReference, $redirectUrl, array $fees)
+    public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
     {
         $amount = array_reduce(
             $fees,
@@ -92,6 +92,65 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
 
         return $response;
+    }
+
+    /**
+     * Record a cash payment in CPMS
+     *
+     * @param string $customerReference
+     * @param string $salesReference
+     * @param float $amount
+     * @param DateTime $receiptDate
+     * @param string $payer
+     * @param string $slipNo
+     * @return bool
+     */
+    public function recordCashPayment(
+        $customerReference,
+        $salesReference,
+        $amount,
+        $receiptDate,
+        $payer,
+        $slipNo
+    ){
+        $client = $this->getServiceLocator()->get('cpms\service\api');
+        $productReference = 'GVR_APPLICATION_FEE';
+        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $params = [
+            'customer_reference' => (string)$customerReference,
+            'scope' => ApiService::SCOPE_CASH,
+            'total_amount' => $amount,
+            'payment_data' => [
+                [
+                    'amount' => $amount,
+                    'sales_reference' => $salesReference,
+                    'product_reference' => $productReference,
+                    'payer_details' => $payer, // not sure this is supported for CASH payments
+                    'payment_reference' => [
+                        'slip_number' => (string)$slipNo,
+                        'receipt_date' => $receiptDate,
+                    ],
+                ]
+            ]
+        ];
+
+        //var_dump($params); exit;
+        $response = $client->post('/api/payment/cash', ApiService::SCOPE_CASH, $params);
+
+        return $response;
+    }
+
+    /**
+     * Format a date as required by CPMS payment reference fields
+     *
+     * @param array|DateTime $date
+     * @return string
+     */
+    public function formatReceiptDate($date) {
+        if (is_array($date)) {
+            $date = $this->getServiceLocator()->get('Helper\Date')->getDateObjectFromArray($date);
+        }
+        return $date->format('d-m-Y');
     }
 
     public function handleResponse($data, $fees)

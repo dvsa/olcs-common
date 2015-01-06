@@ -23,4 +23,16 @@ class DateHelperService extends AbstractHelperService
     {
         return new \DateTime($time);
     }
+
+    /**
+     * Convert DateSelect style array data to a DateTime object
+     * @param array $date
+     * @return \DateTime
+     */
+    public function getDateObjectFromArray(array $date)
+    {
+        $obj = new \DateTime();
+        $obj->setDate($date['year'], $date['month'], $date['day']);
+        return $obj;
+    }
 }
