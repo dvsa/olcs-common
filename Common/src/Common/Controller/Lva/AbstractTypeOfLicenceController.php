@@ -7,8 +7,7 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface;
-use Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterAwareInterface;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 use Zend\Http\Response;
 use Zend\Stdlib\ResponseInterface;
 
@@ -17,29 +16,16 @@ use Zend\Stdlib\ResponseInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicenceController extends AbstractController implements TypeOfLicenceAdapterAwareInterface
+abstract class AbstractTypeOfLicenceController extends AbstractController implements AdapterAwareInterface
 {
-    protected $typeOfLicenceAdapter;
-
-    /**
-     * @return TypeOfLicenceAdapterInterface
-     */
-    public function getTypeOfLicenceAdapter()
-    {
-        return $this->typeOfLicenceAdapter;
-    }
-
-    public function setTypeOfLicenceAdapter(TypeOfLicenceAdapterInterface $adapter)
-    {
-        $this->typeOfLicenceAdapter = $adapter;
-    }
+    use Traits\AdapterAwareTrait;
 
     /**
      * Type of licence section
      */
     public function indexAction()
     {
-        $adapter = $this->getTypeOfLicenceAdapter();
+        $adapter = $this->getAdapter();
 
         $request = $this->getRequest();
 
@@ -99,7 +85,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
 
     protected function processPostAdapter($data)
     {
-        $adapter = $this->getTypeOfLicenceAdapter();
+        $adapter = $this->getAdapter();
 
         if ($adapter === null) {
             return;
@@ -178,7 +164,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
 
     public function confirmationAction()
     {
-        $adapter = $this->getTypeOfLicenceAdapter();
+        $adapter = $this->getAdapter();
 
         if ($adapter === null) {
             return $this->notFoundAction();

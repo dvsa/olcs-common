@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract Type Of Licence Delegator
+ * Abstract Adapter Delegator
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -12,11 +12,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Common\Controller\Lva\Interfaces\ControllerAwareInterface;
 
 /**
- * Abstract Type Of Licence Delegator
+ * Abstract Adapter Delegator
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractTypeOfLicenceDelegator implements DelegatorFactoryInterface
+abstract class AbstractAdapterDelegator implements DelegatorFactoryInterface
 {
     protected $adapter;
 
@@ -40,7 +40,7 @@ abstract class AbstractTypeOfLicenceDelegator implements DelegatorFactoryInterfa
             $adapter->setController($controller);
         }
 
-        $controller->setTypeOfLicenceAdapter($adapter);
+        $controller->setAdapter($adapter);
 
         return $controller;
     }

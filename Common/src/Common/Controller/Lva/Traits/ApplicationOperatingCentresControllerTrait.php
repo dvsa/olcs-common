@@ -14,14 +14,6 @@ namespace Common\Controller\Lva\Traits;
  */
 trait ApplicationOperatingCentresControllerTrait
 {
-    protected function getDocumentProperties()
-    {
-        return array(
-            'application' => $this->getIdentifier(),
-            'licence' => $this->getLicenceId()
-        );
-    }
-
     /**
      * Check Traffic Area After Crud Action
      *

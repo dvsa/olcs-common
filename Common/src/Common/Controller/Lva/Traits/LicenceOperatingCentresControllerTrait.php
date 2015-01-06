@@ -136,16 +136,6 @@ trait LicenceOperatingCentresControllerTrait
     }
 
     /**
-     * Get extra document properties to save
-     */
-    protected function getDocumentProperties()
-    {
-        return array(
-            'licence' => $this->getLicenceId()
-        );
-    }
-
-    /**
      * Format crud data for save
      *
      * @param array $data

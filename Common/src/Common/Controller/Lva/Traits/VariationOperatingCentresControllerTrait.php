@@ -8,6 +8,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Zend\Form\Form;
+
 /**
  * Common variation OC controller logic
  *
@@ -16,90 +18,12 @@ namespace Common\Controller\Lva\Traits;
  */
 trait VariationOperatingCentresControllerTrait
 {
-    protected function getDocumentProperties()
-    {
-        return array(
-            'application' => $this->getIdentifier(),
-            'licence' => $this->getLicenceId()
-        );
-    }
-
-    protected function attachScripts()
-    {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-variation-operating-centre');
-    }
-
-    protected function getTableConfigName()
-    {
-        return 'lva-variation-operating-centres';
-    }
-
     /**
      * Get the entity name representing this LVA's Operating Centres
      */
     protected function getLvaOperatingCentreEntity()
     {
         return 'Entity\\ApplicationOperatingCentre';
-    }
-
-    /**
-     * Get the table data for the main form
-     *
-     * @return array
-     */
-    protected function getTableData()
-    {
-        if (empty($this->tableData)) {
-
-            $licenceData = $this->getIndexedTableData('Licence', $this->getLicenceId());
-            $applicationData = $this->getIndexedTableData('Application', $this->getApplicationId());
-
-            $data = $this->updateAndFilterTableData($licenceData, $applicationData);
-
-            $this->tableData = $this->formatTableData($data);
-        }
-
-        return $this->tableData;
-    }
-
-    protected function updateAndFilterTableData($licenceData, $applicationData)
-    {
-        $data = array();
-
-        foreach ($licenceData as $ocId => $row) {
-
-            if (!isset($applicationData[$ocId])) {
-                // If we have no application oc record
-
-                // E for existing (No updates)
-                $row['action'] = 'E';
-                $data[] = $row;
-            } elseif ($applicationData[$ocId]['action'] === 'U') {
-                // If we have updated the operating centre
-
-                $row['action'] = 'C';
-                $data[] = $row;
-            }
-        }
-
-        $data = array_merge($data, $applicationData);
-
-        return $data;
-    }
-
-    protected function getIndexedTableData($type, $id)
-    {
-        $data = $this->getServiceLocator()->get('Entity\\' . $type . 'OperatingCentre')
-            ->getAddressSummaryData($id)['Results'];
-
-        $indexedData = [];
-
-        foreach ($data as $value) {
-            $value['id'] = substr($type, 0, 1) . $value['id'];
-            $indexedData[$value['operatingCentre']['id']] = $value;
-        }
-
-        return $indexedData;
     }
 
     /**
@@ -169,6 +93,11 @@ trait VariationOperatingCentresControllerTrait
     protected function splitTypeAndId($ref)
     {
         $type = substr($ref, 0, 1);
+
+        if (is_numeric($type)) {
+            return array(null, $ref);
+        }
+
         $id = (int)substr($ref, 1);
 
         return array($type, $id);
@@ -202,5 +131,24 @@ trait VariationOperatingCentresControllerTrait
         $aocRecord = $aocDataService->getByApplicationAndOperatingCentre($this->getApplicationId(), $ocId);
 
         return empty($aocRecord);
+    }
+
+    protected function getChildId()
+    {
+        $ref = $this->params('child_id');
+
+        return $this->splitTypeAndId($ref)[1];
+    }
+
+    public function alterActionForm(Form $form)
+    {
+        $form = parent::alterActionForm($form);
+
+        if ($this->location === 'external') {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->disableElements($form->get('address'));
+        }
+
+        return $form;
     }
 }

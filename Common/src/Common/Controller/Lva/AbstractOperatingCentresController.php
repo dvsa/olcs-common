@@ -11,6 +11,7 @@ use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Data\CategoryDataService;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic between Operating Centres controllers
@@ -19,28 +20,14 @@ use Common\Service\Data\CategoryDataService;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractOperatingCentresController extends AbstractController
+abstract class AbstractOperatingCentresController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait,
+        Traits\AdapterAwareTrait;
 
     protected $tableData = array();
 
-    protected $section = 'operating_centre';
-
-    /**
-     * These vary depending on licence or application
-     */
-    abstract protected function getDocumentProperties();
-
-    protected function getTrafficArea($lvaId = null)
-    {
-        if ($lvaId === null) {
-            $lvaId = $this->getLicenceId();
-        }
-        return $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getTrafficArea($lvaId);
-    }
+    protected $section = 'operating_centres';
 
     /**
      * Data map
@@ -99,25 +86,10 @@ abstract class AbstractOperatingCentresController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->getLvaEntityService()
-                ->getOperatingCentresData($this->getIdentifier());
-
-            $data = $this->formatDataForForm($data);
+            $data = $this->getAdapter()->getOperatingCentresFormData($this->getIdentifier());
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\OperatingCentres');
-
-        $table = $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable($this->getTableConfigName(), $this->getTableData());
-
-        $form->get('table')
-            ->get('table')
-            ->setTable($table);
-
-        $form = $this->alterForm($form)
-            ->setData($data);
+        $form = $this->getAdapter()->getMainForm()->setData($data);
 
         if ($request->isPost()) {
 
@@ -150,14 +122,19 @@ abstract class AbstractOperatingCentresController extends AbstractController
             }
         }
 
-        $this->attachScripts();
+        $this->getAdapter()->attachScripts();
 
         return $this->render('operating_centres', $form);
     }
 
-    protected function attachScripts()
+    protected function getTrafficArea($lvaId = null)
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        if ($lvaId === null) {
+            $lvaId = $this->getLicenceId();
+        }
+        return $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getTrafficArea($lvaId);
     }
 
     /**
@@ -166,11 +143,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
     protected function getLvaOperatingCentreEntity()
     {
         return 'Entity\\' . ucfirst($this->lva) . 'OperatingCentre';
-    }
-
-    protected function getTableConfigName()
-    {
-        return 'lva-operating-centres';
     }
 
     /**
@@ -290,51 +262,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
         $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, $fieldsetMap['data'], $removeFields);
     }
 
-    /**
-     * Get the table data for the main form
-     *
-     * @return array
-     */
-    protected function getTableData()
-    {
-        if (empty($this->tableData)) {
-            $lvaEntity = $this->getLvaOperatingCentreEntity();
-
-            $id = $this->getIdentifier();
-
-            $data = $this->getServiceLocator()->get($lvaEntity)
-                ->getAddressSummaryData($id);
-
-            $this->tableData = $this->formatTableData($data['Results']);
-        }
-
-        return $this->tableData;
-    }
-
-    protected function formatTableData($results)
-    {
-        $newData = array();
-
-        foreach ($results as $row) {
-
-            $newRow = $row;
-
-            if (isset($row['operatingCentre']['address'])) {
-
-                unset($row['operatingCentre']['address']['id']);
-                unset($row['operatingCentre']['address']['version']);
-
-                $newRow = array_merge($newRow, $row['operatingCentre']['address']);
-            }
-
-            unset($newRow['operatingCentre']);
-
-            $newData[] = $newRow;
-        }
-
-        return $newData;
-    }
-
     public function addAction()
     {
         return $this->addOrEdit('add');
@@ -345,13 +272,18 @@ abstract class AbstractOperatingCentresController extends AbstractController
         return $this->addOrEdit('edit');
     }
 
+    protected function getChildId()
+    {
+        return $this->params('child_id');
+    }
+
     protected function addOrEdit($mode)
     {
         $lvaEntity = $this->getLvaOperatingCentreEntity();
 
         $this->getServiceLocator()->get('Script')->loadFile('add-operating-centre');
 
-        $id = $this->params('child_id');
+        $id = $this->getChildId();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -557,42 +489,6 @@ abstract class AbstractOperatingCentresController extends AbstractController
                 array('id' => $file['id'], 'version' => $file['version'], 'operatingCentre' => $operatingCentreId)
             );
         }
-    }
-
-    protected function formatDataForForm($data)
-    {
-        $data['data'] = $oldData = $data;
-
-        $results = $this->getTableData();
-
-        $licenceData = $this->getTypeOfLicenceData();
-
-        $data['data']['noOfOperatingCentres'] = count($results);
-        $data['data']['minVehicleAuth'] = 0;
-        $data['data']['maxVehicleAuth'] = 0;
-        $data['data']['minTrailerAuth'] = 0;
-        $data['data']['maxTrailerAuth'] = 0;
-        $data['data']['licenceType'] = $licenceData['licenceType'];
-
-        foreach ($results as $row) {
-
-            $data['data']['minVehicleAuth'] = max(
-                array($data['data']['minVehicleAuth'], $row['noOfVehiclesRequired'])
-            );
-
-            $data['data']['minTrailerAuth'] = max(
-                array($data['data']['minTrailerAuth'], $row['noOfTrailersRequired'])
-            );
-
-            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesRequired'];
-            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersRequired'];
-        }
-
-        if (isset($oldData['licence']['trafficArea']['id'])) {
-            $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
-        }
-
-        return $data;
     }
 
     protected function formatDataForSave($data)
@@ -833,7 +729,7 @@ abstract class AbstractOperatingCentresController extends AbstractController
                     'category'    => $category['id'],
                     'subCategory' => $subCategory['id'],
                 ),
-                $this->getDocumentProperties()
+                $this->getAdapter()->getDocumentProperties()
             )
         );
     }
