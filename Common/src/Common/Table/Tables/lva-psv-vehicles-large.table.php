@@ -14,7 +14,7 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('label' => 'Remove', 'class' => 'secondary', 'requireRows' => true)
+                'delete' => array('class' => 'secondary', 'requireRows' => true)
             )
         )
     ),
@@ -24,9 +24,8 @@ return array(
         array(
             'title' => $translationPrefix . '.vrm',
             'name' => 'vrm',
-            'formatter' => $this->getServiceLocator()->get('section.vehicle-safety.vehicle.formatter.vrm'),
-            'action-type' => 'large',
-            'psv' => true
+            'action' => 'edit',
+            'type' => 'Action',
         ),
         array(
             'title' => $translationPrefix . '.specified',

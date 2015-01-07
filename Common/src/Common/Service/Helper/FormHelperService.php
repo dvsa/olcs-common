@@ -55,6 +55,9 @@ class FormHelperService extends AbstractHelperService
             $config = array(
                 'type' => 'Zend\Form\Element\Csrf',
                 'name' => 'security',
+                'attributes' => array(
+                    'class' => 'js-csrf-token',
+                ),
                 'options' => array(
                     'csrf_options' => array(
                         'messageTemplates' => array(
@@ -70,7 +73,7 @@ class FormHelperService extends AbstractHelperService
         if ($addContinue) {
             $config = array(
                 'type' => '\Zend\Form\Element\Button',
-                'name' => 'form-actions[submit]',
+                'name' => 'form-actions[continue]',
                 'options' => array(
                     'label' => 'Continue'
                 ),
@@ -95,10 +98,27 @@ class FormHelperService extends AbstractHelperService
 
             if ($query !== '') {
                 $url .= '?' . $query;
+            } else {
+                // WARNING: As rubbish as this looks, do *not* remove
+                // the trailing space. When rendering forms in modals,
+                // IE strips quote marks off attributes wherever possible.
+                // This means that an action of /foo/bar/baz/ will render
+                // without quotes, and the trailing slash will self-close
+                // and completely destroy the form
+                $url .= ' ';
             }
 
             $form->setAttribute('action', $url);
         }
+    }
+
+    public function createFormWithRequest($formName, $request)
+    {
+        $form = $this->createForm($formName);
+
+        $this->setFormActionFromRequest($form, $request);
+
+        return $form;
     }
 
     /**

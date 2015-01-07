@@ -327,14 +327,15 @@ return array(
     'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'Intention',
     'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'Small vehicle conditions and undertakings
         (if applicable)',
+    'application_vehicle-safety_undertakings.limousines.required' => 'You must check this box to continue',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
-    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
-        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Only limousines and novelty type vehicles
+        with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
@@ -423,8 +424,7 @@ return array(
         vehicle?',
     'application_vehicle-safety_vehicle-psv-sub-action.data.makeModel' => 'Make / model',
     'application_vehicle-safety_vehicle-psv-sub-action.data.vrm' => 'Vehicle registration No.',
-    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Would you like to enter the registration numbers of your
-        vehicles?',
+    'application_vehicle-safety_vehicle-psv.hasEnteredReg' => 'Are you submitting vehicle details?',
     'application_vehicle-safety_vehicle-reprint' => 'Replace disc(s)',
     'application_vehicle-safety_vehicle-sub-action.data.vrm' => 'Vehicle registration mark (VRM)',
     'application_vehicle-safety_vehicle-sub-action.data.weight' => 'Gross plated weight (Kg)',
@@ -610,6 +610,7 @@ return array(
     'defendant-type' => 'Defendant type',
     'definition' => 'Definition',
     'delete' => 'Delete',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
     'description' => 'Description',
     'director' => 'Director',
     'disagree' => 'Disagree',

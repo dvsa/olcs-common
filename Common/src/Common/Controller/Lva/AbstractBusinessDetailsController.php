@@ -170,7 +170,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\BusinessDetailsSubsidiaryCompany')
+            ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $this->getRequest())
             ->setData($data);
 
         if ($mode !== 'add') {

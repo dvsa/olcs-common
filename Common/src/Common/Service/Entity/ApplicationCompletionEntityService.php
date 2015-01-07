@@ -357,6 +357,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getVehiclesStatus($applicationData)
     {
+        if ($applicationData['hasEnteredReg'] === 'N') {
+            return self::STATUS_COMPLETE;
+        }
+
         $totalAuth = $applicationData['totAuthVehicles'];
 
         return $this->checkCompletion(
@@ -465,6 +469,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             if ($applicationData['licence']['trafficArea']['isScotland']) {
                 unset($requiredVars['psvOperateSmallVhl']);
+                unset($requiredVars['psvSmallVhlNotes']);
+            }
+
+            if ($applicationData['psvOperateSmallVhl'] === 'N') {
                 unset($requiredVars['psvSmallVhlNotes']);
             }
         }

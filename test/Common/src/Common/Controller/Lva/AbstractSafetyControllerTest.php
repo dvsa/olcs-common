@@ -90,4 +90,26 @@ class AbstractSafetyControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('safety', $this->view);
     }
+
+    public function testBasicAddAction()
+    {
+        $form = $this->createMockForm('Lva\SafetyProviders');
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $this->getMockFormHelper()
+            ->shouldReceive('processAddressLookupForm')
+            ->with($form, $this->request);
+
+        $this->mockRender();
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(50);
+
+        $this->sut->addAction();
+
+        $this->assertEquals('add_safety', $this->view);
+    }
 }

@@ -94,4 +94,26 @@ class AbstractLicenceHistoryControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('licence_history', $this->view);
     }
+
+    public function testBasicAddCurrentAction()
+    {
+        $form = $this->createMockForm('Lva\LicenceHistoryLicence');
+
+        $form->shouldReceive('setData');
+
+        $this->shouldRemoveElements(
+            $form,
+            [
+                'data->disqualificationDate',
+                'data->disqualificationLength',
+                'data->purchaseDate'
+            ]
+        );
+
+        $this->mockRender();
+
+        $this->sut->currentAddAction();
+
+        $this->assertEquals('add_licence_history', $this->view);
+    }
 }

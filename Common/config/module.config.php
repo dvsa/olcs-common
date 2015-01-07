@@ -35,7 +35,10 @@ return array(
             ),
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
-            )
+            ),
+            'LvaApplication/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -93,6 +96,8 @@ return array(
         'invokables' => array(
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
+            'ApplicationVehicleGoodsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter',
             'LicenceTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'VariationTypeOfLicenceAdapter'
@@ -104,6 +109,7 @@ return array(
             'postcode' => 'Common\Service\Postcode\Postcode',
             'postcodeTrafficAreaValidator' => 'Common\Form\Elements\Validators\OperatingCentreTrafficAreaValidator',
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
+            'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
         ),
