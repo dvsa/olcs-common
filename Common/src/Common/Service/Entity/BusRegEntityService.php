@@ -45,10 +45,17 @@ class BusRegEntityService extends AbstractEntityService
 
     public function findByIdentifier($identifier)
     {
-        $result = $this->get(['regNo' => $identifier], $this->mainDataBundle);
+        $params = [
+            'regNo' => $identifier,
+            'sort' => 'variationNo',
+            'order' => 'DESC'
+        ];
+
+        $result = $this->get($params, $this->mainDataBundle);
         if ($result['Count'] === 0) {
             return false;
         }
+
         return $result['Results'][0];
     }
 }
