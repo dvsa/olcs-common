@@ -47,7 +47,7 @@ class BusRegEntityService extends AbstractEntityService
     {
         $params = [
             'regNo' => $identifier,
-            'sort' => 'variationNo',
+            'sort'  => 'variationNo',
             'order' => 'DESC'
         ];
 

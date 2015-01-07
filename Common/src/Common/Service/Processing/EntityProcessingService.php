@@ -87,6 +87,9 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
                     'busReg'  => $entity['id'],
                     'licence' => $entity['licence']['id']
                 ];
+
+            default:
+                return [];
         }
     }
 }
