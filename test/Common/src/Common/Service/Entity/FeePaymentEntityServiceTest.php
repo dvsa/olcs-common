@@ -32,7 +32,8 @@ class FeePaymentEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals($expected, $this->sut->isValidPaymentType($type));
     }
 
-    public function paymentTypeProvider() {
+    public function paymentTypeProvider()
+    {
         return [
             [true, 'fpm_cash'],
             [true, 'fpm_cheque'],

@@ -30,7 +30,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     protected $sm;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->sm = Bootstrap::getServiceManager();
         return parent::setUp();
     }
