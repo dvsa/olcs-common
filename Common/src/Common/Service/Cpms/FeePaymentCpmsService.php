@@ -39,7 +39,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     const RESPONSE_SUCCESS = '000';
 
-    protected function getClient() {
+    protected function getClient()
+    {
         return $this->getServiceLocator()->get('cpms\service\api');
     }
 
@@ -117,8 +118,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $receiptDate,
         $payer,
         $slipNo
-    ){
-
+    ) {
         // Partial payments are not supported. The form validation will normally catch
         // this but it relies on a hidden field so we have a secondary check here
         if ($fee['amount'] != $amount) {
@@ -177,7 +177,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array $response response data
      * @return boolean
      */
-    protected function isSuccessfulResponse(array $response) {
+    protected function isSuccessfulResponse(array $response)
+    {
         return (
             isset($response['code'])
             && $response['code'] === self::RESPONSE_SUCCESS
@@ -191,7 +192,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array|DateTime $date
      * @return string
      */
-    public function formatReceiptDate($date) {
+    public function formatReceiptDate($date)
+    {
         if (is_array($date)) {
             $date = $this->getServiceLocator()->get('Helper\Date')->getDateObjectFromArray($date);
         }

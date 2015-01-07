@@ -24,7 +24,7 @@ use Common\Service\Listener\FeeListenerService;
  */
 class FeePaymentCpmsServiceTest extends MockeryTestCase
 {
-    public function testInitiateRequest()
+    public function testInitiateCardRequest()
     {
         $sut = new FeePaymentCpmsService();
 
@@ -98,7 +98,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 'amount' => 525.25
             ]
         ];
-        $sut->initiateRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
+        $sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
     }
 
     public function testHandleResponseWithInvalidPayment()

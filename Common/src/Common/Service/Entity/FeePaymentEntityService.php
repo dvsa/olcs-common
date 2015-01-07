@@ -34,7 +34,8 @@ class FeePaymentEntityService extends AbstractEntityService
      * @param string $value value to test
      * @return boolean
      */
-    public function isValidPaymentType($value) {
+    public function isValidPaymentType($value)
+    {
         return in_array(
             $value,
             [
