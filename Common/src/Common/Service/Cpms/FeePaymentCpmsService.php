@@ -154,8 +154,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'receiptNo'      => $response['receipt_reference'],
                 'paymentMethod'  => FeePaymentEntityService::METHOD_CASH,
                 'receivedAmount' => $amount,
-                // @todo payer name
-                // @todo slip no.
+                'payer'          => $payer,
+                'slipNo'         => $slipNo,
             ];
 
             $this->getServiceLocator()
