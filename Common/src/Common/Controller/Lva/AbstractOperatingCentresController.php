@@ -76,14 +76,13 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
     protected function addOrEdit($mode)
     {
-        $id = $this->getAdapter()->getChildId();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
             if ($mode === 'edit') {
-                $data = $this->getAdapter()->getAddressData($id);
+                $data = $this->getAdapter()->getAddressData($this->params('child_id'));
             } else {
                 $data = [];
             }
@@ -92,8 +91,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
         $form = $this->getAdapter()->getActionForm($mode, $request)->setData($data);
 
-        $hasProcessedPostcode = $this->getServiceLocator()->get('Helper\Form')
-            ->processAddressLookupForm($form, $request);
+        $hasProcessedPostcode = $this->getAdapter()->processAddressLookupForm($form, $request);
 
         if ($form->has('advertisements')) {
             $hasProcessedFiles = $this->processFiles(

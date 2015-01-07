@@ -368,6 +368,18 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     }
 
     /**
+     * Process address lookup for main form
+     *
+     * @param Form $form
+     * @param Request $request
+     * @return type
+     */
+    public function processAddressLookupForm($form, $request)
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->processAddressLookupForm($form, $request);
+    }
+
+    /**
      * Format the table data for the main table
      *
      * @param array $results
@@ -391,7 +403,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
             unset($newRow['operatingCentre']);
 
-            $newData[] = $newRow;
+            $newData[$newRow['id']] = $newRow;
         }
 
         return $newData;
@@ -651,6 +663,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
      * Alter action form
      *
      * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
      */
     protected function alterActionForm(Form $form)
     {

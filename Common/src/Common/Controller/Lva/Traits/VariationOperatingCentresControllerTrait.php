@@ -32,17 +32,6 @@ trait VariationOperatingCentresControllerTrait
 
     public function restoreAction()
     {
-        $ref = $this->params('child_id');
-
-        list($type, $id) = $this->splitTypeAndId($ref);
-
-        if ($type === 'A') {
-            $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
-                ->delete($id);
-
-            return $this->redirect()->toRouteAjax(null, array('action' => null, 'child_id' => null), array(), true);
-        }
-
-        // @todo restore updated version
+        return $this->getAdapter()->restore();
     }
 }

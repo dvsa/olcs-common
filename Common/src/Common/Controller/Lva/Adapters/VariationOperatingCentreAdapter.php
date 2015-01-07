@@ -18,6 +18,15 @@ use Zend\Form\Form;
  */
 class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 {
+    const ACTION_ADDED = 'A';
+    const ACTION_EXISTING = 'E';
+    const ACTION_CURRENT = 'C';
+    const ACTION_UPDATED = 'U';
+    const ACTION_DELETED = 'D';
+
+    const SOURCE_APPLICATION = 'A';
+    const SOURCE_LICENCE = 'L';
+
     protected $lva = 'variation';
 
     protected $entityService = 'Entity\ApplicationOperatingCentre';
@@ -33,21 +42,20 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
-     * Extend the abstract behaviour to alter the action form
+     * Get address data
      *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
+     * @param int $id
+     * @return array
      */
-    public function alterActionForm(Form $form)
+    public function getAddressData($id)
     {
-        $form = parent::alterActionForm($form);
+        list($type, $ocId) = $this->splitTypeAndId($id);
 
-        if ($this->location === 'external') {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->disableElements($form->get('address'));
+        if ($type === self::SOURCE_APPLICATION) {
+            return $this->getEntityService()->getAddressData($ocId);
         }
 
-        return $form;
+        return $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')->getAddressData($ocId);
     }
 
     /**
@@ -83,10 +91,10 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $aocDataService = $this->getEntityService();
 
         // If we have an application operating centre record
-        if ($type === 'A') {
+        if ($type === self::SOURCE_APPLICATION) {
             $record = $aocDataService->getById($id);
 
-            return in_array($record['action'], ['U', 'A']);
+            return in_array($record['action'], [self::ACTION_UPDATED, self::ACTION_ADDED]);
         }
 
         $locDataService = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre');
@@ -145,13 +153,51 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         list($type, $id) = $this->splitTypeAndId($ref);
 
-        if ($type === 'A') {
+        if ($type === self::SOURCE_APPLICATION) {
             $this->getEntityService()->delete($id);
             return;
         } else {
             $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
                 ->variationDelete($id, $this->getIdentifier());
         }
+    }
+
+    public function restore()
+    {
+        $ref = $this->getController()->params('child_id');
+
+        list($type, $id) = $this->splitTypeAndId($ref);
+
+        // If we have an 'A'pplication_operating_centre record, deleting it should restore all scenarios
+        if ($type === self::SOURCE_APPLICATION) {
+            $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
+                ->delete($id);
+
+            return $this->getController()->redirect()
+                ->toRouteAjax(null, array('action' => null, 'child_id' => null), array(), true);
+        }
+
+        // @todo restore updated version
+    }
+
+    /**
+     * Format the data for the form
+     *
+     * @param array $oldData
+     * @param string $mode
+     * @return array
+     */
+    public function formatCrudDataForForm(array $oldData, $mode)
+    {
+        $data = parent::formatCrudDataForForm($oldData, $mode);
+
+        $action = $this->getOperatingCentreAction();
+
+        if ($action === 'E') {
+            unset($data['advertisements']);
+        }
+
+        return $data;
     }
 
     /**
@@ -171,12 +217,12 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
                 // If we have no application oc record
 
                 // E for existing (No updates)
-                $row['action'] = 'E';
+                $row['action'] = self::ACTION_EXISTING;
                 $data[] = $row;
-            } elseif ($applicationData[$ocId]['action'] === 'U') {
+            } elseif ($applicationData[$ocId]['action'] === self::ACTION_UPDATED) {
                 // If we have updated the operating centre
 
-                $row['action'] = 'C';
+                $row['action'] = self::ACTION_CURRENT;
                 $data[] = $row;
             }
         }
@@ -201,7 +247,8 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $indexedData = [];
 
         foreach ($data as $value) {
-            $value['id'] = substr($type, 0, 1) . $value['id'];
+            $value['source'] = substr($type, 0, 1);
+            $value['id'] = $value['source'] . $value['id'];
             $indexedData[$value['operatingCentre']['id']] = $value;
         }
 
@@ -225,5 +272,76 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $id = (int)substr($ref, 1);
 
         return array($type, $id);
+    }
+
+    protected function getOperatingCentreAction($ref = null)
+    {
+        if ($ref == null) {
+            $ref = $this->getController()->params('child_id');
+        }
+
+        $data = $this->getTableData();
+
+        foreach ($data as $row) {
+            if ($row['id'] === $ref) {
+                return $row['action'];
+            }
+        }
+
+        throw new \Exception('Operating centre not found');
+    }
+
+    /**
+     * Alter action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterActionForm(Form $form)
+    {
+        $form = parent::alterActionForm($form);
+
+        $action = $this->getOperatingCentreAction();
+
+        if ($action !== 'A') {
+            list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
+
+            $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $currentVehicles);
+            $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
+        }
+
+        return $form;
+    }
+
+    protected function getCurrentAuthorisationValues()
+    {
+        $ref = $this->getController()->params('child_id');
+        list($type, $id) = $this->splitTypeAndId($ref);
+
+        $data = $this->getTableData();
+
+        if (!isset($data[$ref])) {
+            throw new \Exception('Operating centre not found');
+        }
+
+        if ($type === self::SOURCE_LICENCE) {
+            return [
+                $data[$ref]['noOfVehiclesRequired'],
+                $data[$ref]['noOfTrailersRequired']
+            ];
+        }
+
+        $ocId = $data[$ref]['operatingCentre']['id'];
+
+        foreach ($data as $row) {
+            if ($row['source'] === self::SOURCE_LICENCE && $row['operatingCentre']['id'] == $ocId) {
+                return [
+                    $row['noOfVehiclesRequired'],
+                    $row['noOfTrailersRequired']
+                ];
+            }
+        }
+
+        throw new \Exception('Operating centre not found');
     }
 }
