@@ -45,6 +45,16 @@ class BusRegEntityService extends AbstractEntityService
 
     public function findByIdentifier($identifier)
     {
+        /**
+         * @TODO this AC still isn't correct; the logic to fetch
+         * the currently active variation (as opposed to highest)
+         * will be fulfilled by https://jira.i-env.net/browse/OLCS-6334
+         *
+         * That story is expected to implement a custom backend service which
+         * *should* satisfy all calls made to the BusReg service, but this
+         * method will most likely still need revisiting and thus get its
+         * own story in the future
+         */
         $params = [
             'regNo' => $identifier,
             'sort'  => 'variationNo',
