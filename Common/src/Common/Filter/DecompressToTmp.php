@@ -92,7 +92,7 @@ class DecompressToTmp extends AbstractFilter
     {
         $tmpDir = $this->createTmpDir();
 
-        $this->getDecompressFilter()->setOptions(['options' => ['target' => $tmpDir]]);
+        $this->getDecompressFilter()->setTarget($tmpDir);
         return $this->getDecompressFilter()->filter($value);
     }
 

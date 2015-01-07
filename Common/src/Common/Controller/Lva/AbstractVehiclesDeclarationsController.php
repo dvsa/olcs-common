@@ -48,6 +48,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
 
         $this->alterForm($form);
 
+        $this->getServiceLocator()->get('Script')->loadFile('vehicle-declarations');
+
         if ($request->isPost() && $form->isValid()) {
 
             $this->save($data);
