@@ -30,7 +30,7 @@ class DecompressToTmpTest extends MockeryTestCase
 
         $mockFilter = m::mock('\Zend\Filter\Decompress');
         $mockFilter->shouldReceive('filter')->with($filename)->andReturn($filePath);
-        $mockFilter->shouldReceive('setOptions')->with(['options' => ['target' => $extractDir]]);
+        $mockFilter->shouldReceive('setTarget')->with($extractDir);
 
         $mockFileSystem = m::mock('Common\Filesystem\Filesystem');
         $mockFileSystem->shouldReceive('createTmpDir')->with($tmpDir, 'zip')->andReturn($extractDir);

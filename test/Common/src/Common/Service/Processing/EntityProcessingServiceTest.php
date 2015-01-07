@@ -50,6 +50,38 @@ class EntityProcessingServiceTest extends MockeryTestCase
         );
     }
 
+    public function testFindEntityForCategoryWithLicenceSubEntity()
+    {
+        $licenceMock = m::mock()
+            ->shouldReceive('findByIdentifier')
+            ->with(123)
+            ->andReturn(
+                [
+                    'foo' => 'bar',
+                    'licence' => [
+                        'licNo' => 1234
+                    ]
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('Entity\Licence', $licenceMock);
+
+        $this->assertEquals(
+            [
+                'foo' => 'bar',
+                'licence' => [
+                    'licNo' => 1234
+                ],
+                'licNo' => 1234
+            ],
+            $this->sut->findEntityForCategory(
+                1,
+                123
+            )
+        );
+    }
+
     public function testFindEntityNameForCategory()
     {
         $this->assertEquals(
