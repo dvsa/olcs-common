@@ -37,6 +37,12 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     const PAYMENT_FAILURE      = 802;
     const PAYMENT_CANCELLATION = 807;
 
+    const RESPONSE_SUCCESS = '000';
+
+    protected function getClient() {
+        return $this->getServiceLocator()->get('cpms\service\api');
+    }
+
     public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
     {
         $amount = array_reduce(
@@ -46,8 +52,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 return $carry;
             }
         );
-
-        $client = $this->getServiceLocator()->get('cpms\service\api');
 
         // @TODO product ref shouldn't have to come from a whitelist...
         $productReference = 'GVR_APPLICATION_FEE';
@@ -67,7 +71,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $response = $client->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
+        $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
 
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
@@ -100,12 +104,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param string $customerReference
      * @param string $salesReference
      * @param float $amount
-     * @param DateTime $receiptDate
+     * @param array $receiptDate (from DateSelect)
      * @param string $payer
      * @param string $slipNo
-     * @return bool
+     * @return boolean success
      */
     public function recordCashPayment(
+        $fee,
         $customerReference,
         $salesReference,
         $amount,
@@ -113,7 +118,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $payer,
         $slipNo
     ){
-        $client = $this->getServiceLocator()->get('cpms\service\api');
         $productReference = 'GVR_APPLICATION_FEE';
         $receiptDate = $this->formatReceiptDate($receiptDate);
         $params = [
@@ -134,10 +138,44 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        //var_dump($params); exit;
-        $response = $client->post('/api/payment/cash', ApiService::SCOPE_CASH, $params);
+        $response = $this->getClient()->post('/api/payment/cash', ApiService::SCOPE_CASH, $params);
 
-        return $response;
+        if ($this->isSuccessfulResponse($response)) {
+            $data = [
+                'feeStatus'      => FeeEntityService::STATUS_PAID,
+                'receivedDate'   => $receiptDate,
+                'receiptNo'      => $response['receipt_reference'],
+                'paymentMethod'  => FeePaymentEntityService::METHOD_CASH,
+                'receivedAmount' => $amount,
+                // @todo payer name
+                // @todo slip no.
+            ];
+
+            $this->getServiceLocator()
+                ->get('Entity\Fee')
+                ->forceUpdate($fee['id'], $data);
+
+            $this->getServiceLocator()->get('Listener\Fee')->trigger(
+                $fee['id'],
+                FeeListenerService::EVENT_PAY
+            );
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Small helper to check if response was successful
+     *
+     * @param array $response response data
+     * @return boolean
+     */
+    protected function isSuccessfulResponse(array $response) {
+        return (
+            isset($response['code'])
+            && $response['code'] === self::RESPONSE_SUCCESS
+            && isset($response['receipt_reference'])
+        );
     }
 
     /**
