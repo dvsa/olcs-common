@@ -47,7 +47,7 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
             ->findByIdentifier($identifier);
 
         // if the entity has a licence relationship, map the number onto the
-        // top-level of the array
+        // top-level of the array for convenience
         if (isset($entity['licence']['licNo'])) {
             $entity['licNo'] = $entity['licence']['licNo'];
         }
@@ -58,5 +58,35 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
     public function findEntityNameForCategory($category)
     {
         return $this->descriptionMap[$category];
+    }
+
+    public function extractRelationsForCategory($category, $entity)
+    {
+        switch ($category) {
+            case CategoryDataService::CATEGORY_APPLICATION:
+            case CategoryDataService::CATEGORY_LICENSING:
+            case CategoryDataService::CATEGORY_ENVIRONMENTAL:
+
+                return ['licence' => $entity['id']];
+
+            case CategoryDataService::CATEGORY_COMPLIANCE:
+
+                return ['case' => $entity['id']];
+
+            case CategoryDataService::CATEGORY_IRFO:
+
+                return ['organisation' => $entity['id']];
+
+            case CategoryDataService::CATEGORY_TRANSPORT_MANAGER:
+
+                return ['transportManager' => $entity['id']];
+
+            case CategoryDataService::CATEGORY_BUS_REGISTRATION:
+
+                return [
+                    'busReg'  => $entity['id'],
+                    'licence' => $entity['licence']['id']
+                ];
+        }
     }
 }
