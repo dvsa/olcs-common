@@ -609,6 +609,7 @@ return array(
     'defendant-type' => 'Defendant type',
     'definition' => 'Definition',
     'delete' => 'Delete',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
     'description' => 'Description',
     'director' => 'Director',
     'disagree' => 'Disagree',
@@ -860,6 +861,11 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.transport-manager.competences.form.country' => 'Country',
+    'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
+    'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
+    'internal.transport-manager.competences.form.serial' => 'Serial',
+    'internal.transport-manager.competences.table.qualification' => 'Qualification',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1492,6 +1498,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );
