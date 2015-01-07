@@ -118,6 +118,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $payer,
         $slipNo
     ){
+
+        // Partial payments are not supported. The form validation will normally catch
+        // this but it relies on a hidden field so we have a secondary check here
+        if ($fee['amount'] != $amount) {
+            throw new PaymentInvalidAmountException("Amount must match the fee due");
+        }
+
         $productReference = 'GVR_APPLICATION_FEE';
         $receiptDate = $this->formatReceiptDate($receiptDate);
         $params = [
