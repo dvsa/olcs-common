@@ -411,4 +411,12 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
         $this->assertEquals(null, $resultStatus);
     }
+
+    /**
+     * @todo this
+     */
+    public function testRecordCashPayment()
+    {
+        $this->markTestIncomplete('todo');
+    }
 }
