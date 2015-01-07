@@ -471,6 +471,10 @@ class ApplicationCompletionEntityService extends AbstractEntityService
                 unset($requiredVars['psvOperateSmallVhl']);
                 unset($requiredVars['psvSmallVhlNotes']);
             }
+
+            if ($applicationData['psvOperateSmallVhl'] === 'N') {
+                unset($requiredVars['psvSmallVhlNotes']);
+            }
         }
 
         $total = array_sum(
