@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Zend\Form\Form;
+
 /**
  * Licence Lva Adapter
  *
@@ -25,5 +27,15 @@ class LicenceLvaAdapter extends AbstractLvaAdapter
         $application = $this->getApplicationAdapter()->getIdentifier();
 
         return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($application);
+    }
+
+    /**
+     * Alter the form based on the LVA rules
+     *
+     * @param \Zend\Form\Form $form
+     */
+    public function alterForm(Form $form)
+    {
+        $form->get('form-actions')->remove('saveAndContinue');
     }
 }

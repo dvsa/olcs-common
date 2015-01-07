@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Zend\Http\Response;
+
 /**
  * Crud table trait
  *
@@ -115,8 +117,12 @@ trait CrudTableTrait
 
         if ($request->isPost()) {
 
-            $this->delete();
+            $response = $this->delete();
             $this->postSave($this->section);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
 
             return $this->redirect()->toRouteAjax(
                 null,

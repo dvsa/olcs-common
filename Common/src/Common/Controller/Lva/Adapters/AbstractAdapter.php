@@ -19,6 +19,7 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    protected $lva;
     protected $applicationAdapter;
     protected $licenceAdapter;
     protected $variationAdapter;
@@ -71,8 +72,28 @@ abstract class AbstractAdapter implements ServiceLocatorAwareInterface
      * @param string $lva
      * @return AbstractLvaAdapter
      */
-    protected function getLvaAdapter($lva)
+    protected function getLvaAdapter($lva = null)
     {
+        if ($lva === null) {
+            $lva = $this->lva;
+        }
+
         return $this->getServiceLocator()->get($lva . 'LvaAdapter');
+    }
+
+    /**
+     * Return an instance of [Application or Licence]EntityService
+     *
+     * @return \Common\Service\Entity\AbstractLvaEntityService
+     */
+    protected function getLvaEntityService()
+    {
+        if ($this->lva === 'variation') {
+            $lva = 'application';
+        } else {
+            $lva = $this->lva;
+        }
+
+        return $this->getServiceLocator()->get('Entity\\' . ucfirst($lva));
     }
 }

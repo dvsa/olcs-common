@@ -39,13 +39,13 @@ return array(
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
             ),
-            'LvaLicence/OperatingCentre' => array(
+            'LvaLicence/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\LicenceOperatingCentreDelegator'
             ),
-            'LvaVariation/OperatingCentre' => array(
+            'LvaVariation/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\VariationOperatingCentreDelegator'
             ),
-            'LvaApplication/OperatingCentre' => array(
+            'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
         ),

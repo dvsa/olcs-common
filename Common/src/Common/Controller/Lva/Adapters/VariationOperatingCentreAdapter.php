@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Zend\Form\Form;
+
 /**
  * Variation Operating Centre Adapter
  *
@@ -16,13 +18,40 @@ namespace Common\Controller\Lva\Adapters;
  */
 class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 {
-    public function attachScripts()
+    protected $lva = 'variation';
+
+    protected $entityService = 'Entity\ApplicationOperatingCentre';
+
+    protected $mainTableConfigName = 'lva-variation-operating-centres';
+
+    /**
+     * Attach the relevant scripts to the main page
+     */
+    public function attachMainScripts()
     {
         $this->getServiceLocator()->get('Script')->loadFile('lva-variation-operating-centre');
     }
 
     /**
-     * Get the table data for the main form
+     * Extend the abstract behaviour to alter the action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterActionForm(Form $form)
+    {
+        $form = parent::alterActionForm($form);
+
+        if ($this->location === 'external') {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->disableElements($form->get('address'));
+        }
+
+        return $form;
+    }
+
+    /**
+     * Extend the abstract behaviour to get the table data for the main form
      *
      * @return array
      */
@@ -30,8 +59,8 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     {
         if (empty($this->tableData)) {
 
-            $licenceData = $this->getIndexedTableData('Licence', $this->getLicenceId());
-            $applicationData = $this->getIndexedTableData('Application', $this->getApplicationId());
+            $licenceData = $this->getIndexedTableData('Licence', $this->getLicenceAdapter()->getIdentifier());
+            $applicationData = $this->getIndexedTableData('Application', $this->getVariationAdapter()->getIdentifier());
 
             $data = $this->updateAndFilterTableData($licenceData, $applicationData);
 
@@ -41,6 +70,97 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         return $this->tableData;
     }
 
+    /**
+     * Un-edited licence operating centre records and updated version stored in application operating centre
+     * can be deleted
+     *
+     * @param type $ref
+     */
+    public function canDeleteRecord($ref)
+    {
+        list($type, $id) = $this->splitTypeAndId($ref);
+
+        $aocDataService = $this->getEntityService();
+
+        // If we have an application operating centre record
+        if ($type === 'A') {
+            $record = $aocDataService->getById($id);
+
+            return in_array($record['action'], ['U', 'A']);
+        }
+
+        $locDataService = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre');
+
+        $record = $locDataService->getAddressData($id);
+
+        $ocId = $record['operatingCentre']['id'];
+
+        $aocRecord = $aocDataService->getByApplicationAndOperatingCentre(
+            $this->getVariationAdapter()->getIdentifier(),
+            $ocId
+        );
+
+        return empty($aocRecord);
+    }
+
+    /**
+     * Shared logic to create a response when a resource isn't deletable
+     *
+     * @return Zend\Http\Response
+     */
+    public function processUndeletableResponse()
+    {
+        $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('could-not-remove-message');
+
+        return $this->getController()->redirect()->toRouteAjax(null, array('child_id' => null), array(), true);
+    }
+
+    /**
+     * Extend the abstract method so that it splits the id from the reference
+     *
+     * @return int
+     */
+    public function getChildId()
+    {
+        $ref = parent::getChildId();
+
+        return $this->splitTypeAndId($ref)[1];
+    }
+
+    /**
+     * This is more complicated than I would like, but we could have either an application oc record "A123" or a licence
+     * operating centre record "L123", so we need to cater for both
+     *
+     * @return mixed
+     */
+    public function delete()
+    {
+        $ref = $this->getController()->params('child_id');
+
+        // JS should restrict requests to only valid ones, however we better double check
+        if (!$this->canDeleteRecord($ref)) {
+            return $this->processUndeletableResponse();
+        }
+
+        list($type, $id) = $this->splitTypeAndId($ref);
+
+        if ($type === 'A') {
+            $this->getEntityService()->delete($id);
+            return;
+        } else {
+            $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
+                ->variationDelete($id, $this->getIdentifier());
+        }
+    }
+
+    /**
+     * Update and filter the table data for variations
+     *
+     * @param array $licenceData
+     * @param array $applicationData
+     * @return array
+     */
     protected function updateAndFilterTableData($licenceData, $applicationData)
     {
         $data = array();
@@ -66,6 +186,13 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         return $data;
     }
 
+    /**
+     * Get the table data and index it for sorting
+     *
+     * @param string $type
+     * @param int $id
+     * @return array
+     */
     protected function getIndexedTableData($type, $id)
     {
         $data = $this->getServiceLocator()->get('Entity\\' . $type . 'OperatingCentre')
@@ -81,8 +208,22 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         return $indexedData;
     }
 
-    protected function getTableConfigName()
+    /**
+     * Splits a reference into type and if i.e. L123 returns ['L', 123]
+     *
+     * @param string $ref
+     * @return array
+     */
+    protected function splitTypeAndId($ref)
     {
-        return 'lva-variation-operating-centres';
+        $type = substr($ref, 0, 1);
+
+        if (is_numeric($type)) {
+            return array(null, $ref);
+        }
+
+        $id = (int)substr($ref, 1);
+
+        return array($type, $id);
     }
 }

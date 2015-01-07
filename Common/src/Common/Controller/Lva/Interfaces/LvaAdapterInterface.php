@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Interfaces;
 
+use Zend\Form\Form;
+
 /**
  * Lva Adapter Interface
  *
@@ -15,4 +17,11 @@ namespace Common\Controller\Lva\Interfaces;
 interface LvaAdapterInterface
 {
     public function getIdentifier();
+
+    /**
+     * Alter the form based on the LVA rules
+     *
+     * @param \Zend\Form\Form $form
+     */
+    public function alterForm(Form $form);
 }

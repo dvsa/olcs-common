@@ -25,8 +25,12 @@ abstract class AbstractControllerAwareAdapter extends AbstractAdapter implements
      * @param string $lva
      * @return AbstractLvaAdapter
      */
-    protected function getLvaAdapter($lva)
+    protected function getLvaAdapter($lva = null)
     {
-        return parent::getLvaAdapter($lva)->setController($this->getController());
+        $adapter = parent::getLvaAdapter($lva);
+
+        $adapter->setController($this->getController());
+
+        return $adapter;
     }
 }

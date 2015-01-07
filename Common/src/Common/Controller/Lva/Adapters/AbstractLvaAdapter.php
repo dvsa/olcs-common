@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
 
 /**
@@ -16,5 +17,12 @@ use Common\Controller\Lva\Interfaces\LvaAdapterInterface;
  */
 abstract class AbstractLvaAdapter extends AbstractControllerAwareAdapter implements LvaAdapterInterface
 {
-
+    /**
+     * Alter the form based on the LVA rules
+     *
+     * @param \Zend\Form\Form $form
+     */
+    public function alterForm(Form $form)
+    {
+    }
 }
