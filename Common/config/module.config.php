@@ -119,6 +119,7 @@ return array(
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
+            'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
