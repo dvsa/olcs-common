@@ -62,7 +62,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testGetIndexActionWithAdapter()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $form = $this->createMockForm('Lva\TypeOfLicence');
 
@@ -187,11 +187,11 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
 
-        $this->assertNull($this->sut->getTypeOfLicenceAdapter());
+        $this->assertNull($this->sut->getAdapter());
 
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
-        $this->assertSame($adapter, $this->sut->getTypeOfLicenceAdapter());
+        $this->assertSame($adapter, $this->sut->getAdapter());
     }
 
     /**
@@ -200,7 +200,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testPostWithValidDataWithAdapterWithoutChanges()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $stubbedCurrentData = [
             'version' => 1,
@@ -294,7 +294,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testPostWithValidDataWithAdapterWithChangesRequiringConfirmation()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $stubbedCurrentData = [
             'version' => 1,
@@ -347,7 +347,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testPostWithValidDataWithAdapterWithChangesRequiringProcessing()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $stubbedCurrentData = [
             'version' => 1,
@@ -406,7 +406,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testPostWithValidDataWithAdapterWithFirstSave()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $stubbedCurrentData = [
             'version' => 1,
@@ -502,7 +502,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testConfirmationActionWithRedirect()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $response = m::mock('\Zend\Http\Response');
 
@@ -518,7 +518,7 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     public function testConfirmationAction()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
-        $this->sut->setTypeOfLicenceAdapter($adapter);
+        $this->sut->setAdapter($adapter);
 
         $response = m::mock('\Zend\Form\Form');
 

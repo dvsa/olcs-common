@@ -1894,7 +1894,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
-        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '" />';
+        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '"  />';
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with(
@@ -1987,7 +1987,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2015,7 +2015,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2051,7 +2051,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2086,7 +2086,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
