@@ -50,7 +50,7 @@ class DateTimeProcessor implements ZendFactoryInterface
     }
 
     /**
-     * Create service fatory method.
+     * Create service factory method.
      *
      * @param ZendServiceLocatorInterface $serviceLocator
      * @return \Common\Util\DateTime

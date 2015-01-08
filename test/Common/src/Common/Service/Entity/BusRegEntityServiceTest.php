@@ -34,7 +34,12 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
                 'RESPONSE'
             ]
         ];
-        $this->expectOneRestCall('BusReg', 'GET', ['regNo' => 123])
+        $params = [
+            'regNo' => 123,
+            'sort' => 'variationNo',
+            'order' => 'DESC'
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
             ->will($this->returnValue($response));
 
         $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
@@ -49,7 +54,12 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
             'Count' => 0,
             'Results' => []
         ];
-        $this->expectOneRestCall('BusReg', 'GET', ['regNo' => 123])
+        $params = [
+            'regNo' => 123,
+            'sort' => 'variationNo',
+            'order' => 'DESC'
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
             ->will($this->returnValue($response));
 
         $this->assertEquals(false, $this->sut->findByIdentifier(123));
