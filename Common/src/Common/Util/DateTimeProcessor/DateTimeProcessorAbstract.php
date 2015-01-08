@@ -86,8 +86,6 @@ abstract class DateTimeProcessorAbstract
 
         $dateTime = date(PHPDateTime::ISO8601, $time);
 
-        //echo $dateTime . PHP_EOL;
-
         return PHPDateTime::createFromFormat(PHPDateTime::ISO8601, $dateTime);
     }
 

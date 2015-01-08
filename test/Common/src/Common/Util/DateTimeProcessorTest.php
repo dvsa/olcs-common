@@ -42,11 +42,7 @@ class DateTimeProcessorTest extends MockeryTestCase
 
         $sut->createService($sl);
 
-        /* $this->assertInstanceOf('Common\Util\DateTimeProcessor\Positive', $sut->getPositiveProcessor());
-        $this->assertInstanceOf('Common\Util\DateTimeProcessor\Negative', $sut->getNegativeProcessor()); */
-
         $calculatedDate = $sut->calculateDate($inDate, $days, $we, $ph);
-        //echo $calculatedDate . PHP_EOL;
 
         $this->assertEquals($outDate, $calculatedDate);
     }
