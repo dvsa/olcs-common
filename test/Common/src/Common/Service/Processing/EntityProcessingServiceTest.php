@@ -9,6 +9,7 @@ namespace CommonTest\Service\Processing;
 
 use CommonTest\Bootstrap;
 use Common\Service\Processing\EntityProcessingService;
+use Common\Service\Data\CategoryDataService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
@@ -88,5 +89,43 @@ class EntityProcessingServiceTest extends MockeryTestCase
             'Licence',
             $this->sut->findEntityNameForCategory(1)
         );
+    }
+
+    /**
+     * @dataProvider extractRelationsDataProvider
+     */
+    public function testExtractRelationsForCategory($category, $expectedData)
+    {
+        $entity = [
+            'id' => 123,
+            'licence' => [
+                'id' => 456
+            ]
+        ];
+
+        $this->assertEquals(
+            $expectedData,
+            $this->sut->extractRelationsForCategory($category, $entity)
+        );
+    }
+
+    public function extractRelationsDataProvider()
+    {
+        return [
+            [CategoryDataService::CATEGORY_APPLICATION, ['licence' => 123]],
+            [CategoryDataService::CATEGORY_LICENSING, ['licence' => 123]],
+            [CategoryDataService::CATEGORY_ENVIRONMENTAL, ['licence' => 123]],
+            [CategoryDataService::CATEGORY_COMPLIANCE, ['case' => 123]],
+            [CategoryDataService::CATEGORY_IRFO, ['organisation' => 123]],
+            [CategoryDataService::CATEGORY_TRANSPORT_MANAGER, ['transportManager' => 123]],
+            [
+                CategoryDataService::CATEGORY_BUS_REGISTRATION,
+                [
+                    'busReg' => 123,
+                    'licence' => 456
+                ]
+            ],
+            [123456789, []]
+        ];
     }
 }
