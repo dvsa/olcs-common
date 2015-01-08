@@ -492,7 +492,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'id' => 1,
             'amount' => 1234.56
         ];
-        $sut->recordCashPayment(
+
+        $result = $sut->recordCashPayment(
             $fee,
             'cust_ref',
             'sales_ref',
@@ -501,5 +502,80 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'Payer',
             '123456'
         );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     */
+    public function testRecordCashPaymentPartPaymentThrowsException()
+    {
+        $sut = new FeePaymentCpmsService();
+
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56
+        ];
+        $sut->recordCashPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '234.56', // not enough!
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456'
+        );
+    }
+
+    public function testRecordCashPaymentFailureReturnsFalse()
+    {
+        $sut = new FeePaymentCpmsService();
+
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/cash', 'CASH', m::any())
+            ->andReturn(
+                [   // error responses aren't well documented
+                    'code' => 'xxx',
+                    'message' => 'error message',
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('cpms\service\api', $client);
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+            ->shouldReceive('forceUpdate')
+            ->never()
+            ->getMock()
+        );
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+            ->shouldReceive('trigger')
+            ->never()
+            ->getMock()
+        );
+
+        $sut->setServiceLocator($this->sm);
+
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56
+        ];
+
+        $result = $sut->recordCashPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '1234.56',
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456'
+        );
+
+        $this->assertFalse($result);
     }
 }
