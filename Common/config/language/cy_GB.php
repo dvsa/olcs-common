@@ -869,6 +869,11 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.transport-manager.competences.form.country' => 'W Country',
+    'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
+    'internal.transport-manager.competences.form.qualification-type' => 'W Qualification type',
+    'internal.transport-manager.competences.form.serial' => 'W Serial',
+    'internal.transport-manager.competences.table.qualification' => 'W Qualification',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
