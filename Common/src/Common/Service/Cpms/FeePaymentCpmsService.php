@@ -311,6 +311,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
             return true;
         }
+
         return false;
     }
 

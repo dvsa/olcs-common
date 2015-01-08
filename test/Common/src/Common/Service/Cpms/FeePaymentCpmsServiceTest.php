@@ -653,6 +653,53 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
     }
 
+    public function testRecordChequePaymentFailureReturnsFalse()
+    {
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/cheque', 'CHEQUE', m::any())
+            ->andReturn(
+                [
+                    'code' => 'xxx',
+                    'message' => 'error message',
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('cpms\service\api', $client);
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+            ->shouldReceive('forceUpdate')
+            ->never()
+            ->getMock()
+        );
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+            ->shouldReceive('trigger')
+            ->never()
+            ->getMock()
+        );
+
+        $this->sut->setServiceLocator($this->sm);
+
+        $fee = ['id' => 1, 'amount' => 1234.56];
+
+        $result = $this->sut->recordChequePayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '1234.56',
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456',
+            '234567'
+        );
+
+        $this->assertFalse($result);
+    }
+
     public function testRecordPostalOrderPayment()
     {
         $params = [
@@ -749,5 +796,52 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             '123456',
             '234567'
         );
+    }
+
+    public function testRecordPostalOrderPaymentFailureReturnsFalse()
+    {
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/postal-order', 'POSTAL_ORDER', m::any())
+            ->andReturn(
+                [
+                    'code' => 'xxx',
+                    'message' => 'error message',
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('cpms\service\api', $client);
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+            ->shouldReceive('forceUpdate')
+            ->never()
+            ->getMock()
+        );
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+            ->shouldReceive('trigger')
+            ->never()
+            ->getMock()
+        );
+
+        $this->sut->setServiceLocator($this->sm);
+
+        $fee = ['id' => 1, 'amount' => 1234.56];
+
+        $result = $this->sut->recordPostalOrderPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '1234.56',
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456',
+            '234567'
+        );
+
+        $this->assertFalse($result);
     }
 }
