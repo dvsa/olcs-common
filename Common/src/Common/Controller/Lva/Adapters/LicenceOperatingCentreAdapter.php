@@ -41,9 +41,30 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      */
     protected function alterForm(Form $form)
     {
-        return $this->commonAlterForm(
-            parent::alterForm($form)
-        );
+        $form = parent::alterForm($form);
+
+        $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
+
+        $filter = $form->getInputFilter();
+
+        foreach (['vehicles', 'trailers'] as $which) {
+            $key = 'totAuth' . ucfirst($which);
+
+            if ($filter->get('data')->has($key)) {
+                $this->attachCantIncreaseValidator(
+                    $filter->get('data')->get($key),
+                    'total-' . $which,
+                    $data[$key]
+                );
+            }
+        }
+
+        if ($form->get('data')->has('totCommunityLicences')) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->remove($form, 'data->totCommunityLicences');
+        }
+
+        return $form;
     }
 
     /**
@@ -126,32 +147,6 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
                 );
             }
         }
-    }
-
-    /**
-     * Common form alterations
-     *
-     * @param \Zend\Form\Form $form
-     */
-    protected function commonAlterForm(Form $form)
-    {
-        $data = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
-
-        $filter = $form->getInputFilter();
-
-        foreach (['vehicles', 'trailers'] as $which) {
-            $key = 'totAuth' . ucfirst($which);
-
-            if ($filter->get('data')->has($key)) {
-                $this->attachCantIncreaseValidator(
-                    $filter->get('data')->get($key),
-                    'total-' . $which,
-                    $data[$key]
-                );
-            }
-        }
-
-        return $form;
     }
 
     /**

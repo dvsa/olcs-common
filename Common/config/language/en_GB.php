@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'could-not-remove-message' => 'The selected record could not be removed.',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -560,6 +559,7 @@ return array(
     'correspondence-address-form-label-postcode' => 'Postcode',
     'correspondence-address-form-label-town-city' => 'Town / City',
     'costs' => 'Costs',
+    'could-not-remove-message' => 'The selected record could not be removed.',
     'court-fpn' => 'Court/FPN',
     'court/fpn' => 'Court/FPN',
     'create' => 'Create',
@@ -571,6 +571,7 @@ return array(
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
+    'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
     'current.option.suffix' => '(current)',
     'currently-with' => 'Currently with',
@@ -1470,6 +1471,8 @@ return array(
     'variation-application-text2' => 'Changes within this section will require a',
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-details-nav' => 'Variation details',
+    'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
+        href="%s">variation application</a>',
     'variation.delete' => 'Delete application',
     'variation.overview.application-no' => 'Application No.',
     'variation.overview.title' => 'Variation application',

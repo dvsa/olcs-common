@@ -433,7 +433,6 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
     protected function getCurrentAuthorisationValues()
     {
-
         $ref = $this->getController()->params('child_id');
         list($type, $id) = $this->splitTypeAndId($ref);
 
@@ -509,5 +508,41 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         }
 
         return $data;
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    protected function alterForm(Form $form)
+    {
+        $form = parent::alterForm($form);
+
+        list($vehicles, $trailers) = $this->getCurrentTotalAuthorisationValues();
+
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+        $form->get('data')->get('totAuthVehicles')
+            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
+        $form->get('data')->get('totAuthTrailers')
+            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+
+        if ($form->get('data')->has('totCommunityLicences')) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->remove($form, 'data->totCommunityLicences');
+        }
+
+        return $form;
+    }
+
+    protected function getCurrentTotalAuthorisationValues()
+    {
+        $licenceId = $this->getLicenceAdapter()->getIdentifier();
+
+        $data = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
+
+        return array($data['totAuthVehicles'], $data['totAuthTrailers']);
     }
 }

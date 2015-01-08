@@ -137,9 +137,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     {
         if (empty($this->tableData)) {
 
-            $id = $this->getApplicationAdapter()->getIdentifier();
-
-            $data = $this->getEntityService()->getAddressSummaryData($id);
+            $data = $this->getEntityService()->getAddressSummaryData($this->getIdentifier());
 
             $this->tableData = $this->formatTableData($data['Results']);
         }
@@ -605,11 +603,17 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $removeFields = array(
             'totAuthSmallVehicles',
             'totAuthMediumVehicles',
-            'totAuthLargeVehicles',
-            'totCommunityLicences'
+            'totAuthLargeVehicles'
         );
 
+        $typeOfLicence = $this->getTypeOfLicenceData();
+        if ($typeOfLicence['licenceType'] !== LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+            $removeFields[] = 'totCommunityLicences';
+        }
+
         $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, 'data', $removeFields);
+
+
     }
 
     /**
