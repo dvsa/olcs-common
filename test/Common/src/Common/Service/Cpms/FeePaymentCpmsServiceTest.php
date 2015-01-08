@@ -16,6 +16,8 @@ use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\FeePaymentEntityService;
 use Mockery as m;
 use Common\Service\Listener\FeeListenerService;
+use CommonTest\Traits\MockDateTrait;
+use CommonTest\Bootstrap;
 
 /**
  * CPMS Fee Payment Service Test
@@ -24,7 +26,17 @@ use Common\Service\Listener\FeeListenerService;
  */
 class FeePaymentCpmsServiceTest extends MockeryTestCase
 {
-    public function testInitiateRequest()
+    use MockDateTrait;
+
+    protected $sm;
+
+    public function setUp()
+    {
+        $this->sm = Bootstrap::getServiceManager();
+        return parent::setUp();
+    }
+
+    public function testInitiateCardRequest()
     {
         $sut = new FeePaymentCpmsService();
 
@@ -98,7 +110,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 'amount' => 525.25
             ]
         ];
-        $sut->initiateRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
+        $sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
     }
 
     public function testHandleResponseWithInvalidPayment()
@@ -410,5 +422,159 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $resultStatus = $sut->handleResponse($data, []);
 
         $this->assertEquals(null, $resultStatus);
+    }
+
+    public function testRecordCashPayment()
+    {
+        $sut = new FeePaymentCpmsService();
+
+        $params = [
+            'customer_reference' => 'cust_ref',
+            'scope' => 'CASH',
+            'total_amount' => (double)1234.56,
+            'payment_data' => [
+                [
+                    'amount' => (double)1234.56,
+                    'sales_reference' => 'sales_ref',
+                    'product_reference' => 'GVR_APPLICATION_FEE',
+                    'payer_details' => 'Payer',
+                    'payment_reference' => [
+                        'slip_number' => 123456,
+                        'receipt_date' => '07-01-2015',
+                    ],
+                ]
+            ]
+        ];
+
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/cash', 'CASH', $params)
+            ->andReturn(
+                [
+                    'code' => '000',
+                    'message' => 'Success',
+                    'receipt_reference' => 'unique_reference'
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('cpms\service\api', $client);
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+            ->shouldReceive('forceUpdate')
+            ->with(
+                1,
+                [
+                    'feeStatus'          => 'lfs_pd', //FeeEntityService::STATUS_PAID
+                    'receivedDate'       => '07-01-2015',
+                    'receiptNo'          => 'unique_reference',
+                    'paymentMethod'      => 'fpm_cash', //FeePaymentEntityService::METHOD_CASH
+                    'receivedAmount'     => '1234.56',
+                    'payerName'          => 'Payer',
+                    'payingInSlipNumber' => '123456',
+                ]
+            )
+            ->getMock()
+        );
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+            ->shouldReceive('trigger')
+            ->with(1, FeeListenerService::EVENT_PAY)
+            ->getMock()
+        );
+
+        $sut->setServiceLocator($this->sm);
+
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56
+        ];
+
+        $result = $sut->recordCashPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '1234.56',
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456'
+        );
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     */
+    public function testRecordCashPaymentPartPaymentThrowsException()
+    {
+        $sut = new FeePaymentCpmsService();
+
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56
+        ];
+        $sut->recordCashPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '234.56', // not enough!
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456'
+        );
+    }
+
+    public function testRecordCashPaymentFailureReturnsFalse()
+    {
+        $sut = new FeePaymentCpmsService();
+
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/cash', 'CASH', m::any())
+            ->andReturn(
+                [   // error responses aren't well documented
+                    'code' => 'xxx',
+                    'message' => 'error message',
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('cpms\service\api', $client);
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+            ->shouldReceive('forceUpdate')
+            ->never()
+            ->getMock()
+        );
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+            ->shouldReceive('trigger')
+            ->never()
+            ->getMock()
+        );
+
+        $sut->setServiceLocator($this->sm);
+
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56
+        ];
+
+        $result = $sut->recordCashPayment(
+            $fee,
+            'cust_ref',
+            'sales_ref',
+            '1234.56',
+            ['day' => '07', 'month' => '01', 'year' => '2015'],
+            'Payer',
+            '123456'
+        );
+
+        $this->assertFalse($result);
     }
 }

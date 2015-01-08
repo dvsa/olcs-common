@@ -37,7 +37,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     const PAYMENT_FAILURE      = 802;
     const PAYMENT_CANCELLATION = 807;
 
-    public function initiateRequest($customerReference, $salesReference, $redirectUrl, array $fees)
+    const RESPONSE_SUCCESS = '000';
+
+    protected function getClient()
+    {
+        return $this->getServiceLocator()->get('cpms\service\api');
+    }
+
+    public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
     {
         $amount = array_reduce(
             $fees,
@@ -46,8 +53,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 return $carry;
             }
         );
-
-        $client = $this->getServiceLocator()->get('cpms\service\api');
 
         // @TODO product ref shouldn't have to come from a whitelist...
         $productReference = 'GVR_APPLICATION_FEE';
@@ -67,7 +72,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $response = $client->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
+        $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
 
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
@@ -92,6 +97,109 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
 
         return $response;
+    }
+
+    /**
+     * Record a cash payment in CPMS
+     *
+     * @param string $customerReference
+     * @param string $salesReference
+     * @param float $amount
+     * @param array $receiptDate (from DateSelect)
+     * @param string $payer
+     * @param string $slipNo
+     * @return boolean success
+     */
+    public function recordCashPayment(
+        $fee,
+        $customerReference,
+        $salesReference,
+        $amount,
+        $receiptDate,
+        $payer,
+        $slipNo
+    ) {
+        // Partial payments are not supported. The form validation will normally catch
+        // this but it relies on a hidden field so we have a secondary check here
+        if ($fee['amount'] != $amount) {
+            throw new PaymentInvalidAmountException("Amount must match the fee due");
+        }
+
+        $productReference = 'GVR_APPLICATION_FEE';
+        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $params = [
+            'customer_reference' => (string)$customerReference,
+            'scope' => ApiService::SCOPE_CASH,
+            'total_amount' => $amount,
+            'payment_data' => [
+                [
+                    'amount' => $amount,
+                    'sales_reference' => $salesReference,
+                    'product_reference' => $productReference,
+                    'payer_details' => $payer, // not sure this is supported for CASH payments
+                    'payment_reference' => [
+                        'slip_number' => (string)$slipNo,
+                        'receipt_date' => $receiptDate,
+                    ],
+                ]
+            ]
+        ];
+
+        $response = $this->getClient()->post('/api/payment/cash', ApiService::SCOPE_CASH, $params);
+
+        if ($this->isSuccessfulResponse($response)) {
+            $data = [
+                'feeStatus'          => FeeEntityService::STATUS_PAID,
+                'receivedDate'       => $receiptDate,
+                'receiptNo'          => $response['receipt_reference'],
+                'paymentMethod'      => FeePaymentEntityService::METHOD_CASH,
+                'receivedAmount'     => $amount,
+                'payerName'          => $payer,
+                'payingInSlipNumber' => $slipNo,
+            ];
+
+            $this->getServiceLocator()
+                ->get('Entity\Fee')
+                ->forceUpdate($fee['id'], $data);
+
+            $this->getServiceLocator()->get('Listener\Fee')->trigger(
+                $fee['id'],
+                FeeListenerService::EVENT_PAY
+            );
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Small helper to check if response was successful
+     * (We require a successful response code AND a receipt reference)
+     *
+     * @param array $response response data
+     * @return boolean
+     */
+    protected function isSuccessfulResponse(array $response)
+    {
+        return (
+            isset($response['code'])
+            && $response['code'] === self::RESPONSE_SUCCESS
+            && isset($response['receipt_reference'])
+            && !empty($response['receipt_reference'])
+        );
+    }
+
+    /**
+     * Format a date as required by CPMS payment reference fields
+     *
+     * @param array|DateTime $date
+     * @return string
+     */
+    public function formatReceiptDate($date)
+    {
+        if (is_array($date)) {
+            $date = $this->getServiceLocator()->get('Helper\Date')->getDateObjectFromArray($date);
+        }
+        return $date->format('d-m-Y');
     }
 
     public function handleResponse($data, $fees)
