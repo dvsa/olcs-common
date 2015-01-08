@@ -128,4 +128,28 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
             [123456789, []]
         ];
     }
+
+    public function testExtractChildrenFromEntity()
+    {
+        $scanMock = m::mock()
+            ->shouldReceive('getChildRelations')
+            ->andReturn(['foo', 'bar', 'baz'])
+            ->getMock();
+
+        $this->sm->setService('Entity\Scan', $scanMock);
+
+        $expected = [
+            'foo' => 1,
+            'baz' => 3
+        ];
+        $this->assertEquals(
+            $expected,
+            $this->sut->extractChildrenFromEntity(
+                [
+                    'foo' => ['id' => 1],
+                    'baz' => ['id' => 3]
+                ]
+            )
+        );
+    }
 }

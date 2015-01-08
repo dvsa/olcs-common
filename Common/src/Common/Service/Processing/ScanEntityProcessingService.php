@@ -110,7 +110,7 @@ class ScanEntityProcessingService implements ServiceLocatorAwareInterface
             ->get('Entity\Scan')
             ->getChildRelations();
 
-        foreach($relations as $relation) {
+        foreach ($relations as $relation) {
             if (isset($scanData[$relation]) && isset($scanData[$relation]['id'])) {
                 $final[$relation] = $scanData[$relation]['id'];
             }
