@@ -149,13 +149,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         if ($this->isSuccessfulResponse($response)) {
             $data = [
-                'feeStatus'      => FeeEntityService::STATUS_PAID,
-                'receivedDate'   => $receiptDate,
-                'receiptNo'      => $response['receipt_reference'],
-                'paymentMethod'  => FeePaymentEntityService::METHOD_CASH,
-                'receivedAmount' => $amount,
-                'payer'          => $payer,
-                'slipNo'         => $slipNo,
+                'feeStatus'          => FeeEntityService::STATUS_PAID,
+                'receivedDate'       => $receiptDate,
+                'receiptNo'          => $response['receipt_reference'],
+                'paymentMethod'      => FeePaymentEntityService::METHOD_CASH,
+                'receivedAmount'     => $amount,
+                'payerName'          => $payer,
+                'payingInSlipNumber' => $slipNo,
             ];
 
             $this->getServiceLocator()
