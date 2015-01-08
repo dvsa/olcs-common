@@ -25,6 +25,18 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     protected $mainTableConfigName = 'lva-variation-operating-centres';
 
     /**
+     * Save the main form data
+     *
+     * @param array $data
+     */
+    public function saveMainFormData(array $data)
+    {
+        unset($data['dataTrafficArea']);
+
+        return parent::saveMainFormData($data);
+    }
+
+    /**
      * Attach the relevant scripts to the main page
      */
     public function attachMainScripts()
@@ -450,5 +462,52 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         }
 
         throw new \Exception('Operating centre not found');
+    }
+
+    /**
+     * For variations, we need to filter out deleted and current records from the min/max calculations, so our
+     * authorisation validation works
+     *
+     * @param array $data
+     * @param array $tableData
+     * @param array $licenceData
+     * @return array
+     */
+    protected function formatDataForForm(array $data, array $tableData, array $licenceData)
+    {
+        $data['data'] = $oldData = $data;
+
+        $data['data']['noOfOperatingCentres'] = 0;
+        $data['data']['minVehicleAuth'] = 0;
+        $data['data']['maxVehicleAuth'] = 0;
+        $data['data']['minTrailerAuth'] = 0;
+        $data['data']['maxTrailerAuth'] = 0;
+        $data['data']['licenceType'] = $licenceData['licenceType'];
+
+        foreach ($tableData as $row) {
+
+            if (in_array($row['action'], [self::ACTION_DELETED, self::ACTION_CURRENT])) {
+                continue;
+            }
+
+            $data['data']['noOfOperatingCentres']++;
+
+            $data['data']['minVehicleAuth'] = max(
+                array($data['data']['minVehicleAuth'], $row['noOfVehiclesRequired'])
+            );
+
+            $data['data']['minTrailerAuth'] = max(
+                array($data['data']['minTrailerAuth'], $row['noOfTrailersRequired'])
+            );
+
+            $data['data']['maxVehicleAuth'] += (int)$row['noOfVehiclesRequired'];
+            $data['data']['maxTrailerAuth'] += (int)$row['noOfTrailersRequired'];
+        }
+
+        if (isset($oldData['licence']['trafficArea']['id'])) {
+            $data['dataTrafficArea']['hiddenId'] = $oldData['licence']['trafficArea']['id'];
+        }
+
+        return $data;
     }
 }
