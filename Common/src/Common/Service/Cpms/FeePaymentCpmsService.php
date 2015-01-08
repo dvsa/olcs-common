@@ -334,6 +334,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     /**
      * Small helper to check if response was successful
+     * (We require a successful response code AND a receipt reference)
      *
      * @param array $response response data
      * @return boolean
@@ -344,6 +345,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             isset($response['code'])
             && $response['code'] === self::RESPONSE_SUCCESS
             && isset($response['receipt_reference'])
+            && !empty($response['receipt_reference'])
         );
     }
 

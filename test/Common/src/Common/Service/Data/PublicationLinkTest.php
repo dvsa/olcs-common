@@ -66,28 +66,49 @@ class PublicationLinkTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the fetchOne method
+     */
+    public function testFetchOne()
+    {
+        $mockClient = m::mock('Common\Util\RestClient');
+        $mockClient->shouldReceive('get')->once()->with('/78', m::type('array'))->andReturn('Data');
+        $sut = new PublicationLink();
+        $sut->setRestClient($mockClient);
+
+        $this->assertEquals('Data', $sut->fetchOne(78));
+        //check caching
+        $sut->fetchOne(78);
+    }
+
+    /**
      * tests the delete method
      */
     public function testDelete()
     {
         $sut = new PublicationLink();
-        $existingData = [
-            'publication' => [
-                'pubStatus' => [
-                    'id' => 'pub_s_new'
-                ]
-            ]
-        ];
 
         $id = 1;
-
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->andReturn($existingData);
+        $mockRestClient = $this->getRestClientWithData($this->getMockPrintedPublicationRecord('pub_s_new'));
         $mockRestClient->shouldReceive('delete')->with($id)->andReturn([]);
 
         $sut->setRestClient($mockRestClient);
 
         $this->assertEquals(true, $sut->delete($id));
+    }
+
+    /**
+     * tests the delete method
+     */
+    public function testUpdate()
+    {
+        $sut = new PublicationLink();
+
+        $id = 1;
+        $mockRestClient = $this->getRestClientWithData($this->getMockPrintedPublicationRecord('pub_s_new'));
+        $mockRestClient->shouldReceive('update')->with('/' . $id, ['data' => '{"id":' . $id . '}'])->andReturn([]);
+        $sut->setRestClient($mockRestClient);
+
+        $this->assertEquals(true, $sut->update($id, ['id' => $id]));
     }
 
     /**
@@ -97,22 +118,21 @@ class PublicationLinkTest extends \PHPUnit_Framework_TestCase
     public function testDeleteServiceException()
     {
         $sut = new PublicationLink();
-        $existingData = [
-            'publication' => [
-                'pubStatus' => [
-                    'id' => 'pub_s_printed'
-                ]
-            ]
-        ];
+        $sut->setRestClient($this->getRestClientWithData($this->getMockPrintedPublicationRecord('pub_s_printed')));
 
-        $id = 1;
+        $sut->delete(1);
+    }
 
-        $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->andReturn($existingData);
+    /**
+     * tests the update method throws the correct exception when an attempt is made to delete something already printed
+     * @expectedException \Common\Exception\DataServiceException
+     */
+    public function testUpdateServiceException()
+    {
+        $sut = new PublicationLink();
+        $sut->setRestClient($this->getRestClientWithData($this->getMockPrintedPublicationRecord('pub_s_printed')));
 
-        $sut->setRestClient($mockRestClient);
-
-        $sut->delete($id);
+        $sut->update(1, []);
     }
 
     /**
@@ -122,15 +142,50 @@ class PublicationLinkTest extends \PHPUnit_Framework_TestCase
     public function testDeleteResourceNotFound()
     {
         $sut = new PublicationLink();
-        $existingData = [];
+        $sut->setRestClient($this->getRestClientWithData([]));
 
-        $id = 1;
+        $sut->delete(1);
+    }
 
+    /**
+     * tests the update method throws the correct exception when the record doesn't exist
+     * @expectedException \Common\Exception\ResourceNotFoundException
+     */
+    public function testUpdateResourceNotFound()
+    {
+        $sut = new PublicationLink();
+        $sut->setRestClient($this->getRestClientWithData([]));
+
+        $sut->update(1, []);
+    }
+
+    /**
+     * Returns a mock rest client with specified data
+     *
+     * @param $data
+     * @return m\MockInterface
+     */
+    public function getRestClientWithData($data)
+    {
         $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->andReturn($existingData);
+        $mockRestClient->shouldReceive('get')->once()->andReturn($data);
 
-        $sut->setRestClient($mockRestClient);
+        return $mockRestClient;
+    }
 
-        $sut->delete($id);
+    /**
+     * Returns data for a printed publication record
+     *
+     * @return array
+     */
+    public function getMockPrintedPublicationRecord($status)
+    {
+        return [
+            'publication' => [
+                'pubStatus' => [
+                    'id' => $status
+                ]
+            ]
+        ];
     }
 }
