@@ -23,6 +23,14 @@ use Common\Controller\Lva\Interfaces\OperatingCentreAdapterInterface;
 abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAdapter implements
     OperatingCentreAdapterInterface
 {
+    const ACTION_ADDED = 'A';
+    const ACTION_EXISTING = 'E';
+    const ACTION_CURRENT = 'C';
+    const ACTION_UPDATED = 'U';
+    const ACTION_DELETED = 'D';
+    const SOURCE_APPLICATION = 'A';
+    const SOURCE_LICENCE = 'L';
+
     protected $tableData;
 
     protected $entityService;
@@ -326,7 +334,10 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             }
 
             $data['applicationOperatingCentre']['operatingCentre'] = $saved['id'];
-            $data['applicationOperatingCentre']['action'] = 'A';
+
+            if (!isset($data['applicationOperatingCentre']['action'])) {
+                $data['applicationOperatingCentre']['action'] = self::ACTION_ADDED;
+            }
 
             $operatingCentreId = $saved['id'];
         } else {
@@ -400,8 +411,6 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
                 $newRow = array_merge($newRow, $row['operatingCentre']['address']);
             }
-
-            unset($newRow['operatingCentre']);
 
             $newData[$newRow['id']] = $newRow;
         }
@@ -850,5 +859,20 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     protected function getIdentifier()
     {
         return $this->getLvaAdapter()->getIdentifier();
+    }
+
+    /**
+     * Disabled address fields
+     *
+     * @param \Zend\Form\Form $form
+     */
+    protected function disableAddressFields($form)
+    {
+        $form->get('address')->remove('searchPostcode');
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->disableElements($form->get('address'));
+        $formHelper->disableValidation($form->getInputFilter()->get('address'));
     }
 }
