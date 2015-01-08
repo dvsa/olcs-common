@@ -466,16 +466,15 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ->with(
                 1,
                 [
-                    'feeStatus'      => 'lfs_pd', //FeeEntityService::STATUS_PAID
-                    'receivedDate'   => '07-01-2015',
-                    'receiptNo'      => 'unique_reference',
-                    'paymentMethod'  => 'fpm_cash', //FeePaymentEntityService::METHOD_CASH
-                    'receivedAmount' => '1234.56',
-                    'payer'          => 'Payer',
-                    'slipNo'         => '123456',
+                    'feeStatus'          => 'lfs_pd', //FeeEntityService::STATUS_PAID
+                    'receivedDate'       => '07-01-2015',
+                    'receiptNo'          => 'unique_reference',
+                    'paymentMethod'      => 'fpm_cash', //FeePaymentEntityService::METHOD_CASH
+                    'receivedAmount'     => '1234.56',
+                    'payerName'          => 'Payer',
+                    'payingInSlipNumber' => '123456',
                 ]
             )
-            //->withAnyArgs()
             ->getMock()
         );
         $this->sm->setService(
