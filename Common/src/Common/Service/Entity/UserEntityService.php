@@ -25,7 +25,7 @@ class UserEntityService extends AbstractEntityService
     /**
      * Get the current user
      *
-     * @todo when we have implemented auth, we need to ammend this
+     * @todo when we have implemented auth, we need to amend this
      */
     public function getCurrentUser()
     {

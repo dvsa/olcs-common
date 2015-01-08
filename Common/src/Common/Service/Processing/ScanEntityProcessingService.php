@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Entity Processing Service
+ * Scan Entity Processing Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
@@ -12,11 +12,11 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
- * Entity Processing Service
+ * Scan Entity Processing Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class EntityProcessingService implements ServiceLocatorAwareInterface
+class ScanEntityProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -60,7 +60,12 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
         return $this->descriptionMap[$category];
     }
 
-    public function extractRelationsForCategory($category, $entity)
+    /**
+     * Given a category and an entity of an unknown type, extract
+     * an array of children from it which can then be used to
+     * create a scan entity with the corresponding child relationships
+     */
+    public function getChildrenForCategory($category, $entity)
     {
         switch ($category) {
             case CategoryDataService::CATEGORY_APPLICATION:
@@ -91,5 +96,26 @@ class EntityProcessingService implements ServiceLocatorAwareInterface
             default:
                 return [];
         }
+    }
+
+    /**
+     * Given an array of data we assume to represent a scan entity,
+     * pick off the IDs of all its children
+     */
+    public function extractChildrenFromEntity($scanData)
+    {
+        $final = [];
+
+        $relations = $this->getServiceLocator()
+            ->get('Entity\Scan')
+            ->getChildRelations();
+
+        foreach($relations as $relation) {
+            if (isset($scanData[$relation]) && isset($scanData[$relation]['id'])) {
+                $final[$relation] = $scanData[$relation]['id'];
+            }
+        }
+
+        return $final;
     }
 }

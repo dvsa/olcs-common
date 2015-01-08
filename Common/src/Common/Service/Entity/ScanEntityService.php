@@ -20,4 +20,31 @@ class ScanEntityService extends AbstractEntityService
      * @var string
      */
     protected $entity = 'Scan';
+
+    /**
+     * Holds the main data bundle
+     *
+     * @var array
+     */
+    protected $mainBundle = [
+        'children' => [
+            'licence', 'busReg', 'case', 'transportManager', 'category', 'subCategory'
+        ]
+    ];
+
+    /**
+     * Retrieve a scan by its primary identifier
+     */
+    public function findById($id)
+    {
+        return $this->get($id, $this->mainBundle);
+    }
+
+    /*
+     * Our corresponding processing service makes use of these
+     */
+    public function getChildRelations()
+    {
+        return $this->mainBundle['children'];
+    }
 }
