@@ -42,6 +42,21 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
+     * Save action form data
+     *
+     * @param string $mode
+     * @param array $data
+     * @param array $formData
+     * @throws \Exception
+     */
+    public function saveActionFormData($mode, array $data, array $formData)
+    {
+        if ($mode === 'add') {
+            return parent::saveActionFormData($mode, $data, $formData);
+        }
+    }
+
+    /**
      * Get address data
      *
      * @param int $id
@@ -304,6 +319,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $action = $this->getOperatingCentreAction();
 
         if ($action !== 'A') {
+
             list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
 
             $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $currentVehicles);
