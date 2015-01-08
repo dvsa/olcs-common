@@ -1398,6 +1398,7 @@ return array(
     'submission-view-title' => 'OTC case submission - %s',
     'submissions' => 'Submissions',
     'submit-pay.button' => 'Submit & pay',
+    'submit-application.button' => 'Submit application',
     'subsidiary-companies' => 'Subsidiary Companies',
     'subtitle-complaint-text' => 'Please enter complaint details',
     'subtitle-condition-text' => 'Please enter condition details',
