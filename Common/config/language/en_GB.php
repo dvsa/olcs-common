@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s">variation application</a>',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

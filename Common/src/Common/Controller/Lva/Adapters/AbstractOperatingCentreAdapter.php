@@ -14,6 +14,7 @@ use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Data\CategoryDataService;
 use Common\Controller\Lva\Adapters\AbstractControllerAwareAdapter;
 use Common\Controller\Lva\Interfaces\OperatingCentreAdapterInterface;
+use Common\Service\Helper\FormHelperService;
 
 /**
  * Abstract Operating Centre Adapter
@@ -625,9 +626,8 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         if ($lvaId === null) {
             $lvaId = $this->getLicenceAdapter()->getIdentifier();
         }
-        return $this->getServiceLocator()
-            ->get('Entity\Licence')
-            ->getTrafficArea($lvaId);
+
+        return $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($lvaId);
     }
 
     /**
@@ -701,14 +701,21 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $formHelper->remove($form, 'data->noOfTrailersRequired');
         $formHelper->remove($form, 'advertisements');
 
-        $dataLabel = $form->get('data')->getLabel();
-        $form->get('data')->setLabel($dataLabel . '-psv');
-
-        $parkingLabel = $form->get('data')->get('sufficientParking')->getLabel();
-        $form->get('data')->get('sufficientParking')->setLabel($parkingLabel . '-psv');
-
-        $permissionLabel = $form->get('data')->get('permission')->getLabel();
-        $form->get('data')->get('permission')->setLabel($permissionLabel . '-psv');
+        $formHelper->alterElementLabel(
+            $form->get('data'),
+            '-psv',
+            FormHelperService::ALTER_LABEL_APPEND
+        );
+        $formHelper->alterElementLabel(
+            $form->get('data')->get('sufficientParking'),
+            '-psv',
+            FormHelperService::ALTER_LABEL_APPEND
+        );
+        $formHelper->alterElementLabel(
+            $form->get('data')->get('permission'),
+            '-psv',
+            FormHelperService::ALTER_LABEL_APPEND
+        );
     }
 
     /**
@@ -737,13 +744,12 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $trafficAreaValidator->setTrafficArea($trafficArea);
 
         // Set the postcode field as not required and attach a new validator
-        $form->getInputFilter()->get('address')->get('postcode')->setRequired(false)
+        $form->getInputFilter()->get('address')->get('postcode')
+            ->setRequired(false)
             ->getValidatorChain()->attach($trafficAreaValidator);
 
-        $actions = $form->get('form-actions');
-
-        if ($licenceData['niFlag'] == 'N' && !$trafficArea && $actions->has('addAnother')) {
-            $actions->remove('addAnother');
+        if ($licenceData['niFlag'] == 'N' && !$trafficArea && $form->get('form-actions')->has('addAnother')) {
+            $form->get('form-actions')->remove('addAnother');
         }
     }
 
