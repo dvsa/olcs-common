@@ -328,14 +328,15 @@ return array(
     'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'W Intention',
     'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'W Small vehicle conditions and undertakings
         (if applicable)',
+    'application_vehicle-safety_undertakings.limousines.required' => 'W You must check this box to continue',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'W Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'W Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'W Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
-    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Limousines and novelty type vehicles with
-        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'W Only limousines and novelty type vehicles
+        with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'W If you intend to operate limousines
         or novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
         to be specified on your licence, if granted? (if applicable)',
@@ -611,6 +612,7 @@ return array(
     'defendant-type' => 'W Defendant type',
     'definition' => 'W Definition',
     'delete' => 'W Delete',
+    'delete.confirmation.text' => 'W This action is permanent and cannot be undone.',
     'description' => 'W Description',
     'director' => 'W Director',
     'disagree' => 'W Disagree',
@@ -657,9 +659,14 @@ return array(
     'fee-details' => 'W Fee Details',
     'fees' => 'W Fees',
     'fees.amount_too_large' => 'W The amount received cannot be greater than the fee amount',
+    'fees.cheque' => 'W Cheque Number',
     'fees.max_amount' => 'W Fee amount',
+    'fees.payer' => 'W Payer name',
     'fees.payment_method' => 'W Payment method',
+    'fees.po' => 'W PO Number',
+    'fees.receipt_date' => 'W Receipt date',
     'fees.received' => 'W Amount received',
+    'fees.slip' => 'W Slip No.',
     'filters' => 'W Filters',
     'finance' => 'W Finance',
     'first-name' => 'W First name(s)',
@@ -862,6 +869,11 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.transport-manager.competences.form.country' => 'W Country',
+    'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
+    'internal.transport-manager.competences.form.qualification-type' => 'W Qualification type',
+    'internal.transport-manager.competences.form.serial' => 'W Serial',
+    'internal.transport-manager.competences.table.qualification' => 'W Qualification',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',

@@ -22,7 +22,7 @@ class DecompressUploadToTmp extends DecompressToTmp
     {
         $tmpDir = $this->createTmpDir();
 
-        $this->getDecompressFilter()->setOptions(['options' => ['target' => $tmpDir]]);
+        $this->getDecompressFilter()->setTarget($tmpDir);
         $value['extracted_dir'] = $tmpDir;
         $this->getDecompressFilter()->filter($value['tmp_name']);
 

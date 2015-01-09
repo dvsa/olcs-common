@@ -327,14 +327,15 @@ return array(
     'application_vehicle-safety_undertakings-smallVehiclesIntention' => 'Intention',
     'application_vehicle-safety_undertakings-smallVehiclesUndertakings' => 'Small vehicle conditions and undertakings
         (if applicable)',
+    'application_vehicle-safety_undertakings.limousines.required' => 'You must check this box to continue',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement' => 'Limousines and novelty type vehicles
         are not to be operated under this operator\'s licence',
     'application_vehicle-safety_undertakings.limousinesApplication.agreement.label' => 'Do you agree to the following
         undertaking being specified on your licence, if granted? (if applicable)',
     'application_vehicle-safety_undertakings.limousinesApplication.yesNo' => 'Are the vehicles you are applying for to
         be used as Limousines or novelty type vehicles?',
-    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Limousines and novelty type vehicles with
-        nine passenger seats or more and issued with a valid Certificate will be used under the licence',
+    'application_vehicle-safety_undertakings.limousinesNine.agreement' => 'Only limousines and novelty type vehicles
+        with nine passenger seats or more and issued with a valid Certificate will be used under the licence',
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
@@ -609,6 +610,7 @@ return array(
     'defendant-type' => 'Defendant type',
     'definition' => 'Definition',
     'delete' => 'Delete',
+    'delete.confirmation.text' => 'This action is permanent and cannot be undone.',
     'description' => 'Description',
     'director' => 'Director',
     'disagree' => 'Disagree',
@@ -655,9 +657,14 @@ return array(
     'fee-details' => 'Fee Details',
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
+    'fees.cheque' => 'Cheque Number',
     'fees.max_amount' => 'Fee amount',
+    'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
+    'fees.po' => 'PO Number',
+    'fees.receipt_date' => 'Receipt date',
     'fees.received' => 'Amount received',
+    'fees.slip' => 'Slip No.',
     'filters' => 'Filters',
     'finance' => 'Finance',
     'first-name' => 'First name(s)',
@@ -860,6 +867,11 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.transport-manager.competences.form.country' => 'Country',
+    'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
+    'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
+    'internal.transport-manager.competences.form.serial' => 'Serial',
+    'internal.transport-manager.competences.table.qualification' => 'Qualification',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1492,6 +1504,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'delete.confirmation.text' => 'This action is permanent and cannot be undone.'
     // Potentially unused (Not found with grep)
 );

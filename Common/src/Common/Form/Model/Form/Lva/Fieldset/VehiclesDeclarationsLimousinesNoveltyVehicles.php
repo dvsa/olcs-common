@@ -33,19 +33,20 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvNoLimousineConfirmationLabel = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
-     * @Form\Required(false)
-     * @Form\AllowEmpty(false)
+     * @Form\Attributes({"class": "js-no-confirmation"})
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesApplication.agreement",
      *     "checked_value": "Y",
-     *     "unchecked_value": "N",
-     *     "help-block": "Please choose",
-     *     "must_be_value": "T"
+     *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
-     * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator"})
+     * @Form\Validator({
+     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
+     *     "options": {
+     *         "required_context_value": "N"
+     *     }
+     * })
      */
     public $psvNoLimousineConfirmation = null;
 
@@ -58,15 +59,19 @@ class VehiclesDeclarationsLimousinesNoveltyVehicles
     public $psvOnlyLimousinesConfirmationLabel = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Attributes({"class": "js-only-confirmation"})
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement",
      *     "checked_value": "Y",
-     *     "unchecked_value": "N",
-     *     "help-block": "Please choose",
-     *     "must_be_value": "Y"
+     *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
+     * @Form\Validator({
+     *     "name": "Common\Form\Elements\Validators\VehicleUndertakingsNoLimousineConfirmationValidator",
+     *     "options": {
+     *         "required_context_value": "Y"
+     *     }
+     * })
      */
     public $psvOnlyLimousinesConfirmation = null;
 }
