@@ -114,6 +114,49 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
     }
 
+    /**
+     * @expectedException Common\Service\Cpms\PaymentInvalidResponseException
+     * @expectedExceptionMessage some kind of error
+     */
+    public function testInitiateCardRequestWithInvalidResponseThrowsException()
+    {
+        $params = [
+            'customer_reference' => 'cust_ref',
+            'scope' => 'CARD',
+            'disable_redirection' => true,
+            'redirect_uri' => 'redirect_url',
+            'payment_data' => [
+                [
+                    'amount' => (double)525.25,
+                    'sales_reference' => 'sales_ref',
+                    'product_reference' => 'GVR_APPLICATION_FEE'
+                ]
+            ]
+        ];
+
+        $client = m::mock()
+            ->shouldReceive('post')
+            ->with('/api/payment/card', 'CARD', $params)
+            ->andReturn('some kind of error')
+            ->getMock();
+
+        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('cpms\service\api')
+            ->andReturn($client)
+            ->getMock();
+
+        $this->sut->setServiceLocator($sl);
+        $fees = [
+            [
+                'id' => 1,
+                'amount' => 525.25
+            ]
+        ];
+
+        $this->sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
+    }
+
     public function testHandleResponseWithInvalidPayment()
     {
         $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
