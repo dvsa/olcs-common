@@ -612,8 +612,6 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         }
 
         $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, 'data', $removeFields);
-
-
     }
 
     /**
@@ -678,7 +676,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
      * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
      */
-    protected function alterActionForm(Form $form)
+    public function alterActionForm(Form $form)
     {
         if ($this->isPsv()) {
             $this->alterActionFormForPsv($form);

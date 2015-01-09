@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
-use Common\Form\Elements\Validators\CantIncreaseValidator;
 
 /**
  * Licence Operating Centre Adapter
@@ -95,16 +94,28 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      */
     public function alterActionForm(Form $form)
     {
+        $form = parent::alterActionForm($form);
+
         $filter = $form->getInputFilter();
 
-        $data = $this->getVehicleAuthsForOperatingCentre($this->params('child_id'));
+        $data = $this->getVehicleAuthsForOperatingCentre(
+            $this->getController()->params('child_id')
+        );
 
-        foreach (['vehicles', 'trailers'] as $which) {
-            $key = 'noOf' . ucfirst($which) . 'Required';
+        if ($filter->get('data')->has('noOfVehiclesRequired')) {
+            $this->attachCantIncreaseValidator(
+                $filter->get('data')->get('noOfVehiclesRequired'),
+                'vehicles',
+                $data['noOfVehiclesRequired']
+            );
+        }
 
-            if ($filter->get('data')->has($key)) {
-                $this->attachCantIncreaseValidator($filter->get('data')->get($key), $which, $data[$key]);
-            }
+        if ($filter->get('data')->has('noOfTrailersRequired')) {
+            $this->attachCantIncreaseValidator(
+                $filter->get('data')->get('noOfTrailersRequired'),
+                'trailers',
+                $data['noOfTrailersRequired']
+            );
         }
 
         return $form;
@@ -174,19 +185,14 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     {
         $validatorChain = $input->getValidatorChain();
 
-        $cantIncreaseValidator = new CantIncreaseValidator();
+        $cantIncreaseValidator = $this->getServiceLocator()->get('CantIncreaseValidator');
 
-        $message = $this->getServiceLocator()->get('Helper\Translation')->formatTranslation(
-            '%s <a href="%s">%s</a>',
-            array(
-                'cant-increase-' . $messageSuffix,
-                $this->getController()->url()->fromRoute(
-                    'create_variation',
-                    ['licence' => $this->getLicenceAdapter()->getIdentifier()]
-                ),
-                'create-variation'
-            )
-        );
+        $licenceId = $this->getLicenceAdapter()->getIdentifier();
+
+        $link = $this->getController()->url()->fromRoute('create_variation', ['licence' => $licenceId]);
+
+        $message = $this->getServiceLocator()->get('Helper\Translation')
+            ->translateReplace('cant-increase-' . $messageSuffix, [$link]);
 
         $cantIncreaseValidator->setGenericMessage($message);
         $cantIncreaseValidator->setPreviousValue($previousValue);
@@ -202,9 +208,7 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      */
     protected function getVehicleAuthsForOperatingCentre($id)
     {
-        return $this->getServiceLocator()
-            ->get('Entity\LicenceOperatingCentre')
-            ->getVehicleAuths($id);
+        return $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')->getVehicleAuths($id);
     }
 
     /**

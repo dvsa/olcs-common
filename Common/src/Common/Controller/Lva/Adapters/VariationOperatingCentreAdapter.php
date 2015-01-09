@@ -397,6 +397,11 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             $ref = $this->getController()->params('child_id');
         }
 
+        // If ref is still null we are adding an OC
+        if ($ref === null) {
+            return self::ACTION_ADDED;
+        }
+
         $data = $this->getTableData();
 
         foreach ($data as $row) {
@@ -414,13 +419,13 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
      */
-    protected function alterActionForm(Form $form)
+    public function alterActionForm(Form $form)
     {
         $form = parent::alterActionForm($form);
 
         $action = $this->getOperatingCentreAction();
 
-        if ($action !== 'A') {
+        if ($action !== self::ACTION_ADDED) {
 
             list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
 

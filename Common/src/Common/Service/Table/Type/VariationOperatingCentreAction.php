@@ -46,6 +46,6 @@ class VariationOperatingCentreAction extends Action
 
         $content = parent::render($data, $column, $formattedContent);
 
-        return $prefix . ' ' . $content;
+        return trim($prefix . ' ' . $content);
     }
 }
