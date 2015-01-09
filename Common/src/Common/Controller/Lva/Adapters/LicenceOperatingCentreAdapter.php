@@ -170,7 +170,7 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      * @param \Zend\Form\Form $form
      * @return \Zend\Form\Form
      */
-    protected function alterForm(Form $form)
+    public function alterForm(Form $form)
     {
         $form = parent::alterForm($form);
 

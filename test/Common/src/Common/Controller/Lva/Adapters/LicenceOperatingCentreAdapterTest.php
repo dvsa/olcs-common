@@ -639,4 +639,52 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->sut->disableConditionalValidation($mockForm);
     }
+
+    public function testAlterForm()
+    {
+        // Stubbed data
+        $licenceId = 5;
+        $stubbedAddressData = [
+            'Results' => []
+        ];
+        $stubbedTolData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+        ];
+
+        // Mocked objects
+        $mockForm = m::mock('\Zend\Form\Form');
+
+        // Mocked services
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockEntityService = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockEntityService);
+        $mockLicenceAdapter = m::mock();
+        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        // Expectations
+        $mockLicenceAdapter->shouldReceive('alterForm')
+            ->with($mockForm);
+
+        $mockLicenceAdapter->shouldReceive('setController')
+            ->with($this->controller)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+            ->with($licenceId)
+            ->andReturn($stubbedTolData);
+
+        $this->fail('Finish me off');
+
+        /*
+
+        $mockEntityService->shouldReceive('getAddressSummaryData')
+            ->with($licenceId)
+            ->andReturn($stubbedAddressData);*/
+
+        $this->sut->alterForm($mockForm);
+    }
 }
