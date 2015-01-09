@@ -78,7 +78,10 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
 
-        if (!is_array($response) || !isset($response['redirection_data'])) {
+        if (!is_array($response)
+            || !isset($response['redirection_data'])
+            || empty($response['redirection_data'])
+        ) {
             throw new PaymentInvalidResponseException(json_encode($response));
         }
 
