@@ -369,7 +369,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     {
         $service = $this->getEntityService();
 
-        $ids = explode(',', $this->params('child_id'));
+        $ids = explode(',', $this->getController()->params('child_id'));
 
         foreach ($ids as $id) {
             $service->delete($id);

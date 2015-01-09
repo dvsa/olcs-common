@@ -25,7 +25,7 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     {
         parent::delete();
 
-        return $this->checkTrafficArea();
+        $this->checkTrafficArea();
     }
 
     /**
@@ -43,9 +43,10 @@ class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         $action = strtolower($data['action']);
 
-        $data = (array)$this->getController()->getRequest()->getPost();
-
         if ($action === 'add' && !$this->getTrafficArea()) {
+
+            $data = (array)$this->getController()->getRequest()->getPost();
+
             $trafficArea = isset($data['dataTrafficArea']['trafficArea'])
                 ? $data['dataTrafficArea']['trafficArea']
                 : '';
