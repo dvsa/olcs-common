@@ -6,7 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("vehicle-filter")
- * @Form\Attributes({"method":"get","class":"form__filter"})
+ * @Form\Attributes({"method":"get","class":"filters"})
  * @Form\Type("Common\Form\Form")
  * @Form\Options({"prefer_form_input_filter": true})
  */
