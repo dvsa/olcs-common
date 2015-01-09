@@ -40,7 +40,33 @@ class VrmTest extends MockeryTestCase
         return [
             ['U3', true],
             ['Z1', false],
-            ['11', true]
+            ['BD100', true],
+            ['BQ000', false],
+            ['BD1456', true],
+            ['QD1456', false],
+            ['K5012', true],
+            ['Z5012', false],
+            ['KL55', true],
+            ['KL05', false],
+            ['F5DEF', true],
+            ['Z5DEF', false],
+            ['G50DEF', true],
+            ['Q05DEF', false],
+            ['AB01QQ', true],
+            ['AB01Q1', false],
+            ['01AB23', true],
+            ['012A34', false],
+            ['KM51ABC', true],
+            ['KMM1ABC', false],
+            ['012345Z', true],
+            ['012345X', false],
+            ['Q5ABC', true],
+            ['Z5ABC', false],
+            ['Q10ABC', true],
+            ['Q00ABC', false],
+            // exceptions
+            ['11', true],
+            ['1CZS', true]
         ];
     }
 }
