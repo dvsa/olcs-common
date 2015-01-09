@@ -22,8 +22,7 @@ class Vrm extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'foo' => 'error.vehicle.vrm-exists-on-licence',
-        'bar' => 'error.vehicle.vrm-exists-on-application'
+        'invalid' => 'error.vrm.invalid'
     );
 
     protected $exceptions = [
@@ -127,6 +126,9 @@ class Vrm extends AbstractValidator
         }
 
         $length = strlen($input);
+        if (!isset($this->patterns[$length])) {
+            return [];
+        }
         return $this->patterns[$length];
     }
 
@@ -146,9 +148,7 @@ class Vrm extends AbstractValidator
      */
     public function isValid($value)
     {
-        // @TODO strlen >= 2 && <= 7
-
-        if (isset($this->exceptions[$value])) {
+        if (in_array($value, $this->exceptions)) {
             return true;
         }
 
@@ -159,8 +159,7 @@ class Vrm extends AbstractValidator
             }
         }
 
-        //$this->error('not-unique-' . $this->type);
-
+        $this->error('invalid');
         return false;
     }
 }
