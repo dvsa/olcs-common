@@ -39,6 +39,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     const RESPONSE_SUCCESS = '000';
 
+    // @TODO product ref shouldn't have to come from a whitelist...
+    const PRODUCT_REFERENCE = 'GVR_APPLICATION_FEE';
+
     protected function getClient()
     {
         return $this->getServiceLocator()->get('cpms\service\api');
@@ -54,9 +57,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             }
         );
 
-        // @TODO product ref shouldn't have to come from a whitelist...
-        $productReference = 'GVR_APPLICATION_FEE';
-
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
@@ -67,7 +67,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 [
                     'amount' => $amount,
                     'sales_reference' => $salesReference,
-                    'product_reference' => $productReference
+                    'product_reference' => self::PRODUCT_REFERENCE,
                 ]
             ]
         ];
@@ -106,8 +106,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param string $salesReference
      * @param float $amount
      * @param array $receiptDate (from DateSelect)
-     * @param string $payer
-     * @param string $slipNo
+     * @param string $payer payer name
+     * @param string $slipNo paying in slip number
      * @return boolean success
      */
     public function recordCashPayment(
@@ -125,7 +125,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new PaymentInvalidAmountException("Amount must match the fee due");
         }
 
-        $productReference = 'GVR_APPLICATION_FEE';
         $receiptDate = $this->formatReceiptDate($receiptDate);
         $params = [
             'customer_reference' => (string)$customerReference,
@@ -135,7 +134,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 [
                     'amount' => $amount,
                     'sales_reference' => $salesReference,
-                    'product_reference' => $productReference,
+                    'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer, // not sure this is supported for CASH payments
                     'payment_reference' => [
                         'slip_number' => (string)$slipNo,
@@ -145,7 +144,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $response = $this->getClient()->post('/api/payment/cash', ApiService::SCOPE_CASH, $params);
+        $response = $this->getClient()->post(
+            '/api/payment/cash',
+            ApiService::SCOPE_CASH,
+            $params
+        );
 
         if ($this->isSuccessfulResponse($response)) {
             $data = [
@@ -158,17 +161,176 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'payingInSlipNumber' => $slipNo,
             ];
 
-            $this->getServiceLocator()
-                ->get('Entity\Fee')
-                ->forceUpdate($fee['id'], $data);
+            $this->updateFeeRecordAsPaid($fee['id'], $data);
 
-            $this->getServiceLocator()->get('Listener\Fee')->trigger(
-                $fee['id'],
-                FeeListenerService::EVENT_PAY
-            );
             return true;
         }
+
         return false;
+    }
+
+    /**
+     * Record a cheque payment in CPMS
+     *
+     * @param string $customerReference
+     * @param string $salesReference
+     * @param float $amount
+     * @param array $receiptDate (from DateSelect)
+     * @param string $payer payer name
+     * @param string $slipNo paying in slip number
+     * @param string $chequeNo cheque number
+     * @return boolean success
+     */
+    public function recordChequePayment(
+        $fee,
+        $customerReference,
+        $salesReference,
+        $amount,
+        $receiptDate,
+        $payer,
+        $slipNo,
+        $chequeNo
+    ) {
+        // Partial payments are not supported
+        if ($fee['amount'] != $amount) {
+            throw new PaymentInvalidAmountException("Amount must match the fee due");
+        }
+
+        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $params = [
+            'customer_reference' => (string)$customerReference,
+            'scope' => ApiService::SCOPE_CHEQUE,
+            'total_amount' => $amount,
+            'payment_data' => [
+                [
+                    'amount' => $amount,
+                    'sales_reference' => $salesReference,
+                    'product_reference' => self::PRODUCT_REFERENCE,
+                    'payer_details' => $payer,
+                    'payment_reference' => [
+                        'slip_number' => (string)$slipNo,
+                        'receipt_date' => $receiptDate,
+                        'cheque_number' => (string)$chequeNo,
+                    ],
+                ]
+            ]
+        ];
+
+        $response = $this->getClient()->post(
+            '/api/payment/cheque',
+            ApiService::SCOPE_CHEQUE,
+            $params
+        );
+
+        if ($this->isSuccessfulResponse($response)) {
+            $data = [
+                'feeStatus'          => FeeEntityService::STATUS_PAID,
+                'receivedDate'       => $receiptDate,
+                'receiptNo'          => $response['receipt_reference'],
+                'paymentMethod'      => FeePaymentEntityService::METHOD_CHEQUE,
+                'receivedAmount'     => $amount,
+                'payerName'          => $payer,
+                'payingInSlipNumber' => $slipNo,
+                'chequePoNumber'     => $chequeNo,
+            ];
+
+            $this->updateFeeRecordAsPaid($fee['id'], $data);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Record a Postal Order payment in CPMS
+     *
+     * @param string $customerReference
+     * @param string $salesReference
+     * @param float $amount
+     * @param array $receiptDate (from DateSelect)
+     * @param string $payer payer name
+     * @param string $slipNo paying in slip number
+     * @param string $poNo Postal Order number
+     * @return boolean success
+     */
+    public function recordPostalOrderPayment(
+        $fee,
+        $customerReference,
+        $salesReference,
+        $amount,
+        $receiptDate,
+        $payer,
+        $slipNo,
+        $poNo
+    ) {
+        // Partial payments are not supported
+        if ($fee['amount'] != $amount) {
+            throw new PaymentInvalidAmountException("Amount must match the fee due");
+        }
+
+        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $params = [
+            'customer_reference' => (string)$customerReference,
+            'scope' => ApiService::SCOPE_POSTAL_ORDER,
+            'total_amount' => $amount,
+            'payment_data' => [
+                [
+                    'amount' => $amount,
+                    'sales_reference' => $salesReference,
+                    'product_reference' => self::PRODUCT_REFERENCE,
+                    'payer_details' => $payer,
+                    'payment_reference' => [
+                        'slip_number' => (string)$slipNo,
+                        'receipt_date' => $receiptDate,
+                        'postal_order_number' => [ $poNo ] // array!
+                    ],
+                ]
+            ]
+        ];
+
+        $response = $this->getClient()->post(
+            '/api/payment/postal-order',
+            ApiService::SCOPE_POSTAL_ORDER,
+            $params
+        );
+
+        if ($this->isSuccessfulResponse($response)) {
+            $data = [
+                'feeStatus'          => FeeEntityService::STATUS_PAID,
+                'receivedDate'       => $receiptDate,
+                'receiptNo'          => $response['receipt_reference'],
+                'paymentMethod'      => FeePaymentEntityService::METHOD_POSTAL_ORDER,
+                'receivedAmount'     => $amount,
+                'payerName'          => $payer,
+                'payingInSlipNumber' => $slipNo,
+                'chequePoNumber'     => $poNo,
+            ];
+
+            $this->updateFeeRecordAsPaid($fee['id'], $data);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Helper function to update fee record and trigger the 'fee paid' event
+     * after successful payment
+     * @param int $feeId
+     * @param array $data fee data
+     * @return null
+     */
+    protected function updateFeeRecordAsPaid($feeId, $data)
+    {
+        $this->getServiceLocator()
+            ->get('Entity\Fee')
+            ->forceUpdate($feeId, $data);
+
+        $this->getServiceLocator()->get('Listener\Fee')->trigger(
+            $feeId, FeeListenerService::EVENT_PAY
+        );
     }
 
     /**
@@ -256,14 +418,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                         'receivedAmount' => $fee['amount']
                     ];
 
-                    $this->getServiceLocator()
-                        ->get('Entity\Fee')
-                        ->forceUpdate($fee['id'], $data);
-
-                    $this->getServiceLocator()->get('Listener\Fee')->trigger(
-                        $fee['id'],
-                        FeeListenerService::EVENT_PAY
-                    );
+                    $this->updateFeeRecordAsPaid($fee['id'], $data);
                 }
 
                 $paymentService->setStatus($payment['id'], PaymentEntityService::STATUS_PAID);
