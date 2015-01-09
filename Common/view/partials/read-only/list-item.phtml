@@ -39,6 +39,10 @@ switch ($item['value']) {
 }
 
 ?>
+
+<?php if (isset($item['hideIfEmpty']) && $item['hideIfEmpty'] && empty($item['value'])):
+ // no-op, don't render
+else: ?>
 <li class="definition-list__item<?php echo (isset($item['class']) ? ' ' . $item['class'] : ''); ?>">
     <dt><?php echo $this->translate($item['label']); ?>
     </dt>
@@ -52,3 +56,4 @@ switch ($item['value']) {
         <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
     </dd>
 </li>
+<?php endif; ?>
