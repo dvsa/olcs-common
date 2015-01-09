@@ -80,7 +80,7 @@ class ScanEntityProcessingService implements ServiceLocatorAwareInterface
 
             case CategoryDataService::CATEGORY_IRFO:
 
-                return ['organisation' => $entity['id']];
+                return ['irfoOrganisation' => $entity['id']];
 
             case CategoryDataService::CATEGORY_TRANSPORT_MANAGER:
 

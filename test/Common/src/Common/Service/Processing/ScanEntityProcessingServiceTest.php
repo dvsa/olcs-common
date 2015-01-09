@@ -116,7 +116,7 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
             [CategoryDataService::CATEGORY_LICENSING, ['licence' => 123]],
             [CategoryDataService::CATEGORY_ENVIRONMENTAL, ['licence' => 123]],
             [CategoryDataService::CATEGORY_COMPLIANCE, ['case' => 123]],
-            [CategoryDataService::CATEGORY_IRFO, ['organisation' => 123]],
+            [CategoryDataService::CATEGORY_IRFO, ['irfoOrganisation' => 123]],
             [CategoryDataService::CATEGORY_TRANSPORT_MANAGER, ['transportManager' => 123]],
             [
                 CategoryDataService::CATEGORY_BUS_REGISTRATION,

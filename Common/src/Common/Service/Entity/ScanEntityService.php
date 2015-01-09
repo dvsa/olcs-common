@@ -28,7 +28,9 @@ class ScanEntityService extends AbstractEntityService
      */
     protected $mainBundle = [
         'children' => [
-            'licence', 'busReg', 'case', 'transportManager', 'category', 'subCategory'
+            'licence', 'busReg', 'case',
+            'transportManager', 'category',
+            'subCategory', 'irfoOrganisation'
         ]
     ];
 

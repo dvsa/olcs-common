@@ -36,7 +36,7 @@ class ScanEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetChildRelations()
     {
         $this->assertEquals(
-            ['licence', 'busReg', 'case', 'transportManager', 'category', 'subCategory'],
+            ['licence', 'busReg', 'case', 'transportManager', 'category', 'subCategory', 'irfoOrganisation'],
             $this->sut->getChildRelations()
         );
     }
