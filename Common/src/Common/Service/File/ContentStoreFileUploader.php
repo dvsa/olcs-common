@@ -46,7 +46,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
             ->write($path, $storeFile);
 
         if (!$response->isSuccess()) {
-            throw new Exception('Unable to store uploaded file');
+            throw new Exception('Unable to store uploaded file: ' . $response->getBody());
         }
 
         $file->setPath($path);
