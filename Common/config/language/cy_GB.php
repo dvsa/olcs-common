@@ -493,10 +493,14 @@ return array(
     'business-type' => 'W Business type',
     'cancel' => 'W Cancel',
     'cancel.button' => 'W Cancel',
-    'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must',
-    'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must',
-    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must ',
-    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must ',
+    'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a
+        href="%s">create a variation application</a>',
     'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise, contact
         the cardholder.',
     'case-associated-with' => 'W Cases associated with %s',
@@ -1471,6 +1475,8 @@ return array(
     'v-auth' => 'W V-auth',
     'v-auth-t-auth' => 'W V-auth/T-auth',
     'variation-application-link-text' => 'W variation application',
+    'variation-application-message' => 'W Making changes to some fields within this section may require a <a
+        href="%s">variation application</a>',
     'variation-application-text' => 'W Making changes to some fields within this section may require a',
     'variation-application-text2' => 'W Changes within this section will require a',
     'variation-application-text3' => 'W You cannot make changes to this section',

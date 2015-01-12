@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s">variation application</a>',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -492,10 +491,14 @@ return array(
     'business-type' => 'Business type',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
-    'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a href="%s">create a variation application</a>',
-    'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create a variation application</a>',
-    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create a variation application</a>',
+    'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create
+        a variation application</a>',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create
+        a variation application</a>',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the
         cardholder.',
     'case-associated-with' => 'Cases associated with %s',
@@ -1468,6 +1471,8 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
+    'variation-application-message' => 'Making changes to some fields within this section may require a <a
+        href="%s">variation application</a>',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
     'variation-application-text2' => 'Changes within this section will require a',
     'variation-application-text3' => 'You cannot make changes to this section',
