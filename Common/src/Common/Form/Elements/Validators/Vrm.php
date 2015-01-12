@@ -1,18 +1,18 @@
 <?php
 
 /**
- * ensure the vrm matches the required criteria
+ * Ensure the VRM matches the required criteria
  *
- * @author nick payne <nick.payne@valtech.co.uk>
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
 
 /**
- * ensure the vrm matches the required criteria
+ * Ensure the VRM matches the required criteria
  *
- * @author nick payne <nick.payne@valtech.co.uk>
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class Vrm extends AbstractValidator
 {
@@ -25,6 +25,12 @@ class Vrm extends AbstractValidator
         'invalid' => 'error.vrm.invalid'
     );
 
+    /**
+     * Exceptional VRMs which are valid but would fail
+     * the normal pattern-based checks
+     *
+     * @var array
+     */
     protected $exceptions = [
         '11',
         '1CZS',
@@ -58,6 +64,12 @@ class Vrm extends AbstractValidator
         'ZV'
     ];
 
+    /**
+     * How we map each character (as defined in the DVSA business rules)
+     * to a partial regular expression
+     *
+     * @var array
+     */
     protected $characterMap = [
         '1' => '1-9',
         '9' => '0-9',
@@ -70,6 +82,11 @@ class Vrm extends AbstractValidator
         'Z' => 'Z'
     ];
 
+    /**
+     * Valid VRM formats as defined in the DVSA business rules
+     *
+     * @var array
+     */
     protected $validFormats = [
         'EE199',
         'EE1999',
@@ -109,13 +126,26 @@ class Vrm extends AbstractValidator
         'Q199AAA'
     ];
 
+    /**
+     * Holds the array of regexes constructed from the DVSA patterns
+     */
     protected $patterns = [];
 
+    /**
+     * Retrieve a subset of regular expressions which *might* match
+     * the given input
+     *
+     * @param string $input
+     * @return array
+     */
     protected function getPatterns($input)
     {
         if (empty($this->patterns)) {
             $patterns = [];
+
             foreach ($this->validFormats as $format) {
+                // we create a 2D array keyed by length so when we look
+                // up a VRM we only run a subset of regexes over it
                 $key = strlen($format);
                 if (!isset($patterns[$key])) {
                     $patterns[$key] = [];
@@ -126,12 +156,20 @@ class Vrm extends AbstractValidator
         }
 
         $length = strlen($input);
+
+        // allow for the fact the input might be completely invalid
         if (!isset($this->patterns[$length])) {
             return [];
         }
         return $this->patterns[$length];
     }
 
+    /**
+     * Construct a regular expression from a given DVSA format
+     *
+     * @param string $formatter
+     * @return string
+     */
     protected function buildRegex($formatter)
     {
         $pattern = '';
@@ -145,6 +183,7 @@ class Vrm extends AbstractValidator
      * Check if VRM is valid
      *
      * @param string $value
+     * @return bool
      */
     public function isValid($value)
     {
