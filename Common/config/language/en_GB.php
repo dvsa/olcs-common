@@ -1505,5 +1505,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'error.vrm.invalid' => 'Invalid Registration Number'
     // Potentially unused (Not found with grep)
 );
