@@ -8,6 +8,6 @@ namespace Common\Service\Cpms;
 /**
  * Invalid Payment Type Exception
  */
-class PaymentInvalidTypeException extends \Exception
+class PaymentInvalidTypeException extends PaymentException
 {
 }

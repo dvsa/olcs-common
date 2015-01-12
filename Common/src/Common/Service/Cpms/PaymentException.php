@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Invalid Payment Amount Exception
+ * Generic Cpms Service Exception
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace Common\Service\Cpms;
 
 /**
- * Invalid Payment Amount Exception
+ * Generic Cpms Service Exception
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class PaymentInvalidAmountException extends PaymentException
+class PaymentException extends \Exception
 {
 }

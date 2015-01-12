@@ -8,6 +8,6 @@ namespace Common\Service\Cpms;
 /**
  * Invalid Payment Response Exception
  */
-class PaymentInvalidResponseException extends \Exception
+class PaymentInvalidResponseException extends PaymentException
 {
 }
