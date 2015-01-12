@@ -1,6 +1,6 @@
 <?php
 /**
- * A trait that controllers can use to easily interact with the flash messenger.
+ * A trait that controllers can use to easily interact with the logger.
  *
  * @package     olcscommon
  * @subpackage  utility
