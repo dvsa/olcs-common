@@ -40,6 +40,22 @@ class TransportManagerEntityService extends AbstractEntityService
     ];
 
     /**
+     * Document Bundle
+     *
+     * @var array
+     */
+    protected $documentBundle = array(
+        'children' => array(
+            'documents' => array(
+                'children' => array(
+                    'category',
+                    'subCategory'
+                )
+            )
+        )
+    );
+
+    /**
      * Get transport manager details
      *
      * @param int $id
@@ -49,8 +65,36 @@ class TransportManagerEntityService extends AbstractEntityService
         return $this->get($id, $this->tmDetailsBundle);
     }
 
+    /**
+     * Find by id
+     *
+     * @param int $id
+     * @return array
+     */
     public function findByIdentifier($identifier)
     {
         return $this->get($identifier);
+    }
+
+    /**
+     * Get transport manager documents
+     *
+     * @param int $id
+     * @param int $categoryId
+     * @param int $documentSubCategoryId
+     * @return array
+     */
+    public function getDocuments($id, $categoryId, $documentSubCategoryId)
+    {
+        $documentBundle = $this->documentBundle;
+
+        $documentBundle['children']['documents']['criteria'] = array(
+            'category'    => $categoryId,
+            'subCategory' => $documentSubCategoryId
+        );
+
+        $data = $this->get($id, $documentBundle);
+
+        return $data['documents'];
     }
 }
