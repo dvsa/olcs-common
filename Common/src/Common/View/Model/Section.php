@@ -21,5 +21,5 @@ class Section extends AbstractViewModel
      *
      * @var string
      */
-    protected $template = 'section';
+    protected $template = 'pages/lva-details';
 }

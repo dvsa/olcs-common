@@ -1407,6 +1407,7 @@ return array(
     'submission-vehicle-trailer' => 'V-auth / T-auth',
     'submission-view-title' => 'OTC case submission - %s',
     'submissions' => 'Submissions',
+    'submit-application.button' => 'Submit application',
     'submit-pay.button' => 'Submit & pay',
     'subsidiary-companies' => 'Subsidiary Companies',
     'subtitle-complaint-text' => 'Please enter complaint details',
@@ -1504,5 +1505,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'error.vrm.invalid' => 'Invalid Registration Number'
     // Potentially unused (Not found with grep)
 );
