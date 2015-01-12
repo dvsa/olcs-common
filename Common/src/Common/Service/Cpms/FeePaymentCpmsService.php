@@ -47,6 +47,10 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         return $this->getServiceLocator()->get('cpms\service\api');
     }
 
+    /**
+     * @return array
+     * @throws Common\Service\Cpms\PaymentInvalidResponseException on error
+     */
     public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
     {
         $amount = array_reduce(
@@ -73,6 +77,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         ];
 
         $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
+
+        if (!is_array($response)
+            || !isset($response['redirection_data'])
+            || empty($response['redirection_data'])
+        ) {
+            throw new PaymentInvalidResponseException(json_encode($response));
+        }
 
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
@@ -340,10 +351,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array $response response data
      * @return boolean
      */
-    protected function isSuccessfulResponse(array $response)
+    protected function isSuccessfulResponse($response)
     {
         return (
-            isset($response['code'])
+            is_array($response)
+            && isset($response['code'])
             && $response['code'] === self::RESPONSE_SUCCESS
             && isset($response['receipt_reference'])
             && !empty($response['receipt_reference'])
