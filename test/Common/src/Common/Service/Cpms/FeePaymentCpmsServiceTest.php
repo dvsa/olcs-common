@@ -52,7 +52,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'sales_reference' => 'sales_ref',
                     'product_reference' => 'GVR_APPLICATION_FEE'
                 ]
-            ]
+            ],
+            'cost_centre' => '12345,67890',
         ];
 
         $client = m::mock()
@@ -131,7 +132,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'sales_reference' => 'sales_ref',
                     'product_reference' => 'GVR_APPLICATION_FEE'
                 ]
-            ]
+            ],
+            'cost_centre' => '12345,67890',
         ];
 
         $client = m::mock()
@@ -475,7 +477,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'receipt_date' => '07-01-2015',
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => '12345,67890',
         ];
 
         $client = m::mock()
@@ -616,7 +619,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'cheque_number' => '234567',
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => '12345,67890',
         ];
 
         $client = m::mock()
@@ -761,7 +765,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'postal_order_number' => ['234567'], // array expected according to api docs
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => '12345,67890',
         ];
 
         $client = m::mock()
