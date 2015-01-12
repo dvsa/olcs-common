@@ -49,6 +49,8 @@ abstract class AbstractFileUploader implements FileUploaderInterface
         }
 
         $this->file = $file;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,14 @@ abstract class AbstractFileUploader implements FileUploaderInterface
         return $this->serviceLocator;
     }
 
+    public function populateFile()
+    {
+        $this->file->setContent(
+            $this->readFile()
+        );
+        return $this;
+    }
+
     /**
      * Create a file object
      *
@@ -134,5 +144,10 @@ abstract class AbstractFileUploader implements FileUploaderInterface
         }
 
         return rtrim($namespace, '/') . '/' . $identifier;
+    }
+
+    protected function readFile()
+    {
+        return file_get_contents($this->file->getPath());
     }
 }

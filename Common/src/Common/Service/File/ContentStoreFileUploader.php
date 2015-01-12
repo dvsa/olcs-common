@@ -33,9 +33,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         // allow for the fact the file might already have
         // content set so we won't need to read from tmp disk
         if ($file->getContent() === null) {
-            $file->setContent(
-                $this->readFile($file)
-            );
+            $this->populateFile();
         }
 
         $storeFile = new ContentStoreFile();
@@ -79,11 +77,6 @@ class ContentStoreFileUploader extends AbstractFileUploader
         $path = $this->getPath($identifier, $namespace);
         $store = $this->getServiceLocator()->get('ContentStore');
         return $store->remove($path);
-    }
-
-    private function readFile($file)
-    {
-        return file_get_contents($file->getPath());
     }
 
     public function serveFile($file, $name)
