@@ -45,7 +45,7 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
         $this->assertEquals(
             'FakeEntity',
             $this->sut->findEntityForCategory(
-                1,
+                1, // NB this refers to a *category* ID
                 123
             )
         );
@@ -77,7 +77,7 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
                 'licNo' => 1234
             ],
             $this->sut->findEntityForCategory(
-                1,
+                1, // NB this refers to a *category* ID
                 123
             )
         );
