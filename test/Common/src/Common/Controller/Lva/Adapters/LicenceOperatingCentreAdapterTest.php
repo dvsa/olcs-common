@@ -8,7 +8,7 @@
 namespace CommonTest\Controller\Lva\Adapters;
 
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use MUnit\Adapter\Mockery\TestCase;
 use Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Helper\FormHelperService;
@@ -18,13 +18,16 @@ use Common\Service\Helper\FormHelperService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceOperatingCentreAdapterTest extends MockeryTestCase
+class LicenceOperatingCentreAdapterTest extends TestCase
 {
     protected $sut;
     protected $sm;
     protected $controller;
 
-    public function setUp()
+    /**
+     * Renamed this method as we are using MUnit for some methods in this file
+     */
+    public function setUpTest()
     {
         $this->sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
         $this->sm->setAllowOverride(true);
@@ -38,6 +41,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testGetDocumentProperties()
     {
+        $this->setUpTest();
+
         $mockLicenceAdapter = m::mock();
         $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
 
@@ -56,6 +61,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testAddMessages()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $licenceId = 4;
 
@@ -89,6 +96,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testAlterActionFormForGoodsWithoutVehicleOrTrailerElement()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
@@ -180,6 +189,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testAlterActionFormForGoodsWithoutVehicleOrTrailerElementWithoutTrafficArea()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
@@ -281,6 +292,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testAlterActionFormForPsvWithoutVehicleOrTrailerElement()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
@@ -382,6 +395,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testAlterActionFormForPsv()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $stubbedTolData = [
             'niFlag' => 'N',
@@ -535,6 +550,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testDisableConditionalValidationWithoutDataSet()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $post = [];
         $licenceId = 3;
@@ -577,6 +594,8 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
 
     public function testDisableConditionalValidation()
     {
+        $this->setUpTest();
+
         // Stubbed data
         $post = [
             'data' => [
@@ -640,51 +659,300 @@ class LicenceOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut->disableConditionalValidation($mockForm);
     }
 
+    /**
+     * @group POC
+     */
     public function testAlterForm()
     {
-        // Stubbed data
-        $licenceId = 5;
-        $stubbedAddressData = [
-            'Results' => []
-        ];
-        $stubbedTolData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
-        ];
+        // Licence ID:5
 
-        // Mocked objects
-        $mockForm = m::mock('\Zend\Form\Form');
+        $this->describe('alterForm', function() {
 
-        // Mocked services
-        $mockFormHelper = m::mock();
-        $this->sm->setService('Helper\Form', $mockFormHelper);
-        $mockEntityService = m::mock();
-        $this->sm->setService('Entity\LicenceOperatingCentre', $mockEntityService);
-        $mockLicenceAdapter = m::mock();
-        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
-        $mockLicenceEntity = m::mock();
-        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+            $this->beforeEach(function($scope) {
+                $this->setUpTest();
 
-        // Expectations
-        $mockLicenceAdapter->shouldReceive('alterForm')
-            ->with($mockForm);
+                // Stubbed data
+                $stubbedTotalAuths = [
+                    'totAuthVehicles' => 10
+                ];
 
-        $mockLicenceAdapter->shouldReceive('setController')
-            ->with($this->controller)
-            ->shouldReceive('getIdentifier')
-            ->andReturn($licenceId);
+                // Mocked services
+                $scope->mockFormHelper = m::mock();
+                $this->sm->setService('Helper\Form', $scope->mockFormHelper);
+                $scope->mockLicenceAdapter = m::mock();
+                $this->sm->setService('LicenceLvaAdapter', $scope->mockLicenceAdapter);
+                $scope->mockEntityService = m::mock();
+                $this->sm->setService('Entity\LicenceOperatingCentre', $scope->mockEntityService);
+                $scope->mockLicenceEntity = m::mock();
+                $this->sm->setService('Entity\Licence', $scope->mockLicenceEntity);
+                $scope->mockValidator = m::mock();
+                $this->sm->setService('CantIncreaseValidator', $scope->mockValidator);
+                $scope->mockTranslator = m::mock();
+                $this->sm->setService('Helper\Translation', $scope->mockTranslator);
 
-        $mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
-            ->with($licenceId)
-            ->andReturn($stubbedTolData);
+                // Mocked objects
+                $scope->mockForm = m::mock('\Zend\Form\Form');
+                $scope->mockInputFilter = m::mock();
+                $scope->mockDataInputFilter = m::mock();
+                $scope->mockValidatorChain = m::mock();
+                $scope->mockDataElement = m::mock();
 
-        $this->fail('Finish me off');
+                // Expectations
+                $scope->mockLicenceAdapter->shouldReceive('setController')
+                    ->with($this->controller)
+                    ->shouldReceive('getIdentifier')
+                    ->andReturn(5);
 
-        /*
+                $scope->mockLicenceEntity->shouldReceive('getTotalAuths')
+                    ->with(5)
+                    ->andReturn($stubbedTotalAuths);
 
-        $mockEntityService->shouldReceive('getAddressSummaryData')
-            ->with($licenceId)
-            ->andReturn($stubbedAddressData);*/
+                $scope->mockForm->shouldReceive('getInputFilter')
+                    ->andReturn($scope->mockInputFilter);
 
-        $this->sut->alterForm($mockForm);
+                $scope->mockDataInputFilter->shouldReceive('has')
+                    ->with('totAuthVehicles')
+                    ->andReturn(true)
+                    ->shouldReceive('has')
+                    ->with('totAuthTrailers')
+                    ->andReturn(false)
+                    ->shouldReceive('get')
+                    ->with('totAuthVehicles')
+                    ->andReturnSelf()
+                    ->shouldReceive('getValidatorChain')
+                    ->andReturn($scope->mockValidatorChain);
+
+                $scope->mockInputFilter->shouldReceive('get')
+                    ->with('data')
+                    ->andReturn($scope->mockDataInputFilter);
+
+                $this->controller->shouldReceive('url->fromRoute')
+                    ->with('create_variation', ['licence' => 5])
+                    ->andReturn('LINK');
+
+                $scope->mockTranslator->shouldReceive('translateReplace')
+                    ->with('cant-increase-total-vehicles', ['LINK'])
+                    ->andReturn('MESSAGE');
+
+                $scope->mockValidator->shouldReceive('setGenericMessage')
+                    ->with('MESSAGE')
+                    ->shouldReceive('setPreviousValue')
+                    ->with(10);
+
+                $scope->mockValidatorChain->shouldReceive('attach')
+                    ->with($scope->mockValidator);
+
+                $scope->mockForm->shouldReceive('get')
+                    ->with('data')
+                    ->andReturn($scope->mockDataElement);
+
+                $scope->mockDataElement->shouldReceive('has')
+                    ->with('totCommunityLicences')
+                    ->andReturn(true);
+
+                $scope->mockFormHelper->shouldReceive('remove')
+                    ->with($scope->mockForm, 'data->totCommunityLicences');
+            });
+
+            $this->describe('will call parent::alterForm', function() {
+
+                $this->beforeEach(function($scope) {
+                    $scope->mockLicenceAdapter->shouldReceive('alterForm')->with($scope->mockForm);
+                    $scope->stubbedTolData = [];
+                });
+
+                $this->describe('without table data', function() {
+
+                    $this->beforeEach(function($scope) {
+                        $scope->mockEntityService->shouldReceive('getAddressSummaryData')
+                            ->with(5)
+                            ->andReturn(['Results' => []]);
+
+                        $scope->mockFormHelper->shouldReceive('remove')
+                            ->with($scope->mockForm, 'dataTrafficArea');
+                    });
+
+                    $this->describe('for a goods licence', function() {
+                        $this->beforeEach(function($scope){
+                            $scope->stubbedTolData['goodsOrPsv'] = LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE;
+                        });
+
+                        $this->describe('for a standard national licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthSmallVehicles',
+                                    'totAuthMediumVehicles',
+                                    'totAuthLargeVehicles',
+                                    'totCommunityLicences'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+
+                        $this->describe('for a standard international licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthSmallVehicles',
+                                    'totAuthMediumVehicles',
+                                    'totAuthLargeVehicles'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+                    });
+
+                    $this->describe('for a psv licence', function() {
+                        $this->beforeEach(function($scope) {
+                            $scope->mockTable = m::mock();
+
+                            $scope->stubbedTolData['goodsOrPsv'] = LicenceEntityService::LICENCE_CATEGORY_PSV;
+
+                            $scope->mockDataElement->shouldReceive('getOptions')
+                                ->andReturn(['hint' => 'foo'])
+                                ->shouldReceive('setOptions')
+                                ->with(['hint' => 'foo.psv']);
+
+                            $scope->mockTable->shouldReceive('removeColumn')
+                                ->with('noOfTrailersRequired')
+                                ->shouldReceive('getFooter')
+                                ->andReturn(['total' => ['content' => 'foo'], 'trailersCol' => 'bar'])
+                                ->shouldReceive('setFooter')
+                                ->with(['total' => ['content' => 'foo-psv']]);
+
+                            $scope->mockForm->shouldReceive('get')
+                                ->with('table')
+                                ->andReturnSelf()
+                                ->shouldReceive('getTable')
+                                ->andReturn($scope->mockTable);
+                        });
+
+                        $this->describe('for a standard national licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthVehicles',
+                                    'totAuthTrailers',
+                                    'minTrailerAuth',
+                                    'maxTrailerAuth',
+                                    'totCommunityLicences'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+
+                        $this->describe('for a standard international licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthVehicles',
+                                    'totAuthTrailers',
+                                    'minTrailerAuth',
+                                    'maxTrailerAuth'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+
+                        $this->describe('for a restricted licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_RESTRICTED;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthVehicles',
+                                    'totAuthTrailers',
+                                    'minTrailerAuth',
+                                    'maxTrailerAuth',
+                                    'totAuthLargeVehicles'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+
+                        $this->describe('for a special restricted licence', function() {
+                            $this->beforeEach(function($scope) {
+                                $scope->stubbedTolData['licenceType']
+                                    = LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED;
+
+                                $scope->mockLicenceEntity->shouldReceive('getTypeOfLicenceData')
+                                    ->with(5)->andReturn($scope->stubbedTolData);
+
+                                $expectedRemoveList = [
+                                    'totAuthVehicles',
+                                    'totAuthTrailers',
+                                    'minTrailerAuth',
+                                    'maxTrailerAuth',
+                                    'totAuthLargeVehicles',
+                                    'totCommunityLicences'
+                                ];
+
+                                $scope->mockFormHelper->shouldReceive('removeFieldList')
+                                    ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            });
+
+                            $this->it('should meet all expectations', function($scope) {
+                                $this->assertSame($scope->mockForm, $this->sut->alterForm($scope->mockForm));
+                            });
+                        });
+                    });
+
+                });
+            });
+        });
     }
 }
