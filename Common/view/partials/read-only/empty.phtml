@@ -1,5 +1,5 @@
 <h3><?php echo $this->translate($header); ?></h3>
 <div class="empty">
     <p><?php echo(isset($helpText) ? $this->translate($helpText) : ''); ?></p>
-    <a class="<?php echo (isset($class) ? $class : 'action--primary'); ?>" href="<?php echo $this->translate($url); ?>"><?php echo $this->translate($label); ?></a>
+    <a class="<?php echo (isset($class) ? $class : 'action--primary'); ?>" href="<?php echo $url; ?>"><?php echo $this->translate($label); ?></a>
 </div>
