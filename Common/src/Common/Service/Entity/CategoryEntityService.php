@@ -21,6 +21,12 @@ class CategoryEntityService extends AbstractEntityService
      */
     protected $entity = 'Category';
 
+    /**
+     * Make sure we return the task allocation type ref data
+     * key
+     *
+     * @var array
+     */
     protected $mainBundle = [
         'children' => [
             'taskAllocationType'
@@ -29,6 +35,9 @@ class CategoryEntityService extends AbstractEntityService
 
     /**
      * Retrieve a category by its primary identifier
+     *
+     * @param int $id
+     * @return mixed
      */
     public function findById($id)
     {

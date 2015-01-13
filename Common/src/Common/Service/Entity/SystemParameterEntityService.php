@@ -23,6 +23,9 @@ class SystemParameterEntityService extends AbstractEntityService
 
     /**
      * Retrieve a value by its key
+     *
+     * @param string $key
+     * @return mixed
      */
     public function getValue($key)
     {
