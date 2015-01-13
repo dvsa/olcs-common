@@ -651,10 +651,12 @@ return array(
     'error.vehicle.vrm-exists-on-application' => 'A vehicle with this registration number already exists on this
         application',
     'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
+    'error.vrm.invalid' => 'Invalid Registration Number',
     'external' => 'External',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
+    'feeNotPaidError' => 'The fee was not paid, please try again',
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
@@ -1505,6 +1507,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'error.vrm.invalid' => 'Invalid Registration Number'
     // Potentially unused (Not found with grep)
 );

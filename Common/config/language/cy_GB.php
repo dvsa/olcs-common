@@ -653,10 +653,12 @@ return array(
     'error.vehicle.vrm-exists-on-application' => 'W A vehicle with this registration number already exists on this
         application',
     'error.vehicle.vrm-exists-on-licence' => 'W A vehicle with this registration number already exists on this licence',
+    'error.vrm.invalid' => 'W Invalid Registration Number',
     'external' => 'W External',
     'fabs-reference' => 'W Fabs Ref',
     'farmers-livestock-carriers' => 'W Farmers / Livestock Carriers',
     'fee-details' => 'W Fee Details',
+    'feeNotPaidError' => 'W The fee was not paid, please try again',
     'fees' => 'W Fees',
     'fees.amount_too_large' => 'W The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'W Cheque Number',
