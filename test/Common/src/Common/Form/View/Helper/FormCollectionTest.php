@@ -59,6 +59,24 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputString('');
     }
 
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderWithHintAtBottom()
+    {
+        $this->prepareElement();
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $this->element->setOption('hint_at_bottom', true);
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex(
+            '/^<fieldset class="class" data-group="test"><legend>(.*)<\/legend>'
+            . '<span data-template="(.*)"><\/span><p class="hint">(.*)<\/p><\/fieldset>$/'
+        );
+    }
 
     /**
      * @outputBuffering disabled
