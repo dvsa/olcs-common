@@ -7,9 +7,10 @@
  */
 namespace Common\Service\Processing;
 
-use Common\Service\Entity\TaskAllocationRules;
+use Common\Service\Entity\TaskAllocationRuleEntityService;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use LogicException;
 
 /**
  * Task Processing Service
@@ -20,58 +21,100 @@ class TaskProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function getAllocationForCategory($categoryId, $data)
+    public function getAssignment(array $data)
     {
+        /**
+         * First of all get a proper category entity based on the supplied ID
+         *
+         * We need to do this because it's the category which dictates the
+         * allocation rule to follow; the caller doesn't choose, and nor do
+         * we infer it from the array of data supplied
+         */
         $category = $this->getServiceLocator()
             ->get('Entity\Category')
-            ->findById($categoryId);
+            ->findById($data['category']);
 
         if ($category === false) {
             return $this->getDefaultAllocation();
         }
 
-        $query = $this->getQueryForRuleType($category['taskAllocationType']['id'], $data);
+        $ruleType = $category['taskAllocationType']['id'];
 
-        if ($query === null) {
-            return $this->getDefaultAllocation();
-        }
+        /**
+         * Based on the allocation type specified by the category we'll get
+         * a different query which we can then just run against the
+         * allocation rule entity
+         */
+        $query = $this->getQueryForRuleType($ruleType, $data);
 
         $rule = $this->getServiceLocator()
-            ->get('Entity\TaskAllocationRules')
+            ->get('Entity\TaskAllocationRule')
             ->findByQuery($query);
 
-        if (!$rule/* || > 1 $rules */) {
+        /**
+         * Multiple rules are just as useless as no rules according to AC
+         */
+        if ($rule === false || $rule['Count'] > 1) {
             return $this->getDefaultAllocation();
         }
 
-        return [
-            'assignedToUser' => $rule['user']['id'],
-            'assignedToTeam' => $rule['team']['id']
-        ];
+        $rule = $rule['Results'][0];
+
+        return $this->getDataForRuleAndType($ruleType, $rule);
     }
 
     private function getQueryForRuleType($type, $data)
     {
-        switch ($rule) {
-            case TaskAllocationRules::TYPE_SIMPLE:
+        switch ($type) {
+            case TaskAllocationRuleEntityService::TYPE_SIMPLE:
                 return [
-                    'category' => $data['category']
+                    'category'    => $data['category'],
+                    // These NULLs are important; there will be multiple matches
+                    // per category, but hopefully only one unique across cat+mlh+ta
+                    'isMlh'       => 'NULL',
+                    'trafficArea' => 'NULL',
                 ];
 
             // no other allocation type is yet implemented as of OLCS-3406
-            case TaskAllocationRules::TYPE_MEDIUM:
-            case TaskAllocationRules::TYPE_COMPLEX:
+            case TaskAllocationRuleEntityService::TYPE_MEDIUM:
+            case TaskAllocationRuleEntityService::TYPE_COMPLEX:
             default:
-                return null;
+                throw new LogicException('Querying for rule type "'. $type .'" is not supported');
+        }
+    }
+
+    /**
+     *
+     */
+    private function getDataForRuleAndType($type, $rule)
+    {
+        switch ($type) {
+            case TaskAllocationRuleEntityService::TYPE_SIMPLE:
+                return $this->buildDetails($rule['team']['id'], $rule['user']['id']);
+
+            // no other allocation type is yet implemented as of OLCS-3406
+            case TaskAllocationRuleEntityService::TYPE_MEDIUM:
+            case TaskAllocationRuleEntityService::TYPE_COMPLEX:
+            default:
+                throw new LogicException('Fetching data for rule type "'. $type .'" is not supported');
         }
     }
 
     private function getDefaultAllocation()
     {
-        // @TODO from 'system config' (needs clarification)
+        $system = $this->getServiceLocator()->get('Entity\SystemParameter');
+
+        return $this->buildDetails(
+            $system->getValue('task.default_team'),
+            $system->getValue('task.default_user')
+        );
+    }
+
+    private function buildDetails($team, $user = null)
+    {
         return [
-            'assignedToUser' => 123,
-            'assignedToTeam' => 456
+            'assignedToTeam' => $team,
+            'assignedToUser' => $user
         ];
     }
 }
