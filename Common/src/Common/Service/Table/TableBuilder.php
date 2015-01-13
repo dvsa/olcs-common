@@ -1373,6 +1373,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         // in query mode we want to manually append a query string to the base route
         if ($this->getQuery()) {
             $queryString = array_merge($this->getQuery()->toArray(), $data);
+
+            /*
+             * This should handle sorting for multiple tables.
+             * Currently this functionality is not tested yet.
+             *
+            // adding table name if we have more than one table
+            $multipleTables = $this->getSetting('multipleTables') ? $this->getSetting('multipleTables') : false;
+            if ($multipleTables) {
+                $tableName = $this->getSetting('name');
+                foreach ($queryString as $key => $part) {
+                    if ($key == 'sort' || $key == 'order') {
+                        $queryString[$tableName . '[' . $key . ']' ] = $part;
+                        unset($queryString[$key]);
+                    }
+                }
+            }
+             */
+
             $returnUrl .= "?" . http_build_query($queryString);
         }
 

@@ -832,13 +832,13 @@ return array(
     'internal-licence-register-service' => 'Register service',
     'internal-navigation-operator' => 'Operator',
     'internal-navigation-operator-business_details' => 'Business details',
-    'internal-navigation-operator-licences_applications' => 'Licences & applications',
+    'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-operator-people' => 'People',
     'internal-navigation-operator-profile' => 'Operator profile',
     'internal-navigation-transport-manager' => 'Transport manager',
     'internal-navigation-transport-manager-cases' => 'Cases',
     'internal-navigation-transport-manager-details' => 'TM details',
-    'internal-navigation-transport-manager-details-applications-licences' => 'Applications & Licences',
+    'internal-navigation-transport-manager-details-responsibilities' => 'Responsibilities',
     'internal-navigation-transport-manager-details-competences' => 'Competences',
     'internal-navigation-transport-manager-details-details' => 'Details',
     'internal-navigation-transport-manager-documents' => 'Documents',
@@ -1504,5 +1504,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.responsibilities.table.applications' => 'Applications',
+    'internal.transport-manager.responsibilities.table.licences' => 'Licences',
     // Potentially unused (Not found with grep)
 );
