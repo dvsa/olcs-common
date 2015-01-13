@@ -234,6 +234,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             )
         );
 
+        $stubbedAppData = array(
+            'totAuthSmallVehicles' => 2,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null
+        );
+
+        $stubbedLicData = array(
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null
+        );
+
         $expectedPsvDiscData = array(
             'licence' => $licenceId,
             'ceasedDate' => null,
@@ -285,12 +297,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                     'operatingCentre' => 7,
                     'licence' => $licenceId
                 )
-            );
+            )
+            ->shouldReceive('deleteList')
+            ->with(['operatingCentre' => 6]);
 
         // createDiscRecords
+        $mockApplicationService->shouldReceive('getById')
+            ->with($id)
+            ->andReturn($stubbedAppData);
+
+        $mockLicenceService->shouldReceive('getById')
+            ->with($licenceId)
+            ->andReturn($stubbedLicData);
+
         $mockLicenceVehicleService = m::mock();
         $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
-            ->with($licenceId)
+            ->with($licenceId, $id)
             ->andReturn($stubbedLicenceVehicles)
             ->shouldReceive('multiUpdate')
             ->with(
@@ -381,6 +403,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             )
         );
 
+        $stubbedAppData = array(
+            'totAuthSmallVehicles' => 2,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null
+        );
+
+        $stubbedLicData = array(
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null
+        );
+
         $expectedPsvDiscData = array(
             'licence' => $licenceId,
             'ceasedDate' => null,
@@ -420,9 +454,17 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             );
 
         // createDiscRecords
+        $mockApplicationService->shouldReceive('getById')
+            ->with($id)
+            ->andReturn($stubbedAppData);
+
+        $mockLicenceService->shouldReceive('getById')
+            ->with($licenceId)
+            ->andReturn($stubbedLicData);
+
         $mockLicenceVehicleService = m::mock();
         $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
-            ->with($licenceId)
+            ->with($licenceId, $id)
             ->andReturn($stubbedLicenceVehicles)
             ->shouldReceive('multiUpdate')
             ->with(
