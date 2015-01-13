@@ -67,11 +67,13 @@ class VariationOperatingCentreActionTest extends MockeryTestCase
             ],
             [
                 'action' => 'C',
-                '(Current) <input type="submit" class="" name="table[action][foo][7]" value="link-text" disabled="disabled" />'
+                '(Current) <input type="submit" class="" name="table[action][foo][7]"'
+                    . ' value="link-text" disabled="disabled" />'
             ],
             [
                 'action' => 'D',
-                '(Removed) <input type="submit" class="" name="table[action][foo][7]" value="link-text" disabled="disabled" />'
+                '(Removed) <input type="submit" class="" name="table[action][foo][7]"'
+                    . ' value="link-text" disabled="disabled" />'
             ],
             [
                 'action' => 'ABC',

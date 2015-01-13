@@ -85,57 +85,6 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
-     * Create a new application operating centre
-     *
-     * @param array $fileListData
-     * @param array $formData
-     */
-    protected function saveExistingRecord($fileListData, $formData)
-    {
-        unset($formData['data']['id']);
-        unset($formData['data']['version']);
-
-        $formData['data']['action'] = self::ACTION_UPDATED;
-
-        return $this->saveRecord($fileListData, $formData);
-    }
-
-    /**
-     * Update updated application operating centre record
-     *
-     * @param array $fileListData
-     * @param array $formData
-     */
-    protected function saveUpdatedRecord($fileListData, $formData)
-    {
-        return $this->saveRecord($fileListData, $formData);
-    }
-
-    /**
-     * Save a record
-     *
-     * @param array $fileListData
-     * @param array $formData
-     */
-    protected function saveRecord($fileListData, $formData)
-    {
-        $data = $this->formatCrudDataForSave($formData);
-
-        $saveData = $data['applicationOperatingCentre'];
-        $saveData['operatingCentre'] = $data['operatingCentre']['id'];
-
-        if (!empty($fileListData)) {
-            $this->saveDocuments($fileListData, $saveData['operatingCentre']);
-        }
-
-        if ($this->isPsv()) {
-            $saveData['adPlaced'] = 0;
-        }
-
-        $this->getEntityService()->save($saveData);
-    }
-
-    /**
      * Get address data
      *
      * @param int $id
@@ -279,21 +228,27 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         throw new \Exception('Can\'t restore this record');
     }
 
-    protected function getCorrespondingApplicationOperatingCentre($locId)
+    /**
+     * Alter action form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterActionForm(Form $form)
     {
-        $tableData = $this->getTableData();
+        $form = parent::alterActionForm($form);
 
-        if (isset($tableData['L' . $locId])) {
-            $ocId = $tableData['L' . $locId]['operatingCentre']['id'];
+        $action = $this->getOperatingCentreAction();
 
-            foreach ($tableData as $row) {
-                if ($row['source'] === self::SOURCE_APPLICATION && $row['operatingCentre']['id'] === $ocId) {
-                    return $this->splitTypeAndId($row['id'])[1];
-                }
-            }
+        if ($action !== self::ACTION_ADDED) {
+
+            list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
+
+            $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $currentVehicles);
+            $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
         }
 
-        throw new \Exception('Corresponding application operating centre record not found');
+        return $form;
     }
 
     /**
@@ -315,6 +270,101 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         }
 
         return $data;
+    }
+
+    /**
+     * Alter the form
+     *
+     * @param \Zend\Form\Form $form
+     * @return \Zend\Form\Form
+     */
+    public function alterForm(Form $form)
+    {
+        $form = parent::alterForm($form);
+
+        list($vehicles, $trailers) = $this->getCurrentTotalAuthorisationValues();
+
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
+        $form->get('data')->get('totAuthVehicles')
+            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
+        $form->get('data')->get('totAuthTrailers')
+            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+
+        if ($form->get('data')->has('totCommunityLicences')) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->remove($form, 'data->totCommunityLicences');
+        }
+
+        return $form;
+    }
+
+    /**
+     * Create a new application operating centre
+     *
+     * @param array $fileListData
+     * @param array $formData
+     */
+    protected function saveExistingRecord($fileListData, $formData)
+    {
+        unset($formData['data']['id']);
+        unset($formData['data']['version']);
+
+        $formData['data']['action'] = self::ACTION_UPDATED;
+
+        return $this->saveRecord($fileListData, $formData);
+    }
+
+    /**
+     * Update updated application operating centre record
+     *
+     * @param array $fileListData
+     * @param array $formData
+     */
+    protected function saveUpdatedRecord($fileListData, $formData)
+    {
+        return $this->saveRecord($fileListData, $formData);
+    }
+
+    /**
+     * Save a record
+     *
+     * @param array $fileListData
+     * @param array $formData
+     */
+    protected function saveRecord($fileListData, $formData)
+    {
+        $data = $this->formatCrudDataForSave($formData);
+
+        $saveData = $data['applicationOperatingCentre'];
+        $saveData['operatingCentre'] = $data['operatingCentre']['id'];
+
+        if (!empty($fileListData)) {
+            $this->saveDocuments($fileListData, $saveData['operatingCentre']);
+        }
+
+        if ($this->isPsv()) {
+            $saveData['adPlaced'] = 0;
+        }
+
+        $this->getEntityService()->save($saveData);
+    }
+
+    protected function getCorrespondingApplicationOperatingCentre($locId)
+    {
+        $tableData = $this->getTableData();
+
+        if (isset($tableData['L' . $locId])) {
+            $ocId = $tableData['L' . $locId]['operatingCentre']['id'];
+
+            foreach ($tableData as $row) {
+                if ($row['source'] === self::SOURCE_APPLICATION && $row['operatingCentre']['id'] === $ocId) {
+                    return $this->splitTypeAndId($row['id'])[1];
+                }
+            }
+        }
+
+        throw new \Exception('Corresponding application operating centre record not found');
     }
 
     /**
@@ -413,29 +463,6 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         throw new \Exception('Operating centre not found');
     }
 
-    /**
-     * Alter action form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    public function alterActionForm(Form $form)
-    {
-        $form = parent::alterActionForm($form);
-
-        $action = $this->getOperatingCentreAction();
-
-        if ($action !== self::ACTION_ADDED) {
-
-            list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
-
-            $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $currentVehicles);
-            $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
-        }
-
-        return $form;
-    }
-
     protected function getCurrentAuthorisationValues()
     {
         $ref = $this->getController()->params('child_id');
@@ -513,33 +540,6 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         }
 
         return $data;
-    }
-
-    /**
-     * Alter the form
-     *
-     * @param \Zend\Form\Form $form
-     * @return \Zend\Form\Form
-     */
-    public function alterForm(Form $form)
-    {
-        $form = parent::alterForm($form);
-
-        list($vehicles, $trailers) = $this->getCurrentTotalAuthorisationValues();
-
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
-        $form->get('data')->get('totAuthVehicles')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
-        $form->get('data')->get('totAuthTrailers')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
-
-        if ($form->get('data')->has('totCommunityLicences')) {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->remove($form, 'data->totCommunityLicences');
-        }
-
-        return $form;
     }
 
     protected function getCurrentTotalAuthorisationValues()

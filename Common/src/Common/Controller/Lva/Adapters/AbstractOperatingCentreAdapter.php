@@ -834,6 +834,10 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
      */
     protected function saveDocuments(array $data, $operatingCentreId)
     {
+        if (!empty($data)) {
+            $documentService = $this->getServiceLocator()->get('Entity\Document');
+        }
+
         foreach ($data as $file) {
 
             $documentData = array(
@@ -842,7 +846,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
                 'operatingCentre' => $operatingCentreId
             );
 
-            $this->getServiceLocator()->get('Entity\Document')->save($documentData);
+            $documentService->save($documentData);
         }
     }
 
