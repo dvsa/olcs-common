@@ -978,6 +978,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderLayout($name)
     {
+        if ($name === 'default' && empty($this->rows) && isset($this->variables['empty_message'])) {
+            return $this->renderLayout('default_empty');
+        }
+
         return $this->getContentHelper()->renderLayout($name);
     }
 
@@ -1278,19 +1282,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $columns = $this->getColumns();
 
-            $message = isset($this->variables['empty_message'])
-                ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
-                : 'The table is empty';
-
             $vars = array(
                 'colspan' => count($columns),
-                'message' => $this->getServiceLocator()->get('translator')->translate($message)
+                'message' => $this->getEmptyMessage()
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
         }
 
         return $content;
+    }
+
+    public function getEmptyMessage()
+    {
+        $message = isset($this->variables['empty_message'])
+            ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
+            : 'The table is empty';
+
+        return $this->getServiceLocator()->get('translator')->translate($message);
     }
 
     /**
