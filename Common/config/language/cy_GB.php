@@ -1413,6 +1413,7 @@ return array(
     'submission-vehicle-trailer' => 'W V-auth / T-auth',
     'submission-view-title' => 'W OTC case submission - %s',
     'submissions' => 'W Submissions',
+    'submit-application.button' => 'W Submit application',
     'submit-pay.button' => 'W Submit & pay',
     'subsidiary-companies' => 'W Subsidiary Companies',
     'subtitle-complaint-text' => 'W Please enter complaint details',

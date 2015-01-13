@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Entity Processing Service Test
+ * Scan Entity Processing Service Test
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace CommonTest\Service\Processing;
 
 use CommonTest\Bootstrap;
-use Common\Service\Processing\EntityProcessingService;
+use Common\Service\Processing\ScanEntityProcessingService;
 use Common\Service\Data\CategoryDataService;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 
 /**
- * Entity Processing Service Test
+ * Scan Entity Processing Service Test
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class EntityProcessingServiceTest extends MockeryTestCase
+class ScanEntityProcessingServiceTest extends MockeryTestCase
 {
     protected $sm;
     protected $sut;
@@ -28,7 +28,7 @@ class EntityProcessingServiceTest extends MockeryTestCase
         $this->sm = Bootstrap::getServiceManager();
         $this->sm->setAllowOverride(true);
 
-        $this->sut = new EntityProcessingService();
+        $this->sut = new ScanEntityProcessingService();
         $this->sut->setServiceLocator($this->sm);
     }
 
@@ -45,7 +45,7 @@ class EntityProcessingServiceTest extends MockeryTestCase
         $this->assertEquals(
             'FakeEntity',
             $this->sut->findEntityForCategory(
-                1,
+                1, // NB this refers to a *category* ID
                 123
             )
         );
@@ -77,7 +77,7 @@ class EntityProcessingServiceTest extends MockeryTestCase
                 'licNo' => 1234
             ],
             $this->sut->findEntityForCategory(
-                1,
+                1, // NB this refers to a *category* ID
                 123
             )
         );
@@ -92,9 +92,9 @@ class EntityProcessingServiceTest extends MockeryTestCase
     }
 
     /**
-     * @dataProvider extractRelationsDataProvider
+     * @dataProvider getChildrenDataProvider
      */
-    public function testExtractRelationsForCategory($category, $expectedData)
+    public function testGetChildrenForCategory($category, $expectedData)
     {
         $entity = [
             'id' => 123,
@@ -105,18 +105,18 @@ class EntityProcessingServiceTest extends MockeryTestCase
 
         $this->assertEquals(
             $expectedData,
-            $this->sut->extractRelationsForCategory($category, $entity)
+            $this->sut->getChildrenForCategory($category, $entity)
         );
     }
 
-    public function extractRelationsDataProvider()
+    public function getChildrenDataProvider()
     {
         return [
             [CategoryDataService::CATEGORY_APPLICATION, ['licence' => 123]],
             [CategoryDataService::CATEGORY_LICENSING, ['licence' => 123]],
             [CategoryDataService::CATEGORY_ENVIRONMENTAL, ['licence' => 123]],
             [CategoryDataService::CATEGORY_COMPLIANCE, ['case' => 123]],
-            [CategoryDataService::CATEGORY_IRFO, ['organisation' => 123]],
+            [CategoryDataService::CATEGORY_IRFO, ['irfoOrganisation' => 123]],
             [CategoryDataService::CATEGORY_TRANSPORT_MANAGER, ['transportManager' => 123]],
             [
                 CategoryDataService::CATEGORY_BUS_REGISTRATION,
@@ -127,5 +127,29 @@ class EntityProcessingServiceTest extends MockeryTestCase
             ],
             [123456789, []]
         ];
+    }
+
+    public function testExtractChildrenFromEntity()
+    {
+        $scanMock = m::mock()
+            ->shouldReceive('getChildRelations')
+            ->andReturn(['foo', 'bar', 'baz'])
+            ->getMock();
+
+        $this->sm->setService('Entity\Scan', $scanMock);
+
+        $expected = [
+            'foo' => 1,
+            'baz' => 3
+        ];
+        $this->assertEquals(
+            $expected,
+            $this->sut->extractChildrenFromEntity(
+                [
+                    'foo' => ['id' => 1],
+                    'baz' => ['id' => 3]
+                ]
+            )
+        );
     }
 }

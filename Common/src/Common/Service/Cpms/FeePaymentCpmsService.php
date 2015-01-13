@@ -42,6 +42,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     // @TODO product ref shouldn't have to come from a whitelist...
     const PRODUCT_REFERENCE = 'GVR_APPLICATION_FEE';
 
+    // @TODO this is a dummy value for testing purposes as cost_centre is now
+    // a required parameter in cpms/payment-service. Awaiting further info on
+    // what OLCS should pass for this field.
+    const COST_CENTRE = '12345,67890';
+
     protected function getClient()
     {
         return $this->getServiceLocator()->get('cpms\service\api');
@@ -73,7 +78,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'sales_reference' => $salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                 ]
-            ]
+            ],
+            'cost_centre' => self::COST_CENTRE,
         ];
 
         $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
@@ -152,7 +158,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                         'receipt_date' => $receiptDate,
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => self::COST_CENTRE,
         ];
 
         $response = $this->getClient()->post(
@@ -224,7 +231,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                         'cheque_number' => (string)$chequeNo,
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => self::COST_CENTRE,
         ];
 
         $response = $this->getClient()->post(
@@ -297,7 +305,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                         'postal_order_number' => [ $poNo ] // array!
                     ],
                 ]
-            ]
+            ],
+            'cost_centre' => self::COST_CENTRE,
         ];
 
         $response = $this->getClient()->post(

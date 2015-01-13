@@ -21,5 +21,8 @@ class TransportManager extends Bundle
         $contactDetails->addChild('address');
 
         $this->addChild('contactDetails', $contactDetails);
+
+        $this->addChild('tmStatus');
+        $this->addChild('tmType');
     }
 }

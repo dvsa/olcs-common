@@ -149,7 +149,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @var string
      */
-    protected $headerViewTemplate = 'layout/partials/header'; //default
+    protected $headerViewTemplate = 'partials/header'; //default
 
     /**
      * @codeCoverageIgnore
