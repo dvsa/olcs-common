@@ -67,14 +67,15 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
 
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+
+        // @NOTE This MUST happen before updating the licence record
+        $this->createDiscRecords($licenceId, $category, $id);
+
         $licenceData = $this->getApplicationDataForValidating($id);
         $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
 
         $this->processApplicationOperatingCentres($id, $licenceId);
-
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
-
-        $this->createDiscRecords($licenceId, $category, $id);
     }
 
     protected function processGrantPsvApplication($id, $licenceId)
@@ -317,15 +318,15 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $application = $this->getServiceLocator()->get('Entity\Application')->getById($applicationId);
 
         $totalApplicationAuth = (
-            (int)$application['totAuthLargeVehiclesField'] +
-            (int)$application['totAuthMediumVehiclesField'] +
-            (int)$application['totAuthSmallVehiclesField']
+            (int)$application['totAuthLargeVehicles'] +
+            (int)$application['totAuthMediumVehicles'] +
+            (int)$application['totAuthSmallVehicles']
         );
 
         $totalLicenceAuth = (
-            (int)$licence['totAuthLargeVehiclesField'] +
-            (int)$licence['totAuthMediumVehiclesField'] +
-            (int)$licence['totAuthSmallVehiclesField']
+            (int)$licence['totAuthLargeVehicles'] +
+            (int)$licence['totAuthMediumVehicles'] +
+            (int)$licence['totAuthSmallVehicles']
         );
 
         return $totalApplicationAuth - $totalLicenceAuth;

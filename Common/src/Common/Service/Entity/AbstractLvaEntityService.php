@@ -44,6 +44,11 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         )
     );
 
+    public function getById($id)
+    {
+        return $this->get($id);
+    }
+
     /**
      * Get operating centres data
      *
