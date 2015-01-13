@@ -295,21 +295,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $fieldset = $form->get('data');
 
-        // have to manually link up the edit button next to
-        // the business type dropdown
-        $element = $fieldset->get('editBusinessType');
-        $element->setOptions(
-            array_merge(
-                $element->getOptions(),
-                array('route' => 'lva-' . $this->lva . '/business_type')
-            )
-        );
-
-        // we have to manually set the business type, otherwise if this
-        // was a POST it won't come through (it's a disabled element)
-        // and will default to the first value (limited company)
-        $fieldset->get('type')->setValue($orgType);
-
         switch ($orgType) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:

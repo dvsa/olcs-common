@@ -479,11 +479,14 @@ return array(
     'application_your-business_people-sub-action-formTitleValueMs' => 'Ms',
     'applications' => 'Applications',
     'apply-changes' => 'Apply changes',
-    'apsts_consideration' => 'Under Consideration',
+    'apsts_consideration' => 'Under consideration',
+    'apsts_curtailed' => 'Curtailed',
     'apsts_granted' => 'Granted',
-    'apsts_new' => 'Not Yet Submitted',
     'apsts_not_submitted' => 'Not submitted',
+    'apsts_ntu' => 'Not taken up',
+    'apsts_refused' => 'Refused',
     'apsts_valid' => 'Valid',
+    'apsts_withdrawn' => 'Withdrawn',
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',
@@ -651,6 +654,7 @@ return array(
     'error.vehicle.vrm-exists-on-application' => 'A vehicle with this registration number already exists on this
         application',
     'error.vehicle.vrm-exists-on-licence' => 'A vehicle with this registration number already exists on this licence',
+    'error.vrm.invalid' => 'Invalid Registration Number',
     'external' => 'External',
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
@@ -1505,6 +1509,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'error.vrm.invalid' => 'Invalid Registration Number'
     // Potentially unused (Not found with grep)
 );
