@@ -86,6 +86,7 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
     'application-search-person-header-partner' => 'W Add new partner',
     'application-search-person-header-person' => 'W Add new responsible person',
@@ -653,6 +654,7 @@ return array(
     'error.vehicle.vrm-exists-on-application' => 'W A vehicle with this registration number already exists on this
         application',
     'error.vehicle.vrm-exists-on-licence' => 'W A vehicle with this registration number already exists on this licence',
+    'error.vrm.invalid' => 'W Invalid Registration Number',
     'external' => 'W External',
     'fabs-reference' => 'W Fabs Ref',
     'farmers-livestock-carriers' => 'W Farmers / Livestock Carriers',

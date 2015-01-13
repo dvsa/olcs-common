@@ -43,7 +43,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
 
-        $this->createDiscRecords($licenceId, $category);
+        $this->createDiscRecords($licenceId, $category, $id);
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
     }
@@ -59,6 +59,22 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         } else {
             $this->processGrantGoodsApplication($id, $licenceId);
         }
+    }
+
+    public function processGrantVariation($id)
+    {
+        $licenceId = $this->getLicenceId($id);
+
+        $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
+
+        $licenceData = $this->getApplicationDataForValidating($id);
+        $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
+
+        $this->processApplicationOperatingCentres($id, $licenceId);
+
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+
+        $this->createDiscRecords($licenceId, $category, $id);
     }
 
     protected function processGrantPsvApplication($id, $licenceId)
@@ -77,7 +93,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $this->processApplicationOperatingCentres($id, $licenceId);
         }
 
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV);
+        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
     }
 
     protected function processGrantGoodsApplication($id, $licenceId)
@@ -237,6 +253,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         foreach ($applicationOperatingCentres as $aoc) {
             switch ($aoc['action']) {
                 case 'A':
+                case 'U':
+                    $action = $aoc['action'];
 
                     unset($aoc['id']);
                     unset($aoc['action']);
@@ -248,31 +266,88 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
                     $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
                     $aoc['licence'] = $licenceId;
-                    $new[] = $aoc;
+
+                    if ($action === 'A') {
+                        $new[] = $aoc;
+                    } else {
+                        $updates[] = $aoc;
+                    }
+                    break;
+                case 'D':
+                    $deletions[] = $aoc['operatingCentre']['id'];
                     break;
             }
         }
 
-        if (!empty($new)) {
+        if (!empty($new) || !empty($updates) || !empty($deletions)) {
             $licenceOperatingCentreService = $this->getServiceLocator()->get('Entity\LicenceOperatingCentre');
-            foreach ($new as $aoc) {
-                $licenceOperatingCentreService->save($aoc);
+
+            if (!empty($new)) {
+                foreach ($new as $aoc) {
+                    $licenceOperatingCentreService->save($aoc);
+                }
+            }
+
+            if (!empty($deletions)) {
+                foreach ($deletions as $ocId) {
+                    $licenceOperatingCentreService->deleteList(['operatingCentre' => $ocId]);
+                }
+            }
+
+            if (!empty($updates)) {
+
+                $locs = $licenceOperatingCentreService->getListForLva($licenceId);
+
+                foreach ($updates as &$aoc) {
+                    foreach ($locs as $loc) {
+                        if ($loc['operatingCentre']['id'] !== $aoc['operatingCentre']) {
+                            continue;
+                        }
+
+                        $licenceOperatingCentreService->forceUpdate($loc['id'], $aoc);
+                    }
+                }
+            }
+        }
+    }
+
+    protected function getDifferenceInTotalAuth($licenceId, $applicationId)
+    {
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
+        $application = $this->getServiceLocator()->get('Entity\Application')->getById($applicationId);
+
+        $totalApplicationAuth = (
+            (int)$application['totAuthLargeVehiclesField'] +
+            (int)$application['totAuthMediumVehiclesField'] +
+            (int)$application['totAuthSmallVehiclesField']
+        );
+
+        $totalLicenceAuth = (
+            (int)$licence['totAuthLargeVehiclesField'] +
+            (int)$licence['totAuthMediumVehiclesField'] +
+            (int)$licence['totAuthSmallVehiclesField']
+        );
+
+        return $totalApplicationAuth - $totalLicenceAuth;
+    }
+
+    protected function createDiscRecords($licenceId, $category, $applicationId)
+    {
+        if ($category === LicenceEntityService::LICENCE_CATEGORY_PSV) {
+
+            $difference = $this->getDifferenceInTotalAuth($licenceId, $applicationId);
+
+            if ($difference > 0) {
+                $this->createPsvDiscs($licenceId, $difference);
             }
         }
 
-        // @todo Process updates and deletions (Out of scope for OLCS-4895)
-    }
-
-    protected function createDiscRecords($licenceId, $category)
-    {
         $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
-            ->getForApplicationValidation($licenceId);
+                ->getForApplicationValidation($licenceId, $applicationId);
 
         if (!empty($licenceVehicles)) {
             if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
                 $this->createGoodsDiscs($licenceVehicles);
-            } else {
-                $this->createPsvDiscs($licenceId, count($licenceVehicles));
             }
 
             $this->specifyVehicles($licenceVehicles);
