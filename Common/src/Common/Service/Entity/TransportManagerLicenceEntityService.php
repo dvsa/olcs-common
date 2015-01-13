@@ -55,7 +55,7 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         ];
         $finalResults = [];
         $results = $this->get($query, $this->dataBundle);
-        foreach ($results['Results'] as &$result) {
+        foreach ($results['Results'] as $result) {
             if (count($status)) {
                 if (in_array($result['licence']['status']['id'], $status)) {
                     $result['ocCount'] = count($result['tmLicenceOcs']);
