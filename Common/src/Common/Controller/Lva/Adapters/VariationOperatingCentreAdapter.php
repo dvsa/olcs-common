@@ -197,12 +197,11 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         list($type, $id) = $this->splitTypeAndId($ref);
 
         if ($type === self::SOURCE_APPLICATION) {
-            $this->getEntityService()->delete($id);
-            return;
-        } else {
-            $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
-                ->variationDelete($id, $this->getIdentifier());
+            return $this->getEntityService()->delete($id);
         }
+
+        $this->getServiceLocator()->get('Entity\LicenceOperatingCentre')
+            ->variationDelete($id, $this->getIdentifier());
     }
 
     public function restore()
@@ -264,7 +263,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         $action = $this->getOperatingCentreAction();
 
-        if ($action === 'E') {
+        if ($action === self::ACTION_EXISTING) {
             unset($data['advertisements']);
             $data['advertisements']['adPlaced'] = 'N';
         }
