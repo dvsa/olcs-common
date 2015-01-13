@@ -155,6 +155,20 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForHtmlTranslatedElementWithoutValue()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+
+        $viewHelper = $this->prepareViewHelper([]);
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEmpty($markup);
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForHtmlTranslatedElementWithTokens()
     {
         $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');

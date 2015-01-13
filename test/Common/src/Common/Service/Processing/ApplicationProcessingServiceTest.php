@@ -802,4 +802,93 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with('licence-valid-confirmation');
         $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
     }
+
+    public function testProcessGrantVariation()
+    {
+        // Params
+        $id = 2;
+
+        // Stubbed data
+        $licenceId = 5;
+        $this->mockDate('2014-01-01');
+        $stubbedValidatingData = [
+            'foo' => 'bar'
+        ];
+        $stubbedAoc = [
+            [
+                'id' => 5,
+                'action' => 'U',
+                'foo' => 'bar',
+                'operatingCentre' => [
+                    'id' => 6
+                ]
+            ]
+        ];
+        $stubbedLoc = [
+            [
+                'id' => 6,
+                'operatingCentre' => [
+                    'id' => 7
+                ]
+            ],
+            [
+                'id' => 5,
+                'operatingCentre' => [
+                    'id' => 6
+                ]
+            ]
+        ];
+        $expectedLocData = [
+            'foo' => 'bar',
+            'operatingCentre' => 6,
+            'licence' => 5
+        ];
+
+        // Mocked services
+        $mockApplicationService = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationService);
+        $mockLicenceService = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+        $mockLicenceVehicleService = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleService);
+        $mockAocService = m::mock();
+        $this->sm->setService('Entity\ApplicationOperatingCentre', $mockAocService);
+        $mockLocService = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockLocService);
+
+        // Expectations
+        $mockApplicationService->shouldReceive('getLicenceIdForApplication')
+            ->with($id)
+            ->andReturn($licenceId)
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $id,
+                ['status' => ApplicationEntityService::APPLICATION_STATUS_VALID, 'grantedDate' => '2014-01-01']
+            )
+            ->shouldReceive('getCategory')
+            ->andReturn(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE)
+            ->shouldReceive('getDataForValidating')
+            ->with($id)
+            ->andReturn($stubbedValidatingData);
+
+        // Create disc records
+        $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
+            ->with($licenceId, $id)
+            ->andReturn([]);
+
+        $mockLicenceService->shouldReceive('forceUpdate')
+            ->with($licenceId, $stubbedValidatingData);
+
+        $mockAocService->shouldReceive('getForApplication')
+            ->with($id)
+            ->andReturn($stubbedAoc);
+
+        $mockLocService->shouldReceive('getListForLva')
+            ->with($licenceId)
+            ->andReturn($stubbedLoc)
+            ->shouldReceive('forceUpdate')
+            ->with(5, $expectedLocData);
+
+        $this->sut->processGrantVariation($id);
+    }
 }
