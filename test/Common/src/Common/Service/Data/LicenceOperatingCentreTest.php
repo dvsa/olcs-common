@@ -2,6 +2,7 @@
 
 namespace OlcsTest\Service\Data;
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\LicenceOperatingCentre;
 use Common\Service\Data\Licence as LicenceService;
 use Mockery as m;
@@ -10,7 +11,7 @@ use Mockery as m;
  * Class LicenceTest
  * @package OlcsTest\Service\Data
  */
-class LicenceOperatingCentreTest extends \PHPUnit_Framework_TestCase
+class LicenceOperatingCentreTest extends MockeryTestCase
 {
     public function testGetBundle()
     {
@@ -46,7 +47,6 @@ class LicenceOperatingCentreTest extends \PHPUnit_Framework_TestCase
     {
         $sut = new LicenceOperatingCentre();
         $licenceId = 110;
-        $licence = ['id' => $licenceId];
         $licenceData = [
             'operatingCentres' => [
                 'operatingCentre' => [
@@ -67,7 +67,7 @@ class LicenceOperatingCentreTest extends \PHPUnit_Framework_TestCase
         $licenceService = m::mock('Common\Service\Data\Licence');
         $licenceService
             ->shouldReceive('getId')
-            ->once()
+            ->times(3)
             ->with()
             ->andReturn($licenceId);
 
