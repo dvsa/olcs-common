@@ -4,33 +4,34 @@
  * Common variation OC controller logic
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Lva\Traits;
-
-use Zend\Form\Form;
 
 /**
  * Common variation OC controller logic
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 trait VariationOperatingCentresControllerTrait
 {
-    protected function getDocumentProperties()
+    /**
+     * Generic delete functionality; usually does the trick but
+     * can be overridden if not
+     */
+    public function deleteAction()
     {
-        return array(
-            'application' => $this->getIdentifier(),
-            'licence' => $this->getLicenceId()
-        );
+        if ($this->getAdapter()->canDeleteRecord($this->params('child_id'))) {
+            return parent::deleteAction();
+        }
+
+        // JS should restrict requests to only valid ones, however we better double check
+        return $this->getAdapter()->processUndeletableResponse();
     }
 
-    protected function getLvaEntity()
+    public function restoreAction()
     {
-        return 'Entity\Application';
-    }
-
-    protected function getLvaOperatingCentreEntity()
-    {
-        return 'Entity\ApplicationOperatingCentre';
+        return $this->getAdapter()->restore();
     }
 }

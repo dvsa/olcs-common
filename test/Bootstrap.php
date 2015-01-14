@@ -4,6 +4,7 @@ namespace CommonTest;
 
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
+use Mockery as m;
 
 error_reporting(-1);
 chdir(dirname(__DIR__));
@@ -43,6 +44,10 @@ class Bootstrap
 
     public static function getServiceManager()
     {
+        // When we fix our unit tests to mock all dependencies
+        // we need to put this line back in to speed up our tests
+        //return m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', self::$config);
         $serviceManager->get('ModuleManager')->loadModules();

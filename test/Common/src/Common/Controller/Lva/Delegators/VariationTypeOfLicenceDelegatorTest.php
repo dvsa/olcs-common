@@ -39,7 +39,7 @@ class VariationTypeOfLicenceDelegatorTest extends MockeryTestCase
             return $mockController;
         };
 
-        $mockController->shouldReceive('setTypeOfLicenceAdapter')
+        $mockController->shouldReceive('setAdapter')
             ->with($mockAdapter);
 
         $sm->shouldReceive('getServiceLocator')
@@ -65,7 +65,7 @@ class VariationTypeOfLicenceDelegatorTest extends MockeryTestCase
             return $mockController;
         };
 
-        $mockController->shouldReceive('setTypeOfLicenceAdapter')
+        $mockController->shouldReceive('setAdapter')
             ->with($mockAdapter);
 
         $mockAdapter->shouldReceive('setController')
