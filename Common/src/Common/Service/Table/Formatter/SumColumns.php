@@ -26,9 +26,8 @@ class SumColumns implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         $total = 0;
-        if (isset($column['columns'])) {
-            $names = explode(',', $column['columns']);
-            foreach ($names as $name) {
+        if (isset($column['columns']) && is_array($column['columns'])) {
+            foreach ($column['columns'] as $name) {
                 if (isset($data[$name]) && is_numeric($data[$name])) {
                     $total += (int)$data[$name];
                 }

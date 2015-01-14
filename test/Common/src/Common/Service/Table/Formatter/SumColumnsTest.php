@@ -47,9 +47,9 @@ class SumColumnsTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [[], [], '0'],
-            [['a' => 1, 'b' => 2], ['columns' => 'a,b'], '3'],
-            [['a' => 1, 'b' => 2], ['columns' => 'a'], '1'],
-            [['a' => 1], ['columns' => 'b'], '0'],
+            [['a' => 1, 'b' => 2], ['columns' => ['a', 'b']], '3'],
+            [['a' => 1, 'b' => 2], ['columns' => ['a']], '1'],
+            [['a' => 1], ['columns' => ['b']], '0'],
         ];
     }
 }
