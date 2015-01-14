@@ -116,6 +116,8 @@ return array(
     'application.review-declarations' => 'W Review & declarations',
     'application.review-declarations.summary' => 'W Application summary',
     'application.review-declarations.summary.new-window' => 'W View in another window',
+    'application.step' => 'W Step %s',
+    'application.steps' => 'W Step %s of %s',
     'application.taxi-phv' => 'W Taxi/PHV licences',
     'application.taxi-phv.licence' => 'W Taxi/PHV licences',
     'application.transport-managers' => 'W Transport managers',
