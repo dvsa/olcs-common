@@ -16,6 +16,7 @@ use Common\Form\Elements\Types\HtmlTranslated;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
+use Common\Form\Elements\Types\TrafficAreaSet;
 
 /**
  * Render form
@@ -51,6 +52,25 @@ class FormElement extends ZendFormElement
         $renderer = $this->getView();
         if (!method_exists($renderer, 'plugin')) {
             return '';
+        }
+
+        if ($element instanceof TrafficAreaSet) {
+            $value = $element->getValue();
+
+            $translationPrefix = (string)$element->getOption('hint-prefix');
+
+            $view = $this->getView();
+
+            return sprintf(
+                '<p>%s</p><h3>%s</h3><p class="hint">%s</p>',
+                $view->translate('trafficAreaSet.trafficArea'),
+                $view->translate($value),
+                sprintf(
+                    $view->translate('trafficAreaSet.hint' . $translationPrefix),
+                    // @todo replace with real link
+                    '#'
+                )
+            );
         }
 
         if ($element instanceof PlainText) {

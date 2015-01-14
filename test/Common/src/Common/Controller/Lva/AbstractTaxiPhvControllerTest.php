@@ -58,9 +58,7 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
         $this->shouldRemoveElements(
             $form,
             [
-                'dataTrafficArea->trafficAreaInfoLabelExists',
-                'dataTrafficArea->trafficAreaInfoNameExists',
-                'dataTrafficArea->trafficAreaInfoHintExists'
+                'dataTrafficArea->trafficAreaSet'
             ]
         );
 

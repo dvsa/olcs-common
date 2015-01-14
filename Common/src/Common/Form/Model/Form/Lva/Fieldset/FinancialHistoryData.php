@@ -51,8 +51,7 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.finance.liquidation",
+     *     "label": "application_previous-history_financial-history.finance.liquidation",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -69,8 +68,7 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.finance.receivership",
+     *     "label": "application_previous-history_financial-history.finance.receivership",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -87,8 +85,7 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.finance.administration",
+     *     "label": "application_previous-history_financial-history.finance.administration",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -105,8 +102,7 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.finance.disqualified",
+     *     "label": "application_previous-history_financial-history.finance.disqualified",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
      *     "label_attributes": {
@@ -118,26 +114,23 @@ class FinancialHistoryData
     public $disqualified = null;
 
     /**
-     * @Form\Required(true)
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
      * @Form\Attributes({
      *     "required": false,
      *     "id": "",
-     *     "class": "long   js-financial-history",
-     *     "placeholder":
-     * "application_previous-history_financial-history.insolvencyDetails.placeholder"
+     *     "class": "long js-financial-history",
+     *     "placeholder": "application_previous-history_financial-history.insolvencyDetails.placeholder"
      * })
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.insolvencyDetails.title",
+     *     "render_as_fieldset": true,
+     *     "label": "application_previous-history_financial-history.insolvencyDetails.title",
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
      *     "column-size": "sm-6",
      *     "help-block": "You can type anything in this box.",
-     *     "hint":
-     * "application_previous-history_financial-history.insolvencyDetails.hint"
+     *     "hint": "application_previous-history_financial-history.insolvencyDetails.hint"
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -156,8 +149,7 @@ class FinancialHistoryData
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
-     *     "label":
-     * "application_previous-history_financial-history.insolvencyConfirmation.title",
+     *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
      *     "help-block": "Please choose",
      *     "must_be_value": "Y"
      * })

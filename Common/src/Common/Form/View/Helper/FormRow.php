@@ -36,6 +36,9 @@ class FormRow extends ZendFormRow
      */
     private static $format = '<div class="field %s">%s</div>';
     private static $errorClass = '<div class="validation-wrapper">%s</div>';
+    protected $fieldsetWrapper = '<fieldset%4$s>%2$s%1$s%3$s</fieldset>';
+    protected $fieldsetLabelWrapper = '<legend>%s</legend>';
+    protected $fieldsetHintFormat = "<p class=\"hint\">%s</p>";
 
     /**
      * Utility form helper that renders a label (if it exists), an element and errors
@@ -73,13 +76,19 @@ class FormRow extends ZendFormRow
                 $this->labelPosition = self::LABEL_APPEND;
             }
 
-            $markup = $this->renderRow($element);
+            $renderAsFieldset = $element->getOption('render_as_fieldset');
+
+            if ($renderAsFieldset) {
+                $markup = $this->renderFieldset($element);
+            } else {
+                $markup = $this->renderRow($element);
+            }
 
             if ($element instanceof SingleCheckbox) {
                 $this->labelPosition = self::LABEL_PREPEND;
             }
         }
-        
+
         $wrap = true;
 
         $type = $element->getAttribute('type');
@@ -116,12 +125,56 @@ class FormRow extends ZendFormRow
         return $markup;
     }
 
+    protected function renderFieldset(ElementInterface $element)
+    {
+        $label = $element->getLabel();
+        $hint = sprintf(
+            $this->fieldsetHintFormat,
+            $this->getView()->translate(
+                $element->getOption('hint')
+            )
+        );
+
+        $element->setOption('hint', '');
+        $element->setLabel('');
+        $markup = $hint . $this->renderRow($element);
+
+        if (!empty($label)) {
+
+            $translator = $this->getTranslator();
+
+            if ($translator !== null) {
+                $label = $translator->translate(
+                    $label,
+                    $this->getTranslatorTextDomain()
+                );
+            }
+
+            if (! $element instanceof LabelAwareInterface || ! $element->getLabelOption('disable_html_escape')) {
+                $escapeHtmlHelper = $this->getEscapeHtmlHelper();
+                $label = $escapeHtmlHelper($label);
+            }
+
+            $legend = sprintf(
+                $this->fieldsetLabelWrapper,
+                $label
+            );
+        }
+
+        return sprintf(
+            $this->fieldsetWrapper,
+            $markup,
+            $legend,
+            '',
+            ''
+        );
+    }
+
     /**
      * Override the parent some more
      */
     protected function renderRow(ElementInterface $element)
     {
-        //$escapeHtmlHelper    = $this->getEscapeHtmlHelper();
         $labelHelper         = $this->getLabelHelper();
         $elementHelper       = $this->getElementHelper();
 

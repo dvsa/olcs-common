@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'trafficAreaSet.trafficArea' => 'Traffic area',
+    'trafficAreaSet.hint-operating-centres' => 'Your traffic area is determined by the location of your operating centres.<br />For more information and to find your traffic area please visit <a href="%s">this link</a>',
+    'trafficAreaSet.hint-taxi-phv' => 'Your traffic area is determined by the location of the council addresses.<br />For more information and to find your traffic area please visit <a href="%s">this link</a>',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
