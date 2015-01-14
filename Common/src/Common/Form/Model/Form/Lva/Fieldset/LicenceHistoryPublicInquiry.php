@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * Licence history public inquiry
+ * @Form\Attributes({"class":"fieldset--secondary"})
  */
 class LicenceHistoryPublicInquiry
 {
