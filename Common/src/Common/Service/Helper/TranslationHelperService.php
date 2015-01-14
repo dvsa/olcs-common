@@ -15,6 +15,18 @@ namespace Common\Service\Helper;
 class TranslationHelperService extends AbstractHelperService
 {
     /**
+     * Allows you to replace variables after the string is translated
+     *
+     * @param string $translationKey
+     * @param array $arguments
+     * @return string
+     */
+    public function translateReplace($translationKey, array $arguments)
+    {
+        return vsprintf($this->translate($translationKey), $arguments);
+    }
+
+    /**
      * Format a translation string
      *
      * @param string $format

@@ -20,7 +20,7 @@ class Action extends AbstractType
      *
      * @var string
      */
-    private $format = '<input type="submit" class="%s" name="%s" value="%s" />';
+    private $format = '<input type="submit" class="%s" name="%s" value="%s" %s />';
 
     /**
      * Render the selector
@@ -51,6 +51,8 @@ class Action extends AbstractType
 
         $name .= '[' . $column['action'] . '][' . $data['id'] . ']';
 
-        return sprintf($this->format, $class, $name, $value);
+        $attributes = isset($column['action-attributes']) ? $column['action-attributes'] : [];
+
+        return sprintf($this->format, $class, $name, $value, implode(' ', $attributes));
     }
 }

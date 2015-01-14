@@ -85,6 +85,13 @@ class FormElement extends ZendFormElement
                 }
                 return vsprintf($element->getValue(), $translated);
             }
+
+            $value = $element->getValue();
+
+            if (empty($value)) {
+                return '';
+            }
+
             return $this->getView()->translate($element->getValue());
         }
 

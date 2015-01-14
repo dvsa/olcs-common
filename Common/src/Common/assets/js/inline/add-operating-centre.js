@@ -1,8 +1,13 @@
 $(function() {
   "use strict";
 
+  var F = OLCS.formHelper;
+
+  var vehicles = F("data", "noOfVehiclesRequired");
+  var trailers = F("data", "noOfTrailersRequired");
+
   function hasAdvertisements() {
-    return OLCS.formHelper.isChecked("advertisements", "adPlaced");
+    return F.isChecked("advertisements", "adPlaced");
   }
 
   OLCS.cascadeForm({
@@ -10,6 +15,11 @@ $(function() {
     rulesets: {
       "advertisements": {
         "*": function() {
+          
+          if (vehicles.data('current')) {
+            return vehicles.val() > vehicles.data('current') || trailers.val() > trailers.data('current');
+          }
+          
           return true;
         },
         "label:adPlacedIn": hasAdvertisements,

@@ -222,11 +222,13 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetForApplicationValidation()
     {
         $id = 3;
+        $applicationId = 8;
 
         $query = array(
             'licence' => $id,
             'removalDate' => 'NULL',
-            'limit' => 'all'
+            'limit' => 'all',
+            'application' => $applicationId
         );
 
         $response = array(
@@ -236,6 +238,6 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('LicenceVehicle', 'GET', $query)
             ->will($this->returnValue($response));
 
-        $this->assertEquals('RESPONSE', $this->sut->getForApplicationValidation($id));
+        $this->assertEquals('RESPONSE', $this->sut->getForApplicationValidation($id, $applicationId));
     }
 }

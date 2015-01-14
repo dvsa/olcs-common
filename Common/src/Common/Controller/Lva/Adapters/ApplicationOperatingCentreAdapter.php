@@ -1,25 +1,31 @@
 <?php
 
 /**
- * Application Operating Centres Controller Trait
+ * Application Operating Centre Adapter
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\Controller\Lva\Traits;
+namespace Common\Controller\Lva\Adapters;
 
 /**
- * Application Operating Centres Controller Trait
+ * Application Operating Centre Adapter
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait ApplicationOperatingCentresControllerTrait
+class ApplicationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 {
-    protected function getDocumentProperties()
+    protected $lva = 'application';
+
+    protected $entityService = 'Entity\ApplicationOperatingCentre';
+
+    /**
+     * Extend the delete behaviour to check traffic area
+     */
+    public function delete()
     {
-        return array(
-            'application' => $this->getIdentifier(),
-            'licence' => $this->getLicenceId()
-        );
+        parent::delete();
+
+        $this->checkTrafficArea();
     }
 
     /**
@@ -27,7 +33,7 @@ trait ApplicationOperatingCentresControllerTrait
      *
      * @param array $data
      */
-    protected function checkTrafficAreaAfterCrudAction($data)
+    public function checkTrafficAreaAfterCrudAction($data)
     {
         if (is_array($data['action'])) {
             // in this scenario we can safely assume the action is 'edit',
@@ -37,9 +43,10 @@ trait ApplicationOperatingCentresControllerTrait
 
         $action = strtolower($data['action']);
 
-        $data = (array)$this->getRequest()->getPost();
-
         if ($action === 'add' && !$this->getTrafficArea()) {
+
+            $data = (array)$this->getController()->getRequest()->getPost();
+
             $trafficArea = isset($data['dataTrafficArea']['trafficArea'])
                 ? $data['dataTrafficArea']['trafficArea']
                 : '';
@@ -49,18 +56,21 @@ trait ApplicationOperatingCentresControllerTrait
                     ->get('Helper\FlashMessenger')
                     ->addWarningMessage('select-traffic-area-error');
 
-                return $this->redirect()->toRoute(null, array(), array(), true);
+                return $this->getController()->redirect()->toRoute(null, array(), array(), true);
             }
         }
     }
 
-    protected function checkTrafficAreaAfterDelete()
+    /**
+     * Check traffic area (We call this after deleting an OC)
+     */
+    protected function checkTrafficArea()
     {
         if ($this->getOperatingCentresCount() === 0) {
             $this->getServiceLocator()
                 ->get('Entity\Licence')
                 ->setTrafficArea(
-                    $this->getLicenceId(),
+                    $this->getLicenceAdapter()->getIdentifier(),
                     null
                 );
         }

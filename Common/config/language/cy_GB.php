@@ -86,6 +86,7 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
     'application-search-person-header-partner' => 'W Add new partner',
     'application-search-person-header-person' => 'W Add new responsible person',
@@ -496,10 +497,14 @@ return array(
     'business-type' => 'W Business type',
     'cancel' => 'W Cancel',
     'cancel.button' => 'W Cancel',
-    'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must',
-    'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must',
-    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must ',
-    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must ',
+    'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a
+        href="%s">create a variation application</a>',
     'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise, contact
         the cardholder.',
     'case-associated-with' => 'W Cases associated with %s',
@@ -564,6 +569,7 @@ return array(
     'correspondence-address-form-label-postcode' => 'W Postcode',
     'correspondence-address-form-label-town-city' => 'W Town / City',
     'costs' => 'W Costs',
+    'could-not-remove-message' => 'W The selected record could not be removed.',
     'court-fpn' => 'W Court/FPN',
     'court/fpn' => 'W Court/FPN',
     'create' => 'W Create',
@@ -575,6 +581,7 @@ return array(
     'credit-debit-card' => 'W Credit /Debit card',
     'crown-copyright' => 'W Crown Copyright',
     'csrf-message' => 'W This page has expired due to a period of inactivity. Please try again',
+    'current-authorisation-hint' => 'W Current authorisation: <strong>%s</strong>',
     'current-submission' => 'W Current submission',
     'current.option.suffix' => 'W (current)',
     'currently-with' => 'W Currently with',
@@ -661,6 +668,7 @@ return array(
     'fabs-reference' => 'W Fabs Ref',
     'farmers-livestock-carriers' => 'W Farmers / Livestock Carriers',
     'fee-details' => 'W Fee Details',
+    'feeNotPaidError' => 'W The fee was not paid, please try again',
     'fees' => 'W Fees',
     'fees.amount_too_large' => 'W The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'W Cheque Number',
@@ -1484,10 +1492,14 @@ return array(
     'v-auth' => 'W V-auth',
     'v-auth-t-auth' => 'W V-auth/T-auth',
     'variation-application-link-text' => 'W variation application',
+    'variation-application-message' => 'W Making changes to some fields within this section may require a <a
+        href="%s">variation application</a>',
     'variation-application-text' => 'W Making changes to some fields within this section may require a',
     'variation-application-text2' => 'W Changes within this section will require a',
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-details-nav' => 'W Variation details',
+    'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
+        href="%s">variation application</a>',
     'variation.delete' => 'W Delete application',
     'variation.overview.application-no' => 'W Application No.',
     'variation.overview.title' => 'W Variation application',

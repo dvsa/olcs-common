@@ -12,6 +12,6 @@ namespace Common\Service\Cpms;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class PaymentInvalidAmountException extends \Exception
+class PaymentInvalidAmountException extends PaymentException
 {
 }
