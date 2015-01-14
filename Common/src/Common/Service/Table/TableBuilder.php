@@ -978,7 +978,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderLayout($name)
     {
-        if ($name === 'default' && empty($this->rows) && isset($this->variables['empty_message'])) {
+        if ($name === 'default' && empty($this->rows)) {
             return $this->renderLayout('default_empty');
         }
 

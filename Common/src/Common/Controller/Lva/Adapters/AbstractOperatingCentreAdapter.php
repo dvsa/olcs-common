@@ -493,20 +493,16 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         if ($trafficAreaId) {
 
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
-            $nameExistsElement = $dataTrafficAreaFieldset->get('trafficAreaInfoNameExists');
-
-            $nameExistsElement->setValue(
-                str_replace('%NAME%', $trafficArea['name'], $nameExistsElement->getValue())
-            );
+            $dataTrafficAreaFieldset->get('trafficAreaSet')
+                ->setValue($trafficArea['name'])
+                ->setOption('hint-suffix', '-operating-centres');
 
             return $form;
         }
 
         $options = $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions();
 
-        $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
-            ->remove('trafficAreaInfoNameExists')
-            ->remove('trafficAreaInfoHintExists')
+        $dataTrafficAreaFieldset->remove('trafficAreaSet')
             ->get('trafficArea')
             ->setValueOptions($options);
 

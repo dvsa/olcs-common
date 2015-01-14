@@ -469,4 +469,51 @@ class CommonApplicationControllerTraitTest extends MockeryTestCase
 
         $this->assertEquals('OVERVIEW', $this->sut->callGoToNextSection($section));
     }
+
+    /**
+     * @group lva_controller_traits
+     */
+    public function testGetSectionStepProgress()
+    {
+        $stubbedOverviewData = array(
+            'applicationCompletions' => array(
+                array(
+                    'foo' => 'bar'
+                )
+            )
+        );
+        $stubbedAccessibleSections = array(
+            'bar' => 'cake'
+        );
+        $stubbedSectionStatus = array(
+            'type_of_licence' => array(
+                'enabled' => true
+            ),
+            'foo' => array(
+                'enabled' => false
+            )
+        );
+
+        $this->sut
+            ->shouldReceive('getIdentifier')
+                ->andReturn(123)
+            ->shouldReceive('getAccessibleSections')
+                ->andReturn($stubbedAccessibleSections)
+            ->shouldReceive('setEnabledAndCompleteFlagOnSections')
+                ->with($stubbedAccessibleSections, ['foo' => 'bar'])
+                ->andReturn($stubbedSectionStatus);
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getOverview')
+                ->with(123)
+                ->andReturn($stubbedOverviewData)
+                ->getMock()
+        );
+
+        $progress = $this->sut->getSectionStepProgress('type_of_licence');
+
+        $this->assertEquals(['stepX' => 1, 'stepY' => 2], $progress);
+    }
 }
