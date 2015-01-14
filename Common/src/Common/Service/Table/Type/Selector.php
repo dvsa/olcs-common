@@ -15,7 +15,7 @@ namespace Common\Service\Table\Type;
  */
 class Selector extends AbstractType
 {
-    protected $format = '<input type="radio" name="%s" value="%s" />';
+    protected $format = '<input type="radio" name="%s" value="%s" %s />';
 
     /**
      * Render the selector
@@ -36,6 +36,16 @@ class Selector extends AbstractType
             $name = $fieldset . '[id]';
         }
 
-        return sprintf($this->format, $name, $data['id']);
+        $dataAttributes = [];
+
+        if (isset($column['data-attributes'])) {
+            foreach ($column['data-attributes'] as $attrName) {
+                if (isset($data[$attrName])) {
+                    $dataAttributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                }
+            }
+        }
+
+        return sprintf($this->format, $name, $data['id'], implode(' ', $dataAttributes));
     }
 }

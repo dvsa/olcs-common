@@ -113,4 +113,14 @@ class TranslationHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->sut->formatTranslation($format, $translations));
     }
+
+    public function testFormatReplace()
+    {
+        $index = 'this %s is %sing %ssome';
+        $arguments = ['foo', 'bar', 'awe'];
+
+        $response = $this->sut->translateReplace($index, $arguments);
+
+        $this->assertEquals('*this foo is baring awesome*', $response);
+    }
 }

@@ -22,7 +22,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Get index
-     * 
+     *
      * @group abstractVehicleGoodsController
      */
     public function testGetIndexAction()
@@ -151,7 +151,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Get index with filters
-     * 
+     *
      * @group abstractVehicleGoodsController
      * @dataProvider filtersForIndexDataProvider
      */
@@ -403,7 +403,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Test index action with post
-     * 
+     *
      * @group abstractVehicleGoodsController1
      */
     public function testIndexActionWithPost()
@@ -492,7 +492,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn($formData);
 
         $this->sut
-            ->shouldReceive('getVehicleGoodsAdapter')
+            ->shouldReceive('getAdapter')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('populateForm')
@@ -564,14 +564,14 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Test set / get vehicle goods adapter
-     * 
+     *
      * @group abstractVehicleGoodsController1
      */
-    public function testSetVehicleGoodsAdapter()
+    public function testSetAdapter()
     {
         $adapter = new ApplicationVehicleGoodsAdapter();
-        $this->sut->setVehicleGoodsAdapter($adapter);
-        $this->assertSame($this->sut->getVehicleGoodsAdapter(), $adapter);
+        $this->sut->setAdapter($adapter);
+        $this->assertSame($this->sut->getAdapter(), $adapter);
     }
 
     public function testBasicAddAction()

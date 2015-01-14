@@ -32,4 +32,9 @@ class ApplicationOperatingCentreEntityService extends AbstractOperatingCentreEnt
 
         return $results['Results'];
     }
+
+    public function getByApplicationAndOperatingCentre($applicationId, $operatingCentreId)
+    {
+        return $this->get(array('application' => $applicationId, 'operatingCentre' => $operatingCentreId))['Results'];
+    }
 }

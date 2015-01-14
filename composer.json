@@ -33,6 +33,7 @@
         "phpunit/phpunit": "4.*",
         "sebastian/diff": "dev-master",
         "mockery/mockery": "dev-master",
+        "major-caiger/munit": "~0.1.0",
         "phpunit/phpcov": "dev-master",
         "dvsa/jackrabbit": "v1.1.0",
         "mikey179/vfsStream": "~1.4.0",

@@ -494,10 +494,14 @@ return array(
     'business-type' => 'Business type',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
-    'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must',
-    'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must',
-    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must ',
-    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must ',
+    'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a
+        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create
+        a variation application</a>',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create
+        a variation application</a>',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the
         cardholder.',
     'case-associated-with' => 'Cases associated with %s',
@@ -562,6 +566,7 @@ return array(
     'correspondence-address-form-label-postcode' => 'Postcode',
     'correspondence-address-form-label-town-city' => 'Town / City',
     'costs' => 'Costs',
+    'could-not-remove-message' => 'The selected record could not be removed.',
     'court-fpn' => 'Court/FPN',
     'court/fpn' => 'Court/FPN',
     'create' => 'Create',
@@ -573,6 +578,7 @@ return array(
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
+    'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
     'current.option.suffix' => '(current)',
     'currently-with' => 'Currently with',
@@ -1480,10 +1486,14 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
+    'variation-application-message' => 'Making changes to some fields within this section may require a <a
+        href="%s">variation application</a>',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
     'variation-application-text2' => 'Changes within this section will require a',
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-details-nav' => 'Variation details',
+    'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
+        href="%s">variation application</a>',
     'variation.delete' => 'Delete application',
     'variation.overview.application-no' => 'Application No.',
     'variation.overview.title' => 'Variation application',
