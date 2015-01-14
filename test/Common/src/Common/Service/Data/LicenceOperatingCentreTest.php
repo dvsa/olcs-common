@@ -97,5 +97,4 @@ class LicenceOperatingCentreTest extends MockeryTestCase
         $this->assertContains('pc', $result[1]);
 
     }
-
 }
