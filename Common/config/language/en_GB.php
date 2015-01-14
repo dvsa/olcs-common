@@ -86,6 +86,7 @@ return array(
     'application-form-owners-header-directors' => 'Directors',
     'application-form-owners-header-partners' => 'Partners',
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
+    'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
     'application-search-person-header-partner' => 'Add new partner',
     'application-search-person-header-person' => 'Add new responsible person',
