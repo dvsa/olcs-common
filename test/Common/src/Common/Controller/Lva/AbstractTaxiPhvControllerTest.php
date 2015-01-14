@@ -87,9 +87,6 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals('taxi_phv', $this->view);
     }
 
-    /**
-     * @group now
-     */
     public function testGetIndexActionWithTableData()
     {
         $stubbedTableData = [
@@ -129,6 +126,108 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
                         'id' => 'A',
                         'name' => 'Foo'
                     ]
+                ]
+            )
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('table')
+            ->andReturn(m::mock('\Zend\Form\Fieldset'))
+            ->shouldReceive('get')
+            ->with('dataTrafficArea')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('trafficArea')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setValueOptions')
+                    ->with([1, 2])
+                    ->getMock()
+                )
+                ->shouldReceive('get')
+                ->with('trafficAreaSet')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setValue')
+                    ->with('Foo')
+                    ->andReturnSelf()
+                    ->shouldReceive('setOption')
+                    ->with('hint-suffix', '-taxi-phv')
+                    ->getMock()
+                )
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('populateFormTable')
+            ->shouldReceive('remove')
+            ->with($form, 'dataTrafficArea->trafficArea');
+
+        $this->shouldRemoveElements(
+            $form,
+            [
+                'dataTrafficArea->trafficAreaSet'
+            ]
+        );
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn(123);
+
+        $this->mockEntity('Licence', 'getTrafficArea')
+            ->with(123)
+            ->andReturn($stubbedTrafficArea);
+
+        $this->mockEntity('PrivateHireLicence', 'getByLicenceId')
+            ->with(123)
+            ->andReturn($stubbedTableData);
+
+        $this->mockEntity('TrafficArea', 'getValueOptions')
+            ->andReturn([1, 2]);
+
+        $this->mockService('Table', 'prepareTable')
+            ->with('lva-taxi-phv', $expectedTableData)
+            ->andReturn(m::mock('\Common\Service\Table\TableBuilder'));
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('taxi_phv', $this->view);
+    }
+
+    public function testGetIndexActionWithTableDataWithoutTa()
+    {
+        $stubbedTableData = [
+            [
+                'id' => 3,
+                'privateHireLicenceNo' => 12345678,
+                'contactDetails' => [
+                    'description' => 'ABC',
+                    'address' => [
+                        'id' => 1,
+                        'version' => 'foo',
+                        'addressLine1' => '123 Street'
+                    ]
+                ]
+            ]
+        ];
+        $expectedTableData = [
+            [
+                'id' => 3,
+                'privateHireLicenceNo' => 12345678,
+                'councilName' => 'ABC',
+                'addressLine1' => '123 Street'
+            ]
+        ];
+
+        $stubbedTrafficArea = [];
+
+        $form = $this->createMockForm('Lva\TaxiPhv');
+
+        $form->shouldReceive('setData')
+            ->with(
+                [
+                    'dataTrafficArea' => []
                 ]
             )
             ->andReturn($form)
