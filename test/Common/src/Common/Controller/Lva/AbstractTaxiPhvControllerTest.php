@@ -155,7 +155,7 @@ class AbstractTaxiPhvControllerTest extends AbstractLvaControllerTestCase
                     ->with('Foo')
                     ->andReturnSelf()
                     ->shouldReceive('setOption')
-                    ->with('hint-prefix', '-taxi-phv')
+                    ->with('hint-suffix', '-taxi-phv')
                     ->getMock()
                 )
                 ->getMock()

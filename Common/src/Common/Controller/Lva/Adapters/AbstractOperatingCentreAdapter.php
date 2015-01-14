@@ -495,7 +495,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $dataTrafficAreaFieldset->get('trafficAreaSet')
                 ->setValue($trafficArea['name'])
-                ->setOption('hint-prefix', '-operating-centres');
+                ->setOption('hint-suffix', '-operating-centres');
 
             return $form;
         }

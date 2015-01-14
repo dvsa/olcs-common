@@ -287,7 +287,6 @@ class FormRow extends ZendFormRow
                     case self::LABEL_APPEND:
                     default:
                         $markup = $labelOpen . $elementString . $label . $labelClose;
-                        break;
                 }
             }
 

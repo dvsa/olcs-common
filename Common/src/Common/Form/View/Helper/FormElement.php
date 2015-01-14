@@ -57,7 +57,7 @@ class FormElement extends ZendFormElement
         if ($element instanceof TrafficAreaSet) {
             $value = $element->getValue();
 
-            $translationPrefix = (string)$element->getOption('hint-prefix');
+            $translationSuffix = (string)$element->getOption('hint-suffix');
 
             $view = $this->getView();
 
@@ -66,7 +66,7 @@ class FormElement extends ZendFormElement
                 $view->translate('trafficAreaSet.trafficArea'),
                 $view->translate($value),
                 sprintf(
-                    $view->translate('trafficAreaSet.hint' . $translationPrefix),
+                    $view->translate('trafficAreaSet.hint' . $translationSuffix),
                     // @todo replace with real link
                     '#'
                 )

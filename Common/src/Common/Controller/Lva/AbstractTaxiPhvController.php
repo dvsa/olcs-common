@@ -210,7 +210,7 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
             $form->get('dataTrafficArea')->get('trafficAreaSet')
                 ->setValue($trafficArea['name'])
-                ->setOption('hint-prefix', '-taxi-phv');
+                ->setOption('hint-suffix', '-taxi-phv');
         } else {
             $formHelper->remove($form, 'dataTrafficArea->trafficAreaSets');
 

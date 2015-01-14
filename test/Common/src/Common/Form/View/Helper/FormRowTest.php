@@ -342,4 +342,18 @@ class FormRowTest extends \PHPUnit_Framework_TestCase
 
         return $viewHelper;
     }
+
+    public function testRenderWithRenderAsFieldset()
+    {
+        $element = $this->prepareElement();
+        $element->setOption('render_as_fieldset', true);
+
+        $viewHelper = $this->prepareHelper();
+        $markup = $viewHelper($element);
+
+        $this->assertEquals(
+            '<fieldset class="fieldset--primary"><legend>Label</legend><p class="hint">Hint</p></fieldset>',
+            $markup
+        );
+    }
 }
