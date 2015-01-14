@@ -35,9 +35,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                     'children' => [
                         'licence' => [
                             'children' => [
-                                'organisation' => [
-                                    'properties' => ['id', 'name']
-                                ]
+                                'organisation'
                             ]
                         ]
                     ]
@@ -93,8 +91,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $query = [
             'transportManagerId' => $id,
-            'action' => '!= :act',
-            'action' => 'NULL',
+            'action' => '!= D',
             'tmApplicationStatus' => [
                 'apsts_consideration',
                 'apsts_not_submitted',

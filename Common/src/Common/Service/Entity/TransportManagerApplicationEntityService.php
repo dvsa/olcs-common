@@ -27,9 +27,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                 'children' => [
                     'licence' => [
                         'children' => [
-                            'organisation' => [
-                                'properties' => ['id', 'name']
-                            ]
+                            'organisation'
                         ]
                     ]
                 ]
@@ -52,13 +50,12 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     {
         $query = [
             'transportManagerId' => $id,
-            'action' => '!= :act',
-            'action' => 'NULL'
+            'action' => '!= D'
         ];
         if (count($status)) {
             $query['tmApplicationStatus'] = $status;
         }
-        $results = $this->get($query, $this->dataBundle, ['act' => 'D']);
+        $results = $this->get($query, $this->dataBundle);
         foreach ($results['Results'] as &$result) {
             $result['ocCount'] = count($result['tmApplicationOcs']);
         }

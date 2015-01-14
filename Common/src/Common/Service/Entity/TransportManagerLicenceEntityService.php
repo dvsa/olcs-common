@@ -25,9 +25,7 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         'children' => [
             'licence' => [
                 'children' => [
-                    'organisation' => [
-                        'properties' => ['id', 'name']
-                    ],
+                    'organisation',
                     'status'
                 ]
             ],
@@ -56,11 +54,9 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
         $finalResults = [];
         $results = $this->get($query, $this->dataBundle);
         foreach ($results['Results'] as $result) {
-            if (count($status)) {
-                if (in_array($result['licence']['status']['id'], $status)) {
-                    $result['ocCount'] = count($result['tmLicenceOcs']);
-                    $finalResults[] = $result;
-                }
+            if (count($status) && in_array($result['licence']['status']['id'], $status)) {
+                $result['ocCount'] = count($result['tmLicenceOcs']);
+                $finalResults[] = $result;
             }
         }
         return $finalResults;
