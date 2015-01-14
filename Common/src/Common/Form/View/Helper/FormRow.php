@@ -112,7 +112,12 @@ class FormRow extends ZendFormRow
             if (strpos($element->getAttribute('class'), 'visually-hidden') !== false) {
                 $markup = sprintf(self::$format, 'visually-hidden', $markup);
             } elseif ($element->getOption('render-container') !== false) {
-                $markup = sprintf(self::$format, $class, $markup);
+
+                $renderAsFieldset = $element->getOption('render_as_fieldset');
+
+                if (!$renderAsFieldset) {
+                    $markup = sprintf(self::$format, $class, $markup);
+                }
             }
         }
 
@@ -166,7 +171,7 @@ class FormRow extends ZendFormRow
             $markup,
             $legend,
             '',
-            ''
+            ' class="fieldset--primary"'
         );
     }
 
