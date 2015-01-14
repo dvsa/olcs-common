@@ -113,6 +113,8 @@ return array(
     'application.previous-history.licence-history' => 'Licence history',
     'application.print' => 'Print application',
     'application.progress' => '%s of %s sections complete',
+    'application.step' => 'Step %s',
+    'application.steps' => 'Step %s of %s',
     'application.review-declarations' => 'Review & declarations',
     'application.review-declarations.summary' => 'Application summary',
     'application.review-declarations.summary.new-window' => 'View in another window',

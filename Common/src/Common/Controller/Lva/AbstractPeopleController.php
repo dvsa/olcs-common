@@ -108,7 +108,7 @@ abstract class AbstractPeopleController extends AbstractController
             return $this->completeSection('people');
         }
 
-        return $this->render('person', $form);
+        return $this->render('person', $form, [], 'people');
     }
 
     /**
