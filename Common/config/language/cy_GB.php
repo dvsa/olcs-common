@@ -1463,6 +1463,11 @@ return array(
     'tic' => 'W TIC',
     'tol-no-changes-message' => 'W No changes to the type of licence detected',
     'traffic-area' => 'W Traffic area',
+    'trafficAreaSet.hint-operating-centres' => 'W Your traffic area is determined by the location of your operating
+        centres.<br />For more information and to find your traffic area please visit <a href="%s">this link</a>',
+    'trafficAreaSet.hint-taxi-phv' => 'W Your traffic area is determined by the location of the council addresses.<br
+        />For more information and to find your traffic area please visit <a href="%s">this link</a>',
+    'trafficAreaSet.trafficArea' => 'W Traffic area',
     'trailer' => 'W Trailer',
     'trailer-count' => 'W %s trailers',
     'transport-manager' => 'W Transport Manager',
