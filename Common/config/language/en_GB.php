@@ -666,6 +666,7 @@ return array(
     'fabs-reference' => 'Fabs Ref',
     'farmers-livestock-carriers' => 'Farmers / Livestock Carriers',
     'fee-details' => 'Fee Details',
+    'feeNotPaidError' => 'The fee was not paid, please try again',
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',

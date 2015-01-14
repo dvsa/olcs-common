@@ -75,7 +75,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                 ]
             ],
