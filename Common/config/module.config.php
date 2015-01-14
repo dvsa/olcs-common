@@ -109,9 +109,10 @@ return array(
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
-            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
+            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory',
         ),
         'aliases' => array(
+            'Cache' => 'Zend\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
@@ -180,7 +181,9 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
+            'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
+            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener'
         )
     ),
     'publications' => array(
@@ -358,4 +361,18 @@ return array(
             ),
         )
     ),
+    'zfc_rbac' => [
+        'role_provider' => ['Common\Rbac\Role\RoleProvider'],
+        'role_provider_manager' => [
+            'factories' => [
+                'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'
+            ]
+        ],
+        'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
+    ],
+    'cache' => [
+        'adapter' => [
+            'name' => 'apc',
+        ]
+    ]
 );

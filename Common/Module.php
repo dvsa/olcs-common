@@ -41,6 +41,12 @@ class Module
             array($missingTranslationProcessor, 'processEvent')
         );
 
+        $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
+
+        $events->getSharedManager()
+            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', $listener);
+
+
         $translator->enableEventManager();
         $translator->setEventManager($events);
 
