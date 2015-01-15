@@ -42,18 +42,20 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
-                $this->getAdapter()->disableConditionalValidation($form);
+                //$this->getAdapter()->disableValidation($form);
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->disableValidation($form->getInputFilter());
             }
 
             if ($form->isValid()) {
 
                 $this->getAdapter()->saveMainFormData($data);
 
+                $this->postSave('operating_centres');
+
                 if ($crudAction !== null) {
                     return $this->handleCrudAction($crudAction);
                 }
-
-                $this->postSave('operating_centres');
 
                 return $this->completeSection('operating_centres');
             }
