@@ -51,16 +51,6 @@ class OperatingCentres
     /**
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation.data.totCommunityLicences"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreCommunityLicences")
-     */
-    public $totCommunityLicences = null;
-
-    /**
-     * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data.totAuthVehicles"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTotalVehicleAuthorisations")
@@ -75,6 +65,16 @@ class OperatingCentres
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTrailerAuthorisations")
      */
     public $totAuthTrailers = null;
+
+    /**
+     * @Form\Attributes({"class":"short","id":""})
+     * @Form\Options({
+     *     "label":
+     * "application_operating-centres_authorisation.data.totCommunityLicences"
+     * })
+     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreCommunityLicences")
+     */
+    public $totCommunityLicences = null;
 
     /**
      * @Form\Attributes({"value":""})
