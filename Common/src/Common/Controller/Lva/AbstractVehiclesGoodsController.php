@@ -133,10 +133,9 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         $id = $this->params('child_id');
         $data = array();
 
-        $vehicleData = $this->getVehicleFormData($id);
+        if ($mode === 'edit' && $request->isPost()) {
 
-        if ($request->isPost()) {
-            $data = (array)$request->getPost();
+            $vehicleData = $this->getVehicleFormData($id);
 
             if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')
@@ -144,8 +143,12 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
                 return $this->redirect()->toRoute(null, [], [], true);
             }
+        }
 
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
+            $vehicleData = $this->getVehicleFormData($id);
             $data = $this->formatVehicleDataForForm($vehicleData);
         }
 
@@ -181,7 +184,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         // set default date values prior to render
-        $today = new \DateTime();
+        $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
         $form = $this->setDefaultDates($form, $today);
 
         return $this->render($mode . '_vehicles', $form);
