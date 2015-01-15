@@ -89,45 +89,6 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
-     * Disable conditional validation
-     *
-     * For licences, we don't want to validate any auth
-     * totals if they haven't been altered
-     */
-    public function disableConditionalValidation(Form $form)
-    {
-        $postData = (array)$this->getController()->getRequest()->getPost();
-        $postData = isset($postData['data']) ? $postData['data'] : [];
-
-        // allow for *all* totals to have been submitted; in reality
-        // the values will be a subset of this dependent on goods/psv
-        $submitted = [
-            'totAuthLargeVehicles',
-            'totAuthMediumVehicles',
-            'totAuthSmallVehicles',
-            'totAuthVehicles',
-            'totAuthTrailers'
-        ];
-
-        // we need to fetch our entity details and
-        // as long as all relevant totals match, disable their
-        // validation
-
-        $totals = $this->getTotalAuthorisationsForLicence($this->getIdentifier());
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $filter = $form->getInputFilter()->get('data');
-
-        foreach ($submitted as $property) {
-            if (isset($postData[$property]) && (int)$postData[$property] === (int)$totals[$property]) {
-                $formHelper->disableValidation(
-                    $filter->get($property)
-                );
-            }
-        }
-    }
-
-    /**
      * Attach a can't increase validator
      *
      * @param Input $input
