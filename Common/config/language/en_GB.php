@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
