@@ -32,8 +32,10 @@ class SectionConfig
         ),
         'business_details' => array(
             'prerequisite' => array(
-                'type_of_licence',
-                'business_type'
+                array(
+                    'type_of_licence',
+                    'business_type'
+                )
             )
         ),
         'addresses' => array(
