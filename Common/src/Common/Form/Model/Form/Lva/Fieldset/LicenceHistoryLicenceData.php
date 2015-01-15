@@ -24,7 +24,7 @@ class LicenceHistoryLicenceData
     /**
      * @Form\Attributes({"class":"long","id":""})
      * @Form\Options({"label":"selfserve-app-subSection-previous-history-licence-history-licNo"})
-     * @Form\Required(false)
+     * @Form\Required(true)
      * @Form\Type("Text")
      */
     public $licNo = null;
@@ -35,7 +35,7 @@ class LicenceHistoryLicenceData
      *     "label":
      * "selfserve-app-subSection-previous-history-licence-history-holderName"
      * })
-     * @Form\Required(false)
+     * @Form\Required(true)
      * @Form\Type("Text")
      */
     public $holderName = null;
