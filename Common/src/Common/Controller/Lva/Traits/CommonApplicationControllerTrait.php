@@ -172,26 +172,4 @@ trait CommonApplicationControllerTrait
                 );
         }
     }
-
-    /**
-     * @param string $currentSection
-     * @return array
-     */
-    protected function getSectionStepProgress($currentSection)
-    {
-        $data = $this->getServiceLocator()->get('Entity\Application')
-            ->getOverview($this->getApplicationId());
-
-        $sectionStatus = $this->setEnabledAndCompleteFlagOnSections(
-            $this->getAccessibleSections(false),
-            $data['applicationCompletions'][0]
-        );
-
-        $sections = array_keys($sectionStatus);
-
-        $index = array_search($currentSection, $sections);
-
-        // we can pass this array straight to the view
-        return ['stepX' => $index+1, 'stepY' => count($sections)];
-    }
 }
