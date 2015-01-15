@@ -68,7 +68,11 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
 
     public function getAddressSummaryData($lvaId)
     {
-        return $this->getAll(array($this->type => $lvaId), $this->addressSummaryBundle);
+        $query = array($this->type => $lvaId);
+
+        $query['sort'] = 'operatingCentre';
+
+        return $this->getAll($query, $this->addressSummaryBundle);
     }
 
     public function getAddressData($id)
