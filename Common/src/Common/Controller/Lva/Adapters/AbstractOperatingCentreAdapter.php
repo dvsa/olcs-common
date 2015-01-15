@@ -184,14 +184,14 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     }
 
     /**
-     * By default our conditional validation is the standard mechanism to not validate empty fields.
+     * By default our CRUD validation is to disable everything.
      * However, some LVAs want to extend this behaviour.
      *
      * @param \Zend\Form\Form $form
      */
-    public function disableConditionalValidation(Form $form)
+    public function disableValidation(Form $form)
     {
-        $this->getServiceLocator()->get('Helper\Form')->disableEmptyValidation($form);
+        $this->getServiceLocator()->get('Helper\Form')->disableValidation($form->getInputFilter());
     }
 
     /**
@@ -493,20 +493,16 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         if ($trafficAreaId) {
 
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
-            $nameExistsElement = $dataTrafficAreaFieldset->get('trafficAreaInfoNameExists');
-
-            $nameExistsElement->setValue(
-                str_replace('%NAME%', $trafficArea['name'], $nameExistsElement->getValue())
-            );
+            $dataTrafficAreaFieldset->get('trafficAreaSet')
+                ->setValue($trafficArea['name'])
+                ->setOption('hint-suffix', '-operating-centres');
 
             return $form;
         }
 
         $options = $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions();
 
-        $dataTrafficAreaFieldset->remove('trafficAreaInfoLabelExists')
-            ->remove('trafficAreaInfoNameExists')
-            ->remove('trafficAreaInfoHintExists')
+        $dataTrafficAreaFieldset->remove('trafficAreaSet')
             ->get('trafficArea')
             ->setValueOptions($options);
 

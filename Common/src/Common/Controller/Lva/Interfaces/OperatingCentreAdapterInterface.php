@@ -66,12 +66,12 @@ interface OperatingCentreAdapterInterface extends AdapterInterface
     public function getActionForm($mode, Request $request);
 
     /**
-     * By default our conditional validation is the standard mechanism to not validate empty fields.
+     * By default our CRUD validation is to disable everything.
      * However, some LVAs want to extend this behaviour.
      *
      * @param \Zend\Form\Form $form
      */
-    public function disableConditionalValidation(Form $form);
+    public function disableValidation(Form $form);
 
     /**
      * Callback to populate files
