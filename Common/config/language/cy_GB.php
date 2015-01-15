@@ -499,6 +499,7 @@ return array(
     'business-type' => 'W Business type',
     'cancel' => 'W Cancel',
     'cancel.button' => 'W Cancel',
+    'cant-edit-removed-vehicle' => 'W You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must <a
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must <a
