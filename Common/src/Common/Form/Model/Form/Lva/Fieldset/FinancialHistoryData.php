@@ -41,7 +41,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -59,7 +59,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -77,7 +77,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -95,7 +95,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -105,13 +105,12 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "question checkbox inline"
+     *      },
      *     "label":
      * "application_previous-history_financial-history.finance.disqualified",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
      * })
      * @Form\Type("radio")
      */
@@ -131,11 +130,6 @@ class FinancialHistoryData
      * @Form\Options({
      *     "label":
      * "application_previous-history_financial-history.insolvencyDetails.title",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box.",
      *     "hint":
      * "application_previous-history_financial-history.insolvencyDetails.hint"
      * })

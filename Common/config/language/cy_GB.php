@@ -868,7 +868,7 @@ return array(
     'internal-operator-profile-first-name' => 'W First name',
     'internal-operator-profile-last-name' => 'W Last name',
     'internal-operator-profile-name' => 'W Operator name',
-    'internal-operator-profile-nature-of-business' => 'W Nature of Business',
+    'internal-operator-profile-nature-of-business' => 'W Nature of business',
     'internal-operator-quick-actions' => 'W Quick actions',
     'internal-pi-hearing-add' => 'W Add hearing',
     'internal-pi-hearing-edit' => 'W Edit hearing',

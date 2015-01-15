@@ -6,6 +6,9 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("dataTrafficArea")
+ * @Form\Attributes({
+ *      "class": "traffic-area"
+ * })
  */
 class TrafficArea
 {

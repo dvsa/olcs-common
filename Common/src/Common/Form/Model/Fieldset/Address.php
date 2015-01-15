@@ -7,6 +7,9 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("address")
  * @Form\Type("\Common\Form\Elements\Types\Address")
+ * @Form\Attributes({
+ *      "class": "address"
+ * })
  */
 class Address
 {
