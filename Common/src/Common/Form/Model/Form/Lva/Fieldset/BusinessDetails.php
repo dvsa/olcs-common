@@ -27,9 +27,9 @@ class BusinessDetails
     public $name = null;
 
     /**
-     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
-     * @Form\Attributes({"class": "add-another"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
+     * @Form\Attributes({"class": "add-another"})
+     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
      */
     public $tradingNames = null;
 
@@ -53,10 +53,4 @@ class BusinessDetails
      *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">here</a>"})
      */
     public $information = null;
-
-    /**
-     * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
-     */
-    public $registeredAddress = null;
 }

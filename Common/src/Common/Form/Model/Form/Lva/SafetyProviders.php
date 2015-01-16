@@ -20,22 +20,21 @@ class SafetyProviders
 
     /**
      * @Form\Name("contactDetails")
-     * @Form\Options({})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\SafetyProvidersContactDetails")
      */
     public $contactDetails = null;
 
     /**
      * @Form\Name("address")
-     * @Form\Options({"label":"application_vehicle-safety_safety-sub-action.address.label"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
+     * @Form\Options({"label":"application_vehicle-safety_safety-sub-action.address.label"})
      */
     public $address = null;
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

@@ -20,8 +20,8 @@ class GenericConfirmation
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ConfirmButtons")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }
