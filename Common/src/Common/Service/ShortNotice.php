@@ -31,7 +31,7 @@ class ShortNotice implements FactoryInterface
         if ($busRules['standardPeriod'] > 0) {
             $interval = new \DateInterval('P' . $busRules['standardPeriod'] . 'D');
 
-            if ($receivedDateTime->add($interval) > $effectiveDateTime) {
+            if ($receivedDateTime->add($interval) >= $effectiveDateTime) {
                 return true;
             }
         }
@@ -45,7 +45,7 @@ class ShortNotice implements FactoryInterface
             $lastDateTime = \DateTime::createFromFormat('Y-m-d', $data['parent']['effectiveDate']);
             $interval = new \DateInterval('P' . $busRules['cancellationPeriod'] . 'D');
 
-            if ($lastDateTime->add($interval) > $effectiveDateTime) {
+            if ($lastDateTime->add($interval) >= $effectiveDateTime) {
                 return true;
             }
         }
