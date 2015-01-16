@@ -23,10 +23,18 @@ class ShortNotice implements FactoryInterface
      */
     public function isShortNotice($data)
     {
-        $busRules = $this->getNoticePeriodService()->fetchOne($data['busNoticePeriod']);
-
         $effectiveDateTime = \DateTime::createFromFormat('Y-m-d', $data['effectiveDate']);
         $receivedDateTime = \DateTime::createFromFormat('Y-m-d', $data['receivedDate']);
+
+        if (!($effectiveDateTime instanceof \DateTime) || !($receivedDateTime instanceof \DateTime)) {
+            return false;
+        }
+
+        if (!isset($data['busNoticePeriod']) || empty($data['busNoticePeriod'])) {
+            return false;
+        }
+
+        $busRules = $this->getNoticePeriodService()->fetchOne($data['busNoticePeriod']);
 
         if ($busRules['standardPeriod'] > 0) {
             $interval = new \DateInterval('P' . $busRules['standardPeriod'] . 'D');
