@@ -79,6 +79,24 @@ class FeeEntityService extends AbstractLvaEntityService
         return $data['Results'];
     }
 
+    public function getLatestOutstandingFeeForApplication($applicationId)
+    {
+        $params = [
+            'application' => $applicationId,
+            'feeStatus' => array(
+                self::STATUS_OUTSTANDING,
+                self::STATUS_WAIVE_RECOMMENDED
+            ),
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+
+        $data = $this->get($params, array('properties' => array('id')));
+
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
     public function cancelForLicence($licenceId)
     {
         $query = array(

@@ -13,6 +13,12 @@ use Zend\Form\Annotation as Form;
 class GenericConfirmation
 {
     /**
+     * @Form\Name("messages")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\Messages")
+     */
+    public $messages;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\ConfirmButtons")

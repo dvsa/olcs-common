@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Service\Table;
 
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\TableBuilder;
 use Common\Service\Table\TableFactory;
 
@@ -15,7 +17,7 @@ use Common\Service\Table\TableFactory;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TableBuilderTest extends \PHPUnit_Framework_TestCase
+class TableBuilderTest extends MockeryTestCase
 {
 
     /**
@@ -1894,7 +1896,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
 
-        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '" />';
+        $expected = '<input type="submit" class="" name="action[edit][1]" value="' . date('d/m/Y') . '"  />';
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
             ->with(
@@ -1987,7 +1989,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="id" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2015,7 +2017,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
 
         $mockContentHelper->expects($this->once())
             ->method('replaceContent')
-            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1" />'));
+            ->with('{{[elements/td]}}', array('content' => '<input type="radio" name="table[id]" value="1"  />'));
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
 
@@ -2051,7 +2053,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="action[edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2086,7 +2088,7 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('replaceContent')
             ->with(
                 '{{[elements/td]}}',
-                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar" />')
+                array('content' => '<input type="submit" class="" name="table[action][edit][1]" value="bar"  />')
             );
 
         $table = $this->getMockTableBuilder(array('getContentHelper'));
@@ -2342,5 +2344,56 @@ class TableBuilderTest extends \PHPUnit_Framework_TestCase
         $table->setSettings(array('Foo' => 'Bar'));
 
         $this->assertEquals(array('Foo' => 'Bar'), $table->getSettings());
+    }
+
+    public function testIsRowDisabled()
+    {
+        // Stubbed data
+        $settings = [];
+        $row = [];
+
+        // Setup
+        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm->setAllowOverride(true);
+        $sm->setService('Config', array());
+        $sut = new TableBuilder($sm);
+
+        $sut->setSettings($settings);
+
+        $this->assertFalse($sut->isRowDisabled($row));
+    }
+
+    /**
+     * @dataProvider providerIsRowDisabled
+     */
+    public function testIsRowDisabledWithDisabled($disabled)
+    {
+        // Stubbed data
+        $settings = [
+            'row-disabled-callback' => function ($row) {
+                return $row['disabled'];
+            }
+        ];
+        $row = [
+            'disabled' => $disabled
+        ];
+
+        // Setup
+        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm->setAllowOverride(true);
+        $sm->setService('Config', array());
+        $sut = new TableBuilder($sm);
+
+        $sut->setSettings($settings);
+
+        $this->assertEquals($disabled, $sut->isRowDisabled($row));
+    }
+
+    public function providerIsRowDisabled()
+    {
+        return [
+            [true],
+            [false]
+        ];
     }
 }

@@ -20,9 +20,9 @@ class PaymentSubmission
 
     /**
      * @Form\Attributes({
-     *     "value": "<div>Application fee <h2>&pound;254</h2></div>"
+     *     "value": "<div>Application fee <h2>&pound;%s</h2></div>"
      * })
-     * @Form\Type("\Common\Form\Elements\Types\Html")
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $amount = null;
 

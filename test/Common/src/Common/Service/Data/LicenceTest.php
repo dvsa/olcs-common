@@ -89,4 +89,24 @@ class LicenceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(3, $result);
     }
+
+    public function testFetchOperatingCentreData()
+    {
+        $licence = [
+            'id' => 110
+        ];
+
+        $sut = new Licence();
+
+        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
+        $mockRestClient->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/110'), $this->isType('array'))
+            ->willReturn($licence);
+
+        $sut->setRestClient($mockRestClient);
+        $result = $sut->fetchOperatingCentreData(110);
+
+        $this->assertEquals($result, $licence);
+    }
 }

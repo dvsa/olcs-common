@@ -35,15 +35,16 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
         $id = $this->getId();
 
         if (is_null($this->getData($id))) {
-
+            $data = array();
             $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
             if (is_array($rawData['operatingCentres'])) {
                 foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
                     $data[$licenceOperatingCentre['operatingCentre']['id']] =
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] .
+
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ' ' .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ' ' .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] . ' ' .
+                        $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] . ' ' .
                         $licenceOperatingCentre['operatingCentre']['address']['postcode'];
                 }
             }

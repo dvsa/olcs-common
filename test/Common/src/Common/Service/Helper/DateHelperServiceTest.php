@@ -41,4 +41,20 @@ class DateHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('DateTime', $helper->getDateObject());
     }
+
+    public function testGetDateObjectFromArray()
+    {
+        $helper = new DateHelperService();
+
+        $obj = $helper->getDateObjectFromArray(
+            [
+                'day' => '07',
+                'month' => '01',
+                'year' => '2015'
+            ]
+        );
+
+        $this->assertInstanceOf('DateTime', $obj);
+        $this->assertEquals('2015-01-07', $obj->format('Y-m-d'));
+    }
 }

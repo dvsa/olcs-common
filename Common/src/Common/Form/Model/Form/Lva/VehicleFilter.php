@@ -6,7 +6,7 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("vehicle-filter")
- * @Form\Attributes({"method":"get","class":"form__filter"})
+ * @Form\Attributes({"method":"get","class":"filters"})
  * @Form\Type("Common\Form\Form")
  * @Form\Options({"prefer_form_input_filter": true})
  */
@@ -37,6 +37,17 @@ class VehicleFilter
     public $specified = null;
 
     /**
+     * @Form\Attributes({"id":"disc","placeholder":""})
+     * @Form\Options({
+     *     "label": "internal-vehicle-filter-disc",
+     *     "value_options": {"A":"All", "Y":"Yes", "N":"No"},
+     *     "disable_inarray_validator": false
+     * })
+     * @Form\Type("\Zend\Form\Element\Select")
+     */
+    public $disc = null;
+
+    /**
      * @Form\Attributes({"id":"includeRemoved","placeholder":""})
      * @Form\Options({
      *     "label": "internal-vehicle-filter-include-removed",
@@ -48,17 +59,6 @@ class VehicleFilter
      * @Form\Type("OlcsCheckbox")
      */
     public $includeRemoved = null;
-
-    /**
-     * @Form\Attributes({"id":"disc","placeholder":""})
-     * @Form\Options({
-     *     "label": "internal-vehicle-filter-disc",
-     *     "value_options": {"A":"All", "Y":"Yes", "N":"No"},
-     *     "disable_inarray_validator": false
-     * })
-     * @Form\Type("\Zend\Form\Element\Select")
-     */
-    public $disc = null;
 
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})

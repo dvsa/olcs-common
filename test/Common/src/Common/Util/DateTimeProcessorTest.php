@@ -24,6 +24,8 @@ class DateTimeProcessorTest extends MockeryTestCase
      */
     public function testCalculateDate($inDate, $days, $we, $ph, $outDate, $phDates = null)
     {
+        date_default_timezone_set('UTC');
+
         $sut = new DateTimeProcessor();
 
         $mock = m::mock('Common\Service\Data\PublicHoliday');
@@ -40,16 +42,15 @@ class DateTimeProcessorTest extends MockeryTestCase
 
         $sut->createService($sl);
 
-        /* $this->assertInstanceOf('Common\Util\DateTimeProcessor\Positive', $sut->getPositiveProcessor());
-        $this->assertInstanceOf('Common\Util\DateTimeProcessor\Negative', $sut->getNegativeProcessor()); */
+        $calculatedDate = $sut->calculateDate($inDate, $days, $we, $ph);
 
-        $this->assertEquals($outDate, $sut->calculateDate($inDate, $days, $we, $ph));
+        $this->assertEquals($outDate, $calculatedDate);
     }
 
     public function dpCalculateDate()
     {
         return [
-            [
+           [
                 '2014-11-03',
                 '11',
                 false, // weekends
@@ -101,7 +102,7 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2015-01-01',
                 ]
             ],
-            [ // netagive, no weekends but public holidays are skipped
+            [ // negative, no weekends but public holidays are skipped
                 '2015-01-03',
                 '-8',
                 false, // weekends
@@ -113,7 +114,7 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2015-01-01',
                 ]
             ],
-            [ // netagive, weekends and public holidays are skipped
+            [ // negative, weekends and public holidays are skipped
                 '2015-01-03',
                 '-6',
                 true, // weekends
@@ -125,7 +126,7 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2015-01-01',
                 ]
             ],
-            [ // netagive, none are skipped
+            [ // negative, none are skipped
                 '2015-01-03',
                 '-20',
                 false, // weekends
@@ -136,7 +137,41 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2014-12-26',
                     '2015-01-01',
                 ]
-            ]
+            ],
+            [ // reproduces a bug
+                '2014-12-02',
+                '30',
+                true, // weekends
+                true, // public holidays
+                '2015-01-16',
+                [
+                    '2014-12-25',
+                    '2014-12-26',
+                    '2015-01-01',
+                ]
+            ],
+            [
+                '2015-12-01',
+                '18',
+                true, // weekends
+                true, // public holidays
+                '2015-12-29',
+                [
+                    '2015-12-25',
+                    '2015-12-26'
+                ]
+            ],
+            [ // reproduces a bug on Christmas day - sorted by date_default_timezone_set('UTC');
+                '2014-10-02',
+                '60',
+                true, // weekends
+                true, // public holidays
+                '2014-12-29',
+                [
+                    '2014-12-25',
+                    '2014-12-26'
+                ]
+            ],
         ];
     }
 }

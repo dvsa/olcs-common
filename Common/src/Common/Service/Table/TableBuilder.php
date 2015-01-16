@@ -978,6 +978,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderLayout($name)
     {
+        if ($name === 'default' && empty($this->rows)) {
+            return $this->renderLayout('default_empty');
+        }
+
         return $this->getContentHelper()->renderLayout($name);
     }
 
@@ -1278,19 +1282,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $columns = $this->getColumns();
 
-            $message = isset($this->variables['empty_message'])
-                ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
-                : 'The table is empty';
-
             $vars = array(
                 'colspan' => count($columns),
-                'message' => $this->getServiceLocator()->get('translator')->translate($message)
+                'message' => $this->getEmptyMessage()
             );
 
             $content .= $this->replaceContent('{{[elements/emptyRow]}}', $vars);
         }
 
         return $content;
+    }
+
+    public function getEmptyMessage()
+    {
+        $message = isset($this->variables['empty_message'])
+            ? $this->replaceContent($this->variables['empty_message'], $this->getVariables())
+            : 'The table is empty';
+
+        return $this->getServiceLocator()->get('translator')->translate($message);
     }
 
     /**
@@ -1373,6 +1382,24 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         // in query mode we want to manually append a query string to the base route
         if ($this->getQuery()) {
             $queryString = array_merge($this->getQuery()->toArray(), $data);
+
+            /*
+             * This should handle sorting for multiple tables.
+             * Currently this functionality is not tested yet.
+             *
+            // adding table name if we have more than one table
+            $multipleTables = $this->getSetting('multipleTables') ? $this->getSetting('multipleTables') : false;
+            if ($multipleTables) {
+                $tableName = $this->getSetting('name');
+                foreach ($queryString as $key => $part) {
+                    if ($key == 'sort' || $key == 'order') {
+                        $queryString[$tableName . '[' . $key . ']' ] = $part;
+                        unset($queryString[$key]);
+                    }
+                }
+            }
+             */
+
             $returnUrl .= "?" . http_build_query($queryString);
         }
 
@@ -1478,5 +1505,16 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     private function shouldHide($column)
     {
         return $this->isDisabled && isset($column['hideWhenDisabled']) && $column['hideWhenDisabled'];
+    }
+
+    public function isRowDisabled($row)
+    {
+        if (!isset($this->settings['row-disabled-callback'])) {
+            return false;
+        }
+
+        $callback = $this->settings['row-disabled-callback'];
+
+        return $callback($row);
     }
 }

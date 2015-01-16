@@ -208,13 +208,11 @@ abstract class AbstractTaxiPhvController extends AbstractController
             $formHelper->remove($form, 'dataTrafficArea');
         } elseif ($trafficAreaId) {
             $formHelper->remove($form, 'dataTrafficArea->trafficArea');
-            $template = $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->getValue();
-            $newValue = str_replace('%NAME%', $trafficArea['name'], $template);
-            $form->get('dataTrafficArea')->get('trafficAreaInfoNameExists')->setValue($newValue);
+            $form->get('dataTrafficArea')->get('trafficAreaSet')
+                ->setValue($trafficArea['name'])
+                ->setOption('hint-suffix', '-taxi-phv');
         } else {
-            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoLabelExists');
-            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoNameExists');
-            $formHelper->remove($form, 'dataTrafficArea->trafficAreaInfoHintExists');
+            $formHelper->remove($form, 'dataTrafficArea->trafficAreaSet');
 
             $form->get('dataTrafficArea')->get('trafficArea')->setValueOptions(
                 $this->getServiceLocator()->get('Entity\TrafficArea')->getValueOptions()

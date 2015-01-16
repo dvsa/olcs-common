@@ -64,6 +64,34 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
     }
 
     /**
+     * @param int $id
+     * @param array $data
+     * @param bool $checkStatus
+     * @return array
+     * @throws ResourceNotFoundException
+     * @throws DataServiceException
+     */
+    public function update($id, $data, $checkStatus = true)
+    {
+        if ($checkStatus) {
+            $params = ['id' => $id];
+            $existing = $this->fetchList($params);
+
+            if (empty($existing)) {
+                throw new ResourceNotFoundException('Publication record could not be found');
+            }
+
+            if ($existing['publication']['pubStatus']['id'] != self::NEW_PUBLICATION_STATUS) {
+                throw new DataServiceException('Only unpublished entries may be edited');
+            };
+        }
+
+        $dataObject = $this->createWithData($data);
+
+        return parent::save($dataObject);
+    }
+
+    /**
      * @param ArrayObject $dataObject
      * @return int
      */
@@ -105,6 +133,26 @@ class PublicationLink extends AbstractData implements ServiceLocatorAwareInterfa
         }
 
         return true;
+    }
+
+    public function fetchOne($id, $bundle = null)
+    {
+        $bundle = $bundle ?: $this->getBundle();
+        if ($this->getData($id) === null) {
+            $data = $this->getRestClient()->get($this->buildPath($id), ['bundle' => json_encode($bundle)]);
+            $this->setData($id, $data);
+        }
+
+        return $this->getData($id);
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    protected function buildPath($id)
+    {
+        return sprintf('/%d', $id);
     }
 
     /**

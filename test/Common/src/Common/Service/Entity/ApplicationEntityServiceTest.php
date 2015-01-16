@@ -562,4 +562,45 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testCreateVariationWithVariationUtility()
+    {
+        $this->mockDate('2014-01-01');
+
+        $licenceId = 3;
+        $stubbedLicenceData = [
+            'bar' => 'foo'
+        ];
+        $applicationData = [
+            'foo' => 'bar'
+        ];
+        $expectedData = [
+            'licence' => 3,
+            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'isVariation' => true,
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ];
+
+        $mockLicenceEntity = m::mock();
+        $mockLicenceEntity->shouldReceive('getVariationData')
+            ->with($licenceId)
+            ->andReturn($stubbedLicenceData);
+
+        $this->expectOneRestCall('Application', 'POST', $expectedData)
+            ->will($this->returnValue(['id' => 5]));
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $mockVariation = m::mock();
+        $this->sm->setService('VariationUtility', $mockVariation);
+        $mockVariation->shouldReceive('alterCreateVariationData')
+            ->with($expectedData)
+            ->andReturn($expectedData);
+
+        $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
+    }
 }

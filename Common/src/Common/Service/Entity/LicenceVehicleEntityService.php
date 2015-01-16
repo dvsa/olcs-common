@@ -143,11 +143,12 @@ class LicenceVehicleEntityService extends AbstractEntityService
         return $vrms;
     }
 
-    public function getForApplicationValidation($licenceId)
+    public function getForApplicationValidation($licenceId, $applicationId)
     {
         $query = array(
             'licence' => $licenceId,
-            'removalDate' => 'NULL'
+            'removalDate' => 'NULL',
+            'application' => $applicationId
         );
 
         $results = $this->getAll($query);

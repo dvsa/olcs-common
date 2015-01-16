@@ -12,6 +12,6 @@ namespace Common\Service\Cpms;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class PaymentInvalidStatusException extends \Exception
+class PaymentInvalidStatusException extends PaymentException
 {
 }
