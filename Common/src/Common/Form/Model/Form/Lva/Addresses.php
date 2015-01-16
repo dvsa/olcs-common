@@ -13,8 +13,8 @@ class Addresses
 {
     /**
      * @Form\Name("correspondence")
-     * @Form\Options({"label":"application_your-business_business-type.correspondence.label"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Correspondence")
+     * @Form\Options({"label":"application_your-business_business-type.correspondence.label"})
      */
     public $correspondence = null;
 
@@ -26,11 +26,11 @@ class Addresses
 
     /**
      * @Form\Name("contact")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
      * @Form\Options({
      *     "label": "application_your-business_business-type.contact-details.label",
      *     "hint": "application_your-business_business-type.contact-details.hint"
      * })
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Contact")
      */
     public $contact = null;
 
@@ -42,15 +42,15 @@ class Addresses
 
     /**
      * @Form\Name("establishment_address")
-     * @Form\Options({"label":"application_your-business_business-type.establishment.label"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
+     * @Form\Options({"label":"application_your-business_business-type.establishment.label"})
      */
     public $establishmentAddress = null;
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

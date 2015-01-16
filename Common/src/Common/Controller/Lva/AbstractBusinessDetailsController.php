@@ -129,8 +129,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $registeredAddressId = null;
 
-        if (isset($data['data']['registeredAddress'])) {
-            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
+        if (isset($data['registeredAddress'])) {
+            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
         }
 
         $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
@@ -252,9 +252,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'registeredAddress' => $data['contactDetails']['address'],
                 'natureOfBusiness' => $natureOfBusiness
-            )
+            ),
+            'registeredAddress' => $data['contactDetails']['address'],
         );
     }
 
@@ -344,7 +344,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $this->getServiceLocator()->get('Helper\Form')->remove($form, 'table')
             ->remove($form, 'data->companyNumber')
-            ->remove($form, 'data->registeredAddress');
+            ->remove($form, 'registeredAddress');
     }
 
     private function populateTable($form, $orgId)

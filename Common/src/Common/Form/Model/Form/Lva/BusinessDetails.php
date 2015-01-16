@@ -22,6 +22,12 @@ class BusinessDetails
     public $data = null;
 
     /**
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
+     * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
+     */
+    public $registeredAddress = null;
+
+    /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */
@@ -29,8 +35,8 @@ class BusinessDetails
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }
