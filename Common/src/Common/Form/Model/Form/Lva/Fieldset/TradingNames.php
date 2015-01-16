@@ -21,7 +21,7 @@ class TradingNames
      *      "target_element": {
      *          "type":"Text",
      *          "attributes": {
-     *              "class": "long"
+     *              "class": "medium"
      *          },
      *          "options": {
      *              "wrapElements":false

@@ -36,21 +36,14 @@ class BusinessDetails
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"chosen-select-medium",  "multiple" : true})
      * @Form\Options({
-     *     "label": "Nature of Business",
+     *     "label": "Nature of business",
      *     "help-block": "Please select a nature of business",
-     *     "category":"SIC_CODE"
+     *     "category":"SIC_CODE",
+     *     "hint":"Please enter your business type. You can find a list of business types at Companies House
+     *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">here</a>"
      * })
      * @Form\Type("DynamicSelect")
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
     public $natureOfBusiness = null;
-
-    /**
-     * @Form\Type("Common\Form\Elements\Types\Html")
-     * @Form\Attributes({
-     *      "value":
-     *      "Please enter your business type. You can find a list of business types at Companies House
-     *      <a href=""https://www.gov.uk/government/publications/standard-industrial-classification-of-economic-activities-sic"" target=""_blank"">here</a>"})
-     */
-    public $information = null;
 }

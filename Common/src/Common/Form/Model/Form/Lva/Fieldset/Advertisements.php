@@ -16,6 +16,9 @@ class Advertisements
     /**
      * @Form\Attributes({"id":"adPlaced","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox inline"
+     *      },
      *     "label":
      * "application_operating-centres_authorisation-sub-action.advertisements.adPlaced",
      *     "value_options": {"Y":"Yes", "N":"No"},
