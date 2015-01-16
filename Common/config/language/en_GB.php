@@ -441,6 +441,7 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'Gross plated weight (Kg)',
+    'application_vehicle-safety_vehicle.tableEmptyMessage' => 'Add your vehicles here',
     'application_your-business_business-details-add' => 'Add subsidiary company',
     'application_your-business_business-details-edit' => 'Edit subsidiary company',
     'application_your-business_business-details-formCompanyNo' => 'Company number',

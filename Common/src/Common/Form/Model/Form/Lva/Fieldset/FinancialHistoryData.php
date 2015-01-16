@@ -6,10 +6,6 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
- * @Form\Options({
- *     "label": "application_previous-history_financial-history.finance.title",
- *     "hint": "application_previous-history_financial-history.finance.hint"
- * })
  */
 class FinancialHistoryData
 {

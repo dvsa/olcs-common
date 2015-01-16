@@ -12,6 +12,7 @@ class TradingNames
     /**
      * @Form\Attributes({"id":"", "class":"add-another"})
      * @Form\Options({
+     *      "label": "Trading names",
      *      "hint":"<input type='submit' name='data[tradingNames][submit_add_trading_name]' value='Add another' />",
      *      "hint_at_bottom":true,
      *      "count":1,
@@ -21,7 +22,7 @@ class TradingNames
      *      "target_element": {
      *          "type":"Text",
      *          "attributes": {
-     *              "class": "long"
+     *              "class": "medium"
      *          },
      *          "options": {
      *              "wrapElements":false
