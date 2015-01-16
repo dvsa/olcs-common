@@ -311,6 +311,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             $applicationData
         );
 
+        if ($this->getServiceLocator()->has('VariationUtility')) {
+            $applicationData = $this->getServiceLocator()->get('VariationUtility')
+                ->alterCreateVariationData($applicationData);
+        }
+
         $application = $this->save($applicationData);
 
         return $application['id'];
