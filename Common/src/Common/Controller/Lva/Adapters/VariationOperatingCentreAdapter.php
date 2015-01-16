@@ -85,6 +85,14 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     }
 
     /**
+     * Set traffic area after action save
+     */
+    protected function setDefaultTrafficAreaAfterActionSave($data)
+    {
+        // Do nothing for variations
+    }
+
+    /**
      * Get address data
      *
      * @param int $id
