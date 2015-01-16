@@ -22,7 +22,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Get index
-     * 
+     *
      * @group abstractVehicleGoodsController
      */
     public function testGetIndexAction()
@@ -151,7 +151,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Get index with filters
-     * 
+     *
      * @group abstractVehicleGoodsController
      * @dataProvider filtersForIndexDataProvider
      */
@@ -403,7 +403,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Test index action with post
-     * 
+     *
      * @group abstractVehicleGoodsController1
      */
     public function testIndexActionWithPost()
@@ -492,7 +492,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn($formData);
 
         $this->sut
-            ->shouldReceive('getVehicleGoodsAdapter')
+            ->shouldReceive('getAdapter')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('populateForm')
@@ -564,14 +564,14 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
     /**
      * Test set / get vehicle goods adapter
-     * 
+     *
      * @group abstractVehicleGoodsController1
      */
-    public function testSetVehicleGoodsAdapter()
+    public function testSetAdapter()
     {
         $adapter = new ApplicationVehicleGoodsAdapter();
-        $this->sut->setVehicleGoodsAdapter($adapter);
-        $this->assertSame($this->sut->getVehicleGoodsAdapter(), $adapter);
+        $this->sut->setAdapter($adapter);
+        $this->assertSame($this->sut->getAdapter(), $adapter);
     }
 
     public function testBasicAddAction()
@@ -622,5 +622,125 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->addAction();
 
         $this->assertEquals('add_vehicles', $this->view);
+    }
+
+    public function testBasicEditActionWithPostToRemovedVehicle()
+    {
+        // Params
+        $id = 1;
+
+        // Stubbed data
+        $stubbedVehicleFormData = [
+            'removalDate' => '2014-01-01'
+        ];
+
+        // Mocks
+        $mockLicenceVehicle = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
+        $mockFlashMessenger = m::mock();
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $mockLicenceVehicle->shouldReceive('getVehicle')
+            ->with($id)
+            ->andReturn($stubbedVehicleFormData);
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->with('cant-edit-removed-vehicle');
+
+        $this->request->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $this->sut
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($id);
+
+        $this->sut->shouldReceive('redirect->toRoute')
+            ->with(null, [], [], true)
+            ->andReturn('REDIRECT');
+
+        $this->assertEquals('REDIRECT', $this->sut->editAction());
+    }
+
+    public function testBasicEditAction()
+    {
+        // Params
+        $id = 1;
+
+        // Stubbed data
+        $stubbedVehicleFormData = [
+            'removalDate' => '2014-01-01',
+            'vehicle' => 'ABC',
+            'goodsDiscs' => 'Foo'
+        ];
+
+        $expectedDiscParam = [
+            'removalDate' => '2014-01-01',
+            'goodsDiscs' => 'Foo'
+        ];
+
+        // Mocks
+        $form = $this->createMockForm('Lva\GoodsVehiclesVehicle');
+        $mockLicenceVehicle = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicle);
+        $mockDateHelper = m::mock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+        $dateObject = m::mock();
+
+        // Expectations
+        $mockDateHelper->shouldReceive('getDateObject')
+            ->andReturn($dateObject);
+
+        $mockLicenceVehicle->shouldReceive('getVehicle')
+            ->with($id)
+            ->andReturn($stubbedVehicleFormData);
+
+        $this->request->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $this->sut
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($id);
+
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('form-actions')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('remove')
+                ->with('submit')
+                ->shouldReceive('get')
+                ->with('cancel')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setAttribute')
+                    ->with('disabled', false)
+                    ->getMock()
+                )
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('disableElements')
+            ->with($form);
+
+        $this->sut->shouldReceive('isDiscPending')
+            ->with($expectedDiscParam)
+            ->andReturn(true)
+            ->shouldReceive('alterVehicleForm')
+            ->with($form, 'edit')
+            ->andReturn($form)
+            ->shouldReceive('setDefaultDates')
+            ->with($form, $dateObject)
+            ->andReturn($form);
+
+        $this->mockRender();
+
+        $this->sut->editAction();
+
+        $this->assertEquals('edit_vehicles', $this->view);
     }
 }

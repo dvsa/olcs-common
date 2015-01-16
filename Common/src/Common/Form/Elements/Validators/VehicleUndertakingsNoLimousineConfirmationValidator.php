@@ -10,7 +10,7 @@ namespace Common\Form\Elements\Validators;
 use Zend\Validator\AbstractValidator;
 
 /**
- * VehicleUndertakingsOperateSmallVehiclesAgreementValidator
+ * VehicleUndertakingsNoLimousineConfirmationValidator
  *
  * @author Jessica Rowbottom <jess.rowbottom@valtech.co.uk>
  */
@@ -22,7 +22,7 @@ class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValida
      * @var array
      */
     protected $messageTemplates = array(
-        'required' => 'You must agree'
+        'required' => 'application_vehicle-safety_undertakings.limousines.required'
     );
 
     /**
@@ -33,13 +33,16 @@ class VehicleUndertakingsNoLimousineConfirmationValidator extends AbstractValida
      */
     public function isValid($value, $context = null)
     {
-        // This only gets used if psvOperateSmallVhl is shown
-        if ( isset($context['psvLimousines']) ) {
-            if ($context['psvLimousines'] === 'N' && $value !== 'Y') {
-                $this->error('required');
+        $requiredContext = $this->getOption('required_context_value');
 
-                return false;
-            }
+        // This only gets used if psvOperateSmallVhl is shown
+        if (isset($context['psvLimousines'])
+            && $context['psvLimousines'] === $requiredContext
+            && $value !== 'Y'
+        ) {
+            $this->error('required');
+
+            return false;
         }
 
         return true;

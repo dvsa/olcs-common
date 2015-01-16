@@ -21,6 +21,18 @@ class AbstractLvaEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
+    public function testGetById()
+    {
+        $id = 3;
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getById($id));
+    }
+
     /**
      * @group entity_services
      */

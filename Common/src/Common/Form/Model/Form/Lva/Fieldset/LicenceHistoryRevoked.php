@@ -5,7 +5,7 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 use Zend\Form\Annotation as Form;
 
 /**
- * Licence history revoked
+ * @Form\Attributes({"class":"fieldset--secondary"})
  */
 class LicenceHistoryRevoked
 {
@@ -19,7 +19,7 @@ class LicenceHistoryRevoked
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")

@@ -129,8 +129,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $registeredAddressId = null;
 
-        if (isset($data['data']['registeredAddress'])) {
-            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['data']['registeredAddress']);
+        if (isset($data['registeredAddress'])) {
+            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
         }
 
         $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
@@ -252,9 +252,9 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'registeredAddress' => $data['contactDetails']['address'],
                 'natureOfBusiness' => $natureOfBusiness
-            )
+            ),
+            'registeredAddress' => $data['contactDetails']['address'],
         );
     }
 
@@ -294,21 +294,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $orgType = $data['type']['id'];
 
         $fieldset = $form->get('data');
-
-        // have to manually link up the edit button next to
-        // the business type dropdown
-        $element = $fieldset->get('editBusinessType');
-        $element->setOptions(
-            array_merge(
-                $element->getOptions(),
-                array('route' => 'lva-' . $this->lva . '/business_type')
-            )
-        );
-
-        // we have to manually set the business type, otherwise if this
-        // was a POST it won't come through (it's a disabled element)
-        // and will default to the first value (limited company)
-        $fieldset->get('type')->setValue($orgType);
 
         switch ($orgType) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
@@ -359,7 +344,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $this->getServiceLocator()->get('Helper\Form')->remove($form, 'table')
             ->remove($form, 'data->companyNumber')
-            ->remove($form, 'data->registeredAddress');
+            ->remove($form, 'registeredAddress');
     }
 
     private function populateTable($form, $orgId)

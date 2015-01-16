@@ -24,8 +24,8 @@ return array(
         )
     ),
     'controllers' => array(
-        // @NOTE This delegator can live in common as both internal and external app type of licence controllers
-        // currently use the same adaptor
+        // @NOTE These delegators can live in common as both internal and external app controllers currently use the
+        // same adapter
         'delegators' => array(
             'LvaApplication/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
@@ -38,6 +38,15 @@ return array(
             ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+            ),
+            'LvaLicence/OperatingCentres' => array(
+                'Common\Controller\Lva\Delegators\LicenceOperatingCentreDelegator'
+            ),
+            'LvaVariation/OperatingCentres' => array(
+                'Common\Controller\Lva\Delegators\VariationOperatingCentreDelegator'
+            ),
+            'LvaApplication/OperatingCentres' => array(
+                'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
         ),
         'abstract_factories' => array(
@@ -80,7 +89,8 @@ return array(
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
         'shared' => array(
-            'Helper\FileUpload' => false
+            'Helper\FileUpload' => false,
+            'CantIncreaseValidator' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
@@ -94,6 +104,7 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
@@ -102,6 +113,12 @@ return array(
                 => 'Common\Controller\Lva\Adapters\LicenceTypeOfLicenceAdapter',
             'VariationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\VariationTypeOfLicenceAdapter',
+            'LicenceOperatingCentreAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceOperatingCentreAdapter',
+            'VariationOperatingCentreAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
+            'ApplicationOperatingCentreAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -114,11 +131,15 @@ return array(
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
         ),
         'factories' => array(
+            'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
+            'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
+            'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
             'Common\Service\Data\Sla' => 'Common\Service\Data\Sla',
             'Common\Service\Data\RefData' => 'Common\Service\Data\RefData',
             'Common\Service\Data\Country' => 'Common\Service\Data\Country',
             'Common\Service\Data\Licence' => 'Common\Service\Data\Licence',
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
+            'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
 
             'OlcsCustomForm' => function ($sm) {
                     return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
@@ -276,6 +297,8 @@ return array(
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
             'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
+            'Common\Service\Data\LicenceOperatingCentre' =>
+                'Common\Service\Data\LicenceOperatingCentre',
         ]
     ],
     'tables' => array(
@@ -301,5 +324,13 @@ return array(
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
-    )
+    ),
+    'caches'=> array(
+        'array'=> array(
+            'adapter' => array(
+                'name' => 'memory',
+                'lifetime' => 0,
+            ),
+        )
+    ),
 );

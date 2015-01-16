@@ -59,7 +59,6 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputString('');
     }
 
-
     /**
      * @outputBuffering disabled
      */
@@ -150,6 +149,20 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         echo $viewHelper($this->element, 'formCollection', '/');
 
         $this->expectOutputRegex('/^actual translated string$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
+    public function testRenderForHtmlTranslatedElementWithoutValue()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');
+
+        $viewHelper = $this->prepareViewHelper([]);
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEmpty($markup);
     }
 
     /**
@@ -248,5 +261,38 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $viewHelper->setView($view);
 
         return $viewHelper;
+    }
+
+    public function testRenderForTrafficAreaSet()
+    {
+        $this->prepareElement('\\Common\Form\Elements\Types\TrafficAreaSet');
+
+        $this->element->setValue('ABC');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEquals(
+            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3><p class="hint">trafficAreaSet.hint</p>',
+            $markup
+        );
+    }
+
+    public function testRenderForTrafficAreaSetWithSuffix()
+    {
+        $this->prepareElement('\\Common\Form\Elements\Types\TrafficAreaSet');
+
+        $this->element->setValue('ABC');
+        $this->element->setOption('hint-suffix', '-foo');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        $markup = $viewHelper($this->element, 'formCollection', '/');
+
+        $this->assertEquals(
+            '<p>trafficAreaSet.trafficArea</p><h3>ABC</h3><p class="hint">trafficAreaSet.hint-foo</p>',
+            $markup
+        );
     }
 }

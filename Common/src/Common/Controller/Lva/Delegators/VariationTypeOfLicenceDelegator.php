@@ -12,7 +12,7 @@ namespace Common\Controller\Lva\Delegators;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationTypeOfLicenceDelegator extends AbstractTypeOfLicenceDelegator
+class VariationTypeOfLicenceDelegator extends AbstractAdapterDelegator
 {
     protected $adapter = 'VariationTypeOfLicenceAdapter';
 }

@@ -14,8 +14,8 @@ class GenericDeleteConfirmation
 {
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\DeleteConfirmButtons")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

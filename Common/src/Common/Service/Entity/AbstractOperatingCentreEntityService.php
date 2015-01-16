@@ -55,9 +55,24 @@ abstract class AbstractOperatingCentreEntityService extends AbstractEntityServic
         )
     );
 
+    protected $listBundle = array(
+        'children' => array(
+            'operatingCentre'
+        )
+    );
+
+    public function getListForLva($lvaId)
+    {
+        return $this->getAll(array($this->type => $lvaId), $this->listBundle);
+    }
+
     public function getAddressSummaryData($lvaId)
     {
-        return $this->getAll(array($this->type => $lvaId), $this->addressSummaryBundle);
+        $query = array($this->type => $lvaId);
+
+        $query['sort'] = 'operatingCentre';
+
+        return $this->getAll($query, $this->addressSummaryBundle);
     }
 
     public function getAddressData($id)

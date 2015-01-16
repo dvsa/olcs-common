@@ -12,7 +12,7 @@ namespace Common\Controller\Lva\Interfaces;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-interface TypeOfLicenceAdapterInterface
+interface TypeOfLicenceAdapterInterface extends AdapterInterface
 {
     public function getQueryParams();
 

@@ -18,6 +18,9 @@ class VehiclesData
     /**
      * @Form\Attributes({"id":"","placeholder":"","class":"js-enabled"})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox inline"
+     *      },
      *     "label": "application_vehicle-safety_vehicle-psv.hasEnteredReg",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",

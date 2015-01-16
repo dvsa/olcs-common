@@ -7,36 +7,19 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Form\Elements\Validators\NewVrm;
-use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
-use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterAwareInterface;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Goods Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements
-    VehicleGoodsAdapterAwareInterface
+abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait,
+        Traits\AdapterAwareTrait;
 
     protected $section = 'vehicles';
-
-    protected $vehicleGoodsAdapter;
-
-    /**
-     * @return VehicleGoodsAdapterInterface
-     */
-    public function getVehicleGoodsAdapter()
-    {
-        return $this->vehicleGoodsAdapter;
-    }
-
-    public function setVehicleGoodsAdapter(VehicleGoodsAdapterInterface $adapter)
-    {
-        $this->vehicleGoodsAdapter = $adapter;
-    }
 
     /**
      * Index action
@@ -47,7 +30,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
-        $adapter = $this->getVehicleGoodsAdapter();
+        $adapter = $this->getAdapter();
 
         $filterForm = $this->getFilterForm();
 
@@ -150,16 +133,36 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         $id = $this->params('child_id');
         $data = array();
 
+        if ($mode === 'edit' && $request->isPost()) {
+
+            $vehicleData = $this->getVehicleFormData($id);
+
+            if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addErrorMessage('cant-edit-removed-vehicle');
+
+                return $this->redirect()->toRoute(null, [], [], true);
+            }
+        }
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-            $data = $this->formatVehicleDataForForm($this->getVehicleFormData($id));
+            $vehicleData = $this->getVehicleFormData($id);
+            $data = $this->formatVehicleDataForForm($vehicleData);
         }
 
         $form = $this->alterVehicleForm(
             $this->getVehicleForm()->setData($data),
             $mode
         );
+
+        if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
+            $formHelper = $this->getServiceLocator()->get('Helper\Form');
+            $formHelper->disableElements($form);
+            $form->get('form-actions')->remove('submit');
+            $form->get('form-actions')->get('cancel')->setAttribute('disabled', false);
+        }
 
         if ($request->isPost() && $form->isValid()) {
 
@@ -181,7 +184,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         // set default date values prior to render
-        $today = new \DateTime();
+        $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
         $form = $this->setDefaultDates($form, $today);
 
         return $this->render($mode . '_vehicles', $form);

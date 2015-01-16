@@ -21,6 +21,18 @@ class AbstractOperatingCentreEntityServiceTest extends AbstractEntityServiceTest
         parent::setUp();
     }
 
+    public function testGetListForLva()
+    {
+        $id = 2;
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'GET', ['' => $id, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getListForLva($id));
+    }
+
     /**
      * @group entity_services
      */
@@ -33,7 +45,8 @@ class AbstractOperatingCentreEntityServiceTest extends AbstractEntityServiceTest
 
         $expectedParams = array(
             'bar' => $id,
-            'limit' => 'all'
+            'limit' => 'all',
+            'sort' => 'operatingCentre'
         );
 
         $this->expectOneRestCall('Foo', 'GET', $expectedParams)

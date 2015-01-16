@@ -167,7 +167,11 @@ class FormCollection extends ZendFormCollection
 
             } else {
 
-                $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
+                if ($element->getOption('hint_at_bottom') === true) {
+                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $markup, $hint);
+                } else {
+                    $markup = sprintf('<fieldset%s>%s%s%s</fieldset>', $attributesString, $legend, $hint, $markup);
+                }
             }
         }
 

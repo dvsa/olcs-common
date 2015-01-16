@@ -48,6 +48,9 @@ class SafetyLicence
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox inline"
+     *      },
      *     "label":
      * "application_vehicle-safety_safety.licence.moreFrequentInspections",
      *     "value_options": {"Y": "Yes", "N": "No"},
@@ -65,6 +68,9 @@ class SafetyLicence
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *     "label": "application_vehicle-safety_safety.licence.tachographAnalyser",
      *     "help-block": "Please choose",
      *     "category": "tachograph_analyser",

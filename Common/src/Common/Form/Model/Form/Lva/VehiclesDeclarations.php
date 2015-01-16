@@ -26,22 +26,22 @@ class VehiclesDeclarations
 
     /**
      * @Form\Name("nineOrMore")
-     * @Form\Options({"label":"application_vehicle-safety_undertakings-nineOrMore"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsNineOrMore")
+     * @Form\Options({"label":"application_vehicle-safety_undertakings-nineOrMore"})
      */
     public $nineOrMore = null;
 
     /**
      * @Form\Name("limousinesNoveltyVehicles")
-     * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsLimousinesNoveltyVehicles")
+     * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})
      */
     public $limousinesNoveltyVehicles = null;
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

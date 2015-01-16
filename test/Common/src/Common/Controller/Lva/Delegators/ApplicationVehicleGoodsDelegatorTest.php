@@ -39,7 +39,7 @@ class ApplicationVehicleGoodsDelegatorTest extends MockeryTestCase
             return $mockController;
         };
 
-        $mockController->shouldReceive('setVehicleGoodsAdapter')
+        $mockController->shouldReceive('setAdapter')
             ->with($mockAdapter);
 
         $sm->shouldReceive('getServiceLocator')

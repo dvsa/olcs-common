@@ -80,9 +80,15 @@ abstract class DateTimeProcessorAbstract
      */
     public function createDateTimeFromString($date)
     {
-        $dateTime = date(PHPDateTime::ISO8601, strtotime($date));
+        $ts = strtotime($date);
 
-        return PHPDateTime::createFromFormat(PHPDateTime::ISO8601, $dateTime);
+        $time = mktime(0, 0, 0, date("n", $ts), date("j", $ts), date("Y", $ts));
+
+        $dateTimeString = date('Y-m-d', $time);
+
+        $dateTime = PHPDateTime::createFromFormat('Y-m-d', $dateTimeString);
+
+        return $dateTime;
     }
 
     /**

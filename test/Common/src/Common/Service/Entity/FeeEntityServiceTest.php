@@ -149,6 +149,34 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetLatestOutstandingFeeForApplication()
+    {
+        $id = 3;
+
+        $query = array(
+            'application' => 3,
+            'feeStatus' => array(
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED
+            ),
+            'limit' => 1,
+            'sort' => 'invoicedDate',
+            'order' => 'DESC'
+        );
+
+        $response = array(
+            'Results' => ['fee1']
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('fee1', $this->sut->getLatestOutstandingFeeForApplication($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetOverview()
     {
         $id = 3;
