@@ -357,7 +357,14 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             throw new \Exception('Unable to save operating centre');
         }
 
-        // set default Traffic Area if we don't have one
+        $this->setDefaultTrafficAreaAfterActionSave($data);
+    }
+
+    /**
+     * Set traffic area after action save
+     */
+    protected function setDefaultTrafficAreaAfterActionSave($data)
+    {
         if (!isset($data['trafficArea']) || empty($data['trafficArea']['id'])) {
             $this->setDefaultTrafficArea($data);
         }
