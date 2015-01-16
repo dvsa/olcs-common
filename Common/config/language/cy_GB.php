@@ -443,6 +443,7 @@ return array(
     'application_vehicle-safety_vehicle.table.title' => 'W Vehicles',
     'application_vehicle-safety_vehicle.table.vrm' => 'W VRM',
     'application_vehicle-safety_vehicle.table.weight' => 'W Gross plated weight (Kg)',
+    'application_vehicle-safety_vehicle.tableEmptyMessage' => 'W Add your vehicles here',
     'application_your-business_business-details-add' => 'W Add subsidiary company',
     'application_your-business_business-details-edit' => 'W Edit subsidiary company',
     'application_your-business_business-details-formCompanyNo' => 'W Company number',
@@ -467,7 +468,8 @@ return array(
     'application_your-business_business-type.registered-office.label' => 'W Registered office address',
     'application_your-business_business_details-subsidiaries-columnCompanyNo' => 'W Company number',
     'application_your-business_business_details-subsidiaries-columnName' => 'W Company name',
-    'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W The table is empty',
+    'application_your-business_business_details-subsidiaries-tableEmptyMessage' => 'W If you have any subsidiary
+        companies, add them here',
     'application_your-business_business_details-subsidiaries-tableHeader' => 'W Subsidiary companies (optional)',
     'application_your-business_fao.label' => 'W For attention of (optional)',
     'application_your-business_people-sub-action-formDateOfBirth' => 'W Date of birth',
