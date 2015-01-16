@@ -598,8 +598,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $mockVariation = m::mock();
         $this->sm->setService('VariationUtility', $mockVariation);
         $mockVariation->shouldReceive('alterCreateVariationData')
-            ->with($applicationData)
-            ->andReturn($applicationData);
+            ->with($expectedData)
+            ->andReturn($expectedData);
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
