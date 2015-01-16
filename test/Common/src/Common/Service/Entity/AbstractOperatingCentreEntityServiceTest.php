@@ -45,7 +45,8 @@ class AbstractOperatingCentreEntityServiceTest extends AbstractEntityServiceTest
 
         $expectedParams = array(
             'bar' => $id,
-            'limit' => 'all'
+            'limit' => 'all',
+            'sort' => 'operatingCentre'
         );
 
         $this->expectOneRestCall('Foo', 'GET', $expectedParams)

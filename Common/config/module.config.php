@@ -324,5 +324,13 @@ return array(
             'backend' => 'http://olcs-backend/',
             'postcode' => 'http://dvsa-postcode.olcspv-ap01.olcs.npm/'
         )
-    )
+    ),
+    'caches'=> array(
+        'array'=> array(
+            'adapter' => array(
+                'name' => 'memory',
+                'lifetime' => 0,
+            ),
+        )
+    ),
 );

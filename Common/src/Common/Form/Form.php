@@ -30,7 +30,7 @@ class Form extends ZendForm\Form
     {
         foreach ($data as &$input) {
             if (is_array($input)) {
-                if (!array_filter($input) && count($input) === 3) {
+                if (!array_filter($input) && (count($input) === 3 || count($input) === 5)) {
                     $input = null;
                 } else {
                     $input = $this->setEmptyDataselectArraysToNull($input);

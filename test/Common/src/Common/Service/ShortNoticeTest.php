@@ -33,8 +33,9 @@ class ShortNoticeTest extends TestCase
      * @param $rules
      * @param $result
      */
-    public function testIsShortNotice($data, $rules, $result)
+    public function testIsShortNotice($rules, $data, $result)
     {
+        $data['busNoticePeriod'] = 1;
         $mockDataService = m::mock('Common\Service\Data\Interfaces\DataService');
         $mockDataService->shouldReceive('fetchOne')->with($data['busNoticePeriod'])->andReturn($rules);
 
@@ -46,42 +47,204 @@ class ShortNoticeTest extends TestCase
 
     public function provideIsShortNotice()
     {
-        $data = [
-            'busNoticePeriod' => 1,
-            'effectiveDate' => '2015-01-15',
-            'receivedDate' => '2015-01-05'
+        $scotRules = [
+            'standardPeriod' => 56,
+            'cancellationPeriod' => 90
         ];
+
+        $otherRules = [
+            'standardPeriod' => 56,
+            'cancellationPeriod' => 0
+        ];
+
+        $sn = true;
+        $notSn = false;
+
         return [
             [
-                $data,//data
-                ['standardPeriod' => 20], //rules
-                true, //result
+                $otherRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-01'],
+                $sn
             ],
             [
-                $data,//data
-                ['standardPeriod' => 2, 'cancellationPeriod' => 0], //rules
-                false, //result
+                $otherRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-26'],
+                $sn
             ],
             [
-                array_merge($data, ['variationNo' => 0]),//data
-                ['standardPeriod' => 2, 'cancellationPeriod' => 20], //rules
-                false, //result
+                $otherRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-27'],
+                $notSn
             ],
             [
-                array_merge($data, ['variationNo' => 1]),//data
-                ['standardPeriod' => 2, 'cancellationPeriod' => 20], //rules
-                null, //result
+                $otherRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-08-28'],
+                $notSn
             ],
             [
-                array_merge($data, ['variationNo' => 1, 'parent' => ['effectiveDate' => '2014-12-30']]),//data
-                ['standardPeriod' => 2, 'cancellationPeriod' => 20], //rules
-                true, //result
+                $otherRules,
+                ['variationNo' => 1, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-01'],
+                $sn
             ],
             [
-                array_merge($data, ['variationNo' => 1, 'parent' => ['effectiveDate' => '2014-11-30']]),//data
-                ['standardPeriod' => 2, 'cancellationPeriod' => 20], //rules
-                false, //result
-            ]
+                $otherRules,
+                ['variationNo' => 1, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-26'],
+                $sn
+            ],
+            [
+                $otherRules,
+                ['variationNo' => 1, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-27'],
+                $notSn
+            ],
+            [
+                $otherRules,
+                ['variationNo' => 1, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-08-28'],
+                $notSn
+            ],
+            //S2
+            [
+                $scotRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-01'],
+                $sn
+            ],
+            [
+                $scotRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-26'],
+                $sn
+            ],
+            [
+                $scotRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-07-27'],
+                $notSn
+            ],
+            [
+                $scotRules,
+                ['variationNo' => 0, 'receivedDate' => '2014-05-31', 'effectiveDate' => '2014-08-28'],
+                $notSn
+            ],
+            //S3
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-15',
+                    'effectiveDate' => '2014-07-21',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-15',
+                    'effectiveDate' => '2014-09-08',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-15',
+                    'effectiveDate' => '2014-09-09',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-15',
+                    'effectiveDate' => '2014-09-10',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $notSn
+            ],
+            //S4
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-08-01',
+                    'effectiveDate' => '2014-08-12',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-08-01',
+                    'effectiveDate' => '2014-09-25',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-08-01',
+                    'effectiveDate' => '2014-09-26',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-08-01',
+                    'effectiveDate' => '2014-09-30',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $notSn
+            ],
+            //S5
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-01',
+                    'effectiveDate' => '2014-08-12',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-01',
+                    'effectiveDate' => '2014-09-08',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-01',
+                    'effectiveDate' => '2014-09-09',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $sn
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-07-01',
+                    'effectiveDate' => '2014-09-30',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                $notSn
+            ],
         ];
     }
 }
