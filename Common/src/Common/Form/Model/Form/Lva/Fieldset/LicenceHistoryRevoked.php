@@ -19,7 +19,7 @@ class LicenceHistoryRevoked
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")

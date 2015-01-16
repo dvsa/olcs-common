@@ -18,6 +18,9 @@ class SafetyProvidersData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *     "label": "application_vehicle-safety_safety-sub-action.data.isExternal",
      *     "value_options": {
      *         "N":

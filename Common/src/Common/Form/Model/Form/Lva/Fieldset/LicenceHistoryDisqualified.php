@@ -15,12 +15,8 @@ class LicenceHistoryDisqualified
      *     "label":
      * "application_previous-history_licence-history_prevBeenDisqualifiedTc",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")

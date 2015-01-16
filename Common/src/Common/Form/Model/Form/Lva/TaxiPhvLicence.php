@@ -14,21 +14,20 @@ class TaxiPhvLicence
 {
     /**
      * @Form\Name("data")
-     * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TaxiPhvLicenceData")
+     * @Form\Options({"label":"application_taxi-phv_licence-sub-action.data"})
      */
     public $data = null;
 
     /**
      * @Form\Name("contactDetails")
-     * @Form\Options({"label":"application_taxi-phv_licence-sub-action.contactDetails"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TaxiPhvContactDetails")
+     * @Form\Options({"label":"application_taxi-phv_licence-sub-action.contactDetails"})
      */
     public $contactDetails = null;
 
     /**
      * @Form\Name("address")
-     * @Form\Options({})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
      */
     public $address = null;
@@ -42,8 +41,8 @@ class TaxiPhvLicence
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

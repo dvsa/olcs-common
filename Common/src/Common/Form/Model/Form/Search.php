@@ -33,8 +33,8 @@ class Search
 
     /**
      * @Form\Name("advanced")
-     * @Form\Options({"label":"Advanced search"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Advanced")
+     * @Form\Options({"label":"Advanced search"})
      */
     public $advanced = null;
 }

@@ -14,8 +14,8 @@ class Undertakings
 {
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

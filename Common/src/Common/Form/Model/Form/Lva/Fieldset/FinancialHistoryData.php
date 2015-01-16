@@ -6,10 +6,6 @@ use Zend\Form\Annotation as Form;
 
 /**
  * @Form\Name("data")
- * @Form\Options({
- *     "label": "application_previous-history_financial-history.finance.title",
- *     "hint": "application_previous-history_financial-history.finance.hint"
- * })
  */
 class FinancialHistoryData
 {
@@ -41,7 +37,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -58,7 +54,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -75,7 +71,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -92,7 +88,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion"
+     *          "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -102,12 +98,11 @@ class FinancialHistoryData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "question checkbox inline"
+     *      },
      *     "label": "application_previous-history_financial-history.finance.disqualified",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
      * })
      * @Form\Type("radio")
      */
@@ -123,14 +118,10 @@ class FinancialHistoryData
      *     "placeholder": "application_previous-history_financial-history.insolvencyDetails.placeholder"
      * })
      * @Form\Options({
-     *     "render_as_fieldset": true,
-     *     "label": "application_previous-history_financial-history.insolvencyDetails.title",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box.",
-     *     "hint": "application_previous-history_financial-history.insolvencyDetails.hint"
+     *     "label":
+     * "application_previous-history_financial-history.insolvencyDetails.title",
+     *     "hint":
+     * "application_previous-history_financial-history.insolvencyDetails.hint"
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
