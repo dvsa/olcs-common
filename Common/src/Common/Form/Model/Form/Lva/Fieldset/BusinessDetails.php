@@ -27,9 +27,9 @@ class BusinessDetails
     public $name = null;
 
     /**
-     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
      * @Form\Attributes({"class": "add-another"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
+     * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
      */
     public $tradingNames = null;
 
