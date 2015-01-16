@@ -14,7 +14,6 @@ class PsvVehicles
 {
     /**
      * @Form\Name("data")
-     * @Form\Options({})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesData")
      */
     public $data = null;
@@ -39,8 +38,8 @@ class PsvVehicles
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

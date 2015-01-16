@@ -14,22 +14,21 @@ class CaseForm
 {
     /**
      * @Form\Name("submissionSections")
-     * @Form\Options({"label":"Select one or more categories"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\SubmissionSections")
+     * @Form\Options({"label":"Select one or more categories"})
      */
     public $submissionSections = null;
 
     /**
      * @Form\Name("fields")
-     * @Form\Options({})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Fields")
      */
     public $fields = null;
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\CaseFormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

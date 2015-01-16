@@ -9,7 +9,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Type("\Zend\Form\Fieldset")
  * @Form\Options({"label":"Registered address"})
  * @Form\Attributes({
- *      "class": "address fieldset--primary",
+ *      "class": "address",
  * })
  */
 class RegisteredAddress

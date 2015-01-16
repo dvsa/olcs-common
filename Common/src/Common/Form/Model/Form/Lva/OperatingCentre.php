@@ -13,25 +13,24 @@ class OperatingCentre
 {
     /**
      * @Form\Name("address")
-     * @Form\Options({"label":"Address"})
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Address")
+     * @Form\Options({"label":"Address"})
      */
     public $address = null;
 
     /**
      * @Form\Name("data")
-     * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentreData")
+     * @Form\Options({"label":"application_operating-centres_authorisation-sub-action.data"})
      */
     public $data = null;
 
     /**
      * @Form\Name("advertisements")
-     * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation-sub-action.advertisements"
-     * })
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Advertisements")
+     * @Form\Options({
+     *     "label": "application_operating-centres_authorisation-sub-action.advertisements"
+     * })
      */
     public $advertisements = null;
 
@@ -44,14 +43,13 @@ class OperatingCentre
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 
     /**
      * @Form\Name("operatingCentre")
-     * @Form\Options({})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentre")
      */
     public $operatingCentre = null;

@@ -25,18 +25,18 @@ class OperatingCentres
 
     /**
      * @Form\Name("data")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentres")
      * @Form\Options({
      *     "label": "application_operating-centres_authorisation.data",
      *     "hint": "application_operating-centres_authorisation.data.hint"
      * })
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\OperatingCentres")
      */
     public $data = null;
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }

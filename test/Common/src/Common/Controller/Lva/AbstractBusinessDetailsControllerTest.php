@@ -39,9 +39,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_st',
-                        'registeredAddress' => ['foo' => 'bar'],
                         'natureOfBusiness' => [1]
-                    ]
+                    ],
+                    'registeredAddress' => ['foo' => 'bar']
                 ]
             );
 
@@ -50,7 +50,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             [
                 'table',
                 'data->companyNumber',
-                'data->registeredAddress',
+                'registeredAddress',
                 'data->name'
             ]
         );
@@ -106,9 +106,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_rc',
-                        'registeredAddress' => ['foo' => 'bar'],
                         'natureOfBusiness' => [1]
-                    ]
+                    ],
+                    'registeredAddress' => ['foo' => 'bar']
                 ]
             );
 
@@ -188,9 +188,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_p',
-                        'registeredAddress' => ['foo' => 'bar'],
                         'natureOfBusiness' => [1]
-                    ]
+                    ],
+                    'registeredAddress' => ['foo' => 'bar']
                 ]
             );
 
@@ -233,7 +233,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             [
                 'table',
                 'data->companyNumber',
-                'data->registeredAddress',
+                'registeredAddress',
                 'data->name',
                 'data->tradingNames'
             ]
@@ -265,9 +265,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         ],
                         'name' => 'An Org',
                         'type' => 'org_t_pa',
-                        'registeredAddress' => ['foo' => 'bar'],
                         'natureOfBusiness' => [1]
-                    ]
+                    ],
+                    'registeredAddress' => ['foo' => 'bar']
                 ]
             );
 
@@ -310,7 +310,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             [
                 'table',
                 'data->companyNumber',
-                'data->registeredAddress',
+                'registeredAddress',
                 'data->name',
                 'data->tradingNames'
             ]
@@ -456,11 +456,9 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                         'tn 1'
                     ]
                 ],
-                'registeredAddress' => [
-                    'foo' => 'bar'
-                ],
                 'natureOfBusiness' => [1,2]
             ],
+            'registeredAddress' => ['foo' => 'bar']
         ];
         $this->setPost($postData);
 

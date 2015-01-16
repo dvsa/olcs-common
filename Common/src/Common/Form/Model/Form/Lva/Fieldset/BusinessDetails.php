@@ -27,8 +27,8 @@ class BusinessDetails
     public $name = null;
 
     /**
-     * @Form\Attributes({"class": "add-another"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\TradingNames")
+     * @Form\Attributes({"class": "add-another"})
      * @Form\Options({"label": "application_your-business_business-details.data.trading_names_optional"})
      */
     public $tradingNames = null;
@@ -46,10 +46,4 @@ class BusinessDetails
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
     public $natureOfBusiness = null;
-
-    /**
-     * @Form\Options({"label": "application_your-business_business-details.data.registered_address"})
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\RegisteredAddress")
-     */
-    public $registeredAddress = null;
 }
