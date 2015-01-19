@@ -35,7 +35,11 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'tmApplicationStatus',
             'transportManager',
             'tmType',
-            'tmApplicationOcs'
+            'tmApplicationOcs' => [
+                'children' => [
+                    'operatingCentre'
+                ]
+             ]
         ]
     ];
 
@@ -60,5 +64,16 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             $result['ocCount'] = count($result['tmApplicationOcs']);
         }
         return $results;
+    }
+
+    /**
+     * Get transport manager application
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getTransportManagerApplication($id)
+    {
+        return $this->get($id, $this->dataBundle);
     }
 }

@@ -43,7 +43,11 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'tmApplicationStatus',
                 'transportManager',
                 'tmType',
-                'tmApplicationOcs'
+                'tmApplicationOcs' => [
+                    'children' => [
+                        'operatingCentre'
+                    ]
+                ]
             ]
         ];
         $returnValue = [

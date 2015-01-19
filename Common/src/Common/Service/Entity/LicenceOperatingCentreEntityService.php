@@ -38,4 +38,18 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
         return $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->save($addressData);
     }
+
+    public function getOperatingCentresForLicence($licId)
+    {
+        $bundle = [
+            'children' => [
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ]
+                ]
+            ]
+        ];
+        return $this->get(['licence' => $licId], $bundle);
+    }
 }
