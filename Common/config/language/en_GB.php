@@ -186,6 +186,7 @@ return array(
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application_operating-centres_authorisation.table.permission' => 'Permission',
     'application_operating-centres_authorisation.table.title' => 'Operating centres',
+    'application_operating-centres_authorisation-tableEmptyMessage' => 'Add your first operating centre here',
     'application_operating-centres_authorisation.table.trailers' => 'Trailers',
     'application_operating-centres_authorisation.table.vehicles' => 'Vehicles',
     'application_previous-history_convictions-penalties-add' => 'Add offence',
