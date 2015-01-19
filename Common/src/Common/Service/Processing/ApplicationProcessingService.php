@@ -300,7 +300,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                 $locs = $licenceOperatingCentreService->getListForLva($licenceId);
 
                 foreach ($updates as &$aoc) {
-                    foreach ($locs as $loc) {
+                    foreach ($locs['Results'] as $loc) {
                         if ($loc['operatingCentre']['id'] !== $aoc['operatingCentre']) {
                             continue;
                         }
