@@ -97,6 +97,62 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testCreateNewWithUtility()
+    {
+        $orgId = 3;
+
+        $licenceData = array(
+            'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
+            'organisation' => $orgId
+        );
+
+        $licenceResponse = array(
+            'id' => 7
+        );
+
+        $applicationData = array(
+            'licence' => 7,
+            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'isVariation' => false
+        );
+
+        $applicationResponse = array(
+            'id' => 4
+        );
+
+        $completionData = array(
+            'application' => 4
+        );
+
+        $mockLicenceService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceService->expects($this->once())
+            ->method('save')
+            ->with($licenceData)
+            ->will($this->returnValue($licenceResponse));
+
+        $mockApplicationCompletionService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationCompletionService->expects($this->once())
+            ->method('save')
+            ->with($completionData);
+
+        $mockUtility = m::mock();
+        $this->sm->setService('ApplicationUtility', $mockUtility);
+        $mockUtility->shouldReceive('alterCreateApplicationData')
+            ->with($applicationData)
+            ->andReturn($applicationData);
+
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+        $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+
+        $this->expectOneRestCall('Application', 'POST', $applicationData)
+            ->will($this->returnValue($applicationResponse));
+
+        $this->assertEquals(array('application' => 4, 'licence' => 7), $this->sut->createNew($orgId));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testDoesBelongToOrganisationNoResponse()
     {
         $id = 4;
