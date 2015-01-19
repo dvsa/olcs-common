@@ -160,6 +160,7 @@ return array(
         available for the total number of vehicles and trailers that I want to keep at this address',
     'application_operating-centres_authorisation-sub-action.data.sufficientParking-psv' => 'I have enough parking spaces
         available for the total number of vehicles that I want to keep at this address',
+    'application_operating-centres_authorisation-tableEmptyMessage' => 'Add your first operating centre here',
     'application_operating-centres_authorisation.data' => 'Authorisation',
     'application_operating-centres_authorisation.data.hint' => 'Enter the total amount of vehicles & trailers that you
         want authorised on the licence you are applying for.',
@@ -186,7 +187,6 @@ return array(
     'application_operating-centres_authorisation.table.footer.total-psv' => 'Total vehicles',
     'application_operating-centres_authorisation.table.permission' => 'Permission',
     'application_operating-centres_authorisation.table.title' => 'Operating centres',
-    'application_operating-centres_authorisation-tableEmptyMessage' => 'Add your first operating centre here',
     'application_operating-centres_authorisation.table.trailers' => 'Trailers',
     'application_operating-centres_authorisation.table.vehicles' => 'Vehicles',
     'application_previous-history_convictions-penalties-add' => 'Add offence',
