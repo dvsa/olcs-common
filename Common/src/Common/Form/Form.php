@@ -13,31 +13,4 @@ class Form extends ZendForm\Form
     {
         return get_class($this);
     }
-
-    public function setData($data)
-    {
-        $data = $this->setEmptyDataselectArraysToNull($data);
-        return parent::setData($data);
-    }
-
-    /**
-     * Sets empty date select arrays to null.
-     *
-     * @param array $data
-     * @return array
-     */
-    private function setEmptyDataselectArraysToNull($data)
-    {
-        foreach ($data as &$input) {
-            if (is_array($input)) {
-                if (!array_filter($input) && count($input) === 3) {
-                    $input = null;
-                } else {
-                    $input = $this->setEmptyDataselectArraysToNull($input);
-                }
-            }
-        }
-
-        return $data;
-    }
 }

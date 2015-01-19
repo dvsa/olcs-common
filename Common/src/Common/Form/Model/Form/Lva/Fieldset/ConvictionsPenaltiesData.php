@@ -18,13 +18,12 @@ class ConvictionsPenaltiesData
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "question checkbox inline"
+     *      },
      *     "label":
      * "selfserve-app-subSection-previous-history-criminal-conviction-hasConv",
      *     "value_options": {"Y": "Yes", "N": "No"},
-     *     "help-block": "Please choose",
-     *     "label_attributes": {
-     *         "class": "inline"
-     *     }
      * })
      * @Form\Type("\Zend\Form\Element\Radio")
      * @Form\Validator({"name":"Common\Form\Elements\Validators\LicenceHistoryLicenceValidator",

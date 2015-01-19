@@ -5,6 +5,7 @@ $translationPrefix = 'application_vehicle-safety_vehicle.table';
 return array(
     'variables' => array(
         'title' => $translationPrefix . '.title',
+        'empty_message' => 'application_vehicle-safety_vehicle.tableEmptyMessage',
         'within_form' => true
     ),
     'settings' => array(

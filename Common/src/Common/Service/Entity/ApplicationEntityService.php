@@ -276,6 +276,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             )
         );
 
+        if ($this->getServiceLocator()->has('ApplicationUtility')) {
+            $applicationData = $this->getServiceLocator()->get('ApplicationUtility')
+                ->alterCreateApplicationData($applicationData);
+        }
+
         $application = $this->save($applicationData);
 
         $applicationCompletionData = [
@@ -310,6 +315,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             // @NOTE The passed in application data has priority, so is last to merge
             $applicationData
         );
+
+        if ($this->getServiceLocator()->has('VariationUtility')) {
+            $applicationData = $this->getServiceLocator()->get('VariationUtility')
+                ->alterCreateVariationData($applicationData);
+        }
 
         $application = $this->save($applicationData);
 

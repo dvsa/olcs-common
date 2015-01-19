@@ -37,6 +37,10 @@ class Date extends ZendDate
      */
     public function isValid($value)
     {
+        if (is_null($value)) {
+            return true;
+        }
+
         $this->setValue($value);
 
         if (empty($value)) {

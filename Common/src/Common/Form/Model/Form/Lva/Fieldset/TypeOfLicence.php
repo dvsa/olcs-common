@@ -12,6 +12,9 @@ class TypeOfLicence
     /**
      * @Form\Name("operator-location")
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *      "fieldset-data-group": "operator-location",
      *      "label": "application_type-of-licence_operator-location.data.niFlag",
      *      "value_options":{
@@ -26,6 +29,9 @@ class TypeOfLicence
     /**
      * @Form\Name("operator-type")
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *      "fieldset-data-group": "operator-type",
      *      "label": "application_type-of-licence_operator-type.data.goodsOrPsv",
      *      "value_options":{
@@ -41,6 +47,9 @@ class TypeOfLicence
     /**
      * @Form\Name("licence-type")
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *      "fieldset-data-group": "licence-type",
      *      "label": "application_type-of-licence_licence-type.data.licenceType",
      *      "value_options":{

@@ -97,6 +97,62 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testCreateNewWithUtility()
+    {
+        $orgId = 3;
+
+        $licenceData = array(
+            'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
+            'organisation' => $orgId
+        );
+
+        $licenceResponse = array(
+            'id' => 7
+        );
+
+        $applicationData = array(
+            'licence' => 7,
+            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'isVariation' => false
+        );
+
+        $applicationResponse = array(
+            'id' => 4
+        );
+
+        $completionData = array(
+            'application' => 4
+        );
+
+        $mockLicenceService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceService->expects($this->once())
+            ->method('save')
+            ->with($licenceData)
+            ->will($this->returnValue($licenceResponse));
+
+        $mockApplicationCompletionService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationCompletionService->expects($this->once())
+            ->method('save')
+            ->with($completionData);
+
+        $mockUtility = m::mock();
+        $this->sm->setService('ApplicationUtility', $mockUtility);
+        $mockUtility->shouldReceive('alterCreateApplicationData')
+            ->with($applicationData)
+            ->andReturn($applicationData);
+
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+        $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+
+        $this->expectOneRestCall('Application', 'POST', $applicationData)
+            ->will($this->returnValue($applicationResponse));
+
+        $this->assertEquals(array('application' => 4, 'licence' => 7), $this->sut->createNew($orgId));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testDoesBelongToOrganisationNoResponse()
     {
         $id = 4;
@@ -559,6 +615,47 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue(['id' => 5]));
 
         $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testCreateVariationWithVariationUtility()
+    {
+        $this->mockDate('2014-01-01');
+
+        $licenceId = 3;
+        $stubbedLicenceData = [
+            'bar' => 'foo'
+        ];
+        $applicationData = [
+            'foo' => 'bar'
+        ];
+        $expectedData = [
+            'licence' => 3,
+            'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
+            'isVariation' => true,
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ];
+
+        $mockLicenceEntity = m::mock();
+        $mockLicenceEntity->shouldReceive('getVariationData')
+            ->with($licenceId)
+            ->andReturn($stubbedLicenceData);
+
+        $this->expectOneRestCall('Application', 'POST', $expectedData)
+            ->will($this->returnValue(['id' => 5]));
+
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $mockVariation = m::mock();
+        $this->sm->setService('VariationUtility', $mockVariation);
+        $mockVariation->shouldReceive('alterCreateVariationData')
+            ->with($expectedData)
+            ->andReturn($expectedData);
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }

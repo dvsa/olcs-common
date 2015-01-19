@@ -42,9 +42,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
                 '2014-11-10',
                 [Date::INVALID => 'Please select a date']
             ],
-            // empty dates should be invalid
+            // empty dates should be valid
             'null date' => [
-                false,
+                true,
                 null,
                 [Date::INVALID => 'Please select a date']
             ],

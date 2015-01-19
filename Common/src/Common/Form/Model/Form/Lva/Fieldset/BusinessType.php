@@ -14,14 +14,15 @@ class BusinessType
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
+     *      "fieldset-attributes": {
+     *          "class": "checkbox"
+     *      },
      *     "label": "application_your-business_business-type.data.type",
-     *     "empty_option": "Please Select",
      *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category",
      *     "service_name": "staticList",
      *     "category": "business_types"
      * })
-     * @Form\Type("DynamicSelect")
+     * @Form\Type("DynamicRadio")
      */
     public $type = null;
 }

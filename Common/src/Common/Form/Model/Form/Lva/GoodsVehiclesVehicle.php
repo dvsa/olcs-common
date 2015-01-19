@@ -32,8 +32,8 @@ class GoodsVehiclesVehicle
 
     /**
      * @Form\Name("form-actions")
-     * @Form\Attributes({"class":"actions-container"})
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormCrudActions")
+     * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
 }
