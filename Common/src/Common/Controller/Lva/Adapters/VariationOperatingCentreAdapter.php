@@ -300,7 +300,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->remove($form, 'data->totCommunityLicences');
+            $formHelper->disableElement($form, 'data->totCommunityLicences');
         }
 
         return $form;
