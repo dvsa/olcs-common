@@ -43,6 +43,10 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
     const FEE_TYPE_IRFOPSVCOPY = 'IRFOPSVCOPY';
     const FEE_TYPE_IRFOGVPERMIT = 'IRFOGVPERMIT';
 
+    const ACCRUAL_RULE_LICENCE_START = 'acr_licence_start';
+    const ACCRUAL_RULE_CONTINUATION  = 'acr_continuation';
+    const ACCRUAL_RULE_IMMEDIATE     = 'acr_immediate';
+
     protected $dataBundle = array(
         'properties' => array(
             'id',
