@@ -276,6 +276,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             )
         );
 
+        if ($this->getServiceLocator()->has('ApplicationUtility')) {
+            $applicationData = $this->getServiceLocator()->get('ApplicationUtility')
+                ->alterCreateApplicationData($applicationData);
+        }
+
         $application = $this->save($applicationData);
 
         $applicationCompletionData = [
