@@ -49,6 +49,9 @@ class ApplicationIdValidator extends AbstractValidator
         if (!$appData) {
             $this->error('appIdNotValid');
             return false;
+        } elseif (!isset($appData['licence']['licenceType']['id'])) {
+            $this->error('appIdNotValid');
+            return false;
         } elseif (isset($appData['licence']['licenceType']['id']) &&
             $appData['licence']['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
             $this->error('appRestricted');
