@@ -38,7 +38,7 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
                     'licenceVehicles' => array(
                         array(
                             'foo',
-                            'removalDate' => 'xxx'
+                            'removalDate' => null,
                         ),
                         array('bar')
                     )
@@ -47,29 +47,27 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
                     'licenceVehicles' => array(
                         array(
                             'cake',
-                            'removalDate' => 'xxx'
+                            'removalDate' => 'xxx',
                         ),
                         array(
                             'jazz',
-                            'removalDate' => 'xxx'
+                            'removalDate' => null,
                         )
                     )
                 )
             )
         );
 
+        // we should get back everything that *doesn't* have a removed date
         $expected = array(
             array(
                 'foo',
-                'removalDate' => 'xxx'
+                'removalDate' => null
             ),
-            array(
-                'cake',
-                'removalDate' => 'xxx'
-            ),
+            array('bar'),
             array(
                 'jazz',
-                'removalDate' => 'xxx'
+                'removalDate' => null
             )
         );
 
