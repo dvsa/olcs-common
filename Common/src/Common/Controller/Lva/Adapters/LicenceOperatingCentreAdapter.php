@@ -159,4 +159,19 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         return $form;
     }
+
+    /**
+     * Format data for save
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function formatDataForSave(array $data)
+    {
+        $data = parent::formatDataForSave($data);
+
+        unset($data['totCommunityLicences']);
+
+        return $data;
+    }
 }
