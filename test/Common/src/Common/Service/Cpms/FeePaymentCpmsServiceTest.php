@@ -36,11 +36,25 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->sut = new FeePaymentCpmsService();
+        $this->sut->setServiceLocator($this->sm);
         return parent::setUp();
     }
 
     public function testInitiateCardRequest()
     {
+        $this->mockDate('2015-01-12');
+        $fees = [
+            [
+                'id' => 1,
+                'amount' => 525.25,
+                'feeType' => [
+                    'accrualRule' => [
+                        'id' => 'acr_immediate', // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE
+                    ]
+                ],
+            ],
+        ];
+
         $params = [
             'customer_reference' => 'cust_ref',
             'scope' => 'CARD',
@@ -50,7 +64,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 [
                     'amount' => (double)525.25,
                     'sales_reference' => 'sales_ref',
-                    'product_reference' => 'GVR_APPLICATION_FEE'
+                    'product_reference' => 'GVR_APPLICATION_FEE',
+                    'payment_reference' => [
+                        'rule_start_date' => '12-01-2015',
+                    ],
                 ]
             ],
             'cost_centre' => '12345,67890',
@@ -66,14 +83,11 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn($client)
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService('cpms\service\api', $client);
+
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('save')
                 ->with(
                     [
@@ -87,11 +101,11 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ]
                 )
                 ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Entity\FeePayment')
-            ->andReturn(
-                m::mock()
+        );
+
+        $this->sm->setService(
+            'Entity\FeePayment',
+            m::mock()
                 ->shouldReceive('save')
                 ->with(
                     [
@@ -101,17 +115,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ]
                 )
                 ->getMock()
-            )
-            ->getMock();
+        );
 
-        $this->sut->setServiceLocator($sl);
-
-        $fees = [
-            [
-                'id' => 1,
-                'amount' => 525.25
-            ]
-        ];
         $this->sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
     }
 
@@ -121,34 +126,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
      */
     public function testInitiateCardRequestWithInvalidResponseThrowsException()
     {
-        $params = [
-            'customer_reference' => 'cust_ref',
-            'scope' => 'CARD',
-            'disable_redirection' => true,
-            'redirect_uri' => 'redirect_url',
-            'payment_data' => [
-                [
-                    'amount' => (double)525.25,
-                    'sales_reference' => 'sales_ref',
-                    'product_reference' => 'GVR_APPLICATION_FEE'
-                ]
-            ],
-            'cost_centre' => '12345,67890',
-        ];
-
         $client = m::mock()
             ->shouldReceive('post')
-            ->with('/api/payment/card', 'CARD', $params)
+            ->with('/api/payment/card', 'CARD', m::any())
             ->andReturn('some kind of error')
             ->getMock();
 
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn($client)
-            ->getMock();
+        $this->sm->setService('cpms\service\api', $client);
 
-        $this->sut->setServiceLocator($sl);
         $fees = [
             [
                 'id' => 1,
@@ -475,6 +460,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'payment_reference' => [
                         'slip_number' => '123456',
                         'receipt_date' => '07-01-2015',
+                        'rule_start_date' => null, // tested separately
                     ],
                 ]
             ],
@@ -617,6 +603,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'slip_number' => '123456',
                         'receipt_date' => '08-01-2015',
                         'cheque_number' => '234567',
+                        'rule_start_date' => null, // tested separately
                     ],
                 ]
             ],
@@ -763,6 +750,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'slip_number' => '123456',
                         'receipt_date' => '08-01-2015',
                         'postal_order_number' => ['234567'], // array expected according to api docs
+                        'rule_start_date' => null, // tested separately
                     ],
                 ]
             ],
@@ -891,5 +879,62 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->assertFalse($result);
+    }
+
+    /**
+     * @dataProvider ruleStartDateProvider
+     */
+    public function testRuleStartDateCalculation($fee, $expectedDateStr)
+    {
+        $this->mockDate('2015-01-20');
+
+        $this->assertEquals($expectedDateStr, $this->sut->getRuleStartDate($fee));
+    }
+
+    public function ruleStartDateProvider()
+    {
+        return [
+            [
+                [
+                    'id' => 88,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'acr_immediate']
+                        // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE
+                    ],
+                ],
+                '20-01-2015'
+            ],
+            [
+                [
+                    'id' => 89,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'acr_licence_start']
+                        // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_LICENCE_START
+                    ],
+                    'licence' => [
+                        'id' => 7,
+                        'inForceDate' => '2015-02-28',
+                    ]
+                ],
+                '28-02-2015'
+            ],
+            [
+                [
+                    'id' => 90,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'acr_continuation']
+                        // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_CONTINUATION
+                    ],
+                    'licence' => [
+                        'id' => 7,
+                        'expiryDate' => '2015-03-31',
+                    ]
+                ],
+                '01-04-2015'
+            ],
+        ];
     }
 }

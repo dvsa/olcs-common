@@ -71,6 +71,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         // @TODO, if we're paying multiple fees, split out into separate
         // payment_data entries and insert correct rule_start date
+        $ruleStartDate = $this->getRuleStartDate($fees[0]);
 
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
@@ -84,7 +85,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'sales_reference' => (string)$salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payment_reference' => [
-                        'rule_start_date' => '',
+                        'rule_start_date' => $ruleStartDate,
                     ],
                 ]
             ],
@@ -160,7 +161,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer, // not sure this is supported for CASH payments
                     'payment_reference' => [
@@ -234,7 +235,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [
@@ -310,7 +311,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$salesReference,
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [
@@ -416,11 +417,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             $dateHelper = $this->getServiceLocator()->get('Helper\Date');
             switch ($rule) {
                 case FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE:
-                    $date = $dateHelper->getDate();
+                    $date = $dateHelper->getDateObject();
                     return $date->format(self::DATE_FORMAT);
                 case FeeTypeDataService::ACCRUAL_RULE_LICENCE_START:
-                    $licenceStart = isset($fee['licence']['in_force_date'])
-                        ? $fee['licence']['in_force_date']
+                    $licenceStart = isset($fee['licence']['inForceDate'])
+                        ? $fee['licence']['inForceDate']
                         : null;
                     if (!is_null($licenceStart)) {
                         $date = $dateHelper->getDateObject($licenceStart);
@@ -428,8 +429,16 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     }
                     break;
                 case FeeTypeDataService::ACCRUAL_RULE_CONTINUATION:
-                    // TODO
                     // The licence continuation date + 1 day (according to calendar dates)
+                    // @TODO check where 'continuation date' comes from
+                    $licenceExpiry = isset($fee['licence']['expiryDate'])
+                        ? $fee['licence']['expiryDate']
+                        : null;
+                    if (!is_null($licenceExpiry)) {
+                        $date = $dateHelper->getDateObject($licenceExpiry);
+                        $date->add(new \DateInterval('P1D'));
+                        return $date->format(self::DATE_FORMAT);
+                    }
                     break;
                 default:
                     break;
