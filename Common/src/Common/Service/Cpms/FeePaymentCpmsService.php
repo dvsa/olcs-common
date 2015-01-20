@@ -56,39 +56,33 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * @param string $customerReference usually organisation id
+     * @param string $redirectUrl redirect back to here from payment gateway
+     * @param array $fees
+     *
      * @return array
      * @throws Common\Service\Cpms\PaymentInvalidResponseException on error
      */
-    public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
+    public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
     {
-        $amount = array_reduce(
-            $fees,
-            function ($carry, $item) {
-                $carry += $item['amount'];
-                return $carry;
-            }
-        );
-
-        // @TODO, if we're paying multiple fees, split out into separate
-        // payment_data entries and insert correct rule_start date
-        $ruleStartDate = $this->getRuleStartDate($fees[0]);
-
+        $paymentData = [];
+        foreach ($fees as $fee) {
+            $paymentData[] = [
+                'amount' => $fee['amount'],
+                'sales_reference' => (string)$fee['id'],
+                'product_reference' => self::PRODUCT_REFERENCE,
+                'payment_reference' => [
+                    'rule_start_date' => $this->getRuleStartDate($fee),
+                ],
+            ];
+        }
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
             'scope' => ApiService::SCOPE_CARD,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
-            'payment_data' => [
-                [
-                    'amount' => $amount,
-                    'sales_reference' => (string)$salesReference,
-                    'product_reference' => self::PRODUCT_REFERENCE,
-                    'payment_reference' => [
-                        'rule_start_date' => $ruleStartDate,
-                    ],
-                ]
-            ],
+            'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
@@ -140,7 +134,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordCashPayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -161,7 +154,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => (string)$salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer, // not sure this is supported for CASH payments
                     'payment_reference' => [
@@ -214,7 +207,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordChequePayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -235,7 +227,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => (string)$salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [
@@ -290,7 +282,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordPostalOrderPayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -311,7 +302,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => (string)$salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [

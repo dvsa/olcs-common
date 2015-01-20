@@ -63,7 +63,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'payment_data' => [
                 [
                     'amount' => (double)525.25,
-                    'sales_reference' => 'sales_ref',
+                    'sales_reference' => '1',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payment_reference' => [
                         'rule_start_date' => '12-01-2015',
@@ -117,7 +117,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $this->sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
+        $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
     }
 
     /**
@@ -141,7 +141,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ]
         ];
 
-        $this->sut->initiateCardRequest('cust_ref', 'sales_ref', 'redirect_url', $fees);
+        $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
     }
 
     public function testHandleResponseWithInvalidPayment()
@@ -454,7 +454,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'payment_data' => [
                 [
                     'amount' => (double)1234.56,
-                    'sales_reference' => 'sales_ref',
+                    'sales_reference' => '1',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payer_details' => 'Payer',
                     'payment_reference' => [
@@ -513,7 +513,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordCashPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -533,7 +532,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sut->recordCashPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '234.56', // not enough!
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -577,7 +575,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordCashPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -596,7 +593,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'payment_data' => [
                 [
                     'amount' => (double)1234.56,
-                    'sales_reference' => 'sales_ref',
+                    'sales_reference' => '1',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payer_details' => 'Payer',
                     'payment_reference' => [
@@ -657,7 +654,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordChequePayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '08', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -678,7 +674,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sut->recordChequePayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '234.56', // not enough!
             ['day' => '08', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -723,7 +718,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordChequePayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -743,7 +737,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'payment_data' => [
                 [
                     'amount' => (double)1234.56,
-                    'sales_reference' => 'sales_ref',
+                    'sales_reference' => '1',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payer_details' => 'Payer',
                     'payment_reference' => [
@@ -804,7 +798,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordPostalOrderPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '08', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -825,7 +818,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sut->recordPostalOrderPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '234.56', // not enough!
             ['day' => '08', 'month' => '01', 'year' => '2015'],
             'Payer',
@@ -870,7 +862,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $result = $this->sut->recordPostalOrderPayment(
             $fee,
             'cust_ref',
-            'sales_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
