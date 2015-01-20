@@ -293,10 +293,15 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-        $form->get('data')->get('totAuthVehicles')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
-        $form->get('data')->get('totAuthTrailers')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+        if ($form->get('data')->has('totAuthVehicles')) {
+            $form->get('data')->get('totAuthVehicles')
+                ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
+        }
+
+        if ($form->get('data')->has('totAuthTrailers')) {
+            $form->get('data')->get('totAuthTrailers')
+                ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+        }
 
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
