@@ -920,4 +920,30 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             }
         );
     }
+
+    public function testSaveMainFormData()
+    {
+        $this->setUpTest();
+
+        // Stubbed data
+        $data = [
+            'foo' => 'bar',
+            'totCommunityLicences' => 'abc'
+        ];
+
+        // Mock services
+        $mockDataService = m::mock();
+        $this->sm->setService('Helper\Data', $mockDataService);
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $mockDataService->shouldReceive('processDataMap')
+            ->with($data, ['main' => ['mapFrom' => ['data', 'dataTrafficArea']]])
+            ->andReturn($data);
+
+        $mockLicenceEntity->shouldReceive('save')
+            ->with(['foo' => 'bar']);
+
+        $this->sut->saveMainFormData($data);
+    }
 }
