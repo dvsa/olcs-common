@@ -592,9 +592,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $table->removeColumn('noOfTrailersRequired');
 
         $footer = $table->getFooter();
-        $footer['total']['content'] .= '-psv';
-        unset($footer['trailersCol']);
-        $table->setFooter($footer);
+        if (isset($footer['total']['content'])) {
+            $footer['total']['content'] .= '-psv';
+            unset($footer['trailersCol']);
+            $table->setFooter($footer);
+        }
     }
 
     /**
