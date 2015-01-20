@@ -825,16 +825,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ]
         ];
         $stubbedLoc = [
-            [
-                'id' => 6,
-                'operatingCentre' => [
-                    'id' => 7
-                ]
-            ],
-            [
-                'id' => 5,
-                'operatingCentre' => [
-                    'id' => 6
+            'Results' => [
+                [
+                    'id' => 6,
+                    'operatingCentre' => [
+                        'id' => 7
+                    ]
+                ],
+                [
+                    'id' => 5,
+                    'operatingCentre' => [
+                        'id' => 6
+                    ]
                 ]
             ]
         ];
