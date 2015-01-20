@@ -894,7 +894,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     public function ruleStartDateProvider()
     {
         return [
-            [
+            'immediate rule' => [
                 [
                     'id' => 88,
                     'amount' => '99.99',
@@ -905,7 +905,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ],
                 '20-01-2015'
             ],
-            [
+            'licence start date rule' => [
                 [
                     'id' => 89,
                     'amount' => '99.99',
@@ -920,7 +920,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ],
                 '28-02-2015'
             ],
-            [
+            'continuation date rule' => [
                 [
                     'id' => 90,
                     'amount' => '99.99',
@@ -934,6 +934,42 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ]
                 ],
                 '01-04-2015'
+            ],
+            'no accrualRule' => [
+                [],
+                null,
+            ],
+            'licence start with no inForceDate' => [
+                [
+                    'id' => 91,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'acr_licence_start']
+                    ],
+                    'licence' => []
+                ],
+                null
+            ],
+            'continuation with no expiryDate' => [
+                [
+                    'id' => 92,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'acr_continuation']
+                    ],
+                    'licence' => []
+                ],
+                null
+            ],
+            'invalid accrualRule' => [
+                [
+                    'id' => 93,
+                    'amount' => '99.99',
+                    'feeType' => [
+                        'accrualRule' => ['id' => 'unknown']
+                    ],
+                ],
+                null
             ],
         ];
     }
