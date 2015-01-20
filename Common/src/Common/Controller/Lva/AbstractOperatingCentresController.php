@@ -29,11 +29,15 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
         $request = $this->getRequest();
 
+        $id = $this->getIdentifier();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->getAdapter()->getOperatingCentresFormData($this->getIdentifier());
+            $data = $this->getAdapter()->getOperatingCentresFormData($id);
         }
+
+        $data = $this->getAdapter()->alterFormData($id, $data);
 
         $form = $this->getAdapter()->getMainForm()->setData($data);
 

@@ -154,6 +154,7 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
             $formHelper->disableElement($form, 'data->totCommunityLicences');
+            $formHelper->disableValidation($form->getInputFilter()->get('data')->get('totCommunityLicences'));
         }
 
         return $form;

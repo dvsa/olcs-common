@@ -531,6 +531,8 @@ return array(
     'categories' => 'W Categories',
     'choose-one' => 'W Choose one',
     'closed' => 'W Closed',
+    'community-licence-changes-contact-office' => 'W If you wish to request additional community licences, please
+        contact the central office',
     'company-registration-form-button-find-address' => 'W Find address',
     'company-registration-form-button-search' => 'W Search',
     'company-registration-form-label-address1' => 'W Address line 1',

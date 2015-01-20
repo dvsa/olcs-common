@@ -301,6 +301,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
             $formHelper->disableElement($form, 'data->totCommunityLicences');
+            $formHelper->disableValidation($form->getInputFilter()->get('data')->get('totCommunityLicences'));
         }
 
         return $form;
@@ -556,5 +557,12 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $data = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
 
         return array($data['totAuthVehicles'], $data['totAuthTrailers']);
+    }
+
+    public function alterFormData($id, $data)
+    {
+        $data['data']['totCommunityLicences'] = $this->getLvaEntityService()->getLicenceTotCommunityLicences($id);
+
+        return $data;
     }
 }
