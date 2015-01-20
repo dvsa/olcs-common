@@ -19,6 +19,6 @@ class AbstractOperatingCentresControllerTest extends MockeryTestCase
 {
     public function testIndexAction()
     {
-        $this->assertTrue(true);
+        $this->markTestIncomplete('Must add tests');
     }
 }
