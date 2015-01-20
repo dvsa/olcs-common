@@ -49,9 +49,21 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 'amount' => 525.25,
                 'feeType' => [
                     'accrualRule' => [
-                        'id' => 'acr_immediate', // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE
+                        'id' => 'acr_immediate',
+                        // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE
                     ]
                 ],
+            ],
+            [
+                'id' => 2,
+                'amount' => 125.25,
+                'feeType' => [
+                    'accrualRule' => [
+                        'id' => 'acr_licence_start',
+                         // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_LICENCE_START
+                    ]
+                ],
+                'licence' => ['id' => 7, 'inForceDate' => '2014-12-25'],
             ],
         ];
 
@@ -67,6 +79,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payment_reference' => [
                         'rule_start_date' => '12-01-2015',
+                    ],
+                ],
+                [
+                    'amount' => (double)125.25,
+                    'sales_reference' => '2',
+                    'product_reference' => 'GVR_APPLICATION_FEE',
+                    'payment_reference' => [
+                        'rule_start_date' => '25-12-2014',
                     ],
                 ]
             ],
@@ -112,6 +132,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'payment' => 321,
                         'fee' => 1,
                         'feeValue' => 525.25
+                    ]
+                )
+                ->shouldReceive('save')
+                ->with(
+                    [
+                        'payment' => 321,
+                        'fee' => 2,
+                        'feeValue' => 125.25
                     ]
                 )
                 ->getMock()
