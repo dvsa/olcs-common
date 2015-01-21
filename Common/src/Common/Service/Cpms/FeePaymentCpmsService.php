@@ -421,7 +421,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     break;
                 case FeeTypeDataService::ACCRUAL_RULE_CONTINUATION:
                     // The licence continuation date + 1 day (according to calendar dates)
-                    // @TODO check where 'continuation date' comes from
                     $licenceExpiry = isset($fee['licence']['expiryDate'])
                         ? $fee['licence']['expiryDate']
                         : null;
