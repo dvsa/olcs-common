@@ -293,14 +293,20 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         $translator = $this->getServiceLocator()->get('Helper\Translation');
 
-        $form->get('data')->get('totAuthVehicles')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
-        $form->get('data')->get('totAuthTrailers')
-            ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+        if ($form->get('data')->has('totAuthVehicles')) {
+            $form->get('data')->get('totAuthVehicles')
+                ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($vehicles)));
+        }
+
+        if ($form->get('data')->has('totAuthTrailers')) {
+            $form->get('data')->get('totAuthTrailers')
+                ->setOption('hint', $translator->translateReplace('current-authorisation-hint', array($trailers)));
+        }
 
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->remove($form, 'data->totCommunityLicences');
+            $formHelper->disableElement($form, 'data->totCommunityLicences');
+            $formHelper->disableValidation($form->getInputFilter()->get('data')->get('totCommunityLicences'));
         }
 
         return $form;
@@ -556,5 +562,27 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
         $data = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
 
         return array($data['totAuthVehicles'], $data['totAuthTrailers']);
+    }
+
+    public function alterFormData($id, $data)
+    {
+        $data['data']['totCommunityLicences'] = $this->getLvaEntityService()->getLicenceTotCommunityLicences($id);
+
+        return $data;
+    }
+
+    /**
+     * Format data for save
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function formatDataForSave(array $data)
+    {
+        $data = parent::formatDataForSave($data);
+
+        unset($data['totCommunityLicences']);
+
+        return $data;
     }
 }

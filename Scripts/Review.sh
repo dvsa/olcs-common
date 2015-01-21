@@ -2,7 +2,10 @@
 
 BASE_BRANCH=${1-"origin/develop"}
 
-echo "{panel:title=TITLE|borderStyle=solid|borderColor=#000|titleBGColor=#75e069/dd4040/e29c22|bgColor=#efefef}"
+# this parses the 'project name' from the git remote url
+PROJECT=$(git remote -v | head -n1 | awk '{print $2}' | sed 's/.*\///' | sed 's/\.git//');
+
+echo "{panel:title=$PROJECT|borderStyle=solid|borderColor=#000|titleBGColor=#75e069/dd4040/e29c22|bgColor=#efefef}"
 
 echo "h2.Summary"
 

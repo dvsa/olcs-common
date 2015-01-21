@@ -2,7 +2,7 @@
 
 namespace CommonTest\Controller\Lva;
 
-use \Mockery as m;
+use Mockery as m;
 
 /**
  * Test Abstract Business Type Controller

@@ -3,7 +3,8 @@
 namespace CommonTest\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService as Org;
-use \Mockery as m;
+use Mockery as m;
+use CommonTest\Bootstrap;
 
 /**
  * Test Abstract People Controller
@@ -18,6 +19,15 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractPeopleController');
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     public function testGetIndexActionForLimitedCompanyWithPeoplePopulated()

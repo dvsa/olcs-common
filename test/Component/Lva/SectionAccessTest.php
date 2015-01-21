@@ -20,6 +20,9 @@ use Common\Service\Entity\LicenceEntityService;
 class SectionAccessTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     *
      * @group component
      * @group lva_component
      * @group section_access_lva_component
@@ -27,7 +30,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
      */
     public function testSectionAccessExternalApplication($access, $expected)
     {
-        $serviceManager = Bootstrap::getServiceManager();
+        $serviceManager = Bootstrap::getRealServiceManager();
 
         $sectionConfig = new SectionConfig();
         $inputSections = $sectionConfig->getAll();
@@ -255,6 +258,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'financial_evidence',
                     'transport_managers',
                     'vehicles',
+                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'financial_history',
@@ -331,6 +335,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles_psv',
                     'vehicles_declarations',
+                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'financial_history',
@@ -356,6 +361,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'financial_evidence',
                     'vehicles_psv',
                     'vehicles_declarations',
+                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'financial_history',
@@ -419,7 +425,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -484,7 +489,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles_psv',
                     'discs',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -506,7 +510,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles_psv',
                     'discs',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -716,7 +719,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'
@@ -784,7 +786,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles_psv',
                     'discs',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'
@@ -807,7 +808,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles_psv',
                     'discs',
-                    'community_licences',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'

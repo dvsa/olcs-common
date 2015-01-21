@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter;
 use Common\Service\Entity\LicenceEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Variation Operating Centre Adapter Test
@@ -36,6 +37,15 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut = new VariationOperatingCentreAdapter();
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setController($this->controller);
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     public function testSaveMainFormData()
@@ -460,5 +470,261 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
             ->andReturn(['id' => 123]);
 
         $this->sut->saveActionFormData($mode, $data, $formData);
+    }
+
+    public function testAlterForm()
+    {
+        // Stubbed data
+        $id = 3;
+        $licenceId = 6;
+        $stubbedTolData = [
+            'niFlag' => 'Y',
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+        ];
+        $stubbedAddressData = [
+            'Results' => []
+        ];
+        $stubbedLicenceAddressData = [
+            'Results' => []
+        ];
+        $stubbedAuths = [
+            'totAuthVehicles' => 10,
+            'totAuthTrailers' => 5
+        ];
+        $stubbedLicData = [
+            'totAuthVehicles' => 10,
+            'totAuthTrailers' => 5
+        ];
+
+        // Going to use a real form here to component test this code, as UNIT testing it will be expensive
+        $sm = $this->getServiceManager();
+        $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
+        // As it's a component test, we will be better off not mocking the form helper
+        $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
+
+        // Mocked services
+        $mockVariationLvaAdapter = m::mock();
+        $this->sm->setService('variationLvaAdapter', $mockVariationLvaAdapter);
+        $mockLicenceLvaAdapter = m::mock();
+        $this->sm->setService('licenceLvaAdapter', $mockLicenceLvaAdapter);
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+        $mockAocEntity = m::mock();
+        $this->sm->setService('Entity\ApplicationOperatingCentre', $mockAocEntity);
+        $mockLocEntity = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockLocEntity);
+        $mockValidator = m::mock('Zend\Validator\ValidatorInterface');
+        $this->sm->setService('CantIncreaseValidator', $mockValidator);
+        $mockTranslator = m::mock();
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        // Expectations
+        $mockVariationLvaAdapter
+            ->shouldReceive('setController')
+            ->with($this->controller)
+            ->shouldReceive('alterForm')
+            ->with($form)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id);
+
+        $mockLicenceLvaAdapter
+            ->shouldReceive('setController')
+            ->with($this->controller)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockApplicationEntity->shouldReceive('getTypeOfLicenceData')
+            ->with($id)
+            ->andReturn($stubbedTolData)
+            ->shouldReceive('getTotalAuths')
+            ->andReturn($stubbedAuths);
+
+        $mockAocEntity->shouldReceive('getAddressSummaryData')
+            ->with($id)
+            ->andReturn($stubbedAddressData);
+
+        $mockLocEntity->shouldReceive('getAddressSummaryData')
+            ->with($licenceId)
+            ->andReturn($stubbedLicenceAddressData);
+
+        $this->controller->shouldReceive('url->fromRoute')
+            ->with('create_variation', ['licence' => $id])
+            ->andReturn('URL');
+
+        $mockTranslator->shouldReceive('translateReplace')
+            ->with('cant-increase-total-vehicles', ['URL'])
+            ->andReturn('MESSAGE 1')
+            ->shouldReceive('translateReplace')
+            ->with('cant-increase-total-trailers', ['URL'])
+            ->andReturn('MESSAGE 2');
+
+        $mockValidator->shouldReceive('setGenericMessage')
+            ->with('MESSAGE 1')
+            ->shouldReceive('setPreviousValue')
+            ->with(10)
+            ->shouldReceive('setGenericMessage')
+            ->with('MESSAGE 2')
+            ->shouldReceive('setPreviousValue')
+            ->with(5);
+
+        $mockLicenceEntity->shouldReceive('getById')
+            ->with($licenceId)
+            ->andReturn($stubbedLicData);
+
+        $mockTranslator->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [10])
+            ->andReturn('HINT 10')
+            ->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [5])
+            ->andReturn('HINT 5');
+
+        $alteredForm = $this->sut->alterForm($form);
+
+        $this->assertFalse($alteredForm->get('data')->has('totCommunityLicences'));
+    }
+
+    public function testAlterFormWithCommunityLicences()
+    {
+        // Stubbed data
+        $id = 3;
+        $licenceId = 6;
+        $stubbedTolData = [
+            'niFlag' => 'Y',
+            'licenceType' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+        ];
+        $stubbedAddressData = [
+            'Results' => []
+        ];
+        $stubbedLicenceAddressData = [
+            'Results' => []
+        ];
+        $stubbedAuths = [
+            'totAuthVehicles' => 10,
+            'totAuthTrailers' => 5
+        ];
+        $stubbedLicData = [
+            'totAuthVehicles' => 10,
+            'totAuthTrailers' => 5
+        ];
+
+        // Going to use a real form here to component test this code, as UNIT testing it will be expensive
+        $sm = $this->getServiceManager();
+        $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
+        // As it's a component test, we will be better off not mocking the form helper
+        $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
+        $sm->setAllowOverride(true);
+        $mockViewRenderer = m::mock();
+        $sm->setService('ViewRenderer', $mockViewRenderer);
+
+        // Mocked services
+        $mockVariationLvaAdapter = m::mock();
+        $this->sm->setService('variationLvaAdapter', $mockVariationLvaAdapter);
+        $mockLicenceLvaAdapter = m::mock();
+        $this->sm->setService('licenceLvaAdapter', $mockLicenceLvaAdapter);
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+        $mockAocEntity = m::mock();
+        $this->sm->setService('Entity\ApplicationOperatingCentre', $mockAocEntity);
+        $mockLocEntity = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockLocEntity);
+        $mockValidator = m::mock('Zend\Validator\ValidatorInterface');
+        $this->sm->setService('CantIncreaseValidator', $mockValidator);
+        $mockTranslator = m::mock();
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        // Expectations
+        $mockVariationLvaAdapter
+            ->shouldReceive('setController')
+            ->with($this->controller)
+            ->shouldReceive('alterForm')
+            ->with($form)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($id);
+
+        $mockLicenceLvaAdapter
+            ->shouldReceive('setController')
+            ->with($this->controller)
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockApplicationEntity->shouldReceive('getTypeOfLicenceData')
+            ->with($id)
+            ->andReturn($stubbedTolData)
+            ->shouldReceive('getTotalAuths')
+            ->andReturn($stubbedAuths);
+
+        $mockAocEntity->shouldReceive('getAddressSummaryData')
+            ->with($id)
+            ->andReturn($stubbedAddressData);
+
+        $mockLocEntity->shouldReceive('getAddressSummaryData')
+            ->with($licenceId)
+            ->andReturn($stubbedLicenceAddressData);
+
+        $this->controller->shouldReceive('url->fromRoute')
+            ->with('create_variation', ['licence' => $id])
+            ->andReturn('URL');
+
+        $mockTranslator->shouldReceive('translateReplace')
+            ->with('cant-increase-total-vehicles', ['URL'])
+            ->andReturn('MESSAGE 1')
+            ->shouldReceive('translateReplace')
+            ->with('cant-increase-total-trailers', ['URL'])
+            ->andReturn('MESSAGE 2');
+
+        $mockValidator->shouldReceive('setGenericMessage')
+            ->with('MESSAGE 1')
+            ->shouldReceive('setPreviousValue')
+            ->with(10)
+            ->shouldReceive('setGenericMessage')
+            ->with('MESSAGE 2')
+            ->shouldReceive('setPreviousValue')
+            ->with(5);
+
+        $mockLicenceEntity->shouldReceive('getById')
+            ->with($licenceId)
+            ->andReturn($stubbedLicData);
+
+        $mockTranslator->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [10])
+            ->andReturn('HINT 10')
+            ->shouldReceive('translateReplace')
+            ->with('current-authorisation-hint', [5])
+            ->andReturn('HINT 5');
+
+        $alteredForm = $this->sut->alterForm($form);
+
+        $this->assertTrue($alteredForm->get('data')->has('totCommunityLicences'));
+    }
+
+    public function testAlterFormData()
+    {
+        // Stubbed data
+        $id = 4;
+        $data = [
+            'foo' => 'bar'
+        ];
+        $expectedData = [
+            'foo' => 'bar',
+            'data' => [
+                'totCommunityLicences' => 10
+            ]
+        ];
+
+        // Mock services
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+
+        $mockApplicationEntity->shouldReceive('getLicenceTotCommunityLicences')
+            ->with($id)
+            ->andReturn(10);
+
+        $this->assertEquals($expectedData, $this->sut->alterFormData($id, $data));
     }
 }

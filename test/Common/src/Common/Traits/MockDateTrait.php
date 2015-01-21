@@ -7,6 +7,8 @@
  */
 namespace CommonTest\Traits;
 
+use Mockery as m;
+
 /**
  * Mock Date Trait
  *
@@ -19,15 +21,13 @@ trait MockDateTrait
      */
     protected function mockDate($date)
     {
-        $dateObj = new \DateTime($date);
 
-        $mockDateHelper = $this->getMock('\stdClass', ['getDate', 'getDateObject']);
-        $mockDateHelper->expects($this->any())
-            ->method('getDate')
-            ->will($this->returnValue($date));
-        $mockDateHelper->expects($this->any())
-            ->method('getDateObject')
-            ->will($this->returnValue($dateObj));
+        $mockDateHelper = m::mock('Common\Service\Helper\DateHelperService')->makePartial();
+
+        $mockDateHelper->shouldReceive('getDate')->andReturn($date);
+
+        $dateObj = new \DateTime($date);
+        $mockDateHelper->shouldReceive('getDateObject')->withNoArgs()->andReturn($dateObj);
 
         $this->sm->setService('Helper\Date', $mockDateHelper);
     }

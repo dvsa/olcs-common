@@ -7,18 +7,19 @@
  */
 namespace CommonTest\Service\VehicleList;
 
-use Common\Service\VehicleList\VehicleList;
+use PHPUnit_Framework_TestCase;
 use Common\Service\VehicleList\Exception;
 use CommonTest\Bootstrap;
+use CommonTest\Traits\MockDateTrait;
 
 /**
  * Vehicle List service test
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class VehicleListTest extends \PHPUnit_Framework_TestCase
+class VehicleListTest extends PHPUnit_Framework_TestCase
 {
-    use \CommonTest\Traits\MockDateTrait;
+    use MockDateTrait;
 
     /**
      * @var Common\Service\VehicleList\VehicleList
@@ -28,7 +29,7 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
     /**
      * @var ServiceLocatorInterface
      */
-    public $serviceLocator;
+    public $sm;
 
     /**
      * @var bool
@@ -42,6 +43,9 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Set up the Vehicle List service
+     *
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
      */
     public function setUp()
     {
@@ -52,8 +56,8 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnCallback(array($this, 'mockRestCalls')));
 
         // the MockDateTrait expects `sm` instead of `serviceLocator`; this is just a quick fix
-        $this->sm = $this->serviceLocator = Bootstrap::getServiceManager();
-        $this->serviceLocator->setAllowOverride(true);
+        $this->sm = Bootstrap::getRealServiceManager();
+        $this->sm->setAllowOverride(true);
 
     }
 
@@ -175,11 +179,11 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->with('/templates/GVVehiclesList.rtf')
             ->will($this->returnValue(null));
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
 
@@ -220,11 +224,11 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->with('file content', [1])
             ->will($this->returnValue(false));
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
 
@@ -267,11 +271,11 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
 
         $this->bookmarksFound = false;
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
 
@@ -342,12 +346,12 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->method('upload')
             ->will($this->returnValue($mockUploadedFile));
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
-        $this->serviceLocator->setService('FileUploader', $mockFileUploader);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('FileUploader', $mockFileUploader);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
 
@@ -430,12 +434,12 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->method('upload')
             ->will($this->returnValue($mockUploadedFile));
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
-        $this->serviceLocator->setService('FileUploader', $mockFileUploader);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('FileUploader', $mockFileUploader);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList(true);
     }
 
@@ -506,12 +510,12 @@ class VehicleListTest extends \PHPUnit_Framework_TestCase
             ->method('upload')
             ->will($this->returnValue($mockUploadedFile));
 
-        $this->serviceLocator->setService('Document', $mockDocument);
-        $this->serviceLocator->setService('category', $mockCategory);
-        $this->serviceLocator->setService('ContentStore', $mockContentStore);
-        $this->serviceLocator->setService('FileUploader', $mockFileUploader);
+        $this->sm->setService('Document', $mockDocument);
+        $this->sm->setService('category', $mockCategory);
+        $this->sm->setService('ContentStore', $mockContentStore);
+        $this->sm->setService('FileUploader', $mockFileUploader);
 
-        $this->vehicleList->setServiceLocator($this->serviceLocator);
+        $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
 

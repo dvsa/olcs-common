@@ -85,6 +85,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         )
     );
 
+    public function alterFormData($id, $data)
+    {
+        return $data;
+    }
+
     /**
      * Add messages to the main index page
      */
@@ -425,7 +430,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     }
 
     /**
-     * Get the relevant *OperatingCentre entity service based on the LVA type
+     * Get the relevant ****OperatingCentre entity service based on the LVA type
      *
      * @return Common\Service\Entity\AbstractEntityService
      */
@@ -592,9 +597,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $table->removeColumn('noOfTrailersRequired');
 
         $footer = $table->getFooter();
-        $footer['total']['content'] .= '-psv';
-        unset($footer['trailersCol']);
-        $table->setFooter($footer);
+        if (isset($footer['total']['content'])) {
+            $footer['total']['content'] .= '-psv';
+            unset($footer['trailersCol']);
+            $table->setFooter($footer);
+        }
     }
 
     /**

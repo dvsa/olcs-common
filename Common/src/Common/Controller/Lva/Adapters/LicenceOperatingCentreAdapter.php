@@ -153,9 +153,25 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         if ($form->get('data')->has('totCommunityLicences')) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->remove($form, 'data->totCommunityLicences');
+            $formHelper->disableElement($form, 'data->totCommunityLicences');
+            $formHelper->disableValidation($form->getInputFilter()->get('data')->get('totCommunityLicences'));
         }
 
         return $form;
+    }
+
+    /**
+     * Format data for save
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function formatDataForSave(array $data)
+    {
+        $data = parent::formatDataForSave($data);
+
+        unset($data['totCommunityLicences']);
+
+        return $data;
     }
 }

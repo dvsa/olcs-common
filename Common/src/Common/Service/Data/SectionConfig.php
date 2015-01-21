@@ -142,10 +142,9 @@ class SectionConfig
         'community_licences' => array(
             'restricted' => array(
                 array(
-                    // Must be variation or licence
+                    // Only shown internally
                     array(
-                        'variation',
-                        'licence'
+                        'internal'
                     ),
                     // and must be either
                     array(
