@@ -20,6 +20,9 @@ use Common\Service\Entity\LicenceEntityService;
 class SectionAccessTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     *
      * @group component
      * @group lva_component
      * @group section_access_lva_component
@@ -27,7 +30,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
      */
     public function testSectionAccessExternalApplication($access, $expected)
     {
-        $serviceManager = Bootstrap::getServiceManager();
+        $serviceManager = Bootstrap::getRealServiceManager();
 
         $sectionConfig = new SectionConfig();
         $inputSections = $sectionConfig->getAll();

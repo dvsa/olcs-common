@@ -8,15 +8,21 @@
 
 namespace CommonTest\Controller;
 
+use PHPUnit_Framework_TestCase;
+use CommonTest\Bootstrap;
+
 /**
  * @group form
  */
-class OlcsCustomFormFactoryTest extends \PHPUnit_Framework_TestCase
+class OlcsCustomFormFactoryTest extends PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
     public function setUp()
     {
-        $this->serviceManager = \CommonTest\Bootstrap::getServiceManager();
+        $this->serviceManager = Bootstrap::getRealServiceManager();
         $this->customFormGenerator = $this->serviceManager->get('OlcsCustomForm');
 
         $this->formConfig = [

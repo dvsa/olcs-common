@@ -35,11 +35,16 @@ abstract class AbstractEntityServiceTestCase extends MockeryTestCase
         $this->restHelper = $this->getMock('\stdClass', array('makeRestCall'));
         $this->restCallOrder = 0;
 
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = $this->getServiceManager();
         $this->sm->setAllowOverride(true);
         $this->sm->setService('Helper\Rest', $this->restHelper);
 
         $this->sut->setServiceLocator($this->sm);
+    }
+
+    protected function getServiceManager()
+    {
+        return Bootstrap::getServiceManager();
     }
 
     protected function expectOneRestCall($entity, $method, $data, $bundle = null)

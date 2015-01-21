@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\PsvDiscEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * PsvDisc Entity Service Test
@@ -21,6 +22,15 @@ class PsvDiscEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut = new PsvDiscEntityService();
 
         parent::setUp();
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     /**
