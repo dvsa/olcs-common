@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\PersonEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Person Entity Service Test
@@ -21,6 +22,15 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut = new PersonEntityService();
 
         parent::setUp();
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     /**

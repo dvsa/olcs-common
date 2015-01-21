@@ -2,7 +2,8 @@
 
 namespace CommonTest\Controller\Lva;
 
-use \Mockery as m;
+use Mockery as m;
+use CommonTest\Bootstrap;
 
 /**
  * Test Abstract Vehicles PSV Controller
@@ -19,8 +20,17 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
     }
 
     /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
+    }
+
+    /**
      * Get index
-     * 
+     *
      * @group abstractVehiclePsvController
      */
     public function testGetIndexAction()

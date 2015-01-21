@@ -42,7 +42,22 @@ class Bootstrap
         self::getServiceManager();
     }
 
+    /**
+     * Changed this method to return a mock
+     *
+     * @return \Zend\ServiceManager\ServiceManager
+     */
     public static function getServiceManager()
+    {
+        return m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+    }
+
+    /**
+     * Added this method for backwards compatibility
+     *
+     * @return \Zend\ServiceManager\ServiceManager
+     */
+    public static function getRealServiceManager()
     {
         // When we fix our unit tests to mock all dependencies
         // we need to put this line back in to speed up our tests

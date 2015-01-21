@@ -12,6 +12,7 @@ use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Entity\ContactDetailsEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\VehicleEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Application Completion Entity Service Test
@@ -25,6 +26,15 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
         $this->sut = new ApplicationCompletionEntityService();
 
         parent::setUp();
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     /**

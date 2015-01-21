@@ -3,7 +3,6 @@
 namespace CommonTest\Controller\Lva;
 
 use CommonTest\Bootstrap;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Olcs\TestHelpers\Lva\Traits\LvaControllerTestTrait;
 

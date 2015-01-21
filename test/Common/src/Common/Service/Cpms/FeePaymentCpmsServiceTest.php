@@ -32,9 +32,13 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     protected $sut;
 
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
     public function setUp()
     {
-        $this->sm = Bootstrap::getServiceManager();
+        $this->sm = Bootstrap::getRealServiceManager();
         $this->sut = new FeePaymentCpmsService();
         $this->sut->setServiceLocator($this->sm);
         return parent::setUp();
