@@ -16,6 +16,28 @@ use Common\Service\Entity\TransportManagerApplicationEntityService;
  */
 class TransportManagerApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 {
+    protected $dataBundle =[
+        'children' => [
+            'application' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
+                ]
+            ],
+            'tmApplicationStatus',
+            'transportManager',
+            'tmType',
+            'tmApplicationOcs' => [
+                'children' => [
+                    'operatingCentre'
+                ]
+            ]
+        ]
+    ];
+
     protected function setUp()
     {
         $this->sut = new TransportManagerApplicationEntityService();
@@ -24,6 +46,8 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
     }
 
     /**
+     * Test get transport manager appplications
+     * 
      * @group transportManagerApplication
      */
     public function testGetTransportManagerApplications()
@@ -43,7 +67,11 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'tmApplicationStatus',
                 'transportManager',
                 'tmType',
-                'tmApplicationOcs'
+                'tmApplicationOcs' => [
+                    'children' => [
+                        'operatingCentre'
+                    ]
+                ]
             ]
         ];
         $returnValue = [
@@ -98,9 +126,22 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                 'apsts_granted'
             ],
         ];
-        $this->expectOneRestCall('TransportManagerApplication', 'GET', $query, $bundle)
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', $query, $this->dataBundle)
             ->will($this->returnValue($returnValue));
 
         $this->assertEquals($expectedValue, $this->sut->getTransportManagerApplications($id, $status));
+    }
+
+    /**
+     * Test get transport manager appplication
+     * 
+     * @group transportManagerApplication
+     */
+    public function testGetTransportManagerApplication()
+    {
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', 1, $this->dataBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTransportManagerApplication(1));
     }
 }

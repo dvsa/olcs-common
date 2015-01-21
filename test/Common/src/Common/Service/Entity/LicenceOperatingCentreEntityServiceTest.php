@@ -69,4 +69,26 @@ class LicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTestC
 
         $this->assertEquals('SAVED', $this->sut->variationDelete($id, $appId));
     }
+
+    /**
+     * Test GetOperatingCentresForLicence
+     *
+     * @group licenceOperatingCentreEntity
+     */
+    public function testGetOperatingCentresForLicence()
+    {
+        $bundle = [
+            'children' => [
+                'operatingCentre' => [
+                    'children' => [
+                        'address'
+                    ]
+                ]
+            ]
+        ];
+        $this->expectOneRestCall('LicenceOperatingCentre', 'GET', ['licence' => 1], $bundle)
+            ->will($this->returnValue('response'));
+
+        $this->assertEquals('response', $this->sut->getOperatingCentresForLicence(1));
+    }
 }
