@@ -43,7 +43,7 @@ class TmApplicationOperatingCentreEntityService extends AbstractEntityService
      * Delete by transport manager application id and operating centre ids
      *
      * @param int $tmAppIds
-     * @return array
+     * @param array $ocIds
      */
     public function deleteByTmAppAndIds($tmAppId, $ocIds)
     {

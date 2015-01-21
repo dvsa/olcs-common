@@ -3,7 +3,7 @@
 /**
  * Test hours per day
  *
- * @author Alex Peshkov <alex.peshkov@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace CommonTest\Form\Elements\InputFilters;
 
@@ -14,7 +14,7 @@ use Zend\Validator as ZendValidator;
 /**
  * Test Hours Per Day Input Filter
  *
- * @author Alex Peshkov <alex.peshkov@clocal.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class HoursPerDayTest extends PHPUnit_Framework_TestCase
 {
