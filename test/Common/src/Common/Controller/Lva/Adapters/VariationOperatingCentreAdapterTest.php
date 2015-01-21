@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter;
 use Common\Service\Entity\LicenceEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Variation Operating Centre Adapter Test
@@ -36,6 +37,15 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut = new VariationOperatingCentreAdapter();
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setController($this->controller);
+    }
+
+    /**
+     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
+     * these tests should be addresses
+     */
+    protected function getServiceManager()
+    {
+        return Bootstrap::getRealServiceManager();
     }
 
     public function testSaveMainFormData()
@@ -488,7 +498,7 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         ];
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
-        $sm = \CommonTest\Bootstrap::getServiceManager();
+        $sm = $this->getServiceManager();
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
@@ -602,7 +612,7 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         ];
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
-        $sm = \CommonTest\Bootstrap::getServiceManager();
+        $sm = $this->getServiceManager();
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
