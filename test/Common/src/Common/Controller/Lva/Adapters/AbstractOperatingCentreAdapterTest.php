@@ -50,4 +50,11 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->sut->disableValidation($form);
     }
+
+    public function testAlterFormData()
+    {
+        $data = ['foo' => 'bar'];
+
+        $this->assertEquals($data, $this->sut->alterFormData(2, $data));
+    }
 }
