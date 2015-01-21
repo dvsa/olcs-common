@@ -31,7 +31,9 @@ class Module
         $events = $e->getApplication()->getEventManager();
 
         $missingTranslationProcessor = new \Common\Service\Translator\MissingTranslationProcessor(
-            $e->getApplication()->getServiceManager()
+            // Inject the renderer and template resolver
+            $e->getApplication()->getServiceManager()->get('ViewRenderer'),
+            $e->getApplication()->getServiceManager()->get('Zend\View\Resolver\TemplatePathStack')
         );
 
         $events->attach(

@@ -110,3 +110,15 @@ $cyGbContent .= "\n);\n";
 
 file_put_contents($translationLocation . 'en_GB.php', $enGbContent);
 file_put_contents($translationLocation . 'cy_GB.php', $cyGbContent);
+
+
+// markup partial translations
+$partials = new DirectoryIterator($translationLocation.'partials/en_GB');
+foreach ($partials as $file) {
+    if (!$file->isDot()) {
+        $source = $file->getPathname(); //. "\n";
+        $dest = str_replace('en_GB', 'cy_GB', $source);
+        copy($source, $dest);
+    }
+}
+// @TODO handle nested partials

@@ -14,11 +14,18 @@ namespace Common\Service\Translator;
  */
 class MissingTranslationProcessor
 {
-    protected $sm;
+    /**
+     * @var Zend\View\Renderer\RendererInterface
+     */
+    protected $renderer;
 
-    public function __construct($sm)
+    /**
+     * @param Zend\View\Renderer\RendererInterface
+     */
+    public function __construct($renderer, $resolver)
     {
-        $this->sm = $sm;
+        $this->renderer = $renderer;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -36,21 +43,21 @@ class MissingTranslationProcessor
 
         if (preg_match_all('/\{([^\}]+)\}/', $message, $matches)) {
 
+            // handles nested translation keys inside curly braces {}
             foreach ($matches[0] as $key => $match) {
                 $message = str_replace($match, $translator->translate($matches[1][$key]), $message);
             }
+
         } else {
 
-            $locale = $params['locale'];
-
-            $partial = __DIR__ . '/../../../../config/language/partials/' . $locale . '/' . $message . '.phtml';
-
-            if (file_exists($partial)) {
-
-                $renderer = $this->sm->get('ViewRenderer');
-
-                $message = $renderer->render($locale . '/' . $message);
+            // handles partials as translations
+            $locale    = $params['locale'];
+            $partial   = $locale . '/' . $message; // e.g. en_GB/my-translation-key
+            $foundPath = $this->resolver->resolve($partial);
+            if ($foundPath !== false) {
+                $message = $this->renderer->render($partial);
             }
+
         }
 
         return $message;
