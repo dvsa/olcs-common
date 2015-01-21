@@ -13,6 +13,12 @@ use Zend\Form\Annotation as Form;
 class Undertakings
 {
     /**
+     * @Form\Name("declarationsAndUndertakings")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\DeclarationsAndUndertakings")
+     */
+    public $declarationsAndUndertakings = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
