@@ -17,5 +17,6 @@ class BusReg extends Bundle
     public function init(ServiceLocatorInterface $serviceLocator)
     {
         $this->addChild('licence', $serviceLocator->get('Licence'));
+        $this->addChild('status');
     }
 }
