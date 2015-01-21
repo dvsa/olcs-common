@@ -22,6 +22,12 @@ class CommunityLicenceFilter
     public $status = null;
 
     /**
+     * @Form\Attributes({"value":1})
+     * @Form\Type("Hidden")
+     */
+    public $isFiltered = null;
+
+    /**
      * @Form\Attributes({"type":"submit","class":"action--primary","data-container-class":"js-hidden"})
      * @Form\Options({
      *     "label": "lva-community-licence-filter-button"

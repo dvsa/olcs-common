@@ -1004,7 +1004,7 @@ return array(
     'lva-community-licences-table-column-issue-number' => 'Issue number',
     'lva-community-licences-table-column-prefix' => 'Prefix',
     'lva-community-licences-table-column-status' => 'Status',
-    'lva-community-licences-table-empty-message' => 'You have not added any community licences',
+    'lva-community-licences-table-empty-message' => 'No community licences match your current criteria',
     'lva-community-licences-table-title' => 'Community licences',
     'lva-financial-evidence-table.file-name' => 'File name',
     'lva-financial-evidence-table.title' => 'Financial evidence',

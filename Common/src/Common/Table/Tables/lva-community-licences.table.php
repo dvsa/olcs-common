@@ -25,7 +25,7 @@ return array(
         ),
         array(
             'title' => 'lva-community-licences-table-column-issue-date',
-            'name' => 'issuedDate',
+            'name' => 'specifiedDate',
             'formatter' => 'Date'
         ),
         array(

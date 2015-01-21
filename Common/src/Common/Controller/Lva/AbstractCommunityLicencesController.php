@@ -19,10 +19,12 @@ abstract class AbstractCommunityLicencesController extends AbstractController
     protected $section = 'community_licences';
 
     protected $defaultFilters = [
-        CommunityLicEntityService::STATUS_PENDING,
-        CommunityLicEntityService::STATUS_VALID,
-        CommunityLicEntityService::STATUS_WITHDRAWN,
-        CommunityLicEntityService::STATUS_SUSPENDED
+        'status' => [
+            CommunityLicEntityService::STATUS_PENDING,
+            CommunityLicEntityService::STATUS_VALID,
+            CommunityLicEntityService::STATUS_WITHDRAWN,
+            CommunityLicEntityService::STATUS_SUSPENDED
+        ]
     ];
 
     protected $filters = [];
@@ -39,7 +41,16 @@ abstract class AbstractCommunityLicencesController extends AbstractController
             return $this->completeSection('community_licences');
         }
 
-        $this->filters = ['status' => $this->params()->fromQuery('status', $this->defaultFilters)];
+        $filterStatuses = $this->params()->fromQuery('status');
+        $hasFiltered = $this->params()->fromQuery('isFiltered');
+
+        if (empty($filterStatuses) && empty($hasFiltered)) {
+            $this->filters = $this->defaultFilters;
+        } else {
+            $this->filters = [
+                'status' => empty($filterStatuses) ? 'NULL': $filterStatuses
+            ];
+        }
 
         $filterForm = $this->getFilterForm()->setData($this->filters);
 
@@ -92,15 +103,9 @@ abstract class AbstractCommunityLicencesController extends AbstractController
      */
     private function getTableData()
     {
-        if (isset($this->filters['status'])) {
-            $statuses = $this->filters['status'];
-        } else {
-            $statuses = 'NULL';
-        }
-
         $query = [
             'licence' => $this->getLicenceId(),
-            'status' => $statuses,
+            'status' => $this->filters['status'],
             'sort' => 'issueNo',
             'order' => 'DESC'
         ];
