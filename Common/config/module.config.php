@@ -219,7 +219,8 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'partials/view' => __DIR__ . '/../view'
+            'partials/view' => __DIR__ . '/../view',
+            'translations' => __DIR__ . '/../config/language/partials'
         )
     ),
     'local_scripts_path' => [__DIR__ . '/../src/Common/assets/js/inline/'],

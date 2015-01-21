@@ -12,15 +12,22 @@ namespace Common\Service\Translator;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class MissingTranslationProcessor implements EventProcessor
+class MissingTranslationProcessor
 {
+    protected $sm;
+
+    public function __construct($sm)
+    {
+        $this->sm = $sm;
+    }
+
     /**
      * Process an event
      *
      * @param object $e
      * @return string
      */
-    public static function processEvent($e)
+    public function processEvent($e)
     {
         $translator = $e->getTarget();
         $params = $e->getParams();
@@ -31,6 +38,18 @@ class MissingTranslationProcessor implements EventProcessor
 
             foreach ($matches[0] as $key => $match) {
                 $message = str_replace($match, $translator->translate($matches[1][$key]), $message);
+            }
+        } else {
+
+            $locale = $params['locale'];
+
+            $partial = __DIR__ . '/../../../../config/language/partials/' . $locale . '/' . $message . '.phtml';
+
+            if (file_exists($partial)) {
+
+                $renderer = $this->sm->get('ViewRenderer');
+
+                $message = $renderer->render($locale . '/' . $message);
             }
         }
 
