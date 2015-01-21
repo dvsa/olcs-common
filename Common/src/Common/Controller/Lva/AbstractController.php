@@ -14,6 +14,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
 use Common\Exception\ResourceConflictException;
+use Common\Controller\Traits\GenericUpload;
 
 /**
  * Lva Abstract Controller
@@ -23,6 +24,7 @@ use Common\Exception\ResourceConflictException;
 abstract class AbstractController extends AbstractActionController
 {
     use Util\FlashMessengerTrait;
+    use GenericUpload;
 
     /**
      * Handle cancel redirect is implemented differently internally than externally
@@ -292,46 +294,6 @@ abstract class AbstractController extends AbstractActionController
         $documentService->delete($id);
 
         return true;
-    }
-
-    protected function processFiles($form, $selector, $uploadCallback, $deleteCallback, $loadCallback)
-    {
-        $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
-
-        $uploadHelper->setForm($form)
-            ->setSelector($selector)
-            ->setUploadCallback($uploadCallback)
-            ->setDeleteCallback($deleteCallback)
-            ->setLoadCallback($loadCallback)
-            ->setRequest($this->getRequest());
-
-        return $uploadHelper->process();
-    }
-
-    /**
-     * Upload a file
-     *
-     * @param array $fileData
-     * @param array $data
-     */
-    protected function uploadFile($fileData, $data)
-    {
-        $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
-        $uploader->setFile($fileData);
-
-        $file = $uploader->upload();
-
-        $docData = array_merge(
-            array(
-                'filename'      => $file->getName(),
-                'identifier'    => $file->getIdentifier(),
-                'size'          => $file->getSize(),
-                'fileExtension' => 'doc_' . $file->getExtension()
-            ),
-            $data
-        );
-
-        $this->getServiceLocator()->get('Entity\Document')->save($docData);
     }
 
     /**
