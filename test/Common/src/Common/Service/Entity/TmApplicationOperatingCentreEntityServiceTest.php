@@ -70,4 +70,28 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
 
         $this->sut->deleteByTmAppAndIds(1, [1,2]);
     }
+
+    /**
+     * Test deleteByTmApplication
+     * 
+     * @group tmApplicationOCEntityService
+     */
+    public function testDeleteByTmApplication()
+    {
+        $query = [
+            'transportManagerApplication' => 1,
+            'limit' => 'all'
+        ];
+        $response = [
+            'Results' => [
+                ['id' => 1],
+            ]
+        ];
+        $this->expectedRestCallInOrder('TmApplicationOc', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->expectedRestCallInOrder('TmApplicationOc', 'DELETE', ['id' => 1]);
+
+        $this->sut->deleteByTmApplication(1);
+    }
 }

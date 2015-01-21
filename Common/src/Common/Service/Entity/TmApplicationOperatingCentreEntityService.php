@@ -65,4 +65,22 @@ class TmApplicationOperatingCentreEntityService extends AbstractEntityService
             }
         }
     }
+
+    /**
+     * Delete by transport manager application id
+     *
+     * @param int $id
+     */
+    public function deleteByTmApplication($id)
+    {
+        $query = [
+            'transportManagerApplication' => $id,
+        ];
+        $data = $this->getAll($query, $this->dataBundle);
+        if (count($data['Results'])) {
+            foreach ($data['Results'] as $record) {
+                $this->delete($record['id']);
+            }
+        }
+    }
 }
