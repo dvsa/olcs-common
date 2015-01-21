@@ -57,6 +57,20 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
+    /**
+     * @var array
+     */
+    private $latestOutstandingFeeForBundle = array(
+        'children' => array(
+            'application',
+            'licence',
+            'feeType' => array(
+                'properties' => 'id',
+                'children' => array('accrualRule' => array())
+            )
+        )
+    );
+
     public function getApplication($id)
     {
         $data = $this->get($id, $this->applicationIdBundle);
@@ -92,7 +106,7 @@ class FeeEntityService extends AbstractLvaEntityService
             'limit' => 1,
         ];
 
-        $data = $this->get($params, array('properties' => array('id')));
+        $data = $this->get($params, $this->latestOutstandingFeeForBundle);
 
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }

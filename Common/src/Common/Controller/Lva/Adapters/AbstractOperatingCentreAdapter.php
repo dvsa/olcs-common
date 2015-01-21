@@ -85,6 +85,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         )
     );
 
+    public function alterFormData($id, $data)
+    {
+        return $data;
+    }
+
     /**
      * Add messages to the main index page
      */
@@ -425,7 +430,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     }
 
     /**
-     * Get the relevant *OperatingCentre entity service based on the LVA type
+     * Get the relevant ****OperatingCentre entity service based on the LVA type
      *
      * @return Common\Service\Entity\AbstractEntityService
      */

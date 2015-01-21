@@ -22,6 +22,7 @@ use Common\Service\Entity\FeeEntityService;
 use Common\Util\LoggerTrait;
 use CpmsClient\Service\ApiService;
 use Common\Service\Listener\FeeListenerService;
+use Common\Service\Data\FeeTypeDataService;
 
 /**
  * Fee Payment Helper Service
@@ -39,6 +40,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     const RESPONSE_SUCCESS = '000';
 
+    const DATE_FORMAT = 'd-m-Y'; // CPMS' preferred date format
+
     // @TODO product ref shouldn't have to come from a whitelist...
     const PRODUCT_REFERENCE = 'GVR_APPLICATION_FEE';
 
@@ -53,32 +56,33 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * @param string $customerReference usually organisation id
+     * @param string $redirectUrl redirect back to here from payment gateway
+     * @param array $fees
+     *
      * @return array
      * @throws Common\Service\Cpms\PaymentInvalidResponseException on error
      */
-    public function initiateCardRequest($customerReference, $salesReference, $redirectUrl, array $fees)
+    public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
     {
-        $amount = array_reduce(
-            $fees,
-            function ($carry, $item) {
-                $carry += $item['amount'];
-                return $carry;
-            }
-        );
-
+        $paymentData = [];
+        foreach ($fees as $fee) {
+            $paymentData[] = [
+                'amount' => $fee['amount'],
+                'sales_reference' => (string)$fee['id'],
+                'product_reference' => self::PRODUCT_REFERENCE,
+                'payment_reference' => [
+                    'rule_start_date' => $this->getRuleStartDate($fee),
+                ],
+            ];
+        }
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
             'scope' => ApiService::SCOPE_CARD,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
-            'payment_data' => [
-                [
-                    'amount' => $amount,
-                    'sales_reference' => (string)$salesReference,
-                    'product_reference' => self::PRODUCT_REFERENCE,
-                ]
-            ],
+            'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
@@ -130,7 +134,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordCashPayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -143,6 +146,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
 
         $receiptDate = $this->formatReceiptDate($receiptDate);
+        $ruleStartDate = $this->getRuleStartDate($fee);
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => ApiService::SCOPE_CASH,
@@ -150,12 +154,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer, // not sure this is supported for CASH payments
                     'payment_reference' => [
                         'slip_number' => (string)$slipNo,
                         'receipt_date' => $receiptDate,
+                        'rule_start_date' => $ruleStartDate,
                     ],
                 ]
             ],
@@ -202,7 +207,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordChequePayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -215,6 +219,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
 
         $receiptDate = $this->formatReceiptDate($receiptDate);
+        $ruleStartDate = $this->getRuleStartDate($fee);
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => ApiService::SCOPE_CHEQUE,
@@ -222,13 +227,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [
                         'slip_number' => (string)$slipNo,
                         'receipt_date' => $receiptDate,
                         'cheque_number' => (string)$chequeNo,
+                        'rule_start_date' => $ruleStartDate,
                     ],
                 ]
             ],
@@ -276,7 +282,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function recordPostalOrderPayment(
         $fee,
         $customerReference,
-        $salesReference,
         $amount,
         $receiptDate,
         $payer,
@@ -289,6 +294,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
 
         $receiptDate = $this->formatReceiptDate($receiptDate);
+        $ruleStartDate = $this->getRuleStartDate($fee);
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => ApiService::SCOPE_POSTAL_ORDER,
@@ -296,13 +302,15 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'payment_data' => [
                 [
                     'amount' => $amount,
-                    'sales_reference' => $salesReference,
+                    'sales_reference' => (string)$fee['id'],
                     'product_reference' => self::PRODUCT_REFERENCE,
                     'payer_details' => $payer,
                     'payment_reference' => [
                         'slip_number' => (string)$slipNo,
                         'receipt_date' => $receiptDate,
-                        'postal_order_number' => [ $poNo ] // array!
+                        'postal_order_number' => [ $poNo ], // array!
+                        'rule_start_date' => $ruleStartDate,
+
                     ],
                 ]
             ],
@@ -382,7 +390,51 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if (is_array($date)) {
             $date = $this->getServiceLocator()->get('Helper\Date')->getDateObjectFromArray($date);
         }
-        return $date->format('d-m-Y');
+        return $date->format(self::DATE_FORMAT);
+    }
+
+    /**
+     * Determine 'rule start date' for a fee
+     *
+     * @see https://jira.i-env.net/browse/OLCS-6005 for business rules
+     *
+     * @param array $fee
+     * @return string date in CPMS format <dd-mm-YYYY>
+     */
+    public function getRuleStartDate($fee)
+    {
+        if (isset($fee['feeType']['accrualRule']['id'])) {
+            $rule = $fee['feeType']['accrualRule']['id'];
+            $dateHelper = $this->getServiceLocator()->get('Helper\Date');
+            switch ($rule) {
+                case FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE:
+                    $date = $dateHelper->getDateObject();
+                    return $date->format(self::DATE_FORMAT);
+                case FeeTypeDataService::ACCRUAL_RULE_LICENCE_START:
+                    $licenceStart = isset($fee['licence']['inForceDate'])
+                        ? $fee['licence']['inForceDate']
+                        : null;
+                    if (!is_null($licenceStart)) {
+                        $date = $dateHelper->getDateObject($licenceStart);
+                        return $date->format(self::DATE_FORMAT);
+                    }
+                    break;
+                case FeeTypeDataService::ACCRUAL_RULE_CONTINUATION:
+                    // The licence continuation date + 1 day (according to calendar dates)
+                    $licenceExpiry = isset($fee['licence']['expiryDate'])
+                        ? $fee['licence']['expiryDate']
+                        : null;
+                    if (!is_null($licenceExpiry)) {
+                        $date = $dateHelper->getDateObject($licenceExpiry);
+                        $date->add(new \DateInterval('P1D'));
+                        return $date->format(self::DATE_FORMAT);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return null;
     }
 
     public function handleResponse($data, $fees)

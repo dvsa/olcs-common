@@ -242,6 +242,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $ocDataForVariationBundle = array(
+        'children' => array(
+            'licence'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -517,5 +523,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $this->getServiceLocator()->get('Entity\Licence')->delete($licenceId);
 
         parent::delete($id);
+    }
+
+    public function getLicenceTotCommunityLicences($id)
+    {
+        $data = $this->get($id, $this->ocDataForVariationBundle);
+
+        return $data['licence']['totCommunityLicences'];
     }
 }
