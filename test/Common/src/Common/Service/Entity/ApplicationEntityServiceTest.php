@@ -659,4 +659,19 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
+
+    public function testGetLicenceTotCommunityLicences()
+    {
+        $id = 3;
+        $stubbedData = [
+            'licence' => [
+                'totCommunityLicences' => 20
+            ]
+        ];
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($stubbedData));
+
+        $this->assertEquals(20, $this->sut->getLicenceTotCommunityLicences($id));
+    }
 }

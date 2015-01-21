@@ -589,6 +589,7 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                 $scope->mockDataInputFilter = m::mock();
                 $scope->mockValidatorChain = m::mock();
                 $scope->mockDataElement = m::mock();
+                $scope->mockCommunityFilter = m::mock();
 
                 // Expectations
                 $scope->mockLicenceAdapter->shouldReceive('setController')
@@ -613,7 +614,10 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                     ->with('totAuthVehicles')
                     ->andReturnSelf()
                     ->shouldReceive('getValidatorChain')
-                    ->andReturn($scope->mockValidatorChain);
+                    ->andReturn($scope->mockValidatorChain)
+                    ->shouldReceive('get')
+                    ->with('totCommunityLicences')
+                    ->andReturn($scope->mockCommunityFilter);
 
                 $scope->mockInputFilter->shouldReceive('get')
                     ->with('data')
@@ -643,8 +647,11 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                     ->with('totCommunityLicences')
                     ->andReturn(true);
 
-                $scope->mockFormHelper->shouldReceive('remove')
+                $scope->mockFormHelper->shouldReceive('disableElement')
                     ->with($scope->mockForm, 'data->totCommunityLicences');
+
+                $scope->mockFormHelper->shouldReceive('disableValidation')
+                    ->with($scope->mockCommunityFilter);
             }
         );
 
@@ -912,5 +919,31 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                 );
             }
         );
+    }
+
+    public function testSaveMainFormData()
+    {
+        $this->setUpTest();
+
+        // Stubbed data
+        $data = [
+            'foo' => 'bar',
+            'totCommunityLicences' => 'abc'
+        ];
+
+        // Mock services
+        $mockDataService = m::mock();
+        $this->sm->setService('Helper\Data', $mockDataService);
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $mockDataService->shouldReceive('processDataMap')
+            ->with($data, ['main' => ['mapFrom' => ['data', 'dataTrafficArea']]])
+            ->andReturn($data);
+
+        $mockLicenceEntity->shouldReceive('save')
+            ->with(['foo' => 'bar']);
+
+        $this->sut->saveMainFormData($data);
     }
 }
