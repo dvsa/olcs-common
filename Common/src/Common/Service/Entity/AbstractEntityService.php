@@ -29,9 +29,16 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
 
     protected $cache = [];
 
+    protected $listBundle;
+
     public function getById($id)
     {
         return $this->get($id);
+    }
+
+    public function getList($query)
+    {
+        return $this->get($query, $this->listBundle);
     }
 
     /**

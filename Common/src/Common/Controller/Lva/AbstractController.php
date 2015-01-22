@@ -354,4 +354,15 @@ abstract class AbstractController extends AbstractActionController
         $this->loggedInUser = $id;
         return $this;
     }
+
+    /**
+     * This method is overidden for applications
+     *
+     * @param int $applicationId
+     * @return int
+     */
+    protected function getLicenceId($applicationId = null)
+    {
+        return $this->getIdentifier();
+    }
 }
