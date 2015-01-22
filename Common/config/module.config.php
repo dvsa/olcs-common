@@ -302,7 +302,6 @@ return array(
             'Common\Service\Data\LicenceOperatingCentre' =>
                 'Common\Service\Data\LicenceOperatingCentre',
         ]
-        
     ],
     'tables' => array(
         'config' => array(
