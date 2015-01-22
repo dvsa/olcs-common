@@ -248,6 +248,18 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $undertakingsDataBundle = array(
+        'children' => [
+            'goodsOrPsv',
+            'licenceType',
+            'licence' => [
+                'children' => [
+                    'licenceType',
+                ],
+            ],
+        ]
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -464,6 +476,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForVehiclesDeclarations($id)
     {
         return $this->get($id, $this->vehicleDeclarationDataBundle);
+    }
+
+    public function getDataForUndertakings($id)
+    {
+        return $this->get($id, $this->undertakingsDataBundle);
     }
 
     public function getStatus($id)
