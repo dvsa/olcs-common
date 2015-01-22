@@ -252,6 +252,10 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
             );
 
+            $this->sections['convictions_penalties']['restricted'][] = array(
+                'variation',
+                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
+            );
         }
     }
 

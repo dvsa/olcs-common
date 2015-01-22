@@ -74,6 +74,23 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @var array
      */
+    private $variationCompletionStatusDataBundle = array(
+        'children' => array(
+            'licenceType',
+            'operatingCentres',
+            'licence' => array(
+                'children' => array(
+                    'licenceType'
+                )
+            )
+        )
+    );
+
+    /**
+     * Bundle to retrieve data to update completion status
+     *
+     * @var array
+     */
     private $completionStatusDataBundle = array(
         'children' => array(
             'goodsOrPsv',
@@ -247,6 +264,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licence'
         )
     );
+
+    public function getVariationCompletionStatusData($id)
+    {
+        return $this->get($id, $this->variationCompletionStatusDataBundle);
+    }
 
     /**
      * Get applications for a given organisation
