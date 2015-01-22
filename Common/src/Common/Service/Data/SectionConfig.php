@@ -10,14 +10,18 @@ namespace Common\Service\Data;
 use Common\Service\Entity\LicenceEntityService;
 use Zend\Filter\Word\UnderscoreToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Section Config
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class SectionConfig
+class SectionConfig implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     /**
      * Holds the section config
      *
@@ -237,6 +241,20 @@ class SectionConfig
         ),
     );
 
+    protected $init = false;
+
+    protected function initSections()
+    {
+        if ($this->init === false) {
+
+            $this->sections['financial_history']['restricted'][] = array(
+                'variation',
+                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
+            );
+
+        }
+    }
+
     /**
      * Return all sections
      *
@@ -244,6 +262,8 @@ class SectionConfig
      */
     public function getAll()
     {
+        $this->initSections();
+
         return $this->sections;
     }
 

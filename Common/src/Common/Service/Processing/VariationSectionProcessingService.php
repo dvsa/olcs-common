@@ -36,6 +36,20 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     ];
 
     protected $sectionCompletion;
+    protected $applicationId;
+
+    public function setApplicationId($applicationId)
+    {
+        $this->applicationId = $applicationId;
+    }
+
+    public function isNotUnchanged($section)
+    {
+        $this->getSectionCompletion($this->applicationId);
+
+        return isset($this->sectionCompletion[$section])
+            && $this->sectionCompletion[$section] != VariationCompletionEntityService::STATUS_UNCHANGED;
+    }
 
     public function completeSection($applicationId, $section)
     {

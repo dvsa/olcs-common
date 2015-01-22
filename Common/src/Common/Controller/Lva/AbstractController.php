@@ -130,11 +130,18 @@ abstract class AbstractController extends AbstractActionController
             $licenceType['licenceType']
         );
 
+        if ($this->lva === 'variation') {
+            $this->getServiceLocator()->get('Processing\VariationSection')
+                ->setApplicationId($this->getIdentifier());
+        }
+
         $sectionConfig = new SectionConfig();
+        $sectionConfig->setServiceLocator($this->getServiceLocator());
+
         $inputSections = $sectionConfig->getAll();
 
-        $sections = $this->getServiceLocator()->get('Helper\Access')->setSections($inputSections)
-            ->getAccessibleSections($access);
+        $sections = $this->getServiceLocator()->get('Helper\Access')
+            ->setSections($inputSections)->getAccessibleSections($access);
 
         if ($keysOnly) {
             $sections = array_keys($sections);
