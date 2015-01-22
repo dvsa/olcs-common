@@ -898,6 +898,9 @@ return array(
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
     'internal.transport-manager.competences.form.serial' => 'Serial',
+    'internal.transport-manager.competences.form.upload.header' => 'Certificate of professional competence',
+    'internal.transport-manager.competences.form.upload.text' => 'Upload a copy of your certificate of professional
+        competence or exemption certificate',
     'internal.transport-manager.competences.table.qualification' => 'Qualification',
     'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
