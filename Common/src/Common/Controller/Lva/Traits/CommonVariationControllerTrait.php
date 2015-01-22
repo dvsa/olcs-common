@@ -30,7 +30,8 @@ trait CommonVariationControllerTrait
 
     protected function postSave($section)
     {
-
+        $this->getServiceLocator()->get('Processing\VariationSection')
+            ->completeSection($this->getApplicationId(), $section);
     }
 
     /**
@@ -48,11 +49,9 @@ trait CommonVariationControllerTrait
         if (!isset($sections[$index + 1])) {
             return $this->goToOverview($this->getApplicationId());
         } else {
+            $params = array($this->getIdentifierIndex() => $this->getApplicationId());
             return $this->redirect()
-                ->toRouteAjax(
-                    'lva-variation/' . $sections[$index + 1],
-                    array($this->getIdentifierIndex() => $this->getApplicationId())
-                );
+                ->toRouteAjax('lva-variation/' . $sections[$index + 1], $params);
         }
     }
 }
