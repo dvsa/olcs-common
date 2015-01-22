@@ -542,7 +542,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         return $data['licence']['totCommunityLicences'];
     }
-    
+
     public function getLicenceType($id)
     {
         return $this->get($id, $this->licenceTypeBundle);
