@@ -233,6 +233,9 @@ class SectionConfig
                         'external',
                     )
                 )
+            ),
+            'prerequisite' => array(
+                'type_of_licence'
             )
         ),
     );
