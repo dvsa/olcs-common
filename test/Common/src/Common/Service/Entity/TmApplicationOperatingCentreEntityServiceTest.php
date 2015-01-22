@@ -54,20 +54,9 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
         $query = [
             'transportManagerApplication' => 1,
             'operatingCentre' => 'IN ["1", "2"]',
-            'limit' => 'all'
         ];
-        $response = [
-            'Results' => [
-                ['id' => 1],
-                ['id' => 2]
-            ]
-        ];
-        $this->expectedRestCallInOrder('TmApplicationOc', 'GET', $query)
-            ->will($this->returnValue($response));
-
-        $this->expectedRestCallInOrder('TmApplicationOc', 'DELETE', ['id' => 1]);
-        $this->expectedRestCallInOrder('TmApplicationOc', 'DELETE', ['id' => 2]);
-
+        $this->expectOneRestCall('TmApplicationOc', 'DELETE', $query)
+            ->will($this->returnValue('RESPONSE'));
         $this->sut->deleteByTmAppAndIds(1, [1,2]);
     }
 
@@ -78,19 +67,8 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
      */
     public function testDeleteByTmApplication()
     {
-        $query = [
-            'transportManagerApplication' => 1,
-            'limit' => 'all'
-        ];
-        $response = [
-            'Results' => [
-                ['id' => 1],
-            ]
-        ];
-        $this->expectedRestCallInOrder('TmApplicationOc', 'GET', $query)
-            ->will($this->returnValue($response));
-
-        $this->expectedRestCallInOrder('TmApplicationOc', 'DELETE', ['id' => 1]);
+        $this->expectOneRestCall('TmApplicationOc', 'DELETE', ['transportManagerApplication' => 1])
+            ->will($this->returnValue('RESPONSE'));
 
         $this->sut->deleteByTmApplication(1);
     }

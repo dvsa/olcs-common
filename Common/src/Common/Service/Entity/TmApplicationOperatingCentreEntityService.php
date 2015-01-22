@@ -57,12 +57,7 @@ class TmApplicationOperatingCentreEntityService extends AbstractEntityService
                 'transportManagerApplication' => $tmAppId,
                 'operatingCentre' => 'IN [' . $allIds . ']'
             ];
-            $data = $this->getAll($query, $this->dataBundle);
-            if (count($data['Results'])) {
-                foreach ($data['Results'] as $record) {
-                    $this->delete($record['id']);
-                }
-            }
+            $this->deleteList($query);
         }
     }
 
@@ -76,11 +71,6 @@ class TmApplicationOperatingCentreEntityService extends AbstractEntityService
         $query = [
             'transportManagerApplication' => $id,
         ];
-        $data = $this->getAll($query, $this->dataBundle);
-        if (count($data['Results'])) {
-            foreach ($data['Results'] as $record) {
-                $this->delete($record['id']);
-            }
-        }
+        $this->deleteList($query);
     }
 }
