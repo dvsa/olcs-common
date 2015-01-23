@@ -10,16 +10,17 @@ use Zend\Form\Annotation as Form;
 class DeclarationsAndUndertakings
 {
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
+     * @Form\Attributes({"value": "markup-review-text"})
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $version = null;
+    public $review = null;
 
     /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
+     * @Form\Attributes({"value": "<h3>%s</h3>" })
+     * @Form\Options({"tokens": { 0: "section.name.undertakings" } })
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $id = null;
+    public $heading = null;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
@@ -41,4 +42,15 @@ class DeclarationsAndUndertakings
      */
     public $declarations = null;
 
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $id = null;
 }
