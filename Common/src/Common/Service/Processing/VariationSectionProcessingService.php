@@ -73,79 +73,11 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'safety' => 'hasSavedSection',
         'conditions_undertakings' => 'hasUpdatedConditionsUndertakings',
         'financial_history' => 'hasUpdatedFinancialHistory',
+        // @NOTE Not sure if we need this just yet
         //'licence_history' => 'hasUpdatedLicenceHistory',
         'convictions_penalties' => 'hasUpdatedConvictionsPenalties',
         'undertakings' => 'hasUpdatedUndertakings'
     ];
-
-    protected function hasCompletedFields($data, $fields)
-    {
-        foreach ($fields as $field) {
-            if (!empty($data[$field])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /*public function hasUpdatedLicenceHistory()
-    {
-        $data = $this->getVariationCompletionStatusData();
-
-        $fields = [
-            'prevHasLicence',
-            'prevHadLicence',
-            'prevBeenRefused',
-            'prevBeenRevoked',
-            'prevBeenAtPi',
-            'prevBeenDisqualifiedTc',
-            'prevPurchasedAssets'
-        ];
-
-        return $this->hasCompletedFields($data, $fields);
-    }*/
-
-    public function hasUpdatedFinancialHistory()
-    {
-        $data = $this->getVariationCompletionStatusData();
-
-        $fields = [
-            'bankrupt',
-            'administration',
-            'disqualified',
-            'liquidation',
-            'receivership',
-            'insolvencyConfirmation',
-            'insolvencyDetails'
-        ];
-
-        return $this->hasCompletedFields($data, $fields);
-    }
-
-    public function hasUpdatedVehicleDeclarations()
-    {
-        $data = $this->getVariationCompletionStatusData();
-
-        $fields = [
-            'psvOperateSmallVhl',
-            'psvSmallVhlNotes',
-            'psvSmallVhlConfirmation',
-            'psvNoSmallVhlConfirmation',
-            'psvLimousines',
-            'psvNoLimousineConfirmation',
-            'psvOnlyLimousinesConfirmation'
-        ];
-
-        return $this->hasCompletedFields($data, $fields);
-    }
-
-    public function hasUpdatedConditionsUndertakings()
-    {
-        $data = $this->getVariationCompletionStatusData();
-
-        return !empty($data['conditionUndertakings']);
-    }
 
     /**
      * Setter for application id
@@ -193,16 +125,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Entity\VariationCompletion')
             ->updateCompletionStatuses($this->getApplicationId(), $this->sectionCompletion);
-    }
-
-    protected function resetUndertakings()
-    {
-        $data = [
-            'declarationConfirmation' => 0
-        ];
-
-        $this->getServiceLocator()->get('Entity\Application')->forceUpdate($this->getApplicationId(), $data);
-        $this->markSectionRequired('undertakings');
     }
 
     /**
@@ -317,6 +239,11 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         return !empty($data['transportManagers']);
     }
 
+    /**
+     * If we have updated the vehicles section
+     *
+     * @return boolean
+     */
     public function hasUpdatedVehicles()
     {
         $data = $this->getVariationCompletionStatusData();
@@ -324,6 +251,11 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         return !empty($data['licenceVehicles']);
     }
 
+    /**
+     * If we have updated convictions penalties section
+     *
+     * @return boolean
+     */
     public function hasUpdatedConvictionsPenalties()
     {
         $data = $this->getVariationCompletionStatusData();
@@ -339,13 +271,90 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         return false;
     }
 
+    /**
+     * If we have updated undertakings
+     *
+     * @return boolean
+     */
     public function hasUpdatedUndertakings()
     {
         $data = $this->getVariationCompletionStatusData();
 
-        // @todo
-        //return $data['declaration_confirmation'] == 1;
-        return true;
+        return $data['declaration_confirmation'] == 1;
+    }
+
+    /** Not sure if this is needed yet
+    public function hasUpdatedLicenceHistory()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenRefused',
+            'prevBeenRevoked',
+            'prevBeenAtPi',
+            'prevBeenDisqualifiedTc',
+            'prevPurchasedAssets'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }*/
+
+    /**
+     * If we have updated financial history
+     *
+     * @return boolean
+     */
+    public function hasUpdatedFinancialHistory()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'bankrupt',
+            'administration',
+            'disqualified',
+            'liquidation',
+            'receivership',
+            'insolvencyConfirmation',
+            'insolvencyDetails'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }
+
+    /**
+     * If we have updated vehicle declarations
+     *
+     * @return boolean
+     */
+    public function hasUpdatedVehicleDeclarations()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'psvOperateSmallVhl',
+            'psvSmallVhlNotes',
+            'psvSmallVhlConfirmation',
+            'psvNoSmallVhlConfirmation',
+            'psvLimousines',
+            'psvNoLimousineConfirmation',
+            'psvOnlyLimousinesConfirmation'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }
+
+    /**
+     * If we have updated conditions undertakings
+     *
+     * @return boolean
+     */
+    public function hasUpdatedConditionsUndertakings()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        return !empty($data['conditionUndertakings']);
     }
 
     /**
@@ -640,5 +649,36 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     protected function markSectionStatus($section, $status)
     {
         $this->sectionCompletion[$section] = $status;
+    }
+
+    /**
+     * If we have completed at least 1 of the fields in the list
+     *
+     * @param array $data
+     * @param array $fields
+     * @return boolean
+     */
+    protected function hasCompletedFields($data, $fields)
+    {
+        foreach ($fields as $field) {
+            if (!empty($data[$field])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Reset the undertakings section
+     */
+    protected function resetUndertakings()
+    {
+        $data = [
+            'declarationConfirmation' => 0
+        ];
+
+        $this->getServiceLocator()->get('Entity\Application')->forceUpdate($this->getApplicationId(), $data);
+        $this->markSectionRequired('undertakings');
     }
 }
