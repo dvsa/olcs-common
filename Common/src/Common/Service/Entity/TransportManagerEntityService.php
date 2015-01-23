@@ -79,18 +79,20 @@ class TransportManagerEntityService extends AbstractEntityService
     /**
      * Get transport manager documents
      *
-     * @param int $id
+     * @param int $tmId
+     * @param int $appId
      * @param int $categoryId
      * @param int $documentSubCategoryId
      * @return array
      */
-    public function getDocuments($id, $categoryId, $documentSubCategoryId)
+    public function getDocuments($id, $appId, $categoryId, $documentSubCategoryId)
     {
         $documentBundle = $this->documentBundle;
 
         $documentBundle['children']['documents']['criteria'] = array(
             'category'    => $categoryId,
-            'subCategory' => $documentSubCategoryId
+            'subCategory' => $documentSubCategoryId,
+            'application' => $appId
         );
 
         $data = $this->get($id, $documentBundle);

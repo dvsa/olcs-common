@@ -277,6 +277,17 @@ class ApplicationEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Bundle to check licence type
+     *
+     * @var array
+     */
+    private $licenceTypeBundle = array(
+        'children' => array(
+            'licenceType'
+        )
+    );
+
+    /**
      * Get applications for a given organisation
      *
      * @param int $organisationId
@@ -560,5 +571,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $data = $this->get($id, $this->ocDataForVariationBundle);
 
         return $data['licence']['totCommunityLicences'];
+    }
+
+    public function getLicenceType($id)
+    {
+        return $this->get($id, $this->licenceTypeBundle);
     }
 }
