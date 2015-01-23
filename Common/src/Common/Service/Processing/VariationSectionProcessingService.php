@@ -10,6 +10,7 @@ namespace Common\Service\Processing;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Common\Service\Entity\VariationCompletionEntityService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Variation Section Processing Service
@@ -20,9 +21,14 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    const STATUS_UNCHANGED = VariationCompletionEntityService::STATUS_UNCHANGED;
+    const STATUS_UPDATED = VariationCompletionEntityService::STATUS_UPDATED;
+    const STATUS_REQUIRES_ATTENTION = VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION;
+
     protected $sectionCompletion;
     protected $applicationId;
     protected $variationCompletionData;
+    protected $isPsv;
 
     protected $requireAttentionMap = [
         'business_details' => [
@@ -56,30 +62,78 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'business_details' => 'hasSavedSection',
         'addresses' => 'hasSavedSection',
         'people' => 'hasSavedSection', // May change
-        'operating_centres' => 'hasUpdatedOperatingCentres'
+        'operating_centres' => 'hasUpdatedOperatingCentres',
+        'financial_evidence' => 'hasSavedSection', // May change
+        'transport_managers' => 'hasUpdatedTransportManagers'
     ];
 
-    public function completeSection($applicationId, $section)
+    /**
+     * Setter for application id
+     *
+     * @param int $applicationId
+     * @return VariationSectionProcessingService
+     */
+    public function setApplicationId($applicationId)
     {
-        $this->getSectionCompletion($applicationId);
+        $this->applicationId = $applicationId;
 
-        if ($this->hasSectionChanged($applicationId, $section)) {
-            $this->sectionCompletion[$section] = VariationCompletionEntityService::STATUS_UPDATED;
+        return $this;
+    }
+
+    /**
+     * Getter for application id
+     *
+     * @return int
+     */
+    public function getApplicationId()
+    {
+        return $this->applicationId;
+    }
+
+    /**
+     * This method is called when we have updated a section, this method applies the business rules regarding marking
+     * relevant sections as requiring attention
+     *
+     * @param string $section
+     */
+    public function completeSection($section)
+    {
+        $this->getSectionCompletion();
+
+        if ($this->hasSectionChanged($section)) {
+            $this->markSectionUpdated($section);
         } else {
-            $this->sectionCompletion[$section] = VariationCompletionEntityService::STATUS_UNCHANGED;
+            $this->markSectionUnchanged($section);
         }
 
         $this->updateSectionsRequiringAttention($section);
 
-        $this->applyBespokeRules($applicationId, $section);
+        $this->applyBespokeRules($section);
 
         $this->getServiceLocator()->get('Entity\VariationCompletion')
-            ->updateCompletionStatuses($applicationId, $this->sectionCompletion);
+            ->updateCompletionStatuses($this->getApplicationId(), $this->sectionCompletion);
     }
 
-    public function setApplicationId($applicationId)
+    /**
+     * Check if a section has been updated
+     *
+     * @param string $section
+     * @return boolean
+     */
+    public function isUpdated($section)
     {
-        $this->applicationId = $applicationId;
+        return $this->isStatus($section, self::STATUS_UPDATED);
+    }
+
+    /**
+     * Check if the section is unchanged
+     *
+     * @param string $section
+     * @return string
+     */
+    public function isUnchanged($section)
+    {
+        return $this->isStatus($section, self::STATUS_UNCHANGED);
     }
 
     /**
@@ -90,33 +144,42 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     public function isNotUnchanged($section)
     {
-        $this->getSectionCompletion($this->applicationId);
+        return !$this->isUnchanged($section);
+    }
 
-        return isset($this->sectionCompletion[$section])
-            && $this->sectionCompletion[$section] != VariationCompletionEntityService::STATUS_UNCHANGED;
+    /**
+     * Shared logic to check a sections status
+     *
+     * @param string $section
+     * @param int $status
+     * @return boolean
+     */
+    public function isStatus($section, $status)
+    {
+        $this->getSectionCompletion();
+
+        return $this->sectionCompletion[$section] === $status;
     }
 
     /**
      * Method to call the corresponding business rule
      *
-     * @param int $applicationId
      * @param string $section
      * @return boolean
      */
-    public function hasSectionChanged($applicationId, $section)
+    public function hasSectionChanged($section)
     {
-        return $this->{$this->sectionUpdatedCheckMap[$section]}($applicationId);
+        return $this->{$this->sectionUpdatedCheckMap[$section]}();
     }
 
     /**
      * Business rules to check if the TOL section has been updated
      *
-     * @param int $applicationId
      * @return boolean
      */
-    public function hasUpdatedTypeOfLicence($applicationId)
+    public function hasUpdatedTypeOfLicence()
     {
-        $data = $this->getVariationCompletionStatusData($applicationId);
+        $data = $this->getVariationCompletionStatusData();
 
         return $data['licenceType']['id'] !== $data['licence']['licenceType']['id'];
     }
@@ -124,12 +187,11 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     /**
      * Business rules to check if the OC section has been updated
      *
-     * @param int $applicationId
      * @return boolean
      */
-    public function hasUpdatedOperatingCentres($applicationId)
+    public function hasUpdatedOperatingCentres()
     {
-        $data = $this->getVariationCompletionStatusData($applicationId);
+        $data = $this->getVariationCompletionStatusData();
 
         if (!empty($data['operatingCentres'])) {
             return true;
@@ -153,12 +215,23 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * A generic callback that marks a section as complete
+     * If we have updated the transport manager section
      *
-     * @param int $applicationId
      * @return boolean
      */
-    public function hasSavedSection($applicationId)
+    public function hasUpdatedTransportManagers()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        return !empty($data['transportManagers']);
+    }
+
+    /**
+     * A generic callback that marks a section as complete
+     *
+     * @return boolean
+     */
+    public function hasSavedSection()
     {
         return true;
     }
@@ -166,14 +239,13 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     /**
      * Fetch and cache the data required for checking update statuses
      *
-     * @param int $applicationId
      * @return array
      */
-    protected function getVariationCompletionStatusData($applicationId)
+    protected function getVariationCompletionStatusData()
     {
         if ($this->variationCompletionData === null) {
             $this->variationCompletionData = $this->getServiceLocator()->get('Entity\Application')
-                ->getVariationCompletionStatusData($applicationId);
+                ->getVariationCompletionStatusData($this->getApplicationId());
         }
 
         return $this->variationCompletionData;
@@ -182,14 +254,13 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     /**
      * Fetch and cache the current section completions
      *
-     * @param int $applicationId
      * @return array
      */
-    protected function getSectionCompletion($applicationId)
+    protected function getSectionCompletion()
     {
         if ($this->sectionCompletion === null) {
             $this->sectionCompletion = $this->getServiceLocator()->get('Entity\VariationCompletion')
-                ->getCompletionStatuses($applicationId);
+                ->getCompletionStatuses($this->getApplicationId());
         }
 
         return $this->sectionCompletion;
@@ -204,17 +275,15 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         foreach ($this->requireAttentionMap as $section => $triggers) {
 
-            if ($section === $currentSection
-                || $this->sectionCompletion[$section] == VariationCompletionEntityService::STATUS_UPDATED
-            ) {
+            if ($section === $currentSection || $this->isUpdated($section)) {
                 continue;
             }
 
-            $this->sectionCompletion[$section] = VariationCompletionEntityService::STATUS_UNCHANGED;
+            $this->markSectionUnchanged($section);
 
             foreach ($triggers as $trigger) {
-                if ($this->sectionCompletion[$trigger] === VariationCompletionEntityService::STATUS_UPDATED) {
-                    $this->sectionCompletion[$section] = VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION;
+                if ($this->isUpdated($trigger)) {
+                    $this->markSectionRequired($section);
                 }
             }
         }
@@ -223,23 +292,231 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     /**
      * Some sections have more complicated rules, we hook into thoses here
      *
-     * @param int $applicationId
      * @param string $section
      */
-    protected function applyBespokeRules($applicationId, $section)
+    protected function applyBespokeRules($section)
     {
         if (isset($this->bespokeRulesMap[$section])) {
-            $this->{$this->bespokeRulesMap[$section]}($applicationId);
+            $this->{$this->bespokeRulesMap[$section]}();
         }
     }
 
     /**
      * Apply the operating centre rules
-     *
-     * @param int $applicationId
      */
-    protected function updateRelatedOperatingCentreSections($applicationId)
+    protected function updateRelatedOperatingCentreSections()
     {
-        // @todo add rules
+        // If we have updated the operating centres section
+        if ($this->isUpdated('operating_centres')) {
+            return $this->updateRelatedOperatingCentreSectionsWhenUpdated();
+        }
+
+        return $this->updateRelatedOperatingCentreSectionsWhenUnchanged();
+    }
+
+    /**
+     * Apply the business rules when the OC section is changed/updated
+     */
+    protected function updateRelatedOperatingCentreSectionsWhenUpdated()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        // If the financial evidence section is unchanged (Not requires attention or updated)
+        // ...and we have increased the total auth vehicles
+        if ($this->isUnchanged('financial_evidence') && $this->hasTotAuthVehiclesIncreased($data)) {
+            $this->markSectionRequired('financial_evidence');
+        }
+
+        $vehSection = $this->getRelevantVehicleSection();
+
+        // If the vehicle section is unchanged AND the totAuthVehicles has dropped below the number of vehicles added
+        if ($this->isUnchanged($vehSection) && $this->hasTotAuthVehiclesDroppedBelowVehicleCount($data)) {
+            $this->markSectionRequired($vehSection);
+        }
+
+        // PSV rules only
+        if ($this->isPsv()) {
+            // If the discs section is unchanged AND the totAuthVehicles has dropped below the number of discs added
+            if ($this->isUnchanged('discs') && $this->hasTotAuthVehiclesDroppedBelowDiscCount) {
+                $this->markSectionRequired('discs');
+            }
+
+            // If the vehicles declaration section is unchanged and any of the tot auth vehicle columns has increased
+            if ($this->isUnchanged('vehicles_declarations') && $this->hasAnyTotAuthIncreased($data)) {
+                $this->markSectionRequired('vehicles_declarations');
+            }
+        }
+    }
+
+    /**
+     * Check if any of the auth fields have increased
+     *
+     * @param array $data
+     * @return boolean
+     */
+    protected function hasAnyTotAuthIncreased($data)
+    {
+        $allAuths = [
+            'totAuthVehicles',
+            'totAuthSmallVehicles',
+            'totAuthMediumVehicles',
+            'totAuthLargeVehicles'
+        ];
+
+        foreach ($allAuths as $authKey) {
+            if ($data[$authKey] > $data['licence'][$authKey]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether the total auth vehicles has been increased
+     *
+     * @param array $data
+     * @return boolean
+     */
+    protected function hasTotAuthVehiclesIncreased($data)
+    {
+        $totAuthVehicles = $this->getTotAuthVehicles($data);
+        $totAuthLicenceVehicles = $this->getTotAuthVehicles($data['licence']);
+
+        return $totAuthVehicles > $totAuthLicenceVehicles;
+    }
+
+    /**
+     * Check whether the total auth vehicles has dropped below the number of vehicles added
+     *
+     * @param array $data
+     * @return boolean
+     */
+    protected function hasTotAuthVehiclesDroppedBelowVehicleCount($data)
+    {
+        $totAuthVehicles = $this->getTotAuthVehicles($data);
+        $totVehicles = count($data['licence']['licenceVehicles']);
+
+        return $totAuthVehicles < $totVehicles;
+    }
+
+    /**
+     * Check whether the total auth vehicles has dropped below the number of discs added
+     *
+     * @param array $data
+     * @return boolean
+     */
+    protected function hasTotAuthVehiclesDroppedBelowDiscsCount($data)
+    {
+        $totAuthVehicles = $this->getTotAuthVehicles($data);
+        $totDiscs = count($data['licence']['psvDiscs']);
+
+        return $totAuthVehicles < $totDiscs;
+    }
+
+    /**
+     * Grab the tot vehicle auths for both application and licence
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function getTotAuthVehicles($data)
+    {
+        if ($this->isPsv()) {
+            return $data['totAuthSmallVehicles'] + $data['totAuthMediumVehicles'] + $data['totAuthLargeVehicles'];
+        }
+
+        return $data['totAuthVehicles'];
+    }
+
+    /**
+     * Mark all related sections that haven't been updated to unchanged.
+     */
+    protected function updateRelatedOperatingCentreSectionsWhenUnchanged()
+    {
+        $relatedSections = [
+            'financial_evidence',
+            'discs',
+            'vehicles_declarations'
+        ];
+
+        $relatedSections[] = $this->getRelevantVehicleSection();
+
+        foreach ($relatedSections as $section) {
+            if (!$this->isUpdated($section)) {
+                $this->markSectionUnchanged($section);
+            }
+        }
+    }
+
+    /**
+     * Return the section name of the vehicle section based on whether the licence is goods or psv
+     *
+     * @return string
+     */
+    protected function getRelevantVehicleSection()
+    {
+        if ($this->isPsv()) {
+            return 'vehicles_psv';
+        }
+
+        return 'vehicles';
+    }
+
+    /**
+     * Check whether the licence is psv
+     *
+     * @return boolean
+     */
+    protected function isPsv()
+    {
+        if ($this->isPsv === null) {
+            $data = $this->getVariationCompletionStatusData();
+
+            $this->isPsv = $data['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+        }
+
+        return $this->isPsv;
+    }
+
+    /**
+     * Mark a section as required
+     *
+     * @param string $section
+     */
+    protected function markSectionRequired($section)
+    {
+        $this->markSectionStatus($section, self::STATUS_REQUIRES_ATTENTION);
+    }
+
+    /**
+     * Mark a section as unchanged
+     *
+     * @param string $section
+     */
+    protected function markSectionUnchanged($section)
+    {
+        $this->markSectionStatus($section, self::STATUS_UNCHANGED);
+    }
+
+    /**
+     * Mark a section as updated
+     *
+     * @param string $section
+     */
+    protected function markSectionUpdated($section)
+    {
+        $this->markSectionStatus($section, self::STATUS_UPDATED);
+    }
+
+    /**
+     * Mark a section with the given status
+     *
+     * @param string $section
+     * @param int $status
+     */
+    protected function markSectionStatus($section, $status)
+    {
+        $this->sectionCompletion[$section] = $status;
     }
 }

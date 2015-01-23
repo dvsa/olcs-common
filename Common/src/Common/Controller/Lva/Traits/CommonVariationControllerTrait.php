@@ -31,7 +31,8 @@ trait CommonVariationControllerTrait
     protected function postSave($section)
     {
         $this->getServiceLocator()->get('Processing\VariationSection')
-            ->completeSection($this->getApplicationId(), $section);
+            ->setApplicationId($this->getApplicationId())
+            ->completeSection($section);
     }
 
     /**

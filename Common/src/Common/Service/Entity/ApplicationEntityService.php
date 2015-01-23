@@ -77,10 +77,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
     private $variationCompletionStatusDataBundle = array(
         'children' => array(
             'licenceType',
+            'goodsOrPsv',
             'operatingCentres',
+            'transportManagers',
             'licence' => array(
                 'children' => array(
-                    'licenceType'
+                    'licenceType',
+                    'licenceVehicles',
+                    'psvDiscs'
                 )
             )
         )
