@@ -49,7 +49,10 @@ class Bootstrap
      */
     public static function getServiceManager()
     {
-        return m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm = m::mock('\Zend\ServiceManager\ServiceManager')->makePartial();
+        $sm->setAllowOverride(true);
+
+        return $sm;
     }
 
     /**
