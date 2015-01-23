@@ -674,4 +674,17 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(20, $this->sut->getLicenceTotCommunityLicences($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetLicenceType()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getLicenceType($id));
+    }
 }
