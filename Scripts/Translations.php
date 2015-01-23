@@ -113,12 +113,24 @@ file_put_contents($translationLocation . 'cy_GB.php', $cyGbContent);
 
 
 // markup partial translations
-$partials = new DirectoryIterator($translationLocation.'partials/en_GB');
-foreach ($partials as $file) {
-    if (!$file->isDot()) {
-        $source = $file->getPathname(); //. "\n";
-        $dest = str_replace('en_GB', 'cy_GB', $source);
-        copy($source, $dest);
+function translatePartials($partials) {
+    // replicates file structure and nested partial includes
+    foreach ($partials as $file) {
+        if (!$file->isDot()) {
+            if ($file->isDir()) {
+                //echo $file->getPathname() . "\n";
+                $subDir = new DirectoryIterator($file->getPathname());
+                translatePartials($subDir);
+            } else {
+                $source = $file->getPathname();
+                $dest = str_replace('en_GB', 'cy_GB', $source);
+
+                $content = file_get_contents($source);
+                file_put_contents($dest, str_replace('en_GB', 'cy_GB', $content));
+            }
+        }
     }
 }
-// @TODO handle nested partials
+
+$partials = new DirectoryIterator($translationLocation.'partials/en_GB');
+translatePartials($partials);
