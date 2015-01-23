@@ -61,11 +61,91 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'business_type' => 'hasSavedSection',
         'business_details' => 'hasSavedSection',
         'addresses' => 'hasSavedSection',
-        'people' => 'hasSavedSection', // May change
+        'people' => 'hasSavedSection',
         'operating_centres' => 'hasUpdatedOperatingCentres',
-        'financial_evidence' => 'hasSavedSection', // May change
-        'transport_managers' => 'hasUpdatedTransportManagers'
+        'financial_evidence' => 'hasSavedSection',
+        'transport_managers' => 'hasUpdatedTransportManagers',
+        'vehicles' => 'hasUpdatedVehicles',
+        'vehicles_psv' => 'hasUpdatedVehicles',
+        'vehicle_declarations' => 'hasUpdatedVehicleDeclarations',
+        'discs' => 'hasSavedSection',
+        'community_licences' => 'hasSavedSection',
+        'safety' => 'hasSavedSection',
+        'conditions_undertakings' => 'hasUpdatedConditionsUndertakings',
+        'financial_history' => 'hasUpdatedFinancialHistory',
+        //'licence_history' => 'hasUpdatedLicenceHistory',
+        'convictions_penalties' => 'hasUpdatedConvictionsPenalties',
+        'undertakings' => 'hasUpdatedUndertakings'
     ];
+
+    protected function hasCompletedFields($data, $fields)
+    {
+        foreach ($fields as $field) {
+            if (!empty($data[$field])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*public function hasUpdatedLicenceHistory()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'prevHasLicence',
+            'prevHadLicence',
+            'prevBeenRefused',
+            'prevBeenRevoked',
+            'prevBeenAtPi',
+            'prevBeenDisqualifiedTc',
+            'prevPurchasedAssets'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }*/
+
+    public function hasUpdatedFinancialHistory()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'bankrupt',
+            'administration',
+            'disqualified',
+            'liquidation',
+            'receivership',
+            'insolvencyConfirmation',
+            'insolvencyDetails'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }
+
+    public function hasUpdatedVehicleDeclarations()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        $fields = [
+            'psvOperateSmallVhl',
+            'psvSmallVhlNotes',
+            'psvSmallVhlConfirmation',
+            'psvNoSmallVhlConfirmation',
+            'psvLimousines',
+            'psvNoLimousineConfirmation',
+            'psvOnlyLimousinesConfirmation'
+        ];
+
+        return $this->hasCompletedFields($data, $fields);
+    }
+
+    public function hasUpdatedConditionsUndertakings()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        return !empty($data['conditionUndertakings']);
+    }
 
     /**
      * Setter for application id
@@ -100,10 +180,11 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         $this->getSectionCompletion();
 
-        if ($this->hasSectionChanged($section)) {
-            $this->markSectionUpdated($section);
-        } else {
+        if (!$this->hasSectionChanged($section)) {
             $this->markSectionUnchanged($section);
+        } elseif (!$this->isUpdated($section)) {
+            $this->markSectionUpdated($section);
+            $this->resetUndertakings();
         }
 
         $this->updateSectionsRequiringAttention($section);
@@ -112,6 +193,16 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Entity\VariationCompletion')
             ->updateCompletionStatuses($this->getApplicationId(), $this->sectionCompletion);
+    }
+
+    protected function resetUndertakings()
+    {
+        $data = [
+            'declarationConfirmation' => 0
+        ];
+
+        $this->getServiceLocator()->get('Entity\Application')->forceUpdate($this->getApplicationId(), $data);
+        $this->markSectionRequired('undertakings');
     }
 
     /**
@@ -224,6 +315,37 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $data = $this->getVariationCompletionStatusData();
 
         return !empty($data['transportManagers']);
+    }
+
+    public function hasUpdatedVehicles()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        return !empty($data['licenceVehicles']);
+    }
+
+    public function hasUpdatedConvictionsPenalties()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        if ($data['convictionsConfirmation'] !== 0) {
+            return true;
+        }
+
+        if ($data['prevConviction'] !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function hasUpdatedUndertakings()
+    {
+        $data = $this->getVariationCompletionStatusData();
+
+        // @todo
+        //return $data['declaration_confirmation'] == 1;
+        return true;
     }
 
     /**

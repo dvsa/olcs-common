@@ -256,6 +256,16 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
             );
+
+            $this->sections['financial_evidence']['restricted'][] = array(
+                'variation',
+                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
+            );
+
+            $this->sections['vehicles_declarations']['restricted'][] = array(
+                'variation',
+                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
+            );
         }
     }
 

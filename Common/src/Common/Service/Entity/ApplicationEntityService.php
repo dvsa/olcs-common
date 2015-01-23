@@ -80,6 +80,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'goodsOrPsv',
             'operatingCentres',
             'transportManagers',
+            'licenceVehicles',
+            'conditionUndertakings',
             'licence' => array(
                 'children' => array(
                     'licenceType',
