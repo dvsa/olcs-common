@@ -9,6 +9,17 @@ use Zend\Form\Annotation as Form;
  */
 class DeclarationsAndUndertakings
 {
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $id = null;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
@@ -23,7 +34,7 @@ class DeclarationsAndUndertakings
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
-    public $confirmation = null;
+    public $declarationConfirmation = null;
 
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")

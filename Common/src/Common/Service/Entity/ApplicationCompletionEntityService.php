@@ -639,6 +639,11 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     private function getUndertakingsStatus($applicationData)
     {
-        return self::STATUS_COMPLETE;
+        $requiredVars = array(
+            $this->isYnValue($applicationData['declarationConfirmation']),
+            $applicationData['declarationConfirmation'] === 'Y'
+        );
+
+        return $this->checkCompletion($requiredVars);
     }
 }

@@ -236,6 +236,7 @@ class SectionConfig
             ),
             'prerequisite' => array(
                 'type_of_licence'
+                // not available till all other sections complete - see EnabledSectionTrait
             )
         ),
     );

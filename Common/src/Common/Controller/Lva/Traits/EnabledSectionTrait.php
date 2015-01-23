@@ -37,6 +37,7 @@ trait EnabledSectionTrait
             }
         }
 
+        $completeCount  = 0;
         foreach ($accessibleSections as $section => $settings) {
             $enabled = true;
 
@@ -50,6 +51,14 @@ trait EnabledSectionTrait
                 'enabled'  => $enabled,
                 'complete' => $complete
             );
+
+            $completeCount += ($complete ? 1 : 0);
+        }
+
+        // Undertakings/Declarations section only enabled once ALL OTHER
+        // sections are complete, https://jira.i-env.net/browse/OLCS-2236
+        if (array_key_exists('undertakings', $accessibleSections)) {
+            $sections['undertakings']['enabled'] = ($completeCount >= (count($accessibleSections)-1));
         }
 
         return $sections;

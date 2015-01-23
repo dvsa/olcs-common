@@ -49,13 +49,16 @@ class MissingTranslationProcessor
             }
 
         } else {
-
-            // handles partials as translations
-            $locale    = $params['locale'];
-            $partial   = $locale . '/' . $message; // e.g. en_GB/my-translation-key
-            $foundPath = $this->resolver->resolve($partial);
-            if ($foundPath !== false) {
-                $message = $this->renderer->render($partial);
+            // handles partials as translations. Note we only try to resolve keys
+            // that match a pattern, to avoid having to run the template resolver
+            // against ALL missing translations
+            if (strpos($message, 'markup-') === 0) {
+                $locale    = $params['locale'];
+                $partial   = $locale . '/' . $message; // e.g. en_GB/my-translation-key
+                $foundPath = $this->resolver->resolve($partial);
+                if ($foundPath !== false) {
+                    $message = $this->renderer->render($partial);
+                }
             }
 
         }
