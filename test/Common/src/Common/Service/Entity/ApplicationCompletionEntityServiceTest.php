@@ -28,13 +28,16 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
         parent::setUp();
     }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
     protected function getServiceManager()
     {
-        return Bootstrap::getRealServiceManager();
+        $sm = Bootstrap::getServiceManager();
+
+        // inject a real string helper to do the requiredcamel-underscore and
+        // underscore-camel conversions
+        $helper = new \Common\Service\Helper\StringHelperService();
+        $sm->setService('Helper\String', $helper);
+
+        return $sm;
     }
 
     /**
