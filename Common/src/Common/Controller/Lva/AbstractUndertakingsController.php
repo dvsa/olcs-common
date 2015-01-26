@@ -1,18 +1,20 @@
 <?php
 
 /**
- * Abstract  Undertakings Controller
+ * Abstract Undertakings Controller
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 
 /**
- * Abstract  Undertakings Controller
+ * Abstract Undertakings Controller
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 abstract class AbstractUndertakingsController extends AbstractController
 {
@@ -39,9 +41,9 @@ abstract class AbstractUndertakingsController extends AbstractController
             } else {
                 // validation failed, we need to lookup application data
                 // but use the POSTed checkbox value to render the form again
-                $confirmed = $data['declarationsAndUndertakings']['confirmation'];
-                $data = $this->formatDataForForm($this->getApplicationData());
-                $data['declarationsAndUndertakings']['confirmation'] = $confirmed;
+                $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
+                $data = $this->formatDataForForm($this->getUndertakingsData());
+                $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
                 $form->setData($data);
             }
         }
@@ -64,7 +66,6 @@ abstract class AbstractUndertakingsController extends AbstractController
         $saveData = $data['declarationsAndUndertakings'];
         return $saveData;
     }
-
 
     /**
      * Get Application Data

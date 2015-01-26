@@ -674,4 +674,81 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(20, $this->sut->getLicenceTotCommunityLicences($id));
     }
+
+    /**
+     * @param array $applicationData
+     * @param bool $expected
+     *
+     * @dataProvider isUpgradeProvider
+     */
+    public function testIsUpgradeVariation($applicationData, $expected)
+    {
+        $id = 99;
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue($applicationData));
+
+        $this->assertEquals($expected, $this->sut->isUpgradeVariation($id));
+    }
+
+    public function isUpgradeProvider()
+    {
+        return [
+            'not a variation' => [
+                [
+                    'isVariation' => false,
+                    'licenceType' => ['id' => 'ltyp_sn'],
+                    'licence' => [
+                        'id' => 7,
+                        'licenceType' => ['id' => 'ltyp_r'],
+                    ],
+                ],
+                false,
+            ],
+            'variation no type change' => [
+                [
+                    'isVariation' => true,
+                    'licenceType' => ['id' => 'ltyp_r'],
+                    'licence' => [
+                        'id' => 7,
+                        'licenceType' => ['id' => 'ltyp_r'],
+                    ],
+                ],
+                false,
+            ],
+            'variation R to SN' => [
+                [
+                    'isVariation' => true,
+                    'licenceType' => ['id' => 'ltyp_si'],
+                    'licence' => [
+                        'id' => 7,
+                        'licenceType' => ['id' => 'ltyp_r'],
+                    ],
+                ],
+                true,
+            ],
+            'variation R to SI' => [
+                [
+                    'isVariation' => true,
+                    'licenceType' => ['id' => 'ltyp_sn'],
+                    'licence' => [
+                        'id' => 7,
+                        'licenceType' => ['id' => 'ltyp_r'],
+                    ],
+                ],
+                true,
+            ],
+            'variation SN to SI' => [
+                [
+                    'isVariation' => true,
+                    'licenceType' => ['id' => 'ltyp_si'],
+                    'licence' => [
+                        'id' => 7,
+                        'licenceType' => ['id' => 'ltyp_sn'],
+                    ],
+                ],
+                false, // CAUTION this may be termed an 'upgrade' in other contexts
+            ],
+        ];
+
+    }
 }
