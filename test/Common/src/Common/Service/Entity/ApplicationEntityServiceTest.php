@@ -699,4 +699,14 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getLicenceType($id));
     }
+
+    public function testGetVariationCompletionStatusData()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getVariationCompletionStatusData($id));
+    }
 }
