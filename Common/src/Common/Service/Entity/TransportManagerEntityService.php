@@ -92,8 +92,10 @@ class TransportManagerEntityService extends AbstractEntityService
         $documentBundle['children']['documents']['criteria'] = array(
             'category'    => $categoryId,
             'subCategory' => $documentSubCategoryId,
-            'application' => $appId
         );
+        if ($appId) {
+            $documentBundle['children']['documents']['criteria']['application'] = $appId;
+        }
 
         $data = $this->get($id, $documentBundle);
 
