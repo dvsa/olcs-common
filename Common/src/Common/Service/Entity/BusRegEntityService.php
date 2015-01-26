@@ -28,7 +28,8 @@ class BusRegEntityService extends AbstractEntityService
      */
     private $mainDataBundle = array(
         'children' => array(
-            'licence'
+            'licence',
+            'status'
         )
     );
 
@@ -58,6 +59,32 @@ class BusRegEntityService extends AbstractEntityService
         $params = [
             'regNo' => $identifier,
             'sort'  => 'variationNo',
+            'order' => 'DESC'
+        ];
+
+        $result = $this->get($params, $this->mainDataBundle);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+
+        return $result['Results'][0];
+    }
+
+    /**
+     * This method exists for EBSR which requires the most recent variation, not the most recent active variation
+     * to prevent regression when the backend service is implemented this method implements an order by on a different
+     * field.
+     *
+     * @TODO in the event of a refused variation, the previous record should be returned instead
+     *
+     * @param $identifier
+     * @return bool
+     */
+    public function findMostRecentByIdentifier($identifier)
+    {
+        $params = [
+            'regNo' => $identifier,
+            'sort'  => 'id',
             'order' => 'DESC'
         ];
 

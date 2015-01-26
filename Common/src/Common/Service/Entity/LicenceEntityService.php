@@ -418,6 +418,15 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $result['Results'][0];
     }
 
+    public function findByIdentifierWithOrganisation($identifier)
+    {
+        $result = $this->get(['licNo' => $identifier], $this->organisationBundle);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+        return $result['Results'][0];
+    }
+
     public function getVariationData($id)
     {
         $data = $this->get($id, $this->typeOfLicenceBundle);
