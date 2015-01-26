@@ -7,6 +7,9 @@
  */
 namespace Common\Service\Translator;
 
+use Zend\View\Renderer\RendererInterface as Renderer;
+use Zend\View\Resolver\ResolverInterface as Resolver;
+
 /**
  * MissingTranslationProcessor
  *
@@ -20,9 +23,15 @@ class MissingTranslationProcessor
     protected $renderer;
 
     /**
-     * @param Zend\View\Renderer\RendererInterface
+     * @var Zend\View\Resolver\ResolverInterface
      */
-    public function __construct($renderer, $resolver)
+    protected $resolver;
+
+    /**
+     * @param Zend\View\Renderer\RendererInterface
+     * @param Zend\View\Resolver\ResolverInterface
+     */
+    public function __construct(Renderer $renderer, Resolver $resolver)
     {
         $this->renderer = $renderer;
         $this->resolver = $resolver;
@@ -43,7 +52,7 @@ class MissingTranslationProcessor
 
         if (preg_match_all('/\{([^\}]+)\}/', $message, $matches)) {
 
-            // handles nested translation keys inside curly braces {}
+            // handles text with translation keys inside curly braces {}
             foreach ($matches[0] as $key => $match) {
                 $message = str_replace($match, $translator->translate($matches[1][$key]), $message);
             }
