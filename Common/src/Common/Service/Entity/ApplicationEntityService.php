@@ -74,6 +74,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @var array
      */
+    private $variationCompletionStatusDataBundle = array(
+        'children' => array(
+            'licenceType',
+            'goodsOrPsv',
+            'operatingCentres',
+            'transportManagers',
+            'licenceVehicles',
+            'conditionUndertakings',
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'licenceVehicles',
+                    'psvDiscs'
+                )
+            )
+        )
+    );
+
+    /**
+     * Bundle to retrieve data to update completion status
+     *
+     * @var array
+     */
     private $completionStatusDataBundle = array(
         'children' => array(
             'goodsOrPsv',
@@ -271,6 +294,22 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
+    public function getVariationCompletionStatusData($id)
+    {
+        return $this->get($id, $this->variationCompletionStatusDataBundle);
+    }
+
+    /**
+     * Bundle to check licence type
+     *
+     * @var array
+     */
+    private $licenceTypeBundle = array(
+        'children' => array(
+            'licenceType'
+        )
+    );
+
     /**
      * Get applications for a given organisation
      *
@@ -351,6 +390,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         $application = $this->save($applicationData);
+
+        $this->getServiceLocator()->get('Entity\VariationCompletion')->save(['application' => $application['id']]);
 
         return $application['id'];
     }
@@ -560,7 +601,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $data['licence']['totCommunityLicences'];
     }
 
-
     /**
      * Determine whether an Application is a Variation involving an 'upgrade'
      * for the purposes of Declarations / Undertakings wording.
@@ -588,5 +628,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         return false;
+    }
+
+    public function getLicenceType($id)
+    {
+        return $this->get($id, $this->licenceTypeBundle);
     }
 }

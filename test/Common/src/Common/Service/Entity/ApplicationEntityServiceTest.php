@@ -616,6 +616,12 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
+        $mockVariationCompletion = m::mock();
+        $mockVariationCompletion->shouldReceive('save')
+            ->with(['application' => 5]);
+
+        $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
+
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
 
@@ -651,6 +657,12 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
+        $mockVariationCompletion = m::mock();
+        $mockVariationCompletion->shouldReceive('save')
+            ->with(['application' => 5]);
+
+        $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
+
         $mockVariation = m::mock();
         $this->sm->setService('VariationUtility', $mockVariation);
         $mockVariation->shouldReceive('alterCreateVariationData')
@@ -678,6 +690,19 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetDataForUndertakings()
     {
         $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForUndertakings($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetLicenceType()
+    {
+        $id = 4;
 
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue('RESPONSE'));
@@ -759,6 +784,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 false, // CAUTION this may be termed an 'upgrade' in other contexts
             ],
         ];
+    }
 
+    public function testGetVariationCompletionStatusData()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getVariationCompletionStatusData($id));
     }
 }

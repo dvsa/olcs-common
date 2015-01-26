@@ -45,19 +45,13 @@ class ApplicationIdTest extends PHPUnit_Framework_TestCase
             ],
             [
                 [
-                    'licence' => ['licenceType' => []]
-                ],
-                false
-            ],
-            [
-                [
-                    'licence' => ['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL]]
+                    'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL]
                 ],
                 true
             ],
             [
                 [
-                    'licence' => ['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED]]
+                    'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED]
                 ],
                 false
             ],

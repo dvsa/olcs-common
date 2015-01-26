@@ -19,9 +19,9 @@ class RestrictionHelperService extends AbstractHelperService
      *
      * @return boolean
      */
-    public function isRestrictionSatisfied($restrictions, array $accessKeys = array())
+    public function isRestrictionSatisfied($restrictions, array $accessKeys = array(), $reference = null)
     {
-        return $this->checkRestriction($restrictions, $accessKeys, false);
+        return $this->checkRestriction($restrictions, $accessKeys, false, $reference);
     }
 
     /**
@@ -32,8 +32,13 @@ class RestrictionHelperService extends AbstractHelperService
      * @param type $strict
      * @return boolean
      */
-    private function checkRestriction($restrictions, array $accessKeys = array(), $strict = true)
+    private function checkRestriction($restrictions, array $accessKeys = array(), $strict = true, $reference = null)
     {
+        // Check for a callable first
+        if (is_callable($restrictions)) {
+            return $restrictions($reference);
+        }
+
         // If we are just matching a string
         if (is_string($restrictions)) {
             return in_array($restrictions, $accessKeys);
@@ -48,7 +53,7 @@ class RestrictionHelperService extends AbstractHelperService
         foreach ($restrictions as $restriction) {
 
             // Check the individual restriction
-            $satisfied = $this->checkRestriction($restriction, $accessKeys, !$strict);
+            $satisfied = $this->checkRestriction($restriction, $accessKeys, !$strict, $reference);
 
             // If we are not strict and this has been satisfied, we can just return true
             if ($satisfied && !$strict) {

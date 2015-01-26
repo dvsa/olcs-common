@@ -355,6 +355,15 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $this->sm->setService('Entity\Application', $mockAppService);
 
+        $mockVariationProcessingService = m::mock();
+        $mockVariationProcessingService->shouldReceive('setApplicationId')
+            ->with(5)
+            ->andReturnSelf()
+            ->shouldReceive('completeSection')
+            ->with('type_of_licence');
+
+        $this->sm->setService('Processing\VariationSection', $mockVariationProcessingService);
+
         $this->assertEquals('REDIRECT', $this->sut->confirmationAction());
     }
 

@@ -32,7 +32,14 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
     {
         $serviceManager = Bootstrap::getRealServiceManager();
 
+        $mockVariationProcessor = $this->getMock('\stdClass', array('isNotUnchanged'));
+        $mockVariationProcessor->expects($this->any())
+            ->method('isNotUnchanged')
+            ->willReturn(false);
+        $serviceManager->setService('Processing\VariationSection', $mockVariationProcessor);
+
         $sectionConfig = new SectionConfig();
+        $sectionConfig->setServiceLocator($serviceManager);
         $inputSections = $sectionConfig->getAll();
 
         $accessHelper = $serviceManager->get('Helper\Access');
