@@ -468,7 +468,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         // PSV rules only
         if ($this->isPsv()) {
             // If the discs section is unchanged AND the totAuthVehicles has dropped below the number of discs added
-            if ($this->isUnchanged('discs') && $this->hasTotAuthVehiclesDroppedBelowDiscCount) {
+            if ($this->isUnchanged('discs') && $this->hasTotAuthVehiclesDroppedBelowDiscsCount($data)) {
                 $this->markSectionRequired('discs');
             }
 

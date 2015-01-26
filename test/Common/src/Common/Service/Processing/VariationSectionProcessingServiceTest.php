@@ -12,6 +12,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use Common\Service\Processing\VariationSectionProcessingService;
 use Common\Service\Entity\VariationCompletionEntityService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Variation Section Processing Service Test
@@ -645,5 +646,709 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
         $this->applicationEntity->shouldReceive('getVariationCompletionStatusData')
             ->with(3)
             ->andReturn($data);
+    }
+
+    public function testCompleteOperatingCentreSectionWithoutChangeForGoods()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'discs' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 1,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licence' => [
+                'totAuthVehicles' => 1,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 4,
+                'totAuthLargeVehicles' => 5
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithoutChangeForPsv()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'discs' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 1,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licence' => [
+                'totAuthVehicles' => 1,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 4,
+                'totAuthLargeVehicles' => 5
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForGoods()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 9,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null,
+            'licence' => [
+                'totAuthVehicles' => 10,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => null,
+                'totAuthMediumVehicles' => null,
+                'totAuthLargeVehicles' => null,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8],
+                    ['vehicle' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForGoodsFinancialEvidence()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 11,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null,
+            'licence' => [
+                'totAuthVehicles' => 10,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => null,
+                'totAuthMediumVehicles' => null,
+                'totAuthLargeVehicles' => null,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8],
+                    ['vehicle' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForGoodsFinancialEvidenceAlreadyUpdated()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UPDATED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 11,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null,
+            'licence' => [
+                'totAuthVehicles' => 10,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => null,
+                'totAuthMediumVehicles' => null,
+                'totAuthLargeVehicles' => null,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8],
+                    ['vehicle' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UPDATED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForGoodsVehicles()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 8,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => null,
+            'totAuthMediumVehicles' => null,
+            'totAuthLargeVehicles' => null,
+            'licence' => [
+                'totAuthVehicles' => 10,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => null,
+                'totAuthMediumVehicles' => null,
+                'totAuthLargeVehicles' => null,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8],
+                    ['vehicle' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForPsvDiscs()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 9,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 3,
+            'totAuthLargeVehicles' => 2,
+            'licence' => [
+                'totAuthVehicles' => 9,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 3,
+                'totAuthLargeVehicles' => 3,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8]
+                ],
+                'psvDiscs' => [
+                    ['disc' => 1],
+                    ['disc' => 2],
+                    ['disc' => 3],
+                    ['disc' => 4],
+                    ['disc' => 5],
+                    ['disc' => 6],
+                    ['disc' => 7],
+                    ['disc' => 8],
+                    ['disc' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteOperatingCentreSectionWithChangeForPsvDiscsAndDeclarations()
+    {
+        // Params
+        $section = 'operating_centres';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'operatingCentres' => null,
+            'totAuthVehicles' => 9,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 2,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 2,
+            'licence' => [
+                'totAuthVehicles' => 9,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 3,
+                'totAuthLargeVehicles' => 3,
+                'licenceVehicles' => [
+                    ['vehicle' => 1],
+                    ['vehicle' => 2],
+                    ['vehicle' => 3],
+                    ['vehicle' => 4],
+                    ['vehicle' => 5],
+                    ['vehicle' => 6],
+                    ['vehicle' => 7],
+                    ['vehicle' => 8]
+                ],
+                'psvDiscs' => [
+                    ['disc' => 1],
+                    ['disc' => 2],
+                    ['disc' => 3],
+                    ['disc' => 4],
+                    ['disc' => 5],
+                    ['disc' => 6],
+                    ['disc' => 7],
+                    ['disc' => 8],
+                    ['disc' => 9],
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'discs' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
     }
 }
