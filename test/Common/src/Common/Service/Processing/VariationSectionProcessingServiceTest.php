@@ -164,6 +164,261 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
         $this->assertTrue($this->sut->hasUpdatedTypeOfLicence());
     }
 
+    public function testHasUpdatedOperatingCentresEmpty()
+    {
+        $data = [
+            'operatingCentres' => [
+                'foo' => 'bar'
+            ]
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedOperatingCentres());
+    }
+
+    public function testHasUpdatedOperatingCentresFalse()
+    {
+        $data = [
+            'operatingCentres' => null,
+            'totAuthVehicles' => 1,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licence' => [
+                'totAuthVehicles' => 1,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 4,
+                'totAuthLargeVehicles' => 5
+            ]
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedOperatingCentres());
+    }
+
+    public function testHasUpdatedOperatingCentresTrue()
+    {
+        $data = [
+            'operatingCentres' => null,
+            'totAuthVehicles' => 1,
+            'totAuthTrailers' => 2,
+            'totAuthSmallVehicles' => 3,
+            'totAuthMediumVehicles' => 4,
+            'totAuthLargeVehicles' => 5,
+            'licence' => [
+                'totAuthVehicles' => 2,
+                'totAuthTrailers' => 2,
+                'totAuthSmallVehicles' => 3,
+                'totAuthMediumVehicles' => 4,
+                'totAuthLargeVehicles' => 5
+            ]
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedOperatingCentres());
+    }
+
+    public function testHasUpdatedTransportManagers()
+    {
+        $data = [
+            'transportManagers' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedTransportManagers());
+    }
+
+    public function testHasUpdatedTransportManagersTrue()
+    {
+        $data = [
+            'transportManagers' => ['foo' => 'bar']
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedTransportManagers());
+    }
+
+    public function testHasUpdatedVehicles()
+    {
+        $data = [
+            'licenceVehicles' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedVehicles());
+    }
+
+    public function testHasUpdatedVehiclesTrue()
+    {
+        $data = [
+            'licenceVehicles' => ['foo' => 'bar']
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedVehicles());
+    }
+
+    public function testHasUpdatedConvictionsPenalties()
+    {
+        $data = [
+            'convictionsConfirmation' => 1
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedConvictionsPenalties());
+    }
+
+    public function testHasUpdatedConvictionsPenaltiesWithPrevConviction()
+    {
+        $data = [
+            'convictionsConfirmation' => 0,
+            'prevConviction' => 1
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedConvictionsPenalties());
+    }
+
+    public function testHasUpdatedConvictionsPenaltiesWithoutPrevConviction()
+    {
+        $data = [
+            'convictionsConfirmation' => 0,
+            'prevConviction' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedConvictionsPenalties());
+    }
+
+    public function testHasUpdatedUndertakings()
+    {
+        $data = [
+            'declaration_confirmation' => 1
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedUndertakings());
+    }
+
+    public function testHasUpdatedUndertakingsFalse()
+    {
+        $data = [
+            'declaration_confirmation' => 0
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedUndertakings());
+    }
+
+    public function testHasUpdatedFinancialHistory()
+    {
+        $data = [
+            'bankrupt' => null,
+            'administration' => null,
+            'disqualified' => null,
+            'liquidation' => null,
+            'receivership' => null,
+            'insolvencyConfirmation' => null,
+            'insolvencyDetails' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedFinancialHistory());
+    }
+
+    public function testHasUpdatedFinancialHistoryTrue()
+    {
+        $data = [
+            'bankrupt' => null,
+            'administration' => null,
+            'disqualified' => 1,
+            'liquidation' => null,
+            'receivership' => null,
+            'insolvencyConfirmation' => null,
+            'insolvencyDetails' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedFinancialHistory());
+    }
+
+    public function testHasUpdatedVehicleDeclarations()
+    {
+        $data = [
+            'psvOperateSmallVhl' => null,
+            'psvSmallVhlNotes' => null,
+            'psvSmallVhlConfirmation' => null,
+            'psvNoSmallVhlConfirmation' => null,
+            'psvLimousines' => null,
+            'psvNoLimousineConfirmation' => null,
+            'psvOnlyLimousinesConfirmation' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedVehicleDeclarations());
+    }
+
+    public function testHasUpdatedVehicleDeclarationsTrue()
+    {
+        $data = [
+            'psvOperateSmallVhl' => null,
+            'psvSmallVhlNotes' => null,
+            'psvSmallVhlConfirmation' => 1,
+            'psvNoSmallVhlConfirmation' => null,
+            'psvLimousines' => null,
+            'psvNoLimousineConfirmation' => null,
+            'psvOnlyLimousinesConfirmation' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedVehicleDeclarations());
+    }
+
+    public function testHasUpdatedConditionsUndertakings()
+    {
+        $data = [
+            'conditionUndertakings' => null
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertFalse($this->sut->hasUpdatedConditionsUndertakings());
+    }
+
+    public function testHasUpdatedConditionsUndertakingsTrue()
+    {
+        $data = [
+            'conditionUndertakings' => ['foo' => 'bar']
+        ];
+
+        $this->setStubbedCompletionData($data);
+
+        $this->assertTrue($this->sut->hasUpdatedConditionsUndertakings());
+    }
+
+    public function testHasSavedSection()
+    {
+        $this->assertTrue($this->sut->hasSavedSection());
+    }
+
     public function testCompleteTypeOfLicenceSectionWithoutChange()
     {
         // Params
