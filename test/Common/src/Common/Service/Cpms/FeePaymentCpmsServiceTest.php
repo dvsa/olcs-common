@@ -34,7 +34,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->sm = Bootstrap::getServiceManager()->setAllowOverride(true);
+        $this->sm = Bootstrap::getServiceManager();
         $this->sut = new FeePaymentCpmsService();
         $this->sut->setServiceLocator($this->sm);
         $this->mockDate('2015-01-21');
