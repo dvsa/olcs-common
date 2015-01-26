@@ -44,4 +44,24 @@ class ApplicationOperatingCentreEntityServiceTest extends AbstractEntityServiceT
 
         $this->assertEquals('RESPONSE', $this->sut->getForApplication($id));
     }
+
+    public function testGetByApplicationAndOperatingCentre()
+    {
+        $id = 3;
+        $ocId = 5;
+
+        $query = array(
+            'application' => $id,
+            'operatingCentre' => $ocId
+        );
+
+        $response = array(
+            'Results' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('ApplicationOperatingCentre', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplicationAndOperatingCentre($id, $ocId));
+    }
 }

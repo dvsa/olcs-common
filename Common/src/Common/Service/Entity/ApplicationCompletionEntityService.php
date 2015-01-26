@@ -30,7 +30,6 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      */
     protected $entity = 'ApplicationCompletion';
 
-
     /**
      * Get completion statuses
      *
