@@ -33,7 +33,14 @@ class EnabledSectionTraitTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testSetEnabledAndCompleteFlagOnSections()
+    /**
+     * @dataProvider setEnabledAndCompleteProvider
+     *
+     * @param array $sections section config
+     * @param array $completions application completions
+     * @param array $expected
+     */
+    public function testSetEnabledAndCompleteFlagOnSections($sections, $completions, $expected)
     {
         $this->sm->setService(
             'Helper\Restriction',
@@ -54,27 +61,102 @@ class EnabledSectionTraitTest extends MockeryTestCase
                 ->getMock()
         );
 
+        $result = $this->sut->setEnabledAndCompleteFlagOnSections($sections, $completions);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function setEnabledAndCompleteProvider()
+    {
         $sections = [
             'type_of_licence' => [],
             'business_type' => [
-                'prerequisite' => ['type_of_licence']
+                'prerequisite' => 'type_of_licence'
             ],
-            'undertakings' => [],
         ];
         $completions = [
             'typeOfLicenceStatus' => 2, // ApplicationCompletionEntityService::STATUS_COMPLETE
             'businessTypeStatus' => 2,
-            'undertakingsStatus' => 0,
         ];
-
-        $result = $this->sut->setEnabledAndCompleteFlagOnSections($sections, $completions);
-
         $expected = [
             'type_of_licence' => ['enabled' => true, 'complete' => true],
             'business_type'   => ['enabled' => true, 'complete' => true],
-            'undertakings'    => ['enabled' => true, 'complete' => false],
         ];
 
-        $this->assertEquals($expected, $result);
+        return [
+            'single prerequisite, 1 complete' => [
+                [
+                    'type_of_licence' => [],
+                    'business_type' => [
+                        'prerequisite' => 'type_of_licence'
+                    ],
+                ],
+                [
+                    'typeOfLicenceStatus' => 2, // ApplicationCompletionEntityService::STATUS_COMPLETE
+                    'businessTypeStatus'  => 0, // ApplicationCompletionEntityService::STATUS_NOT_STARTED
+                ],
+                [
+                    'type_of_licence' => ['enabled' => true, 'complete' => true],
+                    'business_type'   => ['enabled' => true, 'complete' => false],
+                ]
+            ],
+            'multiple prerequisites' => [
+                [
+                    'type_of_licence' => [],
+                    'business_type' => [],
+                    'business_details' => [
+                        'prerequisite' => ['type_of_licence', 'business_type']
+                    ],
+                ],
+                [
+                    'typeOfLicenceStatus' => 2,
+                    'businessTypeStatus'  => 2,
+                    'businessDetails'     => 1, // ApplicationCompletionEntityService::STATUS_INCOMPLETE
+                ],
+                [
+                    'type_of_licence'  => ['enabled' => true, 'complete' => true],
+                    'business_type'    => ['enabled' => true, 'complete' => true],
+                    'business_details' => ['enabled' => true, 'complete' => false],
+                ]
+            ],
+            'inaccessible prerequisite' => [
+                [
+                    'type_of_licence' => [],
+                    'business_type' => [],
+                    'business_details' => [
+                        'prerequisite' => 'foo'
+                    ],
+                ],
+                [
+                    'typeOfLicenceStatus' => 2,
+                    'businessTypeStatus'  => 2,
+                    'businessDetails'     => 1,
+                ],
+                [
+                    'type_of_licence'  => ['enabled' => true, 'complete' => true],
+                    'business_type'    => ['enabled' => true, 'complete' => true],
+                    'business_details' => ['enabled' => true, 'complete' => false],
+                ]
+            ],
+            'multiple inaccessible prerequisites' => [
+                [
+                    'type_of_licence' => [],
+                    'business_type' => [],
+                    'business_details' => [
+                        'prerequisite' => ['foo', 'bar'],
+                    ],
+                ],
+                [
+                    'typeOfLicenceStatus' => 2,
+                    'businessTypeStatus'  => 2,
+                    'businessDetails'     => 1,
+                ],
+                [
+                    'type_of_licence'  => ['enabled' => true, 'complete' => true],
+                    'business_type'    => ['enabled' => true, 'complete' => true],
+                    'business_details' => ['enabled' => true, 'complete' => false],
+                ]
+            ],
+        ];
     }
 }

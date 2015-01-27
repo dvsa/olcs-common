@@ -37,11 +37,18 @@ trait EnabledSectionTrait
             }
         }
 
-        $completeCount  = 0;
         foreach ($accessibleSections as $section => $settings) {
             $enabled = true;
 
             if (isset($settings['prerequisite'])) {
+                // ignore any prerequisites that are inaccessible
+                $settings['prerequisite'] = $this->removeInaccessible(
+                    $settings['prerequisite'],
+                    $accessibleSections
+                );
+            }
+
+            if (!empty($settings['prerequisite'])) {
                 $enabled = $restrictionHelper->isRestrictionSatisfied($settings['prerequisite'], $completeSections);
             }
 
@@ -51,16 +58,25 @@ trait EnabledSectionTrait
                 'enabled'  => $enabled,
                 'complete' => $complete
             );
-
-            $completeCount += ($complete ? 1 : 0);
-        }
-
-        // Undertakings/Declarations section only enabled once ALL OTHER
-        // sections are complete, https://jira.i-env.net/browse/OLCS-2236
-        if (array_key_exists('undertakings', $accessibleSections)) {
-            $sections['undertakings']['enabled'] = ($completeCount >= (count($accessibleSections)-1));
         }
 
         return $sections;
+    }
+
+    protected function removeInaccessible($prerequisites, $accessibleSections)
+    {
+        if (is_string($prerequisites)) {
+            if (!in_array($prerequisites, array_keys($accessibleSections))) {
+                return null;
+            }
+        } elseif (is_array($prerequisites)) {
+            $keep = [];
+            foreach ($prerequisites as $prerequisite) {
+                if (in_array($prerequisite, array_keys($accessibleSections))) {
+                    $keep[] = $prerequisite;
+                }
+            }
+            return $keep;
+        }
     }
 }

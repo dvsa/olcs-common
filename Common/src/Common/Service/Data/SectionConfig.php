@@ -238,10 +238,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
                     )
                 )
             ),
-            'prerequisite' => array(
-                'type_of_licence'
-                // not available till all other sections complete - see EnabledSectionTrait
-            )
         ),
     );
 
@@ -270,6 +266,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
             );
+
+            // undertakings requires all sections (except itself)
+            $this->sections['undertakings']['prerequisite'] = $this->getAllReferences();
+            $key = array_search('undertakings', $this->sections['undertakings']['prerequisite']);
+            unset($this->sections['undertakings']['prerequisite'][$key]);
         }
     }
 
