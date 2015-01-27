@@ -659,6 +659,38 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testFindByIdentifierWithOrganisationWithResult()
+    {
+        $response = [
+            'Count' => 1,
+            'Results' => [
+                'RESPONSE'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 123])
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->findByIdentifierWithOrganisation(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByIdentifierWithOrganisationWithNoResult()
+    {
+        $response = [
+            'Count' => 0,
+            'Results' => []
+        ];
+        $this->expectOneRestCall('Licence', 'GET', ['licNo' => 123])
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(false, $this->sut->findByIdentifierWithOrganisation(123));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetVariationData()
     {
         $id = 4;

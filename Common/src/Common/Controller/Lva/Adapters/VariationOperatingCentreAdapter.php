@@ -252,7 +252,10 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             list($currentVehicles, $currentTrailers) = $this->getCurrentAuthorisationValues();
 
             $form->get('data')->get('noOfVehiclesRequired')->setAttribute('data-current', $currentVehicles);
-            $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
+
+            if ($form->get('data')->has('noOfTrailersRequired')) {
+                $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
+            }
         }
 
         return $form;

@@ -9,9 +9,8 @@ return array(
     'N/A' => 'Not applicable',
     'No' => 'No',
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
-    'OperatingCentreCommunityLicencesValidator.none-numeric' => 'Please enter a numeric value',
-    'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences cannot exceed the total
-        number of vehicles',
+    'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
+        total number of vehicles',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
@@ -172,8 +171,9 @@ return array(
         seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
-    'application_operating-centres_authorisation.data.totCommunityLicences' => 'How many community licences do you
-        require?',
+    'application_operating-centres_authorisation.data.totCommunityLicences' => 'Community licences',
+    'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences
+        do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
         operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
         target="_blank">this link.</a>',
