@@ -602,12 +602,12 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'type_of_licence' => VariationCompletionEntityService::STATUS_UPDATED,
             'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
-            'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
-            'transport_managers' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
@@ -615,9 +615,9 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
-            'financial_history' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
-            'convictions_penalties' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
         ];
 
