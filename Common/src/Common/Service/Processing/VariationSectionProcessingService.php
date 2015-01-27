@@ -58,7 +58,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     ];
 
     protected $bespokeRulesMap = [
-        //'type_of_licence' => 'updateRelatedTypeOfLicenceSections',
+        'type_of_licence' => 'updateRelatedTypeOfLicenceSections',
         'operating_centres' => 'updateRelatedOperatingCentreSections'
     ];
 
@@ -655,10 +655,34 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         $this->markSectionRequired('undertakings');
     }
 
+    /**
+     * Apply bespoke type of licence rules
+     */
     protected function updateRelatedTypeOfLicenceSections()
     {
-        if ($this->isUpdated('type_of_licence')) {
+        $data = $this->getVariationCompletionStatusData();
 
+        $restrictedUpgrades = [
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        // If the old licence type was restricted and it is being upgraded
+        if ($data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            && in_array($data['licenceType']['id'], $restrictedUpgrades)) {
+
+            $relatedSections = [
+                'addresses',
+                'transport_managers',
+                'financial_history',
+                'convictions_penalties'
+            ];
+
+            foreach ($relatedSections as $section) {
+                if ($this->isUnchanged($section)) {
+                    $this->markSectionRequired($section);
+                }
+            }
         }
     }
 }
