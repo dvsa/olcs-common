@@ -616,6 +616,12 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
+        $mockVariationCompletion = m::mock();
+        $mockVariationCompletion->shouldReceive('save')
+            ->with(['application' => 5]);
+
+        $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
+
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
 
@@ -650,6 +656,12 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue(['id' => 5]));
 
         $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $mockVariationCompletion = m::mock();
+        $mockVariationCompletion->shouldReceive('save')
+            ->with(['application' => 5]);
+
+        $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
 
         $mockVariation = m::mock();
         $this->sm->setService('VariationUtility', $mockVariation);
@@ -686,5 +698,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getLicenceType($id));
+    }
+
+    public function testGetVariationCompletionStatusData()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getVariationCompletionStatusData($id));
     }
 }

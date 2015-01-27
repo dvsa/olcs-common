@@ -75,12 +75,15 @@ class Licence extends AbstractData implements AddressProviderInterface
     {
         $id = is_null($id) ? $this->getId() : $id;
 
-        if (is_null($this->getData('oc_' . $id))) {
+        if (is_null($this->getData('oc_' .$id))) {
+            $data = array();
+
             $bundle = is_null($bundle) ? $this->getOperatingCentreBundle() : $bundle;
             $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
 
             $this->setData('oc_' .$id, $data);
         }
+
         return $this->getData('oc_' . $id);
     }
 

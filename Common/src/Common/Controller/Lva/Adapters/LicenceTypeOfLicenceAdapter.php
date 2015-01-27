@@ -111,6 +111,10 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
             $appId = $this->getServiceLocator()->get('Entity\Application')->createVariation($licenceId, $data);
 
+            $this->getServiceLocator()->get('Processing\VariationSection')
+                ->setApplicationId($appId)
+                ->completeSection('type_of_licence');
+
             return $this->getController()->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }
 

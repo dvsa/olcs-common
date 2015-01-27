@@ -68,6 +68,48 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testFindMostRecentByIdentifierWithResult()
+    {
+        $response = [
+            'Count' => 1,
+            'Results' => [
+                'RESPONSE'
+            ]
+        ];
+        $params = [
+            'regNo' => 123,
+            'sort' => 'id',
+            'order' => 'DESC'
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->findMostRecentByIdentifier(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindMostRecentByIdentifierWithNoResult()
+    {
+        $response = [
+            'Count' => 0,
+            'Results' => []
+        ];
+        $params = [
+            'regNo' => 123,
+            'sort' => 'id',
+            'order' => 'DESC'
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(false, $this->sut->findMostRecentByIdentifier(123));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetDataForTasks()
     {
         $id = 4;

@@ -74,6 +74,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @var array
      */
+    private $variationCompletionStatusDataBundle = array(
+        'children' => array(
+            'licenceType',
+            'goodsOrPsv',
+            'operatingCentres',
+            'transportManagers',
+            'licenceVehicles',
+            'conditionUndertakings',
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'licenceVehicles',
+                    'psvDiscs'
+                )
+            )
+        )
+    );
+
+    /**
+     * Bundle to retrieve data to update completion status
+     *
+     * @var array
+     */
     private $completionStatusDataBundle = array(
         'children' => array(
             'goodsOrPsv',
@@ -248,6 +271,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    public function getVariationCompletionStatusData($id)
+    {
+        return $this->get($id, $this->variationCompletionStatusDataBundle);
+    }
+
     /**
      * Bundle to check licence type
      *
@@ -339,6 +367,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         $application = $this->save($applicationData);
+
+        $this->getServiceLocator()->get('Entity\VariationCompletion')->save(['application' => $application['id']]);
 
         return $application['id'];
     }
