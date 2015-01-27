@@ -42,20 +42,34 @@ class OperatingCentreCommunityLicencesValidatorTest extends \PHPUnit_Framework_T
     public function providerIsValid()
     {
         return array(
-            array('', array(), false),
             array(
                 10,
-                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                array('totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
                 false
             ),
             array(
                 6,
-                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                array('totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
                 true
             ),
             array(
                 3,
-                array('noOfOperatingCentres' => 1, 'totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                array('totAuthSmallVehicles' => 3, 'totAuthMediumVehicles' => 3),
+                true
+            ),
+            array(
+                10,
+                array('totAuthVehicles' => 6,),
+                false
+            ),
+            array(
+                6,
+                array('totAuthVehicles' => 6,),
+                true
+            ),
+            array(
+                3,
+                array('totAuthVehicles' => 6,),
                 true
             ),
         );
