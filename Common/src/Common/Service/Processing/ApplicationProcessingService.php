@@ -485,8 +485,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         if (!empty($fee)) {
             // existing fee, cancel it
-            // @TODO
-            //$this->getServiceLocator()->get('Entity\Fee')->cancelForApplication($licenceId);
+            $this->getServiceLocator()->get('Entity\Fee')
+                ->cancelForApplication($applicationId);
             return true;
         }
 
