@@ -118,7 +118,6 @@ function translatePartials($partials) {
     foreach ($partials as $file) {
         if (!$file->isDot()) {
             if ($file->isDir()) {
-                //echo $file->getPathname() . "\n";
                 $subDir = new DirectoryIterator($file->getPathname());
                 translatePartials($subDir);
             } else {

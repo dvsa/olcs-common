@@ -63,8 +63,7 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function formatDataForSave($data)
     {
-        $saveData = $data['declarationsAndUndertakings'];
-        return $saveData;
+        return $data['declarationsAndUndertakings'];
     }
 
     /**

@@ -2,7 +2,8 @@
 
 namespace CommonTest\Controller\Lva;
 
-use \Mockery as m;
+use Mockery as m;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Test Abstract Undertakings Controller
@@ -27,8 +28,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->shouldReceive('getApplicationId')->andReturn($applicationId);
 
         $applicationData = [
-            'licenceType' => ['id' => 'ltype_sn'],
-            'goodsOrPsv' => ['id' => 'lcat_gv'],
+            'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'niFlag' => 'N',
             'declarationConfirmation' => 'N',
             'version' => 1,
@@ -119,8 +120,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $applicationId = '123';
         $this->sut->shouldReceive('getApplicationId')->andReturn($applicationId);
         $applicationData = [
-            'licenceType' => ['id' => 'ltype_sn'],
-            'goodsOrPsv' => ['id' => 'lcat_gv'],
+            'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'niFlag' => 'N',
             'declarationConfirmation' => 'N',
             'version' => 1,
