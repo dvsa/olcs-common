@@ -21,8 +21,7 @@ class OperatingCentres
     /**
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation.data.totAuthSmallVehicles"
+     *     "label": "application_operating-centres_authorisation.data.totAuthSmallVehicles"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
@@ -31,8 +30,7 @@ class OperatingCentres
     /**
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation.data.totAuthMediumVehicles"
+     *     "label": "application_operating-centres_authorisation.data.totAuthMediumVehicles"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
@@ -41,8 +39,7 @@ class OperatingCentres
     /**
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation.data.totAuthLargeVehicles"
+     *     "label": "application_operating-centres_authorisation.data.totAuthLargeVehicles"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
      */
@@ -67,12 +64,15 @@ class OperatingCentres
     public $totAuthTrailers = null;
 
     /**
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({
-     *     "label":
-     * "application_operating-centres_authorisation.data.totCommunityLicences"
+     *     "label": "application_operating-centres_authorisation.data.totCommunityLicences"
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreCommunityLicences")
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreCommunityLicencesValidator"})
      */
     public $totCommunityLicences = null;
 

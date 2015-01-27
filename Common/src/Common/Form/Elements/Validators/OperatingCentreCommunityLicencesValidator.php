@@ -22,7 +22,6 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'none-numeric' => 'OperatingCentreCommunityLicencesValidator.none-numeric',
         'too-many' => 'OperatingCentreCommunityLicencesValidator.too-many'
     );
 
@@ -34,11 +33,6 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
      */
     public function isValid($value, $context = null)
     {
-        if (!is_numeric($value)) {
-            $this->error('none-numeric');
-            return false;
-        }
-
         $total = $this->getTotal($context);
 
         if ($value > $total) {
@@ -57,6 +51,10 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
      */
     private function getTotal($context)
     {
+        if (isset($context['totAuthVehicles'])) {
+            return $context['totAuthVehicles'];
+        }
+
         $total = 0;
 
         $total += (isset($context['totAuthSmallVehicles']) ? $context['totAuthSmallVehicles'] : 0);
