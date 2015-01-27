@@ -490,10 +490,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             return true;
         }
 
-        $licenceId = $this->getLicenceId($applicationId);
-
-        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_VAR);
-
-        return true;
+        return false;
     }
 }

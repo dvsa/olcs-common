@@ -699,6 +699,99 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sut->validateApplication($id);
     }
 
+    public function testMaybeCreateVariationFeeNoExistingFee()
+    {
+        $applicationId = 123;
+        $licenceId     = 456;
+
+        // we'll mock the 'createFee' method as it's tested elsewhere
+        $this->sut = m::mock('Common\Service\Processing\ApplicationProcessingService')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestOutstandingFeeForApplication')
+                ->once()
+                ->with($applicationId)
+                ->andReturn(null)
+                ->getMock()
+        );
+
+        $this->sut->shouldReceive('createFee')->once()->with(
+            $applicationId,
+            $licenceId,
+            'VAR'
+        );
+
+        $this->sut->maybeCreateVariationFee($applicationId, $licenceId);
+    }
+
+    public function testMaybeCreateVariationFeeWithExistingFee()
+    {
+        $applicationId = 123;
+        $licenceId     = 456;
+
+        // we'll mock the 'createFee' method as it's tested elsewhere
+        $this->sut = m::mock('Common\Service\Processing\ApplicationProcessingService')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestOutstandingFeeForApplication')
+                ->once()
+                ->with($applicationId)
+                ->andReturn(['id' => 99, 'amount' => '99.99'])
+                ->getMock()
+        );
+
+        $this->sut->shouldReceive('createFee')->never();
+
+        $this->sut->maybeCreateVariationFee($applicationId, $licenceId);
+    }
+
+    public function testMaybeCancelVariationFeeWithExistingFee()
+    {
+        $applicationId = 123;
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestOutstandingFeeForApplication')
+                    ->once()
+                    ->with($applicationId)
+                    ->andReturn(['id' => 99, 'amount' => '99.99'])
+                ->shouldReceive('cancelForApplication')
+                    ->once()
+                    ->with($applicationId)
+                ->getMock()
+        );
+
+        $this->sut->maybeCancelVariationFee($applicationId);
+    }
+
+    public function testMaybeCancelVariationFeeNoExistingFee()
+    {
+        $applicationId = 123;
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestOutstandingFeeForApplication')
+                    ->once()
+                    ->with($applicationId)
+                    ->andReturn(null)
+                ->shouldReceive('cancelForApplication')
+                    ->never()
+                ->getMock()
+        );
+
+        $this->sut->maybeCancelVariationFee($applicationId);
+    }
+
     protected function mockApplicationService($id, $licenceId, $validationData)
     {
         $mockApplicationService = $this->getMock(
