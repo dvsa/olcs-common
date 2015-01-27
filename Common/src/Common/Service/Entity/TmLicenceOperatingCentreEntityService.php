@@ -40,4 +40,37 @@ class TmLicenceOperatingCentreEntityService extends AbstractEntityService
         ];
         $this->deleteList($query);
     }
+
+    /**
+     * Delete by transport manager licence id and operating centre ids
+     *
+     * @param int $tmLicId
+     * @param array $ocIds
+     */
+    public function deleteByTmLicAndIds($tmLicId, $ocIds)
+    {
+        if (count($ocIds)) {
+            $allIds = '';
+            foreach ($ocIds as $id) {
+                $allIds .= '"' . $id . '", ';
+            }
+            $allIds = trim($allIds, ', ');
+            $query = [
+                'transportManagerLicence' => $tmLicId,
+                'operatingCentre' => 'IN [' . $allIds . ']'
+            ];
+            $this->deleteList($query);
+        }
+    }
+
+    /**
+     * Get all transport manager OCs for given licence
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getAllForTmLicence($id)
+    {
+        return $this->get(['transportManagerLicence' => $id], $this->dataBundle);
+    }
 }

@@ -35,7 +35,11 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
                 ]
             ],
             'tmType',
-            'tmLicenceOcs'
+            'tmLicenceOcs' => [
+                'children' => [
+                    'operatingCentre'
+                ]
+             ]
         ]
     ];
 
@@ -60,5 +64,16 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
             }
         }
         return $finalResults;
+    }
+
+    /**
+     * Get transport manager licence
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getTransportManagerLicence($id)
+    {
+        return $this->get($id, $this->dataBundle);
     }
 }
