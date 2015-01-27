@@ -9,6 +9,7 @@
 namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
+use Common\Service\Entity\LicenceEntityService as Licence;
 
 /**
  * Abstract Undertakings Controller
@@ -85,5 +86,18 @@ abstract class AbstractUndertakingsController extends AbstractController
     protected function save($data)
     {
         return $this->getServiceLocator()->get('Entity\Application')->save($data);
+    }
+
+    /**
+     * @param string $goodsOrPsv
+     * @return string
+     */
+    protected function getPartialPrefix($goodsOrPsv)
+    {
+        if ($goodsOrPsv === Licence::LICENCE_CATEGORY_PSV) {
+            return 'psv';
+        }
+
+        return 'gv';
     }
 }
