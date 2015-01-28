@@ -237,7 +237,7 @@ class SectionConfig implements ServiceLocatorAwareInterface
                         'external',
                     )
                 )
-            )
+            ),
         ),
     );
 
@@ -266,6 +266,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
             );
+
+            // undertakings requires all sections (except itself)
+            $this->sections['undertakings']['prerequisite'] = $this->getAllReferences();
+            $key = array_search('undertakings', $this->sections['undertakings']['prerequisite']);
+            unset($this->sections['undertakings']['prerequisite'][$key]);
         }
     }
 

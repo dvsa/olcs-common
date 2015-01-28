@@ -9,9 +9,8 @@ return array(
     'N/A' => 'W Not applicable',
     'No' => 'W No',
     'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
-    'OperatingCentreCommunityLicencesValidator.none-numeric' => 'W Please enter a numeric value',
-    'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences cannot exceed the total
-        number of vehicles',
+    'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences must not exceed the the
+        total number of vehicles',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
@@ -172,8 +171,9 @@ return array(
         seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'W Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'W Total number of vehicles',
-    'application_operating-centres_authorisation.data.totCommunityLicences' => 'W How many community licences do you
-        require?',
+    'application_operating-centres_authorisation.data.totCommunityLicences' => 'W Community licences',
+    'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'W How many community
+        licences do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'W Your traffic area is determined by your
         operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
         target="_blank">this link.</a>',
@@ -1010,7 +1010,7 @@ return array(
     'lva-community-licences-table-column-issue-number' => 'W Issue number',
     'lva-community-licences-table-column-prefix' => 'W Prefix',
     'lva-community-licences-table-column-status' => 'W Status',
-    'lva-community-licences-table-empty-message' => 'W You have not added any community licences',
+    'lva-community-licences-table-empty-message' => 'W No community licences match your current criteria',
     'lva-community-licences-table-title' => 'W Community licences',
     'lva-financial-evidence-table.file-name' => 'W File name',
     'lva-financial-evidence-table.title' => 'W Financial evidence',
@@ -1057,7 +1057,7 @@ return array(
     'lva.section.title.taxi_phv' => 'W Taxi/PHV',
     'lva.section.title.transport_managers' => 'W Transport managers',
     'lva.section.title.type_of_licence' => 'W Type of licence',
-    'lva.section.title.undertakings' => 'W Declarations',
+    'lva.section.title.undertakings' => 'W Review & declarations',
     'lva.section.title.vehicles' => 'W Vehicles',
     'lva.section.title.vehicles_declarations' => 'W Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'W Vehicles',
@@ -1528,7 +1528,7 @@ return array(
     'transport-manager-details-dob' => 'W Date of Birth',
     'transport-manager-details-email' => 'W Email',
     'transport-manager-details-first-name' => 'W First name',
-    'transport-manager-details-home-address' => 'W Home Addess',
+    'transport-manager-details-home-address' => 'W Home Address',
     'transport-manager-details-last-name' => 'W Last name',
     'transport-manager-details-place-of-birth' => 'W Place of Birth',
     'transport-manager-details-please-select' => 'W Please select',
@@ -1542,6 +1542,7 @@ return array(
     'transport-manager-details-title-value-mrs' => 'W Mrs',
     'transport-manager-details-title-value-ms' => 'W Ms',
     'transport-manager-details-type' => 'W Type',
+    'transport-manager-details-work-address' => 'W Work Address',
     'transport-managers' => 'W Transport Managers',
     'type-of-licence' => 'W Type of licence',
     'undertakings' => 'W Undertakings',

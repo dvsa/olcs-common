@@ -9,9 +9,8 @@ return array(
     'N/A' => 'Not applicable',
     'No' => 'No',
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
-    'OperatingCentreCommunityLicencesValidator.none-numeric' => 'Please enter a numeric value',
-    'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences cannot exceed the total
-        number of vehicles',
+    'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
+        total number of vehicles',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
@@ -172,8 +171,9 @@ return array(
         seats)',
     'application_operating-centres_authorisation.data.totAuthTrailers' => 'Total number of trailers',
     'application_operating-centres_authorisation.data.totAuthVehicles' => 'Total number of vehicles',
-    'application_operating-centres_authorisation.data.totCommunityLicences' => 'How many community licences do you
-        require?',
+    'application_operating-centres_authorisation.data.totCommunityLicences' => 'Community licences',
+    'application_operating-centres_authorisation.data.totCommunityLicences-external-app' => 'How many community licences
+        do you require?',
     'application_operating-centres_authorisation.dataTrafficArea.hint.new' => 'Your traffic area is determined by your
         operating centre\'s location.<br />For more information and to find your traffic please visit <a href="#"
         target="_blank">this link.</a>',
@@ -1054,7 +1054,7 @@ return array(
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.type_of_licence' => 'Type of licence',
-    'lva.section.title.undertakings' => 'Declarations',
+    'lva.section.title.undertakings' => 'Review & declarations',
     'lva.section.title.vehicles' => 'Vehicles',
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',
@@ -1524,7 +1524,7 @@ return array(
     'transport-manager-details-dob' => 'Date of Birth',
     'transport-manager-details-email' => 'Email',
     'transport-manager-details-first-name' => 'First name',
-    'transport-manager-details-home-address' => 'Home Addess',
+    'transport-manager-details-home-address' => 'Home Address',
     'transport-manager-details-last-name' => 'Last name',
     'transport-manager-details-place-of-birth' => 'Place of Birth',
     'transport-manager-details-please-select' => 'Please select',
@@ -1538,6 +1538,7 @@ return array(
     'transport-manager-details-title-value-mrs' => 'Mrs',
     'transport-manager-details-title-value-ms' => 'Ms',
     'transport-manager-details-type' => 'Type',
+    'transport-manager-details-work-address' => 'Work Address',
     'transport-managers' => 'Transport Managers',
     'type-of-licence' => 'Type of licence',
     'undertakings' => 'Undertakings',

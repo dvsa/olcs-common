@@ -41,6 +41,14 @@ trait EnabledSectionTrait
             $enabled = true;
 
             if (isset($settings['prerequisite'])) {
+                // ignore any prerequisites that are inaccessible
+                $settings['prerequisite'] = $this->removeInaccessible(
+                    $settings['prerequisite'],
+                    $accessibleSections
+                );
+            }
+
+            if (!empty($settings['prerequisite'])) {
                 $enabled = $restrictionHelper->isRestrictionSatisfied($settings['prerequisite'], $completeSections);
             }
 
@@ -53,5 +61,22 @@ trait EnabledSectionTrait
         }
 
         return $sections;
+    }
+
+    protected function removeInaccessible($prerequisites, $accessibleSections)
+    {
+        if (is_string($prerequisites)) {
+            if (!in_array($prerequisites, array_keys($accessibleSections))) {
+                return null;
+            }
+        } elseif (is_array($prerequisites)) {
+            $keep = [];
+            foreach ($prerequisites as $prerequisite) {
+                if (in_array($prerequisite, array_keys($accessibleSections))) {
+                    $keep[] = $prerequisite;
+                }
+            }
+            return $keep;
+        }
     }
 }

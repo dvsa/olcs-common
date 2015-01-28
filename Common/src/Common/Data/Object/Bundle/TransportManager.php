@@ -16,11 +16,15 @@ class TransportManager extends Bundle
      */
     public function init(ServiceLocatorInterface $serviceLocator)
     {
-        $contactDetails = new Bundle();
-        $contactDetails->addChild('person');
-        $contactDetails->addChild('address');
+        $homeCd = new Bundle();
+        $homeCd->addChild('person');
+        $homeCd->addChild('address');
 
-        $this->addChild('contactDetails', $contactDetails);
+        $workCd = new Bundle();
+        $workCd->addChild('address');
+
+        $this->addChild('homeCd', $homeCd);
+        $this->addChild('workCd', $workCd);
 
         $this->addChild('tmStatus');
         $this->addChild('tmType');
