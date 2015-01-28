@@ -1054,7 +1054,7 @@ return array(
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.type_of_licence' => 'Type of licence',
-    'lva.section.title.undertakings' => 'Declarations',
+    'lva.section.title.undertakings' => 'Review & declarations',
     'lva.section.title.vehicles' => 'Vehicles',
     'lva.section.title.vehicles_declarations' => 'Vehicle declarations',
     'lva.section.title.vehicles_psv' => 'Vehicles',

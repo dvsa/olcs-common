@@ -687,6 +687,16 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals(20, $this->sut->getLicenceTotCommunityLicences($id));
     }
 
+    public function testGetDataForUndertakings()
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForUndertakings($id));
+    }
+
     /**
      * @group entity_services
      */
@@ -697,7 +707,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getLicenceType($id));
+        $this->assertEquals('RESPONSE', $this->sut->getDataForUndertakings($id));
     }
 
     public function testGetVariationCompletionStatusData()
