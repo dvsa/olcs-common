@@ -18,6 +18,12 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
     protected $type = 'licence';
 
+    protected $authorityDataBundle = array(
+        'children' => array(
+            'operatingCentre'
+        )
+    );
+
     public function getVehicleAuths($id)
     {
         return $this->get($id);
@@ -51,5 +57,10 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
             ]
         ];
         return $this->get(['licence' => $licId], $bundle);
+    }
+
+    public function getAuthorityDataForLicence($licId)
+    {
+        return $this->get(['licence' => $licId], $this->authorityDataBundle);
     }
 }
