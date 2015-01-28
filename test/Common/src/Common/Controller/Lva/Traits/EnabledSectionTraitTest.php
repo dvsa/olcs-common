@@ -143,7 +143,9 @@ class EnabledSectionTraitTest extends MockeryTestCase
                     'type_of_licence' => [],
                     'business_type' => [],
                     'business_details' => [
-                        'prerequisite' => ['foo', 'bar'],
+                        'prerequisite' => [
+                            ['foo', 'bar']
+                        ],
                     ],
                 ],
                 [

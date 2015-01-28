@@ -72,6 +72,10 @@ trait EnabledSectionTrait
         } elseif (is_array($prerequisites)) {
             $keep = [];
             foreach ($prerequisites as $prerequisite) {
+                // recursively handle nested arrays
+                if (is_array($prerequisite)) {
+                    return array($this->removeInaccessible($prerequisite, $accessibleSections));
+                }
                 if (in_array($prerequisite, array_keys($accessibleSections))) {
                     $keep[] = $prerequisite;
                 }

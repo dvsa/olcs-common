@@ -268,9 +268,10 @@ class SectionConfig implements ServiceLocatorAwareInterface
             );
 
             // undertakings requires all sections (except itself)
-            $this->sections['undertakings']['prerequisite'] = $this->getAllReferences();
-            $key = array_search('undertakings', $this->sections['undertakings']['prerequisite']);
-            unset($this->sections['undertakings']['prerequisite'][$key]);
+            $undertakingsPreReqs = $this->getAllReferences();
+            $key = array_search('undertakings', $undertakingsPreReqs);
+            unset($undertakingsPreReqs[$key]);
+            $this->sections['undertakings']['prerequisite'] = array($undertakingsPreReqs);
         }
     }
 
