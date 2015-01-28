@@ -602,8 +602,80 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'type_of_licence' => VariationCompletionEntityService::STATUS_UPDATED,
             'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
-            'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'people' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+        ];
+
+        // Expectations
+        $this->variationCompletion->shouldReceive('updateCompletionStatuses')
+            ->with(3, $expectedCompletion);
+
+        $this->applicationEntity->shouldReceive('forceUpdate')
+            ->with(3, ['declarationConfirmation' => 0]);
+
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->setStubbedCompletionData($stubbedData);
+
+        $this->sut->completeSection($section);
+    }
+
+    public function testCompleteTypeOfLicenceSectionWithRestrictedUpgrade()
+    {
+        // Params
+        $section = 'type_of_licence';
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UPDATED,
+            'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'people' => VariationCompletionEntityService::STATUS_UPDATED,
+            'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'transport_managers' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_psv' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'vehicles_declarations' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'discs' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'community_licences' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'safety' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'conditions_undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'financial_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'convictions_penalties' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
+        ];
+        $stubbedData = [
+            'licenceType' => [
+                'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+            ],
+            'licence' => [
+                'licenceType' => [
+                    'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                ]
+            ]
+        ];
+        $expectedCompletion = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UPDATED, // Note this changes
+            'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_details' => VariationCompletionEntityService::STATUS_UPDATED,
+            'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'people' => VariationCompletionEntityService::STATUS_UPDATED,
             'taxi_phv' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'operating_centres' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'financial_evidence' => VariationCompletionEntityService::STATUS_UNCHANGED,
@@ -618,7 +690,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'financial_history' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
             'licence_history' => VariationCompletionEntityService::STATUS_UNCHANGED,
             'convictions_penalties' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
-            'undertakings' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION
+            'undertakings'  => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION // Note that this changes
         ];
 
         // Expectations
