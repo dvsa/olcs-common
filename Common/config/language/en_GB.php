@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'lva-post-submit-summary-title' => 'Application overview',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
