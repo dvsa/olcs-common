@@ -523,9 +523,23 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     protected function hasTotAuthVehiclesDroppedBelowVehicleCount($data)
     {
         $totAuthVehicles = $this->getTotAuthVehicles($data);
-        $totVehicles = count($data['licence']['licenceVehicles']);
+
+        $totVehicles = $this->countVehicles($data['licence']['licenceVehicles']);
 
         return $totAuthVehicles < $totVehicles;
+    }
+
+    protected function countVehicles($vehicles)
+    {
+        $count = 0;
+
+        foreach ($vehicles as $vehicle) {
+            if (empty($vehicle['removalDate'])) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**

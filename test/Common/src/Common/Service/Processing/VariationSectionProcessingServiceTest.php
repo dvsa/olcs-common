@@ -911,15 +911,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => null,
                 'totAuthLargeVehicles' => null,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8],
-                    ['vehicle' => 9],
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ]
             ]
         ];
@@ -1000,15 +1031,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => null,
                 'totAuthLargeVehicles' => null,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8],
-                    ['vehicle' => 9],
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ]
             ]
         ];
@@ -1089,15 +1151,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => null,
                 'totAuthLargeVehicles' => null,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8],
-                    ['vehicle' => 9],
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ]
             ]
         ];
@@ -1178,15 +1271,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => null,
                 'totAuthLargeVehicles' => null,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8],
-                    ['vehicle' => 9],
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ]
             ]
         ];
@@ -1267,14 +1391,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => 3,
                 'totAuthLargeVehicles' => 3,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8]
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => '2014-01-01'
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ],
                 'psvDiscs' => [
                     ['disc' => 1],
@@ -1366,14 +1522,46 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
                 'totAuthMediumVehicles' => 3,
                 'totAuthLargeVehicles' => 3,
                 'licenceVehicles' => [
-                    ['vehicle' => 1],
-                    ['vehicle' => 2],
-                    ['vehicle' => 3],
-                    ['vehicle' => 4],
-                    ['vehicle' => 5],
-                    ['vehicle' => 6],
-                    ['vehicle' => 7],
-                    ['vehicle' => 8]
+                    [
+                        'vehicle' => 1,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 2,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 3,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 4,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 5,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 6,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 7,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 8,
+                        'removalDate' => null
+                    ],
+                    [
+                        'vehicle' => 9,
+                        'removalDate' => '2014-01-01'
+                    ],
+                    [
+                        'vehicle' => 10,
+                        'removalDate' => '2014-01-01'
+                    ]
                 ],
                 'psvDiscs' => [
                     ['disc' => 1],
