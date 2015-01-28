@@ -554,7 +554,6 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $form->get('data')->setOptions($dataOptions);
 
         $removeFields = array(
-            'totAuthVehicles',
             'totAuthTrailers',
             'minTrailerAuth',
             'maxTrailerAuth'
@@ -622,7 +621,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             $removeFields[] = 'totCommunityLicences';
         }
 
-        $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, 'data', $removeFields);
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->removeFieldList($form, 'data', $removeFields);
+
+        $formHelper->removeValidator($form, 'data->totAuthVehicles', 'Common\Form\Elements\Validators\EqualSum');
     }
 
     /**

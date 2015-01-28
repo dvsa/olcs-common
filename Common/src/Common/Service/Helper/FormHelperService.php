@@ -310,14 +310,25 @@ class FormHelperService extends AbstractHelperService
 
     private function removeElement($form, $filter, $elementReference)
     {
+        list($form, $filter, $name) = $this->getElementAndInputParents($form, $filter, $elementReference);
+
+        $form->remove($name);
+        $filter->remove($name);
+    }
+
+    /**
+     * Grab the parent input filter and fieldset from the top level form and input filter using the -> notation
+     * i.e. data->field would return the data fieldset, data input filter and the string field
+     */
+    public function getElementAndInputParents($form, $filter, $elementReference)
+    {
         if (strstr($elementReference, '->')) {
             list($container, $elementReference) = explode('->', $elementReference, 2);
 
-            $this->removeElement($form->get($container), $filter->get($container), $elementReference);
-        } else {
-            $form->remove($elementReference);
-            $filter->remove($elementReference);
+            return $this->getElementAndInputParents($form->get($container), $filter->get($container), $elementReference);
         }
+
+        return array($form, $filter, $elementReference);
     }
 
     /**
@@ -576,5 +587,21 @@ class FormHelperService extends AbstractHelperService
 
             $element->setValueOptions($options);
         }
+    }
+
+    public function removeValidator($form, $reference, $validatorClass)
+    {
+        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+
+        $validatorChain = $filter->get($field)->getValidatorChain();
+        $newValidatorChain = new ValidatorChain();
+
+        foreach ($validatorChain->getValidators() as $validator) {
+            if (! ($validator['instance'] instanceof $validatorClass)) {
+                $newValidatorChain->attach($validator['instance']);
+            }
+        }
+
+        $filter->get($field)->setValidatorChain($newValidatorChain);
     }
 }

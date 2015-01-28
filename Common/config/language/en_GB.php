@@ -27,8 +27,6 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
-    'OperatingCentreVehicleAuthorisationsValidator.no-vehicles' => 'You must enter at least 1 vehicle',
-    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
@@ -1012,6 +1010,10 @@ return array(
     'lva-financial-evidence-table.file-name' => 'File name',
     'lva-financial-evidence-table.title' => 'Financial evidence',
     'lva-financial-evidence-table.type' => 'Evidence type',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'The sum of small and
+        medium vehicles does not match the total number of vehicles',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
+        'The sum of small, medium and large vehicles does not match the total number of vehicles',
     'lva.section.title.add_convictions_penalties' => 'Add previous conviction',
     'lva.section.title.add_discs' => 'Request discs',
     'lva.section.title.add_licence_history' => 'Add licence',
