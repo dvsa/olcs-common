@@ -27,7 +27,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
     protected $sectionCompletion;
     protected $applicationId;
-    protected $variationCompletionData;
+    protected $variationCompletionData = [];
     protected $isPsv;
 
     protected $requireAttentionMap = [
@@ -378,14 +378,18 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      *
      * @return array
      */
-    protected function getVariationCompletionStatusData()
+    protected function getVariationCompletionStatusData($applicationId = null)
     {
-        if ($this->variationCompletionData === null) {
-            $this->variationCompletionData = $this->getServiceLocator()->get('Entity\Application')
-                ->getVariationCompletionStatusData($this->getApplicationId());
+        if ($applicationId === null) {
+            $applicationId = $this->getApplicationId();
         }
 
-        return $this->variationCompletionData;
+        if (!isset($this->variationCompletionData[$applicationId])) {
+            $this->variationCompletionData[$applicationId] = $this->getServiceLocator()->get('Entity\Application')
+                ->getVariationCompletionStatusData($applicationId);
+        }
+
+        return $this->variationCompletionData[$applicationId];
     }
 
     /**
@@ -660,16 +664,8 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function updateRelatedTypeOfLicenceSections()
     {
-        $data = $this->getVariationCompletionStatusData();
-
-        $restrictedUpgrades = [
-            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
-        ];
-
         // If the old licence type was restricted and it is being upgraded
-        if ($data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
-            && in_array($data['licenceType']['id'], $restrictedUpgrades)) {
+        if ($this->isLicenceUpgrade()) {
 
             $relatedSections = [
                 'addresses',
@@ -684,5 +680,26 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
                 }
             }
         }
+    }
+
+    /**
+     * If the application involves a licence upgrade
+     *
+     * @param int $applicationId
+     * @return boolean
+     */
+    public function isLicenceUpgrade($applicationId = null)
+    {
+        $data = $this->getVariationCompletionStatusData($applicationId);
+
+        $restrictedUpgrades = [
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        return (
+            $data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            && in_array($data['licenceType']['id'], $restrictedUpgrades)
+        );
     }
 }
