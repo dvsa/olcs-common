@@ -601,35 +601,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $data['licence']['totCommunityLicences'];
     }
 
-    /**
-     * Determine whether an Application is a Variation involving an 'upgrade'
-     * for the purposes of Declarations / Undertakings wording.
-     * Defined as changing type of licence from Restricted to Standard National
-     * or Standard International.
-     *
-     * NOTE: SN -> SI is *not* considered an upgrade in this context.
-     */
-    public function isUpgradeVariation($id)
-    {
-        $data = $this->get($id, $this->isUpgradeBundle);
-
-        if ($data['isVariation']) {
-            $licenceType   = $data['licence']['licenceType']['id'];
-            $variationType = $data['licenceType']['id'];
-            if ($licenceType == LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
-                return in_array(
-                    $variationType,
-                    [
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
-                        LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
-                    ]
-                );
-            }
-        }
-
-        return false;
-    }
-
     public function getLicenceType($id)
     {
         return $this->get($id, $this->licenceTypeBundle);
