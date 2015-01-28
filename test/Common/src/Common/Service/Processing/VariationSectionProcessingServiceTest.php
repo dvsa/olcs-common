@@ -306,7 +306,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
     public function testHasUpdatedUndertakings()
     {
         $data = [
-            'declaration_confirmation' => 1
+            'declarationConfirmation' => 1
         ];
 
         $this->setStubbedCompletionData($data);
@@ -317,7 +317,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
     public function testHasUpdatedUndertakingsFalse()
     {
         $data = [
-            'declaration_confirmation' => 0
+            'declarationConfirmation' => 0
         ];
 
         $this->setStubbedCompletionData($data);
