@@ -1119,4 +1119,63 @@ class FormHelperServiceTest extends MockeryTestCase
             $helper->createFormWithRequest('MyForm', 'request')
         );
     }
+
+    public function testUpdatePaymentSubmissonFormWithFee()
+    {
+        $sut = new FormHelperService();
+
+        $fee = ['id' => 1, 'amount' => 1234.56];
+
+        $form = m::mock()->shouldReceive('get')
+            ->with('amount')
+            ->once()
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setTokens')
+                    ->with([0 => '1,234.56'])
+                ->getMock()
+            )
+            ->getMock();
+
+        $sut->updatePaymentSubmissonForm($form, $fee, true, true);
+    }
+
+    public function testUpdatePaymentSubmissonFormWithNoFeeAndIncomplete()
+    {
+        // use a partial mock so we can assert remove() called
+        $sut = m::mock('Common\Service\Helper\FormHelperService')->makePartial();
+
+        $form = m::mock()->shouldReceive('get')
+            ->with('submitPay')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('setLabel')
+                    ->once()
+                    ->with('submit-application.button')
+                ->getMock()
+            )
+            ->getMock();
+
+        // assert fee amount is removed
+        $sut->shouldReceive('remove')->once()->with($form, 'amount');
+
+        // assert button is disabled when
+        $sut->shouldReceive('disableElement')->once()->with($form, 'submitPay');
+
+        $sut->updatePaymentSubmissonForm($form, null, true, false);
+    }
+
+    public function testUpdatePaymentSubmissonFormAlreadySubmitted()
+    {
+        // use a partial mock so we can assert remove() called
+        $sut = m::mock('Common\Service\Helper\FormHelperService')->makePartial();
+
+        $form = m::mock();
+
+        // assert button and fee amount are removed
+        $sut->shouldReceive('remove')->once()->with($form, 'submitPay');
+        $sut->shouldReceive('remove')->once()->with($form, 'amount');
+
+        $sut->updatePaymentSubmissonForm($form, null, false, false);
+    }
 }
