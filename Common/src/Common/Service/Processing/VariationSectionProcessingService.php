@@ -286,7 +286,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         $data = $this->getVariationCompletionStatusData();
 
-        return $data['declaration_confirmation'] == 1;
+        return $data['declarationConfirmation'] == 1;
     }
 
     /** Not sure if this is needed yet
