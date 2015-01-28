@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'lva-post-submit-summary-title' => 'Application overview',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1013,6 +1012,9 @@ return array(
     'lva-financial-evidence-table.file-name' => 'File name',
     'lva-financial-evidence-table.title' => 'Financial evidence',
     'lva-financial-evidence-table.type' => 'Evidence type',
+    'lva-post-stubmit-summary-reference-number' => 'Reference No.',
+    'lva-post-submit-summary-application-no' => 'Application no.',
+    'lva-post-submit-summary-title' => 'Application overview',
     'lva-summary-application-before-processing' => 'Before your application can be processed you must:',
     'lva-summary-application-submitted' => 'Application submitted',
     'lva-summary-application-what-next-text' => 'The Central Licensing Office aims to process your application as soon
@@ -1447,7 +1449,6 @@ return array(
     'selfserve-business-registered-company-description' => 'If you don\'t have your company number to hand, or are
         having problems retrieving your company details, please enter them manually below.',
     'selfserve-dashboard-submission-date' => 'Submission date',
-    'selfserve-dashboard-target-completion-date' => 'Target completion date',
     'selfserve-dashboard-target-not-yet-submitted' => 'Not yet submitted',
     'selfserve-dashboard-target-renewal-date' => 'Renewal date',
     'selfserve-dashboard-target-start-date' => 'Start date',
@@ -1463,6 +1464,7 @@ return array(
     'selfserve-licence-your_business' => 'Your business',
     'send-to' => 'Send to',
     'si' => 'SI',
+    'sidebar-applying-for-licence' => 'Applying for a new licence',
     'skip-hire-waste-transfer-refuse' => 'Skip Hire / Waste Transfer / Refuse',
     'sole-trader' => 'Sole Trader',
     'sole-trader-details-header' => 'Sole trader details',
@@ -1486,6 +1488,7 @@ return array(
     'submissions' => 'Submissions',
     'submit-application.button' => 'Submit application',
     'submit-pay.button' => 'Submit & pay',
+    'submitted-date' => 'Submitted',
     'subsidiary-companies' => 'Subsidiary Companies',
     'subtitle-complaint-text' => 'Please enter complaint details',
     'subtitle-condition-text' => 'Please enter condition details',
@@ -1498,6 +1501,7 @@ return array(
     't-auth' => 'T-auth',
     'tachographAnalyser-external-contractor' => 'An external contractor',
     'tachographAnalyser-yourself' => 'An owner or employee of the business',
+    'target-completion-date' => 'Target completion date',
     'tasks.assignment' => 'Assigned to',
     'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
     'tasks.close.single' => 'Are you sure you want to close this task?',
