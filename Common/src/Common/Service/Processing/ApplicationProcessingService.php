@@ -451,4 +451,45 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     {
         return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($id);
     }
+
+    /**
+     * @param int $applicationId
+     * @param int $licenceId pass this in to save making an extra REST call
+     *
+     * @return boolean true if a fee was created, false otherwise (fee already exists)
+     */
+    public function maybeCreateVariationFee($applicationId, $licenceId)
+    {
+        $fee = $this->getServiceLocator()->get('Entity\Fee')
+            ->getLatestOutstandingFeeForApplication($applicationId);
+
+        if (!empty($fee)) {
+            // existing fee, don't create one
+            return false;
+        }
+
+        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_VAR);
+
+        return true;
+    }
+
+    /**
+     * @param int $applicationId
+     *
+     * @return boolean true if a fee was cancelled, false otherwise (no fee exists)
+     */
+    public function maybeCancelVariationFee($applicationId)
+    {
+        $fee = $this->getServiceLocator()->get('Entity\Fee')
+            ->getLatestOutstandingFeeForApplication($applicationId);
+
+        if (!empty($fee)) {
+            // existing fee, cancel it
+            $this->getServiceLocator()->get('Entity\Fee')
+                ->cancelForApplication($applicationId);
+            return true;
+        }
+
+        return false;
+    }
 }

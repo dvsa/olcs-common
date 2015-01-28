@@ -142,6 +142,37 @@ class FeeEntityService extends AbstractLvaEntityService
         $this->put($updates);
     }
 
+    public function cancelForApplication($applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => array(
+                self::STATUS_OUTSTANDING,
+                self::STATUS_WAIVE_RECOMMENDED
+            )
+        );
+
+        $results = $this->getAll($query, array('properties' => array('id')));
+
+        if (empty($results['Results'])) {
+            return;
+        }
+
+        $updates = array();
+
+        foreach ($results['Results'] as $fee) {
+            $updates[] = array(
+                'id' => $fee['id'],
+                'feeStatus' => self::STATUS_CANCELLED,
+                '_OPTIONS_' => array('force' => true)
+            );
+        }
+
+        $updates['_OPTIONS_']['multiple'] = true;
+
+        $this->put($updates);
+    }
+
     /**
      * Get data for overview
      *
