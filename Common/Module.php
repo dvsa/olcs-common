@@ -10,6 +10,7 @@ use Zend\EventManager\EventManager;
 use Common\Exception\ResourceNotFoundException;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
+use Zend\I18n\Translator\Translator;
 
 /**
  * ZF2 Module
@@ -29,9 +30,15 @@ class Module
 
         $events = $e->getApplication()->getEventManager();
 
+        $missingTranslationProcessor = new \Common\Service\Translator\MissingTranslationProcessor(
+            // Inject the renderer and template resolver
+            $e->getApplication()->getServiceManager()->get('ViewRenderer'),
+            $e->getApplication()->getServiceManager()->get('Zend\View\Resolver\TemplatePathStack')
+        );
+
         $events->attach(
-            'missingTranslation',
-            '\Common\Service\Translator\MissingTranslationProcessor::processEvent'
+            Translator::EVENT_MISSING_TRANSLATION,
+            array($missingTranslationProcessor, 'processEvent')
         );
 
         $translator->enableEventManager();
@@ -102,9 +109,12 @@ class Module
     {
         $locale = \Locale::acceptFromHttp($language);
 
+        // @todo this is wrong
         if (strlen($locale) == 2) {
             return strtolower($locale) . '_' . strtoupper($locale);
         }
+
+        return $locale;
     }
 
     /**
@@ -117,7 +127,8 @@ class Module
     {
         return array(
             'en_GB' => 'English',
-            'cy_CY' => 'Welsh'
+            'cy_CY' => 'Welsh',
+            'cy_GB' => 'Welsh'
         );
     }
 }

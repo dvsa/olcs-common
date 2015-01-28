@@ -271,6 +271,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $undertakingsDataBundle = array(
+        'children' => [
+            'goodsOrPsv',
+            'licenceType',
+            'licence' => [
+                'children' => [
+                    'licenceType',
+                ],
+            ],
+        ]
+    );
+
+    protected $isUpgradeBundle = array(
+        'children' => [
+            'licenceType',
+            'licence' => [
+                'children' => [
+                    'licenceType',
+                ],
+            ],
+        ]
+    );
+
     public function getVariationCompletionStatusData($id)
     {
         return $this->get($id, $this->variationCompletionStatusDataBundle);
@@ -505,6 +528,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForVehiclesDeclarations($id)
     {
         return $this->get($id, $this->vehicleDeclarationDataBundle);
+    }
+
+    public function getDataForUndertakings($id)
+    {
+        return $this->get($id, $this->undertakingsDataBundle);
     }
 
     public function getStatus($id)

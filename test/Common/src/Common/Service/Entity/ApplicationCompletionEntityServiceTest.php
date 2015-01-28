@@ -28,13 +28,16 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
         parent::setUp();
     }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
     protected function getServiceManager()
     {
-        return Bootstrap::getRealServiceManager();
+        $sm = Bootstrap::getServiceManager();
+
+        // inject a real string helper to do the requiredcamel-underscore and
+        // underscore-camel conversions
+        $helper = new \Common\Service\Helper\StringHelperService();
+        $sm->setService('Helper\String', $helper);
+
+        return $sm;
     }
 
     /**
@@ -3212,7 +3215,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED
                 )
             ),
-            // Undertakings
+            // Undertakings complete
             'undertakings_1' => array(
                 // Current section
                 'undertakings',
@@ -3220,6 +3223,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                 $initialStatus,
                 // Mocked application data
                 array(
+                    'declarationConfirmation' => 'Y'
                 ),
                 // Expected completion data
                 array(
@@ -3245,6 +3249,42 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE
+                )
+            ),
+            // Undertakings incomplete
+            'undertakings_2' => array(
+                // Current section
+                'undertakings',
+                // Mocked start completion data
+                $initialStatus,
+                // Mocked application data
+                array(
+                    'declarationConfirmation' => 'N'
+                ),
+                // Expected completion data
+                array(
+                    'id' => 3,
+                    'application' => 3,
+                    'typeOfLicenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessTypeStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'businessDetailsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'addressesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'peopleStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'taxiPhvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'operatingCentresStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialEvidenceStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'transportManagersStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesPsvStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'convictionsPenaltiesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
+                    'undertakingsStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
                 )
             ),
         );
