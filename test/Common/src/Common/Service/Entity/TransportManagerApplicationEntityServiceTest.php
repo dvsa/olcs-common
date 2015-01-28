@@ -47,7 +47,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
     /**
      * Test get transport manager appplications
-     * 
+     *
      * @group transportManagerApplication
      */
     public function testGetTransportManagerApplications()
@@ -134,7 +134,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
     /**
      * Test get transport manager appplication
-     * 
+     *
      * @group transportManagerApplication
      */
     public function testGetTransportManagerApplication()
@@ -143,5 +143,15 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getTransportManagerApplication(1));
+    }
+
+    public function testGetByApplication()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', ['application' => $id])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByApplication($id));
     }
 }

@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\DashboardApplicationLink as sut;
 use CommonTest\Bootstrap;
+
 /**
  * Dashboard Application Link Test
  *
