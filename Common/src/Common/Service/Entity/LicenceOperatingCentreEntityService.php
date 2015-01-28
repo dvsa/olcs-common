@@ -61,6 +61,7 @@ class LicenceOperatingCentreEntityService extends AbstractOperatingCentreEntityS
 
     public function getAuthorityDataForLicence($licId)
     {
-        return $this->get(['licence' => $licId], $this->authorityDataBundle);
+        $data = $this->get(['licence' => $licId], $this->authorityDataBundle);
+        return $data['Results'];
     }
 }
