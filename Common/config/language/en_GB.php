@@ -1241,6 +1241,7 @@ return array(
     'scanning.data.description' => 'Description',
     'scanning.data.entity' => 'Entity ID',
     'scanning.data.sub_category' => 'Subcategory',
+    'scanning.details' => 'Scanning details',
     'scanning.error.entity.1' => 'The Licence No is invalid',
     'scanning.error.entity.2' => 'The Case ID is invalid',
     'scanning.error.entity.3' => 'The Bus registration No is invalid',
