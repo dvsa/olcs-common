@@ -28,7 +28,7 @@ class SectionConfigTest extends MockeryTestCase
         // undertakings sections should have all sections bar itself as a prerequisite
         $this->assertEquals(
             ($totalSections - 1),
-            count($all['undertakings']['prerequisite'])
+            count($all['undertakings']['prerequisite'][0])
         );
     }
 }
