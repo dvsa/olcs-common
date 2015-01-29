@@ -15,10 +15,18 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
 {
     use LicenceServiceTrait;
 
+    const OUTPUT_TYPE_FULL = 1;
+    const OUTPUT_TYPE_PARTIAL = 2;
+
     /**
      * @var integer
      */
     protected $id;
+
+    /**
+     * @var int
+     */
+    protected $outputType = self::OUTPUT_TYPE_FULL;
 
     /**
      * @var string
@@ -38,14 +46,21 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
             $data = array();
             $rawData =  $this->getLicenceService()->fetchOperatingCentreData($this->getId(), $this->getBundle());
             if (is_array($rawData['operatingCentres'])) {
+                $outputType = $this->getOutputType();
                 foreach ($rawData['operatingCentres'] as $licenceOperatingCentre) {
-                    $data[$licenceOperatingCentre['operatingCentre']['id']] =
-
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ' ' .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ' ' .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] . ' ' .
-                        $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] . ' ' .
-                        $licenceOperatingCentre['operatingCentre']['address']['postcode'];
+                    if ($outputType == self::OUTPUT_TYPE_PARTIAL) {
+                        $data[$licenceOperatingCentre['operatingCentre']['id']] =
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ', ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['town'];
+                    } else {
+                        $data[$licenceOperatingCentre['operatingCentre']['id']] =
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine1'] . ', ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine2'] . ', ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine3'] . ' ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['addressLine4'] . ' ' .
+                            $licenceOperatingCentre['operatingCentre']['address']['postcode'];
+                    }
                 }
             }
             $this->setData($id, $data);
@@ -81,5 +96,21 @@ class LicenceOperatingCentre extends AbstractData implements FactoryInterface, L
     public function getId()
     {
         return $this->getLicenceService()->getId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getOutputType()
+    {
+        return $this->outputType;
+    }
+
+    /**
+     * @param int $outputType
+     */
+    public function setOutputType($outputType)
+    {
+        $this->outputType = $outputType;
     }
 }
