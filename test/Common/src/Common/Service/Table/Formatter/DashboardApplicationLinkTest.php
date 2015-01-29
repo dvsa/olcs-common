@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Table\Formatter\DashboardApplicationLink as sut;
 use CommonTest\Bootstrap;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Dashboard Application Link Test
@@ -43,7 +44,7 @@ class DashboardApplicationLinkTest extends MockeryTestCase
         return [
             [
                 [
-                    'status' => 'apsts_not_submitted',
+                    'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
                     'id' => 2
                 ],
                 [
@@ -55,7 +56,7 @@ class DashboardApplicationLinkTest extends MockeryTestCase
             ],
             [
                 [
-                    'status' => 'apsts_not_submitted',
+                    'status' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED,
                     'id' => 2
                 ],
                 [
@@ -67,7 +68,7 @@ class DashboardApplicationLinkTest extends MockeryTestCase
             ],
             [
                 [
-                    'status' => 'apsts_consideration',
+                    'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
                     'id' => 2
                 ],
                 [
@@ -79,7 +80,7 @@ class DashboardApplicationLinkTest extends MockeryTestCase
             ],
             [
                 [
-                    'status' => 'apsts_consideration',
+                    'status' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
                     'id' => 2
                 ],
                 [

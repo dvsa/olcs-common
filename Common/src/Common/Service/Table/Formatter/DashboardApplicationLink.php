@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Table\Formatter;
 
+use Common\Service\Entity\ApplicationEntityService;
+
 /**
  * Dashboard Application Link
  *
@@ -16,7 +18,7 @@ class DashboardApplicationLink implements FormatterInterface
 {
     public static function format($data, $column = array(), $sm = null)
     {
-        if ($data['status'] !== 'apsts_not_submitted') {
+        if ($data['status'] !== ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED) {
             $route = 'lva-' . $column['lva'] . '/submission-summary';
         } else {
             $route = 'lva-' . $column['lva'];
