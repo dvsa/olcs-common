@@ -361,6 +361,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // @NOTE passing licenceVehicle by reference
         foreach ($licenceVehicles as &$licenceVehicle) {
+            $licenceVehicle['application'] = null;
             $licenceVehicle['specifiedDate'] = $date;
         }
 

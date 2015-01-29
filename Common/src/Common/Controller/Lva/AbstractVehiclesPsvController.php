@@ -9,7 +9,6 @@ namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\VehicleEntityService;
-use Common\Form\Elements\Validators\TableRequiredValidator;
 use Zend\Form\Form;
 
 /**
@@ -376,9 +375,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
     protected function getTableData($table)
     {
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesPsvData(
-            $this->getLicenceId()
-        );
+        $licenceVehicles = $this->getAdapter()->getVehiclesData($this->getIdentifier());
 
         $rows = array();
 

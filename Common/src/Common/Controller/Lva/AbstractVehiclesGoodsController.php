@@ -30,26 +30,21 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
-        $adapter = $this->getAdapter();
-
         $filterForm = $this->getFilterForm();
 
         $form = $this->alterForm($this->getForm());
 
-        if ($adapter !== null) {
-            $form = $adapter->populateForm(
-                $request,
-                $this->getLvaEntityService()->getHeaderData($this->getIdentifier()),
-                $form
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
+        } else {
+            $form->setData(
+                $this->getAdapter()->getFormData($this->getIdentifier())
             );
         }
 
-        if ($request->isPost() && ($adapter === null ||
-            $adapter !== null && $form->isValid())) {
+        if ($request->isPost() && $form->isValid()) {
 
-            if ($adapter !== null) {
-                $this->save($form->getData());
-            }
+            $this->getAdapter()->save($form->getData(), $this->getIdentifier());
 
             $this->postSave('vehicles');
 
@@ -245,10 +240,9 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function getTableData()
     {
-        $licenceId = $this->getLicenceId();
         $filters = $this->getGoodsVehicleFilters();
 
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($licenceId);
+        $licenceVehicles = $this->getAdapter()->getVehiclesData($this->getIdentifier());
 
         $results = array();
 
