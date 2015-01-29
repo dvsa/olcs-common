@@ -27,9 +27,15 @@ class TransportManagerEntityService extends AbstractEntityService
 
     protected $tmDetailsBundle = [
         'children' => [
-            'contactDetails' => [
+            'homeCd' => [
                 'children' => [
                     'person',
+                    'address',
+                    'contactType'
+                ]
+            ],
+            'workCd' => [
+                'children' => [
                     'address',
                     'contactType'
                 ]

@@ -27,32 +27,38 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
     protected $sectionCompletion;
     protected $applicationId;
-    protected $variationCompletionData;
+    protected $variationCompletionData = [];
     protected $isPsv;
 
     protected $requireAttentionMap = [
+        'type_of_licence' => [],
+        'business_type' => [],
         'business_details' => [
             'business_type'
         ],
         'addresses' => [
-            'type_of_licence',
             'business_type'
         ],
         'people' => [
             'business_type'
         ],
-        'transport_managers' => [
-            'type_of_licence'
-        ],
-        'financial_history' => [
-            'type_of_licence'
-        ],
-        'convictions_penalties' => [
-            'type_of_licence'
-        ]
+        'operating_centres' => [],
+        'financial_evidence' => [],
+        'transport_managers' => [],
+        'vehicles' => [],
+        'vehicles_psv' => [],
+        'vehicles_declarations' => [],
+        'discs' => [],
+        'community_licences' => [],
+        'safety' => [],
+        'conditions_undertakings' => [],
+        'financial_history' => [],
+        'convictions_penalties' => [],
+        //'undertakings' => [] We don't want this as there is bespoke rules around setting this status
     ];
 
     protected $bespokeRulesMap = [
+        'type_of_licence' => 'updateRelatedTypeOfLicenceSections',
         'operating_centres' => 'updateRelatedOperatingCentreSections'
     ];
 
@@ -67,7 +73,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         'transport_managers' => 'hasUpdatedTransportManagers',
         'vehicles' => 'hasUpdatedVehicles',
         'vehicles_psv' => 'hasUpdatedVehicles',
-        'vehicle_declarations' => 'hasUpdatedVehicleDeclarations',
+        'vehicles_declarations' => 'hasUpdatedVehicleDeclarations',
         'discs' => 'hasSavedSection',
         'community_licences' => 'hasSavedSection',
         'safety' => 'hasSavedSection',
@@ -280,7 +286,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         $data = $this->getVariationCompletionStatusData();
 
-        return $data['declaration_confirmation'] == 1;
+        return $data['declarationConfirmation'] == 1;
     }
 
     /** Not sure if this is needed yet
@@ -372,14 +378,18 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      *
      * @return array
      */
-    protected function getVariationCompletionStatusData()
+    protected function getVariationCompletionStatusData($applicationId = null)
     {
-        if ($this->variationCompletionData === null) {
-            $this->variationCompletionData = $this->getServiceLocator()->get('Entity\Application')
-                ->getVariationCompletionStatusData($this->getApplicationId());
+        if ($applicationId === null) {
+            $applicationId = $this->getApplicationId();
         }
 
-        return $this->variationCompletionData;
+        if (!isset($this->variationCompletionData[$applicationId])) {
+            $this->variationCompletionData[$applicationId] = $this->getServiceLocator()->get('Entity\Application')
+                ->getVariationCompletionStatusData($applicationId);
+        }
+
+        return $this->variationCompletionData[$applicationId];
     }
 
     /**
@@ -427,7 +437,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      */
     protected function applyBespokeRules($section)
     {
-        if (isset($this->bespokeRulesMap[$section])) {
+        if (isset($this->bespokeRulesMap[$section]) && $this->isUpdated($section)) {
             $this->{$this->bespokeRulesMap[$section]}();
         }
     }
@@ -436,19 +446,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      * Apply the operating centre rules
      */
     protected function updateRelatedOperatingCentreSections()
-    {
-        // If we have updated the operating centres section
-        if ($this->isUpdated('operating_centres')) {
-            return $this->updateRelatedOperatingCentreSectionsWhenUpdated();
-        }
-
-        return $this->updateRelatedOperatingCentreSectionsWhenUnchanged();
-    }
-
-    /**
-     * Apply the business rules when the OC section is changed/updated
-     */
-    protected function updateRelatedOperatingCentreSectionsWhenUpdated()
     {
         $data = $this->getVariationCompletionStatusData();
 
@@ -526,9 +523,23 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     protected function hasTotAuthVehiclesDroppedBelowVehicleCount($data)
     {
         $totAuthVehicles = $this->getTotAuthVehicles($data);
-        $totVehicles = count($data['licence']['licenceVehicles']);
+
+        $totVehicles = $this->countVehicles($data['licence']['licenceVehicles']);
 
         return $totAuthVehicles < $totVehicles;
+    }
+
+    protected function countVehicles($vehicles)
+    {
+        $count = 0;
+
+        foreach ($vehicles as $vehicle) {
+            if (empty($vehicle['removalDate'])) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**
@@ -558,26 +569,6 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         }
 
         return $data['totAuthVehicles'];
-    }
-
-    /**
-     * Mark all related sections that haven't been updated to unchanged.
-     */
-    protected function updateRelatedOperatingCentreSectionsWhenUnchanged()
-    {
-        $relatedSections = [
-            'financial_evidence',
-            'discs',
-            'vehicles_declarations'
-        ];
-
-        $relatedSections[] = $this->getRelevantVehicleSection();
-
-        foreach ($relatedSections as $section) {
-            if (!$this->isUpdated($section)) {
-                $this->markSectionUnchanged($section);
-            }
-        }
     }
 
     /**
@@ -680,5 +671,49 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Entity\Application')->forceUpdate($this->getApplicationId(), $data);
         $this->markSectionRequired('undertakings');
+    }
+
+    /**
+     * Apply bespoke type of licence rules
+     */
+    protected function updateRelatedTypeOfLicenceSections()
+    {
+        // If the old licence type was restricted and it is being upgraded
+        if ($this->isLicenceUpgrade()) {
+
+            $relatedSections = [
+                'addresses',
+                'transport_managers',
+                'financial_history',
+                'convictions_penalties'
+            ];
+
+            foreach ($relatedSections as $section) {
+                if ($this->isUnchanged($section)) {
+                    $this->markSectionRequired($section);
+                }
+            }
+        }
+    }
+
+    /**
+     * If the application involves a licence upgrade
+     *
+     * @param int $applicationId
+     * @return boolean
+     */
+    public function isLicenceUpgrade($applicationId = null)
+    {
+        $data = $this->getVariationCompletionStatusData($applicationId);
+
+        $restrictedUpgrades = [
+            LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+            LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+        ];
+
+        return (
+            $data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            && in_array($data['licenceType']['id'], $restrictedUpgrades)
+        );
     }
 }

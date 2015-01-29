@@ -110,3 +110,26 @@ $cyGbContent .= "\n);\n";
 
 file_put_contents($translationLocation . 'en_GB.php', $enGbContent);
 file_put_contents($translationLocation . 'cy_GB.php', $cyGbContent);
+
+
+// markup partial translations
+function translatePartials($partials) {
+    // replicates file structure and nested partial includes
+    foreach ($partials as $file) {
+        if (!$file->isDot()) {
+            if ($file->isDir()) {
+                $subDir = new DirectoryIterator($file->getPathname());
+                translatePartials($subDir);
+            } else {
+                $source = $file->getPathname();
+                $dest = str_replace('en_GB', 'cy_GB', $source);
+
+                $content = file_get_contents($source);
+                file_put_contents($dest, str_replace('en_GB', 'cy_GB', $content));
+            }
+        }
+    }
+}
+
+$partials = new DirectoryIterator($translationLocation.'partials/en_GB');
+translatePartials($partials);
