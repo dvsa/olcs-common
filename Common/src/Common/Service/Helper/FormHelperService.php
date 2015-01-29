@@ -325,7 +325,11 @@ class FormHelperService extends AbstractHelperService
         if (strstr($elementReference, '->')) {
             list($container, $elementReference) = explode('->', $elementReference, 2);
 
-            return $this->getElementAndInputParents($form->get($container), $filter->get($container), $elementReference);
+            return $this->getElementAndInputParents(
+                $form->get($container),
+                $filter->get($container),
+                $elementReference
+            );
         }
 
         return array($form, $filter, $elementReference);

@@ -19,6 +19,10 @@ use Zend\Validator\AbstractValidator;
  */
 class EqualSum extends AbstractValidator
 {
+    protected $messageTemplates = [
+        'error' => 'equalsum-error'
+    ];
+
     public function isValid($value, $context = null)
     {
         $contextFields = $this->getOption('fields');
@@ -38,7 +42,7 @@ class EqualSum extends AbstractValidator
 
         if ((int)$value != $sum) {
 
-            $this->abstractOptions['messageTemplates']['error'] = $message;
+            $this->setMessage($message, 'error');
 
             $this->error('error');
 
