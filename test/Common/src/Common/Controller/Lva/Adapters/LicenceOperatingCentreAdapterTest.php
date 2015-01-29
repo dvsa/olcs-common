@@ -554,7 +554,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
     public function testAlterForm()
     {
         // Licence ID:5
-
         $this->describe('alterForm', array($this, 'describeAlterForm'));
     }
 
@@ -728,7 +727,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                             ->with(5)->andReturn($scope->stubbedTolData);
 
                         $expectedRemoveList = [
-                            'totAuthVehicles',
                             'totAuthTrailers',
                             'minTrailerAuth',
                             'maxTrailerAuth',
@@ -761,7 +759,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                             ->with(5)->andReturn($scope->stubbedTolData);
 
                         $expectedRemoveList = [
-                            'totAuthVehicles',
                             'totAuthTrailers',
                             'minTrailerAuth',
                             'maxTrailerAuth'
@@ -793,7 +790,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                             ->with(5)->andReturn($scope->stubbedTolData);
 
                         $expectedRemoveList = [
-                            'totAuthVehicles',
                             'totAuthTrailers',
                             'minTrailerAuth',
                             'maxTrailerAuth',
@@ -826,7 +822,6 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                             ->with(5)->andReturn($scope->stubbedTolData);
 
                         $expectedRemoveList = [
-                            'totAuthVehicles',
                             'totAuthTrailers',
                             'minTrailerAuth',
                             'maxTrailerAuth',
@@ -877,6 +872,13 @@ class LicenceOperatingCentreAdapterTest extends TestCase
 
                         $scope->mockFormHelper->shouldReceive('removeFieldList')
                             ->with($scope->mockForm, 'data', $expectedRemoveList);
+
+                        $scope->mockFormHelper->shouldReceive('removeValidator')
+                            ->with(
+                                $scope->mockForm,
+                                'data->totAuthVehicles',
+                                'Common\Form\Elements\Validators\EqualSum'
+                            );
                     }
                 );
 
@@ -908,6 +910,13 @@ class LicenceOperatingCentreAdapterTest extends TestCase
 
                         $scope->mockFormHelper->shouldReceive('removeFieldList')
                             ->with($scope->mockForm, 'data', $expectedRemoveList);
+
+                        $scope->mockFormHelper->shouldReceive('removeValidator')
+                            ->with(
+                                $scope->mockForm,
+                                'data->totAuthVehicles',
+                                'Common\Form\Elements\Validators\EqualSum'
+                            );
                     }
                 );
 
