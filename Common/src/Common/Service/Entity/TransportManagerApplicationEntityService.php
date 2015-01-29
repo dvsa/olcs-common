@@ -76,4 +76,9 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     {
         return $this->get($id, $this->dataBundle);
     }
+
+    public function getByApplication($applicationId)
+    {
+        return $this->get(['application' => $applicationId]);
+    }
 }
