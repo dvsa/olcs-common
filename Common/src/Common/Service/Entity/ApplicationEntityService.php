@@ -540,6 +540,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $this->get($id, $this->statusBundle)['status']['id'];
     }
 
+    public function getSubmitSummaryData($id)
+    {
+        return $this->get($id, $this->statusBundle);
+    }
+
     public function getCategory($id)
     {
         return $this->get($id, $this->categoryBundle)['goodsOrPsv']['id'];
