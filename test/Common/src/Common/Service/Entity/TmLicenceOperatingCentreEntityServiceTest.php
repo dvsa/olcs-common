@@ -45,7 +45,7 @@ class TmLicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTes
     {
         $query = [
             'transportManagerLicence' => 1,
-            'operatingCentre' => 'IN ["1", "2"]',
+            'operatingCentre' => 'IN [1, 2]',
         ];
         $this->expectOneRestCall('TmLicenceOc', 'DELETE', $query)
             ->will($this->returnValue('RESPONSE'));

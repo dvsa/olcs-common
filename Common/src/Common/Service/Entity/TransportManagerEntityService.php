@@ -64,7 +64,6 @@ class TransportManagerEntityService extends AbstractEntityService
     /**
      * Get transport manager details
      *
-     * @group transportManagerEntity
      * @param int $id
      */
     public function getTmDetails($id)
@@ -86,7 +85,6 @@ class TransportManagerEntityService extends AbstractEntityService
     /**
      * Get transport manager documents
      *
-     * @group transportManagerEntity
      * @param int $tmId
      * @param int $secondaryId
      * @param string $type

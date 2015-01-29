@@ -50,14 +50,9 @@ class TmLicenceOperatingCentreEntityService extends AbstractEntityService
     public function deleteByTmLicAndIds($tmLicId, $ocIds)
     {
         if (count($ocIds)) {
-            $allIds = '';
-            foreach ($ocIds as $id) {
-                $allIds .= '"' . $id . '", ';
-            }
-            $allIds = trim($allIds, ', ');
             $query = [
                 'transportManagerLicence' => $tmLicId,
-                'operatingCentre' => 'IN [' . $allIds . ']'
+                'operatingCentre' => 'IN [' . implode(', ', $ocIds) . ']'
             ];
             $this->deleteList($query);
         }
