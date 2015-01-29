@@ -577,33 +577,4 @@ class FormHelperService extends AbstractHelperService
             $element->setValueOptions($options);
         }
     }
-
-    /**
-     * @param Zend\Form\Form $form
-     * @param array $fee
-     * @param boolean $canSubmit
-     */
-    public function updatePaymentSubmissonForm($form, $fee, $visible, $enabled)
-    {
-        if ($visible) {
-            if ($fee) {
-                // show fee amount
-                $feeAmount = number_format($fee['amount'], 2);
-                $form->get('amount')->setTokens([0 => $feeAmount]);
-            } else {
-                // if no fee, change submit button text
-                $this->remove($form, 'amount');
-                $form->get('submitPay')->setLabel('submit-application.button');
-            }
-
-            if (!$enabled) {
-                $this->disableElement($form, 'submitPay');
-            }
-
-        } else {
-            // remove submit button and amount
-            $this->remove($form, 'amount');
-            $this->remove($form, 'submitPay');
-        }
-    }
 }
