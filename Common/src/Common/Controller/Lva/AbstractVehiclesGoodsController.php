@@ -356,20 +356,21 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
             $this->reprintSave();
 
-            return $this->redirect()->toRoute(
+            return $this->redirect()->toRouteAjax(
                 null,
                 array($this->getIdentifierIndex() => $this->getIdentifier())
             );
         }
 
-        $form = $this->getConfirmationForm();
+        $form = $this->getConfirmationForm($request);
 
         return $this->render('reprint_vehicles', $form);
     }
 
-    protected function getConfirmationForm()
+    protected function getConfirmationForm($request)
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('GenericConfirmation');
+        return $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('GenericConfirmation', $request);
     }
 
     /**

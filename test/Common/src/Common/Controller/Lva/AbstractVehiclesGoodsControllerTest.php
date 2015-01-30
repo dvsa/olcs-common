@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
 use CommonTest\Bootstrap;
+use CommonTest\Traits\MockDateTrait;
 use Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter;
 
 /**
@@ -14,20 +15,24 @@ use Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter;
  */
 class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 {
+    use MockDateTrait;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
+
+        $this->sm->setService(
+            'Script',
+            m::mock()->shouldReceive('loadFiles')->getMock()
+        );
+        $this->mockDate('2015-01-30');
     }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
     protected function getServiceManager()
     {
-        return Bootstrap::getRealServiceManager();
+        return Bootstrap::getServiceManager();
     }
 
     /**
@@ -752,5 +757,64 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->editAction();
 
         $this->assertEquals('edit_vehicles', $this->view);
+    }
+
+    public function testReprintActionGet()
+    {
+        $this->request->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+                ->shouldReceive('createFormWithRequest')
+                ->with('GenericConfirmation', $this->request)
+                ->getMock()
+        );
+
+        $this->mockRender();
+
+        $this->sut->reprintAction();
+
+        $this->assertEquals('reprint_vehicles', $this->view);
+
+    }
+
+    public function testReprintActionConfirmed()
+    {
+        $this->request->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $this->sut
+            ->shouldReceive('params')->with('child_id')->andReturn('16,17')
+            ->shouldReceive('params')->with('licence')->andReturn(123)
+            ->shouldReceive('getIdentifierIndex')->andReturn('licence');
+
+        $this->sm->setService(
+            'Entity\LicenceVehicle',
+            m::mock()
+                ->shouldReceive('ceaseActiveDisc')->once()->with('16')
+                    ->andReturn(['goodsDiscs' => []])
+                ->shouldReceive('ceaseActiveDisc')->once()->with('17')
+                    ->andReturn(['goodsDiscs' => []])
+                ->getMock()
+        );
+        $this->sm->setService(
+            'Entity\GoodsDisc',
+            m::mock()
+                ->shouldReceive('save')->once()->with(
+                    ['licenceVehicle' => '16', 'isCopy' => 'Y']
+                )
+                ->shouldReceive('save')->once()->with(
+                    ['licenceVehicle' => '17', 'isCopy' => 'Y']
+                )
+                ->getMock()
+        );
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['licence' => 123])
+            ->andReturn('REDIRECT');
+
+        $this->assertEquals('REDIRECT', $this->sut->reprintAction());
     }
 }

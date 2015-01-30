@@ -86,12 +86,13 @@ class TransportManagerEntityService extends AbstractEntityService
      * Get transport manager documents
      *
      * @param int $tmId
-     * @param int $appId
+     * @param int $secondaryId
+     * @param string $type
      * @param int $categoryId
      * @param int $documentSubCategoryId
      * @return array
      */
-    public function getDocuments($id, $appId, $categoryId, $documentSubCategoryId)
+    public function getDocuments($id, $secondaryId, $type, $categoryId, $documentSubCategoryId)
     {
         $documentBundle = $this->documentBundle;
 
@@ -99,8 +100,8 @@ class TransportManagerEntityService extends AbstractEntityService
             'category'    => $categoryId,
             'subCategory' => $documentSubCategoryId,
         );
-        if ($appId) {
-            $documentBundle['children']['documents']['criteria']['application'] = $appId;
+        if ($secondaryId) {
+            $documentBundle['children']['documents']['criteria'][$type] = $secondaryId;
         }
 
         $data = $this->get($id, $documentBundle);

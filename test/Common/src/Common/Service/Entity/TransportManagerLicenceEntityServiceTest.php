@@ -16,6 +16,29 @@ use Common\Service\Entity\TransportManagerLicenceEntityService;
  */
 class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTestCase
 {
+
+    protected $dataBundle = [
+        'children' => [
+            'licence' => [
+                'children' => [
+                    'organisation',
+                    'status'
+                ]
+            ],
+            'transportManager' => [
+                'children' => [
+                    'tmType'
+                ]
+            ],
+            'tmType',
+            'tmLicenceOcs' => [
+                'children' => [
+                    'operatingCentre'
+                ]
+             ]
+        ]
+    ];
+
     protected function setUp()
     {
         $this->sut = new TransportManagerLicenceEntityService();
@@ -105,5 +128,18 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
             ->will($this->returnValue($returnValue));
 
         $this->assertEquals($expectedValue, $this->sut->getTransportManagerLicences($id, $status));
+    }
+
+    /**
+     * Test get transport manager licence
+     * 
+     * @group transportManagerLicences
+     */
+    public function testGetTransportManagerLicence()
+    {
+        $this->expectOneRestCall('TransportManagerLicence', 'GET', 1, $this->dataBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getTransportManagerLicence(1));
     }
 }

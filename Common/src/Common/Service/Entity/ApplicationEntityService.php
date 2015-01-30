@@ -24,6 +24,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
     const APPLICATION_STATUS_VALID = 'apsts_valid';
 
+    const CODE_GV_APP             = 'GV79';
+    const CODE_GV_VAR_UPGRADE     = 'GV80A';
+    const CODE_GV_VAR_NO_UPGRADE  = 'GV81';
+
+    const CODE_PSV_VAR_UPGRADE    = 'PSV431A';
+    const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
+
     /**
      * Define entity for default behaviour
      *
@@ -294,10 +301,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
-    public function getVariationCompletionStatusData($id)
-    {
-        return $this->get($id, $this->variationCompletionStatusDataBundle);
-    }
+    protected $paymentSubmissionBundle = array(
+        'children' => [
+            'goodsOrPsv',
+        ]
+    );
 
     /**
      * Bundle to check licence type
@@ -309,6 +317,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceType'
         )
     );
+
+    public function getVariationCompletionStatusData($id)
+    {
+        return $this->get($id, $this->variationCompletionStatusDataBundle);
+    }
 
     /**
      * Get applications for a given organisation
@@ -609,5 +622,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getLicenceType($id)
     {
         return $this->get($id, $this->licenceTypeBundle);
+    }
+
+    public function getDataForPaymentSubmission($id)
+    {
+        $data = $this->get($id, $this->paymentSubmissionBundle);
+
+        return $data;
     }
 }

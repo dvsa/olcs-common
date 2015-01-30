@@ -35,4 +35,40 @@ class TmLicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTes
 
         $this->sut->deleteByTmLicence(1);
     }
+
+    /**
+     * Test delete by TM licence and ids
+     * 
+     * @group tmLicenceOCEntityService
+     */
+    public function testDeleteByTmLicAndIds()
+    {
+        $query = [
+            'transportManagerLicence' => 1,
+            'operatingCentre' => 'IN [1, 2]',
+        ];
+        $this->expectOneRestCall('TmLicenceOc', 'DELETE', $query)
+            ->will($this->returnValue('RESPONSE'));
+        $this->sut->deleteByTmLicAndIds(1, [1,2]);
+    }
+
+    /**
+     * Test get all for TM licence
+     * 
+     * @group tmLicenceOCEntityService
+     */
+    public function testGetAllForTmLicence()
+    {
+        $dataBundle = [
+            'children' => [
+                'transportManagerLicence',
+                'operatingCentre'
+            ]
+        ];
+
+        $this->expectOneRestCall('TmLicenceOc', 'GET', ['transportManagerLicence' => 1], $dataBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getAllForTmLicence(1));
+    }
 }

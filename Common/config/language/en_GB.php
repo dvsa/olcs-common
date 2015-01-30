@@ -27,8 +27,6 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
-    'OperatingCentreVehicleAuthorisationsValidator.no-vehicles' => 'You must enter at least 1 vehicle',
-    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
@@ -868,6 +866,7 @@ return array(
     'internal-navigation-transport-manager-details' => 'TM details',
     'internal-navigation-transport-manager-details-competences' => 'Competences',
     'internal-navigation-transport-manager-details-details' => 'Details',
+    'internal-navigation-transport-manager-details-employment' => 'Other employment',
     'internal-navigation-transport-manager-details-responsibilities' => 'Responsibilities',
     'internal-navigation-transport-manager-documents' => 'Documents',
     'internal-navigation-transport-manager-processing' => 'Processing',
@@ -903,6 +902,13 @@ return array(
     'internal.transport-manager.competences.form.upload.text' => 'Upload a copy of your certificate of professional
         competence or exemption certificate',
     'internal.transport-manager.competences.table.qualification' => 'Qualification',
+    'internal.transport-manager.employment.cancel' => 'Cancel',
+    'internal.transport-manager.employment.form.address' => 'Address',
+    'internal.transport-manager.employment.form.employerName' => 'Employer name',
+    'internal.transport-manager.employment.form.hoursPerWeek' => 'Hours and days of work',
+    'internal.transport-manager.employment.form.position' => 'Position held',
+    'internal.transport-manager.employment.save' => 'Save',
+    'internal.transport-manager.employments.table' => 'Other employment',
     'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'Cancel',
@@ -1013,6 +1019,10 @@ return array(
     'lva-financial-evidence-table.file-name' => 'File name',
     'lva-financial-evidence-table.title' => 'Financial evidence',
     'lva-financial-evidence-table.type' => 'Evidence type',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'The sum of small and
+        medium vehicles does not match the total number of vehicles',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
+        'The sum of small, medium and large vehicles does not match the total number of vehicles',
     'lva-post-submit-summary-application-no' => 'Application no.',
     'lva-post-submit-summary-reference-number' => 'Reference No.',
     'lva-post-submit-summary-title' => 'Application overview',
@@ -1242,6 +1252,7 @@ return array(
     'scanning.data.description' => 'Description',
     'scanning.data.entity' => 'Entity ID',
     'scanning.data.sub_category' => 'Subcategory',
+    'scanning.details' => 'Scanning details',
     'scanning.error.entity.1' => 'The Licence No is invalid',
     'scanning.error.entity.2' => 'The Case ID is invalid',
     'scanning.error.entity.3' => 'The Bus registration No is invalid',
