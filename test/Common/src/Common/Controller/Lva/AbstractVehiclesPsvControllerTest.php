@@ -236,4 +236,82 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('add_vehicle', $this->view);
     }
+
+    public function testSmallAddAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('add', 'small')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->smallAddAction());
+    }
+
+    public function testSmallEditAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('edit', 'small')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->smallEditAction());
+    }
+
+    public function testSmallDeleteAction()
+    {
+        $this->sut->shouldReceive('deleteAction')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->smallDeleteAction());
+    }
+
+    public function testMediumAddAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('add', 'medium')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->mediumAddAction());
+    }
+
+    public function testMediumEditAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('edit', 'medium')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->mediumEditAction());
+    }
+
+    public function testMediumDeleteAction()
+    {
+        $this->sut->shouldReceive('deleteAction')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->mediumDeleteAction());
+    }
+
+    public function testLargeAddAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('add', 'large')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->largeAddAction());
+    }
+
+    public function testLargeEditAction()
+    {
+        $this->sut->shouldReceive('addOrEdit')
+            ->with('edit', 'large')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->largeEditAction());
+    }
+
+    public function testLargeDeleteAction()
+    {
+        $this->sut->shouldReceive('deleteAction')
+            ->andReturn('RETURN');
+
+        $this->assertEquals('RETURN', $this->sut->largeDeleteAction());
+    }
 }
