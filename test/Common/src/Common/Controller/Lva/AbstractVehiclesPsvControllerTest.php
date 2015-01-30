@@ -19,7 +19,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesPsvController');
-        $this->adapter = m::mock();
+
+        $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
         $this->sut->setAdapter($this->adapter);
     }
 
