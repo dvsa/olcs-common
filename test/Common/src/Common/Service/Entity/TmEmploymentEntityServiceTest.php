@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Entity;
 
-use Mockery as m;
 use Common\Service\Entity\TmEmploymentEntityService;
 
 /**
