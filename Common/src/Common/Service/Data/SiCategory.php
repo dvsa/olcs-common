@@ -9,9 +9,9 @@ use Common\Util\RestClient;
  * Class RefData
  * @package Common\Service
  */
-class Country extends AbstractData implements ListData
+class SiCategory extends AbstractData implements ListData
 {
-    protected $serviceName = 'Country';
+    protected $serviceName = 'SiCategory';
 
     /**
      * Format data!
@@ -24,7 +24,7 @@ class Country extends AbstractData implements ListData
         $optionData = [];
 
         foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['countryDesc'];
+            $optionData[$datum['id']] = $datum['description'];
         }
 
         return $optionData;
@@ -43,26 +43,7 @@ class Country extends AbstractData implements ListData
             return [];
         }
 
-        if ('isMemberState' == $category) {
-            $data = $this->removeNonMemberStates($data);
-        }
-
         return $this->formatData($data);
-    }
-
-    public function removeNonMemberStates($data)
-    {
-        $members = [];
-
-        foreach ($data as $state) {
-
-            if (trim($state['isMemberState']) == 'Y') {
-
-                $members[] = $state;
-            }
-        }
-
-        return $members;
     }
 
     /**
@@ -73,17 +54,17 @@ class Country extends AbstractData implements ListData
      */
     public function fetchListData()
     {
-        if (is_null($this->getData('Country'))) {
+        if (is_null($this->getData($this->serviceName))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000, 'sort' => 'countryDesc']);
+            $data = $this->getRestClient()->get('', ['limit' => 1000, 'sort' => 'description']);
 
-            $this->setData('Country', false);
+            $this->setData($this->serviceName, false);
 
             if (isset($data['Results'])) {
-                $this->setData('Country', $data['Results']);
+                $this->setData($this->serviceName, $data['Results']);
             }
         }
 
-        return $this->getData('Country');
+        return $this->getData($this->serviceName);
     }
 }
