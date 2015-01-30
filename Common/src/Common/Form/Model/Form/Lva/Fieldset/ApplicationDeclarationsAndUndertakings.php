@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("declarations")
  */
-class DeclarationsAndUndertakings
+class ApplicationDeclarationsAndUndertakings
 {
     /**
      * @Form\Attributes({"value": "markup-review-text"})
@@ -17,18 +17,12 @@ class DeclarationsAndUndertakings
 
     /**
      * @Form\Attributes({"value": "<h3>%s</h3>" })
-     * @Form\Options({
-     *      "tokens": { 0: "section.name.undertakings" },
-     *      "priority": 10
-     * })
+     * @Form\Options({"tokens": { 0: "section.name.undertakings" } })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $heading = null;
 
     /**
-     * @Form\Options({
-     *      "priority": 20
-     * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $undertakings = null;
@@ -38,7 +32,7 @@ class DeclarationsAndUndertakings
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "must_be_value": "Y",
-     *      "priority": 30
+     *     "label": "application.review-declarations.confirm-text"
      * })
      * @Form\Attributes({"data-container-class": "confirm"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")

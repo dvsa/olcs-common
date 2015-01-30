@@ -111,6 +111,9 @@ return array(
     'application.print' => 'W Print application',
     'application.progress' => 'W %s of %s sections complete',
     'application.review-declarations' => 'W Review & declarations',
+    'application.review-declarations.confirm-text' => 'W I declare that the statements made in this application are true
+        and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
+        offence to make a false declaration',
     'application.review-declarations.summary' => 'W Application summary',
     'application.review-declarations.summary.new-window' => 'W View in another window',
     'application.step' => 'W Step %s',
@@ -1591,6 +1594,9 @@ return array(
     'variation.overview.application-no' => 'W Application No.',
     'variation.overview.title' => 'W Variation application',
     'variation.print' => 'W Print application',
+    'variation.review-declarations.confirm-text' => 'W I declare that the statements made in this application are true
+        and that there have been no other changes that affect the licence. I understand that it is an offence to make a
+        false declaration. Please see the licence undertakings below as a reminder of your obligations.',
     'vehicle-and-safety' => 'W Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'W I confirm that I would like to continue adding this
         vehicle',

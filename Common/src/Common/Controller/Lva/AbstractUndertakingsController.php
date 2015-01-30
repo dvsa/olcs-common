@@ -26,13 +26,21 @@ abstract class AbstractUndertakingsController extends AbstractController
     {
         $request = $this->getRequest();
 
+        $applicationData = $this->getUndertakingsData();
+
+        // $applicationData['licenceType']['id'] = 'ltyp_r';
+        // $applicationData['goodsOrPsv']['id']  = 'lcat_gv';
+        // $applicationData['niFlag']            = 'N';
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $data = $this->formatDataForForm($this->getUndertakingsData());
+            $data = $this->formatDataForForm($applicationData);
         }
 
         $form = $this->getForm()->setData($data);
+
+        $this->updateForm($form, $applicationData);
 
         if ($request->isPost()) {
             if ($form->isValid()) {
@@ -57,15 +65,16 @@ abstract class AbstractUndertakingsController extends AbstractController
      *
      * @return \Zend\Form\Form
      */
-    protected function getForm()
-    {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\Undertakings');
-    }
+    abstract protected function getForm();
 
     protected function formatDataForSave($data)
     {
         return $data['declarationsAndUndertakings'];
     }
+
+    abstract protected function formatDataForForm($applicationData);
+
+    abstract protected function updateForm($form, $data);
 
     /**
      * Get Application Data
