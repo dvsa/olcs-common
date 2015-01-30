@@ -482,6 +482,17 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         $results = $this->getAll($licenceId, $bundle);
 
-        return $results['licenceVehicles'];
+        $licenceVehicles = $results['licenceVehicles'];
+        $return = [];
+
+        foreach ($licenceVehicles as $vehicle) {
+            if (empty($vehicle['specifiedDate'])) {
+                array_unshift($return, $vehicle);
+            } else {
+                array_push($return, $vehicle);
+            }
+        }
+
+        return $return;
     }
 }

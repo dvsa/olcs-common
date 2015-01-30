@@ -761,7 +761,35 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         );
 
         $stubbedResponse = array(
-            'licenceVehicles' => 'FOO'
+            'licenceVehicles' => array(
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => null
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                )
+            )
+        );
+
+        $expectedResponse = array(
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => null
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            )
         );
 
         // Mocks
@@ -776,7 +804,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
             ->will($this->returnValue($stubbedResponse));
 
-        $this->assertEquals('FOO', $this->sut->getVehiclesDataForApplication($applicationId));
+        $this->assertEquals($expectedResponse, $this->sut->getVehiclesDataForApplication($applicationId));
     }
 
     public function testGetVehiclesPsvDataForApplication()
@@ -805,7 +833,35 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         );
 
         $stubbedResponse = array(
-            'licenceVehicles' => 'FOO'
+            'licenceVehicles' => array(
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => null
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                )
+            )
+        );
+
+        $expectedResponse = array(
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => null
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            )
         );
 
         // Mocks
@@ -820,6 +876,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
             ->will($this->returnValue($stubbedResponse));
 
-        $this->assertEquals('FOO', $this->sut->getVehiclesPsvDataForApplication($applicationId));
+        $this->assertEquals($expectedResponse, $this->sut->getVehiclesPsvDataForApplication($applicationId));
     }
 }
