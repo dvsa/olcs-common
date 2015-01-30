@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\LicenceEntityService;
+use Mockery as m;
 
 /**
  * Licence Entity Service Test
@@ -735,5 +736,90 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals('foo', $this->sut->getOrganisation($id));
+    }
+
+    public function testGetVehiclesDataForApplication()
+    {
+        // Params
+        $applicationId = 2;
+        $licenceId = 4;
+        $expectedBundle = array(
+            'children' => array(
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'goodsDiscs',
+                        'vehicle'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'application' => $applicationId,
+                            'specifiedDate' => 'NOT NULL'
+                        )
+                    )
+                )
+            )
+        );
+
+        $stubbedResponse = array(
+            'licenceVehicles' => 'FOO'
+        );
+
+        // Mocks
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+
+        // Expectations
+        $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
+            ->with($applicationId)
+            ->andReturn($licenceId);
+
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
+            ->will($this->returnValue($stubbedResponse));
+
+        $this->assertEquals('FOO', $this->sut->getVehiclesDataForApplication($applicationId));
+    }
+
+    public function testGetVehiclesPsvDataForApplication()
+    {
+        // Params
+        $applicationId = 2;
+        $licenceId = 4;
+        $expectedBundle = array(
+            'children' => array(
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'vehicle' => array(
+                            'children' => array(
+                                'psvType'
+                            )
+                        )
+                    ),
+                    'criteria' => array(
+                        array(
+                            'application' => $applicationId,
+                            'specifiedDate' => 'NOT NULL'
+                        )
+                    )
+                )
+            )
+        );
+
+        $stubbedResponse = array(
+            'licenceVehicles' => 'FOO'
+        );
+
+        // Mocks
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+
+        // Expectations
+        $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
+            ->with($applicationId)
+            ->andReturn($licenceId);
+
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
+            ->will($this->returnValue($stubbedResponse));
+
+        $this->assertEquals('FOO', $this->sut->getVehiclesPsvDataForApplication($applicationId));
     }
 }

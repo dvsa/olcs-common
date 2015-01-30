@@ -59,9 +59,8 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     {
         return array(
             'data' => array(
-                'version'       => $data['version'],
-                'hasEnteredReg' => isset($data['hasEnteredReg']) && ($data['hasEnteredReg'] == 'Y' ||
-                    $data['hasEnteredReg'] == 'N') ? $data['hasEnteredReg'] : 'Y'
+                'version' => $data['version'],
+                'hasEnteredReg' => $data['hasEnteredReg'] === 'N' ? 'N' : 'Y'
             )
         );
     }
