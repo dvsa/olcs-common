@@ -42,9 +42,6 @@ class OperatingCentreTotalVehicleAuthorisationsValidatorTest extends \PHPUnit_Fr
     public function providerIsValid()
     {
         return array(
-            array('', array(), false),
-            // No vehicles
-            array(0, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), false),
             // No OCs
             array(1, array('noOfOperatingCentres' => 0, 'minVehicleAuth' => 0, 'maxVehicleAuth' => 0), false),
             // 1 OC

@@ -22,12 +22,10 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
      * @var array
      */
     protected $messageTemplates = array(
-        'none-numeric' => 'OperatingCentreVehicleAuthorisationsValidator.none-numeric',
         'no-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre',
         '1-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre',
         'too-low' => 'OperatingCentreVehicleAuthorisationsValidator.too-low',
-        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high',
-        'no-vehicles' => 'OperatingCentreVehicleAuthorisationsValidator.no-vehicles'
+        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high'
     );
 
     /**
@@ -38,18 +36,8 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
      */
     public function isValid($value, $context = null)
     {
-        if (!is_numeric($value)) {
-            $this->error('none-numeric');
-            return false;
-        }
-
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
-
-        if ($value == 0) {
-            $this->error('no-vehicles');
-            return false;
-        }
 
         if ($noOfOperatingCentres === 0 && $value !== 0) {
 

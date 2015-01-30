@@ -20,46 +20,60 @@ class OperatingCentres
 
     /**
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthSmallVehicles"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthSmallVehicles"})
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      */
     public $totAuthSmallVehicles = null;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthMediumVehicles"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthMediumVehicles"})
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      */
     public $totAuthMediumVehicles = null;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthLargeVehicles"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreVehicleAuthorisations")
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthLargeVehicles"})
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      */
     public $totAuthLargeVehicles = null;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthVehicles"
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthVehicles"})
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTotalVehicleAuthorisationsValidator"})
+     * @Form\Validator({
+     *     "name": "Common\Form\Elements\Validators\EqualSum",
+     *     "options": {
+     *         "errorPrefix": "lva-operating-centre-tot-auth-vehicles-equalsum",
+     *         "fields":{"totAuthSmallVehicles", "totAuthMediumVehicles", "totAuthLargeVehicles"}
+     *     }
      * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTotalVehicleAuthorisations")
      */
     public $totAuthVehicles = null;
 
     /**
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totAuthTrailers"
-     * })
-     * @Form\Type("\Common\Form\Elements\InputFilters\OperatingCentreTrailerAuthorisations")
+     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(false)
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthTrailers"})
+     * @Form\Validator({"name": "Digits"})
+     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTrailerAuthorisationsValidator"});
      */
     public $totAuthTrailers = null;
 
@@ -67,9 +81,7 @@ class OperatingCentres
      * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
      * @Form\AllowEmpty(false)
      * @Form\Attributes({"class":"short","id":""})
-     * @Form\Options({
-     *     "label": "application_operating-centres_authorisation.data.totCommunityLicences"
-     * })
+     * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreCommunityLicencesValidator"})

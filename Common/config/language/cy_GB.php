@@ -27,8 +27,6 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
-    'OperatingCentreVehicleAuthorisationsValidator.no-vehicles' => 'W You must enter at least 1 vehicle',
-    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
         restricted licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'W The number of authorised vehicles must not exceed the
@@ -1015,6 +1013,10 @@ return array(
     'lva-financial-evidence-table.file-name' => 'W File name',
     'lva-financial-evidence-table.title' => 'W Financial evidence',
     'lva-financial-evidence-table.type' => 'W Evidence type',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
+        and medium vehicles does not match the total number of vehicles',
+    'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
+        'W The sum of small, medium and large vehicles does not match the total number of vehicles',
     'lva-post-submit-summary-application-no' => 'W Application no.',
     'lva-post-submit-summary-reference-number' => 'W Reference No.',
     'lva-post-submit-summary-title' => 'W Application overview',
