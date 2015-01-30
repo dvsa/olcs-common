@@ -14,8 +14,7 @@ class CommunityLicenceFilter
 {
     /**
      * @Form\Options({
-     *     "category": "com_lic_sts",
-     *     "label": "lva-community-licence-filter-status",
+     *     "category": "com_lic_sts"
      * })
      * @Form\Type("\Common\Form\Element\DynamicMultiCheckbox")
      */
