@@ -397,7 +397,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
      *
      * @return array
      */
-    protected function getSectionCompletion()
+    public function getSectionCompletion()
     {
         if ($this->sectionCompletion === null) {
             $this->sectionCompletion = $this->getServiceLocator()->get('Entity\VariationCompletion')
