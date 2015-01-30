@@ -56,13 +56,13 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $form = $formHelper
-            ->createForm('Lva\PsvVehicles')
-            ->setData($data);
+        $form = $formHelper->createForm('Lva\PsvVehicles')->setData($data);
 
         // we want to alter based on the *original* entity data, not how
         // it's been manipulated to suit the form (if relevant)
         $form = $this->alterForm($form, $entityData);
+
+        $rawTableData = $this->getRawTableData();
 
         foreach ($this->getTables() as $tableName) {
 
@@ -76,7 +76,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 ->get('Table')
                 ->prepareTable(
                     'lva-psv-vehicles-' . $tableName,
-                    $this->getTableData($tableName)
+                    $this->getTableData($rawTableData, $tableName)
                 );
 
             $formHelper->populateFormTable(
@@ -373,15 +373,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         );
     }
 
-    protected function getTableData($table)
+    protected function getRawTableData()
     {
-        $licenceVehicles = $this->getAdapter()->getVehiclesData($this->getIdentifier());
+        return $this->getAdapter()->getVehiclesData($this->getIdentifier());
+    }
 
+    protected function getTableData($tableData, $table)
+    {
         $rows = array();
 
         $type = $this->getPsvTypeFromType($table);
 
-        foreach ($licenceVehicles as $licenceVehicle) {
+        foreach ($tableData as $licenceVehicle) {
 
             // wrong type (small, medium, large)
             if (!isset($licenceVehicle['vehicle']['psvType']['id'])

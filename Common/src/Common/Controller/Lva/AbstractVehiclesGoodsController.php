@@ -7,17 +7,14 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
-
 /**
  * Goods Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements AdapterAwareInterface
+abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait,
-        Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
 

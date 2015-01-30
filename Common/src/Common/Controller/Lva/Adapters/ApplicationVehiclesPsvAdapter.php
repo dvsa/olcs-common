@@ -24,6 +24,6 @@ class ApplicationVehiclesPsvAdapter extends AbstractAdapter implements VehiclesA
      */
     public function getVehiclesData($id)
     {
-        return $this->getServiceLocator()->get('Entity\Application')->getVehiclesPsvData($id);
+        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesPsvDataForApplication($id);
     }
 }

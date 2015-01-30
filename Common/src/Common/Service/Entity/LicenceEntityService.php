@@ -457,17 +457,30 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getVehiclesDataForApplication($applicationId)
     {
+        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehicleDataBundle);
+    }
+
+    public function getVehiclesPsvDataForApplication($applicationId)
+    {
+        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehiclePsvDataBundle);
+    }
+
+    protected function getGenericVehicleDataForApplication($applicationId, $bundle)
+    {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
 
-        $this->vehicleDataBundle['children']['licenceVehicles']['criteria'] = [
+        // So to grab the relevant licence vehicles...
+        $bundle['children']['licenceVehicles']['criteria'] = [
             [
+                // ...either the application id needs to match
                 'application' => $applicationId,
+                // ...or the vehicles must be specified (i.e. on the licence)
                 'specifiedDate' => 'NOT NULL'
             ]
         ];
 
-        $results = $this->getAll($licenceId, $this->vehicleDataBundle);
+        $results = $this->getAll($licenceId, $bundle);
 
         return $results['licenceVehicles'];
     }
