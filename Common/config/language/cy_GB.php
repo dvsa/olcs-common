@@ -759,6 +759,7 @@ return array(
     'internal-licence-bus-list' => 'W Bus registration list',
     'internal-licence-bus-processing' => 'W Processing',
     'internal-licence-bus-processing-label' => 'W Processing',
+    'internal-licence-bus-processing-decisions' => 'W Decisions',
     'internal-licence-bus-processing-notes' => 'W Notes',
     'internal-licence-bus-processing-notes-add' => 'W Add note',
     'internal-licence-bus-processing-notes-add-label' => 'W Add note',
