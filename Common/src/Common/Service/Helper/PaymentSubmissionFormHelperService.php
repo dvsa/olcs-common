@@ -45,6 +45,9 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
                 $helper->remove($form, 'amount');
                 $form->get('submitPay')->setLabel('submit-application.button');
             }
+
+            // note, we don't set an action on the form if we're disabling
+            // the submit button
             if ($enabled) {
                 $form->setAttribute('action', $actionUrl);
             } else {
