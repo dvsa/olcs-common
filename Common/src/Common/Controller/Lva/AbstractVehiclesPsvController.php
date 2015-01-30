@@ -21,6 +21,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     use Traits\CrudTableTrait;
 
     protected $section = 'vehicles_psv';
+    protected $rawTableData;
 
     private $psvTypes = [
         'small'  => VehicleEntityService::PSV_TYPE_SMALL,
@@ -62,8 +63,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         // it's been manipulated to suit the form (if relevant)
         $form = $this->alterForm($form, $entityData);
 
-        $rawTableData = $this->getRawTableData();
-
         foreach ($this->getTables() as $tableName) {
 
             // no point wasting time fetching data for a table
@@ -71,6 +70,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             if (!$form->has($tableName)) {
                 continue;
             }
+
+            $rawTableData = $this->getRawTableData();
 
             $table = $this->getServiceLocator()
                 ->get('Table')
@@ -375,7 +376,11 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
     protected function getRawTableData()
     {
-        return $this->getAdapter()->getVehiclesData($this->getIdentifier());
+        if ($this->rawTableData === null) {
+            $this->rawTableData = $this->getAdapter()->getVehiclesData($this->getIdentifier());
+        }
+
+        return $this->rawTableData;
     }
 
     protected function getTableData($tableData, $table)
