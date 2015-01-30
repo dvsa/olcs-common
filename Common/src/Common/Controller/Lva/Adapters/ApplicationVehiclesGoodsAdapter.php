@@ -24,7 +24,7 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
      */
     public function getVehiclesData($id)
     {
-        return $this->getServiceLocator()->get('Entity\Application')->getVehiclesData($id);
+        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesDataForApplication($id);
     }
 
     /**
@@ -39,7 +39,7 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     {
         $data['data']['id'] = $id;
 
-        return $this->getServiceLocator->get('Entity\Application')->save($data['data']);
+        return $this->getServiceLocator()->get('Entity\Application')->save($data['data']);
     }
 
     /**

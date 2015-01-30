@@ -454,4 +454,21 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         return $response['organisation'];
     }
+
+    public function getVehiclesDataForApplication($applicationId)
+    {
+        $licenceId = $this->getServiceLocator()->get('Entity\Application')
+            ->getLicenceIdForApplication($applicationId);
+
+        $this->vehicleDataBundle['children']['licenceVehicles']['criteria'] = [
+            [
+                'application' => $applicationId,
+                'specifiedDate' => 'NOT NULL'
+            ]
+        ];
+
+        $results = $this->getAll($licenceId, $this->vehicleDataBundle);
+
+        return $results['licenceVehicles'];
+    }
 }

@@ -294,11 +294,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
-    public function getVariationCompletionStatusData($id)
-    {
-        return $this->get($id, $this->variationCompletionStatusDataBundle);
-    }
-
     /**
      * Bundle to check licence type
      *
@@ -309,6 +304,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceType'
         )
     );
+
+    public function getVariationCompletionStatusData($id)
+    {
+        return $this->get($id, $this->variationCompletionStatusDataBundle);
+    }
 
     /**
      * Get applications for a given organisation
