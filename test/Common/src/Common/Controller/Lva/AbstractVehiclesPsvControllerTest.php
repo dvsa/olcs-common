@@ -12,11 +12,15 @@ use CommonTest\Bootstrap;
  */
 class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 {
+    protected $adapter;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesPsvController');
+        $this->adapter = m::mock();
+        $this->sut->setAdapter($this->adapter);
     }
 
     /**
@@ -134,21 +138,17 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('remove')
             ->with($form, 'data->notice');
 
+        $this->adapter->shouldReceive('getVehiclesData')
+        ->with(321)
+        ->andReturn(
+            [
+                'version' => 1,
+                'hasEnteredReg' => 'N'
+            ]
+        );
+
         $this->sut->shouldReceive('getIdentifier')
             ->andReturn(321)
-            ->shouldReceive('getLvaEntityService')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getDataForVehiclesPsv')
-                ->with(321)
-                ->andReturn(
-                    [
-                        'version' => 1,
-                        'hasEnteredReg' => 'N'
-                    ]
-                )
-                ->getMock()
-            )
             ->shouldReceive('getTypeOfLicenceData')
             ->andReturn(
                 [

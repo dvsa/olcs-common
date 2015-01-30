@@ -11,14 +11,20 @@ use Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 {
+    protected $adapter;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
+
+        $this->adapter = m::mock();
+        $this->sut->setAdapter($this->adapter);
     }
 
     /**
@@ -144,7 +150,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
+        $this->adapter->shouldReceive('getVehiclesData')
             ->with(123)
             ->andReturn([]);
 
@@ -274,7 +280,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
+        $this->adapter->shouldReceive('getVehiclesData')
             ->with(123)
             ->andReturn([$licenceVehicle]);
 
@@ -561,7 +567,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
+        $this->adapter->shouldReceive('getVehiclesData')
             ->with(123)
             ->andReturn([]);
 
