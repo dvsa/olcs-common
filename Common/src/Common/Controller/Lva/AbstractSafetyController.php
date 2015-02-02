@@ -313,10 +313,6 @@ abstract class AbstractSafetyController extends AbstractController
         }
 
         // Need to explicitly set these to null, otherwise empty string gets converted to 0
-        if (array_key_exists('safetyInsTrailers', $data['licence']) && empty($data['licence']['safetyInsTrailers'])) {
-            $data['licence']['safetyInsTrailers'] = null;
-        }
-
         if (array_key_exists('safetyInsVehicles', $data['licence']) && empty($data['licence']['safetyInsVehicles'])) {
             $data['licence']['safetyInsVehicles'] = null;
         }

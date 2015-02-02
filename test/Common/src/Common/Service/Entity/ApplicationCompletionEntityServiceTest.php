@@ -2102,7 +2102,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'vehiclesDeclarationsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'discsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'communityLicencesStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
-                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_INCOMPLETE,
+                    'safetyStatus' => ApplicationCompletionEntityService::STATUS_COMPLETE,
                     'conditionsUndertakingsStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'financialHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
                     'licenceHistoryStatus' => ApplicationCompletionEntityService::STATUS_NOT_STARTED,
