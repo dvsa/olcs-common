@@ -9,14 +9,17 @@ namespace Common\Controller\Lva;
 
 use Common\Form\Elements\Validators\NewVrm;
 use Zend\Form\Element\Checkbox;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic for Goods *AND* PSV controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractVehiclesController extends AbstractController
+abstract class AbstractVehiclesController extends AbstractController implements AdapterAwareInterface
 {
+    use Traits\AdapterAwareTrait;
+
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
 

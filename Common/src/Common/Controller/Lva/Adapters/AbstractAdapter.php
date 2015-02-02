@@ -9,13 +9,14 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\Controller\Lva\Interfaces\AdapterInterface;
 
 /**
  * Abstract Adapter
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractAdapter implements ServiceLocatorAwareInterface
+abstract class AbstractAdapter implements ServiceLocatorAwareInterface, AdapterInterface
 {
     use ServiceLocatorAwareTrait;
 

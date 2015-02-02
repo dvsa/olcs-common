@@ -37,7 +37,22 @@ return array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
             'LvaApplication/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+                'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
+            ),
+            'LvaLicence/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\LicenceVehiclesGoodsDelegator'
+            ),
+            'LvaVariation/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\VariationVehiclesGoodsDelegator'
+            ),
+            'LvaApplication/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
+            ),
+            'LvaLicence/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\LicenceVehiclesPsvDelegator'
+            ),
+            'LvaVariation/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\VariationVehiclesPsvDelegator'
             ),
             'LvaLicence/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\LicenceOperatingCentreDelegator'
@@ -119,6 +134,12 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
+            'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
+            'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
+            'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
+            'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
+            'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
