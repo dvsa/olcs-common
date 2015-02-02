@@ -510,7 +510,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
         }
 
         if ($applicationData['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            $requiredVars[] = $this->isAtLeast1($applicationData['licence']['safetyInsTrailers']);
+            $requiredVars[] = $applicationData['licence']['safetyInsTrailers'] !== '';
         }
 
         return $this->checkCompletion($requiredVars);
