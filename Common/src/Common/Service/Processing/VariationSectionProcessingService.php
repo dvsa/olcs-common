@@ -595,7 +595,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         if ($this->isPsv === null) {
             $data = $this->getVariationCompletionStatusData();
 
-            $this->isPsv = $data['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+            $this->isPsv = $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
         }
 
         return $this->isPsv;
