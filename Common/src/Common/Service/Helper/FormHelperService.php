@@ -85,6 +85,16 @@ class FormHelperService extends AbstractHelperService
             $form->add($config);
         }
 
+        //@TODO remove this once selfserve has rbac
+        try {
+            $authService = $this->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService');
+            if (!$authService->isGranted('edit') && !$form->getOption('bypass_auth')) {
+                $form->setOption('readonly', true);
+            }
+        } catch (\Exception $e) {
+            null;
+        }
+
         return $form;
     }
 
