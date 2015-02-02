@@ -33,10 +33,9 @@ class FinancialHistoryTest extends AbstractFormTest
                 new F\Stack(['data', 'insolvencyDetails']),
                 new F\Value(F\Value::VALID, ''),
                 new F\Value(F\Value::VALID, 'foo'),
-                new F\Value(F\Value::INVALID, '', $bankruptContext), // fails https://jira.i-env.net/browse/OLCS-6899
+                new F\Value(F\Value::INVALID, '', $bankruptContext), // this was failing (OLCS-6899)
                 new F\Value(F\Value::INVALID, 'not long enough', $bankruptContext),
-                new F\Value(F\Value::VALID, str_pad('', 200, 'x'), $bankruptContext),
-                new F\Value(F\Value::VALID, str_pad('x', 200, 'x'), $bankruptContext)
+                new F\Value(F\Value::VALID, str_pad('', 200, 'x'), $bankruptContext)
             ),
         ];
     }
