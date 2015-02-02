@@ -127,7 +127,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         $this->updateSectionsRequiringAttention($section);
 
-        $this->applyBespokeRules($section);
+        $this->applyBespokeRules();
 
         $this->getServiceLocator()->get('Entity\VariationCompletion')
             ->updateCompletionStatuses($this->getApplicationId(), $this->sectionCompletion);
@@ -432,13 +432,13 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
     /**
      * Some sections have more complicated rules, we hook into thoses here
-     *
-     * @param string $section
      */
-    protected function applyBespokeRules($section)
+    protected function applyBespokeRules()
     {
-        if (isset($this->bespokeRulesMap[$section]) && $this->isUpdated($section)) {
-            $this->{$this->bespokeRulesMap[$section]}();
+        foreach ($this->bespokeRulesMap as $section => $callback) {
+            if ($this->isUpdated($section)) {
+                $this->$callback();
+            }
         }
     }
 
