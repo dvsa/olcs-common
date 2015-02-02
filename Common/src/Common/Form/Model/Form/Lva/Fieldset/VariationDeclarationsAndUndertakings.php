@@ -7,7 +7,7 @@ use Zend\Form\Annotation as Form;
 /**
  * @Form\Name("declarations")
  */
-class DeclarationsAndUndertakings
+class VariationDeclarationsAndUndertakings
 {
     /**
      * @Form\Attributes({"value": "markup-review-text"})
@@ -25,14 +25,16 @@ class DeclarationsAndUndertakings
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $undertakings = null;
+    public $additionalUndertakings = null;
 
     /**
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
-     *     "must_be_value": "Y"
+     *     "must_be_value": "Y",
+     *     "label": "variation.review-declarations.confirm-text"
      * })
+     * @Form\Attributes({"data-container-class": "confirm"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */
     public $declarationConfirmation = null;
@@ -40,7 +42,7 @@ class DeclarationsAndUndertakings
     /**
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
-    public $declarations = null;
+    public $undertakings = null;
 
     /**
      * @Form\Attributes({"value":""})

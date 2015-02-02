@@ -28,13 +28,7 @@ abstract class AbstractUndertakingsController extends AbstractController
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-        } else {
-            $data = $this->formatDataForForm($this->getUndertakingsData());
-        }
-
-        $form = $this->getForm()->setData($data);
-
-        if ($request->isPost()) {
+            $form = $this->getForm()->setData($data);
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
@@ -43,11 +37,18 @@ abstract class AbstractUndertakingsController extends AbstractController
                 // validation failed, we need to lookup application data
                 // but use the POSTed checkbox value to render the form again
                 $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $data = $this->formatDataForForm($this->getUndertakingsData());
+                $applicationData = $this->getUndertakingsData();
+                $data = $this->formatDataForForm($applicationData);
                 $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
                 $form->setData($data);
             }
+        } else {
+            $applicationData = $this->getUndertakingsData();
+            $data = $this->formatDataForForm($applicationData);
+            $form = $this->getForm()->setData($data);
         }
+
+        $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
     }
@@ -55,11 +56,26 @@ abstract class AbstractUndertakingsController extends AbstractController
     /**
      * Get undertakings form
      *
+     * This should really be declared abstract - it *should* be overridden
+     * by concrete subclasses but we unit test the abstract logic above
+     * and mock this method
+     *
      * @return \Zend\Form\Form
      */
     protected function getForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\Undertakings');
+        // no-op, override in concrete classes
+    }
+
+    protected function formatDataForForm($applicationData)
+    {
+        // override in concrete classes if required
+        return $applicationData;
+    }
+
+    protected function updateForm($form, $data)
+    {
+        // no-op, override in concrete classes if required
     }
 
     protected function formatDataForSave($data)

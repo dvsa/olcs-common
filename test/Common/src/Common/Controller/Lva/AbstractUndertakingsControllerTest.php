@@ -21,7 +21,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
 
     public function testGetIndexAction()
     {
-        $form = $this->createMockForm('Lva\Undertakings');
+        $form = m::mock('\Common\Form\Form');
+        $this->sut->shouldReceive('getForm')->andReturn($form);
 
         $applicationId = '123';
 
@@ -60,6 +61,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             ->with($applicationData)
             ->andReturn($formData);
 
+        $this->sut->shouldReceive('updateForm')->once();
+
         $form->shouldReceive('setData')->once()->with($formData);
 
         $this->mockRender();
@@ -78,7 +81,10 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         ];
 
         $this->setPost($data);
-        $form = $this->createMockForm('Lva\Undertakings');
+
+        $form = m::mock('\Common\Form\Form');
+        $this->sut->shouldReceive('getForm')->andReturn($form);
+
         $form->shouldReceive('setData')->with($data)->andReturnSelf();
         $form->shouldReceive('isValid')->andReturn(true);
 
@@ -113,7 +119,9 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
 
         $this->setPost($data);
 
-        $form = $this->createMockForm('Lva\Undertakings');
+        $form = m::mock('\Common\Form\Form');
+        $this->sut->shouldReceive('getForm')->andReturn($form);
+
         $form->shouldReceive('setData')->once()->with($data)->andReturnSelf();
         $form->shouldReceive('isValid')->andReturn(false);
 
@@ -131,7 +139,6 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(
                 m::mock()
                 ->shouldReceive('getDataForUndertakings')
-                    ->once()
                     ->with($applicationId)
                     ->andReturn($applicationData)
                 ->getMock()
@@ -158,5 +165,11 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->indexAction();
 
         $this->assertEquals('undertakings', $this->view);
+    }
+
+    public function testGetPartialPrefix()
+    {
+        $this->assertEquals('gv', $this->sut->getPartialPrefix('lcat_gv'));
+        $this->assertEquals('psv', $this->sut->getPartialPrefix('lcat_psv'));
     }
 }
