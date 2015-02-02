@@ -10,11 +10,11 @@ use Zend\Form\Annotation as Form;
  * @Form\Attributes({"method":"post"})
  * @Form\Type("Common\Form\Form")
  */
-class Undertakings
+class ApplicationUndertakings
 {
     /**
      * @Form\Name("declarationsAndUndertakings")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\DeclarationsAndUndertakings")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\ApplicationDeclarationsAndUndertakings")
      */
     public $declarationsAndUndertakings = null;
 
