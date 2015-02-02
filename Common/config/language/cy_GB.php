@@ -1597,6 +1597,10 @@ return array(
     'variation.review-declarations.confirm-text' => 'W I declare that the statements made in this application are true
         and that there have been no other changes that affect the licence. I understand that it is an offence to make a
         false declaration. Please see the licence undertakings below as a reminder of your obligations.',
+    'variation.review-declarations.confirm-text-upgrade' => 'W I declare that the statements made in this application
+        are true and that all supporting evidence supplied with regard to my application is correct. I understand that
+        it is an offence to make a false declaration. Please see the licence undertakings below as a reminder of your
+        existing obligations.',
     'vehicle-and-safety' => 'W Vehicle & safety',
     'vehicle-belongs-to-another-licence-confirmation' => 'W I confirm that I would like to continue adding this
         vehicle',

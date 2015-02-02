@@ -28,10 +28,6 @@ abstract class AbstractUndertakingsController extends AbstractController
 
         $applicationData = $this->getUndertakingsData();
 
-        // $applicationData['licenceType']['id'] = 'ltyp_r';
-        // $applicationData['goodsOrPsv']['id']  = 'lcat_gv';
-        // $applicationData['niFlag']            = 'N';
-
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {

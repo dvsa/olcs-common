@@ -23,6 +23,11 @@ class VariationDeclarationsAndUndertakings
     public $heading = null;
 
     /**
+     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
+     */
+    public $additionalUndertakings = null;
+
+    /**
      * @Form\Options({
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
