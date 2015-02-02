@@ -12,7 +12,9 @@ namespace Common\Controller\Lva\Interfaces;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-interface VehicleGoodsAdapterInterface extends AdapterInterface
+interface VehicleGoodsAdapterInterface extends AdapterInterface, VehiclesAdapterInterface
 {
-    public function populateForm($request, $entityData, $form);
+    public function save($data, $id);
+
+    public function getFormData($id);
 }

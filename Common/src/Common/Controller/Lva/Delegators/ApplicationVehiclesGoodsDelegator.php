@@ -12,7 +12,7 @@ namespace Common\Controller\Lva\Delegators;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationVehicleGoodsDelegator extends AbstractAdapterDelegator
+class ApplicationVehiclesGoodsDelegator extends AbstractAdapterDelegator
 {
-    protected $adapter = 'ApplicationVehicleGoodsAdapter';
+    protected $adapter = 'ApplicationVehiclesGoodsAdapter';
 }

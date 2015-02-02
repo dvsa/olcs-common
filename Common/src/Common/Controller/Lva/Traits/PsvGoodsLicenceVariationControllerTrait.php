@@ -18,10 +18,9 @@ trait PsvGoodsLicenceVariationControllerTrait
 {
     /**
      * Remove vehicle question for licences / variations
-     * 
+     *
      * @param Olcs\Common\Form\Form
      */
-
     protected function alterFormForLva(Form $form)
     {
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
