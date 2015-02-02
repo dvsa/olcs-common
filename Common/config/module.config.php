@@ -103,6 +103,9 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
+        'delegators' => [
+            'zfcuser_user_mapper' => [function () { return new \Common\Rbac\UserProvider();}]
+        ],
         'shared' => array(
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false
@@ -151,7 +154,8 @@ return array(
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
-                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
+                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
+            'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
@@ -369,10 +373,19 @@ return array(
             ]
         ],
         'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
+        'redirect_strategy' => [
+            'redirect_when_connected'        => false,
+            'redirect_to_route_disconnected' => 'zfcuser/login',
+            'append_previous_uri'            => true,
+            'previous_uri_query_key'         => 'redirectTo'
+        ],
     ],
     'cache' => [
         'adapter' => [
             'name' => 'apc',
         ]
+    ],
+    'zfcuser' => [
+        'auth_identity_fields' => array('username')
     ]
 );
