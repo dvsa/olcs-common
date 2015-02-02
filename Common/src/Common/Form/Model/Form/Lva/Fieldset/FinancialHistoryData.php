@@ -111,6 +111,7 @@ class FinancialHistoryData
     /**
      * @Form\AllowEmpty(true)
      * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Required(true)
      * @Form\Attributes({
      *     "required": false,
      *     "id": "",
