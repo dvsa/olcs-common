@@ -165,9 +165,59 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals('discs', $this->view);
     }
 
-    /*
-    public function testPostWithValidData()
+    public function testAddAction()
     {
+        // Stubbed data
+        $licenceId = 3;
+        $stubbedPost = [
+            'data' => [
+                'additionalDiscs' => 1
+            ]
+        ];
+
+        // Mocks
+        $mockForm = m::mock();
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockDiscsEntity = m::mock();
+        $this->sm->setService('Entity\PsvDisc', $mockDiscsEntity);
+
+        // Expectations
+        $mockDiscsEntity->shouldReceive('requestDiscs')
+            ->with(1, ['licence' => $licenceId]);
+
+        $this->sut->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('postSave')
+            ->with('discs')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('licence')
+            ->shouldReceive('getIdentifier')
+            ->andReturn($licenceId);
+
+        $mockForm->shouldReceive('get->remove')
+            ->with('addAnother');
+
+        $mockForm->shouldReceive('setData')
+            ->with($stubbedPost)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $mockFormHelper->shouldReceive('createForm')
+            ->with('Lva\PsvDiscsRequest')
+            ->andReturn($mockForm);
+
+        $this->request->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $this->request->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $this->sut->shouldReceive('redirect->toRoute')
+            ->with(null, ['licence' => $licenceId])
+            ->andReturn('REDIRECT');
+
+        $this->assertEquals('REDIRECT', $this->sut->addAction());
     }
-    */
 }
