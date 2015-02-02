@@ -431,7 +431,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Some sections have more complicated rules, we hook into thoses here
+     * Some sections have more complicated rules, we hook into these here
      */
     protected function applyBespokeRules()
     {
