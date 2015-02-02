@@ -92,8 +92,18 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licence' => array(
                 'children' => array(
                     'licenceType',
-                    'licenceVehicles',
-                    'psvDiscs'
+                    'licenceVehicles' => array(
+                        'criteria' => array(
+                            array(
+                                'specifiedDate' => 'NOT NULL'
+                            )
+                        )
+                    ),
+                    'psvDiscs' => array(
+                        'criteria' => array(
+                            'ceasedDate' => 'NULL'
+                        )
+                    )
                 )
             )
         )
@@ -320,7 +330,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getVariationCompletionStatusData($id)
     {
-        return $this->get($id, $this->variationCompletionStatusDataBundle);
+        $bundle = $this->variationCompletionStatusDataBundle;
+
+        $bundle['children']['licence']['children']['licenceVehicles']['criteria'][0]['application'] = $id;
+
+        return $this->get($id, $bundle);
     }
 
     /**

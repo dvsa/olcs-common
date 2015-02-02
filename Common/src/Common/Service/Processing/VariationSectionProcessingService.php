@@ -127,7 +127,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         $this->updateSectionsRequiringAttention($section);
 
-        $this->applyBespokeRules($section);
+        $this->applyBespokeRules();
 
         $this->getServiceLocator()->get('Entity\VariationCompletion')
             ->updateCompletionStatuses($this->getApplicationId(), $this->sectionCompletion);
@@ -431,14 +431,14 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Some sections have more complicated rules, we hook into thoses here
-     *
-     * @param string $section
+     * Some sections have more complicated rules, we hook into these here
      */
-    protected function applyBespokeRules($section)
+    protected function applyBespokeRules()
     {
-        if (isset($this->bespokeRulesMap[$section]) && $this->isUpdated($section)) {
-            $this->{$this->bespokeRulesMap[$section]}();
+        foreach ($this->bespokeRulesMap as $section => $callback) {
+            if ($this->isUpdated($section)) {
+                $this->$callback();
+            }
         }
     }
 
@@ -595,7 +595,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         if ($this->isPsv === null) {
             $data = $this->getVariationCompletionStatusData();
 
-            $this->isPsv = $data['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+            $this->isPsv = $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
         }
 
         return $this->isPsv;

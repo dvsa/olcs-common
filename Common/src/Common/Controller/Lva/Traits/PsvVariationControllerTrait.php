@@ -1,18 +1,18 @@
 <?php
 
 /**
- * PSV Licence Controller Trait
+ * Psv Variation Controller Trait
  *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Lva\Traits;
 
 /**
- * PSV Licence Controller Trait
+ * Psv Variation Controller Trait
  *
- * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-trait PsvLicenceControllerTrait
+trait PsvVariationControllerTrait
 {
     /**
      * We only want to show active vehicles which
@@ -24,6 +24,6 @@ trait PsvLicenceControllerTrait
      */
     protected function showVehicle(array $licenceVehicle, array $filters = [])
     {
-        return (!empty($licenceVehicle['specifiedDate']) && empty($licenceVehicle['removalDate']));
+        return empty($licenceVehicle['removalDate']);
     }
 }
