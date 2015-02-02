@@ -56,11 +56,15 @@ abstract class AbstractUndertakingsController extends AbstractController
     /**
      * Get undertakings form
      *
+     * This should really be declared abstract - it *should* be overridden
+     * by concrete subclasses but we unit test the abstract logic above
+     * and mock this method
+     *
      * @return \Zend\Form\Form
      */
     protected function getForm()
     {
-        return;
+        // no-op, override in concrete classes
     }
 
     protected function formatDataForForm($applicationData)

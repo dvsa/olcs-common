@@ -122,7 +122,9 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
             $this->markSectionUnchanged($section);
         } elseif (!$this->isUpdated($section)) {
             $this->markSectionUpdated($section);
-            $this->resetUndertakings();
+            if ($section !== 'undertakings') {
+                $this->resetUndertakings();
+            }
         }
 
         $this->updateSectionsRequiringAttention($section);
@@ -286,7 +288,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     {
         $data = $this->getVariationCompletionStatusData();
 
-        return $data['declarationConfirmation'] == 1;
+        return $data['declarationConfirmation'] == "Y";
     }
 
     /** Not sure if this is needed yet
@@ -666,7 +668,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     protected function resetUndertakings()
     {
         $data = [
-            'declarationConfirmation' => 0
+            'declarationConfirmation' => 'N'
         ];
 
         $this->getServiceLocator()->get('Entity\Application')->forceUpdate($this->getApplicationId(), $data);
