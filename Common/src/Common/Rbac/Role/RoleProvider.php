@@ -64,6 +64,7 @@ class RoleProvider implements RoleProviderInterface, FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $serviceLocator = $serviceLocator->getServiceLocator();
         $this->setDataService($serviceLocator->get('DataServiceManager')->get('Generic\Service\Data\Role'));
         $this->setCache($serviceLocator->get('Cache'));
         return $this;
@@ -85,16 +86,17 @@ class RoleProvider implements RoleProviderInterface, FactoryInterface
             $result = [];
             $data = $this->getDataService()->fetchList();
 
-            foreach ($data as $key => $roleData) {
+            foreach ($data as $roleData) {
                 $role = new Role($roleData['role']);
 
-                foreach ($roleData['permissions'] as $permission) {
-                    $role->addPermission($permission['name']);
+                if (isset($roleData['rolePermissions'])) {
+                    foreach ($roleData['rolePermissions'] as $permission) {
+                        $role->addPermission($permission['permission']['name']);
+                    }
                 }
 
-                $result[$key] = $role;
+                $result[$roleData['role']] = $role;
             }
-
             $this->getCache()->setItem(self::CACHE_KEY, $result);
         }
 

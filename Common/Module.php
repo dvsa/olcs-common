@@ -44,8 +44,13 @@ class Module
         $listener = $e->getApplication()->getServiceManager()->get('Common\Rbac\Navigation\IsAllowedListener');
 
         $events->getSharedManager()
-            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', $listener);
-
+            ->attach('Zend\View\Helper\Navigation\AbstractHelper', 'isAllowed', array($listener, 'accept'));
+        $events->attach(
+            $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\UnauthorizedStrategy')
+        );
+        $events->attach(
+            $e->getApplication()->getServiceManager()->get('ZfcRbac\View\Strategy\RedirectStrategy')
+        );
 
         $translator->enableEventManager();
         $translator->setEventManager($events);

@@ -183,7 +183,7 @@ return array(
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
-            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener'
+            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
         )
     ),
     'publications' => array(
@@ -362,7 +362,7 @@ return array(
         )
     ),
     'zfc_rbac' => [
-        'role_provider' => ['Common\Rbac\Role\RoleProvider'],
+        'role_provider' => ['Common\Rbac\Role\RoleProvider' => []],
         'role_provider_manager' => [
             'factories' => [
                 'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'

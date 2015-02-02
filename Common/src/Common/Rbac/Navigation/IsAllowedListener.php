@@ -112,7 +112,7 @@ class IsAllowedListener implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $this->setAuthorizationService($serviceLocator->get('ZfcRbac\Service\RoleService'));
+        $this->setAuthorizationService($serviceLocator->get('ZfcRbac\Service\AuthorizationService'));
 
         $options = $serviceLocator->get('ZfcRbac\Options\ModuleOptions');
 
