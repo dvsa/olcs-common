@@ -26,19 +26,9 @@ abstract class AbstractUndertakingsController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $applicationData = $this->getUndertakingsData();
-
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-        } else {
-            $data = $this->formatDataForForm($applicationData);
-        }
-
-        $form = $this->getForm()->setData($data);
-
-        $this->updateForm($form, $applicationData);
-
-        if ($request->isPost()) {
+            $form = $this->getForm()->setData($data);
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
@@ -47,11 +37,18 @@ abstract class AbstractUndertakingsController extends AbstractController
                 // validation failed, we need to lookup application data
                 // but use the POSTed checkbox value to render the form again
                 $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $data = $this->formatDataForForm($this->getUndertakingsData());
+                $applicationData = $this->getUndertakingsData();
+                $data = $this->formatDataForForm($applicationData);
                 $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
                 $form->setData($data);
             }
+        } else {
+            $applicationData = $this->getUndertakingsData();
+            $data = $this->formatDataForForm($applicationData);
+            $form = $this->getForm()->setData($data);
         }
+
+        $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
     }
@@ -61,16 +58,26 @@ abstract class AbstractUndertakingsController extends AbstractController
      *
      * @return \Zend\Form\Form
      */
-    abstract protected function getForm();
+    protected function getForm()
+    {
+        return;
+    }
+
+    protected function formatDataForForm($applicationData)
+    {
+        // override in concrete classes if required
+        return $applicationData;
+    }
+
+    protected function updateForm($form, $data)
+    {
+        // no-op, override in concrete classes if required
+    }
 
     protected function formatDataForSave($data)
     {
         return $data['declarationsAndUndertakings'];
     }
-
-    abstract protected function formatDataForForm($applicationData);
-
-    abstract protected function updateForm($form, $data);
 
     /**
      * Get Application Data
