@@ -5,7 +5,7 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Foo\Bar\Cake;
+namespace CommonTest\Controller\Lva\Traits;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Controller\Lva\Traits\Stubs\PsvVariationControllerTraitStub;
