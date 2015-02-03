@@ -8,8 +8,8 @@
  */
 namespace Common\Form\View\Helper;
 
-use Zend\Form\View\Helper\AbstractHelper as ZendFormViewHelperAbstractHelper;
-use Zend\Form\FormInterface as ZendFormFormInterface;
+use Zend\Form\View\Helper\AbstractHelper;
+use Zend\Form\FormInterface;
 use Zend\Form\Fieldset;
 
 /**
@@ -18,75 +18,62 @@ use Zend\Form\Fieldset;
  * @author Someone <someone@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormErrors extends ZendFormViewHelperAbstractHelper
+class FormErrors extends AbstractHelper
 {
-    protected $defaultErrorText = 'form-errors';
-
-    protected $messageOpenFormat = '<h3>%s</h3>
-        <ol class="validation-summary__list"><li class="validation-summary__item">';
-
-    protected $messageCloseString = '</li></ol>';
-
-    protected $messageSeparatorString = '</li><li class="validation-summary__item">';
-
     /**
      * Invoke as function
      *
      * @param  ZendFormFormInterface $form The form object
      * @return Form
      */
-    public function __invoke(ZendFormFormInterface $form = null, $message = null)
+    public function __invoke(FormInterface $form = null)
     {
         if (!$form) {
             return $this;
         }
 
-        if (!$message) {
-            $message = $this->translate($this->defaultErrorText);
-        }
-
         if ($form->hasValidated() && !$form->isValid()) {
-            return $this->render($form, $message);
+            return $this->render($form);
         }
 
         return null;
     }
 
     /**
-     * Helper method to translate strings
-     *
-     * @param string $text
-     * @return string
-     */
-    protected function translate($text)
-    {
-        $renderer = $this->getView();
-
-        return $renderer->translate($text);
-    }
-
-    /**
      * Renders the error messages.
      *
-     * @param ZendFormFormInterface $form
+     * @param FormInterface $form
      *
      * return string
      */
-    public function render(ZendFormFormInterface $form, $message)
+    public function render(FormInterface $form)
     {
-        $errorHtml = sprintf($this->messageOpenFormat, $message);
+        $messages = $form->getMessages();
 
-        $messagesArray = $this->getFlatMessages($form->getMessages(), $form);
-
-        if (empty($messagesArray)) {
+        if (empty($messages)) {
             return '';
         }
 
-        $messageString = implode($this->messageSeparatorString, $messagesArray);
+        $messagesOpenFormat = '
+<div class="validation-summary">
+    <h3>%s</h3>
+    <ol class="validation-summary__list">
+        <li class="validation-summary__item">
+            ';
 
-        $errorHtml = $errorHtml . $messageString . $this->messageCloseString;
+        $messageSeparatorString = '
+        </li>
+        <li class="validation-summary__item">
+            ';
 
-        return '<div class="validation-summary">' . $errorHtml . '</div>';
+        $messageCloseString = '
+        </li>
+    </ol>
+</div>';
+
+        return sprintf($messagesOpenFormat, $this->translate('form-errors'))
+            . implode($messageSeparatorString, $this->getFlatMessages($messages, $form))
+            . $messageCloseString;
     }
 
     /**
@@ -96,18 +83,25 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      * @param Fieldset $fieldset
      * @return array
      */
-    private function getFlatMessages($messages, $fieldset)
+    protected function getFlatMessages($messages, $fieldset)
     {
         $flatMessages = [];
 
         foreach ($messages as $field => $message) {
+
+            if ($fieldset instanceof Fieldset) {
+                $element = $fieldset->get($field);
+            } else {
+                $element = $fieldset;
+            }
+
             if (is_array($message)) {
                 $flatMessages = array_merge(
                     $flatMessages,
-                    $this->getFlatMessages($message, $fieldset->get($field))
+                    $this->getFlatMessages($message, $element)
                 );
             } else {
-                $flatMessages[] = $this->formatMessage($message, $fieldset);
+                $flatMessages[] = $this->formatMessage($message, $element);
             }
         }
 
@@ -121,7 +115,7 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      * @param Element $element
      * @return string|array
      */
-    private function formatMessage($message, $element)
+    protected function formatMessage($message, $element)
     {
         // We translate the initial message, as they are not always translated before they get here
         $message = $this->translate($message);
@@ -155,7 +149,7 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      * @param Element $element
      * @return string
      */
-    private function getNamedAnchor($element)
+    protected function getNamedAnchor($element)
     {
         $fieldsetAttributes = $element->getOption('fieldset-attributes');
 
@@ -184,7 +178,7 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
      * @param string $element
      * @return string
      */
-    private function getShortLabel($element)
+    protected function getShortLabel($element)
     {
         $label = $element->getOption('short-label');
 
@@ -193,5 +187,18 @@ class FormErrors extends ZendFormViewHelperAbstractHelper
         }
 
         return '';
+    }
+
+    /**
+     * Helper method to translate strings
+     *
+     * @param string $text
+     * @return string
+     */
+    protected function translate($text)
+    {
+        $renderer = $this->getView();
+
+        return $renderer->translate($text);
     }
 }
