@@ -31,6 +31,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $form = $this->alterForm($this->getForm());
 
+        $this->alterFormForLva($form);
+
         if ($request->isPost()) {
             $form->setData((array)$request->getPost());
         } else {
@@ -63,8 +65,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
             return $this->completeSection('vehicles');
         }
-
-        $this->alterFormForLva($form);
 
         $this->getServiceLocator()->get('Script')->loadFiles(
             ['lva-crud', 'forms/filter', 'table-actions', 'vehicle-goods']
