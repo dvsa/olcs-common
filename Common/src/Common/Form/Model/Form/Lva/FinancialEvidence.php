@@ -13,10 +13,10 @@ use Zend\Form\Annotation as Form;
 class FinancialEvidence
 {
     /**
-     * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Name("evidence")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidence")
      */
-    public $table = null;
+    public $evidence = null;
 
     /**
      * @Form\Name("form-actions")

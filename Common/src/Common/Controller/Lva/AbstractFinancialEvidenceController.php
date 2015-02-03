@@ -36,7 +36,15 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         $this->alterFormForLva($form);
 
-        return $this->render('financial_evidence', $form);
+        return $this->render(
+            'financial_evidence',
+            $form,
+            [
+                'vehicles' => 99,
+                'trailers' => 88,
+                'requiredFinance' => 12345.76,
+            ]
+        );
     }
 
     /**
@@ -48,12 +56,6 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     {
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\FinancialEvidence');
-
-        $table = $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable('lva-financial-evidence', $this->getTableData());
-
-        $form->get('table')->get('table')->setTable($table);
 
         return $form;
     }
