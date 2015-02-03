@@ -761,8 +761,8 @@ return array(
     'internal-licence-bus-fees-title' => 'W Fees',
     'internal-licence-bus-list' => 'W Bus registration list',
     'internal-licence-bus-processing' => 'W Processing',
-    'internal-licence-bus-processing-label' => 'W Processing',
     'internal-licence-bus-processing-decisions' => 'W Decisions',
+    'internal-licence-bus-processing-label' => 'W Processing',
     'internal-licence-bus-processing-notes' => 'W Notes',
     'internal-licence-bus-processing-notes-add' => 'W Add note',
     'internal-licence-bus-processing-notes-add-label' => 'W Add note',
@@ -1022,9 +1022,12 @@ return array(
     'lva-community-licences-table-column-status' => 'W Status',
     'lva-community-licences-table-empty-message' => 'W No community licences match your current criteria',
     'lva-community-licences-table-title' => 'W Community licences',
-    'lva-financial-evidence-table.file-name' => 'W File name',
-    'lva-financial-evidence-table.title' => 'W Financial evidence',
-    'lva-financial-evidence-table.type' => 'W Evidence type',
+    'lva-financial-evidence-evidence.label' => 'W Provide evidence',
+    'lva-financial-evidence-upload-now.label' => 'W Would you like to upload your financial evidence now?',
+    'lva-financial-evidence-upload.files.hint' => 'W Please ensure the evidence provided demonstrates there are
+        sufficient financial resources to maintain the vehicles and run the business. Please <a href="#">click here</a>
+        for further guidance',
+    'lva-financial-evidence-upload.label' => 'W Upload files',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
         and medium vehicles does not match the total number of vehicles',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
