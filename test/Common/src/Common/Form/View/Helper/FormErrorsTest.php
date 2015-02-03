@@ -49,7 +49,7 @@ class FormErrorsTest extends MockeryTestCase
         $form->shouldReceive('hasValidated')
             ->andReturn(false);
 
-        $this->assertNull($sut($form));
+        $this->assertEquals('', $sut($form));
     }
 
     public function testInvokeWithoutMessageWithValid()
@@ -64,7 +64,7 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(true);
 
-        $this->assertNull($sut($form));
+        $this->assertEquals('', $sut($form));
     }
 
     public function testInvokeRenderWithoutMessages()

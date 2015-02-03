@@ -32,11 +32,7 @@ class FormErrors extends AbstractHelper
             return $this;
         }
 
-        if ($form->hasValidated() && !$form->isValid()) {
-            return $this->render($form);
-        }
-
-        return null;
+        return $this->render($form);
     }
 
     /**
@@ -48,6 +44,10 @@ class FormErrors extends AbstractHelper
      */
     public function render(FormInterface $form)
     {
+        if (!$form->hasValidated() || $form->isValid()) {
+            return '';
+        }
+
         $messages = $form->getMessages();
 
         if (empty($messages)) {
