@@ -14,9 +14,15 @@ namespace Common\Controller\Lva\Adapters;
  */
 class LicenceFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapter
 {
-    public function getTotalNumberOfAuthorisedVehicles()
+    public function getTotalNumberOfAuthorisedVehicles($id)
     {
         // @TODO
-        return;
+        return 0;
+    }
+
+    public function getRequiredFinance($id)
+    {
+        // @TODO
+        return 0;
     }
 }
