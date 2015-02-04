@@ -1619,5 +1619,22 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.convictionsandpenalties.table' => 'Convictions & penalties',
+    'internal.transport-manager.convictionsandpenalties.table.offence' => 'Offence',
+    'internal.transport-manager.convictionsandpenalties.table.conviction-date' => 'Conviction Date',
+    'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'Name of Court',
+    'internal.transport-manager.convictionsandpenalties.table.penalty' => 'Penalty',
+    'internal-navigation-transport-manager-previous-history' => 'Previous history',
+    'internal-navigation-transport-manager-details-previous-history' => 'Previous history',
+    'internal.transport-manager.convictions-and-penalties.form.conviction-date' => 'Conviction date',
+    'internal.transport-manager.convictions-and-penalties.form.offence' => 'Offence',
+    'internal.transport-manager.convictions-and-penalties.form.offence-details' => 'Offence details',
+    'internal.transport-manager.convictions-and-penalties.form.court-fpn' => 'Name of court',
+    'internal.transport-manager.convictions-and-penalties.form.penalty' => 'Penalty',
+    'internal.transport-manager.previouslicences.table' => 'Revoked, curtailed or suspended licences',
+    'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
+    'internal.transport-manager.previouslicences.table.holderName' => 'Licence holder name',
+    'internal.transport-manager.previous-licences.form.lic-no' => 'Licence no.',
+    'internal.transport-manager.previous-licences.form.holder-name' => 'Licence holder name'
     // Potentially unused (Not found with grep)
 );
