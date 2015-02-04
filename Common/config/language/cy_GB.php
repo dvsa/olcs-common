@@ -1023,7 +1023,9 @@ return array(
     'lva-community-licences-table-empty-message' => 'W No community licences match your current criteria',
     'lva-community-licences-table-title' => 'W Community licences',
     'lva-financial-evidence-evidence.label' => 'W Provide evidence',
-    'lva-financial-evidence-upload-now.label' => 'W Would you like to upload your financial evidence now?',
+    'lva-financial-evidence-upload-now.label' => 'W Provide evidence that you have the required finances stated above',
+    'lva-financial-evidence-upload-now.no' => 'W Send in the post',
+    'lva-financial-evidence-upload-now.yes' => 'W Upload files',
     'lva-financial-evidence-upload.files.hint' => 'W Please ensure the evidence provided demonstrates there are
         sufficient financial resources to maintain the vehicles and run the business. Please <a href="#">click here</a>
         for further guidance',
