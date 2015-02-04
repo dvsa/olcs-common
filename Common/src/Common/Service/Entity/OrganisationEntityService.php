@@ -117,6 +117,22 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->get($id, $this->licencesBundle)['licences'];
     }
 
+    public function getNewApplications($id)
+    {
+        $applications = [];
+
+        $data = $this->get($id, $this->applicationsBundle);
+        foreach ($data['licences'] as $licence) {
+            foreach ($licence['applications'] as $application) {
+                if ($application['isVariation'] == false) {
+                    $applications[] = $application;
+                }
+            }
+        }
+
+        return $applications;
+    }
+
     /**
      * Get the organisation for the given user
      *
