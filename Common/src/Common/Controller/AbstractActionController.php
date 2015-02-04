@@ -746,33 +746,11 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFormClass($type)
     {
-        foreach (['Olcs', 'Common'] as $namespace) {
-            $class = $namespace . '\\Form\\Model\\Form\\' . $this->normaliseFormName($type, true);
-            if (class_exists($class)) {
-
-                $annotationBuilder = $this->getServiceLocator()->get('FormAnnotationBuilder');
-
-                $form =  $annotationBuilder->createForm($class);
-                $form->add(
-                    [
-                        'name' => 'csrf',
-                        'type' => 'Csrf',
-                        'options' => [
-                            'csrf_options' => [
-                                'messageTemplates' => [
-                                    'notSame' => 'csrf-message'
-                                ],
-                                'timeout' => 600
-                            ]
-                        ]
-                    ]
-                );
-
-                return $form;
-            }
+        try {
+            return $this->getServiceLocator()->get('Helper\Form')->createForm($this->normaliseFormName($type, true));
+        } catch (\RuntimeException $e) {
+            return $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
         }
-
-        return $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
     }
 
     /**
