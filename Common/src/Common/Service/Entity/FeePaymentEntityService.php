@@ -35,11 +35,6 @@ class FeePaymentEntityService extends AbstractEntityService
                     'feeStatus',
                 ],
             ],
-            'payment' => [
-                'children' => [
-                    'status'
-                ],
-            ],
         ]
     ];
 
