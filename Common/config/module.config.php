@@ -104,7 +104,12 @@ return array(
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
         'delegators' => [
-            'zfcuser_user_mapper' => [function () { return new \Common\Rbac\UserProvider();}]
+            'zfcuser_user_mapper' => [
+                function () {
+                    //replace me with something proper in future.
+                    return new \Common\Rbac\UserProvider();
+                }
+            ]
         ],
         'shared' => array(
             'Helper\FileUpload' => false,

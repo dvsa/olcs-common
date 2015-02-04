@@ -11,6 +11,10 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
 use ZfcRbac\Guard\ProtectionPolicyTrait;
 use Zend\EventManager\Event;
 
+/**
+ * Class IsAllowedListener
+ * @package Common\Rbac\Navigation
+ */
 class IsAllowedListener implements FactoryInterface
 {
     use ProtectionPolicyTrait;
@@ -62,6 +66,10 @@ class IsAllowedListener implements FactoryInterface
         }
     }
 
+    /**
+     * @param Mvc $page
+     * @return bool
+     */
     public function isGranted(Mvc $page)
     {
         $matchedRouteName = $page->getRoute();
@@ -87,6 +95,10 @@ class IsAllowedListener implements FactoryInterface
         return true;
     }
 
+    /**
+     * @param Event $event
+     * @return bool
+     */
     public function accept(Event $event)
     {
         $event->stopPropagation();
