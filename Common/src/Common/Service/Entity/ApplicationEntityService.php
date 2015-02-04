@@ -317,6 +317,18 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
+    protected $financialEvidenceBundle = array(
+        'children' => [
+            'licenceType',
+            'licence' => [
+                'children' => [
+                    'organisation',
+                    //'licenceType', // may be needed for variations
+                ],
+            ],
+        ]
+    );
+
     /**
      * Bundle to check licence type
      *
@@ -640,28 +652,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getDataForPaymentSubmission($id)
     {
-        $data = $this->get($id, $this->paymentSubmissionBundle);
-
-        return $data;
+        return $this->get($id, $this->paymentSubmissionBundle);
     }
 
-    /**
-     * @note didn't want to override getTotalVehicleAuthorisation as logically
-     * they are very different
-     */
-    public function getTotalVehicleAuthorisationIncLicence($id, $type = '')
+    public function getDataForFinancialEvidence($id)
     {
-        $bundle = [
-            'children' => [
-                'licence'
-            ]
-        ];
-
-        $data = $this->get($id, $bundle);
-
-        $applicationAuth = (int) $data['totAuth' . $type . 'Vehicles'];
-        $licenceAuth = (int) $data['licence']['totAuth' . $type . 'Vehicles'];
-
-        return ($applicationAuth + $licenceAuth);
+        return $this->get($id, $this->financialEvidenceBundle);
     }
 }

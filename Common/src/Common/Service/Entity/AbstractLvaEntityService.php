@@ -76,8 +76,6 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         return $this->get($id)['totAuth' . $type . 'Vehicles'];
     }
 
-    abstract public function getTotalVehicleAuthorisationIncLicence($id, $type = '');
-
     public function getDataForVehiclesPsv($id)
     {
         return $this->get($id);

@@ -91,9 +91,30 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * Holds the licences bundle
+     *
+     * @var array
+     */
+    private $licencesBundle = array(
+        'children' => array(
+            'licences' => array(
+                'children' => array(
+                    'licenceType',
+                    'status'
+                )
+            )
+        )
+    );
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
+    }
+
+    public function getLicences($id)
+    {
+        return $this->get($id, $this->licencesBundle)['licences'];
     }
 
     /**
