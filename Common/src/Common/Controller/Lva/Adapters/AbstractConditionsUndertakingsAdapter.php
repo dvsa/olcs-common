@@ -36,6 +36,42 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     abstract protected function getLvaOperatingCentreEntityService();
 
     /**
+     * Save the data
+     *
+     * @param array $data
+     * @return int
+     */
+    public function save($data)
+    {
+        if ($data['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
+            $data['fields']['operatingCentre'] = null;
+            $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_LICENCE;
+        } else {
+            $data['fields']['operatingCentre'] = $data['fields']['attachedTo'];
+            $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE;
+        }
+
+        return $this->persistConditionUndertaking($data);
+    }
+
+    /**
+     * Persist the condition
+     *
+     * @param array $data
+     * @return int
+     */
+    protected function persistConditionUndertaking($data)
+    {
+        $response = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->save($data);
+
+        if (isset($response['id'])) {
+            return $response['id'];
+        }
+
+        return $data['id'];
+    }
+
+    /**
      * Set the attached to options for the form, based on the lva type and id
      *
      * @param Form $form
