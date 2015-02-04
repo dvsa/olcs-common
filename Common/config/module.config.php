@@ -63,6 +63,15 @@ return array(
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
+            'LvaApplication/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
+            ),
+            'LvaVariation/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
+            ),
+            'LvaLicence/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -120,6 +129,12 @@ return array(
         ),
         'invokables' => array(
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'ApplicationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
+            'VariationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
+            'LicenceConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'

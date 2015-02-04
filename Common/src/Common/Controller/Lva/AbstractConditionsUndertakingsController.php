@@ -7,13 +7,17 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+
 /**
  * Abstract Conditions Undertakings Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractConditionsUndertakingsController extends AbstractController
+abstract class AbstractConditionsUndertakingsController extends AbstractController implements AdapterAwareInterface
 {
+    use Traits\AdapterAwareTrait;
+
     /**
      * Conditions Undertakings section
      */
@@ -22,7 +26,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
             $this->postSave('conditions_undertakings');
+
             return $this->completeSection('conditions_undertakings');
         }
 
@@ -38,8 +44,36 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
      *
      * @return \Zend\Form\Form
      */
-    private function getForm()
+    protected function getForm()
     {
-        return $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\ConditionsUndertakings');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $form = $formHelper->createForm('Lva\ConditionsUndertakings');
+
+        $formHelper->populateFormTable($form->get('table'), $this->getTable());
+
+        return $form;
+    }
+
+    /**
+     * Grab the table object
+     *
+     * @return \Common\Service\Table\TableBuilder
+     */
+    protected function getTable()
+    {
+        $tableBuilder = $this->getServiceLocator()->get('Table');
+
+        return $tableBuilder->prepareTable('lva-conditions-undertakings', $this->getTableData());
+    }
+
+    /**
+     * Grab the table data
+     *
+     * @return array
+     */
+    protected function getTableData()
+    {
+        return $this->getAdapter()->getTableData($this->getIdentifier());
     }
 }
