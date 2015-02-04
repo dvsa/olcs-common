@@ -6,6 +6,7 @@ $(function() {
   function willUpload() {
     return F.isChecked("evidence", "uploadNow");
   }
+
   function willPost() {
     return !willUpload();
   }

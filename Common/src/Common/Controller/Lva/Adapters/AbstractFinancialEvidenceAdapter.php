@@ -32,7 +32,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implemen
      * @todo these will come from db eventually, but OLCS-2222 specifies they
      * are hard-coded for now
      */
-    protected function getFirstVehicleRate($licenceType)
+    public function getFirstVehicleRate($licenceType)
     {
         switch ($licenceType) {
             case Licence::LICENCE_TYPE_RESTRICTED:
@@ -47,7 +47,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implemen
      * @param string $licenceType
      * @return int
      */
-    protected function getAdditionalVehicleRate($licenceType)
+    public function getAdditionalVehicleRate($licenceType)
     {
         switch ($licenceType) {
             case Licence::LICENCE_TYPE_RESTRICTED:

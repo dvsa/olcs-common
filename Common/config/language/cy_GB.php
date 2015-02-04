@@ -1028,8 +1028,7 @@ return array(
     'lva-financial-evidence-upload-now.no' => 'W Send in the post',
     'lva-financial-evidence-upload-now.yes' => 'W Upload files',
     'lva-financial-evidence-upload.files.hint' => 'W Please ensure the evidence provided demonstrates there are
-        sufficient financial resources to maintain the vehicles and run the business. Please <a href="#">click here</a>
-        for further guidance',
+        sufficient financial resources to maintain the vehicles and run the business.',
     'lva-financial-evidence-upload.label' => 'W Upload files',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
         and medium vehicles does not match the total number of vehicles',

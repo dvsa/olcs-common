@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Entity\LicenceEntityService as Licence;
+
 /**
  * Abstract Financial Evidence Controller
  *
@@ -49,6 +51,14 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             [
                 'vehicles' => $this->getAdapter()->getTotalNumberOfAuthorisedVehicles($id),
                 'requiredFinance' => $this->getAdapter()->getRequiredFinance($id),
+                'standardFirst' => $this->getAdapter()
+                    ->getFirstVehicleRate(Licence::LICENCE_TYPE_STANDARD_NATIONAL),
+                'standardAdditional' => $this->getAdapter()
+                    ->getAdditionalVehicleRate(Licence::LICENCE_TYPE_STANDARD_NATIONAL),
+                'restrictedFirst' => $this->getAdapter()
+                    ->getFirstVehicleRate(Licence::LICENCE_TYPE_RESTRICTED),
+                'restrictedAdditional' => $this->getAdapter()
+                    ->getAdditionalVehicleRate(Licence::LICENCE_TYPE_RESTRICTED),
             ]
         );
     }
