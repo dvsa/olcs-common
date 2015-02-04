@@ -644,4 +644,24 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         return $data;
     }
+
+    /**
+     * @note didn't want to override getTotalVehicleAuthorisation as logically
+     * they are very different
+     */
+    public function getTotalVehicleAuthorisationIncLicence($id, $type = '')
+    {
+        $bundle = [
+            'children' => [
+                'licence'
+            ]
+        ];
+
+        $data = $this->get($id, $bundle);
+
+        $applicationAuth = (int) $data['totAuth' . $type . 'Vehicles'];
+        $licenceAuth = (int) $data['licence']['totAuth' . $type . 'Vehicles'];
+
+        return ($applicationAuth + $licenceAuth);
+    }
 }

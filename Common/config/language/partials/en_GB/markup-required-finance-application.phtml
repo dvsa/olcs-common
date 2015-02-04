@@ -1,0 +1,13 @@
+<h3>Required finance</h3>
+
+<p>
+  Based on the total authority of
+  <b>
+    <?php echo $vehicles; ?>
+    <?php echo ($vehicles!=1) ? 'vehicles' : 'vehicle'); ?>
+  </b>
+  for this application, any other submitted applications and any existing
+  licences, you are required to have the following finance available:
+</p>
+
+<h2>£ <?php echo number_format($requiredFinance); ?></h2>

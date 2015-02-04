@@ -495,4 +495,9 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         return $return;
     }
+
+    public function getTotalVehicleAuthorisationIncLicence($id, $type = '')
+    {
+        return $this->getTotalVehicleAuthorisation($id, $type);
+    }
 }

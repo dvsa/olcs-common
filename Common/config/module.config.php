@@ -63,6 +63,15 @@ return array(
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
+            'LvaApplication/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
+            ),
+            'LvaLicence/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\LicenceFinancialEvidenceDelegator'
+            ),
+            'LvaVariation/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -134,6 +143,13 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'LicenceFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceFinancialEvidenceAdapter',
+            'VariationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
+            'ApplicationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
+
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',

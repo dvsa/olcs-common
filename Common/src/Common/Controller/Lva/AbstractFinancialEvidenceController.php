@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Financial Evidence Trait
+ * Abstract Financial Evidence Controller
  *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace Common\Controller\Lva;
 
 /**
- * Financial Evidence Trait
+ * Abstract Financial Evidence Controller
  *
- * @NOTE this is just a placeholder at the minute
- *
- * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 abstract class AbstractFinancialEvidenceController extends AbstractController
 {
+    use Traits\AdapterAwareTrait;
+
     /**
      * Financial evidence section
      */
@@ -36,13 +36,13 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         $this->alterFormForLva($form);
 
+        $id = $this->getIdentifier();
         return $this->render(
             'financial_evidence',
             $form,
             [
-                'vehicles' => 99,
-                'trailers' => 88,
-                'requiredFinance' => 12345.76,
+                'vehicles' => $this->getAdapter()->getTotalNumberOfAuthorisedVehicles($id),
+                'requiredFinance' => $this->getAdapter()->getRequiredFinance($id),
             ]
         );
     }
@@ -58,19 +58,5 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             ->createForm('Lva\FinancialEvidence');
 
         return $form;
-    }
-
-    /**
-     * For now the table data is stubbed data
-     */
-    private function getTableData()
-    {
-        return array(
-            array(
-                'id' => 1,
-                'fileName' => 'Amber_taxis_accounts_2012-2013.xls',
-                'type' => 'Accounts'
-            )
-        );
     }
 }
