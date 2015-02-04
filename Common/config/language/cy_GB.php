@@ -700,6 +700,7 @@ return array(
     'first-name' => 'W First name(s)',
     'flash-discarded-changes' => 'W Your changes have been discarded',
     'form-case-number' => 'W Case number',
+    'form-errors' => 'W Please correct the following errors',
     'from' => 'W From',
     'further-info-required' => 'W Further info required',
     'gen-haulier-distribution' => 'W Gen Haulier / Distribution',
