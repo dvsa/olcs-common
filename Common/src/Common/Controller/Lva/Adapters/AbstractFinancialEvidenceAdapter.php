@@ -25,4 +25,9 @@ abstract class AbstractFinancialEvidenceAdapter
     abstract public function getTotalNumberOfAuthorisedVehicles($id);
 
     abstract public function getRequiredFinance($id);
+
+    public function alterFormForLva($form)
+    {
+        // no-op, can be extended
+    }
 }

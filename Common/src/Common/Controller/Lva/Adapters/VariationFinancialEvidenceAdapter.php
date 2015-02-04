@@ -25,4 +25,10 @@ class VariationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapter
         // @TODO
         return 0;
     }
+
+    public function alterFormForLva($form)
+    {
+        $form->get('finance')->get('requiredFinance')
+            ->setValue('markup-required-finance-variation');
+    }
 }

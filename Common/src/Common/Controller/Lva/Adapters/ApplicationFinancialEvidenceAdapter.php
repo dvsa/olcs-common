@@ -36,4 +36,10 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     {
         return 12345.67;
     }
+
+    public function alterFormForLva($form)
+    {
+        $form->get('finance')->get('requiredFinance')
+            ->setValue('markup-required-finance-application');
+    }
 }

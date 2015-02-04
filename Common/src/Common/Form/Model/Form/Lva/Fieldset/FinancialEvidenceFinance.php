@@ -10,10 +10,9 @@ use Zend\Form\Annotation as Form;
 class FinancialEvidenceFinance
 {
     /**
-     * @Form\Attributes({"value": "markup-required-finance-application" })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      *
-     * @todo different markup for each LVA
+     * (value is set by individual LVA adapters)
      */
     public $requiredFinance = null;
 }

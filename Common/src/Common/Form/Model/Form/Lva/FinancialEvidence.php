@@ -33,6 +33,12 @@ class FinancialEvidence
     public $upload = null;
 
     /**
+     * @Form\Name("sendByPost")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidencePost")
+     */
+    public $sendByPost = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})

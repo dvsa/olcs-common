@@ -71,7 +71,8 @@ class SectionConfig implements ServiceLocatorAwareInterface
             'restricted' => array(
                 array(
                     array(
-                        'application'
+                        'application',
+                        'variation',
                     ),
                     array(
                         LicenceEntityService::LICENCE_TYPE_RESTRICTED,

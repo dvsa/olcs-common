@@ -11,11 +11,14 @@ class FinancialEvidenceEvidence
 {
     /**
      * @Form\Options({
-     *      "fieldset-attributes": {
+     *     "fieldset-attributes": {
      *          "class": "checkbox inline",
-     *      },
+     *     },
      *     "label": "lva-financial-evidence-upload-now.label",
-     *     "value_options": {"Y":"lva-financial-evidence-upload-now.yes", "N":"lva-financial-evidence-upload-now.no"},
+     *     "value_options": {
+     *         "Y":"lva-financial-evidence-upload-now.yes",
+     *         "N":"lva-financial-evidence-upload-now.no"
+     *     },
      *     "help-block": "Please choose",
      *     "label_attributes": {
      *         "class": "inline"
