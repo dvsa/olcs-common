@@ -13,4 +13,18 @@ class Form extends ZendForm\Form
     {
         return get_class($this);
     }
+
+    /**
+     * Prevent a form from being validated (and thus saved) if it is set read only
+     *
+     * @return bool
+     */
+    public function isValid()
+    {
+        if ($this->getOption('readonly')) {
+            return false;
+        }
+
+        return parent::isValid();
+    }
 }

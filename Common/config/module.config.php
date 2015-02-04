@@ -112,15 +112,24 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
+        'delegators' => [
+            'zfcuser_user_mapper' => [
+                function () {
+                    //replace me with something proper in future.
+                    return new \Common\Rbac\UserProvider();
+                }
+            ]
+        ],
         'shared' => array(
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
-            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
+            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory',
         ),
         'aliases' => array(
+            'Cache' => 'Zend\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
@@ -166,7 +175,8 @@ return array(
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
-                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
+                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
+            'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
@@ -196,7 +206,9 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
+            'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
+            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
         )
     ),
     'publications' => array(
@@ -374,4 +386,27 @@ return array(
             ),
         )
     ),
+    'zfc_rbac' => [
+        'role_provider' => ['Common\Rbac\Role\RoleProvider' => []],
+        'role_provider_manager' => [
+            'factories' => [
+                'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'
+            ]
+        ],
+        'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
+        'redirect_strategy' => [
+            'redirect_when_connected'        => false,
+            'redirect_to_route_disconnected' => 'zfcuser/login',
+            'append_previous_uri'            => true,
+            'previous_uri_query_key'         => 'redirectTo'
+        ],
+    ],
+    'cache' => [
+        'adapter' => [
+            'name' => 'apc',
+        ]
+    ],
+    'zfcuser' => [
+        'auth_identity_fields' => array('username')
+    ]
 );

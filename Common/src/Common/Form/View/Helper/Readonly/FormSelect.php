@@ -64,13 +64,16 @@ class FormSelect extends AbstractHelper
 
         $valueOptions = $this->processOptions($element->getValueOptions());
 
-        if ($element->getAttribute('multiple')) {
-            $labels = array_intersect_key($valueOptions, array_combine($element->getValue(), $element->getValue()));
-            $value = implode(', ', $labels);
-        } else {
-            $value = $valueOptions[$element->getValue()];
+        $elementValue = $element->getValue();
+        $value = '';
+        if (!empty($elementValue)) {
+            if ($element->getAttribute('multiple')) {
+                $labels = array_intersect_key($valueOptions, array_combine($elementValue, $elementValue));
+                $value = implode(', ', $labels);
+            } else {
+                $value = $valueOptions[$elementValue];
+            }
         }
-
         return $value;
     }
 }
