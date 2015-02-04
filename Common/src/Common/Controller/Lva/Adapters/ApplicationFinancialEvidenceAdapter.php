@@ -48,36 +48,6 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
     /**
      * @param int $applicationId
-     * @return array
-     */
-    protected function getOtherLicences($applicationId)
-    {
-        if (is_null($this->otherLicences)) {
-            $organisationId = $this->getServiceLocator()->get('Entity\Application')
-                ->getOrganisation($applicationId)['id'];
-
-            $licences = $this->getServiceLocator()->get('Entity\Organisation')
-                ->getLicences($organisationId);
-
-            // filter results to valid statuses
-            $validStatuses = [
-                Licence::LICENCE_STATUS_UNDER_CONSIDERATION,
-                Licence::LICENCE_STATUS_GRANTED,
-                Licence::LICENCE_STATUS_VALID,
-                Licence::LICENCE_STATUS_SUSPENDED,
-                Licence::LICENCE_STATUS_CURTAILED,
-            ];
-            foreach($licences as $licence) {
-                if (in_array($licence['status']['id'], $validStatuses)) {
-                    $this->otherLicences[] = $licence;
-                }
-            }
-        }
-        return $this->otherLicences;
-    }
-
-    /**
-     * @param int $applicationId
      * @return int Required finance amount
      */
     public function getRequiredFinance($applicationId)
@@ -130,12 +100,64 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     }
 
     /**
+     * @param \Zend\Form\Form $form
+     */
+    public function alterFormForLva($form)
+    {
+        $form->get('finance')->get('requiredFinance')
+            ->setValue('markup-required-finance-application');
+    }
+
+    /**
      * @param int $applicationId
      * @return array
      */
     protected function getTotalVehicleAuthForApplication($applicationId)
     {
         return (int) $this->getApplicationData($applicationId)['totAuthVehicles'];
+    }
+
+    /**
+     * @param int $applicationId
+     * @return array
+     */
+    protected function getApplicationData($applicationId)
+    {
+        if (is_null($this->applicationData)) {
+            $this->applicationData = $this->getServiceLocator()->get('Entity\Application')
+                ->getDataForFinancialEvidence($applicationId);
+        }
+        return $this->applicationData;
+    }
+
+    /**
+     * @param int $applicationId
+     * @return array
+     */
+    protected function getOtherLicences($applicationId)
+    {
+        if (is_null($this->otherLicences)) {
+            $organisationId = $this->getServiceLocator()->get('Entity\Application')
+                ->getOrganisation($applicationId)['id'];
+
+            $licences = $this->getServiceLocator()->get('Entity\Organisation')
+                ->getLicences($organisationId);
+
+            // filter results to valid statuses
+            $validStatuses = [
+                Licence::LICENCE_STATUS_UNDER_CONSIDERATION,
+                Licence::LICENCE_STATUS_GRANTED,
+                Licence::LICENCE_STATUS_VALID,
+                Licence::LICENCE_STATUS_SUSPENDED,
+                Licence::LICENCE_STATUS_CURTAILED,
+            ];
+            foreach($licences as $licence) {
+                if (in_array($licence['status']['id'], $validStatuses)) {
+                    $this->otherLicences[] = $licence;
+                }
+            }
+        }
+        return $this->otherLicences;
     }
 
     /**
@@ -168,27 +190,5 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
                 // LICENCE_TYPE_SPECIAL_RESTRICTED is n/a
                 return 3900;
         }
-    }
-
-    /**
-     * @param \Zend\Form\Form $form
-     */
-    public function alterFormForLva($form)
-    {
-        $form->get('finance')->get('requiredFinance')
-            ->setValue('markup-required-finance-application');
-    }
-
-    /**
-     * @param int $applicationId
-     * @return array
-     */
-    protected function getApplicationData($applicationId)
-    {
-        if (is_null($this->applicationData)) {
-            $this->applicationData = $this->getServiceLocator()->get('Entity\Application')
-                ->getDataForFinancialEvidence($applicationId);
-        }
-        return $this->applicationData;
     }
 }
