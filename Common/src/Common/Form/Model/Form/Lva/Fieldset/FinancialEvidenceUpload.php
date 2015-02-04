@@ -18,5 +18,4 @@ class FinancialEvidenceUpload
      * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
      */
     public $file = null;
-
 }

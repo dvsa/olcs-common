@@ -222,7 +222,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
                 Licence::LICENCE_STATUS_SUSPENDED,
                 Licence::LICENCE_STATUS_CURTAILED,
             ];
-            foreach($licences as $licence) {
+            foreach ($licences as $licence) {
                 if (in_array($licence['status']['id'], $validStatuses)) {
                     $this->otherLicences[] = $licence;
                 }
@@ -251,7 +251,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
                 Licence::LICENCE_STATUS_UNDER_CONSIDERATION,
                 Licence::LICENCE_STATUS_GRANTED,
             ];
-            foreach($applications as $application) {
+            foreach ($applications as $application) {
                 if (in_array($application['status']['id'], $validStatuses)) {
                     $this->otherApplications[] = $application;
                 }

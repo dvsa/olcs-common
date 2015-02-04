@@ -17,5 +17,4 @@ class FinancialEvidencePost
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $message = null;
-
 }

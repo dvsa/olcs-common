@@ -18,9 +18,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-abstract class AbstractFinancialEvidenceAdapter
-    extends AbstractAdapter
-    implements FinancialEvidenceAdapterInterface
+abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implements FinancialEvidenceAdapterInterface
 {
     abstract public function getTotalNumberOfAuthorisedVehicles($id);
 
