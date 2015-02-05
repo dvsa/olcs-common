@@ -15,6 +15,11 @@ namespace Common\Service\Helper;
 class AddressHelperService extends AbstractHelperService
 {
     /**
+     * Max length we'll display in the address dropdown before truncating
+     */
+    const MAX_DISPLAY_LENGTH = 50;
+
+    /**
      * Holds the template for the details
      */
     private $details = array(
@@ -80,7 +85,13 @@ class AddressHelperService extends AbstractHelperService
                 }
             }
 
-            $options[$item['uprn']] = implode(', ', $parts);
+            $str = implode(', ', $parts);
+
+            if (strlen($str) >= self::MAX_DISPLAY_LENGTH) {
+                $str = substr($str, 0, self::MAX_DISPLAY_LENGTH - 1) . '…';
+            }
+
+            $options[$item['uprn']] = $str;
         }
 
         return $options;
