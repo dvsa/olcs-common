@@ -46,4 +46,38 @@ class FeePaymentEntityServiceTest extends AbstractEntityServiceTestCase
             [false, null],
         ];
     }
+
+
+    /**
+     * @group entity_services
+     */
+    public function testGetFeesByPaymentId()
+    {
+        $id = 22;
+
+        $query = ['paymentId' => $id];
+
+        $response = array(
+            'Count' => 2,
+            'Results' => [
+                [
+                    'fee' => [ 'id' => 77, 'amount' => 0.99],
+                ],
+                [
+                    'fee' => [ 'id' => 78, 'amount' => 1.99],
+                ],
+            ],
+        );
+
+        $this->expectOneRestCall('FeePayment', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(
+            [
+                [ 'id' => 77, 'amount' => 0.99],
+                [ 'id' => 78, 'amount' => 1.99],
+            ],
+            $this->sut->getFeesByPaymentId($id)
+        );
+    }
 }

@@ -28,6 +28,16 @@ class FeePaymentEntityService extends AbstractEntityService
     const METHOD_POSTAL_ORDER = 'fpm_po';
     const METHOD_WAIVE        = 'fpm_waive';
 
+    protected $feeBundle = [
+        'children' => [
+            'fee' => [
+                'children' => [
+                    'feeStatus',
+                ],
+            ],
+        ]
+    ];
+
     /**
      * Helper function to check whether payment type is one of the defined values
      *
@@ -47,5 +57,21 @@ class FeePaymentEntityService extends AbstractEntityService
                 self::METHOD_WAIVE,
             ]
         );
+    }
+
+    public function getFeesByPaymentId($paymentId)
+    {
+        $query = array(
+            'paymentId' => $paymentId,
+        );
+
+        $data = $this->get($query, $this->feeBundle);
+
+        $fees = [];
+        foreach ($data['Results'] as $feePayment) {
+            $fees[] = $feePayment['fee'];
+        }
+
+        return $fees;
     }
 }
