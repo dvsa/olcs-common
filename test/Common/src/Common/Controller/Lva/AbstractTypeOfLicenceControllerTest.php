@@ -359,7 +359,6 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->with(null, ['foo' => 'bar'], ['query' => ['bar' => 'baz']], true)
             ->andReturn($response);
 
-
         $this->assertSame($response, $this->sut->indexAction());
     }
 
