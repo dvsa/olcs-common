@@ -83,7 +83,7 @@ class FormElementErrors extends ZendFormElementErrors
                     $item = $escapeHtml($item);
                 }
 
-                $messagesToPrint[] = $item;
+                $messagesToPrint[] = ucfirst($item);
             }
         );
 

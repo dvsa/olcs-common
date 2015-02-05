@@ -698,6 +698,7 @@ return array(
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
     'form-case-number' => 'Case number',
+    'form-errors' => 'Please correct the following errors',
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
