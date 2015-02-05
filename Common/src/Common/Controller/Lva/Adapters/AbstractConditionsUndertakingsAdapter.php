@@ -43,7 +43,21 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      */
     public function save($data)
     {
-        if ($data['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
+
+    }
+
+    /**
+     * Process the data for saving
+     *
+     * @param array $data
+     * @param int $id
+     * @return array
+     */
+    public function processDataForSave($data, $id)
+    {
+        unset($data['fields']['licence']);
+
+        if ($data['fields']['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
             $data['fields']['operatingCentre'] = null;
             $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_LICENCE;
         } else {
@@ -51,7 +65,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE;
         }
 
-        return $this->persistConditionUndertaking($data);
+        return $data;
     }
 
     /**

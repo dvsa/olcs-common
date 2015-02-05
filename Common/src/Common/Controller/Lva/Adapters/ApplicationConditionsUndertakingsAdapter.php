@@ -37,6 +37,22 @@ class ApplicationConditionsUndertakingsAdapter extends AbstractConditionsUnderta
     }
 
     /**
+     * Process the data for saving
+     *
+     * @param array $data
+     * @param int $id
+     * @return array
+     */
+    public function processDataForSave($data, $id)
+    {
+        $data = parent::processDataForSave($data, $id);
+
+        $data['fields']['application'] = $id;
+
+        return $data;
+    }
+
+    /**
      * Get licence id from the given lva id
      *
      * @param int id

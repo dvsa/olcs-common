@@ -39,4 +39,13 @@ interface ConditionsUndertakingsAdapterInterface
      * @return array
      */
     public function getTableData($id);
+
+    /**
+     * Process the data for saving
+     *
+     * @param array $data
+     * @param int $id
+     * @return array
+     */
+    public function processDataForSave($data, $id);
 }

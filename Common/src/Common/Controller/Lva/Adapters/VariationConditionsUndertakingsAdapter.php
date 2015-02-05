@@ -39,6 +39,22 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     }
 
     /**
+     * Process the data for saving
+     *
+     * @param array $data
+     * @param int $id
+     * @return array
+     */
+    public function processDataForSave($data, $id)
+    {
+        $data = parent::processDataForSave($data, $id);
+
+        $data['fields']['application'] = $id;
+
+        return $data;
+    }
+
+    /**
      * Each LVA section must implement this method
      *
      * @param int id
