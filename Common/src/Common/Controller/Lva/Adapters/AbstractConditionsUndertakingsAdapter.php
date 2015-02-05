@@ -55,14 +55,31 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      */
     public function processDataForSave($data, $id)
     {
-        unset($data['fields']['licence']);
-
         if ($data['fields']['attachedTo'] == ConditionUndertakingEntityService::ATTACHED_TO_LICENCE) {
             $data['fields']['operatingCentre'] = null;
             $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_LICENCE;
         } else {
             $data['fields']['operatingCentre'] = $data['fields']['attachedTo'];
             $data['fields']['attachedTo'] = ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Process the data for the form
+     *
+     * @param array $data
+     * @return array
+     */
+    public function processDataForForm($data)
+    {
+        if (isset($data['fields']['attachedTo'])
+            && $data['fields']['attachedTo'] != ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
+        ) {
+
+            $data['fields']['attachedTo'] =
+                isset($data['fields']['operatingCentre']) ? $data['fields']['operatingCentre'] : '';
         }
 
         return $data;

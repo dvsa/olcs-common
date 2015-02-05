@@ -48,4 +48,12 @@ interface ConditionsUndertakingsAdapterInterface
      * @return array
      */
     public function processDataForSave($data, $id);
+
+    /**
+     * Process the data for the form
+     *
+     * @param array $data
+     * @return array
+     */
+    public function processDataForForm($data);
 }

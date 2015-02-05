@@ -48,6 +48,7 @@ class LicenceConditionsUndertakingsAdapter extends AbstractConditionsUndertaking
         $data = parent::processDataForSave($data, $id);
 
         $data['fields']['licence'] = $id;
+        $data['fields']['isDraft'] = 'N';
 
         return $data;
     }

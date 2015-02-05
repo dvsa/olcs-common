@@ -48,6 +48,8 @@ class ApplicationConditionsUndertakingsAdapter extends AbstractConditionsUnderta
         $data = parent::processDataForSave($data, $id);
 
         $data['fields']['application'] = $id;
+        $data['fields']['isDraft'] = 'Y';
+        $data['fields']['action'] = 'A';
 
         return $data;
     }

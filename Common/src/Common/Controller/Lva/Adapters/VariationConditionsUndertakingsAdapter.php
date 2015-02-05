@@ -50,6 +50,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
         $data = parent::processDataForSave($data, $id);
 
         $data['fields']['application'] = $id;
+        $data['fields']['isDraft'] = 'Y';
 
         return $data;
     }
