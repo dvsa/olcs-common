@@ -197,7 +197,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         ];
 
         try {
-            $this->sut->handleResponse($data, []);
+            $this->sut->handleResponse($data, 'PAYMENT_METHOD');
         } catch (PaymentNotFoundException $ex) {
             $this->assertEquals('Payment not found', $ex->getMessage());
             return;
@@ -236,7 +236,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         ];
 
         try {
-            $this->sut->handleResponse($data, []);
+            $this->sut->handleResponse($data, 'PAYMENT_METHOD');
         } catch (PaymentInvalidStatusException $ex) {
             $this->assertEquals('Invalid payment status: bad_status', $ex->getMessage());
             return;
@@ -276,7 +276,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'feeStatus' => FeeEntityService::STATUS_PAID,
             'receivedDate' => '2014-12-30 01:20:30',
             'receiptNo' => 'payment_reference',
-            'paymentMethod' => FeePaymentEntityService::METHOD_CARD_OFFLINE,
+            'paymentMethod' => 'PAYMENT_METHOD',
             'receivedAmount' => 525.33
         ];
 
@@ -336,7 +336,18 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 'id' => 1
             ]
         ];
-        $resultStatus = $this->sut->handleResponse($data, $fees);
+
+        $sl->shouldReceive('get')
+            ->with('Entity\FeePayment')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getFeesByPaymentId')
+                ->with(123)
+                ->andReturn($fees)
+                ->getMock()
+            );
+
+        $resultStatus = $this->sut->handleResponse($data, 'PAYMENT_METHOD');
 
         $this->assertEquals(
             PaymentEntityService::STATUS_PAID, $resultStatus
