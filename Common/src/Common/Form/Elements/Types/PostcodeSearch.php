@@ -11,6 +11,7 @@ use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Select;
+use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
  * PostcodeSearch fieldset
@@ -44,7 +45,8 @@ class PostcodeSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--secondary large'
+                'class' => 'action--primary large',
+                'data-container-class' => 'inline'
             )
         );
         $searchButton->setValue('search');
@@ -54,7 +56,7 @@ class PostcodeSearch extends Fieldset
         $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(
-                'data-container-class' => 'inline'
+                'data-container-class' => 'address__select'
             )
         );
 
@@ -64,12 +66,24 @@ class PostcodeSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary'
+                'class' => 'action--primary js-hidden'
             )
         );
         $selectButton->setValue('select');
 
         $this->add($selectButton);
+
+        $manualLink = new HtmlTranslated('manual-link');
+        $manualLink->setValue('<p class="hint--small"><a href=#>%s</a></p>');
+        $manualLink->setTokens(['postcode.address.manual_entry' ]);
+
+        $this->add($manualLink);
+
+        $manualLabel = new HtmlTranslated('manual-label');
+        $manualLabel->setValue('<p class="hint--small">%s</p>');
+        $manualLabel->setTokens(['postcode.address.manual_entry' ]);
+
+        $this->add($manualLabel);
     }
 
     public function setMessages($messages)

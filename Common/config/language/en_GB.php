@@ -1206,6 +1206,7 @@ return array(
     'please-select-row' => 'Please select a row',
     'points' => 'Points',
     'position' => 'Position',
+    'postcode.address.manual_entry' => 'Enter address manually',
     'previous-history' => 'Previous history',
     'priority' => 'Priority',
     'privacy-and-cookies' => 'Privacy &amp; Cookies',
