@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Entity\ConditionUndertakingEntityService;
+
 /**
  * Application Conditions Undertakings Adapter
  *
@@ -22,7 +24,9 @@ class ApplicationConditionsUndertakingsAdapter extends AbstractConditionsUnderta
      */
     public function save($data)
     {
+        $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_APPLICATION;
 
+        return parent::save($data);
     }
 
     /**
@@ -33,7 +37,8 @@ class ApplicationConditionsUndertakingsAdapter extends AbstractConditionsUnderta
      */
     public function getTableData($id)
     {
-        return [];
+        return $this->getServiceLocator()->get('Entity\ConditionUndertaking')
+            ->getForApplication($id);
     }
 
     /**

@@ -34,7 +34,6 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @return \Common\Service\Entity\AbstractEntity
      */
     abstract protected function getLvaOperatingCentreEntityService();
-
     /**
      * Save the data
      *
@@ -43,7 +42,13 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      */
     public function save($data)
     {
+        $response = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->save($data);
 
+        if (isset($response['id'])) {
+            return $response['id'];
+        }
+
+        return $data['id'];
     }
 
     /**

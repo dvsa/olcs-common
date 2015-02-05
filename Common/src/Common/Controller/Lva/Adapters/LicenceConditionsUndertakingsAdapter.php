@@ -22,7 +22,9 @@ class LicenceConditionsUndertakingsAdapter extends AbstractConditionsUndertaking
      */
     public function save($data)
     {
+        $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_LICENCE;
 
+        return parent::save($data);
     }
 
     /**

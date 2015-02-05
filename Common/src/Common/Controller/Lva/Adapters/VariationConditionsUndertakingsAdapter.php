@@ -24,7 +24,9 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
      */
     public function save($data)
     {
+        $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_APPLICATION;
 
+        return parent::save($data);
     }
 
     /**

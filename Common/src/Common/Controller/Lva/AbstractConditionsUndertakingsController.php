@@ -16,7 +16,8 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractConditionsUndertakingsController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait;
 
     /**
      * Conditions Undertakings section
@@ -26,6 +27,15 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
+            $data = (array)$request->getPost();
+
+            $crudAction = $this->getCrudAction(array($data['table']));
+
+            if ($crudAction !== null) {
+
+                return $this->handleCrudAction($crudAction);
+            }
 
             $this->postSave('conditions_undertakings');
 
@@ -37,6 +47,75 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         $this->alterFormForLva($form);
 
         return $this->render('conditions_undertakings', $form);
+    }
+
+    public function addAction()
+    {
+        return $this->addOrEdit('add');
+    }
+
+    public function editAction()
+    {
+        return $this->addOrEdit('edit');
+    }
+
+    protected function addOrEdit($mode)
+    {
+        $request = $this->getRequest();
+        $id = $this->params('child_id');
+
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } elseif ($mode === 'edit') {
+            $data = $this->getConditionPenaltyDetails($id);
+        }
+
+        $form = $this->getConditionUndertakingForm();
+
+        $this->getAdapter()->alterForm($form, $this->getIdentifier());
+
+        $form->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $data = $this->getAdapter()->processDataForSave($data, $this->getIdentifier());
+
+            $this->getAdapter()->save($data);
+
+            return $this->handlePostSave();
+        }
+
+        return $this->render($mode . '_condition_undertaking', $form);
+    }
+
+    protected function delete()
+    {
+        $id = $this->params('child_id');
+
+        $ids = explode(',', $id);
+
+        $entityService = $this->getServiceLocator()->get('Entity\ConditionUndertaking');
+
+        foreach ($ids as $id) {
+            $entityService->delete($id);
+        }
+    }
+
+    protected function getConditionPenaltyDetails($id)
+    {
+        $entity = $this->getServiceLocator()->get('Entity\ConditionUndertaking')
+            ->getById($id);
+
+        $data = [
+            'fields' => $entity
+        ];
+
+        return $this->getAdapter()->processDataForForm($data);
+    }
+
+    protected function getConditionUndertakingForm()
+    {
+        return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertakingForm');
     }
 
     /**
