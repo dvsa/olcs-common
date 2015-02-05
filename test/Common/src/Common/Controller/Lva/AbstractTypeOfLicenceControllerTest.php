@@ -327,6 +327,12 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
         $this->sut->shouldReceive('getTypeOfLicenceData')
             ->andReturn($stubbedCurrentData);
 
+        $form = $this->createMockForm('Lva\TypeOfLicence');
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
         $adapter->shouldReceive('doesChangeRequireConfirmation')
             ->with(
                 [
@@ -340,13 +346,19 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('getRouteParams')
             ->andReturn(['foo' => 'bar'])
             ->shouldReceive('getQueryParams')
-            ->andReturn(['query' => ['bar' => 'baz']]);
+            ->andReturn(['query' => ['bar' => 'baz']])
+            ->shouldReceive('alterForm')
+            ->with($form, 7, '')
+            ->andReturn($form);
 
         $response = m::mock('\Zend\Http\Response');
 
-        $this->sut->shouldReceive('redirect->toRoute')
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(7)
+            ->shouldReceive('redirect->toRoute')
             ->with(null, ['foo' => 'bar'], ['query' => ['bar' => 'baz']], true)
             ->andReturn($response);
+
 
         $this->assertSame($response, $this->sut->indexAction());
     }
@@ -380,6 +392,12 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
         $this->sut->shouldReceive('getTypeOfLicenceData')
             ->andReturn($stubbedCurrentData);
 
+        $form = $this->createMockForm('Lva\TypeOfLicence');
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
         $adapter->shouldReceive('doesChangeRequireConfirmation')
             ->with(
                 [
@@ -399,11 +417,16 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
                 ],
                 $stubbedCurrentData
             )
-            ->andReturn(true);
+            ->andReturn(true)
+            ->shouldReceive('alterForm')
+            ->with($form, 7, '')
+            ->andReturn($form);
 
         $response = m::mock('\Zend\Http\Response');
 
-        $this->sut->shouldReceive('completeSection')
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(7)
+            ->shouldReceive('completeSection')
             ->with('type_of_licence')
             ->andReturn($response);
 
