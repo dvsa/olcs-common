@@ -36,6 +36,11 @@ class PluginManager extends AbstractPluginManager
         }
     }
 
+    /**
+     * Initialize the bundle
+     *
+     * @param $service
+     */
     public function initializeBundle($service)
     {
         if ($service instanceof BundleAware) {

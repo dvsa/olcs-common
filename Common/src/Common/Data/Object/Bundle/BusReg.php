@@ -21,6 +21,11 @@ class BusReg extends Bundle
         $this->addChild('withdrawnReason');
     }
 
+    /**
+     * Gets the default bundle name
+     *
+     * @return string
+     */
     public function getDefaultBundle()
     {
         return 'BusReg';
