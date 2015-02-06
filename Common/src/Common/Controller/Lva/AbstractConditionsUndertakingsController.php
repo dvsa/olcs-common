@@ -19,6 +19,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     use Traits\AdapterAwareTrait,
         Traits\CrudTableTrait;
 
+    protected $section = 'conditions_undertakings';
+
     /**
      * Conditions Undertakings section
      */
@@ -37,16 +39,16 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
                 return $this->handleCrudAction($crudAction);
             }
 
-            $this->postSave('conditions_undertakings');
+            $this->postSave($this->section);
 
-            return $this->completeSection('conditions_undertakings');
+            return $this->completeSection($this->section);
         }
 
         $form = $this->getForm();
 
         $this->alterFormForLva($form);
 
-        return $this->render('conditions_undertakings', $form);
+        return $this->render($this->section, $form);
     }
 
     public function addAction()
@@ -62,11 +64,13 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
-        $id = $this->params('child_id');
+
+        $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
+            $id = $this->params('child_id');
             $data = $this->getConditionPenaltyDetails($id);
         }
 
