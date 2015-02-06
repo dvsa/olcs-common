@@ -745,4 +745,55 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('vehicles_psv', $this->view);
     }
+
+    /**
+     * Test remove vehicle fields
+     *
+     * @group vehcileFormAdapterPsv
+     */
+    public function testRemoveVehicleFields()
+    {
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(false)
+            ->getMock();
+
+        $mockForm = $this->createMockForm('Lva\PsvVehiclesVehicle')
+            ->shouldReceive('setData')
+            ->with([])
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->getMock();
+
+        $mockVehicleFormAdapter = m::mock()
+            ->shouldReceive('alterForm')
+            ->with($mockForm)
+            ->andReturn($mockForm)
+            ->getMock();
+
+        $this->sm->setService('VehicleFormAdapter', $mockVehicleFormAdapter);
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(1)
+            ->shouldReceive('getVehicleFormData')
+            ->with(1)
+            ->andReturn([])
+            ->shouldReceive('formatVehicleDataForForm')
+            ->with([], 'small')
+            ->andReturn([])
+            ->shouldReceive('alterVehicleForm')
+            ->with($mockForm, 'add')
+            ->andReturn($mockForm)
+            ->shouldReceive('setDefaultDates')
+            ->andReturn($mockForm)
+            ->shouldReceive('render')
+            ->andReturn('view');
+
+        $this->assertEquals('view', $this->sut->smallAddAction());
+    }
 }

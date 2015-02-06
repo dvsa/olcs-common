@@ -172,6 +172,30 @@ class DateTimeProcessorTest extends MockeryTestCase
                     '2014-12-26'
                 ]
             ],
+            [ // easter sunday problem
+                '2015-04-28',
+                '-14',
+                true, // weekends
+                true, // public holidays
+                '2015-04-02',
+                [
+                    '2015-04-06',
+                    '2015-04-03'
+                ]
+            ],
+            [ // PI agreed date for extra BH in scotland
+                '2014-12-12',
+                '17',
+                true, // weekends
+                true, // public holidays
+                '2015-01-12',
+                [
+                    '2014-12-25',
+                    '2014-12-26',
+                    '2015-01-01',
+                    '2015-01-02',
+                ]
+            ]
         ];
     }
 }
