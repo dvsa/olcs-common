@@ -66,7 +66,8 @@ class PostcodeSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary js-hidden js-select'
+                'class' => 'action--primary js-select',
+                'data-container-class' => 'js-hidden'
             )
         );
         $selectButton->setValue('select');
@@ -74,8 +75,13 @@ class PostcodeSearch extends Fieldset
         $this->add($selectButton);
 
         $manualLink = new HtmlTranslated('manual-link');
-        $manualLink->setValue('<p class="hint--small js-visible"><a href=#>%s</a></p>');
+        $manualLink->setValue('<p class="hint--small"><a href=#>%s</a></p>');
         $manualLink->setTokens(['postcode.address.manual_entry' ]);
+        $manualLink->setAttributes(
+            array(
+                'data-container-class' => 'js-visible'
+            )
+        );
 
         $this->add($manualLink);
     }
