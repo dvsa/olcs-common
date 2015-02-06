@@ -34,7 +34,7 @@ class PostcodeSearch extends Fieldset
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
             array(
-                'class' => 'short',
+                'class' => 'short js-input',
                 'data-container-class' => 'inline'
             )
         );
