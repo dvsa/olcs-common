@@ -21,7 +21,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     /**
      * Index action
      *
-     * @group abstractVehicleGoodsController
      * @return Response
      */
     public function indexAction()
