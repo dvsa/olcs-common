@@ -187,7 +187,15 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
     {
         // Data
         $stubbedData = [
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'bar' => [
+                'id' => 1,
+                'cake' => 'foo'
+            ]
+        ];
+        $expectedData = [
+            'foo' => 'bar',
+            'bar' => 1
         ];
 
         // Mocks
@@ -224,11 +232,11 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         $this->adapter->shouldReceive('alterForm')
             ->with($mockForm, 7)
             ->shouldReceive('processDataForForm')
-            ->with(['fields' => $stubbedData])
-            ->andReturn($stubbedData);
+            ->with(['fields' => $expectedData])
+            ->andReturn($expectedData);
 
         $mockForm->shouldReceive('setData')
-            ->with($stubbedData);
+            ->with($expectedData);
 
         $this->assertEquals('RENDER', $this->sut->editAction());
     }
