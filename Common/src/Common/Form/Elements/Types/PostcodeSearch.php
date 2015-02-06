@@ -45,7 +45,7 @@ class PostcodeSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary large',
+                'class' => 'action--primary large js-find',
                 'data-container-class' => 'inline'
             )
         );
@@ -66,7 +66,7 @@ class PostcodeSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary js-hidden'
+                'class' => 'action--primary js-hidden js-select'
             )
         );
         $selectButton->setValue('select');
