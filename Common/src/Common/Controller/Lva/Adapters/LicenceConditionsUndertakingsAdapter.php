@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Entity\ConditionUndertakingEntityService;
+
 /**
  * Licence Conditions Undertakings Adapter
  *
