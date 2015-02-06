@@ -807,4 +807,48 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $this->assertEquals('REDIRECT', $this->sut->reprintAction());
     }
+
+    /**
+     * Test remove vehicle fields
+     *
+     * @group vehcileFormAdapterGoods
+     */
+    public function testRemoveVehicleFields()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('setData')
+            ->with([])
+            ->andReturnSelf()
+            ->getMock();
+
+        $mockVehicleFormAdapter = m::mock()
+            ->shouldReceive('alterForm')
+            ->with($mockForm)
+            ->andReturn($mockForm)
+            ->getMock();
+
+        $this->sm->setService('VehicleFormAdapter', $mockVehicleFormAdapter);
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('isPost')
+                ->andReturn(false)
+                ->getMock()
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(1)
+            ->shouldReceive('getVehicleForm')
+            ->andReturn($mockForm)
+            ->shouldReceive('alterVehicleForm')
+            ->with($mockForm, 'add')
+            ->andReturn($mockForm)
+            ->shouldReceive('render')
+            ->with('add_vehicles', $mockForm)
+            ->andReturn('view');
+
+        $this->assertEquals('view', $this->sut->addAction());
+    }
 }

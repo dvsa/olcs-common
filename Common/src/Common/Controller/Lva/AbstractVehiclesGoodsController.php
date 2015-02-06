@@ -149,6 +149,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             $mode
         );
 
+        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
+            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
+        }
+
         if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
             $formHelper->disableElements($form);
@@ -175,9 +179,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
         }
 
-        // set default date values prior to render
-        $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
-        $form = $this->setDefaultDates($form, $today);
+        if (!$this->getServiceLocator()->has('VehicleFormAdapter')) {
+            // set default date values prior to render
+            $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+            $form = $this->setDefaultDates($form, $today);
+        }
 
         return $this->render($mode . '_vehicles', $form);
     }
