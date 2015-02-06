@@ -26,6 +26,11 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
 
         $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
+        $this->adapter
+            ->shouldReceive('showFilters')
+            ->andReturn(true)
+            ->getMock();
+
         $this->sut->setAdapter($this->adapter);
 
         $this->sm->setService(

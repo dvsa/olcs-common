@@ -21,13 +21,17 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     /**
      * Index action
      *
+     * @group abstractVehicleGoodsController
      * @return Response
      */
     public function indexAction()
     {
         $request = $this->getRequest();
 
-        $filterForm = $this->getFilterForm();
+        $showFilters = $this->getAdapter()->showFilters();
+        if ($showFilters) {
+            $filterForm = $this->getFilterForm();
+        }
 
         $form = $this->alterForm($this->getForm());
 
@@ -66,9 +70,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $this->getServiceLocator()->get('Script')->loadFiles(
-            ['lva-crud', 'forms/filter', 'table-actions', 'vehicle-goods']
-        );
+        $files = ['lva-crud', 'table-actions', 'vehicle-goods'];
+        if ($showFilters) {
+            $files[] = 'forms/filter';
+        }
+        $this->getServiceLocator()->get('Script')->loadFiles($files);
 
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
@@ -77,8 +83,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
                 'more-vehicles-than-authorisation'
             );
         }
-
-        return $this->render('vehicles', $form, array('filterForm' => $filterForm));
+        $params = $showFilters ? ['filterForm' => $filterForm] : [];
+        return $this->render('vehicles', $form, $params);
     }
 
     /**
