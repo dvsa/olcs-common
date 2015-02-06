@@ -11,6 +11,7 @@ use Zend\Form\Form;
 use Common\Service\Entity\ConditionUndertakingEntityService;
 use Common\Controller\Lva\Interfaces\ConditionsUndertakingsAdapterInterface;
 use Common\Service\Table\Formatter\Address;
+use Common\Service\Table\TableBuilder;
 
 /**
  * Abstract Conditions Undertakings Adapter
@@ -34,6 +35,17 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @return \Common\Service\Entity\AbstractEntity
      */
     abstract protected function getLvaOperatingCentreEntityService();
+
+    /**
+     * Remove the restore button
+     *
+     * @param TableBuilder $table
+     */
+    public function alterTable(TableBuilder $table)
+    {
+        $table->removeAction('restore');
+    }
+
     /**
      * Save the data
      *

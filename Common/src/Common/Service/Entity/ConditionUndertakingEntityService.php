@@ -41,6 +41,11 @@ class ConditionUndertakingEntityService extends AbstractEntityService
         )
     );
 
+    public function getCondition($id)
+    {
+        return $this->get($id, $this->dataBundle);
+    }
+
     public function getForApplication($applicationId)
     {
         return $this->getAll(['application' => $applicationId], $this->dataBundle)['Results'];

@@ -20,7 +20,8 @@ return array(
         array(
             'title' => 'lva-conditions-undertakings-table-no',
             'type' => 'Action',
-            'action' => 'edit'
+            'action' => 'edit',
+            'name' => 'id'
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-type',
@@ -35,7 +36,7 @@ return array(
         array(
             'title' => 'lva-conditions-undertakings-table-fulfilled',
             'formatter' => 'YesNo',
-            'name' => 'isFullfilled'
+            'name' => 'isFulfilled'
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-status',
@@ -69,7 +70,7 @@ return array(
         ),
         array(
             'width' => 'checkbox',
-            'type' => 'Selector'
+            'type' => 'Checkbox'
         )
     )
 );

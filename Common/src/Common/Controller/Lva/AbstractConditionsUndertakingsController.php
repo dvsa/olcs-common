@@ -23,6 +23,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
     /**
      * Conditions Undertakings section
+     *
+     * @return mixed
      */
     public function indexAction()
     {
@@ -48,19 +50,37 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $this->alterFormForLva($form);
 
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+
         return $this->render($this->section, $form);
     }
 
+    /**
+     * Add action, just wraps addOrEdit
+     *
+     * @return mixed
+     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
+    /**
+     * Add action, just wraps addOrEdit
+     *
+     * @return mixed
+     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
     }
 
+    /**
+     * Common logic between add/edit
+     *
+     * @param string $mode
+     * @return mi
+     */
     protected function addOrEdit($mode)
     {
         $request = $this->getRequest();
@@ -84,7 +104,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
             $data = $this->getAdapter()->processDataForSave($data, $this->getIdentifier());
 
-            $this->getAdapter()->save($data);
+            $this->getAdapter()->save($data['fields']);
 
             return $this->handlePostSave();
         }
@@ -92,6 +112,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         return $this->render($mode . '_condition_undertaking', $form);
     }
 
+    /**
+     * Delete 1 or more conditions
+     */
     protected function delete()
     {
         $id = $this->params('child_id');
@@ -105,18 +128,43 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         }
     }
 
+    /**
+     * Get the form data for a given id
+     *
+     * @param int $id
+     * @return array
+     */
     protected function getConditionPenaltyDetails($id)
     {
-        $entity = $this->getServiceLocator()->get('Entity\ConditionUndertaking')
-            ->getById($id);
+        $entity = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->getCondition($id);
 
-        $data = [
-            'fields' => $entity
-        ];
+        $data = ['fields' => $this->replaceIds($entity)];
 
         return $this->getAdapter()->processDataForForm($data);
     }
 
+    /**
+     * Replace the children's array, with their ids
+     *
+     * @param array $data
+     * @return array
+     */
+    protected function replaceIds($data)
+    {
+        foreach ($data as $key => $var) {
+            if (isset($var['id'])) {
+                $data[$key] = $var['id'];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get the add/edit form
+     *
+     * @return \Zend\Form\Form
+     */
     protected function getConditionUndertakingForm()
     {
         return $this->getServiceLocator()->get('Helper\Form')->createForm('ConditionUndertakingForm');
@@ -147,7 +195,11 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     {
         $tableBuilder = $this->getServiceLocator()->get('Table');
 
-        return $tableBuilder->prepareTable('lva-conditions-undertakings', $this->getTableData());
+        $table = $tableBuilder->prepareTable('lva-conditions-undertakings', $this->getTableData());
+
+        $this->getAdapter()->alterTable($table);
+
+        return $table;
     }
 
     /**

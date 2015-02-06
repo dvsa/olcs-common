@@ -51,8 +51,13 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         $this->sm->setService('Helper\Form', $mockFormHelper);
         $mockTableBuilder = m::mock();
         $this->sm->setService('Table', $mockTableBuilder);
+        $mockScript = m::mock();
+        $this->sm->setService('Script', $mockScript);
 
         // Expectations
+        $mockScript->shouldReceive('loadFile')
+            ->with('lva-crud');
+
         $this->sut->shouldReceive('getRequest')
             ->andReturn($request)
             ->shouldReceive('getIdentifier')
@@ -76,7 +81,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
 
         $this->adapter->shouldReceive('getTableData')
             ->with(7)
-            ->andReturn($stubbedTableData);
+            ->andReturn($stubbedTableData)
+            ->shouldReceive('alterTable')
+            ->with($mockTable);
 
         $mockFormHelper->shouldReceive('createForm')
             ->with('Lva\ConditionsUndertakings')
@@ -206,7 +213,7 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         $request->shouldReceive('isPost')
             ->andReturn(false);
 
-        $mockEntityService->shouldReceive('getById')
+        $mockEntityService->shouldReceive('getCondition')
             ->with(3)
             ->andReturn($stubbedData);
 
@@ -233,7 +240,7 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             'foo' => 'bar'
         ];
         $stubbedData = [
-            'bar' => 'cake'
+            'fields' => ['foo' => 'cake']
         ];
 
         // Mocks
@@ -265,7 +272,7 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($postData, 7)
             ->andReturn($stubbedData)
             ->shouldReceive('save')
-            ->with($stubbedData);
+            ->with(['foo' => 'cake']);
 
         $mockForm->shouldReceive('setData')
             ->with($postData)
