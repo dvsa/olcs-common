@@ -31,15 +31,4 @@ class OtherLicenceEntityService extends AbstractEntityService
     {
         return $this->get(array('transportManager' => $transportManagerId))['Results'];
     }
-
-    /**
-     * Get data
-     *
-     * @param int $tid
-     * @return array
-     */
-    public function getData($id)
-    {
-        return $this->get($id);
-    }
 }
