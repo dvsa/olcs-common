@@ -254,6 +254,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         $form = $this->alterVehicleForm($form, $mode)
             ->setData($data);
 
+        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
+            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
+        }
+
         if ($request->isPost() && $form->isValid()) {
 
             // If we are in edit mode, we can save
