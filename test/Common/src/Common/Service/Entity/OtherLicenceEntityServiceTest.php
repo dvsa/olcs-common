@@ -26,19 +26,6 @@ class OtherLicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetData()
-    {
-        $id = 7;
-
-        $this->expectOneRestCall('OtherLicence', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getData($id));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testGetDataForTransportManager()
     {
         $id = 7;

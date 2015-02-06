@@ -927,6 +927,9 @@ return array(
     'internal.transport-manager.employment.form.position' => 'W Position held',
     'internal.transport-manager.employment.save' => 'W Save',
     'internal.transport-manager.employments.table' => 'W Other employment',
+    'internal.transport-manager.previous-history.delete-question' => 'W Are you sure you want to permanently delete this
+        record?',
+    'internal.transport-manager.previous-history.deleted-message' => 'W Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'W Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'W Licence no.',
     'internal.transport-manager.previouslicences.table' => 'W Revoked, curtailed or suspended licences',
