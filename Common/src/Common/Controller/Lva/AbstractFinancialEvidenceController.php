@@ -27,18 +27,31 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-
-            if (!isset($data['table']['action'])) {
-                $this->postSave('financial_evidence');
-                return $this->completeSection('financial_evidence');
-            }
+        } else {
+            $data = $this->getFormData();
         }
 
-        $form = $this->getFinancialEvidenceForm();
+        $form = $this->getFinancialEvidenceForm()->setData($data);
 
         $this->getAdapter()->alterFormForLva($form);
 
         $id = $this->getIdentifier();
+        $adapter = $this->getAdapter();
+        $hasProcessedFiles = $this->processFiles(
+            $form,
+            'upload->file',
+            array($this, 'processFinancialEvidenceFileUpload'),
+            array($this, 'deleteFile'),
+            function() use ($id, $adapter) {
+                return $adapter->getDocuments($id);
+            }
+        );
+
+        if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
+            // @todo save the fact we have/haven't submitted evidence!
+            $this->postSave('financial_evidence');
+            return $this->completeSection('financial_evidence');
+        }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
@@ -49,11 +62,8 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             ],
             $this->getAdapter()->getRatesForView()
         );
-        return $this->render(
-            'financial_evidence',
-            $form,
-            $variables
-        );
+
+        return $this->render('financial_evidence', $form, $variables);
     }
 
     /**
@@ -67,5 +77,25 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             ->createForm('Lva\FinancialEvidence');
 
         return $form;
+    }
+
+    /**
+     * Handle the file upload
+     *
+     * @param array $file
+     */
+    public function processFinancialEvidenceFileUpload($file)
+    {
+        $id = $this->getIdentifier('application');
+
+        $this->uploadFile($file, $this->getAdapter()->getUploadMetaData($file, $id));
+    }
+
+    /**
+     * @todo we need something in the application model to store the flag
+     */
+    protected function getFormData()
+    {
+       return [];
     }
 }

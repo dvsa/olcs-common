@@ -9,6 +9,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
+use Common\Service\Data\CategoryDataService as Category;
 
 /**
  * Application Financial Evidence Adapter
@@ -108,6 +109,51 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         return $this->getFinanceCalculation($auths);
     }
 
+
+    /**
+     * @param \Zend\Form\Form $form
+     */
+    public function alterFormForLva($form)
+    {
+        $form->get('finance')->get('requiredFinance')
+            ->setValue('markup-required-finance-application');
+    }
+
+    /**
+     * @param int $applicationId
+     */
+    public function getDocuments($applicationId)
+    {
+        $docs = $this->getServiceLocator()->get('Entity\Application')
+            ->getDocuments(
+                $applicationId,
+                Category::CATEGORY_APPLICATION,
+                Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL
+            );
+        return $docs;
+    }
+
+    /**
+     * @param array $file
+     * @param int $applicationId
+     * @return array
+     */
+    public function getUploadMetaData($file, $applicationId)
+    {
+        $categoryService = $this->getServiceLocator()->get('category');
+
+        $licenceId = $this->getServiceLocator()->get('Entity\Application')
+            ->getLicenceIdForApplication($applicationId);
+
+        return [
+            'application' => $applicationId,
+            'description' => 'Financial Evidence', // @TODO set to Filename
+            'category'    => Category::CATEGORY_APPLICATION,
+            'subCategory' => Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
+            'licence'     => $licenceId,
+        ];
+    }
+
     /**
      * Takes an array of vehicle authorisations (example below) and
      * returns the required finance amount
@@ -144,7 +190,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * @param array @auths
      * @return int
      */
-    public function getFinanceCalculation(array $auths)
+    protected function getFinanceCalculation(array $auths)
     {
         $firstVehicleCharge      = 0;
         $additionalVehicleCharge = 0;
@@ -185,15 +231,6 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
         // 5. Return the total required finance
         return $firstVehicleCharge + $additionalVehicleCharge;
-    }
-
-    /**
-     * @param \Zend\Form\Form $form
-     */
-    public function alterFormForLva($form)
-    {
-        $form->get('finance')->get('requiredFinance')
-            ->setValue('markup-required-finance-application');
     }
 
     /**

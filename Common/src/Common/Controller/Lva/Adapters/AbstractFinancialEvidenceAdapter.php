@@ -15,7 +15,8 @@ use Common\Service\Entity\LicenceEntityService as Licence;
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implements FinancialEvidenceAdapterInterface
+abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareAdapter implements
+FinancialEvidenceAdapterInterface
 {
     abstract public function getTotalNumberOfAuthorisedVehicles($id);
 
@@ -23,8 +24,12 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implemen
 
     public function alterFormForLva($form)
     {
-        // no-op, can be extended
+        // no-op by default, can be extended
     }
+
+    abstract public function getDocuments($id);
+
+    abstract public function getUploadMetaData($file, $id);
 
     /**
      * @param string $licenceType

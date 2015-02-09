@@ -24,7 +24,7 @@ trait GenericUpload
      * @param string $loadCallback
      * @return bool
      */
-    protected function processFiles($form, $selector, $uploadCallback, $deleteCallback, $loadCallback)
+    public function processFiles($form, $selector, $uploadCallback, $deleteCallback, $loadCallback)
     {
         $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
 
@@ -45,7 +45,7 @@ trait GenericUpload
      * @param array $data
      * @return array
      */
-    protected function uploadFile($fileData, $data)
+    public function uploadFile($fileData, $data)
     {
         $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
         $uploader->setFile($fileData);
