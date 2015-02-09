@@ -45,20 +45,34 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
+        // we need to show rates in the 'help' section of the form/view
+        // @TODO, show PSV as well?
+        $standardFirst = $this->getAdapter()->getFirstVehicleRate(
+            Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+            Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+        );
+        $standardAdditional = $this->getAdapter()->getAdditionalVehicleRate(
+            Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+            Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+        );
+        $restrictedFirst = $this->getAdapter()->getFirstVehicleRate(
+            Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+            Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+        );
+        $restrictedAdditional = $this->getAdapter()->getAdditionalVehicleRate(
+            Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+            Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+        );
         return $this->render(
             'financial_evidence',
             $form,
             [
                 'vehicles' => $this->getAdapter()->getTotalNumberOfAuthorisedVehicles($id),
                 'requiredFinance' => $this->getAdapter()->getRequiredFinance($id),
-                'standardFirst' => $this->getAdapter()
-                    ->getFirstVehicleRate(Licence::LICENCE_TYPE_STANDARD_NATIONAL),
-                'standardAdditional' => $this->getAdapter()
-                    ->getAdditionalVehicleRate(Licence::LICENCE_TYPE_STANDARD_NATIONAL),
-                'restrictedFirst' => $this->getAdapter()
-                    ->getFirstVehicleRate(Licence::LICENCE_TYPE_RESTRICTED),
-                'restrictedAdditional' => $this->getAdapter()
-                    ->getAdditionalVehicleRate(Licence::LICENCE_TYPE_RESTRICTED),
+                'standardFirst' => $standardFirst,
+                'standardAdditional' => $standardAdditional,
+                'restrictedFirst' => $restrictedFirst,
+                'restrictedAdditional' => $restrictedAdditional,
             ]
         );
     }

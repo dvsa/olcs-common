@@ -28,32 +28,45 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implemen
 
     /**
      * @param string $licenceType
+     * @param string $goodsOrPsv
      * @return int
-     * @todo these will come from db eventually, but OLCS-2222 specifies they
-     * are hard-coded for now
+     *
+     * @todo these will come from a db lookup eventually, but they are hardcoded
+     * for now, see table defined in https://jira.i-env.net/browse/OLCS-2222
      */
-    public function getFirstVehicleRate($licenceType)
+    public function getFirstVehicleRate($licenceType, $goodsOrPsv)
     {
         switch ($licenceType) {
             case Licence::LICENCE_TYPE_RESTRICTED:
+                if ($goodsOrPsv === Licence::LICENCE_CATEGORY_PSV) {
+                    return 4100;
+                }
                 return 3100;
             default:
-                // LICENCE_TYPE_SPECIAL_RESTRICTED is n/a
+                if ($goodsOrPsv === Licence::LICENCE_CATEGORY_PSV) {
+                    return 8000;
+                }
                 return 7000;
         }
     }
 
     /**
      * @param string $licenceType
+     * @param string $goodsOrPsv
      * @return int
      */
-    public function getAdditionalVehicleRate($licenceType)
+    public function getAdditionalVehicleRate($licenceType, $goodsOrPsv)
     {
         switch ($licenceType) {
             case Licence::LICENCE_TYPE_RESTRICTED:
+                if ($goodsOrPsv === Licence::LICENCE_CATEGORY_PSV) {
+                    return 2700;
+                }
                 return 1700;
             default:
-                // LICENCE_TYPE_SPECIAL_RESTRICTED is n/a
+                if ($goodsOrPsv === Licence::LICENCE_CATEGORY_PSV) {
+                    return 4900;
+                }
                 return 3900;
         }
     }

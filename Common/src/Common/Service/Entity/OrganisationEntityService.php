@@ -101,7 +101,8 @@ class OrganisationEntityService extends AbstractEntityService
             'licences' => array(
                 'children' => array(
                     'licenceType',
-                    'status'
+                    'status',
+                    'goodsOrPsv'
                 )
             )
         )

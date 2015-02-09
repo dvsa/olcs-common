@@ -325,7 +325,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'organisation',
                     //'licenceType', // may be needed for variations
                 ],
+                'goodsOrPsv',
             ],
+            'goodsOrPsv',
         ]
     );
 

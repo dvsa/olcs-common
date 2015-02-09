@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Application Financial Evidence Adapter
@@ -61,6 +62,9 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     }
 
     /**
+     * Gets the total required finance when submitting an application, taking
+     * account of other pending applications and existing licences.
+     *
      * @param int $applicationId
      * @return int Required finance amount
      */
@@ -68,15 +72,16 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     {
         $auths = array();
 
-        $appType = $this->getApplicationData($applicationId)['licenceType']['id'];
+        $appData = $this->getApplicationData($applicationId);
         $appVehicles = $this->getTotalVehicleAuthForApplication($applicationId);
 
         // build up an array of vehicle authorisation counts/types...
 
         // add the application count
         $auths[] = [
-            'type' => $appType,
+            'type' => $appData['licenceType']['id'],
             'count' => $appVehicles,
+            'category' => $appData['goodsOrPsv']['id'],
         ];
 
         // add the counts for each licence
@@ -85,6 +90,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             $auths[] = [
                 'type' => $licence['licenceType']['id'],
                 'count' => $licence['totAuthVehicles'],
+                'category' => $licence['goodsOrPsv']['id'],
             ];
         }
 
@@ -94,6 +100,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             $auths[] = [
                 'type' => $application['licenceType']['id'],
                 'count' => $application['totAuthVehicles'],
+                'category' => $application['goodsOrPsv']['id'],
             ];
         }
 
@@ -103,38 +110,36 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     /**
      * Takes an array of vehicle authorisations (example below) and
      * returns the required finance amount
+     * @TODO - edge case where PSV charge may be higher - sort the array first!!
      *
      * array (
      *   0 =>
      *   array (
-     *     'type' => 'ltyp_r',
+     *     'category' => 'lcat_gv'
+     *     'type' => 'ltyp_si',
      *     'count' => 3,
      *   ),
      *   1 =>
      *   array (
-     *     'type' => 'ltyp_sn',
-     *     'count' => 12,
+     *     'category' => 'lcat_gv'
+     *     'type' => 'ltyp_r',
+     *     'count' => 3,
      *   ),
      *   2 =>
      *   array (
-     *     'type' => 'ltyp_sn',
-     *     'count' => 9,
-     *   ),
-     *   3 =>
-     *   array (
-     *     'type' => 'ltyp_sn',
-     *     'count' => 3,
+     *     'catgegory' => 'lcat_psv'
+     *     'type' => 'ltyp_r',
+     *     'count' => 1,
      *   ),
      * )
      *
      * Calculation:
-     *    3 x 1700
-     * +  1 x 7000
-     * + 11 x 3900
-     * +  9 x 3900
-     * +  3 x 3900
+     *    1 x 7000
+     * +  2 x 3900
+     * +  3 x 1700
+     * +  1 x 2700
      * -----------
-     *      101800
+     *       22600
      *
      * @param array @auths
      * @return int
@@ -152,7 +157,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         // get first vehicle charge
         foreach ($auths as $key => $auth) {
             if (!$foundHigher && $count = $auth['count']>0) {
-                $firstVehicleCharge = $this->getFirstVehicleRate($auth['type']);
+                $firstVehicleCharge = $this->getFirstVehicleRate($auth['type'], $auth['category']);
                 $firstVehicleKey = $key;
             }
             if (in_array($auth['type'], $higherChargeTypes)) {
@@ -165,7 +170,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
         // get the additional vehicle charges
         foreach ($auths as $key => $auth) {
-            $rate = $this->getAdditionalVehicleRate($auth['type']);
+            $rate = $this->getAdditionalVehicleRate($auth['type'], $auth['category']);
             $additionalVehicleCharge += ($auth['count'] * $rate);
         }
 
@@ -210,8 +215,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     protected function getOtherLicences($applicationId)
     {
         if (is_null($this->otherLicences)) {
-            $organisationId = $this->getServiceLocator()->get('Entity\Application')
-                ->getOrganisation($applicationId)['id'];
+            $organisationId = $this->getOrganisationId($applicationId);
 
             $licences = $this->getServiceLocator()->get('Entity\Organisation')
                 ->getLicences($organisationId);
@@ -231,6 +235,11 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         return $this->otherLicences;
     }
 
+    protected function getOrganisationId($applicationId)
+    {
+        return $this->getApplicationData($applicationId)['licence']['organisation']['id'];
+    }
+
     /**
      * @param int $applicationId
      * @return array
@@ -240,18 +249,20 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         if (is_null($this->otherApplications)) {
             $this->otherApplications = [];
 
-            $organisationId = $this->getServiceLocator()->get('Entity\Application')
-                ->getOrganisation($applicationId)['id'];
+            $organisationId = $this->getOrganisationId($applicationId);
 
             $applications = $this->getServiceLocator()->get('Entity\Organisation')
                 ->getNewApplications($organisationId);
 
             // filter to new applications in statuses we're interested in
             $validStatuses = [
-                Licence::LICENCE_STATUS_UNDER_CONSIDERATION,
-                Licence::LICENCE_STATUS_GRANTED,
+                Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                Application::APPLICATION_STATUS_GRANTED,
             ];
             foreach ($applications as $application) {
+                if ($application['id'] == $applicationId) {
+                    continue; // don't double-count the current application!
+                }
                 if (in_array($application['status']['id'], $validStatuses)) {
                     $this->otherApplications[] = $application;
                 }
