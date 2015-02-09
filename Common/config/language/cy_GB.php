@@ -1241,6 +1241,7 @@ return array(
     'please-select-row' => 'W Please select a row',
     'points' => 'W Points',
     'position' => 'W Position',
+    'postcode.address.manual_entry' => 'W Enter address manually',
     'previous-history' => 'W Previous history',
     'priority' => 'W Priority',
     'privacy-and-cookies' => 'W Privacy &amp; Cookies',

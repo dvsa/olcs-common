@@ -8,7 +8,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Name("address")
  * @Form\Type("\Common\Form\Elements\Types\Address")
  * @Form\Attributes({
- *      "class": "address"
+ *     "class": "address"
  * })
  */
 class Address
@@ -34,7 +34,7 @@ class Address
 
     /**
      * @Form\Attributes({"class":"long","id":""})
-     * @Form\Options({"label":"Street"})
+     * @Form\Options({"label":"Address lines"})
      * @Form\Type("Text")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
      */

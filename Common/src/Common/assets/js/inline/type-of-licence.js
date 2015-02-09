@@ -66,13 +66,10 @@ $(function() {
     onChange: false,
     success: OLCS.normaliseResponse(function(data) {
       if (data.hasErrors) {
-        var scrollTop = $(window).scrollTop();
-
-        F.render('.js-body', data.body);
+        F.render(".js-body", data.body);
         
         setupCascade();
 
-        $(window).scrollTop(scrollTop);
         return;
       }
       OLCS.formModal(data);
