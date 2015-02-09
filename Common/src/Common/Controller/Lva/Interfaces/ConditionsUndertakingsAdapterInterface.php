@@ -17,6 +17,23 @@ use Zend\Form\Form;
 interface ConditionsUndertakingsAdapterInterface
 {
     /**
+     * Delete a record
+     *
+     * @param int $id
+     * @param int $parentId
+     */
+    public function delete($id, $parentId);
+
+    /**
+     * Check whether we can update the record
+     *
+     * @param int $id
+     * @param int $parentId
+     * @return bool
+     */
+    public function canEditRecord($id, $parentId);
+
+    /**
      * Alter the form based upon the id
      *
      * @param Form $form

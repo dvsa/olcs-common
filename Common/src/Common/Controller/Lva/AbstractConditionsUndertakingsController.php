@@ -90,7 +90,17 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
+
             $id = $this->params('child_id');
+
+            if (!$this->getAdapter()->canEditRecord($id, $this->getIdentifier())) {
+
+                $messenger = $this->getServiceLocator()->get('Helper\FlashMessenger');
+                $messenger->addErrorMessage('You can\'t edit this record');
+
+                return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+            }
+
             $data = $this->getConditionPenaltyDetails($id);
         }
 
@@ -121,10 +131,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $ids = explode(',', $id);
 
-        $entityService = $this->getServiceLocator()->get('Entity\ConditionUndertaking');
-
         foreach ($ids as $id) {
-            $entityService->delete($id);
+            $this->getAdapter()->delete($id, $this->getIdentifier());
         }
     }
 
@@ -195,7 +203,10 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     {
         $tableBuilder = $this->getServiceLocator()->get('Table');
 
-        $table = $tableBuilder->prepareTable('lva-conditions-undertakings', $this->getTableData());
+        $table = $tableBuilder->prepareTable(
+            $this->getAdapter()->getTableName(),
+            $this->getTableData()
+        );
 
         $this->getAdapter()->alterTable($table);
 

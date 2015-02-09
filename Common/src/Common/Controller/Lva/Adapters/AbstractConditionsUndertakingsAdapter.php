@@ -21,6 +21,8 @@ use Common\Service\Table\TableBuilder;
 abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter implements
     ConditionsUndertakingsAdapterInterface
 {
+    protected $tableName = 'lva-conditions-undertakings';
+
     /**
      * Get licence id from the given lva id
      *
@@ -35,6 +37,29 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
      * @return \Common\Service\Entity\AbstractEntity
      */
     abstract protected function getLvaOperatingCentreEntityService();
+
+    /**
+     * Delete a record
+     *
+     * @param int $id
+     * @param int $parentId
+     */
+    public function delete($id, $parentId)
+    {
+        $this->getServiceLocator()->get('Entity\ConditionUndertaking')->delete($id);
+    }
+
+    /**
+     * Check whether we can update the record
+     *
+     * @param int $id
+     * @param int $parentId
+     * @return bool
+     */
+    public function canEditRecord($id, $parentId)
+    {
+        return true;
+    }
 
     /**
      * Remove the restore button
@@ -139,6 +164,11 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
         $form->get('fields')
             ->get('attachedTo')
             ->setValueOptions($options);
+    }
+
+    public function getTableName()
+    {
+        return $this->tableName;
     }
 
     /**
