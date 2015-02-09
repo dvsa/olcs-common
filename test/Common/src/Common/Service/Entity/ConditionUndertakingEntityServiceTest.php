@@ -43,4 +43,15 @@ class ConditionUndertakingEntityServiceTest extends AbstractEntityServiceTestCas
 
         $this->assertEquals('RESPONSE', $this->sut->getForApplication($id));
     }
+
+    public function testGetForLicence()
+    {
+        $id = 3;
+        $reponse = ['Results' => 'RESPONSE'];
+
+        $this->expectOneRestCall('ConditionUndertaking', 'GET', ['licence' => $id, 'limit' => 'all'])
+            ->will($this->returnValue($reponse));
+
+        $this->assertEquals('RESPONSE', $this->sut->getForLicence($id));
+    }
 }
