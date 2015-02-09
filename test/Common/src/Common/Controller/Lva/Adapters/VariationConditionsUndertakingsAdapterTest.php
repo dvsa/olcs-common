@@ -89,7 +89,6 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
      */
     public function testAlterForm()
     {
-        $this->fail('Finish this test');
         // Params
         $form = m::mock('\Zend\Form\Form');
         $id = 123;
@@ -97,8 +96,41 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $stubbedOcList = [
             'Results' => [
                 [
+                    'action' => 'A',
                     'operatingCentre' => [
-                        'id' => 987,
+                        'id' => 111,
+                        'address' => [
+                            'addressLine1' => '123 street',
+                            'addressLine2' => 'foo bar town'
+                        ]
+                    ]
+                ],
+                [
+                    'action' => 'D',
+                    'operatingCentre' => [
+                        'id' => 222,
+                        'address' => [
+                            'addressLine1' => '123 street',
+                            'addressLine2' => 'foo bar town'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        $stubbedLocList = [
+            'Results' => [
+                [
+                    'operatingCentre' => [
+                        'id' => 222,
+                        'address' => [
+                            'addressLine1' => '123 street',
+                            'addressLine2' => 'foo bar town'
+                        ]
+                    ]
+                ],
+                [
+                    'operatingCentre' => [
+                        'id' => 333,
                         'address' => [
                             'addressLine1' => '123 street',
                             'addressLine2' => 'foo bar town'
@@ -117,7 +149,8 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
             'OC' => [
                 'label' => 'OC Address',
                 'options' => [
-                    987 => '123 street, foo bar town'
+                    333 => '123 street, foo bar town',
+                    111 => '123 street, foo bar town'
                 ]
             ]
         ];
@@ -129,6 +162,8 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sm->setService('Entity\Application', $mockApplicationEntity);
         $mockAoc = m::mock();
         $this->sm->setService('Entity\ApplicationOperatingCentre', $mockAoc);
+        $mockLoc = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockLoc);
 
         // Expectations
         $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
@@ -142,6 +177,10 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $mockAoc->shouldReceive('getOperatingCentreListForLva')
             ->with($id)
             ->andReturn($stubbedOcList);
+
+        $mockLoc->shouldReceive('getOperatingCentreListForLva')
+            ->with($licenceId)
+            ->andReturn($stubbedLocList);
 
         $form->shouldReceive('get')
             ->with('fields')

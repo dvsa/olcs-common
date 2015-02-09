@@ -8,6 +8,7 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Common\Controller\Lva\Adapters\AbstractOperatingCentreAdapter;
+use Common\Service\Entity\ConditionUndertakingEntityService;
 
 /**
  * Variation Conditions Undertakings Adapter
