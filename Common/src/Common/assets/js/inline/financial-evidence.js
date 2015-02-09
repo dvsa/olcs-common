@@ -14,7 +14,9 @@ $(function() {
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
-      "upload": willUpload,
+      "evidence": {
+        "selector:#files": willUpload
+      },
       "sendByPost": willPost
     }
   });

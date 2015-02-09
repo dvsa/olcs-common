@@ -26,13 +26,6 @@ class FinancialEvidence
     public $evidence = null;
 
     /**
-     * @Form\Name("upload")
-     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceUpload")
-     * @Form\Options({"label": "lva-financial-evidence-upload.label"})
-     */
-    public $upload = null;
-
-    /**
      * @Form\Name("sendByPost")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidencePost")
      */

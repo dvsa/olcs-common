@@ -39,7 +39,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
         $adapter = $this->getAdapter();
         $hasProcessedFiles = $this->processFiles(
             $form,
-            'upload->file',
+            'evidence->files',
             array($this, 'processFinancialEvidenceFileUpload'),
             array($this, 'deleteFile'),
             function() use ($id, $adapter) {
@@ -52,6 +52,11 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             $this->postSave('financial_evidence');
             return $this->completeSection('financial_evidence');
         }
+
+        // if ($request->isPost()) {
+        //     // dafuq
+        //     var_dump($form->getMessages()); die('HERE');
+        // }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 

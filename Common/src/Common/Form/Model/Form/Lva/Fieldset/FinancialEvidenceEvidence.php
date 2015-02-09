@@ -28,4 +28,24 @@ class FinancialEvidenceEvidence
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $uploadNow = null;
+
+    /**
+     * @Form\AllowEmpty(true)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\Required(true)
+     * @Form\Attributes({"id":"files", "class": "file-upload", "required":false})
+     * @Form\Options({
+     *     "label" : "",
+     *     "hint": "lva-financial-evidence-upload.files.hint",
+     *     "fieldset-attributes": {"label": "lva-financial-evidence-upload.label"}
+     * })
+     * @Form\Validator({
+     *     "name": "Common\Form\Elements\Validators\EvidenceRequiredValidator",
+     *     "options": {
+     *         "label": "financial standing"
+     *     }
+     * })
+     * @Form\Type("\Common\Form\Elements\Types\MultipleFileUpload")
+     */
+    public $files = null;
 }
