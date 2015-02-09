@@ -24,6 +24,7 @@ class FinancialEvidenceEvidence
      *         "class": "inline"
      *     }
      * })
+     * @Form\Attributes({"value": "Y"})
      * @Form\Type("\Zend\Form\Element\Radio")
      */
     public $uploadNow = null;

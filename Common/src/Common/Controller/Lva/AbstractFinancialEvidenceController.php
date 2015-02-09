@@ -38,9 +38,6 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
 
         $this->getAdapter()->alterFormForLva($form);
 
-        // set default value
-        $form->get('evidence')->get('uploadNow')->setValue('Y');
-
         $id = $this->getIdentifier();
 
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
