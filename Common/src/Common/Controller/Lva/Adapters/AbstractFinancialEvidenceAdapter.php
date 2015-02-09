@@ -70,4 +70,29 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractAdapter implemen
                 return 3900;
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getRatesForView()
+    {
+        return [
+            'standardFirst' => $this->getFirstVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'standardAdditional' => $this->getAdditionalVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'restrictedFirst' => $this->getFirstVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+            'restrictedAdditional' => $this->getAdditionalVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
+            ),
+        ];
+    }
 }

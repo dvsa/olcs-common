@@ -31,6 +31,7 @@ class AbstractFinancialEvidenceControllerTest extends AbstractLvaControllerTestC
             ->shouldReceive('getAdditionalVehicleRate')
             ->shouldReceive('getTotalNumberOfAuthorisedVehicles')
             ->shouldReceive('getRequiredFinance')
+            ->shouldReceive('getRatesForView')->andReturn([])
             ->getMock();
 
         $this->sut->setAdapter($mockAdapter);
