@@ -30,6 +30,10 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->sm = Bootstrap::getServiceManager();
         $this->sut->setServiceLocator($this->sm);
 
+    }
+
+    protected function setUpData()
+    {
         $applicationId = 123;
 
         $applicationData = [
@@ -121,14 +125,40 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         //  * plus a goods restricted licence with 3 vehicles, the finance is (3 x £1700) = £5,100
         //  * plus a psv restricted licence with 1 vehicle, the finance is £2,700
         //  * The total required finance is £14,800 + £5,100 + £2,700 = £22,600
-        $expected = 22600; // NOT 24000
+        $expected = 22600;
 
+        $this->setUpData();
         $this->assertEquals($expected, $this->sut->getRequiredFinance(123));
     }
 
-
     public function testGetTotalNumberOfAuthorisedVehicles()
     {
+        $this->setUpData();
         $this->assertEquals(7, $this->sut->getTotalNumberOfAuthorisedVehicles(123));
+    }
+
+    public function testAlterFormForLva()
+    {
+        $mockElement = m::mock()
+            ->shouldReceive('setValue')
+            ->once()
+            ->with('markup-required-finance-application')
+            ->getMock();
+
+        $mockFieldset = m::mock()
+            ->shouldReceive('get')
+            ->once()
+            ->with('requiredFinance')
+            ->andReturn($mockElement)
+            ->getMock();
+
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->once()
+            ->with('finance')
+            ->andReturn($mockFieldset)
+            ->getMock();
+
+        $this->sut->alterFormForLva($mockForm);
     }
 }

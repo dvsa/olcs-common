@@ -63,7 +63,8 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
     /**
      * Gets the total required finance when submitting an application, taking
-     * account of other pending applications and existing licences.
+     * account of other pending applications and existing licences for the 
+     * same operator.
      *
      * @param int $applicationId
      * @return int Required finance amount
@@ -110,7 +111,6 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     /**
      * Takes an array of vehicle authorisations (example below) and
      * returns the required finance amount
-     * @TODO - edge case where PSV charge may be higher - sort the array first!!
      *
      * array (
      *   0 =>
@@ -154,7 +154,16 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             Licence::LICENCE_TYPE_STANDARD_INTERNATIONAL,
         ];
 
-        // get first vehicle charge
+        // 1. Sort the array so the correct (higher) 'first vehicle' charge is
+        // applied (i.e. ensure any PSV apps/licences are handled first)
+        usort(
+            $auths,
+            function($a, $b) {
+                return $a['category'] === Licence::LICENCE_CATEGORY_PSV ? -1 : 1;
+            }
+        );
+
+        // 2. Get first vehicle charge
         foreach ($auths as $key => $auth) {
             if (!$foundHigher && $count = $auth['count']>0) {
                 $firstVehicleCharge = $this->getFirstVehicleRate($auth['type'], $auth['category']);
@@ -165,15 +174,16 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             }
         }
 
-        // don't double-count the first vehicle!
+        // 3. Ensure we don't double-count the first vehicle
         $auths[$firstVehicleKey]['count']--;
 
-        // get the additional vehicle charges
+        // 4. Get the additional vehicle charges
         foreach ($auths as $key => $auth) {
             $rate = $this->getAdditionalVehicleRate($auth['type'], $auth['category']);
             $additionalVehicleCharge += ($auth['count'] * $rate);
         }
 
+        // 5. Return the total required finance
         return $firstVehicleCharge + $additionalVehicleCharge;
     }
 
