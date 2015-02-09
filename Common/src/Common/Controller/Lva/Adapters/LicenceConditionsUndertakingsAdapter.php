@@ -24,7 +24,10 @@ class LicenceConditionsUndertakingsAdapter extends AbstractConditionsUndertaking
      */
     public function save($data)
     {
-        $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_LICENCE;
+        // We only want to override the addedVia if we are creating a new one
+        if (!isset($data['id']) || empty($data['id'])) {
+            $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_LICENCE;
+        }
 
         return parent::save($data);
     }
@@ -37,7 +40,8 @@ class LicenceConditionsUndertakingsAdapter extends AbstractConditionsUndertaking
      */
     public function getTableData($id)
     {
-        return [];
+        return $this->getServiceLocator()->get('Entity\ConditionUndertaking')
+            ->getForLicence($id);
     }
 
     /**
