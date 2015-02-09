@@ -61,6 +61,41 @@ class ShortNotice implements FactoryInterface
         return false;
     }
 
+    public function calculateNoticeDate($data)
+    {
+        $receivedDateTime = \DateTime::createFromFormat('Y-m-d', $data['receivedDate']);
+
+        if (!($receivedDateTime instanceof \DateTime)) {
+            return null;
+        }
+
+        if (!isset($data['busNoticePeriod']) || empty($data['busNoticePeriod'])) {
+            return null;
+        }
+
+        $busRules = $this->getNoticePeriodService()->fetchOne($data['busNoticePeriod']);
+
+        if ($busRules['cancellationPeriod'] > 0 && $data['variationNo'] > 0) {
+            if (!isset($data['parent'])) {
+                //if we don't have a parent record, the result is undefined.
+                return null;
+            }
+
+            $lastDateTime = \DateTime::createFromFormat('Y-m-d', $data['parent']['effectiveDate']);
+            $interval = new \DateInterval('P' . $busRules['cancellationPeriod'] . 'D');
+
+            return $lastDateTime->add($interval)->format('Y-m-d');
+        }
+
+        if ($busRules['standardPeriod'] > 0) {
+            $interval = new \DateInterval('P' . $busRules['standardPeriod'] . 'D');
+
+            return $receivedDateTime->add($interval)->format('Y-m-d');
+        }
+
+        return $data['effectiveDate'];
+    }
+
     /**
      * @param \Common\Service\Data\Interfaces\DataService $noticePeriodService
      * @return $this
