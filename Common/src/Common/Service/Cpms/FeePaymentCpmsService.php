@@ -437,7 +437,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         return null;
     }
 
-    public function handleResponse($data, $fees)
+    /**
+     * @param array $data
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_OFFLINE
+     */
+    public function handleResponse($data, $paymentMethod)
     {
         $reference      = $data['receipt_reference'];
         $paymentService = $this->getServiceLocator()->get('Entity\Payment');
@@ -482,12 +486,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         switch ($apiResponse['payment_status']['code']) {
             case self::PAYMENT_SUCCESS:
+                $fees = $this->getServiceLocator()->get('Entity\FeePayment')
+                    ->getFeesByPaymentId($payment['id']);
                 foreach ($fees as $fee) {
                     $data = [
                         'feeStatus'      => FeeEntityService::STATUS_PAID,
                         'receivedDate'   => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
                         'receiptNo'      => $reference,
-                        'paymentMethod'  => FeePaymentEntityService::METHOD_CARD_OFFLINE,
+                        'paymentMethod'  => $paymentMethod,
                         'receivedAmount' => $fee['amount']
                     ];
 

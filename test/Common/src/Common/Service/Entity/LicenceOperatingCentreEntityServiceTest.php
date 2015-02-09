@@ -86,7 +86,7 @@ class LicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTestC
                 ]
             ]
         ];
-        $this->expectOneRestCall('LicenceOperatingCentre', 'GET', ['licence' => 1], $bundle)
+        $this->expectOneRestCall('LicenceOperatingCentre', 'GET', ['licence' => 1, 'limit' => 'all'], $bundle)
             ->will($this->returnValue('response'));
 
         $this->assertEquals('response', $this->sut->getOperatingCentresForLicence(1));

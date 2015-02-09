@@ -11,6 +11,7 @@ use Zend\Form\Fieldset;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Select;
+use Common\Form\Elements\Types\HtmlTranslated;
 
 /**
  * PostcodeSearch fieldset
@@ -33,7 +34,7 @@ class PostcodeSearch extends Fieldset
         $postcodeSearch = new Text('postcode');
         $postcodeSearch->setAttributes(
             array(
-                'class' => 'short',
+                'class' => 'short js-input',
                 'data-container-class' => 'inline'
             )
         );
@@ -44,7 +45,8 @@ class PostcodeSearch extends Fieldset
         $searchButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--secondary large'
+                'class' => 'action--primary large js-find',
+                'data-container-class' => 'inline'
             )
         );
         $searchButton->setValue('search');
@@ -54,7 +56,7 @@ class PostcodeSearch extends Fieldset
         $selectAddress = new Select('addresses', array('label' => '', 'empty_option' => 'Please select'));
         $selectAddress->setAttributes(
             array(
-                'data-container-class' => 'inline'
+                'data-container-class' => 'address__select'
             )
         );
 
@@ -64,12 +66,24 @@ class PostcodeSearch extends Fieldset
         $selectButton->setAttributes(
             array(
                 'type' => 'submit',
-                'class' => 'action--primary'
+                'class' => 'action--primary js-select',
+                'data-container-class' => 'js-hidden'
             )
         );
         $selectButton->setValue('select');
 
         $this->add($selectButton);
+
+        $manualLink = new HtmlTranslated('manual-link');
+        $manualLink->setValue('<p class="hint--small"><a href=#>%s</a></p>');
+        $manualLink->setTokens(['postcode.address.manual_entry' ]);
+        $manualLink->setAttributes(
+            array(
+                'data-container-class' => 'js-visible'
+            )
+        );
+
+        $this->add($manualLink);
     }
 
     public function setMessages($messages)

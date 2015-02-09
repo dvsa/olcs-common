@@ -63,6 +63,15 @@ return array(
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
+            'LvaApplication/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
+            ),
+            'LvaVariation/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
+            ),
+            'LvaLicence/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
+            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -138,6 +147,12 @@ return array(
         ),
         'invokables' => array(
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'ApplicationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
+            'VariationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
+            'LicenceConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
@@ -348,6 +363,7 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
+            'Common\Service\Data\VariationReason' => 'Common\Service\Data\VariationReason',
             'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>

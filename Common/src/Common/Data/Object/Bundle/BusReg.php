@@ -18,5 +18,17 @@ class BusReg extends Bundle
     {
         $this->addChild('licence', $serviceLocator->get('Licence'));
         $this->addChild('status');
+        $this->addChild('revertStatus');
+        $this->addChild('withdrawnReason');
+    }
+
+    /**
+     * Gets the default bundle name
+     *
+     * @return string
+     */
+    public function getDefaultBundle()
+    {
+        return 'BusReg';
     }
 }
