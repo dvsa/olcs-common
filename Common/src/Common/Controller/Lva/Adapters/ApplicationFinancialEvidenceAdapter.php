@@ -158,7 +158,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         // applied (i.e. ensure any PSV apps/licences are handled first)
         usort(
             $auths,
-            function($a, $b) {
+            function ($a, $b) {
                 return $a['category'] === Licence::LICENCE_CATEGORY_PSV ? -1 : 1;
             }
         );

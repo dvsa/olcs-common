@@ -90,8 +90,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
             ->andReturn($licences)
             ->getMock();
 
-
-        $anotherApplication  = [
+        $anotherApplication = [
             'id' => 124,
             'totAuthVehicles' => 0,
             'status' => [ 'id' => Application::APPLICATION_STATUS_UNDER_CONSIDERATION ],
