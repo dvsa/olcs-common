@@ -13,6 +13,12 @@ use Zend\Form\Annotation as Form;
 class ConditionsUndertakings
 {
     /**
+     * @Form\Name("table")
+     * @Form\ComposedObject("Common\Form\Model\Fieldset\TableRequired")
+     */
+    public $table = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})
