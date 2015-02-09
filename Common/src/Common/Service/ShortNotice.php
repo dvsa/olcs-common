@@ -73,7 +73,7 @@ class ShortNotice implements FactoryInterface
             return null;
         }
 
-        $busRules = $this->getNoticePeriodService()->fetchOne($data['busNoticePeriod']);
+        $busRules = $this->getNoticePeriodService()->fetchOne($data['busNoticePeriod']['id']);
 
         if ($busRules['cancellationPeriod'] > 0 && $data['variationNo'] > 0) {
             if (!isset($data['parent'])) {
