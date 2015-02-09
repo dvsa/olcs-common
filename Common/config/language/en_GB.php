@@ -499,6 +499,8 @@ return array(
     'bus-compliance-issues' => 'Bus compliance issues',
     'bus-services-registered' => 'Local bus services registered',
     'business-type' => 'Business type',
+    'business-type.locked' => 'Cannot change business type. Please contact Central Licensing Office for further
+        advice.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
@@ -1354,7 +1356,7 @@ return array(
     'section.link.edit.vehicles_psv' => 'Edit vehicles',
     'section.link.update.addresses' => 'Update addresses',
     'section.link.update.business_details' => 'Update business details',
-    'section.link.update.business_type' => 'Updated business type',
+    'section.link.update.business_type' => 'Update business type',
     'section.link.update.community_licences' => 'Update community licences',
     'section.link.update.conditions_undertakings' => 'Update conditions & undertakings',
     'section.link.update.convictions_penalties' => 'Update convictions & penalties',
