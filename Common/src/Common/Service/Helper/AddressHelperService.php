@@ -87,7 +87,7 @@ class AddressHelperService extends AbstractHelperService
 
             $str = implode(', ', $parts);
 
-            if (strlen($str) >= self::MAX_DISPLAY_LENGTH) {
+            if (strlen($str) > self::MAX_DISPLAY_LENGTH) {
                 // one char is correct; we use an ellipsis rather than three dots
                 $str = substr($str, 0, self::MAX_DISPLAY_LENGTH - 1) . '…';
             }
