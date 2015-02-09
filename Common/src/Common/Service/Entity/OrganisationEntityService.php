@@ -139,7 +139,7 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->get($identifier);
     }
 
-    public function hasInforceLicences($id)
+    public function hasInForceLicences($id)
     {
         $licences = $this->getServiceLocator()
             ->get('Entity\Licence')

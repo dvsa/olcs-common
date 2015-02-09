@@ -496,7 +496,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $return;
     }
 
-    public function getInforceForOrganisation($orgId)
+    public function getInForceForOrganisation($orgId)
     {
         return $this->get(
             [
