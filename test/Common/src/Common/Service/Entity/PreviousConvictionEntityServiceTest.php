@@ -52,4 +52,17 @@ class PreviousConvictionEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getData($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForTransportManager()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('PreviousConviction', 'GET', ['transportManager' => $id])
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForTransportManager($id));
+    }
 }

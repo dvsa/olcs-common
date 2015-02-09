@@ -30,4 +30,15 @@ class PreviousConvictionEntityService extends AbstractEntityService
     {
         return $this->get($id);
     }
+
+    /**
+     * Get data for tansport manager
+     *
+     * @param int $transportManagerId
+     * @return array
+     */
+    public function getDataForTransportManager($transportManagerId)
+    {
+        return $this->get(array('transportManager' => $transportManagerId))['Results'];
+    }
 }
