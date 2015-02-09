@@ -55,6 +55,30 @@ class LicenceConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->assertEquals(123, $this->sut->save($data));
     }
 
+    public function testSaveOnUpdate()
+    {
+        $data = [
+            'id' => 123,
+            'foo' => 'bar'
+        ];
+
+        $expectedData = [
+            'id' => 123,
+            'foo' => 'bar'
+        ];
+
+        // Mocks
+        $entityService = m::mock();
+        $this->sm->setService('Entity\ConditionUndertaking', $entityService);
+
+        // Expectations
+        $entityService->shouldReceive('save')
+            ->with($expectedData)
+            ->andReturn(['id' => 123]);
+
+        $this->assertEquals(123, $this->sut->save($data));
+    }
+
     public function testGetTableData()
     {
         $id = 1;
