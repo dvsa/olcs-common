@@ -6,6 +6,9 @@ use Zend\Mvc\Service\AbstractPluginManagerFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * PluginManagerFactory
+ */
 class PluginManagerFactory extends AbstractPluginManagerFactory
 {
     const PLUGIN_MANAGER_CLASS = 'Common\Service\Data\PluginManager';
