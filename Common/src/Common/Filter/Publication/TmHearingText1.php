@@ -53,19 +53,17 @@ class TmHearingText1 extends Text1
     public function getOpeningText($publication, $hearingData)
     {
         $case = $publication->offsetGet('case');
-        $transportManager = $publication->offsetGet('transportManager');
+        $transportManagerName = $publication->offsetGet('transportManagerName');
 
         return sprintf(
             $this->pi,
             $case['id'],
             $hearingData['id'],
-            $transportManager['workCd']['person']['title'] . ' '
-                . $transportManager['workCd']['person']['forename'] . ' '
-                . $transportManager['workCd']['person']['familyName'],
+            $transportManagerName,
             $hearingData['piVenueOther'],
             $hearingData['date'],
             $hearingData['time'],
-            $hearingData['previousPublication']
+            ''
         );
     }
 }

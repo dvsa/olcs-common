@@ -33,10 +33,13 @@ class TransportManager extends AbstractPublicationFilter
         }
 
         $newData = [
-            'transportManager' => $tmData,
+            'transportManager' =>
+                $tmData['workCd']['person']['title'] . ' '
+                . $tmData['workCd']['person']['forename'] . ' '
+                . $tmData['workCd']['person']['familyName'],
         ];
 
-        $publication = $this->mergeData($publication, $newData);
+        $publication->offsetSet('transportManagerName', $newData['transportManager']);
 
         return $publication;
     }
