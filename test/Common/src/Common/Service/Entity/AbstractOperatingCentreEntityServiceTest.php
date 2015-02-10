@@ -21,6 +21,18 @@ class AbstractOperatingCentreEntityServiceTest extends AbstractEntityServiceTest
         parent::setUp();
     }
 
+    public function testGetOperatingCentreListForLva()
+    {
+        $id = 4;
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'GET', ['' => $id, 'limit' => 'all'])
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getOperatingCentreListForLva($id));
+    }
+
     public function testGetListForLva()
     {
         $id = 2;

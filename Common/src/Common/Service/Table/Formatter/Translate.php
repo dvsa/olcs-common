@@ -3,15 +3,14 @@
 /**
  * Translate formatter
  *
- * @author Jakub Igla <jakub.igla@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Service\Table\Formatter;
 
 /**
  * Translate formatter
  *
- * @author Jakub Igla <jakub.igla@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class Translate implements FormatterInterface
 {
@@ -26,7 +25,15 @@ class Translate implements FormatterInterface
     public static function format($data, $column = array(), $sm = null)
     {
         if (isset($column['name'])) {
-            return $sm->get('translator')->translate($data[$column['name']]);
+
+            $name = $column['name'];
+            while (strstr($name, '->')) {
+                list($index, $name) = explode('->', $name, 2);
+
+                $data = $data[$index];
+            }
+
+            return $sm->get('translator')->translate($data[$name]);
         }
 
         if (isset($column['content'])) {
