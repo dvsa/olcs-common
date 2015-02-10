@@ -2,16 +2,16 @@
 
 namespace CommonTest\Filter\Publication;
 
-use Common\Filter\Publication\TmHearingText1;
+use Common\Filter\Publication\TmHearingText2;
 use Common\Data\Object\Publication;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
- * Class TmHearingText1Test
+ * Class TmHearingText2Test
  * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class TmHearingText1Test extends MockeryTestCase
+class TmHearingText2Test extends MockeryTestCase
 {
     /**
      * @group publicationFilter
@@ -47,25 +47,13 @@ class TmHearingText1Test extends MockeryTestCase
             ]
         ];
 
-        $expectedOutput = sprintf(
-            'TM Public Inquiry (Case ID: %s, Public Inquiry ID: %s) for %s to be held at %s,
-    on %s commencing at %s (Previous Publication:'
-            . '(%s)) Previous hearing on %s was adjourned.',
-            $caseId,
-            $pi,
-            $publicationData['transportManagerName'],
-            $piVenueOther,
-            $hearingDate,
-            $hearingTime,
-            $previousPublication,
-            $previousHearingDate
-        );
+        $expectedOutput = 'TBC';
 
         $input = new Publication($publicationData);
-        $sut = new TmHearingText1();
+        $sut = new TmHearingText2();
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($expectedOutput, $output->offsetGet('text1'));
+        $this->assertEquals($expectedOutput, $output->offsetGet('text2'));
     }
 }
