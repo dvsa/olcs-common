@@ -147,7 +147,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
         return [
             'application' => $applicationId,
-            'description' => 'Financial Evidence', // @TODO set to Filename
+            'description' => $file->getName(),
             'category'    => Category::CATEGORY_APPLICATION,
             'subCategory' => Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
             'licence'     => $licenceId,

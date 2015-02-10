@@ -38,11 +38,14 @@ trait GenericUpload
 
         $uploadHelper->setForm($form)
             ->setSelector($selector)
-            ->setCountSelector($countSelector)
             ->setUploadCallback($uploadCallback)
             ->setDeleteCallback($deleteCallback)
             ->setLoadCallback($loadCallback)
             ->setRequest($this->getRequest());
+
+        if (!is_null($countSelector)) {
+            $uploadHelper->setCountSelector($countSelector);
+        }
 
         return $uploadHelper->process();
     }
@@ -54,7 +57,7 @@ trait GenericUpload
      * @param array $data
      * @return array
      */
-    public function uploadFile($fileData, $data)
+    protected function uploadFile($fileData, $data)
     {
         $uploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
         $uploader->setFile($fileData);
