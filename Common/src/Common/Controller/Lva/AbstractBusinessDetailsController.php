@@ -11,16 +11,18 @@ use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Helper\FormHelperService;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Controller\Traits\GenericBusinessDetails;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic between Business Details Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessDetailsController extends AbstractController
+abstract class AbstractBusinessDetailsController extends AbstractController implements AdapterAwareInterface
 {
-    use CrudTableTrait;
-    use GenericBusinessDetails;
+    use CrudTableTrait,
+        GenericBusinessDetails,
+        Traits\AdapterAwareTrait;
 
     protected $section = 'business_details';
 
@@ -29,6 +31,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     public function indexAction()
     {
+        $adapter = $this->getAdapter();
+
         $request = $this->getRequest();
 
         $orgId = $this->getCurrentOrganisationId();
@@ -51,6 +55,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $this->alterForm($form, $orgData)
             ->setData($data);
+
+        $adapter->alterFormForOrganisation($form, 123);
 
         if ($form->has('table')) {
             $this->populateTable($form, $orgId);

@@ -36,6 +36,17 @@ return array(
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
+            'LvaApplication/BusinessDetails' => array(
+                // @NOTE: we need an associative array when we need to override the
+                // delegator elsewhere; an indexed array will merge, but we want to override
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaLicence/BusinessDetails' => array(
+                'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaVariation/BusinessDetails' => array(
+                'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -158,6 +169,8 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'GenericBusinessDetailsAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
