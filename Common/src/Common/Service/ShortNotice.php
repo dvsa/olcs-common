@@ -61,6 +61,12 @@ class ShortNotice implements FactoryInterface
         return false;
     }
 
+    /**
+     * Calculates the short notice date
+     *
+     * @param $data
+     * @return null|string
+     */
     public function calculateNoticeDate($data)
     {
         $receivedDateTime = \DateTime::createFromFormat('Y-m-d', $data['receivedDate']);
