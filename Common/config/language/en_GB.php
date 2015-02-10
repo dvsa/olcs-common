@@ -1057,6 +1057,7 @@ return array(
     'lva-financial-evidence-upload.files.hint' => 'Please ensure the evidence provided demonstrates there are sufficient
         financial resources to maintain the vehicles and run the business.',
     'lva-financial-evidence-upload.label' => 'Upload files',
+    'lva-financial-evidence-upload.required' => 'Please upload evidence of financial standing',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'The sum of small and
         medium vehicles does not match the total number of vehicles',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>

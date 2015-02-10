@@ -7,8 +7,10 @@
  */
 namespace Common\Form\Elements\Types;
 
+use Zend\Form\InputFilterProviderFieldset;
 use Zend\Form\Fieldset;
 use Zend\Form\Element;
+use Zend\Validator\GreaterThan;
 use Common\Form\Elements\InputFilters\File;
 
 /**

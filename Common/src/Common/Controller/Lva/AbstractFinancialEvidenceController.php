@@ -24,19 +24,21 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
     public function indexAction()
     {
         $request = $this->getRequest();
+        $id      = $this->getIdentifier();
+        $adapter = $this->getAdapter();
 
+        // get data
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
             $data = $this->getFormData();
         }
 
+        // set up form
         $form = $this->getFinancialEvidenceForm()->setData($data);
+        $adapter->alterFormForLva($form);
 
-        $this->getAdapter()->alterFormForLva($form);
-
-        $id = $this->getIdentifier();
-        $adapter = $this->getAdapter();
+        // handle files
         $hasProcessedFiles = $this->processFiles(
             $form,
             'evidence->files',
@@ -44,7 +46,8 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             array($this, 'deleteFile'),
             function() use ($id, $adapter) {
                 return $adapter->getDocuments($id);
-            }
+            },
+            'evidence->uploadedFileCount'
         );
 
         if (!$hasProcessedFiles && $request->isPost() && $form->isValid()) {
@@ -53,19 +56,16 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             return $this->completeSection('financial_evidence');
         }
 
-        // if ($request->isPost()) {
-        //     // dafuq
-        //     var_dump($form->getMessages()); die('HERE');
-        // }
-
+        // load scripts
         $this->getServiceLocator()->get('Script')->loadFiles(['financial-evidence']);
 
+        // render view
         $variables = array_merge(
             [
-                'vehicles' => $this->getAdapter()->getTotalNumberOfAuthorisedVehicles($id),
-                'requiredFinance' => $this->getAdapter()->getRequiredFinance($id),
+                'vehicles' => $adapter->getTotalNumberOfAuthorisedVehicles($id),
+                'requiredFinance' => $adapter->getRequiredFinance($id),
             ],
-            $this->getAdapter()->getRatesForView()
+            $adapter->getRatesForView()
         );
 
         return $this->render('financial_evidence', $form, $variables);
