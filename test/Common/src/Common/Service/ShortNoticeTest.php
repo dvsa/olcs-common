@@ -42,7 +42,7 @@ class ShortNoticeTest extends TestCase
         $sut = new ShortNotice();
         $sut->setNoticePeriodService($mockDataService);
 
-        $this->assertEquals($result, $sut->isShortNotice($data));
+        $this->assertSame($result, $sut->isShortNotice($data));
     }
 
     public function provideIsShortNotice()
@@ -245,6 +245,159 @@ class ShortNoticeTest extends TestCase
                 ],
                 $notSn
             ],
+            //error cases
+            [
+                $otherRules,
+                [
+                    'receivedDate' => '',
+                    'effectiveDate' => '2014-09-30'
+                ],
+                false
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2015-02-09',
+                    'effectiveDate' => '2016-09-30',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                false
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2014-06-11',
+                    'effectiveDate' => '2014-08-11',
+                ],
+                null
+            ],
         ];
+    }
+
+    /**
+     * @dataProvider provideCalculateNoticeDate
+     * @param $data
+     * @param $rules
+     * @param $result
+     */
+    public function testCalculateNoticeDate($rules, $data, $result)
+    {
+        $data['busNoticePeriod']['id'] = 1;
+        $mockDataService = m::mock('Common\Service\Data\Interfaces\DataService');
+        $mockDataService->shouldReceive('fetchOne')->with($data['busNoticePeriod']['id'])->andReturn($rules);
+
+        $sut = new ShortNotice();
+        $sut->setNoticePeriodService($mockDataService);
+
+        $this->assertEquals($result, $sut->calculateNoticeDate($data));
+    }
+
+    public function provideCalculateNoticeDate()
+    {
+        $scotRules = [
+            'standardPeriod' => 56,
+            'cancellationPeriod' => 90
+        ];
+
+        $otherRules = [
+            'standardPeriod' => 56,
+            'cancellationPeriod' => 0
+        ];
+
+        $noRules = [
+            'standardPeriod' => 0,
+            'cancellationPeriod' => 0
+        ];
+
+        return [
+            [
+              $otherRules,
+                ['receivedDate' => ''],
+                null
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2015-02-09'
+                ],
+                null
+            ],
+            [
+                $noRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2015-02-09',
+                    'effectiveDate' => '2015-03-31'
+                ],
+                '2015-03-31'
+            ],
+            [
+                $otherRules,
+                [
+                    'variationNo' => 0,
+                    'receivedDate' => '2015-02-09'
+                ],
+                '2015-04-06'
+            ],
+            [
+                $otherRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2015-02-09'
+                ],
+                '2015-04-06'
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 0,
+                    'receivedDate' => '2015-02-09'
+                ],
+                '2015-04-06'
+            ],
+            [
+                $scotRules,
+                [
+                    'variationNo' => 1,
+                    'receivedDate' => '2015-02-09',
+                    'parent' => ['effectiveDate' => '2014-06-11']
+                ],
+                '2014-09-09'
+            ],
+        ];
+    }
+
+    public function testCalculateNoticeDateNoRulesDefined()
+    {
+        list ($data, $result) = [
+            [
+                'variationNo' => 1,
+                'receivedDate' => '2015-02-09',
+                'parent' => ['effectiveDate' => '2014-06-11']
+            ],
+            false
+        ];
+
+        $sut = new ShortNotice();
+        $this->assertEquals($result, $sut->calculateNoticeDate($data));
+    }
+
+    public function testIsShortNoticeNoRulesDefined()
+    {
+        list ($data, $result) = [
+            [
+                'variationNo' => 1,
+                'receivedDate' => '2015-02-09',
+                'effectiveDate' => '2014-06-11',
+                'parent' => ['effectiveDate' => '2014-06-11']
+            ],
+            false
+        ];
+
+        $sut = new ShortNotice();
+        $this->assertEquals($result, $sut->isShortNotice($data));
     }
 }

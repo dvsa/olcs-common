@@ -495,4 +495,14 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         return $return;
     }
+
+    public function getInForceForOrganisation($orgId)
+    {
+        return $this->get(
+            [
+                'organisation' => $orgId,
+                'inForceDate' => 'NOT NULL'
+            ]
+        );
+    }
 }

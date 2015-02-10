@@ -20,6 +20,8 @@ class BusReg extends Bundle
         $this->addChild('status');
         $this->addChild('revertStatus');
         $this->addChild('withdrawnReason');
+        $this->addChild('parent');
+        $this->addChild('busNoticePeriod');
     }
 
     /**

@@ -17,4 +17,6 @@ interface VehicleGoodsAdapterInterface extends AdapterInterface, VehiclesAdapter
     public function save($data, $id);
 
     public function getFormData($id);
+
+    public function showFilters();
 }

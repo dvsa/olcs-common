@@ -64,7 +64,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
     /**
      * Gets the total required finance when submitting an application, taking
-     * account of other pending applications and existing licences for the 
+     * account of other pending applications and existing licences for the
      * same operator.
      *
      * @param int $applicationId

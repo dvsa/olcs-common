@@ -64,4 +64,12 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
             )
         );
     }
+
+    /**
+     * Do we need to show filters for vehciles
+     */
+    public function showFilters()
+    {
+        return true;
+    }
 }
