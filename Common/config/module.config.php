@@ -229,6 +229,7 @@ return array(
             'Common\Filter\Publication\TransportManager',
             'Common\Filter\Publication\PiVenue',
             'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\PublicationSection',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\TmHearingText1',
