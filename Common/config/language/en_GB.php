@@ -1048,6 +1048,7 @@ return array(
     'lva-community-licences-table-title' => 'Community licences',
     'lva-conditions-undertakings-table-added-via' => 'Added via',
     'lva-conditions-undertakings-table-attached-to' => 'Attached to',
+    'lva-conditions-undertakings-table-description' => 'Description',
     'lva-conditions-undertakings-table-empty-message' => 'There are no conditions or undertakings added',
     'lva-conditions-undertakings-table-fulfilled' => 'Fulfilled',
     'lva-conditions-undertakings-table-no' => 'No.',

@@ -24,7 +24,13 @@ return array(
             'title' => 'lva-conditions-undertakings-table-no',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
-            'name' => 'id'
+            'formatter' => function ($data, $column) {
+                if (in_array($data['action'], ['U', 'D'])) {
+                    return $data['licConditionVariation']['id'];
+                }
+
+                return $data['id'];
+            }
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-type',
@@ -49,16 +55,6 @@ return array(
         ),
         array(
             'title' => 'lva-conditions-undertakings-table-attached-to',
-            'formatter' => 'Translate',
-            'name' => 'attachedTo->description'
-        ),
-        array(
-            'title' => 'lva-conditions-undertakings-table-s4',
-            'format' => 'Todo'
-        ),
-        array(
-            'title' => 'lva-conditions-undertakings-table-oc-address',
-            'width' => '300px',
             'formatter' => function ($data, $column, $sm) {
 
                 if (isset($data['operatingCentre']['address'])) {
@@ -68,8 +64,18 @@ return array(
                     return $this->callFormatter($column, $data['operatingCentre']['address']);
                 }
 
-                return 'N/A';
+                return 'Licence';
             }
+        ),
+        array(
+            'title' => 'lva-conditions-undertakings-table-s4',
+            'format' => 'Todo'
+        ),
+        array(
+            'title' => 'lva-conditions-undertakings-table-description',
+            'name' => 'notes',
+            'maxlength' => 30,
+            'formatter' => 'Comment'
         ),
         array(
             'width' => 'checkbox',
