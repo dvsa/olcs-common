@@ -37,4 +37,16 @@ class FinancialEvidence
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $id = null;
 }

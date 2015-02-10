@@ -20,6 +20,12 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
 {
     /**
      * @param int $id
+     * @return array
+     */
+    abstract public function getFormData($id);
+
+    /**
+     * @param int $id
      * @return int
      */
     abstract public function getTotalNumberOfAuthorisedVehicles($id);

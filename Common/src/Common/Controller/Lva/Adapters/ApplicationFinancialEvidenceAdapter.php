@@ -26,6 +26,26 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     protected $otherApplications = null; // cache
 
     /**
+     * @param int $applicationId
+     * @return array
+     */
+    public function getFormData($applicationId)
+    {
+        $applicationData = $this->getApplicationData($applicationId);
+
+        $uploaded = $applicationData['financialEvidenceUploaded'];
+
+        return [
+            'id'       => $applicationId,
+            'version'  => $applicationData['version'],
+            'evidence' => [
+                // default to Y
+                'uploadNow' => is_null($uploaded) ? 'Y' : $uploaded,
+            ],
+        ];
+    }
+
+    /**
      * Get the total vehicle authority which includes:
      *
      *  The vehicles on this application

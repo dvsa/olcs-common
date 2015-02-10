@@ -14,6 +14,8 @@ namespace Common\Controller\Lva\Interfaces;
  */
 interface FinancialEvidenceAdapterInterface extends AdapterInterface
 {
+    public function getFormData($id);
+
     public function getTotalNumberOfAuthorisedVehicles($id);
 
     public function getRequiredFinance($id);
