@@ -29,7 +29,6 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->sut = new ApplicationFinancialEvidenceAdapter();
         $this->sm = Bootstrap::getServiceManager();
         $this->sut->setServiceLocator($this->sm);
-
     }
 
     protected function setUpData()
@@ -159,5 +158,33 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
             ->getMock();
 
         $this->sut->alterFormForLva($mockForm);
+    }
+
+    public function testGetRatesForView()
+    {
+        $applicationId = 789;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDataForFinancialEvidence')
+                ->with($applicationId)
+                ->andReturn(
+                    [
+                        'id' => $applicationId,
+                        'goodsOrPsv' => ['id' => Licence::LICENCE_CATEGORY_PSV],
+                    ]
+                )
+                ->getMock()
+        );
+
+        $variables = $this->sut->getRatesForView($applicationId);
+
+        $this->assertInternalType('array', $variables);
+
+        $this->assertArrayHasKey('standardFirst', $variables);
+        $this->assertArrayHasKey('standardAdditional', $variables);
+        $this->assertArrayHasKey('restrictedFirst', $variables);
+        $this->assertArrayHasKey('restrictedAdditional', $variables);
     }
 }

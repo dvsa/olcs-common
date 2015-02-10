@@ -16,28 +16,54 @@ use Common\Service\Entity\LicenceEntityService as Licence;
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareAdapter implements
-FinancialEvidenceAdapterInterface
+    FinancialEvidenceAdapterInterface
 {
+    /**
+     * @param int $id
+     * @return int
+     */
     abstract public function getTotalNumberOfAuthorisedVehicles($id);
 
+    /**
+     * @param int $id
+     * @return int Required finance amount
+     */
     abstract public function getRequiredFinance($id);
 
+    /**
+     * @param int $id
+     * @return array
+     */
+    abstract public function getDocuments($id);
+
+    /**
+     * @param array $file
+     * @param int $applicationId
+     * @return array
+     */
+    abstract public function getUploadMetaData($file, $id);
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    abstract public function getRatesForView($id);
+
+    /**
+     * @param Common\Form\Form
+     * @return void
+     */
     public function alterFormForLva($form)
     {
         // no-op by default, can be extended
     }
-
-    abstract public function getDocuments($id);
-
-    abstract public function getUploadMetaData($file, $id);
 
     /**
      * @param string $licenceType
      * @param string $goodsOrPsv
      * @return int
      *
-     * @todo these will come from a db lookup eventually, but they are hardcoded
-     * for now, see table defined in https://jira.i-env.net/browse/OLCS-2222
+     * @todo these will become a backend lookup following https://jira.i-env.net/browse/OLCS-6988
      */
     public function getFirstVehicleRate($licenceType, $goodsOrPsv)
     {
@@ -74,30 +100,5 @@ FinancialEvidenceAdapterInterface
                 }
                 return 3900;
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getRatesForView()
-    {
-        return [
-            'standardFirst' => $this->getFirstVehicleRate(
-                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
-                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
-            ),
-            'standardAdditional' => $this->getAdditionalVehicleRate(
-                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
-                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
-            ),
-            'restrictedFirst' => $this->getFirstVehicleRate(
-                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
-                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
-            ),
-            'restrictedAdditional' => $this->getAdditionalVehicleRate(
-                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
-                Licence::LICENCE_CATEGORY_GOODS_VEHICLE
-            ),
-        ];
     }
 }

@@ -72,16 +72,4 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
             'PSV R'    => ['ltyp_r' , 'lcat_psv', 2700],
         ];
     }
-
-    public function testGetRatesForView()
-    {
-        $variables = $this->sut->getRatesForView();
-
-        $this->assertInternalType('array', $variables);
-
-        $this->assertArrayHasKey('standardFirst', $variables);
-        $this->assertArrayHasKey('standardAdditional', $variables);
-        $this->assertArrayHasKey('restrictedFirst', $variables);
-        $this->assertArrayHasKey('restrictedAdditional', $variables);
-    }
 }

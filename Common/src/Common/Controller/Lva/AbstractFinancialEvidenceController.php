@@ -44,7 +44,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
             'evidence->files',
             array($this, 'processFinancialEvidenceFileUpload'),
             array($this, 'deleteFile'),
-            function() use ($id, $adapter) {
+            function () use ($id, $adapter) {
                 return $adapter->getDocuments($id);
             },
             'evidence->uploadedFileCount'
@@ -65,7 +65,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
                 'vehicles' => $adapter->getTotalNumberOfAuthorisedVehicles($id),
                 'requiredFinance' => $adapter->getRequiredFinance($id),
             ],
-            $adapter->getRatesForView()
+            $adapter->getRatesForView($id)
         );
 
         return $this->render('financial_evidence', $form, $variables);
@@ -101,6 +101,6 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      */
     protected function getFormData()
     {
-       return [];
+        return [];
     }
 }

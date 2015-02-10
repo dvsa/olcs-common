@@ -37,6 +37,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      *   Under consideration
      *   Granted
      *
+     * @param int $applicationId
      * @return int
      */
     public function getTotalNumberOfAuthorisedVehicles($applicationId)
@@ -109,9 +110,9 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         return $this->getFinanceCalculation($auths);
     }
 
-
     /**
-     * @param \Zend\Form\Form $form
+     * @param Common\Form\Form
+     * @return void
      */
     public function alterFormForLva($form)
     {
@@ -121,6 +122,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
     /**
      * @param int $applicationId
+     * @return array
      */
     public function getDocuments($applicationId)
     {
@@ -146,10 +148,44 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
 
         return [
             'application' => $applicationId,
-            'description' => $file->getName(),
+            'description' => $file['name'],
             'category'    => Category::CATEGORY_APPLICATION,
             'subCategory' => Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
             'licence'     => $licenceId,
+        ];
+    }
+
+    /**
+     * Gets the vehicle rates to display in the help section of the page. Note
+     * that currently we only display the rates according to the current
+     * application category (Goods or PSV) - if the operator holds another
+     * category of licence those figures will be used for the calculation but
+     * are not shown.
+     *
+     * @param int $applicationId
+     * @return array
+     */
+    public function getRatesForView($applicationId)
+    {
+        $goodsOrPsv = $this->getApplicationData($applicationId)['goodsOrPsv']['id'];
+
+        return [
+            'standardFirst' => $this->getFirstVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                $goodsOrPsv
+            ),
+            'standardAdditional' => $this->getAdditionalVehicleRate(
+                Licence::LICENCE_TYPE_STANDARD_NATIONAL,
+                $goodsOrPsv
+            ),
+            'restrictedFirst' => $this->getFirstVehicleRate(
+                Licence::LICENCE_TYPE_RESTRICTED,
+                $goodsOrPsv
+            ),
+            'restrictedAdditional' => $this->getAdditionalVehicleRate(
+                Licence::LICENCE_TYPE_RESTRICTED,
+                $goodsOrPsv
+            ),
         ];
     }
 
@@ -186,7 +222,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      * -----------
      *       22600
      *
-     * @param array @auths
+     * @param array $auths
      * @return int
      */
     protected function getFinanceCalculation(array $auths)
@@ -281,6 +317,10 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
         return $this->otherLicences;
     }
 
+    /**
+     * @param int $applicationId
+     * @return int
+     */
     protected function getOrganisationId($applicationId)
     {
         return $this->getApplicationData($applicationId)['licence']['organisation']['id'];

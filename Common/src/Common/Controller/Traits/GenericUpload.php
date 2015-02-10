@@ -32,8 +32,8 @@ trait GenericUpload
         $uploadCallback,
         $deleteCallback,
         $loadCallback,
-        $countSelector = null)
-    {
+        $countSelector = null
+    ) {
         $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
 
         $uploadHelper->setForm($form)

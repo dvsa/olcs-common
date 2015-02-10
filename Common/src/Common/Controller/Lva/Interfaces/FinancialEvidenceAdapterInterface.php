@@ -18,9 +18,11 @@ interface FinancialEvidenceAdapterInterface extends AdapterInterface
 
     public function getRequiredFinance($id);
 
-    public function alterFormForLva($form);
-
     public function getDocuments($id);
 
     public function getUploadMetaData($file, $id);
+
+    public function getRatesForView($id);
+
+    public function alterFormForLva($form);
 }
