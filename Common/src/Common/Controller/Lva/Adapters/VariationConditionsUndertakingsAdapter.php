@@ -52,6 +52,10 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
             case self::ACTION_DELETED:
                 parent::delete($id, $parentId);
                 return true;
+            case self::ACTION_CURRENT:
+                $data = $this->getConditionData($id, $parentId);
+                parent::delete($data['variationRecords'][0]['id'], $parentId);
+                return true;
         }
         return false;
     }
@@ -100,17 +104,16 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
             $data['addedVia'] = ConditionUndertakingEntityService::ADDED_VIA_APPLICATION;
         } else {
 
-            if (!$this->canEditRecord($data['id'], $data['application'])) {
-                // Shouldn't get here unless someone has tried to be naughty
-                // @todo replace with other exception
-                throw new \Exception('You can\'t edit this record');
-            }
-
             $action = $this->determineAction($data['id'], $data['application']);
 
             if ($action === self::ACTION_EXISTING) {
 
+                $currentData = $this->getConditionData($data['id'], $data['application']);
+
+                $data['addedVia'] = $currentData['addedVia']['id'];
+
                 $data = $this->cloneCondition($data);
+
                 $data['action'] = self::ACTION_UPDATED;
             }
         }

@@ -87,20 +87,19 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $data = [];
 
+        $id = $this->params('child_id');
+
+        if (!$this->getAdapter()->canEditRecord($id, $this->getIdentifier())) {
+
+            $this->getServiceLocator()->get('Helper\FlashMessenger')
+                ->addErrorMessage('generic-cant-edit-message');
+
+            return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
+        }
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-
-            $id = $this->params('child_id');
-
-            if (!$this->getAdapter()->canEditRecord($id, $this->getIdentifier())) {
-
-                $this->getServiceLocator()->get('Helper\FlashMessenger')
-                    ->addErrorMessage('generic-cant-edit-message');
-
-                return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
-            }
-
             $data = $this->getConditionPenaltyDetails($id);
         }
 

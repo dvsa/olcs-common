@@ -35,6 +35,27 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
+    public function testAttachMainScripts()
+    {
+        $mockScript = m::mock();
+        $this->sm->setService('Script', $mockScript);
+
+        $mockScript->shouldReceive('loadFile')
+            ->with('lva-crud');
+
+        $this->sut->attachMainScripts();
+    }
+
+    public function testCanEditRecord()
+    {
+        $this->assertTrue($this->sut->canEditRecord(1, 2));
+    }
+
+    public function testGetTableName()
+    {
+        $this->assertEquals('lva-conditions-undertakings', $this->sut->getTableName());
+    }
+
     public function testAlterTable()
     {
         $table = m::mock('\Common\Service\Table\TableBuilder');
