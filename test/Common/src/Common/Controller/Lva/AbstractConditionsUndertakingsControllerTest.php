@@ -168,7 +168,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->andReturn(7)
             ->shouldReceive('render')
             ->with('add_condition_undertaking', $mockForm)
-            ->andReturn('RENDER');
+            ->andReturn('RENDER')
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3);
 
         $request->shouldReceive('isPost')
             ->andReturn(false);
@@ -178,7 +181,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->andReturn($mockForm);
 
         $this->adapter->shouldReceive('alterForm')
-            ->with($mockForm, 7);
+            ->with($mockForm, 7)
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with([]);
@@ -299,6 +305,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         // Expectations
         $this->sut->shouldReceive('getRequest')
             ->andReturn($request)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3)
             ->shouldReceive('getIdentifier')
             ->andReturn(7)
             ->shouldReceive('handlePostSave')
@@ -319,7 +328,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($postData, 7)
             ->andReturn($stubbedData)
             ->shouldReceive('save')
-            ->with(['foo' => 'cake']);
+            ->with(['foo' => 'cake'])
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with($postData)
@@ -348,6 +360,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         // Expectations
         $this->sut->shouldReceive('getRequest')
             ->andReturn($request)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3)
             ->shouldReceive('getIdentifier')
             ->andReturn(7)
             ->shouldReceive('render')
@@ -367,7 +382,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($mockForm, 7)
             ->shouldReceive('processDataForForm')
             ->with(['fields' => $stubbedData])
-            ->andReturn($stubbedData);
+            ->andReturn($stubbedData)
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with($postData)
