@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Mockery as m;
 
 /**
  * Organisation Entity Service Test
@@ -113,5 +114,24 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testHasInforceLicences()
+    {
+        $mock = m::mock()
+            ->shouldReceive('getInForceForOrganisation')
+            ->andReturn(
+                [
+                    'Count' => 5
+                ]
+            )
+            ->getMock();
+
+        $this->sm->setService('Entity\Licence', $mock);
+
+        $this->assertTrue($this->sut->hasInForceLicences(123));
     }
 }
