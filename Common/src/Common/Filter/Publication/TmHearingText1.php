@@ -15,8 +15,7 @@ namespace Common\Filter\Publication;
 class TmHearingText1 extends Text1
 {
     protected $pi = 'TM Public Inquiry (Case ID: %s, Public Inquiry ID: %s) for %s to be held at %s,
-    on %s commencing at %s (Previous
-    Publication %s))';
+    on %s commencing at %s';
 
     /**
      * @param \Common\Data\Object\Publication  $publication
