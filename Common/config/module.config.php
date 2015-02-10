@@ -75,9 +75,6 @@ return array(
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
-            'LvaLicence/FinancialEvidence' => array(
-                'Common\Controller\Lva\Delegators\LicenceFinancialEvidenceDelegator'
-            ),
             'LvaVariation/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
             ),
@@ -167,8 +164,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
-            'LicenceFinancialEvidenceAdapter'
-                => 'Common\Controller\Lva\Adapters\LicenceFinancialEvidenceAdapter',
             'VariationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'

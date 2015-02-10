@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Application Type Of Licence Adapter
+ * Application Financial Evidence Adapter
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -161,8 +161,6 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getUploadMetaData($file, $applicationId)
     {
-        $categoryService = $this->getServiceLocator()->get('category');
-
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
 

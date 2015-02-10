@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract Financial Evidence Adapter Test
+ * Application Financial Evidence Adapter Test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -12,10 +12,11 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter;
 use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
+use Common\Service\Data\CategoryDataService;
 use CommonTest\Bootstrap;
 
 /**
- * Abstract Financial Evidence Adapter Test
+ * Application Financial Evidence Adapter Test
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
@@ -186,5 +187,104 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->assertArrayHasKey('standardAdditional', $variables);
         $this->assertArrayHasKey('restrictedFirst', $variables);
         $this->assertArrayHasKey('restrictedAdditional', $variables);
+    }
+
+    /**
+     * @dataProvider formDataProvider
+     * @param string|null $uploaded value from application record ('Y'|'N'|null)
+     * @param array $expected expected form data
+     */
+    public function testGetFormData($uploaded, $expected)
+    {
+        $applicationId = 123;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDataForFinancialEvidence')
+                ->with($applicationId)
+                ->andReturn(
+                    [
+                        'id' => $applicationId,
+                        'version' => 1,
+                        'goodsOrPsv' => ['id' => Licence::LICENCE_CATEGORY_PSV],
+                        'financialEvidenceUploaded' => $uploaded
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->getFormData($applicationId)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function formDataProvider()
+    {
+        return [
+            [
+                'Y',
+                ['id'=>123, 'version'=>1, 'evidence'=>['uploadNow'=>'Y']]
+            ],
+            [
+                'N',
+                ['id'=>123, 'version'=>1, 'evidence'=>['uploadNow'=>'N']]
+            ],
+            [
+                null,
+                ['id'=>123, 'version'=>1, 'evidence'=>['uploadNow'=>'Y']]
+            ],
+        ];
+    }
+
+    public function testGetDocuments()
+    {
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDocuments')
+                    ->with(
+                        123,
+                        CategoryDataService::CATEGORY_APPLICATION,
+                        CategoryDataService::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL
+                    )
+                    ->andReturn(['array-of-documents'])
+                ->getMock()
+        );
+
+        $this->assertEquals(['array-of-documents'], $this->sut->getDocuments(123));
+    }
+
+    public function testGetDocumentMetaData()
+    {
+        $applicationId = 123;
+        $licenceId = 456;
+
+        $stubFile = [
+            'name' => 'the-filename'
+        ];
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getLicenceIdForApplication')
+                    ->with($applicationId)
+                    ->andReturn($licenceId)
+                ->getMock()
+        );
+
+        $expected = [
+            'application' => $applicationId,
+            'licence' => $licenceId,
+            'description' => 'the-filename',
+            'category' => CategoryDataService::CATEGORY_APPLICATION,
+            'subCategory' => CategoryDataService::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL,
+        ];
+
+        $this->assertEquals($expected, $this->sut->getUploadMetaData($stubFile, $applicationId));
     }
 }
