@@ -284,9 +284,9 @@ class ShortNoticeTest extends TestCase
      */
     public function testCalculateNoticeDate($rules, $data, $result)
     {
-        $data['busNoticePeriod'] = 1;
+        $data['busNoticePeriod']['id'] = 1;
         $mockDataService = m::mock('Common\Service\Data\Interfaces\DataService');
-        $mockDataService->shouldReceive('fetchOne')->with($data['busNoticePeriod'])->andReturn($rules);
+        $mockDataService->shouldReceive('fetchOne')->with($data['busNoticePeriod']['id'])->andReturn($rules);
 
         $sut = new ShortNotice();
         $sut->setNoticePeriodService($mockDataService);
