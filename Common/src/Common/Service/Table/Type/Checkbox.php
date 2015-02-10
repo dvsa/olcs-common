@@ -15,5 +15,5 @@ namespace Common\Service\Table\Type;
  */
 class Checkbox extends Selector
 {
-    protected $format = '<input type="checkbox" name="%s[]" value="%s" />';
+    protected $format = '<input type="checkbox" name="%s[]" value="%s" %s />';
 }

@@ -50,7 +50,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $this->alterFormForLva($form);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getAdapter()->attachMainScripts();
 
         return $this->render($this->section, $form);
     }

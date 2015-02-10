@@ -94,10 +94,7 @@ class ConditionUndertakingEntityService extends AbstractEntityService
         $query = [
             [
                 'application' => $applicationId,
-                [
-                    'application' => 'NULL',
-                    'licence' => $licenceId
-                ]
+                'licence' => $licenceId
             ]
         ];
 

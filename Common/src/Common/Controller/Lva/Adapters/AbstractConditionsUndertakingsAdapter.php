@@ -39,6 +39,14 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
     abstract protected function getLvaOperatingCentreEntityService();
 
     /**
+     * Attach the relevant scripts to the main page
+     */
+    public function attachMainScripts()
+    {
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+    }
+
+    /**
      * Delete a record
      *
      * @param int $id
