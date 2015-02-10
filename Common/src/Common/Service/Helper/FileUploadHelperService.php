@@ -170,7 +170,9 @@ class FileUploadHelperService extends AbstractHelperService
 
         $files = call_user_func($callback);
 
-        $this->getElement()->get('list')->setFiles($files, $url);
+        $element = $this->getElement();
+
+        $element->get('list')->setFiles($files, $url);
 
         if (!is_null($this->getCountSelector())) {
             $this->findElement($this->getForm(), $this->getCountSelector())

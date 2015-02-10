@@ -134,4 +134,73 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertTrue($this->sut->hasInForceLicences(123));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetLicences()
+    {
+        $id = 3;
+
+        $orgData = [
+            'licences' => 'LICENCES'
+        ];
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($orgData));
+
+        $this->assertEquals('LICENCES', $this->sut->getLicences($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetNewApplications()
+    {
+        $orgData = [
+            'licences' => [
+                [
+                    'id' => 7,
+                    'applications' => [
+                        [
+                            'id' => 20,
+                            'isVariation' => false,
+                        ],
+                        [
+                            'id' => 21,
+                            'isVariation' => true,
+                        ],
+                    ],
+                ],
+                [
+                    'id' => 8,
+                    'applications' => [
+                        [
+                            'id' => 22,
+                            'isVariation' => true,
+                        ],
+                        [
+                            'id' => 23,
+                            'isVariation' => false,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->expectOneRestCall('Organisation', 'GET', 123)
+            ->will($this->returnValue($orgData));
+
+        $expected = [
+            [
+                'id' => 20,
+                'isVariation' => false,
+            ],
+            [
+                'id' => 23,
+                'isVariation' => false,
+            ],
+        ];
+        $this->assertEquals($expected, $this->sut->getNewApplications(123));
+    }
 }

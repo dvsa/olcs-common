@@ -38,6 +38,16 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         );
     }
 
+    public function testSetGetCountSelector()
+    {
+        $helper = new FileUploadHelperService();
+
+        $this->assertEquals(
+            'fakeCountSelector',
+            $helper->setCountSelector('fakeCountSelector')->getCountSelector()
+        );
+    }
+
     public function testSetGetUploadCallback()
     {
         $helper = new FileUploadHelperService();
@@ -121,6 +131,60 @@ class FileUploadHelperServiceTest extends MockeryTestCase
         $this->assertFalse($helper->process());
     }
 
+    public function testProcessWithGetRequestPopulatesFileCount()
+    {
+        $helper = new FileUploadHelperService();
+
+        $request = m::mock('Zend\Http\Request');
+        $request->shouldReceive('isPost')->andReturn(false);
+
+        $helper->setRequest($request);
+
+        $helper->setCountSelector('my-hidden-field');
+        $helper->setSelector('my-files');
+
+        $helper->setLoadCallback(
+            function () {
+                return ['array-of-files'];
+            }
+        );
+
+        $mockUrlHelper = m::mock();
+        $helper->setServiceLocator(
+            m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+                ->shouldReceive('get')
+                    ->with('Helper\Url')
+                    ->andReturn($mockUrlHelper)
+                ->getMock()
+        );
+
+        $fieldset = m::mock() // multiple file upload fieldset
+            ->shouldReceive('get')
+                ->with('list')
+                ->andReturn(
+                    m::mock()
+                        ->shouldReceive('setFiles')
+                            ->with(['array-of-files'], $mockUrlHelper)
+                        ->getMock()
+                )
+            ->getMock();
+
+        $fileCountfield = m::mock()->shouldReceive('setValue')->with(1)->getMock();
+
+        $form = m::mock('Zend\Form\Form')
+            ->shouldReceive('get')
+                ->with('my-files')
+                ->andReturn($fieldset)
+            ->shouldReceive('get')
+                ->with('my-hidden-field')
+                ->andReturn($fileCountfield)
+            ->getMock();
+
+        $helper->setForm($form);
+
+        $this->assertFalse($helper->process());
+    }
+
     public function testProcessWithGetRequestAndNotCallableLoadCallback()
     {
         $helper = new FileUploadHelperService();
@@ -144,7 +208,7 @@ class FileUploadHelperServiceTest extends MockeryTestCase
     {
         $helper = new FileUploadHelperService();
 
-        $file = tempnam("/tmp", "fuhs");
+        $file = tempnam(sys_get_temp_dir(), "fuhs");
         touch($file);
 
         $request = m::mock('Zend\Http\Request');
