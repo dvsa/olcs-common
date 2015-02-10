@@ -82,6 +82,13 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
                 $this->processSave($tradingNames, $orgId, $data);
                 $this->postSave('business_details');
 
+                $adapter->postSave(
+                    [
+                        'licence' => $this->getLicenceId(),
+                        'user'    => $this->getLoggedInUser()
+                    ]
+                );
+
                 // we can't always assume this index exists; varies depending on
                 // org type
                 $crudTables = isset($data['table']) ? array($data['table']) : array();
@@ -163,6 +170,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
 
     private function addOrEdit($mode)
     {
+        $adapter = $this->getAdapter();
+
         $orgId = $this->getCurrentOrganisationId();
         $request = $this->getRequest();
 
@@ -188,6 +197,15 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             $data['organisation'] = $orgId;
 
             $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
+
+            $adapter->postCrudSave(
+                [
+                    'licence' => $this->getLicenceId(),
+                    'user'    => $this->getLoggedInUser(),
+                    'mode'    => $mode,
+                    'name'    => 'organisation name goes here'
+                ]
+            );
 
             return $this->handlePostSave();
         }
@@ -379,5 +397,43 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         foreach ($ids as $id) {
             $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
         }
+    }
+
+    public function deleteAction()
+    {
+        $adapter = $this->getAdapter();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $response = $this->delete();
+            $this->postSave($this->section);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            $adapter->postCrudSave(
+                [
+                    'mode'    => 'delete',
+                    'licence' => $this->getLicenceId(),
+                    'user'    => $this->getLoggedInUser(),
+                    'name'    => 'organisation name goes here'
+                ]
+            );
+
+            return $this->redirect()->toRouteAjax(
+                null,
+                array($this->getIdentifierIndex() => $this->getIdentifier())
+            );
+        }
+
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('GenericDeleteConfirmation', $request);
+
+        $params = ['sectionText' => 'delete.confirmation.text'];
+
+        return $this->render('delete', $form, $params);
     }
 }

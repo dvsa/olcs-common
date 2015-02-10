@@ -25,4 +25,14 @@ class GenericBusinessDetailsAdapter extends AbstractAdapter implements BusinessD
     {
         // no-op
     }
+
+    public function postSave($data)
+    {
+        // no-op
+    }
+
+    public function postCrudSave($data)
+    {
+        // no-op
+    }
 }

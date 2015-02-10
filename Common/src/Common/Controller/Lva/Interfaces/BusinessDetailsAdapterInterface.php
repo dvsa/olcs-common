@@ -17,4 +17,8 @@ use Zend\Form\Form;
 interface BusinessDetailsAdapterInterface
 {
     public function alterFormForOrganisation(Form $Form, $orgId);
+
+    public function postSave($data);
+
+    public function postCrudSave($data);
 }
