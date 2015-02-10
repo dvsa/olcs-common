@@ -128,6 +128,27 @@ abstract class AbstractData implements FactoryInterface, RestClientAware
 
     /**
      * @param \Zend\Stdlib\ArrayObject $dataObject
+     * @param string $service
+     * @return mixed
+     */
+    public function createMutlipleRecordsFromObject(ArrayObject $dataObject, $service, $overwriteData = array())
+    {
+        $dataObject = $this->getServiceLocator()->get($service)->filter($dataObject);
+        if (!empty($overwriteData)) {
+            foreach ($overwriteData as $newData) {
+                foreach ($newData as $key => $value) {
+                    $dataObject->offsetSet($key, $value);
+                }
+                //echo '<p> SAVING</p>';
+                //var_dump($dataObject);
+
+                $this->save($dataObject);
+            }
+        }
+    }
+
+    /**
+     * @param \Zend\Stdlib\ArrayObject $dataObject
      * @return mixed
      */
     public function save($dataObject)
