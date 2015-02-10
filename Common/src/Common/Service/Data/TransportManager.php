@@ -9,7 +9,7 @@ use Common\Service\Data\CrudAbstract;
  *
  * @package Common\Service\Data
  */
-class TransportManager extends CrudAbstract
+class TransportManager extends AbstractData
 {
     /**
      * @var integer
@@ -54,5 +54,23 @@ class TransportManager extends CrudAbstract
             )
         );
         return $bundle;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
