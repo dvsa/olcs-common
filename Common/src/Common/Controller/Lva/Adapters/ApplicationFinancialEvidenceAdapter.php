@@ -124,13 +124,12 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
      */
     public function getDocuments($applicationId)
     {
-        $docs = $this->getServiceLocator()->get('Entity\Application')
+        return $this->getServiceLocator()->get('Entity\Application')
             ->getDocuments(
                 $applicationId,
                 Category::CATEGORY_APPLICATION,
                 Category::DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL
             );
-        return $docs;
     }
 
     /**
