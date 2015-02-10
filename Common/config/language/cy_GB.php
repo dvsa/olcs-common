@@ -706,6 +706,7 @@ return array(
     'from' => 'W From',
     'further-info-required' => 'W Further info required',
     'gen-haulier-distribution' => 'W Gen Haulier / Distribution',
+    'generic-cant-edit-message' => 'W You can\'t edit this record',
     'generic-delete-confirmation-label' => 'W Are you sure you want to remove these?',
     'generic-nothing-updated' => 'W Nothing to update',
     'generic-restore-success' => 'W Record(s) restored successfully',

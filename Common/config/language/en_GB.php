@@ -704,6 +704,7 @@ return array(
     'from' => 'From',
     'further-info-required' => 'Further info required',
     'gen-haulier-distribution' => 'Gen Haulier / Distribution',
+    'generic-cant-edit-message' => 'You can\'t edit this record',
     'generic-delete-confirmation-label' => 'Are you sure you want to remove these?',
     'generic-nothing-updated' => 'Nothing to update',
     'generic-restore-success' => 'Record(s) restored successfully',

@@ -95,8 +95,8 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
             if (!$this->getAdapter()->canEditRecord($id, $this->getIdentifier())) {
 
-                $messenger = $this->getServiceLocator()->get('Helper\FlashMessenger');
-                $messenger->addErrorMessage('You can\'t edit this record');
+                $this->getServiceLocator()->get('Helper\FlashMessenger')
+                    ->addErrorMessage('generic-cant-edit-message');
 
                 return $this->redirect()->toRouteAjax(null, ['action' => null], [], true);
             }
