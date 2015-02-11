@@ -908,4 +908,22 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->updateCommunityLicencesCount($licenceId);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetInforceForOrganisation()
+    {
+        $response = 'RESPONSE';
+
+        $params = [
+            'organisation' => 123,
+            'inForceDate' => 'NOT NULL'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getInForceForOrganisation(123));
+    }
 }

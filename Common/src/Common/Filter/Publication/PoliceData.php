@@ -25,12 +25,14 @@ class PoliceData extends AbstractPublicationFilter
 
         $persons = [];
 
-        foreach ($personData as $person) {
-            $persons[] = [
-                'forename' => $person['person']['forename'],
-                'familyName' => $person['person']['familyName'],
-                'birthDate' => $person['person']['birthDate']
-            ];
+        if (!empty($personData)) {
+            foreach ($personData as $person) {
+                $persons[] = [
+                    'forename' => $person['person']['forename'],
+                    'familyName' => $person['person']['familyName'],
+                    'birthDate' => $person['person']['birthDate']
+                ];
+            }
         }
 
         $publication->offsetSet('policeData', $persons);

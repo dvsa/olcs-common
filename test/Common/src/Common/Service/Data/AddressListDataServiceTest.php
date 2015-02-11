@@ -3,7 +3,6 @@
 namespace OlcsTest\Service\Data;
 
 use CommonTest\Bootstrap;
-use PHPUnit_Framework_TestCase;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Data\AddressListDataService;
 use Mockery as m;
@@ -22,8 +21,6 @@ class AddressListDataServiceTest extends MockeryTestCase
     private $sut;
 
     private $serviceManager;
-
-    private $mockRestHelper;
 
     /**
      * Setup the sut

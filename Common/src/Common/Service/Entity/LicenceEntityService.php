@@ -496,6 +496,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $return;
     }
 
+
     /**
      * Update community licences count
      * 
@@ -513,5 +514,15 @@ class LicenceEntityService extends AbstractLvaEntityService
             'totCommunityLicences' => $validLicencesCount
         ];
         $this->save($data);
+    }
+
+    public function getInForceForOrganisation($orgId)
+    {
+        return $this->get(
+            [
+                'organisation' => $orgId,
+                'inForceDate' => 'NOT NULL'
+            ]
+        );
     }
 }

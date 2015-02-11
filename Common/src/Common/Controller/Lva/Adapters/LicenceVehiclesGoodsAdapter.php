@@ -35,4 +35,12 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     {
         return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($id);
     }
+
+    /**
+     * Do we need to show filters for vehciles
+     */
+    public function showFilters()
+    {
+        return true;
+    }
 }

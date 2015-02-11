@@ -110,4 +110,9 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
 
         $this->assertEquals($expectedData, $this->sut->getFormData($id));
     }
+
+    public function testShowFilters()
+    {
+        $this->assertTrue($this->sut->showFilters());
+    }
 }

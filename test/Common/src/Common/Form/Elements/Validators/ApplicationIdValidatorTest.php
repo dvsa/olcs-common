@@ -16,7 +16,7 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Alexander Peshkov <alex.peshkov@valtech.co.uk>
  */
-class ApplicationIdTest extends PHPUnit_Framework_TestCase
+class ApplicationIdValidatorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test isValid

@@ -33,6 +33,12 @@ abstract class AbstractBusinessTypeController extends AbstractController
 
         $this->alterFormForLva($form);
 
+        if ($this->getServiceLocator()->has('Lva\BusinessType')) {
+            $this->getServiceLocator()
+                ->get('Lva\BusinessType')
+                ->alterFormForLva($form, $orgId, $this->lva);
+        }
+
         if ($request->isPost() && $form->isValid()) {
             $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));
 
@@ -69,11 +75,18 @@ abstract class AbstractBusinessTypeController extends AbstractController
      */
     private function formatDataForSave($orgId, $data)
     {
-        return array(
+        $persist = array(
             'id' => $orgId,
-            'version' => $data['version'],
-            'type' => $data['data']['type']
+            'version' => $data['version']
         );
+
+        // the business type input might be disabled; only update
+        // if we actually get it through
+        if (isset($data['data']['type'])) {
+            $persist['type'] = $data['data']['type'];
+        }
+
+        return $persist;
     }
 
     /**

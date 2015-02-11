@@ -72,6 +72,15 @@ return array(
             'LvaLicence/CommunityLicences' => array(
                 'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
+            'LvaApplication/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
+            ),
+            'LvaVariation/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
+            ),
+            'LvaLicence/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -138,6 +147,12 @@ return array(
         ),
         'invokables' => array(
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'ApplicationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
+            'VariationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
+            'LicenceConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
@@ -237,6 +252,20 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'TmHearingPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\TransportManager',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmHearingText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),

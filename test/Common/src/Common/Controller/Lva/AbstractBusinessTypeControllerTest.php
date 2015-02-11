@@ -47,6 +47,43 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
         $this->assertEquals('business_type', $this->view);
     }
 
+    public function testGetIndexActionWithLvaBusinessTypeService()
+    {
+        $form = $this->createMockForm('Lva\BusinessType');
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(12);
+
+        $this->mockEntity('Organisation', 'getType')
+            ->with(12)
+            ->andReturn(
+                [
+                    'version' => '1',
+                    'type' => [
+                        'id' => 'x'
+                    ]
+                ]
+            );
+
+        $this->setService(
+            'Lva\BusinessType',
+            m::mock()
+            ->shouldReceive('alterFormForLva')
+            ->with($form, 12, '')
+            ->getMock()
+        );
+
+        $this->mockRender();
+
+        $this->sut->indexAction();
+
+        $this->assertEquals('business_type', $this->view);
+    }
+
     public function testPostWithInvalidData()
     {
         $form = $this->createMockForm('Lva\BusinessType');
@@ -96,6 +133,47 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
                     'version' => 1,
                     'id' => 12,
                     'type' => 'org_t_rc'
+                ]
+            );
+
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(12);
+
+        $this->sut
+            ->shouldReceive('postSave')
+            ->with('business_type')
+            ->shouldReceive('completeSection')
+            ->with('business_type')
+            ->andReturn('complete');
+
+        $this->assertEquals(
+            'complete',
+            $this->sut->indexAction()
+        );
+    }
+
+    public function testPostWithValidDataButNoType()
+    {
+        $form = $this->createMockForm('Lva\BusinessType');
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $this->setPost(
+            [
+                'version' => 1,
+            ]
+        );
+
+        $this->mockEntity('Organisation', 'save')
+            ->with(
+                [
+                    'version' => 1,
+                    'id' => 12,
                 ]
             );
 

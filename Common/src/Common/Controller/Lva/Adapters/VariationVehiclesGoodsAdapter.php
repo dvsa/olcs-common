@@ -37,4 +37,12 @@ class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGo
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getVehiclesData($id);
     }
+
+    /**
+     * Do we need to show filters for vehciles
+     */
+    public function showFilters()
+    {
+        return true;
+    }
 }
