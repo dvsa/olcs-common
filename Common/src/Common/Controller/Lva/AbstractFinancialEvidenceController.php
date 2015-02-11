@@ -114,9 +114,7 @@ abstract class AbstractFinancialEvidenceController extends AbstractController
      */
     private function getFinancialEvidenceForm()
     {
-        $form = $this->getServiceLocator()->get('Helper\Form')
+        return $this->getServiceLocator()->get('Helper\Form')
             ->createForm('Lva\FinancialEvidence');
-
-        return $form;
     }
 }
