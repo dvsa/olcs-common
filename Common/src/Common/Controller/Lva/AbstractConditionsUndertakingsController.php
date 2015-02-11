@@ -145,26 +145,9 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     {
         $entity = $this->getServiceLocator()->get('Entity\ConditionUndertaking')->getCondition($id);
 
-        $data = ['fields' => $this->replaceIds($entity)];
+        $data = ['fields' => $this->getServiceLocator()->get('Helper\Data')->replaceIds($entity)];
 
         return $this->getAdapter()->processDataForForm($data);
-    }
-
-    /**
-     * Replace the children's array, with their ids
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function replaceIds($data)
-    {
-        foreach ($data as $key => $var) {
-            if (isset($var['id'])) {
-                $data[$key] = $var['id'];
-            }
-        }
-
-        return $data;
     }
 
     /**

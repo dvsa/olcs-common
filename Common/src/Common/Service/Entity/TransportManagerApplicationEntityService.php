@@ -43,6 +43,25 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         ]
     ];
 
+    protected $grantDataBundle = [
+        'children' => [
+            'application',
+            'tmApplicationStatus',
+            'transportManager',
+            'tmType',
+            'tmApplicationOcs' => [
+                'children' => [
+                    'operatingCentre'
+                ]
+             ]
+        ]
+    ];
+
+    public function getGrantDataForApplication($applicationId)
+    {
+        return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
+    }
+
     /**
      * Get transport manager applications
      *
@@ -53,13 +72,15 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     public function getTransportManagerApplications($id, $status = [])
     {
         $query = [
-            'transportManagerId' => $id,
+            'transportManager' => $id,
             'action' => '!= D'
         ];
         if (count($status)) {
             $query['tmApplicationStatus'] = $status;
         }
+
         $results = $this->get($query, $this->dataBundle);
+
         foreach ($results['Results'] as &$result) {
             $result['ocCount'] = count($result['tmApplicationOcs']);
         }

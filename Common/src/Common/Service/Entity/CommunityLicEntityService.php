@@ -29,4 +29,15 @@ class CommunityLicEntityService extends AbstractEntityService
             'status'
         )
     );
+
+    public function getPendingForLicence($licenceId)
+    {
+        $query = array(
+            'licence' => $licenceId,
+            'specifiedDate' => 'NULL',
+            'status' => self::STATUS_PENDING
+        );
+
+        return $this->getAll($query, $this->listBundle)['Results'];
+    }
 }
