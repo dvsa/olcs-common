@@ -32,4 +32,20 @@ class CasesEntityService extends AbstractEntityService
         // a case's identifier is also its primary key...
         return $this->get($identifier, $this->identifierBundle);
     }
+
+    public function getOpenForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'closeDate' => 'NULL',
+            'deletedDate' => 'NULL',
+        ];
+
+        //@TODO how do we determine whether a case is 'PI' or not?
+        $bundle = [];
+
+        $data = $this->getAll($query, $bundle);
+
+        return $data['Results'];
+    }
 }

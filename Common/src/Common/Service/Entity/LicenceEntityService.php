@@ -34,6 +34,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
+    const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
 
     /**
      * Define entity for default behaviour
@@ -225,13 +226,20 @@ class LicenceEntityService extends AbstractLvaEntityService
                     ],
                 ],
             ],
-            'trafficArea',
             'applications' => [
                 'children' => ['status'],
             ],
             'psvDiscs',
             'licenceVehicles',
             'operatingCentres',
+            /*
+            'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
+                'criteria' => [
+                    'closeDate' => 'NULL',
+                    'deletedDate' => 'NULL',
+                ],
+            ],
+            */
         )
     );
 
