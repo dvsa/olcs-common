@@ -40,6 +40,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
         $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+
         $natureOfBusiness = $this->getServiceLocator()
             ->get('Entity\OrganisationNatureOfBusiness')
             ->getAllForOrganisationForSelect($orgId);
