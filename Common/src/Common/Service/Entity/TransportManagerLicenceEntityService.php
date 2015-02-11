@@ -35,11 +35,7 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
                 ]
             ],
             'tmType',
-            'tmLicenceOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-             ]
+            'operatingCentres'
         ]
     ];
 
@@ -52,17 +48,19 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
      */
     public function getTransportManagerLicences($id, $status = [])
     {
-        $query = [
-            'transportManagerId' => $id,
-        ];
+        $results = $this->get(['transportManagerId' => $id], $this->dataBundle);
+
         $finalResults = [];
-        $results = $this->get($query, $this->dataBundle);
+
         foreach ($results['Results'] as $result) {
+
             if (in_array($result['licence']['status']['id'], $status)) {
-                $result['ocCount'] = count($result['tmLicenceOcs']);
+
+                $result['ocCount'] = count($result['operatingCentres']);
                 $finalResults[] = $result;
             }
         }
+
         return $finalResults;
     }
 

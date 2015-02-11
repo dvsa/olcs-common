@@ -25,6 +25,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         'children' => [
             'application' => [
                 'children' => [
+                    'status',
                     'licence' => [
                         'children' => [
                             'organisation'
@@ -35,11 +36,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'tmApplicationStatus',
             'transportManager',
             'tmType',
-            'tmApplicationOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-             ]
+            'operatingCentres'
         ]
     ];
 
@@ -49,11 +46,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'tmApplicationStatus',
             'transportManager',
             'tmType',
-            'tmApplicationOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-             ]
+            'operatingCentres'
         ]
     ];
 
@@ -71,19 +64,18 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
      */
     public function getTransportManagerApplications($id, $status = [])
     {
-        $query = [
-            'transportManager' => $id,
-            'action' => '!= D'
-        ];
-        if (count($status)) {
-            $query['tmApplicationStatus'] = $status;
-        }
+        $results = $this->get(['transportManager' => $id], $this->dataBundle);
 
-        $results = $this->get($query, $this->dataBundle);
+        $finalResults = [];
 
         foreach ($results['Results'] as &$result) {
-            $result['ocCount'] = count($result['tmApplicationOcs']);
+
+            if (in_array($result['application']['status']['id'], $status)) {
+                $result['ocCount'] = count($result['operatingCentres']);
+                $finalResults[] = $result;
+            }
         }
+
         return $results;
     }
 
