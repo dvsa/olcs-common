@@ -178,6 +178,8 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'GenericBusinessDetailsAdapter'
                 => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',

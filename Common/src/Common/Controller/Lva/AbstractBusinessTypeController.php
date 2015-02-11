@@ -16,7 +16,7 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractBusinessTypeController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\AdapterAwareInterface;
+    use Traits\AdapterAwareTrait;
 
     /**
      * Business type section
