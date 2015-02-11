@@ -41,7 +41,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
      */
     public function attachMainScripts()
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-variation-operating-centre');
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
     }
 
     /**

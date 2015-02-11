@@ -1,18 +1,16 @@
 <?php
+
 /**
  * OLCS custom form annotation builder
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-
 namespace Common\Form\Annotation;
 
 use Zend\Form\Annotation\AnnotationBuilder;
 use ArrayObject;
 use Zend\Code\Annotation\AnnotationCollection;
-use Zend\Code\Annotation\Parser;
 use Zend\EventManager\Event;
-use Zend\Form\Exception;
 
 /**
  * OLCS custom form annotation builder
@@ -43,24 +41,30 @@ class CustomAnnotationBuilder extends AnnotationBuilder
         $events = $this->getEventManager();
         $name   = $this->discoverName($annotations, $reflection);
 
-        $elementSpec = new ArrayObject(array(
-            'flags' => array(),
-            'spec'  => array(
-                'name' => $name
-            ),
-        ));
-        $inputSpec = new ArrayObject(array(
-            'name' => $name,
-        ));
+        $elementSpec = new ArrayObject(
+            array(
+                'flags' => array(),
+                'spec'  => array(
+                    'name' => $name
+                ),
+            )
+        );
+        $inputSpec = new ArrayObject(
+            array(
+                'name' => $name,
+            )
+        );
 
         $event = new Event();
-        $event->setParams(array(
-            'name'        => $name,
-            'elementSpec' => $elementSpec,
-            'inputSpec'   => $inputSpec,
-            'formSpec'    => $formSpec,
-            'filterSpec'  => $filterSpec,
-        ));
+        $event->setParams(
+            array(
+                'name'        => $name,
+                'elementSpec' => $elementSpec,
+                'inputSpec'   => $inputSpec,
+                'formSpec'    => $formSpec,
+                'filterSpec'  => $filterSpec,
+            )
+        );
         foreach ($annotations as $annotation) {
             $event->setParam('annotation', $annotation);
             $events->trigger(__FUNCTION__, $this, $event);

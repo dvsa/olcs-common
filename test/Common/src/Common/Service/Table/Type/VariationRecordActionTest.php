@@ -1,7 +1,7 @@
 <?php
 
 /**
- * VariationOperatingCentreAction Test
+ * VariationRecordAction Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -9,14 +9,14 @@ namespace CommonTest\Service\Table\Type;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Table\Type\VariationOperatingCentreAction;
+use Common\Service\Table\Type\VariationRecordAction;
 
 /**
- * VariationOperatingCentreAction Test
+ * VariationRecordAction Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationOperatingCentreActionTest extends MockeryTestCase
+class VariationRecordActionTest extends MockeryTestCase
 {
     protected $sut;
     protected $table;
@@ -25,7 +25,7 @@ class VariationOperatingCentreActionTest extends MockeryTestCase
     {
         $this->table = m::mock();
 
-        $this->sut = new VariationOperatingCentreAction($this->table);
+        $this->sut = new VariationRecordAction($this->table);
     }
 
     /**

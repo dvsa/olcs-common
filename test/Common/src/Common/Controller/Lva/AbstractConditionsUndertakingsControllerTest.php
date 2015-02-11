@@ -83,7 +83,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with(7)
             ->andReturn($stubbedTableData)
             ->shouldReceive('alterTable')
-            ->with($mockTable);
+            ->with($mockTable)
+            ->shouldReceive('getTableName')
+            ->andReturn('lva-conditions-undertakings')
+            ->shouldReceive('attachMainScripts');
 
         $mockFormHelper->shouldReceive('createForm')
             ->with('Lva\ConditionsUndertakings')
@@ -165,7 +168,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->andReturn(7)
             ->shouldReceive('render')
             ->with('add_condition_undertaking', $mockForm)
-            ->andReturn('RENDER');
+            ->andReturn('RENDER')
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3);
 
         $request->shouldReceive('isPost')
             ->andReturn(false);
@@ -175,7 +181,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->andReturn($mockForm);
 
         $this->adapter->shouldReceive('alterForm')
-            ->with($mockForm, 7);
+            ->with($mockForm, 7)
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with([]);
@@ -233,12 +242,48 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($mockForm, 7)
             ->shouldReceive('processDataForForm')
             ->with(['fields' => $expectedData])
-            ->andReturn($expectedData);
+            ->andReturn($expectedData)
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with($expectedData);
 
         $this->assertEquals('RENDER', $this->sut->editAction());
+    }
+
+    public function testEditActionWithGetCantEdit()
+    {
+        // Mocks
+        $request = m::mock();
+        $mockFlashMessenger = m::mock();
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($request)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(7);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['action' => null], [], true)
+            ->andReturn('REDIRECT');
+
+        $request->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $this->adapter->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(false);
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->with('generic-cant-edit-message');
+
+        $this->assertEquals('REDIRECT', $this->sut->editAction());
     }
 
     public function testAddActionWithPost()
@@ -260,6 +305,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         // Expectations
         $this->sut->shouldReceive('getRequest')
             ->andReturn($request)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3)
             ->shouldReceive('getIdentifier')
             ->andReturn(7)
             ->shouldReceive('handlePostSave')
@@ -280,7 +328,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($postData, 7)
             ->andReturn($stubbedData)
             ->shouldReceive('save')
-            ->with(['foo' => 'cake']);
+            ->with(['foo' => 'cake'])
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with($postData)
@@ -309,6 +360,9 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         // Expectations
         $this->sut->shouldReceive('getRequest')
             ->andReturn($request)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(3)
             ->shouldReceive('getIdentifier')
             ->andReturn(7)
             ->shouldReceive('render')
@@ -328,7 +382,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with($mockForm, 7)
             ->shouldReceive('processDataForForm')
             ->with(['fields' => $stubbedData])
-            ->andReturn($stubbedData);
+            ->andReturn($stubbedData)
+            ->shouldReceive('canEditRecord')
+            ->with(3, 7)
+            ->andReturn(true);
 
         $mockForm->shouldReceive('setData')
             ->with($postData)
@@ -363,12 +420,12 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->with(null, ['application' => 1])
             ->andReturn('REDIRECT');
 
-        $mockEntityService->shouldReceive('delete')
-            ->with(1)
+        $this->adapter->shouldReceive('delete')
+            ->with(1, 1)
             ->shouldReceive('delete')
-            ->with(2)
+            ->with(2, 1)
             ->shouldReceive('delete')
-            ->with(3);
+            ->with(3, 1);
 
         $request->shouldReceive('isPost')
             ->andReturn(true);
