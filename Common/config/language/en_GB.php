@@ -91,6 +91,7 @@ return array(
     'application-update-person-header-director' => 'Edit Director',
     'application-update-sole-trader' => 'Edit sole trader',
     'application.cancel' => 'Cancel application',
+    'application.community_licence.form.total_community_licences' => 'How many additional licences are required?',
     'application.delete' => 'Delete application',
     'application.new.button' => 'Apply for a new licence',
     'application.operating-centres' => 'Operating centres',
@@ -137,6 +138,7 @@ return array(
     'application.your-business.business-type' => 'Business type',
     'application.your-business.people' => 'People',
     'application.your-business.sole-trader' => 'People',
+    'application_community_licence_total_community_licences' => 'Total community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'Advertisements',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'Have you advertised your
         application for this operating centre in your local newspaper?',
@@ -900,6 +902,10 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.form_add.cancel' => 'Cancel',
+    'internal.community_licence.form_add.ok' => 'OK',
+    'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
@@ -1621,6 +1627,7 @@ return array(
         an offence to make a false declaration. Please see the licence undertakings below as a reminder of your existing
         obligations.',
     'vehicle-and-safety' => 'Vehicle & safety',
+    'vehicle-authority-exceeded' => 'The number of licences exceeds the total vehicle authority',
     'vehicle-belongs-to-another-licence-confirmation' => 'I confirm that I would like to continue adding this vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'This vehicle is specified on another licence. Please
         confirm you would like to continue adding this vehicle',

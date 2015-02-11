@@ -63,6 +63,15 @@ return array(
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
             ),
+            'LvaApplication/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\ApplicationCommunityLicenceDelegator'
+            ),
+            'LvaVariation/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\VariationCommunityLicenceDelegator'
+            ),
+            'LvaLicence/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -149,6 +158,12 @@ return array(
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
+            'ApplicationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter',
+            'VariationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
+            'LicenceCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -158,6 +173,7 @@ return array(
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
+            'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
