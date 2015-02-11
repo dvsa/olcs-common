@@ -5,6 +5,8 @@
  *
  * Shared internally across Licences, Variations and Applications
  *
+ * Note that so far internally every single implementation is a no-op
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Adapters;
@@ -17,6 +19,8 @@ use Common\Controller\Lva\Interfaces\BusinessDetailsAdapterInterface;
  *
  * Shared internally across Licences, Variations and Applications
  *
+ * Note that so far internally every single implementation is a no-op
+ *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 class GenericBusinessDetailsAdapter extends AbstractAdapter implements BusinessDetailsAdapterInterface
@@ -26,12 +30,32 @@ class GenericBusinessDetailsAdapter extends AbstractAdapter implements BusinessD
         // no-op
     }
 
+    public function hasChangedTradingNames($orgId, $tradingNames)
+    {
+        // no-op
+    }
+
+    public function hasChangedRegisteredAddress($orgId, $address)
+    {
+        // no-op
+    }
+
+    public function hasChangedNatureOfBusiness($orgId, $natureOfBusiness)
+    {
+        // no-op
+    }
+
+    public function hasChangedSubsidiaryCompany($id, $data)
+    {
+        // no-op
+    }
+
     public function postSave($data)
     {
         // no-op
     }
 
-    public function postCrudSave($data)
+    public function postCrudSave($action, $data)
     {
         // no-op
     }

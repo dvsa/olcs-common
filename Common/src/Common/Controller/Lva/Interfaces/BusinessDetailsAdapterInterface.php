@@ -18,6 +18,14 @@ interface BusinessDetailsAdapterInterface
 {
     public function alterFormForOrganisation(Form $Form, $orgId);
 
+    public function hasChangedTradingNames($orgId, $tradingNames);
+
+    public function hasChangedRegisteredAddress($orgId, $address);
+
+    public function hasChangedNatureOfBusiness($orgId, $natureOfBusiness);
+
+    public function hasChangedSubsidiaryCompany($id, $data);
+
     public function postSave($data);
 
     public function postCrudSave($action, $data);

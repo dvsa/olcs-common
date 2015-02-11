@@ -38,7 +38,7 @@ return array(
             ),
             'LvaApplication/BusinessType' => array(
                 // @NOTE: we need an associative array when we need to override the
-                // delegator elsewhere; an indexed array will merge, but we want to override
+                // delegator elsewhere, such as in selfserve or internal
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
             'LvaLicence/BusinessType' => array(
