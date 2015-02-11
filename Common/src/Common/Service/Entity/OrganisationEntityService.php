@@ -188,6 +188,24 @@ class OrganisationEntityService extends AbstractEntityService
         return !empty(array_diff($existing, $natureOfBusiness));
     }
 
+    public function hasChangedSubsidiaryCompany($id, $company)
+    {
+        $existing = $this->getServiceLocator()
+            ->get('Entity\CompanySubsidiary')
+            ->getById($id);
+
+        $diff = $this->compareKeys(
+            $existing,
+            $company,
+            [
+                'companyNo',
+                'name'
+            ]
+        );
+
+        return !empty($diff);
+    }
+
     private function compareKeys($from, $to, $keys = [])
     {
         $keys = array_flip($keys);

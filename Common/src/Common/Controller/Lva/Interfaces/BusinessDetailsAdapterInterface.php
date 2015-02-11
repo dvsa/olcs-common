@@ -20,5 +20,5 @@ interface BusinessDetailsAdapterInterface
 
     public function postSave($data);
 
-    public function postCrudSave($data);
+    public function postCrudSave($action, $data);
 }

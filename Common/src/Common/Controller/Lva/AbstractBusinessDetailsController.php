@@ -185,12 +185,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         $orgId = $this->getCurrentOrganisationId();
         $request = $this->getRequest();
 
+        $id = $this->params('child_id');
+
         $data = array();
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $data = $this->formatCrudDataForForm(
-                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($this->params('child_id'))
+                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)
             );
         }
 
@@ -206,16 +208,18 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             $data = $this->formatCrudDataForSave($data);
             $data['organisation'] = $orgId;
 
-            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
+            if ($id === null || $adapter->hasChangedSubsidiaryCompany($id, $data)) {
+                $adapter->postCrudSave(
+                    $id === null ? 'added' : 'updated',
+                    [
+                        'licence' => $this->getLicenceId(),
+                        'user'    => $this->getLoggedInUser(),
+                        'name'    => $data['name']
+                    ]
+                );
+            }
 
-            $adapter->postCrudSave(
-                [
-                    'licence' => $this->getLicenceId(),
-                    'user'    => $this->getLoggedInUser(),
-                    'mode'    => $mode,
-                    'name'    => 'organisation name goes here'
-                ]
-            );
+            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
 
             return $this->handlePostSave();
         }
@@ -407,13 +411,20 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         $ids = explode(',', $id);
 
         foreach ($ids as $id) {
-            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
+            $company = $this->getServiceLocator()
+                ->get('Entity\CompanySubsidiary')
+                ->getById($id);
 
-            $adapter->postCrudDelete(
+            $this->getServiceLocator()
+                ->get('Entity\CompanySubsidiary')
+                ->delete($id);
+
+            $adapter->postCrudSave(
+                'deleted',
                 [
                     'licence' => $this->getLicenceId(),
                     'user'    => $this->getLoggedInUser(),
-                    'name'    => 'subsidiary name goes here'
+                    'name'    => $company['name']
                 ]
             );
         }
