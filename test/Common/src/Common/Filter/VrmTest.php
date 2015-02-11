@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Filter;
 
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Filter\Vrm;
 
