@@ -21,7 +21,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
 
     /**
      * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
+     * these tests should be addressed
      */
     protected function getServiceManager()
     {
@@ -89,6 +89,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $form->shouldReceive('has')
             ->with('table')
             ->andReturn(false);
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
 
         $this->sut->indexAction();
 
@@ -172,6 +180,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->with('table')
             ->andReturn($tableFieldset);
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
+
         $this->sut->indexAction();
 
         $this->assertEquals('business_details', $this->view);
@@ -248,6 +264,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
                 'data->tradingNames'
             ]
         );
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
 
         $this->sut->indexAction();
 
@@ -326,6 +350,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ]
         );
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
+
         $this->sut->indexAction();
 
         $this->assertEquals('business_details', $this->view);
@@ -376,6 +408,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $formHelper = $this->getMockFormHelper();
         $formHelper->shouldReceive('processCompanyNumberLookupForm')
             ->with($form, $postData, 'data');
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
 
         $this->mockRender();
 
@@ -442,6 +482,14 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->andReturn(true)
             ->shouldReceive('setValidationGroup')
             ->with(['data' => ['tradingNames']]);
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
 
         $this->mockRender();
 
@@ -578,6 +626,30 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->with('add')
             ->andReturn('crud');
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->shouldReceive('hasChangedTradingNames')
+                ->with(12, [['name' => 'tn 1']])
+                ->andReturn(false)
+                ->shouldReceive('hasChangedRegisteredAddress')
+                ->with(12, ['foo' => 'bar'])
+                ->andReturn(false)
+                ->shouldReceive('hasChangedNatureOfBusiness')
+                ->with(12, [1, 2])
+                ->andReturn(true)
+                ->shouldReceive('postSave')
+                ->with(
+                    [
+                        'licence' => 7,
+                        'user' => ''
+                    ]
+                )
+                ->getMock()
+            );
+
         $this->assertEquals(
             'crud',
             $this->sut->indexAction()
@@ -662,6 +734,19 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->with(12, [])
             ->andReturn();
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->shouldReceive('hasChangedTradingNames')
+                ->andReturn(false)
+                ->shouldReceive('hasChangedRegisteredAddress')
+                ->andReturn(false)
+                ->shouldReceive('hasChangedNatureOfBusiness')
+                ->andReturn(false)
+                ->getMock()
+            );
+
         $this->sut
             ->shouldReceive('postSave')
             ->with('business_details')
@@ -696,7 +781,7 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $form = $this->createMockForm('Lva\BusinessDetailsSubsidiaryCompany');
 
         $postData = [
-            'data' => ['foo' => 'bar']
+            'data' => ['name' => 'bar']
         ];
         $this->setPost($postData);
 
@@ -716,12 +801,31 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             ->shouldReceive('save')
             ->with(
                 [
-                    'foo' => 'bar',
+                    'name' => 'bar',
                     'organisation' => 12
                 ]
             )
             ->getMock()
         );
+
+        $this->sut
+            ->shouldReceive('getLicenceId')
+            ->andReturn(7);
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('postCrudSave')
+                ->with(
+                    'added',
+                    [
+                        'licence' => 7,
+                        'user' => '',
+                        'name' => 'bar'
+                    ]
+                )
+                ->getMock()
+            );
 
         $this->sut->shouldReceive('handlePostSave')
             ->andReturn('post-save');
