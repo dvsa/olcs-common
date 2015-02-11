@@ -14,7 +14,7 @@ namespace Common\Filter\Publication;
  */
 class TmHearingText2 extends Text1
 {
-    protected $tmHearingText2 = 'TBC';
+    protected $tmHearingText2 = 'Article 6 of Regulation (EC) No 1071/2009';
 
     /**
      * @param \Common\Data\Object\Publication  $publication
