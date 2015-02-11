@@ -256,13 +256,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
      */
     private function formatDataForSave($data)
     {
-        return array(
-            'version' => $data['version'],
-            'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
-            ? $data['data']['companyNumber']['company_number']
-            : null,
-            'name' => isset($data['data']['name']) ? $data['data']['name'] : null
+        $persist = array(
+            'version' => $data['version']
         );
+
+        $data = $data['data'];
+
+        if (isset($data['companyNumber']['company_number'])) {
+            $persist['companyOrLlpNo'] = $data['companyNumber']['company_number'];
+        }
+
+        if (isset($data['name'])) {
+            $persist['name'] = $data['name'];
+        }
+
+        return $persist;
     }
 
     /**
