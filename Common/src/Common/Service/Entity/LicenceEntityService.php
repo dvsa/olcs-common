@@ -212,6 +212,29 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $extendedOverviewBundle = array(
+        'children' => array(
+            'licenceType',
+            'status',
+            'goodsOrPsv',
+            'organisation' => [
+                'children' => [
+                    'tradingNames',
+                    'licences' => [
+                        'children' => ['status']
+                    ],
+                ],
+            ],
+            'trafficArea',
+            'applications' => [
+                'children' => ['status'],
+            ],
+            'psvDiscs',
+            'licenceVehicles',
+            'operatingCentres',
+        )
+    );
+
     /**
      * Get data for overview
      *
@@ -504,5 +527,34 @@ class LicenceEntityService extends AbstractLvaEntityService
                 'inForceDate' => 'NOT NULL'
             ]
         );
+    }
+
+    /**
+     * Get data for internal overview
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getExtendedOverview($id)
+    {
+        return $this->get($id, $this->extendedOverviewBundle);
+    }
+
+    /**
+     * @param string $type e.g. 'ltyp_sr'
+     * @return string e.g. 'SR'
+     */
+    public function getShortCodeForType($type)
+    {
+        $map = [
+            self::LICENCE_TYPE_RESTRICTED             => 'R',
+            self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
+            self::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
+            self::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
+        ];
+
+        if (array_key_exists($type, $map)) {
+            return $map[$type];
+        }
     }
 }
