@@ -83,13 +83,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
                 $this->processSave($tradingNames, $orgId, $data);
                 $this->postSave('business_details');
 
-                $adapter->postSave(
-                    [
-                        'licence' => $this->getLicenceId(),
-                        'user'    => $this->getLoggedInUser()
-                    ]
-                );
-
                 // we can't always assume this index exists; varies depending on
                 // org type
                 $crudTables = isset($data['table']) ? array($data['table']) : array();
@@ -136,17 +129,24 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
      */
     private function processSave($tradingNames, $orgId, $data)
     {
+        $adapter = $this->getAdapter();
+
+        $registeredAddressId = null;
+        $isDirty = false;
+
         if (isset($tradingNames['trading_name']) && !empty($tradingNames['trading_name'])) {
             $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
+
+            $isDirty = $adapter->hasChangedTradingNames($orgId, $tradingNames['tradingNames']);
             $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
         }
 
-        $registeredAddressId = null;
-
         if (isset($data['registeredAddress'])) {
+            $isDirty = $isDirty ?: $adapter->hasChangedRegisteredAddress($orgId, $data['registeredAddress']);
             $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
         }
 
+        $isDirty = $isDirty ?: $adapter->hasChangedNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
         $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
 
         $saveData = $this->formatDataForSave($data);
@@ -154,6 +154,15 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
 
         if ($registeredAddressId !== null) {
             $saveData['contactDetails'] = $registeredAddressId;
+        }
+
+        if ($isDirty) {
+            $adapter->postSave(
+                [
+                    'licence' => $this->getLicenceId(),
+                    'user' => $this->getLoggedInUser()
+                ]
+            );
         }
 
         $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
@@ -392,49 +401,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
      */
     protected function delete()
     {
+        $adapter = $this->getAdapter();
+
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
         foreach ($ids as $id) {
             $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
-        }
-    }
 
-    public function deleteAction()
-    {
-        $adapter = $this->getAdapter();
-
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $response = $this->delete();
-            $this->postSave($this->section);
-
-            if ($response instanceof Response) {
-                return $response;
-            }
-
-            $adapter->postCrudSave(
+            $adapter->postCrudDelete(
                 [
-                    'mode'    => 'delete',
                     'licence' => $this->getLicenceId(),
                     'user'    => $this->getLoggedInUser(),
-                    'name'    => 'organisation name goes here'
+                    'name'    => 'subsidiary name goes here'
                 ]
             );
-
-            return $this->redirect()->toRouteAjax(
-                null,
-                array($this->getIdentifierIndex() => $this->getIdentifier())
-            );
         }
-
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('GenericDeleteConfirmation', $request);
-
-        $params = ['sectionText' => 'delete.confirmation.text'];
-
-        return $this->render('delete', $form, $params);
     }
 }

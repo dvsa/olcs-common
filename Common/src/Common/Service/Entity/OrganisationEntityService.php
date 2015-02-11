@@ -147,4 +147,53 @@ class OrganisationEntityService extends AbstractEntityService
 
         return $licences['Count'] > 0;
     }
+
+    public function hasChangedTradingNames($id, $tradingNames)
+    {
+        $data = $this->getBusinessDetailsData($id);
+
+        $map = function ($v) {
+            return $v['name'];
+        };
+
+        $existing = array_map($map, $data['tradingNames']);
+        $updated  = array_map($map, $tradingNames);
+
+        return !empty(array_diff($existing, $updated));
+    }
+
+    public function hasChangedRegisteredAddress($id, $address)
+    {
+        $data = $this->getBusinessDetailsData($id);
+
+        $diff = $this->compareKeys(
+            $data['contactDetails']['address'],
+            $address,
+            [
+                'addressLine1', 'addressLine2',
+                'addressLine3', 'addressLine4',
+                'postcode', 'town',
+            ]
+        );
+
+        return !empty($diff);
+    }
+
+    public function hasChangedNatureOfBusiness($id, $natureOfBusiness)
+    {
+        $existing = $this->getServiceLocator()
+            ->get('Entity\OrganisationNatureOfBusiness')
+            ->getAllForOrganisationForSelect($id);
+
+        return !empty(array_diff($existing, $natureOfBusiness));
+    }
+
+    private function compareKeys($from, $to, $keys = [])
+    {
+        $keys = array_flip($keys);
+        $from = array_intersect_key($from, $keys);
+        $to   = array_intersect_key($to, $keys);
+
+        return array_diff_assoc($from, $to);
+    }
 }
