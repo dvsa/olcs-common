@@ -42,7 +42,7 @@ class FeeWaiveNote extends TexareatMax255Min5 implements InputProviderInterface
                     'options'=> [
                         'type' => \Zend\Validator\NotEmpty::NULL
                     ]
-                ]    
+                ]
             ]
         ];
 

@@ -122,7 +122,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getTypeOfLicenceStatus($applicationData)
+    protected function getTypeOfLicenceStatus($applicationData)
     {
         return $this->checkCompletion(
             array(
@@ -139,7 +139,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getBusinessTypeStatus($applicationData)
+    protected function getBusinessTypeStatus($applicationData)
     {
         return $this->checkCompletion(
             array(
@@ -154,7 +154,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getBusinessDetailsStatus($applicationData)
+    protected function getBusinessDetailsStatus($applicationData)
     {
         if (!isset($applicationData['licence']['organisation']['type']['id'])) {
             return self::STATUS_INCOMPLETE;
@@ -198,7 +198,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getAddressesStatus($applicationData)
+    protected function getAddressesStatus($applicationData)
     {
         $phoneNumber = false;
         $correspondenceAddress = isset($applicationData['licence']['correspondenceCd'])
@@ -244,7 +244,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getPeopleStatus($applicationData)
+    protected function getPeopleStatus($applicationData)
     {
         return $this->checkCompletion(
             array(
@@ -259,7 +259,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getTaxiPhvStatus($applicationData)
+    protected function getTaxiPhvStatus($applicationData)
     {
         return $this->checkCompletion(
             array(
@@ -274,7 +274,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getOperatingCentresStatus($applicationData)
+    protected function getOperatingCentresStatus($applicationData)
     {
         if (count($applicationData['operatingCentres']) === 0) {
             return self::STATUS_INCOMPLETE;
@@ -332,7 +332,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getFinancialEvidenceStatus($applicationData)
+    protected function getFinancialEvidenceStatus($applicationData)
     {
         return self::STATUS_COMPLETE;
     }
@@ -343,7 +343,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getTransportManagersStatus($applicationData)
+    protected function getTransportManagersStatus($applicationData)
     {
         return self::STATUS_COMPLETE;
     }
@@ -354,7 +354,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getVehiclesStatus($applicationData)
+    protected function getVehiclesStatus($applicationData)
     {
         if ($applicationData['hasEnteredReg'] === 'N') {
             return self::STATUS_COMPLETE;
@@ -377,7 +377,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getVehiclesPsvStatus($applicationData)
+    protected function getVehiclesPsvStatus($applicationData)
     {
         if ($applicationData['hasEnteredReg'] === 'N') {
             return self::STATUS_COMPLETE;
@@ -435,7 +435,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getVehiclesDeclarationsStatus($applicationData)
+    protected function getVehiclesDeclarationsStatus($applicationData)
     {
         $requiredVars = array(
             // NineOrMore
@@ -495,7 +495,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getSafetyStatus($applicationData)
+    protected function getSafetyStatus($applicationData)
     {
         $requiredVars = array(
             $this->isAtLeast1($applicationData['licence']['safetyInsVehicles']),
@@ -522,7 +522,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getConditionsUndertakingsStatus($applicationData)
+    protected function getConditionsUndertakingsStatus($applicationData)
     {
         return self::STATUS_COMPLETE;
     }
@@ -533,7 +533,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getFinancialHistoryStatus($applicationData)
+    protected function getFinancialHistoryStatus($applicationData)
     {
         $ynVars = array(
             'bankrupt',
@@ -568,7 +568,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getLicenceHistoryStatus($applicationData)
+    protected function getLicenceHistoryStatus($applicationData)
     {
         $sections = array(
             'prevHasLicence',
@@ -616,7 +616,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getConvictionsPenaltiesStatus($applicationData)
+    protected function getConvictionsPenaltiesStatus($applicationData)
     {
         $requiredVars = array(
             $this->isYnValue($applicationData['prevConviction']),
@@ -636,7 +636,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
      * @param array $applicationData
      * @return int
      */
-    private function getUndertakingsStatus($applicationData)
+    protected function getUndertakingsStatus($applicationData)
     {
         $requiredVars = array(
             $applicationData['declarationConfirmation'] === 'Y'

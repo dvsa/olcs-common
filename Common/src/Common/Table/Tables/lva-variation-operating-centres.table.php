@@ -22,7 +22,7 @@ return array(
     'columns' => array(
         array(
             'title' => 'application_operating-centres_authorisation.table.address',
-            'type' => 'VariationOperatingCentreAction',
+            'type' => 'VariationRecordAction',
             'action' => 'edit',
             'formatter' => 'Address',
         ),

@@ -7,7 +7,6 @@
  */
 namespace CommonTest\Service\Entity;
 
-use Mockery as m;
 use Common\Service\Entity\TmApplicationOperatingCentreEntityService;
 
 /**
@@ -26,7 +25,7 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
 
     /**
      * Test get all for TM application
-     * 
+     *
      * @group tmApplicationOCEntityService
      */
     public function testGetAllForTmApplication()
@@ -46,7 +45,7 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
 
     /**
      * Test get all for TM application
-     * 
+     *
      * @group tmApplicationOCEntityService
      */
     public function testDeleteByTmAppAndIds()
@@ -57,12 +56,12 @@ class TmApplicationOperatingCentreEntityServiceTest extends AbstractEntityServic
         ];
         $this->expectOneRestCall('TmApplicationOc', 'DELETE', $query)
             ->will($this->returnValue('RESPONSE'));
-        $this->sut->deleteByTmAppAndIds(1, [1,2]);
+        $this->sut->deleteByTmAppAndIds(1, [1, 2]);
     }
 
     /**
      * Test deleteByTmApplication
-     * 
+     *
      * @group tmApplicationOCEntityService
      */
     public function testDeleteByTmApplication()

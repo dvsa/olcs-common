@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Variation Operating Centre Action type
+ * Variation Record Action type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Service\Table\Type;
 
 /**
- * Variation Operating Centre Action type
+ * Variation Record Action type
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationOperatingCentreAction extends Action
+class VariationRecordAction extends Action
 {
     /**
      * Render the selector
