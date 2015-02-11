@@ -47,7 +47,7 @@ class TmHearingText2Test extends MockeryTestCase
             ]
         ];
 
-        $expectedOutput = 'TBC';
+        $expectedOutput = 'Article 6 of Regulation (EC) No 1071/2009';
 
         $input = new Publication($publicationData);
         $sut = new TmHearingText2();
