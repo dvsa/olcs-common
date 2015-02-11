@@ -239,6 +239,20 @@ return array(
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
+        'TmHearingPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\TransportManager',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmHearingText2',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'file_uploader' => array(
         'default' => 'ContentStore',
