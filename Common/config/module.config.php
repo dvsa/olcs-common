@@ -101,6 +101,12 @@ return array(
             'LvaLicence/ConditionsUndertakings' => array(
                 'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
             ),
+            'LvaApplication/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
+            ),
+            'LvaVariation/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -187,6 +193,10 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'VariationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
+            'ApplicationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
             'GenericBusinessTypeAdapter'
                 => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'GenericBusinessDetailsAdapter'

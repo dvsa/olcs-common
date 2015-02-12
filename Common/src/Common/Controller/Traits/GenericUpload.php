@@ -18,14 +18,22 @@ trait GenericUpload
      * Process files
      *
      * @param Form $form
-     * @param string $selector
-     * @param string $uploadCallback
-     * @param string $deleteCallback
-     * @param string $loadCallback
+     * @param string $selector - selector identifying the MultipleFileUpload element
+     * @param callable $uploadCallback
+     * @param callable $deleteCallback
+     * @param callable $loadCallback
+     * @param string $countSelector - optional selector identifying element to
+     * update with number of files uploaded (e.g. for validation)
      * @return bool
      */
-    protected function processFiles($form, $selector, $uploadCallback, $deleteCallback, $loadCallback)
-    {
+    public function processFiles(
+        $form,
+        $selector,
+        $uploadCallback,
+        $deleteCallback,
+        $loadCallback,
+        $countSelector = null
+    ) {
         $uploadHelper = $this->getServiceLocator()->get('Helper\FileUpload');
 
         $uploadHelper->setForm($form)
@@ -34,6 +42,10 @@ trait GenericUpload
             ->setDeleteCallback($deleteCallback)
             ->setLoadCallback($loadCallback)
             ->setRequest($this->getRequest());
+
+        if (!is_null($countSelector)) {
+            $uploadHelper->setCountSelector($countSelector);
+        }
 
         return $uploadHelper->process();
     }

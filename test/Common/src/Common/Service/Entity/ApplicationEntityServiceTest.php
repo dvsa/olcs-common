@@ -739,4 +739,14 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForPaymentSubmission($id));
     }
+
+    public function testGetDataForFinancialEvidence()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForFinancialEvidence($id));
+    }
 }

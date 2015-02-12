@@ -48,6 +48,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     const DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL = 112;
     const DOC_SUB_CATEGORY_TRANSPORT_MANAGER_CPC_OR_EXEMPTION = 98;
     const DOC_SUB_CATEGORY_TRANSPORT_MANAGER_TM1_ASSISTED_DIGITAL = 100;
+    const DOC_SUB_CATEGORY_FINANCIAL_EVIDENCE_DIGITAL = 13;
 
     /**
      * Cache the categories
