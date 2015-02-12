@@ -36,6 +36,26 @@ return array(
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
+            'LvaApplication/BusinessType' => array(
+                // @NOTE: we need an associative array when we need to override the
+                // delegator elsewhere, such as in selfserve or internal
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaLicence/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaVariation/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaApplication/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaLicence/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaVariation/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -158,6 +178,10 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
+            'GenericBusinessDetailsAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',

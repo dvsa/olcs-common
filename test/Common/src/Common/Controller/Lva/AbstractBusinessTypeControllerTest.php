@@ -40,42 +40,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
-        $this->mockRender();
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('business_type', $this->view);
-    }
-
-    public function testGetIndexActionWithLvaBusinessTypeService()
-    {
-        $form = $this->createMockForm('Lva\BusinessType');
-
-        $form->shouldReceive('setData')
-            ->andReturn($form);
-
-        $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
-
-        $this->mockEntity('Organisation', 'getType')
-            ->with(12)
+        $this->sut->shouldReceive('getAdapter')
             ->andReturn(
-                [
-                    'version' => '1',
-                    'type' => [
-                        'id' => 'x'
-                    ]
-                ]
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
             );
-
-        $this->setService(
-            'Lva\BusinessType',
-            m::mock()
-            ->shouldReceive('alterFormForLva')
-            ->with($form, 12, '')
-            ->getMock()
-        );
 
         $this->mockRender();
 
@@ -102,6 +73,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
         $this->setPost();
 
         $this->mockRender();
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
 
         $this->sut->indexAction();
 
@@ -147,6 +125,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ->with('business_type')
             ->andReturn('complete');
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
+
         $this->assertEquals(
             'complete',
             $this->sut->indexAction()
@@ -187,6 +172,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('completeSection')
             ->with('business_type')
             ->andReturn('complete');
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
 
         $this->assertEquals(
             'complete',
