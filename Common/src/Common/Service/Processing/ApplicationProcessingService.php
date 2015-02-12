@@ -7,15 +7,15 @@
  */
 namespace Common\Service\Processing;
 
-use Common\Service\Entity\ApplicationEntityService;
-use Common\Service\Entity\LicenceEntityService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
-use Common\Service\Data\FeeTypeDataService;
-use Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter;
+use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\CommunityLicEntityService;
+use Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter;
 
 /**
  * Application Processing Service
@@ -560,29 +560,37 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     {
         if (!$this->licenceHasTransportManager($data['transportManager']['id'], $licenceId)) {
 
+            $otherLicences = $data['otherLicences'];
+            unset($data['otherLicences']);
+
             $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($data);
 
             unset($data['id']);
             unset($data['action']);
             unset($data['version']);
             unset($data['application']);
-
-            // What do we do with this?
             unset($data['tmApplicationStatus']);
 
             $data['licence'] = $licenceId;
 
-            $data['tmLicenceOcs'] = [];
-
-            foreach ($data['tmApplicationOcs'] as $row) {
-                $data['tmLicenceOcs'][] = $row['id'];
+            foreach ($data['operatingCentres'] as $key => $row) {
+                $data['operatingCentres'][$key] = $row['id'];
             }
 
-            unset($data['tmApplicationOcs']);
-
             $entityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-            $entityService->save($data);
+            $id = $entityService->save($data);
+
+            foreach ($otherLicences as $otherLicence) {
+                $this->createOtherLicence($otherLicence, $id);
+            }
         }
+    }
+
+    protected function createOtherLicences($otherLicence, $transportManagerLicenceId)
+    {
+        print '<pre>';
+        print_r($otherLicence);
+        exit;
     }
 
     protected function licenceHasTransportManager($transportManagerId, $licenceId)

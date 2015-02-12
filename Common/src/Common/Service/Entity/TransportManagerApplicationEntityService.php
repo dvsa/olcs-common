@@ -44,7 +44,8 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             'application',
             'transportManager',
             'tmType',
-            'operatingCentres'
+            'operatingCentres',
+            'otherLicences'
         ]
     ];
 
