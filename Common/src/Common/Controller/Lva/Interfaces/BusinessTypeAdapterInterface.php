@@ -16,5 +16,5 @@ use Zend\Form\Form;
  */
 interface BusinessTypeAdapterInterface
 {
-    public function alterFormForOrganisation(Form $Form, $orgId);
+    public function alterFormForOrganisation(Form $form, $orgId);
 }

@@ -16,7 +16,7 @@ use Zend\Form\Form;
  */
 interface BusinessDetailsAdapterInterface
 {
-    public function alterFormForOrganisation(Form $Form, $orgId);
+    public function alterFormForOrganisation(Form $form, $orgId);
 
     public function hasChangedTradingNames($orgId, $tradingNames);
 
