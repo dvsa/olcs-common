@@ -316,21 +316,15 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     {
         if (is_null($this->otherLicences)) {
             $organisationId = $this->getOrganisationId($applicationId);
-
-            $licences = $this->getServiceLocator()->get('Entity\Organisation')
-                ->getLicences($organisationId);
-
-            // filter results to valid statuses
-            $validStatuses = [
-                Licence::LICENCE_STATUS_VALID,
-                Licence::LICENCE_STATUS_SUSPENDED,
-                Licence::LICENCE_STATUS_CURTAILED,
-            ];
-            foreach ($licences as $licence) {
-                if (in_array($licence['status']['id'], $validStatuses)) {
-                    $this->otherLicences[] = $licence;
-                }
-            }
+            $this->otherLicences = $this->getServiceLocator()->get('Entity\Organisation')
+                ->getLicencesByStatus(
+                    $organisationId,
+                    [
+                        Licence::LICENCE_STATUS_VALID,
+                        Licence::LICENCE_STATUS_SUSPENDED,
+                        Licence::LICENCE_STATUS_CURTAILED,
+                    ]
+                );
         }
         return $this->otherLicences;
     }
@@ -356,21 +350,21 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             $organisationId = $this->getOrganisationId($applicationId);
 
             $applications = $this->getServiceLocator()->get('Entity\Organisation')
-                ->getNewApplications($organisationId);
+                ->getNewApplicationsByStatus(
+                    $organisationId,
+                    [
+                        Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                        Application::APPLICATION_STATUS_GRANTED,
+                    ]
+                );
 
-            // filter to new applications in statuses we're interested in
-            $validStatuses = [
-                Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
-                Application::APPLICATION_STATUS_GRANTED,
-            ];
-            foreach ($applications as $application) {
-                if ($application['id'] == $applicationId) {
-                    continue; // don't double-count the current application!
+            // filter out the current application
+            $this->otherApplications = array_filter(
+                $applications,
+                function ($application) {
+                    return $application['id'] != $applicationId;
                 }
-                if (in_array($application['status']['id'], $validStatuses)) {
-                    $this->otherApplications[] = $application;
-                }
-            }
+            );
         }
         return $this->otherApplications;
     }

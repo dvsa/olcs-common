@@ -118,17 +118,30 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->get($id, $this->licencesBundle)['licences'];
     }
 
-    public function getNewApplications($id)
+    /**
+     * @param int $id organisation id
+     * @param string|array $applicationStatus only return child applications
+     *        matching this/these status(es)
+     * @return array
+     */
+    public function getNewApplicationsByStatus($id, $applicationStatus)
     {
         $applications = [];
 
-        $data = $this->get($id, $this->applicationsBundle);
+        if (is_array($applicationStatus)) {
+            $statusCriteria = 'IN ["'.implode('","', $applicationStatus).'"]';
+        } else {
+            $statusCriteria = $applicationStatus;
+        }
+
+        $bundle = $this->applicationsBundle;
+        $bundle['children']['licences']['children']['applications']['criteria'] = [
+            'status' => $statusCriteria
+        ];
+
+        $data = $this->get($id, $bundle);
         foreach ($data['licences'] as $licence) {
-            foreach ($licence['applications'] as $application) {
-                if ($application['isVariation'] == false) {
-                    $applications[] = $application;
-                }
-            }
+            $applications = array_merge($applications, $licence['applications']);
         }
 
         return $applications;
@@ -184,5 +197,27 @@ class OrganisationEntityService extends AbstractEntityService
             ->getInForceForOrganisation($id);
 
         return $licences['Count'] > 0;
+    }
+
+    /**
+     * @param int $id organisation id
+     * @param string|array $licenceStatus only return child licences matching
+     *        this/these status(es)
+     * @return array
+     */
+    public function getLicencesByStatus($id, $licenceStatus)
+    {
+        if (is_array($licenceStatus)) {
+            $statusCriteria = 'IN ["'.implode('","', $licenceStatus).'"]';
+        } else {
+            $statusCriteria = $licenceStatus;
+        }
+
+        $bundle = $this->licencesBundle;
+        $bundle['children']['licences']['criteria'] = [
+            'status' => $statusCriteria
+        ];
+
+        return $this->get($id, $bundle)['licences'];
     }
 }
