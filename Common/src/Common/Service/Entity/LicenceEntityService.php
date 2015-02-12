@@ -221,15 +221,18 @@ class LicenceEntityService extends AbstractLvaEntityService
             'organisation' => [
                 'children' => [
                     'tradingNames',
-                    'licences' => [
-                        'children' => ['status']
-                    ],
+                    'licences',
+                    'leadTcArea'
                 ],
             ],
             'applications' => [
                 'children' => ['status'],
             ],
-            'psvDiscs',
+            'psvDiscs' => [
+                'criteria' => [
+                    'ceasedDate' => 'NULL',
+                ],
+            ],
             'licenceVehicles',
             'operatingCentres',
             /*
@@ -529,7 +532,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     /**
      * Update community licences count
-     * 
+     *
      * @param int $licenceId
      */
     public function updateCommunityLicencesCount($licenceId)
@@ -564,6 +567,24 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function getExtendedOverview($id)
     {
+        // modify bundle to filter other licence statuses
+        $licenceStatuses = [
+            LicenceEntityService::LICENCE_STATUS_VALID,
+            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+        ];
+        $bundle['children']['organisation']['children']['licences']['criteria'] = [
+            'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
+        ];
+
+        $applicationStatuses = [
+            ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+            ApplicationEntityService::APPLICATION_STATUS_GRANTED,
+        ];
+        $bundle['children']['applications']['criteria'] = [
+            'status' => 'IN ["'.implode('","', $applicationStatuses).'"]'
+        ];
+
         return $this->get($id, $this->extendedOverviewBundle);
     }
 
