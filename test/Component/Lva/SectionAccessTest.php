@@ -20,9 +20,6 @@ use Common\Service\Entity\LicenceEntityService;
 class SectionAccessTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     *
      * @group component
      * @group lva_component
      * @group section_access_lva_component
@@ -52,8 +49,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
     {
         return array(
             // EXTERNAL APPLICATION
-            array(
-                // Goods Standard National
+            'External Application Goods Standard National' => array(
                 array(
                     'external',
                     'application',
@@ -77,8 +73,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // Goods Standard International
+            'External Application Goods Standard International' => array(
                 array(
                     'external',
                     'application',
@@ -102,8 +97,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // Goods Restricted
+            'External Application Goods Restricted' => array(
                 array(
                     'external',
                     'application',
@@ -126,8 +120,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Standard National
+            'External Application PSV Standard National' => array(
                 array(
                     'external',
                     'application',
@@ -152,8 +145,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Standard International
+            'External Application PSV Standard International' => array(
                 array(
                     'external',
                     'application',
@@ -178,8 +170,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Restricted
+            'External Application PSV Restricted' => array(
                 array(
                     'external',
                     'application',
@@ -203,8 +194,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Special Restricted
+            'External Application PSV Special Restricted' => array(
                 array(
                     'external',
                     'application',
@@ -222,8 +212,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // INTERNAL APPLICATION
-            array(
-                // Goods Standard National
+            'Internal Application Goods Standard National' => array(
                 array(
                     'internal',
                     'application',
@@ -247,8 +236,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // Goods Standard International
+            'Internal Application Goods Standard International' => array(
                 array(
                     'internal',
                     'application',
@@ -273,8 +261,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // Goods Restricted
+            'Internal Application Goods Restricted' => array(
                 array(
                     'internal',
                     'application',
@@ -297,8 +284,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // PSV Standard National
+            'Internal Application PSV Standard National' => array(
                 array(
                     'internal',
                     'application',
@@ -323,8 +309,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // PSV Standard International
+            'Internal Application PSV Standard International' => array(
                 array(
                     'internal',
                     'application',
@@ -350,8 +335,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // PSV Restricted
+            'Internal Application PSV Restricted' => array(
                 array(
                     'internal',
                     'application',
@@ -376,8 +360,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'convictions_penalties'
                 )
             ),
-            array(
-                // PSV Special Restricted
+           'Internal Application PSV Special Restricted' => array(
                 array(
                     'internal',
                     'application',
@@ -394,8 +377,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // EXTERNAL LICENCE
-            array(
-                // Goods Standard National
+            'External Licence Goods Standard National' => array(
                 array(
                     'external',
                     'licence',
@@ -415,8 +397,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Standard International
+            'External Licence Goods Standard International' => array(
                 array(
                     'external',
                     'licence',
@@ -436,8 +417,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Restricted
+            'External Licence Goods Restricted' => array(
                 array(
                     'external',
                     'licence',
@@ -456,8 +436,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard National
+            'External Licence PSV Standard National' => array(
                 array(
                     'external',
                     'licence',
@@ -478,8 +457,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard International
+            'External Licence PSV Standard International' => array(
                 array(
                     'external',
                     'licence',
@@ -500,8 +478,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Restricted
+            'External Licence PSV Restricted' => array(
                 array(
                     'external',
                     'licence',
@@ -521,8 +498,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Special Restricted
+            'External Licence PSV Special Restricted' => array(
                 array(
                     'external',
                     'licence',
@@ -539,8 +515,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // INTERNAL LICENCE
-            array(
-                // Goods Standard National
+            'Internal Licence Goods Standard National' => array(
                 array(
                     'internal',
                     'licence',
@@ -560,8 +535,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Standard International
+            'Internal Licence Goods Standard International' => array(
                 array(
                     'internal',
                     'licence',
@@ -582,8 +556,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Restricted
+            'Internal Licence Goods Restricted' => array(
                 array(
                     'internal',
                     'licence',
@@ -602,8 +575,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard National
+            'Internal Licence PSV Standard National' => array(
                 array(
                     'internal',
                     'licence',
@@ -624,8 +596,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard International
+            'Internal Licence PSV Standard International' => array(
                 array(
                     'internal',
                     'licence',
@@ -647,8 +618,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Restricted
+            'Internal Licence PSV Restricted' => array(
                 array(
                     'internal',
                     'licence',
@@ -669,8 +639,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Special Restricted
+            'Internal Licence PSV Special Restricted' => array(
                 array(
                     'internal',
                     'licence',
@@ -687,8 +656,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // EXTERNAL VARIATION
-            array(
-                // Goods Standard National
+            'External Variation Goods Standard National' => array(
                 array(
                     'external',
                     'variation',
@@ -709,8 +677,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // Goods Standard International
+            'External Variation Goods Standard International' => array(
                 array(
                     'external',
                     'variation',
@@ -731,8 +698,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // Goods Restricted
+            'External Variation Goods Restricted' => array(
                 array(
                     'external',
                     'variation',
@@ -752,8 +718,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Standard National
+            'External Variation PSV Standard National' => array(
                 array(
                     'external',
                     'variation',
@@ -775,8 +740,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Standard International
+            'External Variation PSV Standard International' => array(
                 array(
                     'external',
                     'variation',
@@ -798,8 +762,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'undertakings'
                 )
             ),
-            array(
-                // PSV Restricted
+            'External Variation PSV Restricted' => array(
                 array(
                     'external',
                     'variation',
@@ -821,8 +784,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                 )
             ),
             // INTERNAL VARIATION
-            array(
-                // Goods Standard National
+            'Internal Variation Goods Standard National' => array(
                 array(
                     'internal',
                     'variation',
@@ -842,8 +804,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Standard International
+            'Internal Variation Goods Standard International' => array(
                 array(
                     'internal',
                     'variation',
@@ -864,8 +825,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // Goods Restricted
+            'Internal Variation Goods Restricted' => array(
                 array(
                     'internal',
                     'variation',
@@ -884,8 +844,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard National
+            'Internal Variation PSV Standard National' => array(
                 array(
                     'internal',
                     'variation',
@@ -906,8 +865,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings'
                 )
             ),
-            array(
-                // PSV Standard International
+            'Internal Variation PSV Standard International' => array(
                 array(
                     'internal',
                     'variation',
@@ -929,8 +887,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                 )
             ),
-            array(
-                // PSV Restricted
+            'Internal Variation PSV Restricted' => array(
                 array(
                     'internal',
                     'variation',

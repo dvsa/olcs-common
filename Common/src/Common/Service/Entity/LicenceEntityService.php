@@ -496,6 +496,25 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $return;
     }
 
+    /**
+     * Update community licences count
+     * 
+     * @param int $licenceId
+     */
+    public function updateCommunityLicencesCount($licenceId)
+    {
+        $communityLicService = $this->getServiceLocator()->get('Entity\CommunityLic');
+        $validLicencesCount = $communityLicService->getValidLicences($licenceId)['Count'];
+
+        $licence = $this->getById($licenceId);
+        $data = [
+            'id' => $licenceId,
+            'version' => $licence['version'],
+            'totCommunityLicences' => $validLicencesCount
+        ];
+        $this->save($data);
+    }
+
     public function getInForceForOrganisation($orgId)
     {
         return $this->get(

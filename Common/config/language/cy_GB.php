@@ -91,6 +91,7 @@ return array(
     'application-update-person-header-director' => 'W Edit Director',
     'application-update-sole-trader' => 'W Edit sole trader',
     'application.cancel' => 'W Cancel application',
+    'application.community_licence.form.total_community_licences' => 'W How many additional licences are required?',
     'application.delete' => 'W Delete application',
     'application.new.button' => 'W Apply for a new licence',
     'application.operating-centres' => 'W Operating centres',
@@ -137,6 +138,7 @@ return array(
     'application.your-business.business-type' => 'W Business type',
     'application.your-business.people' => 'W People',
     'application.your-business.sole-trader' => 'W People',
+    'application_community_licence_total_community_licences' => 'W Total community licences',
     'application_operating-centres_authorisation-sub-action.advertisements' => 'W Advertisements',
     'application_operating-centres_authorisation-sub-action.advertisements.adPlaced' => 'W Have you advertised your
         application for this operating centre in your local newspaper?',
@@ -909,6 +911,10 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.community_licence.form_add.cancel' => 'W Cancel',
+    'internal.community_licence.form_add.ok' => 'W OK',
+    'internal.community_licence.licences_created' => 'W The community licences have been created',
+    'internal.community_licence.office_copy_created' => 'W The office copy has been created',
     'internal.transport-manager.competences.form.country' => 'W Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'W Qualification type',
@@ -1061,9 +1067,14 @@ return array(
     'lva-conditions-undertakings-table-status' => 'W Status',
     'lva-conditions-undertakings-table-title' => 'W Conditions and undertakings',
     'lva-conditions-undertakings-table-type' => 'W Type',
-    'lva-financial-evidence-table.file-name' => 'W File name',
-    'lva-financial-evidence-table.title' => 'W Financial evidence',
-    'lva-financial-evidence-table.type' => 'W Evidence type',
+    'lva-financial-evidence-evidence.label' => 'W Provide evidence',
+    'lva-financial-evidence-upload-now.label' => 'W Provide evidence that you have the required finances stated above',
+    'lva-financial-evidence-upload-now.no' => 'W Send in the post',
+    'lva-financial-evidence-upload-now.yes' => 'W Upload files',
+    'lva-financial-evidence-upload.files.hint' => 'W Please ensure the evidence provided demonstrates there are
+        sufficient financial resources to maintain the vehicles and run the business.',
+    'lva-financial-evidence-upload.label' => 'W Upload files',
+    'lva-financial-evidence-upload.required' => 'W Please upload evidence of financial standing',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
         and medium vehicles does not match the total number of vehicles',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>
@@ -1647,6 +1658,7 @@ return array(
         it is an offence to make a false declaration. Please see the licence undertakings below as a reminder of your
         existing obligations.',
     'vehicle-and-safety' => 'W Vehicle & safety',
+    'vehicle-authority-exceeded' => 'W The number of licences exceeds the total vehicle authority',
     'vehicle-belongs-to-another-licence-confirmation' => 'W I confirm that I would like to continue adding this
         vehicle',
     'vehicle-belongs-to-another-licence-message-external' => 'W This vehicle is specified on another licence. Please

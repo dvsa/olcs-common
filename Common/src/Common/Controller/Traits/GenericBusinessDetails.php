@@ -25,11 +25,7 @@ trait GenericBusinessDetails
     private function saveNatureOfBusiness($orgId, $natureOfBusiness = [])
     {
         $organisationNatureOfBusinessService = $this->getServiceLocator()->get('Entity\OrganisationNatureOfBusiness');
-        $existingRecords = $organisationNatureOfBusinessService->getAllForOrganisation($orgId);
-        $formattedExistingRecords = [];
-        foreach ($existingRecords as $record) {
-            $formattedExistingRecords[] = $record['refData']['id'];
-        }
+        $formattedExistingRecords = $organisationNatureOfBusinessService->getAllForOrganisationForSelect($orgId);
         $recordsToInsert = array_diff($natureOfBusiness, $formattedExistingRecords);
         $recordsToDelete = array_diff($formattedExistingRecords, $natureOfBusiness);
 
