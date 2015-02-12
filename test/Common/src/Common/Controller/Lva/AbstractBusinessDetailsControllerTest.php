@@ -872,6 +872,64 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $this->sut->editAction();
     }
 
+    public function testPostDelete()
+    {
+        $this->setPost([]);
+
+        $this->mockEntity('CompanySubsidiary', 'getById')
+            ->with(5050)
+            ->andReturn(
+                [
+                    'name' => 'mysub'
+                ]
+            );
+
+        $this->mockEntity('CompanySubsidiary', 'delete')
+            ->with(5050);
+
+        $this->sut
+            ->shouldReceive('getLicenceId')
+            ->andReturn(7);
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(5050);
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('postCrudSave')
+                ->with(
+                    'deleted',
+                    [
+                        'licence' => 7,
+                        'user' => '',
+                        'name' => 'mysub'
+                    ]
+                )
+                ->getMock()
+            );
+
+        $this->sut->shouldReceive('getIdentifierIndex')
+            ->andReturn('application')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(4040);
+
+        $this->sut->shouldReceive('redirect')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('toRouteAjax')
+                ->with(null, ['application' => 4040])
+                ->andReturn('redirect')
+                ->getMock()
+            );
+
+        $this->assertEquals(
+            'redirect',
+            $this->sut->deleteAction()
+        );
+    }
+
     private function mockOrgData($type)
     {
         $this->sut
