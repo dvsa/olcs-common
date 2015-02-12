@@ -25,7 +25,7 @@ class TmLicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTes
 
     /**
      * Test deleteByTmLicence
-     * 
+     *
      * @group tmLicenceOCEntityService
      */
     public function testDeleteByTmLicence()
@@ -38,7 +38,7 @@ class TmLicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTes
 
     /**
      * Test delete by TM licence and ids
-     * 
+     *
      * @group tmLicenceOCEntityService
      */
     public function testDeleteByTmLicAndIds()
@@ -49,12 +49,12 @@ class TmLicenceOperatingCentreEntityServiceTest extends AbstractEntityServiceTes
         ];
         $this->expectOneRestCall('TmLicenceOc', 'DELETE', $query)
             ->will($this->returnValue('RESPONSE'));
-        $this->sut->deleteByTmLicAndIds(1, [1,2]);
+        $this->sut->deleteByTmLicAndIds(1, [1, 2]);
     }
 
     /**
      * Test get all for TM licence
-     * 
+     *
      * @group tmLicenceOCEntityService
      */
     public function testGetAllForTmLicence()

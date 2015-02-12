@@ -3,9 +3,15 @@ OLCS.ready(function() {
   
   var tableSelector = "form [data-group*='table']";
   
-  function checkAction(allowedActions) {
+  function checkAction(allowedActions, maxLength) {
+    
+    if (maxLength === null) {
+      maxLength = Infinity;
+    }
+    
     return function (length, callback, selectedInputs) {
-      if (length < 1) {
+      
+      if (length < 1 || length > maxLength) {
         return callback(true);
       }
 
@@ -18,7 +24,7 @@ OLCS.ready(function() {
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Edit",
-    predicate: checkAction(['E', 'U', 'A'])
+    predicate: checkAction(['E', 'U', 'A'], 1)
   });
 
   OLCS.conditionalButton({

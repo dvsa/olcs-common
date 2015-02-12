@@ -22,6 +22,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
 {
     protected $sut;
     protected $sm;
+    protected $mockService;
 
     public function setUp()
     {
@@ -30,9 +31,141 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
         $this->sut = new VariationConditionsUndertakingsAdapter();
 
         $this->sut->setServiceLocator($this->sm);
+
+        $this->mockService = m::mock();
+        $this->sm->setService('Entity\ConditionUndertaking', $this->mockService);
     }
 
-    public function testSave()
+    public function testGetTableName()
+    {
+        $this->assertEquals('lva-variation-conditions-undertakings', $this->sut->getTableName());
+    }
+
+    public function testAttachMainScripts()
+    {
+        $mockScript = m::mock();
+        $this->sm->setService('Script', $mockScript);
+
+        $mockScript->shouldReceive('loadFile')
+            ->with('lva-crud-delta');
+
+        $this->sut->attachMainScripts();
+    }
+
+    public function testRestoreWithoutAction()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'A'
+            ],
+            [
+                'id' => 456,
+                'action' => 'E'
+            ]
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->assertFalse($this->sut->restore(123, $parentId));
+        $this->assertFalse($this->sut->restore(456, $parentId));
+    }
+
+    public function testRestoreWithDelete()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'U'
+            ],
+            [
+                'id' => 456,
+                'action' => 'D'
+            ]
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->mockService->shouldReceive('delete')
+            ->with(123)
+            ->shouldReceive('delete')
+            ->with(456);
+
+        $this->assertTrue($this->sut->restore(123, $parentId));
+        $this->assertTrue($this->sut->restore(456, $parentId));
+    }
+
+    public function testRestoreWithDeleteChild()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'C',
+                'variationRecords' => [
+                    [
+                        'id' => 654
+                    ]
+                ]
+            ]
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->mockService->shouldReceive('delete')
+            ->with(654);
+
+        $this->assertTrue($this->sut->restore(123, $parentId));
+    }
+
+    /**
+     * @dataProvider providerCanEditRecord
+     */
+    public function testCanEditRecord($stubbedCondition, $expected)
+    {
+        $id = 123;
+        $parentId = 321;
+
+        $this->mockGetConditionForVariation($id, $parentId, $stubbedCondition);
+
+        $this->assertEquals($expected, $this->sut->canEditRecord($id, $parentId));
+    }
+
+    /**
+     * @dataProvider providerDetermineAction
+     */
+    public function testDetermineAction($stubbedCondition, $expected)
+    {
+        $id = 123;
+        $parentId = 321;
+
+        $this->mockGetConditionForVariation($id, $parentId, $stubbedCondition);
+
+        $this->assertEquals($expected, $this->sut->determineAction($id, $parentId));
+        // Assert twice to test caching
+        $this->assertEquals($expected, $this->sut->determineAction($id, $parentId));
+    }
+
+    /**
+     * @dataProvider providerGetTableDataEmpty
+     */
+    public function testGetTableData($stubbedData, $expected)
+    {
+        $id = 123;
+
+        $this->mockGetForVariation($id, $stubbedData);
+
+        $this->assertEquals($expected, $this->sut->getTableData($id));
+        // Assert twice to test caching
+        $this->assertEquals($expected, $this->sut->getTableData($id));
+    }
+
+    public function testSaveAdd()
     {
         $data = [
             'foo' => 'bar'
@@ -40,26 +173,154 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
 
         $expectedData = [
             'foo' => 'bar',
+            'action' => 'A',
             'addedVia' => ConditionUndertakingEntityService::ADDED_VIA_APPLICATION
         ];
 
-        // Mocks
-        $entityService = m::mock();
-        $this->sm->setService('Entity\ConditionUndertaking', $entityService);
-
         // Expectations
-        $entityService->shouldReceive('save')
+        $this->mockService->shouldReceive('save')
             ->with($expectedData)
             ->andReturn(['id' => 123]);
 
         $this->assertEquals(123, $this->sut->save($data));
     }
 
-    public function testGetTableData()
+    /**
+     * @dataProvider providerSaveEdit
+     */
+    public function testSaveEdit($action)
     {
-        $id = 1;
+        $data = [
+            'id' => 123,
+            'application' => 321
+        ];
 
-        $this->assertEquals([], $this->sut->getTableData($id));
+        // AEU (Only actions we can edit)
+        $stubbedCondition = [
+            'id' => 123,
+            'action' => $action
+        ];
+
+        $this->mockGetConditionForVariation(123, 321, $stubbedCondition);
+
+        $expectedData = [
+            'id' => 123,
+            'application' => 321
+        ];
+
+        // Expectations
+        $this->mockService->shouldReceive('save')
+            ->with($expectedData)
+            ->andReturn(['id' => 123]);
+
+        $this->assertEquals(123, $this->sut->save($data));
+    }
+
+    public function testSaveEditExisting()
+    {
+        $data = [
+            'id' => 123,
+            'application' => 321
+        ];
+
+        // AEU (Only actions we can edit)
+        $stubbedCondition = [
+            'id' => 123,
+            'action' => 'E',
+            'addedVia' => [
+                'id' => 'case'
+            ]
+        ];
+
+        $this->mockGetConditionForVariation(123, 321, $stubbedCondition);
+
+        $expectedData = [
+            'application' => 321,
+            'addedVia' => 'case',
+            'action' => 'U',
+            'licConditionVariation' => 123
+        ];
+
+        // Expectations
+        $this->mockService->shouldReceive('save')
+            ->with($expectedData)
+            ->andReturn(['id' => 789]);
+
+        $this->assertEquals(789, $this->sut->save($data));
+    }
+
+    public function testDeleteWithoutAction()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'C'
+            ],
+            [
+                'id' => 456,
+                'action' => 'D'
+            ]
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->assertNull($this->sut->delete(123, $parentId));
+        $this->assertNull($this->sut->delete(456, $parentId));
+    }
+
+    public function testDeleteWithDelete()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'A'
+            ],
+            [
+                'id' => 456,
+                'action' => 'U'
+            ]
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->mockService->shouldReceive('delete')
+            ->with(123)
+            ->shouldReceive('delete')
+            ->with(456);
+
+        $this->assertNull($this->sut->delete(123, $parentId));
+        $this->assertNull($this->sut->delete(456, $parentId));
+    }
+
+    public function testDeleteWithDelta()
+    {
+        $parentId = 321;
+
+        $stubbedData = [
+            [
+                'id' => 123,
+                'action' => 'E',
+                'foo' => 'bar'
+            ]
+        ];
+        $expectedData = [
+            'foo' => 'bar',
+            'application' => 321,
+            'action' => 'D',
+            'licConditionVariation' => 123
+        ];
+
+        $this->mockGetForVariation($parentId, $stubbedData);
+
+        $this->mockService->shouldReceive('save')
+            ->with($expectedData)
+            ->andReturn(['id' => 789]);
+
+        $this->assertNull($this->sut->delete(123, $parentId));
     }
 
     public function testProcessDataForSave()
@@ -198,5 +459,135 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
             );
 
         $this->sut->alterForm($form, $id);
+    }
+
+    public function testAlterTable()
+    {
+        $table = m::mock('\Common\Service\Table\TableBuilder');
+
+        $this->assertNull($this->sut->alterTable($table));
+    }
+
+    public function providerGetTableDataEmpty()
+    {
+        return [
+            [
+                [],
+                []
+            ],
+            [
+                [
+                    [
+                        'id' => 12,
+                        'action' => 'A'
+                    ],
+                    [
+                        'id' => 13,
+                        'action' => null,
+                        'variationRecords' => []
+                    ],
+                    [
+                        'id' => 14,
+                        'action' => null,
+                        'variationRecords' => [
+                            ['action' => 'D']
+                        ]
+                    ]
+                ],
+                [
+                    [
+                        'id' => 12,
+                        'action' => 'A'
+                    ],
+                    [
+                        'id' => 13,
+                        'action' => 'E',
+                        'variationRecords' => []
+                    ]
+                ],
+            ]
+        ];
+    }
+
+    public function providerDetermineAction()
+    {
+        return [
+            'Added' => [
+                ['action' => 'A'],
+                'A'
+            ],
+            'Updated' => [
+                ['action' => 'U'],
+                'U'
+            ],
+            'Existing' => [
+                ['action' => null, 'variationRecords' => []],
+                'E'
+            ],
+            'Removed' => [
+                ['variationRecords' => [['action' => 'D']]],
+                'R'
+            ],
+            'Current' => [
+                ['variationRecords' => [['action' => 'U']]],
+                'C'
+            ]
+        ];
+    }
+
+    public function providerCanEditRecord()
+    {
+        return [
+            'Added' => [
+                ['action' => 'A'],
+                true
+            ],
+            'Updated' => [
+                ['action' => 'U'],
+                true
+            ],
+            'Existing' => [
+                ['action' => null, 'variationRecords' => []],
+                true
+            ],
+            'Removed' => [
+                ['variationRecords' => [['action' => 'D']]],
+                false
+            ],
+            'Current' => [
+                ['variationRecords' => [['action' => 'U']]],
+                false
+            ]
+        ];
+    }
+
+    public function providerSaveEdit()
+    {
+        return [
+            ['A'],
+            ['U']
+        ];
+    }
+
+    /**
+     * Helper method to prevent duplicating mock expectations
+     */
+    protected function mockGetConditionForVariation($id, $parentId, $stubbedCondition)
+    {
+        $this->mockService->shouldReceive('getConditionForVariation')
+            ->once()
+            ->with($id, $parentId)
+            ->andReturn($stubbedCondition);
+    }
+
+    /**
+     * Helper method to prevent duplicating mock expectations
+     */
+    protected function mockGetForVariation($id, $stubbedData)
+    {
+        $this->mockService->shouldReceive('getForVariation')
+            ->once()
+            ->with($id)
+            ->andReturn($stubbedData);
     }
 }

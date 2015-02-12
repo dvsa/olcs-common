@@ -14,12 +14,15 @@ return array(
                 'delete' => array('class' => 'secondary', 'requireRows' => true),
                 'restore' => array('class' => 'secondary', 'requireRows' => true)
             )
-        )
+        ),
+        'row-disabled-callback' => function ($row) {
+            return in_array($row['action'], ['D', 'C']);
+        }
     ),
     'columns' => array(
         array(
             'title' => 'lva-conditions-undertakings-table-no',
-            'type' => 'Action',
+            'type' => 'VariationRecordAction',
             'action' => 'edit',
             'formatter' => function ($data, $column) {
                 if (in_array($data['action'], ['U', 'D'])) {
@@ -76,7 +79,10 @@ return array(
         ),
         array(
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
+            'data-attributes' => array(
+                'action'
+            )
         )
     )
 );
