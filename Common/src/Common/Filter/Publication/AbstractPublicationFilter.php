@@ -22,7 +22,9 @@ class AbstractPublicationFilter extends AbstractFilter implements ServiceLocator
 
     protected $publicationNewStatus = 'pub_s_new';
     protected $hearingSectionId = 13;
+    protected $tmHearingSectionId = 27;
     protected $decisionSectionId = 14;
+    protected $tmDecisionSectionId = 28;
 
     /**
      * Merges the new data with the existing ArrayObject
