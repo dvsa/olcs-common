@@ -33,7 +33,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                     ]
                 ]
             ],
-            'tmApplicationStatus',
             'transportManager',
             'tmType',
             'operatingCentres'
@@ -43,7 +42,6 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     protected $grantDataBundle = [
         'children' => [
             'application',
-            'tmApplicationStatus',
             'transportManager',
             'tmType',
             'operatingCentres'
@@ -76,7 +74,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
             }
         }
 
-        return $results;
+        return $finalResults;
     }
 
     /**

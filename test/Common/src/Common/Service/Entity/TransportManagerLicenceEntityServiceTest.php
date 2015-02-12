@@ -31,11 +31,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                 ]
             ],
             'tmType',
-            'tmLicenceOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-             ]
+            'operatingCentres'
         ]
     ];
 
@@ -60,7 +56,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                             'id' => 'lsts_dummy'
                         ]
                     ],
-                    'tmLicenceOcs' => [
+                    'operatingCentres' => [
                         'one',
                         'two'
                     ]
@@ -71,7 +67,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                             'id' => 'lsts_valid'
                         ]
                     ],
-                    'tmLicenceOcs' => [
+                    'operatingCentres' => [
                         'one',
                         'two'
                     ]
@@ -82,7 +78,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                             'id' => 'lsts_suspended'
                         ]
                     ],
-                    'tmLicenceOcs' => [
+                    'operatingCentres' => [
                         'one',
                         'two',
                         'three'
@@ -90,6 +86,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                 ],
             ]
         ];
+
         $status = [
             'lsts_valid',
             'lsts_suspended',
@@ -103,7 +100,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                         'id' => 'lsts_valid'
                     ]
                 ],
-                'tmLicenceOcs' => [
+                'operatingCentres' => [
                     'one',
                     'two'
                 ],
@@ -115,7 +112,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
                         'id' => 'lsts_suspended'
                     ]
                 ],
-                'tmLicenceOcs' => [
+                'operatingCentres' => [
                     'one',
                     'two',
                     'three'
@@ -132,7 +129,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
 
     /**
      * Test get transport manager licence
-     * 
+     *
      * @group transportManagerLicences
      */
     public function testGetTransportManagerLicence()
