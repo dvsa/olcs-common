@@ -138,7 +138,7 @@ class VariationConditionsUndertakingsAdapter extends AbstractConditionsUndertaki
     {
         $data = $this->getConditionData($id, $parentId);
 
-        if (isset($data['action']) && !empty(isset($data['action']))) {
+        if (isset($data['action']) && !empty($data['action'])) {
             return $data['action'];
         }
 

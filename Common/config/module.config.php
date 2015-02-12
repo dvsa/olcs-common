@@ -36,6 +36,26 @@ return array(
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
+            'LvaApplication/BusinessType' => array(
+                // @NOTE: we need an associative array when we need to override the
+                // delegator elsewhere, such as in selfserve or internal
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaLicence/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaVariation/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaApplication/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaLicence/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaVariation/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -62,6 +82,15 @@ return array(
             ),
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
+            ),
+            'LvaApplication/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\ApplicationCommunityLicenceDelegator'
+            ),
+            'LvaVariation/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\VariationCommunityLicenceDelegator'
+            ),
+            'LvaLicence/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
             'LvaApplication/ConditionsUndertakings' => array(
                 'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
@@ -158,12 +187,22 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
+            'GenericBusinessDetailsAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
             'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
             'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
             'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
+            'ApplicationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter',
+            'VariationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
+            'LicenceCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -173,6 +212,7 @@ return array(
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
+            'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'

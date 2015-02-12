@@ -7,13 +7,17 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+
 /**
  * Shared logic between Business type controllers
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessTypeController extends AbstractController
+abstract class AbstractBusinessTypeController extends AbstractController implements AdapterAwareInterface
 {
+    use Traits\AdapterAwareTrait;
+
     /**
      * Business type section
      */
@@ -33,11 +37,7 @@ abstract class AbstractBusinessTypeController extends AbstractController
 
         $this->alterFormForLva($form);
 
-        if ($this->getServiceLocator()->has('Lva\BusinessType')) {
-            $this->getServiceLocator()
-                ->get('Lva\BusinessType')
-                ->alterFormForLva($form, $orgId, $this->lva);
-        }
+        $this->getAdapter()->alterFormForOrganisation($form, $orgId);
 
         if ($request->isPost() && $form->isValid()) {
             $this->getServiceLocator()->get('Entity\Organisation')->save($this->formatDataForSave($orgId, $data));

@@ -9,7 +9,12 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-
+                'add' => array('label' => 'Add', 'class' => 'primary'),
+                'office-licence-add' => array(
+                    'label' => 'Add office licence',
+                    'class' => 'secondary',
+                    'requireRows' => true
+                )
             )
         )
     ),

@@ -11,16 +11,18 @@ use Common\Service\Entity\OrganisationEntityService;
 use Common\Service\Helper\FormHelperService;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Controller\Traits\GenericBusinessDetails;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic between Business Details Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessDetailsController extends AbstractController
+abstract class AbstractBusinessDetailsController extends AbstractController implements AdapterAwareInterface
 {
-    use CrudTableTrait;
-    use GenericBusinessDetails;
+    use CrudTableTrait,
+        GenericBusinessDetails,
+        Traits\AdapterAwareTrait;
 
     protected $section = 'business_details';
 
@@ -29,6 +31,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     public function indexAction()
     {
+        $adapter = $this->getAdapter();
+
         $request = $this->getRequest();
 
         $orgId = $this->getCurrentOrganisationId();
@@ -36,6 +40,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
         $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+
         $natureOfBusiness = $this->getServiceLocator()
             ->get('Entity\OrganisationNatureOfBusiness')
             ->getAllForOrganisationForSelect($orgId);
@@ -51,6 +56,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         $this->alterForm($form, $orgData)
             ->setData($data);
+
+        $adapter->alterFormForOrganisation($form, $orgId);
 
         if ($form->has('table')) {
             $this->populateTable($form, $orgId);
@@ -122,17 +129,24 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     private function processSave($tradingNames, $orgId, $data)
     {
+        $adapter = $this->getAdapter();
+
+        $registeredAddressId = null;
+        $isDirty = false;
+
         if (isset($tradingNames['trading_name']) && !empty($tradingNames['trading_name'])) {
             $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
+
+            $isDirty = $adapter->hasChangedTradingNames($orgId, $tradingNames['tradingNames']);
             $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
         }
 
-        $registeredAddressId = null;
-
         if (isset($data['registeredAddress'])) {
+            $isDirty = $isDirty ?: $adapter->hasChangedRegisteredAddress($orgId, $data['registeredAddress']);
             $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
         }
 
+        $isDirty = $isDirty ?: $adapter->hasChangedNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
         $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
 
         $saveData = $this->formatDataForSave($data);
@@ -140,6 +154,15 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         if ($registeredAddressId !== null) {
             $saveData['contactDetails'] = $registeredAddressId;
+        }
+
+        if ($isDirty) {
+            $adapter->postSave(
+                [
+                    'licence' => $this->getLicenceId(),
+                    'user' => $this->getLoggedInUser()
+                ]
+            );
         }
 
         $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
@@ -157,15 +180,19 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
     private function addOrEdit($mode)
     {
+        $adapter = $this->getAdapter();
+
         $orgId = $this->getCurrentOrganisationId();
         $request = $this->getRequest();
-
+        $id = $this->params('child_id');
         $data = array();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
+
             $data = $this->formatCrudDataForForm(
-                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($this->params('child_id'))
+                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)
             );
         }
 
@@ -180,6 +207,17 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($data);
             $data['organisation'] = $orgId;
+
+            if ($id === null || $adapter->hasChangedSubsidiaryCompany($id, $data)) {
+                $adapter->postCrudSave(
+                    $id === null ? 'added' : 'updated',
+                    [
+                        'licence' => $this->getLicenceId(),
+                        'user'    => $this->getLoggedInUser(),
+                        'name'    => $data['name']
+                    ]
+                );
+            }
 
             $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
 
@@ -218,13 +256,21 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     private function formatDataForSave($data)
     {
-        return array(
-            'version' => $data['version'],
-            'companyOrLlpNo' => isset($data['data']['companyNumber']['company_number'])
-            ? $data['data']['companyNumber']['company_number']
-            : null,
-            'name' => isset($data['data']['name']) ? $data['data']['name'] : null
+        $persist = array(
+            'version' => $data['version']
         );
+
+        $data = $data['data'];
+
+        if (isset($data['companyNumber']['company_number'])) {
+            $persist['companyOrLlpNo'] = $data['companyNumber']['company_number'];
+        }
+
+        if (isset($data['name'])) {
+            $persist['name'] = $data['name'];
+        }
+
+        return $persist;
     }
 
     /**
@@ -367,11 +413,28 @@ abstract class AbstractBusinessDetailsController extends AbstractController
      */
     protected function delete()
     {
+        $adapter = $this->getAdapter();
+
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
         foreach ($ids as $id) {
-            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
+            $company = $this->getServiceLocator()
+                ->get('Entity\CompanySubsidiary')
+                ->getById($id);
+
+            $this->getServiceLocator()
+                ->get('Entity\CompanySubsidiary')
+                ->delete($id);
+
+            $adapter->postCrudSave(
+                'deleted',
+                [
+                    'licence' => $this->getLicenceId(),
+                    'user'    => $this->getLoggedInUser(),
+                    'name'    => $company['name']
+                ]
+            );
         }
     }
 }
