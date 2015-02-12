@@ -64,6 +64,7 @@ class DocumentGenerationHelperService extends AbstractHelperService
 
         $filePath = $this->getServiceLocator()
             ->get('Helper\Date')
+            // @FIXME: generates clashes with multiple documents...
             ->getDate('YmdHi') . '_' . $filename . '.rtf';
 
         return $uploader->upload($folder, $filePath);
