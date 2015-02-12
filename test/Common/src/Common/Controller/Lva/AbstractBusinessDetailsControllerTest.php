@@ -764,6 +764,10 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
     {
         $form = $this->createMockForm('Lva\BusinessDetailsSubsidiaryCompany');
 
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
+
         $form->shouldReceive('setData')
             ->with([]);
 
@@ -784,6 +788,10 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
             'data' => ['name' => 'bar']
         ];
         $this->setPost($postData);
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
 
         $form->shouldReceive('setData')
             ->with($postData)

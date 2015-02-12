@@ -184,14 +184,13 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
 
         $orgId = $this->getCurrentOrganisationId();
         $request = $this->getRequest();
-        $id = null;
+        $id = $this->params('child_id');
         $data = array();
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
 
-            $id = $this->params('child_id');
             $data = $this->formatCrudDataForForm(
                 $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)
             );
