@@ -174,9 +174,29 @@ class FileUploadHelperService extends AbstractHelperService
 
         $element->get('list')->setFiles($files, $url);
 
-        if (!is_null($this->getCountSelector())) {
-            $this->findElement($this->getForm(), $this->getCountSelector())
-                ->setValue(count($files));
+        $this->updateCount(count($files));
+
+    }
+
+    protected function updateCount($count)
+    {
+        $selector = $this->getCountSelector();
+
+        if (!is_null($selector)) {
+            $this->findElement($this->getForm(), $selector)->setValue($count);
+        }
+    }
+
+    protected function decrementCount()
+    {
+        $selector = $this->getCountSelector();
+
+        if (!is_null($selector)) {
+            $element = $this->findElement($this->getForm(), $selector);
+            $count = (int)$element->getValue();
+            if ($count>0) {
+                $element->setValue($count - 1);
+            }
         }
     }
 
@@ -283,6 +303,7 @@ class FileUploadHelperService extends AbstractHelperService
 
                 if ($success === true) {
                     $element->remove($name);
+                    $this->decrementCount();
                 }
 
                 return true;
