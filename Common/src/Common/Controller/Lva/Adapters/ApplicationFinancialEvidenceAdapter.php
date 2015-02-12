@@ -361,7 +361,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             // filter out the current application
             $this->otherApplications = array_filter(
                 $applications,
-                function ($application) {
+                function ($application) use ($applicationId) {
                     return $application['id'] != $applicationId;
                 }
             );

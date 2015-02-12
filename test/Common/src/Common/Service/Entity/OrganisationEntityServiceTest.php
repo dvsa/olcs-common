@@ -155,52 +155,62 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetNewApplications()
+    public function testGetNewApplicationsByStatus()
     {
         $orgData = [
             'licences' => [
                 [
                     'id' => 7,
                     'applications' => [
-                        [
-                            'id' => 20,
-                            'isVariation' => false,
-                        ],
-                        [
-                            'id' => 21,
-                            'isVariation' => true,
-                        ],
+                        ['id' => 20],
+                        ['id' => 21],
                     ],
                 ],
                 [
                     'id' => 8,
                     'applications' => [
-                        [
-                            'id' => 22,
-                            'isVariation' => true,
-                        ],
-                        [
-                            'id' => 23,
-                            'isVariation' => false,
-                        ],
+                        ['id' => 22],
+                        ['id' => 23],
                     ],
                 ],
             ],
         ];
 
-        $this->expectOneRestCall('Organisation', 'GET', 123)
-            ->will($this->returnValue($orgData));
-
-        $expected = [
-            [
-                'id' => 20,
-                'isVariation' => false,
-            ],
-            [
-                'id' => 23,
-                'isVariation' => false,
+        $expectedBundle = [
+            'children' => [
+                'licences' => [
+                    'children' => [
+                        'applications' => [
+                            'children' => ['status'],
+                            'criteria' => [
+                                'status' => 'IN ["apsts_consideration","apsts_granted"]',
+                                'isVariation' => false,
+                            ],
+                        ],
+                        'licenceType',
+                        'status',
+                    ],
+                ],
             ],
         ];
-        $this->assertEquals($expected, $this->sut->getNewApplications(123));
+        $this->expectOneRestCall('Organisation', 'GET', 123, $expectedBundle)
+            ->will($this->returnValue($orgData));
+
+        $expectedResult = [
+            ['id' => 20],
+            ['id' => 21],
+            ['id' => 22],
+            ['id' => 23],
+        ];
+        $this->assertEquals(
+            $expectedResult,
+            $this->sut->getNewApplicationsByStatus(
+                123,
+                [
+                    'apsts_consideration',
+                    'apsts_granted'
+                ]
+            )
+        );
     }
 }

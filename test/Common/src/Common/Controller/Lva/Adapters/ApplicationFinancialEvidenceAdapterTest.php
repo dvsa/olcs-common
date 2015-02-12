@@ -66,16 +66,8 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 
             ],
             [
-                'id' => 236,
-                'status' => [ 'id' => Licence::LICENCE_STATUS_GRANTED ], // should be ignored
-                'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_GOODS_VEHICLE ],
-                'licenceType' => [ 'id' => Licence::LICENCE_TYPE_RESTRICTED ],
-                'totAuthVehicles' => 69,
-
-            ],
-            [
                 'id' => 237,
-                'status' => [ 'id' => Licence::LICENCE_STATUS_SUSPENDED ], // should be included
+                'status' => [ 'id' => Licence::LICENCE_STATUS_SUSPENDED ],
                 'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_PSV ],
                 'licenceType' => [ 'id' => Licence::LICENCE_TYPE_RESTRICTED ],
                 'totAuthVehicles' => 1,
@@ -84,9 +76,16 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         ];
 
         $mockOrganisationEntityService = m::mock()
-            ->shouldReceive('getLicences')
+            ->shouldReceive('getLicencesByStatus')
             ->once()
-            ->with(99)
+            ->with(
+                99,
+                [
+                    Licence::LICENCE_STATUS_VALID,
+                    Licence::LICENCE_STATUS_SUSPENDED,
+                    Licence::LICENCE_STATUS_CURTAILED
+                ]
+            )
             ->andReturn($licences)
             ->getMock();
 
@@ -108,9 +107,15 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         ];
 
         $mockOrganisationEntityService
-            ->shouldReceive('getNewApplications')
+            ->shouldReceive('getNewApplicationsByStatus')
             ->once()
-            ->with(99)
+             ->with(
+                99,
+                [
+                    Application::APPLICATION_STATUS_UNDER_CONSIDERATION,
+                    Application::APPLICATION_STATUS_GRANTED,
+                ]
+            )
             ->andReturn($currentApplications);
 
         $this->sm->setService('Entity\Organisation', $mockOrganisationEntityService);

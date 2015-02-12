@@ -120,23 +120,18 @@ class OrganisationEntityService extends AbstractEntityService
 
     /**
      * @param int $id organisation id
-     * @param string|array $applicationStatus only return child applications
-     *        matching this/these status(es)
+     * @param array $applicationStatuses only return child applications
+     *        matching these statuses
      * @return array
      */
-    public function getNewApplicationsByStatus($id, $applicationStatus)
+    public function getNewApplicationsByStatus($id, $applicationStatuses)
     {
         $applications = [];
 
-        if (is_array($applicationStatus)) {
-            $statusCriteria = 'IN ["'.implode('","', $applicationStatus).'"]';
-        } else {
-            $statusCriteria = $applicationStatus;
-        }
-
         $bundle = $this->applicationsBundle;
         $bundle['children']['licences']['children']['applications']['criteria'] = [
-            'status' => $statusCriteria
+            'status' => 'IN ["'.implode('","', $applicationStatuses).'"]',
+            'isVariation' => false,
         ];
 
         $data = $this->get($id, $bundle);
@@ -201,21 +196,15 @@ class OrganisationEntityService extends AbstractEntityService
 
     /**
      * @param int $id organisation id
-     * @param string|array $licenceStatus only return child licences matching
-     *        this/these status(es)
+     * @param array $licenceStatuses only return child licences matching
+     *        these statuses
      * @return array
      */
-    public function getLicencesByStatus($id, $licenceStatus)
+    public function getLicencesByStatus($id, $licenceStatuses)
     {
-        if (is_array($licenceStatus)) {
-            $statusCriteria = 'IN ["'.implode('","', $licenceStatus).'"]';
-        } else {
-            $statusCriteria = $licenceStatus;
-        }
-
         $bundle = $this->licencesBundle;
         $bundle['children']['licences']['criteria'] = [
-            'status' => $statusCriteria
+            'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
         ];
 
         return $this->get($id, $bundle)['licences'];
