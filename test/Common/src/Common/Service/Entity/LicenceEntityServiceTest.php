@@ -880,6 +880,36 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
+     * @group licenceEntity
+     */
+    public function testUpdateCommunityLicencesCount()
+    {
+        $licenceId = 1;
+        $licenceData = [
+            'version' => 1
+        ];
+        $saveData = [
+            'id' => $licenceId,
+            'version' => 1,
+            'totCommunityLicences' => 2
+        ];
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn(['Count' => 2])
+            ->getMock();
+
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $saveData);
+
+        $this->sut->updateCommunityLicencesCount($licenceId);
+    }
+
+    /**
      * @group entity_services
      */
     public function testGetInforceForOrganisation()
