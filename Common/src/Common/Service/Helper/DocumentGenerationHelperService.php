@@ -15,6 +15,13 @@ namespace Common\Service\Helper;
 class DocumentGenerationHelperService extends AbstractHelperService
 {
     /**
+     * Hold an in memory cache of templates fetched from the store;
+     * Useful when multiple copies of the same template are printed
+     * during a single request
+     */
+    private $templateCache = [];
+
+    /**
      * Helper method to generate a string of content from a given template and
      * query parameters
      *
@@ -28,9 +35,7 @@ class DocumentGenerationHelperService extends AbstractHelperService
     {
         $documentService = $this->getServiceLocator()->get('Document');
 
-        $file = $this->getServiceLocator()
-            ->get('ContentStore')
-            ->read('/templates/' . $template . '.rtf');
+        $file = $this->getTemplate($template);
 
         $query = $documentService->getBookmarkQueries($file, $queryData);
 
@@ -62,5 +67,16 @@ class DocumentGenerationHelperService extends AbstractHelperService
             ->getDate('YmdHi') . '_' . $filename . '.rtf';
 
         return $uploader->upload($folder, $filePath);
+    }
+
+    private function getTemplate($template)
+    {
+        if (!isset($this->templates[$template])) {
+            $this->templates[$template] = $this->getServiceLocator()
+                ->get('ContentStore')
+                ->read('/templates/' . $template . '.rtf');
+        }
+
+        return $this->templates[$template];
     }
 }

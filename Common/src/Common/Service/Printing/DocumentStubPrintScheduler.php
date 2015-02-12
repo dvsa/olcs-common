@@ -20,7 +20,7 @@ class DocumentStubPrintScheduler implements PrintSchedulerInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function enqueueFile(File $file, $jobName)
+    public function enqueueFile(File $file, $jobName, $options = [])
     {
         $data = [
             'identifier'    => $file->getIdentifier(),
