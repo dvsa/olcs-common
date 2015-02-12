@@ -102,4 +102,21 @@ class PsvDiscEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->requestDiscs($count, $data);
     }
+
+    /**
+     * @group psvDiscEntityService
+     */
+    public function testGetNotCeasedDiscs()
+    {
+        $licenceId = 1;
+        $query = [
+            'ceasedDate' => 'NULL',
+            'licence' => $licenceId,
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('PsvDisc', 'GET', $query);
+
+        $this->sut->getNotCeasedDiscs($licenceId);
+    }
 }

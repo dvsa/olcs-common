@@ -65,6 +65,9 @@ class SectionConfig implements ServiceLocatorAwareInterface
             )
         ),
         'financial_evidence' => array(
+            'prerequisite' => array(
+                'operating_centres'
+            ),
             'restricted' => array(
                 array(
                     array(

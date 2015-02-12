@@ -58,14 +58,10 @@ class OrganisationNatureOfBusinessEntityService extends AbstractEntityService
      */
     public function getAllForOrganisationForSelect($orgId)
     {
-        $query = [
-            'organisation' => $orgId
-        ];
-
-        $data = $this->getAll($query, $this->dataBundle);
+        $data = $this->getAllForOrganisation($orgId);
 
         $normalized = [];
-        foreach ($data['Results'] as $value) {
+        foreach ($data as $value) {
             $normalized[] = $value['refData']['id'];
         }
         return $normalized;

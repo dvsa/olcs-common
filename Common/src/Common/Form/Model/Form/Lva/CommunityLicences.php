@@ -13,6 +13,12 @@ use Zend\Form\Annotation as Form;
 class CommunityLicences
 {
     /**
+     * @Form\Name("data")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\CommunityLicencesData")
+     */
+    public $data = null;
+
+    /**
      * @Form\Name("table")
      * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
      */

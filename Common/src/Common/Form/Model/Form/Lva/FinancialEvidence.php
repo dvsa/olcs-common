@@ -13,10 +13,23 @@ use Zend\Form\Annotation as Form;
 class FinancialEvidence
 {
     /**
-     * @Form\Name("table")
-     * @Form\ComposedObject("Common\Form\Model\Fieldset\Table")
+     * @Form\Name("finance")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceFinance")
      */
-    public $table = null;
+    public $finance = null;
+
+    /**
+     * @Form\Name("evidence")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidenceEvidence")
+     * @Form\Options({"label": "lva-financial-evidence-evidence.label"})
+     */
+    public $evidence = null;
+
+    /**
+     * @Form\Name("sendByPost")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FinancialEvidencePost")
+     */
+    public $sendByPost = null;
 
     /**
      * @Form\Name("form-actions")
@@ -24,4 +37,16 @@ class FinancialEvidence
      * @Form\Attributes({"class":"actions-container"})
      */
     public $formActions = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $version = null;
+
+    /**
+     * @Form\Attributes({"value":""})
+     * @Form\Type("Hidden")
+     */
+    public $id = null;
 }
