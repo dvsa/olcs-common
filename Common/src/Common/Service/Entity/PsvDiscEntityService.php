@@ -21,6 +21,12 @@ class PsvDiscEntityService extends AbstractEntityService
      */
     protected $entity = 'PsvDisc';
 
+    protected $bundle = [
+        'children' => [
+            'licence'
+        ]
+    ];
+
     public function ceaseDiscs(array $ids = array())
     {
         $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
@@ -57,5 +63,21 @@ class PsvDiscEntityService extends AbstractEntityService
         $postData['_OPTIONS_'] = array('multiple' => true);
 
         $this->save($postData);
+    }
+
+    /**
+     * Get active and pending discs
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getNotCeasedDiscs($licenceId)
+    {
+        $query = [
+            'ceasedDate' => 'NULL',
+            'licence' => $licenceId
+        ];
+
+        return $this->getAll($query, $this->bundle);
     }
 }

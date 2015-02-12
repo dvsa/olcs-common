@@ -152,6 +152,332 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('LICENCES', $this->sut->getLicences($id));
     }
 
+    public function testChangedTradingNamesWithNoDiffs()
+    {
+        $existing = [
+            'tradingNames' => [
+                [
+                    'name' => 'foo'
+                ],
+                [
+                    'name' => 'bar'
+                ]
+            ]
+        ];
+
+        $updated = [
+            [
+                'name' => 'foo'
+            ],
+            [
+                'name' => 'bar'
+            ]
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertFalse($this->sut->hasChangedTradingNames($id, $updated));
+    }
+
+    public function testChangedTradingNamesWithAdded()
+    {
+        $existing = [
+            'tradingNames' => [
+                [
+                    'name' => 'foo'
+                ]
+            ]
+        ];
+
+        $updated = [
+            [
+                'name' => 'foo'
+            ],
+            [
+                'name' => 'bar'
+            ]
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+    }
+
+    public function testChangedTradingNamesWithRemoved()
+    {
+        $existing = [
+            'tradingNames' => [
+                [
+                    'name' => 'foo'
+                ],
+                [
+                    'name' => 'bar'
+                ]
+            ]
+        ];
+
+        $updated = [
+            [
+                'name' => 'bar'
+            ]
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+    }
+
+    public function testChangedTradingNamesWithDifferentValues()
+    {
+        $existing = [
+            'tradingNames' => [
+                [
+                    'name' => 'foo'
+                ],
+                [
+                    'name' => 'bar'
+                ]
+            ]
+        ];
+
+        $updated = [
+            [
+                'name' => 'foo'
+            ],
+            [
+                'name' => 'baz'
+            ]
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertTrue($this->sut->hasChangedTradingNames($id, $updated));
+    }
+
+    public function testHasChangedRegisteredAddressWithNoDiffs()
+    {
+        $existing = [
+            'contactDetails' => [
+                'address' => [
+                    'addressLine1' => 'one',
+                    'addressLine2' => 'two',
+                    'addressLine3' => 'three',
+                    'addressLine4' => 'four',
+                    'postcode' => 'LS20',
+                    'town' => 'Leeds'
+                ]
+            ]
+        ];
+
+        $updated = [
+            'addressLine1' => 'one',
+            'addressLine2' => 'two',
+            'addressLine3' => 'three',
+            'addressLine4' => 'four',
+            'postcode' => 'LS20',
+            'town' => 'Leeds'
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertFalse($this->sut->hasChangedRegisteredAddress($id, $updated));
+    }
+
+    public function testHasChangedRegisteredAddressWithDifferentData()
+    {
+        $existing = [
+            'contactDetails' => [
+                'address' => [
+                    'addressLine1' => 'one',
+                    'addressLine2' => 'six',
+                    'addressLine3' => 'three',
+                    'addressLine4' => 'ten',
+                    'postcode' => 'LS20',
+                    'town' => 'Leeds'
+                ]
+            ]
+        ];
+
+        $updated = [
+            'addressLine1' => 'one',
+            'addressLine2' => 'two',
+            'addressLine3' => 'three',
+            'addressLine4' => 'four',
+            'postcode' => 'LS20',
+            'town' => 'Leeds'
+        ];
+
+        $id = 1;
+
+        $this->expectOneRestCall('Organisation', 'GET', $id)
+            ->will($this->returnValue($existing));
+
+        $this->assertTrue($this->sut->hasChangedRegisteredAddress($id, $updated));
+    }
+
+    public function testChangedNatureOfBusinessWithNoDiffs()
+    {
+        $existing = [
+            'foo', 'bar'
+        ];
+
+        $updated = [
+            'foo', 'bar'
+        ];
+
+        $id = 1;
+
+        $this->sm->setService(
+            'Entity\OrganisationNatureOfBusiness',
+            m::mock()
+            ->shouldReceive('getAllForOrganisationForSelect')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertFalse($this->sut->hasChangedNatureOfBusiness($id, $updated));
+    }
+
+    public function testChangedNatureOfBusinessWithDifferentValues()
+    {
+        $existing = [
+            'foo', 'baz'
+        ];
+
+        $updated = [
+            'foo', 'bar'
+        ];
+
+        $id = 1;
+
+        $this->sm->setService(
+            'Entity\OrganisationNatureOfBusiness',
+            m::mock()
+            ->shouldReceive('getAllForOrganisationForSelect')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
+    }
+
+    public function testChangedNatureOfBusinessWithAdded()
+    {
+        $existing = [
+            'foo', 'bar'
+        ];
+
+        $updated = [
+            'foo', 'bar', 'baz'
+        ];
+
+        $id = 1;
+
+        $this->sm->setService(
+            'Entity\OrganisationNatureOfBusiness',
+            m::mock()
+            ->shouldReceive('getAllForOrganisationForSelect')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
+    }
+
+    public function testChangedNatureOfBusinessWithRemoved()
+    {
+        $existing = [
+            'foo', 'bar', 'baz'
+        ];
+
+        $updated = [
+            'foo', 'bar'
+        ];
+
+        $id = 1;
+
+        $this->sm->setService(
+            'Entity\OrganisationNatureOfBusiness',
+            m::mock()
+            ->shouldReceive('getAllForOrganisationForSelect')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
+    }
+
+    public function testHasChangedSubsidiaryCompanyWithNoDiffs()
+    {
+        $existing = [
+            'companyNo' => '1234',
+            'name' => 'foo'
+        ];
+
+        $updated = [
+            'companyNo' => '1234',
+            'name' => 'foo'
+        ];
+
+        $id = 123;
+
+        $this->sm->setService(
+            'Entity\CompanySubsidiary',
+            m::mock()
+            ->shouldReceive('getById')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertFalse($this->sut->hasChangedSubsidiaryCompany($id, $updated));
+    }
+
+    public function testHasChangedSubsidiaryCompanyWithDifferentData()
+    {
+        $existing = [
+            'companyNo' => '1234',
+            'name' => 'foo'
+        ];
+
+        $updated = [
+            'companyNo' => '4212',
+            'name' => 'foo'
+        ];
+
+        $id = 123;
+
+        $this->sm->setService(
+            'Entity\CompanySubsidiary',
+            m::mock()
+            ->shouldReceive('getById')
+            ->with($id)
+            ->andReturn($existing)
+            ->getMock()
+        );
+
+        $this->assertTrue($this->sut->hasChangedSubsidiaryCompany($id, $updated));
+    }
+
     /**
      * @group entity_services
      */

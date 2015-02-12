@@ -194,6 +194,73 @@ class OrganisationEntityService extends AbstractEntityService
         return $licences['Count'] > 0;
     }
 
+    public function hasChangedTradingNames($id, $tradingNames)
+    {
+        $data = $this->getBusinessDetailsData($id);
+
+        $map = function ($v) {
+            return $v['name'];
+        };
+
+        $existing = array_map($map, $data['tradingNames']);
+        $updated  = array_map($map, $tradingNames);
+
+        return count($existing) !== count($updated) || !empty(array_diff($updated, $existing));
+    }
+
+    public function hasChangedRegisteredAddress($id, $address)
+    {
+        $data = $this->getBusinessDetailsData($id);
+
+        $diff = $this->compareKeys(
+            $data['contactDetails']['address'],
+            $address,
+            [
+                'addressLine1', 'addressLine2',
+                'addressLine3', 'addressLine4',
+                'postcode', 'town',
+            ]
+        );
+
+        return !empty($diff);
+    }
+
+    public function hasChangedNatureOfBusiness($id, $updated)
+    {
+        $existing = $this->getServiceLocator()
+            ->get('Entity\OrganisationNatureOfBusiness')
+            ->getAllForOrganisationForSelect($id);
+
+        return count($existing) !== count($updated) || !empty(array_diff($updated, $existing));
+    }
+
+    public function hasChangedSubsidiaryCompany($id, $company)
+    {
+        $existing = $this->getServiceLocator()
+            ->get('Entity\CompanySubsidiary')
+            ->getById($id);
+
+        $diff = $this->compareKeys(
+            $existing,
+            $company,
+            [
+                'companyNo',
+                'name'
+            ]
+        );
+
+        return !empty($diff);
+    }
+
+    private function compareKeys($from, $to, $keys = [])
+    {
+        $keys = array_flip($keys);
+        $from = array_intersect_key($from, $keys);
+        $to   = array_intersect_key($to, $keys);
+
+        return array_diff_assoc($to, $from);
+    }
+
     /**
      * @param int $id organisation id
      * @param array $licenceStatuses only return child licences matching
