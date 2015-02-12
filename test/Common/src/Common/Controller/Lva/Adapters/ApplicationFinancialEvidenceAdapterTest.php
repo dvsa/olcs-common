@@ -109,7 +109,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $mockOrganisationEntityService
             ->shouldReceive('getNewApplicationsByStatus')
             ->once()
-             ->with(
+            ->with(
                 99,
                 [
                     Application::APPLICATION_STATUS_UNDER_CONSIDERATION,

@@ -17,8 +17,7 @@ use Common\Service\Entity\LicenceEntityService as Licence;
  */
 abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareAdapter implements
     FinancialEvidenceAdapterInterface
-    {
-
+{
     // these values will be retrieved via SystemParameterEntityService
     // following https://jira.i-env.net/browse/OLCS-6988
     const RATE_GOODS_FIRST_STANDARD        = 7000;

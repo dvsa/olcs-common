@@ -135,23 +135,6 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertTrue($this->sut->hasInForceLicences(123));
     }
 
-    /**
-     * @group entity_services
-     */
-    public function testGetLicences()
-    {
-        $id = 3;
-
-        $orgData = [
-            'licences' => 'LICENCES'
-        ];
-
-        $this->expectOneRestCall('Organisation', 'GET', $id)
-            ->will($this->returnValue($orgData));
-
-        $this->assertEquals('LICENCES', $this->sut->getLicences($id));
-    }
-
     public function testChangedTradingNamesWithNoDiffs()
     {
         $existing = [
@@ -534,7 +517,46 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
                 123,
                 [
                     'apsts_consideration',
-                    'apsts_granted'
+                    'apsts_granted',
+                ]
+            )
+        );
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetLicencesByStatus()
+    {
+        $orgData = [
+            'licences' => 'LICENCES'
+        ];
+
+        $expectedBundle = [
+            'children' => [
+                'licences' => [
+                    'children' => [
+                        'licenceType',
+                        'status',
+                        'goodsOrPsv',
+                    ],
+                    'criteria' => [
+                        'status' => 'IN ["lsts_valid","lsts_suspended","lsts_curtailed"]'
+                    ],
+                ],
+            ],
+        ];
+        $this->expectOneRestCall('Organisation', 'GET', 123, $expectedBundle)
+            ->will($this->returnValue($orgData));
+
+        $this->assertEquals(
+            'LICENCES',
+            $this->sut->getLicencesByStatus(
+                123,
+                [
+                    'lsts_valid',
+                    'lsts_suspended',
+                    'lsts_curtailed',
                 ]
             )
         );

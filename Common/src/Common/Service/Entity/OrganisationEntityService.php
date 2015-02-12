@@ -113,11 +113,6 @@ class OrganisationEntityService extends AbstractEntityService
         return $this->get($id, $this->applicationsBundle);
     }
 
-    public function getLicences($id)
-    {
-        return $this->get($id, $this->licencesBundle)['licences'];
-    }
-
     /**
      * @param int $id organisation id
      * @param array $applicationStatuses only return child applications
@@ -273,7 +268,6 @@ class OrganisationEntityService extends AbstractEntityService
         $bundle['children']['licences']['criteria'] = [
             'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
         ];
-
         return $this->get($id, $bundle)['licences'];
     }
 }
