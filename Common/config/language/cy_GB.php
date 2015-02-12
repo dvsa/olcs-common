@@ -886,6 +886,7 @@ return array(
     'internal-navigation-transport-manager-processing' => 'W Processing',
     'internal-navigation-transport-manager-processing-decisions' => 'W Decisions',
     'internal-navigation-transport-manager-processing-history' => 'W History',
+    'internal-navigation-transport-manager-processing-publications' => 'W Publication',
     'internal-navigation-transport-manager-processing-notes' => 'W Notes',
     'internal-navigation-transport-manager-processing-tasks' => 'W Tasks',
     'internal-operator-create-new-operator' => 'W Create new operator',
