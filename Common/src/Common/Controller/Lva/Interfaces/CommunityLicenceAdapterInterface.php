@@ -3,14 +3,14 @@
 /**
  * Community Licence Adapter Interface
  *
- * @author Alex Peshkov <alex.peshkov@vltech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Interfaces;
 
 /**
  * Community Licence Adapter Interface
  *
- * @author Alex Peshkov <alex.peshkov@vltech.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 interface CommunityLicenceAdapterInterface extends AdapterInterface
 {

@@ -87,11 +87,7 @@ class CommunityLicEntityService extends AbstractEntityService
             self::STATUS_WITHDRAWN,
             self::STATUS_SUSPENDED
         ];
-        $all = '';
-        foreach ($valid as $status) {
-            $all .= '"' . $status . '",';
-        }
-        return 'IN [' . substr($all, 0, strlen($all) - 1) . ']';
+        return 'IN ["' . implode('","', $valid) . '"]';
     }
 
     /**

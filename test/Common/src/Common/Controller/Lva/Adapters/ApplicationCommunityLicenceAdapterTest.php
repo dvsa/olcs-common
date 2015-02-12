@@ -8,7 +8,7 @@
 namespace CommonTest\Controller\Lva\Adapters;
 
 use Mockery as m;
-use MUnit\Adapter\Mockery\TestCase;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter;
 
 /**
@@ -16,7 +16,7 @@ use Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter;
  *
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class ApplicationCommunityLicenceAdapterTest extends TestCase
+class ApplicationCommunityLicenceAdapterTest extends MockeryTestCase
 {
     protected $sut;
     protected $sm;

@@ -3,7 +3,7 @@
 /**
  * Total Vehicle Authority Validator
  *
- * @author Alex Peshkov <alex.peshkov@alex.pehkov.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace Common\Form\Elements\Validators\Lva;
 
@@ -12,7 +12,7 @@ use Zend\Validator\AbstractValidator;
 /**
  * Total Vehicle Authority Validator
  *
- * @author Alex Peshkov <alex.peshkov@alex.pehkov.co.uk>
+ * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class TotalVehicleAuthorityValidator extends AbstractValidator
 {

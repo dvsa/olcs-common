@@ -496,7 +496,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $return;
     }
 
-
     /**
      * Update community licences count
      * 

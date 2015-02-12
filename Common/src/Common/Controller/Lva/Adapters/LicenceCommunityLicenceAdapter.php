@@ -21,8 +21,6 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
 {
     protected $lva = 'licence';
 
-    protected $entityService = 'Entity\CommunityLic';
-
     /**
      * Add office copy
      *
@@ -34,7 +32,7 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
             'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
             'status' => CommunityLicEntityService::STATUS_ACTIVE
         ];
-        $this->getServiceLocator()->get($this->entityService)->addOfficeCopy($data, $licenceId);
+        $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
     }
 
     /**

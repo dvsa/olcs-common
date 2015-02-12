@@ -21,8 +21,6 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
 {
     protected $lva = 'variation';
 
-    protected $entityService = 'Entity\CommunityLic';
-
     /**
      * Create office copy
      *
@@ -33,7 +31,7 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
         $data = [
             'status' => CommunityLicEntityService::STATUS_PENDING
         ];
-        $this->getServiceLocator()->get($this->entityService)->addOfficeCopy($data, $licenceId);
+        $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
     }
 
     /**
