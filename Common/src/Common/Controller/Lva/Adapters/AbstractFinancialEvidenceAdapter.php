@@ -44,7 +44,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
 
     /**
      * @param array $file
-     * @param int $applicationId
+     * @param int $id
      * @return array
      */
     abstract public function getUploadMetaData($file, $id);
