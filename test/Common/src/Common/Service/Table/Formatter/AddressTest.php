@@ -59,7 +59,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
             array(
                 array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
                 array(),
-                'foo, bar, cake'
+                'foo, bar'
             ),
             array(
                 array(
@@ -69,7 +69,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
                     'addressLine4' => 'fourth'
                 ),
                 array(),
-                'foo, bar, cake, fourth'
+                'foo, bar'
             ),
             array(
                 array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
