@@ -73,7 +73,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $data = $this->formatDataForForm($this->getFormData());
         $form->setData($data);
 
-        $this->getServiceLocator()->get('Script')->loadFile('forms/filter');
+        $this->getServiceLocator()->get('Script')->loadFiles(['forms/filter', 'community-licence']);
 
         return $this->render('community_licences', $form, ['filterForm' => $filterForm]);
     }
@@ -156,7 +156,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     /**
      * Hide Add Office Licence action, if necessary
      *
-     * @param \Common\Service\Table\TableBuilder
+     * @param \Common\Service\Table\TableBuilder $table
      * @return \Common\Service\Table\TableBuilder
      */
     protected function alterTable($table)
@@ -165,8 +165,29 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($officeCopy) {
             $table->removeAction('office-licence-add');
         }
+        if (!$this->checkTableForValidLicences($table)) {
+            $table->removeAction('void');
+        }
 
         return $table;
+    }
+
+    /**
+     * Hide Add Office Licence action, if necessary
+     *
+     * @param \Common\Service\Table\TableBuilder
+     * @return bool
+     */
+    protected function checkTableForValidLicences($table)
+    {
+        $rows = $table->getRows();
+        foreach ($rows as $row) {
+            if (in_array($row['status']['id'], $this->defaultFilters['status'])) {
+                return true;
+                break;
+            }
+        }
+        return false;
     }
 
     /**
@@ -261,5 +282,90 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             ->get('total')
             ->getValidatorChain()
             ->attach($totalVehicleAuthorityValidator);
+    }
+
+    /**
+     * Add action
+     * 
+     */
+    public function voidAction()
+    {
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+
+        $ids = explode(',', $this->params('child_id'));
+        if (!$this->allowToVoid($ids)) {
+            $this->addErrorMessage($translator->translate('internal.community_licence.not_allowed'));
+            return $this->redirectToIndex();
+        }
+        if (!$request->isPost()) {
+            $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesVoid');
+            $view = new ViewModel(['form' => $form]);
+            $view->setTemplate('partials/form');
+            return $this->render($view);
+        }
+
+        if (!$this->isButtonPressed('cancel')) {
+            $this->voidLicences($ids);
+            $this->addSuccessMessage($translator->translate('internal.community_licence.licences_voided'));
+        }
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * Void licences
+     * 
+     * @param array $ids
+     */
+    protected function voidLicences($ids)
+    {
+        $licenceId = $this->getLicenceId();
+        $licences = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
+
+        $data = [
+            'status' => CommunityLicEntityService::STATUS_VOID,
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'licence' => $licenceId
+        ];
+        $dataToVoid = [];
+        foreach ($licences as $licence) {
+            $dataToVoid[] = array_merge($licence, $data);
+        }
+        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
+    }
+
+    /**
+     * Check if selected licences allow to be voided
+     * 
+     * @param string $ids
+     */
+    protected function allowToVoid($ids)
+    {
+        $allow = true;
+        $licenceId = $this->getLicenceId();
+        $licences = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
+        $hasOfficeCopy = false;
+        foreach ($licences as $licence) {
+            if ($licence['issueNo'] === 0) {
+                $hasOfficeCopy = true;
+                break;
+            }
+        }
+        if ($hasOfficeCopy) {
+            $allValidLicences = $this->getServiceLocator()
+                ->get('Entity\CommunityLic')
+                ->getValidLicences($licenceId);
+            foreach ($allValidLicences['Results'] as $validLicence) {
+                if (!in_array($validLicence['id'], $ids)) {
+                    $allow = false;
+                    break;
+                }
+            }
+        }
+        return $allow;
     }
 }

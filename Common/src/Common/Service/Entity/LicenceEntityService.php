@@ -567,6 +567,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
+<<<<<<< HEAD
      * Get data for internal overview
      *
      * @param int $id
@@ -598,6 +599,27 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Get community licences by licence id and ids
+     *
+     * @param int $licenceId
+     * @param array $ids
+     * @return array
+     */
+    public function getCommunityLicencesByLicenceIdAndIds($licenceId, $ids)
+    {
+        $bundle = [
+            'children' => [
+                'communityLics' => [
+                    'criteria' => [
+                        'id' => 'IN [' . implode(',', $ids) . ']'
+                    ]
+                ]
+            ]
+        ];
+        return $this->get($licenceId, $bundle)['communityLics'];
+    }
+
+    /**
      * @param string $type e.g. 'ltyp_sr'
      * @return string e.g. 'SR'
      */
@@ -614,4 +636,5 @@ class LicenceEntityService extends AbstractLvaEntityService
             return $map[$type];
         }
     }
+
 }
