@@ -586,11 +586,17 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
-    protected function createOtherLicences($otherLicence, $transportManagerLicenceId)
+    protected function createOtherLicence($otherLicence, $transportManagerLicenceId)
     {
-        print '<pre>';
-        print_r($otherLicence);
-        exit;
+        $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($otherLicence);
+
+        unset($data['id']);
+        unset($data['version']);
+        unset($data['transportManagerApplication']);
+
+        $data['transportManagerLicence'] = $transportManagerLicenceId;
+
+        $this->getServiceLocator()->get('Entity\OtherLicence')->save($data);
     }
 
     protected function licenceHasTransportManager($transportManagerId, $licenceId)
@@ -603,7 +609,13 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function deleteTransportManager($data, $licenceId)
     {
-
+        $this->getServiceLocator()->get('Entity\TransportManagerLicence')
+            ->deleteList(
+                [
+                    'transportManager' => $data['transportManager']['id'],
+                    'licence' => $licenceId
+                ]
+            );
     }
 
     protected function grantCommunityLicencesData($licenceId)
