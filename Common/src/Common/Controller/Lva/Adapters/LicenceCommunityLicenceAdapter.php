@@ -59,7 +59,9 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
             'status' => CommunityLicEntityService::STATUS_ACTIVE,
         ];
 
-        $identifiers = $this->getServiceLocator()->get('Entity\CommunityLic')->addCommunityLicences($data, $licenceId, $totalLicences);
+        $identifiers = $this->getServiceLocator()
+            ->get('Entity\CommunityLic')
+            ->addCommunityLicences($data, $licenceId, $totalLicences);
 
         return $this->getServiceLocator()
             ->get('Helper\CommunityLicenceDocument')

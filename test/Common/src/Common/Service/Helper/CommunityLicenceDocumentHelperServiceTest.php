@@ -23,7 +23,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
     /**
      * @dataProvider generateBatchProvider
      */
-    public function testGenerateBatchWithPSVLicence($licence, $template)
+    public function testGenerateBatchWithLicences($licence, $template)
     {
         $mockDocument = m::mock();
         $mockFile = m::mock();
