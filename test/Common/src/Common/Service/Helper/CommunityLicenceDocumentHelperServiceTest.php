@@ -33,7 +33,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
             ->with('Entity\Licence')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('getById')
+                ->shouldReceive('getOverview')
                 ->with(123)
                 ->andReturn($licence)
                 ->getMock()

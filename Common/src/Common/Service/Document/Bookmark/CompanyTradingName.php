@@ -60,7 +60,25 @@ class CompanyTradingName extends DynamicBookmark
 
     private function getFirstTradingName($tradingNames)
     {
-        // @TODO: based on created date ASC
-        return $tradingNames[0]['name'];
+        // we could use usort here, but we don't actually want to sort
+        // the whole array; we just want the earliest created so a simple
+        // loop is (probably) quicker
+        $first = null;
+        $name = null;
+        foreach ($tradingNames as $tradingName) {
+            // save a strtotime if it's pointless
+            if ($first === null) {
+                $name = $tradingName['name'];
+                continue;
+            }
+
+            $current = strtotime($tradingName['createdOn']);
+            if ($current < $first) {
+                $first = $current;
+                $name = $tradingName['name'];
+            }
+        }
+
+        return $name;
     }
 }

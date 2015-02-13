@@ -28,7 +28,7 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
         // we need this because we're interested in its category & type
         $licence = $this->getServiceLocator()
             ->get('Entity\Licence')
-            ->getById($licenceId);
+            ->getOverview($licenceId);
 
         foreach ($communityLicenceIds as $id) {
             $template = $this->getTemplateForLicence($licence);
