@@ -91,9 +91,50 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    /**
+     * Holds the licences bundle
+     *
+     * @var array
+     */
+    private $licencesBundle = array(
+        'children' => array(
+            'licences' => array(
+                'children' => array(
+                    'licenceType',
+                    'status',
+                    'goodsOrPsv'
+                )
+            )
+        )
+    );
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
+    }
+
+    /**
+     * @param int $id organisation id
+     * @param array $applicationStatuses only return child applications
+     *        matching these statuses
+     * @return array
+     */
+    public function getNewApplicationsByStatus($id, $applicationStatuses)
+    {
+        $applications = [];
+
+        $bundle = $this->applicationsBundle;
+        $bundle['children']['licences']['children']['applications']['criteria'] = [
+            'status' => 'IN ["'.implode('","', $applicationStatuses).'"]',
+            'isVariation' => false,
+        ];
+
+        $data = $this->get($id, $bundle);
+        foreach ($data['licences'] as $licence) {
+            $applications = array_merge($applications, $licence['applications']);
+        }
+
+        return $applications;
     }
 
     /**
@@ -213,5 +254,20 @@ class OrganisationEntityService extends AbstractEntityService
         $to   = array_intersect_key($to, $keys);
 
         return array_diff_assoc($to, $from);
+    }
+
+    /**
+     * @param int $id organisation id
+     * @param array $licenceStatuses only return child licences matching
+     *        these statuses
+     * @return array
+     */
+    public function getLicencesByStatus($id, $licenceStatuses)
+    {
+        $bundle = $this->licencesBundle;
+        $bundle['children']['licences']['criteria'] = [
+            'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
+        ];
+        return $this->get($id, $bundle)['licences'];
     }
 }
