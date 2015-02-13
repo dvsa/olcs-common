@@ -29,7 +29,7 @@ class GrantCommunityLicenceProcessingService implements ServiceLocatorAwareInter
         $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
         foreach ($results as &$row) {
-            $row['status'] = CommunityLicEntityService::STATUS_VALID;
+            $row['status'] = CommunityLicEntityService::STATUS_ACTIVE;
             $row['specifiedDate'] = $date;
         }
 
