@@ -38,19 +38,23 @@ class GrantCommunityLicenceProcessingServiceTest extends MockeryTestCase
         $licenceId = 321;
         $stubbedPendingLicences = [
             [
+                'id' => 12,
                 'foo' => 'bar'
             ],
             [
+                'id' => 34,
                 'foo' => 'cake'
             ]
         ];
         $expectedData = [
             [
+                'id' => 12,
                 'foo' => 'bar',
                 'status' => CommunityLicEntityService::STATUS_ACTIVE,
                 'specifiedDate' => '2012-01-01'
             ],
             [
+                'id' => 34,
                 'foo' => 'cake',
                 'status' => CommunityLicEntityService::STATUS_ACTIVE,
                 'specifiedDate' => '2012-01-01'
@@ -62,8 +66,10 @@ class GrantCommunityLicenceProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLic);
         $mockDateHelper = m::mock();
         $this->sm->setService('Helper\Date', $mockDateHelper);
+        $mockDocHelper = m::mock();
+        $this->sm->setService('Helper\CommunityLicenceDocument', $mockDocHelper);
 
-        // Expectatiosn
+        // Expectations
         $mockCommunityLic->shouldReceive('getPendingForLicence')
             ->with($licenceId)
             ->andReturn($stubbedPendingLicences)
@@ -72,6 +78,9 @@ class GrantCommunityLicenceProcessingServiceTest extends MockeryTestCase
 
         $mockDateHelper->shouldReceive('getDate')
             ->andReturn('2012-01-01');
+
+        $mockDocHelper->shouldReceive('generateBatch')
+            ->with(321, [12, 34]);
 
         $this->sut->grant($licenceId);
     }

@@ -17,5 +17,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  */
 interface PrintSchedulerInterface extends ServiceLocatorAwareInterface
 {
-    public function enqueueFile(File $file, $jobName);
+    CONST OPTION_DOUBLE_SIDED = 1;
+
+    public function enqueueFile(File $file, $jobName, $options = []);
 }

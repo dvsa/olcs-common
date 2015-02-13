@@ -188,6 +188,32 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut->addCommunityLicences($data, $licenceId, 2);
     }
 
+    /**
+     * @group entity_services
+     */
+    public function testGetWithLicence()
+    {
+        $query = [
+            'foo' => 'bar'
+        ];
+
+        $bundle = [
+            'children' => [
+                'status',
+                'licence' => [
+                    'children' => [
+                        'licenceType'
+                    ]
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('CommunityLic', 'GET', $query, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getWithLicence($query));
+    }
+
     public function testGetPendingForLicence()
     {
         $licenceId = 123;

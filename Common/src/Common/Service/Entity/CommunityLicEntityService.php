@@ -34,6 +34,17 @@ class CommunityLicEntityService extends AbstractEntityService
         )
     );
 
+    protected $licenceBundle = array(
+        'children' => array(
+            'status',
+            'licence' => array(
+                'children' => array(
+                    'licenceType'
+                )
+            )
+        )
+    );
+
     public function getPendingForLicence($licenceId)
     {
         $query = array(
@@ -141,6 +152,11 @@ class CommunityLicEntityService extends AbstractEntityService
             $dataToSave[] = $data;
         }
         $dataToSave['_OPTIONS_'] = ['multiple' => true];
-        $this->save($dataToSave);
+        return $this->save($dataToSave);
+    }
+
+    public function getWithLicence($id)
+    {
+        return $this->get($id, $this->licenceBundle);
     }
 }
