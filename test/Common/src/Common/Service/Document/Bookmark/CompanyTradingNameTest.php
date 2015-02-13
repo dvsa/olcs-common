@@ -60,6 +60,7 @@ class CompanyTradingNameTest extends \PHPUnit_Framework_TestCase
             $bookmark->render()
         );
     }
+
     public function testRenderWithNoTradingNames()
     {
         $bookmark = new CompanyTradingName();
