@@ -23,17 +23,18 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
      * @param array $licenceIds
      *
      */
-    public function generateBatch($licenceIds = [])
+    public function generateBatch($licenceId, $communityLicenceIds = [])
     {
-        foreach ($licenceIds as $id) {
-            $licence = $this->getServiceLocator()
-                ->get('Entity\CommunityLic')
-                ->getWithLicence($id);
+        // we need this because we're interested in its category & type
+        $licence = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getById($licenceId);
 
-            $template = $this->getTemplateForLicence($licence['licence']);
+        foreach ($communityLicenceIds as $id) {
+            $template = $this->getTemplateForLicence($licence);
 
             $query = [
-                'licence' => $licence['licence']['id'],
+                'licence' => $licenceId,
                 'communityLic' => $id
             ];
 
@@ -55,7 +56,7 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
 
         if ($licence['licenceType']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV) {
             $prefix = 'PSV';
-        } else if ($licence['niFlag'] === 'Y') {
+        } elseif ($licence['niFlag'] === 'Y') {
             $prefix = 'GV_NI';
         } else {
             $prefix = 'GV_GB';

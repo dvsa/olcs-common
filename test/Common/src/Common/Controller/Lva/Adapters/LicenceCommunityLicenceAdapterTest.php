@@ -117,7 +117,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with([1, 2, 3])
+            ->with(1, [1, 2, 3])
             ->andReturn('foo')
             ->getMock()
         );
