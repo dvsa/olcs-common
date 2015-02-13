@@ -42,10 +42,10 @@ class GrantTransportManagerProcessingService implements ServiceLocatorAwareInter
     {
         if (!$this->licenceHasTransportManager($data['transportManager']['id'], $licenceId)) {
 
+            $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($data);
+
             $otherLicences = $data['otherLicences'];
             unset($data['otherLicences']);
-
-            $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($data);
 
             unset($data['id']);
             unset($data['action']);
