@@ -25,6 +25,7 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
         'children' => [
             'application' => [
                 'children' => [
+                    'status',
                     'licence' => [
                         'children' => [
                             'organisation'
@@ -32,16 +33,26 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
                     ]
                 ]
             ],
-            'tmApplicationStatus',
             'transportManager',
             'tmType',
-            'tmApplicationOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-             ]
+            'operatingCentres'
         ]
     ];
+
+    protected $grantDataBundle = [
+        'children' => [
+            'application',
+            'transportManager',
+            'tmType',
+            'operatingCentres',
+            'otherLicences'
+        ]
+    ];
+
+    public function getGrantDataForApplication($applicationId)
+    {
+        return $this->getAll(['application' => $applicationId], $this->grantDataBundle)['Results'];
+    }
 
     /**
      * Get transport manager applications
@@ -52,18 +63,19 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
      */
     public function getTransportManagerApplications($id, $status = [])
     {
-        $query = [
-            'transportManagerId' => $id,
-            'action' => '!= D'
-        ];
-        if (count($status)) {
-            $query['tmApplicationStatus'] = $status;
-        }
-        $results = $this->get($query, $this->dataBundle);
+        $results = $this->get(['transportManager' => $id, 'action' => '!=D'], $this->dataBundle);
+
+        $finalResults = [];
+
         foreach ($results['Results'] as &$result) {
-            $result['ocCount'] = count($result['tmApplicationOcs']);
+
+            if (in_array($result['application']['status']['id'], $status)) {
+                $result['ocCount'] = count($result['operatingCentres']);
+                $finalResults[] = $result;
+            }
         }
-        return $results;
+
+        return $finalResults;
     }
 
     /**

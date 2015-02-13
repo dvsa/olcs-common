@@ -169,9 +169,7 @@ abstract class AbstractConditionsUndertakingsAdapter extends AbstractAdapter imp
             );
         }
 
-        $form->get('fields')
-            ->get('attachedTo')
-            ->setValueOptions($options);
+        $form->get('fields')->get('attachedTo')->setValueOptions($options);
     }
 
     public function getTableName()

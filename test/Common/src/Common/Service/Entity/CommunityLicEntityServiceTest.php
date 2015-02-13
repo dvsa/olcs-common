@@ -213,4 +213,21 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getWithLicence($query));
     }
+
+    public function testGetPendingForLicence()
+    {
+        $licenceId = 123;
+
+        $query = [
+            'licence' => $licenceId,
+            'specifiedDate' => 'NULL',
+            'status' => 'cl_sts_pending',
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('CommunityLic', 'GET', $query)
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getPendingForLicence($licenceId));
+    }
 }
