@@ -170,6 +170,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $licenceType = LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL;
         $date = '2012-01-01';
 
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
+
         $this->mockDate($date);
 
         $expectedGrantData = array(
@@ -353,6 +365,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $category = LicenceEntityService::LICENCE_CATEGORY_PSV;
         $licenceType = LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED;
         $date = '2012-01-01';
+
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
 
         $this->mockDate($date);
 
@@ -583,6 +607,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'feeDate' => '2019-05-31'
         );
 
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
+
         $this->mockApplicationService($id, $licenceId, $validationData);
 
         $this->mockLicenceService($licenceId, $expectedLicenceData);
@@ -630,6 +666,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'expiryDate' => '2019-05-31',
             'feeDate' => '2019-05-31'
         );
+
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
 
         $mockApplicationService = $this->mockApplicationService($id, $licenceId, $validationData);
 
@@ -938,6 +986,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'operatingCentre' => 6,
             'licence' => 5
         ];
+
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
 
         // Mocked services
         $mockApplicationService = m::mock();

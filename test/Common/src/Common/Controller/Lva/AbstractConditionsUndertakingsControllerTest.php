@@ -214,6 +214,8 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         $this->sm->setService('Entity\ConditionUndertaking', $mockEntityService);
         $mockFormHelper = m::mock();
         $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockDataHelper = m::mock();
+        $this->sm->setService('Helper\Data', $mockDataHelper);
 
         // Expectations
         $this->sut->shouldReceive('getRequest')
@@ -233,6 +235,10 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
         $mockEntityService->shouldReceive('getCondition')
             ->with(3)
             ->andReturn($stubbedData);
+
+        $mockDataHelper->shouldReceive('replaceIds')
+            ->with($stubbedData)
+            ->andReturn($expectedData);
 
         $mockFormHelper->shouldReceive('createForm')
             ->with('ConditionUndertakingForm')

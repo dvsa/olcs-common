@@ -2,9 +2,6 @@
 
 namespace Common\Service\Data;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\FactoryInterface;
 
 /**

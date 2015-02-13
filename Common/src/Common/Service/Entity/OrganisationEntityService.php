@@ -200,7 +200,9 @@ class OrganisationEntityService extends AbstractEntityService
         $existing = array_map($map, $data['tradingNames']);
         $updated  = array_map($map, $tradingNames);
 
-        return count($existing) !== count($updated) || !empty(array_diff($updated, $existing));
+        $diff = array_diff($updated, $existing);
+
+        return count($existing) !== count($updated) || !empty($diff);
     }
 
     public function hasChangedRegisteredAddress($id, $address)
@@ -226,7 +228,9 @@ class OrganisationEntityService extends AbstractEntityService
             ->get('Entity\OrganisationNatureOfBusiness')
             ->getAllForOrganisationForSelect($id);
 
-        return count($existing) !== count($updated) || !empty(array_diff($updated, $existing));
+        $diff = array_diff($updated, $existing);
+
+        return count($existing) !== count($updated) || !empty($diff);
     }
 
     public function hasChangedSubsidiaryCompany($id, $company)

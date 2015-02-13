@@ -8,7 +8,6 @@
 namespace Common\Form\Elements\Validators;
 
 use Zend\Validator\AbstractValidator;
-use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
