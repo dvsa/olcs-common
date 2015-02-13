@@ -51,6 +51,7 @@ class CompanyTradingName extends DynamicBookmark
             array_filter(
                 [
                     $organisation['name'],
+                    $tradingAs,
                     Formatter\Address::format($address)
                 ]
             )
@@ -60,6 +61,6 @@ class CompanyTradingName extends DynamicBookmark
     private function getFirstTradingName($tradingNames)
     {
         // @TODO: based on created date ASC
-        return $tradingNames[0];
+        return $tradingNames[0]['name'];
     }
 }
