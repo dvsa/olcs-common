@@ -7,17 +7,14 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
-
 /**
  * Goods Vehicles Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController implements AdapterAwareInterface
+abstract class AbstractVehiclesGoodsController extends AbstractVehiclesController
 {
-    use Traits\CrudTableTrait,
-        Traits\AdapterAwareTrait;
+    use Traits\CrudTableTrait;
 
     protected $section = 'vehicles';
 
@@ -30,26 +27,26 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
-        $adapter = $this->getAdapter();
-
-        $filterForm = $this->getFilterForm();
+        $showFilters = $this->getAdapter()->showFilters();
+        if ($showFilters) {
+            $filterForm = $this->getFilterForm();
+        }
 
         $form = $this->alterForm($this->getForm());
 
-        if ($adapter !== null) {
-            $form = $adapter->populateForm(
-                $request,
-                $this->getLvaEntityService()->getHeaderData($this->getIdentifier()),
-                $form
+        $this->alterFormForLva($form);
+
+        if ($request->isPost()) {
+            $form->setData((array)$request->getPost());
+        } else {
+            $form->setData(
+                $this->getAdapter()->getFormData($this->getIdentifier())
             );
         }
 
-        if ($request->isPost() && ($adapter === null ||
-            $adapter !== null && $form->isValid())) {
+        if ($request->isPost() && $form->isValid()) {
 
-            if ($adapter !== null) {
-                $this->save($form->getData());
-            }
+            $this->getAdapter()->save($form->getData(), $this->getIdentifier());
 
             $this->postSave('vehicles');
 
@@ -72,11 +69,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $this->alterFormForLva($form);
-
-        $this->getServiceLocator()->get('Script')->loadFiles(
-            ['lva-crud', 'forms/filter', 'table-actions', 'vehicle-goods']
-        );
+        $files = ['lva-crud', 'table-actions', 'vehicle-goods'];
+        if ($showFilters) {
+            $files[] = 'forms/filter';
+        }
+        $this->getServiceLocator()->get('Script')->loadFiles($files);
 
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
@@ -85,8 +82,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
                 'more-vehicles-than-authorisation'
             );
         }
-
-        return $this->render('vehicles', $form, array('filterForm' => $filterForm));
+        $params = $showFilters ? ['filterForm' => $filterForm] : [];
+        return $this->render('vehicles', $form, $params);
     }
 
     /**
@@ -157,6 +154,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             $mode
         );
 
+        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
+            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
+        }
+
         if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
             $formHelper = $this->getServiceLocator()->get('Helper\Form');
             $formHelper->disableElements($form);
@@ -183,9 +184,11 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
         }
 
-        // set default date values prior to render
-        $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
-        $form = $this->setDefaultDates($form, $today);
+        if (!$this->getServiceLocator()->has('VehicleFormAdapter')) {
+            // set default date values prior to render
+            $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
+            $form = $this->setDefaultDates($form, $today);
+        }
 
         return $this->render($mode . '_vehicles', $form);
     }
@@ -245,10 +248,9 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function getTableData()
     {
-        $licenceId = $this->getLicenceId();
         $filters = $this->getGoodsVehicleFilters();
 
-        $licenceVehicles = $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($licenceId);
+        $licenceVehicles = $this->getAdapter()->getVehiclesData($this->getIdentifier());
 
         $results = array();
 

@@ -9,9 +9,25 @@ return array(
     'settings' => array(
         'crud' => array(
             'actions' => array(
-
+                'add' => array('label' => 'Add', 'class' => 'primary'),
+                'office-licence-add' => array(
+                    'label' => 'Add office licence',
+                    'class' => 'secondary',
+                    'requireRows' => true
+                ),
+                'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
             )
-        )
+        ),
+        'row-disabled-callback' => function ($row) {
+            return in_array(
+                $row['status']['id'],
+                [
+                    Common\Service\Entity\CommunityLicEntityService::STATUS_EXPIRED,
+                    Common\Service\Entity\CommunityLicEntityService::STATUS_VOID,
+                    Common\Service\Entity\CommunityLicEntityService::STATUS_RETURNDED
+                ]
+            );
+        }
     ),
     'columns' => array(
         array(
@@ -39,8 +55,10 @@ return array(
             'formatter' => 'Date'
         ),
         array(
+            'title' => '',
             'width' => 'checkbox',
-            'type' => 'Selector'
-        )
+            'type' => 'Checkbox',
+            'disableIfRowIsDisabled' => true
+        ),
     )
 );

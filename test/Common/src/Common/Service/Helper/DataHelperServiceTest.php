@@ -163,4 +163,27 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $output);
     }
+
+    public function testReplaceIds()
+    {
+        $data = [
+            'foo' => 'bar',
+            'bar' => [
+                'cake'
+            ],
+            'cake' => [
+                'id' => 124,
+                'blah' => 'blap'
+            ]
+        ];
+        $expectedData = [
+            'foo' => 'bar',
+            'bar' => [
+                'cake'
+            ],
+            'cake' => 124
+        ];
+
+        $this->assertEquals($expectedData, $this->sut->replaceIds($data));
+    }
 }

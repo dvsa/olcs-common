@@ -5,23 +5,33 @@ namespace CommonTest\Controller\Lva;
 use Mockery as m;
 use CommonTest\Bootstrap;
 use CommonTest\Traits\MockDateTrait;
-use Common\Controller\Lva\Adapters\ApplicationVehicleGoodsAdapter;
 
 /**
  * Test Abstract Vehicles Goods Controller
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
 class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 {
     use MockDateTrait;
+
+    protected $adapter;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesGoodsController');
+
+        $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
+        $this->adapter
+            ->shouldReceive('showFilters')
+            ->andReturn(true)
+            ->getMock();
+
+        $this->sut->setAdapter($this->adapter);
 
         $this->sm->setService(
             'Script',
@@ -86,6 +96,10 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $form = $this->createMockForm('Lva\GoodsVehicles');
 
+        $this->adapter->shouldReceive('getFormData')
+            ->with(321)
+            ->andReturn([]);
+
         $form->shouldReceive('setData')
             ->with(
                 []
@@ -149,8 +163,8 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
-            ->with(123)
+        $this->adapter->shouldReceive('getVehiclesData')
+            ->with(321)
             ->andReturn([]);
 
         $this->mockEntity('Licence', 'getVehiclesTotal')
@@ -216,6 +230,10 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $form = $this->createMockForm('Lva\GoodsVehicles');
 
+        $this->adapter->shouldReceive('getFormData')
+            ->with(321)
+            ->andReturn([]);
+
         $form->shouldReceive('setData')
             ->with(
                 []
@@ -279,8 +297,8 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
-            ->with(123)
+        $this->adapter->shouldReceive('getVehiclesData')
+            ->with(321)
             ->andReturn([$licenceVehicle]);
 
         $this->mockEntity('Licence', 'getVehiclesTotal')
@@ -460,7 +478,7 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $form->shouldReceive('setData')
             ->with(
-                []
+                $formData
             )
             ->andReturn($form)
             ->shouldReceive('get')
@@ -506,25 +524,14 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('getData')
             ->andReturn($formData);
 
-        $this->sut
-            ->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('populateForm')
-                ->with($this->request, ['hasEnteredReg' => 'Y', 'version' => 1], $form)
-                ->andReturn($form)
-                ->getMock()
-            )
-            ->shouldReceive('getIdentifier')
-            ->andReturn(1)
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(321)
             ->shouldReceive('getLvaEntityService')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('getHeaderData')
-                ->with(1)
+                ->with(321)
                 ->andReturn(['hasEnteredReg' => 'Y', 'version' => 1])
-                ->shouldReceive('save')
-                ->with(['hasEnteredReg' => 'Y', 'version' => 1, 'id' => 1])
                 ->getMock()
             )
             ->shouldReceive('params')
@@ -556,8 +563,6 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $this->sut->shouldReceive('getLicenceId')
             ->andReturn(123)
-            ->shouldReceive('getIdentifier')
-            ->andReturn(321)
             ->shouldReceive('getLvaEntityService')
             ->andReturn(
                 m::mock()
@@ -566,27 +571,17 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
             );
 
-        $this->mockEntity('Licence', 'getVehiclesData')
-            ->with(123)
-            ->andReturn([]);
+        $this->adapter->shouldReceive('getVehiclesData')
+            ->with(321)
+            ->andReturn([])
+            ->shouldReceive('save')
+            ->with($formData, 321);
 
         $this->mockEntity('Licence', 'getVehiclesTotal')
             ->with(123)
             ->andReturn(0);
 
         $this->sut->indexAction();
-    }
-
-    /**
-     * Test set / get vehicle goods adapter
-     *
-     * @group abstractVehicleGoodsController1
-     */
-    public function testSetAdapter()
-    {
-        $adapter = new ApplicationVehicleGoodsAdapter();
-        $this->sut->setAdapter($adapter);
-        $this->assertSame($this->sut->getAdapter(), $adapter);
     }
 
     public function testBasicAddAction()
@@ -816,5 +811,49 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn('REDIRECT');
 
         $this->assertEquals('REDIRECT', $this->sut->reprintAction());
+    }
+
+    /**
+     * Test remove vehicle fields
+     *
+     * @group vehcileFormAdapterGoods
+     */
+    public function testRemoveVehicleFields()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('setData')
+            ->with([])
+            ->andReturnSelf()
+            ->getMock();
+
+        $mockVehicleFormAdapter = m::mock()
+            ->shouldReceive('alterForm')
+            ->with($mockForm)
+            ->andReturn($mockForm)
+            ->getMock();
+
+        $this->sm->setService('VehicleFormAdapter', $mockVehicleFormAdapter);
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('isPost')
+                ->andReturn(false)
+                ->getMock()
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(1)
+            ->shouldReceive('getVehicleForm')
+            ->andReturn($mockForm)
+            ->shouldReceive('alterVehicleForm')
+            ->with($mockForm, 'add')
+            ->andReturn($mockForm)
+            ->shouldReceive('render')
+            ->with('add_vehicles', $mockForm)
+            ->andReturn('view');
+
+        $this->assertEquals('view', $this->sut->addAction());
     }
 }

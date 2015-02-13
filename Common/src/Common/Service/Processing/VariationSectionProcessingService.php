@@ -433,7 +433,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Some sections have more complicated rules, we hook into thoses here
+     * Some sections have more complicated rules, we hook into these here
      */
     protected function applyBespokeRules()
     {
@@ -597,7 +597,7 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
         if ($this->isPsv === null) {
             $data = $this->getVariationCompletionStatusData();
 
-            $this->isPsv = $data['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+            $this->isPsv = $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
         }
 
         return $this->isPsv;

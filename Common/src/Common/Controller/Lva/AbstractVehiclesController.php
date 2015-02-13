@@ -9,14 +9,17 @@ namespace Common\Controller\Lva;
 
 use Common\Form\Elements\Validators\NewVrm;
 use Zend\Form\Element\Checkbox;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic for Goods *AND* PSV controllers
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractVehiclesController extends AbstractController
+abstract class AbstractVehiclesController extends AbstractController implements AdapterAwareInterface
 {
+    use Traits\AdapterAwareTrait;
+
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
 
@@ -129,6 +132,16 @@ abstract class AbstractVehiclesController extends AbstractController
         return false;
     }
 
+    protected function preSaveVehicle($data, $mode)
+    {
+        return $data;
+    }
+
+    protected function postSaveVehicle($licenceVehicleId, $mode)
+    {
+        // No-op
+    }
+
     /**
      * Save the vehicle
      *
@@ -137,6 +150,8 @@ abstract class AbstractVehiclesController extends AbstractController
      */
     protected function saveVehicle($data, $mode)
     {
+        $data = $this->preSaveVehicle($data, $mode);
+
         if ($mode !== 'add') {
             // We don't want these updating
             unset($data['licence-vehicle']['specifiedDate']);
@@ -181,10 +196,14 @@ abstract class AbstractVehiclesController extends AbstractController
         $saved = $this->getServiceLocator()->get('Entity\LicenceVehicle')->save($licenceVehicle);
 
         if (isset($saved['id'])) {
-            return $saved['id'];
+            $licenceVehicleId = $saved['id'];
         } elseif (!empty($licenceVehicle['id'])) {
-            return $licenceVehicle['id'];
+            $licenceVehicleId = $licenceVehicle['id'];
         }
+
+        $this->postSaveVehicle($licenceVehicleId, $mode);
+
+        return $licenceVehicleId;
     }
 
     /**

@@ -747,7 +747,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'operatingCentres' => null,
             'totAuthVehicles' => 1,
             'totAuthTrailers' => 2,
@@ -822,7 +822,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_PSV],
             'operatingCentres' => null,
             'totAuthVehicles' => 1,
             'totAuthTrailers' => 2,
@@ -897,7 +897,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'operatingCentres' => null,
             'totAuthVehicles' => 9,
             'totAuthTrailers' => 2,
@@ -1017,7 +1017,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'operatingCentres' => null,
             'totAuthVehicles' => 11,
             'totAuthTrailers' => 2,
@@ -1137,7 +1137,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'operatingCentres' => null,
             'totAuthVehicles' => 11,
             'totAuthTrailers' => 2,
@@ -1257,7 +1257,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
             'operatingCentres' => null,
             'totAuthVehicles' => 8,
             'totAuthTrailers' => 2,
@@ -1377,7 +1377,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_PSV],
             'operatingCentres' => null,
             'totAuthVehicles' => 9,
             'totAuthTrailers' => 2,
@@ -1508,7 +1508,7 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             'undertakings' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
         $stubbedData = [
-            'goodsOrPsv' => LicenceEntityService::LICENCE_CATEGORY_PSV,
+            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_PSV],
             'operatingCentres' => null,
             'totAuthVehicles' => 9,
             'totAuthTrailers' => 2,

@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\LicenceEntityService;
+use Mockery as m;
 
 /**
  * Licence Entity Service Test
@@ -735,5 +736,214 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals('foo', $this->sut->getOrganisation($id));
+    }
+
+    public function testGetVehiclesDataForApplication()
+    {
+        // Params
+        $applicationId = 2;
+        $licenceId = 4;
+        $expectedBundle = array(
+            'children' => array(
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'goodsDiscs',
+                        'vehicle'
+                    ),
+                    'criteria' => array(
+                        array(
+                            'application' => $applicationId,
+                            'specifiedDate' => 'NOT NULL'
+                        )
+                    )
+                )
+            )
+        );
+
+        $stubbedResponse = array(
+            'licenceVehicles' => array(
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => null
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                )
+            )
+        );
+
+        $expectedResponse = array(
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => null
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            )
+        );
+
+        // Mocks
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+
+        // Expectations
+        $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
+            ->with($applicationId)
+            ->andReturn($licenceId);
+
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
+            ->will($this->returnValue($stubbedResponse));
+
+        $this->assertEquals($expectedResponse, $this->sut->getVehiclesDataForApplication($applicationId));
+    }
+
+    public function testGetVehiclesPsvDataForApplication()
+    {
+        // Params
+        $applicationId = 2;
+        $licenceId = 4;
+        $expectedBundle = array(
+            'children' => array(
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'vehicle' => array(
+                            'children' => array(
+                                'psvType'
+                            )
+                        )
+                    ),
+                    'criteria' => array(
+                        array(
+                            'application' => $applicationId,
+                            'specifiedDate' => 'NOT NULL'
+                        )
+                    )
+                )
+            )
+        );
+
+        $stubbedResponse = array(
+            'licenceVehicles' => array(
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => null
+                ),
+                array(
+                    'foo' => 'bar',
+                    'specifiedDate' => '2014-01-01'
+                )
+            )
+        );
+
+        $expectedResponse = array(
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => null
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            ),
+            array(
+                'foo' => 'bar',
+                'specifiedDate' => '2014-01-01'
+            )
+        );
+
+        // Mocks
+        $mockApplicationEntity = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntity);
+
+        // Expectations
+        $mockApplicationEntity->shouldReceive('getLicenceIdForApplication')
+            ->with($applicationId)
+            ->andReturn($licenceId);
+
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $licenceId, 'limit' => 'all'], $expectedBundle)
+            ->will($this->returnValue($stubbedResponse));
+
+        $this->assertEquals($expectedResponse, $this->sut->getVehiclesPsvDataForApplication($applicationId));
+    }
+
+    /**
+     * @group licenceEntity
+     */
+    public function testUpdateCommunityLicencesCount()
+    {
+        $licenceId = 1;
+        $licenceData = [
+            'version' => 1
+        ];
+        $saveData = [
+            'id' => $licenceId,
+            'version' => 1,
+            'totCommunityLicences' => 2
+        ];
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn(['Count' => 2])
+            ->getMock();
+
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $this->expectedRestCallInOrder('Licence', 'GET', $licenceId)
+            ->will($this->returnValue($licenceData));
+
+        $this->expectedRestCallInOrder('Licence', 'PUT', $saveData);
+
+        $this->sut->updateCommunityLicencesCount($licenceId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetInforceForOrganisation()
+    {
+        $response = 'RESPONSE';
+
+        $params = [
+            'organisation' => 123,
+            'inForceDate' => 'NOT NULL'
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getInForceForOrganisation(123));
+    }
+
+    /**
+     * @group licenceEntity
+     */
+    public function testGetCommunityLicencesByLicenceIdAndIds()
+    {
+        $licenceId = 1;
+        $bundle = [
+            'children' => [
+                'communityLics' => [
+                    'criteria' => [
+                        'id' => 'IN [1,2,3]'
+                    ]
+                ]
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', $licenceId, $bundle)
+            ->will($this->returnValue(['communityLics' => 'response']));
+        $this->assertEquals('response', $this->sut->getCommunityLicencesByLicenceIdAndIds($licenceId, [1, 2, 3]));
     }
 }

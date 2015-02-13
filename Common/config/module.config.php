@@ -36,8 +36,43 @@ return array(
             'LvaVariation/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\VariationTypeOfLicenceDelegator'
             ),
+            'LvaApplication/BusinessType' => array(
+                // @NOTE: we need an associative array when we need to override the
+                // delegator elsewhere, such as in selfserve or internal
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaLicence/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaVariation/BusinessType' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
+            ),
+            'LvaApplication/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaLicence/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
+            'LvaVariation/BusinessDetails' => array(
+                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
+            ),
             'LvaApplication/Vehicles' => array(
-                'Common\Controller\Lva\Delegators\ApplicationVehicleGoodsDelegator'
+                'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
+            ),
+            'LvaLicence/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\LicenceVehiclesGoodsDelegator'
+            ),
+            'LvaVariation/Vehicles' => array(
+                'Common\Controller\Lva\Delegators\VariationVehiclesGoodsDelegator'
+            ),
+            'LvaApplication/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\ApplicationVehiclesPsvDelegator'
+            ),
+            'LvaLicence/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\LicenceVehiclesPsvDelegator'
+            ),
+            'LvaVariation/VehiclesPsv' => array(
+                'Common\Controller\Lva\Delegators\VariationVehiclesPsvDelegator'
             ),
             'LvaLicence/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\LicenceOperatingCentreDelegator'
@@ -47,6 +82,30 @@ return array(
             ),
             'LvaApplication/OperatingCentres' => array(
                 'Common\Controller\Lva\Delegators\ApplicationOperatingCentreDelegator'
+            ),
+            'LvaApplication/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\ApplicationCommunityLicenceDelegator'
+            ),
+            'LvaVariation/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\VariationCommunityLicenceDelegator'
+            ),
+            'LvaLicence/CommunityLicences' => array(
+                'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
+            ),
+            'LvaApplication/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
+            ),
+            'LvaVariation/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
+            ),
+            'LvaLicence/ConditionsUndertakings' => array(
+                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
+            ),
+            'LvaApplication/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
+            ),
+            'LvaVariation/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
             ),
         ),
         'abstract_factories' => array(
@@ -88,15 +147,24 @@ return array(
     ),
     'version' => (isset($release['version']) ? $release['version'] : ''),
     'service_manager' => array(
+        'delegators' => [
+            'zfcuser_user_mapper' => [
+                function () {
+                    //replace me with something proper in future.
+                    return new \Common\Rbac\UserProvider();
+                }
+            ]
+        ],
         'shared' => array(
             'Helper\FileUpload' => false,
             'CantIncreaseValidator' => false
         ),
         'abstract_factories' => array(
             'Common\Util\AbstractServiceFactory',
-            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory'
+            'Common\Filter\Publication\Builder\PublicationBuilderAbstractFactory',
         ),
         'aliases' => array(
+            'Cache' => 'Zend\Cache\Storage\StorageInterface',
             'DataServiceManager' => 'Common\Service\Data\PluginManager',
             'BundleManager' => 'Common\Service\Data\BundleManager',
             'translator' => 'MvcTranslator',
@@ -105,6 +173,12 @@ return array(
         ),
         'invokables' => array(
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'ApplicationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
+            'VariationConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationConditionsUndertakingsAdapter',
+            'LicenceConditionsUndertakingsAdapter'
+                => 'Common\Controller\Lva\Adapters\LicenceConditionsUndertakingsAdapter',
             'ApplicationTypeOfLicenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter',
             'ApplicationVehicleGoodsAdapter'
@@ -119,6 +193,26 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'VariationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
+            'ApplicationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
+            'GenericBusinessDetailsAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
+            'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
+            'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
+            'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
+            'ApplicationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesPsvAdapter',
+            'LicenceVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesPsvAdapter',
+            'VariationVehiclesPsvAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesPsvAdapter',
+            'ApplicationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\ApplicationCommunityLicenceAdapter',
+            'VariationCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
+            'LicenceCommunityLicenceAdapter' =>
+                'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -128,8 +222,10 @@ return array(
             'goodsDiscStartNumberValidator' => 'Common\Form\Elements\Validators\GoodsDiscStartNumberValidator',
             'applicationIdValidator' => 'Common\Form\Elements\Validators\ApplicationIdValidator',
             'oneRowInTablesRequired' => 'Common\Form\Elements\Validators\Lva\OneRowInTablesRequiredValidator',
+            'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
-                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm'
+                'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
+            'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
@@ -159,7 +255,9 @@ return array(
             'Common\Service\Data\PluginManager' => 'Common\Service\Data\PluginManagerFactory',
             'Common\Service\Data\BundleManager' => 'Common\Service\Data\BundleManagerFactory',
             'Common\Util\DateTimeProcessor' => 'Common\Util\DateTimeProcessor',
-            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory'
+            'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
+            'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
+            'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
         )
     ),
     'publications' => array(
@@ -188,6 +286,34 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'TmDecisionPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\TransportManager',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmDecisionText2',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'TmHearingPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\TransportManager',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmHearingText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
@@ -299,6 +425,7 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
+            'Common\Service\Data\VariationReason' => 'Common\Service\Data\VariationReason',
             'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
@@ -337,4 +464,27 @@ return array(
             ),
         )
     ),
+    'zfc_rbac' => [
+        'role_provider' => ['Common\Rbac\Role\RoleProvider' => []],
+        'role_provider_manager' => [
+            'factories' => [
+                'Common\Rbac\Role\RoleProvider' => 'Common\Rbac\Role\RoleProvider'
+            ]
+        ],
+        'protection_policy' => \ZfcRbac\Guard\GuardInterface::POLICY_DENY,
+        'redirect_strategy' => [
+            'redirect_when_connected'        => false,
+            'redirect_to_route_disconnected' => 'zfcuser/login',
+            'append_previous_uri'            => true,
+            'previous_uri_query_key'         => 'redirectTo'
+        ],
+    ],
+    'cache' => [
+        'adapter' => [
+            'name' => 'apc',
+        ]
+    ],
+    'zfcuser' => [
+        'auth_identity_fields' => array('username')
+    ]
 );

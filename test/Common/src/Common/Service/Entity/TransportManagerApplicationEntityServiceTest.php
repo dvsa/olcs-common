@@ -20,6 +20,7 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
         'children' => [
             'application' => [
                 'children' => [
+                    'status',
                     'licence' => [
                         'children' => [
                             'organisation'
@@ -27,14 +28,9 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
                     ]
                 ]
             ],
-            'tmApplicationStatus',
             'transportManager',
             'tmType',
-            'tmApplicationOcs' => [
-                'children' => [
-                    'operatingCentre'
-                ]
-            ]
+            'operatingCentres'
         ]
     ];
 
@@ -53,37 +49,26 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
     public function testGetTransportManagerApplications()
     {
         $id = 1;
-        $bundle = [
-            'children' => [
-                'application' => [
-                    'children' => [
-                        'licence' => [
-                            'children' => [
-                                'organisation'
-                            ]
-                        ]
-                    ]
-                ],
-                'tmApplicationStatus',
-                'transportManager',
-                'tmType',
-                'tmApplicationOcs' => [
-                    'children' => [
-                        'operatingCentre'
-                    ]
-                ]
-            ]
-        ];
         $returnValue = [
             'Results' => [
                 [
-                    'tmApplicationOcs' => [
+                    'application' => [
+                        'status' => [
+                            'id' => 'apsts_consideration'
+                        ]
+                    ],
+                    'operatingCentres' => [
                         'one',
                         'two'
                     ]
                 ],
                 [
-                    'tmApplicationOcs' => [
+                    'application' => [
+                        'status' => [
+                            'id' => 'foo'
+                        ]
+                    ],
+                    'operatingCentres' => [
                         'one',
                         'two',
                         'three'
@@ -98,34 +83,25 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
         ];
 
         $expectedValue = [
-            'Results' => [
-                [
-                    'tmApplicationOcs' => [
-                        'one',
-                        'two'
-                    ],
-                    'ocCount' => 2
+            [
+                'application' => [
+                    'status' => [
+                        'id' => 'apsts_consideration'
+                    ]
                 ],
-                [
-                    'tmApplicationOcs' => [
-                        'one',
-                        'two',
-                        'three'
-                    ],
-                    'ocCount' => 3
+                'operatingCentres' => [
+                    'one',
+                    'two'
                 ],
+                'ocCount' => 2
             ]
         ];
 
         $query = [
-            'transportManagerId' => $id,
-            'action' => '!= D',
-            'tmApplicationStatus' => [
-                'apsts_consideration',
-                'apsts_not_submitted',
-                'apsts_granted'
-            ],
+            'transportManager' => $id,
+            'action' => '!=D'
         ];
+
         $this->expectOneRestCall('TransportManagerApplication', 'GET', $query, $this->dataBundle)
             ->will($this->returnValue($returnValue));
 
@@ -153,5 +129,17 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getByApplication($id));
+    }
+
+    public function testGetGrantDataForApplication()
+    {
+        $applicationId = 123;
+
+        $query = ['application' => $applicationId, 'limit' => 'all'];
+
+        $this->expectOneRestCall('TransportManagerApplication', 'GET', $query)
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getGrantDataForApplication($applicationId));
     }
 }

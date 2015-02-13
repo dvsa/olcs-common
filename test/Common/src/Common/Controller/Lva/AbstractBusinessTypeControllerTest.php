@@ -40,6 +40,14 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->with($form, 12)
+                ->getMock()
+            );
+
         $this->mockRender();
 
         $this->sut->indexAction();
@@ -65,6 +73,13 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
         $this->setPost();
 
         $this->mockRender();
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
 
         $this->sut->indexAction();
 
@@ -109,6 +124,61 @@ class AbstractBusinessTypeControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('completeSection')
             ->with('business_type')
             ->andReturn('complete');
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
+
+        $this->assertEquals(
+            'complete',
+            $this->sut->indexAction()
+        );
+    }
+
+    public function testPostWithValidDataButNoType()
+    {
+        $form = $this->createMockForm('Lva\BusinessType');
+
+        $form->shouldReceive('setData')
+            ->andReturn($form);
+
+        $form->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $this->setPost(
+            [
+                'version' => 1,
+            ]
+        );
+
+        $this->mockEntity('Organisation', 'save')
+            ->with(
+                [
+                    'version' => 1,
+                    'id' => 12,
+                ]
+            );
+
+        $this->sut
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(12);
+
+        $this->sut
+            ->shouldReceive('postSave')
+            ->with('business_type')
+            ->shouldReceive('completeSection')
+            ->with('business_type')
+            ->andReturn('complete');
+
+        $this->sut->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('alterFormForOrganisation')
+                ->getMock()
+            );
 
         $this->assertEquals(
             'complete',

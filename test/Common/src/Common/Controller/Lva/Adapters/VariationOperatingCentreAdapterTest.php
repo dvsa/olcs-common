@@ -117,7 +117,7 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
     {
         $mockScript = m::mock();
         $mockScript->shouldReceive('loadFile')
-            ->with('lva-variation-operating-centre');
+            ->with('lva-crud-delta');
 
         $this->sm->setService('Script', $mockScript);
 

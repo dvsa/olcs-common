@@ -454,4 +454,95 @@ class LicenceEntityService extends AbstractLvaEntityService
 
         return $response['organisation'];
     }
+
+    public function getVehiclesDataForApplication($applicationId)
+    {
+        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehicleDataBundle);
+    }
+
+    public function getVehiclesPsvDataForApplication($applicationId)
+    {
+        return $this->getGenericVehicleDataForApplication($applicationId, $this->vehiclePsvDataBundle);
+    }
+
+    protected function getGenericVehicleDataForApplication($applicationId, $bundle)
+    {
+        $licenceId = $this->getServiceLocator()->get('Entity\Application')
+            ->getLicenceIdForApplication($applicationId);
+
+        // So to grab the relevant licence vehicles...
+        $bundle['children']['licenceVehicles']['criteria'] = [
+            [
+                // ...either the application id needs to match
+                'application' => $applicationId,
+                // ...or the vehicles must be specified (i.e. on the licence)
+                'specifiedDate' => 'NOT NULL'
+            ]
+        ];
+
+        $results = $this->getAll($licenceId, $bundle);
+
+        $licenceVehicles = $results['licenceVehicles'];
+        $return = [];
+
+        foreach ($licenceVehicles as $vehicle) {
+            if (empty($vehicle['specifiedDate'])) {
+                array_unshift($return, $vehicle);
+            } else {
+                array_push($return, $vehicle);
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Update community licences count
+     * 
+     * @param int $licenceId
+     */
+    public function updateCommunityLicencesCount($licenceId)
+    {
+        $communityLicService = $this->getServiceLocator()->get('Entity\CommunityLic');
+        $validLicencesCount = $communityLicService->getValidLicences($licenceId)['Count'];
+
+        $licence = $this->getById($licenceId);
+        $data = [
+            'id' => $licenceId,
+            'version' => $licence['version'],
+            'totCommunityLicences' => $validLicencesCount
+        ];
+        $this->save($data);
+    }
+
+    public function getInForceForOrganisation($orgId)
+    {
+        return $this->get(
+            [
+                'organisation' => $orgId,
+                'inForceDate' => 'NOT NULL'
+            ]
+        );
+    }
+
+    /**
+     * Get community licences by licence id and ids
+     *
+     * @param int $licenceId
+     * @param array $ids
+     * @return array
+     */
+    public function getCommunityLicencesByLicenceIdAndIds($licenceId, $ids)
+    {
+        $bundle = [
+            'children' => [
+                'communityLics' => [
+                    'criteria' => [
+                        'id' => 'IN [' . implode(',', $ids) . ']'
+                    ]
+                ]
+            ]
+        ];
+        return $this->get($licenceId, $bundle)['communityLics'];
+    }
 }

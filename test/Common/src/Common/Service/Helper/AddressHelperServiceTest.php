@@ -202,9 +202,9 @@ class AddressHelperServiceTest extends PHPUnit_Framework_TestCase
         );
 
         $expectedResult = array(
-            123 => 'My Company Ltd, Awesome House Street Name, Some Town',
-            234 => '1a-22b Awesome House, 31 Some Street Street Name, Some Town',
-            345 => '1a-22b Awesome House, 31 Some Street Street Name, Some Town'
+            123 => 'My Company Ltd, Awesome House Street Name, Some T…',
+            234 => '1a-22b Awesome House, 31 Some Street Street Name,…',
+            345 => '1a-22b Awesome House, 31 Some Street Street Name,…'
         );
 
         $result = $this->service->formatAddressesForSelect($list);

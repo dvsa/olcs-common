@@ -23,6 +23,8 @@ class FileUploadHelperService extends AbstractHelperService
 
     private $selector;
 
+    private $countSelector;
+
     private $uploadCallback;
 
     private $deleteCallback;
@@ -52,6 +54,17 @@ class FileUploadHelperService extends AbstractHelperService
     public function setSelector($selector)
     {
         $this->selector = $selector;
+        return $this;
+    }
+
+    public function getCountSelector()
+    {
+        return $this->countSelector;
+    }
+
+    public function setCountSelector($selector)
+    {
+        $this->countSelector = $selector;
         return $this;
     }
 
@@ -155,7 +168,36 @@ class FileUploadHelperService extends AbstractHelperService
 
         $url = $this->getServiceLocator()->get('Helper\Url');
 
-        $this->getElement()->get('list')->setFiles(call_user_func($callback), $url);
+        $files = call_user_func($callback);
+
+        $element = $this->getElement();
+
+        $element->get('list')->setFiles($files, $url);
+
+        $this->updateCount(count($files));
+
+    }
+
+    protected function updateCount($count)
+    {
+        $selector = $this->getCountSelector();
+
+        if (!is_null($selector)) {
+            $this->findElement($this->getForm(), $selector)->setValue($count);
+        }
+    }
+
+    protected function decrementCount()
+    {
+        $selector = $this->getCountSelector();
+
+        if (!is_null($selector)) {
+            $element = $this->findElement($this->getForm(), $selector);
+            $count = (int)$element->getValue();
+            if ($count>0) {
+                $element->setValue($count - 1);
+            }
+        }
     }
 
     /**
@@ -261,6 +303,7 @@ class FileUploadHelperService extends AbstractHelperService
 
                 if ($success === true) {
                     $element->remove($name);
+                    $this->decrementCount();
                 }
 
                 return true;

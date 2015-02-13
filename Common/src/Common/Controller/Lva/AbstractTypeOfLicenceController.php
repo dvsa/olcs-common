@@ -30,15 +30,7 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $data = (array)$request->getPost();
-
-            $response = $this->processPostAdapter($data);
-
-            if ($response instanceof Response) {
-                return $response;
-            }
-
         } else {
             $data = $this->formatDataForForm($this->getTypeOfLicenceData());
         }
@@ -52,6 +44,12 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
         $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
+
+            $response = $this->processPostAdapter($data);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
 
             // If we have an adapter, we need to grab the previous data as we need to check this later
             $previousData = null;
