@@ -15,6 +15,23 @@ namespace Common\Service\Helper;
 class DataHelperService extends AbstractHelperService
 {
     /**
+     * Replace the children's array, with their ids
+     *
+     * @param array $data
+     * @return array
+     */
+    public function replaceIds($data)
+    {
+        foreach ($data as $key => $var) {
+            if (isset($var['id'])) {
+                $data[$key] = $var['id'];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
      * Repeat an array x times
      *
      * @param array $array

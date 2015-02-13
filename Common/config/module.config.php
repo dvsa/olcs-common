@@ -101,6 +101,12 @@ return array(
             'LvaLicence/ConditionsUndertakings' => array(
                 'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
             ),
+            'LvaApplication/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
+            ),
+            'LvaVariation/FinancialEvidence' => array(
+                'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -187,6 +193,10 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter',
             'ApplicationOperatingCentreAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationOperatingCentreAdapter',
+            'VariationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
+            'ApplicationFinancialEvidenceAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
             'GenericBusinessTypeAdapter'
                 => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'GenericBusinessDetailsAdapter'
@@ -276,6 +286,20 @@ return array(
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
             'Common\Filter\Publication\DecisionText1',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'TmDecisionPublicationFilter' => array(
+            'Common\Filter\Publication\LastHearing',
+            'Common\Filter\Publication\TransportManager',
+            'Common\Filter\Publication\PiVenue',
+            'Common\Filter\Publication\HearingDateTime',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\PublicationSection',
+            'Common\Filter\Publication\PreviousPublication',
+            'Common\Filter\Publication\PreviousUnpublished',
+            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmDecisionText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),

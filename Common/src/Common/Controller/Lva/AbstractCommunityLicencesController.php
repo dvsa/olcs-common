@@ -218,16 +218,16 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Add action
-     * 
+     *
      */
     public function addAction()
     {
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            if ($this->isButtonPressed('cancel')) {
-                return $this->redirectToIndex();
-            }
+
+        if ($this->isButtonPressed('cancel')) {
+            return $this->redirectToIndex();
         }
+
         $licenceId = $this->getLicenceId();
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
@@ -263,13 +263,12 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Attach vehicle authority validator
-     * 
+     *
      * @param Zend\Form\Form $form
      */
     protected function attachVehicleAuthorityValidator($form)
     {
-        $totalDiscs =
-            $this->getServiceLocator()
+        $totalDiscs = $this->getServiceLocator()
             ->get('Entity\PsvDisc')
             ->getNotCeasedDiscs($this->getLicenceId())['Count'];
 
