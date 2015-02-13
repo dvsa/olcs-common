@@ -7,7 +7,7 @@ OLCS.ready(function() {
 
   // @todo Make the cascadeForm component use event delegation and remove this setup function afterwards
   function setupCascade() {
-    
+
     // cache some input lookups
     var niFlag       = F("type-of-licence", "operator-location");
     var operatorType = F("type-of-licence", "operator-type");
@@ -56,9 +56,9 @@ OLCS.ready(function() {
           F("type-of-licence", "licence-type").first().prop("checked", true);
         }
       }
-    }); 
+    });
   }
-  
+
   setupCascade();
 
   OLCS.formHandler({
@@ -67,7 +67,6 @@ OLCS.ready(function() {
     success: OLCS.normaliseResponse(function(data) {
       if (data.hasErrors) {
         F.render(".js-body", data.body);
-        
         setupCascade();
 
         return;
