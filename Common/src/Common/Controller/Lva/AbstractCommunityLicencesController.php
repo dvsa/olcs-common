@@ -180,15 +180,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function checkTableForValidLicences($table)
     {
-        $found = false;
         $rows = $table->getRows();
         foreach ($rows as $row) {
             if (in_array($row['status']['id'], $this->defaultFilters['status'])) {
-                $found = true;
+                return true;
                 break;
             }
         }
-        return $found;
+        return false;
     }
 
     /**
