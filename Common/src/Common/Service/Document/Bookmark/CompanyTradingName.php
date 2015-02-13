@@ -66,14 +66,8 @@ class CompanyTradingName extends DynamicBookmark
         $first = null;
         $name = null;
         foreach ($tradingNames as $tradingName) {
-            // save a strtotime if it's pointless
-            if ($first === null) {
-                $name = $tradingName['name'];
-                continue;
-            }
-
             $current = strtotime($tradingName['createdOn']);
-            if ($current < $first) {
+            if ($name === null || $current < $first) {
                 $first = $current;
                 $name = $tradingName['name'];
             }
