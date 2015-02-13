@@ -14,15 +14,13 @@ namespace Common\Filter\Publication;
  */
 class TmHearingText2 extends Text1
 {
-    protected $tmHearingText2 = 'Article 6 of Regulation (EC) No 1071/2009';
-
     /**
      * @param \Common\Data\Object\Publication  $publication
      * @return \Common\Data\Object\Publication
      */
     public function filter($publication)
     {
-        $publication->offsetSet('text2', $this->tmHearingText2);
+        $publication->offsetSet('text2', $publication['text2']);
 
         return $publication;
     }

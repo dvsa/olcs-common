@@ -44,16 +44,15 @@ class TmDecisionText2Test extends MockeryTestCase
                     'isAdjourned' => true,
                     'date' => $previousDecisionDate
                 ]
-            ]
+            ],
+            'text2' => 'TEST TEXT 2'
         ];
-
-        $expectedOutput = 'Repute Not Lost under Article 6 of Regulation (EC) No 1071/2009';
 
         $input = new Publication($publicationData);
         $sut = new TmDecisionText2();
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($expectedOutput, $output->offsetGet('text2'));
+        $this->assertEquals($publicationData['text2'], $output->offsetGet('text2'));
     }
 }
