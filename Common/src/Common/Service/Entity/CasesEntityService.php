@@ -27,6 +27,10 @@ class CasesEntityService extends AbstractEntityService
         ]
     ];
 
+    private $openForLicenceBundle = [
+        'children' => ['publicInquirys']
+    ];
+
     public function findByIdentifier($identifier)
     {
         // a case's identifier is also its primary key...
@@ -41,12 +45,7 @@ class CasesEntityService extends AbstractEntityService
             'deletedDate' => 'NULL',
         ];
 
-        //@TODO how do we determine whether a case is 'PI' or not?
-        $bundle = [
-            'children' => ['publicInquirys']
-        ];
-
-        $data = $this->getAll($query, $bundle);
+        $data = $this->getAll($query, $this->openForLicenceBundle);
 
         return $data['Results'];
     }
