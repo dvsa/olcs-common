@@ -30,17 +30,11 @@ class Address implements FormatterInterface
         }
 
         if (isset($column['addressFields'])) {
-
             $fields = $column['addressFields'];
         } else {
             $fields = array(
                 'addressLine1',
-                'addressLine2',
-                'addressLine3',
-                'addressLine4',
-                'town',
-                'postcode',
-                'countryCode'
+                'town'
             );
         }
 
