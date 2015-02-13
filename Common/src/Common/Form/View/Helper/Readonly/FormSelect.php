@@ -5,6 +5,7 @@ namespace Common\Form\View\Helper\Readonly;
 use Zend\Form\Element\Select;
 use Zend\Form\ElementInterface;
 use Zend\View\Helper\AbstractHelper;
+use Zend\View\Helper\EscapeHtml;
 
 /**
  * Class FormSelect
@@ -12,6 +13,33 @@ use Zend\View\Helper\AbstractHelper;
  */
 class FormSelect extends AbstractHelper
 {
+    /**
+     * @var EscapeHtml
+     */
+    protected $escapeHtmlHelper;
+
+    /**
+     * Retrieve the escapeHtml helper
+     *
+     * @return EscapeHtml
+     */
+    protected function getEscapeHtmlHelper()
+    {
+        if ($this->escapeHtmlHelper) {
+            return $this->escapeHtmlHelper;
+        }
+
+        if (method_exists($this->view, 'plugin')) {
+            $this->escapeHtmlHelper = $this->view->plugin('escapehtml');
+        }
+
+        if (!$this->escapeHtmlHelper instanceof EscapeHtml) {
+            $this->escapeHtmlHelper = new EscapeHtml();
+        }
+
+        return $this->escapeHtmlHelper;
+    }
+
     /**
      * Invoke helper as function
      *
@@ -74,6 +102,9 @@ class FormSelect extends AbstractHelper
                 $value = $valueOptions[$elementValue];
             }
         }
-        return $value;
+
+        $escapeHelper = $this->getEscapeHtmlHelper();
+
+        return $escapeHelper($value);
     }
 }
