@@ -221,7 +221,9 @@ class LicenceEntityService extends AbstractLvaEntityService
             'organisation' => [
                 'children' => [
                     'tradingNames',
-                    'licences',
+                    'licences' => [
+                        'children' => ['status'],
+                    ],
                     'leadTcArea'
                 ],
             ],
@@ -233,7 +235,12 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'ceasedDate' => 'NULL',
                 ],
             ],
-            'licenceVehicles',
+            'licenceVehicles' => [
+                'criteria' => [
+                    'specifiedDate' => 'NOT NULL',
+                    'removalDate' => 'NULL',
+                ],
+            ],
             'operatingCentres',
             /*
             'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
@@ -567,6 +574,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function getExtendedOverview($id)
     {
+        $bundle = $this->extendedOverviewBundle;
+
         // modify bundle to filter other licence statuses
         $licenceStatuses = [
             LicenceEntityService::LICENCE_STATUS_VALID,
@@ -585,7 +594,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             'status' => 'IN ["'.implode('","', $applicationStatuses).'"]'
         ];
 
-        return $this->get($id, $this->extendedOverviewBundle);
+        return $this->get($id, $bundle);
     }
 
     /**

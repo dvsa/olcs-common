@@ -42,7 +42,9 @@ class CasesEntityService extends AbstractEntityService
         ];
 
         //@TODO how do we determine whether a case is 'PI' or not?
-        $bundle = [];
+        $bundle = [
+            'children' => ['publicInquirys']
+        ];
 
         $data = $this->getAll($query, $bundle);
 
