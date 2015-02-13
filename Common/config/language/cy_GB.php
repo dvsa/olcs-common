@@ -1070,9 +1070,14 @@ return array(
     'lva-conditions-undertakings-table-status' => 'W Status',
     'lva-conditions-undertakings-table-title' => 'W Conditions and undertakings',
     'lva-conditions-undertakings-table-type' => 'W Type',
-    'lva-financial-evidence-table.file-name' => 'W File name',
-    'lva-financial-evidence-table.title' => 'W Financial evidence',
-    'lva-financial-evidence-table.type' => 'W Evidence type',
+    'lva-financial-evidence-evidence.label' => 'W Provide evidence',
+    'lva-financial-evidence-upload-now.label' => 'W Provide evidence that you have the required finances stated above',
+    'lva-financial-evidence-upload-now.no' => 'W Send in the post',
+    'lva-financial-evidence-upload-now.yes' => 'W Upload files',
+    'lva-financial-evidence-upload.files.hint' => 'W Please ensure the evidence provided demonstrates there are
+        sufficient financial resources to maintain the vehicles and run the business.',
+    'lva-financial-evidence-upload.label' => 'W Upload files',
+    'lva-financial-evidence-upload.required' => 'W Please upload evidence of financial standing',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles' => 'W The sum of small
         and medium vehicles does not match the total number of vehicles',
     'lva-operating-centre-tot-auth-vehicles-equalsumtotAuthSmallVehicles-totAuthMediumVehicles-totAuthLargeVehicles' =>

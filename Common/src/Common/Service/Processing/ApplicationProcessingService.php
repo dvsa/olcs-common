@@ -7,13 +7,13 @@
  */
 namespace Common\Service\Processing;
 
-use Common\Service\Entity\ApplicationEntityService;
-use Common\Service\Entity\LicenceEntityService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
-use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Application Processing Service
@@ -31,6 +31,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     protected $applicationValidatingData = array();
 
+    /**
+     * Called when an application is validated (When GV fee is paid, or when PSV is granted)
+     *
+     * @param int $id
+     */
     public function validateApplication($id)
     {
         $licenceId = $this->getLicenceId($id);
@@ -40,6 +45,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->copyApplicationDataToLicence($id, $licenceId);
 
         $this->processApplicationOperatingCentres($id, $licenceId);
+        $this->processCommonGrantData($id, $licenceId);
 
         $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
 
@@ -48,6 +54,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
     }
 
+    /**
+     * Called when granting an NEW application
+     *
+     * @param int $id
+     */
     public function processGrantApplication($id)
     {
         $licenceId = $this->getLicenceId($id);
@@ -61,6 +72,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
+    /**
+     * Called when granting a variation application
+     *
+     * @param int $id
+     */
     public function processGrantVariation($id)
     {
         $licenceId = $this->getLicenceId($id);
@@ -76,36 +92,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
 
         $this->processApplicationOperatingCentres($id, $licenceId);
+        $this->processCommonGrantData($id, $licenceId);
     }
 
-    protected function processGrantPsvApplication($id, $licenceId)
-    {
-        $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
-        $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
-
-        $this->grantApplication($id, $appStatus);
-        $this->grantLicence($licenceId, $licStatus);
-
-        $this->copyApplicationDataToLicence($id, $licenceId);
-
-        $dataForValidating = $this->getApplicationDataForValidating($id);
-
-        if ($dataForValidating['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-            $this->processApplicationOperatingCentres($id, $licenceId);
-        }
-
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
-    }
-
-    protected function processGrantGoodsApplication($id, $licenceId)
-    {
-        $this->grantApplication($id);
-        $this->grantLicence($licenceId);
-
-        $taskId = $this->createGrantTask($id, $licenceId);
-        $this->createGrantFee($id, $licenceId, $taskId);
-    }
-
+    /**
+     * Called when un-granting an application
+     *
+     * @param int $id
+     */
     public function processUnGrantApplication($id)
     {
         $licenceId = $this->getLicenceId($id);
@@ -139,6 +133,47 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
 
         $this->getServiceLocator()->get('Entity\Fee')->save($feeData);
+    }
+
+    /**
+     * @param int $applicationId
+     * @param int $licenceId pass this in to save making an extra REST call
+     *
+     * @return boolean true if a fee was created, false otherwise (fee already exists)
+     */
+    public function maybeCreateVariationFee($applicationId, $licenceId)
+    {
+        $fee = $this->getServiceLocator()->get('Entity\Fee')
+            ->getLatestOutstandingFeeForApplication($applicationId);
+
+        if (!empty($fee)) {
+            // existing fee, don't create one
+            return false;
+        }
+
+        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_VAR);
+
+        return true;
+    }
+
+    /**
+     * @param int $applicationId
+     *
+     * @return boolean true if a fee was cancelled, false otherwise (no fee exists)
+     */
+    public function maybeCancelVariationFee($applicationId)
+    {
+        $fee = $this->getServiceLocator()->get('Entity\Fee')
+            ->getLatestOutstandingFeeForApplication($applicationId);
+
+        if (!empty($fee)) {
+            // existing fee, cancel it
+            $this->getServiceLocator()->get('Entity\Fee')
+                ->cancelForApplication($applicationId);
+            return true;
+        }
+
+        return false;
     }
 
     protected function createGrantFee($applicationId, $licenceId, $taskId)
@@ -452,44 +487,51 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return $this->getServiceLocator()->get('Entity\Application')->getLicenceIdForApplication($id);
     }
 
-    /**
-     * @param int $applicationId
-     * @param int $licenceId pass this in to save making an extra REST call
-     *
-     * @return boolean true if a fee was created, false otherwise (fee already exists)
-     */
-    public function maybeCreateVariationFee($applicationId, $licenceId)
+    protected function processGrantPsvApplication($id, $licenceId)
     {
-        $fee = $this->getServiceLocator()->get('Entity\Fee')
-            ->getLatestOutstandingFeeForApplication($applicationId);
+        $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
+        $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
 
-        if (!empty($fee)) {
-            // existing fee, don't create one
-            return false;
+        $this->grantApplication($id, $appStatus);
+        $this->grantLicence($licenceId, $licStatus);
+
+        $this->copyApplicationDataToLicence($id, $licenceId);
+
+        $dataForValidating = $this->getApplicationDataForValidating($id);
+
+        if ($dataForValidating['licenceType'] !== LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
+            $this->processApplicationOperatingCentres($id, $licenceId);
         }
 
-        $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_VAR);
+        $this->processCommonGrantData($id, $licenceId);
 
-        return true;
+        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
+    }
+
+    protected function processGrantGoodsApplication($id, $licenceId)
+    {
+        $this->grantApplication($id);
+        $this->grantLicence($licenceId);
+
+        $taskId = $this->createGrantTask($id, $licenceId);
+        $this->createGrantFee($id, $licenceId, $taskId);
     }
 
     /**
-     * @param int $applicationId
+     * Common logic to grant data
+     * - called when validating a NEW GV App
+     * - called when granting a NEW PSV App
+     * - called when granting a variation
      *
-     * @return boolean true if a fee was cancelled, false otherwise (no fee exists)
+     * @param int $id
+     * @param int $licenceId
      */
-    public function maybeCancelVariationFee($applicationId)
+    protected function processCommonGrantData($id, $licenceId)
     {
-        $fee = $this->getServiceLocator()->get('Entity\Fee')
-            ->getLatestOutstandingFeeForApplication($applicationId);
+        $this->getServiceLocator()->get('Processing\GrantConditionUndertaking')->grant($id, $licenceId);
 
-        if (!empty($fee)) {
-            // existing fee, cancel it
-            $this->getServiceLocator()->get('Entity\Fee')
-                ->cancelForApplication($applicationId);
-            return true;
-        }
+        $this->getServiceLocator()->get('Processing\GrantCommunityLicence')->grant($licenceId);
 
-        return false;
+        $this->getServiceLocator()->get('Processing\GrantTransportManager')->grant($id, $licenceId);
     }
 }

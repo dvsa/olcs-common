@@ -317,6 +317,19 @@ class ApplicationEntityService extends AbstractLvaEntityService
         ]
     );
 
+    protected $financialEvidenceBundle = array(
+        'children' => [
+            'licenceType',
+            'licence' => [
+                'children' => [
+                    'organisation'
+                ],
+                'goodsOrPsv',
+            ],
+            'goodsOrPsv',
+        ]
+    );
+
     /**
      * Bundle to check licence type
      *
@@ -640,8 +653,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getDataForPaymentSubmission($id)
     {
-        $data = $this->get($id, $this->paymentSubmissionBundle);
+        return $this->get($id, $this->paymentSubmissionBundle);
+    }
 
-        return $data;
+    public function getDataForFinancialEvidence($id)
+    {
+        return $this->get($id, $this->financialEvidenceBundle);
     }
 }

@@ -48,7 +48,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get office copy
-     * 
+     *
      * @group communityLicService
      * @dataProvider dataProvider
      */
@@ -70,7 +70,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Data provider for office copy
-     * 
+     *
      */
     public function dataProvider()
     {
@@ -82,7 +82,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get valid licences
-     * 
+     *
      * @group communityLicService
      */
     public function testGetValidLicences()
@@ -102,7 +102,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test add office copy
-     * 
+     *
      * @group communityLicService
      */
     public function testAddOfficeCopy()
@@ -134,7 +134,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test add community licences
-     * 
+     *
      * @group communityLicService
      */
     public function testAddCommuniyLicences()
@@ -186,5 +186,48 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('CommunityLic', 'POST', $dataToSave);
 
         $this->sut->addCommunityLicences($data, $licenceId, 2);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetWithLicence()
+    {
+        $query = [
+            'foo' => 'bar'
+        ];
+
+        $bundle = [
+            'children' => [
+                'status',
+                'licence' => [
+                    'children' => [
+                        'licenceType'
+                    ]
+                ]
+            ]
+        ];
+
+        $this->expectOneRestCall('CommunityLic', 'GET', $query, $bundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getWithLicence($query));
+    }
+
+    public function testGetPendingForLicence()
+    {
+        $licenceId = 123;
+
+        $query = [
+            'licence' => $licenceId,
+            'specifiedDate' => 'NULL',
+            'status' => 'cl_sts_pending',
+            'limit' => 'all'
+        ];
+
+        $this->expectOneRestCall('CommunityLic', 'GET', $query)
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getPendingForLicence($licenceId));
     }
 }
