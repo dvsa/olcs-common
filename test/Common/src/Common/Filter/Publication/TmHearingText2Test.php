@@ -44,16 +44,15 @@ class TmHearingText2Test extends MockeryTestCase
                     'isAdjourned' => true,
                     'date' => $previousHearingDate
                 ]
-            ]
+            ],
+            'text2' => 'TEST TEXT 2'
         ];
-
-        $expectedOutput = 'Article 6 of Regulation (EC) No 1071/2009';
 
         $input = new Publication($publicationData);
         $sut = new TmHearingText2();
 
         $output = $sut->filter($input);
 
-        $this->assertEquals($expectedOutput, $output->offsetGet('text2'));
+        $this->assertEquals($publicationData['text2'], $output->offsetGet('text2'));
     }
 }
