@@ -926,4 +926,24 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getInForceForOrganisation(123));
     }
+
+    /**
+     * @group licenceEntity
+     */
+    public function testGetCommunityLicencesByLicenceIdAndIds()
+    {
+        $licenceId = 1;
+        $bundle = [
+            'children' => [
+                'communityLics' => [
+                    'criteria' => [
+                        'id' => 'IN [1,2,3]'
+                    ]
+                ]
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', $licenceId, $bundle)
+            ->will($this->returnValue(['communityLics' => 'response']));
+        $this->assertEquals('response', $this->sut->getCommunityLicencesByLicenceIdAndIds($licenceId, [1, 2, 3]));
+    }
 }

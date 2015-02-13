@@ -524,4 +524,25 @@ class LicenceEntityService extends AbstractLvaEntityService
             ]
         );
     }
+
+    /**
+     * Get community licences by licence id and ids
+     *
+     * @param int $licenceId
+     * @param array $ids
+     * @return array
+     */
+    public function getCommunityLicencesByLicenceIdAndIds($licenceId, $ids)
+    {
+        $bundle = [
+            'children' => [
+                'communityLics' => [
+                    'criteria' => [
+                        'id' => 'IN [' . implode(',', $ids) . ']'
+                    ]
+                ]
+            ]
+        ];
+        return $this->get($licenceId, $bundle)['communityLics'];
+    }
 }
