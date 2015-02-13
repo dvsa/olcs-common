@@ -567,7 +567,6 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
-<<<<<<< HEAD
      * Get data for internal overview
      *
      * @param int $id
