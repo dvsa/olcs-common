@@ -34,7 +34,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
 
     /**
      * Test add office copy
-     * 
+     *
      * @group licenceCommunityLicenceAdapter
      */
     public function testAddOfficeCopy()
@@ -63,7 +63,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
 
     /**
      * Test get total authority
-     * 
+     *
      * @group licenceCommunityLicenceAdapter
      */
     public function testGetTotalAuthority()
@@ -82,7 +82,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
 
     /**
      * Test add commuinty licences
-     * 
+     *
      * @group licenceCommunityLicenceAdapter
      */
     public function testAddCommunityLicences()
@@ -93,6 +93,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
             ->shouldReceive('getDate')
             ->andReturn('2015-01-01')
             ->getMock();
+
         $this->sm->setService('Helper\Date', $mockDateHelper);
 
         $data = [
@@ -103,9 +104,27 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
         $mockAddCommunityLicences = m::mock()
             ->shouldReceive('addCommunityLicences')
             ->with($data, $licenceId, 2)
+            ->andReturn(
+                [
+                    'id' => [1, 2, 3]
+                ]
+            )
             ->getMock();
+
         $this->sm->setService('Entity\CommunityLic', $mockAddCommunityLicences);
 
-        $this->sut->addCommunityLicences($licenceId, 2);
+        $this->sm->setService(
+            'Helper\CommunityLicenceDocument',
+            m::mock()
+            ->shouldReceive('generateBatch')
+            ->with([1, 2, 3])
+            ->andReturn('foo')
+            ->getMock()
+        );
+
+        $this->assertEquals(
+            'foo',
+            $this->sut->addCommunityLicences($licenceId, 2)
+        );
     }
 }
