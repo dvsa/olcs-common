@@ -230,7 +230,7 @@ class AbstractConditionsUndertakingsAdapterTest extends MockeryTestCase
                         'id' => 987,
                         'address' => [
                             'addressLine1' => '123 street',
-                            'addressLine2' => 'foo bar town'
+                            'town' => 'foo bar town'
                         ]
                     ]
                 ]

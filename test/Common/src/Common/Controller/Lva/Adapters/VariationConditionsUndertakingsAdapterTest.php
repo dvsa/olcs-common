@@ -362,7 +362,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
                         'id' => 111,
                         'address' => [
                             'addressLine1' => '123 street',
-                            'addressLine2' => 'foo bar town'
+                            'town' => 'foo bar town'
                         ]
                     ]
                 ],
@@ -372,7 +372,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
                         'id' => 222,
                         'address' => [
                             'addressLine1' => '123 street',
-                            'addressLine2' => 'foo bar town'
+                            'town' => 'foo bar town'
                         ]
                     ]
                 ]
@@ -385,7 +385,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
                         'id' => 222,
                         'address' => [
                             'addressLine1' => '123 street',
-                            'addressLine2' => 'foo bar town'
+                            'town' => 'foo bar town'
                         ]
                     ]
                 ],
@@ -394,7 +394,7 @@ class VariationConditionsUndertakingsAdapterTest extends MockeryTestCase
                         'id' => 333,
                         'address' => [
                             'addressLine1' => '123 street',
-                            'addressLine2' => 'foo bar town'
+                            'town' => 'foo bar town'
                         ]
                     ]
                 ]
