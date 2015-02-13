@@ -25,7 +25,6 @@ class DateFrom extends DynamicBookmark
 
     public function render()
     {
-        // @TODO confirm with Steve L, AC says issued date
         return date("d/m/Y", strtotime($this->data['specifiedDate']));
     }
 }

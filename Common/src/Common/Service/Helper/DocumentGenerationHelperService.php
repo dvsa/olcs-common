@@ -60,14 +60,18 @@ class DocumentGenerationHelperService extends AbstractHelperService
 
         $uploader->setFile(['content' => $content]);
 
-        $filename = str_replace(" ", "_", $filename);
-
+        /*
+         * @NOTE: setting the filepath of the identifier conflicts
+         * with the need to store files uniquely (which the uploader
+         * will otherwise take care of). As per discussions 13/02/15
+         * we've agreed not to set "friendly" file paths and that
+         * a separate task is needed to identify a solution
         $filePath = $this->getServiceLocator()
             ->get('Helper\Date')
-            // @FIXME: generates clashes with multiple documents...
             ->getDate('YmdHi') . '_' . $filename . '.rtf';
+         */
 
-        return $uploader->upload($folder, $filePath);
+        return $uploader->upload($folder);
     }
 
     private function getTemplate($template)
