@@ -34,7 +34,7 @@ class Address implements FormatterInterface
         } else {
             $fields = array(
                 'addressLine1',
-                'addressLine2'
+                'town'
             );
         }
 
