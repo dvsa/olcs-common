@@ -926,4 +926,37 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getInForceForOrganisation(123));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetExtendedOverview()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getExtendedOverview($id));
+    }
+
+    /**
+     * @group entity_services
+     * @dataProvider shortCodeProvider
+     */
+    public function testGetShortCodeForType($shortCode, $type)
+    {
+        $this->assertEquals($shortCode, $this->sut->getShortCodeForType($type));
+    }
+
+    public function shortCodeProvider()
+    {
+        return [
+            ['SI', LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL],
+            ['SN', LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
+            ['R', LicenceEntityService::LICENCE_TYPE_RESTRICTED],
+            ['SR', LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED],
+            [null, 'something_invalid'],
+        ];
+    }
 }
