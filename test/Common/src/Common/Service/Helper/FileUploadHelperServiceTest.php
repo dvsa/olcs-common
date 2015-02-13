@@ -379,6 +379,21 @@ class FileUploadHelperServiceTest extends MockeryTestCase
             }
         );
 
+        $helper->setCountSelector('my-hidden-field');
+
+        $fileCountfield = m::mock()
+            ->shouldReceive('getValue')->andReturn('3')
+            ->shouldReceive('setValue')->with(2)
+            ->getMock();
+
+        $form = m::mock('Zend\Form\Form')
+            ->shouldReceive('get')
+                ->with('my-hidden-field')
+                ->andReturn($fileCountfield)
+            ->getMock();
+
+        $helper->setForm($form);
+
         $this->assertEquals(true, $helper->process());
     }
 

@@ -46,9 +46,9 @@ class FormDateSelect extends AbstractHelper
 
         $dateTime = new \DateTime();
         $dateTime->setDate(
-            $element->getYearElement()->getValue(),
-            $element->getMonthElement()->getValue(),
-            $element->getDayElement()->getValue()
+            (int) $element->getYearElement()->getValue(),
+            (int) $element->getMonthElement()->getValue(),
+            (int) $element->getDayElement()->getValue()
         );
 
         return $dateTime->format($this->format);
