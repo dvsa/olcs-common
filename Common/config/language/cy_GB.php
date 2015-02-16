@@ -37,7 +37,7 @@ return array(
     'Please add a person' => 'W Please add a person',
     'Please add a safety inspection provider' => 'W Please add a safety inspection provider',
     'Save and continue' => 'W Save & continue',
-    'Value is required and can't be empty' => 'W value is required',
+    'Value is required and can\'t be empty' => 'W value is required',
     'Week' => 'W Week',
     'Weeks' => 'W Weeks',
     'Yes' => 'W Yes',
