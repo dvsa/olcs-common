@@ -576,7 +576,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
      */
     public function testAddActionWithPost()
     {
-        $totalDiscs = 2;
+        $totalLicences = 2;
         $totalVehicleAuthority = 10;
         $licenceId = 1;
         $totalLicences = 3;
@@ -593,16 +593,9 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn($data)
             ->getMock();
 
-        $mockPsvDiscSevice = m::mock()
-            ->shouldReceive('getNotCeasedDiscs')
-            ->with($licenceId)
-            ->andReturn(['Count' => $totalDiscs])
-            ->getMock();
-        $this->sm->setService('Entity\PsvDisc', $mockPsvDiscSevice);
-
         $mockValidator = m::mock()
-            ->shouldReceive('setTotalDiscs')
-            ->with($totalDiscs)
+            ->shouldReceive('setTotalLicences')
+            ->with($totalLicences)
             ->shouldReceive('setTotalVehicleAuthority')
             ->with($totalVehicleAuthority)
             ->getMock();
@@ -673,6 +666,9 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getOfficeCopy')
             ->with($licenceId)
             ->andReturn(null)
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn(['Count' => $totalLicences])
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
@@ -703,7 +699,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
      */
     public function testAddActionWithPostFormIsNotValid()
     {
-        $totalDiscs = 2;
+        $totalLicences = 2;
         $totalVehicleAuthority = 10;
         $licenceId = 1;
         $totalLicences = 3;
@@ -720,16 +716,16 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn($data)
             ->getMock();
 
-        $mockPsvDiscSevice = m::mock()
-            ->shouldReceive('getNotCeasedDiscs')
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getValidLicences')
             ->with($licenceId)
-            ->andReturn(['Count' => $totalDiscs])
+            ->andReturn(['Count' => $totalLicences])
             ->getMock();
-        $this->sm->setService('Entity\PsvDisc', $mockPsvDiscSevice);
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
         $mockValidator = m::mock()
-            ->shouldReceive('setTotalDiscs')
-            ->with($totalDiscs)
+            ->shouldReceive('setTotalLicences')
+            ->with($totalLicences)
             ->shouldReceive('setTotalVehicleAuthority')
             ->with($totalVehicleAuthority)
             ->getMock();
@@ -975,6 +971,8 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
             ->andReturn([['issueNo' => 0]])
+            ->shouldReceive('updateCommunityLicencesCount')
+            ->with($licenceId)
             ->getMock();
         $this->sm->setService('Entity\Licence', $mockLicenceService);
 
