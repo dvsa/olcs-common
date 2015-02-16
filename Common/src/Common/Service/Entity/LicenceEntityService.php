@@ -331,14 +331,14 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getVehiclesTotal($id)
     {
-        $data = $this->get($id, $this->vehiclesTotalBundle);
+        $data = $this->getAll($id, $this->vehiclesTotalBundle);
 
         return count($data['licenceVehicles']);
     }
 
     public function getVehiclesPsvTotal($id, $type)
     {
-        $data = $this->get($id, $this->vehiclesPsvTotalBundle);
+        $data = $this->getAll($id, $this->vehiclesPsvTotalBundle);
 
         $count = 0;
 
