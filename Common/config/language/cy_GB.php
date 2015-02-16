@@ -502,6 +502,10 @@ return array(
     'built-by' => 'W Built by',
     'bus-compliance-issues' => 'W Bus compliance issues',
     'bus-services-registered' => 'W Local bus services registered',
+    'business-details.company_number.locked' => 'W Cannot change company number. Please contact Central Licensing Office
+        for further advice',
+    'business-details.name.locked' => 'W Cannot change company name. Please contact Central Licensing Office for further
+        advice',
     'business-type' => 'W Business type',
     'business-type.locked' => 'W Cannot change business type. Please contact Central Licensing Office for further
         advice.',
