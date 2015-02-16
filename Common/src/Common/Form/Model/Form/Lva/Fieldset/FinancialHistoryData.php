@@ -28,8 +28,9 @@ class FinancialHistoryData
     public $hasAnyPerson = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-bankrupt",
      *     "label": "application_previous-history_financial-history.finance.bankrupt",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
@@ -37,6 +38,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
+     *         "id":"bankrupt",
      *          "class":"subquestion checkbox inline"
      *     }
      * })
@@ -45,8 +47,9 @@ class FinancialHistoryData
     public $bankrupt = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-liquidation",
      *     "label": "application_previous-history_financial-history.finance.liquidation",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
@@ -54,6 +57,7 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
+     *         "id":"liquidation",
      *          "class":"subquestion checkbox inline"
      *     }
      * })
@@ -62,8 +66,9 @@ class FinancialHistoryData
     public $liquidation = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-receivership",
      *     "label": "application_previous-history_financial-history.finance.receivership",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
@@ -71,7 +76,8 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion checkbox inline"
+     *         "id": "receiversip",
+     *         "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -79,8 +85,9 @@ class FinancialHistoryData
     public $receivership = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-administration",
      *     "label": "application_previous-history_financial-history.finance.administration",
      *     "value_options": {"Y": "Yes", "N": "No"},
      *     "help-block": "Please choose",
@@ -88,7 +95,8 @@ class FinancialHistoryData
      *         "class": "inline"
      *     },
      *     "fieldset-attributes" : {
-     *          "class":"subquestion checkbox inline"
+     *         "id":"administration",
+     *         "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -96,13 +104,15 @@ class FinancialHistoryData
     public $administration = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-disqualified",
      *      "fieldset-attributes": {
+     *         "id":"disqualified",
      *          "class": "question checkbox inline"
      *      },
      *     "label": "application_previous-history_financial-history.finance.disqualified",
-     *     "value_options": {"Y": "Yes", "N": "No"},
+     *     "value_options": {"Y": "Yes", "N": "No"}
      * })
      * @Form\Type("radio")
      */
@@ -119,10 +129,12 @@ class FinancialHistoryData
      *     "placeholder": "application_previous-history_financial-history.insolvencyDetails.placeholder"
      * })
      * @Form\Options({
-     *     "label":
-     * "application_previous-history_financial-history.insolvencyDetails.title",
-     *     "hint":
-     * "application_previous-history_financial-history.insolvencyDetails.hint"
+     *     "short-label": "short-label-financial-history-additional-information",
+     *     "label": "application_previous-history_financial-history.insolvencyDetails.title",
+     *     "hint": "application_previous-history_financial-history.insolvencyDetails.hint",
+     *     "label_attributes": {
+     *         "id": "additional-information"
+     *     }
      * })
      * @Form\Type("TextArea")
      * @Form\Filter({"name":"Zend\Filter\StringTrim"})
@@ -137,13 +149,17 @@ class FinancialHistoryData
     public $file = null;
 
     /**
-     * @Form\Attributes({"id":"","placeholder":""})
+     * @Form\Annotations({"id":""})
      * @Form\Options({
+     *     "short-label": "short-label-financial-history-insolvency",
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "label": "application_previous-history_financial-history.insolvencyConfirmation.title",
      *     "help-block": "Please choose",
-     *     "must_be_value": "Y"
+     *     "must_be_value": "Y",
+     *     "label_attributes": {
+     *         "id":"insolvency"
+     *     }
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      */

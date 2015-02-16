@@ -1,6 +1,17 @@
 <?php
 
 return array(
+    'short-label-financial-history-bankrupt' => 'Bankruptcy',
+    'short-label-financial-history-liquidation' => 'Liquidation',
+    'short-label-financial-history-receivership' => 'Receivership',
+    'short-label-financial-history-administration' => 'Administration',
+    'short-label-financial-history-disqualified' => 'Disqualified',
+    'short-label-financial-history-insolvency' => 'Insolvency',
+    'short-label-financial-history-additional-information' => 'Additional information',
+    'Value is required and can\'t be empty' => 'value is required',
+    'short-label-tol-operator-location' => 'Location',
+    'short-label-tol-operator-type' => 'Type of operator',
+    'short-label-tol-licence-type' => 'Licence type',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
