@@ -75,4 +75,26 @@ trait GenericUpload
         );
         return $this->getServiceLocator()->get('Entity\Document')->save($docData);
     }
+
+    /**
+     * Delete file
+     *
+     * @NOTE This is public so it can be called as a callback when processing files
+     *
+     * @param int $id
+     */
+    public function deleteFile($id)
+    {
+        $documentService = $this->getServiceLocator()->get('Entity\Document');
+
+        $identifier = $documentService->getIdentifier($id);
+
+        if (!empty($identifier)) {
+            $this->getServiceLocator()->get('FileUploader')->getUploader()->remove($identifier);
+        }
+
+        $documentService->delete($id);
+
+        return true;
+    }
 }

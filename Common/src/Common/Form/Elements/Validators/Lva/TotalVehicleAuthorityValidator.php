@@ -19,7 +19,7 @@ class TotalVehicleAuthorityValidator extends AbstractValidator
     /**
      * @var int
      */
-    private $totalDiscs;
+    private $totalLicences;
 
     /**
      * @var int
@@ -43,7 +43,7 @@ class TotalVehicleAuthorityValidator extends AbstractValidator
      */
     public function isValid($value)
     {
-        $totalLicences = (int)$value + $this->getTotalDiscs();
+        $totalLicences = (int)$value + $this->getTotalLicences();
         if ($totalLicences > $this->getTotalVehicleAuthority()) {
             $this->error('vehicle-authority-exceeded');
             return false;
@@ -53,23 +53,23 @@ class TotalVehicleAuthorityValidator extends AbstractValidator
     }
 
     /**
-     * Get total discs
+     * Get total licences
      *
      * @return int
      */
-    public function getTotalDiscs()
+    public function getTotalLicences()
     {
-        return $this->totalDiscs;
+        return $this->totalLicences;
     }
 
     /**
-     * Set total discs
+     * Set total licences
      *
      * @param int
      */
-    public function setTotalDiscs($totalDiscs)
+    public function setTotalLicences($totalLicences)
     {
-        $this->totalDiscs = $totalDiscs;
+        $this->totalLicences = $totalLicences;
     }
 
     /**
