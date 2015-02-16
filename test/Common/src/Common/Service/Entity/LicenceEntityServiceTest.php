@@ -998,7 +998,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('RESPONSE', $this->sut->getExtendedOverview($id));
     }
 
-   /**
+    /**
      * @group entity_services
      * @dataProvider shortCodeProvider
      */

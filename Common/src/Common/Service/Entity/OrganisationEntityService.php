@@ -127,7 +127,7 @@ class OrganisationEntityService extends AbstractEntityService
 
         $bundle = $this->applicationsBundle;
         $bundle['children']['licences']['children']['applications']['criteria'] = [
-            'status' => 'IN ["'.implode('","', $applicationStatuses).'"]',
+            'status' => 'IN ' . json_encode($applicationStatuses),
             'isVariation' => false,
         ];
 
@@ -272,7 +272,7 @@ class OrganisationEntityService extends AbstractEntityService
     {
         $bundle = $this->licencesBundle;
         $bundle['children']['licences']['criteria'] = [
-            'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
+            'status' => 'IN ' . json_encode($licenceStatuses)
         ];
         return $this->get($id, $bundle)['licences'];
     }
