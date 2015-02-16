@@ -126,7 +126,7 @@ class FormErrors extends AbstractHelper
         if ($label == '') {
             $message = ucfirst($message);
         } else {
-            $label = '\'' . $this->translate($label) . '\' ';
+            $label = $this->translate($label) . ': ';
 
             // @NOTE We pass this back through the translator, so individual messages can be tweaked for a better UX
             $message = $this->translate($label . $message);
