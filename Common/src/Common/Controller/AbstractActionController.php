@@ -1418,7 +1418,7 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      *
      * @param int $id
      */
-    public function deleteFile($id, $fieldset, $name)
+    protected function deleteFile($id, $fieldset, $name)
     {
         // @NOTE progressivly start to include the logic within a service
         //  but maintain the old logic for backwards compatability
@@ -1426,17 +1426,20 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             return $this->getSectionService()->deleteFile($id, $fieldset, $name);
         }
 
-        $documentService = $this->getServiceLocator()->get('Entity\Document');
+        $fileDetails = $this->makeRestCall(
+            'Document',
+            'GET',
+            array('id' => $id),
+            array('properties' => array('identifier'))
+        );
 
-        $identifier = $documentService->getIdentifier($id);
+        if (isset($fileDetails['identifier']) && !empty($fileDetails['identifier'])) {
+            if ($this->getUploader()->remove($fileDetails['identifier'])) {
 
-        if (!empty($identifier)) {
-            $this->getServiceLocator()->get('FileUploader')->getUploader()->remove($identifier);
+                $this->makeRestCall('Document', 'DELETE', array('id' => $id));
+                $fieldset->remove($name);
+            }
         }
-
-        $documentService->delete($id);
-
-        $fieldset->remove($name);
     }
 
     public function getFileSizeValidator()
