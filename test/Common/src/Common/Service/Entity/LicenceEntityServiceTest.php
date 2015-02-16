@@ -954,7 +954,45 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $this->expectOneRestCall('Licence', 'GET', $id)
+        $expectedBundle = [
+            'children' => [
+                'licenceType',
+                'status',
+                'goodsOrPsv',
+                'organisation' => [
+                    'children' => [
+                        'tradingNames',
+                        'licences' => [
+                            'children' => ['status'],
+                            'criteria' => [
+                                'status' => 'IN ["lsts_valid","lsts_suspended","lsts_curtailed"]',
+                            ],
+                        ],
+                        'leadTcArea',
+                    ],
+                ],
+                'applications' => [
+                    'children' => ['status'],
+                    'criteria' => [
+                        'status' => 'IN ["apsts_consideration","apsts_granted"]',
+                    ],
+                ],
+                'psvDiscs' => [
+                    'criteria' => [
+                        'ceasedDate' => 'NULL',
+                    ],
+                ],
+                'licenceVehicles' => [
+                    'criteria' => [
+                        'specifiedDate' => 'NOT NULL',
+                        'removalDate' => 'NULL',
+                    ],
+                ],
+                'operatingCentres',
+            ],
+        ];
+
+        $this->expectOneRestCall('Licence', 'GET', $id, $expectedBundle)
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getExtendedOverview($id));
