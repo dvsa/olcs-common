@@ -32,6 +32,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             CommunityLicEntityService::STATUS_SUSPENDED
         ]
     ];
+    
+    protected $statusesForResore = [
+        CommunityLicEntityService::STATUS_WITHDRAWN,
+        CommunityLicEntityService::STATUS_SUSPENDED
+    ];
 
     protected $filters = [];
 
@@ -168,12 +173,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if (!$this->checkTableForValidLicences($table)) {
             $table->removeAction('void');
         }
+        if (!$this->checkTableForWithdrawnOrSuspendedLicences($table)) {
+            $table->removeAction('restore');
+        }
 
         return $table;
     }
 
     /**
-     * Hide Add Office Licence action, if necessary
+     * Check table for valid licences
      *
      * @param \Common\Service\Table\TableBuilder
      * @return bool
@@ -184,7 +192,23 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         foreach ($rows as $row) {
             if (in_array($row['status']['id'], $this->defaultFilters['status'])) {
                 return true;
-                break;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check table for withdrawn or suspended licences
+     *
+     * @param \Common\Service\Table\TableBuilder
+     * @return bool
+     */
+    protected function checkTableForWithdrawnOrSuspendedLicences($table)
+    {
+        $rows = $table->getRows();
+        foreach ($rows as $row) {
+            if (in_array($row['status']['id'], $this->statusesForResore)) {
+                return true;
             }
         }
         return false;
