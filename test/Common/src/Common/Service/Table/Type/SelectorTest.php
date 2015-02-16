@@ -47,6 +47,36 @@ class SelectorTest extends MockeryTestCase
         );
     }
 
+    /**
+     * Test render with disabled attribute
+     *
+     * @group checkboxTest
+     */
+    public function testRenderWithDisabledAttribute()
+    {
+        $fieldset = 'table';
+        $data = [
+            'id' => 7
+        ];
+        $column = [
+            'disableIfRowIsDisabled' => true
+        ];
+
+        $this->table
+            ->shouldReceive('getFieldset')
+            ->andReturn($fieldset)
+            ->shouldReceive('isRowDisabled')
+            ->with($data)
+            ->andReturn(true);
+
+        $response = $this->sut->render($data, $column);
+
+        $this->assertEquals(
+            '<input type="radio" name="table[id]" value="7" disabled="disabled" />',
+            $response
+        );
+    }
+
     public function testRenderWithoutFieldet()
     {
         $fieldset = null;
