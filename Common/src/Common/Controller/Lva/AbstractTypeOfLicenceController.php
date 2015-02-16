@@ -89,6 +89,12 @@ abstract class AbstractTypeOfLicenceController extends AbstractController implem
             return;
         }
 
+        // @NOTE If we haven't got type-of-licence then all of our elements are disabled
+        // so we want to skip checking and persisting data, and just move the user on
+        if (!isset($data['type-of-licence'])) {
+            return $this->completeSection('type_of_licence');
+        }
+
         $currentData = $this->getTypeOfLicenceData();
 
         if ($adapter->doesChangeRequireConfirmation($data['type-of-licence'], $currentData)) {
