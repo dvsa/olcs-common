@@ -3,6 +3,7 @@
 /**
  * Checkbox Test
  *
+ * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 namespace CommonTest\Service\Table\Type;
@@ -14,6 +15,7 @@ use Common\Service\Table\Type\Checkbox;
 /**
  * Checkbox Test
  *
+ * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
 class CheckboxTest extends MockeryTestCase
@@ -32,7 +34,7 @@ class CheckboxTest extends MockeryTestCase
 
     /**
      * Test render with disabled attribute
-     * 
+     *
      * @group checkboxTest
      */
     public function testRenderWithDisabledAttribute()
@@ -62,7 +64,7 @@ class CheckboxTest extends MockeryTestCase
 
     /**
      * Test render
-     * 
+     *
      * @group checkboxTest
      */
     public function testRender()
@@ -80,6 +82,35 @@ class CheckboxTest extends MockeryTestCase
 
         $this->assertEquals(
             '<input type="checkbox" name="table[id][]" value="7"  />',
+            $response
+        );
+    }
+
+    /**
+     * Test render
+     *
+     * @group checkboxTest
+     */
+    public function testRenderWithAttributes()
+    {
+        $fieldset = 'table';
+        $data = [
+            'id' => 7,
+            'action' => 'foo'
+        ];
+        $column = [
+            'data-attributes' => [
+                'action'
+            ]
+        ];
+
+        $this->table->shouldReceive('getFieldset')
+            ->andReturn($fieldset);
+
+        $response = $this->sut->render($data, $column);
+
+        $this->assertEquals(
+            '<input type="checkbox" name="table[id][]" value="7" data-action="foo" />',
             $response
         );
     }
