@@ -39,7 +39,12 @@ switch ($item['value']) {
 }
 
 ?>
-<?php if (isset($item['hideIfEmpty']) && $item['hideIfEmpty'] && empty($item['value'])):
+<?php
+if (isset($item['hideIfEmpty'])
+    && $item['hideIfEmpty']
+    && empty($item['value'])
+    && !(array_key_exists('numeric', $item) && $item['numeric']===0)
+):
  // no-op, don't render
 else: ?>
 <div class="definition-list__item<?php echo (isset($item['class']) ? ' ' . $item['class'] : ''); ?>">

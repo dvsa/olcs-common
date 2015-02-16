@@ -27,9 +27,26 @@ class CasesEntityService extends AbstractEntityService
         ]
     ];
 
+    private $openForLicenceBundle = [
+        'children' => ['publicInquirys']
+    ];
+
     public function findByIdentifier($identifier)
     {
         // a case's identifier is also its primary key...
         return $this->get($identifier, $this->identifierBundle);
+    }
+
+    public function getOpenForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'closeDate' => 'NULL',
+            'deletedDate' => 'NULL',
+        ];
+
+        $data = $this->getAll($query, $this->openForLicenceBundle);
+
+        return $data['Results'];
     }
 }
