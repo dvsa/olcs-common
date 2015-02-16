@@ -15,11 +15,16 @@ $(function() {
     rulesets: {
       "advertisements": {
         "*": function() {
-          
+
           if (vehicles.data('current')) {
-            return vehicles.val() > vehicles.data('current') || trailers.val() > trailers.data('current');
+            var increased = vehicles.val() > vehicles.data('current') || trailers.val() > trailers.data('current');
+
+            // @todo this really needs to happen on the onChange for adPlaced, rather than here!
+            F.setRadioByValue("advertisements", "adPlaced", increased ? "Y" : "N");
+
+            return increased;
           }
-          
+
           return true;
         },
         "label:adPlacedIn": hasAdvertisements,
