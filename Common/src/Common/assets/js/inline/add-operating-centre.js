@@ -1,6 +1,8 @@
 $(function() {
   "use strict";
 
+  // jshint newcap:false
+
   var F = OLCS.formHelper;
 
   var vehicles = F("data", "noOfVehiclesRequired");
@@ -15,14 +17,8 @@ $(function() {
     rulesets: {
       "advertisements": {
         "*": function() {
-
-          if (vehicles.data('current')) {
-            var increased = vehicles.val() > vehicles.data('current') || trailers.val() > trailers.data('current');
-
-            // @todo this really needs to happen on the onChange for adPlaced, rather than here!
-            F.setRadioByValue("advertisements", "adPlaced", increased ? "Y" : "N");
-
-            return increased;
+          if (vehicles.data("current")) {
+            return vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current");
           }
 
           return true;
@@ -32,5 +28,13 @@ $(function() {
         "selector:#file": hasAdvertisements
       }
     }
+  });
+
+  OLCS.eventEmitter.on("show:advertisements:*", function() {
+    F.selectRadio("advertisements", "adPlaced", "Y");
+  });
+
+  OLCS.eventEmitter.on("hide:advertisements:*", function() {
+    F.selectRadio("advertisements", "adPlaced", "N");
   });
 });
