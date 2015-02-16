@@ -39,7 +39,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id":"bankrupt",
-     *          "class":"subquestion checkbox inline"
+     *         "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -58,7 +58,7 @@ class FinancialHistoryData
      *     },
      *     "fieldset-attributes" : {
      *         "id":"liquidation",
-     *          "class":"subquestion checkbox inline"
+     *         "class":"subquestion checkbox inline"
      *     }
      * })
      * @Form\Type("radio")
@@ -109,7 +109,7 @@ class FinancialHistoryData
      *     "short-label": "short-label-financial-history-disqualified",
      *      "fieldset-attributes": {
      *         "id":"disqualified",
-     *          "class": "question checkbox inline"
+     *         "class": "question checkbox inline"
      *      },
      *     "label": "application_previous-history_financial-history.finance.disqualified",
      *     "value_options": {"Y": "Yes", "N": "No"}
