@@ -32,7 +32,7 @@ class BusReg extends Generic
             'mapSupplied',
             'trcConditionChecked',
             'copiedToLaPte',
-            'isShortNotice',
+            'laShortNote',
             'applicationSigned'
         ];
 
