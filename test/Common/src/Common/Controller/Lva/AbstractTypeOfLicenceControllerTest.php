@@ -435,6 +435,51 @@ class AbstractTypeOfLicenceControllerTest extends AbstractLvaControllerTestCase
     /**
      * @group lva-type-of-licence
      */
+    public function testPostWithValidDataWithoutData()
+    {
+        $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');
+        $this->sut->setAdapter($adapter);
+
+        $stubbedCurrentData = [
+            'version' => 1,
+            'niFlag' => 'N',
+            'goodsOrPsv' => 'lcat_gv',
+            'licenceType' => 'ltyp_sn'
+        ];
+
+        $this->setPost(
+            [
+                'version' => ''
+            ]
+        );
+
+        $this->sut->shouldReceive('getTypeOfLicenceData')
+            ->andReturn($stubbedCurrentData);
+
+        $form = $this->createMockForm('Lva\TypeOfLicence');
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $adapter->shouldReceive('alterForm')
+            ->with($form, 7, '')
+            ->andReturn($form);
+
+        $response = m::mock('\Zend\Http\Response');
+
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(7)
+            ->shouldReceive('completeSection')
+            ->with('type_of_licence')
+            ->andReturn($response);
+
+        $this->assertSame($response, $this->sut->indexAction());
+    }
+
+    /**
+     * @group lva-type-of-licence
+     */
     public function testPostWithValidDataWithAdapterWithFirstSave()
     {
         $adapter = m::mock('\Common\Controller\Lva\Interfaces\TypeOfLicenceAdapterInterface');

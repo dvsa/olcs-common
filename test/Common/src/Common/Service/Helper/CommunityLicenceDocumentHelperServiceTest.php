@@ -71,7 +71,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
         return [
             [
                 [
-                    'licenceType' => [
+                    'goodsOrPsv' => [
                         'id' => LicenceEntityService::LICENCE_CATEGORY_PSV
                     ],
                     'niFlag' => 'N'
@@ -80,7 +80,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
             ],
             [
                 [
-                    'licenceType' => [
+                    'goodsOrPsv' => [
                         'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
                     ],
                     'niFlag' => 'N'
@@ -89,7 +89,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
             ],
             [
                 [
-                    'licenceType' => [
+                    'goodsOrPsv' => [
                         'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
                     ],
                     'niFlag' => 'Y'

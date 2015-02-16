@@ -292,13 +292,13 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function attachVehicleAuthorityValidator($form)
     {
-        $totalDiscs = $this->getServiceLocator()
-            ->get('Entity\PsvDisc')
-            ->getNotCeasedDiscs($this->getLicenceId())['Count'];
+        $totalLicences = $this->getServiceLocator()
+            ->get('Entity\CommunityLic')
+            ->getValidLicences($this->getLicenceId())['Count'];
 
         $totalVehicleAuthority = $this->getAdapter()->getTotalAuthority($this->getIdentifier());
         $totalVehicleAuthorityValidator = $this->getServiceLocator()->get('totalVehicleAuthorityValidator');
-        $totalVehicleAuthorityValidator->setTotalDiscs($totalDiscs);
+        $totalVehicleAuthorityValidator->setTotalLicences($totalLicences);
         $totalVehicleAuthorityValidator->setTotalVehicleAuthority($totalVehicleAuthority);
 
         $form->getInputFilter()
@@ -358,6 +358,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $dataToVoid[] = array_merge($licence, $data);
         }
         $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
+        $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
     }
 
     /**

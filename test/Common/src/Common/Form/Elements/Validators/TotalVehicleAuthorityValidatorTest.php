@@ -30,9 +30,9 @@ class TotalVehicleAuthorityValidatorTest extends \PHPUnit_Framework_TestCase
      * @group totalVehicleAuthorityValidator
      * @dataProvider providerIsValid
      */
-    public function testIsValid($value, $totalDiscs, $totalVehicleAuthority, $expected)
+    public function testIsValid($value, $totalLicences, $totalVehicleAuthority, $expected)
     {
-        $this->validator->setTotalDiscs($totalDiscs);
+        $this->validator->setTotalLicences($totalLicences);
         $this->validator->setTotalVehicleAuthority($totalVehicleAuthority);
         $this->assertEquals($expected, $this->validator->isValid($value));
     }

@@ -50,7 +50,8 @@ class LicenceEntityService extends AbstractLvaEntityService
     private $overviewBundle = array(
         'children' => array(
             'licenceType',
-            'status'
+            'status',
+            'goodsOrPsv'
         )
     );
 

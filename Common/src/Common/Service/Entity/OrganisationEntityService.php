@@ -81,7 +81,9 @@ class OrganisationEntityService extends AbstractEntityService
                 'children' => array(
                     'applications' => array(
                         'children' => array(
-                            'status'
+                            'status',
+                            'licenceType',
+                            'goodsOrPsv',
                         )
                     ),
                     'licenceType',

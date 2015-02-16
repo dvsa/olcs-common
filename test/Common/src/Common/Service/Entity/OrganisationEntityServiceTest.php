@@ -490,7 +490,7 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
                 'licences' => [
                     'children' => [
                         'applications' => [
-                            'children' => ['status'],
+                            'children' => ['status', 'licenceType', 'goodsOrPsv'],
                             'criteria' => [
                                 'status' => 'IN ["apsts_consideration","apsts_granted"]',
                                 'isVariation' => false,

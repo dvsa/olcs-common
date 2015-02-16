@@ -54,7 +54,7 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
     {
         $prefix = '';
 
-        if ($licence['licenceType']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV) {
+        if ($licence['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV) {
             $prefix = 'PSV';
         } elseif ($licence['niFlag'] === 'Y') {
             $prefix = 'GV_NI';
