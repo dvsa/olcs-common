@@ -5,7 +5,6 @@
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-
 namespace Common\Service\Table\Type;
 
 /**
@@ -36,16 +35,20 @@ class Selector extends AbstractType
             $name = $fieldset . '[id]';
         }
 
-        $dataAttributes = [];
+        $attributes = [];
 
         if (isset($column['data-attributes'])) {
             foreach ($column['data-attributes'] as $attrName) {
                 if (isset($data[$attrName])) {
-                    $dataAttributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                    $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
                 }
             }
         }
 
-        return sprintf($this->format, $name, $data['id'], implode(' ', $dataAttributes));
+        if (isset($column['disableIfRowIsDisabled']) && $this->getTable()->isRowDisabled($data)) {
+            $attributes[] = 'disabled="disabled"';
+        }
+
+        return sprintf($this->format, $name, $data['id'], implode(' ', $attributes));
     }
 }
