@@ -40,7 +40,11 @@ class Selector extends AbstractType
         if (isset($column['data-attributes'])) {
             foreach ($column['data-attributes'] as $attrName) {
                 if (isset($data[$attrName])) {
-                    $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                    if (is_array($data[$attrName]) && isset($data[$attrName]['id'])) {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName]['id'] . '"';
+                    } else {
+                        $attributes[] = 'data-' . $attrName . '="' . $data[$attrName] . '"';
+                    }
                 }
             }
         }
