@@ -26,7 +26,7 @@ class CommunityLicSuspensionEntityService extends AbstractEntityService
         if (count($ids)) {
             $reasonIds = [];
             $query = [
-                'communityLic' => 'IN [' . implode(',', $ids) . ']'
+                'communityLic' => 'IN ' . json_encode($ids) 
             ];
             $reasons = $this->get($query);
             if ($reasons['Count']) {
@@ -34,7 +34,7 @@ class CommunityLicSuspensionEntityService extends AbstractEntityService
                     $reasonIds[] = $reason['id'];
                 }
                 $reasonsQuery = [
-                    'communityLicSuspension' => 'IN [' . implode(',', $reasonIds) . ']'
+                    'communityLicSuspension' => 'IN ' . json_encode($reasonIds) 
                 ];
                 $this->getServiceLocator()->get('Entity\CommunityLicSuspensionReason')->deleteList($reasonsQuery);
             }

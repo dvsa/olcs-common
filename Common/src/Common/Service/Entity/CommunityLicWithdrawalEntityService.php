@@ -26,7 +26,7 @@ class CommunityLicWithdrawalEntityService extends AbstractEntityService
         if (count($ids)) {
             $reasonIds = [];
             $query = [
-                'communityLic' => 'IN [' . implode(',', $ids) . ']'
+                'communityLic' => 'IN ' . json_encode($ids)
             ];
             $reasons = $this->get($query);
             if ($reasons['Count']) {
@@ -34,7 +34,7 @@ class CommunityLicWithdrawalEntityService extends AbstractEntityService
                     $reasonIds[] = $reason['id'];
                 }
                 $reasonsQuery = [
-                    'communityLicWithdrawal' => 'IN [' . implode(',', $reasonIds) . ']'
+                    'communityLicWithdrawal' => 'IN ' . json_encode($reasonIds) 
                 ];
                 $this->getServiceLocator()->get('Entity\CommunityLicWithdrawalReason')->deleteList($reasonsQuery);
             }
