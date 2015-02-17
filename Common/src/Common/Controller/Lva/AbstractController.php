@@ -141,8 +141,7 @@ abstract class AbstractController extends AbstractActionController
                 ->setApplicationId($this->getIdentifier());
         }
 
-        $sectionConfig = new SectionConfig();
-        $sectionConfig->setServiceLocator($this->getServiceLocator());
+        $sectionConfig = $this->getServiceLocator()->get('SectionConfig');
 
         $inputSections = $sectionConfig->getAll();
 

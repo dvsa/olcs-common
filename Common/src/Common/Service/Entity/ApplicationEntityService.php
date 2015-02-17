@@ -341,6 +341,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $reviewBundles = array(
+        'type_of_licence' => array(
+            'children' => array(
+                'licenceType',
+                'goodsOrPsv'
+            )
+        )
+    );
+
     public function getVariationCompletionStatusData($id)
     {
         $bundle = $this->variationCompletionStatusDataBundle;
@@ -659,5 +668,39 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForFinancialEvidence($id)
     {
         return $this->get($id, $this->financialEvidenceBundle);
+    }
+
+    /**
+     * Grab all of the review
+     *
+     * @param type $id
+     * @param array $sections
+     *
+     * @return array
+     */
+    public function getReviewData($id, array $sections = array())
+    {
+        $bundle = $this->getReviewBundle($sections);
+
+        return $this->get($id, $bundle);
+    }
+
+    /**
+     * Dynamically build the review bundle
+     *
+     * @param array $sections
+     * @return array
+     */
+    protected function getReviewBundle(array $sections = array())
+    {
+        $bundle = array();
+
+        foreach ($sections as $section) {
+            if (isset($this->reviewBundles[$section])) {
+                $bundle = array_merge_recursive($bundle, $this->reviewBundles[$section]);
+            }
+        }
+
+        return $bundle;
     }
 }

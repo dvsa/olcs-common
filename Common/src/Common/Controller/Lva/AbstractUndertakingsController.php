@@ -75,7 +75,13 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function updateForm($form, $data)
     {
-        // no-op, override in concrete classes if required
+        $summaryDownload = sprintf(
+            '<p><a href="%s" target="_blank">%s</a></p>',
+            $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
+            'View full application'
+        );
+
+        $form->get('declarationsAndUndertakings')->get('summaryDownload')->setAttribute('value', $summaryDownload);
     }
 
     protected function formatDataForSave($data)

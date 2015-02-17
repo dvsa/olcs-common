@@ -1,6 +1,10 @@
 <?php
 
 return array(
+    'application-review-type_of_licence' => 'Type of licence',
+    'application-review-type-of-licence-operator-location' => 'Where do you operate from?',
+    'application-review-type-of-licence-operator-type' => 'What type of operator are you?',
+    'application-review-type-of-licence-licence-type' => 'What type of licence do you want to apply for?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
