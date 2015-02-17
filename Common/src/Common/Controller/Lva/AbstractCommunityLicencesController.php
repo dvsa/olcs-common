@@ -33,7 +33,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         ]
     ];
 
-    protected $statusesForResore = [
+    protected $statusesForRestore = [
         CommunityLicEntityService::STATUS_WITHDRAWN,
         CommunityLicEntityService::STATUS_SUSPENDED
     ];
@@ -207,7 +207,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     {
         $rows = $table->getRows();
         foreach ($rows as $row) {
-            if (in_array($row['status']['id'], $this->statusesForResore)) {
+            if (in_array($row['status']['id'], $this->statusesForRestore)) {
                 return true;
             }
         }
