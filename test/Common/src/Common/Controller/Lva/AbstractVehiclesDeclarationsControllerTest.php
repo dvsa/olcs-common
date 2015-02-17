@@ -17,15 +17,15 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractVehiclesDeclarationsController');
-    }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
+        $this->mockService('Script', 'loadFile')->with('vehicle-declarations');
+
+        $this->mockService('Helper\Translation', 'translate')
+            ->andReturnUsing(
+                function ($input) {
+                    return $input;
+                }
+            );
     }
 
     public function testGetIndexAction()

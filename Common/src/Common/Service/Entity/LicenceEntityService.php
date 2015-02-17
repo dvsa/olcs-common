@@ -34,6 +34,14 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_VALID = 'lsts_valid';
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
+    const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
+
+    private $typeShortCodeMap =[
+        self::LICENCE_TYPE_RESTRICTED             => 'R',
+        self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
+        self::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
+        self::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
+    ];
 
     /**
      * Define entity for default behaviour
@@ -210,6 +218,46 @@ class LicenceEntityService extends AbstractLvaEntityService
     protected $organisationBundle = array(
         'children' => array(
             'organisation'
+        )
+    );
+
+    protected $extendedOverviewBundle = array(
+        'children' => array(
+            'licenceType',
+            'status',
+            'goodsOrPsv',
+            'organisation' => [
+                'children' => [
+                    'tradingNames',
+                    'licences' => [
+                        'children' => ['status'],
+                    ],
+                    'leadTcArea'
+                ],
+            ],
+            'applications' => [
+                'children' => ['status'],
+            ],
+            'psvDiscs' => [
+                'criteria' => [
+                    'ceasedDate' => 'NULL',
+                ],
+            ],
+            'licenceVehicles' => [
+                'criteria' => [
+                    'specifiedDate' => 'NOT NULL',
+                    'removalDate' => 'NULL',
+                ],
+            ],
+            'operatingCentres',
+            /*
+            'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
+                'criteria' => [
+                    'closeDate' => 'NULL',
+                    'deletedDate' => 'NULL',
+                ],
+            ],
+            */
         )
     );
 
@@ -499,7 +547,7 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     /**
      * Update community licences count
-     * 
+     *
      * @param int $licenceId
      */
     public function updateCommunityLicencesCount($licenceId)
@@ -527,6 +575,38 @@ class LicenceEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Get data for internal overview
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getExtendedOverview($id)
+    {
+        $bundle = $this->extendedOverviewBundle;
+
+        // modify bundle to filter other licence statuses
+        $licenceStatuses = [
+            LicenceEntityService::LICENCE_STATUS_VALID,
+            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+        ];
+        $bundle['children']['organisation']['children']['licences']['criteria'] = [
+            'status' => 'IN ' . json_encode($licenceStatuses)
+        ];
+
+        // modify bundle to filter other application statuses
+        $applicationStatuses = [
+            ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
+            ApplicationEntityService::APPLICATION_STATUS_GRANTED,
+        ];
+        $bundle['children']['applications']['criteria'] = [
+            'status' => 'IN ' . json_encode($applicationStatuses)
+        ];
+
+        return $this->get($id, $bundle);
+    }
+
+    /**
      * Get community licences by licence id and ids
      *
      * @param int $licenceId
@@ -539,11 +619,22 @@ class LicenceEntityService extends AbstractLvaEntityService
             'children' => [
                 'communityLics' => [
                     'criteria' => [
-                        'id' => 'IN [' . implode(',', $ids) . ']'
+                        'id' => 'IN ' . json_encode($ids)
                     ]
                 ]
             ]
         ];
         return $this->get($licenceId, $bundle)['communityLics'];
+    }
+
+    /**
+     * @param string $type e.g. 'ltyp_sr'
+     * @return string e.g. 'SR'
+     */
+    public function getShortCodeForType($type)
+    {
+        if (array_key_exists($type, $this->typeShortCodeMap)) {
+            return $this->typeShortCodeMap[$type];
+        }
     }
 }

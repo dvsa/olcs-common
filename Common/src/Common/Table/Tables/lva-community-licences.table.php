@@ -12,8 +12,7 @@ return array(
                 'add' => array('label' => 'Add', 'class' => 'primary'),
                 'office-licence-add' => array(
                     'label' => 'Add office licence',
-                    'class' => 'secondary',
-                    'requireRows' => true
+                    'class' => 'secondary'
                 ),
                 'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
             )

@@ -17,15 +17,8 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractDiscsController');
-    }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
+        $this->mockService('Script', 'loadFiles')->with(['discs', 'forms/filter']);
     }
 
     /**
@@ -217,6 +210,9 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
         $this->sut->shouldReceive('redirect->toRoute')
             ->with(null, ['licence' => $licenceId])
             ->andReturn('REDIRECT');
+
+        $this->mockService('Helper\FlashMessenger', 'addSuccessMessage')
+            ->with('psv-discs-requested-successfully');
 
         $this->assertEquals('REDIRECT', $this->sut->addAction());
     }

@@ -9,6 +9,7 @@ namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\PersonEntityService;
 use CommonTest\Bootstrap;
+use Mockery as m;
 
 /**
  * Person Entity Service Test
@@ -25,28 +26,21 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
-    }
-
-    /**
      * @group entity_services
      */
     public function testGetAllForOrganisationWithNoLimit()
     {
         $id = 7;
 
-        $data = array(
-            'organisation' => $id,
-            'limit' => 50
+        $this->sm->setService(
+            'Entity\OrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByOrg')
+                ->once()
+                ->with($id, null)
+                ->andReturn('RESPONSE')
+                ->getMock()
         );
-
-        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
-            ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getAllForOrganisation($id));
     }
@@ -57,16 +51,19 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetAllForOrganisationWithLimit()
     {
         $id = 7;
+        $limit = 10;
 
-        $data = array(
-            'organisation' => $id,
-            'limit' => 10
+        $this->sm->setService(
+            'Entity\OrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByOrg')
+                ->once()
+                ->with($id, $limit)
+                ->andReturn('RESPONSE')
+                ->getMock()
         );
 
-        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getAllForOrganisation($id, 10));
+        $this->assertEquals('RESPONSE', $this->sut->getAllForOrganisation($id, $limit));
     }
 
     /**
@@ -76,12 +73,7 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $data = array(
-            'organisation' => $id,
-            'limit' => 1
-        );
-
-        $restResult = array(
+        $orgPersonServiceResult = array(
             'Count' => 1,
             'Results' => array(
                 array(
@@ -90,8 +82,15 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
 
-        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
-            ->willReturn($restResult);
+        $this->sm->setService(
+            'Entity\OrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByOrg')
+                ->once()
+                ->with($id, 1)
+                ->andReturn($orgPersonServiceResult)
+                ->getMock()
+        );
 
         $this->assertEquals(array('foo' => 'bar'), $this->sut->getFirstForOrganisation($id));
     }
@@ -103,18 +102,20 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 7;
 
-        $data = array(
-            'organisation' => $id,
-            'limit' => 1
-        );
-
-        $restResult = array(
+        $orgPersonServiceResult = array(
             'Count' => 0,
             'Results' => array()
         );
 
-        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
-            ->willReturn($restResult);
+        $this->sm->setService(
+            'Entity\OrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByOrg')
+                ->once()
+                ->with($id, 1)
+                ->andReturn($orgPersonServiceResult)
+                ->getMock()
+        );
 
         $this->assertEquals(array(), $this->sut->getFirstForOrganisation($id));
     }
