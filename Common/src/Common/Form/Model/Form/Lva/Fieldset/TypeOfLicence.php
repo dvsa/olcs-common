@@ -11,8 +11,11 @@ class TypeOfLicence
 {
     /**
      * @Form\Name("operator-location")
+     * @Form\Attributes({"id": ""})
      * @Form\Options({
+     *      "short-label": "short-label-tol-operator-location",
      *      "fieldset-attributes": {
+     *          "id": "operator-location",
      *          "class": "checkbox"
      *      },
      *      "fieldset-data-group": "operator-location",
@@ -28,8 +31,11 @@ class TypeOfLicence
 
     /**
      * @Form\Name("operator-type")
+     * @Form\Attributes({"id": ""})
      * @Form\Options({
+     *      "short-label": "short-label-tol-operator-type",
      *      "fieldset-attributes": {
+     *          "id": "operator-type",
      *          "class": "checkbox"
      *      },
      *      "fieldset-data-group": "operator-type",
@@ -46,8 +52,11 @@ class TypeOfLicence
 
     /**
      * @Form\Name("licence-type")
+     * @Form\Attributes({"id": ""})
      * @Form\Options({
+     *      "short-label": "short-label-tol-licence-type",
      *      "fieldset-attributes": {
+     *          "id": "licence-type",
      *          "class": "checkbox"
      *      },
      *      "fieldset-data-group": "licence-type",

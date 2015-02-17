@@ -36,6 +36,13 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
 
+    private $typeShortCodeMap =[
+        self::LICENCE_TYPE_RESTRICTED             => 'R',
+        self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
+        self::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
+        self::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
+    ];
+
     /**
      * Define entity for default behaviour
      *
@@ -584,15 +591,16 @@ class LicenceEntityService extends AbstractLvaEntityService
             LicenceEntityService::LICENCE_STATUS_CURTAILED,
         ];
         $bundle['children']['organisation']['children']['licences']['criteria'] = [
-            'status' => 'IN ["'.implode('","', $licenceStatuses).'"]'
+            'status' => 'IN ' . json_encode($licenceStatuses)
         ];
 
+        // modify bundle to filter other application statuses
         $applicationStatuses = [
             ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
             ApplicationEntityService::APPLICATION_STATUS_GRANTED,
         ];
         $bundle['children']['applications']['criteria'] = [
-            'status' => 'IN ["'.implode('","', $applicationStatuses).'"]'
+            'status' => 'IN ' . json_encode($applicationStatuses)
         ];
 
         return $this->get($id, $bundle);
@@ -611,7 +619,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             'children' => [
                 'communityLics' => [
                     'criteria' => [
-                        'id' => 'IN [' . implode(',', $ids) . ']'
+                        'id' => 'IN ' . json_encode($ids)
                     ]
                 ]
             ]
@@ -625,16 +633,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      */
     public function getShortCodeForType($type)
     {
-        $map = [
-            self::LICENCE_TYPE_RESTRICTED             => 'R',
-            self::LICENCE_TYPE_STANDARD_INTERNATIONAL => 'SI',
-            self::LICENCE_TYPE_STANDARD_NATIONAL      => 'SN',
-            self::LICENCE_TYPE_SPECIAL_RESTRICTED     => 'SR',
-        ];
-
-        if (array_key_exists($type, $map)) {
-            return $map[$type];
+        if (array_key_exists($type, $this->typeShortCodeMap)) {
+            return $this->typeShortCodeMap[$type];
         }
     }
-
 }

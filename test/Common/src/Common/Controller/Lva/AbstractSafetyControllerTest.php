@@ -17,15 +17,8 @@ class AbstractSafetyControllerTest extends AbstractLvaControllerTestCase
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractSafetyController');
-    }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
+        $this->mockService('Script', 'loadFiles')->with(['vehicle-safety', 'lva-crud']);
     }
 
     public function testGetIndexAction()

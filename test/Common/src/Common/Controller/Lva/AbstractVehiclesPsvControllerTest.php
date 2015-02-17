@@ -23,15 +23,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
         $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
         $this->sut->setAdapter($this->adapter);
-    }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
+        $this->mockService('Script', 'loadFiles')->with(['lva-crud', 'vehicle-psv']);
     }
 
     /**

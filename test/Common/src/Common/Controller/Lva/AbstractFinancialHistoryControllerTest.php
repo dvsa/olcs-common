@@ -17,15 +17,8 @@ class AbstractFinancialHistoryControllerTest extends AbstractLvaControllerTestCa
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractFinancialHistoryController');
-    }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
+        $this->mockService('Script', 'loadFile')->with('financial-history');
     }
 
     public function testGetIndexAction()
