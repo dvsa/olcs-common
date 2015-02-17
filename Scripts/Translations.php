@@ -36,7 +36,11 @@ foreach ($translations as $key => $value) {
 
     $value = preg_replace('/(\s+)/', ' ', $value);
 
+    // fix quotes in values
     $value = str_replace("'", "\'", $value);
+
+    // fix quotes in keys
+    $key = str_replace("'", "\'", $key);
 
     if ($found) {
         $foundArray[$key] = $value;
