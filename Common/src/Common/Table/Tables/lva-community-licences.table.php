@@ -58,7 +58,8 @@ return array(
             'title' => '',
             'width' => 'checkbox',
             'type' => 'Checkbox',
-            'disableIfRowIsDisabled' => true
+            'disableIfRowIsDisabled' => true,
+            'data-attributes' => ['status']
         ),
     )
 );
