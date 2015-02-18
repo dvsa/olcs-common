@@ -70,8 +70,6 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      * @param string $licenceType
      * @param string $goodsOrPsv
      * @return float
-     *
-     * @todo these will become a system parameter lookup following https://jira.i-env.net/browse/OLCS-6988
      */
     public function getFirstVehicleRate($licenceType, $goodsOrPsv)
     {
@@ -89,7 +87,7 @@ abstract class AbstractFinancialEvidenceAdapter extends AbstractControllerAwareA
      */
     public function getAdditionalVehicleRate($licenceType, $goodsOrPsv)
     {
-       foreach ($this->getRates() as $rate) {
+        foreach ($this->getRates() as $rate) {
             if ($rate['goodsOrPsv']['id'] == $goodsOrPsv && $rate['licenceType']['id'] == $licenceType) {
                 return (float) $rate['additionalVehicleRate'];
             }
