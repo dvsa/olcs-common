@@ -19,8 +19,11 @@ use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
  */
 abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait,
-        Traits\AdapterAwareTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait {
+        Traits\CrudTableTrait::deleteAction as originalDeleteAction;
+    }
+
 
     /**
      * Needed by the Crud Table Trait
@@ -178,6 +181,16 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     public function addAction()
     {
+        $orgId = $this->getCurrentOrganisationId();
+
+        if (!$this->getAdapter()->canAdd($orgId)) {
+            $this->addErrorMessage('cannot-perform-action');
+            return $this->redirect()->toRouteAjax(
+                null,
+                [$this->getIdentifierIndex() => $this->getIdentifier()]
+            );
+        }
+
         return $this->addOrEdit('add');
     }
 
@@ -431,5 +444,23 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if (isset($orgPersonData)) {
             $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
         }
+    }
+
+    /**
+     * Delete person action
+     */
+    public function deleteAction()
+    {
+        $orgId = $this->getCurrentOrganisationId();
+
+        if (!$this->getAdapter()->canDelete($orgId)) {
+            $this->addErrorMessage('cannot-perform-action');
+            return $this->redirect()->toRouteAjax(
+                null,
+                [$this->getIdentifierIndex() => $this->getIdentifier()]
+            );
+        }
+
+        return $this->originalDeleteAction();
     }
 }

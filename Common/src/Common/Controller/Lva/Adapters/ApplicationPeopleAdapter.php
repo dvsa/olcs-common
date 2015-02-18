@@ -30,4 +30,14 @@ class ApplicationPeopleAdapter extends AbstractAdapter
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
     {
     }
+
+    public function canAdd($orgId)
+    {
+        return true;
+    }
+
+    public function canDelete($orgId)
+    {
+        return true;
+    }
 }
