@@ -12,6 +12,12 @@ class LocalAuthority extends AbstractData implements ListData
 {
     protected $serviceName = 'LocalAuthority';
 
+    protected $bundle = [
+        'children' => [
+            'trafficArea'
+        ]
+    ];
+
     /**
      * Format data!
      *
@@ -30,6 +36,30 @@ class LocalAuthority extends AbstractData implements ListData
     }
 
     /**
+     * Format for groups
+     *
+     * @param array $data
+     * @return array
+     */
+    public function formatDataForGroups(array $data)
+    {
+        $optionData = [];
+
+        foreach ($data as $datum) {
+            $taId = $datum['txcName'];
+            if (!isset($optionData[$taId])) {
+                $optionData[$taId] = [
+                    'label' => $datum['trafficArea']['name'],
+                    'options' => []
+                ];
+            }
+            $optionData[$taId]['options'][$datum['id']] = $datum['description'];
+        }
+
+        return $optionData;
+    }
+
+    /**
      * @param $category
      * @param bool $useGroups
      * @return array
@@ -40,6 +70,10 @@ class LocalAuthority extends AbstractData implements ListData
 
         if (!$data) {
             return [];
+        }
+
+        if ($useGroups) {
+            return $this->formatDataForGroups($data);
         }
 
         return $this->formatData($data);
@@ -55,7 +89,12 @@ class LocalAuthority extends AbstractData implements ListData
     {
         if (is_null($this->getData('LocalAuthority'))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000]);
+            $params = [
+                'limit' => 1000,
+                'bundle' => json_encode($this->bundle)
+            ];
+
+            $data = $this->getRestClient()->get('', $params);
 
             $this->setData('LocalAuthority', false);
 
