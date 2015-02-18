@@ -75,10 +75,12 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function updateForm($form, $data)
     {
+        $translator = $this->getServiceLocator()->get('Helper\Translation');
+
         $summaryDownload = sprintf(
             '<p><a href="%s" target="_blank">%s</a></p>',
             $this->url()->fromRoute('lva-' . $this->lva . '/review', [], [], true),
-            'View full application'
+            $translator->translate('view-full-application')
         );
 
         $form->get('declarationsAndUndertakings')->get('summaryDownload')->setAttribute('value', $summaryDownload);

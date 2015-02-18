@@ -7,14 +7,17 @@
  */
 namespace Common\Service\Review;
 
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+
 /**
  * Variation Type Of Licence Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationTypeOfLicenceReviewService extends AbstractVariationReviewService
+class VariationTypeOfLicenceReviewService implements ReviewServiceInterface, ServiceLocatorAwareInterface
 {
-    protected $sectionName = 'type_of_licence';
+    use ServiceLocatorAwareTrait;
 
     /**
      * Format the readonly config from the given data
@@ -24,6 +27,17 @@ class VariationTypeOfLicenceReviewService extends AbstractVariationReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        // Re-use application here
+        return ['freetext' => $this->getFreeText($data)];
+    }
+
+    protected function getFreeText($data)
+    {
+        return $this->getServiceLocator()->get('Helper\Translation')->translateReplace(
+            'variation-application-type-of-licence-freetext',
+            [
+                $data['licence']['licenceType']['description'],
+                $data['licenceType']['description']
+            ]
+        );
     }
 }

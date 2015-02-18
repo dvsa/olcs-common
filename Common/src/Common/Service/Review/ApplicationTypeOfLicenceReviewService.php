@@ -14,10 +14,8 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationTypeOfLicenceReviewService extends AbstractApplicationReviewService
+class ApplicationTypeOfLicenceReviewService implements ReviewServiceInterface
 {
-    protected $sectionName = 'type_of_licence';
-
     /**
      * Format the readonly config from the given data
      *
@@ -26,11 +24,14 @@ class ApplicationTypeOfLicenceReviewService extends AbstractApplicationReviewSer
      */
     public function getConfigFromData(array $data = array())
     {
-        // @NOTE this doesn't look right with the empty item at the start
-        // however this is because we optionally show operator location
         $config = [
             'multiItems' => [
-                [],
+                [
+                    [
+                        'label' => 'application-review-type-of-licence-operator-location',
+                        'value' => $this->getOperatorLocation($data)
+                    ]
+                ],
                 [
                     [
                         'label' => 'application-review-type-of-licence-licence-type',
@@ -40,18 +41,13 @@ class ApplicationTypeOfLicenceReviewService extends AbstractApplicationReviewSer
             ]
         ];
 
-        // We only show operator location for Goods
-        if ($data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+        // We only show operator type for GB, as NI is always goods
+        if ($data['niFlag'] === 'N') {
             $config['multiItems'][0][] = [
-                'label' => 'application-review-type-of-licence-operator-location',
-                'value' => $this->getOperatorLocation($data)
+                'label' => 'application-review-type-of-licence-operator-type',
+                'value' => $this->getOperatorType($data)
             ];
         }
-
-        $config['multiItems'][0][] = [
-            'label' => 'application-review-type-of-licence-operator-type',
-            'value' => $this->getOperatorType($data)
-        ];
 
         return $config;
     }

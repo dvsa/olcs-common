@@ -7,6 +7,7 @@
  */
 namespace Common\Controller\Lva\Adapters;
 
+use Common\Service\Entity\LicenceEntityService;
 use Common\Controller\Lva\Interfaces\ReviewAdapterInterface;
 
 /**
@@ -27,17 +28,21 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
      */
     public function getSectionData($id, array $relevantSections = array())
     {
+        $sections = $this->filterSections($id, $relevantSections);
+
         $entity = ucfirst($this->lva);
 
+        $method = 'getReviewDataFor' . $entity;
+
         // Grab all of the review data in one go
-        $reviewData = $this->getServiceLocator()->get('Entity\\' . $entity)
-            ->getReviewData($id, $relevantSections);
+        $reviewData = $this->getServiceLocator()->get('Entity\Application')
+            ->$method($id, $sections);
 
         $stringHelper = $this->getServiceLocator()->get('Helper\String');
 
         $sectionConfig = [];
 
-        foreach ($relevantSections as $section) {
+        foreach ($sections as $section) {
             $serviceName = 'Review\\' . $entity . $stringHelper->underscoreToCamel($section);
 
             // @NOTE this check is in place while we implement each section
@@ -45,12 +50,44 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
             if ($this->getServiceLocator()->has($serviceName)) {
                 $service = $this->getServiceLocator()->get($serviceName);
                 $sectionConfig[] = [
-                    'header' => $service->getHeader($reviewData),
+                    'header' => 'review-' . $section,
                     'config' => $service->getConfigFromData($reviewData)
                 ];
             }
         }
 
-        return $sectionConfig;
+        return [
+            'reviewTitle' => $this->getTitle($reviewData),
+            'sections' => $sectionConfig
+        ];
+    }
+
+    protected function getTitle($data)
+    {
+        return sprintf(
+            '%s-review-title-%s%s',
+            $this->lva,
+            $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE ? 'gv' : 'psv',
+            $this->isNewPsvSpecialRestricted($data) ? '-sr' : ''
+        );
+    }
+
+    protected function isNewPsvSpecialRestricted($data)
+    {
+        return $this->lva === 'application'
+            && $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV
+            && $data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED;
+    }
+
+    /**
+     * We extend this method in the variation adapter, to filter unwanted sections
+     *
+     * @param int $id
+     * @param array $sections
+     * @return array
+     */
+    protected function filterSections($id, $sections)
+    {
+        return $sections;
     }
 }

@@ -15,13 +15,6 @@ namespace Common\Service\Review;
 interface ReviewServiceInterface
 {
     /**
-     *
-     * @param array $data
-     * @return string
-     */
-    public function getHeader(array $data = array());
-
-    /**
      * Format the readonly config from the given data
      *
      * @param array $data
