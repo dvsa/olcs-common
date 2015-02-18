@@ -354,7 +354,30 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ]
         ],
         'application' => [
-            'type_of_licence' => []
+            'type_of_licence' => [],
+            'operating_centres' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea'
+                        ]
+                    ],
+                    'operatingCentres' => [
+                        'children' => [
+                            'operatingCentre' => [
+                                'children' => [
+                                    'address',
+                                    'adDocuments' => [
+                                        'children' => [
+                                            'application'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
         ],
         'variation' => [
             'type_of_licence' => [

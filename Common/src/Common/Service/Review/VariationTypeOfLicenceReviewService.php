@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationTypeOfLicenceReviewService implements ReviewServiceInterface, ServiceLocatorAwareInterface
+class VariationTypeOfLicenceReviewService extends AbstractReviewService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -30,7 +30,7 @@ class VariationTypeOfLicenceReviewService implements ReviewServiceInterface, Ser
         return ['freetext' => $this->getFreeText($data)];
     }
 
-    protected function getFreeText($data)
+    private function getFreeText($data)
     {
         return $this->getServiceLocator()->get('Helper\Translation')->translateReplace(
             'variation-application-type-of-licence-freetext',
