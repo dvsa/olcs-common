@@ -16,6 +16,11 @@ class VariationDeclarationsAndUndertakings
     public $review = null;
 
     /**
+     * @Form\Type("\Common\Form\Elements\Types\Html")
+     */
+    public $summaryDownload = null;
+
+    /**
      * @Form\Attributes({"value": "<h3>%s</h3>" })
      * @Form\Options({"tokens": { 0: "section.name.undertakings" } })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
