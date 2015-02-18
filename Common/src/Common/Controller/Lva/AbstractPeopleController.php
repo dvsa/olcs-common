@@ -183,12 +183,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $orgId = $this->getCurrentOrganisationId();
 
-        if (!$this->getAdapter()->canAdd($orgId)) {
-            $this->addErrorMessage('cannot-perform-action');
-            return $this->redirect()->toRouteAjax(
-                null,
-                [$this->getIdentifierIndex() => $this->getIdentifier()]
-            );
+        if (!$this->getAdapter()->canModify($orgId)) {
+            return $this->redirectWithoutPermission();
         }
 
         return $this->addOrEdit('add');
@@ -453,14 +449,19 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
     {
         $orgId = $this->getCurrentOrganisationId();
 
-        if (!$this->getAdapter()->canDelete($orgId)) {
-            $this->addErrorMessage('cannot-perform-action');
-            return $this->redirect()->toRouteAjax(
-                null,
-                [$this->getIdentifierIndex() => $this->getIdentifier()]
-            );
+        if (!$this->getAdapter()->canModify($orgId)) {
+            return $this->redirectWithoutPermission();
         }
 
         return $this->originalDeleteAction();
+    }
+
+    private function redirectWithoutPermission()
+    {
+        $this->addErrorMessage('cannot-perform-action');
+        return $this->redirect()->toRouteAjax(
+            null,
+            [$this->getIdentifierIndex() => $this->getIdentifier()]
+        );
     }
 }
