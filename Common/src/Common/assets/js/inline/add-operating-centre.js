@@ -1,6 +1,8 @@
 $(function() {
   "use strict";
 
+  // jshint newcap:false
+
   var F = OLCS.formHelper;
 
   var vehicles = F("data", "noOfVehiclesRequired");
@@ -15,11 +17,10 @@ $(function() {
     rulesets: {
       "advertisements": {
         "*": function() {
-          
-          if (vehicles.data('current')) {
-            return vehicles.val() > vehicles.data('current') || trailers.val() > trailers.data('current');
+          if (vehicles.data("current")) {
+            return vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current");
           }
-          
+
           return true;
         },
         "label:adPlacedIn": hasAdvertisements,
@@ -27,5 +28,13 @@ $(function() {
         "selector:#file": hasAdvertisements
       }
     }
+  });
+
+  OLCS.eventEmitter.on("show:advertisements:*", function() {
+    F.selectRadio("advertisements", "adPlaced", "Y");
+  });
+
+  OLCS.eventEmitter.on("hide:advertisements:*", function() {
+    F.selectRadio("advertisements", "adPlaced", "N");
   });
 });

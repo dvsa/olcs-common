@@ -8,7 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\PsvDiscEntityService;
-use CommonTest\Bootstrap;
+use Mockery as m;
 
 /**
  * PsvDisc Entity Service Test
@@ -22,15 +22,6 @@ class PsvDiscEntityServiceTest extends AbstractEntityServiceTestCase
         $this->sut = new PsvDiscEntityService();
 
         parent::setUp();
-    }
-
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
     }
 
     /**
@@ -99,6 +90,22 @@ class PsvDiscEntityServiceTest extends AbstractEntityServiceTestCase
         );
 
         $this->expectOneRestCall('PsvDisc', 'POST', $saveData);
+
+        $this->sm->setService(
+            'Helper\Data',
+            // we could inject the real data helper here, but it's fairly trivial to mock it
+            m::mock()
+                ->shouldReceive('arrayRepeat')
+                    ->with(['isCopy' => 'N', 'foo' => 'bar'], 3)
+                    ->andReturn(
+                        [
+                            ['isCopy' => 'N', 'foo' => 'bar'],
+                            ['isCopy' => 'N', 'foo' => 'bar'],
+                            ['isCopy' => 'N', 'foo' => 'bar'],
+                        ]
+                    )
+                ->getMock()
+        );
 
         $this->sut->requestDiscs($count, $data);
     }

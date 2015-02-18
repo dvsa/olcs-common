@@ -276,7 +276,7 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         if ($action === self::ACTION_EXISTING) {
             unset($data['advertisements']);
-            $data['advertisements']['adPlaced'] = 'N';
+            $data['advertisements']['adPlaced'] = null;
         }
 
         return $data;

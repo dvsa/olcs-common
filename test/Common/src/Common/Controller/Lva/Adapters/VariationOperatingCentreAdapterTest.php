@@ -39,15 +39,6 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut->setController($this->controller);
     }
 
-    /**
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
-     */
-    protected function getServiceManager()
-    {
-        return Bootstrap::getRealServiceManager();
-    }
-
     public function testSaveMainFormData()
     {
         $data = ['dataTrafficArea' => 'A', 'foo' => 'bar'];
@@ -498,7 +489,7 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         ];
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
-        $sm = $this->getServiceManager();
+        $sm = Bootstrap::getRealServiceManager();
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
@@ -612,7 +603,7 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         ];
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
-        $sm = $this->getServiceManager();
+        $sm = Bootstrap::getRealServiceManager();
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
@@ -726,5 +717,45 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
             ->andReturn(10);
 
         $this->assertEquals($expectedData, $this->sut->alterFormData($id, $data));
+    }
+
+    public function testFormatCrudDataForForm()
+    {
+        $this->sut = m::mock('\Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $oc = [
+            'id' => 72,
+            'address' => [ 'foo', 'countryCode' => ['id' => 'GB'] ]
+        ];
+        $data = [
+
+            'id' => 4,
+            'foo' => 'bar',
+
+            'adPlacedIn' => null,
+            'adPlacedDate' => null,
+            'adPlaced' => 'N',
+            'operatingCentre' => $oc,
+        ];
+
+        // should nullify the adPlaced checkbox and split into fieldsets
+        $expectedData = [
+            'data' => [
+                'id' => 4,
+                'foo' => 'bar',
+            ],
+            'advertisements' => [
+                'adPlaced' => null,
+            ],
+            'operatingCentre' => $oc,
+            'address' => [ 'foo', 'countryCode' => 'GB' ], // country code is flattened
+        ];
+
+        $this->sut->shouldReceive('getOperatingCentreAction')->andReturn('E');
+        $this->sut->shouldReceive('getTrafficArea')->andReturn('T');
+
+        $this->assertEquals($expectedData, $this->sut->formatCrudDataForForm($data, 'edit'));
     }
 }

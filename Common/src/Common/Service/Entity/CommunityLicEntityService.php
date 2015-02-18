@@ -8,6 +8,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\Entity\TrafficAreaEntityService;
+
 /**
  * Community Lic Entity Service
  *
@@ -120,10 +122,9 @@ class CommunityLicEntityService extends AbstractEntityService
      */
     public function addOfficeCopy($data, $licenceId)
     {
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
         $additionalData = [
             'licence' => $licenceId,
-            'serialNoPrefix' => $licence['niFlag'] === 'Y' ? self::PREFIX_NI : self::PREFIX_GB,
+            'serialNoPrefix' => $this->getSerialNoPrefixFromTrafficArea($licenceId),
             'issueNo' => 0
         ];
         $this->save(array_merge($data, $additionalData));
@@ -142,8 +143,7 @@ class CommunityLicEntityService extends AbstractEntityService
         $startIssueNo = $validLicences['Count'] ?
             $validLicences['Results'][$validLicences['Count'] - 1]['issueNo'] + 1 : 1;
 
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->getById($licenceId);
-        $data['serialNoPrefix'] = $licence['niFlag'] === 'Y' ? self::PREFIX_NI : self::PREFIX_GB;
+        $data['serialNoPrefix'] = $this->getSerialNoPrefixFromTrafficArea($licenceId);
         $data['licence'] = $licenceId;
 
         $dataToSave = [];
@@ -158,5 +158,12 @@ class CommunityLicEntityService extends AbstractEntityService
     public function getWithLicence($id)
     {
         return $this->get($id, $this->licenceBundle);
+    }
+    
+    protected function getSerialNoPrefixFromTrafficArea($licenceId)
+    {
+        $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($licenceId);
+        return ($trafficArea['id'] === TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE)
+            ? self::PREFIX_NI : self::PREFIX_GB;
     }
 }

@@ -43,9 +43,6 @@ class VehicleListTest extends PHPUnit_Framework_TestCase
 
     /**
      * Set up the Vehicle List service
-     *
-     * @todo These tests require a real service manager to run, as they are not mocking all dependencies,
-     * these tests should be addresses
      */
     public function setUp()
     {
@@ -56,9 +53,7 @@ class VehicleListTest extends PHPUnit_Framework_TestCase
             ->will($this->returnCallback(array($this, 'mockRestCalls')));
 
         // the MockDateTrait expects `sm` instead of `serviceLocator`; this is just a quick fix
-        $this->sm = Bootstrap::getRealServiceManager();
-        $this->sm->setAllowOverride(true);
-
+        $this->sm = Bootstrap::getServiceManager();
     }
 
     /**
@@ -351,6 +346,8 @@ class VehicleListTest extends PHPUnit_Framework_TestCase
         $this->sm->setService('ContentStore', $mockContentStore);
         $this->sm->setService('FileUploader', $mockFileUploader);
 
+        $this->mockDate('20141208114500');
+
         $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
     }
@@ -514,6 +511,8 @@ class VehicleListTest extends PHPUnit_Framework_TestCase
         $this->sm->setService('category', $mockCategory);
         $this->sm->setService('ContentStore', $mockContentStore);
         $this->sm->setService('FileUploader', $mockFileUploader);
+
+        $this->mockDate('20141208114500');
 
         $this->vehicleList->setServiceLocator($this->sm);
         $this->vehicleList->generateVehicleList();
