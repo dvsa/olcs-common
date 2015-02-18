@@ -33,6 +33,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         ]
     ];
 
+    protected $statusesForRestore = [
+        CommunityLicEntityService::STATUS_WITHDRAWN,
+        CommunityLicEntityService::STATUS_SUSPENDED
+    ];
+
     protected $filters = [];
 
     /**
@@ -168,12 +173,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if (!$this->checkTableForValidLicences($table)) {
             $table->removeAction('void');
         }
+        if (!$this->checkTableForWithdrawnOrSuspendedLicences($table)) {
+            $table->removeAction('restore');
+        }
 
         return $table;
     }
 
     /**
-     * Hide Add Office Licence action, if necessary
+     * Check table for valid licences
      *
      * @param \Common\Service\Table\TableBuilder
      * @return bool
@@ -183,6 +191,23 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $rows = $table->getRows();
         foreach ($rows as $row) {
             if (in_array($row['status']['id'], $this->defaultFilters['status'])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check table for withdrawn or suspended licences
+     *
+     * @param \Common\Service\Table\TableBuilder
+     * @return bool
+     */
+    protected function checkTableForWithdrawnOrSuspendedLicences($table)
+    {
+        $rows = $table->getRows();
+        foreach ($rows as $row) {
+            if (in_array($row['status']['id'], $this->statusesForRestore)) {
                 return true;
             }
         }
@@ -293,8 +318,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
-        if (!$this->allowToVoid($ids)) {
-            $this->addErrorMessage($translator->translate('internal.community_licence.not_allowed'));
+        if (!$this->allowToProcess($ids)) {
+            $this->addErrorMessage($translator->translate('internal.community_licence.void_not_allowed'));
             return $this->redirectToIndex();
         }
         if (!$request->isPost()) {
@@ -337,11 +362,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
-     * Check if selected licences allow to be voided
+     * Check if selected licences allow to be voided /restored
      * 
      * @param string $ids
      */
-    protected function allowToVoid($ids)
+    protected function allowToProcess($ids)
     {
         $allow = true;
         $licenceId = $this->getLicenceId();
@@ -367,5 +392,58 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             }
         }
         return $allow;
+    }
+
+    /**
+     * Restore action
+     * 
+     */
+    public function restoreAction()
+    {
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+
+        $ids = explode(',', $this->params('child_id'));
+        if (!$this->allowToProcess($ids)) {
+            $this->addErrorMessage($translator->translate('internal.community_licence.restore_not_allowed'));
+            return $this->redirectToIndex();
+        }
+        if (!$request->isPost()) {
+            $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\CommunityLicencesRestore');
+            $view = new ViewModel(['form' => $form]);
+            $view->setTemplate('partials/form');
+            return $this->render($view);
+        }
+        if (!$this->isButtonPressed('cancel')) {
+            $this->restoreLicences($ids);
+            $this->addSuccessMessage($translator->translate('internal.community_licence.licences_restored'));
+        }
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * Restore licences
+     * 
+     * @param array $ids
+     */
+    protected function restoreLicences($ids)
+    {
+        $licenceId = $this->getLicenceId();
+        $licences = $this->getServiceLocator()
+            ->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
+
+        $dataToRestore = [];
+        foreach ($licences as $licence) {
+            if ($licence['specifiedDate']) {
+                $data['status'] = CommunityLicEntityService::STATUS_ACTIVE;
+            } else {
+                $data['status'] = CommunityLicEntityService::STATUS_PENDING;
+            }
+            $dataToRestore[] = array_merge($licence, $data);
+        }
+        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToRestore);
+        $this->getServiceLocator()->get('Entity\CommunityLicSuspension')->deleteSuspensionsAndReasons($ids);
+        $this->getServiceLocator()->get('Entity\CommunityLicWithdrawal')->deleteWithdrawalsAndReasons($ids);
     }
 }
