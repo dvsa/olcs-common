@@ -32,6 +32,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     public function indexAction()
     {
+        $adapter = $this->getAdapter();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
             ->get('Entity\Organisation')
@@ -72,6 +73,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->setTable($table);
 
         $this->alterForm($form, $table, $orgData);
+
+        $adapter->alterFormForOrganisation($form, $table, $orgId);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
@@ -194,6 +197,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     private function addOrEdit($mode)
     {
+        $adapter = $this->getAdapter();
         $request = $this->getRequest();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
@@ -226,6 +230,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $this->getServiceLocator()->get('Helper\Form')
                 ->remove($form, 'data->position');
         }
+
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId);
 
         $form->setData($data);
 

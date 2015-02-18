@@ -40,6 +40,7 @@ return array(
             'name' => 'position',
         ),
         array(
+            'name' => 'select',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )

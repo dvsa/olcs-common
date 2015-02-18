@@ -18,8 +18,16 @@ use Common\Controller\Lva\Adapters\AbstractAdapter;
  */
 class ApplicationPeopleAdapter extends AbstractAdapter
 {
-    public function alterSoleTraderFormForOrganisation(Form $form, $orgId)
+    public function alterFormForOrganisation(Form $form, $orgId)
     {
         // no-op by default
+    }
+
+    public function alterSoleTraderFormForOrganisation(Form $form, $orgId)
+    {
+    }
+
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
+    {
     }
 }
