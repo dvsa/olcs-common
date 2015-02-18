@@ -52,6 +52,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $logger->addWriter($this->logWriter);
         $this->sut->setLogger($logger);
 
+        // Mock the CPMS client
         $this->client = m::mock()
             ->shouldReceive('getOptions')
             ->andReturn(
@@ -61,12 +62,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ->getMock()
             )
             ->getMock();
-
-        // $this->client = m::mock()
-        //     ->shouldReceive('getOptions->getDomain')
-        //     ->andReturn('fake-domain')
-        //     ->getMock();
-
         $this->sm->setService('cpms\service\api', $this->client);
 
         return parent::setUp();
