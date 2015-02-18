@@ -9,6 +9,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic between People controllers
@@ -16,9 +17,10 @@ use Common\Service\Entity\OrganisationEntityService;
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractPeopleController extends AbstractController
+abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait;
+    use Traits\CrudTableTrait,
+        Traits\AdapterAwareTrait;
 
     /**
      * Needed by the Crud Table Trait
@@ -78,6 +80,8 @@ abstract class AbstractPeopleController extends AbstractController
 
     private function handleSoleTrader($orgId, $orgData)
     {
+        $adapter = $this->getAdapter();
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -95,6 +99,8 @@ abstract class AbstractPeopleController extends AbstractController
             ->setData($data);
 
         $this->alterFormForLva($form);
+
+        $adapter->alterSoleTraderFormForOrganisation($form, $orgId);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());

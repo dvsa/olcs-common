@@ -107,6 +107,15 @@ return array(
             'LvaVariation/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
             ),
+            'LvaLicence/People' => array(
+                'Common\Controller\Lva\Delegators\LicencePeopleDelegator'
+            ),
+            'LvaVariation/People' => array(
+                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
+            ),
+            'LvaApplication/People' => array(
+                'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
@@ -213,6 +222,12 @@ return array(
                 'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
             'LicenceCommunityLicenceAdapter' =>
                 'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
+            'ApplicationPeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
+            'LicencePeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\LicencePeopleAdapter',
+            'VariationPeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationPeopleAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
