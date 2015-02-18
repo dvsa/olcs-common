@@ -42,8 +42,7 @@ class FinancialStandingRateEntityService extends AbstractEntityService
             'order' => 'DESC',
         ];
 
-        $data = $this->getServiceLocator()->get('Entity\FinancialStandingRate')
-            ->get($query, $this->ratesBundle);
+        $data = $this->get($query, $this->ratesBundle);
 
         return $data['Results'];
     }
