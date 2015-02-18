@@ -14,6 +14,8 @@ use CommonTest\Bootstrap;
  */
 class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 {
+    private $adapter;
+
     public function setUp()
     {
         parent::setUp();
@@ -21,6 +23,10 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractPeopleController');
 
         $this->mockService('Script', 'loadFile')->with('lva-crud');
+
+        $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
+
+        $this->sut->setAdapter($this->adapter);
     }
 
     public function testGetIndexActionForLimitedCompanyWithPeoplePopulated()
@@ -115,6 +121,9 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->with('table')
             ->andReturn($tableFieldset);
 
+        $this->adapter->shouldReceive('alterFormForOrganisation')
+            ->with($form, $table, 12);
+
         $this->sut->indexAction();
 
         $this->assertEquals('people', $this->view);
@@ -157,16 +166,18 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
+        $this->adapter->shouldReceive('alterSoleTraderFormForOrganisation')
+            ->with($form, 12);
+
         $this->sut->indexAction();
 
         $this->assertEquals('person', $this->view);
     }
 
-    /**
-     * @group abstractPeopleController
-     */
-    public function testGetIndexActionForSaveSoleTrader()
+    public function testPostIndexActionWithValidDataForSaveSoleTrader()
     {
+        $this->setPost([]);
+
         $form = $this->createMockForm('Lva\SoleTrader');
 
         $form->shouldReceive('setData')
@@ -219,15 +230,14 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockEntity('OrganisationPerson', 'save');
 
-        $this->request
-            ->shouldReceive('isPost')
-            ->andReturn(true);
-
         $this->sut
             ->shouldReceive('postSave')
             ->with('people')
             ->shouldReceive('completeSection')
             ->with('people');
+
+        $this->adapter->shouldReceive('alterSoleTraderFormForOrganisation')
+            ->with($form, 12);
 
         $this->sut->indexAction();
     }
@@ -256,6 +266,12 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
         $this->getMockFormHelper()
             ->shouldReceive('remove')
             ->with($form, 'data->position');
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(true)
+            ->shouldReceive('alterAddOrEditFormForOrganisation')
+            ->with($form, 12);
 
         $this->sut->addAction();
     }
