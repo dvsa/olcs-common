@@ -57,7 +57,10 @@ class LocalAuthorityTest extends MockeryTestCase
     public function testFetchListData($data, $expected)
     {
         $mockRestClient = m::mock('Common\Util\RestClient');
-        $mockRestClient->shouldReceive('get')->once()->with('', ['limit' => 1000])->andReturn($data);
+        $mockRestClient->shouldReceive('get')
+            ->once()
+            ->with('', ['limit' => 1000, 'bundle' => '{"children":["trafficArea"]}'])
+            ->andReturn($data);
 
         $sut = new LocalAuthority();
         $sut->setRestClient($mockRestClient);
