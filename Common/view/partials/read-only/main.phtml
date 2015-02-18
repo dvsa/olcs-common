@@ -1,18 +1,18 @@
 <div class="read-only">
     <?php
-        if (isset($header) || isset($actions)) {
-            echo $this->render('partials/read-only/header');
-        }
+    if (isset($header) || isset($actions)) {
+        echo $this->render('partials/read-only/header');
+    }
 
-        if (isset($multiItems)) {
-            foreach ($multiItems as $items) {
-                echo $this->render('partials/read-only/list', ['items' => $items]);
-            }
-        } elseif(isset($items)) {
-            echo $this->render('partials/read-only/list');
+    if (isset($multiItems)) {
+        foreach ($multiItems as $items) {
+            echo $this->render('partials/read-only/list', ['items' => $items]);
         }
+    } elseif (isset($items)) {
+        echo $this->render('partials/read-only/list', ['items' => $items]);
+    }
 
-        if (isset($freetext)) { ?>
-            <p><?php echo $freetext; ?></p>
+    if (isset($freetext)) { ?>
+        <p><?php echo $freetext; ?></p>
     <?php } ?>
 </div>
