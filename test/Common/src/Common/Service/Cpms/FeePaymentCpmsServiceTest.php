@@ -175,6 +175,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
+
+        $this->assertCount(2, $this->logWriter->events);
+        $this->assertEquals('Card payment request', $this->logWriter->events[0]['message']);
+        $this->assertEquals('Card payment response', $this->logWriter->events[1]['message']);
     }
 
     /**

@@ -23,7 +23,6 @@ use Common\Util\LoggerTrait;
 use CpmsClient\Service\ApiService;
 use Common\Service\Listener\FeeListenerService;
 use Common\Service\Data\FeeTypeDataService;
-use Olcs\Db\Traits\LoggerAwareTrait as OlcsLoggerAwareTrait;
 
 /**
  * Fee Payment Helper Service
@@ -77,17 +76,36 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 ],
             ];
         }
+
+        $endPoint = '/api/payment/card';
+        $scope    = ApiService::SCOPE_CARD;
+
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
-            'scope' => ApiService::SCOPE_CARD,
+            'scope' => $scope,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
-        $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
+        $this->debug(
+            'Card payment request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+                'params'   => $params,
+            ]
+        );
+
+        $response = $this->getClient()->post($endPoint, $scope, $params);
+
+        $this->debug('Card payment response', ['response' => $response]);
 
         if (!is_array($response)
             || !isset($response['redirection_data'])
@@ -349,7 +367,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'cost_centre' => self::COST_CENTRE,
         ];
 
-
         $this->debug(
             'Postal order payment request',
             [
@@ -570,7 +587,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     protected function debug($message, $data)
     {
-         return $this->getLogger()->debug(
+        return $this->getLogger()->debug(
             $message,
             [
                 'data' => array_merge(
