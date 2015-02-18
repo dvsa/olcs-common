@@ -29,10 +29,7 @@ class LocalAuthority extends AbstractData implements ListData
         $optionData = [];
 
         foreach ($data as $datum) {
-            $optionData[$datum['id']] = [
-                'label' => $datum['description'],
-                'options' => []
-            ];
+            $optionData[$datum['id']] = $datum['description'];
         }
 
         return $optionData;
