@@ -110,17 +110,15 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
         $licenceId = 1;
 
         $mockLicenceService = m::mock()
-            ->shouldReceive('getById')
+            ->shouldReceive('getTrafficArea')
             ->with($licenceId)
-            ->andReturn(
-                ['niFlag' => 'N']
-            )
+            ->andReturn(['id' => 'N'])
             ->getMock();
         $this->sm->setService('Entity\Licence', $mockLicenceService);
 
         $additionalData = [
             'licence' => $licenceId,
-            'serialNoPrefix' => 'UKGB',
+            'serialNoPrefix' => 'UKNI',
             'issueNo' => 0
         ];
         $data = [
@@ -163,22 +161,22 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
                 'somedata' => 'somedata',
                 'issueNo' => 3,
                 'licence' => $licenceId,
-                'serialNoPrefix' => 'UKGB'
+                'serialNoPrefix' => 'UKNI'
             ],
             [
                 'somedata' => 'somedata',
                 'issueNo' => 4,
                 'licence' => $licenceId,
-                'serialNoPrefix' => 'UKGB'
+                'serialNoPrefix' => 'UKNI'
             ]
         ];
         $this->expectedRestCallInOrder('CommunityLic', 'GET', $queryForValidLicences)
             ->will($this->returnValue($validLicences));
 
         $mockLicenceService = m::mock()
-            ->shouldReceive('getById')
+            ->shouldReceive('getTrafficArea')
             ->with($licenceId)
-            ->andReturn(['niFlag' => 'N'])
+            ->andReturn(['id' => 'N'])
             ->getMock();
 
         $this->sm->setService('Entity\Licence', $mockLicenceService);
@@ -189,7 +187,7 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
-     * @group entity_services
+     * @group communityLicService
      */
     public function testGetWithLicence()
     {
@@ -214,6 +212,9 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('RESPONSE', $this->sut->getWithLicence($query));
     }
 
+    /**
+     * @group communityLicService
+     */
     public function testGetPendingForLicence()
     {
         $licenceId = 123;

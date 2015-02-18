@@ -718,4 +718,44 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->assertEquals($expectedData, $this->sut->alterFormData($id, $data));
     }
+
+    public function testFormatCrudDataForForm()
+    {
+        $this->sut = m::mock('\Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
+
+        $oc = [
+            'id' => 72,
+            'address' => [ 'foo', 'countryCode' => ['id' => 'GB'] ]
+        ];
+        $data = [
+
+            'id' => 4,
+            'foo' => 'bar',
+
+            'adPlacedIn' => null,
+            'adPlacedDate' => null,
+            'adPlaced' => 'N',
+            'operatingCentre' => $oc,
+        ];
+
+        // should nullify the adPlaced checkbox and split into fieldsets
+        $expectedData = [
+            'data' => [
+                'id' => 4,
+                'foo' => 'bar',
+            ],
+            'advertisements' => [
+                'adPlaced' => null,
+            ],
+            'operatingCentre' => $oc,
+            'address' => [ 'foo', 'countryCode' => 'GB' ], // country code is flattened
+        ];
+
+        $this->sut->shouldReceive('getOperatingCentreAction')->andReturn('E');
+        $this->sut->shouldReceive('getTrafficArea')->andReturn('T');
+
+        $this->assertEquals($expectedData, $this->sut->formatCrudDataForForm($data, 'edit'));
+    }
 }

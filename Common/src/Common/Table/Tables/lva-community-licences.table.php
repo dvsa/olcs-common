@@ -15,6 +15,7 @@ return array(
                     'class' => 'secondary'
                 ),
                 'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
+                'restore' => array('label' => 'Restore', 'class' => 'secondary', 'requireRows' => true),
             )
         ),
         'row-disabled-callback' => function ($row) {
@@ -57,7 +58,8 @@ return array(
             'title' => '',
             'width' => 'checkbox',
             'type' => 'Checkbox',
-            'disableIfRowIsDisabled' => true
+            'disableIfRowIsDisabled' => true,
+            'data-attributes' => ['status']
         ),
     )
 );
