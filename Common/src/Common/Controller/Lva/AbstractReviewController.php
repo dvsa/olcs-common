@@ -22,19 +22,9 @@ abstract class AbstractReviewController extends AbstractController implements In
     {
         return new ReviewViewModel(
             $this->getAdapter()->getSectionData(
-                $this->params()->fromRoute('application'),
+                $this->params('application'),
                 $this->getAccessibleSections(true)
             )
         );
-    }
-
-    /**
-     * @NOTE Need to implement this as it's declared abstract in AbstractController
-     *
-     * @param int $lvaId
-     */
-    protected function handleCancelRedirect($lvaId)
-    {
-        // No-op
     }
 }
