@@ -13,6 +13,7 @@ use Olcs\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter;
 use Common\Service\Entity\LicenceEntityService;
 use CommonTest\Bootstrap;
 use CommonTest\Traits\MockDateTrait;
+use CommonTest\Traits\MockFinancialStandingRatesTrait;
 
 /**
  * Abstract Financial Evidence Adapter Test
@@ -23,6 +24,8 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
 {
     use MockDateTrait;
 
+    use MockFinancialStandingRatesTrait;
+
     protected $sut;
 
     public function setUp()
@@ -30,14 +33,6 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
         $this->sut = m::mock('Common\Controller\Lva\Adapters\AbstractFinancialEvidenceAdapter')->makePartial();
         $this->sm = Bootstrap::getServiceManager();
         $this->sut->setServiceLocator($this->sm);
-
-        $this->sm->setService(
-            'Entity\FinancialStandingRate',
-            m::mock()
-                ->shouldReceive('getRatesInEffect')
-                ->andReturn($this->getFinancialStandingRates())
-                ->getMock()
-        );
     }
 
     /**
@@ -48,6 +43,13 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
      */
     public function testGetFirstVehicleRate($licenceType, $goodsOrPsv, $expected)
     {
+        $this->sm->setService(
+            'Entity\FinancialStandingRate',
+            m::mock()
+                ->shouldReceive('getRatesInEffect')
+                ->andReturn($this->getFinancialStandingRates())
+                ->getMock()
+        );
         $this->assertEquals($expected, $this->sut->getFirstVehicleRate($licenceType, $goodsOrPsv));
     }
 
@@ -71,6 +73,13 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
      */
     public function testGetAdditionalVehicleRate($licenceType, $goodsOrPsv, $expected)
     {
+        $this->sm->setService(
+            'Entity\FinancialStandingRate',
+            m::mock()
+                ->shouldReceive('getRatesInEffect')
+                ->andReturn($this->getFinancialStandingRates())
+                ->getMock()
+        );
         $this->assertEquals($expected, $this->sut->getAdditionalVehicleRate($licenceType, $goodsOrPsv));
     }
 
@@ -86,59 +95,16 @@ class AbstractFinancialEvidenceAdapterTest extends MockeryTestCase
         ];
     }
 
-    protected function getFinancialStandingRates()
+    public function testWhenNoRates()
     {
-        return [
-            [
-                'firstVehicleRate'      => '7000.00',
-                'additionalVehicleRate' => '3900.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_gv'],
-                'licenceType'           => ['id' => 'ltyp_sn'],
-            ],
-            [
-                'firstVehicleRate'      => '7000.00',
-                'additionalVehicleRate' => '3900.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_gv'],
-                'licenceType'           => ['id' => 'ltyp_si'],
-            ],
-            [
-                'firstVehicleRate'      => '3100.00',
-                'additionalVehicleRate' => '1700.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_gv'],
-                'licenceType'           => ['id' => 'ltyp_r'],
-            ],
-            [
-                'firstVehicleRate'      => '8000.00',
-                'additionalVehicleRate' => '4900.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_psv'],
-                'licenceType'           => ['id' => 'ltyp_sn'],
-            ],
-            [
-                'firstVehicleRate'      => '8000.00',
-                'additionalVehicleRate' => '4900.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_psv'],
-                'licenceType'           => ['id' => 'ltyp_si'],
-            ],
-            [
-                'firstVehicleRate'      => '4100.00',
-                'additionalVehicleRate' => '2700.00',
-                'effectiveFrom'         => '2015-02-01',
-                'goodsOrPsv'            => ['id' => 'lcat_psv'],
-                'licenceType'           => ['id' => 'ltyp_r'],
-            ],
-            [
-                // an old rate that maybe didn't get deleted
-                'firstVehicleRate'      => '7000.00',
-                'additionalVehicleRate' => '3900.00',
-                'effectiveFrom'         => '2014-11-01',
-                'goodsOrPsv'            => ['id' => 'lcat_gv'],
-                'licenceType'           => ['id' => 'ltyp_si'],
-            ],
-        ];
+        $this->sm->setService(
+            'Entity\FinancialStandingRate',
+            m::mock()
+                ->shouldReceive('getRatesInEffect')
+                ->andReturn([])
+                ->getMock()
+        );
+        $this->assertNull($this->sut->getFirstVehicleRate('ltyp_si', 'lcat_gv'));
+        $this->assertNull($this->sut->getAdditionalVehicleRate('ltyp_si', 'lcat_gv'));
     }
 }
