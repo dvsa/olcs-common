@@ -302,7 +302,12 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     private function formatCrudDataForSave($data)
     {
-        return $data['data'];
+        return array_filter(
+            $data['data'],
+            function ($v) {
+                return $v !== null;
+            }
+        );
     }
 
     /**
