@@ -15,6 +15,16 @@ namespace Common\Service\Table\Formatter;
  */
 class Address implements FormatterInterface
 {
+    protected static $allFields = [
+        'addressLine1',
+        'addressLine2',
+        'addressLine3',
+        'addressLine4',
+        'town',
+        'postcode',
+        'countryCode'
+    ];
+
     /**
      * Format a address
      *
@@ -30,7 +40,12 @@ class Address implements FormatterInterface
         }
 
         if (isset($column['addressFields'])) {
-            $fields = $column['addressFields'];
+
+            if ($column['addressFields'] == 'FULL') {
+                $fields = self::$allFields;
+            } else {
+                $fields = $column['addressFields'];
+            }
         } else {
             $fields = array(
                 'addressLine1',
