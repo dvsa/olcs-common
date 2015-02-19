@@ -15,6 +15,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
 use Common\Controller\Lva\Adapters\AbstractAdapter;
+use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 
 /**
  * Common (aka Internal) Variation People Adapter
@@ -22,13 +23,13 @@ use Common\Controller\Lva\Adapters\AbstractAdapter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class VariationPeopleAdapter extends AbstractAdapter
+class VariationPeopleAdapter extends AbstractAdapter implements PeopleAdapterInterface
 {
     public function addMessages($orgId)
     {
     }
 
-    public function alterFormForOrganisation(Form $form, $orgId)
+    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
     {
     }
 
