@@ -41,6 +41,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->get('Entity\Organisation')
             ->getType($orgId);
 
+        $adapter->addMessages($orgId);
+
         if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
             return $this->handleSoleTrader($orgId, $orgData);
         }

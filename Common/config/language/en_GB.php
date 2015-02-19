@@ -1681,6 +1681,7 @@ return array(
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
+    'variation-people-message' => 'Making changes to people will require a <a href="%s">variation application</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-title-gv' => 'Application to vary a Goods Vehicle Operator\'s Licence',
