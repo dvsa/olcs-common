@@ -6,6 +6,8 @@ use Common\Service\Document\Bookmark\Formatter;
 
 abstract class BusRegFlatAbstract extends DynamicBookmark
 {
+
+    const CLASS_NAMESPACE = __NAMESPACE__;
     const FORMATTER = null;
     const BR_FIELD = null;
 
