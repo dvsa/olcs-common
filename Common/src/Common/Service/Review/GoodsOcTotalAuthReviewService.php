@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Review;
 
+use Common\Service\Entity\LicenceEntityService;
+
 /**
  * Goods Oc Total Auth Review Service
  *
@@ -22,7 +24,7 @@ class GoodsOcTotalAuthReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        return [
+        $config = [
             'header' => 'review-operating-centres-authorisation-title',
             'multiItems' => [
                 [
@@ -37,5 +39,14 @@ class GoodsOcTotalAuthReviewService extends AbstractReviewService
                 ]
             ]
         ];
+
+        if ($data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+            $config['multiItems'][0][] = [
+                'label' => 'review-operating-centres-authorisation-community-licences',
+                'value' => $data['totCommunityLicences']
+            ];
+        }
+
+        return $config;
     }
 }
