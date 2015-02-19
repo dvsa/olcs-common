@@ -7,11 +7,6 @@
  */
 namespace Common\Service\Entity;
 
-use Common\Service\Data\SectionConfig;
-use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\VehicleEntityService;
-
 /**
  * Application Tracking Entity Service
  *
