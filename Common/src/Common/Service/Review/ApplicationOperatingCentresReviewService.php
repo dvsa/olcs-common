@@ -25,51 +25,37 @@ class ApplicationOperatingCentresReviewService extends AbstractReviewService imp
      * @param array $data
      * @return array
      */
-    public function getConfigFromData(array $data = array())
+    public function getConfigFromData(array $data = [])
     {
-        $config = [
-            'subSections' => [
-                [
-                    'mainItems' => [
-
-                    ]
-                ]
-            ]
-        ];
+        $config = ['subSections' => []];
 
         $isPsv = $this->isPsv($data);
 
         if ($isPsv) {
             $ocService = $this->getServiceLocator()->get('Review\PsvOperatingCentre');
-            $authService = $this->getServiceLocator()->get('Review\PsvOcTotalAuth');
+            $authService = $this->getServiceLocator()->get('Review\ApplicationPsvOcTotalAuth');
         } else {
             $ocService = $this->getServiceLocator()->get('Review\GoodsOperatingCentre');
-            $authService = $this->getServiceLocator()->get('Review\GoodsOcTotalAuth');
+            $authService = $this->getServiceLocator()->get('Review\ApplicationGoodsOcTotalAuth');
         }
+
+        $added = [];
 
         foreach ($data['operatingCentres'] as $operatingCentre) {
-            $config['subSections'][0]['mainItems'][] = $ocService->getConfigFromData($operatingCentre);
+            $added[] = $ocService->getConfigFromData($operatingCentre);
         }
 
-        $config['subSections'][0]['mainItems'][] = $this->formatTrafficArea($data);
+        if (!empty($added)) {
+            $config['subSections'][] = ['mainItems' => $added];
+        }
 
-        $config['subSections'][0]['mainItems'][] = $authService->getConfigFromData($data);
-
-        return $config;
-    }
-
-    private function formatTrafficArea($data)
-    {
-        return [
-            'header' => 'review-operating-centres-traffic-area-title',
-            'multiItems' => [
-                [
-                    [
-                        'label' => 'review-operating-centres-traffic-area',
-                        'value' => $data['licence']['trafficArea']['name']
-                    ]
-                ]
+        $config['subSections'][] = [
+            'mainItems' => [
+                $this->getServiceLocator()->get('Review\TrafficArea')->getConfigFromData($data),
+                $authService->getConfigFromData($data)
             ]
         ];
+
+        return $config;
     }
 }

@@ -25,51 +25,64 @@ class VariationOperatingCentresReviewService extends AbstractReviewService imple
      * @param array $data
      * @return array
      */
-    public function getConfigFromData(array $data = array())
+    public function getConfigFromData(array $data = [])
     {
-        $config = [
-            'subSections' => [
-                [
-                    'mainItems' => [
-
-                    ]
-                ]
-            ]
-        ];
+        $config = ['subSections' => []];
 
         $isPsv = $this->isPsv($data);
 
         if ($isPsv) {
             $ocService = $this->getServiceLocator()->get('Review\PsvOperatingCentre');
-            $authService = $this->getServiceLocator()->get('Review\PsvOcTotalAuth');
+            $authService = $this->getServiceLocator()->get('Review\VariationPsvOcTotalAuth');
         } else {
             $ocService = $this->getServiceLocator()->get('Review\GoodsOperatingCentre');
-            $authService = $this->getServiceLocator()->get('Review\GoodsOcTotalAuth');
+            $authService = $this->getServiceLocator()->get('Review\VariationGoodsOcTotalAuth');
         }
+
+        $added = $updated = $deleted = [];
 
         foreach ($data['operatingCentres'] as $operatingCentre) {
-            $config['subSections'][0]['mainItems'][] = $ocService->getConfigFromData($operatingCentre);
+            switch ($operatingCentre['action']) {
+                case 'A':
+                    $added[] = $ocService->getConfigFromData($operatingCentre);
+                    break;
+                case 'U':
+                    $updated[] = $ocService->getConfigFromData($operatingCentre);
+                    break;
+                case 'D':
+                    $deleted[] = $ocService->getConfigFromData($operatingCentre);
+            }
         }
 
-        $config['subSections'][0]['mainItems'][] = $this->formatTrafficArea($data);
+        if (!empty($added)) {
+            $config['subSections'][] = [
+                'title' => 'variation-review-operating-centres-added-title',
+                'mainItems' => $added
+            ];
+        }
 
-        $config['subSections'][0]['mainItems'][] = $authService->getConfigFromData($data);
+        if (!empty($updated)) {
+            $config['subSections'][] = [
+                'title' => 'variation-review-operating-centres-updated-title',
+                'mainItems' => $updated
+            ];
+        }
 
-        return $config;
-    }
+        if (!empty($deleted)) {
+            $config['subSections'][] = [
+                'title' => 'variation-review-operating-centres-deleted-title',
+                'mainItems' => $deleted
+            ];
+        }
 
-    private function formatTrafficArea($data)
-    {
-        return [
-            'header' => 'review-operating-centres-traffic-area-title',
-            'multiItems' => [
-                [
-                    [
-                        'label' => 'review-operating-centres-traffic-area',
-                        'value' => $data['licence']['trafficArea']['name']
-                    ]
-                ]
+        $config['subSections'][] = [
+            'title' => 'variation-review-operating-centres-ta-auth-title',
+            'mainItems' => [
+                $this->getServiceLocator()->get('Review\TrafficArea')->getConfigFromData($data),
+                $authService->getConfigFromData($data)
             ]
         ];
+
+        return $config;
     }
 }

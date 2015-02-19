@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Psv Oc Total Auth Review Service
+ * Application Psv Oc Total Auth Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -10,11 +10,11 @@ namespace Common\Service\Review;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
- * Psv Oc Total Auth Review Service
+ * Application Psv Oc Total Auth Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class PsvOcTotalAuthReviewService extends AbstractReviewService
+class ApplicationPsvOcTotalAuthReviewService extends AbstractReviewService
 {
     private $licenceTypesWithLargeVehicles = [
         LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,

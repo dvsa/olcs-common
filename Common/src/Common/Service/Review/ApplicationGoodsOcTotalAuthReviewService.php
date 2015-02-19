@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Goods Oc Total Auth Review Service
+ * Application Goods Oc Total Auth Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -10,11 +10,11 @@ namespace Common\Service\Review;
 use Common\Service\Entity\LicenceEntityService;
 
 /**
- * Goods Oc Total Auth Review Service
+ * Application Goods Oc Total Auth Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GoodsOcTotalAuthReviewService extends AbstractReviewService
+class ApplicationGoodsOcTotalAuthReviewService extends AbstractReviewService
 {
     /**
      * Get total auth config

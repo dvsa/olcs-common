@@ -347,14 +347,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     protected $reviewBundles = [
+        // Base bundle partials are shared between new and variation apps
         'base' => [
-            'children' => [
-                'licenceType',
-                'goodsOrPsv'
-            ]
-        ],
-        'application' => [
-            'type_of_licence' => [],
+            // Default bundle partial is used in every case
+            'default' => [
+                'children' => [
+                    'licenceType',
+                    'goodsOrPsv'
+                ]
+            ],
             'operating_centres' => [
                 'children' => [
                     'licence' => [
@@ -377,8 +378,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
-            ],
+            ]
         ],
+        'application' => [],
         'variation' => [
             'type_of_licence' => [
                 'children' => [
@@ -751,9 +753,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     protected function getReviewBundle($sections, $lva)
     {
-        $bundle = $this->reviewBundles['base'];
+        $bundle = $this->reviewBundles['base']['default'];
 
         foreach ($sections as $section) {
+
+            if (isset($this->reviewBundles['base'][$section])) {
+                $bundle = array_merge_recursive($bundle, $this->reviewBundles['base'][$section]);
+            }
+
             if (isset($this->reviewBundles[$lva][$section])) {
                 $bundle = array_merge_recursive($bundle, $this->reviewBundles[$lva][$section]);
             }
