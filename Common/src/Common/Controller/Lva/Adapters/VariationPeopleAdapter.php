@@ -18,12 +18,12 @@ use Zend\Form\Form;
 use Common\Controller\Lva\Adapters\AbstractAdapter;
 
 /**
- * Common (aka Internal) Application People Adapter
+ * Common (aka Internal) Variation People Adapter
  *
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ApplicationPeopleAdapter extends AbstractAdapter
+class VariationPeopleAdapter extends AbstractAdapter
 {
     public function alterFormForOrganisation(Form $form, $orgId)
     {

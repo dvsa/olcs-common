@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Common (aka Internal) Application People Adapter
+ * Common (aka Internal) Licence People Adapter
  *
  * @NOTE: currently identical and not abstracted at all
  * in common between all three LVAs
@@ -18,12 +18,12 @@ use Zend\Form\Form;
 use Common\Controller\Lva\Adapters\AbstractAdapter;
 
 /**
- * Common (aka Internal) Application People Adapter
+ * Common (aka Internal) Licence People Adapter
  *
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ApplicationPeopleAdapter extends AbstractAdapter
+class LicencePeopleAdapter extends AbstractAdapter
 {
     public function alterFormForOrganisation(Form $form, $orgId)
     {

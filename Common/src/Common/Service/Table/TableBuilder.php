@@ -350,20 +350,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         }
     }
 
-    public function disableAction($name)
-    {
-        if ($this->hasAction($name)) {
-            $this->settings['crud']['actions'][$name]['disabled'] = true;
-        }
-    }
-
-    public function disableActions()
-    {
-        foreach ($this->settings['crud']['actions'] as $key => $config) {
-            $this->disableAction($key);
-        }
-    }
-
     public function removeActions()
     {
         foreach ($this->settings['crud']['actions'] as $key => $config) {
@@ -1465,10 +1451,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
             $class = isset($details['class']) ? $details['class'] : 'secondary';
 
-            if (isset($details['disabled']) && $details['disabled']) {
-                $attrs .= ' disabled="disabled"';
-            }
-
             $actionFieldName = $this->getActionFieldName();
 
             $newActions[] = array(
@@ -1476,8 +1458,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 'value' => $value,
                 'label' => $label,
                 'class' => $class,
-                'action_field_name' => $actionFieldName,
-                'attrs' => $attrs
+                'action_field_name' => $actionFieldName
             );
         }
 
