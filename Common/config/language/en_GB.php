@@ -914,13 +914,28 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
+    'internal.community_licence.form.change_status_to' => 'Change status to',
+    'internal.community_licence.form.end_date' => 'End date',
+    'internal.community_licence.form.licences_validation' => 'Please select at least one reason',
+    'internal.community_licence.form.reasons' => 'Reasons',
+    'internal.community_licence.form.start_date' => 'Start date',
+    'internal.community_licence.form.suspended' => 'Suspended',
+    'internal.community_licence.form.withdrawn' => 'Withdrawn',
     'internal.community_licence.form_add.cancel' => 'Cancel',
     'internal.community_licence.form_add.ok' => 'OK',
     'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.licences_restored' => 'The selected licences have been restored',
+    'internal.community_licence.licences_suspended' => 'The licences have been suspended',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
-    'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
+    'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
+        copy',
+    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
+        before the office copy',
+    'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
@@ -1693,9 +1708,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal.community_licence.restore_not_allowed' =>
-        'You cannot restore these licences without restoring the office copy',
-    'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
-    'internal.community_licence.licences_restored' => 'The selected licences have been restored'
     // Potentially unused (Not found with grep)
 );
