@@ -31,12 +31,7 @@ class ApplicationPeopleAdapter extends AbstractAdapter
     {
     }
 
-    public function canAdd($orgId)
-    {
-        return true;
-    }
-
-    public function canDelete($orgId)
+    public function canModify($orgId)
     {
         return true;
     }
