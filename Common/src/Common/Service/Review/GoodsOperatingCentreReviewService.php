@@ -10,11 +10,9 @@ namespace Common\Service\Review;
 /**
  * Goods Operating Centre Review Service
  *
- * @NOTE Rightly or wrongly we extend Psv version here, as we just add additional items in the Goods version
- *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GoodsOperatingCentreReviewService extends PsvOperatingCentreReviewService
+class GoodsOperatingCentreReviewService extends AbstractReviewService
 {
     /**
      * Format the OC config
@@ -24,7 +22,7 @@ class GoodsOperatingCentreReviewService extends PsvOperatingCentreReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        $config = parent::getConfigFromData($data);
+        $config = $this->getServiceLocator()->get('Review\PsvOperatingCentre')->getConfigFromData($data);
 
         $config['multiItems']['vehicles+trailers'][] = [
             'label' => 'review-operating-centre-total-trailers',
@@ -74,9 +72,9 @@ class GoodsOperatingCentreReviewService extends PsvOperatingCentreReviewService
         }
 
         if (empty($files)) {
-            return 'No files uploaded';
+            return $this->translate('no-files-uploaded');
         }
 
-        return implode('<br />', $files);
+        return implode('<br>', $files);
     }
 }

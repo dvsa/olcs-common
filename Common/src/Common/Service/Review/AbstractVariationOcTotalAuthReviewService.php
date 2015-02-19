@@ -7,19 +7,13 @@
  */
 namespace Common\Service\Review;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Abstract Variation Oc Total Auth Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractVariationOcTotalAuthReviewService extends AbstractReviewService implements
-    ServiceLocatorAwareInterface
+abstract class AbstractVariationOcTotalAuthReviewService extends AbstractReviewService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Get the keys of the values to compare
      *

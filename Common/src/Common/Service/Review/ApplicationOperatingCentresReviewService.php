@@ -7,18 +7,13 @@
  */
 namespace Common\Service\Review;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Application Operating Centres Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationOperatingCentresReviewService extends AbstractReviewService implements ServiceLocatorAwareInterface
+class ApplicationOperatingCentresReviewService extends AbstractReviewService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Format the readonly config from the given data
      *

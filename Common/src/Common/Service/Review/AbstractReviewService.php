@@ -9,6 +9,8 @@ namespace Common\Service\Review;
 
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Table\Formatter\Address;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Abstract Review Service
@@ -18,8 +20,10 @@ use Common\Service\Table\Formatter\Address;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractReviewService implements ReviewServiceInterface
+abstract class AbstractReviewService implements ReviewServiceInterface, ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     protected function formatShortAddress($address)
     {
         return Address::format($address);
@@ -48,5 +52,10 @@ abstract class AbstractReviewService implements ReviewServiceInterface
     protected function isPsv($data)
     {
         return $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_PSV;
+    }
+
+    protected function translate($string)
+    {
+        return $this->getServiceLocator()->get('Helper\Translation')->translate($string);
     }
 }

@@ -7,18 +7,13 @@
  */
 namespace Common\Service\Review;
 
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-
 /**
  * Variation Type Of Licence Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationTypeOfLicenceReviewService extends AbstractReviewService implements ServiceLocatorAwareInterface
+class VariationTypeOfLicenceReviewService extends AbstractReviewService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Format the readonly config from the given data
      *

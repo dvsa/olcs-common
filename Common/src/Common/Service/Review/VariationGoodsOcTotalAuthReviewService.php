@@ -30,7 +30,7 @@ class VariationGoodsOcTotalAuthReviewService extends AbstractVariationOcTotalAut
         ];
 
         if ($data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
-            $changedKeys['totCommunityLicences'] = 'commnunity-licences';
+            $changedKeys['totCommunityLicences'] = 'community-licences';
         }
 
         return $changedKeys;

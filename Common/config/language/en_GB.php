@@ -1175,6 +1175,7 @@ return array(
     'new-case-header' => 'New case associated with %s, licence #%s',
     'new-case-next' => 'Next',
     'nfas' => 'NFAs',
+    'no-files-uploaded' => 'No files uploaded',
     'no-further-action' => 'No further action',
     'noOfTrailersRequiredError' => 'Total number of trailers cannot be zero if total number of vehicles is zero',
     'noOfVehiclesRequiredError' => 'Total number of vehicles cannot be zero if total number of trailers is zero',
