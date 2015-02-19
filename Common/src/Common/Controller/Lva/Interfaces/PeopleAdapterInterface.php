@@ -22,8 +22,6 @@ interface PeopleAdapterInterface
 
     public function alterFormForPartnership(Form $form, $table, $orgId);
 
-    public function alterSoleTraderFormForOrganisation(Form $form, $orgId);
-
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId);
 
     public function canModify($orgId);
