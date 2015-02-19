@@ -16,6 +16,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
+use Common\Service\Entity\OrganisationEntityService;
 
 /**
  * Common (aka Internal) Licence People Adapter
@@ -24,6 +25,10 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
  */
 class LicencePeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
+    private $excludeTypes = [
+        OrganisationEntityService::ORG_TYPE_SOLE_TRADER,
+        OrganisationEntityService::ORG_TYPE_PARTNERSHIP
+    ];
 
     public function addMessages($orgId)
     {
@@ -40,8 +45,11 @@ class LicencePeopleAdapter extends AbstractControllerAwareAdapter implements Peo
 
     public function alterAddOrEditFormForOrganisation(Form $form, $orgType)
     {
-        // @TODO: if the company is NOT partnership or sole trader,
-        // we want to lock it...
+        if (in_array($orgType, $this->excludeTypes)) {
+            return;
+        }
+
+        return $this->getServiceLocator()->get('Lva\People')->lockPersonForm($form, $orgType);
     }
 
     public function canModify($orgId)
