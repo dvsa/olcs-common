@@ -1,8 +1,11 @@
 <?php
-
+/**
+ * Class
+ *
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ */
 namespace CommonTest\Service\Document\Bookmark;
 
-//use Common\Service\Document\Bookmark\BrFinishPoint as BrFinishPoint;
 use Common\Service\Document\Bookmark\Formatter\FormatterInterface;
 
 /**
@@ -12,7 +15,10 @@ use Common\Service\Document\Bookmark\Formatter\FormatterInterface;
  */
 abstract class BusRegFlatTestAbstract extends \PHPUnit_Framework_TestCase
 {
-    const SUT_CLASS_NAME = '\Common\Service\Document\Bookmark\BrDateReceived';
+    /**
+     * Implement this in the child class
+     */
+    const SUT_CLASS_NAME = '\Common\Service\Document\Bookmark\BOOKMARK_CLASS_NAME';
 
     public function testGetQueryContainsExpectedKeys()
     {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class
+ *
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ */
 namespace CommonTest\Service\Document\Bookmark;
 
 /**

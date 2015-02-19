@@ -1,9 +1,19 @@
 <?php
+/**
+ * Class
+ *
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ */
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 use Common\Service\Document\Bookmark\Formatter;
 
+/**
+ * Class
+ *
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ */
 abstract class BusRegFlatAbstract extends DynamicBookmark
 {
 
