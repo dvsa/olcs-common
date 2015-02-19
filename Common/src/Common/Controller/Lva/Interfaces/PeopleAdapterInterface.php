@@ -20,7 +20,7 @@ interface PeopleAdapterInterface
 
     public function alterFormForOrganisation(Form $form, $table, $orgId);
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgType);
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType);
 
     public function canModify($orgId);
 }

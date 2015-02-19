@@ -6,8 +6,7 @@
  * @NOTE: currently identical and not abstracted at all
  * in common between all three LVAs
  *
- * This will change in the next two stories to be developed
- * OLCS-6542
+ * This will change in the next story to be developed
  * OLCS-6543
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
@@ -25,15 +24,15 @@ use Common\Controller\Lva\Adapters\AbstractAdapter;
  */
 class VariationPeopleAdapter extends AbstractAdapter
 {
+    public function addMessages($orgId)
+    {
+    }
+
     public function alterFormForOrganisation(Form $form, $orgId)
     {
     }
 
-    public function alterSoleTraderFormForOrganisation(Form $form, $orgId)
-    {
-    }
-
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
     {
     }
 

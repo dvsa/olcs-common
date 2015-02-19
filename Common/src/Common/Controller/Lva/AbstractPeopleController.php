@@ -108,7 +108,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->alterFormForLva($form);
 
-        $adapter->alterAddOrEditFormForOrganisation($form, OrganisationEntityService::ORG_TYPE_SOLE_TRADER);
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId, OrganisationEntityService::ORG_TYPE_SOLE_TRADER);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
@@ -242,7 +242,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
                 ->remove($form, 'data->position');
         }
 
-        $adapter->alterAddOrEditFormForOrganisation($form, $orgData['type']['id']);
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId, $orgData['type']['id']);
 
         $form->setData($data);
 
