@@ -89,6 +89,10 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
                 [
                     'header' => 'review-business_type',
                     'config' => $stubbedBtConfig
+                ],
+                [
+                    'header' => 'review-business_details',
+                    'config' => null
                 ]
             ]
         ];
