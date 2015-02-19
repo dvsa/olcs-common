@@ -16,16 +16,20 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
 use Common\Controller\Lva\Adapters\AbstractAdapter;
+use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 
 /**
  * Common (aka Internal) Licence People Adapter
  *
- *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicencePeopleAdapter extends AbstractAdapter
+class LicencePeopleAdapter extends AbstractAdapter implements PeopleAdapterInterface
 {
-    public function alterFormForOrganisation(Form $form, $orgId)
+    public function alterFormForOrganisation(Form $form, $table, $orgId)
+    {
+    }
+
+    public function alterFormForPartnership(Form $form, $table, $orgId)
     {
     }
 
