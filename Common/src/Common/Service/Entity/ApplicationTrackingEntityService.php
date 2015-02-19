@@ -55,7 +55,6 @@ class ApplicationTrackingEntityService extends AbstractEntityService
     public function getValueOptions()
     {
         return [
-            '' => '',
             self::STATUS_ACCEPTED => 'Accepted',
             self::STATUS_NOT_ACCEPTED => 'Not accepted',
             self::STATUS_NOT_APPLICABLE => 'Not applicable',

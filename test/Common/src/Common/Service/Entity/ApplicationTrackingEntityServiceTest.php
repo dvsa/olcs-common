@@ -87,4 +87,15 @@ class ApplicationTrackingEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getTrackingStatuses($applicationId));
     }
+
+    public function testGetValueOptions()
+    {
+        $expected = [
+            1 => 'Accepted',
+            2 => 'Not accepted',
+            3 => 'Not applicable',
+        ];
+
+        $this->assertEquals($expected, $this->sut->getValueOptions());
+    }
 }
