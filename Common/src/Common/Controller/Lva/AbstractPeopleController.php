@@ -79,11 +79,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->alterForm($form, $table, $orgData);
 
-        if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_PARTNERSHIP) {
-            $adapter->alterFormForPartnership($form, $table, $orgId);
-        } else {
-            $adapter->alterFormForOrganisation($form, $table, $orgId);
-        }
+        $adapter->alterFormForOrganisation($form, $table, $orgId);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
