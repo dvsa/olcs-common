@@ -162,6 +162,20 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockRender();
 
+        $mockTranslator = m::mock();
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        $mockTranslator->shouldReceive('translate')
+            ->with('view-full-application')
+            ->andReturn('view-full-application');
+
+        $this->sut->shouldReceive('url->fromRoute')
+            ->with('lva-/review', [], [], true)
+            ->andReturn('URL');
+
+        $form->shouldReceive('get->get->setAttribute')
+            ->with('value', '<p><a href="URL" target="_blank">view-full-application</a></p>');
+
         $this->sut->indexAction();
 
         $this->assertEquals('undertakings', $this->view);

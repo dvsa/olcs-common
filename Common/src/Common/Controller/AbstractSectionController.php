@@ -809,7 +809,7 @@ abstract class AbstractSectionController extends AbstractActionController
 
         // this process defers to a service which takes care of checking
         // whether the script(s) exist
-        $view->setVariable('scripts', $this->loadScripts($scripts));
+        $this->loadScripts($scripts);
     }
 
     /**

@@ -259,7 +259,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
 
-        $this->expectOneRestCall('Licence', 'GET', $id)
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $id, 'limit' => 'all'])
             ->will($this->returnValue($response));
 
         $this->assertEquals(2, $this->sut->getVehiclesTotal($id));
@@ -311,7 +311,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             )
         );
 
-        $this->expectOneRestCall('Licence', 'GET', $id)
+        $this->expectOneRestCall('Licence', 'GET', ['id' => $id, 'limit' => 'all'])
             ->will($this->returnValue($response));
 
         $this->assertEquals(2, $this->sut->getVehiclesPsvTotal($id, $type));
@@ -969,12 +969,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                             ],
                         ],
                         'leadTcArea',
-                    ],
-                ],
-                'applications' => [
-                    'children' => ['status'],
-                    'criteria' => [
-                        'status' => 'IN ["apsts_consideration","apsts_granted"]',
                     ],
                 ],
                 'psvDiscs' => [

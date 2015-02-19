@@ -9,7 +9,6 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Util;
-use Common\Service\Data\SectionConfig;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Exception;
 use Zend\Mvc\MvcEvent;
@@ -25,11 +24,6 @@ abstract class AbstractController extends AbstractActionController
 {
     use Util\FlashMessengerTrait,
         GenericUpload;
-
-    /**
-     * Handle cancel redirect is implemented differently internally than externally
-     */
-    abstract protected function handleCancelRedirect($lvaId);
 
     /**
      * Internal/External
@@ -141,8 +135,7 @@ abstract class AbstractController extends AbstractActionController
                 ->setApplicationId($this->getIdentifier());
         }
 
-        $sectionConfig = new SectionConfig();
-        $sectionConfig->setServiceLocator($this->getServiceLocator());
+        $sectionConfig = $this->getServiceLocator()->get('SectionConfig');
 
         $inputSections = $sectionConfig->getAll();
 

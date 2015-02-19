@@ -32,12 +32,38 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     protected $sut;
 
+    protected $client;
+
+    /**
+     * @var \Zend\Log\Writer\Mock
+     */
+    protected $logWriter;
+
     public function setUp()
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->sut = new FeePaymentCpmsService();
         $this->sut->setServiceLocator($this->sm);
         $this->mockDate('2015-01-21');
+
+        // Mock the logger
+        $this->logWriter = new \Zend\Log\Writer\Mock();
+        $logger = new \Zend\Log\Logger();
+        $logger->addWriter($this->logWriter);
+        $this->sut->setLogger($logger);
+
+        // Mock the CPMS client
+        $this->client = m::mock()
+            ->shouldReceive('getOptions')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('getDomain')
+                    ->andReturn('fake-domain')
+                    ->getMock()
+            )
+            ->getMock();
+        $this->sm->setService('cpms\service\api', $this->client);
+
         return parent::setUp();
     }
 
@@ -94,8 +120,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'cost_centre' => '12345,67890',
         ];
 
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/card', 'CARD', $params)
             ->andReturn(
                 [
@@ -103,8 +128,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ]
             )
             ->getMock();
-
-        $this->sm->setService('cpms\service\api', $client);
 
         $this->sm->setService(
             'Entity\Payment',
@@ -147,6 +170,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
+
+        $this->assertCount(2, $this->logWriter->events);
+        $this->assertEquals('Card payment request', $this->logWriter->events[0]['message']);
+        $this->assertEquals('Card payment response', $this->logWriter->events[1]['message']);
     }
 
     /**
@@ -155,13 +182,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
      */
     public function testInitiateCardRequestWithInvalidResponseThrowsException()
     {
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/card', 'CARD', m::any())
             ->andReturn('some kind of error')
             ->getMock();
-
-        $this->sm->setService('cpms\service\api', $client);
 
         $fees = [
             [
@@ -175,22 +199,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testHandleResponseWithInvalidPayment()
     {
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn(m::mock())
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('getDetails')
                 ->with('payment_reference')
                 ->andReturn(false)
                 ->getMock()
-            )
-            ->getMock();
-
-        $this->sut->setServiceLocator($sl);
+        );
 
         $data = [
             'receipt_reference' => 'payment_reference'
@@ -208,14 +224,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testHandleResponseWithInvalidPaymentStatus()
     {
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn(m::mock())
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('getDetails')
                 ->with('payment_reference')
                 ->andReturn(
@@ -226,10 +237,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ]
                 )
                 ->getMock()
-            )
-            ->getMock();
-
-        $this->sut->setServiceLocator($sl);
+        );
 
         $data = [
             'receipt_reference' => 'payment_reference'
@@ -258,8 +266,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $client = m::mock()
-            ->shouldReceive('put')
+        $this->client->shouldReceive('put')
             ->with('/api/gateway/payment_reference/complete', 'CARD', $data)
             ->shouldReceive('get')
             ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
@@ -284,14 +291,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $mockFeeListener->shouldReceive('trigger')
             ->with(1, FeeListenerService::EVENT_PAY);
 
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn($client)
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('getDetails')
                 ->with('payment_reference')
                 ->andReturn(
@@ -305,30 +307,26 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->shouldReceive('setStatus')
                 ->with(123, PaymentEntityService::STATUS_PAID)
                 ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Helper\Date')
-            ->andReturn(
-                m::mock()
+        );
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
                 ->shouldReceive('getDate')
                 ->with('Y-m-d H:i:s')
                 ->andReturn('2014-12-30 01:20:30')
                 ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Entity\Fee')
-            ->andReturn(
-                m::mock()
+        );
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
                 ->shouldReceive('forceUpdate')
                 ->with(1, $saveData)
                 ->getMock()
-            )
-            ->shouldReceive('get')
-            ->with('Listener\Fee')
-            ->andReturn($mockFeeListener)
-            ->getMock();
+        );
 
-        $this->sut->setServiceLocator($sl);
+        $this->sm->setService('Listener\Fee', $mockFeeListener);
 
         $fees = [
             [
@@ -337,15 +335,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ]
         ];
 
-        $sl->shouldReceive('get')
-            ->with('Entity\FeePayment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\FeePayment',
+            m::mock()
                 ->shouldReceive('getFeesByPaymentId')
                 ->with(123)
                 ->andReturn($fees)
                 ->getMock()
-            );
+        );
 
         $resultStatus = $this->sut->handleResponse($data, 'PAYMENT_METHOD');
 
@@ -370,8 +367,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $client = m::mock()
-            ->shouldReceive('put')
+        $this->client->shouldReceive('put')
             ->with('/api/gateway/payment_reference/complete', 'CARD', $data)
             ->shouldReceive('get')
             ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
@@ -384,14 +380,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn($client)
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('getDetails')
                 ->with('payment_reference')
                 ->andReturn(
@@ -405,10 +396,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->shouldReceive('setStatus')
                 ->with(123, $status)
                 ->getMock()
-            )
-            ->getMock();
-
-        $this->sut->setServiceLocator($sl);
+        );
 
         $resultStatus = $this->sut->handleResponse($data, []);
 
@@ -425,12 +413,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testHandleResponseWithUnhandledStatus()
     {
-        $this->sut->setLogger(
-            m::mock('Zend\Log\LoggerInterface')
-            ->shouldReceive('log')
-            ->getMock()
-        );
-
         $data = [
             'receipt_reference' => 'payment_reference'
         ];
@@ -442,8 +424,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ]
             ]
         ];
-        $client = m::mock()
-            ->shouldReceive('put')
+        $this->client->shouldReceive('put')
             ->with('/api/gateway/payment_reference/complete', 'CARD', $data)
             ->shouldReceive('get')
             ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
@@ -456,14 +437,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sl = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
-            ->shouldReceive('get')
-            ->with('cpms\service\api')
-            ->andReturn($client)
-            ->shouldReceive('get')
-            ->with('Entity\Payment')
-            ->andReturn(
-                m::mock()
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
                 ->shouldReceive('getDetails')
                 ->with('payment_reference')
                 ->andReturn(
@@ -475,10 +451,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     ]
                 )
                 ->getMock()
-            )
-            ->getMock();
-
-        $this->sut->setServiceLocator($sl);
+        );
 
         $resultStatus = $this->sut->handleResponse($data, []);
 
@@ -507,8 +480,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'cost_centre' => '12345,67890',
         ];
 
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/cash', 'CASH', $params)
             ->andReturn(
                 [
@@ -519,7 +491,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()
@@ -560,6 +531,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->assertTrue($result);
+
+        $this->assertCount(2, $this->logWriter->events);
+        $this->assertEquals('Cash payment request', $this->logWriter->events[0]['message']);
+        $this->assertEquals('Cash payment response', $this->logWriter->events[1]['message']);
     }
 
     /**
@@ -581,8 +556,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testRecordCashPaymentFailureReturnsFalse()
     {
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/cash', 'CASH', m::any())
             ->andReturn(
                 [   // error responses aren't well documented
@@ -592,7 +566,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()
@@ -647,8 +620,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'cost_centre' => '12345,67890',
         ];
 
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/cheque', 'CHEQUE', $params)
             ->andReturn(
                 [
@@ -659,7 +631,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()
@@ -702,6 +673,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->assertTrue($result);
+
+        $this->assertCount(2, $this->logWriter->events);
+        $this->assertEquals('Cheque payment request', $this->logWriter->events[0]['message']);
+        $this->assertEquals('Cheque payment response', $this->logWriter->events[1]['message']);
     }
 
     /**
@@ -724,8 +699,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testRecordChequePaymentFailureReturnsFalse()
     {
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/cheque', 'CHEQUE', m::any())
             ->andReturn(
                 [
@@ -735,7 +709,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()
@@ -791,8 +764,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'cost_centre' => '12345,67890',
         ];
 
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/postal-order', 'POSTAL_ORDER', $params)
             ->andReturn(
                 [
@@ -803,7 +775,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()
@@ -846,6 +817,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         );
 
         $this->assertTrue($result);
+
+        $this->assertCount(2, $this->logWriter->events);
+        $this->assertEquals('Postal order payment request', $this->logWriter->events[0]['message']);
+        $this->assertEquals('Postal order payment response', $this->logWriter->events[1]['message']);
     }
 
     /**
@@ -868,8 +843,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
     public function testRecordPostalOrderPaymentFailureReturnsFalse()
     {
-        $client = m::mock()
-            ->shouldReceive('post')
+        $this->client->shouldReceive('post')
             ->with('/api/payment/postal-order', 'POSTAL_ORDER', m::any())
             ->andReturn(
                 [
@@ -879,7 +853,6 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $this->sm->setService('cpms\service\api', $client);
         $this->sm->setService(
             'Entity\Fee',
             m::mock()

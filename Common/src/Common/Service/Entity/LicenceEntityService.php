@@ -232,11 +232,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'licences' => [
                         'children' => ['status'],
                     ],
-                    'leadTcArea'
+                    'leadTcArea',
                 ],
-            ],
-            'applications' => [
-                'children' => ['status'],
             ],
             'psvDiscs' => [
                 'criteria' => [
@@ -338,14 +335,14 @@ class LicenceEntityService extends AbstractLvaEntityService
 
     public function getVehiclesTotal($id)
     {
-        $data = $this->get($id, $this->vehiclesTotalBundle);
+        $data = $this->getAll($id, $this->vehiclesTotalBundle);
 
         return count($data['licenceVehicles']);
     }
 
     public function getVehiclesPsvTotal($id, $type)
     {
-        $data = $this->get($id, $this->vehiclesPsvTotalBundle);
+        $data = $this->getAll($id, $this->vehiclesPsvTotalBundle);
 
         $count = 0;
 
@@ -592,15 +589,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         ];
         $bundle['children']['organisation']['children']['licences']['criteria'] = [
             'status' => 'IN ' . json_encode($licenceStatuses)
-        ];
-
-        // modify bundle to filter other application statuses
-        $applicationStatuses = [
-            ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
-            ApplicationEntityService::APPLICATION_STATUS_GRANTED,
-        ];
-        $bundle['children']['applications']['criteria'] = [
-            'status' => 'IN ' . json_encode($applicationStatuses)
         ];
 
         return $this->get($id, $bundle);
