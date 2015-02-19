@@ -516,6 +516,7 @@ return array(
         advice.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
+    'cannot-perform-action' => 'You cannot perform this action',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
         href="%s">create a variation application</a>',
@@ -920,13 +921,17 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
     'internal.community_licence.form_add.cancel' => 'Cancel',
     'internal.community_licence.form_add.ok' => 'OK',
     'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
-    'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
+    'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
+        copy',
+    'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
@@ -1256,6 +1261,16 @@ return array(
     'payment-submission' => 'Payment & submission',
     'payment-successful' => 'Payment successful',
     'penalty' => 'Penalty',
+    'people.birthDate.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.familyName.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.forename.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.otherName.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for further
+        advice.',
     'persons' => 'Person Information',
     'pi_s_reg' => 'PI Registered',
     'pi_s_schedule' => 'PI Scheduled',
@@ -1704,9 +1719,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal.community_licence.restore_not_allowed' =>
-        'You cannot restore these licences without restoring the office copy',
-    'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
-    'internal.community_licence.licences_restored' => 'The selected licences have been restored'
     // Potentially unused (Not found with grep)
 );

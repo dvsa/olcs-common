@@ -275,4 +275,57 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 
         $this->sut->addAction();
     }
+
+    public function testAddActionWithoutPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('addErrorMessage')
+            ->with('cannot-perform-action')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('id')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['id' => 1]);
+
+        $this->sut->addAction();
+    }
+
+    public function testDeleteActionWithPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(true);
+
+        $this->sut->shouldReceive('originalDeleteAction');
+
+        $this->sut->deleteAction();
+    }
+
+    public function testDeleteActionWithoutPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('addErrorMessage')
+            ->with('cannot-perform-action')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('id')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['id' => 1]);
+
+        $this->sut->deleteAction();
+    }
 }

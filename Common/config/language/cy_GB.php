@@ -518,6 +518,7 @@ return array(
         advice.',
     'cancel' => 'W Cancel',
     'cancel.button' => 'W Cancel',
+    'cannot-perform-action' => 'W You cannot perform this action',
     'cant-edit-removed-vehicle' => 'W You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'W In order to increase the total number of trailers on the licence you must <a
         href="%s">create a variation application</a>',
@@ -922,13 +923,18 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.community_licence.confirm_restore_licences' => 'W Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'W Are you sure you want to void these licences?',
     'internal.community_licence.form_add.cancel' => 'W Cancel',
     'internal.community_licence.form_add.ok' => 'W OK',
     'internal.community_licence.licences_created' => 'W The community licences have been created',
+    'internal.community_licence.licences_restored' => 'W The selected licences have been restored',
     'internal.community_licence.licences_voided' => 'W The selected licences have been voided ',
-    'internal.community_licence.not_allowed' => 'W You cannot void the office copy without voiding all the licences',
     'internal.community_licence.office_copy_created' => 'W The office copy has been created',
+    'internal.community_licence.restore_not_allowed' => 'W You cannot restore these licences without restoring the
+        office copy',
+    'internal.community_licence.void_not_allowed' => 'W You cannot void the office copy without voiding all the
+        licences',
     'internal.transport-manager.competences.form.country' => 'W Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'W Qualification type',
@@ -1259,6 +1265,16 @@ return array(
     'payment-submission' => 'W Payment & submission',
     'payment-successful' => 'W Payment successful',
     'penalty' => 'W Penalty',
+    'people.birthDate.locked' => 'W You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.familyName.locked' => 'W You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.forename.locked' => 'W You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.otherName.locked' => 'W You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.title.locked' => 'W You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
     'persons' => 'W Person Information',
     'pi_s_reg' => 'W PI Registered',
     'pi_s_schedule' => 'W PI Scheduled',
