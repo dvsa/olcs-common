@@ -41,7 +41,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->get('Entity\Organisation')
             ->getType($orgId);
 
-        $adapter->addMessages($orgId);
+        $adapter->addMessages($orgData['type']['id']);
 
         if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
             return $this->handleSoleTrader($orgId, $orgData);
@@ -79,7 +79,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->alterForm($form, $table, $orgData);
 
-        $adapter->alterFormForOrganisation($form, $table, $orgId);
+        $adapter->alterFormForOrganisation($form, $table, $orgId, $orgData['type']['id']);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 

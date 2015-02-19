@@ -18,7 +18,7 @@ interface PeopleAdapterInterface
 {
     public function addMessages($orgId);
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId);
+    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType);
 
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType);
 

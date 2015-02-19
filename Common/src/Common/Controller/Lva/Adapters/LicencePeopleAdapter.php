@@ -30,16 +30,23 @@ class LicencePeopleAdapter extends AbstractControllerAwareAdapter implements Peo
         OrganisationEntityService::ORG_TYPE_PARTNERSHIP
     ];
 
-    public function addMessages($orgId)
+    public function addMessages($orgType)
     {
-        return $this->getServiceLocator()->get('Lva\LicencePeople')->maybeAddVariationMessage(
-            $this->getController(),
-            $orgId
-        );
+        if (in_array($orgType, $this->excludeTypes)) {
+            return;
+        }
+
+        return $this->getServiceLocator()
+            ->get('Lva\LicencePeople')
+            ->addVariationMessage($this->getController());
     }
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId)
+    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
     {
+        if (in_array($orgType, $this->excludeTypes)) {
+            return;
+        }
+
         return $this->getServiceLocator()->get('Lva\People')->lockOrganisationForm($form, $table);
     }
 

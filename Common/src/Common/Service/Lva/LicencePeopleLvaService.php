@@ -20,21 +20,8 @@ class LicencePeopleLvaService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    private $excludeTypes = [
-        OrganisationEntityService::ORG_TYPE_SOLE_TRADER,
-        OrganisationEntityService::ORG_TYPE_PARTNERSHIP
-    ];
-
-    public function maybeAddVariationMessage($controller, $orgId)
+    public function addVariationMessage($controller)
     {
-        $orgData = $this->getServiceLocator()
-            ->get('Entity\Organisation')
-            ->getType($orgId);
-
-        if (in_array($orgData['type']['id'], $this->excludeTypes)) {
-            return;
-        }
-
         $params = [
             'licence' => $controller->params('licence')
         ];
