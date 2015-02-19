@@ -232,11 +232,8 @@ class LicenceEntityService extends AbstractLvaEntityService
                     'licences' => [
                         'children' => ['status'],
                     ],
-                    'leadTcArea'
+                    'leadTcArea',
                 ],
-            ],
-            'applications' => [
-                'children' => ['status'],
             ],
             'psvDiscs' => [
                 'criteria' => [
@@ -592,15 +589,6 @@ class LicenceEntityService extends AbstractLvaEntityService
         ];
         $bundle['children']['organisation']['children']['licences']['criteria'] = [
             'status' => 'IN ' . json_encode($licenceStatuses)
-        ];
-
-        // modify bundle to filter other application statuses
-        $applicationStatuses = [
-            ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION,
-            ApplicationEntityService::APPLICATION_STATUS_GRANTED,
-        ];
-        $bundle['children']['applications']['criteria'] = [
-            'status' => 'IN ' . json_encode($applicationStatuses)
         ];
 
         return $this->get($id, $bundle);

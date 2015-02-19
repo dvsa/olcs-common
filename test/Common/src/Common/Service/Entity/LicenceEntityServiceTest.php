@@ -971,12 +971,6 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                         'leadTcArea',
                     ],
                 ],
-                'applications' => [
-                    'children' => ['status'],
-                    'criteria' => [
-                        'status' => 'IN ["apsts_consideration","apsts_granted"]',
-                    ],
-                ],
                 'psvDiscs' => [
                     'criteria' => [
                         'ceasedDate' => 'NULL',
