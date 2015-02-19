@@ -154,7 +154,6 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->method('save')
             ->with($trackingData);
 
-
         $mockUtility = m::mock();
         $this->sm->setService('ApplicationUtility', $mockUtility);
         $mockUtility->shouldReceive('alterCreateApplicationData')
@@ -848,5 +847,16 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ]
             ]
         ];
+    }
+
+    public function testGetValueOptions()
+    {
+        $expected = [
+            1 => 'Accepted',
+            2 => 'Not accepted',
+            3 => 'Not applicable',
+        ];
+
+        $this->assertEquals($expected, $this->sut->getValueOptions());
     }
 }
