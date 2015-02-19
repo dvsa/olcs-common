@@ -749,4 +749,83 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForFinancialEvidence($id));
     }
+
+    /**
+     * @dataProvider providerGetReviewDataForApplication
+     */
+    public function testGetReviewDataForApplication($sections, $expectedBundle)
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getReviewDataForApplication($id, $sections));
+    }
+
+    /**
+     * @dataProvider providerGetReviewDataForVariation
+     */
+    public function testGetReviewDataForVariation($sections, $expectedBundle)
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getReviewDataForVariation($id, $sections));
+    }
+
+    public function providerGetReviewDataForApplication()
+    {
+        return [
+            'No sections' => [
+                [],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ],
+            'Type of licence' => [
+                ['type_of_licence'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public function providerGetReviewDataForVariation()
+    {
+        return [
+            'No sections' => [
+                [],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ],
+            'Type of licence' => [
+                ['type_of_licence'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'licenceType'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
 }

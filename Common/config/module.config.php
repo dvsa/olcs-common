@@ -27,6 +27,12 @@ return array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
+            'LvaApplication\Review' => array(
+                'Common\Controller\Lva\Delegators\ApplicationReviewDelegator'
+            ),
+            'LvaVariation\Review' => array(
+                'Common\Controller\Lva\Delegators\VariationReviewDelegator'
+            ),
             'LvaApplication/TypeOfLicence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationTypeOfLicenceDelegator'
             ),
@@ -181,6 +187,9 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'SectionConfig' => 'Common\Service\Data\SectionConfig',
+            'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
+            'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
             'ApplicationConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
