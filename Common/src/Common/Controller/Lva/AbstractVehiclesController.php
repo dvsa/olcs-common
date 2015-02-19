@@ -246,11 +246,19 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             $validators->attach($validator);
         }
 
-        if ($mode === 'edit') {
+        if ($mode === 'edit' || !$this->canAddAnother()) {
             $form->get('form-actions')->remove('addAnother');
         }
 
         return $form;
+    }
+
+    protected function canAddAnother()
+    {
+        $totalAuth = $this->getTotalNumberOfAuthorisedVehicles();
+        $totalVehicles = $this->getTotalNumberOfVehicles();
+
+        return $totalVehicles < ($totalAuth - 1);
     }
 
     /**

@@ -590,6 +590,9 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $specifiedDate = m::mock();
         $removalDate = m::mock();
+        $mockEntityService = m::mock();
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
 
         $form->shouldReceive('setData')
             ->andReturn($form)
@@ -627,7 +630,21 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
 
         $this->sut->shouldReceive('params')
             ->with('child_id')
-            ->andReturn(50);
+            ->andReturn(50)
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockEntityService)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(123)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(321);
+
+        $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
+            ->with(123)
+            ->andReturn(10);
+
+        $mockLicenceEntity->shouldReceive('getVehiclesTotal')
+            ->with(321)
+            ->andReturn(8);
 
         $this->sut->addAction();
 
