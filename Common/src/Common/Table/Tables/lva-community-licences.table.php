@@ -16,6 +16,7 @@ return array(
                 ),
                 'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
                 'restore' => array('label' => 'Restore', 'class' => 'secondary', 'requireRows' => true),
+                'stop' => array('label' => 'Stop', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
         'row-disabled-callback' => function ($row) {

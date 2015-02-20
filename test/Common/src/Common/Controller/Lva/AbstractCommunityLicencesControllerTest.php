@@ -290,6 +290,9 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('removeAction')
             ->with('restore')
             ->once()
+            ->shouldReceive('removeAction')
+            ->with('stop')
+            ->once()
             ->getMock();
 
         $mockRequest->shouldReceive('isPost')
@@ -417,6 +420,9 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('removeAction')
             ->with('restore')
             ->once()
+            ->shouldReceive('removeAction')
+            ->with('stop')
+            ->once()
             ->getMock();
 
         $mockRequest->shouldReceive('isPost')
@@ -452,16 +458,21 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->with($id)
             ->andReturn(['officeCopy']);
 
-        $this->sut->shouldReceive('params->fromQuery')
-            ->with('status')
-            ->andReturn($stubbedFilters);
-
-        $this->sut->shouldReceive('params->fromQuery')
-            ->with('isFiltered')
-            ->andReturn($stubbedIsFiltered);
-
         $this->sut->shouldReceive('getRequest')
             ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('fromQuery')
+                ->with('isFiltered')
+                ->once()
+                ->andReturn($stubbedIsFiltered)
+                ->shouldReceive('fromQuery')
+                ->with('status')
+                ->once()
+                ->andReturn($stubbedFilters)
+                ->getMock()
+            )
             ->shouldReceive('getIdentifier')
             ->andReturn($id)
             ->shouldReceive('getLicenceId')
@@ -1277,5 +1288,406 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn('redirect');
 
         $this->assertEquals('redirect', $this->sut->restoreAction());
+    }
+
+    /**
+     * Test stop action with cancel button pressed
+     * 
+     * @group abstractCommunityLicenceController
+     */
+    public function testStopActionWithCancel()
+    {
+        $this->sut
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(true)
+            ->shouldReceive('redirectToIndex')
+            ->andReturn('redirect');
+
+        $this->assertEquals('redirect', $this->sut->stopAction());
+    }
+
+    /**
+     * Test stop action with 'not allowed' result
+     * 
+     * @group abstractCommunityLicenceController
+     */
+    public function testStopActionNotAllowed()
+    {
+        $licenceId = 1;
+
+        $mockLicenceService = m::mock()
+            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
+            ->with($licenceId, [1,2])
+            ->andReturn([['issueNo' => 0]])
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $mockCommunityLicService = m::mock('Entity\CommunityLic')
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn(['Results' => [['id' => 99, 'status' => ['id' => CommunityLicEntityService::STATUS_ACTIVE]]]])
+            ->getMock();
+
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $this->sut
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(false)
+            ->shouldReceive('getRequest')
+            ->andReturn('request')
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('addSuccessMessage')
+            ->with('internal.community_licence.stop_not_allowed')
+            ->shouldReceive('redirectToIndex')
+            ->andReturn('redirect');
+
+        $this->assertEquals('redirect', $this->sut->stopAction());
+    }
+
+    /**
+     * Test stop action with display confirmation form
+     * 
+     * @group abstractCommunityLicenceController
+     */
+    public function testStopActionDisplayForm()
+    {
+        $mockFormHelper = m::mock()
+            ->shouldReceive('createForm')
+            ->with('Lva\CommunityLicencesStop')
+            ->andReturn('form')
+            ->getMock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockScriptService = m::mock()
+            ->shouldReceive('loadFile')
+            ->with('community-licence-stop')
+            ->getMock();
+        $this->sm->setService('Script', $mockScriptService);
+
+        $this->sut
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(false)
+            ->shouldReceive('getRequest')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('isPost')
+                ->andReturn(false)
+                ->getMock()
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('allowToStop')
+            ->with([1,2])
+            ->andReturn(true)
+            ->shouldReceive('render')
+            ->andReturn('view');
+
+        $this->assertEquals('view', $this->sut->stopAction());
+    }
+
+    /**
+     * Test stop action
+     * 
+     * @dataProvider postProvider
+     * @group abstractCommunityLicenceController
+     */
+    public function testStopActionPost(
+        $data,
+        $message,
+        $comLicsToSave,
+        $suspensionOrWithdrawalService,
+        $reasonsService,
+        $comLicSwSave,
+        $reasonsToSave
+    ) {
+
+        $licenceId = 1;
+        $comLics = [
+            ['id' => 1, 'version' => 1],
+            ['id' => 2, 'version' => 2]
+        ];
+
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($data)
+            ->getMock();
+
+        $mockForm = m::mock()
+            ->shouldReceive('setData')
+            ->with($data)
+            ->shouldReceive('isValid')
+            ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn($data)
+            ->getMock();
+
+        $mockFormHelper = m::mock()
+            ->shouldReceive('createForm')
+            ->with('Lva\CommunityLicencesStop')
+            ->andReturn($mockForm)
+            ->getMock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockScriptService = m::mock()
+            ->shouldReceive('loadFile')
+            ->with('community-licence-stop')
+            ->getMock();
+        $this->sm->setService('Script', $mockScriptService);
+
+        $mockDateHelper = m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2015-01-01')
+            ->getMock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $mockLicenceService = m::mock()
+            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
+            ->with($licenceId, [1,2])
+            ->andReturn($comLics)
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with($comLicsToSave)
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $mockSuspensionOrWithdrawalService = m::mock()
+            ->shouldReceive('save')
+            ->with($comLicSwSave)
+            // actually, we should have ['id' => [1,2]], but to cover all the code let's assume we saved only one record
+            ->andReturn(['id' => 1])
+            ->getMock();
+        $this->sm->setService($suspensionOrWithdrawalService, $mockSuspensionOrWithdrawalService);
+
+        $mockReasonsService = m::mock()
+            ->shouldReceive('save')
+            ->with($reasonsToSave)
+            ->getMock();
+        $this->sm->setService($reasonsService, $mockReasonsService);
+
+        $this->sut
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(false)
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('allowToStop')
+            ->with([1,2])
+            ->andReturn(true)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('addSuccessMessage')
+            ->with($message)
+            ->shouldReceive('redirectToIndex')
+            ->andReturn('redirect');
+
+        $this->assertEquals('redirect', $this->sut->stopAction());
+    }
+
+    /**
+     * Post provider
+     */
+    public function postProvider()
+    {
+        return [
+            'suspend' => [
+                [
+                    'data' => ['type' => 'Y', 'reason' => ['reason1', 'reason2']],
+                    'dates' => [
+                        'startDate' => '2014-01-01',
+                        'endDate' => '2015-02-02'
+                    ]
+                ],
+                'internal.community_licence.licences_suspended',
+                [
+                    ['id' => 1, 'version' => 1, 'status' => CommunityLicEntityService::STATUS_SUSPENDED],
+                    ['id' => 2, 'version' => 2, 'status' => CommunityLicEntityService::STATUS_SUSPENDED]
+                ],
+                'Entity\CommunityLicSuspension',
+                'Entity\CommunityLicSuspensionReason',
+                [
+                    [
+                        'communityLic' => 1,
+                        'startDate' => '2014-01-01',
+                        'endDate' => '2015-02-02'
+                    ],
+                    [
+                        'communityLic' => 2,
+                        'startDate' => '2014-01-01',
+                        'endDate' => '2015-02-02'
+                    ],
+                    '_OPTIONS_' => ['multiple' => true]
+                ],
+                [
+                    ['communityLicSuspension' => 1, 'type' => 'reason1'],
+                    ['communityLicSuspension' => 1, 'type' => 'reason2'],
+                    '_OPTIONS_' => ['multiple' => true]
+                ]
+            ],
+            'withdraw' => [
+                [
+                    'data' => ['type' => 'N', 'reason' => ['reason1', 'reason2']],
+                    'dates' => []
+                ],
+                'internal.community_licence.licences_withdrawn',
+                [
+                    [
+                        'id' => 1,
+                        'version' => 1,
+                        'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
+                        'expiryDate' => '2015-01-01'
+                    ],
+                    [
+                        'id' => 2,
+                        'version' => 2,
+                        'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
+                        'expiryDate' => '2015-01-01'
+                    ]
+                ],
+                'Entity\CommunityLicWithdrawal',
+                'Entity\CommunityLicWithdrawalReason',
+                [
+                    [
+                        'communityLic' => 1,
+                    ],
+                    [
+                        'communityLic' => 2,
+                    ],
+                    '_OPTIONS_' => ['multiple' => true]
+                ],
+                [
+                    ['communityLicWithdrawal' => 1, 'type' => 'reason1'],
+                    ['communityLicWithdrawal' => 1, 'type' => 'reason2'],
+                    '_OPTIONS_' => ['multiple' => true]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Test stop action with confirmation form is not valid
+     * 
+     * @group abstractCommunityLicenceController
+     * @dataProvider validLicenceProvider
+     */
+    public function testStopActionFormNotValid($validLicences, $licences)
+    {
+        $licenceId = 1;
+
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn([])
+            ->getMock();
+
+        $mockForm = m::mock()
+            ->shouldReceive('setData')
+            ->with([])
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->getMock();
+
+        $mockFormHelper = m::mock()
+            ->shouldReceive('createForm')
+            ->with('Lva\CommunityLicencesStop')
+            ->andReturn($mockForm)
+            ->getMock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $mockScriptService = m::mock()
+            ->shouldReceive('loadFile')
+            ->with('community-licence-stop')
+            ->getMock();
+        $this->sm->setService('Script', $mockScriptService);
+
+        $mockLicences = m::mock()
+            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
+            ->with($licenceId, [1,2])
+            ->andReturn($licences)
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicences);
+
+        $mockCommunityLic = m::mock()
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn($validLicences)
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLic);
+
+        $this->sut
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(false)
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('render')
+            ->andReturn('view');
+
+        $this->assertEquals('view', $this->sut->stopAction());
+    }
+
+    public function validLicenceProvider()
+    {
+        return [
+            [
+                [
+                    'Results' => [
+                        ['status' => ['id' => 'status1']],
+                        ['status' => ['id' => 'status2']]
+                    ]
+                ],
+                [
+                    ['issueNo' => 1], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => []
+                ],
+                [
+                    ['issueNo' => 1], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => [
+                        ['status' => ['id' => 'status1']],
+                        ['status' => ['id' => 'status2']]
+                    ]
+                ],
+                [
+                    ['issueNo' => 0], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => []
+                ],
+                [
+                    ['issueNo' => 0], ['issueNo' => 2]
+                ]
+            ]
+        ];
     }
 }

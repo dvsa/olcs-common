@@ -74,6 +74,10 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => 4
         );
 
+        $trackingData = array(
+            'application' => 4
+        );
+
         $mockLicenceService = $this->getMock('\stdClass', array('save'));
         $mockLicenceService->expects($this->once())
             ->method('save')
@@ -85,8 +89,14 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->method('save')
             ->with($completionData);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with($trackingData);
+
         $this->sm->setService('Entity\Licence', $mockLicenceService);
         $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $this->expectOneRestCall('Application', 'POST', $applicationData)
             ->will($this->returnValue($applicationResponse));
@@ -124,6 +134,10 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => 4
         );
 
+        $trackingData = array(
+            'application' => 4
+        );
+
         $mockLicenceService = $this->getMock('\stdClass', array('save'));
         $mockLicenceService->expects($this->once())
             ->method('save')
@@ -135,6 +149,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->method('save')
             ->with($completionData);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with($trackingData);
+
         $mockUtility = m::mock();
         $this->sm->setService('ApplicationUtility', $mockUtility);
         $mockUtility->shouldReceive('alterCreateApplicationData')
@@ -143,6 +162,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sm->setService('Entity\Licence', $mockLicenceService);
         $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $this->expectOneRestCall('Application', 'POST', $applicationData)
             ->will($this->returnValue($applicationResponse));
@@ -796,6 +816,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv'
                     ]
                 ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
     }
@@ -821,6 +869,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'licence' => [
                             'children' => [
                                 'licenceType'
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ]
                         ]
                     ]

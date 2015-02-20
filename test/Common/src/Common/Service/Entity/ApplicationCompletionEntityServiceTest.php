@@ -28,18 +28,6 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
         parent::setUp();
     }
 
-    protected function getServiceManager()
-    {
-        $sm = Bootstrap::getServiceManager();
-
-        // inject a real string helper to do the requiredcamel-underscore and
-        // underscore-camel conversions
-        $helper = new \Common\Service\Helper\StringHelperService();
-        $sm->setService('Helper\String', $helper);
-
-        return $sm;
-    }
-
     /**
      * @group entity_services
      *
