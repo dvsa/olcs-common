@@ -598,7 +598,9 @@ return array(
     'create' => 'Create',
     'create-new-case' => 'Create new case',
     'create-variation' => 'create a variation application',
+    'create-variation-application-received-date' => 'Application received',
     'create-variation-button' => 'Create variation',
+    'create-variation-fee-required' => 'Is a variation fee required?',
     'created' => 'Created',
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
@@ -935,13 +937,13 @@ return array(
     'internal.community_licence.licences_created' => 'The community licences have been created',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
-    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
-    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
-        before the office copy',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
+    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
+    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
+        before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
