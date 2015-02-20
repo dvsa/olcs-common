@@ -6,16 +6,17 @@
  */
 namespace Common\Service\Document\Bookmark;
 
+use Common\Service\Document\Bookmark\Base\StaticBookmark;
+
 /**
  * Class
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class BrStartPoint extends BusRegFlatAbstract
+class S9AuthorisorsAge extends StaticBookmark
 {
-    const FORMATTER = null;
-    const FIELD  = 'startPoint';
-    const SERVICE = 'BusReg';
-    const SRCH_FLD_KEY = 'id';
-    const SRCH_VAL_KEY = 'busRegId';
+    public function render()
+    {
+        return '';
+    }
 }

@@ -236,12 +236,104 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(321);
 
         $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
-            ->with(123, '')
+            ->with(123, 'Small')
             ->andReturn(10);
 
         $mockLicenceEntity->shouldReceive('getVehiclesPsvTotal')
-            ->with(321, '')
+            ->with(321, 'vhl_t_a')
             ->andReturn(8);
+
+        $this->sut->smallAddAction();
+
+        $this->assertEquals('add_vehicle', $this->view);
+    }
+
+    public function testBasicSmallAddActionDisabledAddAnother()
+    {
+        $form = $this->createMockForm('Lva\PsvVehiclesVehicle');
+
+        $specifiedDate = m::mock();
+        $removalDate = m::mock();
+        $mockEntityService = m::mock();
+        $mockLicenceEntity = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceEntity);
+
+        $form->shouldReceive('setData')
+            ->andReturn($form)
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('discNo')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setAttribute')
+                    ->with('disabled', 'disabled')
+                    ->getMock()
+                )
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn($specifiedDate)
+                ->shouldReceive('get')
+                ->with('removalDate')
+                ->andReturn($removalDate)
+                ->shouldReceive('has')
+                ->with('receivedDate')
+                ->andReturn(false)
+                ->getMock()
+            );
+
+        $this->getMockFormHelper()
+            ->shouldReceive('disableDateElement')
+            ->with($specifiedDate)
+            ->shouldReceive('disableDateElement')
+            ->with($removalDate);
+
+        $this->shouldRemoveElements(
+            $form,
+            [
+                'data->isNovelty',
+                'data->makeModel',
+                'licence-vehicle->discNo'
+            ]
+        );
+
+        $this->mockRender();
+
+        $this->mockEntity('LicenceVehicle', 'getVehiclePsv')
+            ->with(50)
+            ->andReturn([]);
+
+        $this->sut->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(50)
+            ->shouldReceive('params')
+            ->with('action')
+            ->andReturn('small-add')
+            ->shouldReceive('getLvaEntityService')
+            ->andReturn($mockEntityService)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(123)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(321);
+
+        $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
+            ->with(123, 'Small')
+            ->andReturn(10);
+
+        $mockLicenceEntity->shouldReceive('getVehiclesPsvTotal')
+            ->with(321, 'vhl_t_a')
+            ->andReturn(9);
+
+        $form->shouldReceive('get')
+            ->with('form-actions')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('remove')
+                ->with('addAnother')
+                ->getMock()
+            );
 
         $this->sut->smallAddAction();
 

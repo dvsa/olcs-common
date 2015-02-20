@@ -66,7 +66,7 @@ class GoodsOperatingCentreReviewService extends AbstractReviewService
         $files = [];
 
         foreach ($data['operatingCentre']['adDocuments'] as $document) {
-            if ($document['application']['id'] == $data['id']) {
+            if ($document['application']['id'] == $data['application']['id']) {
                 $files[] = $document['filename'];
             }
         }
