@@ -91,6 +91,7 @@ class ApplicationTrackingEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetValueOptions()
     {
         $expected = [
+            0 => '',
             1 => 'Accepted',
             2 => 'Not accepted',
             3 => 'Not applicable',

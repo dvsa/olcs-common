@@ -108,6 +108,7 @@ return array(
     'application.overview' => 'W Overview',
     'application.overview.application-no' => 'W Application No.',
     'application.overview.details' => 'W Overview',
+    'application.overview.saved' => 'W The overview page has been saved',
     'application.overview.title' => 'W Application overview',
     'application.payment-submission' => 'W Payment & submission',
     'application.payment-submission.payment' => 'W Payment',

@@ -14,6 +14,8 @@ namespace Common\Service\Entity;
  */
 class ApplicationTrackingEntityService extends AbstractEntityService
 {
+    const STATUS_NOT_SET        = 0;
+
     const STATUS_ACCEPTED       = 1;
 
     const STATUS_NOT_ACCEPTED   = 2;
@@ -55,8 +57,9 @@ class ApplicationTrackingEntityService extends AbstractEntityService
     public function getValueOptions()
     {
         return [
-            self::STATUS_ACCEPTED => 'Accepted',
-            self::STATUS_NOT_ACCEPTED => 'Not accepted',
+            self::STATUS_NOT_SET        => '',
+            self::STATUS_ACCEPTED       => 'Accepted',
+            self::STATUS_NOT_ACCEPTED   => 'Not accepted',
             self::STATUS_NOT_APPLICABLE => 'Not applicable',
         ];
     }
