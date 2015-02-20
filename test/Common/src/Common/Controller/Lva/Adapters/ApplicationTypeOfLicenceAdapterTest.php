@@ -12,6 +12,7 @@ use Mockery as m;
 use Common\Controller\Lva\Adapters\ApplicationTypeOfLicenceAdapter;
 use CommonTest\Bootstrap;
 use Common\Service\Entity\ApplicationCompletionEntityService;
+use Common\Service\Entity\TaskEntityService;
 
 /**
  * Application Type Of Licence Adapter Test
@@ -246,6 +247,7 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $applicationId = 4;
         $licenceId = 5;
+        $taskId = 1;
 
         $this->controller->shouldReceive('params')
             ->with('application')
@@ -262,7 +264,7 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
         $mockProcessingService->shouldReceive('cancelFees')
             ->with($licenceId)
             ->shouldReceive('createFee')
-            ->with($applicationId, $licenceId, 'APP');
+            ->with($applicationId, $licenceId, 'APP', $taskId);
 
         $mockAppCompletionService = m::mock();
         $mockAppCompletionService->shouldReceive('getCompletionStatuses')
@@ -270,6 +272,8 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
             ->andReturn($stubbedCompletionData)
             ->shouldReceive('save')
             ->with($expectedCompletionData);
+
+        $this->mockCreateTask($applicationId, $licenceId, $taskId);
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Processing\Application', $mockProcessingService);
@@ -308,6 +312,7 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
     protected function expectCreateFee($applicationId)
     {
         $licenceId = 6;
+        $taskId = 1;
 
         $mockApplicationService = m::mock();
         $mockApplicationService->shouldReceive('getLicenceIdForApplication')
@@ -316,10 +321,12 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $mockProcessingService = m::mock();
         $mockProcessingService->shouldReceive('createFee')
-            ->with($applicationId, $licenceId, 'APP');
+            ->with($applicationId, $licenceId, 'APP', $taskId);
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Processing\Application', $mockProcessingService);
+
+        $this->mockCreateTask($applicationId, $licenceId, $taskId);
     }
 
     /**
@@ -473,7 +480,7 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
 
         // removeApplication
         $mockTaskService = m::mock();
-        $mockTaskService->shouldReceive('deleteList')
+        $mockTaskService->shouldReceive('closeByQuery')
             ->with(['application' => $applicationId]);
 
         // createApplication
@@ -483,15 +490,65 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
 
         $mockProcessingService = m::mock();
         $mockProcessingService->shouldReceive('createFee')
-            ->with(8, 9, 'APP');
+            ->with(8, 9, 'APP', 1);
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Entity\ApplicationCompletion', $mockAppCompletion);
-        $this->sm->setService('Entity\Task', $mockTaskService);
         $this->sm->setService('Processing\Application', $mockProcessingService);
 
+        $this->mockCreateTask(8, 9, 1, $mockTaskService);
         $response = $this->sut->confirmationAction();
 
         $this->assertEquals('REDIRECT', $response);
+    }
+
+    protected function mockCreateTask($applicationId, $licenceId, $taskId, $mockTaskService = null)
+    {
+        if (is_null($mockTaskService)) {
+            $mockTaskService = m::mock();
+        }
+        $mockTranslator = m::mock()
+            ->shouldReceive('translate')
+            ->with('internal.new_application.task_description')
+            ->andReturn('message')
+            ->getMock();
+        $this->sm->setService('translator', $mockTranslator);
+
+        $mockDateHelper = m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2015-01-01')
+            ->getMock();
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $mockUserService = m::mock()
+            ->shouldReceive('getCurrentUser')
+            ->andReturn(
+                [
+                    'id' => 1,
+                    'team' => [
+                        'id' => 1
+                    ]
+                ]
+            )
+            ->getMock();
+        $this->sm->setService('Entity\User', $mockUserService);
+
+        $taskToSave = [
+            'category' => TaskEntityService::CATEGORY_APPLICATION,
+            'subCategory' => TaskEntityService::SUBCATEGORY_FEE_DUE,
+            'description' => 'message',
+            'actionDate' => '2015-01-01',
+            'assignedToUser' => 1,
+            'assignedToTeam' => 1,
+            'isClosed' => 0,
+            'urgent' => 0,
+            'application' => $applicationId,
+            'licence' => $licenceId
+        ];
+        $mockTaskService->shouldReceive('save')
+            ->with($taskToSave)
+            ->andReturn(['id' => $taskId])
+            ->getMock();
+        $this->sm->setService('Entity\Task', $mockTaskService);
     }
 }

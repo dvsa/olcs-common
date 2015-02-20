@@ -24,6 +24,8 @@ class TaskEntityService extends AbstractEntityService
     const STATUS_OPEN = 'tst_open';
     const STATUS_CLOSED = 'tst_closed';
     const STATUS_ALL = 'tst_all';
+    const CATEGORY_APPLICATION = 9;
+    const SUBCATEGORY_FEE_DUE = 11;
 
     public function closeByQuery(array $query = array())
     {
