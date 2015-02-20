@@ -20,9 +20,11 @@ class CleanTest extends \PHPUnit_Framework_TestCase
     public function testFilter()
     {
         $data = [
-            'hearingData' => 'test',
-            'licenceData' => 'test',
-            'publicationSectionConst' => 'test'
+            'hearingData' => true,
+            'licenceData' => true,
+            'publicationSectionConst' => true,
+            'case' => true,
+            'busRegData' => true
         ];
 
         $input = new Publication($data);
