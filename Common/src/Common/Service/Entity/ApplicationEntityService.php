@@ -365,6 +365,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'operatingCentres' => [
                         'children' => [
+                            'application',
                             'operatingCentre' => [
                                 'children' => [
                                     'address',

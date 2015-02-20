@@ -36,7 +36,7 @@ class GoodsOperatingCentreReviewServiceTest extends MockeryTestCase
     public function testGetConfigFromData($withAd, $adDocuments, $expectedAdvertisements, $needToMockTranslator)
     {
         $data = [
-            'id' => 123,
+            'id' => 321,
             'adPlaced' => $withAd,
             'adPlacedIn' => 'Some paper',
             'adPlacedDate' => '2014-03-02',
@@ -44,6 +44,9 @@ class GoodsOperatingCentreReviewServiceTest extends MockeryTestCase
             'noOfTrailersRequired' => 20,
             'sufficientParking' => 'Y',
             'permission' => 'N',
+            'application' => [
+                'id' => 123
+            ],
             'operatingCentre' => [
                 'adDocuments' => $adDocuments,
                 'address' => [
