@@ -114,6 +114,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
             if (!$data['id']) {
+                // @FIXME: this no longer exists in this class; it's a protected
+                // method in the abstract adapter. Could make it public and call it...
                 $this->addOrganisationPerson('add', $orgId, $orgData, $person, $data);
             }
 
@@ -220,7 +222,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $data = $this->formatCrudDataForForm(
-                $adapter->getPerson($this->params('child_id'))
+                $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'))
             );
         }
 
@@ -248,15 +250,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
 
-            $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
-
-            $this->addOrganisationPerson(
-                $mode,
-                $orgId,
-                $orgData,
-                $person,
-                $data
-            );
+            $adapter->save($orgId, $data);
 
             return $this->handlePostSave();
         }
@@ -367,37 +361,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->getByOrgAndPersonId($orgId, $personId);
 
         return $orgPerson['position'];
-    }
-
-    /**
-     * Helper method to conditionally add or update a matching organisation
-     * person record when saving a new person
-     */
-    private function addOrganisationPerson($mode, $orgId, $orgData, $person, $data)
-    {
-        // If we are creating a person, we need to link them to the organisation,
-        // otherwise we might need to update person's position
-        if ($mode === 'add') {
-            $orgPersonData = array(
-                'organisation' => $orgId,
-                'person' => $person['id'],
-                'position' => isset($data['position']) ? $data['position'] : ''
-            );
-        } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
-            $orgPerson = $this->getServiceLocator()
-                ->get('Entity\OrganisationPerson')
-                ->getByOrgAndPersonId($orgId, $data['id']);
-
-            $orgPersonData = array(
-                'position' => isset($data['position']) ? $data['position'] : '',
-                'id' => $orgPerson['id'],
-                'version' => $orgPerson['version'],
-            );
-        }
-
-        if (isset($orgPersonData)) {
-            $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
-        }
     }
 
     /**

@@ -78,4 +78,26 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
 
         return $result['Results'][0];
     }
+
+    public function variationCreate($personId, $orgId, $applicationId)
+    {
+        return $this->variationAction($personId, $orgId, $applicationId, 'A');
+    }
+
+    public function variationDelete($personId, $orgId, $applicationId)
+    {
+        return $this->variationAction($personId, $orgId, $applicationId, 'D');
+    }
+
+    private function variationAction($personId, $orgId, $applicationId, $action)
+    {
+        $data = [
+            'action' => $action,
+            'organisation' => $orgId,
+            'application' => $applicationId,
+            'person' => $personId
+        ];
+
+        return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')->save($data);
+    }
 }

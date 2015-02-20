@@ -100,13 +100,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $final;
     }
 
-    // @TODO can we remove this? Don't think it will
-    // ever actually change per adapter...
-    public function getPerson($id)
-    {
-        return $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'));
-    }
-
     protected function isExceptionalType($orgType)
     {
         return in_array($orgType, $this->exceptionalTypes);
@@ -156,5 +149,49 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function restore($orgId)
     {
         throw new \Exception('Not implemented');
+    }
+
+    public function save($orgId, $data)
+    {
+        $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
+
+        $this->addOrganisationPerson(
+            $mode,
+            $orgId,
+            $orgData,
+            $person,
+            $data
+        );
+    }
+
+    /**
+     * Helper method to conditionally add or update a matching organisation
+     * person record when saving a new person
+     */
+    private function addOrganisationPerson($mode, $orgId, $orgData, $person, $data)
+    {
+        // If we are creating a person, we need to link them to the organisation,
+        // otherwise we might need to update person's position
+        if ($mode === 'add') {
+            $orgPersonData = array(
+                'organisation' => $orgId,
+                'person' => $person['id'],
+                'position' => isset($data['position']) ? $data['position'] : ''
+            );
+        } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+            $orgPerson = $this->getServiceLocator()
+                ->get('Entity\OrganisationPerson')
+                ->getByOrgAndPersonId($orgId, $data['id']);
+
+            $orgPersonData = array(
+                'position' => isset($data['position']) ? $data['position'] : '',
+                'id' => $orgPerson['id'],
+                'version' => $orgPerson['version'],
+            );
+        }
+
+        if (isset($orgPersonData)) {
+            $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
+        }
     }
 }

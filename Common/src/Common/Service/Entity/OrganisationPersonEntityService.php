@@ -97,16 +97,4 @@ class OrganisationPersonEntityService extends AbstractEntityService
 
         return $this->get($query, $this->peopleBundle);
     }
-
-    public function variationDelete($personId, $orgId, $applicationId)
-    {
-        $data = [
-            'action' => 'D',
-            'organisation' => $orgId,
-            'application' => $applicationId,
-            'person' => $personId
-        ];
-
-        return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')->save($data);
-    }
 }
