@@ -71,9 +71,7 @@ class VariationOperatingCentresReviewService extends AbstractReviewService
         }
 
         $config['subSections'][] = [
-            'title' => 'variation-review-operating-centres-ta-auth-title',
             'mainItems' => [
-                $this->getServiceLocator()->get('Review\TrafficArea')->getConfigFromData($data),
                 $authService->getConfigFromData($data)
             ]
         ];
