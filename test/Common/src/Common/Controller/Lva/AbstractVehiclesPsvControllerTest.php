@@ -236,11 +236,11 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(321);
 
         $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
-            ->with(123, '')
+            ->with(123, 'Small')
             ->andReturn(10);
 
         $mockLicenceEntity->shouldReceive('getVehiclesPsvTotal')
-            ->with(321, '')
+            ->with(321, 'vhl_t_a')
             ->andReturn(8);
 
         $this->sut->smallAddAction();
