@@ -71,7 +71,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\People');
 
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-people', $this->getTableData($orgId));
+        $table = $adapter->createTable($orgId);
 
         $form->get('table')
             ->get('table')
@@ -81,7 +81,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $adapter->alterFormForOrganisation($form, $table, $orgId, $orgData['type']['id']);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $adapter->attachMainScripts();
 
         return $this->render('people', $form);
     }
@@ -263,28 +263,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         }
 
         return $this->render($mode . '_people', $form);
-    }
-
-    /**
-     * Get the table data for the main form
-     *
-     * @param int $orgId
-     * @return array
-     */
-    private function getTableData($orgId)
-    {
-        $results = $this->getServiceLocator()->get('Entity\Person')
-            ->getAllForOrganisation($orgId);
-
-        $final = array();
-        foreach ($results['Results'] as $row) {
-            // flatten the person's position if it's non null
-            if (isset($row['position'])) {
-                $row['person']['position'] = $row['position'];
-            }
-            $final[] = $row['person'];
-        }
-        return $final;
     }
 
     /**

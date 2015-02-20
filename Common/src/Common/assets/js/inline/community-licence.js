@@ -7,6 +7,8 @@ OLCS.ready(function() {
 
   var tableSelector = "form [data-group*='table']";
 
+  // @TODO: DRY this up with lva-crud-delta; it's
+  // a carbon copy except for the data attribute used
   function checkStatus(allowedStatuses, maxLength) {
 
     if (maxLength === null) {

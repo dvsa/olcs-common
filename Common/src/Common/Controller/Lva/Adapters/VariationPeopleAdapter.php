@@ -25,12 +25,16 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
  */
 class VariationPeopleAdapter extends AbstractAdapter implements PeopleAdapterInterface
 {
-    public function addMessages($orgId)
+    public function addMessages($orgType)
     {
     }
 
     public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
     {
+        // @TODO: if the type === partnership, return early since internal
+        // can always edit these org types
+
+        // otherwise go ahead with variation logic @TODO
     }
 
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)

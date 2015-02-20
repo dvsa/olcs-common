@@ -23,4 +23,6 @@ interface PeopleAdapterInterface
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType);
 
     public function canModify($orgId);
+
+    public function attachMainScripts();
 }
