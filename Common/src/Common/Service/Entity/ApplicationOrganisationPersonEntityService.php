@@ -38,6 +38,18 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
     );
 
     /**
+     * Retrieve a record by person ID
+     */
+    public function getByPersonId($id)
+    {
+        $appPerson = $this->get(array('person' => $id), $this->peopleBundle);
+        if ($appPerson['Count'] === 0) {
+            return false;
+        }
+        return $appPerson['Results'][0];
+    }
+
+    /**
      * Get all people for a given application
      *
      * @param int $applicationId
@@ -50,7 +62,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         }
 
         $query = array(
-            'organisation' => $applicationId,
+            'application' => $applicationId,
             'limit' => $limit
         );
 

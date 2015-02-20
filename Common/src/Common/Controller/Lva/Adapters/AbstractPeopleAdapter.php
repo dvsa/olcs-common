@@ -71,7 +71,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected function formatTableData($results)
     {
         $final = array();
-        foreach ($results['Results'] as $row) {
+        foreach ($results as $row) {
             // flatten the person's position if it's non null
             if (isset($row['position'])) {
                 $row['person']['position'] = $row['position'];
@@ -79,5 +79,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             $final[] = $row['person'];
         }
         return $final;
+    }
+
+    public function getPerson($id)
+    {
+        return $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'));
     }
 }

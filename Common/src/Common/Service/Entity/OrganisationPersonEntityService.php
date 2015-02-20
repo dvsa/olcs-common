@@ -75,7 +75,11 @@ class OrganisationPersonEntityService extends AbstractEntityService
      */
     public function getByPersonId($id)
     {
-        return $this->get(array('person' => $id));
+        $orgPerson = $this->get(array('person' => $id), $this->peopleBundle);
+        if ($orgPerson['Count'] === 0) {
+            return false;
+        }
+        return $orgPerson['Results'][0];
     }
 
     /**

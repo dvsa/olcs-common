@@ -220,7 +220,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
             $data = $this->formatCrudDataForForm(
-                $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'))
+                $adapter->getPerson($this->params('child_id'))
             );
         }
 
