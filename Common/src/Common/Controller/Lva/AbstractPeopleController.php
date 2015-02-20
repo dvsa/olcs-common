@@ -291,35 +291,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     protected function delete()
     {
-        $id = $this->params('child_id');
         $orgId = $this->getCurrentOrganisationId();
 
-        // This allows us to handle multiple delete
-        $ids = explode(',', $id);
-
-        foreach ($ids as $id) {
-            $this->deletePerson($id, $orgId);
-        }
-    }
-
-    /**
-     * Delete a person from the organisation, and then delete the person if they are now an orphan
-     *
-     * @param int $id
-     */
-    protected function deletePerson($id, $orgId)
-    {
-        $orgPersonService = $this->getServiceLocator()->get('Entity\OrganisationPerson');
-
-        $orgPersonService->deleteByOrgAndPersonId($orgId, $id);
-
-        $result = $orgPersonService->getByPersonId($id);
-
-        // delete the actual person row if they no longer relate
-        // to an organisation
-        if (isset($result['Count']) && $result['Count'] === 0) {
-            $this->getServiceLocator()->get('Entity\Person')->delete($id);
-        }
+        $this->getAdapter()->delete($orgId);
     }
 
     private function populatePeople($orgId, $orgData)
@@ -451,6 +425,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     public function restoreAction()
     {
-        return $this->getAdapter()->restore();
+        $orgId = $this->getCurrentOrganisationId();
+
+        return $this->getAdapter()->restore($orgId);
     }
 }

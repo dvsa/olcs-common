@@ -71,15 +71,11 @@ class OrganisationPersonEntityService extends AbstractEntityService
     }
 
     /**
-     * Retrieve a record by person ID
+     * Retrieve all records by person ID
      */
-    public function getByPersonId($id)
+    public function getAllWithPerson($id)
     {
-        $orgPerson = $this->get(array('person' => $id), $this->peopleBundle);
-        if ($orgPerson['Count'] === 0) {
-            return false;
-        }
-        return $orgPerson['Results'][0];
+        return $this->get(array('person' => $id), $this->peopleBundle);
     }
 
     /**
@@ -100,5 +96,17 @@ class OrganisationPersonEntityService extends AbstractEntityService
         );
 
         return $this->get($query, $this->peopleBundle);
+    }
+
+    public function variationDelete($personId, $orgId, $applicationId)
+    {
+        $data = [
+            'action' => 'D',
+            'organisation' => $orgId,
+            'application' => $applicationId,
+            'person' => $personId
+        ];
+
+        return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')->save($data);
     }
 }
