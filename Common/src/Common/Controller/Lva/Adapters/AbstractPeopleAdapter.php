@@ -9,7 +9,6 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
-use Common\Controller\Lva\Adapters\AbstractAdapter;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 
 /**
@@ -17,9 +16,11 @@ use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-abstract class AbstractPeopleAdapter extends AbstractAdapter implements PeopleAdapterInterface
+abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
     protected $tableConfig = 'lva-people';
+
+    protected $tableData = [];
 
     public function addMessages($orgType)
     {
@@ -53,9 +54,22 @@ abstract class AbstractPeopleAdapter extends AbstractAdapter implements PeopleAd
      */
     protected function getTableData($orgId)
     {
-        $results = $this->getServiceLocator()->get('Entity\Person')
-            ->getAllForOrganisation($orgId);
+        if (empty($this->tableData)) {
+            $results = $this->getServiceLocator()->get('Entity\Person')
+                ->getAllForOrganisation($orgId);
 
+            $this->tableData = $this->formatTableData($results);
+        }
+        return $this->tableData;
+    }
+
+    public function attachMainScripts()
+    {
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+    }
+
+    protected function formatTableData($results)
+    {
         $final = array();
         foreach ($results['Results'] as $row) {
             // flatten the person's position if it's non null
@@ -65,10 +79,5 @@ abstract class AbstractPeopleAdapter extends AbstractAdapter implements PeopleAd
             $final[] = $row['person'];
         }
         return $final;
-    }
-
-    public function attachMainScripts()
-    {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
     }
 }

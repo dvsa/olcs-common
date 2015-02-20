@@ -17,13 +17,14 @@ namespace Common\Controller\Lva\Adapters;
 use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
  * Common (aka Internal) Licence People Adapter
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicencePeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
+class LicencePeopleAdapter extends AbstractPeopleAdapter implements PeopleAdapterInterface
 {
     private $excludeTypes = [
         OrganisationEntityService::ORG_TYPE_SOLE_TRADER,

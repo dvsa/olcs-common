@@ -24,7 +24,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         Traits\CrudTableTrait::deleteAction as originalDeleteAction;
     }
 
-
     /**
      * Needed by the Crud Table Trait
      */
