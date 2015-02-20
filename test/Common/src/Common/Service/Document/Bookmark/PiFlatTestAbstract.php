@@ -1,6 +1,6 @@
 <?php
 /**
- * Class
+ * Statement
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
@@ -9,11 +9,11 @@ namespace CommonTest\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\Formatter\FormatterInterface;
 
 /**
- * Class
+ * Statement
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-abstract class BusRegFlatTestAbstract extends \PHPUnit_Framework_TestCase
+abstract class PiFlatTestAbstract extends \PHPUnit_Framework_TestCase
 {
     /**
      * Implement this in the child class
@@ -28,11 +28,11 @@ abstract class BusRegFlatTestAbstract extends \PHPUnit_Framework_TestCase
 
         $bookmark = new $sutClassName();
 
-        $query = $bookmark->getQuery([$sutClassName::SRCH_VAL_KEY => $id]);
+        $query = $bookmark->getQuery(['pi' => $id]);
 
-        $this->assertEquals($sutClassName::SERVICE, $query['service']);
+        $this->assertEquals('Pi', $query['service']);
 
-        $this->assertEquals([$sutClassName::SRCH_FLD_KEY => $id], $query['data']);
+        $this->assertEquals(['id' => $id], $query['data']);
     }
 
     public function testRender()
