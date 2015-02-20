@@ -44,16 +44,19 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
 
         foreach ($sections as $section) {
             $serviceName = 'Review\\' . $entity . $stringHelper->underscoreToCamel($section);
+            $config = null;
 
             // @NOTE this check is in place while we implement each section
             // eventually we should be able to remove the if
             if ($this->getServiceLocator()->has($serviceName)) {
                 $service = $this->getServiceLocator()->get($serviceName);
-                $sectionConfig[] = [
-                    'header' => 'review-' . $section,
-                    'config' => $service->getConfigFromData($reviewData)
-                ];
+                $config = $service->getConfigFromData($reviewData);
             }
+
+            $sectionConfig[] = [
+                'header' => 'review-' . $section,
+                'config' => $config
+            ];
         }
 
         return [

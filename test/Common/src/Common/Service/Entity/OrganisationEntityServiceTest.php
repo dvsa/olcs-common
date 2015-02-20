@@ -523,6 +523,68 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
         );
     }
 
+
+    /**
+     * @group entity_services
+     */
+    public function testGetAllApplicationsByStatus()
+    {
+        $orgData = [
+            'licences' => [
+                [
+                    'id' => 7,
+                    'applications' => [
+                        ['id' => 20],
+                        ['id' => 21],
+                    ],
+                ],
+                [
+                    'id' => 8,
+                    'applications' => [
+                        ['id' => 22],
+                        ['id' => 23],
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedBundle = [
+            'children' => [
+                'licences' => [
+                    'children' => [
+                        'applications' => [
+                            'children' => ['status', 'licenceType', 'goodsOrPsv'],
+                            'criteria' => [
+                                'status' => 'IN ["apsts_consideration","apsts_granted"]',
+                            ],
+                        ],
+                        'licenceType',
+                        'status',
+                    ],
+                ],
+            ],
+        ];
+        $this->expectOneRestCall('Organisation', 'GET', 123, $expectedBundle)
+            ->will($this->returnValue($orgData));
+
+        $expectedResult = [
+            ['id' => 20],
+            ['id' => 21],
+            ['id' => 22],
+            ['id' => 23],
+        ];
+        $this->assertEquals(
+            $expectedResult,
+            $this->sut->getAllApplicationsByStatus(
+                123,
+                [
+                    'apsts_consideration',
+                    'apsts_granted',
+                ]
+            )
+        );
+    }
+
     /**
      * @group entity_services
      */

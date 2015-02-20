@@ -347,15 +347,40 @@ class ApplicationEntityService extends AbstractLvaEntityService
      * @var array
      */
     protected $reviewBundles = [
+        // Base bundle partials are shared between new and variation apps
         'base' => [
-            'children' => [
-                'licenceType',
-                'goodsOrPsv'
+            // Default bundle partial is used in every case
+            'default' => [
+                'children' => [
+                    'licenceType',
+                    'goodsOrPsv'
+                ]
+            ],
+            'operating_centres' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea'
+                        ]
+                    ],
+                    'operatingCentres' => [
+                        'children' => [
+                            'operatingCentre' => [
+                                'children' => [
+                                    'address',
+                                    'adDocuments' => [
+                                        'children' => [
+                                            'application'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
-        'application' => [
-            'type_of_licence' => []
-        ],
+        'application' => [],
         'variation' => [
             'type_of_licence' => [
                 'children' => [
@@ -731,9 +756,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     protected function getReviewBundle($sections, $lva)
     {
-        $bundle = $this->reviewBundles['base'];
+        $bundle = $this->reviewBundles['base']['default'];
 
         foreach ($sections as $section) {
+
+            if (isset($this->reviewBundles['base'][$section])) {
+                $bundle = array_merge_recursive($bundle, $this->reviewBundles['base'][$section]);
+            }
+
             if (isset($this->reviewBundles[$lva][$section])) {
                 $bundle = array_merge_recursive($bundle, $this->reviewBundles[$lva][$section]);
             }

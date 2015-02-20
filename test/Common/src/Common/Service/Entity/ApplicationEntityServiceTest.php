@@ -816,6 +816,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv'
                     ]
                 ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
     }
@@ -841,6 +869,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'licence' => [
                             'children' => [
                                 'licenceType'
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ]
                         ]
                     ]
