@@ -43,9 +43,7 @@ class VariationOperatingCentresReviewServiceTest extends MockeryTestCase
         $expected = [
             'subSections' => [
                 [
-                    'title' => 'variation-review-operating-centres-ta-auth-title',
                     'mainItems' => [
-                        'TACONFIG',
                         'TOTAL_AUTH_CONFIG'
                     ]
                 ]
@@ -55,16 +53,10 @@ class VariationOperatingCentresReviewServiceTest extends MockeryTestCase
         // Mocks
         $mockOcService = m::mock();
         $mockTotalAuthService = m::mock();
-        $mockTaService = m::mock();
         $this->sm->setService('Review\\' . $expectedOcService, $mockOcService);
         $this->sm->setService('Review\\' . $expectedTaService, $mockTotalAuthService);
-        $this->sm->setService('Review\TrafficArea', $mockTaService);
 
         // Expectations
-        $mockTaService->shouldReceive('getConfigFromData')
-            ->with($data)
-            ->andReturn('TACONFIG');
-
         $mockTotalAuthService->shouldReceive('getConfigFromData')
             ->with($data)
             ->andReturn('TOTAL_AUTH_CONFIG');
@@ -120,9 +112,7 @@ class VariationOperatingCentresReviewServiceTest extends MockeryTestCase
                     ],
                 ],
                 [
-                    'title' => 'variation-review-operating-centres-ta-auth-title',
                     'mainItems' => [
-                        'TACONFIG',
                         'TOTAL_AUTH_CONFIG'
                     ]
                 ]
@@ -132,16 +122,10 @@ class VariationOperatingCentresReviewServiceTest extends MockeryTestCase
         // Mocks
         $mockOcService = m::mock();
         $mockTotalAuthService = m::mock();
-        $mockTaService = m::mock();
         $this->sm->setService('Review\\' . $expectedOcService, $mockOcService);
         $this->sm->setService('Review\\' . $expectedTaService, $mockTotalAuthService);
-        $this->sm->setService('Review\TrafficArea', $mockTaService);
 
         // Expectations
-        $mockTaService->shouldReceive('getConfigFromData')
-            ->with($data)
-            ->andReturn('TACONFIG');
-
         $mockTotalAuthService->shouldReceive('getConfigFromData')
             ->with($data)
             ->andReturn('TOTAL_AUTH_CONFIG');

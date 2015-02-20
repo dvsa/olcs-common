@@ -830,6 +830,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         ],
                         'operatingCentres' => [
                             'children' => [
+                                'application',
                                 'operatingCentre' => [
                                     'children' => [
                                         'address',
@@ -887,6 +888,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         ],
                         'operatingCentres' => [
                             'children' => [
+                                'application',
                                 'operatingCentre' => [
                                     'children' => [
                                         'address',
