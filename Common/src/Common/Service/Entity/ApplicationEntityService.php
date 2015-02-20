@@ -341,6 +341,59 @@ class ApplicationEntityService extends AbstractLvaEntityService
         )
     );
 
+    /**
+     * Holds a map of all dynamic bundle partials for the review data, split by section name
+     *
+     * @var array
+     */
+    protected $reviewBundles = [
+        // Base bundle partials are shared between new and variation apps
+        'base' => [
+            // Default bundle partial is used in every case
+            'default' => [
+                'children' => [
+                    'licenceType',
+                    'goodsOrPsv'
+                ]
+            ],
+            'operating_centres' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea'
+                        ]
+                    ],
+                    'operatingCentres' => [
+                        'children' => [
+                            'operatingCentre' => [
+                                'children' => [
+                                    'address',
+                                    'adDocuments' => [
+                                        'children' => [
+                                            'application'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        'application' => [],
+        'variation' => [
+            'type_of_licence' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'licenceType'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     public function getVariationCompletionStatusData($id)
     {
         $bundle = $this->variationCompletionStatusDataBundle;
@@ -659,5 +712,60 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function getDataForFinancialEvidence($id)
     {
         return $this->get($id, $this->financialEvidenceBundle);
+    }
+
+    /**
+     * Grab all of the review for an application
+     *
+     * @param type $id
+     * @param array $sections
+     *
+     * @return array
+     */
+    public function getReviewDataForApplication($id, array $sections = array())
+    {
+        $bundle = $this->getReviewBundle($sections, 'application');
+
+        return $this->get($id, $bundle);
+    }
+
+    /**
+     * Grab all of the review for a variation
+     *
+     * @param type $id
+     * @param array $sections
+     *
+     * @return array
+     */
+    public function getReviewDataForVariation($id, array $sections = array())
+    {
+        $bundle = $this->getReviewBundle($sections, 'variation');
+
+        return $this->get($id, $bundle);
+    }
+
+    /**
+     * Dynamically build the review bundle
+     *
+     * @param array $sections
+     * @param string $lva
+     * @return array
+     */
+    protected function getReviewBundle($sections, $lva)
+    {
+        $bundle = $this->reviewBundles['base']['default'];
+
+        foreach ($sections as $section) {
+
+            if (isset($this->reviewBundles['base'][$section])) {
+                $bundle = array_merge_recursive($bundle, $this->reviewBundles['base'][$section]);
+            }
+
+            if (isset($this->reviewBundles[$lva][$section])) {
+                $bundle = array_merge_recursive($bundle, $this->reviewBundles[$lva][$section]);
+            }
+        }
+
+        return $bundle;
     }
 }

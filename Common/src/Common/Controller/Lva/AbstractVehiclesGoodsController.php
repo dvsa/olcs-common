@@ -69,7 +69,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $files = ['lva-crud', 'table-actions', 'vehicle-goods'];
+        $files = ['lva-crud', 'vehicle-goods'];
         if ($showFilters) {
             $files[] = 'forms/filter';
         }
