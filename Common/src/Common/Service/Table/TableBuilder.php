@@ -721,6 +721,13 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     {
         $this->setRows(isset($data['Results']) ? $data['Results'] : $data);
         $this->setTotal(isset($data['Count']) ? $data['Count'] : count($this->rows));
+
+        // if there's only one row and we have a singular title, use it
+        if ($this->getTotal() == 1) {
+            if ($this->getVariable('titleSingular')) {
+                $this->setVariable('title', $this->getVariable('titleSingular'));
+            }
+        }
     }
 
     /**

@@ -935,13 +935,13 @@ return array(
     'internal.community_licence.licences_created' => 'The community licences have been created',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
-    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
-    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
-        before the office copy',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
+    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
+    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
+        before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -976,6 +976,8 @@ return array(
     'internal.transport-manager.previouslicences.table' => 'Revoked, curtailed or suspended licences',
     'internal.transport-manager.previouslicences.table.holderName' => 'Licence holder name',
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
+    'internal.transport-manager.processing.notes.add.title' => 'Add note',
+    'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
     'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'Cancel',
