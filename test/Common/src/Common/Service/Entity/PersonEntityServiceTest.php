@@ -8,7 +8,6 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\PersonEntityService;
-use CommonTest\Bootstrap;
 use Mockery as m;
 
 /**

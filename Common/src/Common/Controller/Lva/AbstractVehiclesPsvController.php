@@ -22,6 +22,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
     protected $section = 'vehicles_psv';
     protected $rawTableData;
+    protected $type;
 
     private $psvTypes = [
         'small'  => VehicleEntityService::PSV_TYPE_SMALL,
@@ -30,8 +31,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     ];
 
     /**
-     * Simple helper method to extract tables based on
-     * available types
+     * Simple helper method to extract tables based on available types
      */
     private function getTables()
     {
@@ -233,6 +233,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     protected function addOrEdit($mode, $type)
     {
+        $this->type = $type;
+
         $request = $this->getRequest();
 
         $data = array();
@@ -460,7 +462,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     protected function getTotalNumberOfAuthorisedVehicles()
     {
-        $type = $this->getTypeFromPost();
+        $type = $this->getType();
 
         if (!isset($this->totalAuthorisedVehicles[$type])) {
             $this->totalAuthorisedVehicles[$type] = $this->getLvaEntityService()->getTotalVehicleAuthorisation(
@@ -480,7 +482,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected function getTotalNumberOfVehicles()
     {
         $type = $this->getPsvTypeFromType(
-            $this->getTypeFromPost()
+            $this->getType()
         );
 
         if (!isset($this->totalVehicles[$type])) {
@@ -497,10 +499,13 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
     /**
      * Helper so we can always work out what type of PSV we're
-     * dealing with from POST data
      */
-    protected function getTypeFromPost()
+    protected function getType()
     {
+        if (isset($this->type)) {
+            return $this->type;
+        }
+
         $data = (array)$this->getRequest()->getPost();
 
         foreach ($this->getTables() as $type) {
