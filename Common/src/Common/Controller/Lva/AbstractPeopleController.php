@@ -448,4 +448,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             [$this->getIdentifierIndex() => $this->getIdentifier()]
         );
     }
+
+    public function restoreAction()
+    {
+        return $this->getAdapter()->restore();
+    }
 }

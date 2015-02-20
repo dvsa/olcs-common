@@ -17,7 +17,6 @@ return array(
             )
         ),
         'row-disabled-callback' => function ($row) {
-            return false;
             return in_array($row['action'], ['D', 'C']);
         }
     ),

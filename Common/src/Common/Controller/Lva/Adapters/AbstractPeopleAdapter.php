@@ -10,6 +10,7 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
+use Common\Service\Entity\OrganisationEntityService;
 
 /**
  * Abstract people adapter
@@ -21,6 +22,11 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected $tableConfig = 'lva-people';
 
     protected $tableData = [];
+
+    private $exceptionalTypes = [
+        OrganisationEntityService::ORG_TYPE_SOLE_TRADER,
+        OrganisationEntityService::ORG_TYPE_PARTNERSHIP
+    ];
 
     public function addMessages($orgType)
     {
@@ -84,5 +90,19 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     public function getPerson($id)
     {
         return $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'));
+    }
+
+    protected function isExceptionalType($orgType)
+    {
+        return in_array($orgType, $this->exceptionalTypes);
+    }
+
+    protected function isExceptionalOrganisation($orgId)
+    {
+        $orgData = $this->getServiceLocator()
+            ->get('Entity\Organisation')
+            ->getType($orgId);
+
+        return $this->isExceptionalType($orgData['type']['id']);
     }
 }

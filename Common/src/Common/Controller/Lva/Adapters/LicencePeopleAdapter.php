@@ -16,7 +16,6 @@ namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
 use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
-use Common\Service\Entity\OrganisationEntityService;
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
@@ -24,16 +23,11 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicencePeopleAdapter extends AbstractPeopleAdapter implements PeopleAdapterInterface
+class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
-    private $excludeTypes = [
-        OrganisationEntityService::ORG_TYPE_SOLE_TRADER,
-        OrganisationEntityService::ORG_TYPE_PARTNERSHIP
-    ];
-
     public function addMessages($orgType)
     {
-        if (in_array($orgType, $this->excludeTypes)) {
+        if ($this->isExceptionalType($orgType)) {
             return;
         }
 
@@ -44,7 +38,7 @@ class LicencePeopleAdapter extends AbstractPeopleAdapter implements PeopleAdapte
 
     public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
     {
-        if (in_array($orgType, $this->excludeTypes)) {
+        if ($this->isExceptionalType($orgType)) {
             return;
         }
 
@@ -53,7 +47,7 @@ class LicencePeopleAdapter extends AbstractPeopleAdapter implements PeopleAdapte
 
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
     {
-        if (in_array($orgType, $this->excludeTypes)) {
+        if ($this->isExceptionalType($orgType)) {
             return;
         }
 
