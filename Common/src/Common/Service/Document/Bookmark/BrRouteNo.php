@@ -14,5 +14,8 @@ namespace Common\Service\Document\Bookmark;
 class BrRouteNo extends BusRegFlatAbstract
 {
     const FORMATTER = null;
-    const BR_FIELD  = 'routeNo';
+    const FIELD  = 'routeNo';
+    const SERVICE = 'BusReg';
+    const SRCH_FLD_KEY = 'id';
+    const SRCH_VAL_KEY = 'busRegId';
 }
