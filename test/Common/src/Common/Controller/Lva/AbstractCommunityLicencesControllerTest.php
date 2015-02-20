@@ -1331,13 +1331,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.stop_not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $this->sut
             ->shouldReceive('isButtonPressed')
             ->with('cancel')
@@ -1349,6 +1342,8 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn('1,2')
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
+            ->shouldReceive('addSuccessMessage')
+            ->with('internal.community_licence.stop_not_allowed')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -1405,7 +1400,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
      * @group abstractCommunityLicenceController
      */
     public function testStopActionPost(
-        $post,
+        $data,
         $message,
         $comLicsToSave,
         $suspensionOrWithdrawalService,
@@ -1424,14 +1419,16 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('isPost')
             ->andReturn(true)
             ->shouldReceive('getPost')
-            ->andReturn($post)
+            ->andReturn($data)
             ->getMock();
 
         $mockForm = m::mock()
             ->shouldReceive('setData')
-            ->with($post)
+            ->with($data)
             ->shouldReceive('isValid')
             ->andReturn(true)
+            ->shouldReceive('getData')
+            ->andReturn($data)
             ->getMock();
 
         $mockFormHelper = m::mock()
@@ -1446,13 +1443,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->with('community-licence-stop')
             ->getMock();
         $this->sm->setService('Script', $mockScriptService);
-
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with($message)
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
 
         $mockDateHelper = m::mock()
             ->shouldReceive('getDate')
@@ -1502,7 +1492,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
             ->shouldReceive('addSuccessMessage')
-            ->with('message')
+            ->with($message)
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -1519,16 +1509,8 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
                 [
                     'data' => ['type' => 'Y', 'reason' => ['reason1', 'reason2']],
                     'dates' => [
-                        'startDate' => [
-                            'day' => '01',
-                            'month' => '01',
-                            'year' => '2014'
-                        ],
-                        'endDate' => [
-                            'day' => '02',
-                            'month' => '02',
-                            'year' => '2015'
-                        ]
+                        'startDate' => '2014-01-01',
+                        'endDate' => '2015-02-02'
                     ]
                 ],
                 'internal.community_licence.licences_suspended',
@@ -1601,9 +1583,12 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
      * Test stop action with confirmation form is not valid
      * 
      * @group abstractCommunityLicenceController
+     * @dataProvider validLicenceProvider
      */
-    public function testStopActionFormNotValid()
+    public function testStopActionFormNotValid($validLicences, $licences)
     {
+        $licenceId = 1;
+
         $mockRequest = m::mock()
             ->shouldReceive('isPost')
             ->andReturn(true)
@@ -1631,21 +1616,78 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->getMock();
         $this->sm->setService('Script', $mockScriptService);
 
+        $mockLicences = m::mock()
+            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
+            ->with($licenceId, [1,2])
+            ->andReturn($licences)
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicences);
+
+        $mockCommunityLic = m::mock()
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn($validLicences)
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLic);
+
         $this->sut
             ->shouldReceive('isButtonPressed')
             ->with('cancel')
             ->andReturn(false)
             ->shouldReceive('getRequest')
             ->andReturn($mockRequest)
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
             ->shouldReceive('params')
             ->with('child_id')
             ->andReturn('1,2')
-            ->shouldReceive('allowToStop')
-            ->with([1,2])
-            ->andReturn(true)
             ->shouldReceive('render')
             ->andReturn('view');
 
         $this->assertEquals('view', $this->sut->stopAction());
+    }
+
+    public function validLicenceProvider()
+    {
+        return [
+            [
+                [
+                    'Results' => [
+                        ['status' => ['id' => 'status1']],
+                        ['status' => ['id' => 'status2']]
+                    ]
+                ],
+                [
+                    ['issueNo' => 1], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => []
+                ],
+                [
+                    ['issueNo' => 1], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => [
+                        ['status' => ['id' => 'status1']],
+                        ['status' => ['id' => 'status2']]
+                    ]
+                ],
+                [
+                    ['issueNo' => 0], ['issueNo' => 2]
+                ]
+            ],
+            [
+                [
+                    'Results' => []
+                ],
+                [
+                    ['issueNo' => 0], ['issueNo' => 2]
+                ]
+            ]
+        ];
     }
 }

@@ -450,8 +450,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         $ids = explode(',', $this->params('child_id'));
         if (!$this->allowToStop($ids)) {
-            $translator = $this->getServiceLocator()->get('translator');
-            $this->addErrorMessage($translator->translate('internal.community_licence.stop_not_allowed'));
+            $this->addErrorMessage('internal.community_licence.stop_not_allowed');
             return $this->redirectToIndex();
         }
 
@@ -464,7 +463,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
-                $this->stopLicences($ids, $data);
+                $this->stopLicences($ids, $form->getData());
                 return $this->redirectToIndex();
             }
         }
@@ -479,7 +478,6 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     protected function allowToStop($ids)
     {
-        $allow = true;
         $licenceId = $this->getLicenceId();
         if ($this->hasOfficeCopy($licenceId, $ids)) {
             $allValidLicences = $this->getServiceLocator()
@@ -487,18 +485,22 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 ->getValidLicences($licenceId);
             foreach ($allValidLicences['Results'] as $validLicence) {
                 if (
+
                         ($validLicence['status']['id'] == CommunityLicEntityService::STATUS_PENDING) ||
+
                         (
                            $validLicence['status']['id'] == CommunityLicEntityService::STATUS_ACTIVE &&
                            !in_array($validLicence['id'], $ids)
                         )
+
                     ) {
-                    $allow = false;
-                    break;
+
+                    return false;
+
                 }
             }
         }
-        return $allow;
+        return true;
     }
 
     /**
@@ -513,27 +515,24 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $licences = $this->getServiceLocator()
             ->get('Entity\Licence')
             ->getCommunityLicencesByLicenceIdAndIds($licenceId, $ids);
-        $hasOfficeCopy = false;
         foreach ($licences as $licence) {
             if ($licence['issueNo'] === 0) {
-                $hasOfficeCopy = true;
-                break;
+                return true;
             }
         }
-        return $hasOfficeCopy;
+        return false;
     }
 
     /**
      * Suspend or withdrawn licences
      * 
      * @param array $ids
-     * @param array $post
+     * @param array $formattedData
      * @return bool
      */
-    protected function stopLicences($ids, $post)
+    protected function stopLicences($ids, $formattedData)
     {
-        $translator = $this->getServiceLocator()->get('translator');
-        $type = $post['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
+        $type = $formattedData['data']['type'] === 'N' ? 'withdrawal' : 'suspension';
 
         // prepare common data for community licence depending of selected asction
         if ($type == 'withdrawal') {
@@ -541,14 +540,14 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
               'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
               'expiryDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
             ];
-            $message = $translator->translate('internal.community_licence.licences_withdrawn');
+            $message = 'internal.community_licence.licences_withdrawn';
             $suspensionOrWithrawalService = 'Entity\CommunityLicWithdrawal';
             $reasonService = 'Entity\CommunityLicWithdrawalReason';
         } else {
             $comLicData = [
                 'status' => CommunityLicEntityService::STATUS_SUSPENDED
              ];
-            $message = $translator->translate('internal.community_licence.licences_suspended');
+            $message = 'internal.community_licence.licences_suspended';
             $suspensionOrWithrawalService = 'Entity\CommunityLicSuspension';
             $reasonService = 'Entity\CommunityLicSuspensionReason';
         }
@@ -569,22 +568,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 'communityLic' => $comLic['id']
             ];
             if ($type == 'suspension') {
-                $data['startDate'] = isset($post['dates']['startDate']) ?
-                    sprintf(
-                        '%s-%s-%s',
-                        $post['dates']['startDate']['year'],
-                        $post['dates']['startDate']['month'],
-                        $post['dates']['startDate']['day']
-                    )
-                : null;
-                $data['endDate'] = isset($post['dates']['endDate']) ?
-                    sprintf(
-                        '%s-%s-%s',
-                        $post['dates']['endDate']['year'],
-                        $post['dates']['endDate']['month'],
-                        $post['dates']['endDate']['day']
-                    )
-                : null;
+                $data['startDate'] = $formattedData['dates']['startDate'];
+                $data['endDate'] = $formattedData['dates']['endDate'];
             }
             $comLicsWs[] = $data;
         }
@@ -599,7 +584,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         // prepare to save all withdrawal/suspension reasons at once
         $reasons = [];
         foreach ($result['id'] as $id) {
-            foreach ($post['data']['reason'] as $reason) {
+            foreach ($formattedData['data']['reason'] as $reason) {
                 $data = [
                     'communityLic' . ucfirst($type) => $id,
                     'type' => $reason
