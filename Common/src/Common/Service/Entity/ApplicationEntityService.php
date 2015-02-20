@@ -445,11 +445,14 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         $application = $this->save($applicationData);
 
-        $applicationCompletionData = [
-            'application' => $application['id'],
-        ];
+        // create blank records for Completions and Tracking
+        $applicationStatusData = ['application' => $application['id']];
 
-        $this->getServiceLocator()->get('Entity\ApplicationCompletion')->save($applicationCompletionData);
+        $this->getServiceLocator()->get('Entity\ApplicationCompletion')
+            ->save($applicationStatusData);
+
+        $this->getServiceLocator()->get('Entity\ApplicationTracking')
+            ->save($applicationStatusData);
 
         return array(
             'application' => $application['id'],
