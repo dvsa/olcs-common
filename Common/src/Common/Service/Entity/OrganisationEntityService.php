@@ -118,7 +118,7 @@ class OrganisationEntityService extends AbstractEntityService
     /**
      * @param int $id organisation id
      * @param array $applicationStatuses only return child applications
-     *        matching these statuses
+     *        matching these statuses (excluding variations)
      * @return array
      */
     public function getNewApplicationsByStatus($id, $applicationStatuses)
@@ -129,6 +129,29 @@ class OrganisationEntityService extends AbstractEntityService
         $bundle['children']['licences']['children']['applications']['criteria'] = [
             'status' => 'IN ' . json_encode($applicationStatuses),
             'isVariation' => false,
+        ];
+
+        $data = $this->get($id, $bundle);
+        foreach ($data['licences'] as $licence) {
+            $applications = array_merge($applications, $licence['applications']);
+        }
+
+        return $applications;
+    }
+
+    /**
+     * @param int $id organisation id
+     * @param array $applicationStatuses only return child applications
+     *        matching these statuses (including variaions)
+     * @return array
+     */
+    public function getAllApplicationsByStatus($id, $applicationStatuses)
+    {
+        $applications = [];
+
+        $bundle = $this->applicationsBundle;
+        $bundle['children']['licences']['children']['applications']['criteria'] = [
+            'status' => 'IN ' . json_encode($applicationStatuses)
         ];
 
         $data = $this->get($id, $bundle);

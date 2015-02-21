@@ -28,6 +28,9 @@ class SelectorTest extends MockeryTestCase
         $this->sut = new Selector($this->table);
     }
 
+    /**
+     * @group checkboxTest
+     */
     public function testRender()
     {
         $fieldset = 'table';
@@ -77,6 +80,9 @@ class SelectorTest extends MockeryTestCase
         );
     }
 
+    /**
+     * @group checkboxTest
+     */
     public function testRenderWithoutFieldet()
     {
         $fieldset = null;
@@ -96,12 +102,44 @@ class SelectorTest extends MockeryTestCase
         );
     }
 
+    /**
+     * @group checkboxTest
+     */
     public function testRenderWithDataAttributes()
     {
         $fieldset = null;
         $data = [
             'id' => 7,
             'action' => 'blap'
+        ];
+        $column = [
+            'data-attributes' => array(
+                'action'
+            )
+        ];
+
+        $this->table->shouldReceive('getFieldset')
+            ->andReturn($fieldset);
+
+        $response = $this->sut->render($data, $column);
+
+        $this->assertEquals(
+            '<input type="radio" name="id" value="7" data-action="blap" />',
+            $response
+        );
+    }
+
+    /**
+     * Test render with data attribute when column is an array
+     *
+     * @group checkboxTest
+     */
+    public function testRenderWithDataAttributesArray()
+    {
+        $fieldset = null;
+        $data = [
+            'id' => 7,
+            'action' => ['id' => 'blap']
         ];
         $column = [
             'data-attributes' => array(

@@ -74,6 +74,10 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => 4
         );
 
+        $trackingData = array(
+            'application' => 4
+        );
+
         $mockLicenceService = $this->getMock('\stdClass', array('save'));
         $mockLicenceService->expects($this->once())
             ->method('save')
@@ -85,8 +89,14 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->method('save')
             ->with($completionData);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with($trackingData);
+
         $this->sm->setService('Entity\Licence', $mockLicenceService);
         $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $this->expectOneRestCall('Application', 'POST', $applicationData)
             ->will($this->returnValue($applicationResponse));
@@ -124,6 +134,10 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             'application' => 4
         );
 
+        $trackingData = array(
+            'application' => 4
+        );
+
         $mockLicenceService = $this->getMock('\stdClass', array('save'));
         $mockLicenceService->expects($this->once())
             ->method('save')
@@ -135,6 +149,11 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->method('save')
             ->with($completionData);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with($trackingData);
+
         $mockUtility = m::mock();
         $this->sm->setService('ApplicationUtility', $mockUtility);
         $mockUtility->shouldReceive('alterCreateApplicationData')
@@ -143,6 +162,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sm->setService('Entity\Licence', $mockLicenceService);
         $this->sm->setService('Entity\ApplicationCompletion', $mockApplicationCompletionService);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $this->expectOneRestCall('Application', 'POST', $applicationData)
             ->will($this->returnValue($applicationResponse));
@@ -748,5 +768,142 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForFinancialEvidence($id));
+    }
+
+    /**
+     * @dataProvider providerGetReviewDataForApplication
+     */
+    public function testGetReviewDataForApplication($sections, $expectedBundle)
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getReviewDataForApplication($id, $sections));
+    }
+
+    /**
+     * @dataProvider providerGetReviewDataForVariation
+     */
+    public function testGetReviewDataForVariation($sections, $expectedBundle)
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('Application', 'GET', $id, $expectedBundle)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getReviewDataForVariation($id, $sections));
+    }
+
+    public function providerGetReviewDataForApplication()
+    {
+        return [
+            'No sections' => [
+                [],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ],
+            'Type of licence' => [
+                ['type_of_licence'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'application',
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public function providerGetReviewDataForVariation()
+    {
+        return [
+            'No sections' => [
+                [],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv'
+                    ]
+                ]
+            ],
+            'Type of licence' => [
+                ['type_of_licence'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'licenceType'
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Operating centre' => [
+                ['operating_centres'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'trafficArea'
+                            ]
+                        ],
+                        'operatingCentres' => [
+                            'children' => [
+                                'application',
+                                'operatingCentre' => [
+                                    'children' => [
+                                        'address',
+                                        'adDocuments' => [
+                                            'children' => [
+                                                'application'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

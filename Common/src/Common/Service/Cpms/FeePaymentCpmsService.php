@@ -76,17 +76,36 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 ],
             ];
         }
+
+        $endPoint = '/api/payment/card';
+        $scope    = ApiService::SCOPE_CARD;
+
         $params = [
             // @NOTE CPMS rejects ints as 'missing', so we have to force a string...
             'customer_reference' => (string)$customerReference,
-            'scope' => ApiService::SCOPE_CARD,
+            'scope' => $scope,
             'disable_redirection' => true,
             'redirect_uri' => $redirectUrl,
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
-        $response = $this->getClient()->post('/api/payment/card', ApiService::SCOPE_CARD, $params);
+        $this->debug(
+            'Card payment request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+                'params'   => $params,
+            ]
+        );
+
+        $response = $this->getClient()->post($endPoint, $scope, $params);
+
+        $this->debug('Card payment response', ['response' => $response]);
 
         if (!is_array($response)
             || !isset($response['redirection_data'])
@@ -145,11 +164,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new PaymentInvalidAmountException("Amount must match the fee due");
         }
 
-        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $receiptDate   = $this->formatReceiptDate($receiptDate);
         $ruleStartDate = $this->getRuleStartDate($fee);
+        $endPoint      = '/api/payment/cash';
+        $scope         = ApiService::SCOPE_CASH;
+
         $params = [
             'customer_reference' => (string)$customerReference,
-            'scope' => ApiService::SCOPE_CASH,
+            'scope' => $scope,
             'total_amount' => $amount,
             'payment_data' => [
                 [
@@ -167,11 +189,22 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'cost_centre' => self::COST_CENTRE,
         ];
 
-        $response = $this->getClient()->post(
-            '/api/payment/cash',
-            ApiService::SCOPE_CASH,
-            $params
+        $this->debug(
+            'Cash payment request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+                'params'   => $params,
+            ]
         );
+
+        $response = $this->getClient()->post($endPoint, $scope, $params);
+
+        $this->debug('Cash payment response', ['response' => $response]);
 
         if ($this->isSuccessfulResponse($response)) {
             $data = [
@@ -218,11 +251,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new PaymentInvalidAmountException("Amount must match the fee due");
         }
 
-        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $receiptDate   = $this->formatReceiptDate($receiptDate);
         $ruleStartDate = $this->getRuleStartDate($fee);
+        $endPoint      = '/api/payment/cheque';
+        $scope         = ApiService::SCOPE_CHEQUE;
+
         $params = [
             'customer_reference' => (string)$customerReference,
-            'scope' => ApiService::SCOPE_CHEQUE,
+            'scope' => $scope,
             'total_amount' => $amount,
             'payment_data' => [
                 [
@@ -241,11 +277,22 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'cost_centre' => self::COST_CENTRE,
         ];
 
-        $response = $this->getClient()->post(
-            '/api/payment/cheque',
-            ApiService::SCOPE_CHEQUE,
-            $params
+        $this->debug(
+            'Cheque payment request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+                'params'   => $params,
+            ]
         );
+
+        $response = $this->getClient()->post($endPoint, $scope, $params);
+
+        $this->debug('Cheque payment response', ['response' => $response]);
 
         if ($this->isSuccessfulResponse($response)) {
             $data = [
@@ -293,11 +340,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new PaymentInvalidAmountException("Amount must match the fee due");
         }
 
-        $receiptDate = $this->formatReceiptDate($receiptDate);
+        $receiptDate   = $this->formatReceiptDate($receiptDate);
         $ruleStartDate = $this->getRuleStartDate($fee);
+        $endPoint      = '/api/payment/postal-order';
+        $scope         = ApiService::SCOPE_POSTAL_ORDER;
+
         $params = [
             'customer_reference' => (string)$customerReference,
-            'scope' => ApiService::SCOPE_POSTAL_ORDER,
+            'scope' => $scope,
             'total_amount' => $amount,
             'payment_data' => [
                 [
@@ -317,11 +367,22 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'cost_centre' => self::COST_CENTRE,
         ];
 
-        $response = $this->getClient()->post(
-            '/api/payment/postal-order',
-            ApiService::SCOPE_POSTAL_ORDER,
-            $params
+        $this->debug(
+            'Postal order payment request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+                'params'   => $params,
+            ]
         );
+
+        $response = $this->getClient()->post($endPoint, $scope, $params);
+
+        $this->debug('Postal order payment response', ['response' => $response]);
 
         if ($this->isSuccessfulResponse($response)) {
             $data = [
@@ -522,5 +583,20 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             $paymentService->setStatus($payment['id'], $status);
             return $status;
         }
+    }
+
+    protected function debug($message, $data)
+    {
+        return $this->getLogger()->debug(
+            $message,
+            [
+                'data' => array_merge(
+                    [
+                        'domain' => $this->getClient()->getOptions()->getDomain(),
+                    ],
+                    $data
+                ),
+            ]
+        );
     }
 }

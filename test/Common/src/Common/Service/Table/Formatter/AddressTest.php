@@ -70,6 +70,11 @@ class AddressTest extends \PHPUnit_Framework_TestCase
                 array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
                 array('addressFields' => array('addressLine1', 'addressLine2')),
                 'foo, bar'
+            ),
+            array(
+                array('addressLine1' => 'foo', 'addressLine2' => 'bar', 'addressLine3' => 'cake'),
+                array('addressFields' => 'FULL'),
+                'foo, bar, cake'
             )
         );
     }
