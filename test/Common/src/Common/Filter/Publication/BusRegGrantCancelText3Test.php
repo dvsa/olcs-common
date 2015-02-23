@@ -35,7 +35,6 @@ class BusRegGrantCancelText3Test extends MockeryTestCase
             $formattedEffectiveDate
         );
 
-
         $busRegData = [
             'startPoint' => $startPoint,
             'finishPoint' => $finishPoint,

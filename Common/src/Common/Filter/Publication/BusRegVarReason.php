@@ -25,7 +25,7 @@ class BusRegVarReason extends AbstractPublicationFilter
         $reasons = [];
 
         if (!empty($busReg['variationReasons'])) {
-            foreach($busReg['variationReasons'] as $reason) {
+            foreach ($busReg['variationReasons'] as $reason) {
                 $reasons[] = $reason['description'];
             }
         }
@@ -42,7 +42,7 @@ class BusRegVarReason extends AbstractPublicationFilter
             default:
                 $variationReasons = $reasons[0];
 
-               for ($i = 1; $i < $numReasons; $i++) {
+                for ($i = 1; $i < $numReasons; $i++) {
                     if ($i == ($numReasons - 1)) {
                         //array counts from zero, so this is last record
                         $variationReasons .= ' and ' . $reasons[$i];

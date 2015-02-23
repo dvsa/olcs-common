@@ -25,7 +25,7 @@ class BusRegServiceDesignation extends AbstractPublicationFilter
         $services = [$busReg['serviceNo']];
 
         if (!empty($busReg['otherServices'])) {
-            foreach($busReg['otherServices'] as $otherService) {
+            foreach ($busReg['otherServices'] as $otherService) {
                 $services[] = $otherService['serviceNo'];
             }
         }

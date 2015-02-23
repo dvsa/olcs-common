@@ -25,7 +25,7 @@ class BusRegServiceTypes extends AbstractPublicationFilter
         $serviceTypes = [];
 
         if (!empty($busReg['busServiceTypes'])) {
-            foreach($busReg['busServiceTypes'] as $serviceType) {
+            foreach ($busReg['busServiceTypes'] as $serviceType) {
                 $serviceTypes[] = $serviceType['description'];
             }
         }

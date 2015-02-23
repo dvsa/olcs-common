@@ -37,7 +37,6 @@ class BusRegGrantVarText3Test extends MockeryTestCase
             $variationReasons
         );
 
-
         $busRegData = [
             'startPoint' => $startPoint,
             'finishPoint' => $finishPoint,
