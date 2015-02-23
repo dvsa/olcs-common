@@ -70,7 +70,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         if (empty($this->tableData)) {
             $results = $this->getServiceLocator()->get('Entity\Person')
-                ->getAllForOrganisation($orgId);
+                ->getAllForOrganisation($orgId)['Results'];
 
             $this->tableData = $this->formatTableData($results);
         }
@@ -91,7 +91,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
                 $row['person']['position'] = $row['position'];
             }
             // @TODO: move this out into the variation formatTableData
-            // cal perhaps? Then again, all this stuff is a bit nasty...
+            // call perhaps? Then again, all this stuff is a bit nasty...
             if (isset($row['action'])) {
                 $row['person']['action'] = $row['action'];
             }

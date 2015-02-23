@@ -14,7 +14,6 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
-use Common\Controller\Lva\Adapters\AbstractAdapter;
 
 /**
  * Common (aka Internal) Application People Adapter
@@ -22,22 +21,32 @@ use Common\Controller\Lva\Adapters\AbstractAdapter;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ApplicationPeopleAdapter extends AbstractAdapter
+class ApplicationPeopleAdapter extends VariationPeopleAdapter
 {
-    public function addMessages($orgId)
+    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
     {
-    }
+        if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
+            return;
+        }
 
-    public function alterFormForOrganisation(Form $form, $orgId)
-    {
+        return parent::alterFormForOrganisation($form, $table, $orgId, $orgType);
     }
 
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
     {
+        if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
+            return;
+        }
+
+        return parent::alterAddOrEditFormForOrganisation($form, $orgId, $orgType);
     }
 
     public function canModify($orgId)
     {
-        return true;
+        if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
+            return true;
+        }
+
+        return parent::canModify($orgId);
     }
 }
