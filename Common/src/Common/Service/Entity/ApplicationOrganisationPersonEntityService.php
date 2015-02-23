@@ -33,7 +33,8 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
      */
     private $peopleBundle = array(
         'children' => array(
-            'person'
+            'person',
+            'originalPerson'
         )
     );
 
@@ -79,6 +80,22 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    public function getByApplicationAndOriginalPersonId($applicationId, $personId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'originalPerson' => $personId
+        );
+
+        $result = $this->get($query, $this->peopleBundle);
+
+        if ($result['Count'] < 1) {
+            return false;
+        }
+
+        return $result['Results'][0];
+    }
+
     public function deleteByApplicationAndPersonId($applicationId, $personId)
     {
         $appPerson = $this->getByApplicationAndPersonId($applicationId, $personId);
@@ -88,9 +105,23 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         }
     }
 
+    public function deleteByApplicationAndOriginalPersonId($applicationId, $personId)
+    {
+        $appPerson = $this->getByApplicationAndOriginalPersonId($applicationId, $personId);
+
+        if ($appPerson) {
+            $this->deletePerson($appPerson['id'], $appPerson['person']['id']);
+        }
+    }
+
     public function variationCreate($personId, $orgId, $applicationId)
     {
         return $this->variationAction($personId, $orgId, $applicationId, 'A');
+    }
+
+    public function variationUpdate($personId, $orgId, $applicationId, $originalId)
+    {
+        return $this->variationAction($personId, $orgId, $applicationId, 'U', $originalId);
     }
 
     public function variationDelete($personId, $orgId, $applicationId)
@@ -98,7 +129,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $this->variationAction($personId, $orgId, $applicationId, 'D');
     }
 
-    private function variationAction($personId, $orgId, $applicationId, $action)
+    private function variationAction($personId, $orgId, $applicationId, $action, $originalId = null)
     {
         $data = [
             'action' => $action,
@@ -107,6 +138,16 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
             'person' => $personId
         ];
 
+        if (isset($originalId)) {
+            $data['originalPerson'] = $originalId;
+        }
+
         return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')->save($data);
+    }
+
+    public function deletePerson($id, $personId)
+    {
+        $this->delete($id);
+        $this->getServiceLocator()->get('Entity\Person')->delete($personId);
     }
 }
