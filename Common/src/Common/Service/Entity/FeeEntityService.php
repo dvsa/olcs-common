@@ -121,13 +121,14 @@ class FeeEntityService extends AbstractLvaEntityService
             )
         );
 
-        $results = $this->getAll($query, array('properties' => array('id')));
+        $results = $this->getAll($query, array('properties' => array('id'), 'children' => array('task')));
 
         if (empty($results['Results'])) {
             return;
         }
 
         $updates = array();
+        $tasks = array();
 
         foreach ($results['Results'] as $fee) {
             $updates[] = array(
@@ -135,11 +136,17 @@ class FeeEntityService extends AbstractLvaEntityService
                 'feeStatus' => self::STATUS_CANCELLED,
                 '_OPTIONS_' => array('force' => true)
             );
+            $tasks[] = array(
+                'id' => $fee['task']['id'],
+                'version' => $fee['task']['version'],
+                'isClosed' => 'Y'
+            );
         }
 
         $updates['_OPTIONS_']['multiple'] = true;
-
         $this->put($updates);
+
+        $this->getServiceLocator()->get('Entity\Task')->multiUpdate($tasks);
     }
 
     public function cancelForApplication($applicationId)

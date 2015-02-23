@@ -943,6 +943,7 @@ return array(
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'Qualification type',
