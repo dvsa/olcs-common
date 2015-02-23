@@ -524,10 +524,10 @@ return array(
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must <a
         href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a
-        href="%s">create a variation application</a>',
-    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a
-        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
+    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
     'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise, contact
         the cardholder.',
     'case-associated-with' => 'W Cases associated with %s',
@@ -1158,6 +1158,7 @@ return array(
     'lva.section.title.financial_evidence' => 'W Financial evidence',
     'lva.section.title.financial_history' => 'W Financial history',
     'lva.section.title.licence_history' => 'W Licence history',
+    'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
     'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
     'lva.section.title.overview' => 'W Overview',
     'lva.section.title.people' => 'W People',
@@ -1209,6 +1210,8 @@ return array(
     'numOfOffences' => 'W Number of offences',
     'number-of-offences' => 'W Number of offences',
     'objections' => 'W Objections',
+    'oc-create-variation-confirmation-message' => 'W In order to add an additional operating centre on the licence you
+        must create a variation application',
     'ocs' => 'W OCs',
     'offence-date' => 'W Offence date',
     'offence-date-from' => 'W Offence date from',

@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'oc-create-variation' => 'In order to add an additional operating centre on the licence you must create a variation application',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -523,10 +522,10 @@ return array(
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a
         href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create
-        a variation application</a>',
-    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create
-        a variation application</a>',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the
         cardholder.',
     'case-associated-with' => 'Cases associated with %s',
@@ -1155,6 +1154,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.licence_history' => 'Licence history',
+    'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
@@ -1206,6 +1206,8 @@ return array(
     'numOfOffences' => 'Number of offences',
     'number-of-offences' => 'Number of offences',
     'objections' => 'Objections',
+    'oc-create-variation-confirmation-message' => 'In order to add an additional operating centre on the licence you
+        must create a variation application',
     'ocs' => 'OCs',
     'offence-date' => 'Offence date',
     'offence-date-from' => 'Offence date from',

@@ -14,6 +14,34 @@ namespace Common\Controller\Lva\Traits;
  */
 trait LicenceOperatingCentresControllerTrait
 {
+
+    public function addAction()
+    {
+        // @NOTE The behaviour of this service differs internally to externally
+        $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
+
+        $request = $this->getRequest();
+
+        $form = $processingService->getForm($request);
+
+        if ($request->isPost() && $form->isValid()) {
+
+            $data = $processingService->getDataFromForm($form);
+
+            $licenceId = $this->params('licence');
+
+            $appId = $processingService->createVariation($licenceId, $data);
+
+            return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
+        }
+
+        return $this->render(
+            'oc-create-variation-confirmation-title',
+            $form,
+            array('sectionText' => 'oc-create-variation-confirmation-message')
+        );
+    }
+
     public function deleteAction()
     {
         $ids = explode(',', $this->params('child_id'));
