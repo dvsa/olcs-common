@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'oc-create-variation' => 'In order to add an additional operating centre on the licence you must create a variation application',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

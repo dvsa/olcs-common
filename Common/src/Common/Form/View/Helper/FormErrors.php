@@ -11,6 +11,7 @@ namespace Common\Form\View\Helper;
 use Zend\Form\View\Helper\AbstractHelper;
 use Zend\Form\FormInterface;
 use Zend\Form\Fieldset;
+use Common\Form\Elements\Validators\Messages\ValidationMessageInterface;
 
 /**
  * Form errors view helper
@@ -117,6 +118,10 @@ class FormErrors extends AbstractHelper
      */
     protected function formatMessage($message, $element)
     {
+        if ($message instanceof ValidationMessageInterface) {
+            return $message->getMessage();
+        }
+
         // We translate the initial message, as they are not always translated before they get here
         $message = $this->translate($message);
 
