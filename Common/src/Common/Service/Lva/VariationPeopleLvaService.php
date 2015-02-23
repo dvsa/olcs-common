@@ -90,7 +90,7 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
         throw new \Exception('Can\'t restore this record');
     }
 
-    public function savePerson($orgId, $id, $appId)
+    public function savePerson($orgId, $data, $appId)
     {
         if (!empty($data['id'])) {
             return $this->update($orgId, $data, $appId);
@@ -179,5 +179,20 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
         }
 
         return $indexed;
+    }
+
+    public function getPersonPosition($orgId, $appId, $personId)
+    {
+        $person = $this->getServiceLocator()
+            ->get('Entity\ApplicationOrganisationPerson')
+            ->getByApplicationAndPersonId($appId, $personId);
+
+        if (!$person) {
+            $person = $this->getServiceLocator()
+                ->get('Entity\OrganisationPerson')
+                ->getByOrgAndPersonId($orgId, $personId);
+        }
+
+        return $person['position'];
     }
 }

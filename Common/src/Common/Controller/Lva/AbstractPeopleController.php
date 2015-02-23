@@ -111,13 +111,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
-            $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
-            if (!$data['id']) {
-                // @FIXME: this no longer exists in this class; it's a protected
-                // method in the abstract adapter. Could make it public and call it...
-                $this->addOrganisationPerson('add', $orgId, $orgData, $person, $data);
-            }
+            $adapter->save($orgId, $data);
 
             $this->postSave('people');
             return $this->completeSection('people');
@@ -224,6 +219,12 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $data = $this->formatCrudDataForForm(
                 $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'))
             );
+
+            if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+                // we need to pre-populate the user's position from the org for
+                // 'other' business types
+                $data['position'] = $adapter->getPersonPosition($orgId, $this->params('child_id'));
+            }
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
@@ -233,11 +234,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $form->get('form-actions')->remove('addAnother');
         }
 
-        if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
-            // we need to pre-populate the user's position from the org for
-            // 'other' business types
-            $data['position'] = $this->getOrganisationPosition($orgId);
-        } else {
+        // @TODO: can we put this in alterAddOrEditFormForOrganisation?
+        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
             // otherwise we're not interested in position at all, bin it off
             $this->getServiceLocator()->get('Helper\Form')
                 ->remove($form, 'data->position');
@@ -352,20 +350,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->getAllForOrganisation($orgId, 1);
 
         return isset($results['Count']) && $results['Count'] > 0;
-    }
-
-    private function getOrganisationPosition($orgId)
-    {
-        $personId = $this->params('child_id');
-        if ($personId === null) {
-            return null;
-        }
-
-        $orgPerson = $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson')
-            ->getByOrgAndPersonId($orgId, $personId);
-
-        return $orgPerson['position'];
     }
 
     /**

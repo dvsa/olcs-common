@@ -26,6 +26,8 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         OrganisationEntityService::ORG_TYPE_PARTNERSHIP
     ];
 
+    private $organisation;
+
     public function addMessages($orgType)
     {
     }
@@ -90,13 +92,29 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return in_array($orgType, $this->exceptionalTypes);
     }
 
+    protected function getOrganisation($orgId)
+    {
+        if ($this->organisation === null) {
+            $this->organisation = $this->getServiceLocator()
+                ->get('Entity\Organisation')
+                ->getType($orgId);
+        }
+
+        return $this->organisation;
+    }
+
+    protected function getOrganisationType($orgId)
+    {
+        $orgData = $this->getOrganisation($orgId);
+
+        return $orgData['type']['id'];
+    }
+
     protected function isExceptionalOrganisation($orgId)
     {
-        $orgData = $this->getServiceLocator()
-            ->get('Entity\Organisation')
-            ->getType($orgId);
-
-        return $this->isExceptionalType($orgData['type']['id']);
+        return $this->isExceptionalType(
+            $this->getOrganisationType($orgId)
+        );
     }
 
     /**
@@ -128,30 +146,15 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
-        $this->addOrganisationPerson(
-            $mode,
-            $orgId,
-            $orgData,
-            $person,
-            $data
-        );
-    }
+        $orgType = $this->getOrganisationType($orgId);
 
-    /**
-     * Helper method to conditionally add or update a matching organisation
-     * person record when saving a new person
-     */
-    private function addOrganisationPerson($mode, $orgId, $orgData, $person, $data)
-    {
-        // If we are creating a person, we need to link them to the organisation,
-        // otherwise we might need to update person's position
-        if ($mode === 'add') {
+        if (empty($data['id'])) {
             $orgPersonData = array(
                 'organisation' => $orgId,
                 'person' => $person['id'],
                 'position' => isset($data['position']) ? $data['position'] : ''
             );
-        } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+        } elseif ($orgType === OrganisationEntityService::ORG_TYPE_OTHER) {
             $orgPerson = $this->getServiceLocator()
                 ->get('Entity\OrganisationPerson')
                 ->getByOrgAndPersonId($orgId, $data['id']);
@@ -171,5 +174,14 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     protected function getTableConfig($orgId)
     {
         return 'lva-people';
+    }
+
+    public function getPersonPosition($orgId, $personId)
+    {
+        $orgPerson = $this->getServiceLocator()
+            ->get('Entity\OrganisationPerson')
+            ->getByOrgAndPersonId($orgId, $personId);
+
+        return $orgPerson['position'];
     }
 }

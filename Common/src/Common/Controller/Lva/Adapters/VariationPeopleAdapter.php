@@ -88,6 +88,15 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
         return $this->getServiceLocator()
             ->get('Lva\VariationPeople')
-            ->savePerson($orgId, $id, $appId);
+            ->savePerson($orgId, $data, $appId);
+    }
+
+    public function getPersonPosition($orgId, $personId)
+    {
+        $appId = $this->getLvaAdapter()->getIdentifier();
+
+        return $this->getServiceLocator()
+            ->get('Lva\VariationPeople')
+            ->getPersonPosition($orgId, $appId, $personId);
     }
 }

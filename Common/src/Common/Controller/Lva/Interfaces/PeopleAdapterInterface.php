@@ -23,4 +23,12 @@ interface PeopleAdapterInterface
     public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType);
 
     public function canModify($orgId);
+
+    public function createTable($orgId);
+
+    public function delete($orgId, $id);
+
+    public function restore($orgId, $id);
+
+    public function save($orgId, $data);
 }
