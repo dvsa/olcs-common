@@ -114,24 +114,12 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         return $this->isExceptionalType($orgData['type']['id']);
     }
 
-    public function delete($orgId)
-    {
-        $id = $this->getController()->params('child_id');
-
-        // This allows us to handle multiple delete
-        $ids = explode(',', $id);
-
-        foreach ($ids as $id) {
-            $this->deletePerson($id, $orgId);
-        }
-    }
-
     /**
      * Delete a person from the organisation, and then delete the person if they are now an orphan
      *
      * @param int $id
      */
-    protected function deletePerson($id, $orgId)
+    public function delete($orgId, $id)
     {
         $orgPersonService = $this->getServiceLocator()->get('Entity\OrganisationPerson');
 
@@ -146,7 +134,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         }
     }
 
-    public function restore($orgId)
+    public function restore($orgId, $id)
     {
         throw new \Exception('Not implemented');
     }

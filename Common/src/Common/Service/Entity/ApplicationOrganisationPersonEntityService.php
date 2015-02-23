@@ -79,6 +79,15 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    public function deleteByApplicationAndPersonId($applicationId, $personId)
+    {
+        $appPerson = $this->getByApplicationAndPersonId($applicationId, $personId);
+
+        if ($appPerson) {
+            $this->delete($appPerson['id']);
+        }
+    }
+
     public function variationCreate($personId, $orgId, $applicationId)
     {
         return $this->variationAction($personId, $orgId, $applicationId, 'A');

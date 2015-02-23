@@ -285,9 +285,14 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
      */
     protected function delete()
     {
+        $id = $this->params('child_id');
         $orgId = $this->getCurrentOrganisationId();
 
-        $this->getAdapter()->delete($orgId);
+        $ids = explode(',', $id);
+
+        foreach ($ids as $id) {
+            $this->getAdapter()->delete($orgId, $id);
+        }
     }
 
     private function populatePeople($orgId, $orgData)
@@ -388,8 +393,13 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
     public function restoreAction()
     {
+        $id = $this->params('child_id');
         $orgId = $this->getCurrentOrganisationId();
 
-        return $this->getAdapter()->restore($orgId);
+        $ids = explode(',', $id);
+
+        foreach ($ids as $id) {
+            $this->getAdapter()->restore($orgId, $id);
+        }
     }
 }
