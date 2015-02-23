@@ -80,7 +80,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $adapter->alterFormForOrganisation($form, $table, $orgId, $orgData['type']['id']);
 
-        $adapter->attachMainScripts();
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
         return $this->render('people', $form);
     }
