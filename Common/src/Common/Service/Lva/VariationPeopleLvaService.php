@@ -106,7 +106,9 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
 
         if ($appPerson) {
             // save direct, that's fine...
-            // @TODO: anything to update against the app_org_person table?
+
+            // @TODO: if we're org type other we need to update
+            // the corresponding appOrgPerson record with $data['position']
             return $this->getServiceLocator()->get('Entity\Person')->save($data);
         }
 
@@ -119,6 +121,8 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
 
         $newPerson = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
+        // @TODO if org type other we need to persist $data['position'] here
+        // too
         $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
             ->variationUpdate($newPerson['id'], $orgId, $appId, $originalId);
     }
@@ -127,6 +131,8 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
     {
         $result = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
+        // @TODO if org type other we need to persist $data['position'] here
+        // too
         $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
             ->variationCreate($result['id'], $orgId, $appId);
     }
