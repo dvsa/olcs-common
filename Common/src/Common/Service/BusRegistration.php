@@ -30,8 +30,6 @@ class BusRegistration
         // Timetable conditions should default to no
         'timetableAcceptable' => 'N',
         'mapSupplied' => 'N',
-        // Reg number is generated based upon the licence and route number. empty by default.
-        'regNo' => '',
         // (Re)set dates to null
         'dateReceived' => null,
         'effectiveDate' => null,
@@ -48,6 +46,7 @@ class BusRegistration
         'needNewStop' => 'N', //should this be moved to all? and the details field wiped?
         'hasManoeuvre' => 'N',
         'hasNotFixedStop' => 'N',
+        // Reg number is generated based upon the licence and route number. empty by default.
         'regNo' => '',
         'routeNo' => 0,
         'useAllStops' => 'Y', //should probably default to yes
@@ -98,7 +97,7 @@ class BusRegistration
         //unset database metadata
         $this->scrubEntity($data);
         if (isset($data['otherServices']) && is_array($data['otherServices'])) {
-            foreach ($data['otherServices'] as $otherService) {
+            foreach ($data['otherServices'] as &$otherService) {
                 $this->scrubEntity($otherService);
             }
         }
