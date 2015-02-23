@@ -24,7 +24,8 @@ class Clean extends AbstractPublicationFilter
             'hearingData',
             'licenceData',
             'publicationSectionConst',
-            'case'
+            'case',
+            'busRegData'
         ];
 
         foreach ($keys as $key) {
