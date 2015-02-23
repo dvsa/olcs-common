@@ -16,7 +16,7 @@ use Zend\Form\Form;
  */
 interface PeopleAdapterInterface
 {
-    public function addMessages($orgId);
+    public function addMessages($orgType);
 
     public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType);
 

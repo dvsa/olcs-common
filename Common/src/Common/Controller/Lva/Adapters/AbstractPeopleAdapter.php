@@ -27,8 +27,6 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     const SOURCE_APPLICATION = 'A';
     const SOURCE_ORGANISATION = 'O';
 
-    protected $tableConfig = 'lva-people';
-
     protected $tableData = [];
 
     private $exceptionalTypes = [
@@ -57,7 +55,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
     {
         return $this->getServiceLocator()
             ->get('Table')
-            ->prepareTable($this->tableConfig, $this->getTableData($orgId));
+            ->prepareTable($this->getTableConfig($orgId), $this->getTableData($orgId));
     }
 
     /**
@@ -181,5 +179,10 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
         if (isset($orgPersonData)) {
             $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
         }
+    }
+
+    protected function getTableConfig($orgId)
+    {
+        return 'lva-people';
     }
 }

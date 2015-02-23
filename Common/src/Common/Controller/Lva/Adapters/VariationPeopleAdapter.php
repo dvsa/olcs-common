@@ -3,12 +3,6 @@
 /**
  * Common (aka Internal) Application People Adapter
  *
- * @NOTE: currently identical and not abstracted at all
- * in common between all three LVAs
- *
- * This will change in the next story to be developed
- * OLCS-6543
- *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
 namespace Common\Controller\Lva\Adapters;
@@ -24,26 +18,6 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 {
     protected $lva = 'variation';
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
-    {
-        // internally we don't ever need to alter the index form
-        // this is because partnerships can always edit straight up,
-        // and other types like LTD, LLP make their alterations elsewhere
-    }
-
-    public function createTable($orgId)
-    {
-        // @TODO perhaps make a getTableConfig($orgId) mechanism
-        if (!$this->isExceptionalOrganisation($orgId)) {
-            $this->tableConfig = 'lva-variation-people';
-        }
-        return parent::createTable($orgId);
-    }
-
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
-    {
-    }
-
     public function canModify($orgId)
     {
         return true;
@@ -54,8 +28,18 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
     // I don't think inheritance is the solution, so either wrap
     // another service or... something else
 
+    protected function getTableConfig($orgId)
+    {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return 'lva-people';
+        }
+
+        return 'lva-variation-people';
+    }
+
     public function attachMainScripts()
     {
+        // @TODO switch based on exceptional type or not
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
     }
 
@@ -66,6 +50,10 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      */
     protected function getTableData($orgId)
     {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return parent::getTableData($orgId);
+        }
+
         if (empty($this->tableData)) {
 
             $orgPeople = $this->getServiceLocator()->get('Entity\Person')
@@ -137,6 +125,10 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function delete($orgId, $id)
     {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return parent::save($orgId, $data);
+        }
+
         $appId = $this->getLvaAdapter()->getIdentifier();
 
         $appPerson = $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
@@ -155,6 +147,10 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function restore($orgId, $id)
     {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return parent::restore($orgId, $id);
+        }
+
         // @TODO methodize
         $data = $this->getTableData($orgId);
         foreach ($data as $row) {
@@ -182,6 +178,10 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function save($orgId, $data)
     {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return parent::save($orgId, $data);
+        }
+
         if (!empty($data['id'])) {
             return $this->update($orgId, $data);
         }
