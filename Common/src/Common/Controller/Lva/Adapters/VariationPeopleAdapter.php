@@ -23,11 +23,6 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
         return true;
     }
 
-    // @TODO: all methods below are duplicated across int/ext
-    // variation adapters
-    // I don't think inheritance is the solution, so either wrap
-    // another service or... something else
-
     protected function getTableConfig($orgId)
     {
         if ($this->isExceptionalOrganisation($orgId)) {
