@@ -401,5 +401,17 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         foreach ($ids as $id) {
             $this->getAdapter()->restore($orgId, $id);
         }
+
+        // we need to explicitly null the current action and child ID; these
+        // just get merged with the rest of the current route params
+        $routeParams = [
+            'action' => null,
+            'child_id' => null
+        ];
+
+        return $this->redirect()->toRouteAjax(
+            null,
+            [$this->getIdentifierIndex() => $this->getIdentifier()]
+        );
     }
 }
