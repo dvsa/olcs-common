@@ -419,15 +419,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param int $organisationId
      * @param array $applicationData
+     * @param string $trafficArea
      */
-    public function createNew($organisationId, $applicationData = array())
+    public function createNew($organisationId, $applicationData = array(), $trafficArea = null)
     {
         $licenceData = array(
             'status' => LicenceEntityService::LICENCE_STATUS_NOT_SUBMITTED,
             'organisation' => $organisationId,
         );
 
-        $licence = $this->getServiceLocator()->get('Entity\Licence')->save($licenceData);
+        $licenceService = $this->getServiceLocator()->get('Entity\Licence');
+        $licence = $licenceService->save($licenceData);
+        if ($trafficArea) {
+            $licenceService->setTrafficArea($licence['id'], $trafficArea);
+        }
 
         $applicationData = array_merge(
             $applicationData,

@@ -77,12 +77,17 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $trackingData = array(
             'application' => 4
         );
+        $trafficAreaId = 'B';
 
-        $mockLicenceService = $this->getMock('\stdClass', array('save'));
+        $mockLicenceService = $this->getMock('\stdClass', array('save', 'setTrafficArea'));
         $mockLicenceService->expects($this->once())
             ->method('save')
             ->with($licenceData)
             ->will($this->returnValue($licenceResponse));
+
+        $mockLicenceService->expects($this->once())
+            ->method('setTrafficArea')
+            ->with(7, $trafficAreaId);
 
         $mockApplicationCompletionService = $this->getMock('\stdClass', array('save'));
         $mockApplicationCompletionService->expects($this->once())
@@ -101,7 +106,10 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Application', 'POST', $applicationData)
             ->will($this->returnValue($applicationResponse));
 
-        $this->assertEquals(array('application' => 4, 'licence' => 7), $this->sut->createNew($orgId));
+        $this->assertEquals(
+            array('application' => 4, 'licence' => 7),
+            $this->sut->createNew($orgId, [], $trafficAreaId)
+        );
     }
 
     /**
