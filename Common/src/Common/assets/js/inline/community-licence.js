@@ -40,4 +40,10 @@ OLCS.ready(function() {
     label: "Restore",
     predicate: checkStatus(['cl_sts_withdrawn', 'cl_sts_suspended'])
   });
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Stop",
+    predicate: checkStatus(['cl_sts_active'])
+  });
 });

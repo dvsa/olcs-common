@@ -14,6 +14,7 @@ use Common\Service\Entity\LicenceEntityService as Licence;
 use Common\Service\Entity\ApplicationEntityService as Application;
 use Common\Service\Data\CategoryDataService;
 use CommonTest\Bootstrap;
+use CommonTest\Traits\MockFinancialStandingRatesTrait;
 
 /**
  * Application Financial Evidence Adapter Test
@@ -22,6 +23,8 @@ use CommonTest\Bootstrap;
  */
 class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 {
+    use MockFinancialStandingRatesTrait;
+
     protected $sut;
     protected $sm;
 
@@ -132,6 +135,15 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         $expected = 22600;
 
         $this->setUpData();
+
+        $this->sm->setService(
+            'Entity\FinancialStandingRate',
+            m::mock()
+                ->shouldReceive('getRatesInEffect')
+                ->andReturn($this->getFinancialStandingRates())
+                ->getMock()
+        );
+
         $this->assertEquals($expected, $this->sut->getRequiredFinance(123));
     }
 
@@ -181,6 +193,14 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
                         'goodsOrPsv' => ['id' => Licence::LICENCE_CATEGORY_PSV],
                     ]
                 )
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\FinancialStandingRate',
+            m::mock()
+                ->shouldReceive('getRatesInEffect')
+                ->andReturn($this->getFinancialStandingRates())
                 ->getMock()
         );
 

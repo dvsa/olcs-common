@@ -14,7 +14,7 @@ use Common\Service\Entity\LicenceEntityService;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationTypeOfLicenceReviewService implements ReviewServiceInterface
+class ApplicationTypeOfLicenceReviewService extends AbstractReviewService
 {
     /**
      * Format the readonly config from the given data
@@ -52,17 +52,17 @@ class ApplicationTypeOfLicenceReviewService implements ReviewServiceInterface
         return $config;
     }
 
-    protected function getOperatorLocation($data)
+    private function getOperatorLocation($data)
     {
         return $data['niFlag'] === 'N' ? 'Great Britain' : 'Northern Ireland';
     }
 
-    protected function getOperatorType($data)
+    private function getOperatorType($data)
     {
         return $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE ? 'Goods' : 'PSV';
     }
 
-    protected function getLicenceType($data)
+    private function getLicenceType($data)
     {
         return $data['licenceType']['description'];
     }
