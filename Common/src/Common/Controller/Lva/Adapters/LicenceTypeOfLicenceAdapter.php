@@ -99,36 +99,29 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
     public function confirmationAction()
     {
+        // @NOTE The behaviour of this service differs internally to externally
+        $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
+
         $request = $this->getController()->getRequest();
 
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('CreateVariation');
+        $form = $processingService->getForm($request);
 
-        if ($request->isPost()) {
+        if ($request->isPost() && $form->isValid()) {
 
-            $form->setData((array)$request->getPost());
+            $data = $processingService->getDataFromForm($form);
 
-            if ($form->isValid()) {
+            $data['licenceType'] = $this->getController()->params()->fromQuery('licence-type');
 
-                $data = [
-                    'licenceType' => $this->getController()->params()->fromQuery('licence-type')
-                ];
+            $licenceId = $this->getController()->params('licence');
 
-                $licenceId = $this->getController()->params('licence');
+            $appId = $processingService->createVariation($licenceId, $data);
 
-                $appId = $this->getServiceLocator()->get('Entity\Application')->createVariation($licenceId, $data);
+            $this->getServiceLocator()->get('Processing\VariationSection')
+                ->setApplicationId($appId)
+                ->completeSection('type_of_licence');
 
-                $this->getServiceLocator()->get('Processing\VariationSection')
-                    ->setApplicationId($appId)
-                    ->completeSection('type_of_licence');
-
-                return $this->getController()->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
-            }
+            return $this->getController()->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }
-
-        $formHelper->setFormActionFromRequest($form, $this->getController()->getRequest());
-
-        $form->get('form-actions')->get('submit')->setLabel('create-variation-button');
 
         return $form;
     }
