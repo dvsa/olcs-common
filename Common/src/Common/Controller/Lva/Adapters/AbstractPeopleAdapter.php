@@ -19,14 +19,6 @@ use Common\Service\Entity\OrganisationEntityService;
  */
 abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter implements PeopleAdapterInterface
 {
-    const ACTION_ADDED = 'A';
-    const ACTION_EXISTING = 'E';
-    const ACTION_CURRENT = 'C';
-    const ACTION_UPDATED = 'U';
-    const ACTION_DELETED = 'D';
-    const SOURCE_APPLICATION = 'A';
-    const SOURCE_ORGANISATION = 'O';
-
     protected $tableData = [];
 
     private $exceptionalTypes = [
