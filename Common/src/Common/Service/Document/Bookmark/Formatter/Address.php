@@ -9,7 +9,7 @@ namespace Common\Service\Document\Bookmark\Formatter;
  */
 class Address implements FormatterInterface
 {
-    protected static $_separator = "\n";
+    protected static $separator = "\n";
 
     public static function format(array $data)
     {
@@ -39,7 +39,7 @@ class Address implements FormatterInterface
      */
     public static function setSeparator($separator)
     {
-        static::$_separator = $separator;
+        static::$separator = $separator;
     }
 
     /**
@@ -47,6 +47,6 @@ class Address implements FormatterInterface
      */
     public static function getSeparator()
     {
-        return static::$_separator;
+        return static::$separator;
     }
 }
