@@ -32,12 +32,6 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
         return 'lva-variation-people';
     }
 
-    public function attachMainScripts()
-    {
-        // @TODO switch based on exceptional type or not
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
-    }
-
     /**
      * Extend the abstract behaviour to get the table data for the main form
      *

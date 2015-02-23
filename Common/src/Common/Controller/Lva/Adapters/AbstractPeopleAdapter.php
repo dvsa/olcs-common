@@ -69,7 +69,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     public function attachMainScripts()
     {
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
     }
 
     protected function formatTableData($results)
