@@ -300,25 +300,22 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
      */
     public function testConfirmationActionWithGet()
     {
-        $mockRequest = m::mock();
-        $mockRequest->shouldReceive('isPost')
-            ->andReturn(false);
+        // Mocks
+        $mockProcessingService = m::mock();
+        $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
+        $mockRequest = m::mock('\Zend\Http\Request');
+        $form = m::mock();
 
+        // Expectations
         $this->controller->shouldReceive('getRequest')
             ->andReturn($mockRequest);
 
-        $form = m::mock();
-        $form->shouldReceive('get->get->setLabel')
-            ->with('create-variation-button');
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false);
 
-        $mockFormHelper = m::mock();
-        $mockFormHelper->shouldReceive('createForm')
-            ->with('GenericConfirmation')
-            ->andReturn($form)
-            ->shouldReceive('setFormActionFromRequest')
-            ->with($form, $mockRequest);
-
-        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $mockProcessingService->shouldReceive('getForm')
+            ->with($mockRequest)
+            ->andReturn($form);
 
         $this->assertSame($form, $this->sut->confirmationAction());
     }
@@ -328,8 +325,30 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
      */
     public function testConfirmationActionWithPost()
     {
-        $mockRequest = m::mock();
+        // Mocks
+        $mockProcessingService = m::mock();
+        $this->sm->setService('Processing\CreateVariation', $mockProcessingService);
+        $mockRequest = m::mock('\Zend\Http\Request');
+        $form = m::mock();
+
+        // Expectations
+        $this->controller->shouldReceive('getRequest')
+            ->andReturn($mockRequest);
+
+        $mockProcessingService->shouldReceive('getForm')
+            ->with($mockRequest)
+            ->andReturn($form)
+            ->shouldReceive('createVariation')
+            ->with(3, ['licenceType' => 'xxx', 'foo' => 'bar'])
+            ->andReturn(5)
+            ->shouldReceive('getDataFromForm')
+            ->with($form)
+            ->andReturn(['foo' => 'bar']);
+
         $mockRequest->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $form->shouldReceive('isValid')
             ->andReturn(true);
 
         $this->controller->shouldReceive('getRequest')
@@ -347,13 +366,6 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
         $this->controller->shouldReceive('redirect->toRouteAjax')
             ->with('lva-variation', ['application' => 5])
             ->andReturn('REDIRECT');
-
-        $mockAppService = m::mock();
-        $mockAppService->shouldReceive('createVariation')
-            ->with(3, ['licenceType' => 'xxx'])
-            ->andReturn(5);
-
-        $this->sm->setService('Entity\Application', $mockAppService);
 
         $mockVariationProcessingService = m::mock();
         $mockVariationProcessingService->shouldReceive('setApplicationId')
