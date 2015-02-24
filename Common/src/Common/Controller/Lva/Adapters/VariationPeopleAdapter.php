@@ -25,7 +25,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     protected function getTableConfig($orgId)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->doesNotRequireDeltas($orgId)) {
             return 'lva-people';
         }
 
@@ -39,7 +39,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
      */
     protected function getTableData($orgId)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->doesNotRequireDeltas($orgId)) {
             return parent::getTableData($orgId);
         }
 
@@ -54,7 +54,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function delete($orgId, $id)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->doesNotRequireDeltas($orgId)) {
             return parent::delete($orgId, $data);
         }
 
@@ -67,7 +67,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function restore($orgId, $id)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->doesNotRequireDeltas($orgId)) {
             return parent::restore($orgId, $id);
         }
 
@@ -80,7 +80,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function save($orgId, $data)
     {
-        if ($this->isExceptionalOrganisation($orgId)) {
+        if ($this->doesNotRequireDeltas($orgId)) {
             return parent::save($orgId, $data);
         }
 
@@ -93,10 +93,19 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 
     public function getPersonPosition($orgId, $personId)
     {
+        if ($this->doesNotRequireDeltas($orgId)) {
+            return parent::getPersonPosition($orgId, $personId);
+        }
+
         $appId = $this->getLvaAdapter()->getIdentifier();
 
         return $this->getServiceLocator()
             ->get('Lva\VariationPeople')
             ->getPersonPosition($orgId, $appId, $personId);
+    }
+
+    protected function doesNotRequireDeltas($orgId)
+    {
+        return $this->isExceptionalOrganisation($orgId);
     }
 }
