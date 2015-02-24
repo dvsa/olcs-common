@@ -362,7 +362,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
-     * Check if selected licences allow to be voided /restored
+     * Check if selected licences allow to be voided
      * 
      * @param string $ids
      */
@@ -385,6 +385,28 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     }
 
     /**
+     * Check if selected licences allow to be restored
+     * 
+     * @param string $ids
+     */
+    protected function allowToRestore($ids)
+    {
+        $licenceId = $this->getLicenceId();
+        if (!$this->hasOfficeCopy($licenceId, $ids)) {
+            $officeCopy = $this->getServiceLocator()
+                ->get('Entity\CommunityLic')
+                ->getOfficeCopy($licenceId);
+            if (
+                    $officeCopy['status']['id'] == CommunityLicEntityService::STATUS_WITHDRAWN ||
+                    $officeCopy['status']['id'] == CommunityLicEntityService::STATUS_SUSPENDED
+                ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Restore action
      * 
      */
@@ -394,7 +416,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
-        if (!$this->allowToProcess($ids)) {
+        if (!$this->allowToRestore($ids)) {
             $this->addErrorMessage($translator->translate('internal.community_licence.restore_not_allowed'));
             return $this->redirectToIndex();
         }
@@ -426,9 +448,15 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $dataToRestore = [];
         foreach ($licences as $licence) {
             if ($licence['specifiedDate']) {
-                $data['status'] = CommunityLicEntityService::STATUS_ACTIVE;
+                $data = [
+                    'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                    'expiredDate' => null
+                ];
             } else {
-                $data['status'] = CommunityLicEntityService::STATUS_PENDING;
+                $data = [
+                    'status' => CommunityLicEntityService::STATUS_PENDING,
+                    'expiredDate' => null
+                ];
             }
             $dataToRestore[] = array_merge($licence, $data);
         }
@@ -538,7 +566,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         if ($type == 'withdrawal') {
             $comLicData = [
               'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
-              'expiryDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
+              'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
             ];
             $message = 'internal.community_licence.licences_withdrawn';
             $suspensionOrWithrawalService = 'Entity\CommunityLicWithdrawal';

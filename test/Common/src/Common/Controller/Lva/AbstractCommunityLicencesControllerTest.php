@@ -1049,9 +1049,10 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     /**
      * Test restore action not allowed
      * 
+     * @dataProvider statusProvider
      * @group abstractCommunityLicenceController
      */
-    public function testRestoreActionNotAllowed()
+    public function testRestoreActionNotAllowed($status)
     {
         $licenceId = 1;
         $licences = [1, 2];
@@ -1066,14 +1067,14 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
-            ->andReturn([['issueNo' => 0]])
+            ->andReturn([['issueNo' => 1]])
             ->getMock();
         $this->sm->setService('Entity\Licence', $mockLicenceService);
 
         $mockCommunityLicService = m::mock()
-            ->shouldReceive('getValidLicences')
+            ->shouldReceive('getOfficeCopy')
             ->with($licenceId)
-            ->andReturn(['Results' => [['id' => 999]]])
+            ->andReturn(['id' => 3, 'status' => ['id' => $status]])
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
@@ -1091,6 +1092,17 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn('redirect');
 
         $this->assertEquals('redirect', $this->sut->restoreAction());
+    }
+
+    /**
+     * Status provider
+     */
+    public function statusProvider()
+    {
+        return [
+            [CommunityLicEntityService::STATUS_WITHDRAWN],
+            [CommunityLicEntityService::STATUS_SUSPENDED]
+        ];
     }
 
     /**
@@ -1206,9 +1218,10 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     /**
      * Test restore action
      * 
+     * @dataProvider comLicRestoreProvider
      * @group abstractCommunityLicenceController
      */
-    public function testRestoreAction()
+    public function testRestoreAction($comLicsByIds, $comLicsToSave)
     {
         $licenceId = 1;
         $licences = [1, 2];
@@ -1223,34 +1236,16 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
-            ->andReturn(
-                [
-                    ['issueNo' => 0, 'specifiedDate' => null],
-                    ['issueNo' => 1, 'specifiedDate' => '2015-01-01']
-                ]
-            )
+            ->andReturn($comLicsByIds)
             ->getMock();
         $this->sm->setService('Entity\Licence', $mockLicenceService);
 
         $mockCommunityLicService = m::mock()
-            ->shouldReceive('getValidLicences')
+            ->shouldReceive('getOfficeCopy')
             ->with($licenceId)
-            ->andReturn(['Results' => [['id' => 1], ['id' => 2]]])
+            ->andReturn(['id' => 3, 'status' => ['id' => CommunityLicEntityService::STATUS_PENDING]])
             ->shouldReceive('multiUpdate')
-            ->with(
-                [
-                    [
-                        'status' => CommunityLicEntityService::STATUS_PENDING,
-                        'issueNo' => 0,
-                        'specifiedDate' => null
-                    ],
-                    [
-                        'status' => CommunityLicEntityService::STATUS_ACTIVE,
-                        'issueNo' => 1,
-                        'specifiedDate' =>'2015-01-01'
-                    ],
-                ]
-            )
+            ->with($comLicsToSave)
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
@@ -1288,6 +1283,55 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->andReturn('redirect');
 
         $this->assertEquals('redirect', $this->sut->restoreAction());
+    }
+
+    /**
+     * Data provider for community licences for restore
+     */
+    public function comLicRestoreProvider()
+    {
+        return [
+            'hasOfficeCopy' => [
+                [
+                    ['issueNo' => 0, 'specifiedDate' => null],
+                    ['issueNo' => 1, 'specifiedDate' => '2015-01-01']
+                ],
+                [
+                    [
+                        'status' => CommunityLicEntityService::STATUS_PENDING,
+                        'issueNo' => 0,
+                        'specifiedDate' => null,
+                        'expiredDate' => null
+                    ],
+                    [
+                        'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                        'issueNo' => 1,
+                        'specifiedDate' =>'2015-01-01',
+                        'expiredDate' => null
+                    ]
+                ],
+            ],
+            'noOfficeCopyButStatusIsPending' => [
+                [
+                    ['issueNo' => 1, 'specifiedDate' => null],
+                    ['issueNo' => 2, 'specifiedDate' => '2015-01-01']
+                ],
+                [
+                    [
+                        'status' => CommunityLicEntityService::STATUS_PENDING,
+                        'issueNo' => 1,
+                        'specifiedDate' => null,
+                        'expiredDate' => null
+                    ],
+                    [
+                        'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                        'issueNo' => 2,
+                        'specifiedDate' =>'2015-01-01',
+                        'expiredDate' => null
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**
@@ -1550,13 +1594,13 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
                         'id' => 1,
                         'version' => 1,
                         'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
-                        'expiryDate' => '2015-01-01'
+                        'expiredDate' => '2015-01-01'
                     ],
                     [
                         'id' => 2,
                         'version' => 2,
                         'status' => CommunityLicEntityService::STATUS_WITHDRAWN,
-                        'expiryDate' => '2015-01-01'
+                        'expiredDate' => '2015-01-01'
                     ]
                 ],
                 'Entity\CommunityLicWithdrawal',

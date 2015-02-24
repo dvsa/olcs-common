@@ -341,6 +341,44 @@ return array(
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
         ),
+        'BusRegGrantNewPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\BusReg',
+            'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\BusRegServiceDesignation',
+            'Common\Filter\Publication\BusRegServiceTypes',
+            'Common\Filter\Publication\BusRegText1',
+            'Common\Filter\Publication\BusRegText2',
+            'Common\Filter\Publication\BusRegGrantNewText3',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'BusRegGrantVarPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\BusReg',
+            'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\BusRegServiceDesignation',
+            'Common\Filter\Publication\BusRegVarReason',
+            'Common\Filter\Publication\BusRegText1',
+            'Common\Filter\Publication\BusRegText2',
+            'Common\Filter\Publication\BusRegGrantVarText3',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
+        'BusRegGrantCancelPublicationFilter' => array(
+            'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\Publication',
+            'Common\Filter\Publication\BusReg',
+            'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\BusRegServiceDesignation',
+            'Common\Filter\Publication\BusRegText1',
+            'Common\Filter\Publication\BusRegText2',
+            'Common\Filter\Publication\BusRegGrantCancelText3',
+            'Common\Filter\Publication\PoliceData',
+            'Common\Filter\Publication\Clean'
+        ),
     ),
     'file_uploader' => array(
         'default' => 'ContentStore',

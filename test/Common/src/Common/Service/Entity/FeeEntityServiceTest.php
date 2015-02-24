@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\FeeEntityService;
+use Mockery as m;
 
 /**
  * Fee Entity Service Test
@@ -48,7 +49,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
-     * @group entity_services
+     * @group feeService
      */
     public function testCancelForLicence()
     {
@@ -66,7 +67,11 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $results = array(
             'Results' => array(
                 array(
-                    'id' => 7
+                    'id' => 7,
+                    'task' => array(
+                        'id' => 1,
+                        'version' => 1
+                    )
                 )
             )
         );
@@ -79,11 +84,24 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
                 '_OPTIONS_' => array('force' => true)
             )
         );
+        $taskData = array(
+            array(
+                'id' => 1,
+                'isClosed' => 'Y',
+                'version' => 1
+            )
+        );
 
         $this->expectedRestCallInOrder('Fee', 'GET', $query)
             ->will($this->returnValue($results));
 
         $this->expectedRestCallInOrder('Fee', 'PUT', $data);
+
+        $mockTaskService = m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with($taskData)
+            ->getMock();
+        $this->sm->setService('Entity\Task', $mockTaskService);
 
         $this->sut->cancelForLicence($id);
     }

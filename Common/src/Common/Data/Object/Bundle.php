@@ -25,17 +25,33 @@ class Bundle implements \JsonSerializable
     protected $criteria = [];
 
     /**
+     * @var bool
+     */
+    private $initialised = false;
+
+    /**
      * Override in child classes to provide initialization
      *
      * @param ServiceLocatorInterface $serviceLocator
      */
     public function init(ServiceLocatorInterface $serviceLocator)
     {
+        if (!$this->initialised) {
+            $this->initialised = true;
+            $this->doInit($serviceLocator);
+        }
+    }
+
+    /**
+     * Override in extending classes
+     */
+    protected function doInit(ServiceLocatorInterface $serviceLocator)
+    {
         //
     }
 
     /**
-     * Addsa a child to the bundle
+     * Adds a child to the bundle
      *
      * @param $name
      * @param Bundle $bundle
