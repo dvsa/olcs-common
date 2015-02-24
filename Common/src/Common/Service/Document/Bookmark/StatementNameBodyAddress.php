@@ -42,10 +42,6 @@ class StatementNameBodyAddress extends DynamicBookmark
 
         $separator = "\n";
 
-        $oldSep = AddressFormatter::getSeparator();
-
-        AddressFormatter::setSeparator($separator);
-
         $string = implode(
             $separator,
             array_filter(
@@ -56,8 +52,6 @@ class StatementNameBodyAddress extends DynamicBookmark
                 ]
             )
         );
-
-        AddressFormatter::setSeparator($oldSep);
 
         return $string;
     }

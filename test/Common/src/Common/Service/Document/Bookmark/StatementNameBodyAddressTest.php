@@ -53,6 +53,8 @@ class StatementNameBodyAddressTest extends \PHPUnit_Framework_TestCase
 
         $bookmark->setData($data);
 
-        $this->assertEquals('James Smith, Some Body or Business, A1, A2, A3, A4, A5, A6', $bookmark->render());
+        $result = "James Smith\nSome Body or Business\nA1\nA2\nA3\nA4\nA5\nA6";
+
+        $this->assertEquals($result, $bookmark->render());
     }
 }
