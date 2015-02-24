@@ -31,8 +31,13 @@ class BusRegText2 extends AbstractPublicationFilter
             $licence .= " " . sprintf($this->tradingAs, $latestTradingName['name']);
         }
 
+        //licence address
+        if ($publication->offsetExists('licenceAddress')) {
+            $licence .= ", " . $publication->offsetGet('licenceAddress');
+        }
+
         $newData = [
-            'text2' => $licence,
+            'text2' => strtoupper($licence),
         ];
 
         $publication = $this->mergeData($publication, $newData);

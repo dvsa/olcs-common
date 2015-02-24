@@ -30,6 +30,9 @@ class Licence extends Bundle
         $cases->addChild('appeals', $appeals)
               ->addChild('stays', $stays);
 
+        $correspondenceCd = new Bundle();
+        $correspondenceCd->addChild('address');
+
         $organisation = new Bundle();
         $organisation->addChild('organisationPersons')
                      ->addChild('tradingNames');
@@ -39,6 +42,7 @@ class Licence extends Bundle
              ->addChild('goodsOrPsv')
              ->addChild('licenceType')
              ->addChild('trafficArea')
-             ->addChild('organisation', $organisation);
+             ->addChild('organisation', $organisation)
+             ->addChild('correspondenceCd', $correspondenceCd);
     }
 }
