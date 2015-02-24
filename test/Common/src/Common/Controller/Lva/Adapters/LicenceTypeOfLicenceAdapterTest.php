@@ -339,7 +339,7 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
             ->with($mockRequest)
             ->andReturn($form)
             ->shouldReceive('createVariation')
-            ->with(3, ['licenceType' => 'xxx', 'foo' => 'bar'])
+            ->with(3, ['licenceType' => 'xxx', 'foo' => 'barDid '])
             ->andReturn(5)
             ->shouldReceive('getDataFromForm')
             ->with($form)
