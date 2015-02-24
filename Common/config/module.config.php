@@ -24,6 +24,9 @@ return array(
         )
     ),
     'controllers' => array(
+        'initializers' => array(
+            'Common\Controller\Crud\Initializer'
+        ),
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
@@ -187,6 +190,7 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
             'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',

@@ -25,6 +25,11 @@ class FinancialStandingRateEntityService extends AbstractEntityService
         'children' => [ 'goodsOrPsv', 'licenceType' ]
     ];
 
+    public function getFullList()
+    {
+        return $this->getAll(null, $this->ratesBundle);
+    }
+
     /**
      * Get all current rates
      */
