@@ -49,6 +49,7 @@ class LicencePeopleAdapter extends AbstractPeopleAdapter
 
     public function canModify($orgId)
     {
-        return true;
+        // internally we can modify simple orgs but not most
+        return $this->isExceptionalOrganisation($orgId);
     }
 }

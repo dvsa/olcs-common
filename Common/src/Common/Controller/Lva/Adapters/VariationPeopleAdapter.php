@@ -55,7 +55,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
     public function delete($orgId, $id)
     {
         if ($this->isExceptionalOrganisation($orgId)) {
-            return parent::save($orgId, $data);
+            return parent::delete($orgId, $data);
         }
 
         $appId = $this->getLvaAdapter()->getIdentifier();
