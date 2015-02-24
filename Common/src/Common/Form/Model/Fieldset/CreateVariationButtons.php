@@ -8,7 +8,7 @@ use Zend\Form\Annotation as Form;
  * @Form\Name("form-actions")
  * @Form\Attributes({"class":"actions-container"})
  */
-class CreateConfirmationButtons
+class CreateVariationButtons
 {
     /**
      * @Form\Attributes({"type":"submit","class":"action--primary large"})
