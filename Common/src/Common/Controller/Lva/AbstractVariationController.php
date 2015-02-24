@@ -7,31 +7,23 @@
  */
 namespace Common\Controller\Lva;
 
+use Zend\Form\Form;
+
 /**
  * Abstract Variation Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AbstractVariationController extends AbstractController
+abstract class AbstractVariationController extends AbstractController
 {
+    use Traits\CreateVariationTrait;
+
     public function indexAction()
     {
-        // @NOTE The behaviour of this service differs internally to externally
-        $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
+        $form = $this->processForm();
 
-        $request = $this->getRequest();
-
-        $form = $processingService->getForm($request);
-
-        if ($request->isPost() && $form->isValid()) {
-
-            $data = $processingService->getDataFromForm($form);
-
-            $licenceId = $this->params('licence');
-
-            $appId = $processingService->createVariation($licenceId, $data);
-
-            return $this->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
+        if (! ($form instanceof Form)) {
+            return $form;
         }
 
         return $this->render(

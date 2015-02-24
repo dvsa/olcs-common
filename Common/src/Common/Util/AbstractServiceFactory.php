@@ -72,15 +72,6 @@ class AbstractServiceFactory implements AbstractFactoryInterface
                     return $className;
                 }
             }
-
-            return false;
-        }
-
-        foreach ($namespaces as $namespace) {
-            $className = $namespace . $name;
-            if (class_exists($className)) {
-                return $className;
-            }
         }
 
         return false;

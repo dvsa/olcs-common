@@ -119,7 +119,14 @@ class FormErrors extends AbstractHelper
     protected function formatMessage($message, $element)
     {
         if ($message instanceof ValidationMessageInterface) {
-            return $message->getMessage();
+
+            $msg = $message->getMessage();
+
+            if ($message->shouldTranslate()) {
+                $msg = $this->translate($msg);
+            }
+
+            return $msg;
         }
 
         // We translate the initial message, as they are not always translated before they get here
