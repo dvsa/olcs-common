@@ -14,7 +14,7 @@ class TransportManager extends Bundle
     /**
      * @param ServiceLocatorInterface $serviceLocator
      */
-    public function init(ServiceLocatorInterface $serviceLocator)
+    protected function doInit(ServiceLocatorInterface $serviceLocator)
     {
         $homeCd = new Bundle();
         $homeCd->addChild('person');

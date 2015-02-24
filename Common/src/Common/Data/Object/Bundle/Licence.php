@@ -16,7 +16,7 @@ class Licence extends Bundle
      *
      * @param ServiceLocatorInterface $serviceLocator
      */
-    public function init(ServiceLocatorInterface $serviceLocator)
+    protected function doInit(ServiceLocatorInterface $serviceLocator)
     {
         $appeals = new Bundle();
         $appeals->addChild('outcome')
