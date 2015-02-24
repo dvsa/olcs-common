@@ -14,7 +14,7 @@ class Role extends Bundle
     /**
      * @param ServiceLocatorInterface $serviceLocator
      */
-    public function init(ServiceLocatorInterface $serviceLocator)
+    protected function doInit(ServiceLocatorInterface $serviceLocator)
     {
         $permission = new Bundle();
         $permission->addChild('permission');

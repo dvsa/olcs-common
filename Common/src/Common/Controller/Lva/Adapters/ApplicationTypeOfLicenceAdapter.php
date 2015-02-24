@@ -10,6 +10,7 @@ namespace Common\Controller\Lva\Adapters;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\ApplicationCompletionEntityService;
+use Common\Service\Entity\TaskEntityService;
 
 /**
  * Application Type Of Licence Adapter
@@ -84,8 +85,11 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
 
+        $taskId = $this->createTask($applicationId, $licenceId);
+
         $this->getServiceLocator()->get('Processing\Application')
-            ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_APP);
+            ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_APP, $taskId);
+
     }
 
     public function confirmationAction()
@@ -149,7 +153,7 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
     protected function removeApplication($applicationId)
     {
-        $this->getServiceLocator()->get('Entity\Task')->deleteList(['application' => $applicationId]);
+        $this->getServiceLocator()->get('Entity\Task')->closeByQuery(['application' => $applicationId]);
         $this->getServiceLocator()->get('Entity\Application')->delete($applicationId);
     }
 
@@ -178,5 +182,32 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
             ->getLicenceIdForApplication($applicationId);
 
         $this->getServiceLocator()->get('Processing\Application')->cancelFees($licenceId);
+    }
+
+    /**
+     * Create a task for the new fee
+     * 
+     * @param int $applicationId
+     * @param int $licenceId
+     * @return int|null
+     */
+    protected function createTask($applicationId, $licenceId)
+    {
+        $translator = $this->getServiceLocator()->get('translator');
+        $currentUser = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
+        $task = [
+            'category' => TaskEntityService::CATEGORY_APPLICATION,
+            'subCategory' => TaskEntityService::SUBCATEGORY_FEE_DUE,
+            'description' => $translator->translate('internal.new_application.task_description'),
+            'actionDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'assignedToUser' => $currentUser['id'],
+            'assignedToTeam' => $currentUser['team']['id'],
+            'isClosed' => 0,
+            'urgent' => 0,
+            'application' => $applicationId,
+            'licence' => $licenceId
+        ];
+        $result = $this->getServiceLocator()->get('Entity\Task')->save($task);
+        return isset($result['id']) ? $result['id'] : null;
     }
 }

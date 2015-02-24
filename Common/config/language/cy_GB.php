@@ -936,6 +936,7 @@ return array(
     'internal.community_licence.form_add.ok' => 'W OK',
     'internal.community_licence.licences_created' => 'W The community licences have been created',
     'internal.community_licence.licences_restored' => 'W The selected licences have been restored',
+    'internal.new_application.task_description' => 'W Application Fee Due',
     'internal.community_licence.licences_suspended' => 'W The licences have been suspended',
     'internal.community_licence.licences_voided' => 'W The selected licences have been voided ',
     'internal.community_licence.licences_withdrawn' => 'W The licences have been withdrawn',

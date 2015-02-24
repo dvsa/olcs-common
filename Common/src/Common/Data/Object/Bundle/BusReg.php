@@ -14,7 +14,7 @@ class BusReg extends Bundle
     /**
      * @param ServiceLocatorInterface $serviceLocator
      */
-    public function init(ServiceLocatorInterface $serviceLocator)
+    protected function doInit(ServiceLocatorInterface $serviceLocator)
     {
         $this->addChild('licence', $serviceLocator->get('Licence'));
         $this->addChild('status');
@@ -22,6 +22,11 @@ class BusReg extends Bundle
         $this->addChild('withdrawnReason');
         $this->addChild('parent');
         $this->addChild('busNoticePeriod');
+        $this->addChild('busServiceTypes');
+        $this->addChild('otherServices');
+        $this->addChild('trafficAreas');
+        $this->addChild('variationReasons');
+        $this->addChild('localAuthoritys');
     }
 
     /**
