@@ -24,18 +24,20 @@ class TaskOwner implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        $ownerParts = [];
+        $owner = '';
 
         if (!empty($data['teamName'])) {
-            $ownerParts[] = $data['teamName'];
+            $owner = $data['teamName'];
         }
+
+        $data['ownerName'] = trim($data['ownerName']);
 
         if (empty($data['ownerName'])) {
-            $ownerParts[] = 'Unassigned';
+            $user = 'Unassigned';
         } else {
-            $ownerParts[] = $data['ownerName'];
+            $user = $data['ownerName'];
         }
 
-        return implode(': ', $ownerParts);
+        return $owner . ' (' . $user . ')';
     }
 }
