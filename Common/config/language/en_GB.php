@@ -1769,5 +1769,11 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'conditions-and-undertakings-conditions' => 'Conditions',
+    'conditions-and-undertakings-undertakings' => 'Undertakings',
+    'tm-responsibilities-licences' => 'Licences',
+    'tm-responsibilities-applications' => 'Applications',
+    'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
+    'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences'
     // Potentially unused (Not found with grep)
 );
