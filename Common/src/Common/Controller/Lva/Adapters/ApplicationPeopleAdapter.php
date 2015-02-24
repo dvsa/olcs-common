@@ -16,22 +16,22 @@ use Zend\Form\Form;
  */
 class ApplicationPeopleAdapter extends VariationPeopleAdapter
 {
-    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
+    public function alterFormForOrganisation(Form $form, $table, $orgId)
     {
         if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
             return;
         }
 
-        return parent::alterFormForOrganisation($form, $table, $orgId, $orgType);
+        return parent::alterFormForOrganisation($form, $table, $orgId);
     }
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
     {
         if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
             return;
         }
 
-        return parent::alterAddOrEditFormForOrganisation($form, $orgId, $orgType);
+        return parent::alterAddOrEditFormForOrganisation($form, $orgId);
     }
 
     public function canModify($orgId)
@@ -45,6 +45,10 @@ class ApplicationPeopleAdapter extends VariationPeopleAdapter
 
     protected function doesNotRequireDeltas($orgId)
     {
+        if ($this->isExceptionalOrganisation($orgId)) {
+            return true;
+        }
+
         $appId = $this->getLvaAdapter()->getIdentifier();
 
         $appOrgPeople = $this->getServiceLocator()

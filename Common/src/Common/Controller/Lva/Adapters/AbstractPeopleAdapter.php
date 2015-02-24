@@ -28,15 +28,15 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     private $organisation;
 
-    public function addMessages($orgType)
+    public function addMessages($orgId)
     {
     }
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
+    public function alterFormForOrganisation(Form $form, $table, $orgId)
     {
     }
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
     {
     }
 

@@ -55,7 +55,7 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
     public function delete($orgId, $id)
     {
         if ($this->doesNotRequireDeltas($orgId)) {
-            return parent::delete($orgId, $data);
+            return parent::delete($orgId, $id);
         }
 
         $appId = $this->getLvaAdapter()->getIdentifier();

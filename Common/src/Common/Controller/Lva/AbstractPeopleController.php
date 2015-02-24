@@ -40,7 +40,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->get('Entity\Organisation')
             ->getType($orgId);
 
-        $adapter->addMessages($orgData['type']['id']);
+        $adapter->addMessages($orgId);
 
         if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
             return $this->handleSoleTrader($orgId, $orgData);
@@ -78,7 +78,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->alterForm($form, $table, $orgData);
 
-        $adapter->alterFormForOrganisation($form, $table, $orgId, $orgData['type']['id']);
+        $adapter->alterFormForOrganisation($form, $table, $orgId);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
@@ -107,7 +107,7 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
 
         $this->alterFormForLva($form);
 
-        $adapter->alterAddOrEditFormForOrganisation($form, $orgId, OrganisationEntityService::ORG_TYPE_SOLE_TRADER);
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
@@ -174,6 +174,19 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             ->setValue($translator->translate($guidanceLabel));
     }
 
+    private function alterCrudForm($form, $mode, $orgData)
+    {
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
+        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
+            // otherwise we're not interested in position at all, bin it off
+            $this->getServiceLocator()->get('Helper\Form')
+                ->remove($form, 'data->position');
+        }
+    }
+
     /**
      * Add person action
      */
@@ -231,17 +244,9 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Person', $request);
 
-        if ($mode !== 'add') {
-            $form->get('form-actions')->remove('addAnother');
-        }
+        $this->alterCrudForm($form, $mode, $orgData);
 
-        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
-            // otherwise we're not interested in position at all, bin it off
-            $this->getServiceLocator()->get('Helper\Form')
-                ->remove($form, 'data->position');
-        }
-
-        $adapter->alterAddOrEditFormForOrganisation($form, $orgId, $orgData['type']['id']);
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId);
 
         $form->setData($data);
 

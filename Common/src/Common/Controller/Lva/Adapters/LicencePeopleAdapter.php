@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva\Adapters;
 
 use Zend\Form\Form;
-use Common\Controller\Lva\Interfaces\PeopleAdapterInterface;
 use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
 
 /**
@@ -18,9 +17,9 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  */
 class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
-    public function addMessages($orgType)
+    public function addMessages($orgId)
     {
-        if ($this->isExceptionalType($orgType)) {
+        if ($this->isExceptionalOrganisation($orgId)) {
             return;
         }
 
@@ -29,27 +28,30 @@ class LicencePeopleAdapter extends AbstractPeopleAdapter
             ->addVariationMessage($this->getController());
     }
 
-    public function alterFormForOrganisation(Form $form, $table, $orgId, $orgType)
+    public function alterFormForOrganisation(Form $form, $table, $orgId)
     {
-        if ($this->isExceptionalType($orgType)) {
+        if ($this->isExceptionalOrganisation($orgId)) {
             return;
         }
 
         return $this->getServiceLocator()->get('Lva\People')->lockOrganisationForm($form, $table);
     }
 
-    public function alterAddOrEditFormForOrganisation(Form $form, $orgId, $orgType)
+    public function alterAddOrEditFormForOrganisation(Form $form, $orgId)
     {
-        if ($this->isExceptionalType($orgType)) {
+        if ($this->isExceptionalOrganisation($orgId)) {
             return;
         }
 
-        return $this->getServiceLocator()->get('Lva\People')->lockPersonForm($form, $orgType);
+        return $this->getServiceLocator()->get('Lva\People')->lockPersonForm(
+            $form,
+            $this->getOrganisationType($orgId)
+        );
     }
 
     public function canModify($orgId)
     {
-        // internally we can modify simple orgs but not most
+        // internally we can modify simple orgs only
         return $this->isExceptionalOrganisation($orgId);
     }
 }
