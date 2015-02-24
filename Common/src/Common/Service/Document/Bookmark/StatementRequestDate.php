@@ -8,7 +8,7 @@ namespace Common\Service\Document\Bookmark;
  */
 class StatementRequestDate extends StatementFlatAbstract
 {
-    const FORMATTER = null;
+    const FORMATTER = 'Date';
     const FIELD  = 'requestedDate';
     const SERVICE = 'Statement';
     const SRCH_FLD_KEY = 'id';
