@@ -80,7 +80,6 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
                 ->deleteByApplicationAndOriginalPersonId($appId, $id);
         }
 
-
         throw new \Exception('Can\'t restore this record');
     }
 

@@ -88,8 +88,8 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             ->with('variation-application-message', ['URL'])
             ->andReturn('TRANSLATED');
 
-        $mockFlashMessenger->shouldReceive('addCurrentMessage')
-            ->with('TRANSLATED', 'info');
+        $mockFlashMessenger->shouldReceive('addCurrentInfoMessage')
+            ->with('TRANSLATED');
 
         $this->sut->addMessages();
     }

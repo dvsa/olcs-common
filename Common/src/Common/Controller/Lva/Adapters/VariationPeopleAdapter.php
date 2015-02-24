@@ -18,11 +18,6 @@ class VariationPeopleAdapter extends AbstractPeopleAdapter
 {
     protected $lva = 'variation';
 
-    public function canModify($orgId)
-    {
-        return true;
-    }
-
     protected function getTableConfig($orgId)
     {
         if ($this->doesNotRequireDeltas($orgId)) {

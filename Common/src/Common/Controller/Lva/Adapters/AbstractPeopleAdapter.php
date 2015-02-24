@@ -77,8 +77,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
             if (isset($row['position'])) {
                 $row['person']['position'] = $row['position'];
             }
-            // @TODO: move this out into the variation formatTableData
-            // call perhaps? Then again, all this stuff is a bit nasty...
+            // ... and action too
             if (isset($row['action'])) {
                 $row['person']['action'] = $row['action'];
             }

@@ -34,22 +34,13 @@ class ApplicationPeopleAdapter extends VariationPeopleAdapter
         return parent::alterAddOrEditFormForOrganisation($form, $orgId);
     }
 
-    public function canModify($orgId)
-    {
-        if (!$this->getServiceLocator()->get('Entity\Organisation')->hasInForceLicences($orgId)) {
-            return true;
-        }
-
-        return parent::canModify($orgId);
-    }
-
     protected function doesNotRequireDeltas($orgId)
     {
         if ($this->isExceptionalOrganisation($orgId)) {
             return true;
         }
 
-        $appId = $this->getLvaAdapter()->getIdentifier();
+        $appId = $this->getApplicationAdapter()->getIdentifier();
 
         $appOrgPeople = $this->getServiceLocator()
             ->get('Entity\ApplicationOrganisationPerson')
