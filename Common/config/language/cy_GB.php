@@ -936,17 +936,19 @@ return array(
     'internal.community_licence.form_add.ok' => 'W OK',
     'internal.community_licence.licences_created' => 'W The community licences have been created',
     'internal.community_licence.licences_restored' => 'W The selected licences have been restored',
-    'internal.new_application.task_description' => 'W Application Fee Due',
     'internal.community_licence.licences_suspended' => 'W The licences have been suspended',
+    'internal.community_licence.licences_voided' => 'W The selected licences have been voided ',
     'internal.community_licence.licences_withdrawn' => 'W The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'W The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'W You cannot restore these licences without restoring the
         office copy',
     'internal.community_licence.stop_not_allowed' => 'W Please void, withdraw or suspend the other pending/active
         licences before the office copy',
-    'internal.community_licence.licences_voided' => 'W The selected licences have been voided ',
     'internal.community_licence.void_not_allowed' => 'W You cannot void the office copy without voiding all the
         licences',
+    'internal.documents.delete.delete_message' => 'W Are you sure you want to permanently delete this record?',
+    'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
+    'internal.new_application.task_description' => 'W Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'W Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
     'internal.transport-manager.competences.form.qualification-type' => 'W Qualification type',
