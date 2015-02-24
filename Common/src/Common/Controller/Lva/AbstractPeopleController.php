@@ -235,7 +235,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             $form->get('form-actions')->remove('addAnother');
         }
 
-        // @TODO: can we put this in alterAddOrEditFormForOrganisation?
         if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
             // otherwise we're not interested in position at all, bin it off
             $this->getServiceLocator()->get('Helper\Form')

@@ -67,14 +67,8 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
 
     public function restorePerson($orgId, $id, $appId)
     {
-        // @TODO methodize
         $data = $this->getTableData($orgId, $appId);
-        foreach ($data as $row) {
-            if ($row['id'] == $id) {
-                $action = $row['action'];
-                break;
-            }
-        }
+        $action = $this->extractAction($id, $data);
 
         if ($action === self::ACTION_DELETED) {
             return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
@@ -101,40 +95,22 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
 
     private function update($orgId, $data, $appId)
     {
-        $appPerson = $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
-            ->getByApplicationAndPersonId($appId, $data['id']);
+        $appOrgService = $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson');
+
+        $appPerson = $appOrgService->getByApplicationAndPersonId($appId, $data['id']);
 
         if ($appPerson) {
             // save direct, that's fine...
-
-            // @TODO: if we're org type other we need to update
-            // the corresponding appOrgPerson record with $data['position']
-            return $this->getServiceLocator()->get('Entity\Person')->save($data);
+            return $appOrgService->updatePerson($appPerson, $data);
         }
 
-        /**
-         * An update of an existing person means we actually create a new
-         * application person which links back to the original person
-         */
-        $originalId = $data['id'];
-        unset($data['id']);
-
-        $newPerson = $this->getServiceLocator()->get('Entity\Person')->save($data);
-
-        // @TODO if org type other we need to persist $data['position'] here
-        // too
-        $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
-            ->variationUpdate($newPerson['id'], $orgId, $appId, $originalId);
+        return $appOrgService->variationUpdate($orgId, $appId, $data);
     }
 
     private function add($orgId, $data, $appId)
     {
-        $result = $this->getServiceLocator()->get('Entity\Person')->save($data);
-
-        // @TODO if org type other we need to persist $data['position'] here
-        // too
         $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')
-            ->variationCreate($result['id'], $orgId, $appId);
+            ->variationCreate($orgId, $appId, $data);
     }
 
     /**
@@ -200,5 +176,16 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
         }
 
         return $person['position'];
+    }
+
+    private function extractAction($targetId, $data)
+    {
+        foreach ($data as $row) {
+            if ($row['id'] == $targetId) {
+                return $row['action'];
+            }
+        }
+
+        return null;
     }
 }

@@ -114,37 +114,65 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         }
     }
 
-    public function variationCreate($personId, $orgId, $applicationId)
+    public function variationCreate($orgId, $applicationId, $data)
     {
-        return $this->variationAction($personId, $orgId, $applicationId, 'A');
+        return $this->variationPersist($orgId, $applicationId, $data, 'A');
     }
 
-    public function variationUpdate($personId, $orgId, $applicationId, $originalId)
+    public function variationUpdate($orgId, $applicationId, $data)
     {
-        return $this->variationAction($personId, $orgId, $applicationId, 'U', $originalId);
+        return $this->variationPersist($orgId, $applicationId, $data, 'U');
     }
 
     public function variationDelete($personId, $orgId, $applicationId)
     {
-        return $this->variationAction($personId, $orgId, $applicationId, 'D');
-    }
-
-    private function variationAction($personId, $orgId, $applicationId, $action, $originalId = null)
-    {
         $data = [
-            'action' => $action,
+            'action' => 'D',
             'organisation' => $orgId,
             'application' => $applicationId,
             'person' => $personId
         ];
 
-        if (isset($originalId)) {
-            $data['originalPerson'] = $originalId;
-        }
-
-        return $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson')->save($data);
+        return $this->save($data);
     }
 
+    private function variationPersist($orgId, $applicationId, $data, $action)
+    {
+        $variationData = [
+            'action' => $action,
+            'organisation' => $orgId,
+            'application' => $applicationId,
+            'originalPerson' => isset($data['id']) ? $data['id'] : null,
+            'position' => isset($data['position']) ? $data['position'] : null
+        ];
+
+        unset($data['id']);
+        $newPerson = $this->getServiceLocator()->get('Entity\Person')->save($data);
+
+        $variationData['person'] = $newPerson['id'];
+
+        return $this->save($variationData);
+    }
+
+    public function updatePerson($appData, $personData)
+    {
+        if (isset($personData['position'])) {
+            $appData = [
+                'id' => $appData['id'],
+                'version' => $appData['version'],
+                'position' => $personData['position']
+            ];
+            // @TODO getting version conflicts without force here; surely the version
+            // is fine?
+            $this->forceUpdate($appData['id'], $appData);
+        }
+        return $this->getServiceLocator()->get('Entity\Person')->save($personData);
+    }
+
+    /**
+     * Deletes not only the app org person but the linked
+     * person entity too
+     */
     public function deletePerson($id, $personId)
     {
         $this->delete($id);
