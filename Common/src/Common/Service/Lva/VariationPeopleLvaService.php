@@ -181,7 +181,7 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
     private function extractAction($targetId, $data)
     {
         foreach ($data as $row) {
-            if ($row['id'] == $targetId) {
+            if ($row['person']['id'] == $targetId) {
                 return $row['action'];
             }
         }
