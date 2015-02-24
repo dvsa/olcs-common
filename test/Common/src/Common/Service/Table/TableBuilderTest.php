@@ -359,6 +359,29 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test loadData with 1 row of data
+     */
+    public function testLoadDataWithOneRow()
+    {
+        $data = array(
+            array('foo' => 'bar'),
+        );
+
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setVariable('title', 'Things');
+        $table->setVariable('titleSingular', 'Thing');
+
+        $table->loadData($data);
+
+        $this->assertEquals($data, $table->getRows());
+
+        $this->assertEquals(1, $table->getTotal());
+
+        $this->assertEquals('Thing', $table->getVariable('title'));
+    }
+
+    /**
      * Test loadData with result data
      */
     public function testLoadDataWithResultData()

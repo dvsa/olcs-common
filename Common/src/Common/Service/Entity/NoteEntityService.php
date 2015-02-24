@@ -29,7 +29,7 @@ class NoteEntityService extends AbstractEntityService
      */
     public function getNotesList($filters)
     {
-        $results = $this->getAll($filters, $this->bundle);
+        $results = $this->get($filters, $this->bundle);
 
         return $results['Results'];
     }
