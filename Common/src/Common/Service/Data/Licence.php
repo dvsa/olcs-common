@@ -189,6 +189,14 @@ class Licence extends AbstractData implements AddressProviderInterface
                         )
                     )
                 ),
+                'correspondenceCd' => array(
+                    'properties' => 'ALL',
+                    'children' => array(
+                        'address' => array(
+                            'properties' => 'ALL'
+                        )
+                    )
+                ),
                 'status' => array(
                     'properties' => array('id', 'description')
                 ),

@@ -23,6 +23,14 @@ class HoursPerDay extends Text implements InputProviderInterface
     protected function getValidators()
     {
         return array(
+            new ZendValidator\Digits(
+                [
+                    'messages' => [
+                        ZendValidator\Digits::NOT_DIGITS =>
+                        ucfirst(substr($this->getName(), -3)) . " must be a whole number"
+                    ]
+                ]
+            ),
             new ZendValidator\Between(
                 [
                     'min' => 0,
@@ -32,7 +40,7 @@ class HoursPerDay extends Text implements InputProviderInterface
                         ucfirst(substr($this->getName(), -3)) . " must be between '%min%' and '%max%', inclusively"
                     ]
                 ]
-            )
+            ),
         );
     }
 }
