@@ -22,7 +22,7 @@ class LicenceAddress extends AbstractPublicationFilter
     {
         $licenceData = $publication->offsetGet('licenceData');
 
-        if (!empty($licenceData['contactDetails'])) {
+        if (!empty($licenceData['correspondenceCd'])) {
 
             $addressFields = [
                 'addressLine1',
@@ -34,7 +34,7 @@ class LicenceAddress extends AbstractPublicationFilter
             ];
 
             $populatedFields = [];
-            $address = $licenceData['contactDetails'][0]['address'];
+            $address = $licenceData['correspondenceCd']['address'];
 
             foreach ($addressFields as $field) {
                 if (isset($address[$field]) && trim($address[$field]) != '') {
