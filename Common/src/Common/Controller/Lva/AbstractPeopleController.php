@@ -223,7 +223,8 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
             if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
                 // we need to pre-populate the user's position from the org for
                 // 'other' business types
-                $data['position'] = $adapter->getPersonPosition($orgId, $this->params('child_id'));
+                // @TODO can we wrap this up in formatCrudDataForForm?
+                $data['data']['position'] = $adapter->getPersonPosition($orgId, $this->params('child_id'));
             }
         }
 
