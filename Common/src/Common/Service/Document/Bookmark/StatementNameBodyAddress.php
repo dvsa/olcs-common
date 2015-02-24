@@ -40,7 +40,7 @@ class StatementNameBodyAddress extends DynamicBookmark
         $address = isset($this->data['requestorsContactDetails']['address'])
                  ? $this->data['requestorsContactDetails']['address'] : [];
 
-        $separator = ', ';
+        $separator = "\n";
 
         $oldSep = AddressFormatter::getSeparator();
 
