@@ -27,7 +27,7 @@ class TaskOwner implements FormatterInterface
         $owner = '';
 
         if (!empty($data['teamName'])) {
-            $owner = $data['teamName'];
+            $owner = $data['teamName'] . ' ';
         }
 
         $data['ownerName'] = trim($data['ownerName']);
@@ -38,6 +38,6 @@ class TaskOwner implements FormatterInterface
             $user = $data['ownerName'];
         }
 
-        return $owner . ' (' . $user . ')';
+        return $owner . '(' . $user . ')';
     }
 }
