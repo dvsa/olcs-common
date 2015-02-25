@@ -1,6 +1,16 @@
 <?php
 
 return array(
+    'financial-standing-rate-element-goodsOrPsv' => 'Operator type',
+    'financial-standing-rate-element-licenceType' => 'Licence type',
+    'financial-standing-rate-element-firstVehicleRate' => 'First vehicle rate',
+    'financial-standing-rate-element-additionalVehicleRate' => 'Additional vehicle rate',
+    'financial-standing-rate-element-effectiveDate' => 'Effective date',
+    'financial-standing-rate-form-edit' => 'Edit financial standing rate',
+    'financial-standing-rate-form-add' => 'Add financial standing rate',
+    'record-saved-successfully' => 'Record saved successfully',
+    'financial-standing-rate-title' => 'Financial standing rates',
+    'record-not-found' => 'Record not found',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

@@ -25,9 +25,19 @@ class FinancialStandingRateEntityService extends AbstractEntityService
         'children' => [ 'goodsOrPsv', 'licenceType' ]
     ];
 
+    public function getRecordById($id)
+    {
+        return $this->get($id, $this->ratesBundle);
+    }
+
     public function getFullList()
     {
-        return $this->getAll(null, $this->ratesBundle);
+        $query = [
+            'sort' => 'effectiveFrom',
+            'order' => 'ASC'
+        ];
+
+        return $this->getAll($query, $this->ratesBundle);
     }
 
     /**

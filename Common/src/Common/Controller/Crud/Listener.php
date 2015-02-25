@@ -60,6 +60,12 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
         $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'), 20);
     }
 
+    /**
+     * Check for crud actions before hitting the controller action
+     *
+     * @param MvcEvent $e
+     * @return mixed
+     */
     public function onDispatch(MvcEvent $e)
     {
         // If we are not posting we can return early
@@ -69,6 +75,11 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
         }
 
         $postData = (array)$request->getPost();
+
+        if ($this->hasCancelled($postData)) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addInfoMessage('flash-discarded-changes');
+            return $this->setResult($e, $this->controller->redirect()->toRouteAjax(null));
+        }
 
         // If we don't have a table and action
         if (!$this->hasCrudAction($postData)) {
@@ -92,18 +103,35 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
 
         if ($actionConfig['requireRows'] && $ids === null) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage('please-select-row');
-            return $this->setResult($e, $this->controller->redirect()->refreshAjax());
+            return $this->setResult($e, $this->controller->redirect()->refresh());
         }
 
         $params = ['action' => $requestedAction];
 
-        if ($ids !== null) {
+        if ($actionConfig['requireRows']) {
             $params['id'] = $ids;
         }
 
-        return $this->setResult($e, $this->controller->redirect()->toRouteAjax(null, $params, [], true));
+        return $this->setResult($e, $this->controller->redirect()->toRoute(null, $params, [], true));
     }
 
+    /**
+     * Check if the user has cancelled the action
+     *
+     * @param array $postData
+     * @return boolean
+     */
+    protected function hasCancelled($postData)
+    {
+        return isset($postData['form-actions']['cancel']);
+    }
+
+    /**
+     * Get the crud config or use the default
+     *
+     * @param string $routeName
+     * @return array
+     */
     protected function getCrudConfig($routeName)
     {
         $config = $this->getServiceLocator()->get('Config');
@@ -115,6 +143,13 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
         return $this->defaultCrudConfig;
     }
 
+    /**
+     * Set the event result
+     *
+     * @param MvcEvent $e
+     * @param mixed $result
+     * @return mixed
+     */
     protected function setResult($e, $result)
     {
         $e->setResult($result);
@@ -123,7 +158,7 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
     }
 
     /**
-     * @NOTE This method will need extending
+     * Check if the post has a crud action
      *
      * @param array $postData
      * @return boolean
@@ -134,32 +169,40 @@ class Listener implements EventManagerAwareInterface, ListenerAggregateInterface
     }
 
     /**
-     * @NOTE This method will need extending
+     * Format the action from the crud action
      *
      * @param array $action
      * @return string
      */
     protected function formatAction($action)
     {
+        if (is_array($action['action'])) {
+            $action['action'] = key($action['action']);
+        }
+
         return strtolower($action['action']);
     }
 
     /**
-     * @NOTE This method will need extending
+     * Format the id's from the crud action
      *
      * @param array $postData
      * @return string
      */
     protected function formatIds($postData)
     {
-        if (!isset($postData['id'])) {
+        if (is_array($postData['action'])) {
+            $id = key(reset($postData['action']));
+        } elseif (isset($postData['id'])) {
+            $id = $postData['id'];
+        } else {
             return null;
         }
 
-        if (is_array($postData['id'])) {
-            return implode(',', $postData['id']);
+        if (is_array($id)) {
+            return implode(',', $id);
         }
 
-        return $postData['id'];
+        return $id;
     }
 }
