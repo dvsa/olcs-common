@@ -113,4 +113,21 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getAllByOrg($id, $limit));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetAllWithPerson()
+    {
+        $id = 7;
+
+        $data = [
+            'person' => $id
+        ];
+
+        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getAllWithPerson($id));
+    }
 }

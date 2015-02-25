@@ -17,7 +17,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
     /**
      * Set a sane limit when fetching people
      */
-    const ORG_PERSON_LIMIT = 50;
+    const APP_PERSON_LIMIT = 50;
 
     /**
      * Define entity for default behaviour
@@ -47,7 +47,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
     public function getAllByApplication($applicationId, $limit = null)
     {
         if ($limit === null) {
-            $limit = self::ORG_PERSON_LIMIT;
+            $limit = self::APP_PERSON_LIMIT;
         }
 
         $query = array(
@@ -80,6 +80,16 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * Get a record by application *and* original person ID
+     *
+     * By 'original person' we're referring to a parent record
+     * in the person table which this app_org_person represents
+     * an update of
+     *
+     * @param type $applicationId
+     * @param type $personId
+     */
     public function getByApplicationAndOriginalPersonId($applicationId, $personId)
     {
         $query = array(
@@ -96,6 +106,12 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * Delete a record by a given application and person ID
+     *
+     * @NOTE that this only deletes the application_organisation_record, not
+     * the person it links to
+     */
     public function deleteByApplicationAndPersonId($applicationId, $personId)
     {
         $appPerson = $this->getByApplicationAndPersonId($applicationId, $personId);
@@ -105,6 +121,12 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         }
     }
 
+    /**
+     * Delete a record by a given application and original person ID
+     *
+     * @NOTE that this deletes both the application_organisation_record
+     * and the person it links to, but *not* the 'original' person
+     */
     public function deleteByApplicationAndOriginalPersonId($applicationId, $personId)
     {
         $appPerson = $this->getByApplicationAndOriginalPersonId($applicationId, $personId);
@@ -114,16 +136,25 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         }
     }
 
+    /**
+     * Create a variation record of a person
+     */
     public function variationCreate($orgId, $applicationId, $data)
     {
         return $this->variationPersist($orgId, $applicationId, $data, 'A');
     }
 
+    /**
+     * Update a variation record of a person
+     */
     public function variationUpdate($orgId, $applicationId, $data)
     {
         return $this->variationPersist($orgId, $applicationId, $data, 'U');
     }
 
+    /**
+     * Delete a variation record of a person
+     */
     public function variationDelete($personId, $orgId, $applicationId)
     {
         $data = [
@@ -154,6 +185,13 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
         return $this->save($variationData);
     }
 
+    /*
+     * Update a person linked to an application
+     *
+     * @NOTE that if the person has a 'position' field we also
+     * persist that, but it has to be stored against the app
+     * org record rather than the person themselves
+     */
     public function updatePerson($appData, $personData)
     {
         if (isset($personData['position'])) {
