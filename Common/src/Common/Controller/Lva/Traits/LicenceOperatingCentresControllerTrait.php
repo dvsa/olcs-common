@@ -22,7 +22,8 @@ trait LicenceOperatingCentresControllerTrait
     {
         $form = $this->processForm();
 
-        if (! ($form instanceof Form)) {
+        // If we don't have an instance of Form, it should be a Response object, so we can just return it
+        if (!($form instanceof Form)) {
             return $form;
         }
 
