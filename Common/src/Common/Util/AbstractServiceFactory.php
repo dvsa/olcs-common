@@ -27,7 +27,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        return class_exists($this->getClassName($requestedName));
+        return ($this->getClassName($requestedName) !== false);
     }
 
     /**
@@ -58,14 +58,22 @@ class AbstractServiceFactory implements AbstractFactoryInterface
      */
     private function getClassName($name)
     {
-        $className = 'Common\Service\\';
+        $namespaces = [
+            'Olcs\Service\\',
+            'Common\Service\\'
+        ];
 
         if (strstr($name, '\\')) {
             list($type, $name) = explode('\\', $name, 2);
 
-            return $className . $type . '\\' . $name . $type . 'Service';
+            foreach ($namespaces as $namespace) {
+                $className = $namespace . $type . '\\' . $name . $type . 'Service';
+                if (class_exists($className)) {
+                    return $className;
+                }
+            }
         }
 
-        return $className . $name;
+        return false;
     }
 }

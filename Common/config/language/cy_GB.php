@@ -524,10 +524,10 @@ return array(
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'W In order to increase the total number of vehicles on the licence you must <a
         href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a
-        href="%s">create a variation application</a>',
-    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a
-        href="%s">create a variation application</a>',
+    'cant-increase-trailers' => 'W In order to increase the trailers at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
+    'cant-increase-vehicles' => 'W In order to increase the vehicles at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
     'card-declined' => 'W Please check that the details you entered were correct and try again.<br>Otherwise, contact
         the cardholder.',
     'case-associated-with' => 'W Cases associated with %s',
@@ -573,6 +573,8 @@ return array(
     'conditions' => 'W Conditions',
     'conditions-and-undertaking-for-licences' => 'W Conditions and undertakings for licences',
     'conditions-and-undertakings' => 'W Conditions and undertakings',
+    'conditions-and-undertakings-conditions' => 'W Conditions',
+    'conditions-and-undertakings-undertakings' => 'W Undertakings',
     'confirm-grant-application' => 'W Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => 'W Are you sure you want to undo the grant?',
     'continue.button' => 'W Continue',
@@ -600,7 +602,9 @@ return array(
     'create' => 'W Create',
     'create-new-case' => 'W Create new case',
     'create-variation' => 'W create a variation application',
+    'create-variation-application-received-date' => 'W Application received',
     'create-variation-button' => 'W Create variation',
+    'create-variation-fee-required' => 'W Is a variation fee required?',
     'created' => 'W Created',
     'created-on' => 'W Created on',
     'credit-debit-card' => 'W Credit /Debit card',
@@ -946,6 +950,8 @@ return array(
         licences before the office copy',
     'internal.community_licence.void_not_allowed' => 'W You cannot void the office copy without voiding all the
         licences',
+    'internal.documents.delete.delete_message' => 'W Are you sure you want to permanently delete this record?',
+    'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
     'internal.new_application.task_description' => 'W Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'W Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
@@ -1159,6 +1165,7 @@ return array(
     'lva.section.title.financial_evidence' => 'W Financial evidence',
     'lva.section.title.financial_history' => 'W Financial history',
     'lva.section.title.licence_history' => 'W Licence history',
+    'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
     'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
     'lva.section.title.overview' => 'W Overview',
     'lva.section.title.people' => 'W People',
@@ -1210,6 +1217,8 @@ return array(
     'numOfOffences' => 'W Number of offences',
     'number-of-offences' => 'W Number of offences',
     'objections' => 'W Objections',
+    'oc-create-variation-confirmation-message' => 'W In order to add an additional operating centre on the licence you
+        must create a variation application',
     'ocs' => 'W OCs',
     'offence-date' => 'W Offence date',
     'offence-date-from' => 'W Offence date from',
@@ -1280,6 +1289,9 @@ return array(
     'payment-for' => 'W Payment for',
     'payment-submission' => 'W Payment & submission',
     'payment-successful' => 'W Payment successful',
+    'penalties-applied-penalties' => 'W Applied penalties',
+    'penalties-imposed-penalties' => 'W Imposed penalties',
+    'penalties-requested-penalties' => 'W Requested penalties',
     'penalty' => 'W Penalty',
     'persons' => 'W Person Information',
     'pi_s_reg' => 'W PI Registered',
@@ -1688,6 +1700,10 @@ return array(
     'testProperty' => 'W the test',
     'testPropertyPlaceHolder' => 'W test @placeHolder is @here',
     'tic' => 'W TIC',
+    'tm-previous-history-convictions-and-penalties' => 'W Convictions/Penalties',
+    'tm-previous-history-revoked-curtailed-suspended-licences' => 'W Revoked, Curtailed or Suspended Licences',
+    'tm-responsibilities-applications' => 'W Applications',
+    'tm-responsibilities-licences' => 'W Licences',
     'tol-no-changes-message' => 'W No changes to the type of licence detected',
     'traffic-area' => 'W Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'W Your traffic area is determined by the location of your operating
