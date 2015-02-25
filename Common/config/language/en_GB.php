@@ -945,6 +945,8 @@ return array(
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
         before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.documents.delete.delete_message' => 'Are you sure you want to permanently delete this record?',
+    'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
