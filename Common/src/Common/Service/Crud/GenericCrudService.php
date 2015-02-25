@@ -37,7 +37,7 @@ class GenericCrudService implements ServiceLocatorAwareInterface
             $form = $this->getForm($service, $request)->setData((array)$request->getPost());
 
             // If the form is valid, we want to process save
-            if ($form->isValid()) {
+            if ($service->isFormValid($form, $id)) {
 
                 try {
                     return $service->processSave($form->getData(), $id);

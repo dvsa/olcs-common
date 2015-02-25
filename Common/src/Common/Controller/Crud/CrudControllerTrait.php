@@ -19,6 +19,39 @@ use Common\Service\Table\TableBuilder;
  */
 trait CrudControllerTrait
 {
+    /**
+     * The current page's extra layout, over and above the
+     * standard base template
+     *
+     * @var string
+     */
+    protected $pageLayout = 'admin-layout';
+
+    protected function confirmDelete($crudService, $pageTitle, $sectionText, $id)
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $id = explode(',', $id);
+
+            $processDelete = $crudService->processDelete($id);
+
+            if ($processDelete instanceof Redirect) {
+                return $processDelete->process($this->redirect());
+            }
+
+            return $this->notFoundAction();
+        }
+
+        return $this->renderForm(
+            $crudService->getDeleteForm($request),
+            $pageTitle,
+            null,
+            ['sectionText' => $sectionText]
+        );
+    }
+
     protected function addOrEditForm($crudService, $pageTitle, $id = null)
     {
         $processForm = $crudService->processForm($this->getRequest(), $id);
@@ -35,14 +68,6 @@ trait CrudControllerTrait
 
         return $this->notFoundAction();
     }
-
-    /**
-     * The current page's extra layout, over and above the
-     * standard base template
-     *
-     * @var string
-     */
-    protected $pageLayout = 'wide-layout';
 
     /**
      * Render a table within the admin area
@@ -68,9 +93,11 @@ trait CrudControllerTrait
      * @param string $subTitle
      * @return ViewModel
      */
-    protected function renderForm(Form $form, $title = null, $subTitle = null)
+    protected function renderForm(Form $form, $title = null, $subTitle = null, $params = [])
     {
-        $view = new ViewModel(['form' => $form]);
+        $params = array_merge($params, ['form' => $form]);
+
+        $view = new ViewModel($params);
         $view->setTemplate('partials/form');
 
         return $this->renderView($view, $title, $subTitle);

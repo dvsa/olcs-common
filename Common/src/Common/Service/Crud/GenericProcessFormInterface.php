@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Crud;
 
+use Zend\Form\Form;
+
 /**
  * Generic Process Form Interface
  *
@@ -14,6 +16,14 @@ namespace Common\Service\Crud;
  */
 interface GenericProcessFormInterface
 {
+    /**
+     * Check if a form is valid
+     *
+     * @param Form $form
+     * @return boolean
+     */
+    public function isFormValid(Form $form, $id = null);
+
     /**
      * Process the saving of an entity
      *

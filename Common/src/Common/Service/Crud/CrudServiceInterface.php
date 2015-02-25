@@ -17,6 +17,20 @@ use Zend\Http\Request;
 interface CrudServiceInterface
 {
     /**
+     * Get the delete confirmation form
+     *
+     * @param Request $request
+     */
+    public function getDeleteForm(Request $request);
+
+    /**
+     * Process deletions
+     *
+     * @param array $ids
+     */
+    public function processDelete(array $ids = []);
+
+    /**
      * Process an Add/Edit form
      *
      * @param Request $request
