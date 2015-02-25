@@ -121,7 +121,7 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
             ],
         ];
 
-        $this->expectOneRestCall('TransportManagerLicence', 'GET', ['transportManagerId' => $id])
+        $this->expectOneRestCall('TransportManagerLicence', 'GET', ['transportManager' => $id])
             ->will($this->returnValue($returnValue));
 
         $this->assertEquals($expectedValue, $this->sut->getTransportManagerLicences($id, $status));
