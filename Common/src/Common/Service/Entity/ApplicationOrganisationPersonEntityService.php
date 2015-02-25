@@ -201,9 +201,7 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
                 'version' => $appData['version'],
                 'position' => $personData['position']
             ];
-            // @TODO getting version conflicts without force here; surely the version
-            // is fine?
-            $this->forceUpdate($appData['id'], $appData);
+            $this->save($appData);
         }
         return $this->getServiceLocator()->get('Entity\Person')->save($personData);
     }
