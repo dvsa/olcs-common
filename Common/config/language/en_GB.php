@@ -517,6 +517,7 @@ return array(
         advice.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
+    'cannot-perform-action' => 'You cannot perform this action',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
         href="%s">create a variation application</a>',
@@ -939,7 +940,7 @@ return array(
     'internal.community_licence.licences_created' => 'The community licences have been created',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
-    'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
+    'internal.community_licence.licences_voided' => 'The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
@@ -1289,6 +1290,58 @@ return array(
     'penalties-imposed-penalties' => 'Imposed penalties',
     'penalties-requested-penalties' => 'Requested penalties',
     'penalty' => 'Penalty',
+    'people.org_t_llp.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_p.birthDate.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.familyName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.forename.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.otherName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.org_t_pa.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.position.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_rc.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_st.birthDate.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.familyName.locked' => 'You cannot change people details. Please contact the Central Licensing
+        Office for further advice.',
+    'people.org_t_st.forename.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.otherName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
     'persons' => 'Person Information',
     'pi_s_reg' => 'PI Registered',
     'pi_s_schedule' => 'PI Scheduled',
@@ -1745,6 +1798,8 @@ return array(
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
+    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
+        variation application <a href="%s">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-operating-centres-added-title' => 'New operating centres',

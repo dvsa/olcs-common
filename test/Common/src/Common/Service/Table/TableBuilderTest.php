@@ -2419,4 +2419,37 @@ class TableBuilderTest extends MockeryTestCase
             [false]
         ];
     }
+
+    public function testRemoveActions()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->expects($this->at(0))
+            ->method('removeAction')
+            ->with('foo');
+
+        $table->expects($this->at(1))
+            ->method('removeAction')
+            ->with('bar');
+
+        $table->removeActions();
+    }
 }

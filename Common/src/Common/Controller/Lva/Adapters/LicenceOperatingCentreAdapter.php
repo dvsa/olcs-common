@@ -46,7 +46,7 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             ->translateReplace('variation-application-message', [$link]);
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addCurrentMessage($message, 'info');
+            ->addCurrentInfoMessage($message);
     }
 
     /**

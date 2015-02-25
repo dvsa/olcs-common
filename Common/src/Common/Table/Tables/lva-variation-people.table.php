@@ -12,14 +12,18 @@ return array(
             'actions' => array(
                 'add' => array('class' => 'primary'),
                 'edit' => array('requireRows' => true),
-                'delete' => array('class' => 'secondary', 'requireRows' => true)
+                'delete' => array('class' => 'secondary', 'requireRows' => true),
+                'restore' => array('class' => 'secondary', 'requireRows' => true)
             )
-        )
+        ),
+        'row-disabled-callback' => function ($row) {
+            return in_array($row['action'], ['D', 'C']);
+        }
     ),
     'columns' => array(
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
-            'type' => 'Action',
+            'type' => 'VariationRecordAction',
             'action' => 'edit',
             'value_format' => '{{title}} {{forename}} {{familyName}}'
         ),
@@ -42,7 +46,10 @@ return array(
         array(
             'name' => 'select',
             'width' => 'checkbox',
-            'type' => 'Checkbox'
+            'type' => 'Checkbox',
+            'data-attributes' => array(
+                'action'
+            )
         )
     )
 );
