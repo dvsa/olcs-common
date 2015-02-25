@@ -48,7 +48,7 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
      */
     public function getTransportManagerLicences($id, $status = [])
     {
-        $results = $this->get(['transportManagerId' => $id], $this->dataBundle);
+        $results = $this->get(['transportManager' => $id], $this->dataBundle);
 
         $finalResults = [];
 
