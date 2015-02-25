@@ -20,17 +20,21 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
+    /**
+     * Update all organisation people based on relevant deltas
+     * in application_organisation_person
+     *
+     * @param int $applicationId
+     */
     public function grant($applicationId)
     {
-        $entityService = $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson');
+        $results = $this->getServiceLocator()
+            ->get('Entity\ApplicationOrganisationPerson')
+            ->getAllByApplication($applicationId);
 
-        $results = $entityService->getAllByApplication($applicationId);
-
-        if (empty($results)) {
+        if ($results['Count'] === 0) {
             return;
         }
-
-        $user = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
 
         foreach ($results['Results'] as $row) {
             switch ($row['action']) {
@@ -47,23 +51,38 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
         }
     }
 
+    /**
+     * Create a person and associate it with a new organisation
+     * person record
+     *
+     * @param array $data
+     */
     private function createOrganisationPerson($data)
     {
-        $dataService = $this->getServiceLocator()->get('Helper\Data');
+        $person = $this->getServiceLocator()
+            ->get('Entity\Person')
+            ->save(
+                $this->cleanData($data['person'])
+            );
 
-        $personData = $this->cleanData($data['person']);
+        $orgData = $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->replaceIds(
+                $this->cleanData($data, ['action', 'originalPerson', 'person'])
+            );
 
-        $person = $this->getServiceLocator()->get('Entity\Person')->save($personData);
-
-        $orgData = $dataService->replaceIds(
-            $this->cleanData($data, ['action', 'originalPerson', 'person'])
-        );
         $orgData['person'] = $person['id'];
-        // @TODO addedDate
+        $orgData['addedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
 
         $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgData);
     }
 
+    /**
+     * Updates are actually just a combination of a delete
+     * of the original person and an add of the new one
+     *
+     * @param array $data
+     */
     private function updateOrganisationPerson($data)
     {
         $orgId    = $data['organisation']['id'];
@@ -73,13 +92,52 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
         $this->createOrganisationPerson($data);
     }
 
+    /**
+     * Delete a person
+     *
+     * @param array $data
+     */
     private function deleteOrganisationPerson($data)
     {
         $orgId    = $data['organisation']['id'];
         $personId = $data['person']['id'];
+
         $this->deleteByOrgAndPersonId($orgId, $personId);
     }
 
+    /**
+     * Helper to delete both an org row and the person it
+     * links to
+     *
+     * @param int $orgId
+     * @param int $personId
+     */
+    private function deleteByOrgAndPersonId($orgId, $personId)
+    {
+        $this->getServiceLocator()
+            ->get('Entity\OrganisationPerson')
+            ->deleteByOrgAndPersonId($orgId, $personId);
+
+        // @TODO confirm: AC says to delete the person, but it
+        // might exist in other organisations. If we need to check
+        // if it's the last one before delete then push this behind
+        // the OrgPerson entity and DRY up in the people adapter
+        // or controller (can't remember where it does this at the mo)
+        /*
+        $this->getServiceLocator()
+            ->get('Entity\Person')
+            ->delete($personId);
+         */
+    }
+
+    /**
+     * Helper method to clean typical keys out of their source
+     * entities so they don't accidentally get applied to
+     * their destination rows
+     *
+     * @param array $input
+     * @param array $extraKeys
+     */
     private function cleanData($input, $extraKeys = [])
     {
         $keys = array_merge(
@@ -91,16 +149,5 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
         }
 
         return $input;
-    }
-
-    private function deleteByOrgAndPersonId($orgId, $personId)
-    {
-        $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson')
-            ->deleteByOrgAndPersonId($orgId, $personId);
-
-        $this->getServiceLocator()
-            ->get('Entity\Person')
-            ->delete($personId);
     }
 }
