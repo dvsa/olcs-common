@@ -103,7 +103,7 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
         $licenceId = $this->getLicenceAdapter()->getIdentifier();
 
-        $link = $this->getController()->url()->fromRoute('create_variation', ['licence' => $licenceId]);
+        $link = $this->getController()->url()->fromRoute('lva-licence/variation', ['licence' => $licenceId]);
 
         $message = $this->getServiceLocator()->get('Helper\Translation')
             ->translateReplace('cant-increase-' . $messageSuffix, [$link]);

@@ -518,7 +518,7 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             ->andReturn($stubbedVehicleAuths);
 
         $this->controller->shouldReceive('url->fromRoute')
-            ->with('create_variation', ['licence' => $licenceId])
+            ->with('lva-licence/variation', ['licence' => $licenceId])
             ->andReturn('URL');
 
         $mockTranslator->shouldReceive('translateReplace')
@@ -623,7 +623,7 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                     ->andReturn($scope->mockDataInputFilter);
 
                 $this->controller->shouldReceive('url->fromRoute')
-                    ->with('create_variation', ['licence' => 5])
+                    ->with('lva-licence/variation', ['licence' => 5])
                     ->andReturn('LINK');
 
                 $scope->mockTranslator->shouldReceive('translateReplace')
