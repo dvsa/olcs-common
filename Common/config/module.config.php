@@ -343,6 +343,7 @@ return array(
         ),
         'BusRegGrantNewPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
@@ -356,6 +357,7 @@ return array(
         ),
         'BusRegGrantVarPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
@@ -369,6 +371,7 @@ return array(
         ),
         'BusRegGrantCancelPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',

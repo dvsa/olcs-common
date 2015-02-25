@@ -3,11 +3,11 @@
 namespace Common\Service\Document\Bookmark;
 
 /**
- * S9AuthorisedDecision
+ * S9AuthorsorsTitle
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class S9AuthorsorsTitle extends StatementFlatAbstract
+class S9AuthorisorsTitle extends StatementFlatAbstract
 {
     const FORMATTER = null;
     const FIELD  = 'authorisersTitle';
