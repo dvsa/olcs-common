@@ -117,17 +117,6 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()
             ->get('Entity\OrganisationPerson')
             ->deleteByOrgAndPersonId($orgId, $personId);
-
-        // @TODO confirm: AC says to delete the person, but it
-        // might exist in other organisations. If we need to check
-        // if it's the last one before delete then push this behind
-        // the OrgPerson entity and DRY up in the people adapter
-        // or controller (can't remember where it does this at the mo)
-        /*
-        $this->getServiceLocator()
-            ->get('Entity\Person')
-            ->delete($personId);
-         */
     }
 
     /**
