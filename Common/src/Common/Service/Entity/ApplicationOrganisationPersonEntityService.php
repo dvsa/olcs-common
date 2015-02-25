@@ -34,7 +34,8 @@ class ApplicationOrganisationPersonEntityService extends AbstractEntityService
     private $peopleBundle = array(
         'children' => array(
             'person',
-            'originalPerson'
+            'originalPerson',
+            'organisation'
         )
     );
 

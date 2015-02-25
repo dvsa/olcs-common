@@ -20,7 +20,7 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function grant($applicationId, $licenceId)
+    public function grant($applicationId)
     {
         $entityService = $this->getServiceLocator()->get('Entity\ApplicationOrganisationPerson');
 
@@ -32,18 +32,75 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
 
         $user = $this->getServiceLocator()->get('Entity\User')->getCurrentUser();
 
-        foreach ($results as $row) {
+        foreach ($results['Results'] as $row) {
             switch ($row['action']) {
                 case VariationPeopleLvaService::ACTION_ADDED:
                     $this->createOrganisationPerson($row);
                     break;
                 case VariationPeopleLvaService::ACTION_UPDATED:
-                    $this->createOrganisationPerson($row);
+                    $this->updateOrganisationPerson($row);
                     break;
                 case VariationPeopleLvaService::ACTION_DELETED:
-                    $this->createOrganisationPerson($row);
+                    $this->deleteOrganisationPerson($row);
                     break;
             }
         }
+    }
+
+    private function createOrganisationPerson($data)
+    {
+        $dataService = $this->getServiceLocator()->get('Helper\Data');
+
+        $personData = $this->cleanData($data['person']);
+
+        $person = $this->getServiceLocator()->get('Entity\Person')->save($personData);
+
+        $orgData = $dataService->replaceIds(
+            $this->cleanData($data, ['action', 'originalPerson', 'person'])
+        );
+        $orgData['person'] = $person['id'];
+        // @TODO addedDate
+
+        $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgData);
+    }
+
+    private function updateOrganisationPerson($data)
+    {
+        $orgId    = $data['organisation']['id'];
+        $personId = $data['originalPerson']['id'];
+
+        $this->deleteByOrgAndPersonId($orgId, $personId);
+        $this->createOrganisationPerson($data);
+    }
+
+    private function deleteOrganisationPerson($data)
+    {
+        $orgId    = $data['organisation']['id'];
+        $personId = $data['person']['id'];
+        $this->deleteByOrgAndPersonId($orgId, $personId);
+    }
+
+    private function cleanData($input, $extraKeys = [])
+    {
+        $keys = array_merge(
+            ['id', 'version', 'createdOn', 'lastModifiedOn'],
+            $extraKeys
+        );
+        foreach ($keys as $key) {
+            unset($input[$key]);
+        }
+
+        return $input;
+    }
+
+    private function deleteByOrgAndPersonId($orgId, $personId)
+    {
+        $this->getServiceLocator()
+            ->get('Entity\OrganisationPerson')
+            ->deleteByOrgAndPersonId($orgId, $personId);
+
+        $this->getServiceLocator()
+            ->get('Entity\Person')
+            ->delete($personId);
     }
 }
