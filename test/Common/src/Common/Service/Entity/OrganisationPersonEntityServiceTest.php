@@ -72,7 +72,11 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
         $orgId = 3;
         $personId = 7;
 
-        $this->expectedRestCallInOrder('OrganisationPerson', 'DELETE', ['organisation' => $orgId, 'person' => $personId]);
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
 
         $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
             ->willReturn(['Count' => 10]);
@@ -88,7 +92,11 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
         $orgId = 3;
         $personId = 7;
 
-        $this->expectedRestCallInOrder('OrganisationPerson', 'DELETE', ['organisation' => $orgId, 'person' => $personId]);
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
 
         $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
             ->willReturn(['Count' => 0]);
