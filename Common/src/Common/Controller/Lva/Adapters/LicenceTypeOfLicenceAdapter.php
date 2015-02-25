@@ -99,17 +99,22 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
     public function confirmationAction()
     {
+        // @NOTE The behaviour of this service differs internally to externally
+        $processingService = $this->getServiceLocator()->get('Processing\CreateVariation');
+
         $request = $this->getController()->getRequest();
 
-        if ($request->isPost()) {
+        $form = $processingService->getForm($request);
 
-            $data = [
-                'licenceType' => $this->getController()->params()->fromQuery('licence-type')
-            ];
+        if ($request->isPost() && $form->isValid()) {
+
+            $data = $processingService->getDataFromForm($form);
+
+            $data['licenceType'] = $this->getController()->params()->fromQuery('licence-type');
 
             $licenceId = $this->getController()->params('licence');
 
-            $appId = $this->getServiceLocator()->get('Entity\Application')->createVariation($licenceId, $data);
+            $appId = $processingService->createVariation($licenceId, $data);
 
             $this->getServiceLocator()->get('Processing\VariationSection')
                 ->setApplicationId($appId)
@@ -117,12 +122,6 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
             return $this->getController()->redirect()->toRouteAjax('lva-variation', ['application' => $appId]);
         }
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('GenericConfirmation');
-        $formHelper->setFormActionFromRequest($form, $this->getController()->getRequest());
-
-        $form->get('form-actions')->get('submit')->setLabel('create-variation-button');
 
         return $form;
     }

@@ -522,10 +522,10 @@ return array(
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a
         href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create
-        a variation application</a>',
-    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create
-        a variation application</a>',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the
         cardholder.',
     'case-associated-with' => 'Cases associated with %s',
@@ -598,7 +598,9 @@ return array(
     'create' => 'Create',
     'create-new-case' => 'Create new case',
     'create-variation' => 'create a variation application',
+    'create-variation-application-received-date' => 'Application received',
     'create-variation-button' => 'Create variation',
+    'create-variation-fee-required' => 'Is a variation fee required?',
     'created' => 'Created',
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
@@ -935,13 +937,13 @@ return array(
     'internal.community_licence.licences_created' => 'The community licences have been created',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
-    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
-    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
-        before the office copy',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
+    'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
+    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
+        before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
@@ -1153,6 +1155,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.licence_history' => 'Licence history',
+    'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
@@ -1204,6 +1207,8 @@ return array(
     'numOfOffences' => 'Number of offences',
     'number-of-offences' => 'Number of offences',
     'objections' => 'Objections',
+    'oc-create-variation-confirmation-message' => 'In order to add an additional operating centre on the licence you
+        must create a variation application',
     'ocs' => 'OCs',
     'offence-date' => 'Offence date',
     'offence-date-from' => 'Offence date from',
