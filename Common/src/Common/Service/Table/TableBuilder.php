@@ -1443,8 +1443,6 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         foreach ($actions as $name => $details) {
 
-            $attrs = '';
-
             $value = isset($details['value']) ? $details['value'] : ucwords($name);
 
             $label = isset($details['label']) ? $details['label'] : $value;

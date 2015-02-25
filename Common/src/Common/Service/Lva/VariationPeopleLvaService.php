@@ -184,7 +184,5 @@ class VariationPeopleLvaService implements ServiceLocatorAwareInterface
                 return $row['action'];
             }
         }
-
-        return null;
     }
 }
