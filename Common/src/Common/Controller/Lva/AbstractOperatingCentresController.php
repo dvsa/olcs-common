@@ -84,6 +84,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+            $data = $this->getAdapter()->alterFormDataOnPost($mode, $data);
         } else {
             if ($mode === 'edit') {
                 $data = $this->getAdapter()->getAddressData($this->params('child_id'));

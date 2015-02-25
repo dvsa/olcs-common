@@ -90,6 +90,11 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         return $data;
     }
 
+    public function alterFormDataOnPost($mode, $data)
+    {
+        return $data;
+    }
+
     /**
      * Add messages to the main index page
      */
