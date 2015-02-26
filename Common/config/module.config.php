@@ -130,6 +130,7 @@ return array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
+            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
@@ -256,6 +257,7 @@ return array(
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
+            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',

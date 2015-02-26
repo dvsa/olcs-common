@@ -610,6 +610,12 @@ return array(
     'created-on' => 'W Created on',
     'credit-debit-card' => 'W Credit /Debit card',
     'crown-copyright' => 'W Crown Copyright',
+    'crud-financial-standing-delete-message' => 'W Are you sure you want to remove the selected financial standing
+        rate(s)?',
+    'crud-financial-standing-delete-title' => 'W Remove financial standing rate(s)',
+    'crud-financial-standing-form-add' => 'W Add financial standing rate',
+    'crud-financial-standing-form-edit' => 'W Edit financial standing rate',
+    'crud-financial-standing-title' => 'W Financial standing rates',
     'csrf-message' => 'W This page has expired due to a period of inactivity. Please try again',
     'current-authorisation-hint' => 'W Current authorisation: <strong>%s</strong>',
     'current-submission' => 'W Current submission',
@@ -720,9 +726,6 @@ return array(
     'finance' => 'W Finance',
     'financial-standing-already-exists-validation' => 'W A rate for this operator type, licence type and effective date
         already exists',
-    'financial-standing-rate-delete-message' => 'W Are you sure you want to remove the selected financial standing
-        rate(s)?',
-    'financial-standing-rate-delete-title' => 'W Remove financial standing rate(s)',
     'financial-standing-rate-element-additionalVehicleRate' => 'W Additional vehicle rate',
     'financial-standing-rate-element-additionalVehicleRate-short' => 'W Additional vehicle',
     'financial-standing-rate-element-effectiveDate' => 'W Effective date',
@@ -730,9 +733,6 @@ return array(
     'financial-standing-rate-element-firstVehicleRate-short' => 'W First vehicle',
     'financial-standing-rate-element-goodsOrPsv' => 'W Operator type',
     'financial-standing-rate-element-licenceType' => 'W Licence type',
-    'financial-standing-rate-form-add' => 'W Add financial standing rate',
-    'financial-standing-rate-form-edit' => 'W Edit financial standing rate',
-    'financial-standing-rate-title' => 'W Financial standing rates',
     'first-name' => 'W First name(s)',
     'flash-discarded-changes' => 'W Your changes have been discarded',
     'form-case-number' => 'W Case number',

@@ -608,6 +608,12 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
+        rate(s)?',
+    'crud-financial-standing-delete-title' => 'Remove financial standing rate(s)',
+    'crud-financial-standing-form-add' => 'Add financial standing rate',
+    'crud-financial-standing-form-edit' => 'Edit financial standing rate',
+    'crud-financial-standing-title' => 'Financial standing rates',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
@@ -718,9 +724,6 @@ return array(
     'finance' => 'Finance',
     'financial-standing-already-exists-validation' => 'A rate for this operator type, licence type and effective date
         already exists',
-    'financial-standing-rate-delete-message' => 'Are you sure you want to remove the selected financial standing
-        rate(s)?',
-    'financial-standing-rate-delete-title' => 'Remove financial standing rate(s)',
     'financial-standing-rate-element-additionalVehicleRate' => 'Additional vehicle rate',
     'financial-standing-rate-element-additionalVehicleRate-short' => 'Additional vehicle',
     'financial-standing-rate-element-effectiveDate' => 'Effective date',
@@ -728,9 +731,6 @@ return array(
     'financial-standing-rate-element-firstVehicleRate-short' => 'First vehicle',
     'financial-standing-rate-element-goodsOrPsv' => 'Operator type',
     'financial-standing-rate-element-licenceType' => 'Licence type',
-    'financial-standing-rate-form-add' => 'Add financial standing rate',
-    'financial-standing-rate-form-edit' => 'Edit financial standing rate',
-    'financial-standing-rate-title' => 'Financial standing rates',
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
     'form-case-number' => 'Case number',
