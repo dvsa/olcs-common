@@ -25,6 +25,7 @@ class OperatingCentres
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthSmallVehicles"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totAuthSmallVehicles = null;
 
@@ -35,6 +36,7 @@ class OperatingCentres
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthMediumVehicles"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totAuthMediumVehicles = null;
 
@@ -45,6 +47,7 @@ class OperatingCentres
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthLargeVehicles"})
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totAuthLargeVehicles = null;
 
@@ -63,6 +66,7 @@ class OperatingCentres
      *         "fields":{"totAuthSmallVehicles", "totAuthMediumVehicles", "totAuthLargeVehicles"}
      *     }
      * })
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totAuthVehicles = null;
 
@@ -74,6 +78,7 @@ class OperatingCentres
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTrailerAuthorisationsValidator"});
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totAuthTrailers = null;
 
@@ -85,6 +90,7 @@ class OperatingCentres
      * @Form\Validator({"name": "Digits"})
      * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreCommunityLicencesValidator"})
+     * @Form\Filter({"name":"\Zend\Filter\Null", "options": {"type":"string"} })
      */
     public $totCommunityLicences = null;
 
