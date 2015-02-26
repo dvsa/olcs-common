@@ -11,6 +11,7 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before

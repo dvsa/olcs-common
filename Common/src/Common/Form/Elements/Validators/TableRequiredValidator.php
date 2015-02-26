@@ -52,7 +52,7 @@ class TableRequiredValidator extends AbstractValidator
     }
 
     /**
-     * Custom validation for tachograph analyser
+     * Custom validation for table rows
      *
      * @param mixed $value
      * @param array $context

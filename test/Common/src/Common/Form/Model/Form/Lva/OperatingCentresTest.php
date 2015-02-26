@@ -35,16 +35,22 @@ class OperatingCentresTest extends AbstractFormTest
         return [
             new F\Test(
                 new F\Stack(['data', 'totAuthVehicles']),
+                new F\Value(F\Value::VALID, ''),
                 new F\Value(F\Value::INVALID, '', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
                 new F\Value(F\Value::INVALID, '0', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
                 new F\Value(F\Value::INVALID, '12', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
                 new F\Value(F\Value::VALID, '9', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
                 new F\Value(F\Value::INVALID, 'foo'),
-                new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
-
-                new F\Value(F\Value::INVALID, ''),
-                new F\Value(F\Value::INVALID, '', $noOCContext)
+                new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $oneOCContext, $minContext)
             ),
+            // @todo - fix AbstractFormTest to stop preserving state between tests :(
+            // new F\Test(
+            //     new F\Stack(['table', 'rows']),
+            //     new F\Value(F\Value::VALID, 1),
+            //     new F\Value(F\Value::VALID, '2'),
+            //     new F\Value(F\Value::INVALID, ''),
+            //     new F\Value(F\Value::INVALID, '0')
+            // ),
         ];
     }
 
@@ -60,7 +66,8 @@ class OperatingCentresTest extends AbstractFormTest
         $form->remove('dataTrafficArea');
 
         $formData = [
-            'data' => $inputData
+            'data' => $inputData,
+            'table' => ['rows' => 1] // simulate one operating centre in the table
         ];
 
         $form->setData($formData);

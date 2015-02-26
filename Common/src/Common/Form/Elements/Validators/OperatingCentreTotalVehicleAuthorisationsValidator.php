@@ -45,7 +45,7 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
 
-        if ($noOfOperatingCentres === 0) {
+        if ($noOfOperatingCentres === 0 && $value !== 0) {
 
             $this->error('no-operating-centre');
             return false;
