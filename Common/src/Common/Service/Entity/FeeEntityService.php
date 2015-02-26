@@ -121,7 +121,7 @@ class FeeEntityService extends AbstractLvaEntityService
             )
         );
 
-        $results = $this->getAll($query, array('properties' => array('id'), 'children' => array('task')));
+        $results = $this->getAll($query, array('children' => array('task')));
 
         if (empty($results['Results'])) {
             return;

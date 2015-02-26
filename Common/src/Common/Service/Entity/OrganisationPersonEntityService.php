@@ -59,6 +59,9 @@ class OrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * Remove a record by org *and* person ID
+     */
     public function deleteByOrgAndPersonId($orgId, $personId)
     {
         $query = array(
@@ -71,15 +74,15 @@ class OrganisationPersonEntityService extends AbstractEntityService
     }
 
     /**
-     * Retrieve a record by person ID
+     * Retrieve all records for a given person ID
      */
-    public function getByPersonId($id)
+    public function getAllWithPerson($id)
     {
-        return $this->get(array('person' => $id));
+        return $this->get(array('person' => $id), $this->peopleBundle);
     }
 
     /**
-     * Get all people for a given organisation
+     * Get all records for a given organisation
      *
      * @param int $orgId
      * @param int $limit

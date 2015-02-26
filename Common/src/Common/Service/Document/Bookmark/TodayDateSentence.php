@@ -7,7 +7,7 @@ namespace Common\Service\Document\Bookmark;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class TodaysDateSentence extends TodayDateSentence
+class TodayDateSentence extends TodaysDateSentence
 {
     //
 }

@@ -14,13 +14,19 @@ use CommonTest\Bootstrap;
  */
 class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
 {
+    private $adapter;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->mockController('\Common\Controller\Lva\AbstractPeopleController');
 
-        $this->mockService('Script', 'loadFile')->with('lva-crud');
+        $this->mockService('Script', 'loadFile')->with('lva-crud-delta');
+
+        $this->adapter = m::mock('\Common\Controller\Lva\Interfaces\AdapterInterface');
+
+        $this->sut->setAdapter($this->adapter);
     }
 
     public function testGetIndexActionForLimitedCompanyWithPeoplePopulated()
@@ -72,10 +78,6 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ]
         ];
 
-        $this->mockService('Table', 'prepareTable')
-            ->with('lva-people', $people)
-            ->andReturn($table);
-
         $this->setService(
             'translator',
             m::mock()
@@ -114,6 +116,14 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('get')
             ->with('table')
             ->andReturn($tableFieldset);
+
+        $this->adapter->shouldReceive('alterFormForOrganisation')
+            ->with($form, $table, 12)
+            ->shouldReceive('addMessages')
+            ->with(12)
+            ->shouldReceive('createTable')
+            ->with(12)
+            ->andReturn($table);
 
         $this->sut->indexAction();
 
@@ -157,16 +167,20 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
+        $this->adapter->shouldReceive('alterAddOrEditFormForOrganisation')
+            ->with($form, 12)
+            ->shouldReceive('addMessages')
+            ->with(12);
+
         $this->sut->indexAction();
 
         $this->assertEquals('person', $this->view);
     }
 
-    /**
-     * @group abstractPeopleController
-     */
-    public function testGetIndexActionForSaveSoleTrader()
+    public function testPostIndexActionWithValidDataForSaveSoleTrader()
     {
+        $this->setPost([]);
+
         $form = $this->createMockForm('Lva\SoleTrader');
 
         $form->shouldReceive('setData')
@@ -214,20 +228,29 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                     ]
                 ]
             );
-        $this->mockEntity('Person', 'save')
-            ->andReturn(['id' => 1]);
-
-        $this->mockEntity('OrganisationPerson', 'save');
-
-        $this->request
-            ->shouldReceive('isPost')
-            ->andReturn(true);
 
         $this->sut
             ->shouldReceive('postSave')
             ->with('people')
             ->shouldReceive('completeSection')
             ->with('people');
+
+        $this->adapter->shouldReceive('alterAddOrEditFormForOrganisation')
+            ->with($form, 12)
+            ->shouldReceive('addMessages')
+            ->with(12)
+            ->shouldReceive('save')
+            ->with(
+                12,
+                [
+                    'forename' => 'a',
+                    'familyName' => 'b',
+                    'birthDate' => '2014-01-01',
+                    'version' => '',
+                    'id' => '',
+                    'title' => 'Mr'
+                ]
+            );
 
         $this->sut->indexAction();
     }
@@ -257,6 +280,65 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('remove')
             ->with($form, 'data->position');
 
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(true)
+            ->shouldReceive('alterAddOrEditFormForOrganisation')
+            ->with($form, 12);
+
         $this->sut->addAction();
+    }
+
+    public function testAddActionWithoutPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('addErrorMessage')
+            ->with('cannot-perform-action')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('id')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['id' => 1]);
+
+        $this->sut->addAction();
+    }
+
+    public function testDeleteActionWithPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(true);
+
+        $this->sut->shouldReceive('originalDeleteAction');
+
+        $this->sut->deleteAction();
+    }
+
+    public function testDeleteActionWithoutPermission()
+    {
+        $this->mockOrganisationId(12);
+
+        $this->adapter->shouldReceive('canModify')
+            ->with(12)
+            ->andReturn(false);
+
+        $this->sut->shouldReceive('addErrorMessage')
+            ->with('cannot-perform-action')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('id')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1)
+            ->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['id' => 1]);
+
+        $this->sut->deleteAction();
     }
 }

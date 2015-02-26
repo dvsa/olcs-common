@@ -80,19 +80,6 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetByPersonId()
-    {
-        $personId = 7;
-
-        $this->expectOneRestCall('OrganisationPerson', 'GET', ['person' => $personId])
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getByPersonId($personId));
-    }
-
-    /**
-     * @group entity_services
-     */
     public function testGetAllByOrgWithNoLimit()
     {
         $id = 7;
@@ -125,5 +112,22 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getAllByOrg($id, $limit));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetAllWithPerson()
+    {
+        $id = 7;
+
+        $data = [
+            'person' => $id
+        ];
+
+        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getAllWithPerson($id));
     }
 }
