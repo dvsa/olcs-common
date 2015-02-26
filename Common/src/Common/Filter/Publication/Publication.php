@@ -31,13 +31,13 @@ class Publication extends AbstractPublicationFilter
 
         $data = $this->getServiceLocator()->get('\Common\Service\Data\Publication')->fetchList($params);
 
-        if (!isset($data['Results'][0]['id'])) {
+        if (!isset($data[0]['id'])) {
             throw new ResourceNotFoundException('No publication found');
         }
 
         $newData = [
-            'publication' => $data['Results'][0]['id'],
-            'publicationNo' => $data['Results'][0]['publicationNo']
+            'publication' => $data[0]['id'],
+            'publicationNo' => $data[0]['publicationNo']
         ];
 
         $publication = $this->mergeData($publication, $newData);
