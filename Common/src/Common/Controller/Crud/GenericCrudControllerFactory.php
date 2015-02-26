@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Crud Controller Factory
+ * Creates configured instances of GenericCrudController
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -12,11 +12,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Filter\Word\CamelCaseToDash;
 
 /**
- * Crud Controller Factory
+ * Creates configured instances of GenericCrudController
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class CrudControllerFactory implements FactoryInterface
+class GenericCrudControllerFactory implements FactoryInterface
 {
     /**
      * Create service
