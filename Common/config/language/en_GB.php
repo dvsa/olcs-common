@@ -1160,6 +1160,7 @@ return array(
     'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
+    'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
@@ -1769,5 +1770,10 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'licence_goods-trailers_trailer.table.title' => 'Licence Trailers',
+    'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'No trailers found for this licence.',
+    'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer No.',
+    'licence_goods-trailers_trailer.table.specified' => 'Specified Date',
+    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and that the list is regularly reviewed.'
     // Potentially unused (Not found with grep)
 );
