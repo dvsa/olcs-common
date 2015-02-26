@@ -69,16 +69,15 @@ class OrganisationPersonEntityService extends AbstractEntityService
             'person' => $personId
         );
 
-        $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'DELETE', $query);
-    }
+        $this->deleteList($query);
 
-    /**
-     * Retrieve all records for a given person ID
-     */
-    public function getAllWithPerson($id)
-    {
-        return $this->get(array('person' => $id), $this->peopleBundle);
+        // delete the actual person row if they no longer relate
+        // to an organisation
+        $remaining = $this->get(['person' => $personId]);
+
+        if ($remaining['Count'] === 0) {
+            $this->getServiceLocator()->get('Entity\Person')->delete($personId);
+        }
     }
 
     /**

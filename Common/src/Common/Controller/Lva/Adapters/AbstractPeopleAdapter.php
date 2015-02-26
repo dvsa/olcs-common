@@ -123,17 +123,9 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
      */
     public function delete($orgId, $id)
     {
-        $orgPersonService = $this->getServiceLocator()->get('Entity\OrganisationPerson');
-
-        $orgPersonService->deleteByOrgAndPersonId($orgId, $id);
-
-        $result = $orgPersonService->getAllWithPerson($id);
-
-        // delete the actual person row if they no longer relate
-        // to an organisation
-        if (isset($result['Count']) && $result['Count'] === 0) {
-            $this->getServiceLocator()->get('Entity\Person')->delete($id);
-        }
+        $this->getServiceLocator()
+            ->get('Entity\OrganisationPerson')
+            ->deleteByOrgAndPersonId($orgId, $id);
     }
 
     public function restore($orgId, $id)

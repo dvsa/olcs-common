@@ -105,7 +105,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Delete the entity by its ID
+     * Delete the entity by arbitrary params
      *
      * @param array $data
      */

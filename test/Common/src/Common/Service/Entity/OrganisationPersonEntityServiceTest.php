@@ -67,12 +67,46 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testDeleteByOrgAndPersonId()
+    public function testDeleteByOrgAndPersonIdWithMultiplePeopleRemaining()
     {
         $orgId = 3;
         $personId = 7;
 
-        $this->expectOneRestCall('OrganisationPerson', 'DELETE', ['organisation' => $orgId, 'person' => $personId]);
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
+
+        $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
+            ->willReturn(['Count' => 10]);
+
+        $this->sut->deleteByOrgAndPersonId($orgId, $personId);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDeleteByOrgAndPersonIdWithNoPeopleRemaining()
+    {
+        $orgId = 3;
+        $personId = 7;
+
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
+
+        $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
+            ->willReturn(['Count' => 0]);
+
+        $personService = $this->getMock('\stdClass', ['delete']);
+        $personService->expects($this->once())
+            ->method('delete')
+            ->with(7);
+
+        $this->sm->setService('Entity\Person', $personService);
 
         $this->sut->deleteByOrgAndPersonId($orgId, $personId);
     }
@@ -112,22 +146,5 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getAllByOrg($id, $limit));
-    }
-
-    /**
-     * @group entity_services
-     */
-    public function testGetAllWithPerson()
-    {
-        $id = 7;
-
-        $data = [
-            'person' => $id
-        ];
-
-        $this->expectOneRestCall('OrganisationPerson', 'GET', $data)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getAllWithPerson($id));
     }
 }

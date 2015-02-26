@@ -299,10 +299,7 @@ class ApplicationOrganisationPersonEntityServiceTest extends AbstractEntityServi
         $mergedData = [
             'id' => 1,
             'version' => 2,
-            'position' => 'test',
-            '_OPTIONS_' => [
-                'force' => true
-            ]
+            'position' => 'test'
         ];
 
         $this->expectOneRestCall('ApplicationOrganisationPerson', 'PUT', $mergedData)
