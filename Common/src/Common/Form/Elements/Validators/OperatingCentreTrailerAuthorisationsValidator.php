@@ -30,14 +30,14 @@ class OperatingCentreTrailerAuthorisationsValidator extends AbstractValidator
     );
 
     /**
-     * Custom validation for tachograph analyser
+     * Custom validation for trailer authorisations
      *
      * @param mixed $value
      * @param array $context
      */
     public function isValid($value, $context = null)
     {
-        if (!is_numeric($value)) {
+        if (!is_null($value) && !is_numeric($value)) {
             $this->error('none-numeric');
             return false;
         }

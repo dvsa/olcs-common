@@ -28,19 +28,22 @@ class OperatingCentresTest extends AbstractFormTest
         $smContext    = new F\Context(new F\Stack(['data', 'totAuthSmallVehicles']) , '2');
         $medContext   = new F\Context(new F\Stack(['data', 'totAuthMediumVehicles']), '3');
         $largeContext = new F\Context(new F\Stack(['data', 'totAuthLargeVehicles']) , '4');
-        $ocContext    = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '1');
+        $oneOCContext = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '1');
         $minContext   = new F\Context(new F\Stack(['data', 'minVehicleAuth'])       , '9');
+        $noOCContext  = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '0');
 
         return [
             new F\Test(
                 new F\Stack(['data', 'totAuthVehicles']),
-                new F\Value(F\Value::VALID, ''),
-                new F\Value(F\Value::INVALID, '', $smContext, $medContext, $largeContext, $ocContext, $minContext),
-                new F\Value(F\Value::INVALID, '0', $smContext, $medContext, $largeContext, $ocContext, $minContext),
-                new F\Value(F\Value::INVALID, '12', $smContext, $medContext, $largeContext, $ocContext, $minContext),
-                new F\Value(F\Value::VALID, '9', $smContext, $medContext, $largeContext, $ocContext, $minContext),
+                new F\Value(F\Value::INVALID, '', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
+                new F\Value(F\Value::INVALID, '0', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
+                new F\Value(F\Value::INVALID, '12', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
+                new F\Value(F\Value::VALID, '9', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
                 new F\Value(F\Value::INVALID, 'foo'),
-                new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $ocContext, $minContext)
+                new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $oneOCContext, $minContext),
+
+                new F\Value(F\Value::INVALID, ''),
+                new F\Value(F\Value::INVALID, '', $noOCContext)
             ),
         ];
     }
@@ -81,6 +84,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthVehicles'       => '',
                     'totAuthTrailers'       => '',
                     'totCommunityLicences'  => '',
+                    'noOfOperatingCentres'  => '1',
                 ],
                 [
                     'totAuthSmallVehicles'  => null,
@@ -89,6 +93,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthVehicles'       => null,
                     'totAuthTrailers'       => null,
                     'totCommunityLicences'  => null,
+                    'noOfOperatingCentres'  => '1',
                 ],
             ],
             'zeroes' => [
@@ -99,6 +104,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthVehicles'       => '0',
                     'totAuthTrailers'       => '0',
                     'totCommunityLicences'  => '0',
+                    'noOfOperatingCentres'  => '1',
                 ],
                 [
                     'totAuthSmallVehicles'  => '0',
@@ -107,6 +113,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthVehicles'       => '0',
                     'totAuthTrailers'       => '0',
                     'totCommunityLicences'  => '0',
+                    'noOfOperatingCentres'  => '1',
                 ],
             ],
         ];

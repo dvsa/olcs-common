@@ -27,13 +27,13 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
         total number of vehicles parked across all of your operating centres',
     'OperatingCentreVehicleAuthorisationsValidator.too-low' => 'The total number of authorised vehicles must be equal or
         greater than the largest number of vehicles authorised at any individual operating centre',
-    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'Please Select' => 'Please Select',
     'Please add a person' => 'Please add a person',
     'Please add a safety inspection provider' => 'Please add a safety inspection provider',
