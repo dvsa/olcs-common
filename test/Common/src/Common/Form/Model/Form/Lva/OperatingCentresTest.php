@@ -2,7 +2,8 @@
 
 namespace CommonTest\Form\Model\Form\Lva;
 
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Olcs\TestHelpers\FormTester\AbstractFormTest;
+use Olcs\TestHelpers\FormTester\Data\Object as F;
 use CommonTest\Bootstrap;
 
 /**
@@ -11,84 +12,35 @@ use CommonTest\Bootstrap;
  * @package OlcsTest\FormTest
  * @group ComponentTests
  * @group FormTests
- * @note this doesn't extend AbstractFormTest as we're only testing filters,
- * not validation
  */
-class OperatingCentresTest extends MockeryTestCase
+class OperatingCentresTest extends AbstractFormTest
 {
     protected $formName = '\Common\Form\Model\Form\Lva\OperatingCentres';
 
-    protected $sm;
-
-    protected $form;
-
-    public function setUp()
+    protected function getServiceManager()
     {
-        parent::setUp();
-
-        $this->sm   = Bootstrap::getRealServiceManager();
-        $this->form = $this->sm->get('FormAnnotationBuilder')->createForm($this->formName);
-        $this->form->remove('dataTrafficArea');
+        return Bootstrap::getRealServiceManager();
     }
 
-    /**
-     * @dataProvider numericFieldsProvider
-     */
-    public function testNumericFieldsAreNulled($inputData, $expectedData)
+    protected function getFormData()
     {
-        $formData = [
-            'data' => $inputData
-        ];
+        $smContext    = new F\Context(new F\Stack(['data', 'totAuthSmallVehicles']) , '2');
+        $medContext   = new F\Context(new F\Stack(['data', 'totAuthMediumVehicles']), '3');
+        $largeContext = new F\Context(new F\Stack(['data', 'totAuthLargeVehicles']) , '4');
+        $ocContext    = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '1');
+        $minContext   = new F\Context(new F\Stack(['data', 'minVehicleAuth'])       , '9');
 
-        $this->form->setData($formData);
-
-        $this->assertTrue($this->form->isValid(), json_encode($this->form->getMessages()));
-
-        $filtered = $this->form->getData();
-        foreach ($inputData as $field => $value) {
-            $this->assertEquals($expectedData[$field], $filtered['data'][$field]);
-        }
-    }
-
-    public function numericFieldsProvider()
-    {
         return [
-            'empty strings' => [
-                [
-                    'totAuthSmallVehicles'  => '',
-                    'totAuthMediumVehicles' => '',
-                    'totAuthLargeVehicles'  => '',
-                    'totAuthVehicles'       => '',
-                    'totAuthTrailers'       => '',
-                    'totCommunityLicences'  => '',
-                ],
-                [
-                    'totAuthSmallVehicles'  => null,
-                    'totAuthMediumVehicles' => null,
-                    'totAuthLargeVehicles'  => null,
-                    'totAuthVehicles'       => null,
-                    'totAuthTrailers'       => null,
-                    'totCommunityLicences'  => null,
-                ],
-            ],
-            'zeroes' => [
-                [
-                    'totAuthSmallVehicles'  => '0',
-                    'totAuthMediumVehicles' => '0',
-                    'totAuthLargeVehicles'  => '0',
-                    'totAuthVehicles'       => '0',
-                    'totAuthTrailers'       => '0',
-                    'totCommunityLicences'  => '0',
-                ],
-                [
-                    'totAuthSmallVehicles'  => '0',
-                    'totAuthMediumVehicles' => '0',
-                    'totAuthLargeVehicles'  => '0',
-                    'totAuthVehicles'       => '0',
-                    'totAuthTrailers'       => '0',
-                    'totCommunityLicences'  => '0',
-                ],
-            ],
+            new F\Test(
+                new F\Stack(['data', 'totAuthVehicles']),
+                new F\Value(F\Value::VALID, ''),
+                new F\Value(F\Value::INVALID, '', $smContext, $medContext, $largeContext, $ocContext, $minContext),
+                new F\Value(F\Value::INVALID, '0', $smContext, $medContext, $largeContext, $ocContext, $minContext),
+                new F\Value(F\Value::INVALID, '12', $smContext, $medContext, $largeContext, $ocContext, $minContext),
+                new F\Value(F\Value::VALID, '9', $smContext, $medContext, $largeContext, $ocContext, $minContext),
+                new F\Value(F\Value::INVALID, 'foo'),
+                new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $ocContext, $minContext)
+            ),
         ];
     }
 }

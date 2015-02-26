@@ -22,6 +22,7 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
      * @var array
      */
     protected $messageTemplates = array(
+        'none-numeric' => 'OperatingCentreVehicleAuthorisationsValidator.none-numeric',
         'no-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre',
         '1-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre',
         'too-low' => 'OperatingCentreVehicleAuthorisationsValidator.too-low',
@@ -29,13 +30,18 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
     );
 
     /**
-     * Custom validation for tachograph analyser
+     * Custom validation for total vehicle authorisations
      *
      * @param mixed $value
      * @param array $context
      */
     public function isValid($value, $context = null)
     {
+        if (!is_null($value) && !is_numeric($value)) {
+            $this->error('none-numeric');
+            return false;
+        }
+
         $noOfOperatingCentres = (int)$context['noOfOperatingCentres'];
         $value = (int)$value;
 

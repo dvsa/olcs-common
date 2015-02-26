@@ -52,12 +52,11 @@ class OperatingCentres
     public $totAuthLargeVehicles = null;
 
     /**
-     * @Form\Attributes({"class":"short","id":""})
-     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(false)
+     * @Form\Input("Common\InputFilter\ContinueIfEmptyInput")
+     * @Form\AllowEmpty(true)
+     * @Form\Required(true)
+     * @Form\Attributes({"class":"short","id":"","required":false})
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totAuthVehicles"})
-     * @Form\Validator({"name": "Digits"})
-     * @Form\Validator({"name": "Between", "options": {"min":0, "max": 1000000}})
      * @Form\Validator({"name": "Common\Form\Elements\Validators\OperatingCentreTotalVehicleAuthorisationsValidator"})
      * @Form\Validator({
      *     "name": "Common\Form\Elements\Validators\EqualSum",

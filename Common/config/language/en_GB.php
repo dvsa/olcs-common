@@ -33,6 +33,7 @@ return array(
         total number of vehicles parked across all of your operating centres',
     'OperatingCentreVehicleAuthorisationsValidator.too-low' => 'The total number of authorised vehicles must be equal or
         greater than the largest number of vehicles authorised at any individual operating centre',
+    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
     'Please Select' => 'Please Select',
     'Please add a person' => 'Please add a person',
     'Please add a safety inspection provider' => 'Please add a safety inspection provider',
