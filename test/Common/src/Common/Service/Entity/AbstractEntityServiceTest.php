@@ -117,4 +117,45 @@ class AbstractEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->multiUpdate($data);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testDeleteListByIds()
+    {
+        $ids = ['id' => [1,2]];
+
+        $this->setEntity('Foo');
+
+        $this->expectedRestCallInOrder('Foo', 'DELETE', array('id' => 1));
+        $this->expectedRestCallInOrder('Foo', 'DELETE', array('id' => 2));
+
+        $this->sut->deleteListByIds($ids);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testDeleteListByIdsNoIdIndex()
+    {
+        $ids = ['foo' => '1'];
+
+        $this->setEntity('Foo');
+
+        $this->expectOneRestCall('Foo', 'DELETE', array('foo' => 1));
+
+        $this->sut->deleteListByIds($ids);
+    }
+
+    /**
+     * @group entity_services
+     *
+     * @expectedException \Common\Exception\ConfigurationException
+     */
+    public function testDeleteListByIdsWithoutDefiningEntity()
+    {
+        $id = 1;
+
+        $this->sut->deleteListByIds(['id' => $id]);
+    }
 }
