@@ -151,6 +151,10 @@ class FlashMessengerTest extends MockeryTestCase
 
         $markup = $this->sut->render();
 
+        //check initial markup
         $this->assertEquals($expected, $markup);
+
+        //check messages don't render twice
+        $this->assertEquals('', $this->sut->render());
     }
 }
