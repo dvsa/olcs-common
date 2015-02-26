@@ -63,7 +63,7 @@ class Redirect
         $this->params = [];
         $this->options = [];
         $this->useRouteMatch = true;
-        $this->ajax = false;
+        $this->ajax = true;
 
         return $this;
     }

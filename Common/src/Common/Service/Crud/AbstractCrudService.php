@@ -43,6 +43,18 @@ abstract class AbstractCrudService implements CrudServiceInterface, ServiceLocat
     }
 
     /**
+     * Get default form data
+     *
+     * @NOTE This method is used by genericCrudService to allow you to define default form data
+     *
+     * @return array
+     */
+    public function getDefaultFormData()
+    {
+        return [];
+    }
+
+    /**
      * Get the delete confirmation form
      *
      * @param Request $request

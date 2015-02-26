@@ -25,6 +25,15 @@ interface GenericProcessFormInterface
     public function isFormValid(Form $form, $id = null);
 
     /**
+     * Get default form data
+     *
+     * @NOTE This method is used by genericCrudService to allow you to define default form data
+     *
+     * @return array
+     */
+    public function getDefaultFormData();
+
+    /**
      * Process the saving of an entity
      *
      * @param array $data

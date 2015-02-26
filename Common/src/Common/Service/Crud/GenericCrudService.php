@@ -69,13 +69,7 @@ class GenericCrudService implements ServiceLocatorAwareInterface
             return $this->getForm($service, $request)->setData($data);
         }
 
-        $form = $this->getForm($service, $request);
-
-        if (method_exists($service, 'getDefaultFormData')) {
-            $form->setData($service->getDefaultFormData());
-        }
-
-        return $form;
+        return $this->getForm($service, $request)->setData($service->getDefaultFormData());
     }
 
     protected function getForm($service, $request)
