@@ -44,7 +44,7 @@ class OperatingCentreTrailerAuthorisationsValidatorTest extends \PHPUnit_Framewo
         return array(
             array('', array(), false),
             // No OCs
-            array(0, array('noOfOperatingCentres' => 0, 'minTrailerAuth' => 0, 'maxTrailerAuth' => 0), true), // note this is different to vehicles(!)
+            array(0, array('noOfOperatingCentres' => 0, 'minTrailerAuth' => 0, 'maxTrailerAuth' => 0), true),
             array(1, array('noOfOperatingCentres' => 0, 'minTrailerAuth' => 0, 'maxTrailerAuth' => 0), false),
             // 1 OC
             array(9, array('noOfOperatingCentres' => 1, 'minTrailerAuth' => 10, 'maxTrailerAuth' => 10), false),

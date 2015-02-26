@@ -25,12 +25,12 @@ class OperatingCentresTest extends AbstractFormTest
 
     protected function getFormData()
     {
-        $smContext    = new F\Context(new F\Stack(['data', 'totAuthSmallVehicles']) , '2');
+        $smContext    = new F\Context(new F\Stack(['data', 'totAuthSmallVehicles']), '2');
         $medContext   = new F\Context(new F\Stack(['data', 'totAuthMediumVehicles']), '3');
-        $largeContext = new F\Context(new F\Stack(['data', 'totAuthLargeVehicles']) , '4');
-        $oneOCContext = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '1');
-        $minContext   = new F\Context(new F\Stack(['data', 'minVehicleAuth'])       , '9');
-        $noOCContext  = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']) , '0');
+        $largeContext = new F\Context(new F\Stack(['data', 'totAuthLargeVehicles']), '4');
+        $oneOCContext = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']), '1');
+        $minContext   = new F\Context(new F\Stack(['data', 'minVehicleAuth']), '9');
+        $noOCContext  = new F\Context(new F\Stack(['data', 'noOfOperatingCentres']), '0');
 
         return [
             new F\Test(
@@ -43,14 +43,6 @@ class OperatingCentresTest extends AbstractFormTest
                 new F\Value(F\Value::INVALID, 'foo'),
                 new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $oneOCContext, $minContext)
             ),
-            // @todo - fix AbstractFormTest to stop preserving state between tests :(
-            // new F\Test(
-            //     new F\Stack(['table', 'rows']),
-            //     new F\Value(F\Value::VALID, 1),
-            //     new F\Value(F\Value::VALID, '2'),
-            //     new F\Value(F\Value::INVALID, ''),
-            //     new F\Value(F\Value::INVALID, '0')
-            // ),
         ];
     }
 
