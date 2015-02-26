@@ -17,6 +17,7 @@ class OperatingCentresTest extends AbstractFormTest
 {
     protected $formName = '\Common\Form\Model\Form\Lva\OperatingCentres';
 
+
     protected function getServiceManager()
     {
         return Bootstrap::getRealServiceManager();
@@ -41,6 +42,73 @@ class OperatingCentresTest extends AbstractFormTest
                 new F\Value(F\Value::INVALID, 'foo'),
                 new F\Value(F\Value::INVALID, 'bar', $smContext, $medContext, $largeContext, $ocContext, $minContext)
             ),
+        ];
+    }
+
+    /**
+     * Test that filters nullify numeric fields correctly
+     * @dataProvider numericFieldsProvider
+     */
+    public function testNumericFieldsAreNulled($inputData, $expectedData)
+    {
+        $sm = Bootstrap::getRealServiceManager();
+
+        $form = $sm->get('FormAnnotationBuilder')->createForm($this->formName);
+        $form->remove('dataTrafficArea');
+
+        $formData = [
+            'data' => $inputData
+        ];
+
+        $form->setData($formData);
+
+        $this->assertTrue($form->isValid(), json_encode($form->getMessages()));
+
+        $filtered = $form->getData();
+        foreach ($inputData as $field => $value) {
+            $this->assertEquals($expectedData[$field], $filtered['data'][$field]);
+        }
+    }
+
+    public function numericFieldsProvider()
+    {
+        return [
+            'empty strings' => [
+                [
+                    'totAuthSmallVehicles'  => '',
+                    'totAuthMediumVehicles' => '',
+                    'totAuthLargeVehicles'  => '',
+                    'totAuthVehicles'       => '',
+                    'totAuthTrailers'       => '',
+                    'totCommunityLicences'  => '',
+                ],
+                [
+                    'totAuthSmallVehicles'  => null,
+                    'totAuthMediumVehicles' => null,
+                    'totAuthLargeVehicles'  => null,
+                    'totAuthVehicles'       => null,
+                    'totAuthTrailers'       => null,
+                    'totCommunityLicences'  => null,
+                ],
+            ],
+            'zeroes' => [
+                [
+                    'totAuthSmallVehicles'  => '0',
+                    'totAuthMediumVehicles' => '0',
+                    'totAuthLargeVehicles'  => '0',
+                    'totAuthVehicles'       => '0',
+                    'totAuthTrailers'       => '0',
+                    'totCommunityLicences'  => '0',
+                ],
+                [
+                    'totAuthSmallVehicles'  => '0',
+                    'totAuthMediumVehicles' => '0',
+                    'totAuthLargeVehicles'  => '0',
+                    'totAuthVehicles'       => '0',
+                    'totAuthTrailers'       => '0',
+                    'totCommunityLicences'  => '0',
+                ],
+            ],
         ];
     }
 }
