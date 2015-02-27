@@ -1165,7 +1165,7 @@ class FormHelperServiceTest extends MockeryTestCase
         $element->shouldReceive('getValidatorChain')->andReturn(
             m::mock()
                 ->shouldReceive('getValidators')
-                ->andReturn([] )
+                ->andReturn([])
                 ->getMock()
         );
 
