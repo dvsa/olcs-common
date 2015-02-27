@@ -8,8 +8,6 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\FinancialStandingRateEntityService;
-use CommonTest\Bootstrap;
-use Mockery as m;
 
 /**
  * Financial Standing Rate Entity Service Test
@@ -65,5 +63,27 @@ class FinancialStandingRateEntityServiceTest extends AbstractEntityServiceTestCa
             ->will($this->returnValue(['Results' => $rates]));
 
         $this->assertSame($rates, $this->sut->getRatesInEffect('2016-04-23'));
+    }
+
+    public function testGetRecordById()
+    {
+        $id = 123;
+
+        $this->expectOneRestCall('FinancialStandingRate', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getRecordById($id));
+    }
+
+    public function testGetFullList()
+    {
+        $this->expectOneRestCall(
+            'FinancialStandingRate',
+            'GET',
+            ['sort' => 'effectiveFrom', 'order' => 'ASC', 'limit' => 'all']
+        )
+        ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getFullList());
     }
 }

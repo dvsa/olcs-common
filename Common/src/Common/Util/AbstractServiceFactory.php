@@ -60,6 +60,7 @@ class AbstractServiceFactory implements AbstractFactoryInterface
     {
         $namespaces = [
             'Olcs\Service\\',
+            'Admin\Service\\',
             'Common\Service\\'
         ];
 
