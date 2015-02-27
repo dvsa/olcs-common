@@ -85,6 +85,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $table,
                 $tableName
             );
+
+            $this->addWarningIfAuthorityExceeded($tableName, $entityData);
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'vehicle-psv']);
@@ -321,6 +323,12 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         foreach ($this->getTables() as $table) {
 
+            if ($this->getVehicleCountByType($table, $data) > 0) {
+                // Never remove table if we have previously added vehicles
+                // (https://jira.i-env.net/browse/OLCS-7590)
+                continue;
+            }
+
             $ucTable = ucwords($table);
 
             if (!isset($data['totAuth' . $ucTable . 'Vehicles']) || $data['totAuth' . $ucTable . 'Vehicles'] < 1) {
@@ -336,6 +344,41 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         }
 
         return $form;
+    }
+
+    /**
+     * Get count of vehicles of a particular type
+     * @param string $type table name (small|medium|large)
+     * @param array $data
+     * @return int|null
+     */
+    protected function getVehicleCountByType($type, $data)
+    {
+        $count = 0;
+        $psvType = $this->getPsvTypeFromType($type);
+        if (isset($this->psvTypes[$type])) {
+            foreach ($data['licence']['licenceVehicles'] as $licenceVehicle) {
+                if ($licenceVehicle['vehicle']['psvType']['id'] == $psvType) {
+                    $count++;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Get vehicle authorisation for a particular type
+     * @param string $type table name (small|medium|large)
+     * @param array $data
+     * @return int|null
+     */
+    protected function getVehicleAuthByType($type, $data)
+    {
+        $authField = 'totAuth' . ucwords($type) . 'Vehicles';
+        if (array_key_exists($authField, $data)) {
+            return (int) $data[$authField];
+        }
     }
 
     /**
@@ -512,6 +555,24 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             if (isset($data[$type]['action'])) {
                 return $type;
             }
+        }
+    }
+
+    /**
+     * Add a flash warning message if the individual authority for a type of
+     * vehicle is exceeded. This is an edge case and should only happen when
+     * vehicles are added and then Operating Centre authority is decreased.
+     */
+    protected function addWarningIfAuthorityExceeded($type, $data)
+    {
+        $vehicles  = (int)$this->getVehicleCountByType($type, $data);
+        $authority = (int)$this->getVehicleAuthByType($type, $data);
+        $hasEnteredReg = $data['hasEnteredReg'];
+
+        if ($hasEnteredReg == 'Y' && $vehicles>$authority) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
+                'more-vehicles-than-'.$type.'-authorisation'
+            );
         }
     }
 }

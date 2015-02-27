@@ -1202,6 +1202,12 @@ return array(
     'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
     'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
