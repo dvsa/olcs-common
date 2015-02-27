@@ -55,6 +55,12 @@ class ApplicationIdValidatorTest extends PHPUnit_Framework_TestCase
                 ],
                 false
             ],
+            [
+                [
+                    'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED]
+                ],
+                false
+            ],
         ];
     }
 }
