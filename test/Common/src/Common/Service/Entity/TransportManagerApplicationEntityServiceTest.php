@@ -99,7 +99,8 @@ class TransportManagerApplicationEntityServiceTest extends AbstractEntityService
 
         $query = [
             'transportManager' => $id,
-            'action' => '!=D'
+            'action' => '!=D',
+            'limit' => 'all'
         ];
 
         $this->expectOneRestCall('TransportManagerApplication', 'GET', $query, $this->dataBundle)

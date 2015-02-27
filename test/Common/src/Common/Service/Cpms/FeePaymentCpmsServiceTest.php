@@ -118,6 +118,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ]
             ],
             'cost_centre' => '12345,67890',
+            'total_amount' => '650.50',
         ];
 
         $this->client->shouldReceive('post')

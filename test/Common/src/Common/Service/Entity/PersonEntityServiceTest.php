@@ -68,6 +68,47 @@ class PersonEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetAllForApplicationWithNoLimit()
+    {
+        $id = 7;
+
+        $this->sm->setService(
+            'Entity\ApplicationOrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByApplication')
+                ->once()
+                ->with($id, null)
+                ->andReturn('RESPONSE')
+                ->getMock()
+        );
+
+        $this->assertEquals('RESPONSE', $this->sut->getAllForApplication($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetAllForApplicationWithLimit()
+    {
+        $id = 7;
+        $limit = 10;
+
+        $this->sm->setService(
+            'Entity\ApplicationOrganisationPerson',
+            m::mock()
+                ->shouldReceive('getAllByApplication')
+                ->once()
+                ->with($id, $limit)
+                ->andReturn('RESPONSE')
+                ->getMock()
+        );
+
+        $this->assertEquals('RESPONSE', $this->sut->getAllForApplication($id, $limit));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetOneForOrganisationWithResults()
     {
         $id = 7;

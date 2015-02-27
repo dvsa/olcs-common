@@ -57,4 +57,11 @@ class AbstractOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->assertEquals($data, $this->sut->alterFormData(2, $data));
     }
+
+    public function testAlterFormDataOnPost()
+    {
+        $data = ['foo' => 'bar'];
+
+        $this->assertSame($data, $this->sut->alterFormDataOnPost('edit', $data));
+    }
 }

@@ -46,7 +46,7 @@ class BusRegText2Test extends MockeryTestCase
 
         $expectedOutput = [
             'licenceData' => $licenceData,
-            'text2' => $licNo . ' ' . $organisationName . ' T/A ' . $tradingName2
+            'text2' => strtoupper($licNo . ' ' . $organisationName . ' T/A ' . $tradingName2)
         ];
 
         $input = new Publication($inputData);
@@ -81,7 +81,7 @@ class BusRegText2Test extends MockeryTestCase
 
         $expectedOutput = [
             'licenceData' => $licenceData,
-            'text2' => $licNo . ' ' . $organisationName
+            'text2' => strtoupper($licNo . ' ' . $organisationName)
         ];
 
         $input = new Publication($inputData);

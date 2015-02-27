@@ -9,6 +9,7 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
 /**
  * Shared logic between People controllers
@@ -16,9 +17,12 @@ use Common\Service\Entity\OrganisationEntityService;
  * @author Nick Payne <nick.payne@valtech.co.uk>
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractPeopleController extends AbstractController
+abstract class AbstractPeopleController extends AbstractController implements AdapterAwareInterface
 {
-    use Traits\CrudTableTrait;
+    use Traits\AdapterAwareTrait,
+        Traits\CrudTableTrait {
+        Traits\CrudTableTrait::deleteAction as originalDeleteAction;
+    }
 
     /**
      * Needed by the Crud Table Trait
@@ -30,10 +34,13 @@ abstract class AbstractPeopleController extends AbstractController
      */
     public function indexAction()
     {
+        $adapter = $this->getAdapter();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
             ->get('Entity\Organisation')
             ->getType($orgId);
+
+        $adapter->addMessages($orgId);
 
         if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_SOLE_TRADER) {
             return $this->handleSoleTrader($orgId, $orgData);
@@ -63,7 +70,7 @@ abstract class AbstractPeopleController extends AbstractController
 
         $form = $this->getServiceLocator()->get('Helper\Form')->createForm('Lva\People');
 
-        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-people', $this->getTableData($orgId));
+        $table = $adapter->createTable($orgId);
 
         $form->get('table')
             ->get('table')
@@ -71,13 +78,17 @@ abstract class AbstractPeopleController extends AbstractController
 
         $this->alterForm($form, $table, $orgData);
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        $adapter->alterFormForOrganisation($form, $table, $orgId);
+
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud-delta');
 
         return $this->render('people', $form);
     }
 
     private function handleSoleTrader($orgId, $orgData)
     {
+        $adapter = $this->getAdapter();
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -96,13 +107,12 @@ abstract class AbstractPeopleController extends AbstractController
 
         $this->alterFormForLva($form);
 
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId);
+
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
-            $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
 
-            if (!$data['id']) {
-                $this->addOrganisationPerson('add', $orgId, $orgData, $person, $data);
-            }
+            $adapter->save($orgId, $data);
 
             $this->postSave('people');
             return $this->completeSection('people');
@@ -164,11 +174,30 @@ abstract class AbstractPeopleController extends AbstractController
             ->setValue($translator->translate($guidanceLabel));
     }
 
+    private function alterCrudForm($form, $mode, $orgData)
+    {
+        if ($mode !== 'add') {
+            $form->get('form-actions')->remove('addAnother');
+        }
+
+        if ($orgData['type']['id'] !== OrganisationEntityService::ORG_TYPE_OTHER) {
+            // otherwise we're not interested in position at all, bin it off
+            $this->getServiceLocator()->get('Helper\Form')
+                ->remove($form, 'data->position');
+        }
+    }
+
     /**
      * Add person action
      */
     public function addAction()
     {
+        $orgId = $this->getCurrentOrganisationId();
+
+        if (!$this->getAdapter()->canModify($orgId)) {
+            return $this->redirectWithoutPermission();
+        }
+
         return $this->addOrEdit('add');
     }
 
@@ -188,6 +217,7 @@ abstract class AbstractPeopleController extends AbstractController
      */
     private function addOrEdit($mode)
     {
+        $adapter = $this->getAdapter();
         $request = $this->getRequest();
         $orgId = $this->getCurrentOrganisationId();
         $orgData = $this->getServiceLocator()
@@ -202,66 +232,32 @@ abstract class AbstractPeopleController extends AbstractController
             $data = $this->formatCrudDataForForm(
                 $this->getServiceLocator()->get('Entity\Person')->getById($this->params('child_id'))
             );
+
+            if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
+                // we need to pre-populate the user's position from the org for
+                // 'other' business types
+                $data['data']['position'] = $adapter->getPersonPosition($orgId, $this->params('child_id'));
+            }
         }
 
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\Person', $request);
 
-        if ($mode !== 'add') {
-            $form->get('form-actions')->remove('addAnother');
-        }
+        $this->alterCrudForm($form, $mode, $orgData);
 
-        if ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
-            // we need to pre-populate the user's position from the org for
-            // 'other' business types
-            $data['position'] = $this->getOrganisationPosition($orgId);
-        } else {
-            // otherwise we're not interested in position at all, bin it off
-            $this->getServiceLocator()->get('Helper\Form')
-                ->remove($form, 'data->position');
-        }
+        $adapter->alterAddOrEditFormForOrganisation($form, $orgId);
 
         $form->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
 
-            $person = $this->getServiceLocator()->get('Entity\Person')->save($data);
-
-            $this->addOrganisationPerson(
-                $mode,
-                $orgId,
-                $orgData,
-                $person,
-                $data
-            );
+            $adapter->save($orgId, $data);
 
             return $this->handlePostSave();
         }
 
         return $this->render($mode . '_people', $form);
-    }
-
-    /**
-     * Get the table data for the main form
-     *
-     * @param int $orgId
-     * @return array
-     */
-    private function getTableData($orgId)
-    {
-        $results = $this->getServiceLocator()->get('Entity\Person')
-            ->getAllForOrganisation($orgId);
-
-        $final = array();
-        foreach ($results['Results'] as $row) {
-            // flatten the person's position if it's non null
-            if (isset($row['position'])) {
-                $row['person']['position'] = $row['position'];
-            }
-            $final[] = $row['person'];
-        }
-        return $final;
     }
 
     /**
@@ -277,7 +273,12 @@ abstract class AbstractPeopleController extends AbstractController
      */
     private function formatCrudDataForSave($data)
     {
-        return $data['data'];
+        return array_filter(
+            $data['data'],
+            function ($v) {
+                return $v !== null;
+            }
+        );
     }
 
     /**
@@ -289,31 +290,10 @@ abstract class AbstractPeopleController extends AbstractController
         $id = $this->params('child_id');
         $orgId = $this->getCurrentOrganisationId();
 
-        // This allows us to handle multiple delete
         $ids = explode(',', $id);
 
         foreach ($ids as $id) {
-            $this->deletePerson($id, $orgId);
-        }
-    }
-
-    /**
-     * Delete a person from the organisation, and then delete the person if they are now an orphan
-     *
-     * @param int $id
-     */
-    protected function deletePerson($id, $orgId)
-    {
-        $orgPersonService = $this->getServiceLocator()->get('Entity\OrganisationPerson');
-
-        $orgPersonService->deleteByOrgAndPersonId($orgId, $id);
-
-        $result = $orgPersonService->getByPersonId($id);
-
-        // delete the actual person row if they no longer relate
-        // to an organisation
-        if (isset($result['Count']) && $result['Count'] === 0) {
-            $this->getServiceLocator()->get('Entity\Person')->delete($id);
+            $this->getAdapter()->delete($orgId, $id);
         }
     }
 
@@ -376,48 +356,50 @@ abstract class AbstractPeopleController extends AbstractController
         return isset($results['Count']) && $results['Count'] > 0;
     }
 
-    private function getOrganisationPosition($orgId)
+    /**
+     * Delete person action
+     */
+    public function deleteAction()
     {
-        $personId = $this->params('child_id');
-        if ($personId === null) {
-            return null;
+        $orgId = $this->getCurrentOrganisationId();
+
+        if (!$this->getAdapter()->canModify($orgId)) {
+            return $this->redirectWithoutPermission();
         }
 
-        $orgPerson = $this->getServiceLocator()
-            ->get('Entity\OrganisationPerson')
-            ->getByOrgAndPersonId($orgId, $personId);
-
-        return $orgPerson['position'];
+        return $this->originalDeleteAction();
     }
 
-    /**
-     * Helper method to conditionally add or update a matching organisation
-     * person record when saving a new person
-     */
-    private function addOrganisationPerson($mode, $orgId, $orgData, $person, $data)
+    private function redirectWithoutPermission()
     {
-        // If we are creating a person, we need to link them to the organisation,
-        // otherwise we might need to update person's position
-        if ($mode === 'add') {
-            $orgPersonData = array(
-                'organisation' => $orgId,
-                'person' => $person['id'],
-                'position' => isset($data['position']) ? $data['position'] : ''
-            );
-        } elseif ($orgData['type']['id'] === OrganisationEntityService::ORG_TYPE_OTHER) {
-            $orgPerson = $this->getServiceLocator()
-                ->get('Entity\OrganisationPerson')
-                ->getByOrgAndPersonId($orgId, $data['id']);
+        $this->addErrorMessage('cannot-perform-action');
+        return $this->redirect()->toRouteAjax(
+            null,
+            [$this->getIdentifierIndex() => $this->getIdentifier()]
+        );
+    }
 
-            $orgPersonData = array(
-                'position' => isset($data['position']) ? $data['position'] : '',
-                'id' => $orgPerson['id'],
-                'version' => $orgPerson['version'],
-            );
+    public function restoreAction()
+    {
+        $id = $this->params('child_id');
+        $orgId = $this->getCurrentOrganisationId();
+
+        $ids = explode(',', $id);
+
+        foreach ($ids as $id) {
+            $this->getAdapter()->restore($orgId, $id);
         }
 
-        if (isset($orgPersonData)) {
-            $this->getServiceLocator()->get('Entity\OrganisationPerson')->save($orgPersonData);
-        }
+        // we need to explicitly null the current action and child ID; these
+        // just get merged with the rest of the current route params
+        $routeParams = [
+            'action' => null,
+            'child_id' => null
+        ];
+
+        return $this->redirect()->toRouteAjax(
+            null,
+            [$this->getIdentifierIndex() => $this->getIdentifier()]
+        );
     }
 }

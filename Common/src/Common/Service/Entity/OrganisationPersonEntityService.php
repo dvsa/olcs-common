@@ -59,6 +59,9 @@ class OrganisationPersonEntityService extends AbstractEntityService
         return $result['Results'][0];
     }
 
+    /**
+     * Remove a record by org *and* person ID
+     */
     public function deleteByOrgAndPersonId($orgId, $personId)
     {
         $query = array(
@@ -66,20 +69,19 @@ class OrganisationPersonEntityService extends AbstractEntityService
             'person' => $personId
         );
 
-        $this->getServiceLocator()->get('Helper\Rest')
-            ->makeRestCall($this->entity, 'DELETE', $query);
+        $this->deleteList($query);
+
+        // delete the actual person row if they no longer relate
+        // to an organisation
+        $remaining = $this->get(['person' => $personId]);
+
+        if ($remaining['Count'] === 0) {
+            $this->getServiceLocator()->get('Entity\Person')->delete($personId);
+        }
     }
 
     /**
-     * Retrieve a record by person ID
-     */
-    public function getByPersonId($id)
-    {
-        return $this->get(array('person' => $id));
-    }
-
-    /**
-     * Get all people for a given organisation
+     * Get all records for a given organisation
      *
      * @param int $orgId
      * @param int $limit
