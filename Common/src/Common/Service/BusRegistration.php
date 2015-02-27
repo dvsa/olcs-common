@@ -85,7 +85,9 @@ class BusRegistration
 
         $data['shortNotices'] = [$this->defaultShortNotice];
 
-        $data['licence'] = $licence;
+        $data['licence']['id'] = $licence['id'];
+
+        $data['_OPTIONS_'] = $this->getCascadeOptions();
 
         return $data;
     }
@@ -111,10 +113,17 @@ class BusRegistration
 
         //This is defined manyToOne in backend...
         $data['shortNotices'] = [$this->defaultShortNotice];
-        $data['parent'] = $previous;
+        $data['parent']['id'] = $previous['id'];
+
+        //optimise backend call
+        $licence = $data['licence'];
+        unset($data['licence']);
+        $data['licence']['id'] = $licence['id'];
 
         //override columns which need different defaults for a variation
         $data = array_merge($data, $this->defaultAll);
+
+        $data['_OPTIONS_'] = $this->getCascadeOptions();
 
         return $data;
     }
@@ -146,21 +155,18 @@ class BusRegistration
     public function getCascadeOptions()
     {
         return [
-            //'_OPTIONS_' => [
-                //'cascade' => [
-                    'list' => [
-                        'shortNotices' => [
-                            'entity' => 'BusShortNotice',
-                            'parent' => 'busReg'
-                        ],
-                        //currently handled by custom code, uncomment if/when removed
-                        /*'otherServices' => [
-                            'entity' => 'BusRegOtherService',
-                            'parent' => 'busReg'
-                        ]*/
+            'cascade' => [
+                'list' => [
+                    'shortNotices' => [
+                        'entity' => 'BusShortNotice',
+                        'parent' => 'busReg'
+                    ],
+                    'otherServices' => [
+                        'entity' => 'BusRegOtherService',
+                        'parent' => 'busReg'
                     ]
-                //]
-            //]
+                ]
+            ]
         ];
     }
 }

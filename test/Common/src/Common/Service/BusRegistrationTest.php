@@ -20,7 +20,7 @@ class BusRegistrationTest extends TestCase
         $result = $sut->createNew($licence);
 
         $this->assertInternalType('array', $result);
-        $this->assertSame($licence, $result['licence']);
+        $this->assertSame($licence['id'], $result['licence']['id']);
 
         $this->assertEquals(BusRegistration::STATUS_NEW, $result['status']);
         $this->assertEquals(BusRegistration::STATUS_NEW, $result['revertStatus']);
@@ -49,7 +49,7 @@ class BusRegistrationTest extends TestCase
         $this->assertEquals(BusRegistration::STATUS_VAR, $result['status']);
         $this->assertEquals(BusRegistration::STATUS_VAR, $result['revertStatus']);
 
-        $this->assertSame($new, $result['parent']);
+        $this->assertSame($new['id'], $result['parent']['id']);
 
         $this->assertEquals('N', $result['trcConditionChecked']);
         $this->assertEquals(['serviceNo' => '4a'], $result['otherServices'][0]);
@@ -65,6 +65,7 @@ class BusRegistrationTest extends TestCase
      */
     public function testCreateCancellation($variation)
     {
+        $variation['id'] = 18;
         $sut = new BusRegistration();
         $result = $sut->createCancellation($variation);
 
@@ -79,8 +80,9 @@ class BusRegistrationTest extends TestCase
         $options = $sut->getCascadeOptions();
 
         $this->assertInternalType('array', $options);
-        $this->assertArrayHasKey('list', $options);
-        $this->assertNotEmpty($options['list']);
+        $this->assertArrayHasKey('cascade', $options);
+        $this->assertArrayHasKey('list', $options['cascade']);
+        $this->assertNotEmpty($options['cascade']['list']);
     }
 
 }
