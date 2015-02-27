@@ -85,8 +85,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
                 $table,
                 $tableName
             );
-
-            $this->addWarningIfAuthorityExceeded($tableName, $entityData);
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles(['lva-crud', 'vehicle-psv']);
@@ -97,6 +95,9 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             $this->postSave('vehicles_psv');
 
             $crudAction = $this->getCrudAction($data);
+
+            $hasEnteredReg = $form->getData()['data']['hasEnteredReg'];
+            $this->addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, true);
 
             if ($crudAction !== null) {
                 $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
@@ -114,6 +115,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             return $this->completeSection('vehicles_psv');
         }
 
+        $this->addWarningsIfAuthorityExceeded($entityData['hasEnteredReg'], $entityData, false);
         return $this->render('vehicles_psv', $form);
     }
 
@@ -563,16 +565,18 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      * vehicle is exceeded. This is an edge case and should only happen when
      * vehicles are added and then Operating Centre authority is decreased.
      */
-    protected function addWarningIfAuthorityExceeded($type, $data)
+    protected function addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, $redirecting)
     {
-        $vehicles  = (int)$this->getVehicleCountByType($type, $data);
-        $authority = (int)$this->getVehicleAuthByType($type, $data);
-        $hasEnteredReg = $data['hasEnteredReg'];
+        $method = $redirecting ? 'addWarningMessage' : 'addCurrentWarningMessage';
 
-        if ($hasEnteredReg == 'Y' && $vehicles>$authority) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
-                'more-vehicles-than-'.$type.'-authorisation'
-            );
+        foreach ($this->getTables() as $type) {
+            $vehicles  = (int)$this->getVehicleCountByType($type, $entityData);
+            $authority = (int)$this->getVehicleAuthByType($type, $entityData);
+            if ($hasEnteredReg == 'Y' && $vehicles>$authority) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
+                    'more-vehicles-than-'.$type.'-authorisation'
+                );
+            }
         }
     }
 }

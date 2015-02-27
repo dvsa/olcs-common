@@ -980,10 +980,9 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->assertSame($mockForm, $this->sut->alterForm($mockForm, $data));
     }
 
-    public function testAddWarningIfAuthorityExceeded()
+    public function testAddWarningsIfAuthorityExceeded()
     {
         $data = [
-            'hasEnteredReg'         => 'Y',
             'totAuthVehicles'       => 5,
             'totAuthSmallVehicles'  => 2,
             'totAuthMediumVehicles' => 3,
@@ -1007,7 +1006,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->getMock()
         );
 
-        $this->sut->addWarningIfAuthorityExceeded('large', $data);
+        $this->sut->addWarningsIfAuthorityExceeded('Y', $data, true);
     }
 
     protected function mockRowField($form, $name, $value)
