@@ -7,7 +7,6 @@
  */
 namespace Common\Service\Lva;
 
-use Common\Service\Entity\OrganisationEntityService;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
@@ -26,11 +25,12 @@ class LicencePeopleLvaService implements ServiceLocatorAwareInterface
             'licence' => $controller->params('licence')
         ];
 
-        $link = $controller->url()->fromRoute('create_variation', $params);
+        $link = $controller->url()->fromRoute('lva-licence/variation', $params);
         $message = $this->getServiceLocator()->get('Helper\Translation')
             ->translateReplace('variation-people-message', [$link]);
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addCurrentInfoMessage($message);
+        $placeholder = $this->getServiceLocator()->get('ViewHelperManager')->get('placeholder');
+
+        $placeholder->getContainer('guidance')->append($message);
     }
 }
