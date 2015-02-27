@@ -2,12 +2,19 @@
 
 namespace Common\Service;
 
+/**
+ * Class BusRegistration
+ * @package Common\Service
+ */
 class BusRegistration
 {
     const STATUS_NEW = 'breg_s_new';
     const STATUS_VAR = 'breg_s_var';
     const STATUS_CANCEL = 'breg_s_cancellation';
 
+    /**
+     * @var array
+     */
     protected $defaultAll = [
         // Reason for action text fields should all be empty
         'reasonSnRefused' => '',
@@ -39,6 +46,9 @@ class BusRegistration
         'ebsrRefresh' => 'N'
     ];
 
+    /**
+     * @var array
+     */
     protected $defaultNew = [
         'subsidised' => 'bs_no', //might this need to be a constant?
         'busNoticePeriod' => 2,
@@ -55,6 +65,9 @@ class BusRegistration
         'qualityPartnershipFacilitiesUsed' => 'N'
     ];
 
+    /**
+     * @var array
+     */
     protected $defaultShortNotice = [
         'bankHolidayChange' => 'N',
         'connectionChange' => 'N',
@@ -77,6 +90,10 @@ class BusRegistration
         'unforseenDetail' => null,
     ];
 
+    /**
+     * @param $licence
+     * @return array
+     */
     public function createNew($licence)
     {
         $data = array_merge($this->defaultAll, $this->defaultNew);
@@ -92,6 +109,10 @@ class BusRegistration
         return $data;
     }
 
+    /**
+     * @param $previous
+     * @return mixed
+     */
     public function createVariation($previous)
     {
         $data = $previous;
@@ -128,6 +149,10 @@ class BusRegistration
         return $data;
     }
 
+    /**
+     * @param $previous
+     * @return mixed
+     */
     public function createCancellation($previous)
     {
         $data = $this->createVariation($previous);
@@ -138,6 +163,9 @@ class BusRegistration
         return $data;
     }
 
+    /**
+     * @param $entity
+     */
     protected function scrubEntity(&$entity)
     {
         //unset database metadata
@@ -152,6 +180,9 @@ class BusRegistration
         );
     }
 
+    /**
+     * @return array
+     */
     public function getCascadeOptions()
     {
         return [

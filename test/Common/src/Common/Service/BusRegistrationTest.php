@@ -84,5 +84,4 @@ class BusRegistrationTest extends TestCase
         $this->assertArrayHasKey('list', $options['cascade']);
         $this->assertNotEmpty($options['cascade']['list']);
     }
-
 }
