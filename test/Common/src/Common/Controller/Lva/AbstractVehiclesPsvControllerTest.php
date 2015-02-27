@@ -143,7 +143,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->andReturn(
                     [
                         'version' => 1,
-                        'hasEnteredReg' => 'N'
+                        'hasEnteredReg' => 'N',
+                        'licence' => ['licenceVehicles' => []],
                     ]
                 )
                 ->getMock()
@@ -594,7 +595,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->andReturn(
                     [
                         'version' => 1,
-                        'hasEnteredReg' => 'N'
+                        'hasEnteredReg' => 'N',
+                        'licence' => ['licenceVehicles' => []],
                     ]
                 )
                 ->getMock()
@@ -797,7 +799,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->andReturn(
                     [
                         'version' => 1,
-                        'hasEnteredReg' => 'N'
+                        'hasEnteredReg' => 'N',
+                        'licence' => ['licenceVehicles' => []],
                     ]
                 )
                 ->getMock()
