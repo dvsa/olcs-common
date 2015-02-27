@@ -37,6 +37,28 @@ class DateSelectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($targetYear, $element->getMaxYear());
     }
 
+    /**
+     * Test the input specification
+     */
+    public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndMinYear()
+    {
+        $element = new DateSelect();
+        $element->setOptions(
+            array(
+                'max_year_delta' => '+11',
+                'min_year_delta' => '-1',
+                'required' => true
+            )
+        );
+        $spec = $element->getInputSpecification();
+
+        $baseYear = date('Y', strtotime('-1 years'));
+        $targetYear = date('Y', strtotime('+11 years'));
+        $this->assertTrue($spec['required']);
+        $this->assertEquals($baseYear, $element->getMinYear());
+        $this->assertEquals($targetYear, $element->getMaxYear());
+    }
+
     public function testGetInputSpecificationWithRequiredAndMaxYearDeltaAndValue()
     {
         $element = new DateSelect();

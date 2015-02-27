@@ -27,22 +27,29 @@ class DateSelect extends ZendElement\DateSelect
         if ($this->getOption('max_year_delta')) {
             $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
 
-            // the minimum year is either:
-            // a) the input value's year, if less than the current year
-            // b) the current year if it has no value or it's a forthcoming year
-            $refStamp = strtotime($this->getValue());
-            $currentYear = date('Y');
+            $minYear = $this->getOption('min_year_delta');
 
-            if ($refStamp !== false) {
-                $refYear = date('Y', $refStamp);
-                if ($refYear > $currentYear) {
-                    $refYear = $currentYear;
-                }
+            if (isset($minYear)) {
+                $minYear = date('Y', strtotime($minYear . ' years'));
             } else {
-                $refYear = $currentYear;
+
+                // the minimum year is either:
+                // a) the input value's year, if less than the current year
+                // b) the current year if it has no value or it's a forthcoming year
+                $refStamp = strtotime($this->getValue());
+                $currentYear = date('Y');
+
+                if ($refStamp !== false) {
+                    $minYear = date('Y', $refStamp);
+                    if ($minYear > $currentYear) {
+                        $minYear = $currentYear;
+                    }
+                } else {
+                    $minYear = $currentYear;
+                }
             }
 
-            $this->setMinYear($refYear);
+            $this->setMinYear($minYear);
             $this->setMaxYear($maxYear);
         }
 
