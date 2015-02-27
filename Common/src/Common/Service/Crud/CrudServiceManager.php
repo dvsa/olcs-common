@@ -26,11 +26,13 @@ class CrudServiceManager extends AbstractPluginManager
         }
 
         $self = $this;
-        $this->addInitializer(function ($instance) use ($self) {
-            if ($instance instanceof ServiceLocatorAwareInterface) {
-                $instance->setServiceLocator($self->getServiceLocator());
+        $this->addInitializer(
+            function ($instance) use ($self) {
+                if ($instance instanceof ServiceLocatorAwareInterface) {
+                    $instance->setServiceLocator($self->getServiceLocator());
+                }
             }
-        });
+        );
     }
     /**
      * Validate the plugin

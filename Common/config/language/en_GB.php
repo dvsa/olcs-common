@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

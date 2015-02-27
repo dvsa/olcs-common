@@ -18,8 +18,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class CrudServiceManagerFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = '\Common\Service\Crud\CrudServiceManager';
-
     /**
      * Create and return a plugin manager.
      * Classes that extend this should provide a valid class for
@@ -33,15 +31,8 @@ class CrudServiceManagerFactory extends AbstractPluginManagerFactory
         $config = $serviceLocator->get('Config');
         $configObject = new Config($config['crud_service_manager']);
 
-        $pluginManagerClass = static::PLUGIN_MANAGER_CLASS;
-        /* @var $plugins AbstractPluginManager */
-        $plugins = new $pluginManagerClass($configObject);
+        $plugins = new CrudServiceManager($configObject);
         $plugins->setServiceLocator($serviceLocator);
-        $configuration = $serviceLocator->get('Config');
-
-        if (isset($configuration['di']) && $serviceLocator->has('Di')) {
-            $plugins->addAbstractFactory($serviceLocator->get('DiAbstractServiceFactory'));
-        }
 
         return $plugins;
     }
