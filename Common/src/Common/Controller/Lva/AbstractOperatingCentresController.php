@@ -126,6 +126,33 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
         return $this->getAdapter()->delete();
     }
 
+    public function deleteAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $response = $this->delete();
+            $this->postSave($this->section);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            return $this->redirect()->toRouteAjax(
+                null,
+                array($this->getIdentifierIndex() => $this->getIdentifier())
+            );
+        }
+
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('GenericDeleteConfirmation', $request);
+
+        $params = ['sectionText' => 'review-operating_centres_delete'];
+
+        return $this->render('delete-oc', $form, $params);
+    }
+
     /**
      * Handle the file upload
      *
