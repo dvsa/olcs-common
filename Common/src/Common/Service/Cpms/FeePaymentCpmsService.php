@@ -66,6 +66,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
     {
         $paymentData = [];
+        $totalAmount = 0;
         foreach ($fees as $fee) {
             $paymentData[] = [
                 'amount' => $fee['amount'],
@@ -75,6 +76,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'rule_start_date' => $this->getRuleStartDate($fee),
                 ],
             ];
+            $totalAmount += (float) $fee['amount'];
         }
 
         $endPoint = '/api/payment/card';
@@ -88,6 +90,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'redirect_uri' => $redirectUrl,
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
+            'total_amount' => number_format($totalAmount, 2),
         ];
 
         $this->debug(

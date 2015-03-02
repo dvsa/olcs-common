@@ -24,6 +24,9 @@ return array(
         )
     ),
     'controllers' => array(
+        'initializers' => array(
+            'Common\Controller\Crud\Initializer'
+        ),
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
@@ -127,6 +130,7 @@ return array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
+            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
@@ -187,6 +191,7 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
             'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
@@ -252,6 +257,7 @@ return array(
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
+            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',

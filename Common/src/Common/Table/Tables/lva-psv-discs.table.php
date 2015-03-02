@@ -10,8 +10,8 @@ return array(
         'crud' => array(
             'actions' => array(
                 'add' => array('label' => 'Request new discs', 'class' => 'primary'),
-                'replace' => array('label' => 'Replace', 'requireRows' => true),
-                'void' => array('label' => 'Void', 'requireRows' => true),
+                'replace' => array('label' => 'Replace', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
+                'void' => array('label' => 'Void', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
             )
         ),
         'paginate' => array(
