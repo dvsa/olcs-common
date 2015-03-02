@@ -25,7 +25,7 @@ OLCS.ready(function() {
         return disable(false);
       }
 
-      disable(allowedActions.indexOf(action) === -1);
+      disable($.inArray(action, allowedActions) === -1);
     };
   }
 
