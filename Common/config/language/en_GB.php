@@ -1842,5 +1842,16 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'internal.transport-manager.other-licence.form.lic-no' => 'Licence number',
+    'internal.transport-manager.other-licence.form.role' => 'Role',
+    'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
+    'internal.transport-manager.other-licence.form.total-auth-vehicles'=> 'Vehicles',
+    'internal.transport-manager.other-licence.form.hours-per-week' => 'Hours per week'
     // Potentially unused (Not found with grep)
 );
