@@ -11,11 +11,12 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'W Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'W The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
@@ -27,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
         restricted licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'W The number of authorised vehicles must not exceed the
@@ -1204,6 +1206,12 @@ return array(
     'money-element-invalid' => 'W Please enter a valid amount (max 2 decimal places)',
     'month' => 'W Month',
     'more-vehicles-than-authorisation' => 'W There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'W There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'W There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'W There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'W You cannot have more vehicles than the total vehicle authority',
     'name' => 'W Name',
     'name-defendant-type' => 'W Name / Defendant type',

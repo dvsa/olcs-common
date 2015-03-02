@@ -168,6 +168,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $table = $this->createMainTable();
 
         $form->get('table')->get('table')->setTable($table);
+        $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
         $this->alterForm($form);
 
@@ -494,6 +495,10 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         }
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        // modify the table validation message
+        $formHelper->getValidator($form, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
+            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
 
         $tableData = $this->getTableData();
 
