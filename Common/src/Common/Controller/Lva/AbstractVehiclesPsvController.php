@@ -378,9 +378,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected function getVehicleAuthByType($type, $data)
     {
         $authField = 'totAuth' . ucwords($type) . 'Vehicles';
-        if (array_key_exists($authField, $data)) {
-            return (int) $data[$authField];
-        }
+        return (int) $data[$authField];
     }
 
     /**
@@ -564,15 +562,25 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      * Add a flash warning message if the individual authority for a type of
      * vehicle is exceeded. This is an edge case and should only happen when
      * vehicles are added and then Operating Centre authority is decreased.
+     *
+     * @param string $hasEnteredReg 'Y'|'N' we only show warning if user has
+     * answered that the are submitting vehicle details
+     * @param array $entityData
+     * @param boolean $redirecting whether we are rendering or redirecting
+     * dictates which flash message method we use
      */
     protected function addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, $redirecting)
     {
+        if ($hasEnteredReg !== 'Y') {
+            return;
+        }
+
         $method = $redirecting ? 'addWarningMessage' : 'addCurrentWarningMessage';
 
         foreach ($this->getTables() as $type) {
             $vehicles  = (int)$this->getVehicleCountByType($type, $entityData);
             $authority = (int)$this->getVehicleAuthByType($type, $entityData);
-            if ($hasEnteredReg == 'Y' && $vehicles>$authority) {
+            if ($vehicles>$authority) {
                 $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
                     'more-vehicles-than-'.$type.'-authorisation'
                 );

@@ -29,11 +29,9 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
     }
 
     /**
-     * Get index
-     *
-     * @group abstractVehiclePsvController
+     * Common setup for testGetIndexAction and testIndexActionPostValid
      */
-    public function testGetIndexAction()
+    protected function indexActionSetup(&$form, $entityData)
     {
         $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
             ->with([0, 0, 0])
@@ -41,19 +39,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->with(false)
             ->getMock();
 
-        $form = $this->createMockForm('Lva\PsvVehicles');
-
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'data' => [
-                        'version' => 1,
-                        'hasEnteredReg' => 'N'
-                    ]
-                ]
-            )
-            ->andReturn($form)
-            ->shouldReceive('has')
+        $form->shouldReceive('has')
             ->with('small')
             ->andReturn(false)
             ->shouldReceive('has')
@@ -141,13 +127,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 m::mock()
                 ->shouldReceive('getDataForVehiclesPsv')
                 ->with(321)
-                ->andReturn(
-                    [
-                        'version' => 1,
-                        'hasEnteredReg' => 'N',
-                        'licence' => ['licenceVehicles' => []],
-                    ]
-                )
+                ->andReturn($entityData)
                 ->getMock()
             )
             ->shouldReceive('getTypeOfLicenceData')
@@ -159,12 +139,75 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                     'licenceType' => 'z'
                 ]
             );
+    }
+
+    /**
+     * Get index
+     *
+     * @group abstractVehiclePsvController
+     */
+    public function testGetIndexAction()
+    {
+        $form = $this->createMockForm('Lva\PsvVehicles');
+
+        $entityData = [
+            'version' => 1,
+            'hasEnteredReg' => 'N',
+            'licence' => ['licenceVehicles' => []],
+        ];
+
+        $this->indexActionSetup($form, $entityData);
+
+        $form->shouldReceive('setData')
+            ->once()
+            ->with(
+                [
+                    'data' => [
+                        'version' => 1,
+                        'hasEnteredReg' => 'N'
+                    ]
+                ]
+            )
+            ->andReturnSelf();
 
         $this->mockRender();
 
         $this->sut->indexAction();
 
         $this->assertEquals('vehicles_psv', $this->view);
+    }
+
+    public function testIndexActionPostValid()
+    {
+        $form = $this->createMockForm('Lva\PsvVehicles');
+
+        $entityData = [
+            'version' => 1,
+            'hasEnteredReg' => 'N',
+            'licence' => ['licenceVehicles' => []],
+        ];
+
+        $this->indexActionSetup($form, $entityData);
+
+        $postData = ['POST'];
+        $this->setPost($postData);
+
+        $form->shouldReceive('setData')->once()->with($postData)->andReturnSelf();
+        $form->shouldReceive('isValid')->andReturn('true');
+
+        $formData = [
+            'data' => [
+                'hasEnteredReg' => 'Y'
+            ]
+        ];
+        $form->shouldReceive('getData')->andReturn($formData);
+        $this->sut->shouldReceive('save')->with($formData);
+        $this->sut->shouldReceive('addWarningsIfAuthorityExceeded')->with('Y', $entityData, true);
+
+        $redirect = m::mock();
+        $this->sut->shouldReceive('completeSection')->andReturn($redirect);
+
+        $this->assertSame($redirect, $this->sut->indexAction());
     }
 
     public function testBasicSmallAddAction()
@@ -980,6 +1023,12 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->assertSame($mockForm, $this->sut->alterForm($mockForm, $data));
     }
 
+    /**
+     * Test that flash warning message is added when we render the page and
+     * an authority for individual vehicle type is exceeded. (This can only
+     * happen when vehicles were previously added but then the Operating Centre
+     * authority is decreased)
+     */
     public function testAddWarningsIfAuthorityExceeded()
     {
         $data = [
@@ -1001,8 +1050,65 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->sm->setService(
             'Helper\FlashMessenger',
             m::mock()
+                ->shouldReceive('addCurrentWarningMessage')
+                    ->once()
+                    ->with('more-vehicles-than-large-authorisation')
                 ->shouldReceive('addWarningMessage')
-                ->once()
+                    ->never()
+                ->getMock()
+        );
+
+        $this->sut->addWarningsIfAuthorityExceeded('Y', $data, false);
+    }
+
+    /**
+     * Test that flash warning messages are not added if user selects they are
+     * not submitting vehicle details
+     */
+    public function testAddWarningsIfAuthorityExceededNotSubmitting()
+    {
+        $this->sm->setService(
+            'Helper\FlashMessenger',
+            m::mock()
+                ->shouldReceive('addWarningMessage')->never()
+                ->shouldReceive('addCurrentWarningMessage')->never()
+                ->getMock()
+        );
+
+        $this->sut->addWarningsIfAuthorityExceeded('N', [], true);
+        $this->sut->addWarningsIfAuthorityExceeded('N', [], false);
+    }
+
+    /**
+     * Test that correct flash warning message is added on save when an
+     * authority is exceeded
+     */
+    public function testAddWarningsIfAuthorityExceededRedirect()
+    {
+        $data = [
+            'totAuthVehicles'       => 5,
+            'totAuthSmallVehicles'  => 1,
+            'totAuthMediumVehicles' => 3,
+            'totAuthLargeVehicles'  => 1,
+            'licence' => [
+                'licenceVehicles' => [
+                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
+                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
+                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
+                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
+                ],
+            ]
+        ];
+        $this->sm->setService(
+            'Helper\FlashMessenger',
+            m::mock()
+                ->shouldReceive('addWarningMessage')
+                    ->once()
+                    ->with('more-vehicles-than-large-authorisation')
+                ->shouldReceive('addWarningMessage')
+                    ->once()
+                    ->with('more-vehicles-than-small-authorisation')
+                ->shouldReceive('addCurrentWarningMessage')->never()
                 ->getMock()
         );
 
