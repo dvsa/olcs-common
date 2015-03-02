@@ -1201,6 +1201,7 @@ return array(
     'maint' => 'W Maint',
     'mark-urgent' => 'W Mark as urgent',
     'mlh' => 'W MLH',
+    'money-element-invalid' => 'W Please enter a valid amount (max 2 decimal places)',
     'month' => 'W Month',
     'more-vehicles-than-authorisation' => 'W There are currently more vehicles than the total authority',
     'more-vehicles-than-total-auth-error' => 'W You cannot have more vehicles than the total vehicle authority',
@@ -1814,15 +1815,15 @@ return array(
     'v-auth' => 'W V-auth',
     'v-auth-t-auth' => 'W V-auth/T-auth',
     'variation-application-link-text' => 'W variation application',
-    'variation-application-message' => 'W Making changes to some fields within this section may require a <a
-        href="%s">variation application</a>',
+    'variation-application-message' => 'W Making changes to some fields within this section may require a <a href="%s"
+        class="js-modal-ajax">variation application</a>',
     'variation-application-text' => 'W Making changes to some fields within this section may require a',
     'variation-application-text2' => 'W Changes within this section will require a',
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
-        variation application <a href="%s">click here</a>',
+        variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-operating-centres-added-title' => 'W New operating centres',

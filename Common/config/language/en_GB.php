@@ -1,7 +1,6 @@
 <?php
 
 return array(
-    'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
@@ -1198,6 +1197,7 @@ return array(
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
+    'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
     'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
@@ -1810,15 +1810,15 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a
-        href="%s">variation application</a>',
+    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
+        class="js-modal-ajax">variation application</a>',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
     'variation-application-text2' => 'Changes within this section will require a',
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
     'variation-people-message' => 'Making changes to this page will require a variation application. To start a
-        variation application <a href="%s">click here</a>',
+        variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-operating-centres-added-title' => 'New operating centres',

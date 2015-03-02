@@ -41,12 +41,14 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             'licence' => $this->getLicenceAdapter()->getIdentifier()
         ];
 
-        $link = $this->getController()->url()->fromRoute('create_variation', $params);
+        $link = $this->getController()->url()->fromRoute('lva-licence/variation', $params);
+
         $message = $this->getServiceLocator()->get('Helper\Translation')
             ->translateReplace('variation-application-message', [$link]);
 
-        $this->getServiceLocator()->get('Helper\FlashMessenger')
-            ->addCurrentInfoMessage($message);
+        $placeholder = $this->getServiceLocator()->get('ViewHelperManager')->get('placeholder');
+
+        $placeholder->getContainer('guidance')->append($message);
     }
 
     /**
