@@ -14,7 +14,7 @@ use Common\Service\Document\Bookmark\StatementFlatAbstract;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class S9AuthorsorsTitleTest extends StatementFlatTestAbstract
+class S9AuthorisorsTitleTest extends StatementFlatTestAbstract
 {
-    const SUT_CLASS_NAME = '\Common\Service\Document\Bookmark\S9AuthorsorsTitle';
+    const SUT_CLASS_NAME = '\Common\Service\Document\Bookmark\S9AuthorisorsTitle';
 }

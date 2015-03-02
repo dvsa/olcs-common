@@ -22,10 +22,8 @@ class LicenceAddressTest extends \PHPUnit_Framework_TestCase
     public function testFilter($addressData, $expectedOutput)
     {
         $licenceData = [
-            'contactDetails' => [
-                0 => [
-                    'address' => $addressData
-                ]
+            'correspondenceCd' => [
+                'address' => $addressData
             ],
         ];
 

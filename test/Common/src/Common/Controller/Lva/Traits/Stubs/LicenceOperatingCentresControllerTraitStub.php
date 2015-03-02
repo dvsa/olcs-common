@@ -14,13 +14,13 @@ class LicenceOperatingCentresControllerTraitStub extends AbstractActionControlle
 {
     use LicenceOperatingCentresControllerTrait;
 
-    public function callDisableConditionalValidation($form)
+    public function callAddAction()
     {
-        return $this->disableConditionalValidation($form);
+        return $this->addAction();
     }
 
-    public function callFormatCrudDataForSave($data)
+    public function callDeleteAction()
     {
-        return $this->formatCrudDataForSave($data);
+        return $this->deleteAction();
     }
 }

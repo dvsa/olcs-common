@@ -24,6 +24,9 @@ return array(
         )
     ),
     'controllers' => array(
+        'initializers' => array(
+            'Common\Controller\Crud\Initializer'
+        ),
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
@@ -113,11 +116,21 @@ return array(
             'LvaVariation/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\VariationFinancialEvidenceDelegator'
             ),
+            'LvaLicence/People' => array(
+                'Common\Controller\Lva\Delegators\LicencePeopleDelegator'
+            ),
+            'LvaVariation/People' => array(
+                'Common\Controller\Lva\Delegators\VariationPeopleDelegator'
+            ),
+            'LvaApplication/People' => array(
+                'Common\Controller\Lva\Delegators\ApplicationPeopleDelegator'
+            ),
         ),
         'abstract_factories' => array(
             'Common\Controller\Lva\AbstractControllerFactory',
         ),
         'invokables' => array(
+            'GenericCrudController' => 'Common\Controller\Crud\GenericCrudController',
             'Common\Controller\File' => 'Common\Controller\FileController',
             'Common\Controller\FormRewrite' => 'Common\Controller\FormRewriteController',
         )
@@ -178,6 +191,7 @@ return array(
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
         ),
         'invokables' => array(
+            'CrudListener' => 'Common\Controller\Crud\Listener',
             'SectionConfig' => 'Common\Service\Data\SectionConfig',
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
             'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
@@ -222,6 +236,12 @@ return array(
                 'Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter',
             'LicenceCommunityLicenceAdapter' =>
                 'Common\Controller\Lva\Adapters\LicenceCommunityLicenceAdapter',
+            'ApplicationPeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\ApplicationPeopleAdapter',
+            'LicencePeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\LicencePeopleAdapter',
+            'VariationPeopleAdapter'
+                => 'Common\Controller\Lva\Adapters\VariationPeopleAdapter',
             'Document' => '\Common\Service\Document\Document',
             'Common\Filesystem\Filesystem' => 'Common\Filesystem\Filesystem',
             'VehicleList' => '\Common\Service\VehicleList\VehicleList',
@@ -237,6 +257,7 @@ return array(
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
         ),
         'factories' => array(
+            'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -328,6 +349,7 @@ return array(
         ),
         'BusRegGrantNewPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
@@ -341,6 +363,7 @@ return array(
         ),
         'BusRegGrantVarPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
@@ -354,6 +377,7 @@ return array(
         ),
         'BusRegGrantCancelPublicationFilter' => array(
             'Common\Filter\Publication\BusRegLicence',
+            'Common\Filter\Publication\LicenceAddress',
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',

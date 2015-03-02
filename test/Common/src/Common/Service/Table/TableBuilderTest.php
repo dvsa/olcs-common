@@ -359,6 +359,29 @@ class TableBuilderTest extends MockeryTestCase
     }
 
     /**
+     * Test loadData with 1 row of data
+     */
+    public function testLoadDataWithOneRow()
+    {
+        $data = array(
+            array('foo' => 'bar'),
+        );
+
+        $table = new TableBuilder($this->getMockServiceLocator());
+
+        $table->setVariable('title', 'Things');
+        $table->setVariable('titleSingular', 'Thing');
+
+        $table->loadData($data);
+
+        $this->assertEquals($data, $table->getRows());
+
+        $this->assertEquals(1, $table->getTotal());
+
+        $this->assertEquals('Thing', $table->getVariable('title'));
+    }
+
+    /**
      * Test loadData with result data
      */
     public function testLoadDataWithResultData()
@@ -2395,5 +2418,38 @@ class TableBuilderTest extends MockeryTestCase
             [true],
             [false]
         ];
+    }
+
+    public function testRemoveActions()
+    {
+        $tableConfig = array(
+            'settings' => array(
+                'paginate' => array(),
+                'crud' => array(
+                    'actions' => array(
+                        'foo' => array(),
+                        'bar' => array()
+                    )
+                )
+            )
+        );
+
+        $table = $this->getMockTableBuilder(array('getConfigFromFile', 'removeAction'));
+
+        $table->expects($this->once())
+            ->method('getConfigFromFile')
+            ->will($this->returnValue($tableConfig));
+
+        $table->loadConfig('test');
+
+        $table->expects($this->at(0))
+            ->method('removeAction')
+            ->with('foo');
+
+        $table->expects($this->at(1))
+            ->method('removeAction')
+            ->with('bar');
+
+        $table->removeActions();
     }
 }

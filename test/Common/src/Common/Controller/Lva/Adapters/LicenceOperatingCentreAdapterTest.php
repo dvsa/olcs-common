@@ -69,10 +69,10 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         // Mocked services
         $mockLicenceAdapter = m::mock();
         $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
-        $mockFlashMessenger = m::mock();
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
         $mockTranslator = m::mock();
         $this->sm->setService('Helper\Translation', $mockTranslator);
+        $mockViewHelperManager = m::mock();
+        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
 
         // Expectations
         $mockLicenceAdapter->shouldReceive('setController')
@@ -81,15 +81,27 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             ->andReturn($licenceId);
 
         $this->controller->shouldReceive('url->fromRoute')
-            ->with('create_variation', ['licence' => 4])
+            ->with('lva-licence/variation', ['licence' => 4])
             ->andReturn('URL');
 
         $mockTranslator->shouldReceive('translateReplace')
             ->with('variation-application-message', ['URL'])
             ->andReturn('TRANSLATED');
 
-        $mockFlashMessenger->shouldReceive('addCurrentMessage')
-            ->with('TRANSLATED', 'info');
+        $mockViewHelperManager->shouldReceive('get')
+            ->with('placeholder')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getContainer')
+                ->with('guidance')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('append')
+                    ->with('TRANSLATED')
+                    ->getMock()
+                )
+                ->getMock()
+            );
 
         $this->sut->addMessages();
     }
@@ -518,7 +530,7 @@ class LicenceOperatingCentreAdapterTest extends TestCase
             ->andReturn($stubbedVehicleAuths);
 
         $this->controller->shouldReceive('url->fromRoute')
-            ->with('create_variation', ['licence' => $licenceId])
+            ->with('lva-licence/variation', ['licence' => $licenceId])
             ->andReturn('URL');
 
         $mockTranslator->shouldReceive('translateReplace')
@@ -623,7 +635,7 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                     ->andReturn($scope->mockDataInputFilter);
 
                 $this->controller->shouldReceive('url->fromRoute')
-                    ->with('create_variation', ['licence' => 5])
+                    ->with('lva-licence/variation', ['licence' => 5])
                     ->andReturn('LINK');
 
                 $scope->mockTranslator->shouldReceive('translateReplace')

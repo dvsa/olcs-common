@@ -9,7 +9,7 @@ use Common\Service\Document\Bookmark\Base\DateDelta;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class TodayDateSentence extends DateDelta
+class TodaysDateSentence extends DateDelta
 {
     const FORMAT = "j F Y";
 }

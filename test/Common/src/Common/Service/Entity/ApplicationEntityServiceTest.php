@@ -648,7 +648,13 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $mockVariationCompletion->shouldReceive('save')
             ->with(['application' => 5]);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with(['application' => 5]);
+
         $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $this->assertEquals(5, $this->sut->createVariation($licenceId, $applicationData));
     }
@@ -689,7 +695,13 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $mockVariationCompletion->shouldReceive('save')
             ->with(['application' => 5]);
 
+        $mockApplicationTrackingService = $this->getMock('\stdClass', array('save'));
+        $mockApplicationTrackingService->expects($this->once())
+            ->method('save')
+            ->with(['application' => 5]);
+
         $this->sm->setService('Entity\VariationCompletion', $mockVariationCompletion);
+        $this->sm->setService('Entity\ApplicationTracking', $mockApplicationTrackingService);
 
         $mockVariation = m::mock();
         $this->sm->setService('VariationUtility', $mockVariation);

@@ -32,7 +32,7 @@ class TmQualificationEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 1;
 
-        $data = ['transportManagerId' => $id];
+        $data = ['transportManager' => $id];
         $initialOrder = [
             ['qualificationType' => ['displayOrder' => 3]],
             ['qualificationType' => ['displayOrder' => 2]],

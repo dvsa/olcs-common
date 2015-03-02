@@ -34,6 +34,18 @@ class PersonEntityService extends AbstractEntityService
     }
 
     /**
+     * Get all people for a given application
+     *
+     * @param int $orgId
+     * @param int $limit
+     */
+    public function getAllForApplication($appId, $limit = null)
+    {
+        return $this->getServiceLocator()
+            ->get('Entity\ApplicationOrganisationPerson')->getAllByApplication($appId, $limit);
+    }
+
+    /**
      * Get a single person for a given organisation
      *
      * @param int $orgId

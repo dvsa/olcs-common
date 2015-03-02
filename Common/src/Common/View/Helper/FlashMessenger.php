@@ -27,6 +27,13 @@ class FlashMessenger extends ZendFlashMessenger
     protected $messageSeparatorString = '</p></div><div %s><p>';
 
     /**
+     * Whether the template has already been rendered
+     *
+     * @var bool
+     */
+    protected $isRendered = false;
+
+    /**
      * Holds the wrapper format
      *
      * @var string
@@ -38,6 +45,17 @@ class FlashMessenger extends ZendFlashMessenger
         return $this->render();
     }
 
+    public function setIsRendered($isRendered)
+    {
+        $this->isRendered = $isRendered;
+        return $this;
+    }
+
+    public function getIsRendered()
+    {
+        return $this->isRendered;
+    }
+
     /**
      * Render Messages
      *
@@ -47,6 +65,10 @@ class FlashMessenger extends ZendFlashMessenger
      */
     public function render($namespace = PluginFlashMessenger::NAMESPACE_DEFAULT, array $classes = array())
     {
+        if ($this->getIsRendered()) {
+            return '';
+        }
+
         $markup = $this->renderAllFromNamespace('error', array('notice--danger'));
         $markup .= $this->renderAllFromNamespace('success', array('notice--success'));
         $markup .= $this->renderAllFromNamespace('warning', array('notice--warning'));
@@ -56,6 +78,8 @@ class FlashMessenger extends ZendFlashMessenger
         if (empty($markup)) {
             return '';
         }
+
+        $this->setIsRendered(true);
 
         return sprintf($this->wrapper, $markup);
     }
