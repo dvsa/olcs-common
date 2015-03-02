@@ -90,7 +90,11 @@ abstract class AbstractTrailersController extends AbstractController
     public function delete()
     {
         $id = $this->params('child_id');
-        $this->getServiceLocator()->get('Entity\Trailer')->delete($id);
+
+        $ids = explode(',', $id);
+        foreach($ids as $id) {
+            $this->getServiceLocator()->get('Entity\Trailer')->delete($id);
+        }
     }
 
     /**
