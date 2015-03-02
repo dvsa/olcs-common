@@ -32,7 +32,7 @@ class TrailerEntityService extends AbstractLvaEntityService
      *
      * @throws \InvalidArgumentException If no licence ID is passed.
      *
-     * @return \ArrayIterator The results.
+     * @return array The results.
      */
     public function getTrailerDataForLicence($licenceId = null)
     {

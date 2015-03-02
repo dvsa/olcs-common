@@ -7,6 +7,7 @@
 namespace Common\Controller\Lva;
 
 use Zend\Form\FormInterface;
+use Zend\Stdlib\RequestInterface;
 
 /**
  * Class AbstractTrailersController
@@ -19,49 +20,126 @@ use Zend\Form\FormInterface;
  */
 abstract class AbstractTrailersController extends AbstractController
 {
-    /**
-     * Trait to support a CRUD table.
-     */
-    use Traits\CrudTableTrait;
-
     /*
      * The key for the guidance text displayed below the form.
      */
     const GUIDANCE_LABEL = 'licence_goods-trailers_trailer.table.guidance';
 
     /**
+     * Trait to support a CRUD table.
+     */
+    use Traits\CrudTableTrait;
+
+    /**
      * The section identifier.
      *
      * @var string $section
      */
-    protected $section = 'trailors';
+    protected $section = 'trailers';
 
     public function indexAction()
     {
-        $form = $this->getServiceLocator()
-                     ->get('Helper\Form')
-                     ->createForm('Lva\Trailers');
+        $request = $this->getRequest();
 
-        $this->alterForm($form);
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+            $crudAction = $this->getCrudAction($data);
+
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction);
+            }
+
+            return $this->completeSection('trailers');
+        }
+
+        $form = $this->getForm($request);
+        $table = $this->getTable();
+
+        $this->alterForm($form, $table);
 
         $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
 
         return $this->render('trailer', $form);
     }
 
+    /**
+     * Delegating method for adding a new trailer.
+     *
+     * @return mixed
+     */
     public function addAction()
     {
-
+        return $this->addOrEdit('add');
     }
 
+    /**
+     * Delegating method for editing a trailer.
+     *
+     * @return mixed
+     */
     public function editAction()
     {
-
+        return $this->addOrEdit('edit');
     }
 
-    public function deleteAction()
+    /**
+     * Method is called from the deleteAction in the abstract.
+     *
+     * @return void
+     */
+    public function delete()
     {
+        $id = $this->params('child_id');
+        $this->getServiceLocator()->get('Entity\Trailer')->delete($id);
+    }
 
+    /**
+     * Delagate methosd to handle adding and editing trailers.
+     *
+     * @param null|string $method Add or edit.
+     *
+     * @return mixed
+     */
+    protected function addOrEdit($method = null)
+    {
+        if (!is_string($method) || !in_array($method, ["add", "edit"])) {
+            throw new \InvalidArgumentException(
+                __METHOD__ . " expects argument 'add' or 'edit'."
+            );
+        }
+
+        $request = $this->getRequest();
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\Trailer', $request);
+
+        $data = array();
+        if ($request->isPost()) {
+            $data = (array)$request->getPost();
+        } elseif ($method === 'edit') {
+            $form->get('form-actions')->remove('addAnother');
+            $data = array(
+                'data' => $this->getServiceLocator()
+                    ->get('Entity\Trailer')
+                    ->getById($this->params('child_id'))
+            );
+        }
+
+        $form->setData($data);
+
+        if ($request->isPost() && $form->isValid()) {
+            $data = $form->getData()['data'];
+            $data['licence'] = $this->getLicenceId();
+
+            if ($method === 'add') {
+                $data['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate();
+            }
+
+            $this->getServiceLocator()->get('Entity\Trailer')->save($data);
+
+            return $this->handlePostSave();
+        }
+
+        return $this->render($method . '_trailer', $form);
     }
 
     /**
@@ -74,6 +152,19 @@ abstract class AbstractTrailersController extends AbstractController
         return $this->getServiceLocator()
             ->get('Table')
             ->prepareTable('lva-trailers', $this->getTableData());
+    }
+
+    /**
+     * Return the trailer form.
+     *
+     * @param RequestInterface $request The request
+     *
+     * @return Form $form The form
+     */
+    protected function getForm(RequestInterface $request)
+    {
+        return $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('Lva\Trailers', $request);
     }
 
     /**
@@ -104,14 +195,15 @@ abstract class AbstractTrailersController extends AbstractController
      * Alter the form to add the table and set the guidance.
      *
      * @param FormInterface $form The form.
+     * @param Table $table The table to add to the form.
      */
-    protected function alterForm(FormInterface $form)
+    protected function alterForm(FormInterface $form, $table)
     {
         $translator = $this->getServiceLocator()->get('translator');
 
         $form->get('table')
             ->get('table')
-            ->setTable($this->getTable());
+            ->setTable($table);
 
         $form->get('guidance')
             ->get('guidance')
