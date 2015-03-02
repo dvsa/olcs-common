@@ -94,7 +94,7 @@ abstract class AbstractTrailersController extends AbstractController
     }
 
     /**
-     * Delagate methosd to handle adding and editing trailers.
+     * Delegate methods to handle adding and editing trailers.
      *
      * @param null|string $method Add or edit.
      *
