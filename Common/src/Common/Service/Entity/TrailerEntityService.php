@@ -42,6 +42,12 @@ class TrailerEntityService extends AbstractLvaEntityService
             );
         }
 
-        return $this->get(['licence' => $licenceId]);
+        return $this->get(
+            array(
+                'licence' => $licenceId,
+                'sort' => 'specifiedDate',
+                'order' => 'ASC'
+            )
+        );
     }
 }

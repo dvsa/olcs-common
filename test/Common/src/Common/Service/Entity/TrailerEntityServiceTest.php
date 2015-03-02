@@ -35,8 +35,15 @@ class TrailerEntityServiceTest extends AbstractEntityServiceTestCase
 
         $response = array();
 
-        $this->expectOneRestCall('Trailer', 'GET', ['licence' => $licenceId])
-            ->will($this->returnValue($response));
+        $this->expectOneRestCall(
+            'Trailer',
+            'GET',
+            array(
+                'licence' => $licenceId,
+                'sort' => 'specifiedDate',
+                'order' => 'ASC'
+            )
+        )->will($this->returnValue($response));
 
         $this->assertEquals($response, $this->sut->getTrailerDataForLicence($licenceId));
     }
