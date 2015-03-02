@@ -67,12 +67,19 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testDeleteByOrgAndPersonId()
+    public function testDeleteByOrgAndPersonIdWithMultiplePeopleRemaining()
     {
         $orgId = 3;
         $personId = 7;
 
-        $this->expectOneRestCall('OrganisationPerson', 'DELETE', ['organisation' => $orgId, 'person' => $personId]);
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
+
+        $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
+            ->willReturn(['Count' => 10]);
 
         $this->sut->deleteByOrgAndPersonId($orgId, $personId);
     }
@@ -80,14 +87,28 @@ class OrganisationPersonEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetByPersonId()
+    public function testDeleteByOrgAndPersonIdWithNoPeopleRemaining()
     {
+        $orgId = 3;
         $personId = 7;
 
-        $this->expectOneRestCall('OrganisationPerson', 'GET', ['person' => $personId])
-            ->will($this->returnValue('RESPONSE'));
+        $this->expectedRestCallInOrder(
+            'OrganisationPerson',
+            'DELETE',
+            ['organisation' => $orgId, 'person' => $personId]
+        );
 
-        $this->assertEquals('RESPONSE', $this->sut->getByPersonId($personId));
+        $this->expectedRestCallInOrder('OrganisationPerson', 'GET', ['person' => $personId])
+            ->willReturn(['Count' => 0]);
+
+        $personService = $this->getMock('\stdClass', ['delete']);
+        $personService->expects($this->once())
+            ->method('delete')
+            ->with(7);
+
+        $this->sm->setService('Entity\Person', $personService);
+
+        $this->sut->deleteByOrgAndPersonId($orgId, $personId);
     }
 
     /**

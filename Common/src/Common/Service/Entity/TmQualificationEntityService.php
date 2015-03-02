@@ -38,7 +38,7 @@ class TmQualificationEntityService extends AbstractEntityService
     public function getQualificationsForTm($id)
     {
         $query = [
-            'transportManagerId' => $id
+            'transportManager' => $id
         ];
         $results = $this->get($query, $this->dataBundle);
 

@@ -130,6 +130,17 @@ class SectionConfig implements ServiceLocatorAwareInterface
                 )
             )
         ),
+        'trailers' => array(
+            'restricted' => array(
+                array(
+                    array(
+                        'external',
+                        'licence'
+                    ),
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                )
+            )
+        ),
         'discs' => array(
             'restricted' => array(
                 array(
@@ -261,6 +272,11 @@ class SectionConfig implements ServiceLocatorAwareInterface
             );
 
             $this->sections['financial_evidence']['restricted'][] = array(
+                'variation',
+                array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
+            );
+
+            $this->sections['vehicles_declarations']['restricted'][] = array(
                 'variation',
                 array($this->getServiceLocator()->get('Processing\VariationSection'), 'isNotUnchanged')
             );

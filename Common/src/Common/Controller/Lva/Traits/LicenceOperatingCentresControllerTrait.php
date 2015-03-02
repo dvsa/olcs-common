@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Lva\Traits;
 
+use Zend\Form\Form;
+
 /**
  * Common licence OC controller logic
  *
@@ -14,6 +16,24 @@ namespace Common\Controller\Lva\Traits;
  */
 trait LicenceOperatingCentresControllerTrait
 {
+    use CreateVariationTrait;
+
+    public function addAction()
+    {
+        $form = $this->processForm();
+
+        // If we don't have an instance of Form, it should be a Response object, so we can just return it
+        if (!($form instanceof Form)) {
+            return $form;
+        }
+
+        return $this->render(
+            'oc-create-variation-confirmation-title',
+            $form,
+            ['sectionText' => 'oc-create-variation-confirmation-message']
+        );
+    }
+
     public function deleteAction()
     {
         $ids = explode(',', $this->params('child_id'));

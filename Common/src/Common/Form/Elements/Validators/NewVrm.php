@@ -36,8 +36,9 @@ class NewVrm extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        'not-unique-Licence' => 'error.vehicle.vrm-exists-on-licence',
-        'not-unique-Application' => 'error.vehicle.vrm-exists-on-application'
+        'not-unique-Licence'     => 'error.vehicle.vrm-exists-on-licence',
+        'not-unique-Application' => 'error.vehicle.vrm-exists-on-application',
+        'not-unique-Variation'   => 'error.vehicle.vrm-exists-on-application',
     );
 
     /**

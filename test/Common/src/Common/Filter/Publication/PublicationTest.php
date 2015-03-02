@@ -62,11 +62,9 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
         ];
 
         $restData = [
-            'Results' => [
-                0 => [
-                    'id' => $id,
-                    'publicationNo' => $publicationNo
-                ]
+            0 => [
+                'id' => $id,
+                'publicationNo' => $publicationNo
             ]
         ];
 

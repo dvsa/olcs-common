@@ -533,5 +533,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Processing\GrantCommunityLicence')->grant($licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantTransportManager')->grant($id, $licenceId);
+
+        $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
     }
 }

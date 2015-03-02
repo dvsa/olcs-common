@@ -105,7 +105,7 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Delete the entity by its ID
+     * Delete the entity by arbitrary params
      *
      * @param array $data
      */
@@ -118,6 +118,27 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         $this->clearCache();
 
         return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', $data);
+    }
+
+    /**
+     * Delete multiple entity by its IDs
+     *
+     * @param array $data
+     */
+    public function deleteListByIds($data)
+    {
+        if (($entity = $this->getEntity()) === null) {
+            throw new ConfigurationException('Entity is not defined');
+        }
+
+        if (array_key_exists('id', $data) === false) {
+            return $this->deleteList($data);
+        } else {
+            $this->clearCache();
+            foreach ($data['id'] as $id) {
+                $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, 'DELETE', ['id' => $id]);
+            }
+        }
     }
 
     /**

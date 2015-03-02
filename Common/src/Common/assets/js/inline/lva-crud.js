@@ -7,9 +7,9 @@ OLCS.ready(function() {
   if (document.body.className.search("selfserve") === -1) {
     return;
   }
-  
+
   var tableSelector = "form [data-group*='table']";
-  
+
   /**
    * Always bind some generic edit and delete buttons as they're
    * common across most (all?) CRUD forms
@@ -29,6 +29,6 @@ OLCS.ready(function() {
       callback(length < 1);
     }
   });
-  
+
   OLCS.crudTableHandler();
 });

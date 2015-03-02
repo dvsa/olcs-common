@@ -7,6 +7,8 @@ OLCS.ready(function() {
 
   var tableSelector = "form [data-group*='table']";
 
+  // @TODO: DRY this up with lva-crud-delta; it's
+  // a carbon copy except for the data attribute used
   function checkStatus(allowedStatuses, maxLength) {
 
     if (maxLength === null) {
@@ -19,16 +21,16 @@ OLCS.ready(function() {
         return callback(true);
       }
 
-      var action = $(selectedInputs[0]).data('status');
+      var action = $(selectedInputs[0]).data("status");
 
-      callback(allowedStatuses.indexOf(action) === -1);
+      callback($.inArray(action, allowedStatuses) === -1);
     };
-  };
+  }
 
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Void",
-    predicate: function (length, callback) {
+    predicate: function(length, callback) {
       callback(length < 1);
     }
   });
@@ -36,12 +38,12 @@ OLCS.ready(function() {
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Restore",
-    predicate: checkStatus(['cl_sts_withdrawn', 'cl_sts_suspended'])
+    predicate: checkStatus(["cl_sts_withdrawn", "cl_sts_suspended"])
   });
 
   OLCS.conditionalButton({
     container: tableSelector,
     label: "Stop",
-    predicate: checkStatus(['cl_sts_active'])
+    predicate: checkStatus(["cl_sts_active"])
   });
 });

@@ -11,11 +11,12 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
@@ -27,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
@@ -517,15 +519,16 @@ return array(
         advice.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
+    'cannot-perform-action' => 'You cannot perform this action',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
         href="%s">create a variation application</a>',
     'cant-increase-total-vehicles' => 'In order to increase the total number of vehicles on the licence you must <a
         href="%s">create a variation application</a>',
-    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s">create
-        a variation application</a>',
-    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s">create
-        a variation application</a>',
+    'cant-increase-trailers' => 'In order to increase the trailers at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
+    'cant-increase-vehicles' => 'In order to increase the vehicles at the operating centre you must <a href="%s"
+        class="js-modal-ajax">create a variation application</a>',
     'card-declined' => 'Please check that the details you entered were correct and try again.<br>Otherwise, contact the
         cardholder.',
     'case-associated-with' => 'Cases associated with %s',
@@ -571,6 +574,8 @@ return array(
     'conditions' => 'Conditions',
     'conditions-and-undertaking-for-licences' => 'Conditions and undertakings for licences',
     'conditions-and-undertakings' => 'Conditions and undertakings',
+    'conditions-and-undertakings-conditions' => 'Conditions',
+    'conditions-and-undertakings-undertakings' => 'Undertakings',
     'confirm-grant-application' => 'Are you sure you want to grant this application?',
     'confirm-undo-grant-application' => 'Are you sure you want to undo the grant?',
     'continue.button' => 'Continue',
@@ -598,11 +603,19 @@ return array(
     'create' => 'Create',
     'create-new-case' => 'Create new case',
     'create-variation' => 'create a variation application',
+    'create-variation-application-received-date' => 'Application received',
     'create-variation-button' => 'Create variation',
+    'create-variation-fee-required' => 'Is a variation fee required?',
     'created' => 'Created',
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
+        rate(s)?',
+    'crud-financial-standing-delete-title' => 'Remove financial standing rate(s)',
+    'crud-financial-standing-form-add' => 'Add financial standing rate',
+    'crud-financial-standing-form-edit' => 'Edit financial standing rate',
+    'crud-financial-standing-title' => 'Financial standing rates',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
@@ -711,6 +724,15 @@ return array(
     'fees.slip' => 'Slip No.',
     'filters' => 'Filters',
     'finance' => 'Finance',
+    'financial-standing-already-exists-validation' => 'A rate for this operator type, licence type and effective date
+        already exists',
+    'financial-standing-rate-element-additionalVehicleRate' => 'Additional vehicle rate',
+    'financial-standing-rate-element-additionalVehicleRate-short' => 'Additional vehicle',
+    'financial-standing-rate-element-effectiveDate' => 'Effective date',
+    'financial-standing-rate-element-firstVehicleRate' => 'First vehicle rate',
+    'financial-standing-rate-element-firstVehicleRate-short' => 'First vehicle',
+    'financial-standing-rate-element-goodsOrPsv' => 'Operator type',
+    'financial-standing-rate-element-licenceType' => 'Licence type',
     'first-name' => 'First name(s)',
     'flash-discarded-changes' => 'Your changes have been discarded',
     'form-case-number' => 'Case number',
@@ -935,14 +957,16 @@ return array(
     'internal.community_licence.licences_created' => 'The community licences have been created',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
+    'internal.community_licence.licences_voided' => 'The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
-    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
-        before the office copy',
-    'internal.community_licence.licences_voided' => 'The selected licences have been voided ',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
+    'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
+        before the office copy',
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
+    'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
+    'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -969,14 +993,16 @@ return array(
     'internal.transport-manager.employment.form.position' => 'Position held',
     'internal.transport-manager.employment.save' => 'Save',
     'internal.transport-manager.employments.table' => 'Other employment',
-    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete this
-        record?',
+    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
+     selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'Licence no.',
     'internal.transport-manager.previouslicences.table' => 'Revoked, curtailed or suspended licences',
     'internal.transport-manager.previouslicences.table.holderName' => 'Licence holder name',
     'internal.transport-manager.previouslicences.table.lic-no' => 'Licence no.',
+    'internal.transport-manager.processing.notes.add.title' => 'Add note',
+    'internal.transport-manager.processing.notes.modify.title' => 'Edit note',
     'internal.transport-manager.responsibilities.additional-information' => 'Additional information',
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'Cancel',
@@ -1153,6 +1179,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.licence_history' => 'Licence history',
+    'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
     'lva.section.title.overview' => 'Overview',
     'lva.section.title.people' => 'People',
@@ -1160,6 +1187,7 @@ return array(
     'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
+    'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
@@ -1172,8 +1200,15 @@ return array(
     'maint' => 'Maint',
     'mark-urgent' => 'Mark as urgent',
     'mlh' => 'MLH',
+    'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
     'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
@@ -1204,6 +1239,8 @@ return array(
     'numOfOffences' => 'Number of offences',
     'number-of-offences' => 'Number of offences',
     'objections' => 'Objections',
+    'oc-create-variation-confirmation-message' => 'In order to add an additional operating centre on the licence you
+        must create a variation application',
     'ocs' => 'OCs',
     'offence-date' => 'Offence date',
     'offence-date-from' => 'Offence date from',
@@ -1274,7 +1311,62 @@ return array(
     'payment-for' => 'Payment for',
     'payment-submission' => 'Payment & submission',
     'payment-successful' => 'Payment successful',
+    'penalties-applied-penalties' => 'Applied penalties',
+    'penalties-imposed-penalties' => 'Imposed penalties',
+    'penalties-requested-penalties' => 'Requested penalties',
     'penalty' => 'Penalty',
+    'people.org_t_llp.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_llp.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_p.birthDate.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.familyName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.forename.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.otherName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_p.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
+    'people.org_t_pa.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.position.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_pa.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_rc.birthDate.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.familyName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.forename.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.otherName.locked' => 'You cannot change an existing person\'s details. If you need to do this,
+        please remove and then re-add the person.',
+    'people.org_t_rc.title.locked' => 'You cannot change an existing person\'s details. If you need to do this, please
+        remove and then re-add the person.',
+    'people.org_t_st.birthDate.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.familyName.locked' => 'You cannot change people details. Please contact the Central Licensing
+        Office for further advice.',
+    'people.org_t_st.forename.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.otherName.locked' => 'You cannot change people details. Please contact the Central Licensing Office
+        for further advice.',
+    'people.org_t_st.title.locked' => 'You cannot change people details. Please contact the Central Licensing Office for
+        further advice.',
     'persons' => 'Person Information',
     'pi_s_reg' => 'PI Registered',
     'pi_s_schedule' => 'PI Scheduled',
@@ -1317,6 +1409,9 @@ return array(
     'receipt' => 'Receipt',
     'recommendation' => 'Recommendation',
     'recommendations' => 'Recommendations',
+    'record-deleted' => 'Record(s) deleted successfully',
+    'record-not-found' => 'Record not found',
+    'record-saved-successfully' => 'Record saved successfully',
     'refrigerated-transport' => 'Refrigerated Transport',
     'registered-company' => 'Registered Company',
     'registered-company-details-header' => 'Registered company details',
@@ -1405,6 +1500,7 @@ return array(
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
     'section.add.vehicles' => 'The vehicle has been added',
+    'section.add.trailers' => 'The trailer has been added',
     'section.applied-add.licence_history' => 'Licence history added',
     'section.applied-edit.licence_history' => 'Licence history updated',
     'section.current-add.licence_history' => 'Licence history added',
@@ -1419,6 +1515,7 @@ return array(
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',
     'section.edit.vehicles' => 'The vehicle has been updated',
+    'section.edit.trailers' => 'The trailer has been updated',
     'section.held-add.licence_history' => 'Licence history added',
     'section.held-edit.licence_history' => 'Licence history updated',
     'section.large-add.vehicles_psv' => 'The vehicle has been added',
@@ -1481,6 +1578,7 @@ return array(
     'section.link.update.type_of_licence' => 'Update type of licence',
     'section.link.update.undertakings' => 'Update declarations',
     'section.link.update.vehicles' => 'Update vehicles',
+    'section.link.update.trailers' => 'Update trailers',
     'section.link.update.vehicles_declarations' => 'Update vehicle declarations',
     'section.link.update.vehicles_psv' => 'Update vehicles',
     'section.medium-add.vehicles_psv' => 'The vehicle has been added',
@@ -1503,6 +1601,7 @@ return array(
     'section.name.transport_managers' => 'Transport managers',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
+    'section.name.trailers' => 'Trailers',
     'section.name.vehicles' => 'Vehicles',
     'section.name.vehicles_declarations' => 'Vehicle declarations',
     'section.name.vehicles_psv' => 'Vehicles',
@@ -1683,6 +1782,10 @@ return array(
     'testProperty' => 'the test',
     'testPropertyPlaceHolder' => 'test @placeHolder is @here',
     'tic' => 'TIC',
+    'tm-previous-history-convictions-and-penalties' => 'Convictions/Penalties',
+    'tm-previous-history-revoked-curtailed-suspended-licences' => 'Revoked, Curtailed or Suspended Licences',
+    'tm-responsibilities-applications' => 'Applications',
+    'tm-responsibilities-licences' => 'Licences',
     'tol-no-changes-message' => 'No changes to the type of licence detected',
     'traffic-area' => 'Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'Your traffic area is determined by the location of your operating
@@ -1722,13 +1825,15 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a
-        href="%s">variation application</a>',
+    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
+        class="js-modal-ajax">variation application</a>',
     'variation-application-text' => 'Making changes to some fields within this section may require a',
     'variation-application-text2' => 'Changes within this section will require a',
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
+    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
+        variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-operating-centres-added-title' => 'New operating centres',
@@ -1771,5 +1876,14 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'lva.section.title.add_trailer' => 'Add Trailer',
+    'lva.section.title.edit_trailer' => 'Edit Trailer',
+    'licence_goods-trailers_trailer.table.title' => 'Licence Trailers',
+    'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'No trailers found for this licence.',
+    'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer No.',
+    'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
+    'licence_goods-trailers_trailer.table.specified' => 'Specified Date',
+    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
+     that the list is regularly reviewed.'
     // Potentially unused (Not found with grep)
 );

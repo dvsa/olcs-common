@@ -66,6 +66,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
     {
         $paymentData = [];
+        $totalAmount = 0;
         foreach ($fees as $fee) {
             $paymentData[] = [
                 'amount' => $fee['amount'],
@@ -75,6 +76,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'rule_start_date' => $this->getRuleStartDate($fee),
                 ],
             ];
+            $totalAmount += (float) $fee['amount'];
         }
 
         $endPoint = '/api/payment/card';
@@ -88,6 +90,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'redirect_uri' => $redirectUrl,
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
+            'total_amount' => number_format($totalAmount, 2),
         ];
 
         $this->debug(
@@ -108,8 +111,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Card payment response', ['response' => $response]);
 
         if (!is_array($response)
-            || !isset($response['redirection_data'])
-            || empty($response['redirection_data'])
+            || !isset($response['receipt_reference'])
+            || empty($response['receipt_reference'])
         ) {
             throw new PaymentInvalidResponseException(json_encode($response));
         }
@@ -118,8 +121,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ->get('Entity\Payment')
             ->save(
                 [
-                    // yes, 'redirection_data' really is correct...
-                    'guid' => $response['redirection_data'],
+                    // GUID is now in receipt_reference field not redirection_data as before
+                    'guid' => $response['receipt_reference'],
                     'status' => PaymentEntityService::STATUS_OUTSTANDING
                 ]
             );
