@@ -61,21 +61,25 @@ class TemplateWorker
             while (false !== ($entry = readdir($handle))) {
 
                 if (substr($entry, 0, 1) !== ".") {
-                    $file = new \Dvsa\Jackrabbit\Data\Object\File();
-                    $file->setContent(
-                        file_get_contents($source . '/' . $entry)
-                    );
-                    $file->setMimeType('application/rtf');
-
-                    $path = $name . '/' . str_replace(" ", "_", $entry);
-
-                    echo "Uploading $path\n";
-
-                    $r = $this->client->write($path, $file);
-                    if ($r->isSuccess()) {
-                        echo "OK\n";
+                    if (is_dir($source.'/'.$entry)) {
+                        $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
                     } else {
-                        echo "ERROR: " . $r->getStatusCode() . "\n";
+                        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+                        $file->setContent(
+                            file_get_contents($source . '/' . $entry)
+                        );
+                        $file->setMimeType('application/rtf');
+
+                        $path = $name . '/' . str_replace(" ", "_", $entry);
+
+                        echo "Uploading $path\n";
+
+                        $r = $this->client->write($path, $file);
+                        if ($r->isSuccess()) {
+                            echo "OK\n";
+                        } else {
+                            echo "ERROR: " . $r->getStatusCode() . "\n";
+                        }
                     }
                 }
             }
