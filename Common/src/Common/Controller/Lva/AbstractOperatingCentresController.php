@@ -51,7 +51,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
             if ($form->isValid()) {
 
-                $this->getAdapter()->saveMainFormData($data);
+                $this->getAdapter()->saveMainFormData($form->getData());
 
                 $this->postSave('operating_centres');
 

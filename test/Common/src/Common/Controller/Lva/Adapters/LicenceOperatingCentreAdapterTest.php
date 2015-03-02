@@ -663,6 +663,12 @@ class LicenceOperatingCentreAdapterTest extends TestCase
 
                 $scope->mockFormHelper->shouldReceive('disableValidation')
                     ->with($scope->mockCommunityFilter);
+
+                $scope->mockFormHelper->shouldReceive('getValidator')
+                    ->with($scope->mockForm, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
+                    ->andReturn(
+                        m::mock()->shouldReceive('setMessage')->getMock()
+                    );
             }
         );
 
@@ -882,8 +888,9 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                             'totCommunityLicences'
                         ];
 
-                        $scope->mockFormHelper->shouldReceive('removeFieldList')
-                            ->with($scope->mockForm, 'data', $expectedRemoveList);
+                        $scope->mockFormHelper
+                            ->shouldReceive('removeFieldList')
+                                ->with($scope->mockForm, 'data', $expectedRemoveList);
 
                         $scope->mockFormHelper->shouldReceive('removeValidator')
                             ->with(

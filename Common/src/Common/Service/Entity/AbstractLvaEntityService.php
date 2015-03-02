@@ -44,6 +44,24 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
         )
     );
 
+    protected $psvBundle = [
+        'children' => [
+            'licence' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle' => [
+                                'children' => [
+                                    'psvType'
+                                ]
+                            ]
+                        ]
+                    ],
+                ],
+            ],
+        ]
+    ];
+
     /**
      * Get operating centres data
      *
@@ -78,7 +96,7 @@ abstract class AbstractLvaEntityService extends AbstractEntityService
 
     public function getDataForVehiclesPsv($id)
     {
-        return $this->get($id);
+        return $this->get($id, $this->psvBundle);
     }
 
     /**

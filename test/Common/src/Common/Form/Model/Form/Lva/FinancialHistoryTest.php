@@ -24,8 +24,6 @@ class FinancialHistoryTest extends AbstractFormTest
 
     protected function getFormData()
     {
-        $sm  = $this->getServiceManager();
-
         $bankruptContext = new F\Context(new F\Stack(['data', 'bankrupt']), 'Y');
 
         return [
