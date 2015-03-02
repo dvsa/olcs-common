@@ -18,7 +18,7 @@ class AbstractDiscsControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockController('\Common\Controller\Lva\AbstractDiscsController');
 
-        $this->mockService('Script', 'loadFiles')->with(['discs', 'forms/filter']);
+        $this->mockService('Script', 'loadFiles')->with(['forms/filter']);
     }
 
     /**
