@@ -125,7 +125,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ->with('/api/payment/card', 'CARD', $params)
             ->andReturn(
                 [
-                    'redirection_data' => 'guid_123'
+                    'receipt_reference' => 'guid_123'
                 ]
             )
             ->getMock();

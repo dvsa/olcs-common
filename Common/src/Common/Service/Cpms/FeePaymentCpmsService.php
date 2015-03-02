@@ -111,8 +111,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Card payment response', ['response' => $response]);
 
         if (!is_array($response)
-            || !isset($response['redirection_data'])
-            || empty($response['redirection_data'])
+            || !isset($response['receipt_reference'])
+            || empty($response['receipt_reference'])
         ) {
             throw new PaymentInvalidResponseException(json_encode($response));
         }
@@ -121,8 +121,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ->get('Entity\Payment')
             ->save(
                 [
-                    // yes, 'redirection_data' really is correct...
-                    'guid' => $response['redirection_data'],
+                    // GUID is now in receipt_reference field not redirection_data as before
+                    'guid' => $response['receipt_reference'],
                     'status' => PaymentEntityService::STATUS_OUTSTANDING
                 ]
             );
