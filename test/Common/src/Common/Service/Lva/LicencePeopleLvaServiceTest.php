@@ -40,7 +40,7 @@ class LicencePeopleLvaServiceTest extends MockeryTestCase
             ->andReturn(
                 m::mock()
                 ->shouldReceive('fromRoute')
-                ->with('create_variation', ['licence' => 7])
+                ->with('lva-licence/variation', ['licence' => 7])
                 ->andReturn('a-link')
                 ->getMock()
             )
@@ -56,11 +56,22 @@ class LicencePeopleLvaServiceTest extends MockeryTestCase
         );
 
         $this->setService(
-            'Helper\FlashMessenger',
+            'ViewHelperManager',
             m::mock()
-            ->shouldReceive('addCurrentInfoMessage')
-            ->with('A translated message')
-            ->getMock()
+            ->shouldReceive('get')
+            ->with('placeholder')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getContainer')
+                ->with('guidance')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('append')
+                    ->with('A translated message')
+                    ->getMock()
+                )
+                ->getMock()
+            )->getMock()
         );
 
         $this->sut->addVariationMessage($controller);
