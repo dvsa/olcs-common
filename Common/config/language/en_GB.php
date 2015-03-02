@@ -991,7 +991,8 @@ return array(
     'internal.transport-manager.employment.form.position' => 'Position held',
     'internal.transport-manager.employment.save' => 'Save',
     'internal.transport-manager.employments.table' => 'Other employment',
-    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to remove the selected record(s)?',
+    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to remove the selected
+     record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'Licence no.',
@@ -1872,6 +1873,7 @@ return array(
     'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer No.',
     'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
     'licence_goods-trailers_trailer.table.specified' => 'Specified Date',
-    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and that the list is regularly reviewed.'
+    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
+     that the list is regularly reviewed.'
     // Potentially unused (Not found with grep)
 );

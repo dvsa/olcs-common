@@ -76,7 +76,8 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
                         m::mock('Element')
                             ->shouldReceive('setValue')
                             ->getMock()
-                    )->getMock());
+                    )->getMock()
+            );
 
         $this->setService(
             'translator',
@@ -194,24 +195,27 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
             ->with($childId)
             ->andReturn([]);
 
-
         $form->shouldReceive('setData')
             ->with([])
             ->shouldReceive('isValid')
             ->andReturn(true)
             ->shouldReceive('getData')
-            ->andReturn(array(
-                'data' => array()
-            ));
+            ->andReturn(
+                array(
+                    'data' => array()
+                )
+            );
 
         $this->sut->shouldReceive('getLicenceId')
             ->andReturn(1);
 
         $this->mockEntity('Trailer', 'save')
-            ->with(array(
-                'licence' => 1,
-                'specifiedDate' => ''
-            ));
+            ->with(
+                array(
+                    'licence' => 1,
+                    'specifiedDate' => ''
+                )
+            );
 
         $this->mockService('Helper\Date', 'getDate');
 
@@ -246,15 +250,19 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
             ->andReturn([]);
 
         $form->shouldReceive('setData')
-            ->with(array(
-                'data' => array()
-            ))
+            ->with(
+                array(
+                    'data' => array()
+                )
+            )
             ->shouldReceive('isValid')
             ->andReturn(true)
             ->shouldReceive('getData')
-            ->andReturn(array(
-                'data' => array()
-            ));
+            ->andReturn(
+                array(
+                    'data' => array()
+                )
+            );
 
         $this->mockRender();
 
@@ -266,7 +274,9 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
     {
         $childId = 1;
         $data = array(
-            "id" => 1, "trailerNo" => "A0001", "specifiedDate" => "2014-01-01"
+            "id" => 1,
+            "trailerNo" => "A0001",
+            "specifiedDate" => "2014-01-01"
         );
 
         $this->request
@@ -287,23 +297,26 @@ class AbstractTrailersControllerTest extends AbstractLvaControllerTestCase
             ->with($childId)
             ->andReturn([]);
 
-
         $form->shouldReceive('setData')
             ->with([])
             ->shouldReceive('isValid')
             ->andReturn(true)
             ->shouldReceive('getData')
-            ->andReturn(array(
-                'data' => array()
-            ));
+            ->andReturn(
+                array(
+                    'data' => array()
+                )
+            );
 
         $this->sut->shouldReceive('getLicenceId')
             ->andReturn(1);
 
         $this->mockEntity('Trailer', 'save')
-            ->with(array(
-                'licence' => 1
-            ));
+            ->with(
+                array(
+                    'licence' => 1
+                )
+            );
 
         $this->sut->shouldReceive('handlePostSave');
 

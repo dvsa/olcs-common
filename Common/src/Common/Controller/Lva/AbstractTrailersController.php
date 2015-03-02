@@ -207,8 +207,8 @@ abstract class AbstractTrailersController extends AbstractController
 
         $form->get('guidance')
             ->get('guidance')
-            ->setValue($translator->translate(
-                self::GUIDANCE_LABEL
-            ));
+            ->setValue(
+                $translator->translate(self::GUIDANCE_LABEL)
+            );
     }
 }
