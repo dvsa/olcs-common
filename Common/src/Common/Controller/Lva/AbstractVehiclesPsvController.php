@@ -96,6 +96,9 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
             $crudAction = $this->getCrudAction($data);
 
+            $hasEnteredReg = $form->getData()['data']['hasEnteredReg'];
+            $this->addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, true);
+
             if ($crudAction !== null) {
                 $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
                     $this->getActionFromCrudAction($crudAction)
@@ -112,6 +115,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             return $this->completeSection('vehicles_psv');
         }
 
+        $this->addWarningsIfAuthorityExceeded($entityData['hasEnteredReg'], $entityData, false);
         return $this->render('vehicles_psv', $form);
     }
 
@@ -321,6 +325,12 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         foreach ($this->getTables() as $table) {
 
+            if ($this->getVehicleCountByType($table, $data) > 0) {
+                // Never remove table if we have previously added vehicles
+                // (https://jira.i-env.net/browse/OLCS-7590)
+                continue;
+            }
+
             $ucTable = ucwords($table);
 
             if (!isset($data['totAuth' . $ucTable . 'Vehicles']) || $data['totAuth' . $ucTable . 'Vehicles'] < 1) {
@@ -336,6 +346,39 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         }
 
         return $form;
+    }
+
+    /**
+     * Get count of vehicles of a particular type
+     * @param string $type table name (small|medium|large)
+     * @param array $data
+     * @return int|null
+     */
+    protected function getVehicleCountByType($type, $data)
+    {
+        $count = 0;
+        $psvType = $this->getPsvTypeFromType($type);
+        if (isset($this->psvTypes[$type])) {
+            foreach ($data['licence']['licenceVehicles'] as $licenceVehicle) {
+                if ($licenceVehicle['vehicle']['psvType']['id'] == $psvType) {
+                    $count++;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * Get vehicle authorisation for a particular type
+     * @param string $type table name (small|medium|large)
+     * @param array $data
+     * @return int|null
+     */
+    protected function getVehicleAuthByType($type, $data)
+    {
+        $authField = 'totAuth' . ucwords($type) . 'Vehicles';
+        return (int) $data[$authField];
     }
 
     /**
@@ -511,6 +554,36 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         foreach ($this->getTables() as $type) {
             if (isset($data[$type]['action'])) {
                 return $type;
+            }
+        }
+    }
+
+    /**
+     * Add a flash warning message if the individual authority for a type of
+     * vehicle is exceeded. This is an edge case and should only happen when
+     * vehicles are added and then Operating Centre authority is decreased.
+     *
+     * @param string $hasEnteredReg 'Y'|'N' we only show warning if user has
+     * answered that the are submitting vehicle details
+     * @param array $entityData
+     * @param boolean $redirecting whether we are rendering or redirecting
+     * dictates which flash message method we use
+     */
+    protected function addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, $redirecting)
+    {
+        if ($hasEnteredReg !== 'Y') {
+            return;
+        }
+
+        $method = $redirecting ? 'addWarningMessage' : 'addCurrentWarningMessage';
+
+        foreach ($this->getTables() as $type) {
+            $vehicles  = (int)$this->getVehicleCountByType($type, $entityData);
+            $authority = (int)$this->getVehicleAuthByType($type, $entityData);
+            if ($vehicles>$authority) {
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
+                    'more-vehicles-than-'.$type.'-authorisation'
+                );
             }
         }
     }

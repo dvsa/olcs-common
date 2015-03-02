@@ -11,11 +11,12 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
@@ -27,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
@@ -1185,6 +1187,7 @@ return array(
     'lva.section.title.replace_discs' => 'Are you sure you would like to replace these discs?',
     'lva.section.title.reprint_vehicles' => 'Are you sure you want to request replacement discs for the selected
         vehicle(s)?',
+    'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
     'lva.section.title.transport_managers' => 'Transport managers',
@@ -1200,6 +1203,12 @@ return array(
     'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
     'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
@@ -1489,6 +1498,7 @@ return array(
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
     'section.add.vehicles' => 'The vehicle has been added',
+    'section.add.trailers' => 'The trailer has been added',
     'section.applied-add.licence_history' => 'Licence history added',
     'section.applied-edit.licence_history' => 'Licence history updated',
     'section.current-add.licence_history' => 'Licence history added',
@@ -1503,6 +1513,7 @@ return array(
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',
     'section.edit.vehicles' => 'The vehicle has been updated',
+    'section.edit.trailers' => 'The trailer has been updated',
     'section.held-add.licence_history' => 'Licence history added',
     'section.held-edit.licence_history' => 'Licence history updated',
     'section.large-add.vehicles_psv' => 'The vehicle has been added',
@@ -1565,6 +1576,7 @@ return array(
     'section.link.update.type_of_licence' => 'Update type of licence',
     'section.link.update.undertakings' => 'Update declarations',
     'section.link.update.vehicles' => 'Update vehicles',
+    'section.link.update.trailers' => 'Update trailers',
     'section.link.update.vehicles_declarations' => 'Update vehicle declarations',
     'section.link.update.vehicles_psv' => 'Update vehicles',
     'section.medium-add.vehicles_psv' => 'The vehicle has been added',
@@ -1587,6 +1599,7 @@ return array(
     'section.name.transport_managers' => 'Transport managers',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
+    'section.name.trailers' => 'Trailers',
     'section.name.vehicles' => 'Vehicles',
     'section.name.vehicles_declarations' => 'Vehicle declarations',
     'section.name.vehicles_psv' => 'Vehicles',
@@ -1861,5 +1874,14 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'lva.section.title.add_trailer' => 'Add Trailer',
+    'lva.section.title.edit_trailer' => 'Edit Trailer',
+    'licence_goods-trailers_trailer.table.title' => 'Licence Trailers',
+    'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'No trailers found for this licence.',
+    'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer No.',
+    'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
+    'licence_goods-trailers_trailer.table.specified' => 'Specified Date',
+    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
+     that the list is regularly reviewed.'
     // Potentially unused (Not found with grep)
 );
