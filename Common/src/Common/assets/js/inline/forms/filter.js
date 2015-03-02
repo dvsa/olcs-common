@@ -13,7 +13,8 @@ OLCS.ready(function() {
     // where we'll render any response data to
     container: ".table__form",
     // filter the data returned from the server to only
-    // contain content within this element
+    // contain content *within* this element, not including
+    // the filter wrapper itself
     filter: ".table__form"
   });
 });
