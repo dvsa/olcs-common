@@ -1,20 +1,17 @@
 <?php
 /**
- * Statement
+ * Class
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
 namespace CommonTest\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\Formatter\FormatterInterface;
-
 /**
- * Statement
+ * Class
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-abstract class PiFlatTestAbstract extends BusRegFlatTestAbstract
+class PiHearingTimeTest extends PiFlatTestAbstract
 {
-
-    //
+    const SUT_CLASS_NAME = '\Common\Service\Document\Bookmark\PiHearingTime';
 }
