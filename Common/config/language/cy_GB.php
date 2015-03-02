@@ -16,7 +16,7 @@ return array(
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'W The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
@@ -28,7 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
-    'OperatingCentreVehicleAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
         restricted licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'W The number of authorised vehicles must not exceed the

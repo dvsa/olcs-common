@@ -22,7 +22,7 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
      * @var array
      */
     protected $messageTemplates = array(
-        'none-numeric' => 'OperatingCentreVehicleAuthorisationsValidator.none-numeric',
+        'non-numeric' => 'OperatingCentreVehicleAuthorisationsValidator.non-numeric',
         'no-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre',
         '1-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre',
         'too-low' => 'OperatingCentreVehicleAuthorisationsValidator.too-low',
@@ -38,7 +38,7 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
     public function isValid($value, $context = null)
     {
         if (!is_null($value) && !is_numeric($value)) {
-            $this->error('none-numeric');
+            $this->error('non-numeric');
             return false;
         }
 
