@@ -133,10 +133,8 @@ class SectionConfig implements ServiceLocatorAwareInterface
         'trailers' => array(
             'restricted' => array(
                 array(
-                    array(
-                        'external',
-                        'licence'
-                    ),
+                    'external',
+                    'licence',
                     LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
                 )
             )
