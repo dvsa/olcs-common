@@ -969,8 +969,7 @@ return array(
     'internal.transport-manager.employment.form.position' => 'Position held',
     'internal.transport-manager.employment.save' => 'Save',
     'internal.transport-manager.employments.table' => 'Other employment',
-    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete this
-        record?',
+    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'Licence no.',
