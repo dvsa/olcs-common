@@ -44,15 +44,19 @@ $(function() {
       F.selectRadio("advertisements", "adPlaced", "N");
     });
 
-    var showModal = OLCS.eventEmitter.on("show:modal", function() {
-      F.selectRadio("advertisements", "adPlaced", "N");
-    });
-
-    var hideModal = OLCS.eventEmitter.on("hide:modal", function() {
+    OLCS.eventEmitter.once("hide:modal", function() {
       OLCS.eventEmitter.off("show:advertisements:*", showAds);
       OLCS.eventEmitter.off("hide:advertisements:*", hideAds);
-      OLCS.eventEmitter.off("show:modal", showModal);
-      OLCS.eventEmitter.off("hide:modal", hideModal);
+    });
+
+    /**
+     * On first showing the modal, explicitly select 'no' on the ads placed
+     * field. This won't fire if the edit/add was fullscreen but that's
+     * fine because the cascadeForm will trigger and hide it anyway
+     * due to the advertisements:* rule
+     */
+    OLCS.eventEmitter.once("show:modal", function() {
+      F.selectRadio("advertisements", "adPlaced", "N");
     });
   }
 });
