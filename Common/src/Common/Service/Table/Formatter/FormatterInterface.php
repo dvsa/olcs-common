@@ -20,7 +20,7 @@ interface FormatterInterface
 {
 
     /**
-     * Format an cell
+     * Format a cell
      *
      * @param array $data
      * @param array $column

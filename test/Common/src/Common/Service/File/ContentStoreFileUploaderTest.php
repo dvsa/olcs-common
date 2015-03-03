@@ -8,13 +8,14 @@
 namespace CommonTest\Service\File;
 
 use Common\Service\File\ContentStoreFileUploader;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Content Store File Uploader Test
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
+class ContentStoreFileUploaderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -66,6 +67,29 @@ class ContentStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         $headers = [
             'Content-Disposition' => 'attachment; filename="file.txt"',
             'Content-Type' => 'application/rtf',
+            'Content-Length' => '13'
+        ];
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('dummy content', $response->getContent());
+        $this->assertEquals($headers, $response->getHeaders()->toArray());
+    }
+
+    public function testDownloadWithValidHtmlFile()
+    {
+        $file = new \Dvsa\Jackrabbit\Data\Object\File();
+        $file->setContent('dummy content');
+        $file->setMimeType('text/html');
+
+        $this->contentStoreMock->expects($this->once())
+            ->method('read')
+            ->with('test/identifier')
+            ->will($this->returnValue($file));
+
+        $response = $this->uploader->download('identifier', 'file.html');
+
+        $headers = [
+            'Content-Type' => 'text/html',
             'Content-Length' => '13'
         ];
 
