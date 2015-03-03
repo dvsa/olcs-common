@@ -80,7 +80,7 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         // All New application options
         if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
             if ($typeOfLicence['goodsOrPsv'] == LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-                return 'GV79';
+                return ApplicationEntityService::CODE_GV_APP;
             }
 
             if ($typeOfLicence['licenceType'] == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
@@ -95,9 +95,19 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
             ->isLicenceUpgrade($applicationId);
 
         if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
-            return $isUpgrade ? 'GV80A' : 'GV81';
+
+            if ($isUpgrade) {
+                return ApplicationEntityService::CODE_GV_VAR_UPGRADE;
+            }
+
+            return ApplicationEntityService::CODE_GV_VAR_NO_UPGRADE;
         } else {
-            return $isUpgrade ? 'PSV431A' : 'PSV431';
+
+            if ($isUpgrade) {
+                return ApplicationEntityService::CODE_PSV_VAR_UPGRADE;
+            }
+
+            return ApplicationEntityService::CODE_PSV_VAR_NO_UPGRADE;
         }
     }
 
