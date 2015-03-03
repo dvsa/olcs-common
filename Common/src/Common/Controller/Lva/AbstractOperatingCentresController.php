@@ -152,4 +152,24 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
             )
         );
     }
+
+    /**
+     * Gives a new translation key to use for the delete modal text.
+     *
+     * @return string The message translation key.
+     */
+    protected function getDeleteMessage()
+    {
+        return 'review-operating_centres_delete';
+    }
+
+    /**
+     * Override the delete title.
+     *
+     * @return string The modal message key.
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-oc';
+    }
 }
