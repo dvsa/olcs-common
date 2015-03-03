@@ -353,7 +353,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'default' => [
                 'children' => [
                     'licenceType',
-                    'goodsOrPsv'
+                    'goodsOrPsv',
+                    'licence' => [
+                        'children' => [
+                            'organisation'
+                        ]
+                    ]
                 ]
             ],
             'operating_centres' => [

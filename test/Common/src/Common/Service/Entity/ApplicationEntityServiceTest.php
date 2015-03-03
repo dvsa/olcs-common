@@ -824,7 +824,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => ['children' => ['organisation']]
                     ]
                 ]
             ],
@@ -833,7 +834,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => ['children' => ['organisation']]
                     ]
                 ]
             ],
@@ -845,6 +847,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation',
                                 'trafficArea'
                             ]
                         ],
@@ -877,7 +880,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => ['children' => ['organisation']]
                     ]
                 ]
             ],
@@ -889,6 +893,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation',
                                 'licenceType'
                             ]
                         ]
@@ -903,6 +908,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation',
                                 'trafficArea'
                             ]
                         ],

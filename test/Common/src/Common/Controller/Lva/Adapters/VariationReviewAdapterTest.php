@@ -57,6 +57,13 @@ class VariationReviewAdapterTest extends MockeryTestCase
             5 => 'operating_centres'
         ];
         $stubbedReviewData = [
+            'id' => 321,
+            'licence' => [
+                'licNo' => 'AB123',
+                'organisation' => [
+                    'name' => 'Foo ltd'
+                ]
+            ],
             'goodsOrPsv' => [
                 'id' => $operatorType
             ],
@@ -105,6 +112,7 @@ class VariationReviewAdapterTest extends MockeryTestCase
 
         $expected = [
             'reviewTitle' => $expectedTitle,
+            'subTitle' => 'Foo ltd AB123/321',
             'sections' => [
                 [
                     'header' => 'review-type_of_licence',
