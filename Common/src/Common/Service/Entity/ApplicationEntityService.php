@@ -388,7 +388,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 ]
             ]
         ],
-        'application' => [],
+        'application' => [
+            'business_details' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'tradingNames',
+                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
+                                    // many-to-many so this could change
+                                    'natureOfBusinesss' => [
+                                        'children' => [
+                                            'refData'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
         'variation' => [
             'type_of_licence' => [
                 'children' => [

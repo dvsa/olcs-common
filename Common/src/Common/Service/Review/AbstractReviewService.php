@@ -24,6 +24,11 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 {
     use ServiceLocatorAwareTrait;
 
+    protected function formatRefdata($refData)
+    {
+        return $refData['description'];
+    }
+
     protected function formatShortAddress($address)
     {
         return Address::format($address);
