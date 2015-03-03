@@ -145,7 +145,7 @@ class Generic extends AbstractData implements
             throw new BadRequestException('Record could not be saved');
         }
 
-        $this->setData($result['id'], $result);
+        $this->setData($result['id'], null);
 
         return $result['id'];
     }
