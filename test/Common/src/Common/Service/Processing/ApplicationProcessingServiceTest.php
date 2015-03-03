@@ -17,6 +17,7 @@ use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
 use Mockery as m;
+use Common\Service\Processing\ApplicationSnapshotProcessingService;
 
 /**
  * Application Processing Service Test
@@ -174,16 +175,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
 
         $this->mockDate($date);
 
@@ -373,16 +377,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
 
         $this->mockDate($date);
 
@@ -617,16 +624,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
 
         $this->mockApplicationService($id, $licenceId, $validationData);
 
@@ -680,16 +690,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
 
         $mockApplicationService = $this->mockApplicationService($id, $licenceId, $validationData);
 
@@ -1003,16 +1016,19 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
 
         // Mocked services
         $mockApplicationService = m::mock();
