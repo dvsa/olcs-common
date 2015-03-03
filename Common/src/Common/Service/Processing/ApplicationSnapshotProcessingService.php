@@ -47,7 +47,7 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
 
         $descriptionPrefix = $code . ' Application Snapshot ';
 
-        $fileName = $descriptionPrefix . ($event == self::ON_SUBMIT ? ' Submit' : ' Grant') . '.html';
+        $fileName = $descriptionPrefix . ($event == self::ON_SUBMIT ? 'Submit' : 'Grant') . '.html';
         $description = $descriptionPrefix . ($event == self::ON_SUBMIT ? '(at submission)' : '(at grant/valid)');
 
         $documentEntity->save(
@@ -119,16 +119,14 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         // Applications and Variations use a different controller and adapter
         if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
             $appType = 'Application';
-            $adapterName = 'ApplicationReviewAdapter';
         } else {
             $appType = 'Variation';
-            $adapterName = 'VariationReviewAdapter';
         }
 
         // Setup the controller dependencies
         $controllerPluginManager = $this->getServiceLocator()->get('ControllerPluginManager');
         $event = $this->getServiceLocator()->get('Application')->getMvcEvent();
-        $adapter = $this->getServiceLocator()->get($adapterName);
+        $adapter = $this->getServiceLocator()->get(sprintf('%sReviewAdapter', $appType));
 
         // Format the controller name
         $controllerName = sprintf('Lva%s/Review', $appType);
