@@ -42,7 +42,14 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
         $relevantSections = [
             'type_of_licence',
             'business_type',
+            // This section gets filtered out
+            'community_licences',
             // @NOTE As there is no service found, this section will be ignored
+            'business_details'
+        ];
+        $filteredSections = [
+            'type_of_licence',
+            'business_type',
             'business_details'
         ];
         $stubbedReviewData = [
@@ -66,7 +73,7 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
 
         // Expectations
         $mockApplicationEntity->shouldReceive('getReviewDataForApplication')
-            ->with($id, $relevantSections)
+            ->with($id, $filteredSections)
             ->andReturn($stubbedReviewData);
 
         $mockTolService->shouldReceive('getConfigFromData')
@@ -77,7 +84,7 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
             ->with($stubbedReviewData)
             ->andReturn($stubbedBtConfig);
 
-        $return = $this->sut->getSectionData($id, $relevantSections);
+        $return = $this->sut->getSectionData($id, $filteredSections);
 
         $expected = [
             'reviewTitle' => $expectedTitle,

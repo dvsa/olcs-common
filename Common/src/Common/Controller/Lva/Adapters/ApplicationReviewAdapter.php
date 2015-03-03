@@ -21,19 +21,7 @@ class ApplicationReviewAdapter extends AbstractReviewAdapter
      *
      * @var array
      */
-    private $sectionsToIgnore = [
+    protected $sectionsToIgnore = [
         'community_licences'
     ];
-
-    /**
-     * Filter unwanted sections
-     *
-     * @param int $id
-     * @param array $sections
-     * @return array
-     */
-    protected function filterSections($id, $sections)
-    {
-        return array_diff($sections, $this->sectionsToIgnore);
-    }
 }

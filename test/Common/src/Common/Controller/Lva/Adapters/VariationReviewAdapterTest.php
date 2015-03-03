@@ -47,14 +47,15 @@ class VariationReviewAdapterTest extends MockeryTestCase
             'business_details',
             'addresses',
             'safety',
+            'community_licences',
             // <<< END
             'operating_centres',
             // @NOTE this section should be ignored, as it has not been updated
             'vehicles'
         ];
         $filteredSections = [
-            0 => 'type_of_licence',
-            5 => 'operating_centres'
+            'type_of_licence',
+            'operating_centres'
         ];
         $stubbedReviewData = [
             'goodsOrPsv' => [
