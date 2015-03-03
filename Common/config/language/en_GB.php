@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'application-review-business-type' => 'What type of business are you?',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',
