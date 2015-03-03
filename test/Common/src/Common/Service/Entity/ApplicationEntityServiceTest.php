@@ -868,6 +868,24 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         ]
                     ]
                 ]
+            ],
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => [
+                                    'children' => [
+                                        'type'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
     }
@@ -925,6 +943,20 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                         ]
                                     ]
                                 ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => []
                             ]
                         ]
                     ]
