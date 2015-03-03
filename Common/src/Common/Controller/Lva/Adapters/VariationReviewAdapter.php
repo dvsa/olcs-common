@@ -27,7 +27,8 @@ class VariationReviewAdapter extends AbstractReviewAdapter
         'business_type',
         'business_details',
         'addresses',
-        'safety'
+        'safety',
+        'community_licences'
     ];
 
     /**
