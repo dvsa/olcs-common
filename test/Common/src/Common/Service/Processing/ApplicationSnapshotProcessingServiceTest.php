@@ -14,6 +14,7 @@ use CommonTest\Bootstrap;
 use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Data\CategoryDataService;
+
 /**
  * Application Snapshot Processing Service Test
  *
