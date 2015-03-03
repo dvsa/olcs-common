@@ -84,10 +84,10 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
             }
 
             if ($typeOfLicence['licenceType'] == LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-                return 'PSV356';
+                return ApplicationEntityService::CODE_PSV_APP_SR;
             }
 
-            return 'PSV421';
+            return ApplicationEntityService::CODE_PSV_APP;
         }
 
         // All Variation options
