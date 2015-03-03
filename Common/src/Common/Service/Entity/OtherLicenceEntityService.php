@@ -28,7 +28,9 @@ class OtherLicenceEntityService extends AbstractEntityService
      */
     protected $bundle = [
         'children' => [
-            'role'
+            'role',
+            'transportManagerApplication',
+            'transportManagerLicence'
         ]
     ];
 
@@ -42,7 +44,7 @@ class OtherLicenceEntityService extends AbstractEntityService
     {
         return $this->get(array('transportManager' => $transportManagerId))['Results'];
     }
-    
+
     /**
      * Get data for tansport manager application
      *
@@ -63,5 +65,10 @@ class OtherLicenceEntityService extends AbstractEntityService
     public function getByTmLicenceId($id)
     {
         return $this->get(array('transportManagerLicence' => $id), $this->bundle)['Results'];
+    }
+
+    public function getById($id)
+    {
+        return $this->get($id, $this->bundle);
     }
 }
