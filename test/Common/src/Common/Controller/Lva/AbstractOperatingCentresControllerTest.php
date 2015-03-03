@@ -64,6 +64,49 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->assertEquals('VIEW', $this->sut->indexAction());
     }
 
+    public function testDeleteGetAction()
+    {
+        $form = m::mock();
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+                ->shouldReceive('createFormWithRequest')
+                ->with('GenericDeleteConfirmation', $this->request)
+                ->andReturn($form)
+                ->getMock()
+        );
+
+        $this->mockRender();
+
+        $this->sut->deleteAction();
+    }
+
+    public function testDeletePostAction()
+    {
+        $this->setPost([]);
+
+        $response = $this->getMock('\Zend\Http\Response');
+
+        $this->sut->shouldReceive('delete')
+            ->andReturn($response);
+
+        $this->sut->shouldReceive('getIdentifierIndex')
+            ->andReturn('application')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1);
+
+        $this->sut->shouldReceive('redirect')
+            ->andReturn(
+                m::mock()->shouldReceive('toRouteAjax')
+                    ->with(null, ['application' => 1])
+                    ->andReturn('redirect')
+                    ->getMock()
+            );
+
+        $this->sut->deleteAction();
+    }
+
     public function testIndexActionPostValid()
     {
         $id = 1;
