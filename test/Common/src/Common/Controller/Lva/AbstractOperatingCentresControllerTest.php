@@ -64,7 +64,7 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->assertEquals('VIEW', $this->sut->indexAction());
     }
 
-    public function testDeleteGetAction()
+    public function testDeleteAction()
     {
         $form = m::mock();
 
@@ -76,6 +76,10 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
                 ->andReturn($form)
                 ->getMock()
         );
+
+        $this->sut
+            ->shouldReceive('getDeleteModalMessageKey')
+            ->andReturn('review-operating_centres_delete');
 
         $this->mockRender();
 
