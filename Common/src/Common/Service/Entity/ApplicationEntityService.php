@@ -401,6 +401,57 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'business_details' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            // @NOTE I think the companySubsidiaryLicence table should be a straight
+                            // many-to-many so this could change
+                            'companySubsidiaries' => [
+                                'children' => [
+                                    'companySubsidiary'
+                                ]
+                            ],
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'tradingNames',
+                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
+                                    // many-to-many so this could change
+                                    'natureOfBusinesss' => [
+                                        'children' => [
+                                            'refData'
+                                        ]
+                                    ],
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'safety' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'workshops' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'tachographIns'
+                        ]
+                    ]
+                ]
             ]
         ],
         'variation' => [
