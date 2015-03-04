@@ -30,10 +30,10 @@ return array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
-            'LvaApplication\Review' => array(
+            'LvaApplication/Review' => array(
                 'Common\Controller\Lva\Delegators\ApplicationReviewDelegator'
             ),
-            'LvaVariation\Review' => array(
+            'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
             'LvaApplication/TypeOfLicence' => array(
