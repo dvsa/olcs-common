@@ -452,6 +452,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'addresses' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'correspondenceCd' => [
+                                'children' => [
+                                    'address',
+                                    'phoneContacts' => [
+                                        'children' => [
+                                            'phoneContactType'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'establishmentCd' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
         'variation' => [
