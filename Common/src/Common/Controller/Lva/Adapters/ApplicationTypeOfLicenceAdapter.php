@@ -81,7 +81,7 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
         $this->generateLicenceNumber($applicationId);
     }
 
-    public function generateLicenceNumber($applicationId)
+    protected function generateLicenceNumber($applicationId)
     {
         $licenceId = $this->getServiceLocator()->get('Entity\Application')
             ->getLicenceIdForApplication($applicationId);
