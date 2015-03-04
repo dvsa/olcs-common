@@ -1899,5 +1899,7 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?'
     // Potentially unused (Not found with grep)
 );
