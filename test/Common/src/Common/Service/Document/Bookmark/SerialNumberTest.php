@@ -31,7 +31,7 @@ class SerialNumberTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        // The date function is used here (presumably) because there is no easy way to get
+        // The date function is used here because there is no easy way to get
         // a reference to the service container.
         $this->assertEquals(
             '123 ' . date("d/m/Y", strtotime("+0 days")),
