@@ -26,5 +26,6 @@ class Undertakings extends DynamicBookmark
     public function render()
     {
         // @TODO
+        return 'Undertakings';
     }
 }

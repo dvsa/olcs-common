@@ -26,5 +26,6 @@ class Conditions extends DynamicBookmark
     public function render()
     {
         // @TODO
+        return 'Conditions';
     }
 }

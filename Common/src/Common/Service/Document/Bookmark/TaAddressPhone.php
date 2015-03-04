@@ -24,7 +24,7 @@ class TaAddressPhone extends DynamicBookmark
                             'contactDetails' => [
                                 'children' => [
                                     'address',
-                                    'phoneContact'
+                                    'phoneContacts'
                                 ]
                             ]
                         ]
