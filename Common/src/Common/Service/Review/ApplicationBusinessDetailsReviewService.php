@@ -36,28 +36,22 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
             ]
         );
 
-        $config = [
-            'subSections' => [
-                [
-                    'mainItems' => [
-                        [
-                            'multiItems' => [
-                                $this->getCompanyNamePartial($organisation),
-                                $this->getTradingNamePartial($organisation),
-                                $this->getNatureOfBusinessPartial($organisation)
-                            ]
-                        ]
-                    ]
+        $mainItems = [
+            [
+                'multiItems' => [
+                    $this->getCompanyNamePartial($organisation),
+                    $this->getTradingNamePartial($organisation),
+                    $this->getNatureOfBusinessPartial($organisation)
                 ]
             ]
         ];
 
         if ($this->isLtdOrLlp) {
-            $config['subSections'][0]['mainItems'][0]['multiItems'][] = $this->getRegisteredAddressPartial($organisation);
-            $config['subSections'][0]['mainItems'][] = $this->getSubsidiaryCompaniesPartial($data);
+            $mainItems[0]['multiItems'][] = $this->getRegisteredAddressPartial($organisation);
+            $mainItems[] = $this->getSubsidiaryCompaniesPartial($data);
         }
 
-        return $config;
+        return ['subSections' => [['mainItems' => $mainItems]]];
     }
 
     protected function getCompanyNamePartial($data)
