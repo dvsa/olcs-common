@@ -37,16 +37,24 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
         );
 
         $config = [
-            'multiItems' => [
-                $this->getCompanyNamePartial($organisation),
-                $this->getTradingNamePartial($organisation),
-                $this->getNatureOfBusinessPartial($organisation)
+            'subSections' => [
+                [
+                    'mainItems' => [
+                        [
+                            'multiItems' => [
+                                $this->getCompanyNamePartial($organisation),
+                                $this->getTradingNamePartial($organisation),
+                                $this->getNatureOfBusinessPartial($organisation)
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
 
         if ($this->isLtdOrLlp) {
-            $config['multiItems'][] = $this->getRegisteredAddressPartial($organisation);
-            $config['multiItems'][] = $this->getSubsidiaryCompaniesPartial($organisation);
+            $config['subSections'][0]['mainItems'][0]['multiItems'][] = $this->getRegisteredAddressPartial($organisation);
+            $config['subSections'][0]['mainItems'][] = $this->getSubsidiaryCompaniesPartial($data);
         }
 
         return $config;
@@ -123,7 +131,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
     /**
      * @NOTE I think the organisationNatureOfBusiness table should be a straight many-to-many so this could change
      *
-     * @param type $data
+     * @param array $data
      */
     protected function getNatureOfBusinessPartial($data)
     {
@@ -147,11 +155,48 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
 
     protected function getRegisteredAddressPartial($data)
     {
-
+        return [
+            [
+                'label' => 'application-review-business-details-registered-address',
+                'value' => $this->formatFullAddress($data['contactDetails']['address'])
+            ]
+        ];
     }
 
+    /**
+     * @NOTE I think the companySubsidiaryLicence table should be a straight many-to-many so this could change
+     *
+     * @param array $data
+     */
     protected function getSubsidiaryCompaniesPartial($data)
     {
+        $companySubsidiaries = $data['licence']['companySubsidiaries'];
 
+        $config = ['header' => 'application-review-business-details-subsidiary-company-header'];
+
+        if (empty($companySubsidiaries)) {
+            $config['freetext'] = $this->translate('review-none-added');
+
+            return $config;
+        }
+
+        $config['multiItems'] = [];
+
+        foreach ($companySubsidiaries as $companySubsidiaryLink) {
+            $item = [
+                [
+                    'label' => 'application-review-business-details-subsidiary-company-name',
+                    'value' => $companySubsidiaryLink['companySubsidiary']['name']
+                ],
+                [
+                    'label' => 'application-review-business-details-subsidiary-company-no',
+                    'value' => $companySubsidiaryLink['companySubsidiary']['companyNo']
+                ]
+            ];
+
+            $config['multiItems'][] = $item;
+        }
+
+        return $config;
     }
 }

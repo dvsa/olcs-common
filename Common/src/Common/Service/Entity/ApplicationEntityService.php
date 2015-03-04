@@ -406,6 +406,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => [
                     'licence' => [
                         'children' => [
+                            // @NOTE I think the companySubsidiaryLicence table should be a straight
+                            // many-to-many so this could change
+                            'companySubsidiaries' => [
+                                'children' => [
+                                    'companySubsidiary'
+                                ]
+                            ],
                             'organisation' => [
                                 'children' => [
                                     'type',
@@ -415,6 +422,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                     'natureOfBusinesss' => [
                                         'children' => [
                                             'refData'
+                                        ]
+                                    ],
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
                                         ]
                                     ]
                                 ]
