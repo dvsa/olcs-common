@@ -26,7 +26,8 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
         'no-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre',
         '1-operating-centre' => 'OperatingCentreVehicleAuthorisationsValidator.1-operating-centre',
         'too-low' => 'OperatingCentreVehicleAuthorisationsValidator.too-low',
-        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high'
+        'too-high' => 'OperatingCentreVehicleAuthorisationsValidator.too-high',
+        'restricted-too-many' => 'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many',
     );
 
     /**
@@ -39,6 +40,11 @@ class OperatingCentreTotalVehicleAuthorisationsValidator extends AbstractValidat
     {
         if (!is_null($value) && !is_numeric($value)) {
             $this->error('non-numeric');
+            return false;
+        }
+
+        if (isset($context['licenceType']) && $context['licenceType'] == 'ltyp_r' && $value > 2) {
+            $this->error('restricted-too-many');
             return false;
         }
 
