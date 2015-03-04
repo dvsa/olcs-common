@@ -23,7 +23,9 @@ class VariationReviewAdapter extends AbstractReviewAdapter
      *
      * @var array
      */
-    private $sectionsToIgnore = [];
+    protected $sectionsToIgnore = [
+        'community_licences'
+    ];
 
     /**
      * Filter unwanted sections
@@ -36,7 +38,7 @@ class VariationReviewAdapter extends AbstractReviewAdapter
     {
         $completion = $this->getServiceLocator()->get('Entity\VariationCompletion')->getCompletionStatuses($id);
 
-        $filteredSections = array_diff($sections, $this->sectionsToIgnore);
+        $filteredSections = parent::filterSections($id, $sections);
 
         foreach ($filteredSections as $key => $section) {
             if ($completion[$section] !== VariationCompletionEntityService::STATUS_UPDATED) {

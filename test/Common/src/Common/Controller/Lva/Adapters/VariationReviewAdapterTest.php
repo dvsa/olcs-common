@@ -43,6 +43,7 @@ class VariationReviewAdapterTest extends MockeryTestCase
         $relevantSections = [
             'type_of_licence',
             'business_type',
+            'community_licences',
             'operating_centres',
             // @NOTE this section should be ignored, as it has not been updated
             'vehicles'
