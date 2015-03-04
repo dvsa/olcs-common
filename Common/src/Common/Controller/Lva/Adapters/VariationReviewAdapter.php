@@ -23,12 +23,7 @@ class VariationReviewAdapter extends AbstractReviewAdapter
      *
      * @var array
      */
-    private $sectionsToIgnore = [
-        'business_type',
-        'business_details',
-        'addresses',
-        'safety'
-    ];
+    private $sectionsToIgnore = [];
 
     /**
      * Filter unwanted sections

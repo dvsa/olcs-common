@@ -88,6 +88,7 @@ return array(
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
+    'application-review-business-type' => 'What type of business are you?',
     'application-review-title-gv' => 'Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -1845,6 +1846,7 @@ return array(
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-business-type-change' => 'Thank you for updating your business type',
     'variation-review-operating-centres-added-title' => 'New operating centres',
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'Traffic area and authorisation',
