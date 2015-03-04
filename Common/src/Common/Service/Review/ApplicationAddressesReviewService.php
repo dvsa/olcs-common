@@ -41,7 +41,9 @@ class ApplicationAddressesReviewService extends AbstractReviewService
                                     ],
                                     [
                                         'label' => 'application-review-addresses-correspondence-address',
-                                        'value' => $this->formatFullAddress($data['licence']['correspondenceCd']['address'])
+                                        'value' => $this->formatFullAddress(
+                                            $data['licence']['correspondenceCd']['address']
+                                        )
                                     ]
                                 ]
                             ]
@@ -52,19 +54,31 @@ class ApplicationAddressesReviewService extends AbstractReviewService
                                 [
                                     [
                                         'label' => 'application-review-addresses-correspondence-business',
-                                        'value' => $this->getPhoneNumber($phoneContacts, PhoneContactEntityService::TYPE_BUSINESS)
+                                        'value' => $this->getPhoneNumber(
+                                            $phoneContacts,
+                                            PhoneContactEntityService::TYPE_BUSINESS
+                                        )
                                     ],
                                     [
                                         'label' => 'application-review-addresses-correspondence-home',
-                                        'value' => $this->getPhoneNumber($phoneContacts, PhoneContactEntityService::TYPE_HOME)
+                                        'value' => $this->getPhoneNumber(
+                                            $phoneContacts,
+                                            PhoneContactEntityService::TYPE_HOME
+                                        )
                                     ],
                                     [
                                         'label' => 'application-review-addresses-correspondence-mobile',
-                                        'value' => $this->getPhoneNumber($phoneContacts, PhoneContactEntityService::TYPE_MOBILE)
+                                        'value' => $this->getPhoneNumber(
+                                            $phoneContacts,
+                                            PhoneContactEntityService::TYPE_MOBILE
+                                        )
                                     ],
                                     [
                                         'label' => 'application-review-addresses-correspondence-fax',
-                                        'value' => $this->getPhoneNumber($phoneContacts, PhoneContactEntityService::TYPE_FAX)
+                                        'value' => $this->getPhoneNumber(
+                                            $phoneContacts,
+                                            PhoneContactEntityService::TYPE_FAX
+                                        )
                                     ],
                                     [
                                         'label' => 'application-review-addresses-correspondence-email',
