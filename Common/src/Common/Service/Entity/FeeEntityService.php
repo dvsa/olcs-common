@@ -71,6 +71,19 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
+    /**
+     * @var array
+     */
+    protected $organisationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation'
+                )
+            )
+        )
+    );
+
     public function getApplication($id)
     {
         $data = $this->get($id, $this->applicationIdBundle);
@@ -192,5 +205,12 @@ class FeeEntityService extends AbstractLvaEntityService
     public function getOverview($id)
     {
         return $this->get($id, $this->overviewBundle);
+    }
+
+    public function getOrganisation($id)
+    {
+        $data = $this->get($id, $this->organisationBundle);
+
+        return isset($data['licence']['organisation']) ? $data['licence']['organisation'] : null;
     }
 }

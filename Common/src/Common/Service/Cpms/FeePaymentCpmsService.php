@@ -69,7 +69,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $totalAmount = 0;
         foreach ($fees as $fee) {
             $paymentData[] = [
-                'amount' => $fee['amount'],
+                'amount' => $this->formatAmount($fee['amount']),
                 'sales_reference' => (string)$fee['id'],
                 'product_reference' => self::PRODUCT_REFERENCE,
                 'payment_reference' => [
@@ -90,7 +90,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             'redirect_uri' => $redirectUrl,
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
-            'total_amount' => number_format($totalAmount, 2),
+            'total_amount' => $this->formatAmount($totalAmount),
         ];
 
         $this->debug(
@@ -111,8 +111,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Card payment response', ['response' => $response]);
 
         if (!is_array($response)
-            || !isset($response['redirection_data'])
-            || empty($response['redirection_data'])
+            || !isset($response['receipt_reference'])
+            || empty($response['receipt_reference'])
         ) {
             throw new PaymentInvalidResponseException(json_encode($response));
         }
@@ -121,8 +121,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ->get('Entity\Payment')
             ->save(
                 [
-                    // yes, 'redirection_data' really is correct...
-                    'guid' => $response['redirection_data'],
+                    // GUID is now in receipt_reference field not redirection_data as before
+                    'guid' => $response['receipt_reference'],
                     'status' => PaymentEntityService::STATUS_OUTSTANDING
                 ]
             );
@@ -171,6 +171,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $ruleStartDate = $this->getRuleStartDate($fee);
         $endPoint      = '/api/payment/cash';
         $scope         = ApiService::SCOPE_CASH;
+        $amount        = $this->formatAmount($amount);
 
         $params = [
             'customer_reference' => (string)$customerReference,
@@ -258,6 +259,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $ruleStartDate = $this->getRuleStartDate($fee);
         $endPoint      = '/api/payment/cheque';
         $scope         = ApiService::SCOPE_CHEQUE;
+        $amount        = $this->formatAmount($amount);
 
         $params = [
             'customer_reference' => (string)$customerReference,
@@ -347,6 +349,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $ruleStartDate = $this->getRuleStartDate($fee);
         $endPoint      = '/api/payment/postal-order';
         $scope         = ApiService::SCOPE_POSTAL_ORDER;
+        $amount        = $this->formatAmount($amount);
 
         $params = [
             'customer_reference' => (string)$customerReference,
@@ -601,5 +604,17 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 ),
             ]
         );
+    }
+
+    /**
+     * @param mixed $amount
+     * @return string amount formatted to two decimal places with no thousands separator
+     */
+    public function formatAmount($amount)
+    {
+        if (!empty($amount) && !is_numeric($amount)) {
+            throw new \InvalidArgumentException("'".var_export($amount, true)."' is not a valid amount");
+        }
+        return sprintf("%1\$.2f", $amount);
     }
 }

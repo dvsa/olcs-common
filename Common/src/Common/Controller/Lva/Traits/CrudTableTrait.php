@@ -133,9 +133,9 @@ trait CrudTableTrait
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericDeleteConfirmation', $request);
 
-        $params = ['sectionText' => 'delete.confirmation.text'];
+        $params = ['sectionText' => $this->getDeleteMessage()];
 
-        return $this->render('delete', $form, $params);
+        return $this->render($this->getDeleteTitle(), $form, $params);
     }
 
     /**
@@ -147,5 +147,25 @@ trait CrudTableTrait
     protected function delete()
     {
         throw new \BadMethodCallException('Delete method must be implemented');
+    }
+
+    /**
+     * Which delete message to use.
+     *
+     * @return string The modal message key.
+     */
+    protected function getDeleteMessage()
+    {
+        return 'delete.confirmation.text';
+    }
+
+    /**
+     * Which delete title to use.
+     *
+     * @return string The modal message key.
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete';
     }
 }

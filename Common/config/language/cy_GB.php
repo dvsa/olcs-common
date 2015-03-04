@@ -11,11 +11,12 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'W Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'W The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'W Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'W If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'W Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'W The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'W The total number of authorised trailers must be equal
@@ -27,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'W Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'W You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'W Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'W The total number of vehicles on a
         restricted licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'W The number of authorised vehicles must not exceed the
@@ -86,6 +88,7 @@ return array(
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-review-business-type' => 'W What type of business are you?',
     'application-review-title-gv' => 'W Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'W Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -1005,8 +1008,8 @@ return array(
     'internal.transport-manager.otherlicences.table.operating_centres' => 'W Operating Centres',
     'internal.transport-manager.otherlicences.table.role' => 'W Role',
     'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'W Vehicles',
-    'internal.transport-manager.previous-history.delete-question' => 'W Are you sure you want to permanently delete this
-        record?',
+    'internal.transport-manager.previous-history.delete-question' => 'W Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'W Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'W Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'W Licence no.',
@@ -1062,6 +1065,13 @@ return array(
     'licence.surrender' => 'W Surrender licence',
     'licence.variation' => 'W Create variation',
     'licence.variation.confirmation.text' => 'W Are you sure you want to create a variation application?',
+    'licence_goods-trailers_trailer.form.add.trailernumber' => 'W Trailer Number',
+    'licence_goods-trailers_trailer.table.guidance' => 'W I undertake that the trailers specified are in operation and
+        that the list is regularly reviewed.',
+    'licence_goods-trailers_trailer.table.specified' => 'W Specified Date',
+    'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'W No trailers found for this licence.',
+    'licence_goods-trailers_trailer.table.title' => 'W Licence Trailers',
+    'licence_goods-trailers_trailer.table.trailerNo' => 'W Trailer No.',
     'licence_type_of_licence_confirmation' => 'W In order to change your type of licence you must create a variation
         application, Would you like to proceed?',
     'list-of-convictions' => 'W List of convictions',
@@ -1168,6 +1178,7 @@ return array(
     'lva.section.title.add_safety' => 'W Add safety inspection provider',
     'lva.section.title.add_subsidiary_company' => 'W Add subsidiary company',
     'lva.section.title.add_taxi_phv' => 'W Add Taxi/PHV',
+    'lva.section.title.add_trailer' => 'W Add Trailer',
     'lva.section.title.add_vehicle' => 'W Add vehicle',
     'lva.section.title.add_vehicles' => 'W Add vehicle',
     'lva.section.title.addresses' => 'W Addresses',
@@ -1179,6 +1190,7 @@ return array(
     'lva.section.title.convictions_penalties' => 'W Convictions penalties',
     'lva.section.title.create-variation-confirmation' => 'W Create variation application',
     'lva.section.title.delete' => 'W Are you sure you want to remove these records?',
+    'lva.section.title.delete-oc' => 'W Confirm removal',
     'lva.section.title.discs' => 'W Licence discs',
     'lva.section.title.edit_condition_undertaking' => 'W Edit condition/undertaking',
     'lva.section.title.edit_convictions_penalties' => 'W Edit previous conviction',
@@ -1188,6 +1200,7 @@ return array(
     'lva.section.title.edit_safety' => 'W Edit safety inspection provider',
     'lva.section.title.edit_subsidiary_company' => 'W Edit subsidiary company',
     'lva.section.title.edit_taxi_phv' => 'W Edit Taxi/PHV',
+    'lva.section.title.edit_trailer' => 'W Edit Trailer',
     'lva.section.title.edit_vehicle' => 'W Edit vehicle',
     'lva.section.title.edit_vehicles' => 'W Edit vehicle',
     'lva.section.title.financial_evidence' => 'W Financial evidence',
@@ -1203,6 +1216,7 @@ return array(
         vehicle(s)?',
     'lva.section.title.safety' => 'W Safety',
     'lva.section.title.taxi_phv' => 'W Taxi/PHV',
+    'lva.section.title.trailer' => 'W Trailers',
     'lva.section.title.transport_managers' => 'W Transport managers',
     'lva.section.title.type_of_licence' => 'W Type of licence',
     'lva.section.title.undertakings' => 'W Review & declarations',
@@ -1216,6 +1230,12 @@ return array(
     'money-element-invalid' => 'W Please enter a valid amount (max 2 decimal places)',
     'month' => 'W Month',
     'more-vehicles-than-authorisation' => 'W There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'W There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'W There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'W There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'W You cannot have more vehicles than the total vehicle authority',
     'name' => 'W Name',
     'name-defendant-type' => 'W Name / Defendant type',
@@ -1459,6 +1479,7 @@ return array(
     'review-operating-centres-traffic-area' => 'W Your traffic area',
     'review-operating-centres-traffic-area-title' => 'W Traffic area',
     'review-operating_centres' => 'W Operating centres',
+    'review-operating_centres_delete' => 'W Are you sure you wish to remove the selected operating centre(s)',
     'review-people' => 'W People',
     'review-safety' => 'W Safety',
     'review-taxi_phv' => 'W Taxi PHV',
@@ -1504,6 +1525,7 @@ return array(
     'section.add.people' => 'W Person added',
     'section.add.safety' => 'W Safety inspector added',
     'section.add.taxi_phv' => 'W Taxi/PHV added',
+    'section.add.trailers' => 'W The trailer has been added',
     'section.add.vehicles' => 'W The vehicle has been added',
     'section.applied-add.licence_history' => 'W Licence history added',
     'section.applied-edit.licence_history' => 'W Licence history updated',
@@ -1518,6 +1540,7 @@ return array(
     'section.edit.people' => 'W Person updated',
     'section.edit.safety' => 'W Safety inspector updated',
     'section.edit.taxi_phv' => 'W Taxi/PHV updated',
+    'section.edit.trailers' => 'W The trailer has been updated',
     'section.edit.vehicles' => 'W The vehicle has been updated',
     'section.held-add.licence_history' => 'W Licence history added',
     'section.held-edit.licence_history' => 'W Licence history updated',
@@ -1577,6 +1600,7 @@ return array(
     'section.link.update.people' => 'W Update directors',
     'section.link.update.safety' => 'W Update safety',
     'section.link.update.taxi_phv' => 'W Update taxi/PHV licences',
+    'section.link.update.trailers' => 'W Update trailers',
     'section.link.update.transport_managers' => 'W Update transport managers',
     'section.link.update.type_of_licence' => 'W Update type of licence',
     'section.link.update.undertakings' => 'W Update declarations',
@@ -1600,6 +1624,7 @@ return array(
     'section.name.people' => 'W People',
     'section.name.safety' => 'W Safety',
     'section.name.taxi_phv' => 'W Taxi/PHV',
+    'section.name.trailers' => 'W Trailers',
     'section.name.transport_managers' => 'W Transport managers',
     'section.name.type_of_licence' => 'W Type of licence',
     'section.name.undertakings' => 'W Declarations',
@@ -1838,6 +1863,7 @@ return array(
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-business-type-change' => 'W Thank you for updating your business type',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',

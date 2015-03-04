@@ -40,6 +40,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
     // will ever be needed programatically so this list should be manageable
     const DOC_SUB_CATEGORY_APPLICATION_ADVERT_DIGITAL = 5;
     const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
+    const TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL = 14;
     const TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL = 15;
     const TASK_SUB_CATEGORY_APPLICATION_SUBSIDIARY_DIGITAL = 25;
     const TASK_SUB_CATEGORY_HEARINGS_APPEALS = 49;
