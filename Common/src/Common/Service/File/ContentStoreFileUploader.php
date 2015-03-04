@@ -91,16 +91,26 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $fileData = $file->getContent();
 
+        if ($this->forceDownload($name)) {
+            $headers = ['Content-Disposition: attachment; filename="' . $name . '"'];
+        }
+
+        $headers['Content-Type'] = $file->getMimeType();
+        $headers['Content-Length'] = strlen($fileData);
+
         $response->setStatusCode(200);
-        $response->getHeaders()->addHeaders(
-            array(
-                'Content-Disposition: attachment; filename="' . $name . '"',
-                'Content-Type' => $file->getMimeType(),
-                'Content-Length' => strlen($fileData)
-            )
-        );
+        $response->getHeaders()->addHeaders($headers);
 
         $response->setContent($fileData);
         return $response;
+    }
+
+    protected function forceDownload($name)
+    {
+        if (preg_match('/\.html$/', $name)) {
+            return false;
+        }
+
+        return true;
     }
 }

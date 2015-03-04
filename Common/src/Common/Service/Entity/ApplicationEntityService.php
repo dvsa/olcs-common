@@ -28,6 +28,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const CODE_GV_VAR_UPGRADE     = 'GV80A';
     const CODE_GV_VAR_NO_UPGRADE  = 'GV81';
 
+    const CODE_PSV_APP = 'PSV421';
+    const CODE_PSV_APP_SR = 'PSV356';
     const CODE_PSV_VAR_UPGRADE    = 'PSV431A';
     const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
 
@@ -353,7 +355,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'default' => [
                 'children' => [
                     'licenceType',
-                    'goodsOrPsv'
+                    'goodsOrPsv',
+                    'licence' => [
+                        'children' => [
+                            'organisation' => []
+                        ]
+                    ]
                 ]
             ],
             'operating_centres' => [
@@ -381,7 +388,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 ]
             ]
         ],
-        'application' => [],
+        'application' => [
+            'business_type' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
         'variation' => [
             'type_of_licence' => [
                 'children' => [

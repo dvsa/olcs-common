@@ -63,8 +63,14 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
 
         return [
             'reviewTitle' => $this->getTitle($reviewData),
+            'subTitle' => $this->getSubTitle($reviewData),
             'sections' => $sectionConfig
         ];
+    }
+
+    protected function getSubTitle($data)
+    {
+        return sprintf('%s %s/%s', $data['licence']['organisation']['name'], $data['licence']['licNo'], $data['id']);
     }
 
     protected function getTitle($data)

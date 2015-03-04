@@ -14,6 +14,7 @@ use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Processing\ApplicationSnapshotProcessingService;
 
 /**
  * Application Processing Service
@@ -535,5 +536,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Processing\GrantTransportManager')->grant($id, $licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
+
+        $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
+            ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
     }
 }

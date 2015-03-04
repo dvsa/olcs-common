@@ -81,7 +81,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
             // Skip sections that are not in the applicationCompletion record
             // These sections could be licence only sections (such as trailers)
-            if (!isset($completionStatus[$property])) {
+            if (!array_key_exists($property, $completionStatus)) {
                 continue;
             }
 

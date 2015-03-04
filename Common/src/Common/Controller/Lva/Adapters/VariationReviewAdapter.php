@@ -24,10 +24,6 @@ class VariationReviewAdapter extends AbstractReviewAdapter
      * @var array
      */
     protected $sectionsToIgnore = [
-        'business_type',
-        'business_details',
-        'addresses',
-        'safety',
         'community_licences'
     ];
 

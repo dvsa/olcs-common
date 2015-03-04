@@ -42,22 +42,25 @@ class VariationReviewAdapterTest extends MockeryTestCase
         $id = 123;
         $relevantSections = [
             'type_of_licence',
-            // <<< @NOTE These sections get filtered out
             'business_type',
-            'business_details',
-            'addresses',
-            'safety',
             'community_licences',
-            // <<< END
             'operating_centres',
             // @NOTE this section should be ignored, as it has not been updated
             'vehicles'
         ];
         $filteredSections = [
             'type_of_licence',
+            'business_type',
             'operating_centres'
         ];
         $stubbedReviewData = [
+            'id' => 321,
+            'licence' => [
+                'licNo' => 'AB123',
+                'organisation' => [
+                    'name' => 'Foo ltd'
+                ]
+            ],
             'goodsOrPsv' => [
                 'id' => $operatorType
             ],
@@ -67,9 +70,11 @@ class VariationReviewAdapterTest extends MockeryTestCase
         ];
         $stubbedTolConfig = ['items' => 'foo'];
         $stubbedOcConfig = ['items' => 'bar'];
+        $stubbedBtConfig = ['items' => 'blah'];
         $stubbedCompletions = [
             'type_of_licence' => VariationCompletionEntityService::STATUS_UPDATED,
             'operating_centres' => VariationCompletionEntityService::STATUS_UPDATED,
+            'business_type' => VariationCompletionEntityService::STATUS_UPDATED,
             'vehicles' => VariationCompletionEntityService::STATUS_UNCHANGED
         ];
 
@@ -84,6 +89,8 @@ class VariationReviewAdapterTest extends MockeryTestCase
         $this->sm->setService('Review\VariationOperatingCentres', $mockOcService);
         $mockVehicleService = m::mock();
         $this->sm->setService('Review\VariationVehicles', $mockVehicleService);
+        $mockBusinessTypeService = m::mock();
+        $this->sm->setService('Review\VariationBusinessType', $mockBusinessTypeService);
 
         // Expectations
         $mockApplicationEntity->shouldReceive('getReviewDataForVariation')
@@ -98,6 +105,10 @@ class VariationReviewAdapterTest extends MockeryTestCase
             ->with($stubbedReviewData)
             ->andReturn($stubbedOcConfig);
 
+        $mockBusinessTypeService->shouldReceive('getConfigFromData')
+            ->with($stubbedReviewData)
+            ->andReturn($stubbedBtConfig);
+
         $mockVariationCompletion->shouldReceive('getCompletionStatuses')
             ->with($id)
             ->andReturn($stubbedCompletions);
@@ -106,10 +117,15 @@ class VariationReviewAdapterTest extends MockeryTestCase
 
         $expected = [
             'reviewTitle' => $expectedTitle,
+            'subTitle' => 'Foo ltd AB123/321',
             'sections' => [
                 [
                     'header' => 'review-type_of_licence',
                     'config' => $stubbedTolConfig
+                ],
+                [
+                    'header' => 'review-business_type',
+                    'config' => $stubbedBtConfig
                 ],
                 [
                     'header' => 'review-operating_centres',

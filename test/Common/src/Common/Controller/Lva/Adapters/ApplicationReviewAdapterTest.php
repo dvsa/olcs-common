@@ -53,6 +53,13 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
             'business_details'
         ];
         $stubbedReviewData = [
+            'id' => 321,
+            'licence' => [
+                'licNo' => 'AB123',
+                'organisation' => [
+                    'name' => 'Foo ltd'
+                ]
+            ],
             'goodsOrPsv' => [
                 'id' => $operatorType
             ],
@@ -88,6 +95,7 @@ class ApplicationReviewAdapterTest extends MockeryTestCase
 
         $expected = [
             'reviewTitle' => $expectedTitle,
+            'subTitle' => 'Foo ltd AB123/321',
             'sections' => [
                 [
                     'header' => 'review-type_of_licence',
