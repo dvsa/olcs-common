@@ -1857,6 +1857,7 @@ return array(
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-business-details-change' => 'Thank you for updating your business details',
     'variation-review-business-type-change' => 'Thank you for updating your business type',
     'variation-review-operating-centres-added-title' => 'New operating centres',
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
