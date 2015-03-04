@@ -16,6 +16,8 @@ use Common\Service\Entity\OrganisationEntityService;
  */
 class ApplicationBusinessDetailsReviewService extends AbstractReviewService
 {
+    private $isLtdOrLlp;
+
     /**
      * Format the readonly config from the given data
      *
@@ -26,6 +28,14 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
     {
         $organisation = $data['licence']['organisation'];
 
+        $this->isLtdOrLlp = in_array(
+            $organisation['type']['id'],
+            [
+                OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY,
+                OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        );
+
         $config = [
             'multiItems' => [
                 $this->getCompanyNamePartial($organisation),
@@ -34,8 +44,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
             ]
         ];
 
-        // If Ltd/LLP
-        if (true) {
+        if ($this->isLtdOrLlp) {
             $config['multiItems'][] = $this->getRegisteredAddressPartial($organisation);
             $config['multiItems'][] = $this->getSubsidiaryCompaniesPartial($organisation);
         }
@@ -45,15 +54,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
 
     protected function getCompanyNamePartial($data)
     {
-        $isLtdOrLlp = in_array(
-            $data['type']['id'],
-            [
-                OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY,
-                OrganisationEntityService::ORG_TYPE_LLP
-            ]
-        );
-
-        if ($isLtdOrLlp) {
+        if ($this->isLtdOrLlp) {
             return [
                 [
                     'label' => 'application-review-business-details-company-no',
