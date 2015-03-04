@@ -825,7 +825,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'children' => [
                         'licenceType',
                         'goodsOrPsv',
-                        'licence' => ['children' => ['organisation']]
+                        'licence' => ['children' => ['organisation' => []]]
                     ]
                 ]
             ],
@@ -835,7 +835,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'children' => [
                         'licenceType',
                         'goodsOrPsv',
-                        'licence' => ['children' => ['organisation']]
+                        'licence' => ['children' => ['organisation' => []]]
                     ]
                 ]
             ],
@@ -847,7 +847,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
-                                'organisation',
+                                'organisation' => [],
                                 'trafficArea'
                             ]
                         ],
@@ -862,6 +862,24 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                                 'application'
                                             ]
                                         ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => [
+                                    'children' => [
+                                        'type'
                                     ]
                                 ]
                             ]
@@ -881,7 +899,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                     'children' => [
                         'licenceType',
                         'goodsOrPsv',
-                        'licence' => ['children' => ['organisation']]
+                        'licence' => ['children' => ['organisation' => []]]
                     ]
                 ]
             ],
@@ -893,7 +911,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
-                                'organisation',
+                                'organisation' => [],
                                 'licenceType'
                             ]
                         ]
@@ -908,7 +926,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
-                                'organisation',
+                                'organisation' => [],
                                 'trafficArea'
                             ]
                         ],
@@ -925,6 +943,20 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                         ]
                                     ]
                                 ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => []
                             ]
                         ]
                     ]

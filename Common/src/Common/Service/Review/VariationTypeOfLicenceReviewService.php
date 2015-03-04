@@ -30,8 +30,8 @@ class VariationTypeOfLicenceReviewService extends AbstractReviewService
         return $this->getServiceLocator()->get('Helper\Translation')->translateReplace(
             'variation-application-type-of-licence-freetext',
             [
-                $data['licence']['licenceType']['description'],
-                $data['licenceType']['description']
+                $this->formatRefdata($data['licence']['licenceType']),
+                $this->formatRefdata($data['licenceType'])
             ]
         );
     }
