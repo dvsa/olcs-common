@@ -86,8 +86,12 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-grant-error-fees' => 'W You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'W You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'W You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-not-granted' => 'W The application has not been granted',
     'application-review-addresses-contact-details-title' => 'W Contact details',
     'application-review-addresses-correspondence-address' => 'W Correspondence Address',
     'application-review-addresses-correspondence-business' => 'W Business telephone No.',
@@ -1060,6 +1064,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'W Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'W Cancel',
     'internal.transport-manager.responsibilities.continue' => 'W Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'W Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'W How many hours will you spend on your
         Transport Manager duties?',
@@ -1071,6 +1077,8 @@ return array(
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'W What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1899,6 +1907,8 @@ return array(
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
+    'variation-grant-error-no-change' => 'W Nothing has been updated',
+    'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
@@ -1948,9 +1958,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
-        selected record(s)?',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Add other licence',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Edit other licence'
     // Potentially unused (Not found with grep)
 );
