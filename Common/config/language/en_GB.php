@@ -99,6 +99,23 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'Company number',
     'application-review-business-details-trading-names' => 'Trading names',
     'application-review-business-type' => 'What type of business are you?',
+    'application-review-safety-safetyConfirmation' => 'Confirm there are suitable arrangements in place to keep the
+        vehicles in a fit and serviceable condition at all times',
+    'application-review-safety-safetyInsTrailers' => 'Maximum time between trailer safety inspections',
+    'application-review-safety-safetyInsVaries' => 'Are some of the vehicles or trailers inspected more frequently than
+        the interval stated above?',
+    'application-review-safety-safetyInsVaries-psv' => 'Are some of the vehicles inspected more frequently than the
+        interval stated above?',
+    'application-review-safety-safetyInsVehicles' => 'Maximum time between vehicle safety inspections',
+    'application-review-safety-tachographIns' => 'Who analyses the tachograph records?',
+    'application-review-safety-tachographInsName' => 'The company or full name of the external contractor who analyses
+        the tachograph records',
+    'application-review-safety-workshop-address' => 'Address',
+    'application-review-safety-workshop-isExternal' => 'Who will carry out the safety inspections?',
+    'application-review-safety-workshop-isExternal-N' => 'An owner or employee of the business',
+    'application-review-safety-workshop-isExternal-Y' => 'An external contractor',
+    'application-review-safety-workshop-name' => 'Contractor\'s name or person\'s full name if performed internally',
+    'application-review-safety-workshop-title' => 'Safety inspection providers',
     'application-review-title-gv' => 'Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -1777,8 +1794,9 @@ return array(
     'summary-overview.button' => 'View my application summary',
     'surname' => 'Surname',
     't-auth' => 'T-auth',
-    'tachographAnalyser-external-contractor' => 'An external contractor',
-    'tachographAnalyser-yourself' => 'An owner or employee of the business',
+    'tachograph_analyser.tach_external' => 'An external contractor',
+    'tachograph_analyser.tach_internal' => 'An owner or employee of the business',
+    'tachograph_analyser.tach_na' => 'Not applicable',
     'target-completion-date' => 'Target completion date',
     'tasks.assignment' => 'Assigned to',
     'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
@@ -1863,6 +1881,7 @@ return array(
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'Traffic area and authorisation',
     'variation-review-operating-centres-updated-title' => 'Updated operating centres',
+    'variation-review-safety-change' => 'Thank you for updating your safety details',
     'variation-review-title-gv' => 'Application to vary a Goods Vehicle Operator\'s Licence',
     'variation-review-title-psv' => 'Application to vary a Public Service Vehicle Operator\'s Licence',
     'variation.delete' => 'Delete application',

@@ -434,6 +434,24 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'safety' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'workshops' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'tachographIns'
+                        ]
+                    ]
+                ]
             ]
         ],
         'variation' => [
