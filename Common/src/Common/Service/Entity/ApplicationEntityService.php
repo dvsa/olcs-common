@@ -358,7 +358,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'goodsOrPsv',
                     'licence' => [
                         'children' => [
-                            'organisation'
+                            'organisation' => []
                         ]
                     ]
                 ]
@@ -389,6 +389,19 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ]
         ],
         'application' => [
+            'business_type' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
             'business_details' => [
                 'children' => [
                     'licence' => [

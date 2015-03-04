@@ -94,6 +94,7 @@ return array(
     'application-review-business-details-organisation-name' => 'W Organisation name',
     'application-review-business-details-partnership-name' => 'W Partnership name',
     'application-review-business-details-trading-names' => 'W Trading names',
+    'application-review-business-type' => 'W What type of business are you?',
     'application-review-title-gv' => 'W Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'W Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -1857,6 +1858,7 @@ return array(
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-business-type-change' => 'W Thank you for updating your business type',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',

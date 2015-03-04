@@ -15,4 +15,13 @@ namespace Common\Controller\Lva\Adapters;
 class ApplicationReviewAdapter extends AbstractReviewAdapter
 {
     protected $lva = 'application';
+
+    /**
+     * Sections to remove during filterSections
+     *
+     * @var array
+     */
+    protected $sectionsToIgnore = [
+        'community_licences'
+    ];
 }
