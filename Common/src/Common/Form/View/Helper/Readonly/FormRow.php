@@ -71,7 +71,10 @@ class FormRow extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
-        if (in_array($element->getAttribute('type'), ['hidden', 'submit']) || $element instanceof Button) {
+        if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
+            $element instanceof Button ||
+            $element->getOption('remove_if_readonly')
+        ) {
             //bail early if we don't want to display this type of element
             return '';
         }
