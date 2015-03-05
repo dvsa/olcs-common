@@ -4,7 +4,7 @@ namespace Common\Form\View\Helper\Readonly;
 
 use Common\Form\Elements\Types\Table;
 use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
+use Zend\Form\View\Helper\AbstractHelper;
 use Zend\View\Helper\EscapeHtml;
 
 /**
@@ -13,8 +13,7 @@ use Zend\View\Helper\EscapeHtml;
  */
 class FormTable extends AbstractHelper
 {
-
-    /**
+    /*
      * Invoke helper as function
      *
      * Proxies to {@link render()}.
@@ -40,12 +39,10 @@ class FormTable extends AbstractHelper
         if (!($element instanceof Table)) {
             return '';
         }
-        return $this->render($element);
 
-        $value = '';
+        $table = $element->getTable();
+        $table->setDisabled(true);
 
-        $escapeHelper = $this->getEscapeHtmlHelper();
-
-        return $escapeHelper($value);
+        return $element->render();
     }
 }

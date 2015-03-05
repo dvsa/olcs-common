@@ -42,6 +42,7 @@ return array(
             'formatter' => 'YesNo'
         ),
         array(
+            'hideWhenDisabled' => 'true',
             'width' => 'checkbox',
             'type' => 'Checkbox'
         )
