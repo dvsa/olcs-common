@@ -1900,6 +1900,8 @@ return array(
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
     'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
-        selected record(s)?'
+        selected record(s)?',
+    'internal.transport_manager.responsibilities.other_licence_add'=> 'Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit'=> 'Edit other licence'
     // Potentially unused (Not found with grep)
 );
