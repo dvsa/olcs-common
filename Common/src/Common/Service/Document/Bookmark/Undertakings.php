@@ -1,31 +1,14 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+use Common\Service\Entity\ConditionUndertakingEntityService;
 
 /**
  * Licence - Undertakings
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class Undertakings extends DynamicBookmark
+class Undertakings extends AbstractConditionsUndertakings
 {
-    public function getQuery(array $data)
-    {
-        $query = [
-            'service' => 'Licence',
-            'data' => [
-                'id' => $data['licence']
-            ],
-            'bundle' => []
-        ];
-
-        return $query;
-    }
-
-    public function render()
-    {
-        // @TODO
-        return 'Undertakings';
-    }
+    const CONDITION_TYPE = ConditionUndertakingEntityService::TYPE_UNDERTAKING;
 }
