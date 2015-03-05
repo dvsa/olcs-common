@@ -12,7 +12,7 @@
  * Usage of this script will look a little something like this:
  *
  * <pre>
- *  // Dynamic Bookmarks
+ *  // Dynamic Bookmarks (note the data should be a json object).
  *  php ./Scripts/SimulateBookmark.php LicenceType '{"licence": 207}'
  *
  *  // Static Bookmarks
