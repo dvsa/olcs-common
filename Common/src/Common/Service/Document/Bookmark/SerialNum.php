@@ -6,6 +6,9 @@
 
 namespace Common\Service\Document\Bookmark;
 
+use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
+use Common\Service\Helper\DateHelperService;
+
 /**
  * Class SerialNum
  *
@@ -19,8 +22,15 @@ namespace Common\Service\Document\Bookmark;
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-class SerialNum extends LicenceNumber
+class SerialNum extends LicenceNumber implements DateHelperAwareInterface
 {
+    private $helper;
+
+    public function setDateHelper(DateHelperService $helper)
+    {
+        $this->helper = $helper;
+    }
+
     /**
      * Return the serial number as a string in the format of "licenceNo currentDateTime"
      *
@@ -28,6 +38,6 @@ class SerialNum extends LicenceNumber
      */
     public function render()
     {
-        return parent::render() . ' ' . date('d/m/Y H:i:s');
+        return parent::render() . ' ' . $this->helper->getDate('d/m/Y H:i:s');
     }
 }

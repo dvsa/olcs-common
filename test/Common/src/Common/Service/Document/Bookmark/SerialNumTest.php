@@ -24,6 +24,12 @@ class SerialNumTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
+        $mock = $this->getMock('Common\Service\Helper\DateHelperService');
+        $mock->expects($this->once())
+            ->method('getDate')
+            ->with('d/m/Y H:i:s')
+            ->willReturn('01/02/15 12:34:56');
+
         $bookmark = new SerialNum();
         $bookmark->setData(
             [
@@ -31,10 +37,12 @@ class SerialNumTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
+        $bookmark->setDateHelper($mock);
+
         // The date function is used here because there is no easy way to get
         // a reference to the service container.
         $this->assertEquals(
-            '123 ' . date("d/m/Y", strtotime("+0 days")),
+            '123 01/02/15 12:34:56',
             $bookmark->render()
         );
     }
