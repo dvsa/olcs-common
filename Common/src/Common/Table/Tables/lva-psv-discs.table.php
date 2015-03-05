@@ -4,14 +4,23 @@ $translationPrefix = 'psv_discs.table';
 
 return array(
     'variables' => array(
-        'title' => $translationPrefix . '.title'
+        'title' => $translationPrefix . '.title',
+        'within_form' => true,
     ),
     'settings' => array(
         'crud' => array(
             'actions' => array(
                 'add' => array('label' => 'Request new discs', 'class' => 'primary'),
-                'replace' => array('label' => 'Replace', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
-                'void' => array('label' => 'Void', 'class' => 'secondary js-require--multiple', 'requireRows' => true),
+                'replace' => array(
+                    'label' => 'Replace',
+                    'class' => 'secondary js-require--multiple',
+                    'requireRows' => true
+                ),
+                'void' => array(
+                    'label' => 'Void',
+                    'class' => 'secondary js-require--multiple',
+                    'requireRows' => true
+                ),
             )
         ),
         'paginate' => array(

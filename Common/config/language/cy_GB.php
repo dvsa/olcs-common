@@ -1928,6 +1928,7 @@ return array(
     'variation-review-addresses-change' => 'W Thank you for updating your addresses',
     'variation-review-business-details-change' => 'W Thank you for updating your business details',
     'variation-review-business-type-change' => 'W Thank you for updating your business type',
+    'variation-review-discs-change' => 'W Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',
