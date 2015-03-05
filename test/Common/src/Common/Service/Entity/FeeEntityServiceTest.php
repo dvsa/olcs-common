@@ -268,4 +268,40 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->getOverview($id);
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisation()
+    {
+        $id = 3;
+
+        $organisation = array('id' => 1);
+
+        $response = array(
+            'licence' => array(
+                'organisation' => $organisation
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($organisation, $this->sut->getOrganisation($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisationWithoutOrganisation()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(null, $this->sut->getOrganisation($id));
+    }
 }
