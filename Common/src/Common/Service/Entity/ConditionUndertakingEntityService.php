@@ -21,6 +21,9 @@ class ConditionUndertakingEntityService extends AbstractEntityService
     const ADDED_VIA_LICENCE = 'cav_lic';
     const ADDED_VIA_APPLICATION = 'cav_app';
 
+    const TYPE_CONDITION = 'cdt_con';
+    const TYPE_UNDERTAKING = 'cdt_und';
+
     protected $entity = 'ConditionUndertaking';
 
     protected $dataBundle = array(

@@ -3,6 +3,7 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Operating Centres list bookmark
@@ -31,11 +32,16 @@ class OperatingCentres extends DynamicBookmark
                             'operatingCentre' => [
                                 'children' => [
                                     'address',
-                                    'conditionUndertakings'
+                                    'conditionUndertakings' => [
+                                        'children' => [
+                                            'conditionType'
+                                        ]
+                                    ]
                                 ]
                             ]
                         ]
-                    ]
+                    ],
+                    'goodsOrPsv'
                 ]
             ]
         ];
@@ -49,26 +55,28 @@ class OperatingCentres extends DynamicBookmark
             return '';
         }
 
-        $data = $this->data['operatingCentres'];
+        $isGoods = $this->data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE;
+        $rows = [];
 
-        foreach ($data $key => $oc) {
+        foreach ($this->data['operatingCentres'] as $licenceOc) {
+            $oc = $licenceOc['operatingCentre'];
 
-            // iterate over all the OC rows and fetch:
-            // $oc['operatingCentre']['address']
-            // $oc['operatingCentre']['noOfVehiclesRequired']
-            // below sometimes not relevant based on PSV/Goods
-            // $oc['operatingCentre']['noOfTrailersRequired']
-            // below needs to be looped over itself to generate
-            // a concatenated paragraph
-            // $oc['operatingCentre']['conditionUndertakings']
+            $conditionsUndertakings = Formatter\ConditionsUndertakings::format($oc['conditionUndertakings']);
 
+            $rows[] = [
+                'TAB_OC_ADD' => Formatter\Address::format($oc['address']),
+                'TAB_OC_VEH' => $licenceOc['noOfVehiclesRequired'],
+                'TAB_TRAILER' => $isGoods ? 'Trailers' : '',
+                'TAB_OC_TRAILER' => $isGoods ? $licenceOc['noOfTrailersRequired'] : '',
+                'TAB_OC_CONDS_UNDERS' => $conditionsUndertakings
+            ];
         }
 
         $snippet = $this->getSnippet('OcTable');
         $parser  = $this->getParser();
 
         $str = '';
-        foreach ($snippets as $tokens) {
+        foreach ($rows as $tokens) {
             $str .= $parser->replace($snippet, $tokens);
         }
         return $str;
