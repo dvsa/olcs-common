@@ -6,8 +6,6 @@
 
 namespace Common\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\TodaysDate;
-
 /**
  * Class SerialNum
  *
@@ -21,7 +19,7 @@ use Common\Service\Document\Bookmark\TodaysDate;
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-class SerialNum extends LicenceNum
+class SerialNum extends LicenceNumber
 {
     /**
      * Return the serial number as a string in the format of "licenceNo currentDateTime"
@@ -30,8 +28,6 @@ class SerialNum extends LicenceNum
      */
     public function render()
     {
-        $todaysDate = new TodaysDate();
-
-        return parent::render() . ' ' . $todaysDate->render();
+        return parent::render() . ' ' . date('d/m/Y H:i:s');
     }
 }

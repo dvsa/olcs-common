@@ -17,7 +17,11 @@ class DiscsIssued extends DynamicBookmark
             'data' => [
                 'id' => $data['licence']
             ],
-            'bundle' => []
+            'bundle' => [
+                'children' => [
+                    'psvDiscs'
+                ]
+            ]
         ];
 
         return $query;
@@ -25,6 +29,12 @@ class DiscsIssued extends DynamicBookmark
 
     public function render()
     {
-        // @TODO
+        $activeDiscs = array_filter(
+            $this->data['psvDiscs'],
+            function ($val) {
+                return $val['ceasedDate'] === null;
+            }
+        );
+        return count($activeDiscs);
     }
 }
