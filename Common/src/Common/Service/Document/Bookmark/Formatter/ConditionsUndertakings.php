@@ -22,7 +22,7 @@ class ConditionsUndertakings implements FormatterInterface
             $key = $row['conditionType']['id'];
             $index = count($rows[$key]) + 1;
 
-            $rows[$key][] = sprintf('%d) %s', $index, $row['notes']);
+            $rows[$key][] = sprintf("%d).\t%s", $index, $row['notes']);
         }
 
         $result = '';
