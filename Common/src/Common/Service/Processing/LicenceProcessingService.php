@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Print Licence Processing Service
+ * Licence Processing Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
@@ -13,15 +13,15 @@ use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Data\CategoryDataService;
 
 /**
- * Print Licence Processing Service
+ * Licence Processing Service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class PrintLicenceProcessingService implements ServiceLocatorAwareInterface
+class LicenceProcessingService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function printLicence($licenceId)
+    public function generateDocument($licenceId)
     {
         $licence = $this->getServiceLocator()
             ->get('Entity\Licence')
