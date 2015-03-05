@@ -5,7 +5,7 @@ namespace Common\Service\Document\Bookmark\Alias;
 use Common\Service\Document\Bookmark\LicenceHolderName;
 
 /**
- * Operator_Name alias of Operator / licence name
+ * Alias of LicenceHolderName
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */

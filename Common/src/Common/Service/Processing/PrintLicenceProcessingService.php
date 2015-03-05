@@ -10,6 +10,7 @@ namespace Common\Service\Processing;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Data\CategoryDataService;
 
 /**
  * Print Licence Processing Service
@@ -42,6 +43,19 @@ class PrintLicenceProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()
             ->get('PrintScheduler')
             ->enqueueFile($storedFile, $description);
+
+        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+            $storedFile,
+            [
+                'description'   => $description,
+                'filename'      => str_replace(" ", "_", $description) . '.rtf',
+                'fileExtension' => 'doc_rtf',
+                'licence'       => $licenceId,
+                'category'      => CategoryDataService::CATEGORY_LICENSING,
+                'subCategory'   => CategoryDataService::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'isReadOnly'    => true
+            ]
+        );
     }
 
     private function getTemplateName($licence)

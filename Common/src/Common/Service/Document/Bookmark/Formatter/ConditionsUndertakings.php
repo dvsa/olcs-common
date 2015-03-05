@@ -20,7 +20,7 @@ class ConditionsUndertakings implements FormatterInterface
 
         foreach ($data as $row) {
             $key = $row['conditionType']['id'];
-            $index = count($rows[$key]) + 1;
+            $index = count($rows[$key]);
 
             $rows[$key][] = sprintf("%d).\t%s", $index, $row['notes']);
         }
