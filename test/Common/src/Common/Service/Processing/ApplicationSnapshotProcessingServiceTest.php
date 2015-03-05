@@ -334,7 +334,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
         $mockDocumentEntity->shouldReceive('save')
             ->with($expectedDocumentData);
 
-        $mockVariationSection->shouldReceive('isLicenceUpgrade')
+        $mockVariationSection->shouldReceive('isRealUpgrade')
             ->with(123)
             ->andReturn($isUpgrade);
 

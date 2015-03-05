@@ -39,6 +39,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function validateApplication($id)
     {
+        $this->processPreGrantData($id);
+
         $licenceId = $this->getLicenceId($id);
 
         $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
@@ -80,6 +82,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processGrantVariation($id)
     {
+        $this->processPreGrantData($id);
+
         $licenceId = $this->getLicenceId($id);
 
         $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
@@ -490,6 +494,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function processGrantPsvApplication($id, $licenceId)
     {
+        $this->processPreGrantData($id);
+
         $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
         $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
 
@@ -536,7 +542,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Processing\GrantTransportManager')->grant($id, $licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
+    }
 
+    protected function processPreGrantData($id)
+    {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
             ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
     }

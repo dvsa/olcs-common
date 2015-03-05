@@ -92,7 +92,7 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
 
         // All Variation options
         $isUpgrade = $this->getServiceLocator()->get('Processing\VariationSection')
-            ->isLicenceUpgrade($applicationId);
+            ->isRealUpgrade($applicationId);
 
         if ($typeOfLicence['goodsOrPsv'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
 

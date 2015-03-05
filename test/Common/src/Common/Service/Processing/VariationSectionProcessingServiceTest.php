@@ -1611,4 +1611,98 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
 
         $this->sut->completeSection($section);
     }
+
+    /**
+     * @dataProvider providerIsRealUpgrade
+     */
+    public function testIsRealUpgrade($data, $expected)
+    {
+        $this->setStubbedCompletionData($data);
+
+        $this->assertEquals($expected, $this->sut->isRealUpgrade(3));
+    }
+
+    public function providerIsRealUpgrade()
+    {
+        return [
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ]
+        ];
+    }
 }

@@ -718,4 +718,22 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
             && in_array($data['licenceType']['id'], $restrictedUpgrades)
         );
     }
+
+    public function isRealUpgrade($applicationId)
+    {
+        // If we have upgraded from restricted
+        if ($this->isLicenceUpgrade($applicationId)) {
+            return true;
+        }
+
+        $data = $this->getVariationCompletionStatusData($applicationId);
+
+        // If we have upgraded from stand nat, to stand inter
+        if ($data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+            && $data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+            return true;
+        }
+
+        return false;
+    }
 }
