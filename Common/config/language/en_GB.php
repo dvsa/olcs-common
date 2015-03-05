@@ -95,7 +95,7 @@ return array(
     'application-review-addresses-correspondence-fax' => 'Fax telephone No.',
     'application-review-addresses-correspondence-home' => 'Home telephone No.',
     'application-review-addresses-correspondence-mobile' => 'Mobile telephone No.',
-    'application-review-addresses-correspondence-title' => 'Correspondance',
+    'application-review-addresses-correspondence-title' => 'Correspondence',
     'application-review-addresses-establishment-address' => 'Establishment address',
     'application-review-addresses-establishment-title' => 'Establishment',
     'application-review-addresses-fao' => 'For attention of',
@@ -110,6 +110,24 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'Company number',
     'application-review-business-details-trading-names' => 'Trading names',
     'application-review-business-type' => 'What type of business are you?',
+    'application-review-financial-history-administration' => 'Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) administration?',
+    'application-review-financial-history-bankrupt' => 'Has any person named in this application (including partners,
+        directors or transport managers) ever been declared bankrupt or had their estate seized or confiscated?',
+    'application-review-financial-history-disqualified' => 'Have you, or have any of your partners, directors, majority
+        shareholders or your transport manager ever been disqualified from acting as a director of a company or from
+        taking part in the management of a company?',
+    'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
+        traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        application and a decision being made on the application',
+    'application-review-financial-history-insolvencyDetails' => 'Additional information',
+    'application-review-financial-history-liquidation' => 'Has any person named in this application (including partners,
+        directors or transport managers) ever been involved with a company, or business, that has gone into (or is going
+        into) liquidation, owing money?',
+    'application-review-financial-history-receivership' => 'Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) receivership?',
     'application-review-safety-safetyConfirmation' => 'Confirm there are suitable arrangements in place to keep the
         vehicles in a fit and serviceable condition at all times',
     'application-review-safety-safetyInsTrailers' => 'Maximum time between trailer safety inspections',
@@ -1057,6 +1075,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'Cancel',
     'internal.transport-manager.responsibilities.continue' => 'Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your
         Transport Manager duties?',
@@ -1068,6 +1088,8 @@ return array(
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1942,9 +1964,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
-        selected record(s)?',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'Add other licence',
-    'internal.transport_manager.responsibilities.other_licence_edit'=> 'Edit other licence'
     // Potentially unused (Not found with grep)
 );
