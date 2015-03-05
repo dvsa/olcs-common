@@ -6,6 +6,7 @@ use Zend\Form\Element\Button;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\AbstractHelper;
+use Common\Form\Elements\Types\Table;
 
 /**
  * Class FormRow
@@ -78,6 +79,13 @@ class FormRow extends AbstractHelper
         ) {
             //bail early if we don't want to display this type of element
             return '';
+        }
+
+        if ($element instanceof Table) {
+            // we dont want Tables to be rendered with a label / value so just return the result of the view helper
+            $elementHelper = $this->getElementHelper($element);
+
+            return  $elementHelper($element);
         }
 
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
