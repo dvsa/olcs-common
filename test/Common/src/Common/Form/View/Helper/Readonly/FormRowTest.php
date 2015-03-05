@@ -57,10 +57,15 @@ class FormRowTest extends TestCase
         $mockHidden = m::mock('Zend\Form\ElementInterface');
         $mockHidden->shouldReceive('getAttribute')->with('type')->andReturn('hidden');
 
+        $mockRemoveIfReadOnly = m::mock('Zend\Form\ElementInterface');
+        $mockRemoveIfReadOnly->shouldReceive('getAttribute')->with('type')->andReturnNull();
+        $mockRemoveIfReadOnly->shouldReceive('getOption')->with('remove_if_readonly')->andReturn(true);
+
         $mockText = m::mock('Zend\Form\ElementInterface');
         $mockText->shouldReceive('getAttribute')->with('type')->andReturn('textarea');
         $mockText->shouldReceive('getLabel')->andReturn('Label');
         $mockText->shouldReceive('getValue')->andReturn('Value');
+        $mockText->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
         $mockSelect = m::mock('Zend\Form\Element\Select');
         $mockSelect->shouldReceive('getAttribute')->with('type')->andReturn('select');
@@ -68,10 +73,12 @@ class FormRowTest extends TestCase
         $mockSelect->shouldReceive('getValue')->andReturn('Value');
         $mockSelect->shouldReceive('getLabelOption')->andReturn(false);
         $mockSelect->shouldReceive('getAttribute')->andReturn(false);
+        $mockSelect->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
         return [
             [null, null],
             [$mockHidden, ''],
+            [$mockRemoveIfReadOnly, ''],
             [$mockText, '<li class="definition-list__item full-width"><dt>Label</dt><dd>Value</dd></li>'],
             [$mockSelect, '<li class="definition-list__item"><dt>Label</dt><dd>Value</dd></li>']
         ];
