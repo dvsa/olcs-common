@@ -24,7 +24,7 @@ class OpNameTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                "For Attention of Mr Testy Test\nTesting Test Limited\nT/A: Trading Test Limited \n" .
+                "Mr Testy Test\nTesting Test Limited\nT/A: Trading Test Limited \n" .
                 "Test\nTest Place\nTest\nTesting\ntest",
                 array(
                     'organisation' => array(

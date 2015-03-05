@@ -71,12 +71,16 @@ class OpName extends DynamicBookmark
             $organisation['tradingNames']
         );
 
-        $output = '';
-        $output .= 'For Attention of ' . $operator['fao'] . "\n";
-        $output .= $organisation['name'] . "\n";
-        $output .= 'T/A: ' . substr($tradingNames, 0, 40) . "\n";
-        $output .= Formatter\Address::format($operator['address']);
-
-        return $output;
+        return implode(
+            "\n",
+            array_filter(
+                [
+                    $operator['fao'],
+                    $organisation['name'],
+                    'T/A: ' . substr($tradingNames, 0, 40),
+                    Formatter\Address::format($operator['address'])
+                ]
+            )
+        );
     }
 }
