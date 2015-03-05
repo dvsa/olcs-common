@@ -4,14 +4,14 @@
 namespace CommonTest\Form\View\Helper\Readonly;
 
 use PHPUnit_Framework_TestCase as TestCase;
-use Common\Form\View\Helper\Readonly\FormRow;
+use Common\Form\View\Helper\Readonly\FormTable;
 use Mockery as m;
 
 /**
- * Class FormRowTest
+ * Class FormTableTest
  * @package CommonTest\Form\View\Helper\Readonly
  */
-class FormRowTest extends TestCase
+class FormTableTest extends TestCase
 {
     /**
      * @dataProvider provideTestInvoke
@@ -20,34 +20,12 @@ class FormRowTest extends TestCase
      */
     public function testInvoke($element, $expected)
     {
-        $callback = function ($v) {
-            return $v;
-        };
 
-        $mockHtmlHelper = m::mock('Zend\View\Helper\EscapeHtml');
-        $mockHtmlHelper->shouldReceive('__invoke')->andReturnUsing($callback);
-        $mockElementHelper = m::mock('Common\Form\View\Helper\Readonly\FormItem');
-        $mockElementHelper->shouldReceive('__invoke')->andReturnUsing(
-            function ($v) {
-                return $v->getValue();
-            }
-        );
-        $mockTableHelper = m::mock('Common\Form\View\Helper\Readonly\FormTable');
-        $mockTableHelper->shouldReceive('__invoke')->andReturn('<table></table>');
+        $mockView = new \Zend\View\Renderer\PhpRenderer();
 
-        $mockTranslater = m::mock('Zend\I18n\Translator\TranslatorInterface');
-        $mockTranslater->shouldReceive('translate')->andReturnUsing($callback);
-
-        $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
-        $mockView->shouldReceive('plugin')->with('escapehtml')->andReturn($mockHtmlHelper);
-        $mockView->shouldReceive('plugin')->with('readonlyformitem')->andReturn($mockElementHelper);
-        $mockView->shouldReceive('plugin')->with('readonlyformselect')->andReturn($mockElementHelper);
-        $mockView->shouldReceive('plugin')->with('readonlyformtable')->andReturn($mockTableHelper);
-
-        $sut = new FormRow();
+        $sut = new FormTable();
 
         $sut->setView($mockView);
-        $sut->setTranslator($mockTranslater);
 
         $expected = (($expected !== null) ? $expected : $sut);
         $this->assertEquals($expected, $sut($element));
@@ -92,15 +70,13 @@ class FormRowTest extends TestCase
                 'name' => 'foo',
             ]
         ];
+
         $mockTableBuilder = m::mock('Common\Service\Table\TableBuilder');
         $mockTableBuilder->shouldReceive('setDisabled')->with(true);
         $mockTableBuilder->shouldReceive('getColumns')->andReturn($columns);
         $mockTableBuilder->shouldReceive('setColumns')->with($newColumns);
 
         $mockTable = m::mock('Common\Form\Elements\Types\Table');
-        $mockTable->shouldReceive('getAttribute')->with('type')->andReturnNull();
-        $mockTable->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
-
         $mockTable->shouldReceive('getTable')->andReturn($mockTableBuilder);
         $mockTable->shouldReceive('render')->andReturn('<table></table>');
 
@@ -108,10 +84,9 @@ class FormRowTest extends TestCase
             [null, null],
             [$mockHidden, ''],
             [$mockRemoveIfReadOnly, ''],
-            [$mockText, '<li class="definition-list__item full-width"><dt>Label</dt><dd>Value</dd></li>'],
-            [$mockSelect, '<li class="definition-list__item"><dt>Label</dt><dd>Value</dd></li>'],
-            [$mockTable, '<table></table>']
-
+            [$mockText, ''],
+            [$mockSelect, ''],
+            [$mockTable, '<table></table>'],
         ];
     }
 }
