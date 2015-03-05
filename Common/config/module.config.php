@@ -413,7 +413,8 @@ return array(
             'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
-            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow'
+            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
         )
     ),
     'view_manager' => array(

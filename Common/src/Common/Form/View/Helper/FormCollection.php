@@ -81,11 +81,18 @@ class FormCollection extends ZendFormCollection
         $markup           = '';
         $templateMarkup   = '';
         $readOnly = $this->isReadOnly() || $element->getOption('readonly');
+
         $elementHelper    = (
             $readOnly ?
             $this->getView()->plugin('readonlyformrow') :
             $this->getElementHelper()
         );
+
+        // hide readonly elements with additional option remove_if_readonly
+        // e.g. HtmlTranslatable elements where we don't know whether to hide or not
+        if ($readOnly && $element->getOption('remove_if_readonly')) {
+            return '';
+        }
 
         $fieldsetHelper   = $this->getFieldsetHelper();
 
