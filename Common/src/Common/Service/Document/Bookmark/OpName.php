@@ -11,7 +11,7 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 /**
  * Class OpName
  *
- * @todo This
+ * Returns the operators name and address and associated contact information.
  *
  * @package Common\Service\Document\Bookmark
  *
@@ -64,9 +64,12 @@ class OpName extends DynamicBookmark
         $operator = $organisation['contactDetails'];
 
         $tradingNames = '';
-        array_map(function($tradingName) use (&$tradingNames) {
-            $tradingNames .= $tradingName['name'] . ' ';
-        }, $organisation['tradingNames']);
+        array_map(
+            function ($tradingName) use (&$tradingNames) {
+                $tradingNames .= $tradingName['name'] . ' ';
+            },
+            $organisation['tradingNames']
+        );
 
         $output = '';
         $output .= 'For Attention of ' . $operator['fao'] . "\n";
