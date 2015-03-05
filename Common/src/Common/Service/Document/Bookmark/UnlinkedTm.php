@@ -8,8 +8,25 @@ namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 
+/**
+ * Class UnlinkedTm
+ *
+ * Returns all the transport managers for and family names.
+ *
+ * @package Common\Service\Document\Bookmark
+ *
+ * @author Josh Curtis <josh.curtis@valtech.com>
+ */
 class UnlinkedTm extends DynamicBookmark
 {
+    /**
+     * Get the query, this query returns the licences transport managers contact
+     * details.
+     *
+     * @param array $data The licence data
+     *
+     * @return array
+     */
     public function getQuery(array $data)
     {
         $query = array(
@@ -35,6 +52,11 @@ class UnlinkedTm extends DynamicBookmark
         return $query;
     }
 
+    /**
+     * Return the TM's fore and surnames.
+     *
+     * @return string The TM fore and family names.
+     */
     public function render()
     {
         $licences = $this->data['tmLicences'];
