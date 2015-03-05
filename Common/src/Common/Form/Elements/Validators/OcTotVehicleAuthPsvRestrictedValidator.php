@@ -14,7 +14,7 @@ use Zend\Validator\AbstractValidator;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class OperatingCentreTotalVehicleAuthorisationsPsvRestrictedValidator extends AbstractValidator
+class OcTotVehicleAuthPsvRestrictedValidator extends AbstractValidator
 {
     /**
      * Message templates

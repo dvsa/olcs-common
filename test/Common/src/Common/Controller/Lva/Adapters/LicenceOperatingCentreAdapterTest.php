@@ -815,7 +815,13 @@ class LicenceOperatingCentreAdapterTest extends TestCase
                         ];
 
                         $scope->mockFormHelper->shouldReceive('removeFieldList')
-                            ->with($scope->mockForm, 'data', $expectedRemoveList);
+                            ->with($scope->mockForm, 'data', $expectedRemoveList)
+                            ->shouldReceive('attachValidator')
+                            ->with(
+                                $scope->mockForm,
+                                'data->totAuthVehicles',
+                                m::type('\Common\Form\Elements\Validators\OcTotVehicleAuthPsvRestrictedValidator')
+                            );
                     }
                 );
 
