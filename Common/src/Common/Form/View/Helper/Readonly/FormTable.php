@@ -39,7 +39,6 @@ class FormTable extends AbstractHelper
         if (!($element instanceof Table)) {
             return '';
         }
-
         $table = $element->getTable();
         $table->setDisabled(true);
 

@@ -84,7 +84,6 @@ class FormRow extends AbstractHelper
         if ($element instanceof Table) {
             // we dont want Tables to be rendered with a label / value so just return the result of the view helper
             $elementHelper = $this->getElementHelper($element);
-
             return  $elementHelper($element);
         }
 
