@@ -24,6 +24,11 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 {
     use ServiceLocatorAwareTrait;
 
+    protected function formatAmount($amount)
+    {
+        return '£' . number_format($amount, 0);
+    }
+
     protected function formatRefdata($refData)
     {
         return $refData['description'];
