@@ -513,8 +513,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->processCommonGrantData($id, $licenceId);
 
         $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
-
-        //$this->generateLicenceDocument($licenceId);
     }
 
     protected function processGrantGoodsApplication($id, $licenceId)
@@ -544,18 +542,13 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Processing\GrantTransportManager')->grant($id, $licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
+
+        $this->getServiceLocator()->get('Processing\Licence')->generateDocument($licenceId);
     }
 
     protected function processPreGrantData($id)
     {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
             ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
-    }
-
-    protected function generateLicenceDocument($licenceId)
-    {
-        $content = $this->getServiceLocator()
-            ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate('foo');
     }
 }
