@@ -4,6 +4,7 @@ namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ConditionUndertakingEntityService;
 
 /**
  * Operating Centres list bookmark
