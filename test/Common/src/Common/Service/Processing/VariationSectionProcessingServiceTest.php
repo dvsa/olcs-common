@@ -1705,4 +1705,54 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             ]
         ];
     }
+
+    public function testGetSectionsRequiringAttention()
+    {
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+        ];
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->assertEquals(
+            ['business_type', 'addresses'],
+            $this->sut->getSectionsRequiringAttention()
+        );
+    }
+
+    /**
+     * @dataProvider hasChangedProvider
+     * @param array $stubbedStatuses
+     * @param boolean $expected
+     */
+    public function testHasChanged($stubbedStatuses, $expected)
+    {
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->assertEquals($expected, $this->sut->hasChanged());
+    }
+
+    public function hasChangedProvider()
+    {
+        return [
+            [
+                [
+                    'type_of_licence' => VariationCompletionEntityService::STATUS_COMPLETE,
+                    'business_type' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+                    'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+                ],
+                true,
+            ],
+            [
+                [
+                    'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                ],
+                false,
+            ],
+        ];
+    }
 }

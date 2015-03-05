@@ -86,8 +86,12 @@ return array(
     'application-form-owners-header-directors' => 'Directors',
     'application-form-owners-header-partners' => 'Partners',
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
+    'application-grant-error-fees' => 'You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
+    'application-not-granted' => 'The application has not been granted',
     'application-review-addresses-contact-details-title' => 'Contact details',
     'application-review-addresses-correspondence-address' => 'Correspondence Address',
     'application-review-addresses-correspondence-business' => 'Business telephone No.',
@@ -1916,6 +1920,8 @@ return array(
     'variation-application-text3' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
+    'variation-grant-error-no-change' => 'Nothing has been updated',
+    'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
     'variation-people-message' => 'Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a

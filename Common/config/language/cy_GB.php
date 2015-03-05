@@ -86,8 +86,12 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-grant-error-fees' => 'W You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'W You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'W You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-not-granted' => 'W The application has not been granted',
     'application-review-addresses-contact-details-title' => 'W Contact details',
     'application-review-addresses-correspondence-address' => 'W Correspondence Address',
     'application-review-addresses-correspondence-business' => 'W Business telephone No.',
@@ -1921,6 +1925,8 @@ return array(
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
+    'variation-grant-error-no-change' => 'W Nothing has been updated',
+    'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
