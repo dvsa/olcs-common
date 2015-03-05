@@ -1032,6 +1032,17 @@ return array(
     'internal.transport-manager.employment.form.position' => 'Position held',
     'internal.transport-manager.employment.save' => 'Save',
     'internal.transport-manager.employments.table' => 'Other employment',
+    'internal.transport-manager.other-licence.form.hours-per-week' => 'Hours per week',
+    'internal.transport-manager.other-licence.form.lic-no' => 'Licence number',
+    'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
+    'internal.transport-manager.other-licence.form.role' => 'Role',
+    'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
@@ -1056,6 +1067,7 @@ return array(
     'internal.transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
+    'internal.transport_manager.responsibilities.other_licence' => 'other licence',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1930,5 +1942,9 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?',
+    'internal.transport_manager.responsibilities.other_licence_add'=> 'Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit'=> 'Edit other licence'
     // Potentially unused (Not found with grep)
 );
