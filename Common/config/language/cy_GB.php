@@ -86,9 +86,69 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-grant-error-fees' => 'W You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'W You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'W You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-not-granted' => 'W The application has not been granted',
+    'application-review-addresses-contact-details-title' => 'W Contact details',
+    'application-review-addresses-correspondence-address' => 'W Correspondence Address',
+    'application-review-addresses-correspondence-business' => 'W Business telephone No.',
+    'application-review-addresses-correspondence-email' => 'W E-mail address',
+    'application-review-addresses-correspondence-fax' => 'W Fax telephone No.',
+    'application-review-addresses-correspondence-home' => 'W Home telephone No.',
+    'application-review-addresses-correspondence-mobile' => 'W Mobile telephone No.',
+    'application-review-addresses-correspondence-title' => 'W Correspondence',
+    'application-review-addresses-establishment-address' => 'W Establishment address',
+    'application-review-addresses-establishment-title' => 'W Establishment',
+    'application-review-addresses-fao' => 'W For attention of',
+    'application-review-business-details-company-name' => 'W Company name',
+    'application-review-business-details-company-no' => 'W Registered company number',
+    'application-review-business-details-nature-of-business' => 'W Nature of business',
+    'application-review-business-details-organisation-name' => 'W Organisation name',
+    'application-review-business-details-partnership-name' => 'W Partnership name',
+    'application-review-business-details-registered-address' => 'W Registered address',
+    'application-review-business-details-subsidiary-company-header' => 'W Subsidiary companies',
+    'application-review-business-details-subsidiary-company-name' => 'W Company name',
+    'application-review-business-details-subsidiary-company-no' => 'W Company number',
+    'application-review-business-details-trading-names' => 'W Trading names',
     'application-review-business-type' => 'W What type of business are you?',
+    'application-review-financial-history-administration' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) administration?',
+    'application-review-financial-history-bankrupt' => 'W Has any person named in this application (including partners,
+        directors or transport managers) ever been declared bankrupt or had their estate seized or confiscated?',
+    'application-review-financial-history-disqualified' => 'W Have you, or have any of your partners, directors,
+        majority shareholders or your transport manager ever been disqualified from acting as a director of a company or
+        from taking part in the management of a company?',
+    'application-review-financial-history-insolvencyConfirmation' => 'W Confirm that you are aware that you must tell
+        the traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        application and a decision being made on the application',
+    'application-review-financial-history-insolvencyDetails' => 'W Additional information',
+    'application-review-financial-history-liquidation' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) liquidation, owing money?',
+    'application-review-financial-history-receivership' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) receivership?',
+    'application-review-safety-safetyConfirmation' => 'W Confirm there are suitable arrangements in place to keep the
+        vehicles in a fit and serviceable condition at all times',
+    'application-review-safety-safetyInsTrailers' => 'W Maximum time between trailer safety inspections',
+    'application-review-safety-safetyInsVaries' => 'W Are some of the vehicles or trailers inspected more frequently
+        than the interval stated above?',
+    'application-review-safety-safetyInsVaries-psv' => 'W Are some of the vehicles inspected more frequently than the
+        interval stated above?',
+    'application-review-safety-safetyInsVehicles' => 'W Maximum time between vehicle safety inspections',
+    'application-review-safety-tachographIns' => 'W Who analyses the tachograph records?',
+    'application-review-safety-tachographInsName' => 'W The company or full name of the external contractor who analyses
+        the tachograph records',
+    'application-review-safety-workshop-address' => 'W Address',
+    'application-review-safety-workshop-isExternal' => 'W Who will carry out the safety inspections?',
+    'application-review-safety-workshop-isExternal-N' => 'W An owner or employee of the business',
+    'application-review-safety-workshop-isExternal-Y' => 'W An external contractor',
+    'application-review-safety-workshop-name' => 'W Contractor\'s name or person\'s full name if performed internally',
+    'application-review-safety-workshop-title' => 'W Safety inspection providers',
     'application-review-title-gv' => 'W Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'W Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -997,6 +1057,17 @@ return array(
     'internal.transport-manager.employment.form.position' => 'W Position held',
     'internal.transport-manager.employment.save' => 'W Save',
     'internal.transport-manager.employments.table' => 'W Other employment',
+    'internal.transport-manager.other-licence.form.hours-per-week' => 'W Hours per week',
+    'internal.transport-manager.other-licence.form.lic-no' => 'W Licence number',
+    'internal.transport-manager.other-licence.form.operating-centres' => 'W Operating centres',
+    'internal.transport-manager.other-licence.form.role' => 'W Role',
+    'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'W Vehicles',
+    'internal.transport-manager.otherlicences.table' => 'W Other Licences',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'W Hours per Week',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'W Licence Number',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'W Operating Centres',
+    'internal.transport-manager.otherlicences.table.role' => 'W Role',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'W Vehicles',
     'internal.transport-manager.previous-history.delete-question' => 'W Are you sure you want to permanently delete the
         selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'W Deleted successfully',
@@ -1011,6 +1082,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'W Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'W Cancel',
     'internal.transport-manager.responsibilities.continue' => 'W Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'W Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'W How many hours will you spend on your
         Transport Manager duties?',
@@ -1021,6 +1094,9 @@ return array(
     'internal.transport-manager.responsibilities.tm-application-oc' => 'W Which operating centre(s) will you be
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'W What type of manager will you be for this licence?',
+    'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1445,6 +1521,7 @@ return array(
     'review-financial_evidence' => 'W Financial evidence',
     'review-financial_history' => 'W Financial history',
     'review-licence_history' => 'W Licence history',
+    'review-none-added' => 'W None added',
     'review-operating-centre-address' => 'W Address',
     'review-operating-centre-advertisement-ad-placed' => 'W Have you advertised your application for this operating
         centre in you local newspaper?',
@@ -1771,8 +1848,9 @@ return array(
     'summary-overview.button' => 'W View my application summary',
     'surname' => 'W Surname',
     't-auth' => 'W T-auth',
-    'tachographAnalyser-external-contractor' => 'W An external contractor',
-    'tachographAnalyser-yourself' => 'W An owner or employee of the business',
+    'tachograph_analyser.tach_external' => 'W An external contractor',
+    'tachograph_analyser.tach_internal' => 'W An owner or employee of the business',
+    'tachograph_analyser.tach_na' => 'W Not applicable',
     'target-completion-date' => 'W Target completion date',
     'tasks.assignment' => 'W Assigned to',
     'tasks.close.multiple' => 'W Are you sure you want to close these tasks?',
@@ -1847,15 +1925,21 @@ return array(
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
+    'variation-grant-error-no-change' => 'W Nothing has been updated',
+    'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-addresses-change' => 'W Thank you for updating your addresses',
+    'variation-review-business-details-change' => 'W Thank you for updating your business details',
     'variation-review-business-type-change' => 'W Thank you for updating your business type',
+    'variation-review-discs-change' => 'W Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',
     'variation-review-operating-centres-updated-title' => 'W Updated operating centres',
+    'variation-review-safety-change' => 'W Thank you for updating your safety details',
     'variation-review-title-gv' => 'W Application to vary a Goods Vehicle Operator\'s Licence',
     'variation-review-title-psv' => 'W Application to vary a Public Service Vehicle Operator\'s Licence',
     'variation.delete' => 'W Delete application',

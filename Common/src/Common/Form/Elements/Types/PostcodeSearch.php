@@ -38,6 +38,7 @@ class PostcodeSearch extends Fieldset
                 'data-container-class' => 'inline'
             )
         );
+        $postcodeSearch->setOption('remove_if_readonly', true);
 
         $this->add($postcodeSearch);
 
@@ -82,6 +83,7 @@ class PostcodeSearch extends Fieldset
                 'data-container-class' => 'js-visible'
             )
         );
+        $manualLink->setOption('remove_if_readonly', true);
 
         $this->add($manualLink);
     }

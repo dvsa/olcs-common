@@ -1611,4 +1611,148 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
 
         $this->sut->completeSection($section);
     }
+
+    /**
+     * @dataProvider providerIsRealUpgrade
+     */
+    public function testIsRealUpgrade($data, $expected)
+    {
+        $this->setStubbedCompletionData($data);
+
+        $this->assertEquals($expected, $this->sut->isRealUpgrade(3));
+    }
+
+    public function providerIsRealUpgrade()
+    {
+        return [
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                        ]
+                    ]
+                ],
+                true
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ],
+            [
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'licence' => [
+                        'licenceType' => [
+                            'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
+                        ]
+                    ]
+                ],
+                false
+            ]
+        ];
+    }
+
+    public function testGetSectionsRequiringAttention()
+    {
+        $stubbedStatuses = [
+            'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'business_type' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+            'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+            'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+        ];
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->assertEquals(
+            ['business_type', 'addresses'],
+            $this->sut->getSectionsRequiringAttention()
+        );
+    }
+
+    /**
+     * @dataProvider hasChangedProvider
+     * @param array $stubbedStatuses
+     * @param boolean $expected
+     */
+    public function testHasChanged($stubbedStatuses, $expected)
+    {
+        $this->setStubbedCompletionStatuses($stubbedStatuses);
+        $this->assertEquals($expected, $this->sut->hasChanged());
+    }
+
+    public function hasChangedProvider()
+    {
+        return [
+            [
+                [
+                    'type_of_licence' => VariationCompletionEntityService::STATUS_COMPLETE,
+                    'business_type' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+                    'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'addresses' => VariationCompletionEntityService::STATUS_REQUIRES_ATTENTION,
+                ],
+                true,
+            ],
+            [
+                [
+                    'type_of_licence' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'business_type' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'business_details' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                    'addresses' => VariationCompletionEntityService::STATUS_UNCHANGED,
+                ],
+                false,
+            ],
+        ];
+    }
 }

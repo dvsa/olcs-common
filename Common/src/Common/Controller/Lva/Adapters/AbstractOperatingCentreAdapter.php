@@ -91,7 +91,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         return $data;
     }
 
-    public function alterFormDataOnPost($mode, $data)
+    public function alterFormDataOnPost($mode, $data, $childId)
     {
         return $data;
     }
