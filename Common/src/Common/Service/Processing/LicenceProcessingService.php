@@ -65,7 +65,7 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
         }
 
         if ($licence['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED) {
-            return 'PSV_SRLicence';
+            return 'PSVSRLicence';
         }
 
         return 'PSV_LICENCE_V1';
