@@ -24,7 +24,7 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'Testy McTest\n',
+                "Testy McTest\n",
                 array(
                     'tmLicences' => array(
                         0 => array(
@@ -39,7 +39,7 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                'Lorem Ipsum\nTesty McTest\n',
+                "Lorem Ipsum\nTesty McTest\n",
                 array(
                     'tmLicences' => array(
                         0 => array(

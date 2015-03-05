@@ -61,14 +61,14 @@ class UnlinkedTm extends DynamicBookmark
     {
         $licences = $this->data['tmLicences'];
 
-        if(count($licences) === 0) {
+        if (count($licences) === 0) {
             return "To be nominated.";
         }
 
         $output = '';
         foreach ($licences as $licence) {
             $person = $licence['transportManager']['homeCd'];
-            $output .= $person['forename'] . ' ' . $person['familyName'] . '\n';
+            $output .= Formatter\Name::format($person) . "\n";
         }
 
         return $output;
