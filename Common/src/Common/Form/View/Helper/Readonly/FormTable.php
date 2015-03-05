@@ -43,6 +43,18 @@ class FormTable extends AbstractHelper
         $table = $element->getTable();
         $table->setDisabled(true);
 
+        // remove all checkbox columns
+        $columns = $table->getColumns();
+        $newColumns = [];
+        foreach($columns as $column) {
+            if (isset($column['type']) && $column['type'] == 'Checkbox') {
+                continue;
+            } else {
+                $newColumns[] = $column;
+            }
+        }
+        $table->setColumns($newColumns);
+
         return $element->render();
     }
 }
