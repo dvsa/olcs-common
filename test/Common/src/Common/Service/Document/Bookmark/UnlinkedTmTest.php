@@ -26,23 +26,45 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
             array(
                 'Testy McTest\n',
                 array(
-                    'transportManager' => array(
-                        'homeCd' => array(
-                            'forename' => 'Testy',
-                            'familyName' => 'McTest'
+                    'tmLicences' => array(
+                        0 => array(
+                            'transportManager' => array(
+                                'homeCd' => array(
+                                    'forename' => 'Testy',
+                                    'familyName' => 'McTest'
+                                )
+                            )
                         )
                     )
                 )
             ),
             array(
-                'Lorem Ipsum\n',
+                'Lorem Ipsum\nTesty McTest\n',
                 array(
-                    'transportManager' => array(
-                        'homeCd' => array(
-                            'forename' => 'Lorem',
-                            'familyName' => 'Ipsum'
+                    'tmLicences' => array(
+                        0 => array(
+                            'transportManager' => array(
+                                'homeCd' => array(
+                                    'forename' => 'Lorem',
+                                    'familyName' => 'Ipsum'
+                                )
+                            )
+                        ),
+                        1 => array(
+                            'transportManager' => array(
+                                'homeCd' => array(
+                                    'forename' => 'Testy',
+                                    'familyName' => 'McTest'
+                                )
+                            )
                         )
                     )
+                )
+            ),
+            array(
+                'To be nominated.',
+                array(
+                    'tmLicences' => array()
                 )
             )
         );
@@ -54,13 +76,7 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
     public function testRender($expected, $results)
     {
         $bookmark = new UnlinkedTm();
-        $bookmark->setData(
-            array(
-                'tmLicences' => array(
-                    $results
-                ),
-            )
-        );
+        $bookmark->setData($results);
 
         $this->assertEquals($expected, $bookmark->render());
     }
