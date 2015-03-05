@@ -1,15 +1,14 @@
 <?php
-
 namespace Common\Service\Document\Bookmark;
 
 /**
- * Licence holder name bookmark
+ * Licence - Total vehicle authority
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicenceNumber extends SingleValueAbstract
+class AuthorisedVehicles extends SingleValueAbstract
 {
     const SERVICE = 'Licence';
     const SRCH_VAL_KEY = 'licence';
-    const FIELD = 'licNo';
+    const FIELD = 'totAuthVehicles';
 }

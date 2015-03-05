@@ -3,13 +3,14 @@
 namespace Common\Service\Document\Bookmark;
 
 /**
- * Licence holder name bookmark
+ * Licence - In Force Date
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicenceNumber extends SingleValueAbstract
+class IssueDate extends SingleValueAbstract
 {
     const SERVICE = 'Licence';
+    const FORMATTER = 'Date';
     const SRCH_VAL_KEY = 'licence';
-    const FIELD = 'licNo';
+    const FIELD = 'inForceDate';
 }
