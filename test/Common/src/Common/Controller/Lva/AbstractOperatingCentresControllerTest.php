@@ -197,7 +197,6 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->sut->shouldReceive('params')->with('child_id')->andReturn($id);
 
         $postData    = ['postData'];
-        $addressData = ['addressData'];
         $formData    = ['formData'];
 
         $this->setPost($postData);
@@ -217,7 +216,7 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
 
         $this->adapter
             ->shouldReceive('alterFormDataOnPost')
-                ->with('edit', $postData)
+                ->with('edit', $postData, 69)
                 ->andReturn($formData)
             ->shouldReceive('getActionForm')
                 ->with('edit', $this->request)
