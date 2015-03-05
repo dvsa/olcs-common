@@ -1923,6 +1923,7 @@ return array(
     'variation-review-addresses-change' => 'Thank you for updating your addresses',
     'variation-review-business-details-change' => 'Thank you for updating your business details',
     'variation-review-business-type-change' => 'Thank you for updating your business type',
+    'variation-review-discs-change' => 'Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'New operating centres',
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'Traffic area and authorisation',
