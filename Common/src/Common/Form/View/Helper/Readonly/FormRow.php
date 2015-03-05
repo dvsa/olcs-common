@@ -24,6 +24,7 @@ class FormRow extends AbstractHelper
     protected $classMap = [
         'Zend\Form\Element\Select' => 'readonlyformselect',
         'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
+        'Common\Form\Elements\Types\Table' => 'readonlyformtable'
     ];
 
     /**
