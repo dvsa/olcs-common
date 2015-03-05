@@ -47,7 +47,7 @@ class LicenceType extends DynamicBookmark
 
     /**
      * The render method to be used for this bookmark. This method returns the
-     * types and categories as one string.
+     * types and categories as one stri
      *
      * @return string
      */

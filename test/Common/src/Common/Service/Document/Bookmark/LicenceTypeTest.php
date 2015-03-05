@@ -5,9 +5,9 @@ namespace CommonTest\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\LicenceType;
 
 /**
- * Licence holder name test
+ * Licence type test.
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
 class LicenceTypeTest extends \PHPUnit_Framework_TestCase
 {
