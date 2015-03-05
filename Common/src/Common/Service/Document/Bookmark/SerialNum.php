@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SerialNumber.php
+ * SerialNum.php
  */
 
 namespace Common\Service\Document\Bookmark;
@@ -9,7 +9,7 @@ namespace Common\Service\Document\Bookmark;
 use Common\Service\Document\Bookmark\TodaysDate;
 
 /**
- * Class SerialNumber
+ * Class SerialNum
  *
  * This bookmark generates a licence number in the format of:
  *
@@ -21,7 +21,7 @@ use Common\Service\Document\Bookmark\TodaysDate;
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
  */
-class SerialNumber extends LicenceNumber
+class SerialNum extends LicenceNum
 {
     /**
      * Return the serial number as a string in the format of "licenceNo currentDateTime"

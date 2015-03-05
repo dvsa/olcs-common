@@ -2,20 +2,20 @@
 
 namespace CommonTest\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\SerialNumber;
+use Common\Service\Document\Bookmark\SerialNum;
 
 /**
- * Class SerialNumberTest
+ * Class SerialNumTest
  *
  * Test the serial number bookmark.
  *
  * @package CommonTest\Service\Document\Bookmark
  */
-class SerialNumberTest extends \PHPUnit_Framework_TestCase
+class SerialNumTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetQueryContainsExpectedKeys()
     {
-        $bookmark = new SerialNumber();
+        $bookmark = new SerialNum();
         $query = $bookmark->getQuery(['licence' => 123]);
 
         $this->assertEquals('Licence', $query['service']);
@@ -24,7 +24,7 @@ class SerialNumberTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        $bookmark = new SerialNumber();
+        $bookmark = new SerialNum();
         $bookmark->setData(
             [
                 'licNo' => 123
