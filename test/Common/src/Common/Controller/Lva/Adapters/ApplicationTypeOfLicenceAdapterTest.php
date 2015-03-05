@@ -288,8 +288,15 @@ class ApplicationTypeOfLicenceAdapterTest extends MockeryTestCase
     public function testProcessFirstSave()
     {
         $applicationId = 4;
+        $licenceId = 6;
 
         $this->expectCreateFee($applicationId);
+
+        $mockLicenceService = m::mock()
+            ->shouldReceive('generateLicence')
+            ->with($licenceId)
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
 
         $this->sut->processFirstSave($applicationId);
     }
