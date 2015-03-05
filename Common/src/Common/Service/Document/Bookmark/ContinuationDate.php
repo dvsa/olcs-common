@@ -1,30 +1,16 @@
 <?php
-namespace Common\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+namespace Common\Service\Document\Bookmark;
 
 /**
  * Licence - Expiry Date
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class ContinuationDate extends DynamicBookmark
+class ContinuationDate extends SingleValueAbstract
 {
-    public function getQuery(array $data)
-    {
-        $query = [
-            'service' => 'Licence',
-            'data' => [
-                'id' => $data['licence']
-            ],
-            'bundle' => []
-        ];
-
-        return $query;
-    }
-
-    public function render()
-    {
-        return date('d/m/Y', strtotime($this->data['expiryDate']));
-    }
+    const SERVICE = 'Licence';
+    const FORMATTER = 'Date';
+    const SRCH_VAL_KEY = 'licence';
+    const FIELD = 'expiryDate';
 }
