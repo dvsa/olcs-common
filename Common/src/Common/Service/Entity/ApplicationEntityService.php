@@ -517,6 +517,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ]
         ],
         'variation' => [
             'type_of_licence' => [
@@ -546,6 +551,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ]
         ]
     ];
 
