@@ -87,31 +87,42 @@ class ApplicationConvictionsPenaltiesReviewServiceTest extends MockeryTestCase
                                                 'value' => 'Mr'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-forename',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-forename',
                                                 'value' => 'Bob'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-familyName',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-familyName',
                                                 'value' => 'Smith'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-convictionDate',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-'
+                                                    . 'convictionDate',
                                                 'value' => '23/08/1989'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-offence',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-offence',
                                                 'value' => 'Some crime'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-offence-details',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-offence-'
+                                                    . 'details',
                                                 'value' => 'Details about crime'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-offence-court',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-offence-'
+                                                    . 'court',
                                                 'value' => 'Some court'
                                             ],
                                             [
-                                                'label' => 'application-review-convictions-penalties-conviction-offence-penalty',
+                                                'label'
+                                                    => 'application-review-convictions-penalties-conviction-offence-'
+                                                    . 'penalty',
                                                 'value' => 'Slapped wrist'
                                             ]
                                         ]
