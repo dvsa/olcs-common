@@ -45,7 +45,13 @@ class BusReg extends Generic
         return true;
     }
 
-    public function fetchDetail($id = null)
+    /**
+     * Fetches details for a busRegId
+     *
+     * @param null $id
+     * @return array
+     */
+    public function fetchDetail($id)
     {
         $variationBundle = [
             'children' => [
@@ -72,6 +78,12 @@ class BusReg extends Generic
         return $busRegDetail;
     }
 
+    /**
+     * Fetches variation history from busReg table by route number
+     *
+     * @param int $routeNo
+     * @return array
+     */
     public function fetchVariationHistory($routeNo)
     {
         $variationBundle = [
@@ -79,6 +91,7 @@ class BusReg extends Generic
                 'status'
             ]
         ];
+
         $params['routeNo'] = $routeNo;
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
