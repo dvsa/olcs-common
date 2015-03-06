@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\File\File;
+
 /**
  * Document Entity Service
  *
@@ -32,5 +34,18 @@ class DocumentEntityService extends AbstractEntityService
         $data = $this->get($id);
 
         return (isset($data['identifier']) && !empty($data['identifier'])) ? $data['identifier'] : null;
+    }
+
+    public function createFromFile(File $file, $data = [])
+    {
+        $defaults = [
+            'identifier' => $file->getIdentifier(),
+            'size'       => $file->getSize(),
+            'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+        ];
+
+        $data = array_merge($defaults, $data);
+
+        return $this->save($data);
     }
 }

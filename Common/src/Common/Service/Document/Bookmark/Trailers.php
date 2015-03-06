@@ -1,15 +1,14 @@
 <?php
-
 namespace Common\Service\Document\Bookmark;
 
 /**
- * Licence holder name bookmark
+ * Licence - Total trailers authority
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicenceNumber extends SingleValueAbstract
+class Trailers extends SingleValueAbstract
 {
     const SERVICE = 'Licence';
+    const FIELD = 'totAuthTrailers';
     const SRCH_VAL_KEY = 'licence';
-    const FIELD = 'licNo';
 }

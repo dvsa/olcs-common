@@ -1139,6 +1139,7 @@ return array(
     'licence.overview.licence-no' => 'Licence No.',
     'licence.overview.title' => 'Licence overview',
     'licence.print' => 'Print licence',
+    'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
