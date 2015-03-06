@@ -25,12 +25,12 @@ class ConditionsUndertakings implements FormatterInterface
             $rows[$key][] = sprintf("%d).\t%s", $index, $row['notes']);
         }
 
-        $result = '';
+        $results = [];
         foreach ($rows as $key => $data) {
             if (count($data) > 1) {
-                $result .= implode("\n\n", $data);
+                $results[] = implode("\n\n", $data);
             }
         }
-        return $result;
+        return implode("\n\n", $results);
     }
 }
