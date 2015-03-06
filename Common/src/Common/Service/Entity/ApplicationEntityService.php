@@ -475,6 +475,24 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'taxi_phv' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea',
+                            'privateHireLicences' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
         'variation' => [
