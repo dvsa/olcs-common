@@ -1286,6 +1286,7 @@ return array(
     'lva.section.title.edit_vehicles' => 'W Edit vehicle',
     'lva.section.title.financial_evidence' => 'W Financial evidence',
     'lva.section.title.financial_history' => 'W Financial history',
+    'lva.section.title.grant_application' => 'W Grant application',
     'lva.section.title.licence_history' => 'W Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
     'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
