@@ -47,6 +47,16 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
+
+            if (!isset($data['data']['companyNumber'])
+                || !array_key_exists('company_number', $data['data']['companyNumber'])) {
+                $data['data']['companyNumber']['company_number'] = $orgData['companyOrLlpNo'];
+            }
+
+            if (!array_key_exists('name', $data['data'])) {
+                $data['data']['name'] = $orgData['name'];
+            }
+
         } else {
             $data = $this->formatDataForForm($orgData, $natureOfBusiness);
         }
