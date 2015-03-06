@@ -55,7 +55,7 @@ abstract class AbstractStandardConditions extends DynamicBookmark
                 break;
         }
 
-        $path = $this->prefix . '_' . $type . '_' . 'LICENCE_CONDITIONS';
+        $path = $this->prefix . '_' . $type . '_LICENCE_CONDITIONS';
 
         return $this->getSnippet($path);
     }
