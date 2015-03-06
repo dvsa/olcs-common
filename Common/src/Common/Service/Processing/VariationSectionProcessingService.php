@@ -410,6 +410,36 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Fetch list of all sections requiring attention
+     *
+     * @return array
+     */
+    public function getSectionsRequiringAttention()
+    {
+        $filtered = array_filter(
+            $this->getSectionCompletion(),
+            function ($status) {
+                return $status === self::STATUS_REQUIRES_ATTENTION;
+            }
+        );
+
+        return array_keys($filtered);
+    }
+
+    /**
+     * @return boolean if any section has been changed
+     */
+    public function hasChanged()
+    {
+        foreach ($this->getSectionCompletion() as $section => $status) {
+            if ($status !== self::STATUS_UNCHANGED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Apply the generic rules on sections requiring attension
      *
      * @param string $currentSection

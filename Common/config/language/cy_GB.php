@@ -86,8 +86,12 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-grant-error-fees' => 'W You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'W You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'W You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-not-granted' => 'W The application has not been granted',
     'application-review-addresses-contact-details-title' => 'W Contact details',
     'application-review-addresses-correspondence-address' => 'W Correspondence Address',
     'application-review-addresses-correspondence-business' => 'W Business telephone No.',
@@ -95,7 +99,7 @@ return array(
     'application-review-addresses-correspondence-fax' => 'W Fax telephone No.',
     'application-review-addresses-correspondence-home' => 'W Home telephone No.',
     'application-review-addresses-correspondence-mobile' => 'W Mobile telephone No.',
-    'application-review-addresses-correspondence-title' => 'W Correspondance',
+    'application-review-addresses-correspondence-title' => 'W Correspondence',
     'application-review-addresses-establishment-address' => 'W Establishment address',
     'application-review-addresses-establishment-title' => 'W Establishment',
     'application-review-addresses-fao' => 'W For attention of',
@@ -110,6 +114,24 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'W Company number',
     'application-review-business-details-trading-names' => 'W Trading names',
     'application-review-business-type' => 'W What type of business are you?',
+    'application-review-financial-history-administration' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) administration?',
+    'application-review-financial-history-bankrupt' => 'W Has any person named in this application (including partners,
+        directors or transport managers) ever been declared bankrupt or had their estate seized or confiscated?',
+    'application-review-financial-history-disqualified' => 'W Have you, or have any of your partners, directors,
+        majority shareholders or your transport manager ever been disqualified from acting as a director of a company or
+        from taking part in the management of a company?',
+    'application-review-financial-history-insolvencyConfirmation' => 'W Confirm that you are aware that you must tell
+        the traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        application and a decision being made on the application',
+    'application-review-financial-history-insolvencyDetails' => 'W Additional information',
+    'application-review-financial-history-liquidation' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) liquidation, owing money?',
+    'application-review-financial-history-receivership' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) receivership?',
     'application-review-safety-safetyConfirmation' => 'W Confirm there are suitable arrangements in place to keep the
         vehicles in a fit and serviceable condition at all times',
     'application-review-safety-safetyInsTrailers' => 'W Maximum time between trailer safety inspections',
@@ -1060,6 +1082,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'W Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'W Cancel',
     'internal.transport-manager.responsibilities.continue' => 'W Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'W Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'W How many hours will you spend on your
         Transport Manager duties?',
@@ -1071,6 +1095,8 @@ return array(
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'W What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1899,6 +1925,8 @@ return array(
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
+    'variation-grant-error-no-change' => 'W Nothing has been updated',
+    'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
@@ -1906,6 +1934,7 @@ return array(
     'variation-review-addresses-change' => 'W Thank you for updating your addresses',
     'variation-review-business-details-change' => 'W Thank you for updating your business details',
     'variation-review-business-type-change' => 'W Thank you for updating your business type',
+    'variation-review-discs-change' => 'W Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',
@@ -1948,9 +1977,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
-        selected record(s)?',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Add other licence',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Edit other licence'
     // Potentially unused (Not found with grep)
 );
