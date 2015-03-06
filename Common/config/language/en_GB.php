@@ -137,6 +137,12 @@ return array(
     'application-review-financial-history-receivership' => 'Has any person named in this application (including
         partners, directors or transport managers) ever been involved with a company, or business, that has gone into
         (or is going into) receivership?',
+    'application-review-people-person-dob' => 'Date of birth',
+    'application-review-people-person-firstname' => 'First name(s)',
+    'application-review-people-person-lastname' => 'Last name',
+    'application-review-people-person-othername' => 'Other name(s)',
+    'application-review-people-person-position' => 'Position',
+    'application-review-people-person-title' => 'Title',
     'application-review-safety-safetyConfirmation' => 'Confirm there are suitable arrangements in place to keep the
         vehicles in a fit and serviceable condition at all times',
     'application-review-safety-safetyInsTrailers' => 'Maximum time between trailer safety inspections',
@@ -1945,6 +1951,10 @@ return array(
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'Traffic area and authorisation',
     'variation-review-operating-centres-updated-title' => 'Updated operating centres',
+    'variation-review-people-A-title' => 'People added',
+    'variation-review-people-D-title' => 'People removed',
+    'variation-review-people-U-title' => 'People updated',
+    'variation-review-people-change' => 'Thank you for updating your people',
     'variation-review-safety-change' => 'Thank you for updating your safety details',
     'variation-review-title-gv' => 'Application to vary a Goods Vehicle Operator\'s Licence',
     'variation-review-title-psv' => 'Application to vary a Public Service Vehicle Operator\'s Licence',
