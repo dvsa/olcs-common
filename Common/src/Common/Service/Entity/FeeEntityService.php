@@ -124,6 +124,20 @@ class FeeEntityService extends AbstractLvaEntityService
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
 
+    public function getLatestFeeForBusReg($busRegId)
+    {
+        $params = [
+            'busReg' => $busRegId,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+
+        $data = $this->get($params, $this->overviewBundle);
+
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
     public function cancelForLicence($licenceId)
     {
         $query = array(

@@ -14,6 +14,7 @@ use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Processing\ApplicationSnapshotProcessingService;
 use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
 use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
@@ -358,7 +359,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $data['goodsOrPsv'],
             $data['licenceType'],
             $date,
-            ($data['niFlag'] === 'Y')
+            ($data['niFlag'] === 'Y') ? TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE : null
         );
     }
 
