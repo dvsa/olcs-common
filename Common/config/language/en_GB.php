@@ -1133,6 +1133,7 @@ return array(
     'licence.overview.licence-no' => 'Licence No.',
     'licence.overview.title' => 'Licence overview',
     'licence.print' => 'Print licence',
+    'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
@@ -1982,6 +1983,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'licence.print.success' => 'Licence printed successfully',
     // Potentially unused (Not found with grep)
 );
