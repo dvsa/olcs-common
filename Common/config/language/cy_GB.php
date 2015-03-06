@@ -154,6 +154,12 @@ return array(
     'application-review-safety-workshop-isExternal-Y' => 'W An external contractor',
     'application-review-safety-workshop-name' => 'W Contractor\'s name or person\'s full name if performed internally',
     'application-review-safety-workshop-title' => 'W Safety inspection providers',
+    'application-review-taxi-phv-address' => 'W Address',
+    'application-review-taxi-phv-council-name' => 'W Council name',
+    'application-review-taxi-phv-licence-number' => 'W Taxi/PHV licence number',
+    'application-review-taxi-phv-title' => 'W Taxi/PHV licences',
+    'application-review-taxi-phv-traffic-area' => 'W Traffic area',
+    'application-review-taxi-phv-traffic-area-title' => 'W Traffic area',
     'application-review-title-gv' => 'W Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'W Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
