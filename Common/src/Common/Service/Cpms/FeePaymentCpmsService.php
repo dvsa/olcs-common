@@ -37,6 +37,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     const PAYMENT_SUCCESS      = 801;
     const PAYMENT_FAILURE      = 802;
     const PAYMENT_CANCELLATION = 807;
+    const PAYMENT_IN_PROGRESS  = 800;
 
     const RESPONSE_SUCCESS = '000';
 
@@ -521,7 +522,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     /**
      * @param array $data
-     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_OFFLINE
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
      */
     public function handleResponse($data, $paymentMethod)
     {
@@ -564,12 +565,24 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ]
         ];
 
-        $apiResponse = $client->get('/api/payment/' . $reference, ApiService::SCOPE_QUERY_TXN, $params);
+        return $this->resolvePayment($reference, $payment['id'], $paymentMethod);
+    }
 
-        switch ($apiResponse['payment_status']['code']) {
+    /**
+     * @param string $reference receipt reference/guid
+     * @param int $paymentId OLCS payment id
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
+     * @return int status
+     */
+    public function resolvePayment($reference, $paymentId, $paymentMethod)
+    {
+        $paymentService = $this->getServiceLocator()->get('Entity\Payment');
+        $paymentStatus  = $this->getPaymentStatus($reference);
+
+        switch ($paymentStatus) {
             case self::PAYMENT_SUCCESS:
                 $fees = $this->getServiceLocator()->get('Entity\FeePayment')
-                    ->getFeesByPaymentId($payment['id']);
+                    ->getFeesByPaymentId($paymentId);
                 foreach ($fees as $fee) {
                     $data = [
                         'feeStatus'      => FeeEntityService::STATUS_PAID,
@@ -582,7 +595,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     $this->updateFeeRecordAsPaid($fee['id'], $data);
                 }
 
-                $paymentService->setStatus($payment['id'], PaymentEntityService::STATUS_PAID);
+                $paymentService->setStatus($paymentId, PaymentEntityService::STATUS_PAID);
                 $status = PaymentEntityService::STATUS_PAID;
                 break;
 
@@ -594,14 +607,19 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
 
+            case self::PAYMENT_IN_PROGRESS:
+                // resolve any abandoned payments as 'failed'
+                $status = PaymentEntityService::STATUS_FAILED;
+                break;
+
             default:
-                $this->log('Unknown CPMS payment_status: ' . $apiResponse['payment_status']['code']);
+                $this->log('Unknown CPMS payment_status: ' . $paymentStatus);
                 $status = null;
                 break;
         }
 
         if ($status !== null) {
-            $paymentService->setStatus($payment['id'], $status);
+            $paymentService->setStatus($paymentId, $status);
             return $status;
         }
     }
@@ -636,21 +654,23 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * Determine the status of a payment for a fee
      *
-     * We check the auth code as we can't directly query the status via the API
+     * We check the auth code as we can't directly query the status via the API :(
      *
-     * @param array $fee
-     * @return int status (currently 0 or 1 but this could change)
+     * @param string $receiptReference
+     * @return int status
      * @throws InvalidArgumentException
      */
-    public function getPaymentStatus($fee)
+    public function getPaymentStatus($receiptReference)
     {
-        if (!isset($fee['feePayments'][0]['payment']['guid'])) {
-            throw new \InvalidArgumentException('receipt reference not found');
-        }
-        $receiptReference = $fee['feePayments'][0]['payment']['guid'];
-
-        $endPoint = '/api/payment/'.$receiptReference.'/auth-code';
+        $endPoint = '/api/payment/'.$receiptReference;
         $scope = ApiService::SCOPE_QUERY_TXN;
+        $params = [
+            'required_fields' => [
+                'payment' => [
+                    'payment_status'
+                ]
+            ]
+        ];
 
         $this->debug(
             'Payment status request',
@@ -663,12 +683,74 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'scope'    => $scope,
             ]
         );
-        $response = $this->getClient()->get($endPoint, $scope, []);
 
-        if ($this->isSuccessfulResponse($response) && array_key_exists('auth_code', $response)) {
-            return empty($response['auth_code']) ? self::PAYMENT_STATUS_INCOMPLETE : self::PAYMENT_STATUS_COMPLETE;
+        $response = $this->getClient()->get($endPoint, $scope, $params);
+
+        $this->debug('Payment status response', ['response' => $response]);
+
+        if (isset($response['payment_status']['code'])) {
+            return $response['payment_status']['code'];
         }
 
         throw new Exception\StatusInvalidResponseException(json_encode($response));
+    }
+
+    /**
+     * Loop through a fee's payment records and check if any are outstanding
+     */
+    public function hasOutstandingPayment($fee)
+    {
+        foreach ($fee['feePayments'] as $fp) {
+            if (isset($fp['payment']['status']['id'])
+                && $fp['payment']['status']['id'] === PaymentEntityService::STATUS_OUTSTANDING
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine if we're making a card payment
+     */
+    public function isCardPayment($data)
+    {
+        return (
+            isset($data['details']['paymentType'])
+            &&
+            in_array(
+                $data['details']['paymentType'],
+                [FeePaymentEntityService::METHOD_CARD_OFFLINE, FeePaymentEntityService::METHOD_CARD_ONLINE]
+            )
+        );
+    }
+
+    /**
+     * @param array $fee
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
+     * @return boolean whether any fee was paid successfully
+     */
+    public function resolveOutstandingPayments($fee, $paymentMethod)
+    {
+        $paid = false;
+
+        foreach ($fee['feePayments'] as $fp) {
+            if (isset($fp['payment']['status']['id'])
+                && $fp['payment']['status']['id'] === PaymentEntityService::STATUS_OUTSTANDING
+            ) {
+
+                $status = $this->resolvePayment(
+                    $fp['payment']['guid'],
+                    $fp['payment']['id'],
+                    $paymentMethod
+                );
+
+                if ($status === self::PAYMENT_SUCCESS) {
+                    $paid = true;
+                }
+            }
+        }
+
+        return $paid;
     }
 }
