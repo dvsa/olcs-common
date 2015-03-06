@@ -19,6 +19,12 @@ class ApplicationUndertakings
     public $declarationsAndUndertakings = null;
 
     /**
+     * @Form\Name("interim")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\Interim")
+     */
+    public $interim = null;
+
+    /**
      * @Form\Name("form-actions")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\FormActions")
      * @Form\Attributes({"class":"actions-container"})

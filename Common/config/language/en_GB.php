@@ -1861,5 +1861,8 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim authority.',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your interim application.'
     // Potentially unused (Not found with grep)
 );
