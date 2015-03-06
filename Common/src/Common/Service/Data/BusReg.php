@@ -45,7 +45,8 @@ class BusReg extends Generic
         return true;
     }
 
-    public function fetchDetail($id = null) {
+    public function fetchDetail($id = null)
+    {
         $variationBundle = [
             'children' => [
                 'licence' => [
@@ -71,7 +72,8 @@ class BusReg extends Generic
         return $busRegDetail;
     }
 
-    public function fetchVariationHistory($routeNo) {
+    public function fetchVariationHistory($routeNo)
+    {
         $variationBundle = [
             'children' => [
                 'status'
@@ -83,7 +85,6 @@ class BusReg extends Generic
 
         $busRegList = $this->fetchList($params, $variationBundle);
 
-       return $busRegList;
-
+        return $busRegList;
     }
 }
