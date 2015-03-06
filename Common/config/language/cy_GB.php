@@ -114,6 +114,11 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'W Company number',
     'application-review-business-details-trading-names' => 'W Trading names',
     'application-review-business-type' => 'W What type of business are you?',
+    'application-review-financial-evidence-evidence' => 'W Evidence',
+    'application-review-financial-evidence-evidence-post' => 'W Operator to send original evidence to the Central
+        Licensing Office',
+    'application-review-financial-evidence-no-of-vehicles' => 'W Number of vehicles',
+    'application-review-financial-evidence-required-finance' => 'W Required finance',
     'application-review-financial-history-administration' => 'W Has any person named in this application (including
         partners, directors or transport managers) ever been involved with a company, or business, that has gone into
         (or is going into) administration?',
