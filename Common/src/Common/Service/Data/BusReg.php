@@ -71,14 +71,13 @@ class BusReg extends Generic
         return $busRegDetail;
     }
 
-    public function fetchVariationHistory($id = null) {
+    public function fetchVariationHistory($routeNo) {
         $variationBundle = [
-            'properties' => 'ALL',
             'children' => [
                 'status'
             ]
         ];
-        $id = 1;
+        $params['routeNo'] = $routeNo;
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
 
