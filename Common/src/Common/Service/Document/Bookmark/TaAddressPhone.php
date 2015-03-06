@@ -41,7 +41,8 @@ class TaAddressPhone extends DynamicBookmark
         $trafficArea = $this->data['trafficArea'];
         $contactDetails = $trafficArea['contactDetails'];
         $address = isset($contactDetails['address']) ? $contactDetails['address'] : [];
-        $phone = isset($contactDetails['phoneContact']) ? $contactDetails['phoneContact']['phoneNumber'] : null;
+        // @TODO this is always set; we need to pick out the best row
+        $phone = isset($contactDetails['phoneContacts']) ? $contactDetails['phoneContacts']['phoneNumber'] : null;
 
         return implode(
             "\n",
