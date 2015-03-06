@@ -47,6 +47,31 @@ class OpNameTest extends \PHPUnit_Framework_TestCase
                         )
                     )
                 )
+            ),
+            array(
+                "Testing Test Limited\nT/A: Trading Test Limited \n" .
+                "Test\nTest Place\nTest\nTesting\ntest",
+                array(
+                    'organisation' => array(
+                        'name' => 'Testing Test Limited',
+                        'tradingNames' => array(
+                            array(
+                                'name' => 'Trading Test Limited'
+                            )
+                        ),
+                        'contactDetails' => array(
+                            'fao' => '',
+                            'address' => array(
+                                'addressLine1' => 'Test',
+                                'addressLine2' => 'Test Place',
+                                'addressLine3' => '',
+                                'addressLine4' => 'Test',
+                                'town' => 'Testing',
+                                'postcode' => 'test'
+                            )
+                        )
+                    )
+                )
             )
         );
     }
