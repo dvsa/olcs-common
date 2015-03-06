@@ -2,6 +2,7 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+use Common\Service\Entity\PhoneContactEntityService;
 
 /**
  * Traffic Area (with phone number) Address bookmark
@@ -24,7 +25,11 @@ class TaAddressPhone extends DynamicBookmark
                             'contactDetails' => [
                                 'children' => [
                                     'address',
-                                    'phoneContacts'
+                                    'phoneContacts' => [
+                                        'children' => [
+                                            'phoneContactType'
+                                        ]
+                                    ]
                                 ]
                             ]
                         ]
@@ -41,8 +46,6 @@ class TaAddressPhone extends DynamicBookmark
         $trafficArea = $this->data['trafficArea'];
         $contactDetails = $trafficArea['contactDetails'];
         $address = isset($contactDetails['address']) ? $contactDetails['address'] : [];
-        // @TODO this is always set; we need to pick out the best row
-        $phone = isset($contactDetails['phoneContacts']) ? $contactDetails['phoneContacts']['phoneNumber'] : null;
 
         return implode(
             "\n",
@@ -50,9 +53,22 @@ class TaAddressPhone extends DynamicBookmark
                 [
                     $trafficArea['name'],
                     Formatter\Address::format($address),
-                    $phone
+                    $this->fetchTelephone()
                 ]
             )
         );
+    }
+
+    private function fetchTelephone()
+    {
+        if (empty($this->data['trafficArea']['contactDetails']['phoneContacts'])) {
+            return '';
+        }
+
+        foreach ($this->data['trafficArea']['contactDetails']['phoneContacts'] as $phone) {
+            if ($phone['phoneContactType']['id'] === PhoneContactEntityService::TYPE_BUSINESS) {
+                return $phone['phoneNumber'];
+            }
+        }
     }
 }
