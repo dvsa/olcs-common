@@ -493,7 +493,30 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
-            ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'organisationPersons' => [
+                                        'children' => [
+                                            'person'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
         ],
         'variation' => [
             'type_of_licence' => [
@@ -504,7 +527,25 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
-            ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
         ]
     ];
 
