@@ -45,24 +45,42 @@ class BusReg extends Generic
         return true;
     }
 
+    public function fetchDetail($id = null) {
+        $variationBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'publicationLinks' => [
+                            'children' => [
+                                'publication'
+                            ]
+                        ]
+                    ]
+                ],
+                'subsidised',
+                'localAuthoritys',
+                'trafficAreas',
+                'busNoticePeriod',
+                'status',
+                'busServiceTypes'
+            ]
+        ];
+
+        $busRegDetail = $this->fetchOne($id, $variationBundle);
+
+        return $busRegDetail;
+    }
+
     public function fetchVariationHistory($id = null) {
         $variationBundle = [
             'properties' => 'ALL',
             'children' => [
-                'busNoticePeriod' => [
-                    'properties' => 'ALL'
-                ],
-                'status' => [
-                    'properties' => 'ALL'
-                ],
-                'busServiceTypes'
+                'status'
             ]
         ];
         $id = 1;
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
-        //$data = $this->loadCurrent();
-        //$params['routeNo'] = $data['routeNo'];
 
         $busRegList = $this->fetchList($params, $variationBundle);
 
