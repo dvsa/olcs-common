@@ -50,6 +50,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     // what OLCS should pass for this field.
     const COST_CENTRE = '12345,67890';
 
+    const PAYMENT_STATUS_COMPLETE   = 1;
+    const PAYMENT_STATUS_INCOMPLETE = 0;
+
     protected function getClient()
     {
         return $this->getServiceLocator()->get('cpms\service\api');
@@ -61,7 +64,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array $fees
      *
      * @return array
-     * @throws Common\Service\Cpms\PaymentInvalidResponseException on error
+     * @throws Common\Service\Cpms\Exception\PaymentInvalidResponseException on error
      */
     public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
     {
@@ -114,14 +117,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             || !isset($response['receipt_reference'])
             || empty($response['receipt_reference'])
         ) {
-            throw new PaymentInvalidResponseException(json_encode($response));
+            throw new Exception\PaymentInvalidResponseException(json_encode($response));
         }
 
         $payment = $this->getServiceLocator()
             ->get('Entity\Payment')
             ->save(
                 [
-                    // GUID is now in receipt_reference field not redirection_data as before
                     'guid' => $response['receipt_reference'],
                     'status' => PaymentEntityService::STATUS_OUTSTANDING
                 ]
@@ -164,7 +166,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         // Partial payments are not supported. The form validation will normally catch
         // this but it relies on a hidden field so we have a secondary check here
         if ($fee['amount'] != $amount) {
-            throw new PaymentInvalidAmountException("Amount must match the fee due");
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
         }
 
         $receiptDate   = $this->formatReceiptDate($receiptDate);
@@ -210,7 +212,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         $this->debug('Cash payment response', ['response' => $response]);
 
-        if ($this->isSuccessfulResponse($response)) {
+        if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $receiptDate,
@@ -252,7 +254,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     ) {
         // Partial payments are not supported
         if ($fee['amount'] != $amount) {
-            throw new PaymentInvalidAmountException("Amount must match the fee due");
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
         }
 
         $receiptDate   = $this->formatReceiptDate($receiptDate);
@@ -299,7 +301,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         $this->debug('Cheque payment response', ['response' => $response]);
 
-        if ($this->isSuccessfulResponse($response)) {
+        if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $receiptDate,
@@ -342,7 +344,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     ) {
         // Partial payments are not supported
         if ($fee['amount'] != $amount) {
-            throw new PaymentInvalidAmountException("Amount must match the fee due");
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
         }
 
         $receiptDate   = $this->formatReceiptDate($receiptDate);
@@ -390,7 +392,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
         $this->debug('Postal order payment response', ['response' => $response]);
 
-        if ($this->isSuccessfulResponse($response)) {
+        if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $receiptDate,
@@ -435,7 +437,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array $response response data
      * @return boolean
      */
-    protected function isSuccessfulResponse($response)
+    protected function isSuccessfulPaymentResponse($response)
     {
         return (
             is_array($response)
@@ -443,6 +445,19 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             && $response['code'] === self::RESPONSE_SUCCESS
             && isset($response['receipt_reference'])
             && !empty($response['receipt_reference'])
+        );
+    }
+
+    /**
+     * @param array $response response data
+     * @return boolean
+     */
+    protected function isSuccessfulResponse($response)
+    {
+        return (
+            is_array($response)
+            && isset($response['code'])
+            && $response['code'] === self::RESPONSE_SUCCESS
         );
     }
 
@@ -520,11 +535,11 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $payment = $paymentService->getDetails($reference);
 
         if ($payment === false) {
-            throw new PaymentNotFoundException('Payment not found');
+            throw new Exception\PaymentNotFoundException('Payment not found');
         }
 
         if ($payment['status']['id'] !== PaymentEntityService::STATUS_OUTSTANDING) {
-            throw new PaymentInvalidStatusException('Invalid payment status: ' . $payment['status']['id']);
+            throw new Exception\PaymentInvalidStatusException('Invalid payment status: ' . $payment['status']['id']);
         }
 
         /**
@@ -616,5 +631,44 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new \InvalidArgumentException("'".var_export($amount, true)."' is not a valid amount");
         }
         return sprintf("%1\$.2f", $amount);
+    }
+
+    /**
+     * Determine the status of a payment for a fee
+     *
+     * We check the auth code as we can't directly query the status via the API
+     *
+     * @param array $fee
+     * @return int status (currently 0 or 1 but this could change)
+     * @throws InvalidArgumentException
+     */
+    public function getPaymentStatus($fee)
+    {
+        if (!isset($fee['feePayments'][0]['payment']['guid'])) {
+            throw new \InvalidArgumentException('receipt reference not found');
+        }
+        $receiptReference = $fee['feePayments'][0]['payment']['guid'];
+
+        $endPoint = '/api/payment/'.$receiptReference.'/auth-code';
+        $scope = ApiService::SCOPE_QUERY_TXN;
+
+        $this->debug(
+            'Payment status request',
+            [
+                'method' => [
+                    'location' => __METHOD__,
+                    'data' => func_get_args()
+                ],
+                'endPoint' => $endPoint,
+                'scope'    => $scope,
+            ]
+        );
+        $response = $this->getClient()->get($endPoint, $scope, []);
+
+        if ($this->isSuccessfulResponse($response) && array_key_exists('auth_code', $response)) {
+            return empty($response['auth_code']) ? self::PAYMENT_STATUS_INCOMPLETE : self::PAYMENT_STATUS_COMPLETE;
+        }
+
+        throw new Exception\StatusInvalidResponseException(json_encode($response));
     }
 }

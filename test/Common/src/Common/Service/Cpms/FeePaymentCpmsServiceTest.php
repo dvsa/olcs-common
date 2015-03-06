@@ -9,8 +9,8 @@ namespace CommonTest\Service\Cpms;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Cpms\FeePaymentCpmsService;
-use Common\Service\Cpms\PaymentNotFoundException;
-use Common\Service\Cpms\PaymentInvalidStatusException;
+use Common\Service\Cpms\Exception\PaymentNotFoundException;
+use Common\Service\Cpms\Exception\PaymentInvalidStatusException;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\FeePaymentEntityService;
@@ -178,7 +178,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidResponseException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidResponseException
      * @expectedExceptionMessage some kind of error
      */
     public function testInitiateCardRequestWithInvalidResponseThrowsException()
@@ -539,7 +539,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordCashPaymentPartPaymentThrowsException()
     {
@@ -681,7 +681,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordChequePaymentPartPaymentThrowsException()
     {
@@ -825,7 +825,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordPostalOrderPaymentPartPaymentThrowsException()
     {
@@ -1008,7 +1008,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     /**
      * @dataProvider formatAmountInvalidAmountProvider
      * @param mixed $amount
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testFormatAmountInvalidAmounts($amount)
     {
