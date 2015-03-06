@@ -1982,5 +1982,6 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'licence.print.success' => 'Licence printed successfully',
     // Potentially unused (Not found with grep)
 );
