@@ -114,6 +114,21 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'W Company number',
     'application-review-business-details-trading-names' => 'W Trading names',
     'application-review-business-type' => 'W What type of business are you?',
+    'application-review-convictions-penalties-confirmation' => 'W Confirm that you are aware that you must tell the
+        traffic commissioner immediately of any relevant convictions that occur between the submission of your
+        application and a decision being made on this application',
+    'application-review-convictions-penalties-conviction-convictionDate' => 'W Date of conviction',
+    'application-review-convictions-penalties-conviction-familyName' => 'W Last name',
+    'application-review-convictions-penalties-conviction-forename' => 'W First name(s)',
+    'application-review-convictions-penalties-conviction-offence' => 'W Offence',
+    'application-review-convictions-penalties-conviction-offence-court' => 'W Name of court',
+    'application-review-convictions-penalties-conviction-offence-details' => 'W Offence details',
+    'application-review-convictions-penalties-conviction-offence-penalty' => 'W Penalty',
+    'application-review-convictions-penalties-conviction-title' => 'W Title',
+    'application-review-convictions-penalties-question' => 'W Has any person named in this application, (including
+        partners, directors and transport managers); any company of which a person named on this application is or has
+        been a director; any parent company if you are a limited company; or any of your employees or agents been
+        convicted of any relevant offence which must be declared to the traffic commissioner?',
     'application-review-financial-evidence-evidence' => 'W Evidence',
     'application-review-financial-evidence-evidence-post' => 'W Operator to send original evidence to the Central
         Licensing Office',
