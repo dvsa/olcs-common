@@ -34,41 +34,37 @@ class OpNameTest extends \PHPUnit_Framework_TestCase
                                 'name' => 'Trading Test Limited'
                             )
                         ),
-                        'contactDetails' => array(
-                            'fao' => 'Mr Testy Test',
-                            'address' => array(
-                                'addressLine1' => 'Test',
-                                'addressLine2' => 'Test Place',
-                                'addressLine3' => '',
-                                'addressLine4' => 'Test',
-                                'town' => 'Testing',
-                                'postcode' => 'test'
-                            )
+                    ),
+                    'correspondenceCd' => array(
+                        'fao' => 'Mr Testy Test',
+                        'address' => array(
+                            'addressLine1' => 'Test',
+                            'addressLine2' => 'Test Place',
+                            'addressLine3' => '',
+                            'addressLine4' => 'Test',
+                            'town' => 'Testing',
+                            'postcode' => 'test'
                         )
                     )
                 )
             ),
             array(
-                "Testing Test Limited\nT/A: Trading Test Limited \n" .
+                "Testing Test Limited\n" .
                 "Test\nTest Place\nTest\nTesting\ntest",
                 array(
                     'organisation' => array(
                         'name' => 'Testing Test Limited',
-                        'tradingNames' => array(
-                            array(
-                                'name' => 'Trading Test Limited'
-                            )
-                        ),
-                        'contactDetails' => array(
-                            'fao' => '',
-                            'address' => array(
-                                'addressLine1' => 'Test',
-                                'addressLine2' => 'Test Place',
-                                'addressLine3' => '',
-                                'addressLine4' => 'Test',
-                                'town' => 'Testing',
-                                'postcode' => 'test'
-                            )
+                        'tradingNames' => array(),
+                    ),
+                    'correspondenceCd' => array(
+                        'fao' => '',
+                        'address' => array(
+                            'addressLine1' => 'Test',
+                            'addressLine2' => 'Test Place',
+                            'addressLine3' => '',
+                            'addressLine4' => 'Test',
+                            'town' => 'Testing',
+                            'postcode' => 'test'
                         )
                     )
                 )
