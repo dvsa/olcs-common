@@ -29,7 +29,9 @@ class Publication extends AbstractPublicationFilter
             'pubStatus' => $this->publicationNewStatus
         ];
 
-        $data = $this->getServiceLocator()->get('\Common\Service\Data\Publication')->fetchList($params);
+        $publicationService = $this->getServiceLocator()->get('\Common\Service\Data\Publication');
+        $publicationService->setData('list', null);
+        $data = $publicationService->fetchList($params);
 
         if (!isset($data[0]['id'])) {
             throw new ResourceNotFoundException('No publication found');
