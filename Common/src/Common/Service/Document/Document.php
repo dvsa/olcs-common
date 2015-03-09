@@ -126,7 +126,7 @@ class Document implements ServiceLocatorAwareInterface
      * @param $path
      * @return mixed
      */
-    public function download($id, $filename, $path = self::TMP_STORAGE_PATH)
+    public function download($id, $filename, $path)
     {
         return $this->getUploader()->download($id, $filename, $path);
     }
