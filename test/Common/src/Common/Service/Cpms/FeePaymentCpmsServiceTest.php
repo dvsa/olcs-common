@@ -494,7 +494,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->once()
             ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
-            ->andReturn(['something_unexpected'] )
+            ->andReturn(['something_unexpected'])
             ->getMock();
 
         $this->sm->setService(
@@ -1189,5 +1189,84 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 false,
             ],
         ];
+    }
+
+    public function testResolveOutstandingPaymentsSinglePaidFee()
+    {
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56,
+            'feePayments' => [
+                [
+                    'payment' => [
+                        'id' => 11,
+                        'status' => ['id' => 'pay_s_os'], //PaymentEntityService::STATUS_OUTSTANDING
+                        'guid' => 'payment_reference'
+                    ],
+                ]
+            ],
+            'paymentMethod' => ['id' => 'fpm_card_offline'], //FeePaymentEntityService::METHOD_CARD_OFFLINE]
+        ];
+
+        $this->client
+            ->shouldReceive('get')
+            ->with(
+                '/api/payment/payment_reference',
+                'QUERY_TXN',
+                ['required_fields' => ['payment' => ['payment_status']]]
+            )
+            ->andReturn(
+                [
+                    'payment_status' => [
+                        'code' => 801 // FeePaymentCpmsService::PAYMENT_SUCCESS
+                    ]
+                ]
+            );
+
+        $this->sm->setService(
+            'Entity\FeePayment',
+            m::mock()
+                ->shouldReceive('getFeesByPaymentId')
+                ->with(11)
+                ->andReturn([$fee])
+                ->getMock()
+        );
+
+        $this->mockDate('2015-03-09');
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                ->with(
+                    1,
+                    [
+                        'feeStatus'      => FeeEntityService::STATUS_PAID,
+                        'receivedDate'   => '2015-03-09',
+                        'receiptNo'      => 'payment_reference',
+                        'paymentMethod'  => 'fpm_card_offline',
+                        'receivedAmount' => 1234.56
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+                ->shouldReceive('trigger')
+                ->with(1, FeeListenerService::EVENT_PAY)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
+                ->shouldReceive('setStatus')
+                ->with(11, PaymentEntityService::STATUS_PAID)
+                ->getMock()
+        );
+
+        $this->assertTrue($this->sut->resolveOutstandingPayments($fee));
     }
 }

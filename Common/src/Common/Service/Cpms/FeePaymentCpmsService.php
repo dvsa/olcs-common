@@ -51,9 +51,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     // what OLCS should pass for this field.
     const COST_CENTRE = '12345,67890';
 
-    const PAYMENT_STATUS_COMPLETE   = 1;
-    const PAYMENT_STATUS_INCOMPLETE = 0;
-
     protected function getClient()
     {
         return $this->getServiceLocator()->get('cpms\service\api');
@@ -631,6 +628,33 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         }
     }
 
+    /**
+     * @param array $fee
+     * @return boolean whether any fee was paid successfully
+     */
+    public function resolveOutstandingPayments($fee)
+    {
+        $paid = false;
+
+        foreach ($fee['feePayments'] as $fp) {
+            if (isset($fp['payment']['status']['id'])
+                && $fp['payment']['status']['id'] === PaymentEntityService::STATUS_OUTSTANDING
+            ) {
+                $status = $this->resolvePayment(
+                    $fp['payment']['guid'],
+                    $fp['payment']['id'],
+                    $fee['paymentMethod']['id']
+                );
+
+                if ($status === PaymentEntityService::STATUS_PAID) {
+                    $paid = true;
+                }
+            }
+        }
+
+        return $paid;
+    }
+
     protected function debug($message, $data)
     {
         return $this->getLogger()->debug(
@@ -730,32 +754,5 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 [FeePaymentEntityService::METHOD_CARD_OFFLINE, FeePaymentEntityService::METHOD_CARD_ONLINE]
             )
         );
-    }
-
-    /**
-     * @param array $fee
-     * @return boolean whether any fee was paid successfully
-     */
-    public function resolveOutstandingPayments($fee)
-    {
-        $paid = false;
-
-        foreach ($fee['feePayments'] as $fp) {
-            if (isset($fp['payment']['status']['id'])
-                && $fp['payment']['status']['id'] === PaymentEntityService::STATUS_OUTSTANDING
-            ) {
-                $status = $this->resolvePayment(
-                    $fp['payment']['guid'],
-                    $fp['payment']['id'],
-                    $fee['paymentMethod']['id']
-                );
-
-                if ($status === self::PAYMENT_SUCCESS) {
-                    $paid = true;
-                }
-            }
-        }
-
-        return $paid;
     }
 }
