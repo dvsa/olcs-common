@@ -117,6 +117,7 @@ abstract class AbstractFileUploader implements FileUploaderInterface
      * Create a file object
      *
      * @param array $data
+     * @return \Common\Service\File\File
      */
     protected function createFileFromData(array $data = array())
     {
