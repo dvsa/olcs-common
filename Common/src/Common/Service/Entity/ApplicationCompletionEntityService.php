@@ -79,6 +79,12 @@ class ApplicationCompletionEntityService extends AbstractEntityService
             $method = 'get' . $section . 'Status';
             $property = lcfirst($section) . 'Status';
 
+            // Skip sections that are not in the applicationCompletion record
+            // These sections could be licence only sections (such as trailers)
+            if (!array_key_exists($property, $completionStatus)) {
+                continue;
+            }
+
             if ($section === $currentSection || $completionStatus[$property] != self::STATUS_NOT_STARTED) {
                 $completionStatus[$property] = $this->$method($applicationData);
             }

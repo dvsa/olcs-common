@@ -17,6 +17,9 @@ use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
 use Mockery as m;
+use Common\Service\Processing\ApplicationSnapshotProcessingService;
+use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
+use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
 
 /**
  * Application Processing Service Test
@@ -174,16 +177,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockDate($date);
 
@@ -373,16 +382,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockDate($date);
 
@@ -617,16 +632,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $this->mockApplicationService($id, $licenceId, $validationData);
 
@@ -680,16 +701,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         $mockApplicationService = $this->mockApplicationService($id, $licenceId, $validationData);
 
@@ -1003,16 +1030,22 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
         $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
 
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
         $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
 
         // Mocked services
         $mockApplicationService = m::mock();
@@ -1060,5 +1093,191 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with(5, $expectedLocData);
 
         $this->sut->processGrantVariation($id);
+    }
+
+    /**
+     * @dataProvider trackingIsValidProvider
+     * @param array $requiredSections
+     * @param array $completions
+     * @param boolean $expected
+     */
+    public function testTrackingIsValid($requiredSections, $completions, $expected)
+    {
+        $applicationId = 123;
+
+        $this->sm->setService(
+            'Entity\ApplicationTracking',
+            m::mock()
+                ->shouldReceive('getTrackingStatuses')
+                ->with($applicationId)
+                ->andReturn($completions)
+                ->getMock()
+        );
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->trackingIsValid($applicationId, $requiredSections)
+        );
+    }
+
+    public function trackingIsValidProvider()
+    {
+        return [
+            'tracking complete' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => Tracking::STATUS_ACCEPTED,
+                    'businessTypeStatus' => Tracking::STATUS_ACCEPTED,
+                    'operatingCentresStatus' => Tracking::STATUS_NOT_APPLICABLE,
+                ],
+                true
+            ],
+            'tracking not started' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => null,
+                    'businessTypeStatus' => null,
+                    'operatingCentresStatus' => null,
+                ],
+                false
+            ],
+            'tracking not accepted' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => Tracking::STATUS_NOT_ACCEPTED,
+                    'businessTypeStatus' => Tracking::STATUS_ACCEPTED,
+                    'operatingCentresStatus' => Tracking::STATUS_NOT_APPLICABLE,
+                ],
+                false
+            ],
+        ];
+    }
+
+    public function testGetIncompleteSections()
+    {
+        $applicationId = 123;
+
+        $requiredSections = [
+            'type_of_licence',
+            'business_type',
+            'operating_centres',
+        ];
+
+        $this->sm->setService(
+            'Entity\ApplicationCompletion',
+            m::mock()
+                ->shouldReceive('getCompletionStatuses')
+                ->with($applicationId)
+                ->andReturn(
+                    [
+                        'typeOfLicenceStatus' => Completion::STATUS_INCOMPLETE,
+                        'businessTypeStatus' => Completion::STATUS_COMPLETE,
+                        'operatingCentresStatus' => Completion::STATUS_INCOMPLETE,
+                    ]
+                )
+                ->getMock()
+        );
+
+        $expected = ['type_of_licence', 'operating_centres'];
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->getIncompleteSections($applicationId, $requiredSections)
+        );
+    }
+
+    /**
+     * @dataProvider sectionCompletionIsValidProvider
+     * @param array $requiredSections
+     * @param array $completions
+     * @param boolean $expected
+     */
+    public function testSectionCompletionIsValid($requiredSections, $completions, $expected)
+    {
+        $applicationId = 123;
+
+        $this->sm->setService(
+            'Entity\ApplicationCompletion',
+            m::mock()
+                ->shouldReceive('getCompletionStatuses')
+                ->with($applicationId)
+                ->andReturn($completions)
+                ->getMock()
+        );
+
+        $this->assertEquals(
+            $expected,
+            $this->sut->sectionCompletionIsValid($applicationId, $requiredSections)
+        );
+    }
+
+    public function sectionCompletionIsValidProvider()
+    {
+        return [
+            'sections complete' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => Completion::STATUS_COMPLETE,
+                    'businessTypeStatus' => Completion::STATUS_COMPLETE,
+                    'operatingCentresStatus' => Completion::STATUS_COMPLETE,
+                ],
+                true
+            ],
+            'sections not complete' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => Completion::STATUS_COMPLETE,
+                    'businessTypeStatus' => Completion::STATUS_INCOMPLETE,
+                    'operatingCentresStatus' => Completion::STATUS_COMPLETE,
+                ],
+                false
+            ],
+            'missing completion data' => [
+                [
+                    'type_of_licence',
+                    'business_type',
+                    'operating_centres',
+                ],
+                [
+                    'typeOfLicenceStatus' => Completion::STATUS_COMPLETE,
+                    'businessTypeStatus' => Completion::STATUS_COMPLETE,
+                ],
+                false
+            ],
+        ];
+    }
+
+    public function testFeeStatusIsValid()
+    {
+        $applicationId = 123;
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getOutstandingFeesForApplication')
+                ->with($applicationId)
+                ->andReturn([])
+                ->getMock()
+        );
+        $this->assertTrue($this->sut->feeStatusIsValid($applicationId));
     }
 }

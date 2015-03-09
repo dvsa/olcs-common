@@ -71,6 +71,19 @@ class FeeEntityService extends AbstractLvaEntityService
         )
     );
 
+    /**
+     * @var array
+     */
+    protected $organisationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation'
+                )
+            )
+        )
+    );
+
     public function getApplication($id)
     {
         $data = $this->get($id, $this->applicationIdBundle);
@@ -107,6 +120,20 @@ class FeeEntityService extends AbstractLvaEntityService
         ];
 
         $data = $this->get($params, $this->latestOutstandingFeeForBundle);
+
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
+    public function getLatestFeeForBusReg($busRegId)
+    {
+        $params = [
+            'busReg' => $busRegId,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+
+        $data = $this->get($params, $this->overviewBundle);
 
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
@@ -192,5 +219,12 @@ class FeeEntityService extends AbstractLvaEntityService
     public function getOverview($id)
     {
         return $this->get($id, $this->overviewBundle);
+    }
+
+    public function getOrganisation($id)
+    {
+        $data = $this->get($id, $this->organisationBundle);
+
+        return isset($data['licence']['organisation']) ? $data['licence']['organisation'] : null;
     }
 }

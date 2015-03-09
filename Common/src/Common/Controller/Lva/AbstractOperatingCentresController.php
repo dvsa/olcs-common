@@ -51,7 +51,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
             if ($form->isValid()) {
 
-                $this->getAdapter()->saveMainFormData($data);
+                $this->getAdapter()->saveMainFormData($form->getData());
 
                 $this->postSave('operating_centres');
 
@@ -84,7 +84,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-            $data = $this->getAdapter()->alterFormDataOnPost($mode, $data);
+            $data = $this->getAdapter()->alterFormDataOnPost($mode, $data, $this->params('child_id'));
         } else {
             if ($mode === 'edit') {
                 $data = $this->getAdapter()->getAddressData($this->params('child_id'));
@@ -151,5 +151,25 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
                 $this->getAdapter()->getDocumentProperties()
             )
         );
+    }
+
+    /**
+     * Gives a new translation key to use for the delete modal text.
+     *
+     * @return string The message translation key.
+     */
+    protected function getDeleteMessage()
+    {
+        return 'review-operating_centres_delete';
+    }
+
+    /**
+     * Override the delete title.
+     *
+     * @return string The modal message key.
+     */
+    protected function getDeleteTitle()
+    {
+        return 'delete-oc';
     }
 }

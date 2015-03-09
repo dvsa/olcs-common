@@ -461,9 +461,9 @@ return array(
         'inspection_interval_trailer.0' => 'N/A'
     ],
     'tachograph_analyser' => [
-        'tach_internal' => 'tachographAnalyser-yourself',
-        'tach_external' => 'tachographAnalyser-external-contractor',
-        'tach_na' => 'N/A',
+        'tach_internal' => 'tachograph_analyser.tach_internal',
+        'tach_external' => 'tachograph_analyser.tach_external',
+        'tach_na' => 'tachograph_analyser.tach_na',
     ],
     'impounding_type' => [
         'impt_hearing' => 'Hearing',

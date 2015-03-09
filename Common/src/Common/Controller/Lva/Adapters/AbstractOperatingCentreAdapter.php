@@ -15,6 +15,7 @@ use Common\Service\Data\CategoryDataService;
 use Common\Controller\Lva\Adapters\AbstractControllerAwareAdapter;
 use Common\Controller\Lva\Interfaces\OperatingCentreAdapterInterface;
 use Common\Service\Helper\FormHelperService;
+use Common\Form\Elements\Validators\OcTotVehicleAuthPsvRestrictedValidator;
 
 /**
  * Abstract Operating Centre Adapter
@@ -90,7 +91,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         return $data;
     }
 
-    public function alterFormDataOnPost($mode, $data)
+    public function alterFormDataOnPost($mode, $data, $childId)
     {
         return $data;
     }
@@ -168,6 +169,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
         $table = $this->createMainTable();
 
         $form->get('table')->get('table')->setTable($table);
+        $form->get('table')->get('rows')->setValue(count($table->getRows()));
 
         $this->alterForm($form);
 
@@ -495,6 +497,10 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
+        // modify the table validation message
+        $formHelper->getValidator($form, 'table->table', 'Common\Form\Elements\Validators\TableRequiredValidator')
+            ->setMessage('OperatingCentreNoOfOperatingCentres.required', 'required');
+
         $tableData = $this->getTableData();
 
         if (empty($tableData)) {
@@ -586,7 +592,17 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
             $removeFields[] = 'totCommunityLicences';
         }
 
-        $this->getServiceLocator()->get('Helper\Form')->removeFieldList($form, 'data', $removeFields);
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper->removeFieldList($form, 'data', $removeFields);
+
+        if ($licenceData['goodsOrPsv'] == LicenceEntityService::LICENCE_CATEGORY_PSV
+            && $licenceType == LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+
+            $validator = new OcTotVehicleAuthPsvRestrictedValidator();
+
+            $formHelper->attachValidator($form, 'data->totAuthVehicles', $validator);
+        }
     }
 
     /**

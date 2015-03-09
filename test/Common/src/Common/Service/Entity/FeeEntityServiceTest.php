@@ -260,6 +260,30 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetLatestFeeForBusReg()
+    {
+        $id = 3;
+
+        $query = array(
+            'busReg' => 3,
+            'limit' => 1,
+            'sort' => 'invoicedDate',
+            'order' => 'DESC'
+        );
+
+        $response = array(
+            'Results' => ['fee1']
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('fee1', $this->sut->getLatestFeeForBusReg($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetOverview()
     {
         $id = 3;
@@ -267,5 +291,41 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Fee', 'GET', $id);
 
         $this->sut->getOverview($id);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisation()
+    {
+        $id = 3;
+
+        $organisation = array('id' => 1);
+
+        $response = array(
+            'licence' => array(
+                'organisation' => $organisation
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($organisation, $this->sut->getOrganisation($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisationWithoutOrganisation()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(null, $this->sut->getOrganisation($id));
     }
 }

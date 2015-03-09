@@ -978,4 +978,50 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider formatAmountValidAmountProvider
+     * @param mixed $amount
+     * @param string $expected
+     */
+    public function testFormatAmountValidAmounts($amount, $expected)
+    {
+        $this->assertEquals($expected, $this->sut->formatAmount($amount));
+    }
+
+    public function formatAmountValidAmountProvider()
+    {
+        return [
+            [null, '0.00'],
+            ['',    '0.00'],
+            [false, '0.00'],
+            [0, '0.00'],
+            ['0', '0.00'],
+            ['123', '123.00'],
+            [456, '456.00'],
+            [456.1, '456.10'],
+            ['12345.67', '12345.67'],
+            ['1234.56667', '1234.57'],
+        ];
+    }
+
+    /**
+     * @dataProvider formatAmountInvalidAmountProvider
+     * @param mixed $amount
+     * @expectedException InvalidArgumentException
+     */
+    public function testFormatAmountInvalidAmounts($amount)
+    {
+        $result = $this->sut->formatAmount($amount);
+    }
+
+    public function formatAmountInvalidAmountProvider()
+    {
+        return [
+            // anything non-empty and non-numeric is invalid
+            'string' => ['foo'],
+            'array'  => [array(123)],
+            'object' => [new \Stdclass],
+        ];
+    }
 }
