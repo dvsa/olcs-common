@@ -9,6 +9,8 @@ namespace Common\Service\File;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+use Common\Exception\BadRequestException;
+
 /**
  * Abstract File Uploader
  *
@@ -144,6 +146,45 @@ abstract class AbstractFileUploader implements FileUploaderInterface
         }
 
         return rtrim($namespace, '/') . '/' . $identifier;
+    }
+
+    /**
+     * Builds a file upload path e.g. gb/publications/2015/03
+     *
+     * Will retrieve the list of variables needed for the required path and check they are all available.
+     * If extra parameters are passed then they will be appended to the end of the URL
+     *
+     * @link https://wiki.i-env.net/pages/viewpage.action?spaceKey=olcs&title=Document+Repository+Layout
+     * @param array $params
+     * @param string $path
+     * @throws BadRequestException
+     * @return string
+     */
+    public function buildPathNamespace($params, $path = 'defaultPath')
+    {
+        $path = $this->getConfig()[$path];
+
+        preg_match_all("/(\\[.*?\\])/is", $path, $matches);
+
+        foreach($matches[0] as $key => $match){
+            $matches[0][$key] = str_replace(['[', ']'], '', $match);
+        }
+
+        foreach ($matches[0] as $matchString) {
+            if (!isset($params[$matchString])) {
+                return new BadRequestException('Missing ' . $matchString . ' URL parameter');
+            }
+
+            $path = str_replace('[' . $matchString . ']', $params[$matchString], $path);
+            unset($params[$matchString]);
+        }
+
+        //check if we have any additional params to be appended
+        foreach ($params as $param) {
+            $path .= '/' . $param;
+        }
+
+        return $path;
     }
 
     protected function readFile()
