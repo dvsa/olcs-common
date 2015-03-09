@@ -76,12 +76,12 @@ class DocumentGenerationHelperService extends AbstractHelperService
 
     private function getTemplate($template)
     {
-        if (!isset($this->templates[$template])) {
-            $this->templates[$template] = $this->getServiceLocator()
+        if (!isset($this->templateCache[$template])) {
+            $this->templateCache[$template] = $this->getServiceLocator()
                 ->get('ContentStore')
                 ->read('/templates/' . $template . '.rtf');
         }
 
-        return $this->templates[$template];
+        return $this->templateCache[$template];
     }
 }

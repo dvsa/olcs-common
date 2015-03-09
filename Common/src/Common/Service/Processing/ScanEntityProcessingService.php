@@ -76,7 +76,21 @@ class ScanEntityProcessingService implements ServiceLocatorAwareInterface
 
             case CategoryDataService::CATEGORY_COMPLIANCE:
 
-                return ['case' => $entity['id']];
+                $data = ['case' => $entity['id']];
+
+                /**
+                 * Cases are either linked against a licence or TM. We don't need to worry
+                 * about that too much here; just set whatever we have
+                 */
+                if (isset($entity['licence']['id'])) {
+                    $data['licence'] = $entity['licence']['id'];
+                }
+
+                if (isset($entity['transportManager']['id'])) {
+                    $data['transportManager'] = $entity['transportManager']['id'];
+                }
+
+                return $data;
 
             case CategoryDataService::CATEGORY_IRFO:
 

@@ -1171,4 +1171,38 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $this->assertNull($helper->getValidator($form, 'myelement', 'MyValidator'));
     }
+
+    public function testAttachValidator()
+    {
+        $mockForm = m::mock();
+        $mockInputFilter = m::mock();
+        $mockValidator = m::mock();
+        $mockValidatorChain = m::mock();
+
+        $mockForm->shouldReceive('getInputFilter')
+            ->once()
+            ->andReturn($mockInputFilter)
+            ->shouldReceive('get')
+            ->once()
+            ->with('data')
+            ->andReturnSelf();
+
+        $mockInputFilter->shouldReceive('get')
+            ->once()
+            ->with('data')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->once()
+            ->with('foo')
+            ->andReturnSelf()
+            ->shouldReceive('getValidatorChain')
+            ->andReturn($mockValidatorChain);
+
+        $mockValidatorChain->shouldReceive('attach')
+            ->once()
+            ->with($mockValidator);
+
+        $helper = new FormHelperService();
+        $helper->attachValidator($mockForm, 'data->foo', $mockValidator);
+    }
 }

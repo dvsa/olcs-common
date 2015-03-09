@@ -64,6 +64,53 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->assertEquals('VIEW', $this->sut->indexAction());
     }
 
+    public function testDeleteAction()
+    {
+        $form = m::mock();
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+                ->shouldReceive('createFormWithRequest')
+                ->with('GenericDeleteConfirmation', $this->request)
+                ->andReturn($form)
+                ->getMock()
+        );
+
+        $this->sut
+            ->shouldReceive('getDeleteModalMessageKey')
+            ->andReturn('review-operating_centres_delete');
+
+        $this->mockRender();
+
+        $this->sut->deleteAction();
+    }
+
+    public function testDeletePostAction()
+    {
+        $this->setPost([]);
+
+        $response = $this->getMock('\Zend\Http\Response');
+
+        $this->sut->shouldReceive('delete')
+            ->andReturn($response);
+
+        $this->sut->shouldReceive('getIdentifierIndex')
+            ->andReturn('application')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(1);
+
+        $this->sut->shouldReceive('redirect')
+            ->andReturn(
+                m::mock()->shouldReceive('toRouteAjax')
+                    ->with(null, ['application' => 1])
+                    ->andReturn('redirect')
+                    ->getMock()
+            );
+
+        $this->sut->deleteAction();
+    }
+
     public function testIndexActionPostValid()
     {
         $id = 1;
@@ -150,7 +197,6 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
         $this->sut->shouldReceive('params')->with('child_id')->andReturn($id);
 
         $postData    = ['postData'];
-        $addressData = ['addressData'];
         $formData    = ['formData'];
 
         $this->setPost($postData);
@@ -170,7 +216,7 @@ class AbstractOperatingCentresControllerTest extends AbstractLvaControllerTestCa
 
         $this->adapter
             ->shouldReceive('alterFormDataOnPost')
-                ->with('edit', $postData)
+                ->with('edit', $postData, 69)
                 ->andReturn($formData)
             ->shouldReceive('getActionForm')
                 ->with('edit', $this->request)

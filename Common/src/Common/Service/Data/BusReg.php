@@ -44,4 +44,60 @@ class BusReg extends Generic
 
         return true;
     }
+
+    /**
+     * Fetches details for a busRegId
+     *
+     * @param null $id
+     * @return array
+     */
+    public function fetchDetail($id)
+    {
+        $variationBundle = [
+            'children' => [
+                'licence' => [
+                    'children' => [
+                        'publicationLinks' => [
+                            'children' => [
+                                'publication'
+                            ]
+                        ]
+                    ]
+                ],
+                'subsidised',
+                'localAuthoritys',
+                'trafficAreas',
+                'busNoticePeriod',
+                'status',
+                'busServiceTypes'
+            ]
+        ];
+
+        $busRegDetail = $this->fetchOne($id, $variationBundle);
+
+        return $busRegDetail;
+    }
+
+    /**
+     * Fetches variation history from busReg table by route number
+     *
+     * @param int $routeNo
+     * @return array
+     */
+    public function fetchVariationHistory($routeNo)
+    {
+        $variationBundle = [
+            'children' => [
+                'status'
+            ]
+        ];
+
+        $params['routeNo'] = $routeNo;
+        $params['sort'] = 'variationNo';
+        $params['order'] = 'DESC';
+
+        $busRegList = $this->fetchList($params, $variationBundle);
+
+        return $busRegList;
+    }
 }

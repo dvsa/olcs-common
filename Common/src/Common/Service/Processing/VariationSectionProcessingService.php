@@ -410,6 +410,36 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Fetch list of all sections requiring attention
+     *
+     * @return array
+     */
+    public function getSectionsRequiringAttention()
+    {
+        $filtered = array_filter(
+            $this->getSectionCompletion(),
+            function ($status) {
+                return $status === self::STATUS_REQUIRES_ATTENTION;
+            }
+        );
+
+        return array_keys($filtered);
+    }
+
+    /**
+     * @return boolean if any section has been changed
+     */
+    public function hasChanged()
+    {
+        foreach ($this->getSectionCompletion() as $section => $status) {
+            if ($status !== self::STATUS_UNCHANGED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Apply the generic rules on sections requiring attension
      *
      * @param string $currentSection
@@ -717,5 +747,23 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
             $data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
             && in_array($data['licenceType']['id'], $restrictedUpgrades)
         );
+    }
+
+    public function isRealUpgrade($applicationId)
+    {
+        // If we have upgraded from restricted
+        if ($this->isLicenceUpgrade($applicationId)) {
+            return true;
+        }
+
+        $data = $this->getVariationCompletionStatusData($applicationId);
+
+        // If we have upgraded from stand nat, to stand inter
+        if ($data['licence']['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+            && $data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL) {
+            return true;
+        }
+
+        return false;
     }
 }

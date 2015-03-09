@@ -34,6 +34,22 @@ class BusRegEntityService extends AbstractEntityService
     );
 
     /**
+     * Fee data bundle
+     *
+     * @var array
+     */
+    private $feeDataBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'trafficArea'
+                )
+            )
+        )
+    );
+
+    /**
      * Get data for task processing
      *
      * @param int $id
@@ -42,6 +58,17 @@ class BusRegEntityService extends AbstractEntityService
     public function getDataForTasks($id)
     {
         return $this->get($id, $this->mainDataBundle);
+    }
+
+    /**
+     * Get data for fee processing
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForFees($id)
+    {
+        return $this->get($id, $this->feeDataBundle);
     }
 
     public function findByIdentifier($identifier)

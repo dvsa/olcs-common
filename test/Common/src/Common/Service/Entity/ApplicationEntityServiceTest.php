@@ -824,7 +824,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => ['children' => ['organisation' => []]]
                     ]
                 ]
             ],
@@ -833,7 +834,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => ['children' => ['organisation' => []]]
                     ]
                 ]
             ],
@@ -845,6 +847,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation' => [],
                                 'trafficArea'
                             ]
                         ],
@@ -865,6 +868,60 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         ]
                     ]
                 ]
+            ],
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => [
+                                    'children' => [
+                                        'type'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'Business details' => [
+                ['business_details'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => [
+                                    'children' => [
+                                        'type',
+                                        'tradingNames',
+                                        // @NOTE I think the organisationNatureOfBusiness table should be a straight
+                                        // many-to-many so this could change
+                                        'natureOfBusinesss' => [
+                                            'children' => [
+                                                'refData'
+                                            ]
+                                        ],
+                                        'contactDetails' => [
+                                            'children' => [
+                                                'address'
+                                            ]
+                                        ]
+                                    ]
+                                ],
+                                'companySubsidiaries' => [
+                                    'children' => [
+                                        'companySubsidiary'
+                                    ]
+                                ],
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ];
     }
@@ -877,7 +934,42 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'children' => [
                         'licenceType',
-                        'goodsOrPsv'
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => []
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            // Same as base
+            'Business type' => [
+                ['business_type'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => []
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            // Same as base
+            'Business details' => [
+                ['business_details'],
+                [
+                    'children' => [
+                        'licenceType',
+                        'goodsOrPsv',
+                        'licence' => [
+                            'children' => [
+                                'organisation' => []
+                            ]
+                        ]
                     ]
                 ]
             ],
@@ -889,6 +981,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation' => [],
                                 'licenceType'
                             ]
                         ]
@@ -903,6 +996,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'goodsOrPsv',
                         'licence' => [
                             'children' => [
+                                'organisation' => [],
                                 'trafficArea'
                             ]
                         ],

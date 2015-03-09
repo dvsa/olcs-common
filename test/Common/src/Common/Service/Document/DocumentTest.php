@@ -156,4 +156,28 @@ TXT;
             $replaced
         );
     }
+
+    public function testPopulateBookmarksWithDynamicBookmarksImplementingDateAwareInterface()
+    {
+        $content = "Bookmark 1: {\*\bkmkstart Serial_Num} {\*\bkmkend Serial_Num}.";
+
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
+
+        $helperMock = $this->getMock('Common\Service\Helper\DateHelperService');
+
+        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $serviceLocator->expects($this->once())
+            ->method('get')
+            ->with('Helper\Date')
+            ->willReturn($helperMock);
+
+        $this->service->setServiceLocator($serviceLocator);
+
+        $this->service->populateBookmarks(
+            $file,
+            []
+        );
+    }
 }

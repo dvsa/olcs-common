@@ -2,6 +2,7 @@
 
 namespace Common\Service\Document;
 
+use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -105,7 +106,15 @@ class Document implements ServiceLocatorAwareInterface
 
         $factory = new Bookmark\BookmarkFactory();
         foreach ($tokens as $token) {
-            $bookmarks[$token] = $factory->locate($token);
+            $bookmark = $factory->locate($token);
+
+            if ($bookmark instanceof DateHelperAwareInterface) {
+                $bookmark->setDateHelper(
+                    $this->getServiceLocator()->get('Helper\Date')
+                );
+            }
+
+            $bookmarks[$token] = $bookmark;
         }
 
         return $bookmarks;

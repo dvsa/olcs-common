@@ -66,7 +66,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'financial_evidence',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'financial_history',
                     'licence_history',
@@ -91,7 +90,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'financial_evidence',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'financial_history',
                     'licence_history',
@@ -115,7 +113,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'financial_evidence',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'financial_history',
                     'licence_history',
@@ -537,7 +534,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -558,7 +554,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'community_licences',
                     'safety',
                     'conditions_undertakings'
@@ -579,7 +574,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'people',
                     'operating_centres',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -681,7 +675,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'
@@ -703,7 +696,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'transport_managers',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'
@@ -724,7 +716,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'people',
                     'operating_centres',
                     'vehicles',
-                    'trailers',
                     'safety',
                     'conditions_undertakings',
                     'undertakings'

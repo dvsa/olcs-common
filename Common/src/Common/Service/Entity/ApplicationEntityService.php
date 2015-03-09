@@ -28,6 +28,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const CODE_GV_VAR_UPGRADE     = 'GV80A';
     const CODE_GV_VAR_NO_UPGRADE  = 'GV81';
 
+    const CODE_PSV_APP = 'PSV421';
+    const CODE_PSV_APP_SR = 'PSV356';
     const CODE_PSV_VAR_UPGRADE    = 'PSV431A';
     const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
 
@@ -353,7 +355,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'default' => [
                 'children' => [
                     'licenceType',
-                    'goodsOrPsv'
+                    'goodsOrPsv',
+                    'licence' => [
+                        'children' => [
+                            'organisation' => []
+                        ]
+                    ]
                 ]
             ],
             'operating_centres' => [
@@ -381,7 +388,141 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 ]
             ]
         ],
-        'application' => [],
+        'application' => [
+            'business_type' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'business_details' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            // @NOTE I think the companySubsidiaryLicence table should be a straight
+                            // many-to-many so this could change
+                            'companySubsidiaries' => [
+                                'children' => [
+                                    'companySubsidiary'
+                                ]
+                            ],
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'tradingNames',
+                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
+                                    // many-to-many so this could change
+                                    'natureOfBusinesss' => [
+                                        'children' => [
+                                            'refData'
+                                        ]
+                                    ],
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'safety' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'workshops' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'tachographIns'
+                        ]
+                    ]
+                ]
+            ],
+            'addresses' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'correspondenceCd' => [
+                                'children' => [
+                                    'address',
+                                    'phoneContacts' => [
+                                        'children' => [
+                                            'phoneContactType'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'establishmentCd' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'taxi_phv' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea',
+                            'privateHireLicences' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'organisationPersons' => [
+                                        'children' => [
+                                            'person'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ]
+        ],
         'variation' => [
             'type_of_licence' => [
                 'children' => [
@@ -390,6 +531,29 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'licenceType'
                         ]
                     ]
+                ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
                 ]
             ]
         ]

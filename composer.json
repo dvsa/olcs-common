@@ -37,7 +37,7 @@
         "mockery/mockery": "dev-master",
         "major-caiger/munit": "~0.1.0",
         "phpunit/phpcov": "dev-master",
-        "dvsa/jackrabbit": "v1.1.0",
+        "dvsa/jackrabbit": "v1.1.2",
         "mikey179/vfsStream": "~1.4.0",
         "olcs/olcs-testhelpers": "dev-develop"
     },

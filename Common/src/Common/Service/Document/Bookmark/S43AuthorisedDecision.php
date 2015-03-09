@@ -3,14 +3,14 @@
 namespace Common\Service\Document\Bookmark;
 
 /**
- * S9AuthorsorsTitle
+ * S43AuthorisedDecision
  *
- * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
+ * @author Shaun Lizzio <shaun.lizzio@valtech.co.uk>
  */
-class S9AuthorisorsTitle extends StatementFlatAbstract
+class S43AuthorisedDecision extends StatementFlatAbstract
 {
     const FORMATTER = null;
-    const FIELD  = 'authorisersTitle';
+    const FIELD  = 'authorisersDecision';
     const SERVICE = 'Statement';
     const SRCH_FLD_KEY = 'id';
     const SRCH_VAL_KEY = 'statement';
