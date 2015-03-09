@@ -117,6 +117,12 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         return $this->save($newPublication);
     }
 
+    /**
+     * Generates a publication filename
+     *
+     * @param array $publication
+     * @return string
+     */
     public function getPublicationFilename($publication)
     {
         $date = new \DateTime($publication['pubDate']);
@@ -130,6 +136,14 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         . '.rtf';
     }
 
+    /**
+     * @param string $locale
+     * @param string $docTypeName
+     * @param int $year
+     * @param int $month
+     * @param string $status
+     * @return array
+     */
     public function getFilePathVariables($locale, $docTypeName, $year, $month, $status)
     {
         return [
@@ -141,6 +155,12 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         ];
     }
 
+    /**
+     * Gets file path variables from a publication array
+     *
+     * @param array $publication
+     * @return array
+     */
     public function getFilePathVariablesFromPublication($publication)
     {
         $locale = ($publication['trafficArea']['isNi'] == 'Y' ? 'ni' : 'gb');
@@ -155,6 +175,13 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         );
     }
 
+    /**
+     * Creates a publication document record
+     *
+     * @param \Dvsa\Jackrabbit\Data\Object\File $storedFile
+     * @param array $currentPublication
+     * @return mixed
+     */
     private function createPublicationDocumentRecord($storedFile, $currentPublication)
     {
         $fileName = $this->getDocumentService()->formatFilename($this->getPublicationFilename($currentPublication));
@@ -175,6 +202,12 @@ class Publication extends Generic implements ServiceLocatorAwareInterface
         return $this->getDocumentDataService()->save($templateData);
     }
 
+    /**
+     * Builds a publication document
+     *
+     * @param $publication
+     * @return mixed
+     */
     private function createPublicationDocument($publication)
     {
         $queryData = [

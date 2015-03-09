@@ -57,6 +57,11 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
         'Section81' => [self::TABLE_ROW_1],
     ];
 
+    /**
+     * Gets the publication section
+     *
+     * @return array
+     */
     public function getPubTypeSection()
     {
         return $this->pubTypeSection;
@@ -64,6 +69,8 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
 
     /**
      * Gets the list of bookmark snippets
+     *
+     * @return array
      */
     public function getBookmarkSnippets()
     {
@@ -96,6 +103,12 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
         return $returnSnippets;
     }
 
+    /**
+     * Query to retrieve data
+     *
+     * @param array $data
+     * @return array
+     */
     public function getQuery(array $data)
     {
         return [
@@ -115,6 +128,11 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
         ];
     }
 
+    /**
+     * Renders the bookmark
+     *
+     * @return string
+     */
     public function render()
     {
         $entries = [];
@@ -143,6 +161,12 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
         return $this->renderSnippets($entries);
     }
 
+    /**
+     * Renders individual snippets
+     *
+     * @param $snippets
+     * @return string
+     */
     protected function renderSnippets($snippets)
     {
         $parser  = $this->getParser();
