@@ -57,5 +57,23 @@ abstract class AbstractBookmark
         return $this->parser;
     }
 
+    protected function getImage($name, $width = null, $height = null)
+    {
+        $path = __DIR__ . '/../Image/' . $name . '.jpeg';
+        $info = getimagesize($path);
+
+        if ($width === null) {
+            $width = $info[0];
+        }
+
+        if ($height === null) {
+            $height = $info[1];
+        }
+
+        $data = file_get_contents($path);
+
+        return $this->getParser()->renderImage($data, $width, $height, 'jpeg');
+    }
+
     abstract public function render();
 }
