@@ -71,8 +71,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         array $fees,
         $paymentMethod = FeePaymentEntityService::METHOD_CARD_OFFLINE
     ) {
+        $totalAmount = $this->getTotalAmountFromFees($fees);
+
         $paymentData = [];
-        $totalAmount = 0;
         foreach ($fees as $fee) {
             $paymentData[] = [
                 'amount' => $this->formatAmount($fee['amount']),
@@ -82,7 +83,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'rule_start_date' => $this->getRuleStartDate($fee),
                 ],
             ];
-            $totalAmount += (float) $fee['amount'];
         }
 
         $endPoint = '/api/payment/card';
@@ -153,8 +153,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * Record a cash payment in CPMS
      *
+     * @param array $fees
      * @param string $customerReference
-     * @param string $salesReference
      * @param float $amount
      * @param array $receiptDate (from DateSelect)
      * @param string $payer payer name
@@ -162,7 +162,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @return boolean success
      */
     public function recordCashPayment(
-        $fee,
+        $fees,
         $customerReference,
         $amount,
         $receiptDate,
@@ -171,33 +171,33 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     ) {
         // Partial payments are not supported. The form validation will normally catch
         // this but it relies on a hidden field so we have a secondary check here
-        if ($fee['amount'] != $amount) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
+        if ($amount != $this->getTotalAmountFromFees($fees)) {
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
         }
 
-        $receiptDate   = $this->formatReceiptDate($receiptDate);
-        $ruleStartDate = $this->getRuleStartDate($fee);
-        $endPoint      = '/api/payment/cash';
-        $scope         = ApiService::SCOPE_CASH;
-        $amount        = $this->formatAmount($amount);
+        $paymentData = [];
+        foreach ($fees as $fee) {
+            $paymentData[] = [
+                'amount' => $this->formatAmount($fee['amount']),
+                'sales_reference' => (string)$fee['id'],
+                'product_reference' => self::PRODUCT_REFERENCE,
+                'payer_details' => $payer,
+                'payment_reference' => [
+                    'rule_start_date' => $this->getRuleStartDate($fee),
+                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'slip_number' => (string)$slipNo,
+                ],
+            ];
+        }
+
+        $endPoint = '/api/payment/cash';
+        $scope    = ApiService::SCOPE_CASH;
 
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
             'total_amount' => $amount,
-            'payment_data' => [
-                [
-                    'amount' => $amount,
-                    'sales_reference' => (string)$fee['id'],
-                    'product_reference' => self::PRODUCT_REFERENCE,
-                    'payer_details' => $payer, // not sure this is supported for CASH payments
-                    'payment_reference' => [
-                        'slip_number' => (string)$slipNo,
-                        'receipt_date' => $receiptDate,
-                        'rule_start_date' => $ruleStartDate,
-                    ],
-                ]
-            ],
+            'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
@@ -221,7 +221,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $receiptDate,
+                'receivedDate'       => $this->formatReceiptDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CASH,
                 'receivedAmount'     => $amount,
@@ -240,8 +240,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * Record a cheque payment in CPMS
      *
+     * @param array $fees
      * @param string $customerReference
-     * @param string $salesReference
      * @param float $amount
      * @param array $receiptDate (from DateSelect)
      * @param string $payer payer name
@@ -250,7 +250,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @return boolean success
      */
     public function recordChequePayment(
-        $fee,
+        $fees,
         $customerReference,
         $amount,
         $receiptDate,
@@ -259,34 +259,35 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $chequeNo
     ) {
         // Partial payments are not supported
-        if ($fee['amount'] != $amount) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
+        if ($amount != $this->getTotalAmountFromFees($fees)) {
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
         }
 
-        $receiptDate   = $this->formatReceiptDate($receiptDate);
-        $ruleStartDate = $this->getRuleStartDate($fee);
+        $paymentData = [];
+        foreach ($fees as $fee) {
+            $paymentData[] = [
+                'amount' => $this->formatAmount($fee['amount']),
+                'sales_reference' => (string)$fee['id'],
+                'product_reference' => self::PRODUCT_REFERENCE,
+                'payer_details' => $payer,
+                'payment_reference' => [
+                    'rule_start_date' => $this->getRuleStartDate($fee),
+                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'cheque_number' => (string)$chequeNo,
+                    'slip_number' => (string)$slipNo,
+                    // @todo add cheque date
+                ],
+            ];
+        }
+
         $endPoint      = '/api/payment/cheque';
         $scope         = ApiService::SCOPE_CHEQUE;
-        $amount        = $this->formatAmount($amount);
 
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
             'total_amount' => $amount,
-            'payment_data' => [
-                [
-                    'amount' => $amount,
-                    'sales_reference' => (string)$fee['id'],
-                    'product_reference' => self::PRODUCT_REFERENCE,
-                    'payer_details' => $payer,
-                    'payment_reference' => [
-                        'slip_number' => (string)$slipNo,
-                        'receipt_date' => $receiptDate,
-                        'cheque_number' => (string)$chequeNo,
-                        'rule_start_date' => $ruleStartDate,
-                    ],
-                ]
-            ],
+            'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
@@ -310,7 +311,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $receiptDate,
+                'receivedDate'       => $this->formatReceiptDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CHEQUE,
                 'receivedAmount'     => $amount,
@@ -330,8 +331,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * Record a Postal Order payment in CPMS
      *
+     * @param array $fees
      * @param string $customerReference
-     * @param string $salesReference
      * @param float $amount
      * @param array $receiptDate (from DateSelect)
      * @param string $payer payer name
@@ -340,7 +341,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @return boolean success
      */
     public function recordPostalOrderPayment(
-        $fee,
+        $fees,
         $customerReference,
         $amount,
         $receiptDate,
@@ -349,35 +350,34 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $poNo
     ) {
         // Partial payments are not supported
-        if ($fee['amount'] != $amount) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee due");
+        if ($amount != $this->getTotalAmountFromFees($fees)) {
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
         }
 
-        $receiptDate   = $this->formatReceiptDate($receiptDate);
-        $ruleStartDate = $this->getRuleStartDate($fee);
+        $paymentData = [];
+        foreach ($fees as $fee) {
+            $paymentData[] = [
+                'amount' => $this->formatAmount($fee['amount']),
+                'sales_reference' => (string)$fee['id'],
+                'product_reference' => self::PRODUCT_REFERENCE,
+                'payer_details' => $payer,
+                'payment_reference' => [
+                    'rule_start_date' => $this->getRuleStartDate($fee),
+                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'postal_order_number' => [ $poNo ], // array!
+                    'slip_number' => (string)$slipNo,
+                ],
+            ];
+        }
+
         $endPoint      = '/api/payment/postal-order';
         $scope         = ApiService::SCOPE_POSTAL_ORDER;
-        $amount        = $this->formatAmount($amount);
 
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
             'total_amount' => $amount,
-            'payment_data' => [
-                [
-                    'amount' => $amount,
-                    'sales_reference' => (string)$fee['id'],
-                    'product_reference' => self::PRODUCT_REFERENCE,
-                    'payer_details' => $payer,
-                    'payment_reference' => [
-                        'slip_number' => (string)$slipNo,
-                        'receipt_date' => $receiptDate,
-                        'postal_order_number' => [ $poNo ], // array!
-                        'rule_start_date' => $ruleStartDate,
-
-                    ],
-                ]
-            ],
+            'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
 
@@ -401,7 +401,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $receiptDate,
+                'receivedDate'       => $this->formatReceiptDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_POSTAL_ORDER,
                 'receivedAmount'     => $amount,
@@ -754,5 +754,19 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 [FeePaymentEntityService::METHOD_CARD_OFFLINE, FeePaymentEntityService::METHOD_CARD_ONLINE]
             )
         );
+
+    }
+
+    /**
+     * @param array $fees
+     * return float
+     */
+    protected function getTotalAmountFromFees($fees)
+    {
+        $totalAmount = 0;
+        foreach ($fees as $fee) {
+            $totalAmount += (float) $fee['amount'];
+        }
+        return $totalAmount;
     }
 }

@@ -580,7 +580,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordCashPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
@@ -603,7 +603,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $this->sut->recordCashPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '234.56', // not enough!
             ['day' => '07', 'month' => '01', 'year' => '2015'],
@@ -644,7 +644,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordCashPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
@@ -721,7 +721,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordChequePayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '08', 'month' => '01', 'year' => '2015'],
@@ -745,7 +745,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $this->sut->recordChequePayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '234.56', // not enough!
             ['day' => '08', 'month' => '01', 'year' => '2015'],
@@ -787,7 +787,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordChequePayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
@@ -865,7 +865,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordPostalOrderPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '08', 'month' => '01', 'year' => '2015'],
@@ -889,7 +889,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $this->sut->recordPostalOrderPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '234.56', // not enough!
             ['day' => '08', 'month' => '01', 'year' => '2015'],
@@ -931,7 +931,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $fee = ['id' => 1, 'amount' => 1234.56];
 
         $result = $this->sut->recordPostalOrderPayment(
-            $fee,
+            array($fee),
             'cust_ref',
             '1234.56',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
