@@ -170,6 +170,16 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                ->with(1, ['paymentMethod' => 'fpm_card_offline'])
+                ->shouldReceive('forceUpdate')
+                ->with(2, ['paymentMethod' => 'fpm_card_offline'])
+                ->getMock()
+        );
+
         $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
 
         $this->assertCount(2, $this->logWriter->events);

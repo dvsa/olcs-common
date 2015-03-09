@@ -63,12 +63,17 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param string $customerReference usually organisation id
      * @param string $redirectUrl redirect back to here from payment gateway
      * @param array $fees
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
      *
      * @return array
      * @throws Common\Service\Cpms\Exception\PaymentInvalidResponseException on error
      */
-    public function initiateCardRequest($customerReference, $redirectUrl, array $fees)
-    {
+    public function initiateCardRequest(
+        $customerReference,
+        $redirectUrl,
+        array $fees,
+        $paymentMethod = FeePaymentEntityService::METHOD_CARD_OFFLINE
+    ) {
         $paymentData = [];
         $totalAmount = 0;
         foreach ($fees as $fee) {
@@ -140,6 +145,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                         'feeValue' => $fee['amount']
                     ]
                 );
+
+            // ensure payment method is recorded
+            $this->updateFeeRecordPaymentMethod($fee['id'], $paymentMethod);
         }
 
         return $response;
@@ -432,6 +440,18 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Helper function to update fee record with payment method
+     * @param int $feeId
+     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
+     * @return null
+     */
+    protected function updateFeeRecordPaymentMethod($feeId, $paymentMethod)
+    {
+        $data = compact('paymentMethod');
+        return $this->getServiceLocator()->get('Entity\Fee')->forceUpdate($feeId, $data);
+    }
+
+    /**
      * Small helper to check if response was successful
      * (We require a successful response code AND a receipt reference)
      *
@@ -714,10 +734,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     /**
      * @param array $fee
-     * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
      * @return boolean whether any fee was paid successfully
      */
-    public function resolveOutstandingPayments($fee, $paymentMethod)
+    public function resolveOutstandingPayments($fee)
     {
         $paid = false;
 
@@ -725,11 +744,10 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             if (isset($fp['payment']['status']['id'])
                 && $fp['payment']['status']['id'] === PaymentEntityService::STATUS_OUTSTANDING
             ) {
-
                 $status = $this->resolvePayment(
                     $fp['payment']['guid'],
                     $fp['payment']['id'],
-                    $paymentMethod
+                    $fee['paymentMethod']['id']
                 );
 
                 if ($status === self::PAYMENT_SUCCESS) {
