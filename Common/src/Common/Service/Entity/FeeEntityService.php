@@ -213,4 +213,41 @@ class FeeEntityService extends AbstractLvaEntityService
 
         return isset($data['licence']['organisation']) ? $data['licence']['organisation'] : null;
     }
+
+    /**
+     * Get fee by type, statuses and application if
+     *
+     * @param int $feeType
+     * @param array $feeStatuses
+     * @param int $applicationId
+     * @return array
+     */
+    public function getFeeByTypeStatusesAndApplicationId($feeType, $feeStatuses, $applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => $feeStatuses,
+            'feeType' => $feeType
+        );
+        return $this->getAll($query)['Results'];
+    }
+
+    /**
+     * Cancel fee by ids
+     *
+     * @param array $ids
+     */
+    public function cancelByIds($ids)
+    {
+        $updates = array();
+
+        foreach ($ids as $id) {
+            $updates[] = array(
+                'id' => $id,
+                'feeStatus' => self::STATUS_CANCELLED,
+                '_OPTIONS_' => array('force' => true)
+            );
+        }
+        $this->multiUpdate($updates);
+    }
 }

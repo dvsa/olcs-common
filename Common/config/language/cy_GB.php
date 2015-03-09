@@ -1009,6 +1009,27 @@ return array(
         licences',
     'internal.documents.delete.delete_message' => 'W Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
+    'internal.interim.form.interim_application' => 'W Interim application',
+    'internal.interim.form.interim_auth_trailers' => 'W Trailer Authority',
+    'internal.interim.form.interim_auth_vehicles' => 'W Vehicle Authority',
+    'internal.interim.form.interim_cancel' => 'W Cancel',
+    'internal.interim.form.interim_end' => 'W Interim end date',
+    'internal.interim.form.interim_grant' => 'W Grant',
+    'internal.interim.form.interim_reason' => 'W Interim reason',
+    'internal.interim.form.interim_refuse' => 'W Refuse',
+    'internal.interim.form.interim_requested' => 'W Interim requested',
+    'internal.interim.form.interim_save' => 'W Save',
+    'internal.interim.form.interim_start' => 'W Interim start date',
+    'internal.interim.interim_details_saved' => 'W Interim details saved',
+    'internal.interim.operatingcentres.table.address' => 'W Operating centre address',
+    'internal.interim.operatingcentres.table.header' => 'W Operating centres',
+    'internal.interim.operatingcentres.table.listed' => 'W Listed',
+    'internal.interim.operatingcentres.table.trailers' => 'W Trailers',
+    'internal.interim.operatingcentres.table.vehicles' => 'W Vehicles',
+    'internal.interim.vehicles.table.header' => 'W Vehicles',
+    'internal.interim.vehicles.table.listed' => 'W Listed',
+    'internal.interim.vehicles.table.vrm' => 'W VRM',
+    'internal.interim.vehicles.table.weight' => 'W Gross plated weight (Kg)',
     'internal.new_application.task_description' => 'W Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'W Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'W Date of Issue',
@@ -1060,6 +1081,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'W Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'W Cancel',
     'internal.transport-manager.responsibilities.continue' => 'W Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'W Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'W How many hours will you spend on your
         Transport Manager duties?',
@@ -1071,6 +1094,8 @@ return array(
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'W What type of manager will you be for this licence?',
     'internal.transport_manager.responsibilities.other_licence' => 'W other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'W Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'W Edit other licence',
     'invalid-licence-type' => 'W If you are a goods vehicle operator, you can not apply for a special restricted
         licence',
     'invalid-operator-type' => 'W If you operate in Northern Ireland, you can only apply for a Goods licence',
@@ -1948,9 +1973,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'internal.transport-manager.responsibilities.delete-question' => 'W Are you sure you want to permanently delete the
-        selected record(s)?',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Add other licence',
-    'internal.transport_manager.responsibilities.other_licence_add'=> 'W Edit other licence'
     // Potentially unused (Not found with grep)
 );
