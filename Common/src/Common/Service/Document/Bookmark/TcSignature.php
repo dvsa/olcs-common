@@ -31,6 +31,8 @@ class TcSignature extends DynamicBookmark
 
     public function render()
     {
+        // proof-of-concept for OLCS-7669 spike only - the image path
+        // wouldn't be hardcoded like this!
         return $this->getImage('TC_SIG_NORTHWESTERN', 610, 90);
     }
 }
