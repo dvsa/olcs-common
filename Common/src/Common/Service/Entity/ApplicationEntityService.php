@@ -521,6 +521,34 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => [
                     'previousConvictions'
                 ]
+            ],
+            'vehicles' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle'
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'vehicles_psv' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle' => [
+                                'children' => [
+                                    'psvType'
+                                ]
+                            ]
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
             ]
         ],
         'variation' => [
