@@ -34,6 +34,22 @@ class BusRegEntityService extends AbstractEntityService
     );
 
     /**
+     * Fee data bundle
+     *
+     * @var array
+     */
+    private $feeDataBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'trafficArea'
+                )
+            )
+        )
+    );
+
+    /**
      * Get data for task processing
      *
      * @param int $id
@@ -44,30 +60,44 @@ class BusRegEntityService extends AbstractEntityService
         return $this->get($id, $this->mainDataBundle);
     }
 
+    /**
+     * Get data for fee processing
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForFees($id)
+    {
+        return $this->get($id, $this->feeDataBundle);
+    }
+
     public function findByIdentifier($identifier)
     {
-        /**
-         * @TODO this AC still isn't correct; the logic to fetch
-         * the currently active variation (as opposed to highest)
-         * will be fulfilled by https://jira.i-env.net/browse/OLCS-6334
-         *
-         * That story is expected to implement a custom backend service which
-         * *should* satisfy all calls made to the BusReg service, but this
-         * method will most likely still need revisiting and thus get its
-         * own story in the future
-         */
         $params = [
             'regNo' => $identifier,
-            'sort'  => 'variationNo',
-            'order' => 'DESC'
+            'limit' => 1
         ];
 
-        $result = $this->get($params, $this->mainDataBundle);
+        /**
+         * The rules for fetching bus regs by reg number are complex.
+         * OLCS-6334 (https://jira.i-env.net/browse/OLCS-6334) implements these
+         * requirements using a view, so we hook into that here to get an ID first
+         */
+        $result = $this->getServiceLocator()
+            ->get('Helper\Rest')
+            ->makeRestCall('BusRegSearchView', 'GET', $params);
+
         if ($result['Count'] === 0) {
             return false;
         }
 
-        return $result['Results'][0];
+        /**
+         * However, we then do a straight lookup on the ID we got back to guarantee
+         * that the caller of this method gets a bus reg entity with all its properties.
+         * This also allows us to define and manipulate bundles as normal, so the extra
+         * GET request is a worthwhile tradeoff.
+         */
+        return $this->get($result['Results'][0]['id'], $this->mainDataBundle);
     }
 
     /**

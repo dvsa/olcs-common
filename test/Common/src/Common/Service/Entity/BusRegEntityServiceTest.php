@@ -31,16 +31,20 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         $response = [
             'Count' => 1,
             'Results' => [
-                'RESPONSE'
+                [
+                    'id' => 100
+                ]
             ]
         ];
         $params = [
             'regNo' => 123,
-            'sort' => 'variationNo',
-            'order' => 'DESC'
+            'limit' => 1
         ];
-        $this->expectOneRestCall('BusReg', 'GET', $params)
+        $this->expectedRestCallInOrder('BusRegSearchView', 'GET', $params)
             ->will($this->returnValue($response));
+
+        $this->expectedRestCallInOrder('BusReg', 'GET', 100)
+            ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->findByIdentifier(123));
     }
@@ -56,10 +60,9 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         ];
         $params = [
             'regNo' => 123,
-            'sort' => 'variationNo',
-            'order' => 'DESC'
+            'limit' => 1
         ];
-        $this->expectOneRestCall('BusReg', 'GET', $params)
+        $this->expectOneRestCall('BusRegSearchView', 'GET', $params)
             ->will($this->returnValue($response));
 
         $this->assertEquals(false, $this->sut->findByIdentifier(123));
@@ -118,5 +121,18 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForTasks($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForFees()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('BusReg', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForFees($id));
     }
 }

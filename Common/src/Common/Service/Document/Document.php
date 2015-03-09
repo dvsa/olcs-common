@@ -2,15 +2,20 @@
 
 namespace Common\Service\Document;
 
+use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
 use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Document generation service
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class Document
+class Document implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     public function getBookmarkQueries(ContentStoreFile $file, $data)
     {
         $queryData = [];
@@ -97,7 +102,15 @@ class Document
 
         $factory = new Bookmark\BookmarkFactory();
         foreach ($tokens as $token) {
-            $bookmarks[$token] = $factory->locate($token);
+            $bookmark = $factory->locate($token);
+
+            if ($bookmark instanceof DateHelperAwareInterface) {
+                $bookmark->setDateHelper(
+                    $this->getServiceLocator()->get('Helper\Date')
+                );
+            }
+
+            $bookmarks[$token] = $bookmark;
         }
 
         return $bookmarks;

@@ -78,6 +78,14 @@ class ApplicationTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
     public function processFirstSave($applicationId)
     {
         $this->createFee($applicationId);
+        $this->generateLicenceNumber($applicationId);
+    }
+
+    protected function generateLicenceNumber($applicationId)
+    {
+        $licenceId = $this->getServiceLocator()->get('Entity\Application')
+            ->getLicenceIdForApplication($applicationId);
+        $this->getServiceLocator()->get('Entity\Licence')->generateLicence($licenceId);
     }
 
     public function createFee($applicationId)
