@@ -450,19 +450,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param array $response response data
-     * @return boolean
-     */
-    protected function isSuccessfulResponse($response)
-    {
-        return (
-            is_array($response)
-            && isset($response['code'])
-            && $response['code'] === self::RESPONSE_SUCCESS
-        );
-    }
-
-    /**
      * Format a date as required by CPMS payment reference fields
      *
      * @param array|DateTime $date
@@ -654,8 +641,6 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * Determine the status of a payment for a fee
      *
-     * We check the auth code as we can't directly query the status via the API :(
-     *
      * @param string $receiptReference
      * @return int status
      * @throws InvalidArgumentException
@@ -712,6 +697,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     /**
      * Determine if we're making a card payment
+     *
+     * @param array $data payment data
      */
     public function isCardPayment($data)
     {
