@@ -8,6 +8,7 @@
  */
 namespace Common\Controller\Lva;
 
+use Common\Service\Data\FeeTypeDataService;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
 
@@ -32,6 +33,8 @@ abstract class AbstractUndertakingsController extends AbstractController
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
+                // This should go in postSave but due to trait inheritance it cannot.
+                $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
                 // validation failed, we need to lookup application data
@@ -51,6 +54,21 @@ abstract class AbstractUndertakingsController extends AbstractController
         $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
+    }
+
+    protected function handleFees(array $data)
+    {
+        $applicationId = $this->getApplicationId();
+        $licenceId = $this->getLicenceId();
+
+        if ($data['interim']['goodsApplicationInterim'] === 'Y') {
+            $this->getServiceLocator()
+                ->get('Processing\Application')
+                ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_GRANTINT);
+        }elseif ($data['interim']['goodsApplicationInterim'] === 'N') {
+            $this->getServiceLocator()->get('Entity\Fee')
+                ->cancelForApplication($applicationId, FeeTypeDataService::FEE_TYPE_GRANTINT);
+        }
     }
 
     /**

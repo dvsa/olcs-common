@@ -94,6 +94,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licence' => array(
                 'children' => array(
                     'licenceType',
+                    'operatingCentres',
                     'licenceVehicles' => array(
                         'criteria' => array(
                             array(
@@ -106,6 +107,26 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'ceasedDate' => 'NULL'
                         )
                     )
+                )
+            )
+        )
+    );
+
+
+    /**
+     * Bundle to retrieve data for the interim variation processing.
+     *
+     * @var array
+     */
+    private $variationInterimDataBundle = array(
+        'children' => array(
+            'licenceType',
+            'goodsOrPsv',
+            'operatingCentres',
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'operatingCentres'
                 )
             )
         )
@@ -592,6 +613,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $bundle = $this->variationCompletionStatusDataBundle;
 
         $bundle['children']['licence']['children']['licenceVehicles']['criteria'][0]['application'] = $id;
+
+        return $this->get($id, $bundle);
+    }
+
+    /**
+     * Get the application data for interim processing.
+     *
+     * @param $id Application ID
+     *
+     * @return array
+     */
+    public function getVariationInterimData($id)
+    {
+        $bundle = $this->variationInterimDataBundle;
 
         return $this->get($id, $bundle);
     }

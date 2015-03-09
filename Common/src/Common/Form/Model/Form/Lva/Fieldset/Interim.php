@@ -53,9 +53,8 @@ class Interim
      *          "context_values": {"Y"},
      *          "validators": {
      *              {
-     *                  "name": "\Zend\Validator\GreaterThan",
+     *                  "name": "\Zend\Validator\NotEmpty",
      *                  "options": {
-     *                      "min": 0,
      *                      "message": "interim.application.undertakings.form.textarea.error.message.empty"
      *                  }
      *              }
