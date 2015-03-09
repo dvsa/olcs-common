@@ -152,6 +152,40 @@ return array(
     'application-review-financial-history-receivership' => 'Has any person named in this application (including
         partners, directors or transport managers) ever been involved with a company, or business, that has gone into
         (or is going into) receivership?',
+    'application-review-licence-history-applied-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) previously held or applied for a goods or public service vehicle
+        operator\'s licence in any traffic area?',
+    'application-review-licence-history-applied-title' => 'Previous licences',
+    'application-review-licence-history-current-question' => 'Does any person named in this application (including
+        partners, directors and transport managers) currently hold a goods or public service vehicle operator\'s licence
+        in any traffic area?',
+    'application-review-licence-history-current-title' => 'Current licences',
+    'application-review-licence-history-disqualification-date' => 'Date of disqualification',
+    'application-review-licence-history-disqualification-length' => 'Length of disqualification',
+    'application-review-licence-history-disqualified-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) been disqualified from holding or obtaining an operator\'s licence by
+        any traffic commissioner?',
+    'application-review-licence-history-disqualified-title' => 'Disqualifications',
+    'application-review-licence-history-held-question' => 'Within the last twelve months, have you, your company or
+        organisation or your partners or directors purchased the assets or shareholding of any company that, to you
+        knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+    'application-review-licence-history-held-title' => 'Previously purchased assets',
+    'application-review-licence-history-licence-holder' => 'Licence holder name',
+    'application-review-licence-history-licence-no' => 'Licence number',
+    'application-review-licence-history-public-inquiry-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever attended a Public Inquiry before a traffic commissioner?',
+    'application-review-licence-history-public-inquiry-title' => 'Public Inquiries',
+    'application-review-licence-history-purchase-date' => 'Date of purchase',
+    'application-review-licence-history-refused-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had an application for a goods or a public service vehicle
+        operator\'s licence refused by any EU licensing authority?',
+    'application-review-licence-history-refused-title' => 'Refused licences',
+    'application-review-licence-history-revoked-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had a goods or public service vehicle operator\'s licence
+        revoked, suspended or curtailed by any EU licensing authority?',
+    'application-review-licence-history-revoked-title' => 'Revoked, suspended or curtailed licences',
+    'application-review-licence-history-will-surrender' => 'Will this licence be surrendered if this application is
+        granted?',
     'application-review-people-person-dob' => 'Date of birth',
     'application-review-people-person-firstname' => 'First name(s)',
     'application-review-people-person-lastname' => 'Last name',
