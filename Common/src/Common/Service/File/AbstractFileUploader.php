@@ -166,7 +166,7 @@ abstract class AbstractFileUploader implements FileUploaderInterface
 
         preg_match_all("/(\\[.*?\\])/is", $path, $matches);
 
-        foreach($matches[0] as $key => $match){
+        foreach ($matches[0] as $key => $match) {
             $matches[0][$key] = str_replace(['[', ']'], '', $match);
         }
 
