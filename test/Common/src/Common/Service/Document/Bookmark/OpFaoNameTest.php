@@ -31,9 +31,7 @@ class OpFaoNameTest extends \PHPUnit_Framework_TestCase
         $bookmark = new OpFaoName();
         $bookmark->setData(
             [
-                'organisation' => [
-                    'contactDetails' => null
-                ]
+                'correspondenceCd' => null
             ]
         );
 
@@ -48,10 +46,8 @@ class OpFaoNameTest extends \PHPUnit_Framework_TestCase
         $bookmark = new OpFaoName();
         $bookmark->setData(
             [
-                'organisation' => [
-                    'contactDetails' => [
-                        'fao' => 'Team Leader'
-                    ]
+                'correspondenceCd' => [
+                    'fao' => 'Team Leader'
                 ]
             ]
         );
