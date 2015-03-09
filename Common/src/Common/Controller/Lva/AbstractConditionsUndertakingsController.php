@@ -52,7 +52,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $this->getAdapter()->attachMainScripts();
 
-        return $this->render($this->section, $form);
+        return $this->render($this->section, $form, array('title' => null));
     }
 
     /**
