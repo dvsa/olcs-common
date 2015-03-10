@@ -59,40 +59,5 @@ abstract class AbstractBookmark
         return $this->parser;
     }
 
-    /**
-     * @NOTE: only jpegs with an extension of .jpeg are supported at
-     * the moment. If this needs to change then feel free to alter
-     * the API of this method but make sure the RTF parser can handle
-     * the new format
-     */
-    protected function getImage($name, $width = null, $height = null)
-    {
-        $info = [];
-        $type = 'jpeg';
-        $path = __DIR__ . '/../Image/' . $name . '.' . $type;
-
-        if (!file_exists($path)) {
-            throw new RuntimeException('Image path ' . $path . ' does not exist');
-        }
-
-        // it's an extra conditional but no point hitting the disk twice
-        // if we don't need to read any metadata...
-        if ($width === null || $height === null) {
-            $info = getimagesize($path);
-        }
-
-        if ($width === null) {
-            $width = $info[0];
-        }
-
-        if ($height === null) {
-            $height = $info[1];
-        }
-
-        $data = file_get_contents($path);
-
-        return $this->getParser()->renderImage($data, $width, $height, 'jpeg');
-    }
-
     abstract public function render();
 }

@@ -3,6 +3,7 @@
 namespace Common\Service\Document;
 
 use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
+use Common\Service\Document\Bookmark\Interfaces\FileStoreAwareInterface;
 use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -107,6 +108,12 @@ class Document implements ServiceLocatorAwareInterface
             if ($bookmark instanceof DateHelperAwareInterface) {
                 $bookmark->setDateHelper(
                     $this->getServiceLocator()->get('Helper\Date')
+                );
+            }
+
+            if ($bookmark instanceof FileStoreAwareInterface) {
+                $bookmark->setFileStore(
+                    $this->getServiceLocator()->get('ContentStore')
                 );
             }
 

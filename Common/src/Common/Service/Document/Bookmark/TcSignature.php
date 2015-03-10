@@ -1,14 +1,14 @@
 <?php
 namespace Common\Service\Document\Bookmark;
 
-use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+use Common\Service\Document\Bookmark\Base\ImageBookmark;
 
 /**
  * Traffic Comissioner signature
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class TcSignature extends DynamicBookmark
+class TcSignature extends ImageBookmark
 {
     const PREFORMATTED = true;
 
