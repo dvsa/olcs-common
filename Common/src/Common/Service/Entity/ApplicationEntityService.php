@@ -249,7 +249,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => array(
                     'trafficArea'
                 )
-            )
+            ),
+            'licenceType'
         )
     );
 
