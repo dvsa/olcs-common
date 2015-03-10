@@ -4,6 +4,9 @@ namespace Common\Form\Model\Form\Lva\Fieldset;
 
 use Zend\Form\Annotation as Form;
 
+/**
+ * Vehicle Declarations - main occupation (PSV Restricted and > 0 medium vehicles only)
+ */
 class VehiclesDeclarationsMainOccupation
 {
     /**
