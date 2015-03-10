@@ -68,17 +68,18 @@ class TemplateWorker
                         $file->setContent(
                             file_get_contents($source . '/' . $entry)
                         );
+                        // @TODO use the proper mime type here
                         $file->setMimeType('application/rtf');
 
                         $path = $name . '/' . str_replace(" ", "_", $entry);
 
                         echo "Uploading $path\n";
 
-                        $r = $this->client->write($path, $file);
-                        if ($r->isSuccess()) {
+                        $result = $this->client->write($path, $file);
+                        if ($result->isSuccess()) {
                             echo "OK\n";
                         } else {
-                            echo "ERROR: " . $r->getStatusCode() . "\n";
+                            echo "ERROR: " . $result->getStatusCode() . "\n";
                         }
                     }
                 }
@@ -89,11 +90,18 @@ class TemplateWorker
     }
 }
 
+$baseDir = 'templates';
+if (isset($argv[2])) {
+    $baseDir = $argv[2];
+}
+
 $worker = new TemplateWorker($argv);
 
 $data = $worker->readWorkspace();
 
+// always clear out tmp; it can get a bit cluttered
 $worker->deleteFolder('/tmp', $data);
-$worker->deleteFolder('/templates', $data);
 
-$worker->uploadFolder('templates', $argv[1]);
+// then mirror whatever our directory was
+$worker->deleteFolder('/' . $baseDir, $data);
+$worker->uploadFolder($baseDir, $argv[1]);
