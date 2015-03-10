@@ -34,10 +34,8 @@ abstract class ImageBookmark extends DynamicBookmark implements FileStoreAwareIn
     {
         $info = [];
         $type = 'jpeg';
-        //$path = __DIR__ . '/../Image/' . $name . '.' . $type;
         $path = '/templates/Image/' . $name . '.' . $type;
 
-        //$data = file_get_contents($path);
         $file = $this->getFileStore()->read($path);
 
         if ($file === null) {
