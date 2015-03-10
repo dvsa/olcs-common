@@ -46,6 +46,13 @@ class ApplicationPeopleReviewService extends AbstractReviewService
         ];
     }
 
+    /**
+     * Get the current state of all people, ignoring previous states and deleted people
+     *
+     * @param array $applicationPeople
+     * @param array $licencePeople
+     * @return array
+     */
     private function consolidatePeople($applicationPeople, $licencePeople)
     {
         $people = [];

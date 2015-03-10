@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing Office',
+    'application-review-financial-history-evidence' => 'Evidence',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

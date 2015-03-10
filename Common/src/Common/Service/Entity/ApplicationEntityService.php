@@ -428,6 +428,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'financial_history' => [
+                'children' => [
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
