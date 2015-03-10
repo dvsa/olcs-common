@@ -125,4 +125,28 @@ class BusRegEntityService extends AbstractEntityService
 
         return $result['Results'][0];
     }
+
+    /**
+     * Find the most recent Route No by Licence
+     * Assumes that Route Numbers are incremental
+     *
+     * @param $licenceId
+     * @return array
+     */
+    public function findMostRecentRouteNoByLicence($licenceId)
+    {
+        $params = [
+            'licence' => $licenceId,
+            'sort'  => 'routeNo',
+            'order' => 'DESC',
+            'limit' => 1
+        ];
+
+        $result = $this->get($params);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+
+        return $result['Results'][0];
+    }
 }
