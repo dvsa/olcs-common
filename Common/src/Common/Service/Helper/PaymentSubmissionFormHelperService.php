@@ -21,7 +21,7 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      *
      * @param Zend\Form\Form $form
      * @param string $actionUrl
-     * @param array $fee
+     * @param int $applicationId
      * @param boolean $canSubmit
      * @param boolean $enabled
      * @param string $actionUrl
@@ -29,20 +29,39 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
     public function updatePaymentSubmissonForm(
         Form $form,
         $actionUrl,
-        array $fee = null,
+        $applicationId,
         $visible = false,
         $enabled = false
     ) {
-        $helper = $this->getServiceLocator()->get('Helper\Form');
+
+        $processingService = $this->getServiceLocator()->get('Processing\Application');
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $applicationFee = $processingService->getApplicationFee($applicationId);
+        $interimFee = $processingService->getInterimFee($applicationId);
+
+        $fee = 0;
+        if ($applicationFee) {
+            $fee += $applicationFee['amount'];
+        }
+        if ($interimFee) {
+            $fee += $interimFee['amount'];
+        }
 
         if ($visible) {
             if ($fee) {
                 // show fee amount
-                $feeAmount = number_format($fee['amount'], 2);
-                $form->get('amount')->setTokens([0 => $feeAmount]);
+                $feeAmount = number_format($fee, 2);
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                $form->get('amount')->setValue(
+                    $translator->translateReplace(
+                        'application.payment-submission.amount.value',
+                        [$feeAmount]
+                    )
+                );
             } else {
                 // if no fee, change submit button text
-                $helper->remove($form, 'amount');
+                $formHelper->remove($form, 'amount');
                 $form->get('submitPay')->setLabel('submit-application.button');
             }
 
@@ -51,12 +70,12 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
             if ($enabled) {
                 $form->setAttribute('action', $actionUrl);
             } else {
-                $helper->disableElement($form, 'submitPay');
+                $formHelper->disableElement($form, 'submitPay');
             }
         } else {
             // remove submit button and amount
-            $helper->remove($form, 'amount');
-            $helper->remove($form, 'submitPay');
+            $formHelper->remove($form, 'amount');
+            $formHelper->remove($form, 'submitPay');
         }
     }
 }
