@@ -34,21 +34,10 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
         $enabled = false
     ) {
 
-        $processingService = $this->getServiceLocator()->get('Processing\Application');
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $applicationFee = $processingService->getApplicationFee($applicationId);
-        $interimFee = $processingService->getInterimFee($applicationId);
-
-        $fee = 0;
-        if ($applicationFee) {
-            $fee += $applicationFee['amount'];
-        }
-        if ($interimFee) {
-            $fee += $interimFee['amount'];
-        }
-
         if ($visible) {
+            $fee = $this->getFee($applicationId);
             if ($fee) {
                 // show fee amount
                 $feeAmount = number_format($fee, 2);
@@ -78,4 +67,26 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
             $formHelper->remove($form, 'submitPay');
         }
     }
+
+    /**
+     * @param int $applicationId
+     * @return float
+     */
+    protected function getFee($applicationId)
+    {
+        $processingService = $this->getServiceLocator()->get('Processing\Application');
+        $applicationFee = $processingService->getApplicationFee($applicationId);
+        $interimFee = $processingService->getInterimFee($applicationId);
+
+        $fee = 0;
+        if ($applicationFee) {
+            $fee += $applicationFee['amount'];
+        }
+        if ($interimFee) {
+            $fee += $interimFee['amount'];
+        }
+
+        return $fee;
+    }
+
 }
