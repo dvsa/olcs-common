@@ -2058,5 +2058,8 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
+    'ebsr-upload-title' => 'W Register, upload or cancel a service',
+    'ebsr-upload-subtitle' => 'W To register a new service, update or cancel an existing service you need to upload an
+    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
     // Potentially unused (Not found with grep)
 );
