@@ -105,7 +105,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'sales_reference' => '1',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payment_reference' => [
-                        'rule_start_date' => '12-01-2015',
+                        'rule_start_date' => '2015-01-12',
                     ],
                 ],
                 [
@@ -113,7 +113,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'sales_reference' => '2',
                     'product_reference' => 'GVR_APPLICATION_FEE',
                     'payment_reference' => [
-                        'rule_start_date' => '25-12-2014',
+                        'rule_start_date' => '2014-12-25',
                     ],
                 ]
             ],
@@ -530,7 +530,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'payer_details' => 'Payer',
                     'payment_reference' => [
                         'slip_number' => '123456',
-                        'receipt_date' => '07-01-2015',
+                        'receipt_date' => '2015-01-07',
                         'rule_start_date' => null, // tested separately
                     ],
                 ]
@@ -557,7 +557,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 1,
                 [
                     'feeStatus'          => 'lfs_pd', //FeeEntityService::STATUS_PAID
-                    'receivedDate'       => '07-01-2015',
+                    'receivedDate'       => '2015-01-07',
                     'receiptNo'          => 'unique_reference',
                     'paymentMethod'      => 'fpm_cash', //FeePaymentEntityService::METHOD_CASH
                     'receivedAmount'     => '1234.56',
@@ -669,8 +669,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'payer_details' => 'Payer',
                     'payment_reference' => [
                         'slip_number' => '123456',
-                        'receipt_date' => '08-01-2015',
+                        'receipt_date' => '2015-03-10',
                         'cheque_number' => '234567',
+                        'cheque_date' => '2015-03-01',
                         'rule_start_date' => null, // tested separately
                     ],
                 ]
@@ -697,13 +698,14 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 1,
                 [
                     'feeStatus'          => 'lfs_pd', //FeeEntityService::STATUS_PAID
-                    'receivedDate'       => '08-01-2015',
+                    'receivedDate'       => '2015-03-10',
                     'receiptNo'          => 'unique_reference',
                     'paymentMethod'      => 'fpm_cheque', //FeePaymentEntityService::METHOD_CHEQUE
                     'receivedAmount'     => '1234.56',
                     'payerName'          => 'Payer',
                     'payingInSlipNumber' => '123456',
                     'chequePoNumber'     => '234567',
+                    'chequePoDate'       => '2015-03-01',
                 ]
             )
             ->getMock()
@@ -724,10 +726,11 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             array($fee),
             'cust_ref',
             '1234.56',
-            ['day' => '08', 'month' => '01', 'year' => '2015'],
+            ['day' => '10', 'month' => '03', 'year' => '2015'],
             'Payer',
             '123456',
-            '234567'
+            '234567',
+            ['day' => '01', 'month' => '03', 'year' => '2015']
         );
 
         $this->assertTrue($result);
@@ -748,10 +751,11 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             array($fee),
             'cust_ref',
             '234.56', // not enough!
-            ['day' => '08', 'month' => '01', 'year' => '2015'],
+            ['day' => '08', 'month' => '03', 'year' => '2015'],
             'Payer',
             '123456',
-            '234567'
+            '234567',
+            ['day' => '01', 'month' => '03', 'year' => '2015']
         );
     }
 
@@ -793,7 +797,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
             '123456',
-            '234567'
+            '234567',
+            ['day' => '02', 'month' => '01', 'year' => '2015']
         );
 
         $this->assertFalse($result);
@@ -813,7 +818,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'payer_details' => 'Payer',
                     'payment_reference' => [
                         'slip_number' => '123456',
-                        'receipt_date' => '08-01-2015',
+                        'receipt_date' => '2015-01-08',
                         'postal_order_number' => ['234567'], // array expected according to api docs
                         'rule_start_date' => null, // tested separately
                     ],
@@ -841,7 +846,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 1,
                 [
                     'feeStatus'          => 'lfs_pd', //FeeEntityService::STATUS_PAID
-                    'receivedDate'       => '08-01-2015',
+                    'receivedDate'       => '2015-01-08',
                     'receiptNo'          => 'unique_reference',
                     'paymentMethod'      => 'fpm_po', //FeePaymentEntityService::METHOD_POSTAL_ORDER
                     'receivedAmount'     => '1234.56',
@@ -965,7 +970,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         // Common\Service\Data\FeeTypeDataService::ACCRUAL_RULE_IMMEDIATE
                     ],
                 ],
-                '20-01-2015'
+                '2015-01-20'
             ],
             'licence start date rule' => [
                 [
@@ -980,7 +985,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'inForceDate' => '2015-02-28',
                     ]
                 ],
-                '28-02-2015'
+                '2015-02-28'
             ],
             'continuation date rule' => [
                 [
@@ -995,7 +1000,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'expiryDate' => '2015-03-31',
                     ]
                 ],
-                '01-04-2015'
+                '2015-04-01'
             ],
             'no accrualRule' => [
                 [],

@@ -41,7 +41,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
     const RESPONSE_SUCCESS = '000';
 
-    const DATE_FORMAT = 'd-m-Y'; // CPMS' preferred date format
+    // CPMS' preferred date format (note: this changed around 03/2015)
+    const DATE_FORMAT = 'Y-m-d';
 
     // @TODO product ref shouldn't have to come from a whitelist...
     const PRODUCT_REFERENCE = 'GVR_APPLICATION_FEE';
@@ -184,7 +185,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'payer_details' => $payer,
                 'payment_reference' => [
                     'rule_start_date' => $this->getRuleStartDate($fee),
-                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'receipt_date' => $this->formatDate($receiptDate),
                     'slip_number' => (string)$slipNo,
                 ],
             ];
@@ -221,7 +222,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $this->formatReceiptDate($receiptDate),
+                'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CASH,
                 'receivedAmount'     => $amount,
@@ -247,6 +248,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param string $payer payer name
      * @param string $slipNo paying in slip number
      * @param string $chequeNo cheque number
+     * @param string $chequeDate (from DateSelect)
      * @return boolean success
      */
     public function recordChequePayment(
@@ -256,7 +258,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $receiptDate,
         $payer,
         $slipNo,
-        $chequeNo
+        $chequeNo,
+        $chequeDate
     ) {
         // Partial payments are not supported
         if ($amount != $this->getTotalAmountFromFees($fees)) {
@@ -272,8 +275,9 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'payer_details' => $payer,
                 'payment_reference' => [
                     'rule_start_date' => $this->getRuleStartDate($fee),
-                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'receipt_date' => $this->formatDate($receiptDate),
                     'cheque_number' => (string)$chequeNo,
+                    'cheque_date' => $this->formatDate($chequeDate),
                     'slip_number' => (string)$slipNo,
                     // @todo add cheque date
                 ],
@@ -311,13 +315,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $this->formatReceiptDate($receiptDate),
+                'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CHEQUE,
                 'receivedAmount'     => $amount,
                 'payerName'          => $payer,
                 'payingInSlipNumber' => $slipNo,
                 'chequePoNumber'     => $chequeNo,
+                'chequePoDate'       => $this->formatDate($chequeDate),
             ];
 
             $this->updateFeeRecordAsPaid($fee['id'], $data);
@@ -363,7 +368,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'payer_details' => $payer,
                 'payment_reference' => [
                     'rule_start_date' => $this->getRuleStartDate($fee),
-                    'receipt_date' => $this->formatReceiptDate($receiptDate),
+                    'receipt_date' => $this->formatDate($receiptDate),
                     'postal_order_number' => [ $poNo ], // array!
                     'slip_number' => (string)$slipNo,
                 ],
@@ -401,7 +406,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         if ($this->isSuccessfulPaymentResponse($response)) {
             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
-                'receivedDate'       => $this->formatReceiptDate($receiptDate),
+                'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_POSTAL_ORDER,
                 'receivedAmount'     => $amount,
@@ -472,7 +477,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @param array|DateTime $date
      * @return string
      */
-    public function formatReceiptDate($date)
+    protected function formatDate($date)
     {
         if (is_array($date)) {
             $date = $this->getServiceLocator()->get('Helper\Date')->getDateObjectFromArray($date);

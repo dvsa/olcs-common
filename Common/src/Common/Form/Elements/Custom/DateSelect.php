@@ -16,14 +16,10 @@ use Zend\Form\Element as ZendElement;
  */
 class DateSelect extends ZendElement\DateSelect
 {
-    /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInput()}.
-     *
-     * @return array
-     */
-    public function getInputSpecification()
+    public function setOptions($options)
     {
+        parent::setOptions($options);
+
         if ($this->getOption('max_year_delta')) {
             $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
 
@@ -52,7 +48,15 @@ class DateSelect extends ZendElement\DateSelect
             $this->setMinYear($minYear);
             $this->setMaxYear($maxYear);
         }
-
+    }
+    /**
+     * Should return an array specification compatible with
+     * {@link Zend\InputFilter\Factory::createInput()}.
+     *
+     * @return array
+     */
+    public function getInputSpecification()
+    {
         return array(
             'name' => $this->getName(),
             'required' => $this->getOption('required'),
