@@ -56,37 +56,41 @@ class TemplateWorker
 
     public function uploadFolder($name, $source)
     {
-        if ($handle = opendir($source)) {
+        $handle = opendir($source);
 
-            while (false !== ($entry = readdir($handle))) {
+        if (!$handle) {
+            echo "Could not open directory: " . $source . "\n";
+            return;
+        }
 
-                if (substr($entry, 0, 1) !== ".") {
-                    if (is_dir($source.'/'.$entry)) {
-                        $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
+        while (false !== ($entry = readdir($handle))) {
+
+            if (substr($entry, 0, 1) !== ".") {
+                if (is_dir($source.'/'.$entry)) {
+                    $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
+                } else {
+                    $file = new \Dvsa\Jackrabbit\Data\Object\File();
+                    $file->setContent(
+                        file_get_contents($source . '/' . $entry)
+                    );
+                    // @TODO use the proper mime type here
+                    $file->setMimeType('application/rtf');
+
+                    $path = $name . '/' . str_replace(" ", "_", $entry);
+
+                    echo "Uploading $path\n";
+
+                    $result = $this->client->write($path, $file);
+                    if ($result->isSuccess()) {
+                        echo "OK\n";
                     } else {
-                        $file = new \Dvsa\Jackrabbit\Data\Object\File();
-                        $file->setContent(
-                            file_get_contents($source . '/' . $entry)
-                        );
-                        // @TODO use the proper mime type here
-                        $file->setMimeType('application/rtf');
-
-                        $path = $name . '/' . str_replace(" ", "_", $entry);
-
-                        echo "Uploading $path\n";
-
-                        $result = $this->client->write($path, $file);
-                        if ($result->isSuccess()) {
-                            echo "OK\n";
-                        } else {
-                            echo "ERROR: " . $result->getStatusCode() . "\n";
-                        }
+                        echo "ERROR: " . $result->getStatusCode() . "\n";
                     }
                 }
             }
-
-            closedir($handle);
         }
+
+        closedir($handle);
     }
 }
 
@@ -97,6 +101,7 @@ if (isset($argv[2])) {
 
 $worker = new TemplateWorker($argv);
 
+echo "Reading remote workspace...\n";
 $data = $worker->readWorkspace();
 
 // always clear out tmp; it can get a bit cluttered
