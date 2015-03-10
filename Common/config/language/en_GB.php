@@ -142,6 +142,9 @@ return array(
     'application-review-financial-history-disqualified' => 'Have you, or have any of your partners, directors, majority
         shareholders or your transport manager ever been disqualified from acting as a director of a company or from
         taking part in the management of a company?',
+    'application-review-financial-history-evidence' => 'Evidence',
+    'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing
+        Office',
     'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
         traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
         application and a decision being made on the application',

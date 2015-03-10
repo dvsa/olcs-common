@@ -24,7 +24,7 @@ class ApplicationPeopleReviewService extends AbstractReviewService
     {
         $mainItems = [];
 
-        $people = array_merge(
+        $people = $this->consolidatePeople(
             $data['applicationOrganisationPersons'],
             $data['licence']['organisation']['organisationPersons']
         );
@@ -44,5 +44,46 @@ class ApplicationPeopleReviewService extends AbstractReviewService
                 ]
             ]
         ];
+    }
+
+    /**
+     * Get the current state of all people, ignoring previous states and deleted people
+     *
+     * @param array $applicationPeople
+     * @param array $licencePeople
+     * @return array
+     */
+    private function consolidatePeople($applicationPeople, $licencePeople)
+    {
+        $people = [];
+        $ignore = [];
+
+        foreach ($applicationPeople as $person) {
+            switch ($person['action']) {
+                case 'A':
+                    $people[] = $person;
+                    break;
+                // If we have updated a person on the application
+                // The updated person is stored in the 'originalPerson' child
+                // The newly updated person is stored in the 'person' child
+                case 'U':
+                    $people[] = $person;
+                    $ignore[] = $person['originalPerson']['id'];
+                    break;
+                // If we have deleted a person on the application
+                // The deleted person is stored in the 'person' child
+                case 'D':
+                    $ignore[] = $person['person']['id'];
+                    break;
+            }
+        }
+
+        foreach ($licencePeople as $person) {
+            if (!in_array($person['person']['id'], $ignore)) {
+                $people[] = $person;
+            }
+        }
+
+        return $people;
     }
 }
