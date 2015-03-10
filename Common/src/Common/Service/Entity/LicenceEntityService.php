@@ -131,6 +131,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             'licenceVehicles' => array(
                 'children' => array(
                     'goodsDiscs',
+                    'interimApplication',
                     'vehicle'
                 )
             )
