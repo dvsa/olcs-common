@@ -5,7 +5,7 @@
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-namespace Common\Service\Cpms;
+namespace Common\Service\Cpms\Exception;
 
 /**
  * Payment Not Found Exception

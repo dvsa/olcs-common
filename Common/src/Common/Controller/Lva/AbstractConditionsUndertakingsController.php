@@ -52,7 +52,7 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
 
         $this->getAdapter()->attachMainScripts();
 
-        return $this->render($this->section, $form);
+        return $this->render($this->section, $form, $this->getRenderVariables());
     }
 
     /**
@@ -203,5 +203,15 @@ abstract class AbstractConditionsUndertakingsController extends AbstractControll
     protected function getTableData()
     {
         return $this->getAdapter()->getTableData($this->getIdentifier());
+    }
+
+    /**
+     * Get any override variables to use for rendering.
+     *
+     * @return array
+     */
+    protected function getRenderVariables()
+    {
+        return array();
     }
 }

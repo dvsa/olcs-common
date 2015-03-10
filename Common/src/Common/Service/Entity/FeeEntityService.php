@@ -53,7 +53,8 @@ class FeeEntityService extends AbstractLvaEntityService
                         )
                     )
                 )
-            )
+            ),
+            'paymentMethod',
         )
     );
 

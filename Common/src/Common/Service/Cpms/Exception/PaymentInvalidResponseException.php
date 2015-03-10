@@ -3,7 +3,7 @@
 /**
  * Invalid Payment Response Exception
  */
-namespace Common\Service\Cpms;
+namespace Common\Service\Cpms\Exception;
 
 /**
  * Invalid Payment Response Exception
