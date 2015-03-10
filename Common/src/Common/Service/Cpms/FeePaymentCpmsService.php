@@ -194,7 +194,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
-            'total_amount' => $amount,
+            'total_amount' => $this->formatAmount($amount),
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
@@ -284,7 +284,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
-            'total_amount' => $amount,
+            'total_amount' => $this->formatAmount($amount),
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
@@ -373,7 +373,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $params = [
             'customer_reference' => (string)$customerReference,
             'scope' => $scope,
-            'total_amount' => $amount,
+            'total_amount' => $this->formatAmount($amount),
             'payment_data' => $paymentData,
             'cost_centre' => self::COST_CENTRE,
         ];
