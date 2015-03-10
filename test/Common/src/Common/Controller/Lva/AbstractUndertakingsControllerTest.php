@@ -103,6 +103,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             ->with('undertakings')
             ->andReturn('complete');
 
+        $this->sut->shouldReceive('handleFees');
+
         $this->assertEquals(
             'complete',
             $this->sut->indexAction()
