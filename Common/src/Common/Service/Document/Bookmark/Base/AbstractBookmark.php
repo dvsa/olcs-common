@@ -1,8 +1,6 @@
 <?php
 namespace Common\Service\Document\Bookmark\Base;
 
-use RuntimeException;
-
 /**
  * Abstract bookmark
  *
