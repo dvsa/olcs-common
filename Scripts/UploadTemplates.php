@@ -65,29 +65,31 @@ class TemplateWorker
 
         while (false !== ($entry = readdir($handle))) {
 
-            if (substr($entry, 0, 1) !== ".") {
-                if (is_dir($source.'/'.$entry)) {
-                    $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
+            if (substr($entry, 0, 1) === ".") {
+                continue;
+            }
+
+            if (is_dir($source.'/'.$entry)) {
+                $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
+            } else {
+                $data = file_get_contents($source . '/' . $entry);
+
+                $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                $mimeType = $finfo->buffer($data);
+
+                $file = new \Dvsa\Jackrabbit\Data\Object\File();
+                $file->setContent($data);
+                $file->setMimeType($mimeType);
+
+                $path = $name . '/' . str_replace(" ", "_", $entry);
+
+                echo "Uploading $path... ";
+
+                $result = $this->client->write($path, $file);
+                if ($result->isSuccess()) {
+                    echo "OK\n";
                 } else {
-                    $data = file_get_contents($source . '/' . $entry);
-
-                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
-                    $mimeType = $finfo->buffer($data);
-
-                    $file = new \Dvsa\Jackrabbit\Data\Object\File();
-                    $file->setContent($data);
-                    $file->setMimeType($mimeType);
-
-                    $path = $name . '/' . str_replace(" ", "_", $entry);
-
-                    echo "Uploading $path... ";
-
-                    $result = $this->client->write($path, $file);
-                    if ($result->isSuccess()) {
-                        echo "OK\n";
-                    } else {
-                        echo "ERROR: " . $result->getStatusCode() . "\n";
-                    }
+                    echo "ERROR: " . $result->getStatusCode() . "\n";
                 }
             }
         }
