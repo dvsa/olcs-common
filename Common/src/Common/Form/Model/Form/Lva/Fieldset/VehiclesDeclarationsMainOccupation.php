@@ -26,7 +26,7 @@ class VehiclesDeclarationsMainOccupation
      *     "label": "application_vehicle-safety_undertakings.mainOccupation.notes",
      * })
      * @Form\Type("Textarea")
-     * @Form\Validator({"name": "Zend\Validator\StringLength", "options": {"min": 10, "max": 4000}})
+     * @Form\Validator({"name": "Zend\Validator\StringLength", "options": {"min": 10, "max": 1000}})
      */
     public $psvMediumVhlNotes = null;
 }
