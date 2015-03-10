@@ -789,5 +789,4 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
         }
     }
-
 }

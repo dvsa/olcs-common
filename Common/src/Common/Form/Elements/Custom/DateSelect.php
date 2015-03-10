@@ -16,27 +16,6 @@ use Zend\Form\Element as ZendElement;
  */
 class DateSelect extends ZendElement\DateSelect
 {
-    public function setOptions($options)
-    {
-        parent::setOptions($options);
-
-        if ($this->getOption('max_year_delta')) {
-            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
-
-            $minYear = $this->getOption('min_year_delta');
-
-            if (isset($minYear)) {
-                $minYear = date('Y', strtotime($minYear . ' years'));
-            } else {
-                // if there's no delta specified, initially set the minimum year
-                // to the current year
-                $minYear = date('Y');
-            }
-
-            $this->setMinYear($minYear);
-            $this->setMaxYear($maxYear);
-        }
-    }
     /**
      * Should return an array specification compatible with
      * {@link Zend\InputFilter\Factory::createInput()}.
@@ -94,4 +73,27 @@ class DateSelect extends ZendElement\DateSelect
             )
         );
     }
+
+    public function setOptions($options)
+    {
+        parent::setOptions($options);
+
+        if ($this->getOption('max_year_delta')) {
+            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
+
+            $minYear = $this->getOption('min_year_delta');
+
+            if (isset($minYear)) {
+                $minYear = date('Y', strtotime($minYear . ' years'));
+            } else {
+                // if there's no delta specified, initially set the minimum year
+                // to the current year
+                $minYear = date('Y');
+            }
+
+            $this->setMinYear($minYear);
+            $this->setMaxYear($maxYear);
+        }
+    }
+
 }
