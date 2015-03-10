@@ -6,6 +6,7 @@ use Zend\Form\Element\Button;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper\AbstractHelper;
+use Common\Form\Elements\Types\Table;
 
 /**
  * Class FormRow
@@ -24,6 +25,7 @@ class FormRow extends AbstractHelper
     protected $classMap = [
         'Zend\Form\Element\Select' => 'readonlyformselect',
         'Zend\Form\Element\DateSelect' => 'readonlyformdateselect',
+        'Common\Form\Elements\Types\Table' => 'readonlyformtable'
     ];
 
     /**
@@ -71,9 +73,18 @@ class FormRow extends AbstractHelper
      */
     public function render(ElementInterface $element)
     {
-        if (in_array($element->getAttribute('type'), ['hidden', 'submit']) || $element instanceof Button) {
+        if (in_array($element->getAttribute('type'), ['hidden', 'submit']) ||
+            $element instanceof Button ||
+            $element->getOption('remove_if_readonly')
+        ) {
             //bail early if we don't want to display this type of element
             return '';
+        }
+
+        if ($element instanceof Table) {
+            // we dont want Tables to be rendered with a label / value so just return the result of the view helper
+            $elementHelper = $this->getElementHelper($element);
+            return  $elementHelper($element);
         }
 
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();

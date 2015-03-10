@@ -8,16 +8,16 @@ namespace Common\Service\Document\Bookmark\Base;
  */
 abstract class AbstractBookmark
 {
-    protected $token = null;
-
-    protected $parser = null;
-
     /**
      * By default, all bookmarks are not assumed to have been preformatted.
      * This indicates that the parser should replace any relevant characters
      * such as newlines with its own representation (e.g. \par, <br>, etc)
      */
     const PREFORMATTED = false;
+
+    protected $token = null;
+
+    protected $parser = null;
 
     public function setToken($token)
     {
@@ -34,10 +34,12 @@ abstract class AbstractBookmark
         return static::PREFORMATTED;
     }
 
-    public function getSnippet()
+    public function getSnippet($className = null)
     {
-        $className = explode('\\', get_called_class());
-        $className = array_pop($className);
+        if ($className === null) {
+            $className = explode('\\', get_called_class());
+            $className = array_pop($className);
+        }
 
         $fileExt = $this->getParser()->getFileExtension();
         $path = __DIR__ . '/../Snippet/' . $className . '.' . $fileExt;

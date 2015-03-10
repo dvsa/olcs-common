@@ -53,7 +53,8 @@ class FeeEntityService extends AbstractLvaEntityService
                         )
                     )
                 )
-            )
+            ),
+            'paymentMethod',
         )
     );
 
@@ -120,6 +121,20 @@ class FeeEntityService extends AbstractLvaEntityService
         ];
 
         $data = $this->get($params, $this->latestOutstandingFeeForBundle);
+
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
+    public function getLatestFeeForBusReg($busRegId)
+    {
+        $params = [
+            'busReg' => $busRegId,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+
+        $data = $this->get($params, $this->overviewBundle);
 
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }

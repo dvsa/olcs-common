@@ -119,9 +119,11 @@ class ApplicationAddressesReviewService extends AbstractReviewService
 
     private function getPhoneNumber($phoneContacts, $which)
     {
-        foreach ($phoneContacts as $phoneContact) {
-            if ($phoneContact['phoneContactType']['id'] === $which) {
-                return $phoneContact['phoneNumber'];
+        if (is_array($phoneContacts)) {
+            foreach ($phoneContacts as $phoneContact) {
+                if ($phoneContact['phoneContactType']['id'] === $which) {
+                    return $phoneContact['phoneNumber'];
+                }
             }
         }
 

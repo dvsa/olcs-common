@@ -86,8 +86,12 @@ return array(
     'application-form-owners-header-directors' => 'W Directors',
     'application-form-owners-header-partners' => 'W Partners',
     'application-form-owners-header-persons' => 'W Persons responsible for your organisation',
+    'application-grant-error-fees' => 'W You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'W You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'W You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
+    'application-not-granted' => 'W The application has not been granted',
     'application-review-addresses-contact-details-title' => 'W Contact details',
     'application-review-addresses-correspondence-address' => 'W Correspondence Address',
     'application-review-addresses-correspondence-business' => 'W Business telephone No.',
@@ -95,7 +99,7 @@ return array(
     'application-review-addresses-correspondence-fax' => 'W Fax telephone No.',
     'application-review-addresses-correspondence-home' => 'W Home telephone No.',
     'application-review-addresses-correspondence-mobile' => 'W Mobile telephone No.',
-    'application-review-addresses-correspondence-title' => 'W Correspondance',
+    'application-review-addresses-correspondence-title' => 'W Correspondence',
     'application-review-addresses-establishment-address' => 'W Establishment address',
     'application-review-addresses-establishment-title' => 'W Establishment',
     'application-review-addresses-fao' => 'W For attention of',
@@ -110,6 +114,85 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'W Company number',
     'application-review-business-details-trading-names' => 'W Trading names',
     'application-review-business-type' => 'W What type of business are you?',
+    'application-review-convictions-penalties-confirmation' => 'W Confirm that you are aware that you must tell the
+        traffic commissioner immediately of any relevant convictions that occur between the submission of your
+        application and a decision being made on this application',
+    'application-review-convictions-penalties-conviction-convictionDate' => 'W Date of conviction',
+    'application-review-convictions-penalties-conviction-familyName' => 'W Last name',
+    'application-review-convictions-penalties-conviction-forename' => 'W First name(s)',
+    'application-review-convictions-penalties-conviction-offence' => 'W Offence',
+    'application-review-convictions-penalties-conviction-offence-court' => 'W Name of court',
+    'application-review-convictions-penalties-conviction-offence-details' => 'W Offence details',
+    'application-review-convictions-penalties-conviction-offence-penalty' => 'W Penalty',
+    'application-review-convictions-penalties-conviction-title' => 'W Title',
+    'application-review-convictions-penalties-question' => 'W Has any person named in this application, (including
+        partners, directors and transport managers); any company of which a person named on this application is or has
+        been a director; any parent company if you are a limited company; or any of your employees or agents been
+        convicted of any relevant offence which must be declared to the traffic commissioner?',
+    'application-review-financial-evidence-evidence' => 'W Evidence',
+    'application-review-financial-evidence-evidence-post' => 'W Operator to send original evidence to the Central
+        Licensing Office',
+    'application-review-financial-evidence-no-of-vehicles' => 'W Number of vehicles',
+    'application-review-financial-evidence-required-finance' => 'W Required finance',
+    'application-review-financial-history-administration' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) administration?',
+    'application-review-financial-history-bankrupt' => 'W Has any person named in this application (including partners,
+        directors or transport managers) ever been declared bankrupt or had their estate seized or confiscated?',
+    'application-review-financial-history-disqualified' => 'W Have you, or have any of your partners, directors,
+        majority shareholders or your transport manager ever been disqualified from acting as a director of a company or
+        from taking part in the management of a company?',
+    'application-review-financial-history-insolvencyConfirmation' => 'W Confirm that you are aware that you must tell
+        the traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        application and a decision being made on the application',
+    'application-review-financial-history-insolvencyDetails' => 'W Additional information',
+    'application-review-financial-history-liquidation' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) liquidation, owing money?',
+    'application-review-financial-history-receivership' => 'W Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) receivership?',
+    'application-review-licence-history-applied-question' => 'W Has any person named in the application (including
+        partners, directors or transport managers) previously held or applied for a goods or public service vehicle
+        operator\'s licence in any traffic area?',
+    'application-review-licence-history-applied-title' => 'W Previous licences',
+    'application-review-licence-history-current-question' => 'W Does any person named in this application (including
+        partners, directors and transport managers) currently hold a goods or public service vehicle operator\'s licence
+        in any traffic area?',
+    'application-review-licence-history-current-title' => 'W Current licences',
+    'application-review-licence-history-disqualification-date' => 'W Date of disqualification',
+    'application-review-licence-history-disqualification-length' => 'W Length of disqualification',
+    'application-review-licence-history-disqualified-question' => 'W Has any person named in the application (including
+        partners, directors or transport managers) been disqualified from holding or obtaining an operator\'s licence by
+        any traffic commissioner?',
+    'application-review-licence-history-disqualified-title' => 'W Disqualifications',
+    'application-review-licence-history-held-question' => 'W Within the last twelve months, have you, your company or
+        organisation or your partners or directors purchased the assets or shareholding of any company that, to you
+        knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+    'application-review-licence-history-held-title' => 'W Previously purchased assets',
+    'application-review-licence-history-licence-holder' => 'W Licence holder name',
+    'application-review-licence-history-licence-no' => 'W Licence number',
+    'application-review-licence-history-public-inquiry-question' => 'W Has any person named in the application
+        (including partners, directors or transport managers) ever attended a Public Inquiry before a traffic
+        commissioner?',
+    'application-review-licence-history-public-inquiry-title' => 'W Public Inquiries',
+    'application-review-licence-history-purchase-date' => 'W Date of purchase',
+    'application-review-licence-history-refused-question' => 'W Has any person named in the application (including
+        partners, directors or transport managers) ever had an application for a goods or a public service vehicle
+        operator\'s licence refused by any EU licensing authority?',
+    'application-review-licence-history-refused-title' => 'W Refused licences',
+    'application-review-licence-history-revoked-question' => 'W Has any person named in the application (including
+        partners, directors or transport managers) ever had a goods or public service vehicle operator\'s licence
+        revoked, suspended or curtailed by any EU licensing authority?',
+    'application-review-licence-history-revoked-title' => 'W Revoked, suspended or curtailed licences',
+    'application-review-licence-history-will-surrender' => 'W Will this licence be surrendered if this application is
+        granted?',
+    'application-review-people-person-dob' => 'W Date of birth',
+    'application-review-people-person-firstname' => 'W First name(s)',
+    'application-review-people-person-lastname' => 'W Last name',
+    'application-review-people-person-othername' => 'W Other name(s)',
+    'application-review-people-person-position' => 'W Position',
+    'application-review-people-person-title' => 'W Title',
     'application-review-safety-safetyConfirmation' => 'W Confirm there are suitable arrangements in place to keep the
         vehicles in a fit and serviceable condition at all times',
     'application-review-safety-safetyInsTrailers' => 'W Maximum time between trailer safety inspections',
@@ -127,6 +210,12 @@ return array(
     'application-review-safety-workshop-isExternal-Y' => 'W An external contractor',
     'application-review-safety-workshop-name' => 'W Contractor\'s name or person\'s full name if performed internally',
     'application-review-safety-workshop-title' => 'W Safety inspection providers',
+    'application-review-taxi-phv-address' => 'W Address',
+    'application-review-taxi-phv-council-name' => 'W Council name',
+    'application-review-taxi-phv-licence-number' => 'W Taxi/PHV licence number',
+    'application-review-taxi-phv-title' => 'W Taxi/PHV licences',
+    'application-review-taxi-phv-traffic-area' => 'W Traffic area',
+    'application-review-taxi-phv-traffic-area-title' => 'W Traffic area',
     'application-review-title-gv' => 'W Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'W Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'W Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -134,6 +223,14 @@ return array(
     'application-review-type-of-licence-licence-type' => 'W What type of licence do you want to apply for?',
     'application-review-type-of-licence-operator-location' => 'W Where do you operate from?',
     'application-review-type-of-licence-operator-type' => 'W What type of operator are you?',
+    'application-review-vehicles-hasEnteredReg' => 'W Vehicle details submitted?',
+    'application-review-vehicles-is-novelty' => 'W Limousine or novelty vehicle',
+    'application-review-vehicles-make' => 'W Make / model',
+    'application-review-vehicles-psv-large-title' => 'W 17 or more passenger seat vehicles',
+    'application-review-vehicles-psv-medium-title' => 'W 9 - 16 passenger seat vehicles',
+    'application-review-vehicles-psv-small-title' => 'W Small vehicles',
+    'application-review-vehicles-vrm' => 'W VRM',
+    'application-review-vehicles-weight' => 'W Gross plated weight (Kg)',
     'application-search-person-header-partner' => 'W Add new partner',
     'application-search-person-header-person' => 'W Add new responsible person',
     'application-search-subsidiary-header' => 'W Subsidiary Company',
@@ -1125,6 +1222,7 @@ return array(
     'licence.overview.licence-no' => 'W Licence No.',
     'licence.overview.title' => 'W Licence overview',
     'licence.print' => 'W Print licence',
+    'licence.print.success' => 'W Licence printed successfully',
     'licence.surrender' => 'W Surrender licence',
     'licence.variation' => 'W Create variation',
     'licence.variation.confirmation.text' => 'W Are you sure you want to create a variation application?',
@@ -1268,6 +1366,7 @@ return array(
     'lva.section.title.edit_vehicles' => 'W Edit vehicle',
     'lva.section.title.financial_evidence' => 'W Financial evidence',
     'lva.section.title.financial_history' => 'W Financial history',
+    'lva.section.title.grant_application' => 'W Grant application',
     'lva.section.title.licence_history' => 'W Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
     'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
@@ -1924,6 +2023,8 @@ return array(
     'variation-application-text3' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
+    'variation-grant-error-no-change' => 'W Nothing has been updated',
+    'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
     'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
@@ -1931,10 +2032,15 @@ return array(
     'variation-review-addresses-change' => 'W Thank you for updating your addresses',
     'variation-review-business-details-change' => 'W Thank you for updating your business details',
     'variation-review-business-type-change' => 'W Thank you for updating your business type',
+    'variation-review-discs-change' => 'W Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'W New operating centres',
     'variation-review-operating-centres-deleted-title' => 'W Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'W Traffic area and authorisation',
     'variation-review-operating-centres-updated-title' => 'W Updated operating centres',
+    'variation-review-people-A-title' => 'W People added',
+    'variation-review-people-D-title' => 'W People removed',
+    'variation-review-people-U-title' => 'W People updated',
+    'variation-review-people-change' => 'W Thank you for updating your people',
     'variation-review-safety-change' => 'W Thank you for updating your safety details',
     'variation-review-title-gv' => 'W Application to vary a Goods Vehicle Operator\'s Licence',
     'variation-review-title-psv' => 'W Application to vary a Public Service Vehicle Operator\'s Licence',

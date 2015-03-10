@@ -388,6 +388,48 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'vehicles' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle'
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'vehicles_psv' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle' => [
+                                'children' => [
+                                    'psvType'
+                                ]
+                            ]
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ],
+            'licence_history' => [
+                'children' => [
+                    'previousLicences' => [
+                        'children' => [
+                            'previousLicenceType'
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
@@ -477,7 +519,48 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
-            ]
+            ],
+            'taxi_phv' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea',
+                            'privateHireLicences' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'organisationPersons' => [
+                                        'children' => [
+                                            'person'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
         ],
         'variation' => [
             'type_of_licence' => [
@@ -485,6 +568,24 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'licence' => [
                         'children' => [
                             'licenceType'
+                        ]
+                    ]
+                ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
                         ]
                     ]
                 ]

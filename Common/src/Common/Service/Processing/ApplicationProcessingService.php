@@ -14,7 +14,10 @@ use Common\Service\Data\CategoryDataService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Processing\ApplicationSnapshotProcessingService;
+use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
+use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
 
 /**
  * Application Processing Service
@@ -39,6 +42,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function validateApplication($id)
     {
+        $this->processPreGrantData($id);
+
         $licenceId = $this->getLicenceId($id);
 
         $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
@@ -80,6 +85,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processGrantVariation($id)
     {
+        $this->processPreGrantData($id);
+
         $licenceId = $this->getLicenceId($id);
 
         $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
@@ -175,6 +182,82 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param int $applicationId
+     * @param array $requiredSections
+     */
+    public function trackingIsValid($applicationId, $requiredSections)
+    {
+        $statuses = $this->getServiceLocator()->get('Entity\ApplicationTracking')
+            ->getTrackingStatuses($applicationId);
+
+        $stringHelper = $this->getServiceLocator()->get('Helper\String');
+
+        $validStatuses = [Tracking::STATUS_ACCEPTED, Tracking::STATUS_NOT_APPLICABLE];
+
+        foreach ($requiredSections as $section) {
+            $key = lcfirst($stringHelper->underscoreToCamel($section).'Status');
+            if (!in_array($statuses[$key], $validStatuses)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $applicationId
+     * @param array $requiredSections
+     */
+    public function sectionCompletionIsValid($applicationId, $requiredSections)
+    {
+        $completions = $this->getServiceLocator()->get('Entity\ApplicationCompletion')
+            ->getCompletionStatuses($applicationId);
+
+        $stringHelper = $this->getServiceLocator()->get('Helper\String');
+
+        foreach ($requiredSections as $section) {
+            $key = lcfirst($stringHelper->underscoreToCamel($section).'Status');
+            if (!isset($completions[$key]) || $completions[$key] !== Completion::STATUS_COMPLETE) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $applicationId
+     * @param array $requiredSections
+     */
+    public function getIncompleteSections($applicationId, $requiredSections)
+    {
+        $completions = $this->getServiceLocator()->get('Entity\ApplicationCompletion')
+            ->getCompletionStatuses($applicationId);
+
+        $stringHelper = $this->getServiceLocator()->get('Helper\String');
+
+        $incomplete = [];
+        foreach ($requiredSections as $section) {
+            $key = lcfirst($stringHelper->underscoreToCamel($section).'Status');
+            if ($completions[$key] !== Completion::STATUS_COMPLETE) {
+                $incomplete[] = $section;
+            }
+        }
+
+        return $incomplete;
+    }
+
+    /**
+     * @param int $applicationId
+     * @param boolean if there are any outstanding fees
+     */
+    public function feeStatusIsValid($applicationId)
+    {
+        $fees = $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId);
+        return empty($fees);
     }
 
     protected function createGrantFee($applicationId, $licenceId, $taskId)
@@ -276,7 +359,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             $data['goodsOrPsv'],
             $data['licenceType'],
             $date,
-            ($data['niFlag'] === 'Y')
+            ($data['niFlag'] === 'Y') ? TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE : null
         );
     }
 
@@ -490,6 +573,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function processGrantPsvApplication($id, $licenceId)
     {
+        $this->processPreGrantData($id);
+
         $appStatus = ApplicationEntityService::APPLICATION_STATUS_VALID;
         $licStatus = LicenceEntityService::LICENCE_STATUS_VALID;
 
@@ -537,6 +622,11 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->getServiceLocator()->get('Processing\GrantPeople')->grant($id);
 
+        $this->getServiceLocator()->get('Processing\Licence')->generateDocument($licenceId);
+    }
+
+    protected function processPreGrantData($id)
+    {
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
             ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
     }
