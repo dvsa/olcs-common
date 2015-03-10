@@ -5,7 +5,7 @@
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-namespace Common\Service\Cpms;
+namespace Common\Service\Cpms\Exception;
 
 /**
  * Invalid Payment Amount Exception
