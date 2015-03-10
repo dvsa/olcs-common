@@ -8,6 +8,8 @@ namespace Common\Service\Helper;
 
 use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\FeeEntityService;
+use Common\Service\Data\FeeTypeDataService;
 
 /**
  * Class InterimHelperService
@@ -57,6 +59,100 @@ class InterimHelperService extends AbstractHelperService
                 return true;
             }
         }
+    }
+
+    /**
+     * Create an interim fee for the application if one doesnt already exist.
+     *
+     * @param $applicationId The applications identifier.
+     *
+     * @return void
+     */
+    public function createInterimFeeIfNotExist($applicationId)
+    {
+        $applicationProcessingService = $this->getServiceLocator()->get('Processing\Application');
+        $fees = $this->getInterimFees($applicationId);
+
+        // Create fee if not exist.
+        if (!$fees) {
+            $interimData = $this->getInterimData($applicationId);
+            $applicationProcessingService->createFee(
+                $applicationId,
+                $interimData['licence']['id'],
+                FeeTypeDataService::FEE_TYPE_GRANTINT
+            );
+        }
+    }
+
+    /**
+     * Cancel an interim fee for an application if one exists.
+     *
+     * @param $applicationId The applications identifier.
+     *
+     * @return void
+     */
+    public function cancelInterimFees($applicationId)
+    {
+        $feeService = $this->getServiceLocator()->get('Entity\Fee');
+        $fees = $this->getInterimFees($applicationId);
+
+        $ids = [];
+        foreach ($fees as $fee) {
+            $ids[] = $fee['id'];
+        }
+
+        if ($ids) {
+            $feeService->cancelByIds($ids);
+        }
+
+    }
+
+    /**
+     * Get all fees with a specific type and status for an application.
+     *
+     * @param null|int $applicationId The application identifier.
+     * @param string $type The fee type.
+     * @param array $statuses The fee statuses.
+     *
+     * @return mixed
+     */
+    protected function getInterimFees
+    (
+        $applicationId = null,
+        $type = FeeTypeDataService::FEE_TYPE_GRANTINT,
+        $statuses = array(
+            FeeEntityService::STATUS_OUTSTANDING,
+            FeeEntityService::STATUS_WAIVE_RECOMMENDED
+        )
+    )
+    {
+        $feeService = $this->getServiceLocator()->get('Entity\Fee');
+
+        $applicationProcessingService = $this->getServiceLocator()->get('Processing\Application');
+        $feeTypeData = $applicationProcessingService->getFeeTypeForApplication(
+            $applicationId,
+            $type
+        );
+
+        return $feeService->getFeeByTypeStatusesAndApplicationId(
+            $feeTypeData['id'],
+            $statuses,
+            $applicationId
+        );
+    }
+
+    /**
+     * Get interim data for an application.
+     *
+     * @param $applicationId Get interim data
+     *
+     * @return mixed
+     */
+    protected function getInterimData($applicationId)
+    {
+        return $this->getServiceLocator()
+            ->get('Entity\Application')
+            ->getDataForInterim($applicationId);
     }
 
     /**

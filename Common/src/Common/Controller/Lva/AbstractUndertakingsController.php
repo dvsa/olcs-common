@@ -8,7 +8,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Data\FeeTypeDataService;
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
 
@@ -33,7 +32,6 @@ abstract class AbstractUndertakingsController extends AbstractController
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
-                // This should go in postSave but due to trait inheritance it cannot.
                 $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
@@ -56,18 +54,19 @@ abstract class AbstractUndertakingsController extends AbstractController
         return $this->render('undertakings', $form);
     }
 
-    protected function handleFees(array $data)
+    /**
+     * Handle any fees that may need to bo applied upon completing this section.
+     *
+     * @param $data
+     */
+    public function handleFees($data)
     {
-        $applicationId = $this->getApplicationId();
-        $licenceId = $this->getLicenceId();
+        $interimService = $this->getServiceLocator()->get('Helper\Interim');
 
         if ($data['interim']['goodsApplicationInterim'] === 'Y') {
-            $this->getServiceLocator()
-                ->get('Processing\Application')
-                ->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_GRANTINT);
-        }elseif ($data['interim']['goodsApplicationInterim'] === 'N') {
-            $this->getServiceLocator()->get('Entity\Fee')
-                ->cancelForApplication($applicationId, FeeTypeDataService::FEE_TYPE_GRANTINT);
+            $interimService->createInterimFeeIfNotExist($data['declarationsAndUndertakings']['id']);
+        } elseif($data['interim']['goodsApplicationInterim'] === 'N') {
+            $interimService->cancelInterimFees($data['declarationsAndUndertakings']['id']);
         }
     }
 
