@@ -160,6 +160,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             }
         }
 
+        // @see https://jira.i-env.net/browse/OLCS-2853
         if ($data['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_RESTRICTED
             || $data['totAuthMediumVehicles'] === 0
         ) {
