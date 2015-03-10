@@ -554,6 +554,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'applicationOrganisationPersons' => [
                         'children' => [
+                            'originalPerson',
                             'person'
                         ]
                     ]
