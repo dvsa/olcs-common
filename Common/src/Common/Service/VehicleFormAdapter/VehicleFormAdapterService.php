@@ -26,10 +26,6 @@ class VehicleFormAdapterService implements ServiceLocatorAwareInterface
         $formHelper->remove($form, 'licence-vehicle->removalDate');
         $formHelper->remove($form, 'licence-vehicle->discNo');
 
-        // we don't have any visible elements now but we need
-        // to keep this fieldset to save existing logic
-        $form->get('licence-vehicle')->setAttribute('class', 'visually-hidden');
-
         return $form;
     }
 }
