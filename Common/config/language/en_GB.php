@@ -152,6 +152,40 @@ return array(
     'application-review-financial-history-receivership' => 'Has any person named in this application (including
         partners, directors or transport managers) ever been involved with a company, or business, that has gone into
         (or is going into) receivership?',
+    'application-review-licence-history-applied-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) previously held or applied for a goods or public service vehicle
+        operator\'s licence in any traffic area?',
+    'application-review-licence-history-applied-title' => 'Previous licences',
+    'application-review-licence-history-current-question' => 'Does any person named in this application (including
+        partners, directors and transport managers) currently hold a goods or public service vehicle operator\'s licence
+        in any traffic area?',
+    'application-review-licence-history-current-title' => 'Current licences',
+    'application-review-licence-history-disqualification-date' => 'Date of disqualification',
+    'application-review-licence-history-disqualification-length' => 'Length of disqualification',
+    'application-review-licence-history-disqualified-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) been disqualified from holding or obtaining an operator\'s licence by
+        any traffic commissioner?',
+    'application-review-licence-history-disqualified-title' => 'Disqualifications',
+    'application-review-licence-history-held-question' => 'Within the last twelve months, have you, your company or
+        organisation or your partners or directors purchased the assets or shareholding of any company that, to you
+        knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+    'application-review-licence-history-held-title' => 'Previously purchased assets',
+    'application-review-licence-history-licence-holder' => 'Licence holder name',
+    'application-review-licence-history-licence-no' => 'Licence number',
+    'application-review-licence-history-public-inquiry-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever attended a Public Inquiry before a traffic commissioner?',
+    'application-review-licence-history-public-inquiry-title' => 'Public Inquiries',
+    'application-review-licence-history-purchase-date' => 'Date of purchase',
+    'application-review-licence-history-refused-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had an application for a goods or a public service vehicle
+        operator\'s licence refused by any EU licensing authority?',
+    'application-review-licence-history-refused-title' => 'Refused licences',
+    'application-review-licence-history-revoked-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had a goods or public service vehicle operator\'s licence
+        revoked, suspended or curtailed by any EU licensing authority?',
+    'application-review-licence-history-revoked-title' => 'Revoked, suspended or curtailed licences',
+    'application-review-licence-history-will-surrender' => 'Will this licence be surrendered if this application is
+        granted?',
     'application-review-people-person-dob' => 'Date of birth',
     'application-review-people-person-firstname' => 'First name(s)',
     'application-review-people-person-lastname' => 'Last name',
@@ -1068,6 +1102,27 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.interim_application' => 'Interim application',
+    'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
+    'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
+    'internal.interim.form.interim_cancel' => 'Cancel',
+    'internal.interim.form.interim_end' => 'Interim end date',
+    'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_reason' => 'Interim reason',
+    'internal.interim.form.interim_refuse' => 'Refuse',
+    'internal.interim.form.interim_requested' => 'Interim requested',
+    'internal.interim.form.interim_save' => 'Save',
+    'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.operatingcentres.table.address' => 'Operating centre address',
+    'internal.interim.operatingcentres.table.header' => 'Operating centres',
+    'internal.interim.operatingcentres.table.listed' => 'Listed',
+    'internal.interim.operatingcentres.table.trailers' => 'Trailers',
+    'internal.interim.operatingcentres.table.vehicles' => 'Vehicles',
+    'internal.interim.vehicles.table.header' => 'Vehicles',
+    'internal.interim.vehicles.table.listed' => 'Listed',
+    'internal.interim.vehicles.table.vrm' => 'VRM',
+    'internal.interim.vehicles.table.weight' => 'Gross plated weight (Kg)',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -2019,6 +2074,9 @@ return array(
     'your-business' => 'Your business',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is an additional charge to apply for this',
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim authority.',
-    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your interim application.'
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your interim application.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
     // Potentially unused (Not found with grep)
 );

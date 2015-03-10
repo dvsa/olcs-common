@@ -14,6 +14,14 @@ namespace Common\Service\Entity;
  */
 class PreviousLicenceEntityService extends AbstractEntityService
 {
+    const TYPE_CURRENT = 'prev_has_licence';
+    const TYPE_APPLIED = 'prev_had_licence';
+    const TYPE_REFUSED = 'prev_been_refused';
+    const TYPE_REVOKED = 'prev_been_revoked';
+    const TYPE_PUBLIC_INQUIRY = 'prev_been_at_pi';
+    const TYPE_DISQUALIFIED = 'prev_been_disqualified_tc';
+    const TYPE_HELD = 'prev_purchased_assets';
+
     /**
      * Define entity for default behaviour
      *

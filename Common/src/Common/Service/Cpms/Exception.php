@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Generic Cpms Service Exception
+ * Generic Cpms Exception
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace Common\Service\Cpms;
 
 /**
- * Generic Cpms Service Exception
+ * Generic Cpms Exception
  *
  * @author Dan Eggleston <dan@stolenegg.com>
  */
-class PaymentException extends \Exception
+class Exception extends \Exception
 {
 }

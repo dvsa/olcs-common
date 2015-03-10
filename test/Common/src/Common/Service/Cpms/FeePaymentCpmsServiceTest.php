@@ -9,8 +9,8 @@ namespace CommonTest\Service\Cpms;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Cpms\FeePaymentCpmsService;
-use Common\Service\Cpms\PaymentNotFoundException;
-use Common\Service\Cpms\PaymentInvalidStatusException;
+use Common\Service\Cpms\Exception\PaymentNotFoundException;
+use Common\Service\Cpms\Exception\PaymentInvalidStatusException;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\FeePaymentEntityService;
@@ -170,6 +170,16 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                ->with(1, ['paymentMethod' => 'fpm_card_offline'])
+                ->shouldReceive('forceUpdate')
+                ->with(2, ['paymentMethod' => 'fpm_card_offline'])
+                ->getMock()
+        );
+
         $this->sut->initiateCardRequest('cust_ref', 'redirect_url', $fees);
 
         $this->assertCount(2, $this->logWriter->events);
@@ -178,7 +188,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidResponseException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidResponseException
      * @expectedExceptionMessage some kind of error
      */
     public function testInitiateCardRequestWithInvalidResponseThrowsException()
@@ -407,8 +417,9 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     public function nonSuccessfulStatusProvider()
     {
         return [
-            [807, PaymentEntityService::STATUS_FAILED],
-            [802, PaymentEntityService::STATUS_CANCELLED]
+            'cancellation' => [807, PaymentEntityService::STATUS_FAILED],
+            'failure'      => [802, PaymentEntityService::STATUS_CANCELLED],
+            'in progress'  => [800, PaymentEntityService::STATUS_FAILED],
         ];
     }
 
@@ -426,8 +437,10 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             ]
         ];
         $this->client->shouldReceive('put')
+            ->once()
             ->with('/api/gateway/payment_reference/complete', 'CARD', $data)
             ->shouldReceive('get')
+            ->once()
             ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
             ->andReturn(
                 [
@@ -457,6 +470,50 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $resultStatus = $this->sut->handleResponse($data, []);
 
         $this->assertEquals(null, $resultStatus);
+    }
+
+    /**
+     * @expectedException Common\Service\Cpms\Exception\StatusInvalidResponseException
+     */
+    public function testHandleResponseWithInvalidStatusResponse()
+    {
+        $data = [
+            'receipt_reference' => 'payment_reference'
+        ];
+
+        $queryData = [
+            'required_fields' => [
+                'payment' => [
+                    'payment_status'
+                ]
+            ]
+        ];
+        $this->client->shouldReceive('put')
+            ->once()
+            ->with('/api/gateway/payment_reference/complete', 'CARD', $data)
+            ->shouldReceive('get')
+            ->once()
+            ->with('/api/payment/payment_reference', 'QUERY_TXN', $queryData)
+            ->andReturn(['something_unexpected'])
+            ->getMock();
+
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
+                ->shouldReceive('getDetails')
+                ->with('payment_reference')
+                ->andReturn(
+                    [
+                        'id' => 123,
+                        'status' => [
+                            'id' => PaymentEntityService::STATUS_OUTSTANDING
+                        ]
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->sut->handleResponse($data, []);
     }
 
     public function testRecordCashPayment()
@@ -539,7 +596,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordCashPaymentPartPaymentThrowsException()
     {
@@ -681,7 +738,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordChequePaymentPartPaymentThrowsException()
     {
@@ -825,7 +882,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     }
 
     /**
-     * @expectedException Common\Service\Cpms\PaymentInvalidAmountException
+     * @expectedException Common\Service\Cpms\Exception\PaymentInvalidAmountException
      */
     public function testRecordPostalOrderPaymentPartPaymentThrowsException()
     {
@@ -1008,7 +1065,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     /**
      * @dataProvider formatAmountInvalidAmountProvider
      * @param mixed $amount
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testFormatAmountInvalidAmounts($amount)
     {
@@ -1023,5 +1080,193 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'array'  => [array(123)],
             'object' => [new \Stdclass],
         ];
+    }
+
+    /**
+     * @dataProvider isCardPaymentProvider
+     * @param array $data
+     * @param boolean $expected
+     */
+    public function testIsCardPayment($data, $expected)
+    {
+        $this->assertEquals($expected, $this->sut->isCardPayment($data));
+    }
+
+    /**
+     * @return array
+     */
+    public function isCardPaymentProvider()
+    {
+        return [
+            'card online' => [
+                ['details' => ['paymentType' => FeePaymentEntityService::METHOD_CARD_ONLINE]],
+                true,
+            ],
+            'card offline' => [
+                ['details' => ['paymentType' => FeePaymentEntityService::METHOD_CARD_OFFLINE]],
+                true,
+            ],
+            'not card' => [
+                ['details' => ['paymentType' => FeePaymentEntityService::METHOD_CASH]],
+                false,
+            ],
+            'invalid' => [
+                [],
+                false,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider hasOutstandingPaymentProvider
+     * @param array $feeData
+     * @param boolean $expected
+     */
+    public function testHasOutstandingPayments($feeData, $expected)
+    {
+        $this->assertEquals($expected, $this->sut->hasOutstandingPayment($feeData));
+    }
+
+    /**
+     * @return array
+     */
+    public function hasOutstandingPaymentProvider()
+    {
+        return [
+            'one outstanding' => [
+                [
+                    'id' => 1,
+                    'feePayments' => [
+                        [
+                            'payment' => [
+                                'id' => 1,
+                                'status' => ['id' => 'pay_s_os'], //PaymentEntityService::STATUS_OUTSTANDING
+                            ],
+                        ]
+                    ]
+                ],
+                true,
+            ],
+            'none outstanding' => [
+                [
+                    'id' => 1,
+                    'feePayments' => [
+                        [
+                            'payment' => [
+                                'id' => 1,
+                                'status' => ['id' => 'pay_s_somethingelse'],
+                            ],
+                        ]
+                    ]
+                ],
+                false,
+            ],
+            'two payments with one outstanding' => [
+                [
+                    'id' => 1,
+                    'feePayments' => [
+                        [
+                            'payment' => [
+                                'id' => 1,
+                                'status' => ['id' => 'pay_s_cn'], //PaymentEntityService::STATUS_CANCELLED
+                            ],
+                        ],
+                        [
+                            'payment' => [
+                                'id' => 2,
+                                'status' => ['id' => 'pay_s_os'], //PaymentEntityService::STATUS_OUTSTANDING
+                            ],
+                        ]
+                    ]
+                ],
+                true,
+            ],
+            'no payments' =>[
+                [
+                    'id' => 1,
+                    'feePayments' => [],
+                ],
+                false,
+            ],
+        ];
+    }
+
+    public function testResolveOutstandingPaymentsSinglePaidFee()
+    {
+        $fee = [
+            'id' => 1,
+            'amount' => 1234.56,
+            'feePayments' => [
+                [
+                    'payment' => [
+                        'id' => 11,
+                        'status' => ['id' => 'pay_s_os'], //PaymentEntityService::STATUS_OUTSTANDING
+                        'guid' => 'payment_reference'
+                    ],
+                ]
+            ],
+            'paymentMethod' => ['id' => 'fpm_card_offline'], //FeePaymentEntityService::METHOD_CARD_OFFLINE]
+        ];
+
+        $this->client
+            ->shouldReceive('get')
+            ->with(
+                '/api/payment/payment_reference',
+                'QUERY_TXN',
+                ['required_fields' => ['payment' => ['payment_status']]]
+            )
+            ->andReturn(
+                [
+                    'payment_status' => [
+                        'code' => 801 // FeePaymentCpmsService::PAYMENT_SUCCESS
+                    ]
+                ]
+            );
+
+        $this->sm->setService(
+            'Entity\FeePayment',
+            m::mock()
+                ->shouldReceive('getFeesByPaymentId')
+                ->with(11)
+                ->andReturn([$fee])
+                ->getMock()
+        );
+
+        $this->mockDate('2015-03-09');
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                ->with(
+                    1,
+                    [
+                        'feeStatus'      => FeeEntityService::STATUS_PAID,
+                        'receivedDate'   => '2015-03-09',
+                        'receiptNo'      => 'payment_reference',
+                        'paymentMethod'  => 'fpm_card_offline',
+                        'receivedAmount' => 1234.56
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Listener\Fee',
+            m::mock()
+                ->shouldReceive('trigger')
+                ->with(1, FeeListenerService::EVENT_PAY)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Payment',
+            m::mock()
+                ->shouldReceive('setStatus')
+                ->with(11, PaymentEntityService::STATUS_PAID)
+                ->getMock()
+        );
+
+        $this->assertTrue($this->sut->resolveOutstandingPayments($fee));
     }
 }
