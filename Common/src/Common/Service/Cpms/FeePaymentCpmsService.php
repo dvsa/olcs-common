@@ -483,7 +483,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
      * @see https://jira.i-env.net/browse/OLCS-6005 for business rules
      *
      * @param array $fee
-     * @return string date in CPMS format <dd-mm-YYYY>
+     * @return string date in CPMS format
      */
     public function getRuleStartDate($fee)
     {
