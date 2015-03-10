@@ -88,5 +88,4 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
 
         return $fee;
     }
-
 }

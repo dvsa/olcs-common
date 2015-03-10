@@ -247,7 +247,7 @@ class FeeEntityService extends AbstractLvaEntityService
         return $this->getAll($query)['Results'];
     }
 
-   /**
+    /**
      * Get latest fee by type, statuses and application id
      *
      * @param int $feeType

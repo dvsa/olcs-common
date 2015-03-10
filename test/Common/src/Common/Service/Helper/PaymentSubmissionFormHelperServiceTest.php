@@ -83,7 +83,6 @@ class PaymentSubmissionFormHelperServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-
         $this->sut->updatePaymentSubmissonForm($form, $actionUrl, $applicationId, true, true);
     }
 
