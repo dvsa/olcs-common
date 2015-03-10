@@ -17,31 +17,6 @@ use Common\Service\Entity\AddressEntityService;
 trait GenericBusinessDetails
 {
     /**
-     * Save the nature of business
-     *
-     * @param int $orgId
-     * @param array $natureOfBusiness
-     */
-    private function saveNatureOfBusiness($orgId, $natureOfBusiness = [])
-    {
-        $organisationNatureOfBusinessService = $this->getServiceLocator()->get('Entity\OrganisationNatureOfBusiness');
-        $formattedExistingRecords = $organisationNatureOfBusinessService->getAllForOrganisationForSelect($orgId);
-        $recordsToInsert = array_diff($natureOfBusiness, $formattedExistingRecords);
-        $recordsToDelete = array_diff($formattedExistingRecords, $natureOfBusiness);
-
-        $organisationNatureOfBusinessService->deleteByOrganisationAndIds($orgId, $recordsToDelete);
-
-        foreach ($recordsToInsert as $id) {
-            $natureOfBusiness = [
-                'organisation' => $orgId,
-                'refData' => $id,
-                'createdBy' => $this->getLoggedInUser()
-            ];
-            $organisationNatureOfBusinessService->save($natureOfBusiness);
-        }
-    }
-
-    /**
      * Save the organisations registered address
      *
      * @param int $orgId

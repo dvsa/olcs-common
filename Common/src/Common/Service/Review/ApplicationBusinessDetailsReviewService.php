@@ -122,17 +122,12 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
         return $tradingNamesList;
     }
 
-    /**
-     * @NOTE I think the organisationNatureOfBusiness table should be a straight many-to-many so this could change
-     *
-     * @param array $data
-     */
     protected function getNatureOfBusinessPartial($data)
     {
         $list = [];
         $first = true;
 
-        foreach ($data['natureOfBusinesss'] as $natureOfBusinessLink) {
+        foreach ($data['natureOfBusinesses'] as $natureOfBusinessLink) {
             $label = '';
             if ($first) {
                 $label = 'application-review-business-details-nature-of-business';
@@ -140,7 +135,7 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
             }
             $list[] = [
                 'label' => $label,
-                'value' => $this->formatRefData($natureOfBusinessLink['refData'])
+                'value' => $this->formatRefData($natureOfBusinessLink)
             ];
         }
 
