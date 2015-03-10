@@ -516,12 +516,12 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
         $this->sut->handleResponse($data, []);
     }
 
-    public function testRecordCashPayment()
+    public function testRecordCashPaymentSuccess()
     {
         $params = [
             'customer_reference' => 'cust_ref',
             'scope' => 'CASH',
-            'total_amount' => (double)1234.56,
+            'total_amount' => 1334.66,
             'payment_data' => [
                 [
                     'amount' => (double)1234.56,
@@ -532,6 +532,17 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                         'slip_number' => '123456',
                         'receipt_date' => '2015-01-07',
                         'rule_start_date' => null, // tested separately
+                    ],
+                ],
+                [
+                    'amount' => 100.10,
+                    'sales_reference' => '2',
+                    'product_reference' => 'GVR_APPLICATION_FEE',
+                    'payer_details' => 'Payer',
+                    'payment_reference' => [
+                        'slip_number' => '123456',
+                        'receipt_date' => '2015-01-07',
+                        'rule_start_date' => null,
                     ],
                 ]
             ],
@@ -553,6 +564,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
             'Entity\Fee',
             m::mock()
             ->shouldReceive('forceUpdate')
+            ->once()
             ->with(
                 1,
                 [
@@ -565,24 +577,39 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                     'payingInSlipNumber' => '123456',
                 ]
             )
+            ->shouldReceive('forceUpdate')
+            ->once()
+            ->with(
+                2,
+                [
+                    'feeStatus'          => 'lfs_pd',
+                    'receivedDate'       => '2015-01-07',
+                    'receiptNo'          => 'unique_reference',
+                    'paymentMethod'      => 'fpm_cash',
+                    'receivedAmount'     => '100.10',
+                    'payerName'          => 'Payer',
+                    'payingInSlipNumber' => '123456',
+                ]
+            )
             ->getMock()
         );
         $this->sm->setService(
             'Listener\Fee',
             m::mock()
-            ->shouldReceive('trigger')
-            ->with(1, FeeListenerService::EVENT_PAY)
-            ->getMock()
+                ->shouldReceive('trigger')->with(1, FeeListenerService::EVENT_PAY)->once()
+                ->shouldReceive('trigger')->with(2, FeeListenerService::EVENT_PAY)->once()
+                ->getMock()
         );
 
         $this->sut->setServiceLocator($this->sm);
 
-        $fee = ['id' => 1, 'amount' => 1234.56];
+        $fee1 = ['id' => 1, 'amount' => 1234.56];
+        $fee2 = ['id' => 2, 'amount' => 100.10];
 
         $result = $this->sut->recordCashPayment(
-            array($fee),
+            array($fee1, $fee2),
             'cust_ref',
-            '1234.56',
+            '1334.66',
             ['day' => '07', 'month' => '01', 'year' => '2015'],
             'Payer',
             '123456'

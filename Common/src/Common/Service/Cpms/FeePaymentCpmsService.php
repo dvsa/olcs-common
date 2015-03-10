@@ -170,11 +170,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $payer,
         $slipNo
     ) {
-        // Partial payments are not supported. The form validation will normally catch
-        // this but it relies on a hidden field so we have a secondary check here
-        if ($amount != $this->getTotalAmountFromFees($fees)) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
-        }
+
+        $this->checkAmountMatchesTotalDue($amount, $fees);
 
         $paymentData = [];
         foreach ($fees as $fee) {
@@ -225,13 +222,13 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CASH,
-                'receivedAmount'     => $amount,
                 'payerName'          => $payer,
                 'payingInSlipNumber' => $slipNo,
             ];
-
-            $this->updateFeeRecordAsPaid($fee['id'], $data);
-
+            foreach ($fees as $fee) {
+                $data['receivedAmount'] = $fee['amount'];
+                $this->updateFeeRecordAsPaid($fee['id'], $data);
+            }
             return true;
         }
 
@@ -261,10 +258,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $chequeNo,
         $chequeDate
     ) {
-        // Partial payments are not supported
-        if ($amount != $this->getTotalAmountFromFees($fees)) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
-        }
+
+        $this->checkAmountMatchesTotalDue($amount, $fees);
 
         $paymentData = [];
         foreach ($fees as $fee) {
@@ -312,20 +307,20 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Cheque payment response', ['response' => $response]);
 
         if ($this->isSuccessfulPaymentResponse($response)) {
-            $data = [
+             $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_CHEQUE,
-                'receivedAmount'     => $amount,
                 'payerName'          => $payer,
                 'payingInSlipNumber' => $slipNo,
                 'chequePoNumber'     => $chequeNo,
                 'chequePoDate'       => $this->formatDate($chequeDate),
             ];
-
-            $this->updateFeeRecordAsPaid($fee['id'], $data);
-
+            foreach ($fees as $fee) {
+                $data['receivedAmount'] = $fee['amount'];
+                $this->updateFeeRecordAsPaid($fee['id'], $data);
+            }
             return true;
         }
 
@@ -353,10 +348,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $slipNo,
         $poNo
     ) {
-        // Partial payments are not supported
-        if ($amount != $this->getTotalAmountFromFees($fees)) {
-            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
-        }
+
+        $this->checkAmountMatchesTotalDue($amount, $fees);
 
         $paymentData = [];
         foreach ($fees as $fee) {
@@ -408,14 +401,14 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                 'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
                 'paymentMethod'      => FeePaymentEntityService::METHOD_POSTAL_ORDER,
-                'receivedAmount'     => $amount,
                 'payerName'          => $payer,
                 'payingInSlipNumber' => $slipNo,
                 'chequePoNumber'     => $poNo,
             ];
-
-            $this->updateFeeRecordAsPaid($fee['id'], $data);
-
+            foreach ($fees as $fee) {
+                $data['receivedAmount'] = $fee['amount'];
+                $this->updateFeeRecordAsPaid($fee['id'], $data);
+            }
             return true;
         }
 
@@ -769,8 +762,32 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     {
         $totalAmount = 0;
         foreach ($fees as $fee) {
-            $totalAmount += (float) $fee['amount'];
+            $totalAmount += (float)$fee['amount'];
         }
         return $totalAmount;
     }
+
+    /**
+     * Partial payments are not supported for cash/cheque/PO payments.
+     * The form validation will normally catch any mismatch but it relies on a
+     * hidden field so we have a secondary check here in the service layer.
+     *
+     * @param string $amount
+     * @param array $fees
+     * @return null
+     * @throws Common\Service\Cpms\Exception\PaymentInvalidAmountException
+     *
+     * @note We compare the formatted amounts as comparing floats for equality
+     * doesn't work!!
+     * @see http://php.net/manual/en/language.types.float.php
+     */
+    protected function checkAmountMatchesTotalDue($amount, $fees)
+    {
+        $amount    = $this->formatAmount($amount);
+        $totalFees = $this->formatAmount($this->getTotalAmountFromFees($fees));
+        if ($amount !== $totalFees) {
+            throw new Exception\PaymentInvalidAmountException("Amount must match the fee(s) due");
+        }
+    }
+
 }
