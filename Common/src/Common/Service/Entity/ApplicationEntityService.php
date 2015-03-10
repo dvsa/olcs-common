@@ -386,6 +386,48 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'vehicles' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle'
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'vehicles_psv' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle' => [
+                                'children' => [
+                                    'psvType'
+                                ]
+                            ]
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ],
+            'licence_history' => [
+                'children' => [
+                    'previousLicences' => [
+                        'children' => [
+                            'previousLicenceType'
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
@@ -517,39 +559,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
-            'convictions_penalties' => [
-                'children' => [
-                    'previousConvictions'
-                ]
-            ],
-            'vehicles' => [
-                'children' => [
-                    'licenceVehicles' => [
-                        'children' => [
-                            'vehicle'
-                        ],
-                        'criteria' => [
-                            'removalDate' => 'NULL'
-                        ]
-                    ]
-                ]
-            ],
-            'vehicles_psv' => [
-                'children' => [
-                    'licenceVehicles' => [
-                        'children' => [
-                            'vehicle' => [
-                                'children' => [
-                                    'psvType'
-                                ]
-                            ]
-                        ],
-                        'criteria' => [
-                            'removalDate' => 'NULL'
-                        ]
-                    ]
-                ]
-            ]
         ],
         'variation' => [
             'type_of_licence' => [
@@ -577,11 +586,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
                             'person'
                         ]
                     ]
-                ]
-            ],
-            'convictions_penalties' => [
-                'children' => [
-                    'previousConvictions'
                 ]
             ]
         ]
