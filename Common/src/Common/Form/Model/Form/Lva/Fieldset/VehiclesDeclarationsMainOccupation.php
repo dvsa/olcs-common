@@ -11,14 +11,6 @@ class VehiclesDeclarationsMainOccupation
 {
     /**
      * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings.limousinesNine.agreement.label"
-     * })
-     * @Form\Type("\Common\Form\Elements\Types\Html")
-     */
-    //public $psvOnlyLimousinesConfirmationLabel = null;
-
-    /**
-     * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.mainOccupation.confirmation",
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
