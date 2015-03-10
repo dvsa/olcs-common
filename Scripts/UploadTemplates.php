@@ -69,16 +69,18 @@ class TemplateWorker
                 if (is_dir($source.'/'.$entry)) {
                     $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
                 } else {
+                    $data = file_get_contents($source . '/' . $entry);
+
+                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                    $mimeType = $finfo->buffer($data);
+
                     $file = new \Dvsa\Jackrabbit\Data\Object\File();
-                    $file->setContent(
-                        file_get_contents($source . '/' . $entry)
-                    );
-                    // @TODO use the proper mime type here
-                    $file->setMimeType('application/rtf');
+                    $file->setContent($data);
+                    $file->setMimeType($mimeType);
 
                     $path = $name . '/' . str_replace(" ", "_", $entry);
 
-                    echo "Uploading $path\n";
+                    echo "Uploading $path... ";
 
                     $result = $this->client->write($path, $file);
                     if ($result->isSuccess()) {
