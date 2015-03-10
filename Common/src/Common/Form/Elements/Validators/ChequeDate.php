@@ -22,12 +22,10 @@ class ChequeDate extends AbstractValidator
      */
     const INVALID = 'invalid';
 
-    const MAX_INTERVAL = '+6 months';
-
     /**
-     * @var int
+     * @const string
      */
-    protected $dateLimit;
+    const MAX_INTERVAL = '+6 months';
 
     /**
      * Error messages
@@ -44,7 +42,7 @@ class ChequeDate extends AbstractValidator
     public function isValid($value)
     {
         $date = strtotime($value);
-        $limit = $this->getDateLimit();
+        $limit = strtotime(self::MAX_INTERVAL);
 
         if ($date > $limit) {
             $this->error(self::INVALID);
@@ -53,28 +51,4 @@ class ChequeDate extends AbstractValidator
 
         return true;
     }
-
-    /**
-     * @return int
-     */
-    public function getDateLimit()
-    {
-        if (is_null($this->dateLimit)) {
-            $this->dateLimit = strtotime(self::MAX_INTERVAL);
-        }
-        return $this->dateLimit;
-    }
-
-    /**
-     * Setter is mainly for unit testing
-     *
-     * @param int $limit timestamp
-     * @return self
-     */
-    public function setDateLimit($limit)
-    {
-        $this->dateLimit = $limit;
-        return $this;
-    }
-
 }

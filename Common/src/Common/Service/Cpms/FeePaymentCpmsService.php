@@ -279,13 +279,12 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
                     'cheque_number' => (string)$chequeNo,
                     'cheque_date' => $this->formatDate($chequeDate),
                     'slip_number' => (string)$slipNo,
-                    // @todo add cheque date
                 ],
             ];
         }
 
-        $endPoint      = '/api/payment/cheque';
-        $scope         = ApiService::SCOPE_CHEQUE;
+        $endPoint = '/api/payment/cheque';
+        $scope    = ApiService::SCOPE_CHEQUE;
 
         $params = [
             'customer_reference' => (string)$customerReference,
@@ -375,8 +374,8 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
             ];
         }
 
-        $endPoint      = '/api/payment/postal-order';
-        $scope         = ApiService::SCOPE_POSTAL_ORDER;
+        $endPoint = '/api/payment/postal-order';
+        $scope    = ApiService::SCOPE_POSTAL_ORDER;
 
         $params = [
             'customer_reference' => (string)$customerReference,
