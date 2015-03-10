@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
 use CommonTest\Bootstrap;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Test Abstract Vehicles Declarations Controller
@@ -48,6 +49,10 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     'nineOrMore' => [
                         'psvNoSmallVhlConfirmation' => 'y',
                     ],
+                    'mainOccupation' => [
+                        'psvMediumVhlConfirmation' => null,
+                        'psvMediumVhlNotes' => null
+                    ],
                     'limousinesNoveltyVehicles' => [
                         'psvLimousines' => '',
                         'psvNoLimousineConfirmation' => '',
@@ -74,7 +79,12 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                     'psvOnlyLimousinesConfirmation' => '',
                     'totAuthSmallVehicles' => null,
                     'totAuthMediumVehicles' => null,
-                    'totAuthLargeVehicles' => null
+                    'totAuthLargeVehicles' => null,
+                    'psvMediumVhlConfirmation' => null,
+                    'psvMediumVhlNotes' => null,
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ]
                 ]
             );
 
@@ -83,6 +93,7 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
             [
                 'smallVehiclesIntention',
                 'nineOrMore',
+                'mainOccupation',
                 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmationLabel',
                 'limousinesNoveltyVehicles->psvOnlyLimousinesConfirmation'
             ]

@@ -491,6 +491,16 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.mainOccupation' => 'Business or main occupation',
+    'application_vehicle-safety_undertakings.mainOccupation.confirmation' => 'You are fully aware of, and will comply
+        with, the restrictions under the terms of the restricted licence for the use of vehicles with between nine and
+        sixteen passenger seats',
+    'application_vehicle-safety_undertakings.mainOccupation.notes' => 'Give details below of your business or main
+        occupation and how you will comply with these restrictions. If you are claiming qualification on the grounds
+        that the operation of these vehicles is not your main occupation please provide further details, including the
+        number of hours worked in your main occupation and how many hours you anticipate working on this transport
+        undertaking should the licence be granted. If your main occupation involves driving please indicate, on average,
+        how may hours per week you drive. If employed please include your employer\'s name and address',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
