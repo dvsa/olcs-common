@@ -1281,7 +1281,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->assertTrue($this->sut->feeStatusIsValid($applicationId));
     }
 
-    public function testGetApplicationFee()
+    /**
+     * @dataProvider getApplicationFeeProvider
+     * @param $applicationType
+     * @param $expectedFeeType
+     */
+    public function testGetApplicationFee($applicationType, $expectedFeeType)
     {
         $applicationId = 69;
 
@@ -1300,6 +1305,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->shouldReceive('getApplicationDate')
                     ->with($applicationId)
                     ->andReturn('2015-03-10')
+                ->shouldReceive('getApplicationType')
+                    ->with($applicationId)
+                    ->andReturn($applicationType)
                 ->getMock()
         );
 
@@ -1308,7 +1316,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             m::mock()
                 ->shouldReceive('getLatest')
                 ->with(
-                    FeeTypeDataService::FEE_TYPE_APP,
+                    $expectedFeeType,
                     'lcat_gv',
                     'ltyp_sn',
                     '2015-03-10',
@@ -1340,6 +1348,14 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         );
 
         $this->assertEquals($fee, $this->sut->getApplicationFee($applicationId));
+    }
+
+    public function getApplicationFeeProvider()
+    {
+        return [
+            [ApplicationEntityService::APPLICATION_TYPE_VARIATION, FeeTypeDataService::FEE_TYPE_VAR],
+            [ApplicationEntityService::APPLICATION_TYPE_NEW, FeeTypeDataService::FEE_TYPE_APP],
+        ];
     }
 
     public function testGetInterimFee()

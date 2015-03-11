@@ -267,7 +267,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     public function getApplicationFee($applicationId)
     {
-        return $this->getFeeForApplicationByType($applicationId, FeeTypeDataService::FEE_TYPE_APP);
+        $applicationType = $this->getServiceLocator()->get('Entity\Application')
+            ->getApplicationType($applicationId);
+
+        $feeType =($applicationType == ApplicationEntityService::APPLICATION_TYPE_VARIATION)
+            ? FeeTypeDataService::FEE_TYPE_VAR
+            : FeeTypeDataService::FEE_TYPE_APP;
+
+        return $this->getFeeForApplicationByType($applicationId, $feeType);
     }
 
     protected function getFeeForApplicationByType($applicationId, $feeType)
