@@ -262,24 +262,19 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     public function getInterimFee($applicationId)
     {
-        // get current fee type
-        $feeTypeData = $this->getFeeTypeForApplication(
-            $applicationId,
-            FeeTypeDataService::FEE_TYPE_GRANTINT
-        );
-
-        return $this->getServiceLocator()->get('Entity\Fee')->getLatestFeeByTypeStatusesAndApplicationId(
-            $feeTypeData['id'],
-            [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
-            $applicationId
-        );
+        return $this->getFeeForApplicationByType($applicationId, FeeTypeDataService::FEE_TYPE_GRANTINT);
     }
 
     public function getApplicationFee($applicationId)
     {
+        return $this->getFeeForApplicationByType($applicationId, FeeTypeDataService::FEE_TYPE_APP);
+    }
+
+    protected function getFeeForApplicationByType($applicationId, $feeType)
+    {
         $feeTypeData = $this->getFeeTypeForApplication(
             $applicationId,
-            FeeTypeDataService::FEE_TYPE_APP
+            $feeType
         );
 
         return $this->getServiceLocator()->get('Entity\Fee')->getLatestFeeByTypeStatusesAndApplicationId(
