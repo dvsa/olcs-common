@@ -2025,16 +2025,12 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
-        class="js-modal-ajax">variation application</a>',
-    'variation-application-text' => 'Making changes to some fields within this section may require a',
-    'variation-application-text2' => 'Changes within this section will require a',
-    'variation-application-text3' => 'You cannot make changes to this section',
+    'variation-application-text' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
     'variation-grant-error-no-change' => 'Nothing has been updated',
     'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
-    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
+    'variation-message' => 'Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',

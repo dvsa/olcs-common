@@ -66,44 +66,15 @@ class LicenceOperatingCentreAdapterTest extends TestCase
         // Stubbed data
         $licenceId = 4;
 
-        // Mocked services
-        $mockLicenceAdapter = m::mock();
-        $this->sm->setService('LicenceLvaAdapter', $mockLicenceAdapter);
-        $mockTranslator = m::mock();
-        $this->sm->setService('Helper\Translation', $mockTranslator);
-        $mockViewHelperManager = m::mock();
-        $this->sm->setService('ViewHelperManager', $mockViewHelperManager);
+        // Mocks
+        $mockVariation = m::mock();
+        $this->sm->setService('Lva\Variation', $mockVariation);
 
         // Expectations
-        $mockLicenceAdapter->shouldReceive('setController')
-            ->with($this->controller)
-            ->shouldReceive('getIdentifier')
-            ->andReturn($licenceId);
+        $mockVariation->shouldReceive('addVariationMessage')
+            ->with($licenceId);
 
-        $this->controller->shouldReceive('url->fromRoute')
-            ->with('lva-licence/variation', ['licence' => 4])
-            ->andReturn('URL');
-
-        $mockTranslator->shouldReceive('translateReplace')
-            ->with('variation-application-message', ['URL'])
-            ->andReturn('TRANSLATED');
-
-        $mockViewHelperManager->shouldReceive('get')
-            ->with('placeholder')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getContainer')
-                ->with('guidance')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('append')
-                    ->with('TRANSLATED')
-                    ->getMock()
-                )
-                ->getMock()
-            );
-
-        $this->sut->addMessages();
+        $this->sut->addMessages($licenceId);
     }
 
     public function testAlterActionFormForGoodsWithoutVehicleOrTrailerElement()

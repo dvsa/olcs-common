@@ -4,7 +4,6 @@ namespace CommonTest\Controller\Lva;
 
 use Common\Service\Entity\OrganisationEntityService as Org;
 use Mockery as m;
-use CommonTest\Bootstrap;
 
 /**
  * Test Abstract People Controller
@@ -71,13 +70,6 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->with('title', 'Directors')
             ->getMock();
 
-        $people = [
-            [
-                'x' => 'y',
-                'position' => 'x'
-            ]
-        ];
-
         $this->setService(
             'translator',
             m::mock()
@@ -117,10 +109,13 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->with('table')
             ->andReturn($tableFieldset);
 
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(123);
+
         $this->adapter->shouldReceive('alterFormForOrganisation')
             ->with($form, $table, 12)
             ->shouldReceive('addMessages')
-            ->with(12)
+            ->with(12, 123)
             ->shouldReceive('createTable')
             ->with(12)
             ->andReturn($table);
@@ -167,10 +162,13 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(123);
+
         $this->adapter->shouldReceive('alterAddOrEditFormForOrganisation')
             ->with($form, 12)
             ->shouldReceive('addMessages')
-            ->with(12);
+            ->with(12, 123);
 
         $this->sut->indexAction();
 
@@ -235,10 +233,13 @@ class AbstractPeopleControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('completeSection')
             ->with('people');
 
+        $this->sut->shouldReceive('getIdentifier')
+            ->andReturn(123);
+
         $this->adapter->shouldReceive('alterAddOrEditFormForOrganisation')
             ->with($form, 12)
             ->shouldReceive('addMessages')
-            ->with(12)
+            ->with(12, 123)
             ->shouldReceive('save')
             ->with(
                 12,
