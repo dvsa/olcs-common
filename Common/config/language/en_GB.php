@@ -251,10 +251,10 @@ return array(
     'application.overview.saved' => 'The overview page has been saved',
     'application.overview.title' => 'Application overview',
     'application.payment-submission' => 'Payment & submission',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
-    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.previous-history' => 'Previous history',
     'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.previous-history.financial-history' => 'Financial history',
@@ -840,6 +840,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -1157,6 +1160,9 @@ return array(
     'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'Name of Court',
     'internal.transport-manager.convictionsandpenalties.table.offence' => 'Offence',
     'internal.transport-manager.convictionsandpenalties.table.penalty' => 'Penalty',
+    'internal.transport-manager.delete-question' => 'Are you sure you want to permanently delete the selected
+        record(s)?',
+    'internal.transport-manager.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.employment.cancel' => 'Cancel',
     'internal.transport-manager.employment.form.address' => 'Address',
     'internal.transport-manager.employment.form.employerName' => 'Employer name',
@@ -2087,9 +2093,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'ebsr-upload-title' => 'Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
-
     // Potentially unused (Not found with grep)
 );
