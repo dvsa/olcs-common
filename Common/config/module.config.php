@@ -329,7 +329,7 @@ return array(
             'Common\Filter\Publication\PublicationSection',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmDecisionText1',
             'Common\Filter\Publication\TmDecisionText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
