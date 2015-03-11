@@ -181,10 +181,6 @@ class CommunityLicEntityService extends AbstractEntityService
      */
     public function addCommunityLicencesWithIssueNos($data, $licenceId, $issueNos)
     {
-        $validLicences = $this->getValidLicences($licenceId);
-        $startIssueNo = $validLicences['Count'] ?
-            $validLicences['Results'][$validLicences['Count'] - 1]['issueNo'] + 1 : 1;
-
         $data['serialNoPrefix'] = $this->getSerialNoPrefixFromTrafficArea($licenceId);
         $data['licence'] = $licenceId;
 
@@ -212,7 +208,7 @@ class CommunityLicEntityService extends AbstractEntityService
     {
         $data = [];
         // Doctrine implementation won't let us do: $this->getAll(['id' => 'IN ' . json_encode($ids)]);
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             $data[] = $this->get($id);
         }
         return $data;

@@ -32,7 +32,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test index action with post, no crud action
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testIndexActionWithPost()
@@ -66,7 +66,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test index action with post, crud action
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testIndexActionWithPostCrudAction()
@@ -98,7 +98,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test index action with get with default filters
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testIndexActionWithGetWithDefaultFilters()
@@ -227,7 +227,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test index action with get with filters
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testIndexActionWithGetWithFilters()
@@ -361,7 +361,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test index action with get with empty filters
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testIndexActionWithGetWithEmptyFilters()
@@ -500,7 +500,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test office licence add action
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testOfficeLicenceAddAction()
@@ -544,7 +544,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test add action
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testAddAction()
@@ -576,7 +576,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test add action with cancel button pressed
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testAddActionWithCancel()
@@ -600,7 +600,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test add action with post
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testAddActionWithPost()
@@ -723,7 +723,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test add action with post, form is not valid
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testAddActionWithPostFormIsNotValid()
@@ -824,7 +824,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test void action not allowed
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testVoidActionNotAllowed()
@@ -871,7 +871,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test void action with display question
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testVoidActionWithDisplayQuestion()
@@ -928,7 +928,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test void action with cancel
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testVoidActionWithCancel()
@@ -981,7 +981,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test void action
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testVoidAction()
@@ -1055,7 +1055,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test restore action not allowed
-     * 
+     *
      * @dataProvider statusProvider
      * @group abstractCommunityLicenceController
      */
@@ -1114,7 +1114,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test restore action with display question
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testRestoreActionWithDisplayQuestion()
@@ -1171,7 +1171,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test restore action with cancel
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testRestoreActionWithCancel()
@@ -1224,7 +1224,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test restore action
-     * 
+     *
      * @dataProvider comLicRestoreProvider
      * @group abstractCommunityLicenceController
      */
@@ -1343,7 +1343,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test stop action with cancel button pressed
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testStopActionWithCancel()
@@ -1360,7 +1360,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test stop action with 'not allowed' result
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testStopActionNotAllowed()
@@ -1403,7 +1403,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test stop action with display confirmation form
-     * 
+     *
      * @group abstractCommunityLicenceController
      */
     public function testStopActionDisplayForm()
@@ -1446,7 +1446,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test stop action
-     * 
+     *
      * @dataProvider postProvider
      * @group abstractCommunityLicenceController
      */
@@ -1632,7 +1632,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
 
     /**
      * Test stop action with confirmation form is not valid
-     * 
+     *
      * @group abstractCommunityLicenceController
      * @dataProvider validLicenceProvider
      */
@@ -1740,5 +1740,15 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
                 ]
             ]
         ];
+    }
+
+    /**
+     * Test reprint action
+     *
+     * @group abstractCommunityLicenceController
+     */
+    public function testReprintAddAction()
+    {
+        $this->markTestIncomplete("TODO");
     }
 }
