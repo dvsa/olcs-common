@@ -37,6 +37,7 @@ class OperatingCentresTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithGoodsLicence()
     {
         $data = [
+            'id' => 100,
             'goodsOrPsv' => [
                 'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
             ],
@@ -58,7 +59,11 @@ class OperatingCentresTest extends \PHPUnit_Framework_TestCase
                                     'id' => ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
                                 ],
                                 'isFulfilled' => 'N',
-                                'notes' => 'condition 1'
+                                'isDraft' => 'N',
+                                'notes' => 'condition 1',
+                                'licence' => [
+                                    'id' => 100
+                                ]
                             ], [
                                 'conditionType' => [
                                     'id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING
@@ -67,7 +72,11 @@ class OperatingCentresTest extends \PHPUnit_Framework_TestCase
                                     'id' => ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
                                 ],
                                 'isFulfilled' => 'N',
-                                'notes' => 'undertaking 1'
+                                'isDraft' => 'N',
+                                'notes' => 'undertaking 1',
+                                'licence' => [
+                                    'id' => 100
+                                ]
                             ], [
                                 'conditionType' => [
                                     'id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING
@@ -76,7 +85,11 @@ class OperatingCentresTest extends \PHPUnit_Framework_TestCase
                                     'id' => ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
                                 ],
                                 'isFulfilled' => 'N',
-                                'notes' => 'undertaking 2'
+                                'isDraft' => 'N',
+                                'notes' => 'undertaking 2',
+                                'licence' => [
+                                    'id' => 100
+                                ]
                             ]
                         ]
                     ]
@@ -118,6 +131,7 @@ class OperatingCentresTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithPsvLicence()
     {
         $data = [
+            'id' => 123,
             'goodsOrPsv' => [
                 'id' => LicenceEntityService::LICENCE_CATEGORY_PSV,
             ],
