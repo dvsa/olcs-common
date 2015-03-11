@@ -524,9 +524,16 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * @param array $data
      * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
+     * @throws Common\Service\Cpms\Exception\PaymentNotFoundException
+     * @throws Common\Service\Cpms\Exception\PaymentInvalidStatusException
+     * @throws Common\Service\Cpms\Exception
      */
     public function handleResponse($data, $paymentMethod)
     {
+        if (!isset($data['receipt_reference'])) {
+            throw new Exception('No receipt_reference received from CPMS gateway');
+        }
+
         $reference      = $data['receipt_reference'];
         $paymentService = $this->getServiceLocator()->get('Entity\Payment');
         $client         = $this->getServiceLocator()->get('cpms\service\api');
