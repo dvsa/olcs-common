@@ -8,6 +8,13 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use Common\Service\Helper\InterimHelperService;
 
+/**
+ * Class InterimHelperServiceTest
+ *
+ * Test the interim helper service view determining logical methods.
+ *
+ * @package CommonTest\Service\Helper
+ */
 class InterimHelperServiceTest extends MockeryTestCase
 {
     protected $sut = null;

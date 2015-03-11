@@ -117,7 +117,7 @@ class FeeEntityService extends AbstractLvaEntityService
         return $data['Results'];
     }
 
-    public function getLatestOutstandingFeeForApplication($applicationId, $feeType = null)
+    public function getLatestOutstandingFeeForApplication($applicationId)
     {
         $params = [
             'application' => $applicationId,
@@ -129,10 +129,6 @@ class FeeEntityService extends AbstractLvaEntityService
             'order' => 'DESC',
             'limit' => 1
         ];
-
-        if (!is_null($feeType)) {
-            $params['feeType'] = $feeType;
-        }
 
         $data = $this->get($params, $this->latestOutstandingFeeForBundle);
 
@@ -194,7 +190,7 @@ class FeeEntityService extends AbstractLvaEntityService
         }
     }
 
-    public function cancelForApplication($applicationId, $feeType = null)
+    public function cancelForApplication($applicationId)
     {
         $query = array(
             'application' => $applicationId,
@@ -203,10 +199,6 @@ class FeeEntityService extends AbstractLvaEntityService
                 self::STATUS_WAIVE_RECOMMENDED
             )
         );
-
-        if (!is_null($feeType)) {
-            $query['feeType'] = $feeType;
-        }
 
         $results = $this->getAll($query, array('properties' => array('id')));
 

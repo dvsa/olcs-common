@@ -673,9 +673,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
      */
     public function getVariationInterimData($id)
     {
-        $bundle = $this->variationInterimDataBundle;
-
-        return $this->get($id, $bundle);
+        return $this->get($id, $this->variationInterimDataBundle);
     }
 
     /**
