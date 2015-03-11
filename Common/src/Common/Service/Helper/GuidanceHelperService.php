@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class GuidanceHelperService extends ServiceLocatorAwareInterface
+class GuidanceHelperService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
