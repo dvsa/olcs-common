@@ -142,6 +142,9 @@ return array(
     'application-review-financial-history-disqualified' => 'W Have you, or have any of your partners, directors,
         majority shareholders or your transport manager ever been disqualified from acting as a director of a company or
         from taking part in the management of a company?',
+    'application-review-financial-history-evidence' => 'W Evidence',
+    'application-review-financial-history-evidence-send' => 'W Operator to send original evidence to the Central
+        Licensing Office',
     'application-review-financial-history-insolvencyConfirmation' => 'W Confirm that you are aware that you must tell
         the traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
         application and a decision being made on the application',
@@ -493,6 +496,16 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'W If you intend to operate limousines
         or novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking
         to be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.mainOccupation' => 'W Business or main occupation',
+    'application_vehicle-safety_undertakings.mainOccupation.confirmation' => 'W You are fully aware of, and will comply
+        with, the restrictions under the terms of the restricted licence for the use of vehicles with between nine and
+        sixteen passenger seats',
+    'application_vehicle-safety_undertakings.mainOccupation.notes' => 'W Give details below of your business or main
+        occupation and how you will comply with these restrictions. If you are claiming qualification on the grounds
+        that the operation of these vehicles is not your main occupation please provide further details, including the
+        number of hours worked in your main occupation and how many hours you anticipate working on this transport
+        undertaking should the licence be granted. If your main occupation involves driving please indicate, on average,
+        how may hours per week you drive. If employed please include your employer\'s name and address',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'W Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',

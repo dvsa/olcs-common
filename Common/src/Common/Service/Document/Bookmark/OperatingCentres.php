@@ -36,7 +36,8 @@ class OperatingCentres extends DynamicBookmark
                                     'conditionUndertakings' => [
                                         'children' => [
                                             'conditionType',
-                                            'attachedTo'
+                                            'attachedTo',
+                                            'licence'
                                         ]
                                     ]
                                 ]
@@ -64,7 +65,7 @@ class OperatingCentres extends DynamicBookmark
             $oc = $licenceOc['operatingCentre'];
 
             $conditionsUndertakings = Formatter\ConditionsUndertakings::format(
-                $this->filterConditionsUndertakings($oc['conditionUndertakings'])
+                $this->filterConditionsUndertakings($oc['conditionUndertakings'], $this->data['id'])
             );
 
             $rows[] = [
@@ -86,14 +87,17 @@ class OperatingCentres extends DynamicBookmark
         return $str;
     }
 
-    private function filterConditionsUndertakings($input)
+    private function filterConditionsUndertakings($input, $licenceId)
     {
         return array_filter(
             $input,
-            function ($val) {
+            function ($val) use ($licenceId) {
                 return (
                     $val['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
                     && $val['isFulfilled'] === 'N'
+                    && $val['isDraft'] === 'N'
+                    && isset($val['licence']['id'])
+                    && $val['licence']['id'] === $licenceId
                 );
             }
         );

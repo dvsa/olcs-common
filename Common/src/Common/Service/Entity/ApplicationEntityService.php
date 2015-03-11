@@ -272,7 +272,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => array(
                     'trafficArea'
                 )
-            )
+            ),
+            'licenceType'
         )
     );
 
@@ -451,6 +452,16 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'financial_history' => [
+                'children' => [
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
@@ -577,6 +588,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'applicationOrganisationPersons' => [
                         'children' => [
+                            'originalPerson',
                             'person'
                         ]
                     ]

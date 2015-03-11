@@ -11,6 +11,7 @@ use CommonTest\Bootstrap;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Review\VariationVehiclesPsvReviewService;
+use Common\Service\Entity\VehicleEntityService;
 
 /**
  * Variation Vehicles Psv Review Service Test
@@ -20,6 +21,7 @@ use Common\Service\Review\VariationVehiclesPsvReviewService;
 class VariationVehiclesPsvReviewServiceTest extends MockeryTestCase
 {
     protected $sut;
+
     protected $sm;
 
     public function setUp()
@@ -30,18 +32,111 @@ class VariationVehiclesPsvReviewServiceTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetConfigFromData()
+    /**
+     * @dataProvider providerGetConfigFromData
+     */
+    public function testGetConfigFromData($data, $expected)
     {
-        $data = [
-            'foo' => 'bar'
+        $mockTranslator = m::mock();
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        $mockTranslator->shouldReceive('translate')
+            ->andReturnUsing(
+                function ($string) {
+                    return $string . '-translated';
+                }
+            );
+
+        $mockVehiclesPsv = m::mock();
+        $this->sm->setService('Review\VehiclesPsv', $mockVehiclesPsv);
+        $mockVehiclesPsv->shouldReceive('getConfigFromData')
+            ->with($data, [])
+            ->andReturn('MAINITEMS');
+
+        $this->assertEquals($expected, $this->sut->getConfigFromData($data));
+    }
+
+    public function providerGetConfigFromData()
+    {
+        return [
+            [
+                [
+                    'hasEnteredReg' => 'N'
+                ],
+                [
+                    'subSections' => [
+                        [
+                            'mainItems' => 'MAINITEMS'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                [
+                    'hasEnteredReg' => 'Y',
+                    'licenceVehicles' => [
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                ],
+                                'vrm' => 'SM10QWE',
+                                'makeModel' => 'Foo Bar',
+                                'isNovelty' => 'Y'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_SMALL
+                                ],
+                                'vrm' => 'SM11QWE',
+                                'makeModel' => 'Foo Bar',
+                                'isNovelty' => 'N'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_MEDIUM
+                                ],
+                                'vrm' => 'ME10QWE'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_MEDIUM
+                                ],
+                                'vrm' => 'ME11QWE'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_LARGE
+                                ],
+                                'vrm' => 'LG10QWE'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'psvType' => [
+                                    'id' => VehicleEntityService::PSV_TYPE_LARGE
+                                ],
+                                'vrm' => 'LG11QWE'
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'subSections' => [
+                        [
+                            'mainItems' => 'MAINITEMS'
+                        ]
+                    ]
+                ]
+            ]
         ];
-
-        $mockApplicationService = m::mock();
-        $this->sm->setService('Review\ApplicationVehiclesPsv', $mockApplicationService);
-        $mockApplicationService->shouldReceive('getConfigFromData')
-            ->with($data)
-            ->andReturn('CONFIG');
-
-        $this->assertEquals('CONFIG', $this->sut->getConfigFromData($data));
     }
 }

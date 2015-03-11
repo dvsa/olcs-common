@@ -24,34 +24,29 @@ class DateSelect extends ZendElement\DateSelect
      */
     public function getInputSpecification()
     {
-        if ($this->getOption('max_year_delta')) {
-            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
+        $minYear = $this->getOption('min_year_delta');
 
-            $minYear = $this->getOption('min_year_delta');
+        if (isset($minYear)) {
+            $minYear = date('Y', strtotime($minYear . ' years'));
+        } else {
 
-            if (isset($minYear)) {
-                $minYear = date('Y', strtotime($minYear . ' years'));
-            } else {
+            // the minimum year is either:
+            // a) the input value's year, if less than the current year
+            // b) the current year if it has no value or it's a forthcoming year
+            $refStamp = strtotime($this->getValue());
+            $currentYear = date('Y');
 
-                // the minimum year is either:
-                // a) the input value's year, if less than the current year
-                // b) the current year if it has no value or it's a forthcoming year
-                $refStamp = strtotime($this->getValue());
-                $currentYear = date('Y');
-
-                if ($refStamp !== false) {
-                    $minYear = date('Y', $refStamp);
-                    if ($minYear > $currentYear) {
-                        $minYear = $currentYear;
-                    }
-                } else {
+            if ($refStamp !== false) {
+                $minYear = date('Y', $refStamp);
+                if ($minYear > $currentYear) {
                     $minYear = $currentYear;
                 }
+            } else {
+                $minYear = $currentYear;
             }
-
-            $this->setMinYear($minYear);
-            $this->setMaxYear($maxYear);
         }
+
+        $this->setMinYear($minYear);
 
         return array(
             'name' => $this->getName(),
@@ -78,4 +73,27 @@ class DateSelect extends ZendElement\DateSelect
             )
         );
     }
+
+    public function setOptions($options)
+    {
+        parent::setOptions($options);
+
+        if ($this->getOption('max_year_delta')) {
+            $maxYear = date('Y', strtotime($this->getOption('max_year_delta') . ' years'));
+
+            $minYear = $this->getOption('min_year_delta');
+
+            if (isset($minYear)) {
+                $minYear = date('Y', strtotime($minYear . ' years'));
+            } else {
+                // if there's no delta specified, initially set the minimum year
+                // to the current year
+                $minYear = date('Y');
+            }
+
+            $this->setMinYear($minYear);
+            $this->setMaxYear($maxYear);
+        }
+    }
+
 }

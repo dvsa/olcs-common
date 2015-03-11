@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Review;
 
+use Common\Service\Data\CategoryDataService;
+
 /**
  * Application Financial History Review Service
  *
@@ -75,6 +77,14 @@ class ApplicationFinancialHistoryReviewService extends AbstractReviewService
                     'value' => $data['insolvencyDetails']
                 ]
             ];
+
+            $config['multiItems'][] = [
+                [
+                    'label' => 'application-review-financial-history-evidence',
+                    'noEscape' => true,
+                    'value' => $this->formatEvidence($data)
+                ]
+            ];
         }
 
         $config['multiItems'][] = [
@@ -85,5 +95,26 @@ class ApplicationFinancialHistoryReviewService extends AbstractReviewService
         ];
 
         return $config;
+    }
+
+    private function formatEvidence($data)
+    {
+        $files = $this->findFiles(
+            $data['documents'],
+            CategoryDataService::CATEGORY_LICENSING,
+            CategoryDataService::DOC_SUB_CATEGORY_LICENCE_INSOLVENCY_DOCUMENT_DIGITAL
+        );
+
+        if (empty($files)) {
+            return $this->translate('application-review-financial-history-evidence-send');
+        }
+
+        $fileNames = [];
+
+        foreach ($files as $file) {
+            $fileNames[] = $file['filename'];
+        }
+
+        return implode('<br>', $fileNames);
     }
 }

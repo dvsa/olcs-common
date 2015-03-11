@@ -40,7 +40,11 @@ class UnlinkedTm extends DynamicBookmark
                         'children' => [
                             'transportManager' => [
                                 'children' => [
-                                    'homeCd'
+                                    'homeCd' => [
+                                        'children' => [
+                                            'person'
+                                        ]
+                                    ]
                                 ]
                             ]
                         ]
@@ -65,12 +69,12 @@ class UnlinkedTm extends DynamicBookmark
             return "To be nominated.";
         }
 
-        $output = '';
+        $output = [];
         foreach ($licences as $licence) {
-            $person = $licence['transportManager']['homeCd'];
-            $output .= Formatter\Name::format($person) . "\n";
+            $person = $licence['transportManager']['homeCd']['person'];
+            $output[] = Formatter\Name::format($person);
         }
 
-        return $output;
+        return implode("\n", $output);
     }
 }

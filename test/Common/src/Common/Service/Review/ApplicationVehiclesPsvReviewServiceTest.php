@@ -35,7 +35,7 @@ class ApplicationVehiclesPsvReviewServiceTest extends MockeryTestCase
     /**
      * @dataProvider providerGetConfigFromData
      */
-    public function testGetConfigFromData($data, $expected)
+    public function testGetConfigFromData($data, $expectedMainItems, $expected)
     {
         $mockTranslator = m::mock();
         $this->sm->setService('Helper\Translation', $mockTranslator);
@@ -46,6 +46,12 @@ class ApplicationVehiclesPsvReviewServiceTest extends MockeryTestCase
                     return $string . '-translated';
                 }
             );
+
+        $mockVehiclesPsv = m::mock();
+        $this->sm->setService('Review\VehiclesPsv', $mockVehiclesPsv);
+        $mockVehiclesPsv->shouldReceive('getConfigFromData')
+            ->with($data, $expectedMainItems)
+            ->andReturn('MAINITEMS');
 
         $this->assertEquals($expected, $this->sut->getConfigFromData($data));
     }
@@ -58,20 +64,21 @@ class ApplicationVehiclesPsvReviewServiceTest extends MockeryTestCase
                     'hasEnteredReg' => 'N'
                 ],
                 [
-                    'subSections' => [
-                        [
-                            'mainItems' => [
+                    [
+                        'multiItems' => [
+                            [
                                 [
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-hasEnteredReg',
-                                                'value' => 'No'
-                                            ]
-                                        ]
-                                    ]
+                                    'label' => 'application-review-vehicles-hasEnteredReg',
+                                    'value' => 'No'
                                 ]
                             ]
+                        ]
+                    ]
+                ],
+                [
+                    'subSections' => [
+                        [
+                            'mainItems' => 'MAINITEMS'
                         ]
                     ]
                 ]
@@ -135,79 +142,21 @@ class ApplicationVehiclesPsvReviewServiceTest extends MockeryTestCase
                     ]
                 ],
                 [
-                    'subSections' => [
-                        [
-                            'mainItems' => [
+                    [
+                        'multiItems' => [
+                            [
                                 [
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-hasEnteredReg',
-                                                'value' => 'Yes'
-                                            ]
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'header' => 'application-review-vehicles-psv-small-title',
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'SM10QWE'
-                                            ],
-                                            [
-                                                'label' => 'application-review-vehicles-make',
-                                                'value' => 'Foo Bar (application-review-vehicles-is-novelty-translated)'
-                                            ]
-                                        ],
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'SM11QWE'
-                                            ],
-                                            [
-                                                'label' => 'application-review-vehicles-make',
-                                                'value' => 'Foo Bar'
-                                            ]
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'header' => 'application-review-vehicles-psv-medium-title',
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'ME10QWE'
-                                            ]
-                                        ],
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'ME11QWE'
-                                            ]
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'header' => 'application-review-vehicles-psv-large-title',
-                                    'multiItems' => [
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'LG10QWE'
-                                            ]
-                                        ],
-                                        [
-                                            [
-                                                'label' => 'application-review-vehicles-vrm',
-                                                'value' => 'LG11QWE'
-                                            ]
-                                        ]
-                                    ]
+                                    'label' => 'application-review-vehicles-hasEnteredReg',
+                                    'value' => 'Yes'
                                 ]
                             ]
+                        ]
+                    ]
+                ],
+                [
+                    'subSections' => [
+                        [
+                            'mainItems' => 'MAINITEMS'
                         ]
                     ]
                 ]
