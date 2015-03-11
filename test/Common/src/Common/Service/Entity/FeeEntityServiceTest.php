@@ -331,7 +331,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get fee by type, statuses and applicationId
-     * 
+     *
      * @group feeEntity
      */
     public function testGetFeeByTypeStatusesAndApplicationId()
@@ -360,7 +360,7 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get fee by type, statuses and applicationId
-     * 
+     *
      * @group feeEntity
      */
     public function testCancelByIds()
@@ -381,5 +381,36 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         );
         $this->expectOneRestCall('Fee', 'PUT', $query);
         $this->sut->cancelByIds($ids);
+    }
+
+    /**
+     * Test get latest fee by type, statuses and applicationId
+     *
+     * @group feeEntity
+     */
+    public function testGetLatestFeeByTypeStatusesAndApplicationId()
+    {
+        $id = 3;
+        $statuses = [
+            FeeEntityService::STATUS_OUTSTANDING,
+            FeeEntityService::STATUS_WAIVE_RECOMMENDED
+        ];
+
+        $query = [
+            'application' => $id,
+            'feeStatus'   => $statuses,
+            'feeType'     => 1,
+            'sort'        => 'invoicedDate',
+            'order'       => 'DESC',
+            'limit'       => 1,
+        ];
+
+        $response = [
+            'Results' => ['fee1']
+        ];
+
+        $this->expectOneRestCall('Fee', 'GET', $query)->will($this->returnValue($response));
+
+        $this->assertEquals('fee1', $this->sut->getLatestFeeByTypeStatusesAndApplicationId(1, $statuses, $id));
     }
 }

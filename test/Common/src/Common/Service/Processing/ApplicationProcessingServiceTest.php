@@ -1280,4 +1280,142 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         );
         $this->assertTrue($this->sut->feeStatusIsValid($applicationId));
     }
+
+    /**
+     * @dataProvider getApplicationFeeProvider
+     * @param $applicationType
+     * @param $expectedFeeType
+     */
+    public function testGetApplicationFee($applicationType, $expectedFeeType)
+    {
+        $applicationId = 69;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getTypeOfLicenceData')
+                    ->with($applicationId)
+                    ->andReturn(
+                        [
+                            'licenceType' => 'ltyp_sn',
+                            'niFlag'      => 'N',
+                            'goodsOrPsv'  => 'lcat_gv',
+                        ]
+                    )
+                ->shouldReceive('getApplicationDate')
+                    ->with($applicationId)
+                    ->andReturn('2015-03-10')
+                ->shouldReceive('getApplicationType')
+                    ->with($applicationId)
+                    ->andReturn($applicationType)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Data\FeeType',
+            m::mock()
+                ->shouldReceive('getLatest')
+                ->with(
+                    $expectedFeeType,
+                    'lcat_gv',
+                    'ltyp_sn',
+                    '2015-03-10',
+                    null
+                )
+                ->andReturn(
+                    [
+                        'id' => 99,
+                        'description' => 'Application Fee Type Description',
+                        'fixedValue' => '100.00',
+                    ]
+                )
+                ->getMock()
+        );
+
+        $fee = ['id' => 1];
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
+                ->with(
+                    99,
+                    [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+                    $applicationId
+                )
+                ->andReturn($fee)
+                ->getMock()
+        );
+
+        $this->assertEquals($fee, $this->sut->getApplicationFee($applicationId));
+    }
+
+    public function getApplicationFeeProvider()
+    {
+        return [
+            [ApplicationEntityService::APPLICATION_TYPE_VARIATION, FeeTypeDataService::FEE_TYPE_VAR],
+            [ApplicationEntityService::APPLICATION_TYPE_NEW, FeeTypeDataService::FEE_TYPE_APP],
+        ];
+    }
+
+    public function testGetInterimFee()
+    {
+        $applicationId = 69;
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getTypeOfLicenceData')
+                    ->with($applicationId)
+                    ->andReturn(
+                        [
+                            'licenceType' => 'ltyp_sn',
+                            'niFlag'      => 'N',
+                            'goodsOrPsv'  => 'lcat_gv',
+                        ]
+                    )
+                ->shouldReceive('getApplicationDate')
+                    ->with($applicationId)
+                    ->andReturn('2015-03-10')
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Data\FeeType',
+            m::mock()
+                ->shouldReceive('getLatest')
+                ->with(
+                    FeeTypeDataService::FEE_TYPE_GRANTINT,
+                    'lcat_gv',
+                    'ltyp_sn',
+                    '2015-03-10',
+                    null
+                )
+                ->andReturn(
+                    [
+                        'id' => 101,
+                        'description' => 'Interim Fee Type Description',
+                        'fixedValue' => '100.00',
+                    ]
+                )
+                ->getMock()
+        );
+
+        $fee = ['id' => 1];
+
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getLatestFeeByTypeStatusesAndApplicationId')
+                ->with(
+                    101,
+                    [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+                    $applicationId
+                )
+                ->andReturn($fee)
+                ->getMock()
+        );
+
+        $this->assertEquals($fee, $this->sut->getInterimFee($applicationId));
+    }
 }

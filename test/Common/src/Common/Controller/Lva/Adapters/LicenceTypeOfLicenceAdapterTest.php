@@ -240,16 +240,16 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
             'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
         ];
 
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('addCurrentInfoMessage')
-            ->with('variation-application-text3');
+        $mockGuidance = m::mock();
+        $mockGuidance->shouldReceive('append')
+            ->with('variation-application-text');
 
         $mockAppEntityService = m::mock();
         $mockAppEntityService->shouldReceive('getTypeOfLicenceData')
             ->with($id)
             ->andReturn($stubbedData);
 
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+        $this->sm->setService('Helper\Guidance', $mockGuidance);
         $this->sm->setService('Entity\Licence', $mockAppEntityService);
 
         $this->sut->setMessages($id, $applicationType);
@@ -267,30 +267,17 @@ class LicenceTypeOfLicenceAdapterTest extends MockeryTestCase
             'licenceType' => LicenceEntityService::LICENCE_TYPE_RESTRICTED
         ];
 
-        $mockFlashMessenger = m::mock();
-        $mockFlashMessenger->shouldReceive('addCurrentInfoMessage')
-            ->with('MESSAGE');
+        $mockVariation = m::mock();
+        $mockVariation->shouldReceive('addVariationMessage')
+            ->with($id);
 
         $mockAppEntityService = m::mock();
         $mockAppEntityService->shouldReceive('getTypeOfLicenceData')
             ->with($id)
             ->andReturn($stubbedData);
 
-        $expectedTranslationVariables = [
-            'variation-application-text2',
-            // @todo replace with real link
-            'https://www.google.co.uk/?q=Licence+Type#q=Licence+Type',
-            'variation-application-link-text'
-        ];
-
-        $mockTranslationHelper = m::mock();
-        $mockTranslationHelper->shouldReceive('formatTranslation')
-            ->with('%s <a href="%s" target="_blank">%s</a>', $expectedTranslationVariables)
-            ->andReturn('MESSAGE');
-
-        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+        $this->sm->setService('Lva\Variation', $mockVariation);
         $this->sm->setService('Entity\Licence', $mockAppEntityService);
-        $this->sm->setService('Helper\Translation', $mockTranslationHelper);
 
         $this->sut->setMessages($id, $applicationType);
     }

@@ -75,25 +75,10 @@ class LicenceTypeOfLicenceAdapter extends AbstractTypeOfLicenceAdapter
 
     public function setMessages($id = null, $applicationType = null)
     {
-        $flashMessenger = $this->getServiceLocator()->get('Helper\FlashMessenger');
-
         if ($this->shouldDisableLicenceType($id, $applicationType)) {
-            $flashMessenger->addCurrentInfoMessage('variation-application-text3');
+            $this->getServiceLocator()->get('Helper\Guidance')->append('variation-application-text');
         } else {
-            // If some fields are editable
-            $translationHelper = $this->getServiceLocator()->get('Helper\Translation');
-
-            $message = $translationHelper->formatTranslation(
-                '%s <a href="%s" target="_blank">%s</a>',
-                array(
-                    'variation-application-text2',
-                    // @todo replace with real link
-                    'https://www.google.co.uk/?q=Licence+Type#q=Licence+Type',
-                    'variation-application-link-text'
-
-                )
-            );
-            $flashMessenger->addCurrentInfoMessage($message);
+            return $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($id);
         }
     }
 

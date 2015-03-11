@@ -266,6 +266,28 @@ class FeeEntityService extends AbstractLvaEntityService
     }
 
     /**
+     * Get latest fee by type, statuses and application id
+     *
+     * @param int $feeType
+     * @param array $feeStatuses
+     * @param int $applicationId
+     * @return array fee
+     */
+    public function getLatestFeeByTypeStatusesAndApplicationId($feeType, $feeStatuses, $applicationId)
+    {
+         $query = array(
+            'application' => $applicationId,
+            'feeStatus' => $feeStatuses,
+            'feeType' => $feeType,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        );
+        $data = $this->get($query);
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
+    /**
      * Cancel fee by ids
      *
      * @param array $ids
