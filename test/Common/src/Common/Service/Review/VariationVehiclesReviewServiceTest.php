@@ -7,8 +7,6 @@
  */
 namespace CommonTest\Service\Review;
 
-use CommonTest\Bootstrap;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Review\VariationVehiclesReviewService;
 
@@ -20,28 +18,74 @@ use Common\Service\Review\VariationVehiclesReviewService;
 class VariationVehiclesReviewServiceTest extends MockeryTestCase
 {
     protected $sut;
-    protected $sm;
 
     public function setUp()
     {
         $this->sut = new VariationVehiclesReviewService();
-
-        $this->sm = Bootstrap::getServiceManager();
-        $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetConfigFromData()
+    /**
+     * @dataProvider providerGetConfigFromData
+     */
+    public function testGetConfigFromData($data, $expected)
     {
-        $data = [
-            'foo' => 'bar'
+        $this->assertEquals($expected, $this->sut->getConfigFromData($data));
+    }
+
+    public function providerGetConfigFromData()
+    {
+        return [
+            [
+                [
+                    'hasEnteredReg' => 'Y',
+                    'licenceVehicles' => [
+                        [
+                            'vehicle' => [
+                                'vrm' => 'AB12QWE',
+                                'platedWeight' => '1000'
+                            ]
+                        ],
+                        [
+                            'vehicle' => [
+                                'vrm' => 'AB13QWE',
+                                'platedWeight' => '10000'
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'subSections' => [
+                        [
+                            'mainItems' => [
+                                [
+                                    'multiItems' => [
+                                        [
+                                            [
+                                                'label' => 'application-review-vehicles-vrm',
+                                                'value' => 'AB12QWE'
+                                            ],
+                                            [
+                                                'label' => 'application-review-vehicles-weight',
+                                                'value' => '1,000 Kg'
+                                            ]
+                                        ],
+                                        [
+                                            [
+                                                'label' => 'application-review-vehicles-vrm',
+                                                'value' => 'AB13QWE'
+                                            ],
+                                            [
+                                                'label' => 'application-review-vehicles-weight',
+                                                'value' => '10,000 Kg'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ];
-
-        $mockApplicationService = m::mock();
-        $this->sm->setService('Review\ApplicationVehicles', $mockApplicationService);
-        $mockApplicationService->shouldReceive('getConfigFromData')
-            ->with($data)
-            ->andReturn('CONFIG');
-
-        $this->assertEquals('CONFIG', $this->sut->getConfigFromData($data));
     }
 }

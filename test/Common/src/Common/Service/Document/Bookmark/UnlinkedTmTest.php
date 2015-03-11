@@ -24,14 +24,16 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                "Testy McTest\n",
+                "Testy McTest",
                 array(
                     'tmLicences' => array(
                         0 => array(
                             'transportManager' => array(
                                 'homeCd' => array(
-                                    'forename' => 'Testy',
-                                    'familyName' => 'McTest'
+                                    'person' => array(
+                                        'forename' => 'Testy',
+                                        'familyName' => 'McTest'
+                                    )
                                 )
                             )
                         )
@@ -39,22 +41,26 @@ class UnlinkedTmTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             array(
-                "Lorem Ipsum\nTesty McTest\n",
+                "Lorem Ipsum\nTesty McTest",
                 array(
                     'tmLicences' => array(
                         0 => array(
                             'transportManager' => array(
                                 'homeCd' => array(
-                                    'forename' => 'Lorem',
-                                    'familyName' => 'Ipsum'
+                                    'person' => array(
+                                        'forename' => 'Lorem',
+                                        'familyName' => 'Ipsum'
+                                    )
                                 )
                             )
                         ),
                         1 => array(
                             'transportManager' => array(
                                 'homeCd' => array(
-                                    'forename' => 'Testy',
-                                    'familyName' => 'McTest'
+                                    'person' => array(
+                                        'forename' => 'Testy',
+                                        'familyName' => 'McTest'
+                                    )
                                 )
                             )
                         )

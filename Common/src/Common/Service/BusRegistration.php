@@ -62,7 +62,8 @@ class BusRegistration
         'useAllStops' => 'Y', //should probably default to yes
         'isQualityContract' => 'N',
         'isQualityPartnership' => 'N',
-        'qualityPartnershipFacilitiesUsed' => 'N'
+        'qualityPartnershipFacilitiesUsed' => 'N',
+        'otherServices' => []
     ];
 
     /**

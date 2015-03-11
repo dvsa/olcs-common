@@ -142,6 +142,9 @@ return array(
     'application-review-financial-history-disqualified' => 'Have you, or have any of your partners, directors, majority
         shareholders or your transport manager ever been disqualified from acting as a director of a company or from
         taking part in the management of a company?',
+    'application-review-financial-history-evidence' => 'Evidence',
+    'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing
+        Office',
     'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
         traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
         application and a decision being made on the application',
@@ -491,6 +494,16 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.mainOccupation' => 'Business or main occupation',
+    'application_vehicle-safety_undertakings.mainOccupation.confirmation' => 'You are fully aware of, and will comply
+        with, the restrictions under the terms of the restricted licence for the use of vehicles with between nine and
+        sixteen passenger seats',
+    'application_vehicle-safety_undertakings.mainOccupation.notes' => 'Give details below of your business or main
+        occupation and how you will comply with these restrictions. If you are claiming qualification on the grounds
+        that the operation of these vehicles is not your main occupation please provide further details, including the
+        number of hours worked in your main occupation and how many hours you anticipate working on this transport
+        undertaking should the licence be granted. If your main occupation involves driving please indicate, on average,
+        how may hours per week you drive. If employed please include your employer\'s name and address',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
@@ -1102,6 +1115,27 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.interim_application' => 'Interim application',
+    'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
+    'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
+    'internal.interim.form.interim_cancel' => 'Cancel',
+    'internal.interim.form.interim_end' => 'Interim end date',
+    'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_reason' => 'Interim reason',
+    'internal.interim.form.interim_refuse' => 'Refuse',
+    'internal.interim.form.interim_requested' => 'Interim requested',
+    'internal.interim.form.interim_save' => 'Save',
+    'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.operatingcentres.table.address' => 'Operating centre address',
+    'internal.interim.operatingcentres.table.header' => 'Operating centres',
+    'internal.interim.operatingcentres.table.listed' => 'Listed',
+    'internal.interim.operatingcentres.table.trailers' => 'Trailers',
+    'internal.interim.operatingcentres.table.vehicles' => 'Vehicles',
+    'internal.interim.vehicles.table.header' => 'Vehicles',
+    'internal.interim.vehicles.table.listed' => 'Listed',
+    'internal.interim.vehicles.table.vrm' => 'VRM',
+    'internal.interim.vehicles.table.weight' => 'Gross plated weight (Kg)',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -2051,5 +2085,9 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
+
     // Potentially unused (Not found with grep)
 );

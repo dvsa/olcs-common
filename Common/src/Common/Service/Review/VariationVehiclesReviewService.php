@@ -22,6 +22,31 @@ class VariationVehiclesReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        return $this->getServiceLocator()->get('Review\ApplicationVehicles')->getConfigFromData($data);
+        $multiItems = [];
+
+        foreach ($data['licenceVehicles'] as $vehicle) {
+            $multiItems[] = [
+                [
+                    'label' => 'application-review-vehicles-vrm',
+                    'value' => $vehicle['vehicle']['vrm']
+                ],
+                [
+                    'label' => 'application-review-vehicles-weight',
+                    'value' => $this->formatNumber($vehicle['vehicle']['platedWeight']) . ' Kg'
+                ]
+            ];
+        }
+
+        return [
+            'subSections' => [
+                [
+                    'mainItems' => [
+                        [
+                            'multiItems' => $multiItems
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

@@ -816,6 +816,300 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals('RESPONSE', $this->sut->getReviewDataForVariation($id, $sections));
     }
 
+    /**
+     * Test get data for interim
+     * 
+     * @group applicationEntity
+     */
+    public function testGetDataForInterim()
+    {
+        $id = 123;
+        $bundle = array(
+            'children' => array(
+                'operatingCentres' => array(
+                    'children' => array(
+                        'operatingCentre' => array(
+                            'children' => array(
+                                'address'
+                            )
+                        )
+                    )
+                ),
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'vehicle',
+                        'interimApplication'
+                    )
+                ),
+                'interimStatus',
+                'licence'
+            )
+        );
+        $response = [
+            'id' => $id,
+            'operatingCentres' => [
+                ['action' => 'A', 'operatingCentre' => ['address' => 'address1']],
+                ['action' => 'U', 'operatingCentre' => ['address' => 'address2']],
+                ['action' => '', 'operatingCentre' => ['address' => 'address3']],
+            ]
+        ];
+        $processed = [
+            'id' => $id,
+            'operatingCentres' => [
+                ['action' => 'A', 'address' => 'address1', 'operatingCentre' => ['address' => 'address1']],
+                ['action' => 'U', 'address' => 'address2', 'operatingCentre' => ['address' => 'address2']],
+            ]
+        ];
+
+        $this->expectOneRestCall('Application', 'GET', $id, $bundle)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($processed, $this->sut->getDataForInterim($id));
+    }
+
+    /**
+     * Test save interim data
+     * 
+     * @group applicationEntity
+     * @dataProvider providerSaveInterimData
+     */
+    public function testSaveInterimData($formData, $saveData, $saveOcData, $saveLicenceVehicleData, $type)
+    {
+        $bundle = array(
+            'children' => array(
+                'operatingCentres' => array(
+                    'children' => array(
+                        'operatingCentre' => array(
+                            'children' => array(
+                                'address'
+                            )
+                        )
+                    )
+                ),
+                'licenceVehicles' => array(
+                    'children' => array(
+                        'vehicle',
+                        'interimApplication'
+                    )
+                ),
+                'interimStatus',
+                'licence'
+            )
+        );
+
+        $expectedResults = array(
+            'id' => 1,
+            'operatingCentres' => array(
+                array(
+                    'isInterim' => 'Y',
+                    'id' => 3,
+                    'version' => 1,
+                    'action' => 'A',
+                    'operatingCentre' => ['address' => 'address']
+                ),
+                array(
+                    'isInterim' => 'Y',
+                    'id' => 4,
+                    'version' => 1,
+                    'action' => 'U',
+                    'operatingCentre' => ['address' => 'address']
+                ),
+                array(
+                    'isInterim' => 'N',
+                    'id' => 1,
+                    'version' => 1,
+                    'action' => 'A',
+                    'operatingCentre' => ['address' => 'address']
+                ),
+                array(
+                    'isInterim' => 'N',
+                    'id' => 2,
+                    'version' => 1,
+                    'action' => 'U',
+                    'operatingCentre' => ['address' => 'address']
+                )
+            ),
+            'licenceVehicles' => array(
+                array(
+                    'interimApplication' => null,
+                    'id' => 1,
+                    'version' => 2
+                ),
+                array(
+                    'interimApplication' => null,
+                    'id' => 2,
+                    'version' => 2
+                ),
+                array(
+                    'interimApplication' => 1,
+                    'id' => 3,
+                    'version' => 2
+                ),
+                array(
+                    'interimApplication' => 1,
+                    'id' => 4,
+                    'version' => 2
+                )
+            )
+        );
+
+        $this->expectedRestCallInOrder('Application', 'PUT', $saveData);
+
+        $this->expectedRestCallInOrder('Application', 'GET', 1, $bundle)
+            ->will($this->returnValue($expectedResults));
+
+        $mockApplicationOcService = m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with($saveOcData)
+            ->getMock();
+        $this->sm->setService('Entity\ApplicationOperatingCentre', $mockApplicationOcService);
+
+        $mocklicenceVehicleService = m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with($saveLicenceVehicleData)
+            ->getMock();
+        $this->sm->setService('Entity\LicenceVehicle', $mocklicenceVehicleService);
+
+        $this->sut->saveInterimData($formData, $type);
+    }
+
+    /**
+     * Provider set interim data
+     */
+    public function providerSaveInterimData()
+    {
+        return [
+            'set' => [
+                // form data
+                [
+                    'data' => [
+                        'interimReason' => 'reason',
+                        'interimStart' => '2014/01/01',
+                        'interimEnd' => '2015/01/01',
+                        'interimAuthVehicles' => 10,
+                        'interimAuthTrailers' => 20,
+                        'interimStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
+                        'id' => 1,
+                        'version' => 2
+                    ],
+                    'operatingCentres' => [
+                        'id' => [1, 2]
+                    ],
+                    'vehicles' => [
+                        'id' => [1, 2]
+                    ]
+                ],
+                // save application data
+                [
+                    'interimReason' => 'reason',
+                    'interimStart' => '2014/01/01',
+                    'interimEnd' => '2015/01/01',
+                    'interimAuthVehicles' => 10,
+                    'interimAuthTrailers' => 20,
+                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
+                    'id' => 1,
+                    'version' => 2
+                ],
+                // save application operating centre data
+                [
+                    [
+                        'id' => 1,
+                        'version' => 1,
+                        'isInterim' => 'Y'
+                    ],
+                    [
+                        'id' => 2,
+                        'version' => 1,
+                        'isInterim' => 'Y'
+                    ],
+                    [
+                        'id' => 3,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ],
+                ],
+                // save licence vehicle data
+                [
+                    [
+                        'id' => 1,
+                        'version' => 2,
+                        'interimApplication' => 1
+                    ],
+                    [
+                        'id' => 2,
+                        'version' => 2,
+                        'interimApplication' => 1
+                    ],
+                    [
+                        'id' => 3,
+                        'version' => 2,
+                        'interimApplication' => 'NULL'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 2,
+                        'interimApplication' => 'NULL'
+                    ]
+                ],
+                // type
+                true
+            ],
+            'unset' => [
+                // form data
+                [
+                    'data' => [
+                        'id' => 1,
+                        'version' => 2
+                     ]
+                ],
+                // save application data
+                [
+                    'interimReason' => '',
+                    'interimStart' => '',
+                    'interimEnd' => '',
+                    'interimAuthVehicles' => 0,
+                    'interimAuthTrailers' => 0,
+                    'interimStatus' => '',
+                    'id' => 1,
+                    'version' => 2
+                ],
+                // save applicaiton operating centres data
+                [
+                    [
+                        'id' => 3,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ]
+                ],
+                // save licence data
+                [
+                    [
+                        'id' => 3,
+                        'version' => 2,
+                        'interimApplication' => 'NULL'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 2,
+                        'interimApplication' => 'NULL'
+                    ]
+                ],
+                // type
+                false
+            ]
+        ];
+    }
+
     public function providerGetReviewDataForApplication()
     {
         return [

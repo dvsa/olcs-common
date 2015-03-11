@@ -41,6 +41,7 @@ class ConditionsTest extends \PHPUnit_Framework_TestCase
                             'id' => ConditionUndertakingEntityService::TYPE_CONDITION
                         ],
                         'isFulfilled' => 'N',
+                        'isDraft' => 'N',
                         'notes' => 'a note'
                     ], [
                         'attachedTo' => [
@@ -50,6 +51,7 @@ class ConditionsTest extends \PHPUnit_Framework_TestCase
                             'id' => ConditionUndertakingEntityService::TYPE_CONDITION
                         ],
                         'isFulfilled' => 'Y',
+                        'isDraft' => 'N',
                         'notes' => 'another note'
                     ], [
                         'attachedTo' => [
@@ -59,6 +61,7 @@ class ConditionsTest extends \PHPUnit_Framework_TestCase
                             'id' => ConditionUndertakingEntityService::TYPE_CONDITION
                         ],
                         'isFulfilled' => 'N',
+                        'isDraft' => 'N',
                         'notes' => 'a third note'
                     ]
                 ]
