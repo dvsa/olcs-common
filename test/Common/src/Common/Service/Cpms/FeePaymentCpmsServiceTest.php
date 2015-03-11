@@ -8,9 +8,7 @@
 namespace CommonTest\Service\Cpms;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\Service\Cpms\FeePaymentCpmsService;
-use Common\Service\Cpms\Exception\PaymentNotFoundException;
-use Common\Service\Cpms\Exception\PaymentInvalidStatusException;
+use Common\Service\Cpms as CpmsService;
 use Common\Service\Entity\PaymentEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Entity\FeePaymentEntityService;
@@ -42,7 +40,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     public function setUp()
     {
         $this->sm = Bootstrap::getServiceManager();
-        $this->sut = new FeePaymentCpmsService();
+        $this->sut = new CpmsService\FeePaymentCpmsService();
         $this->sut->setServiceLocator($this->sm);
         $this->mockDate('2015-01-21');
 
@@ -225,7 +223,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
         try {
             $this->sut->handleResponse($data, 'PAYMENT_METHOD');
-        } catch (PaymentNotFoundException $ex) {
+        } catch (CpmsService\Exception\PaymentNotFoundException $ex) {
             $this->assertEquals('Payment not found', $ex->getMessage());
             return;
         }
@@ -256,7 +254,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
 
         try {
             $this->sut->handleResponse($data, 'PAYMENT_METHOD');
-        } catch (PaymentInvalidStatusException $ex) {
+        } catch (CpmsService\Exception\PaymentInvalidStatusException $ex) {
             $this->assertEquals('Invalid payment status: bad_status', $ex->getMessage());
             return;
         }
@@ -409,7 +407,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $resultStatus = $this->sut->handleResponse($data, []);
+        $resultStatus = $this->sut->handleResponse($data, 'PAYMENT_METHOD');
 
         $this->assertEquals($status, $resultStatus);
     }
@@ -467,7 +465,7 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $resultStatus = $this->sut->handleResponse($data, []);
+        $resultStatus = $this->sut->handleResponse($data, 'PAYMENT_METHOD');
 
         $this->assertEquals(null, $resultStatus);
     }
@@ -513,7 +511,16 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
                 ->getMock()
         );
 
-        $this->sut->handleResponse($data, []);
+        $this->sut->handleResponse($data, 'PAYMENT_METHOD');
+    }
+
+    /**
+     * @expectedException \Common\Service\Cpms\Exception
+     */
+    public function testHandleResponseWithInvalidGatewayData()
+    {
+        $data = [];
+        $this->sut->handleResponse($data, 'PAYMENT_METHOD');
     }
 
     public function testRecordCashPaymentSuccess()
