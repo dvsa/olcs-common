@@ -254,6 +254,7 @@ return array(
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.previous-history' => 'Previous history',
     'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.previous-history.financial-history' => 'Financial history',
