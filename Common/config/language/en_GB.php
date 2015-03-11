@@ -863,6 +863,7 @@ return array(
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
+    'fees.cheque_date' => 'Cheque date',
     'fees.max_amount' => 'Fee amount',
     'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',

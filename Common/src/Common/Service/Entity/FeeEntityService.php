@@ -68,7 +68,17 @@ class FeeEntityService extends AbstractLvaEntityService
             'feeType' => array(
                 'properties' => 'id',
                 'children' => array('accrualRule' => array())
-            )
+            ),
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            ),
+            'paymentMethod',
         )
     );
 
