@@ -85,39 +85,21 @@ class InterimHelperServiceTest extends MockeryTestCase
             ),
             array(
                 array(
-                    'totAuthVehicles' => 10,
-                    'licence' => array(
-                        'totAuthVehicles' => 11
-                    )
-                ),
-                array('hasVehicleAuthChange' => 'totAuthVehicles')
-            ),
-            array(
-                array(
-                    'totAuthVehicles' => 'null',
+                    'totAuthVehicles' => 11,
                     'licence' => array(
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasVehicleAuthChange' => 'totAuthVehicles')
+                array('hasAuthIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
-                    'totAuthTrailers' => 10,
+                    'totAuthTrailers' => 11,
                     'licence' => array(
-                        'totAuthTrailers' => 11
+                        'totAuthTrailers' => 10
                     )
                 ),
-                array('hasTrailerAuthChange' => 'totAuthTrailers')
-            ),
-            array(
-                array(
-                    'totAuthTrailers' => 'null',
-                    'licence' => array(
-                        'totAuthTrailers' => 11
-                    )
-                ),
-                array('hasTrailerAuthChange' => 'totAuthTrailers')
+                array('hasAuthIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(
@@ -196,7 +178,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthVehicles' => 10
                     )
                 ),
-                array('hasVehicleAuthChange' => 'totAuthVehicles')
+                array('hasAuthIncrease' => 'totAuthVehicles')
             ),
             array(
                 array(
@@ -205,7 +187,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'totAuthTrailers' => 10
                     )
                 ),
-                array('hasTrailerAuthChange' => 'totAuthTrailers')
+                array('hasAuthIncrease' => 'totAuthTrailers')
             ),
             array(
                 array(

@@ -29,8 +29,8 @@ class InterimHelperService extends AbstractHelperService
      */
     protected $functionToDataMap = array(
         'hasUpgrade'=> 'licenceType',
-        'hasVehicleAuthChange' => 'totAuthVehicles',
-        'hasTrailerAuthChange' => 'totAuthTrailers',
+        'hasAuthIncrease' => 'totAuthVehicles',
+        'hasAuthIncrease' => 'totAuthTrailers',
         'hasNewOperatingCentre' => 'operatingCentres',
         'hasIncreaseInOperatingCentre' => 'operatingCentres'
     );
@@ -192,37 +192,16 @@ class InterimHelperService extends AbstractHelperService
     }
 
     /**
-     * Has the overall licence vehicle authority changed.
+     * Has the overall authority increased.
      *
      * @param $variation The variation data.
      * @param $licence The current licence data.
      *
      * @return bool
      */
-    protected function hasVehicleAuthChange($variation, $licence)
+    protected function hasAuthIncrease($variation, $licence)
     {
-        if ($variation === $licence || is_null($variation)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Has the overall licence trailer authority changed.
-     *
-     * @param $variation The variation data.
-     * @param $licence The current licence data.
-     *
-     * @return bool
-     */
-    protected function hasTrailerAuthChange($variation, $licence)
-    {
-        if ($variation === $licence || is_null($variation)) {
-            return false;
-        }
-
-        return true;
+        return ($variation > $licence);
     }
 
     /**
