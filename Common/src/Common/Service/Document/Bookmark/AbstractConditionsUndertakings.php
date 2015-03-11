@@ -43,6 +43,7 @@ abstract class AbstractConditionsUndertakings extends DynamicBookmark
             if ($row['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
                 && $row['conditionType']['id'] === static::CONDITION_TYPE
                 && $row['isFulfilled'] === 'N'
+                && $row['isDraft'] === 'N'
             ) {
                 $rows[] = $row['notes'];
             }
