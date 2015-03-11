@@ -99,7 +99,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     /**
      * Add messages to the main index page
      */
-    public function addMessages()
+    public function addMessages($id)
     {
         // No-op by default
     }

@@ -20,7 +20,7 @@ interface OperatingCentreAdapterInterface extends AdapterInterface
     /**
      * Add messages to the main index page
      */
-    public function addMessages();
+    public function addMessages($id);
 
     /**
      * Attach the relevant scripts to the main page

@@ -35,20 +35,9 @@ class LicenceOperatingCentreAdapter extends AbstractOperatingCentreAdapter
     /**
      * Add variation info message
      */
-    public function addMessages()
+    public function addMessages($id)
     {
-        $params = [
-            'licence' => $this->getLicenceAdapter()->getIdentifier()
-        ];
-
-        $link = $this->getController()->url()->fromRoute('lva-licence/variation', $params);
-
-        $message = $this->getServiceLocator()->get('Helper\Translation')
-            ->translateReplace('variation-application-message', [$link]);
-
-        $placeholder = $this->getServiceLocator()->get('ViewHelperManager')->get('placeholder');
-
-        $placeholder->getContainer('guidance')->append($message);
+        return $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($id);
     }
 
     /**
