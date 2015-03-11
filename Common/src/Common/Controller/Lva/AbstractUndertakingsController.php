@@ -65,7 +65,7 @@ abstract class AbstractUndertakingsController extends AbstractController
 
         if ($data['interim']['goodsApplicationInterim'] === 'Y') {
             $interimService->createInterimFeeIfNotExist($data['declarationsAndUndertakings']['id']);
-        } elseif($data['interim']['goodsApplicationInterim'] === 'N') {
+        } elseif ($data['interim']['goodsApplicationInterim'] === 'N') {
             $interimService->cancelInterimFees($data['declarationsAndUndertakings']['id']);
         }
     }

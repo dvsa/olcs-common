@@ -60,6 +60,4 @@ class VariationDeclarationsAndUndertakings
      * @Form\Type("Hidden")
      */
     public $id = null;
-
-    
 }

@@ -130,7 +130,7 @@ class FeeEntityService extends AbstractLvaEntityService
             'limit' => 1
         ];
 
-        if(!is_null($feeType)) {
+        if (!is_null($feeType)) {
             $params['feeType'] = $feeType;
         }
 

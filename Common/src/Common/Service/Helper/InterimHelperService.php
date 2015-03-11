@@ -54,11 +54,13 @@ class InterimHelperService extends AbstractHelperService
 
         $licenceData = $applicationData['licence'];
 
-        foreach($this->functionToDataMap as $function => $dataKey) {
+        foreach ($this->functionToDataMap as $function => $dataKey) {
             if ($this->$function($applicationData[$dataKey], $licenceData[$dataKey])) {
                 return true;
             }
         }
+
+        return false;
     }
 
     /**
@@ -124,8 +126,7 @@ class InterimHelperService extends AbstractHelperService
             FeeEntityService::STATUS_OUTSTANDING,
             FeeEntityService::STATUS_WAIVE_RECOMMENDED
         )
-    )
-    {
+    ) {
         $feeService = $this->getServiceLocator()->get('Entity\Fee');
 
         $applicationProcessingService = $this->getServiceLocator()->get('Processing\Application');
@@ -200,7 +201,11 @@ class InterimHelperService extends AbstractHelperService
      */
     protected function hasVehicleAuthChange($variation, $licence)
     {
-        return !($variation === $licence || $variation === null);
+        if ($variation === $licence || is_null($variation)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -213,7 +218,11 @@ class InterimHelperService extends AbstractHelperService
      */
     protected function hasTrailerAuthChange($variation, $licence)
     {
-        return !($variation === $licence || $variation === null);
+        if ($variation === $licence || is_null($variation)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -247,15 +256,29 @@ class InterimHelperService extends AbstractHelperService
             return false;
         }
 
-        foreach($licence as $key => $operatingCenter) {
+        foreach ($licence as $key => $operatingCenter) {
             if (
-                ($variation[$key]['noOfVehiclesRequired'] !== $licence[$key]['noOfVehiclesRequired']) ||
-                ($variation[$key]['noOfTrailersRequired'] !== $licence[$key]['noOfTrailersRequired'])
+                ($variation[$key]['noOfVehiclesRequired'] > $licence[$key]['noOfVehiclesRequired']) ||
+                ($variation[$key]['noOfTrailersRequired'] > $licence[$key]['noOfTrailersRequired'])
             ) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Set the function to data map.
+     *
+     * @param array $functionToDataMap The function to data map.
+     *
+     * @return $this
+     */
+    public function setFunctionToDataMap(array $functionToDataMap)
+    {
+        $this->functionToDataMap = $functionToDataMap;
+
+        return $this;
     }
 }
