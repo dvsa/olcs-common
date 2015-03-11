@@ -293,6 +293,9 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('removeAction')
             ->with('stop')
             ->once()
+            ->shouldReceive('removeAction')
+            ->with('reprint')
+            ->once()
             ->getMock();
 
         $mockRequest->shouldReceive('isPost')
@@ -423,6 +426,10 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('removeAction')
             ->with('stop')
             ->once()
+            ->shouldReceive('removeAction')
+            ->with('reprint')
+            ->once()
+
             ->getMock();
 
         $mockRequest->shouldReceive('isPost')

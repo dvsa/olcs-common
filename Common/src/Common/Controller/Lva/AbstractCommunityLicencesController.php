@@ -130,7 +130,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Get form data
-     * 
+     *
      * @return array
      */
     private function getFormData()
@@ -140,7 +140,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Format data for form
-     * 
+     *
      * @param array $data
      * @return array
      */
@@ -191,6 +191,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
         if (!$this->checkTableForLicences($table, [CommunityLicEntityService::STATUS_ACTIVE])) {
             $table->removeAction('stop');
+            $table->removeAction('reprint');
         }
 
         return $table;
@@ -216,7 +217,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Office licence add acion
-     * 
+     *
      * @return Zend\Http\Redirect
      */
     public function officeLicenceAddAction()
@@ -229,7 +230,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Redirect to index
-     * 
+     *
      * @return Zend\Http\Redirect
      */
     protected function redirectToIndex()
@@ -310,7 +311,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Add action
-     * 
+     *
      */
     public function voidAction()
     {
@@ -338,7 +339,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Void licences
-     * 
+     *
      * @param array $ids
      */
     protected function voidLicences($ids)
@@ -363,7 +364,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Check if selected licences allow to be voided
-     * 
+     *
      * @param string $ids
      */
     protected function allowToProcess($ids)
@@ -386,7 +387,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Check if selected licences allow to be restored
-     * 
+     *
      * @param string $ids
      */
     protected function allowToRestore($ids)
@@ -408,7 +409,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Restore action
-     * 
+     *
      */
     public function restoreAction()
     {
@@ -435,7 +436,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Restore licences
-     * 
+     *
      * @param array $ids
      */
     protected function restoreLicences($ids)
@@ -467,7 +468,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Stop action
-     * 
+     *
      */
     public function stopAction()
     {
@@ -499,9 +500,61 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         return $this->render($view);
     }
 
+    public function reprintAction()
+    {
+        $licenceId  = $this->getLicenceId();
+        $ids = explode(',', $this->params('child_id'));
+
+        if (!$this->allowToReprint($ids)) {
+            $this->addErrorMessage('internal.community_licence.reprint_not_allowed');
+            return $this->redirectToIndex();
+        }
+
+        // 1. Void existing licences
+        $this->voidLicences($ids);
+
+        // 2. Create new licences with the same issue numbers
+        $issueNos = $this->getIssueNumbersForLicences($ids);
+        $this->getAdapter()->addCommunityLicencesWithIssueNos($licenceId, $issueNos);
+
+        $this->addSuccessMessage('internal.community_licence.licences_reprinted');
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * Check if selected licences can be reprinted
+     *
+     * @param string $ids
+     * @return boolean true iff all are active
+     */
+    protected function allowToReprint($ids)
+    {
+        $licenceId = $this->getLicenceId();
+        $activeLicences = $this->getServiceLocator()->get('Entity\CommunityLic')
+            ->getActiveLicences($licenceId);
+
+        $activeIds = [];
+        foreach ($activeLicences['Results'] as $licence) {
+            $activeIds[] = $licence['id'];
+        }
+
+        $notActive = array_diff($ids, $activeIds);
+        return empty($notActive);
+    }
+
+    protected function getIssueNumbersForLicences($ids)
+    {
+        return array_map(
+            function ($licence) {
+                return $licence['issueNo'];
+            },
+            $this->getServiceLocator()->get('Entity\CommunityLic')->getByIds($ids)
+        );
+    }
+
     /**
      * Check if selected licences allow to be suspended / withdrawn
-     * 
+     *
      * @param string $ids
      */
     protected function allowToStop($ids)
@@ -533,7 +586,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Check if office copy was selected
-     * 
+     *
      * @param int $licenceId
      * @param array $ids
      * @return bool
@@ -553,7 +606,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     /**
      * Suspend or withdrawn licences
-     * 
+     *
      * @param array $ids
      * @param array $formattedData
      * @return bool
