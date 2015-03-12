@@ -510,14 +510,22 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->redirectToIndex();
         }
 
-        // 1. Void existing licences
-        $this->voidLicences($ids);
+        if (!$this->getRequest()->isPost()) {
+            return $this->renderConfirmation('internal.community_licence.confirm_reprint_licences');
+        }
 
-        // 2. Create new licences with the same issue numbers
-        $issueNos = $this->getIssueNumbersForLicences($ids);
-        $this->getAdapter()->addCommunityLicencesWithIssueNos($licenceId, $issueNos);
+        if (!$this->isButtonPressed('cancel')) {
 
-        $this->addSuccessMessage('internal.community_licence.licences_reprinted');
+            // 1. Void existing licences
+            $this->voidLicences($ids);
+
+            // 2. Create new licences with the same issue numbers
+            $issueNos = $this->getIssueNumbersForLicences($ids);
+            $this->getAdapter()->addCommunityLicencesWithIssueNos($licenceId, $issueNos);
+
+            $this->addSuccessMessage('internal.community_licence.licences_reprinted');
+        }
+
         return $this->redirectToIndex();
     }
 
@@ -676,5 +684,19 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $reasons['_OPTIONS_'] = ['multiple' => true];
         $this->getServiceLocator()->get($reasonService)->save($reasons);
         $this->addSuccessMessage($message);
+    }
+
+    protected function renderConfirmation($message)
+    {
+        $form = $this->getServiceLocator()->get('Helper\Form')
+            ->createFormWithRequest('GenericConfirmation', $this->getRequest());
+
+        $form->get('messages')->get('message')
+            ->setValue('internal.community_licence.confirm_reprint_licences');
+
+        $view = new ViewModel(['form' => $form]);
+        $view->setTemplate('partials/form');
+
+        return $this->render($view);
     }
 }
