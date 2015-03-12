@@ -840,6 +840,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -902,6 +905,12 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
+        an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
+        interim application.',
+    'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
+        authority.',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
@@ -2083,9 +2092,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'ebsr-upload-title' => 'Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
-
     // Potentially unused (Not found with grep)
 );

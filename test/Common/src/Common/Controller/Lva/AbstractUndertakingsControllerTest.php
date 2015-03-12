@@ -103,9 +103,49 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             ->with('undertakings')
             ->andReturn('complete');
 
+        $this->sut->shouldReceive('handleFees');
+
         $this->assertEquals(
             'complete',
             $this->sut->indexAction()
+        );
+    }
+
+    public function handleFeesProvider()
+    {
+        return array(
+            array(
+                'createInterimFeeIfNotExist', 'Y'
+            ),
+            array(
+                'cancelInterimFees', 'N'
+            )
+        );
+    }
+
+    /**
+     * @dataProvider handleFeesProvider
+     */
+    public function testHandleFees($method, $isInterim)
+    {
+        $this->sm->shouldReceive('get')
+            ->with('Helper\Interim')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive($method)
+                    ->with(1)
+                    ->getMock()
+            );
+
+        $this->sut->handleFees(
+            array(
+                'interim' => array(
+                    'goodsApplicationInterim' => $isInterim,
+                ),
+                'declarationsAndUndertakings' => array(
+                    'id' => 1
+                )
+            )
         );
     }
 

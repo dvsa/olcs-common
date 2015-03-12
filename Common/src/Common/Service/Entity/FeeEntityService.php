@@ -127,7 +127,7 @@ class FeeEntityService extends AbstractLvaEntityService
             ),
             'sort'  => 'invoicedDate',
             'order' => 'DESC',
-            'limit' => 1,
+            'limit' => 1
         ];
 
         $data = $this->get($params, $this->latestOutstandingFeeForBundle);
