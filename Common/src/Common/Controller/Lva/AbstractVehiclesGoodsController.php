@@ -284,12 +284,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
      */
     protected function getGoodsVehicleFilters()
     {
-        $filters = [];
-        $filters['vrm'] = $this->params()->fromQuery('vrm', 'All');
-        $filters['specified'] = $this->params()->fromQuery('specified', 'A');
-        $filters['includeRemoved'] = $this->params()->fromQuery('includeRemoved', 0);
-        $filters['disc'] = $this->params()->fromQuery('disc', 'A');
-        return $filters;
+        return $this->getAdapter()->getFilters($this->params()->fromQuery());
     }
 
     /**
@@ -458,11 +453,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
      */
     protected function getFilterForm()
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\VehicleFilter');
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $form->get('vrm')->setValueOptions($vrmOptions);
-        return $form;
+        return $this->getAdapter()->getFilterForm();
     }
 
     /**
