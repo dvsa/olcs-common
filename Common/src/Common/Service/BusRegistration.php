@@ -38,7 +38,7 @@ class BusRegistration
         'timetableAcceptable' => 'N',
         'mapSupplied' => 'N',
         // (Re)set dates to null
-        'dateReceived' => null,
+        'receivedDate' => null,
         'effectiveDate' => null,
         'endDate' => null,
         // These will be set to yes explicitly by the TXC processor, default it to no for the internal app
@@ -131,6 +131,7 @@ class BusRegistration
 
         $data['variationNo']++;
         $data['status'] = self::STATUS_VAR;
+        $data['statusChangeDate'] = date(\DateTime::ISO8601);
         $data['revertStatus'] = self::STATUS_VAR;
 
         //This is defined manyToOne in backend...

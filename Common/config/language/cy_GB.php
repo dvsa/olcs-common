@@ -842,6 +842,9 @@ return array(
     'driver' => 'W Driver',
     'driver-vehicle-standards-agency' => 'W Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'W East of England',
+    'ebsr-upload-subtitle' => 'W To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'W Register, upload or cancel a service',
     'ecms-number' => 'W ECMS #',
     'ecmsNo' => 'W ECMS',
     'edit' => 'W Edit',
@@ -866,6 +869,7 @@ return array(
     'fees' => 'W Fees',
     'fees.amount_too_large' => 'W The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'W Cheque Number',
+    'fees.cheque_date' => 'W Cheque date',
     'fees.max_amount' => 'W Fee amount',
     'fees.payer' => 'W Payer name',
     'fees.payment_method' => 'W Payment method',
@@ -903,6 +907,12 @@ return array(
     'impo_wd' => 'W Application Withdrawn',
     'impt_hearing' => 'W Hearing',
     'impt_paper' => 'W Paperwork',
+    'interim.application.undertakings.form.checkbox.label' => 'W Do you wish to apply for an interim authority? There is
+        an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'W Please provide us with a reason for your
+        interim application.',
+    'interim.application.undertakings.form.textarea.placeholder' => 'W Enter the reason you are requesting an interim
+        authority.',
     'internal' => 'W Internal',
     'internal-application-processing' => 'W Processing',
     'internal-application-processing-notes' => 'W Notes',
@@ -2092,8 +2102,5 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
-    'ebsr-upload-title' => 'W Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'W To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
     // Potentially unused (Not found with grep)
 );

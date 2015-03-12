@@ -1,4 +1,6 @@
 OLCS.ready(function() {
+  "use strict";
+
   OLCS.tableHandler({
     table: ".table__form"
   });

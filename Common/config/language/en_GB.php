@@ -254,6 +254,7 @@ return array(
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.previous-history' => 'Previous history',
     'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.previous-history.financial-history' => 'Financial history',
@@ -839,6 +840,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -863,6 +867,7 @@ return array(
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
+    'fees.cheque_date' => 'Cheque date',
     'fees.max_amount' => 'Fee amount',
     'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
@@ -900,6 +905,12 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
+        an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
+        interim application.',
+    'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
+        authority.',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
@@ -2023,16 +2034,12 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
-        class="js-modal-ajax">variation application</a>',
-    'variation-application-text' => 'Making changes to some fields within this section may require a',
-    'variation-application-text2' => 'Changes within this section will require a',
-    'variation-application-text3' => 'You cannot make changes to this section',
+    'variation-application-text' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
     'variation-grant-error-no-change' => 'Nothing has been updated',
     'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
-    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
+    'variation-message' => 'Making changes to this page will require a variation application. To start a
         variation application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
@@ -2085,9 +2092,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'ebsr-upload-title' => 'Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
-
     // Potentially unused (Not found with grep)
 );

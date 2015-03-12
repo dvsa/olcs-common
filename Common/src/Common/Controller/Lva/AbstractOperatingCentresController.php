@@ -25,7 +25,7 @@ abstract class AbstractOperatingCentresController extends AbstractController imp
 
     public function indexAction()
     {
-        $this->getAdapter()->addMessages();
+        $this->getAdapter()->addMessages($this->getIdentifier());
 
         $request = $this->getRequest();
 

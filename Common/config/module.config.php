@@ -269,10 +269,6 @@ return array(
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
-
-            'OlcsCustomForm' => function ($sm) {
-                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-            },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
@@ -329,7 +325,7 @@ return array(
             'Common\Filter\Publication\PublicationSection',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmDecisionText1',
             'Common\Filter\Publication\TmDecisionText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
@@ -393,7 +389,8 @@ return array(
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(
-            'location' => 'documents'
+            'location' => 'documents',
+            'defaultPath' => '[locale]/[doc_type_name]/[year]/[month]', // e.g. gb/publications/2015/03
         )
     ),
     'view_helpers' => array(

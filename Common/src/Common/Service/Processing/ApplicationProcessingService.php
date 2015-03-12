@@ -260,6 +260,37 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         return empty($fees);
     }
 
+    public function getInterimFee($applicationId)
+    {
+        return $this->getFeeForApplicationByType($applicationId, FeeTypeDataService::FEE_TYPE_GRANTINT);
+    }
+
+    public function getApplicationFee($applicationId)
+    {
+        $applicationType = $this->getServiceLocator()->get('Entity\Application')
+            ->getApplicationType($applicationId);
+
+        $feeType =($applicationType == ApplicationEntityService::APPLICATION_TYPE_VARIATION)
+            ? FeeTypeDataService::FEE_TYPE_VAR
+            : FeeTypeDataService::FEE_TYPE_APP;
+
+        return $this->getFeeForApplicationByType($applicationId, $feeType);
+    }
+
+    protected function getFeeForApplicationByType($applicationId, $feeType)
+    {
+        $feeTypeData = $this->getFeeTypeForApplication(
+            $applicationId,
+            $feeType
+        );
+
+        return $this->getServiceLocator()->get('Entity\Fee')->getLatestFeeByTypeStatusesAndApplicationId(
+            $feeTypeData['id'],
+            [FeeEntityService::STATUS_OUTSTANDING, FeeEntityService::STATUS_WAIVE_RECOMMENDED],
+            $applicationId
+        );
+    }
+
     protected function createGrantFee($applicationId, $licenceId, $taskId)
     {
         $this->createFee($applicationId, $licenceId, FeeTypeDataService::FEE_TYPE_GRANT, $taskId);

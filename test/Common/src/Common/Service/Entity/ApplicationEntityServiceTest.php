@@ -239,6 +239,16 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertTrue($this->sut->doesBelongToOrganisation($id, $orgId));
     }
 
+    public function testGetVariationInterimData()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('Application', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getVariationInterimData($id));
+    }
+
     /**
      * @group entity_services
      */
@@ -747,7 +757,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Application', 'GET', $id)
             ->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getDataForUndertakings($id));
+        $this->assertEquals('RESPONSE', $this->sut->getLicenceType($id));
     }
 
     public function testGetVariationCompletionStatusData()

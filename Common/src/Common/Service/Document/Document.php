@@ -3,9 +3,10 @@
 namespace Common\Service\Document;
 
 use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
-use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+
+use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
 /**
  * Document generation service
@@ -15,6 +16,9 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 class Document implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
+
+    const DOCUMENT_TIMESTAMP_FORMAT = 'YmdHi';
+    const METADATA_KEY = 'data';
 
     public function getBookmarkQueries(ContentStoreFile $file, $data)
     {
@@ -114,5 +118,57 @@ class Document implements ServiceLocatorAwareInterface
         }
 
         return $bookmarks;
+    }
+
+    /**
+     * @param $id
+     * @param $filename
+     * @param $path
+     * @return mixed
+     */
+    public function download($id, $filename, $path)
+    {
+        return $this->getUploader()->download($id, $filename, $path);
+    }
+
+    /**
+     * Returns the METADATA_KEY constant
+     *
+     * @return string
+     */
+    public function getMetadataKey()
+    {
+        return self::METADATA_KEY;
+    }
+
+    /**
+     * Returns a document timestamp
+     *
+     * @return string
+     */
+    public function getTimestampFormat()
+    {
+        return self::DOCUMENT_TIMESTAMP_FORMAT;
+    }
+
+    /**
+     * Formats a document filename
+     *
+     * @param string $input
+     * @return string
+     */
+    public function formatFilename($input)
+    {
+        return str_replace([' ', '/'], '_', $input);
+    }
+
+    /**
+     * Get uploader
+     *
+     * @return \Common\Service\File\FileUploaderFactory
+     */
+    protected function getUploader()
+    {
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 }
