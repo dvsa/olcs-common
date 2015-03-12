@@ -415,8 +415,8 @@ class FeePaymentCpmsServiceTest extends MockeryTestCase
     public function nonSuccessfulStatusProvider()
     {
         return [
-            'cancellation' => [807, PaymentEntityService::STATUS_FAILED],
-            'failure'      => [802, PaymentEntityService::STATUS_CANCELLED],
+            'cancellation' => [807, PaymentEntityService::STATUS_CANCELLED],
+            'failure'      => [802, PaymentEntityService::STATUS_FAILED],
             'in progress'  => [800, PaymentEntityService::STATUS_FAILED],
         ];
     }

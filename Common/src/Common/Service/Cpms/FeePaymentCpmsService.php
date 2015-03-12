@@ -602,24 +602,19 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
                     $this->updateFeeRecordAsPaid($fee['id'], $data);
                 }
-
                 $paymentService->setStatus($paymentId, PaymentEntityService::STATUS_PAID);
                 $status = PaymentEntityService::STATUS_PAID;
                 break;
-
             case self::PAYMENT_FAILURE:
-                $status = PaymentEntityService::STATUS_CANCELLED;
-                break;
-
-            case self::PAYMENT_CANCELLATION:
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
-
+            case self::PAYMENT_CANCELLATION:
+                $status = PaymentEntityService::STATUS_CANCELLED;
+                break;
             case self::PAYMENT_IN_PROGRESS:
                 // resolve any abandoned payments as 'failed'
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
-
             default:
                 $this->log('Unknown CPMS payment_status: ' . $paymentStatus);
                 $status = null;
