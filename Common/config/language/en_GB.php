@@ -251,10 +251,10 @@ return array(
     'application.overview.saved' => 'The overview page has been saved',
     'application.overview.title' => 'Application overview',
     'application.payment-submission' => 'Payment & submission',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
-    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.previous-history' => 'Previous history',
     'application.previous-history.convictions-penalties' => 'Convictions & penalties',
     'application.previous-history.financial-history' => 'Financial history',
@@ -840,6 +840,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -1117,12 +1120,15 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
+    'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'Interim application',
     'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
     'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
     'internal.interim.form.interim_cancel' => 'Cancel',
     'internal.interim.form.interim_end' => 'Interim end date',
     'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_granted' => 'Interim granted',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
     'internal.interim.form.interim_requested' => 'Interim requested',
@@ -1377,6 +1383,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.grant_application' => 'Grant application',
+    'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
@@ -2030,8 +2037,8 @@ return array(
     'variation-details-nav' => 'Variation details',
     'variation-grant-error-no-change' => 'Nothing has been updated',
     'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
-    'variation-message' => 'Making changes to this page will require a variation application. To start a
-        variation application <a href="%s" class="js-modal-ajax">click here</a>',
+    'variation-message' => 'Making changes to this page will require a variation application. To start a variation
+        application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-addresses-change' => 'Thank you for updating your addresses',
@@ -2083,9 +2090,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'ebsr-upload-title' => 'Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.'
-
     // Potentially unused (Not found with grep)
 );
