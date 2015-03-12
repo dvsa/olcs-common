@@ -393,7 +393,8 @@ return array(
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(
-            'location' => 'documents'
+            'location' => 'documents',
+            'defaultPath' => '[locale]/[doc_type_name]/[year]/[month]', // e.g. gb/publications/2015/03
         )
     ),
     'view_helpers' => array(

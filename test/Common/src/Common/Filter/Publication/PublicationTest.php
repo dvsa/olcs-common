@@ -25,6 +25,7 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
         $sut = new PublicationFilter();
 
         $mockPublicationService = m::mock('Common\Service\Data\Publication');
+        $mockPublicationService->shouldReceive('setData')->with('list', null);
         $mockPublicationService->shouldReceive('fetchList')->andReturn(false);
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
@@ -79,6 +80,7 @@ class PublicationTest extends \PHPUnit_Framework_TestCase
         $sut = new PublicationFilter();
 
         $mockPublicationService = m::mock('Common\Service\Data\Publication');
+        $mockPublicationService->shouldReceive('setData')->with('list', null);
         $mockPublicationService->shouldReceive('fetchList')->with($params)->andReturn($restData);
 
         $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');

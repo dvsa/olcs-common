@@ -25,10 +25,21 @@ class PublicationTest extends MockeryTestCase
         $newPublicationNo = $publicationNo + 1;
         $version = 2;
         $pubType = 'N&P';
-        $trafficAreaId = 'N';
+        $trafficAreaId = 'B';
+        $trafficAreaName = 'North East of England';
+        $isNi = 'N';
         $pubStatusId = 'pub_s_new';
+        $pubStatusDescription = 'New';
         $pubDate = '2014-10-31';
         $newPubDate = '2014-11-14';
+        $docTemplateId = 642;
+        $docIdentifier = 'documentIdentifier';
+        $docDescription = 'documentDescription';
+        $documentPath = 'gb/publications/2014/10/' . strtolower($pubStatusDescription);
+        $docSize = 12345;
+        $categoryId = 11;
+        $subCategoryId = 113;
+        $savedDocumentId = 700;
 
         $currentPublication = [
             'id' => $id,
@@ -37,17 +48,34 @@ class PublicationTest extends MockeryTestCase
             'pubType' => $pubType,
             'pubDate' => $pubDate,
             'pubStatus' => [
-                'id' => $pubStatusId
+                'id' => $pubStatusId,
+                'description' => $pubStatusDescription
             ],
             'trafficArea' => [
-                'id' => $trafficAreaId
+                'id' => $trafficAreaId,
+                'isNi' => $isNi,
+                'name' => $trafficAreaName
+            ],
+            'docTemplate' => [
+                'id' => $docTemplateId,
+                'document' => [
+                    'identifier' => $docIdentifier,
+                ],
+                'description' => $docDescription,
+                'category' => [
+                    'id' => $categoryId
+                ],
+                'subCategory' => [
+                    'id' => $subCategoryId
+                ]
             ]
         ];
 
         $updateData = [
             'id' => $id,
             'pubStatus' => 'pub_s_generated',
-            'version' => $version
+            'version' => $version,
+            'document' => $savedDocumentId
         ];
 
         $newPublicationData = [
@@ -55,7 +83,8 @@ class PublicationTest extends MockeryTestCase
             'pubStatus' => 'pub_s_new',
             'pubDate' => $newPubDate,
             'pubType' => $pubType,
-            'publicationNo' => $newPublicationNo
+            'publicationNo' => $newPublicationNo,
+            'docTemplate' => $docTemplateId
         ];
 
         $mockClient = m::mock('Common\Util\RestClient');
@@ -69,8 +98,48 @@ class PublicationTest extends MockeryTestCase
             )
             ->andReturn(['id' => $newId]);
 
+        $mockJackRabbitFile = m::mock('Dvsa\Jackrabbit\Data\Object\File');
+        $mockJackRabbitFile->shouldReceive('getIdentifier')->andReturn($docIdentifier);
+        $mockJackRabbitFile->shouldReceive('getSize')->andReturn($docSize);
+
+        $mockContentStore = m::mock('Dvsa\Jackrabbit\Service\Client');
+        $mockContentStore->shouldReceive('read')->with($docIdentifier)->andReturn($mockJackRabbitFile);
+
+        $mockDocumentService = m::mock('Common\Service\Document\Document');
+        $mockDocumentService->shouldReceive('getBookmarkQueries');
+        $mockDocumentService->shouldReceive('populateBookmarks');
+        $mockDocumentService->shouldReceive('getMetadataKey');
+        $mockDocumentService->shouldReceive('getTimestampFormat');
+        $mockDocumentService->shouldReceive('formatFilename');
+
+        $mockFileUploader = m::mock('Common\Service\File\ContentStoreFileUploader');
+        $mockFileUploader->shouldReceive('setFile');
+
+        $mockFileUploader->shouldReceive('buildPathNamespace')->andReturn($documentPath);
+        $mockFileUploader->shouldReceive('upload')->with($documentPath)->andReturn($mockJackRabbitFile);
+
+        $mockFileFactory = m::mock('Common\Service\File\FileUploaderFactory');
+        $mockFileFactory->shouldReceive('getUploader')->andReturn($mockFileUploader);
+
+        $mockRestHelper = m::mock('RestHelper');
+        $mockRestHelper->shouldReceive('makeRestCall');
+
+        $mockDocumentDataService = m::mock('Generic\Service\Data\Document');
+        $mockDocumentDataService->shouldReceive('save')->andReturn($savedDocumentId);
+
+        $mockServiceManager = m::mock('\Zend\ServiceManager\ServiceManager');
+        $mockServiceManager->shouldReceive('get')->with('DataServiceManager')->andReturnSelf();
+        $mockServiceManager->shouldReceive('get')
+            ->with('Generic\Service\Data\Document')
+            ->andReturn($mockDocumentDataService);
+        $mockServiceManager->shouldReceive('get')->with('Helper\Rest')->andReturn($mockRestHelper);
+        $mockServiceManager->shouldReceive('get')->with('ContentStore')->andReturn($mockContentStore);
+        $mockServiceManager->shouldReceive('get')->with('FileUploader')->andReturn($mockFileFactory);
+        $mockServiceManager->shouldReceive('get')->with('Document')->andReturn($mockDocumentService);
+
         $sut = new Publication();
         $sut->setRestClient($mockClient);
+        $sut->setServiceLocator($mockServiceManager);
 
         $this->assertEquals($newId, $sut->generate($id));
     }
