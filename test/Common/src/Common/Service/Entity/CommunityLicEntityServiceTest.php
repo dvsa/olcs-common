@@ -291,10 +291,19 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * @group communityLicService
-     * @todo
      */
     public function testGetByIds()
     {
-        $this->markTestIncomplete("TODO");
+        $ids = ['1', '2'];
+
+        expectedRestCallInOrder('CommunityLic', 'GET', '1')
+            ->will($this->returnValue('COMMUNITYLIC1'));
+        expectedRestCallInOrder('CommunityLic', 'GET', '2')
+            ->will($this->returnValue('COMMUNITYLIC2'));
+
+        $this->assertEquals(
+            ['COMMUNITYLIC1', 'COMMUNITYLIC2'],
+            $this->sut->getByIds($licenceId)
+        );
     }
 }

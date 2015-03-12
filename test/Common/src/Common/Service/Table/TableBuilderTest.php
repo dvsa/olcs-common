@@ -1051,6 +1051,56 @@ class TableBuilderTest extends MockeryTestCase
 
         $table->expects($this->once())
             ->method('renderDropdownActions')
+            ->will($this->returnValue('DROPDOWN'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'DROPDOWN'), $table->renderActions());
+    }
+
+    /**
+     * Test renderActions with format override
+     * (Default behaviour is dropdown for > 4 actions)
+     */
+    public function testRenderActionsWithFormatOverrideButtons()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'add' => array(),
+                    'edit' => array(),
+                    'foo' => array(),
+                    'bar' => array(),
+                    'cake' => array()
+                )
+            ),
+            'actionFormat' => 'buttons'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        unset($content);
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderButtonActions'));
+
+        $table->expects($this->once())
+            ->method('renderButtonActions')
             ->will($this->returnValue('BUTTONS'));
 
         $table->expects($this->once())
@@ -1062,6 +1112,53 @@ class TableBuilderTest extends MockeryTestCase
         $table->setSettings($settings);
 
         $this->assertEquals(array('content' => 'BUTTONS'), $table->renderActions());
+    }
+
+    /**
+     * Test renderActions with format override
+     * (Default behaviour is buttons for <= 4 actions)
+     */
+    public function testRenderActionsWithFormatOverrideDropdown()
+    {
+        $settings = array(
+            'crud' => array(
+                'actions' => array(
+                    'foo' => array(),
+                    'bar' => array(),
+                )
+            ),
+            'actionFormat' => 'dropdown'
+        );
+
+        $mockContentHelper = $this->getMock('\stdClass', array('replaceContent'));
+
+        $mockContentHelper->expects($this->any())
+            ->method('replaceContent')
+            ->with('{{[elements/actionContainer]}}')
+            ->will(
+                $this->returnCallback(
+                    function ($content, $vars) {
+                        unset($content);
+                        return $vars;
+                    }
+                )
+            );
+
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'renderDropdownActions'));
+
+        $table->expects($this->once())
+            ->method('renderDropdownActions')
+            ->will($this->returnValue('DROPDOWN'));
+
+        $table->expects($this->once())
+            ->method('getContentHelper')
+            ->will($this->returnValue($mockContentHelper));
+
+        $table->setType(TableBuilder::TYPE_CRUD);
+
+        $table->setSettings($settings);
+
+        $this->assertEquals(array('content' => 'DROPDOWN'), $table->renderActions());
     }
 
     /**
@@ -2451,13 +2548,5 @@ class TableBuilderTest extends MockeryTestCase
             ->with('bar');
 
         $table->removeActions();
-    }
-
-    /**
-     * @todo
-     */
-    public function testFormatActionContentWithOverride()
-    {
-        $this->markTestIncomplete("TODO");
     }
 }
