@@ -7,7 +7,9 @@
  */
 namespace Common\Controller\Crud;
 
+use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\MutableCreationOptionsInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -26,14 +28,39 @@ class GenericCrudControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator, $serviceName = null, $requestedName = null)
     {
+        $mainServiceLocator = $serviceLocator->getServiceLocator();
+
         $crudServiceName = $this->getCrudServiceName($requestedName);
         $translationPrefix = $this->getTranslationPrefix($requestedName);
 
-        $service = $serviceLocator->getServiceLocator()->get('CrudServiceManager')->get($crudServiceName);
+        /** @var \Common\Service\Crud\AbstractCrudService $service */
+        $service = $mainServiceLocator->get('CrudServiceManager')->get($crudServiceName);
 
+        /** @var \Common\Controller\Crud\GenericCrudController $controller */
         $controller = $serviceLocator->get('GenericCrudController');
         $controller->setCrudService($service);
         $controller->setTranslationPrefix($translationPrefix);
+
+        /**
+         * Set config options
+         *
+         * This is a the crud_controller_config array from the module.config.php file.
+         */
+        $config = $mainServiceLocator->get('Config');
+        if (isset($config['crud_controller_config'][$requestedName])) {
+            $options = $config['crud_controller_config'][$requestedName];
+
+            $controller->setOptions($options);
+        }
+
+        /**
+         * Set scripts
+         *
+         * Sets the inline java scripts as an event just prior to dispatch.
+         * Also sets up the required parameters
+         */
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpParams'], 100);
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpScripts'], 10000);
 
         return $controller;
     }

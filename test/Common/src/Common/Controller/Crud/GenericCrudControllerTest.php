@@ -19,12 +19,24 @@ use Common\Controller\Crud\GenericCrudController;
  */
 class GenericCrudControllerTest extends MockeryTestCase
 {
+    /**
+     * @var \Common\Controller\Crud\GenericCrudController
+     */
     protected $sut;
 
+    /**
+     * @var \Zend\ServiceManager\ServiceManager
+     */
     protected $sm;
 
+    /**
+     * @var \Common\Service\Crud\CrudServiceInterface
+     */
     protected $crudService;
 
+    /**
+     * @var \Zend\Http\Request
+     */
     protected $request;
 
     public function setUp()
@@ -48,24 +60,18 @@ class GenericCrudControllerTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setCrudService($this->crudService);
         $this->sut->setTranslationPrefix('crud-foo');
-        $this->sut->setPageLayout('custom-layout');
+        $this->sut->setOption('pageLayout', 'custom-layout');
+
+        // Tests the params - required for every method so acceptable to assert here.
+        $params = ['a' => uniqid(), 'b' => uniqid()];
+        $this->assertSame($params, $this->sut->setParams($params)->getParams());
     }
 
     public function testIndexAction()
     {
-        // Mocks
-        $mockScript = m::mock();
-        $this->sm->setService('Script', $mockScript);
+        $this->request->shouldReceive('isXmlHttpRequest')->andReturn(false);
 
-        // Expectations
-        $mockScript->shouldReceive('loadFile')
-            ->with('table-actions');
-
-        $this->request->shouldReceive('isXmlHttpRequest')
-            ->andReturn(false);
-
-        $this->crudService->shouldReceive('getList')
-            ->andReturn('TABLE');
+        $this->crudService->shouldReceive('getList')->with($this->sut->getParams())->andReturn('TABLE');
 
         // Assertions
         $view = $this->sut->indexAction();
