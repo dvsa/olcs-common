@@ -214,8 +214,14 @@ class InterimHelperService extends AbstractHelperService
      */
     protected function hasNewOperatingCentre($variationOpCentres, $licenceOpCentres)
     {
-        if (!empty($variationOpCentres)) {
-            return true;
+        if (empty($variationOpCentres)) {
+            return false;
+        }
+
+        foreach ($variationOpCentres as $operatingCentre) {
+            if ($operatingCentre['action'] === 'A') {
+                return true;
+            }
         }
 
         return false;
@@ -229,13 +235,27 @@ class InterimHelperService extends AbstractHelperService
      *
      * @return bool
      */
-    protected function hasIncreaseInOperatingCentre($variation, $licence)
+    protected function hasIncreaseInOperatingCentre($variationOpCentres, $licenceOpCentres)
     {
-        if (empty($variation)) {
-            return false;
+        $licence = array();
+        $variation = array();
+
+        // Makes dealing with the records easier.
+        foreach ($licenceOpCentres as $opCentre) {
+            $licence[$opCentre['operatingCentre']['id']] = $opCentre;
         }
 
+        foreach ($variationOpCentres as $opCentre) {
+            $variation[$opCentre['operatingCentre']['id']] = $opCentre;
+        }
+
+        // foreach of the licence op centres.
         foreach ($licence as $key => $operatingCenter) {
+            // If a variation record doesnt exists or its a removal op centre.
+            if (!isset($variation[$key]) || $variation[$key]['action'] == 'D') {
+                break;
+            }
+
             if (
                 ($variation[$key]['noOfVehiclesRequired'] > $licence[$key]['noOfVehiclesRequired']) ||
                 ($variation[$key]['noOfTrailersRequired'] > $licence[$key]['noOfTrailersRequired'])
