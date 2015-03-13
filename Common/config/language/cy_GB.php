@@ -252,6 +252,7 @@ return array(
     'application.overview.saved' => 'W The overview page has been saved',
     'application.overview.title' => 'W Application overview',
     'application.payment-submission' => 'W Payment & submission',
+    'application.payment-submission.amount.value' => 'W <div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'W Payment',
     'application.payment-submission.summary.subtitle' => 'W Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'W Thank you',
@@ -1169,6 +1170,9 @@ return array(
     'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'W Name of Court',
     'internal.transport-manager.convictionsandpenalties.table.offence' => 'W Offence',
     'internal.transport-manager.convictionsandpenalties.table.penalty' => 'W Penalty',
+    'internal.transport-manager.delete-question' => 'W Are you sure you want to permanently delete the selected
+        record(s)?',
+    'internal.transport-manager.deleted-message' => 'W Deleted successfully',
     'internal.transport-manager.employment.cancel' => 'W Cancel',
     'internal.transport-manager.employment.form.address' => 'W Address',
     'internal.transport-manager.employment.form.employerName' => 'W Employer name',
