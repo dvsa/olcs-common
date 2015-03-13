@@ -223,8 +223,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
     public function officeLicenceAddAction()
     {
         $this->getAdapter()->addOfficeCopy($this->getLicenceId());
-        $translator = $this->getServiceLocator()->get('translator');
-        $this->addSuccessMessage($translator->translate('internal.community_licence.office_copy_created'));
+        $this->addSuccessMessage('internal.community_licence.office_copy_created');
         return $this->redirectToIndex();
     }
 
@@ -277,8 +276,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
                 $this->getAdapter()->addCommunityLicences($licenceId, $data['data']['total']);
                 $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
 
-                $translator = $this->getServiceLocator()->get('translator');
-                $this->addSuccessMessage($translator->translate('internal.community_licence.licences_created'));
+                $this->addSuccessMessage('internal.community_licence.licences_created');
 
                 return $this->redirectToIndex();
             }
@@ -315,12 +313,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     public function voidAction()
     {
-        $translator = $this->getServiceLocator()->get('translator');
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
         if (!$this->allowToProcess($ids)) {
-            $this->addErrorMessage($translator->translate('internal.community_licence.void_not_allowed'));
+            $this->addErrorMessage('internal.community_licence.void_not_allowed');
             return $this->redirectToIndex();
         }
         if (!$request->isPost()) {
@@ -332,7 +329,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         if (!$this->isButtonPressed('cancel')) {
             $this->voidLicences($ids);
-            $this->addSuccessMessage($translator->translate('internal.community_licence.licences_voided'));
+            $this->addSuccessMessage('internal.community_licence.licences_voided');
         }
         return $this->redirectToIndex();
     }
@@ -413,12 +410,11 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     public function restoreAction()
     {
-        $translator = $this->getServiceLocator()->get('translator');
         $request = $this->getRequest();
 
         $ids = explode(',', $this->params('child_id'));
         if (!$this->allowToRestore($ids)) {
-            $this->addErrorMessage($translator->translate('internal.community_licence.restore_not_allowed'));
+            $this->addErrorMessage('internal.community_licence.restore_not_allowed');
             return $this->redirectToIndex();
         }
         if (!$request->isPost()) {
@@ -429,7 +425,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         }
         if (!$this->isButtonPressed('cancel')) {
             $this->restoreLicences($ids);
-            $this->addSuccessMessage($translator->translate('internal.community_licence.licences_restored'));
+            $this->addSuccessMessage('internal.community_licence.licences_restored');
         }
         return $this->redirectToIndex();
     }
@@ -691,8 +687,7 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $this->getRequest());
 
-        $form->get('messages')->get('message')
-            ->setValue('internal.community_licence.confirm_reprint_licences');
+        $form->get('messages')->get('message')->setValue($message);
 
         $view = new ViewModel(['form' => $form]);
         $view->setTemplate('partials/form');

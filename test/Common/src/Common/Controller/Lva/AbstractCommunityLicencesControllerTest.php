@@ -3,7 +3,7 @@
 namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
+use CommonTest\Controller\Lva\AbstractLvaControllerTestCase;
 use CommonTest\Bootstrap;
 use Common\Service\Entity\CommunityLicEntityService;
 
@@ -13,7 +13,7 @@ use Common\Service\Entity\CommunityLicEntityService;
  * @author Rob Caiger <rob@clocal.co.uk>
  * @author Alex Peshkov <alex.peshkov@valtech.co.uk>
  */
-class AbstractCommunityLicencesControllerTest extends MockeryTestCase
+class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestCase
 {
     protected $sut;
     protected $sm;
@@ -505,14 +505,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
      */
     public function testOfficeLicenceAddAction()
     {
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.office_copy_created')
-            ->andReturn('message')
-            ->getMock();
-
-        $this->sm->setService('translator', $mockTranslator);
-
         $licenceId = 1;
         $this->sut
             ->shouldReceive('getAdapter')
@@ -525,7 +517,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
             ->shouldReceive('addSuccessMessage')
-            ->with('message')
+            ->with('internal.community_licence.office_copy_created')
             ->shouldReceive('redirect')
             ->andReturn(
                 m::mock()
@@ -646,13 +638,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->getMock();
         $this->sm->setService('Entity\Licence', $mockLicenceService);
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.licences_created')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $mockForm = m::mock()
             ->shouldReceive('getInputFilter')
             ->andReturn(
@@ -714,7 +699,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getAdapter')
             ->andReturn($mockAdapter)
             ->shouldReceive('addSuccessMessage')
-            ->with('message')
+            ->with('internal.community_licence.licences_created')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -832,13 +817,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $licenceId = 1;
         $licences = [1, 2];
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.void_not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
@@ -862,7 +840,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
             ->shouldReceive('addErrorMessage')
-            ->with('message')
+            ->with('internal.community_licence.void_not_allowed')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -878,13 +856,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     {
         $licenceId = 1;
         $licences = [1, 2];
-
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
 
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
@@ -936,13 +907,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $licenceId = 1;
         $licences = [1, 2];
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
@@ -988,13 +952,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     {
         $licenceId = 1;
         $licences = [1, 2];
-
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.licences_voided')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
 
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
@@ -1046,7 +1003,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->with('cancel')
             ->andReturn(false)
             ->shouldReceive('addSuccessMessage')
-            ->with('message')
+            ->with('internal.community_licence.licences_voided')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -1063,13 +1020,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     {
         $licenceId = 1;
         $licences = [1, 2];
-
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.restore_not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
 
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
@@ -1094,7 +1044,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
             ->shouldReceive('addErrorMessage')
-            ->with('message')
+            ->with('internal.community_licence.restore_not_allowed')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -1121,13 +1071,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     {
         $licenceId = 1;
         $licences = [1, 2];
-
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
 
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
@@ -1179,13 +1122,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $licenceId = 1;
         $licences = [1, 2];
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.not_allowed')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
@@ -1233,13 +1169,6 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
         $licenceId = 1;
         $licences = [1, 2];
 
-        $mockTranslator = m::mock()
-            ->shouldReceive('translate')
-            ->with('internal.community_licence.licences_restored')
-            ->andReturn('message')
-            ->getMock();
-        $this->sm->setService('translator', $mockTranslator);
-
         $mockLicenceService = m::mock()
             ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
             ->with($licenceId, $licences)
@@ -1285,7 +1214,7 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
             ->with('cancel')
             ->andReturn(false)
             ->shouldReceive('addSuccessMessage')
-            ->with('message')
+            ->with('internal.community_licence.licences_restored')
             ->shouldReceive('redirectToIndex')
             ->andReturn('redirect');
 
@@ -1743,12 +1672,151 @@ class AbstractCommunityLicencesControllerTest extends MockeryTestCase
     }
 
     /**
+     * Test reprint action with non-active licences (GET)
+     *
+     * @group abstractCommunityLicenceController
+     */
+    public function testReprintActionGetNotAllowed()
+    {
+        $licenceId = 1;
+        $licences = [1, 2];
+
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getActiveLicences')
+            ->with($licenceId)
+            ->andReturn(['Results' => [['id' => 999]]])
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn(m::mock())
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('addErrorMessage')
+            ->with('internal.community_licence.reprint_not_allowed')
+            ->shouldReceive('redirectToIndex')
+            ->andReturn('redirect');
+
+        $this->assertEquals('redirect', $this->sut->reprintAction());
+    }
+
+    /**
      * Test reprint action
      *
      * @group abstractCommunityLicenceController
      */
-    public function testReprintAddAction()
+    public function testReprintActionDisplayConfirmation()
     {
-        $this->markTestIncomplete("TODO");
+        $licenceId = 1;
+        $licences = [1, 2];
+
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(false)
+            ->getMock();
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId);
+
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getActiveLicences')
+            ->with($licenceId)
+            ->andReturn(
+                [
+                    'Results' => [
+                        ['id' => 1],
+                        ['id' => 2],
+                        ['id' => 3],
+                    ],
+                ]
+            )
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('messages')
+            ->andReturn(
+                m::mock()
+                    ->shouldReceive('get')
+                    ->with('message')
+                    ->andReturn(
+                        m::mock()
+                            ->shouldReceive('setValue')
+                            ->with('internal.community_licence.confirm_reprint_licences')
+                            ->getMock()
+                    )
+                    ->getMock()
+            )
+            ->getMock();
+        $mockFormHelper = m::mock()
+            ->shouldReceive('createFormWithRequest')
+            ->with('GenericConfirmation', $mockRequest)
+            ->andReturn($mockForm)
+            ->getMock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $this->mockRender();
+
+        $view = $this->sut->reprintAction();
+
+        $this->assertSame($mockForm, $view->getVariable('form'));
+    }
+
+    /**
+     * Test reprint action with cancel
+     *
+     * @group abstractCommunityLicenceController
+     */
+    public function testReprintActionWithCancel()
+    {
+        $this->markTestIncomplete();
+        $licenceId = 1;
+        $licences = [1, 2];
+
+        $mockLicenceService = m::mock()
+            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
+            ->with($licenceId, $licences)
+            ->andReturn([['issueNo' => 0]])
+            ->getMock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $mockCommunityLicService = m::mock()
+            ->shouldReceive('getValidLicences')
+            ->with($licenceId)
+            ->andReturn(['Results' => [['id' => 1], ['id' => 2]]])
+            ->getMock();
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
+
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('isPost')
+                ->andReturn(true)
+                ->getMock()
+            )
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('1,2')
+            ->shouldReceive('getLicenceId')
+            ->andReturn($licenceId)
+            ->shouldReceive('isButtonPressed')
+            ->with('cancel')
+            ->andReturn(true)
+            ->shouldReceive('redirectToIndex')
+            ->andReturn('redirect');
+
+        $this->assertEquals('redirect', $this->sut->voidAction());
     }
 }
