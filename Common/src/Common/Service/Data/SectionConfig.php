@@ -244,10 +244,6 @@ class SectionConfig implements ServiceLocatorAwareInterface
                         'application',
                         'variation'
                     ),
-                    // and external
-                    array(
-                        'external',
-                    )
                 )
             ),
         ),
