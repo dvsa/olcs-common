@@ -100,6 +100,75 @@ class LicenceProcessingServiceTest extends MockeryTestCase
         $this->sut->generateDocument(1);
     }
 
+    /**
+     * @dataProvider generateInterimDocumentProvider
+     */
+    public function testGenerateInterimDocument($niFlag, $isVariation, $template, $description, $filename)
+    {
+        $entityData = [
+            'niFlag' => $niFlag,
+            'isVariation' => $isVariation,
+            'licence' => [
+                'id' => 1
+            ]
+        ];
+
+        $this->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDataForProcessing')
+                ->with(1)
+                ->andReturn($entityData)
+                ->getMock()
+        );
+
+        $file = m::mock();
+        $content = m::mock();
+
+        $this->setService(
+            'Helper\DocumentGeneration',
+            m::mock()
+                ->shouldReceive('generateFromTemplate')
+                ->with($template, ['licence' => 1])
+                ->andReturn($content)
+                ->shouldReceive('uploadGeneratedContent')
+                ->with($content, 'documents', $description)
+                ->andReturn($file)
+                ->getMock()
+        );
+
+        $this->setService(
+            'PrintScheduler',
+            m::mock()
+                ->shouldReceive('enqueueFile')
+                ->with($file, $description)
+                ->getMock()
+        );
+
+        $this->setService(
+            'Entity\Document',
+            m::mock()
+                ->shouldReceive('createFromFile')
+                ->with(
+                    $file,
+                    [
+                        'description' => $description,
+                        'filename' => $filename,
+                        'fileExtension' => 'doc_rtf',
+                        'application'   => 1,
+                        'licence'       => 1,
+                        'category' => 1,
+                        'subCategory' => 79,
+                        'isDigital'     => false,
+                        'isScan'        => false
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->sut->generateInterimDocument(1);
+    }
+
     public function generateDocumentProvider()
     {
         return [
@@ -133,6 +202,37 @@ class LicenceProcessingServiceTest extends MockeryTestCase
                 'GV_Licence.rtf'
             ]
 
+        ];
+    }
+
+    public function generateInterimDocumentProvider()
+    {
+        return [
+            [
+                'N',
+                true,
+                'GB/GV_Interim_Direction',
+                'GV Interim Direction',
+                'GV_Interim_Direction.rtf'
+            ], [
+                'N',
+                false,
+                'GB/GV_Interim_Licence',
+                'GV Interim Licence',
+                'GV_Interim_Licence.rtf'
+            ], [
+                'Y',
+                true,
+                'NI/GV_Interim_Direction',
+                'GV Interim Direction',
+                'GV_Interim_Direction.rtf'
+            ], [
+                'Y',
+                false,
+                'NI/GV_Interim_Licence',
+                'GV Interim Licence',
+                'GV_Interim_Licence.rtf'
+            ]
         ];
     }
 
