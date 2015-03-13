@@ -115,4 +115,14 @@ class DataHelperService extends AbstractHelperService
 
         return $data;
     }
+
+    public function fetchNestedData($data, $search)
+    {
+        if (strpos($search, '->') !== false) {
+            list($head, $rest) = explode('->', $search, 2);
+            return $this->fetchNestedData($data[$head], $rest);
+        }
+
+        return $data[$search];
+    }
 }
