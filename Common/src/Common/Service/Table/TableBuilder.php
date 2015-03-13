@@ -33,6 +33,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
     const MAX_FORM_ACTIONS = 4;
 
+    const ACTION_FORMAT_BUTTONS = 'buttons';
+    const ACTION_FORMAT_DROPDOWN = 'dropdown';
+
     /**
      * Hold the pagination helper
      *
@@ -1046,7 +1049,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
 
         $newActions = $this->formatActions($actions);
 
-        $content = $this->formatActionContent($newActions);
+        $content = $this->formatActionContent($newActions, $this->getSetting('actionFormat'));
 
         return $this->replaceContent('{{[elements/actionContainer]}}', array('content' => $content));
     }
@@ -1427,10 +1430,18 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * Format action content
      *
      * @param array $actions
+     * @param string $overrideFormat
      * @return string
      */
-    private function formatActionContent($actions)
+    private function formatActionContent($actions, $overrideFormat)
     {
+        switch ($overrideFormat) {
+            case self::ACTION_FORMAT_DROPDOWN:
+                return $this->renderDropdownActions($actions);
+            case self::ACTION_FORMAT_BUTTONS:
+                return $this->renderButtonActions($actions);
+        }
+
         if (count($actions) > self::MAX_FORM_ACTIONS) {
             return $this->renderDropdownActions($actions);
         }

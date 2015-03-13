@@ -1105,6 +1105,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.community_licence.confirm_reprint_licences' => 'W Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'W Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'W Are you sure you want to void these licences?',
     'internal.community_licence.form.change_status_to' => 'W Change status to',
@@ -1117,11 +1118,13 @@ return array(
     'internal.community_licence.form_add.cancel' => 'W Cancel',
     'internal.community_licence.form_add.ok' => 'W OK',
     'internal.community_licence.licences_created' => 'W The community licences have been created',
+    'internal.community_licence.licences_reprinted' => 'W The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'W The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'W The licences have been suspended',
     'internal.community_licence.licences_voided' => 'W The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'W The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'W The office copy has been created',
+    'internal.community_licence.reprint_not_allowed' => 'W You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'W You cannot restore these licences without restoring the
         office copy',
     'internal.community_licence.stop_not_allowed' => 'W Please void, withdraw or suspend the other pending/active
