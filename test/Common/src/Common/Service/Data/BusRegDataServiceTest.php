@@ -75,7 +75,7 @@ class BusRegDataServiceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->once()
             ->with('', m::type('array'))
-            ->andReturn(['Results' => $mockData]);
+            ->andReturn(['Results' => $mockData, 'Count' => count($mockData)]);
 
         $this->sut->setRestClient($mockRestClient);
 
