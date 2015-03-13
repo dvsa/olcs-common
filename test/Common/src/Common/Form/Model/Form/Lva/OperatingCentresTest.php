@@ -82,7 +82,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthLargeVehicles'  => '',
                     'totAuthVehicles'       => '',
                     'totAuthTrailers'       => '',
-                    'totCommunityLicences'  => '',
+                    'totCommunityLicences'  => '0',
                     'noOfOperatingCentres'  => '1',
                 ],
                 [
@@ -91,7 +91,7 @@ class OperatingCentresTest extends AbstractFormTest
                     'totAuthLargeVehicles'  => null,
                     'totAuthVehicles'       => null,
                     'totAuthTrailers'       => null,
-                    'totCommunityLicences'  => null,
+                    'totCommunityLicences'  => '0',
                     'noOfOperatingCentres'  => '1',
                 ],
             ],
