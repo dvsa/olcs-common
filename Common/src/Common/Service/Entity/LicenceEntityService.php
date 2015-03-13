@@ -131,6 +131,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             'licenceVehicles' => array(
                 'children' => array(
                     'goodsDiscs',
+                    'interimApplication',
                     'vehicle'
                 )
             )
@@ -406,9 +407,8 @@ class LicenceEntityService extends AbstractLvaEntityService
      * Generates new licences or updates existing one and saves it to licence entity
      *
      * @param string $licenceId
-     * @return string|bool
      */
-    protected function generateLicence($licenceId)
+    public function generateLicence($licenceId)
     {
         $licence = $this->get($licenceId, $this->licenceNoGenBundle);
 

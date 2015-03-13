@@ -32,6 +32,13 @@ class VehiclesDeclarations
     public $nineOrMore = null;
 
     /**
+     * @Form\Name("mainOccupation")
+     * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsMainOccupation")
+     * @Form\Options({"label":"application_vehicle-safety_undertakings.mainOccupation"})
+     */
+    public $mainOccupation = null;
+
+    /**
      * @Form\Name("limousinesNoveltyVehicles")
      * @Form\ComposedObject("Common\Form\Model\Form\Lva\Fieldset\VehiclesDeclarationsLimousinesNoveltyVehicles")
      * @Form\Options({"label":"application_vehicle-safety_undertakings-limousines"})

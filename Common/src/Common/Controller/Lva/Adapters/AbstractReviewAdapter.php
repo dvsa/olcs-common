@@ -19,6 +19,8 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
 {
     protected $lva = '';
 
+    protected $sectionsToIgnore = [];
+
     /**
      * Get all sections for a given application id
      *
@@ -61,8 +63,14 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
 
         return [
             'reviewTitle' => $this->getTitle($reviewData),
+            'subTitle' => $this->getSubTitle($reviewData),
             'sections' => $sectionConfig
         ];
+    }
+
+    protected function getSubTitle($data)
+    {
+        return sprintf('%s %s/%s', $data['licence']['organisation']['name'], $data['licence']['licNo'], $data['id']);
     }
 
     protected function getTitle($data)
@@ -83,7 +91,7 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
     }
 
     /**
-     * We extend this method in the variation adapter, to filter unwanted sections
+     * Filter unwanted sections
      *
      * @param int $id
      * @param array $sections
@@ -91,6 +99,6 @@ abstract class AbstractReviewAdapter extends AbstractAdapter implements ReviewAd
      */
     protected function filterSections($id, $sections)
     {
-        return $sections;
+        return array_values(array_diff($sections, $this->sectionsToIgnore));
     }
 }

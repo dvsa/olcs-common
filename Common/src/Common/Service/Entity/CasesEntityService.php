@@ -23,7 +23,8 @@ class CasesEntityService extends AbstractEntityService
 
     private $identifierBundle = [
         'children' => [
-            'licence'
+            'licence',
+            'transportManager'
         ]
     ];
 

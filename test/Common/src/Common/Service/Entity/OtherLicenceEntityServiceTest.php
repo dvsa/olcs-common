@@ -35,4 +35,49 @@ class OtherLicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForTransportManager($id));
     }
+
+    /**
+     * Test get by id
+     *
+     * @group otherLicence
+     */
+    public function testGetById()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('OtherLicence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getById($id));
+    }
+
+    /**
+     * Test get by TM application id
+     *
+     * @group otherLicence
+     */
+    public function testGetByTmApplicationId()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('OtherLicence', 'GET', ['transportManagerApplication' => $id])
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByTmApplicationId($id));
+    }
+
+    /**
+     * Test get by TM licence id
+     *
+     * @group otherLicence
+     */
+    public function testGetByTmLicenceId()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('OtherLicence', 'GET', ['transportManagerLicence' => $id])
+            ->will($this->returnValue(['Results' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getByTmLicenceId($id));
+    }
 }

@@ -24,6 +24,34 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 {
     use ServiceLocatorAwareTrait;
 
+    protected function findFiles($files, $category, $subCategory)
+    {
+        $foundFiles = [];
+
+        foreach ($files as $file) {
+            if ($file['category']['id'] == $category && $file['subCategory']['id'] == $subCategory) {
+                $foundFiles[] = $file;
+            }
+        }
+
+        return $foundFiles;
+    }
+
+    protected function formatNumber($number)
+    {
+        return number_format($number);
+    }
+
+    protected function formatAmount($amount)
+    {
+        return '£' . number_format($amount, 0);
+    }
+
+    protected function formatRefdata($refData)
+    {
+        return $refData['description'];
+    }
+
     protected function formatShortAddress($address)
     {
         return Address::format($address);
@@ -39,9 +67,9 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
         return $value === 'Y' ? 'Confirmed' : 'Unconfirmed';
     }
 
-    protected function formatDate($date)
+    protected function formatDate($date, $format = 'd F Y')
     {
-        return date('d F Y', strtotime($date));
+        return date($format, strtotime($date));
     }
 
     protected function formatYesNo($value)

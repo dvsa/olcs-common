@@ -32,6 +32,7 @@ abstract class AbstractUndertakingsController extends AbstractController
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
+                $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
                 // validation failed, we need to lookup application data
@@ -51,6 +52,26 @@ abstract class AbstractUndertakingsController extends AbstractController
         $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
+    }
+
+    /**
+     * Handle any fees that may need to bo applied upon completing this section.
+     *
+     * @param $data
+     */
+    public function handleFees($data)
+    {
+        if (!isset($data['interim'])) {
+            return; // interim not relevant on internal
+        }
+
+        $interimService = $this->getServiceLocator()->get('Helper\Interim');
+
+        if ($data['interim']['goodsApplicationInterim'] === 'Y') {
+            $interimService->createInterimFeeIfNotExist($data['declarationsAndUndertakings']['id']);
+        } elseif ($data['interim']['goodsApplicationInterim'] === 'N') {
+            $interimService->cancelInterimFees($data['declarationsAndUndertakings']['id']);
+        }
     }
 
     /**

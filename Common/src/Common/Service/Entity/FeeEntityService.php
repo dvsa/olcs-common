@@ -53,7 +53,8 @@ class FeeEntityService extends AbstractLvaEntityService
                         )
                     )
                 )
-            )
+            ),
+            'paymentMethod',
         )
     );
 
@@ -67,6 +68,29 @@ class FeeEntityService extends AbstractLvaEntityService
             'feeType' => array(
                 'properties' => 'id',
                 'children' => array('accrualRule' => array())
+            ),
+            'feePayments' => array(
+                'children' => array(
+                    'payment' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            ),
+            'paymentMethod',
+        )
+    );
+
+    /**
+     * @var array
+     */
+    protected $organisationBundle = array(
+        'children' => array(
+            'licence' => array(
+                'children' => array(
+                    'organisation'
+                )
             )
         )
     );
@@ -103,10 +127,24 @@ class FeeEntityService extends AbstractLvaEntityService
             ),
             'sort'  => 'invoicedDate',
             'order' => 'DESC',
-            'limit' => 1,
+            'limit' => 1
         ];
 
         $data = $this->get($params, $this->latestOutstandingFeeForBundle);
+
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
+    public function getLatestFeeForBusReg($busRegId)
+    {
+        $params = [
+            'busReg' => $busRegId,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        ];
+
+        $data = $this->get($params, $this->overviewBundle);
 
         return !empty($data['Results']) ? $data['Results'][0] : null;
     }
@@ -192,5 +230,71 @@ class FeeEntityService extends AbstractLvaEntityService
     public function getOverview($id)
     {
         return $this->get($id, $this->overviewBundle);
+    }
+
+    public function getOrganisation($id)
+    {
+        $data = $this->get($id, $this->organisationBundle);
+
+        return isset($data['licence']['organisation']) ? $data['licence']['organisation'] : null;
+    }
+
+    /**
+     * Get fee by type, statuses and application if
+     *
+     * @param int $feeType
+     * @param array $feeStatuses
+     * @param int $applicationId
+     * @return array
+     */
+    public function getFeeByTypeStatusesAndApplicationId($feeType, $feeStatuses, $applicationId)
+    {
+        $query = array(
+            'application' => $applicationId,
+            'feeStatus' => $feeStatuses,
+            'feeType' => $feeType
+        );
+        return $this->getAll($query)['Results'];
+    }
+
+    /**
+     * Get latest fee by type, statuses and application id
+     *
+     * @param int $feeType
+     * @param array $feeStatuses
+     * @param int $applicationId
+     * @return array fee
+     */
+    public function getLatestFeeByTypeStatusesAndApplicationId($feeType, $feeStatuses, $applicationId)
+    {
+         $query = array(
+            'application' => $applicationId,
+            'feeStatus' => $feeStatuses,
+            'feeType' => $feeType,
+            'sort'  => 'invoicedDate',
+            'order' => 'DESC',
+            'limit' => 1,
+        );
+        $data = $this->get($query);
+        return !empty($data['Results']) ? $data['Results'][0] : null;
+    }
+
+    /**
+     * Cancel fee by ids
+     *
+     * @param array $ids
+     */
+    public function cancelByIds($ids)
+    {
+        $updates = array();
+
+        foreach ($ids as $id) {
+            $updates[] = array(
+                'id' => $id,
+                'feeStatus' => self::STATUS_CANCELLED,
+                '_OPTIONS_' => array('force' => true)
+            );
+        }
+        $this->multiUpdate($updates);
     }
 }

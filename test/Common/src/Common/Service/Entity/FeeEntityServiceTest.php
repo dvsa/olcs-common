@@ -260,6 +260,30 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetLatestFeeForBusReg()
+    {
+        $id = 3;
+
+        $query = array(
+            'busReg' => 3,
+            'limit' => 1,
+            'sort' => 'invoicedDate',
+            'order' => 'DESC'
+        );
+
+        $response = array(
+            'Results' => ['fee1']
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('fee1', $this->sut->getLatestFeeForBusReg($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetOverview()
     {
         $id = 3;
@@ -267,5 +291,126 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Fee', 'GET', $id);
 
         $this->sut->getOverview($id);
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisation()
+    {
+        $id = 3;
+
+        $organisation = array('id' => 1);
+
+        $response = array(
+            'licence' => array(
+                'organisation' => $organisation
+            )
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($organisation, $this->sut->getOrganisation($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetOrganisationWithoutOrganisation()
+    {
+        $id = 3;
+
+        $response = array();
+
+        $this->expectOneRestCall('Fee', 'GET', $id)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(null, $this->sut->getOrganisation($id));
+    }
+
+    /**
+     * Test get fee by type, statuses and applicationId
+     *
+     * @group feeEntity
+     */
+    public function testGetFeeByTypeStatusesAndApplicationId()
+    {
+        $id = 3;
+        $statuses = array(
+            FeeEntityService::STATUS_OUTSTANDING,
+            FeeEntityService::STATUS_WAIVE_RECOMMENDED
+        );
+        $query = array(
+            'application' => $id,
+            'feeStatus' => $statuses,
+            'feeType' => 1,
+            'limit' => 'all'
+        );
+
+        $response = array(
+            'Results' => ['fee1']
+        );
+
+        $this->expectOneRestCall('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(['fee1'], $this->sut->getFeeByTypeStatusesAndApplicationId(1, $statuses, $id));
+    }
+
+    /**
+     * Test get fee by type, statuses and applicationId
+     *
+     * @group feeEntity
+     */
+    public function testCancelByIds()
+    {
+        $ids = array(1,2);
+        $query = array(
+            array(
+                'id' => 1,
+                'feeStatus' => FeeEntityService::STATUS_CANCELLED,
+                '_OPTIONS_' => array('force' => true)
+            ),
+            array(
+                'id' => 2,
+                'feeStatus' => FeeEntityService::STATUS_CANCELLED,
+                '_OPTIONS_' => array('force' => true)
+            ),
+            '_OPTIONS_' => array('multiple' => true)
+        );
+        $this->expectOneRestCall('Fee', 'PUT', $query);
+        $this->sut->cancelByIds($ids);
+    }
+
+    /**
+     * Test get latest fee by type, statuses and applicationId
+     *
+     * @group feeEntity
+     */
+    public function testGetLatestFeeByTypeStatusesAndApplicationId()
+    {
+        $id = 3;
+        $statuses = [
+            FeeEntityService::STATUS_OUTSTANDING,
+            FeeEntityService::STATUS_WAIVE_RECOMMENDED
+        ];
+
+        $query = [
+            'application' => $id,
+            'feeStatus'   => $statuses,
+            'feeType'     => 1,
+            'sort'        => 'invoicedDate',
+            'order'       => 'DESC',
+            'limit'       => 1,
+        ];
+
+        $response = [
+            'Results' => ['fee1']
+        ];
+
+        $this->expectOneRestCall('Fee', 'GET', $query)->will($this->returnValue($response));
+
+        $this->assertEquals('fee1', $this->sut->getLatestFeeByTypeStatusesAndApplicationId(1, $statuses, $id));
     }
 }

@@ -618,4 +618,26 @@ class FormHelperService extends AbstractHelperService
 
         $filter->get($field)->setValidatorChain($newValidatorChain);
     }
+
+    public function attachValidator($form, $reference, $validator)
+    {
+        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+
+        $validatorChain = $filter->get($field)->getValidatorChain();
+
+        $validatorChain->attach($validator);
+    }
+
+    public function getValidator($form, $reference, $validatorClass)
+    {
+        list($fieldset, $filter, $field) = $this->getElementAndInputParents($form, $form->getInputFilter(), $reference);
+
+        $validatorChain = $filter->get($field)->getValidatorChain();
+
+        foreach ($validatorChain->getValidators() as $validator) {
+            if ($validator['instance'] instanceof $validatorClass) {
+                return $validator['instance'];
+            }
+        }
+    }
 }

@@ -35,7 +35,7 @@ class ApplicationTypeOfLicenceReviewService extends AbstractReviewService
                 [
                     [
                         'label' => 'application-review-type-of-licence-licence-type',
-                        'value' => $this->getLicenceType($data)
+                        'value' => $this->formatRefdata($data['licenceType'])
                     ]
                 ]
             ]
@@ -60,10 +60,5 @@ class ApplicationTypeOfLicenceReviewService extends AbstractReviewService
     private function getOperatorType($data)
     {
         return $data['goodsOrPsv']['id'] === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE ? 'Goods' : 'PSV';
-    }
-
-    private function getLicenceType($data)
-    {
-        return $data['licenceType']['description'];
     }
 }

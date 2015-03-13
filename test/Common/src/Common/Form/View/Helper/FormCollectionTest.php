@@ -167,6 +167,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $mockElement = m::mock('Zend\Form\ElementInterface');
         $mockElement->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockElement->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
         $mockHelper = m::mock('Common\Form\View\Helper\Readonly\FormRow');
         $mockHelper->shouldReceive('__invoke')->with($mockElement)->andReturn('element');
@@ -180,6 +181,7 @@ class FormCollectionTest extends \PHPUnit_Framework_TestCase
         $mockFieldset->shouldReceive('getIterator')->andReturn($iterator);
         $mockFieldset->shouldReceive('getOption')->with('readonly')->andReturn(true);
         $mockFieldset->shouldReceive('getOption')->with('hint')->andReturnNull();
+        $mockFieldset->shouldReceive('getOption')->with('remove_if_readonly')->andReturnNull();
 
         $mockView = m::mock('Zend\View\Renderer\PhpRenderer');
         $mockView->shouldReceive('formCollection')->andReturn($mockHelper);

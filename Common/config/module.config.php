@@ -30,10 +30,10 @@ return array(
         // @NOTE These delegators can live in common as both internal and external app controllers currently use the
         // same adapter
         'delegators' => array(
-            'LvaApplication\Review' => array(
+            'LvaApplication/Review' => array(
                 'Common\Controller\Lva\Delegators\ApplicationReviewDelegator'
             ),
-            'LvaVariation\Review' => array(
+            'LvaVariation/Review' => array(
                 'Common\Controller\Lva\Delegators\VariationReviewDelegator'
             ),
             'LvaApplication/TypeOfLicence' => array(
@@ -268,10 +268,7 @@ return array(
             'Common\Service\Data\Publication' => 'Common\Service\Data\Publication',
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
-
-            'OlcsCustomForm' => function ($sm) {
-                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-            },
+            'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
@@ -328,7 +325,7 @@ return array(
             'Common\Filter\Publication\PublicationSection',
             'Common\Filter\Publication\PreviousPublication',
             'Common\Filter\Publication\PreviousUnpublished',
-            'Common\Filter\Publication\TmHearingText1',
+            'Common\Filter\Publication\TmDecisionText1',
             'Common\Filter\Publication\TmDecisionText2',
             'Common\Filter\Publication\PoliceData',
             'Common\Filter\Publication\Clean'
@@ -392,7 +389,8 @@ return array(
     'file_uploader' => array(
         'default' => 'ContentStore',
         'config' => array(
-            'location' => 'documents'
+            'location' => 'documents',
+            'defaultPath' => '[locale]/[doc_type_name]/[year]/[month]', // e.g. gb/publications/2015/03
         )
     ),
     'view_helpers' => array(
@@ -413,7 +411,8 @@ return array(
             'readonlyformitem' => 'Common\Form\View\Helper\Readonly\FormItem',
             'readonlyformselect' => 'Common\Form\View\Helper\Readonly\FormSelect',
             'readonlyformdateselect' => 'Common\Form\View\Helper\Readonly\FormDateSelect',
-            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow'
+            'readonlyformrow' => 'Common\Form\View\Helper\Readonly\FormRow',
+            'readonlyformtable' => 'Common\Form\View\Helper\Readonly\FormTable'
         )
     ),
     'view_manager' => array(

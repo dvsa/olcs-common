@@ -1119,4 +1119,90 @@ class FormHelperServiceTest extends MockeryTestCase
             $helper->createFormWithRequest('MyForm', 'request')
         );
     }
+
+    public function testGetValidator()
+    {
+        $validatorName = '\Zend\Validator\GreaterThan';
+
+        $helper    = new FormHelperService();
+        $form      = m::mock('Zend\Form\Form');
+        $validator = m::mock($validatorName);
+        $element   = m::mock();
+        $filter    = m::mock('\Zend\InputFilter\InputFilter');
+
+        $form->shouldReceive('getInputFilter')->andReturn($filter);
+
+        $filter->shouldReceive('get')->with('myelement')->andReturn($element);
+
+        $element->shouldReceive('getValidatorChain')->andReturn(
+            m::mock()
+                ->shouldReceive('getValidators')
+                ->andReturn(
+                    [
+                        ['instance' => $validator],
+                        ['instance' => m::mock()],
+                    ]
+                )
+                ->getMock()
+        );
+
+        $result = $helper->getValidator($form, 'myelement', $validatorName);
+
+        $this->assertSame($validator, $result);
+    }
+
+    public function testGetValidatorNotFoundReturnsNull()
+    {
+        $helper    = new FormHelperService();
+        $form      = m::mock('Zend\Form\Form');
+        $element   = m::mock();
+        $filter    = m::mock('\Zend\InputFilter\InputFilter');
+
+        $form->shouldReceive('getInputFilter')->andReturn($filter);
+
+        $filter->shouldReceive('get')->with('myelement')->andReturn($element);
+
+        $element->shouldReceive('getValidatorChain')->andReturn(
+            m::mock()
+                ->shouldReceive('getValidators')
+                ->andReturn([])
+                ->getMock()
+        );
+
+        $this->assertNull($helper->getValidator($form, 'myelement', 'MyValidator'));
+    }
+
+    public function testAttachValidator()
+    {
+        $mockForm = m::mock();
+        $mockInputFilter = m::mock();
+        $mockValidator = m::mock();
+        $mockValidatorChain = m::mock();
+
+        $mockForm->shouldReceive('getInputFilter')
+            ->once()
+            ->andReturn($mockInputFilter)
+            ->shouldReceive('get')
+            ->once()
+            ->with('data')
+            ->andReturnSelf();
+
+        $mockInputFilter->shouldReceive('get')
+            ->once()
+            ->with('data')
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->once()
+            ->with('foo')
+            ->andReturnSelf()
+            ->shouldReceive('getValidatorChain')
+            ->andReturn($mockValidatorChain);
+
+        $mockValidatorChain->shouldReceive('attach')
+            ->once()
+            ->with($mockValidator);
+
+        $helper = new FormHelperService();
+        $helper->attachValidator($mockForm, 'data->foo', $mockValidator);
+    }
 }

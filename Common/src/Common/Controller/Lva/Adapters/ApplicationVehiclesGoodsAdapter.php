@@ -72,4 +72,29 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     {
         return true;
     }
+
+    /**
+     * Retrieve the filter form
+     */
+    public function getFilterForm()
+    {
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $formHelper->createForm('Lva\VehicleFilter');
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $form->get('vrm')->setValueOptions($vrmOptions);
+        return $form;
+    }
+
+    /**
+     * Get all relevant form filters
+     */
+    public function getFilters($params)
+    {
+        $filters = [];
+        $filters['vrm'] = isset($params['vrm']) ? $params['vrm'] : 'All';
+        $filters['specified'] = isset($params['specified']) ? $params['specified'] : 'A';
+        $filters['includeRemoved'] = isset($params['includeRemoved']) ? $params['includeRemoved'] : 0;
+        $filters['disc'] = isset($params['disc']) ? $params['disc'] : 'A';
+        return $filters;
+    }
 }

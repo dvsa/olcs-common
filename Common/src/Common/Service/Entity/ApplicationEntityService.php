@@ -28,8 +28,13 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const CODE_GV_VAR_UPGRADE     = 'GV80A';
     const CODE_GV_VAR_NO_UPGRADE  = 'GV81';
 
+    const CODE_PSV_APP = 'PSV421';
+    const CODE_PSV_APP_SR = 'PSV356';
     const CODE_PSV_VAR_UPGRADE    = 'PSV431A';
     const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
+
+    const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
+    const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
 
     /**
      * Define entity for default behaviour
@@ -92,6 +97,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licence' => array(
                 'children' => array(
                     'licenceType',
+                    'operatingCentres',
                     'licenceVehicles' => array(
                         'criteria' => array(
                             array(
@@ -102,6 +108,34 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'psvDiscs' => array(
                         'criteria' => array(
                             'ceasedDate' => 'NULL'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+
+    /**
+     * Bundle to retrieve data for the interim variation processing.
+     *
+     * @var array
+     */
+    private $variationInterimDataBundle = array(
+        'children' => array(
+            'licenceType',
+            'goodsOrPsv',
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre'
+                )
+            ),
+            'licence' => array(
+                'children' => array(
+                    'licenceType',
+                    'operatingCentres' => array(
+                        'children' => array(
+                            'operatingCentre'
                         )
                     )
                 )
@@ -247,7 +281,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => array(
                     'trafficArea'
                 )
-            )
+            ),
+            'licenceType'
         )
     );
 
@@ -353,7 +388,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'default' => [
                 'children' => [
                     'licenceType',
-                    'goodsOrPsv'
+                    'goodsOrPsv',
+                    'licence' => [
+                        'children' => [
+                            'organisation' => []
+                        ]
+                    ]
                 ]
             ],
             'operating_centres' => [
@@ -379,9 +419,191 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'vehicles' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle'
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'vehicles_psv' => [
+                'children' => [
+                    'licenceVehicles' => [
+                        'children' => [
+                            'vehicle' => [
+                                'children' => [
+                                    'psvType'
+                                ]
+                            ]
+                        ],
+                        'criteria' => [
+                            'removalDate' => 'NULL'
+                        ]
+                    ]
+                ]
+            ],
+            'convictions_penalties' => [
+                'children' => [
+                    'previousConvictions'
+                ]
+            ],
+            'licence_history' => [
+                'children' => [
+                    'previousLicences' => [
+                        'children' => [
+                            'previousLicenceType'
+                        ]
+                    ]
+                ]
+            ],
+            'financial_history' => [
+                'children' => [
+                    'documents' => [
+                        'children' => [
+                            'category',
+                            'subCategory'
+                        ]
+                    ]
+                ]
             ]
         ],
-        'application' => [],
+        'application' => [
+            'business_type' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'business_details' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            // @NOTE I think the companySubsidiaryLicence table should be a straight
+                            // many-to-many so this could change
+                            'companySubsidiaries' => [
+                                'children' => [
+                                    'companySubsidiary'
+                                ]
+                            ],
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'tradingNames',
+                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
+                                    // many-to-many so this could change
+                                    'natureOfBusinesss' => [
+                                        'children' => [
+                                            'refData'
+                                        ]
+                                    ],
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'safety' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'workshops' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'tachographIns'
+                        ]
+                    ]
+                ]
+            ],
+            'addresses' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'correspondenceCd' => [
+                                'children' => [
+                                    'address',
+                                    'phoneContacts' => [
+                                        'children' => [
+                                            'phoneContactType'
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            'establishmentCd' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'taxi_phv' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea',
+                            'privateHireLicences' => [
+                                'children' => [
+                                    'contactDetails' => [
+                                        'children' => [
+                                            'address'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type',
+                                    'organisationPersons' => [
+                                        'children' => [
+                                            'person'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'originalPerson',
+                            'person'
+                        ]
+                    ]
+                ]
+            ],
+        ],
         'variation' => [
             'type_of_licence' => [
                 'children' => [
@@ -391,9 +613,65 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'people' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'organisation' => [
+                                'children' => [
+                                    'type'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'applicationOrganisationPersons' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ]
+                ]
             ]
         ]
     ];
+
+    /**
+     * Interim bundle
+     *
+     * @var array
+     */
+    private $interimBundle = array(
+        'children' => array(
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre' => array(
+                        'children' => array(
+                            'address'
+                        )
+                    )
+                )
+            ),
+            'licenceVehicles' => array(
+                'children' => array(
+                    'vehicle',
+                    'interimApplication',
+                    'goodsDiscs'
+                )
+            ),
+            'interimStatus',
+            'licence' => array(
+                'children' => array(
+                    'communityLics' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    protected $interimData = null;
 
     public function getVariationCompletionStatusData($id)
     {
@@ -402,6 +680,18 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $bundle['children']['licence']['children']['licenceVehicles']['criteria'][0]['application'] = $id;
 
         return $this->get($id, $bundle);
+    }
+
+    /**
+     * Get the application data for interim processing.
+     *
+     * @param $id Application ID
+     *
+     * @return array
+     */
+    public function getVariationInterimData($id)
+    {
+        return $this->get($id, $this->variationInterimDataBundle);
     }
 
     /**
@@ -783,5 +1073,150 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         return $bundle;
+    }
+
+    /**
+     * Get data for interim
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForInterim($id)
+    {
+        if (!$this->interimData) {
+            $results = $this->get($id, $this->interimBundle);
+            $selected = [];
+            foreach ($results['operatingCentres'] as $result) {
+                if ($result['action'] === 'A' || $result['action'] === 'U') {
+                    $selected[] = $result;
+                    $selected[count($selected) - 1]['address'] = $result['operatingCentre']['address'];
+                }
+            }
+            $results['operatingCentres'] = $selected;
+            $this->interimData = $results;
+        }
+        return $this->interimData;
+    }
+
+    /**
+     * Save interim data
+     *
+     * @param array $data
+     * @param bool $type (true: save data, false: remove data)
+     */
+    public function saveInterimData($formData = [], $type = true)
+    {
+        $data = $formData['data'];
+        if ($type) {
+            $dataToSave = [
+                'interimReason' => $data['interimReason'],
+                'interimStart' => $data['interimStart'],
+                'interimEnd' => $data['interimEnd'],
+                'interimAuthVehicles' => $data['interimAuthVehicles'],
+                'interimAuthTrailers' => $data['interimAuthTrailers'],
+                'interimStatus' => self::INTERIM_STATUS_REQUESTED,
+                'id' => $data['id'],
+                'version' => $data['version']
+            ];
+            $newOcs = isset($formData['operatingCentres']['id']) && $formData['operatingCentres']['id'] ?
+                $formData['operatingCentres']['id'] : [];
+            $newVehicles = isset($formData['vehicles']['id']) && $formData['vehicles']['id'] ?
+                $formData['vehicles']['id'] : [];
+        } else {
+            $dataToSave = [
+                'interimReason' => '',
+                'interimStart' => '',
+                'interimEnd' => '',
+                'interimAuthVehicles' => 0,
+                'interimAuthTrailers' => 0,
+                'interimStatus' => '',
+                'id' => $data['id'],
+                'version' => $data['version']
+            ];
+            $newOcs = [];
+            $newVehicles = [];
+        }
+        $this->save($dataToSave);
+        $this->saveApplictionOperatingCentresForInterim($newOcs, $data['id']);
+        $this->saveVehiclesForInterim($newVehicles, $data['id']);
+    }
+
+    /**
+     * Save application operating centres for interim
+     *
+     * @param array $ocData
+     * @param int $id
+     */
+    protected function saveApplictionOperatingCentresForInterim($ocData, $id)
+    {
+        $interimData = $this->getDataForInterim($id);
+        $existingOcs = [];
+        $versions = [];
+        foreach ($interimData['operatingCentres'] as $oc) {
+            if ($oc['isInterim'] == 'Y') {
+                $existingOcs[] = $oc['id'];
+            }
+            $versions[$oc['id']] = $oc['version'];
+        }
+        $recordsToSet = array_diff($ocData, $existingOcs);
+        $recordsToUnset = array_diff($existingOcs, $ocData);
+        $data = [];
+        // preparing data to set interim flag
+        foreach ($recordsToSet as $id) {
+            $data[] = [
+                'id' => $id,
+                'version' => $versions[$id],
+                'isInterim' => 'Y'
+            ];
+        }
+        // preparing data to unset interim flag
+        foreach ($recordsToUnset as $id) {
+            $data[] = [
+                'id' => $id,
+                'version' => $versions[$id],
+                'isInterim' => 'N'
+            ];
+        }
+        $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->multiUpdate($data);
+    }
+
+    /**
+     * Save licence vehicles for interim
+     *
+     * @param array $vehcileData
+     * @param int $id
+     */
+    protected function saveVehiclesForInterim($vehcileData, $id)
+    {
+        $interimData = $this->getDataForInterim($id);
+        $existingVehicles = [];
+        $versions = [];
+        foreach ($interimData['licenceVehicles'] as $vehicle) {
+            if ($vehicle['interimApplication']) {
+                $existingVehicles[] = $vehicle['id'];
+            }
+            $versions[$vehicle['id']] = $vehicle['version'];
+        }
+        $recordsToSet = array_diff($vehcileData, $existingVehicles);
+        $recordsToUnset = array_diff($existingVehicles, $vehcileData);
+
+        $data = [];
+        // preparing data to set interim flag
+        foreach ($recordsToSet as $recordId) {
+            $data[] = [
+                'id' => $recordId,
+                'version' => $versions[$recordId],
+                'interimApplication' => $id
+            ];
+        }
+        // preparing data to unset interim flag
+        foreach ($recordsToUnset as $recordId) {
+            $data[] = [
+                'id' => $recordId,
+                'version' => $versions[$recordId],
+                'interimApplication' => 'NULL'
+            ];
+        }
+        $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($data);
     }
 }

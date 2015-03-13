@@ -20,11 +20,7 @@ class OpFaoName extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
-                    'organisation' => [
-                        'children' => [
-                            'contactDetails'
-                        ]
-                    ]
+                    'correspondenceCd'
                 ]
             ]
         ];
@@ -32,6 +28,6 @@ class OpFaoName extends DynamicBookmark
 
     public function render()
     {
-        return $this->data['organisation']['contactDetails']['fao'];
+        return $this->data['correspondenceCd']['fao'];
     }
 }

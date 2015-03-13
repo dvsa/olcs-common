@@ -19,9 +19,6 @@ class PaymentSubmission
     public $version = null;
 
     /**
-     * @Form\Attributes({
-     *     "value": "<div>Application fee <h2>&pound;%s</h2></div>"
-     * })
      * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
      */
     public $amount = null;

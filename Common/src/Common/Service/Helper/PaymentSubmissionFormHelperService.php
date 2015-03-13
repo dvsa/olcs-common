@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Helper;
 
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Form\Form;
 
 /**
@@ -21,7 +22,7 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
      *
      * @param Zend\Form\Form $form
      * @param string $actionUrl
-     * @param array $fee
+     * @param int $applicationId
      * @param boolean $canSubmit
      * @param boolean $enabled
      * @param string $actionUrl
@@ -29,20 +30,28 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
     public function updatePaymentSubmissonForm(
         Form $form,
         $actionUrl,
-        array $fee = null,
+        $applicationId,
         $visible = false,
         $enabled = false
     ) {
-        $helper = $this->getServiceLocator()->get('Helper\Form');
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
         if ($visible) {
+            $fee = $this->getFee($applicationId);
             if ($fee) {
                 // show fee amount
-                $feeAmount = number_format($fee['amount'], 2);
-                $form->get('amount')->setTokens([0 => $feeAmount]);
+                $feeAmount = number_format($fee, 2);
+                $translator = $this->getServiceLocator()->get('Helper\Translation');
+                $form->get('amount')->setValue(
+                    $translator->translateReplace(
+                        'application.payment-submission.amount.value',
+                        [$feeAmount]
+                    )
+                );
             } else {
                 // if no fee, change submit button text
-                $helper->remove($form, 'amount');
+                $formHelper->remove($form, 'amount');
                 $form->get('submitPay')->setLabel('submit-application.button');
             }
 
@@ -51,12 +60,39 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
             if ($enabled) {
                 $form->setAttribute('action', $actionUrl);
             } else {
-                $helper->disableElement($form, 'submitPay');
+                $formHelper->disableElement($form, 'submitPay');
             }
         } else {
             // remove submit button and amount
-            $helper->remove($form, 'amount');
-            $helper->remove($form, 'submitPay');
+            $formHelper->remove($form, 'amount');
+            $formHelper->remove($form, 'submitPay');
         }
+    }
+
+    /**
+     * @param int $applicationId
+     * @return float
+     */
+    protected function getFee($applicationId)
+    {
+        $processingService = $this->getServiceLocator()->get('Processing\Application');
+        $applicationFee = $processingService->getApplicationFee($applicationId);
+
+        $fee = 0;
+
+        if ($applicationFee) {
+            $fee += $applicationFee['amount'];
+        }
+
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($applicationId);
+        if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            $interimFee = $processingService->getInterimFee($applicationId);
+
+            if ($interimFee) {
+                $fee += $interimFee['amount'];
+            }
+        }
+
+        return $fee;
     }
 }

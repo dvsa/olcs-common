@@ -35,8 +35,12 @@ class Address implements FormatterInterface
      */
     public static function format($data, $column = array(), $sm = null)
     {
-        if (isset($column['name']) && isset($data[$column['name']])) {
-            $data = $data[$column['name']];
+        if (isset($column['name'])) {
+            if (strpos($column['name'], '->')) {
+                $data = $sm->get('Helper\Data')->fetchNestedData($data, $column['name']);
+            } elseif (isset($data[$column['name']])) {
+                $data = $data[$column['name']];
+            }
         }
 
         if (isset($column['addressFields'])) {

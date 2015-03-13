@@ -28,7 +28,7 @@ abstract class AbstractPeopleAdapter extends AbstractControllerAwareAdapter impl
 
     private $organisation;
 
-    public function addMessages($orgId)
+    public function addMessages($orgId, $id)
     {
     }
 

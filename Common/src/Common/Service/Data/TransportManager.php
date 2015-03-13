@@ -45,7 +45,7 @@ class TransportManager extends AbstractData
     {
         $bundle = array(
             'children' => array(
-                'workCd' => array(
+                'homeCd' => array(
                     'children' => array(
                         'person',
                         'address'

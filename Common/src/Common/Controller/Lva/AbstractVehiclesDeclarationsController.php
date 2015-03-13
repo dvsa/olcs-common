@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Vehicles Declarations Trait
+ * Vehicles Declarations Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Lva;
 
-use Zend\Form\Form;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
- * Vehicles Declarations Trait
+ * Vehicles Declarations Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -27,6 +27,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
                 'application',
                 'smallVehiclesIntention',
                 'nineOrMore',
+                'mainOccupation',
                 'limousinesNoveltyVehicles'
             )
         )
@@ -116,6 +117,10 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             'nineOrMore' => array(
                 'psvNoSmallVhlConfirmation' => $data['psvNoSmallVhlConfirmation']
             ),
+            'mainOccupation' => array(
+                'psvMediumVhlConfirmation' => $data['psvMediumVhlConfirmation'],
+                'psvMediumVhlNotes' => $data['psvMediumVhlNotes']
+            ),
             'limousinesNoveltyVehicles' => array(
                 'psvLimousines' => $data['psvLimousines'],
                 'psvNoLimousineConfirmation' => $data['psvNoLimousineConfirmation'],
@@ -128,8 +133,8 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
      * Add customisation to the form dependent on which of five scenarios
      * is in play for OLCS-2855
      *
-     * @param Form $form
-     * @return Form
+     * @param Zend\Form\Form $form
+     * @return Zend\Form\Form
      */
     protected function alterForm($form)
     {
@@ -153,6 +158,13 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             if (is_null($data[$attribute])) {
                 $data[$attribute] = 0;
             }
+        }
+
+        // @see https://jira.i-env.net/browse/OLCS-2853
+        if ($data['licenceType']['id'] !== LicenceEntityService::LICENCE_TYPE_RESTRICTED
+            || $data['totAuthMediumVehicles'] === 0
+        ) {
+            $formHelper->remove($form, 'mainOccupation');
         }
 
         if ($data['totAuthSmallVehicles'] === 0) {

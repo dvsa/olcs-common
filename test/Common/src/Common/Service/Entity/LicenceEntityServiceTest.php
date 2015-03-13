@@ -748,6 +748,7 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
                 'licenceVehicles' => array(
                     'children' => array(
                         'goodsDiscs',
+                        'interimApplication',
                         'vehicle'
                     ),
                     'criteria' => array(

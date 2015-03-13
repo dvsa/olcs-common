@@ -11,11 +11,12 @@ return array(
     'OperatingCentreAdPlacedInValidator.required' => 'Please enter a newspaper name',
     'OperatingCentreCommunityLicencesValidator.too-many' => 'The number of community licences must not exceed the the
         total number of vehicles',
+    'OperatingCentreNoOfOperatingCentres.required' => 'Please add an operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.1-operating-centre' => 'If you are only applying for one operating
         centre, the total number of authorised trailers must be the same as at your operating centre',
     'OperatingCentreTrailerAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of trailers',
-    'OperatingCentreTrailerAuthorisationsValidator.none-numeric' => 'Please enter a numeric value',
+    'OperatingCentreTrailerAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreTrailerAuthorisationsValidator.too-high' => 'The number of authorised trailers must not exceed the
         total number of trailers parked across all of your operating centres',
     'OperatingCentreTrailerAuthorisationsValidator.too-low' => 'The total number of authorised trailers must be equal or
@@ -27,6 +28,7 @@ return array(
     'OperatingCentreVehicleAuthorisationsValidator.no-operating-centre' => 'Please add an operating centre before
         setting the total number of vehicles',
     'OperatingCentreVehicleAuthorisationsValidator.no-vehicle-types' => 'You must enter at least 1 vehicle type',
+    'OperatingCentreVehicleAuthorisationsValidator.non-numeric' => 'Please enter a numeric value',
     'OperatingCentreVehicleAuthorisationsValidator.restricted-too-many' => 'The total number of vehicles on a restricted
         licence cannot exceed 2',
     'OperatingCentreVehicleAuthorisationsValidator.too-high' => 'The number of authorised vehicles must not exceed the
@@ -84,8 +86,138 @@ return array(
     'application-form-owners-header-directors' => 'Directors',
     'application-form-owners-header-partners' => 'Partners',
     'application-form-owners-header-persons' => 'Persons responsible for your organisation',
+    'application-grant-error-fees' => 'You must process the application fees before granting this application',
+    'application-grant-error-sections' => 'You must complete these sections before granting this application: %s',
+    'application-grant-error-tracking' => 'You must complete the tracking section before granting the application',
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
+    'application-not-granted' => 'The application has not been granted',
+    'application-review-addresses-contact-details-title' => 'Contact details',
+    'application-review-addresses-correspondence-address' => 'Correspondence Address',
+    'application-review-addresses-correspondence-business' => 'Business telephone No.',
+    'application-review-addresses-correspondence-email' => 'E-mail address',
+    'application-review-addresses-correspondence-fax' => 'Fax telephone No.',
+    'application-review-addresses-correspondence-home' => 'Home telephone No.',
+    'application-review-addresses-correspondence-mobile' => 'Mobile telephone No.',
+    'application-review-addresses-correspondence-title' => 'Correspondence',
+    'application-review-addresses-establishment-address' => 'Establishment address',
+    'application-review-addresses-establishment-title' => 'Establishment',
+    'application-review-addresses-fao' => 'For attention of',
+    'application-review-business-details-company-name' => 'Company name',
+    'application-review-business-details-company-no' => 'Registered company number',
+    'application-review-business-details-nature-of-business' => 'Nature of business',
+    'application-review-business-details-organisation-name' => 'Organisation name',
+    'application-review-business-details-partnership-name' => 'Partnership name',
+    'application-review-business-details-registered-address' => 'Registered address',
+    'application-review-business-details-subsidiary-company-header' => 'Subsidiary companies',
+    'application-review-business-details-subsidiary-company-name' => 'Company name',
+    'application-review-business-details-subsidiary-company-no' => 'Company number',
+    'application-review-business-details-trading-names' => 'Trading names',
+    'application-review-business-type' => 'What type of business are you?',
+    'application-review-convictions-penalties-confirmation' => 'Confirm that you are aware that you must tell the
+        traffic commissioner immediately of any relevant convictions that occur between the submission of your
+        application and a decision being made on this application',
+    'application-review-convictions-penalties-conviction-convictionDate' => 'Date of conviction',
+    'application-review-convictions-penalties-conviction-familyName' => 'Last name',
+    'application-review-convictions-penalties-conviction-forename' => 'First name(s)',
+    'application-review-convictions-penalties-conviction-offence' => 'Offence',
+    'application-review-convictions-penalties-conviction-offence-court' => 'Name of court',
+    'application-review-convictions-penalties-conviction-offence-details' => 'Offence details',
+    'application-review-convictions-penalties-conviction-offence-penalty' => 'Penalty',
+    'application-review-convictions-penalties-conviction-title' => 'Title',
+    'application-review-convictions-penalties-question' => 'Has any person named in this application, (including
+        partners, directors and transport managers); any company of which a person named on this application is or has
+        been a director; any parent company if you are a limited company; or any of your employees or agents been
+        convicted of any relevant offence which must be declared to the traffic commissioner?',
+    'application-review-financial-evidence-evidence' => 'Evidence',
+    'application-review-financial-evidence-evidence-post' => 'Operator to send original evidence to the Central
+        Licensing Office',
+    'application-review-financial-evidence-no-of-vehicles' => 'Number of vehicles',
+    'application-review-financial-evidence-required-finance' => 'Required finance',
+    'application-review-financial-history-administration' => 'Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) administration?',
+    'application-review-financial-history-bankrupt' => 'Has any person named in this application (including partners,
+        directors or transport managers) ever been declared bankrupt or had their estate seized or confiscated?',
+    'application-review-financial-history-disqualified' => 'Have you, or have any of your partners, directors, majority
+        shareholders or your transport manager ever been disqualified from acting as a director of a company or from
+        taking part in the management of a company?',
+    'application-review-financial-history-evidence' => 'Evidence',
+    'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing
+        Office',
+    'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
+        traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
+        application and a decision being made on the application',
+    'application-review-financial-history-insolvencyDetails' => 'Additional information',
+    'application-review-financial-history-liquidation' => 'Has any person named in this application (including partners,
+        directors or transport managers) ever been involved with a company, or business, that has gone into (or is going
+        into) liquidation, owing money?',
+    'application-review-financial-history-receivership' => 'Has any person named in this application (including
+        partners, directors or transport managers) ever been involved with a company, or business, that has gone into
+        (or is going into) receivership?',
+    'application-review-licence-history-applied-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) previously held or applied for a goods or public service vehicle
+        operator\'s licence in any traffic area?',
+    'application-review-licence-history-applied-title' => 'Previous licences',
+    'application-review-licence-history-current-question' => 'Does any person named in this application (including
+        partners, directors and transport managers) currently hold a goods or public service vehicle operator\'s licence
+        in any traffic area?',
+    'application-review-licence-history-current-title' => 'Current licences',
+    'application-review-licence-history-disqualification-date' => 'Date of disqualification',
+    'application-review-licence-history-disqualification-length' => 'Length of disqualification',
+    'application-review-licence-history-disqualified-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) been disqualified from holding or obtaining an operator\'s licence by
+        any traffic commissioner?',
+    'application-review-licence-history-disqualified-title' => 'Disqualifications',
+    'application-review-licence-history-held-question' => 'Within the last twelve months, have you, your company or
+        organisation or your partners or directors purchased the assets or shareholding of any company that, to you
+        knowledge, currently holds or has previously held an operator\'s licence in any traffic area?',
+    'application-review-licence-history-held-title' => 'Previously purchased assets',
+    'application-review-licence-history-licence-holder' => 'Licence holder name',
+    'application-review-licence-history-licence-no' => 'Licence number',
+    'application-review-licence-history-public-inquiry-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever attended a Public Inquiry before a traffic commissioner?',
+    'application-review-licence-history-public-inquiry-title' => 'Public Inquiries',
+    'application-review-licence-history-purchase-date' => 'Date of purchase',
+    'application-review-licence-history-refused-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had an application for a goods or a public service vehicle
+        operator\'s licence refused by any EU licensing authority?',
+    'application-review-licence-history-refused-title' => 'Refused licences',
+    'application-review-licence-history-revoked-question' => 'Has any person named in the application (including
+        partners, directors or transport managers) ever had a goods or public service vehicle operator\'s licence
+        revoked, suspended or curtailed by any EU licensing authority?',
+    'application-review-licence-history-revoked-title' => 'Revoked, suspended or curtailed licences',
+    'application-review-licence-history-will-surrender' => 'Will this licence be surrendered if this application is
+        granted?',
+    'application-review-people-person-dob' => 'Date of birth',
+    'application-review-people-person-firstname' => 'First name(s)',
+    'application-review-people-person-lastname' => 'Last name',
+    'application-review-people-person-othername' => 'Other name(s)',
+    'application-review-people-person-position' => 'Position',
+    'application-review-people-person-title' => 'Title',
+    'application-review-safety-safetyConfirmation' => 'Confirm there are suitable arrangements in place to keep the
+        vehicles in a fit and serviceable condition at all times',
+    'application-review-safety-safetyInsTrailers' => 'Maximum time between trailer safety inspections',
+    'application-review-safety-safetyInsVaries' => 'Are some of the vehicles or trailers inspected more frequently than
+        the interval stated above?',
+    'application-review-safety-safetyInsVaries-psv' => 'Are some of the vehicles inspected more frequently than the
+        interval stated above?',
+    'application-review-safety-safetyInsVehicles' => 'Maximum time between vehicle safety inspections',
+    'application-review-safety-tachographIns' => 'Who analyses the tachograph records?',
+    'application-review-safety-tachographInsName' => 'The company or full name of the external contractor who analyses
+        the tachograph records',
+    'application-review-safety-workshop-address' => 'Address',
+    'application-review-safety-workshop-isExternal' => 'Who will carry out the safety inspections?',
+    'application-review-safety-workshop-isExternal-N' => 'An owner or employee of the business',
+    'application-review-safety-workshop-isExternal-Y' => 'An external contractor',
+    'application-review-safety-workshop-name' => 'Contractor\'s name or person\'s full name if performed internally',
+    'application-review-safety-workshop-title' => 'Safety inspection providers',
+    'application-review-taxi-phv-address' => 'Address',
+    'application-review-taxi-phv-council-name' => 'Council name',
+    'application-review-taxi-phv-licence-number' => 'Taxi/PHV licence number',
+    'application-review-taxi-phv-title' => 'Taxi/PHV licences',
+    'application-review-taxi-phv-traffic-area' => 'Traffic area',
+    'application-review-taxi-phv-traffic-area-title' => 'Traffic area',
     'application-review-title-gv' => 'Application for a new Goods Vehicle Operator\'s Licence',
     'application-review-title-psv' => 'Application for a Public Service Vehicle Operator\'s Licence',
     'application-review-title-psv-sr' => 'Application for a Special Restricted Public Service Vehicle Operator\'s
@@ -93,6 +225,14 @@ return array(
     'application-review-type-of-licence-licence-type' => 'What type of licence do you want to apply for?',
     'application-review-type-of-licence-operator-location' => 'Where do you operate from?',
     'application-review-type-of-licence-operator-type' => 'What type of operator are you?',
+    'application-review-vehicles-hasEnteredReg' => 'Vehicle details submitted?',
+    'application-review-vehicles-is-novelty' => 'Limousine or novelty vehicle',
+    'application-review-vehicles-make' => 'Make / model',
+    'application-review-vehicles-psv-large-title' => '17 or more passenger seat vehicles',
+    'application-review-vehicles-psv-medium-title' => '9 - 16 passenger seat vehicles',
+    'application-review-vehicles-psv-small-title' => 'Small vehicles',
+    'application-review-vehicles-vrm' => 'VRM',
+    'application-review-vehicles-weight' => 'Gross plated weight (Kg)',
     'application-search-person-header-partner' => 'Add new partner',
     'application-search-person-header-person' => 'Add new responsible person',
     'application-search-subsidiary-header' => 'Subsidiary Company',
@@ -111,6 +251,7 @@ return array(
     'application.overview.saved' => 'The overview page has been saved',
     'application.overview.title' => 'Application overview',
     'application.payment-submission' => 'Payment & submission',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
@@ -354,6 +495,16 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.mainOccupation' => 'Business or main occupation',
+    'application_vehicle-safety_undertakings.mainOccupation.confirmation' => 'You are fully aware of, and will comply
+        with, the restrictions under the terms of the restricted licence for the use of vehicles with between nine and
+        sixteen passenger seats',
+    'application_vehicle-safety_undertakings.mainOccupation.notes' => 'Give details below of your business or main
+        occupation and how you will comply with these restrictions. If you are claiming qualification on the grounds
+        that the operation of these vehicles is not your main occupation please provide further details, including the
+        number of hours worked in your main occupation and how many hours you anticipate working on this transport
+        undertaking should the licence be granted. If your main occupation involves driving please indicate, on average,
+        how may hours per week you drive. If employed please include your employer\'s name and address',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
@@ -689,6 +840,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -713,6 +867,7 @@ return array(
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
+    'fees.cheque_date' => 'Cheque date',
     'fees.max_amount' => 'Fee amount',
     'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
@@ -750,6 +905,12 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
+        an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
+        interim application.',
+    'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
+        authority.',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
@@ -941,6 +1102,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
     'internal.community_licence.form.change_status_to' => 'Change status to',
@@ -953,11 +1115,13 @@ return array(
     'internal.community_licence.form_add.cancel' => 'Cancel',
     'internal.community_licence.form_add.ok' => 'OK',
     'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.licences_reprinted' => 'The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
+    'internal.community_licence.reprint_not_allowed' => 'You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
@@ -965,6 +1129,30 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
+    'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
+    'internal.interim.form.interim_application' => 'Interim application',
+    'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
+    'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
+    'internal.interim.form.interim_cancel' => 'Cancel',
+    'internal.interim.form.interim_end' => 'Interim end date',
+    'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_granted' => 'Interim granted',
+    'internal.interim.form.interim_reason' => 'Interim reason',
+    'internal.interim.form.interim_refuse' => 'Refuse',
+    'internal.interim.form.interim_requested' => 'Interim requested',
+    'internal.interim.form.interim_save' => 'Save',
+    'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.operatingcentres.table.address' => 'Operating centre address',
+    'internal.interim.operatingcentres.table.header' => 'Operating centres',
+    'internal.interim.operatingcentres.table.listed' => 'Listed',
+    'internal.interim.operatingcentres.table.trailers' => 'Trailers',
+    'internal.interim.operatingcentres.table.vehicles' => 'Vehicles',
+    'internal.interim.vehicles.table.header' => 'Vehicles',
+    'internal.interim.vehicles.table.listed' => 'Listed',
+    'internal.interim.vehicles.table.vrm' => 'VRM',
+    'internal.interim.vehicles.table.weight' => 'Gross plated weight (Kg)',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -984,6 +1172,9 @@ return array(
     'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'Name of Court',
     'internal.transport-manager.convictionsandpenalties.table.offence' => 'Offence',
     'internal.transport-manager.convictionsandpenalties.table.penalty' => 'Penalty',
+    'internal.transport-manager.delete-question' => 'Are you sure you want to permanently delete the selected
+        record(s)?',
+    'internal.transport-manager.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.employment.cancel' => 'Cancel',
     'internal.transport-manager.employment.form.address' => 'Address',
     'internal.transport-manager.employment.form.employerName' => 'Employer name',
@@ -991,8 +1182,19 @@ return array(
     'internal.transport-manager.employment.form.position' => 'Position held',
     'internal.transport-manager.employment.save' => 'Save',
     'internal.transport-manager.employments.table' => 'Other employment',
-    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete this
-        record?',
+    'internal.transport-manager.other-licence.form.hours-per-week' => 'Hours per week',
+    'internal.transport-manager.other-licence.form.lic-no' => 'Licence number',
+    'internal.transport-manager.other-licence.form.operating-centres' => 'Operating centres',
+    'internal.transport-manager.other-licence.form.role' => 'Role',
+    'internal.transport-manager.other-licence.form.total-auth-vehicles' => 'Vehicles',
+    'internal.transport-manager.otherlicences.table' => 'Other Licences',
+    'internal.transport-manager.otherlicences.table.hours_per_week' => 'Hours per Week',
+    'internal.transport-manager.otherlicences.table.lic_no' => 'Licence Number',
+    'internal.transport-manager.otherlicences.table.operating_centres' => 'Operating Centres',
+    'internal.transport-manager.otherlicences.table.role' => 'Role',
+    'internal.transport-manager.otherlicences.table.total_auth_vehicles' => 'Vehicles',
+    'internal.transport-manager.previous-history.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.previous-history.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.previous-licences.form.holder-name' => 'Licence holder name',
     'internal.transport-manager.previous-licences.form.lic-no' => 'Licence no.',
@@ -1005,6 +1207,8 @@ return array(
     'internal.transport-manager.responsibilities.application-id' => 'Application ID',
     'internal.transport-manager.responsibilities.cancel' => 'Cancel',
     'internal.transport-manager.responsibilities.continue' => 'Continue',
+    'internal.transport-manager.responsibilities.delete-question' => 'Are you sure you want to permanently delete the
+        selected record(s)?',
     'internal.transport-manager.responsibilities.hours-per-week' => 'Hours per week',
     'internal.transport-manager.responsibilities.hours-per-week-subtitle' => 'How many hours will you spend on your
         Transport Manager duties?',
@@ -1015,6 +1219,9 @@ return array(
     'internal.transport-manager.responsibilities.tm-application-oc' => 'Which operating centre(s) will you be
         responsible for?',
     'internal.transport-manager.responsibilities.tm-type' => 'What type of manager will you be for this licence?',
+    'internal.transport_manager.responsibilities.other_licence' => 'other licence',
+    'internal.transport_manager.responsibilities.other_licence_add' => 'Add other licence',
+    'internal.transport_manager.responsibilities.other_licence_edit' => 'Edit other licence',
     'invalid-licence-type' => 'If you are a goods vehicle operator, you can not apply for a special restricted licence',
     'invalid-operator-type' => 'If you operate in Northern Ireland, you can only apply for a Goods licence',
     'isTrailer' => 'Trailer?',
@@ -1043,9 +1250,17 @@ return array(
     'licence.overview.licence-no' => 'Licence No.',
     'licence.overview.title' => 'Licence overview',
     'licence.print' => 'Print licence',
+    'licence.print.success' => 'Licence printed successfully',
     'licence.surrender' => 'Surrender licence',
     'licence.variation' => 'Create variation',
     'licence.variation.confirmation.text' => 'Are you sure you want to create a variation application?',
+    'licence_goods-trailers_trailer.form.add.trailernumber' => 'Trailer Number',
+    'licence_goods-trailers_trailer.table.guidance' => 'I undertake that the trailers specified are in operation and
+        that the list is regularly reviewed.',
+    'licence_goods-trailers_trailer.table.specified' => 'Specified Date',
+    'licence_goods-trailers_trailer.table.tableEmptyMessage' => 'No trailers found for this licence.',
+    'licence_goods-trailers_trailer.table.title' => 'Licence Trailers',
+    'licence_goods-trailers_trailer.table.trailerNo' => 'Trailer No.',
     'licence_type_of_licence_confirmation' => 'In order to change your type of licence you must create a variation
         application, Would you like to proceed?',
     'list-of-convictions' => 'List of convictions',
@@ -1152,6 +1367,7 @@ return array(
     'lva.section.title.add_safety' => 'Add safety inspection provider',
     'lva.section.title.add_subsidiary_company' => 'Add subsidiary company',
     'lva.section.title.add_taxi_phv' => 'Add Taxi/PHV',
+    'lva.section.title.add_trailer' => 'Add Trailer',
     'lva.section.title.add_vehicle' => 'Add vehicle',
     'lva.section.title.add_vehicles' => 'Add vehicle',
     'lva.section.title.addresses' => 'Addresses',
@@ -1163,6 +1379,7 @@ return array(
     'lva.section.title.convictions_penalties' => 'Convictions penalties',
     'lva.section.title.create-variation-confirmation' => 'Create variation application',
     'lva.section.title.delete' => 'Are you sure you want to remove these records?',
+    'lva.section.title.delete-oc' => 'Confirm removal',
     'lva.section.title.discs' => 'Licence discs',
     'lva.section.title.edit_condition_undertaking' => 'Edit condition/undertaking',
     'lva.section.title.edit_convictions_penalties' => 'Edit previous conviction',
@@ -1172,10 +1389,13 @@ return array(
     'lva.section.title.edit_safety' => 'Edit safety inspection provider',
     'lva.section.title.edit_subsidiary_company' => 'Edit subsidiary company',
     'lva.section.title.edit_taxi_phv' => 'Edit Taxi/PHV',
+    'lva.section.title.edit_trailer' => 'Edit Trailer',
     'lva.section.title.edit_vehicle' => 'Edit vehicle',
     'lva.section.title.edit_vehicles' => 'Edit vehicle',
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
+    'lva.section.title.grant_application' => 'Grant application',
+    'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
@@ -1187,6 +1407,7 @@ return array(
         vehicle(s)?',
     'lva.section.title.safety' => 'Safety',
     'lva.section.title.taxi_phv' => 'Taxi/PHV',
+    'lva.section.title.trailer' => 'Trailers',
     'lva.section.title.transport_managers' => 'Transport managers',
     'lva.section.title.type_of_licence' => 'Type of licence',
     'lva.section.title.undertakings' => 'Review & declarations',
@@ -1200,6 +1421,12 @@ return array(
     'money-element-invalid' => 'Please enter a valid amount (max 2 decimal places)',
     'month' => 'Month',
     'more-vehicles-than-authorisation' => 'There are currently more vehicles than the total authority',
+    'more-vehicles-than-large-authorisation' => 'There are currently more large vehicles than the large vehicle
+        authority',
+    'more-vehicles-than-medium-authorisation' => 'There are currently more medium vehicles than the medium vehicle
+        authority',
+    'more-vehicles-than-small-authorisation' => 'There are currently more small vehicles than the small vehicle
+        authority',
     'more-vehicles-than-total-auth-error' => 'You cannot have more vehicles than the total vehicle authority',
     'name' => 'Name',
     'name-defendant-type' => 'Name / Defendant type',
@@ -1421,6 +1648,7 @@ return array(
     'review-financial_evidence' => 'Financial evidence',
     'review-financial_history' => 'Financial history',
     'review-licence_history' => 'Licence history',
+    'review-none-added' => 'None added',
     'review-operating-centre-address' => 'Address',
     'review-operating-centre-advertisement-ad-placed' => 'Have you advertised your application for this operating centre
         in you local newspaper?',
@@ -1443,6 +1671,7 @@ return array(
     'review-operating-centres-traffic-area' => 'Your traffic area',
     'review-operating-centres-traffic-area-title' => 'Traffic area',
     'review-operating_centres' => 'Operating centres',
+    'review-operating_centres_delete' => 'Are you sure you wish to remove the selected operating centre(s)',
     'review-people' => 'People',
     'review-safety' => 'Safety',
     'review-taxi_phv' => 'Taxi PHV',
@@ -1488,6 +1717,7 @@ return array(
     'section.add.people' => 'Person added',
     'section.add.safety' => 'Safety inspector added',
     'section.add.taxi_phv' => 'Taxi/PHV added',
+    'section.add.trailers' => 'The trailer has been added',
     'section.add.vehicles' => 'The vehicle has been added',
     'section.applied-add.licence_history' => 'Licence history added',
     'section.applied-edit.licence_history' => 'Licence history updated',
@@ -1502,6 +1732,7 @@ return array(
     'section.edit.people' => 'Person updated',
     'section.edit.safety' => 'Safety inspector updated',
     'section.edit.taxi_phv' => 'Taxi/PHV updated',
+    'section.edit.trailers' => 'The trailer has been updated',
     'section.edit.vehicles' => 'The vehicle has been updated',
     'section.held-add.licence_history' => 'Licence history added',
     'section.held-edit.licence_history' => 'Licence history updated',
@@ -1561,6 +1792,7 @@ return array(
     'section.link.update.people' => 'Update directors',
     'section.link.update.safety' => 'Update safety',
     'section.link.update.taxi_phv' => 'Update taxi/PHV licences',
+    'section.link.update.trailers' => 'Update trailers',
     'section.link.update.transport_managers' => 'Update transport managers',
     'section.link.update.type_of_licence' => 'Update type of licence',
     'section.link.update.undertakings' => 'Update declarations',
@@ -1584,6 +1816,7 @@ return array(
     'section.name.people' => 'People',
     'section.name.safety' => 'Safety',
     'section.name.taxi_phv' => 'Taxi/PHV',
+    'section.name.trailers' => 'Trailers',
     'section.name.transport_managers' => 'Transport managers',
     'section.name.type_of_licence' => 'Type of licence',
     'section.name.undertakings' => 'Declarations',
@@ -1741,8 +1974,9 @@ return array(
     'summary-overview.button' => 'View my application summary',
     'surname' => 'Surname',
     't-auth' => 'T-auth',
-    'tachographAnalyser-external-contractor' => 'An external contractor',
-    'tachographAnalyser-yourself' => 'An owner or employee of the business',
+    'tachograph_analyser.tach_external' => 'An external contractor',
+    'tachograph_analyser.tach_internal' => 'An owner or employee of the business',
+    'tachograph_analyser.tach_na' => 'Not applicable',
     'target-completion-date' => 'Target completion date',
     'tasks.assignment' => 'Assigned to',
     'tasks.close.multiple' => 'Are you sure you want to close these tasks?',
@@ -1810,21 +2044,28 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
-        class="js-modal-ajax">variation application</a>',
-    'variation-application-text' => 'Making changes to some fields within this section may require a',
-    'variation-application-text2' => 'Changes within this section will require a',
-    'variation-application-text3' => 'You cannot make changes to this section',
+    'variation-application-text' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
-    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
-        variation application <a href="%s" class="js-modal-ajax">click here</a>',
+    'variation-grant-error-no-change' => 'Nothing has been updated',
+    'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
+    'variation-message' => 'Making changes to this page will require a variation application. To start a variation
+        application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
+    'variation-review-addresses-change' => 'Thank you for updating your addresses',
+    'variation-review-business-details-change' => 'Thank you for updating your business details',
+    'variation-review-business-type-change' => 'Thank you for updating your business type',
+    'variation-review-discs-change' => 'Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'New operating centres',
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',
     'variation-review-operating-centres-ta-auth-title' => 'Traffic area and authorisation',
     'variation-review-operating-centres-updated-title' => 'Updated operating centres',
+    'variation-review-people-A-title' => 'People added',
+    'variation-review-people-D-title' => 'People removed',
+    'variation-review-people-U-title' => 'People updated',
+    'variation-review-people-change' => 'Thank you for updating your people',
+    'variation-review-safety-change' => 'Thank you for updating your safety details',
     'variation-review-title-gv' => 'Application to vary a Goods Vehicle Operator\'s Licence',
     'variation-review-title-psv' => 'Application to vary a Public Service Vehicle Operator\'s Licence',
     'variation.delete' => 'Delete application',

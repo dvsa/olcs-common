@@ -17,15 +17,13 @@ use Common\Controller\Lva\Adapters\AbstractPeopleAdapter;
  */
 class LicencePeopleAdapter extends AbstractPeopleAdapter
 {
-    public function addMessages($orgId)
+    public function addMessages($orgId, $id)
     {
         if ($this->isExceptionalOrganisation($orgId)) {
             return;
         }
 
-        return $this->getServiceLocator()
-            ->get('Lva\LicencePeople')
-            ->addVariationMessage($this->getController());
+        return $this->getServiceLocator()->get('Lva\Variation')->addVariationMessage($id);
     }
 
     public function alterFormForOrganisation(Form $form, $table, $orgId)

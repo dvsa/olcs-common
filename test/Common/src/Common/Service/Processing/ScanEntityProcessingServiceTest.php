@@ -100,7 +100,12 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
             'id' => 123,
             'licence' => [
                 'id' => 456
-            ]
+            ],
+            // not every entity would have this but we're only testing that
+            // if a category is interested in it, will it pick it up
+            'transportManager' => [
+                'id' => 789
+            ],
         ];
 
         $this->assertEquals(
@@ -115,7 +120,14 @@ class ScanEntityProcessingServiceTest extends MockeryTestCase
             [CategoryDataService::CATEGORY_APPLICATION, ['licence' => 123]],
             [CategoryDataService::CATEGORY_LICENSING, ['licence' => 123]],
             [CategoryDataService::CATEGORY_ENVIRONMENTAL, ['licence' => 123]],
-            [CategoryDataService::CATEGORY_COMPLIANCE, ['case' => 123]],
+            [
+                CategoryDataService::CATEGORY_COMPLIANCE,
+                [
+                    'case' => 123,
+                    'licence' => 456,
+                    'transportManager' => 789
+                ]
+            ],
             [CategoryDataService::CATEGORY_IRFO, ['irfoOrganisation' => 123]],
             [CategoryDataService::CATEGORY_TRANSPORT_MANAGER, ['transportManager' => 123]],
             [

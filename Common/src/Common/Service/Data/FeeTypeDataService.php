@@ -9,7 +9,6 @@ namespace Common\Service\Data;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Entity\Exceptions\UnexpectedResponseException;
 
 /**
@@ -36,8 +35,6 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
     const FEE_TYPE_GVANNVEH = 'GVANNVEH';
     const FEE_TYPE_INTUPGRADEVEH = 'INTUPGRADEVEH';
     const FEE_TYPE_INTAMENDED = 'INTAMENDED';
-    const FEE_TYPE_BUSAPPSCOT = 'BUSAPPSCOT';
-    const FEE_TYPE_BUSVARSCOT = 'BUSVARSCOT';
     const FEE_TYPE_IRFOPSVAPP = 'IRFOPSVAPP';
     const FEE_TYPE_IRFOPSVANN = 'IRFOPSVANN';
     const FEE_TYPE_IRFOPSVCOPY = 'IRFOPSVCOPY';
@@ -56,7 +53,7 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
         )
     );
 
-    public function getLatest($feeType, $goodsOrPsv, $licenceType, $date, $isNi = false)
+    public function getLatest($feeType, $goodsOrPsv, $licenceType, $date, $trafficArea = null)
     {
         $query = array(
             'feeType' => $feeType,
@@ -66,7 +63,7 @@ class FeeTypeDataService implements ServiceLocatorAwareInterface
                 'NULL'
             ),
             'effectiveFrom' => '<= ' . $date,
-            'trafficArea' => $isNi ? TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE : 'NULL',
+            'trafficArea' => $trafficArea ? $trafficArea : 'NULL',
             'sort' => 'effectiveFrom',
             'order' => 'DESC',
             'limit' => 1

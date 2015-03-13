@@ -34,9 +34,9 @@ class TransportManager extends AbstractPublicationFilter
 
         $newData = [
             'transportManager' =>
-                $tmData['workCd']['person']['title'] . ' '
-                . $tmData['workCd']['person']['forename'] . ' '
-                . $tmData['workCd']['person']['familyName'],
+                $tmData['homeCd']['person']['title'] . ' '
+                . $tmData['homeCd']['person']['forename'] . ' '
+                . $tmData['homeCd']['person']['familyName'],
         ];
 
         $publication->offsetSet('transportManagerName', $newData['transportManager']);

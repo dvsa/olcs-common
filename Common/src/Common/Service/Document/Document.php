@@ -2,6 +2,10 @@
 
 namespace Common\Service\Document;
 
+use Common\Service\Document\Bookmark\Interfaces\DateHelperAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+
 use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
 /**
@@ -9,8 +13,13 @@ use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class Document
+class Document implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
+    const DOCUMENT_TIMESTAMP_FORMAT = 'YmdHi';
+    const METADATA_KEY = 'data';
+
     public function getBookmarkQueries(ContentStoreFile $file, $data)
     {
         $queryData = [];
@@ -97,9 +106,69 @@ class Document
 
         $factory = new Bookmark\BookmarkFactory();
         foreach ($tokens as $token) {
-            $bookmarks[$token] = $factory->locate($token);
+            $bookmark = $factory->locate($token);
+
+            if ($bookmark instanceof DateHelperAwareInterface) {
+                $bookmark->setDateHelper(
+                    $this->getServiceLocator()->get('Helper\Date')
+                );
+            }
+
+            $bookmarks[$token] = $bookmark;
         }
 
         return $bookmarks;
+    }
+
+    /**
+     * @param $id
+     * @param $filename
+     * @param $path
+     * @return mixed
+     */
+    public function download($id, $filename, $path)
+    {
+        return $this->getUploader()->download($id, $filename, $path);
+    }
+
+    /**
+     * Returns the METADATA_KEY constant
+     *
+     * @return string
+     */
+    public function getMetadataKey()
+    {
+        return self::METADATA_KEY;
+    }
+
+    /**
+     * Returns a document timestamp
+     *
+     * @return string
+     */
+    public function getTimestampFormat()
+    {
+        return self::DOCUMENT_TIMESTAMP_FORMAT;
+    }
+
+    /**
+     * Formats a document filename
+     *
+     * @param string $input
+     * @return string
+     */
+    public function formatFilename($input)
+    {
+        return str_replace([' ', '/'], '_', $input);
+    }
+
+    /**
+     * Get uploader
+     *
+     * @return \Common\Service\File\FileUploaderFactory
+     */
+    protected function getUploader()
+    {
+        return $this->getServiceLocator()->get('FileUploader')->getUploader();
     }
 }

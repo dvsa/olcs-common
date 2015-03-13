@@ -365,8 +365,10 @@ class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCas
         $postData = [
             'data' => [
                 'companyNumber' => [
+                    'company_number' => '12345678',
                     'submit_lookup_company' => true
-                ]
+                ],
+                'name' => 'Foo Ltd'
             ]
         ];
         $this->setPost($postData);
