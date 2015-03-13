@@ -66,8 +66,6 @@ class BusRegDataServiceTest extends MockeryTestCase
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
 
-
-
         $mockRestClient = m::mock('Common\Util\RestClient');
         $mockData = [ 0 => ['id' => 99]];
 
@@ -75,7 +73,7 @@ class BusRegDataServiceTest extends MockeryTestCase
             ->shouldReceive('get')
             ->once()
             ->with('', m::type('array'))
-            ->andReturn(['Results' => $mockData]);
+            ->andReturn(['Results' => $mockData, 'Count' => count($mockData)]);
 
         $this->sut->setRestClient($mockRestClient);
 
