@@ -261,6 +261,7 @@ return array(
     'application.previous-history.licence-history' => 'Licence history',
     'application.progress' => '%s of %s sections complete',
     'application.review-declarations' => 'Review & declarations',
+    'application.review-declarations.confirm-short-label' => 'Declarations',
     'application.review-declarations.confirm-text' => 'I declare that the statements made in this application are true
         and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
         offence to make a false declaration',
@@ -658,6 +659,9 @@ return array(
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',
+    'bus-registrations-index-subtitle' => 'In order to register, update or cancel a bus service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'bus-registrations-index-title' => 'Bus registrations',
     'bus-services-registered' => 'Local bus services registered',
     'business-details.company_number.locked' => 'Cannot change company number. Please contact Central Licensing Office
         for further advice',
@@ -1631,6 +1635,7 @@ return array(
     'record-not-found' => 'Record not found',
     'record-saved-successfully' => 'Record saved successfully',
     'refrigerated-transport' => 'Refrigerated Transport',
+    'register-cancel-update-service' => 'Register, update or cancel a service',
     'registered-company' => 'Registered Company',
     'registered-company-details-header' => 'Registered company details',
     'registered-office-details-header' => 'Registered office details',
@@ -2072,6 +2077,7 @@ return array(
     'variation.overview.application-no' => 'Application No.',
     'variation.overview.title' => 'Variation application',
     'variation.print' => 'Print application',
+    'variation.review-declarations.confirm-short-label' => 'Declarations',
     'variation.review-declarations.confirm-text' => 'I declare that the statements made in this application are true and
         that there have been no other changes that affect the licence. I understand that it is an offence to make a
         false declaration. Please see the licence undertakings below as a reminder of your obligations.',
@@ -2102,12 +2108,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'ebsr-upload-title' => 'Register, upload or cancel a service',
-    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
-    Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
-    'bus-registrations-index-title' => 'Bus registrations',
-    'bus-registrations-index-subtitle' => 'In order to register, update or cancel a bus service you need to upload an
-     Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
-    'register-cancel-update-service' => 'Register, update or cancel a service'
     // Potentially unused (Not found with grep)
 );

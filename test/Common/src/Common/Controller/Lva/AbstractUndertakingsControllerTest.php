@@ -198,7 +198,7 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             ->once()
             ->with($applicationData)
             ->andReturn($formData);
-        $form->shouldReceive('setData')->once()->with($formData)->andReturnSelf();
+        $form->shouldReceive('populateValues')->once()->with($formData)->andReturnSelf();
 
         $this->mockRender();
 
