@@ -7,6 +7,7 @@
  */
 namespace Common\Service\Helper;
 
+use Common\Service\Entity\LicenceEntityService;
 use Zend\Form\Form;
 
 /**
@@ -76,14 +77,20 @@ class PaymentSubmissionFormHelperService extends AbstractHelperService
     {
         $processingService = $this->getServiceLocator()->get('Processing\Application');
         $applicationFee = $processingService->getApplicationFee($applicationId);
-        $interimFee = $processingService->getInterimFee($applicationId);
 
         $fee = 0;
+
         if ($applicationFee) {
             $fee += $applicationFee['amount'];
         }
-        if ($interimFee) {
-            $fee += $interimFee['amount'];
+
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($applicationId);
+        if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            $interimFee = $processingService->getInterimFee($applicationId);
+
+            if ($interimFee) {
+                $fee += $interimFee['amount'];
+            }
         }
 
         return $fee;
