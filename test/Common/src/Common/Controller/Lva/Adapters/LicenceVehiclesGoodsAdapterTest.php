@@ -58,4 +58,44 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
     {
         $this->assertTrue($this->sut->showFilters());
     }
+
+    public function testGetFilterForm()
+    {
+        $form = m::mock();
+
+        $mockApplicationVehiclesGoodsAdapter = m::mock();
+        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
+
+        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilterForm')
+            ->andReturn($form);
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+            ->shouldReceive('remove')
+            ->with($form, 'specified')
+            ->getMock()
+        );
+
+        $this->assertEquals($form, $this->sut->getFilterForm());
+    }
+
+    public function testGetFilters()
+    {
+        $form = m::mock();
+
+        $mockApplicationVehiclesGoodsAdapter = m::mock();
+        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
+
+        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilters')
+            ->with(['foo' => 'bar'])
+            ->andReturn(['foo' => 'bar']);
+
+        $expected = [
+            'foo' => 'bar',
+            'specified' => 'Y'
+        ];
+
+        $this->assertEquals($expected, $this->sut->getFilters(['foo' => 'bar']));
+    }
 }

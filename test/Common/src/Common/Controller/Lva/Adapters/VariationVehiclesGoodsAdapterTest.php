@@ -58,4 +58,27 @@ class VariationVehiclesGoodsAdapterTest extends MockeryTestCase
     {
         $this->assertTrue($this->sut->showFilters());
     }
+
+    public function testGetFilterForm()
+    {
+        $mockApplicationVehiclesGoodsAdapter = m::mock();
+        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
+
+        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilterForm')
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getFilterForm());
+    }
+
+    public function testGetFilters()
+    {
+        $mockApplicationVehiclesGoodsAdapter = m::mock();
+        $this->sm->setService('ApplicationVehiclesGoodsAdapter', $mockApplicationVehiclesGoodsAdapter);
+
+        $mockApplicationVehiclesGoodsAdapter->shouldReceive('getFilters')
+            ->with(['foo' => 'bar'])
+            ->andReturn('RESPONSE');
+
+        $this->assertEquals('RESPONSE', $this->sut->getFilters(['foo' => 'bar']));
+    }
 }

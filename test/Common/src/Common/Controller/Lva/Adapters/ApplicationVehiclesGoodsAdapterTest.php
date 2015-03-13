@@ -115,4 +115,63 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
     {
         $this->assertTrue($this->sut->showFilters());
     }
+
+    public function testGetFilterForm()
+    {
+        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
+        $filterForm = m::mock()
+            ->shouldReceive('get')
+            ->with('vrm')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('setValueOptions')
+                ->with($vrmOptions)
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->sm->setService(
+            'Helper\Form',
+            m::mock()
+            ->shouldReceive('createForm')
+            ->with('Lva\VehicleFilter')
+            ->andReturn($filterForm)
+            ->getMock()
+        );
+
+        $this->assertEquals($filterForm, $this->sut->getFilterForm());
+    }
+
+    public function testGetFilters()
+    {
+        $input = [
+            'vrm' => 'foo',
+            'specified' => 'bar',
+            'includeRemoved' => 'baz',
+            'disc' => 'test'
+        ];
+
+        $expected = [
+            'vrm' => 'foo',
+            'specified' => 'bar',
+            'includeRemoved' => 'baz',
+            'disc' => 'test'
+        ];
+
+        $this->assertEquals($expected, $this->sut->getFilters($input));
+    }
+
+    public function testGetFiltersWithDefaults()
+    {
+        $input = [];
+
+        $expected = [
+            'vrm' => 'All',
+            'specified' => 'A',
+            'includeRemoved' => 0,
+            'disc' => 'A'
+        ];
+
+        $this->assertEquals($expected, $this->sut->getFilters($input));
+    }
 }
