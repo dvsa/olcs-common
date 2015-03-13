@@ -498,6 +498,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
     public function reprintAction()
     {
+        if ($this->getRequest()->isPost() && $this->isButtonPressed('cancel')) {
+            return $this->redirectToIndex();
+        }
+
         $licenceId  = $this->getLicenceId();
         $ids = explode(',', $this->params('child_id'));
 
@@ -506,13 +510,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             return $this->redirectToIndex();
         }
 
-        if (!$this->getRequest()->isPost()) {
-            return $this->renderConfirmation('internal.community_licence.confirm_reprint_licences');
-        }
-
-        if (!$this->isButtonPressed('cancel')) {
-
-            // 1. Void existing licences
+        if ($this->getRequest()->isPost()) {
+             // 1. Void existing licences
             $this->voidLicences($ids);
 
             // 2. Create new licences with the same issue numbers
@@ -520,9 +519,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
             $this->getAdapter()->addCommunityLicencesWithIssueNos($licenceId, $issueNos);
 
             $this->addSuccessMessage('internal.community_licence.licences_reprinted');
+            return $this->redirectToIndex();
         }
 
-        return $this->redirectToIndex();
+        return $this->renderConfirmation('internal.community_licence.confirm_reprint_licences');
     }
 
     /**

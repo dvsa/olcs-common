@@ -1672,11 +1672,11 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
     }
 
     /**
-     * Test reprint action with non-active licences (GET)
+     * Test reprint action with non-active licences
      *
      * @group abstractCommunityLicenceController
      */
-    public function testReprintActionGetNotAllowed()
+    public function testReprintActionNotAllowed()
     {
         $licenceId = 1;
         $licences = [1, 2];
@@ -1684,24 +1684,27 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
         $mockCommunityLicService = m::mock()
             ->shouldReceive('getActiveLicences')
             ->with($licenceId)
+            ->once()
             ->andReturn(['Results' => [['id' => 999]]])
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
+        $redirect = m::mock();
         $this->sut
-            ->shouldReceive('getRequest')
-            ->andReturn(m::mock())
             ->shouldReceive('params')
             ->with('child_id')
+            ->once()
             ->andReturn('1,2')
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
             ->shouldReceive('addErrorMessage')
             ->with('internal.community_licence.reprint_not_allowed')
+            ->once()
             ->shouldReceive('redirectToIndex')
-            ->andReturn('redirect');
+            ->once()
+            ->andReturn($redirect);
 
-        $this->assertEquals('redirect', $this->sut->reprintAction());
+        $this->assertSame($redirect, $this->sut->reprintAction());
     }
 
     /**
@@ -1724,6 +1727,7 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->andReturn($mockRequest)
             ->shouldReceive('params')
             ->with('child_id')
+            ->once()
             ->andReturn('1,2')
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId);
@@ -1731,6 +1735,7 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
         $mockCommunityLicService = m::mock()
             ->shouldReceive('getActiveLicences')
             ->with($licenceId)
+            ->once()
             ->andReturn(
                 [
                     'Results' => [
@@ -1762,6 +1767,7 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
         $mockFormHelper = m::mock()
             ->shouldReceive('createFormWithRequest')
             ->with('GenericConfirmation', $mockRequest)
+            ->once()
             ->andReturn($mockForm)
             ->getMock();
         $this->sm->setService('Helper\Form', $mockFormHelper);
@@ -1780,43 +1786,109 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
      */
     public function testReprintActionWithCancel()
     {
-        $this->markTestIncomplete();
         $licenceId = 1;
         $licences = [1, 2];
 
-        $mockLicenceService = m::mock()
-            ->shouldReceive('getCommunityLicencesByLicenceIdAndIds')
-            ->with($licenceId, $licences)
-            ->andReturn([['issueNo' => 0]])
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'form-actions' => ['cancel' => '']
+                ]
+            )
             ->getMock();
-        $this->sm->setService('Entity\Licence', $mockLicenceService);
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest);
+
+        $redirect = m::mock();
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('redirectToIndex')
+            ->once()
+            ->andReturn($redirect);
+
+        $this->assertSame($redirect, $this->sut->reprintAction());
+    }
+
+    /**
+     * Test reprint action success
+     *
+     * @group abstractCommunityLicenceController
+     */
+    public function testReprintActionSuccess()
+    {
+        $licenceId = 1;
+        $licences = [1, 2];
+
+        $mockRequest = m::mock()
+            ->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn(
+                [
+                    'form-actions' => ['submit' => '']
+                ]
+            )
+            ->getMock();
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest);
 
         $mockCommunityLicService = m::mock()
-            ->shouldReceive('getValidLicences')
+            ->shouldReceive('getActiveLicences')
             ->with($licenceId)
-            ->andReturn(['Results' => [['id' => 1], ['id' => 2]]])
+            ->once()
+            ->andReturn(
+                [
+                    'Results' => [
+                        ['id' => 1],
+                        ['id' => 2],
+                        ['id' => 3],
+                    ],
+                ]
+            )
+            ->shouldReceive('getByIds')
+            ->with($licences)
+            ->andReturn(
+                [
+                    ['id' => 1, 'issueNo' => 4],
+                    ['id' => 2, 'issueNo' => 5],
+                ]
+            )
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicService);
 
+        $mockAdapter = m::mock()
+            ->shouldReceive('addCommunityLicencesWithIssueNos')
+            ->with($licenceId, [4, 5])
+            ->once()
+            ->getMock();
+
+        $redirect = m::mock();
         $this->sut
             ->shouldReceive('getRequest')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('isPost')
-                ->andReturn(true)
-                ->getMock()
-            )
+            ->andReturn($mockRequest)
             ->shouldReceive('params')
             ->with('child_id')
+            ->once()
             ->andReturn('1,2')
             ->shouldReceive('getLicenceId')
             ->andReturn($licenceId)
-            ->shouldReceive('isButtonPressed')
-            ->with('cancel')
-            ->andReturn(true)
+            ->shouldReceive('voidLicences') // void behaviour is tested elsewhere
+            ->once()
+            ->shouldReceive('getAdapter')
+            ->andReturn($mockAdapter)
+            ->shouldReceive('addSuccessMessage')
+            ->with('internal.community_licence.licences_reprinted')
+            ->once()
             ->shouldReceive('redirectToIndex')
-            ->andReturn('redirect');
+            ->once()
+            ->andReturn($redirect);
 
-        $this->assertEquals('redirect', $this->sut->voidAction());
+        $this->assertSame($redirect, $this->sut->reprintAction());
     }
 }
