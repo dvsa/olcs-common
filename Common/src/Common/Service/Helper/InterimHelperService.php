@@ -10,6 +10,7 @@ use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\CommunityLicEntityService;
 
 /**
  * Class InterimHelperService
@@ -280,14 +281,15 @@ class InterimHelperService extends AbstractHelperService
 
         return $this;
     }
-    
+
     /**
      * Grant interim
      *
+     * @param int $applicationId
      */
-    public function grantInterim()
+    public function grantInterim($applicationId)
     {
-        $interimData = $this->getInterimData();
+        $interimData = $this->getInterimData($applicationId);
 
         // set interim status to in-force
         $dataToSave = [
@@ -377,7 +379,5 @@ class InterimHelperService extends AbstractHelperService
             ->get('Helper\CommunityLicenceDocument')
             ->generateBatch($interimData['licence']['id'], $comLicsIds);
 
-        $this->addSuccessMessage('internal.interim.form.interim_granted');
-        
     }
 }
