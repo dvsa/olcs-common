@@ -43,4 +43,33 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     {
         return true;
     }
+
+    /**
+     * Retrieve the filter form
+     *
+     * Here we wrap the application version before removing
+     * the irrelevant specified date field
+     */
+    public function getFilterForm()
+    {
+        $form = $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilterForm();
+
+        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'specified');
+
+        return $form;
+    }
+
+    /**
+     * Get all relevant form filters
+     *
+     * Here we wrap the application version and override
+     * the specified date
+     */
+    public function getFilters($params)
+    {
+        return array_merge(
+            $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilters($params),
+            ['specified' => 'Y']
+        );
+    }
 }

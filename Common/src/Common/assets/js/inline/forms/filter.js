@@ -1,4 +1,6 @@
 OLCS.ready(function() {
+  "use strict";
+
   /**
    * @NOTE: This is a generic form handler which just binds
    * to forms with a known class. It should be reusable wherever

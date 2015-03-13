@@ -269,10 +269,6 @@ return array(
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
-
-            'OlcsCustomForm' => function ($sm) {
-                    return new \Common\Service\Form\OlcsCustomFormFactory($sm->get('Config'));
-            },
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',

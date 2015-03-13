@@ -23,9 +23,9 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
      * @group component
      * @group lva_component
      * @group section_access_lva_component
-     * @dataProvider providerSectionAccessExternalApplication
+     * @dataProvider providerSectionAccess
      */
-    public function testSectionAccessExternalApplication($access, $expected)
+    public function testSectionAccessAccessibleSections($access, $expected)
     {
         $serviceManager = Bootstrap::getRealServiceManager();
 
@@ -45,7 +45,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, array_keys($accessibleSections));
     }
 
-    public function providerSectionAccessExternalApplication()
+    public function providerSectionAccess()
     {
         return array(
             // EXTERNAL APPLICATION
@@ -233,7 +233,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
             'Internal Application Goods Standard International' => array(
@@ -258,7 +259,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
             'Internal Application Goods Restricted' => array(
@@ -281,7 +283,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
             'Internal Application PSV Standard National' => array(
@@ -306,7 +309,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
             'Internal Application PSV Standard International' => array(
@@ -332,7 +336,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
             'Internal Application PSV Restricted' => array(
@@ -357,7 +362,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'conditions_undertakings',
                     'financial_history',
                     'licence_history',
-                    'convictions_penalties'
+                    'convictions_penalties',
+                    'undertakings',
                 )
             ),
            'Internal Application PSV Special Restricted' => array(
@@ -373,7 +379,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'business_details',
                     'addresses',
                     'people',
-                    'taxi_phv'
+                    'taxi_phv',
+                    'undertakings',
                 )
             ),
             // EXTERNAL LICENCE
@@ -804,7 +811,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings',
                 )
             ),
             'Internal Variation Goods Standard International' => array(
@@ -825,7 +833,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles',
                     'community_licences',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings',
                 )
             ),
             'Internal Variation Goods Restricted' => array(
@@ -844,7 +853,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings',
                 )
             ),
             'Internal Variation PSV Standard National' => array(
@@ -865,7 +875,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles_psv',
                     'discs',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings',
                 )
             ),
             'Internal Variation PSV Standard International' => array(
@@ -888,6 +899,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'community_licences',
                     'safety',
                     'conditions_undertakings',
+                    'undertakings',
                 )
             ),
             'Internal Variation PSV Restricted' => array(
@@ -908,7 +920,8 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'discs',
                     'community_licences',
                     'safety',
-                    'conditions_undertakings'
+                    'conditions_undertakings',
+                    'undertakings',
                 )
             )
         );

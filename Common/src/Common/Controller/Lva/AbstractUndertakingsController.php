@@ -61,6 +61,10 @@ abstract class AbstractUndertakingsController extends AbstractController
      */
     public function handleFees($data)
     {
+        if (!isset($data['interim'])) {
+            return; // interim not relevant on internal
+        }
+
         $interimService = $this->getServiceLocator()->get('Helper\Interim');
 
         if ($data['interim']['goodsApplicationInterim'] === 'Y') {

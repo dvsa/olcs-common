@@ -26,7 +26,7 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
     );
 
     /**
-     * Custom validation for tachograph analyser
+     * Custom validation for community licences
      *
      * @param mixed $value
      * @param array $context
@@ -35,7 +35,7 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
     {
         $total = $this->getTotal($context);
 
-        if ($value > $total) {
+        if (is_numeric($value) && $value > $total) {
             $this->error('too-many');
             return false;
         }
@@ -52,7 +52,7 @@ class OperatingCentreCommunityLicencesValidator extends AbstractValidator
     private function getTotal($context)
     {
         if (isset($context['totAuthVehicles'])) {
-            return $context['totAuthVehicles'];
+            return (int)$context['totAuthVehicles'];
         }
 
         $total = 0;
