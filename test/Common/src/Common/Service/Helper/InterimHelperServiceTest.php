@@ -104,12 +104,12 @@ class InterimHelperServiceTest extends MockeryTestCase
             array(
                 array(
                     'operatingCentres' => array(
-                        'a'=> 'b'
+                        array(
+                            'action' => 'A'
+                        )
                     ),
                     'licence' => array(
-                        'operatingCentres' => array(
-                            'a'=> 'b'
-                        )
+                        'operatingCentres' => array()
                     )
                 ),
                 array('hasNewOperatingCentre' => 'operatingCentres')
@@ -118,15 +118,22 @@ class InterimHelperServiceTest extends MockeryTestCase
                 array(
                     'operatingCentres' => array(
                         array(
+                            'action' => 'U',
                             'noOfVehiclesRequired' => 11,
-                            'noOfTrailersRequired' => 10
+                            'noOfTrailersRequired' => 10,
+                            'operatingCentre' => array(
+                                'id' => 1
+                            )
                         )
                     ),
                     'licence' => array(
                         'operatingCentres' => array(
                             array(
                                 'noOfVehiclesRequired' => 10,
-                                'noOfTrailersRequired' => 10
+                                'noOfTrailersRequired' => 10,
+                                'operatingCentre' => array(
+                                    'id' => 1
+                                )
                             )
                         )
                     )
@@ -137,15 +144,48 @@ class InterimHelperServiceTest extends MockeryTestCase
                 array(
                     'operatingCentres' => array(
                         array(
+                            'action' => 'U',
                             'noOfVehiclesRequired' => 10,
-                            'noOfTrailersRequired' => 11
+                            'noOfTrailersRequired' => 11,
+                            'operatingCentre' => array(
+                                'id' => 1
+                            )
                         )
                     ),
                     'licence' => array(
                         'operatingCentres' => array(
                             array(
                                 'noOfVehiclesRequired' => 10,
-                                'noOfTrailersRequired' => 10
+                                'noOfTrailersRequired' => 10,
+                                'operatingCentre' => array(
+                                    'id' => 1
+                                )
+                            )
+                        )
+                    )
+                ),
+                array('hasIncreaseInOperatingCentre' => 'operatingCentres')
+            ),
+            array(
+                array(
+                    'operatingCentres' => array(
+                        array(
+                            'action' => 'U',
+                            'noOfVehiclesRequired' => 10,
+                            'noOfTrailersRequired' => 11,
+                            'operatingCentre' => array(
+                                'id' => 1
+                            )
+                        )
+                    ),
+                    'licence' => array(
+                        'operatingCentres' => array(
+                            array(
+                                'noOfVehiclesRequired' => 10,
+                                'noOfTrailersRequired' => 10,
+                                'operatingCentre' => array(
+                                    'id' => 1
+                                )
                             )
                         )
                     )
@@ -191,11 +231,22 @@ class InterimHelperServiceTest extends MockeryTestCase
             ),
             array(
                 array(
+                    'operatingCentres' => array(
+                        array(
+                            'action' => 'U'
+                        )
+                    ),
+                    'licence' => array(
+                        'operatingCentres' => array()
+                    )
+                ),
+                array('hasNewOperatingCentre' => 'operatingCentres')
+            ),
+            array(
+                array(
                     'operatingCentres' => array(),
                     'licence' => array(
-                        'operatingCentres' => array(
-                            'a'=> 'b'
-                        )
+                        'operatingCentres' => array()
                     )
                 ),
                 array('hasNewOperatingCentre' => 'operatingCentres')
@@ -204,15 +255,22 @@ class InterimHelperServiceTest extends MockeryTestCase
                 array(
                     'operatingCentres' => array(
                         array(
+                            'action' => 'D',
                             'noOfVehiclesRequired' => 10,
-                            'noOfTrailersRequired' => 10
+                            'noOfTrailersRequired' => 11,
+                            'operatingCentre' => array(
+                                'id' => 1
+                            )
                         )
                     ),
                     'licence' => array(
                         'operatingCentres' => array(
                             array(
                                 'noOfVehiclesRequired' => 10,
-                                'noOfTrailersRequired' => 10
+                                'noOfTrailersRequired' => 10,
+                                'operatingCentre' => array(
+                                    'id' => 1
+                                )
                             )
                         )
                     )
@@ -226,7 +284,10 @@ class InterimHelperServiceTest extends MockeryTestCase
                         'operatingCentres' => array(
                             array(
                                 'noOfVehiclesRequired' => 10,
-                                'noOfTrailersRequired' => 10
+                                'noOfTrailersRequired' => 10,
+                                'operatingCentre' => array(
+                                    'id' => 1
+                                )
                             )
                         )
                     )

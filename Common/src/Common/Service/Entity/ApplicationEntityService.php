@@ -125,11 +125,19 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceType',
             'goodsOrPsv',
-            'operatingCentres',
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre'
+                )
+            ),
             'licence' => array(
                 'children' => array(
                     'licenceType',
-                    'operatingCentres'
+                    'operatingCentres' => array(
+                        'children' => array(
+                            'operatingCentre'
+                        )
+                    )
                 )
             )
         )
