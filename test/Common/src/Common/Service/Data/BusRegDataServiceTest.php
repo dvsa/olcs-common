@@ -66,8 +66,6 @@ class BusRegDataServiceTest extends MockeryTestCase
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
 
-
-
         $mockRestClient = m::mock('Common\Util\RestClient');
         $mockData = [ 0 => ['id' => 99]];
 
