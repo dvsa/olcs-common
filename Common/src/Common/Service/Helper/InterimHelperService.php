@@ -218,8 +218,8 @@ class InterimHelperService extends AbstractHelperService
             return false;
         }
 
-        foreach($variationOpCentres as $operatingCentre) {
-            if($operatingCentre['action'] === 'A') {
+        foreach ($variationOpCentres as $operatingCentre) {
+            if ($operatingCentre['action'] === 'A') {
                 return true;
             }
         }
