@@ -406,6 +406,17 @@ final class GenericCrudController extends AbstractActionController implements
             ]
         );
 
+        if ($this->getOption('innerLayout')) {
+
+            // This is a zend\view\variables object - cast it to an array.
+            $innerLayout = new ViewModel($viewVariables);
+            $innerLayout->setTemplate('layout/' . $this->getOption('innerLayout'));
+
+            $innerLayout->addChild($view, 'content');
+
+            $view = $innerLayout;
+        }
+
         $header = new ViewModel($viewVariables);
         $header->setTemplate('partials/header');
 
