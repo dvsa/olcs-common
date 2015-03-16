@@ -7,25 +7,84 @@
  */
 namespace Common\Controller\Crud;
 
+use Common\Service\Table\TableBuilderAwareInterface;
+use Common\Service\Table\TableBuilderAwareTrait;
 use Common\Util\Redirect;
 use Common\Service\Crud\CrudServiceInterface;
+use Common\Service\Crud\AbstractCrudService;
 use Common\Controller\Interfaces\CrudControllerInterface;
 use Zend\Form\Form;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
+use Common\Util\OptionTrait;
 
 /**
  * Generic Crud Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-final class GenericCrudController extends AbstractActionController implements CrudControllerInterface
+final class GenericCrudController extends AbstractActionController implements
+    CrudControllerInterface,
+    TableBuilderAwareInterface
 {
+    use OptionTrait,
+        TableBuilderAwareTrait;
+
+    /**
+     * @var AbstractCrudService
+     */
     protected $crudService;
 
     protected $translationPrefix = '';
 
-    protected $pageLayout = 'admin-layout';
+    /**
+     * @var array
+     */
+    protected $params;
+
+    /**
+     * Requested Name
+     *
+     * @var string
+     */
+    protected $requestedName;
+
+    /**
+     * @return mixed
+     */
+    public function getRequestedName()
+    {
+        return $this->requestedName;
+    }
+
+    /**
+     * @param mixed $requestedName
+     */
+    public function setRequestedName($requestedName)
+    {
+        $this->requestedName = $requestedName;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
 
     /**
      * Inject the crud service
@@ -35,6 +94,17 @@ final class GenericCrudController extends AbstractActionController implements Cr
     public function setCrudService(CrudServiceInterface $crudService)
     {
         $this->crudService = $crudService;
+        return $this;
+    }
+
+    /**
+     * Gets the crud service.
+     *
+     * @return AbstractCrudService
+     */
+    public function getCrudService()
+    {
+        return $this->crudService;
     }
 
     /**
@@ -45,16 +115,17 @@ final class GenericCrudController extends AbstractActionController implements Cr
     public function setTranslationPrefix($prefix)
     {
         $this->translationPrefix = $prefix;
+        return $this;
     }
 
     /**
-     * Override the page layout
+     * Gets the translation prefix.
      *
-     * @param string $layout
+     * @return string
      */
-    public function setPageLayout($layout = null)
+    public function getTranslationPrefix()
     {
-        $this->pageLayout = $layout;
+        return $this->translationPrefix;
     }
 
     /**
@@ -64,9 +135,118 @@ final class GenericCrudController extends AbstractActionController implements Cr
      */
     public function indexAction()
     {
-        $this->getServiceLocator()->get('Script')->loadFile('table-actions');
+        $view = new ViewModel(['table' => $this->getTable()]);
+        $view->setTemplate('partials/table');
 
-        return $this->renderTable();
+        return $this->renderView($view, $this->getTranslationPrefix() . '-title');
+    }
+
+    /**
+     * Returns an instantiated Table builder object.
+     *
+     * @return TableBuilder
+     */
+    public function getTable()
+    {
+        $data = $this->getCrudService()->getList($this->getParams());
+
+        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data);
+    }
+
+    /**
+     * Sets up the config for this controller/action. FYI, called automatically by the event manager.
+     *
+     * @return array
+     */
+    public function setUpOptions()
+    {
+        /** @var string $requestedName contains the name of the requested controller */
+        $requestedName = $this->getRequestedName();
+
+        /** @var string $action contains current action name */
+        $action = $this->params()->fromRoute('action');
+
+        $config = $this->getServiceLocator()->get('Config');
+        if (isset($config['crud_controller_config'][$requestedName][$action])) {
+            $options = $config['crud_controller_config'][$requestedName][$action];
+
+            $this->setOptions($options);
+        }
+    }
+
+    /**
+     * Sets up the required params for this controller as
+     * specified in the config options in the module.config.php
+     * crud_controller_config options array.
+     *
+     * FYI, This is called automatically by the factory.
+     *
+     * @return array
+     */
+    public function setUpParams()
+    {
+        $params = [];
+
+        if ($requiredParams = $this->getOption('requiredParams')) {
+
+            foreach ($requiredParams as $paramKey) {
+                $params[$paramKey] = $this->params()->fromQuery($paramKey);
+                $params[$paramKey] = $this->params()->fromRoute($paramKey);
+            }
+
+            $this->setParams(array_filter($params));
+        }
+    }
+
+    /**
+     * Sets javascript for this controller.
+     *
+     * FYI, the calling of this method is setup from the factory's create method
+     * and therefore automatically runs on dispatch.
+     *
+     * @throws \Exception
+     */
+    public function setUpScripts()
+    {
+        /**
+         * Contains scripts config option - this contains sub-arrays with
+         * action identifying keys.
+         *
+         * @var array $scripts
+         */
+        $scripts = $this->getOption('scripts');
+
+        /** @var string $action contains current action name */
+        //$action = $this->params()->fromRoute('action');
+
+        /** @var \Common\Service\Script\ScriptFactory $scriptService */
+        $scriptService = $this->getServiceLocator()->get('Script');
+
+        if (isset($scripts)) {
+            foreach ($scripts as $scriptName) {
+
+                /**
+                 * Load the file that was specified in the action->scripts->array
+                 */
+                $scriptService->loadFile($scriptName);
+            }
+        }
+    }
+
+    /**
+     * Sets the navigation to the default location specified in the module.config.php.
+     *
+     * @return void
+     */
+    public function setNavigationLocation()
+    {
+        if ($navId = $this->getOption('navigation', null)) {
+
+            $navigation = $this->getServiceLocator()->get('Navigation');
+            if (!empty($navId)) {
+                $navigation->findOneBy('id', $navId)->setActive();
+            }
+        }
     }
 
     /**
@@ -113,7 +293,7 @@ final class GenericCrudController extends AbstractActionController implements Cr
 
             $id = explode(',', $id);
 
-            $processDelete = $this->crudService->processDelete($id);
+            $processDelete = $this->getCrudService()->processDelete($id);
 
             if ($processDelete instanceof Redirect) {
                 return $processDelete->process($this->redirect());
@@ -123,10 +303,10 @@ final class GenericCrudController extends AbstractActionController implements Cr
         }
 
         return $this->renderForm(
-            $this->crudService->getDeleteForm($request),
-            $this->translationPrefix . '-delete-title',
+            $this->getCrudService()->getDeleteForm($request),
+            $this->getTranslationPrefix() . '-delete-title',
             null,
-            ['sectionText' => $this->translationPrefix . '-delete-message']
+            ['sectionText' => $this->getTranslationPrefix() . '-delete-message']
         );
     }
 
@@ -139,11 +319,11 @@ final class GenericCrudController extends AbstractActionController implements Cr
      */
     private function addOrEditForm($mode, $id = null)
     {
-        $processForm = $this->crudService->processForm($this->getRequest(), $id);
+        $processForm = $this->getCrudService()->processForm($this->getRequest(), $id);
 
         // @NOTE If we have a form render it
         if ($processForm instanceof Form) {
-            return $this->renderForm($processForm, $this->translationPrefix . '-form-' . $mode);
+            return $this->renderForm($processForm, $this->getTranslationPrefix() . '-form-' . $mode);
         }
 
         // If we have a Redirect object, process the redirect
@@ -159,13 +339,13 @@ final class GenericCrudController extends AbstractActionController implements Cr
      *
      * @return ViewModel
      */
-    private function renderTable()
+    /*private function renderTable()
     {
-        $view = new ViewModel(['table' => $this->crudService->getList()]);
+        $view = new ViewModel(['table' => $this->getCrudService()->getList($this->getParams())]);
         $view->setTemplate('partials/table');
 
-        return $this->renderView($view, $this->translationPrefix . '-title');
-    }
+        return $this->renderView($view, $this->getTranslationPrefix() . '-title');
+    }*/
 
     /**
      * Create a form view for a crud table
@@ -202,13 +382,24 @@ final class GenericCrudController extends AbstractActionController implements Cr
             ]
         );
 
+        if ($this->getOption('innerLayout')) {
+
+            // This is a zend\view\variables object - cast it to an array.
+            $innerLayout = new ViewModel($viewVariables);
+            $innerLayout->setTemplate('layout/' . $this->getOption('innerLayout'));
+
+            $innerLayout->addChild($view, 'content');
+
+            $view = $innerLayout;
+        }
+
         $header = new ViewModel($viewVariables);
         $header->setTemplate('partials/header');
 
-        if ($this->pageLayout !== null) {
+        if ($this->getOption('pageLayout')) {
 
             $layout = new ViewModel($viewVariables);
-            $layout->setTemplate('layout/' . $this->pageLayout);
+            $layout->setTemplate('layout/' . $this->getOption('pageLayout'));
             $layout->addChild($view, 'content');
 
             $view = $layout;

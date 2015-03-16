@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use Common\Controller\Crud\GenericCrudControllerFactory;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Generic Crud Controller Factory Test
@@ -28,6 +29,7 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
         $this->sut = new GenericCrudControllerFactory();
 
         $this->sm = Bootstrap::getServiceManager();
+        $this->sm->shouldReceive('getServiceLocator')->andReturnSelf();
     }
 
     public function testCreateService()
@@ -43,18 +45,51 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
         $mockGenericController = m::mock();
         $this->sm->setService('GenericCrudController', $mockGenericController);
 
-        // Expectations
-        $this->sm->shouldReceive('getServiceLocator')
-            ->andReturnSelf();
+        $tableBuilder = $this->getMock(
+            '\Common\Service\Table\TableBuilder',
+            [], [], '', false, true, true, false, false
+        );
+        $this->sm->setService('TableBuilder', $tableBuilder);
 
+        // Config / options
+        $config = [
+            'crud_controller_config' => [
+                $requestedName => [
+                    'index' => [
+                        'pageLayout' => 'test',
+                    ]
+                ]
+            ]
+        ];
+        $this->sm->setService('Config', $config);
+
+        // Event manager
+        $em = m::mock('\Zend\EventManager\EventManager');
+        $em->shouldReceive('attach')->with(
+            MvcEvent::EVENT_DISPATCH,
+            [$mockGenericController, 'setNavigationLocation'],
+            99
+        );
+        $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpParams'], 100);
+        $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpScripts'], 10000);
+        $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpOptions'], 10001);
+        $mockGenericController->shouldReceive('setNavigationLocation')->andReturn(null);
+        $mockGenericController->shouldReceive('setUpParams')->andReturn(null);
+        $mockGenericController->shouldReceive('setUpScripts')->andReturn(null);
+        $mockGenericController->shouldReceive('setUpOptions')->andReturn(null);
+        $mockGenericController->shouldReceive('getEventManager')->andReturn($em);
+
+        // Expectations
         $mockCrudServiceManager->shouldReceive('get')
             ->with('FooCrudService')
             ->andReturn($mockFoo);
 
-        $mockGenericController->shouldReceive('setCrudService')
-            ->with($mockFoo)
-            ->shouldReceive('setTranslationPrefix')
-            ->with('crud-foo');
+        $mockGenericController->shouldReceive('setCrudService')->with($mockFoo);
+        $mockGenericController->shouldReceive('setTranslationPrefix')->with('crud-foo');
+        $mockGenericController->shouldReceive('setRequestedName')->with($requestedName);
+        $mockGenericController->shouldReceive('setTableBuilder')->with($tableBuilder);
+        //$mockGenericController->shouldReceive('setOptions')->once()
+        //    ->with($config['crud_controller_config'][$requestedName]);
 
         $this->assertSame($mockGenericController, $this->sut->createService($this->sm, $serviceName, $requestedName));
     }
