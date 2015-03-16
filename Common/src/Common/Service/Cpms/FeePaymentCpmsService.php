@@ -307,7 +307,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Cheque payment response', ['response' => $response]);
 
         if ($this->isSuccessfulPaymentResponse($response)) {
-             $data = [
+            $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],
@@ -524,9 +524,16 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
     /**
      * @param array $data
      * @param string $paymentMethod FeePaymentEntityService::METHOD_CARD_OFFLINE|METHOD_CARD_ONLINE
+     * @throws Common\Service\Cpms\Exception\PaymentNotFoundException
+     * @throws Common\Service\Cpms\Exception\PaymentInvalidStatusException
+     * @throws Common\Service\Cpms\Exception
      */
     public function handleResponse($data, $paymentMethod)
     {
+        if (!isset($data['receipt_reference'])) {
+            throw new Exception('No receipt_reference received from CPMS gateway');
+        }
+
         $reference      = $data['receipt_reference'];
         $paymentService = $this->getServiceLocator()->get('Entity\Payment');
         $client         = $this->getServiceLocator()->get('cpms\service\api');
@@ -595,24 +602,19 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
 
                     $this->updateFeeRecordAsPaid($fee['id'], $data);
                 }
-
                 $paymentService->setStatus($paymentId, PaymentEntityService::STATUS_PAID);
                 $status = PaymentEntityService::STATUS_PAID;
                 break;
-
             case self::PAYMENT_FAILURE:
-                $status = PaymentEntityService::STATUS_CANCELLED;
-                break;
-
-            case self::PAYMENT_CANCELLATION:
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
-
+            case self::PAYMENT_CANCELLATION:
+                $status = PaymentEntityService::STATUS_CANCELLED;
+                break;
             case self::PAYMENT_IN_PROGRESS:
                 // resolve any abandoned payments as 'failed'
                 $status = PaymentEntityService::STATUS_FAILED;
                 break;
-
             default:
                 $this->log('Unknown CPMS payment_status: ' . $paymentStatus);
                 $status = null;

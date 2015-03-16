@@ -848,11 +848,20 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 'licenceVehicles' => array(
                     'children' => array(
                         'vehicle',
-                        'interimApplication'
+                        'interimApplication',
+                        'goodsDiscs'
                     )
                 ),
                 'interimStatus',
-                'licence'
+                'licence' => array(
+                    'children' => array(
+                        'communityLics' => array(
+                            'children' => array(
+                                'status'
+                            )
+                        )
+                    )
+                )
             )
         );
         $response = [
@@ -899,11 +908,20 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 'licenceVehicles' => array(
                     'children' => array(
                         'vehicle',
-                        'interimApplication'
+                        'interimApplication',
+                        'goodsDiscs'
                     )
                 ),
                 'interimStatus',
-                'licence'
+                'licence' => array(
+                    'children' => array(
+                        'communityLics' => array(
+                            'children' => array(
+                                'status'
+                            )
+                        )
+                    )
+                )
             )
         );
 

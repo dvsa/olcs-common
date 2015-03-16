@@ -72,6 +72,11 @@ class OperatingCentreCommunityLicencesValidatorTest extends \PHPUnit_Framework_T
                 array('totAuthVehicles' => 6,),
                 true
             ),
+            array(
+                5,
+                array('totAuthVehicles' => ''), // converted to int
+                false
+            )
         );
     }
 }

@@ -252,6 +252,7 @@ return array(
     'application.overview.saved' => 'W The overview page has been saved',
     'application.overview.title' => 'W Application overview',
     'application.payment-submission' => 'W Payment & submission',
+    'application.payment-submission.amount.value' => 'W <div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'W Payment',
     'application.payment-submission.summary.subtitle' => 'W Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'W Thank you',
@@ -1104,6 +1105,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'W Include removed',
     'internal-vehicle-filter-specified' => 'W Specified',
     'internal-vehicle-filter-vrm' => 'W VRM',
+    'internal.community_licence.confirm_reprint_licences' => 'W Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'W Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'W Are you sure you want to void these licences?',
     'internal.community_licence.form.change_status_to' => 'W Change status to',
@@ -1116,11 +1118,13 @@ return array(
     'internal.community_licence.form_add.cancel' => 'W Cancel',
     'internal.community_licence.form_add.ok' => 'W OK',
     'internal.community_licence.licences_created' => 'W The community licences have been created',
+    'internal.community_licence.licences_reprinted' => 'W The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'W The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'W The licences have been suspended',
     'internal.community_licence.licences_voided' => 'W The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'W The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'W The office copy has been created',
+    'internal.community_licence.reprint_not_allowed' => 'W You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'W You cannot restore these licences without restoring the
         office copy',
     'internal.community_licence.stop_not_allowed' => 'W Please void, withdraw or suspend the other pending/active
@@ -1129,12 +1133,15 @@ return array(
         licences',
     'internal.documents.delete.delete_message' => 'W Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'W Deleted successfully',
+    'internal.interim.form.grant_confirm' => 'W Are you sure you want to grant this interim?',
+    'internal.interim.form.grant_not_allowed' => 'W You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'W Interim application',
     'internal.interim.form.interim_auth_trailers' => 'W Trailer Authority',
     'internal.interim.form.interim_auth_vehicles' => 'W Vehicle Authority',
     'internal.interim.form.interim_cancel' => 'W Cancel',
     'internal.interim.form.interim_end' => 'W Interim end date',
     'internal.interim.form.interim_grant' => 'W Grant',
+    'internal.interim.form.interim_granted' => 'W Interim granted',
     'internal.interim.form.interim_reason' => 'W Interim reason',
     'internal.interim.form.interim_refuse' => 'W Refuse',
     'internal.interim.form.interim_requested' => 'W Interim requested',
@@ -1169,6 +1176,9 @@ return array(
     'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'W Name of Court',
     'internal.transport-manager.convictionsandpenalties.table.offence' => 'W Offence',
     'internal.transport-manager.convictionsandpenalties.table.penalty' => 'W Penalty',
+    'internal.transport-manager.delete-question' => 'W Are you sure you want to permanently delete the selected
+        record(s)?',
+    'internal.transport-manager.deleted-message' => 'W Deleted successfully',
     'internal.transport-manager.employment.cancel' => 'W Cancel',
     'internal.transport-manager.employment.form.address' => 'W Address',
     'internal.transport-manager.employment.form.employerName' => 'W Employer name',
@@ -1390,6 +1400,7 @@ return array(
     'lva.section.title.financial_evidence' => 'W Financial evidence',
     'lva.section.title.financial_history' => 'W Financial history',
     'lva.section.title.grant_application' => 'W Grant application',
+    'lva.section.title.interim' => 'W Interim application',
     'lva.section.title.licence_history' => 'W Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'W Adding an operating centre',
     'lva.section.title.operating_centres' => 'W Operating centres & authorisation',
@@ -2039,17 +2050,13 @@ return array(
     'v-auth' => 'W V-auth',
     'v-auth-t-auth' => 'W V-auth/T-auth',
     'variation-application-link-text' => 'W variation application',
-    'variation-application-message' => 'W Making changes to some fields within this section may require a <a href="%s"
-        class="js-modal-ajax">variation application</a>',
-    'variation-application-text' => 'W Making changes to some fields within this section may require a',
-    'variation-application-text2' => 'W Changes within this section will require a',
-    'variation-application-text3' => 'W You cannot make changes to this section',
+    'variation-application-text' => 'W You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'W The licence type has been changed from %s to %s',
     'variation-details-nav' => 'W Variation details',
     'variation-grant-error-no-change' => 'W Nothing has been updated',
     'variation-grant-error-sections' => 'W You must update these sections before granting this application: %s',
-    'variation-people-message' => 'W Making changes to this page will require a variation application. To start a
-        variation application <a href="%s" class="js-modal-ajax">click here</a>',
+    'variation-message' => 'W Making changes to this page will require a variation application. To start a variation
+        application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'W In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-addresses-change' => 'W Thank you for updating your addresses',
@@ -2102,5 +2109,12 @@ return array(
     'west-midlands' => 'W West Midlands',
     'west-of-england' => 'W West of England',
     'your-business' => 'W Your business',
+    'ebsr-upload-title' => 'W Register, upload or cancel a service',
+    'ebsr-upload-subtitle' => 'W To register a new service, update or cancel an existing service you need to upload an
+    Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'bus-registrations-index-title' => 'W Bus registrations',
+    'bus-registrations-index-subtitle' => 'W In order to register, update or cancel a bus service you need to upload an
+     Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'register-cancel-update-service' => 'W Register, update or cancel a service'
     // Potentially unused (Not found with grep)
 );

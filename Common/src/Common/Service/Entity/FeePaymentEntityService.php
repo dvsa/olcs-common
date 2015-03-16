@@ -62,7 +62,7 @@ class FeePaymentEntityService extends AbstractEntityService
     public function getFeesByPaymentId($paymentId)
     {
         $query = array(
-            'paymentId' => $paymentId,
+            'payment' => $paymentId,
         );
 
         $data = $this->get($query, $this->feeBundle);
