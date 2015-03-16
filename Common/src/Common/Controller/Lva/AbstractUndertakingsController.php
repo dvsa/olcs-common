@@ -41,7 +41,8 @@ abstract class AbstractUndertakingsController extends AbstractController
                 $applicationData = $this->getUndertakingsData();
                 $data = $this->formatDataForForm($applicationData);
                 $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
-                $form->setData($data);
+                // don't call setData again here or we lose validation messages
+                $form->populateValues($data);
             }
         } else {
             $applicationData = $this->getUndertakingsData();
