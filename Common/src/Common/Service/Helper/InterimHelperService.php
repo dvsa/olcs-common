@@ -301,9 +301,33 @@ class InterimHelperService extends AbstractHelperService
 
         // get all vehicles for the given application and
         // set licence_vehicle.specified_date = current date/time
-        $licenceVehicles = [];
+        list($activeDiscs, $newDiscs) = $this->processLicenceVehicleSaving($interimData);
+
+        // all active discs, set goods_disc.ceased_date = current date/time wherever goods_disc.ceased_date is null
+        if ($activeDiscs) {
+            $this->processActiveDicsVoiding($activeDiscs);
+        }
+
+        if ($newDiscs) {
+            // create a new pending discs record, Set the is_interim flag to 1
+            $this->processNewDiscsAdding($newDiscs);
+        }
+
+        // activate, generate & print community licences
+        $this->processCommunityLicences($interimData);
+    }
+
+    /**
+     * Process licence vehicle saving
+     *
+     * @param array $interimData
+     * @param array
+     */
+    protected function processLicenceVehicleSaving($interimData)
+    {
         $activeDiscs = [];
         $newDiscs = [];
+        $licenceVehicles = [];
         foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
             $lv = [
                 'id' => $licenceVehicle['id'],
@@ -329,7 +353,16 @@ class InterimHelperService extends AbstractHelperService
             $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);
         }
 
-        // all active discs, set goods_disc.ceased_date = current date/time wherever goods_disc.ceased_date is null
+        return [$activeDiscs, $newDiscs];
+    }
+
+    /**
+     * Process active discs voiding
+     *
+     * @param array $newDiscs
+     */
+    protected function processActiveDicsVoiding($activeDiscs)
+    {
         $discsToVoid = [];
         foreach ($activeDiscs as $disc) {
             $dsc = [
@@ -342,16 +375,29 @@ class InterimHelperService extends AbstractHelperService
         if ($discsToVoid) {
             $this->getServiceLocator()->get('Entity\GoodsDisc')->multiUpdate($discsToVoid);
         }
+    }
 
-        // create a new pending discs record, Set the is_interim flag to 1
-        if ($newDiscs) {
-            $newDiscs['_OPTIONS_'] = [
-                'multiple' => true
-            ];
-            $this->getServiceLocator()->get('Entity\GoodsDisc')->save($newDiscs);
-        }
+    /**
+     * Process new discs adding
+     *
+     * @param array $newDiscs
+     */
+    protected function processNewDiscsAdding($newDiscs)
+    {
+        $newDiscs['_OPTIONS_'] = [
+            'multiple' => true
+        ];
+        $this->getServiceLocator()->get('Entity\GoodsDisc')->save($newDiscs);
+    }
 
-        // activate community licence, set status to active and
+    /**
+     * Process community licences
+     *
+     * @param array $interimData
+     */
+    protected function processCommunityLicences($interimData)
+    {
+        // activate community licences, set status to active and
         // set specified date to the current one where status = pending and licence id is current.
         $commLicsToActivate = [];
         $comLicsIds = [];
@@ -372,12 +418,10 @@ class InterimHelperService extends AbstractHelperService
         }
         if ($commLicsToActivate) {
             $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($commLicsToActivate);
+            // generate and print any pending community licences (take form communityLicService)
+            $this->getServiceLocator()
+                ->get('Helper\CommunityLicenceDocument')
+                ->generateBatch($interimData['licence']['id'], $comLicsIds);
         }
-
-        // generate and print any pending community licences (take form communityLicService)
-        $this->getServiceLocator()
-            ->get('Helper\CommunityLicenceDocument')
-            ->generateBatch($interimData['licence']['id'], $comLicsIds);
-
     }
 }

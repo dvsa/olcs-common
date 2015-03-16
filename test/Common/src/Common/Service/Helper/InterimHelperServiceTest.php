@@ -475,6 +475,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
                 ]
             )
+            ->once()
             ->getMock()
         );
 
@@ -499,6 +500,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     ]
                 ]
             )
+            ->once()
             ->getMock()
         );
 
@@ -515,6 +517,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     ]
                 ]
             )
+            ->once()
             ->shouldReceive('save')
             ->with(
                 [
@@ -527,6 +530,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     ]
                 ]
             )
+            ->once()
             ->getMock()
         );
 
@@ -544,6 +548,7 @@ class InterimHelperServiceTest extends MockeryTestCase
                     ]
                 ]
             )
+            ->once()
             ->getMock()
         );
 
@@ -552,6 +557,315 @@ class InterimHelperServiceTest extends MockeryTestCase
             m::mock()
             ->shouldReceive('generateBatch')
             ->with(99, [50])
+            ->getMock()
+        );
+
+        $this->assertEquals(null, $this->sut->grantInterim($applicationId));
+    }
+
+    /**
+     * @group interimHelper
+     */
+    public function testInterimGrantingNoDiscsVoiding()
+    {
+        $applicationId = 10;
+
+        $interimData = [
+            'id' => 10,
+            'version' => 100,
+            'licenceVehicles' => [
+                [
+                    'id' => 20,
+                    'version' => 200,
+                    'goodsDiscs' => []
+                ]
+            ],
+            'licence' => [
+                'communityLics' => [
+                    [
+                        'id' => 50,
+                        'version' => 500,
+                        'status' => [
+                            'id' => CommunityLicEntityService::STATUS_PENDING
+                        ]
+                    ]
+                ],
+                'id' => 99
+            ]
+        ];
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+            ->shouldReceive('getDataForInterim')
+            ->with($applicationId)
+            ->andReturn($interimData)
+            ->shouldReceive('save')
+            ->with(
+                [
+                    'id' => $applicationId,
+                    'version' => 100,
+                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\GoodsDisc',
+            m::mock()
+            ->shouldReceive('save')
+            ->with(
+                [
+                    [
+                        'licenceVehicle' => 20,
+                        'isInterim' => 'Y'
+                    ],
+                    '_OPTIONS_' => [
+                        'multiple' => true
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2014-01-01 00:00:00')
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\LicenceVehicle',
+            m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    [
+                        'id' => 20,
+                        'version' => 200,
+                        'specifiedDate' => '2014-01-01 00:00:00'
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\CommunityLic',
+            m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    [
+                        'id' => 50,
+                        'version' => 500,
+                        'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                        'specifiedDate' => '2014-01-01 00:00:00'
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\CommunityLicenceDocument',
+            m::mock()
+            ->shouldReceive('generateBatch')
+            ->with(99, [50])
+            ->once()
+            ->getMock()
+        );
+
+        $this->assertEquals(null, $this->sut->grantInterim($applicationId));
+    }
+
+    /**
+     * @group interimHelper
+     */
+    public function testInterimGrantingNoCommunityLicencesProcessed()
+    {
+        $applicationId = 10;
+
+        $interimData = [
+            'id' => 10,
+            'version' => 100,
+            'licenceVehicles' => [
+                [
+                    'id' => 20,
+                    'version' => 200,
+                    'goodsDiscs' => [
+                        [
+                            'ceasedDate' => null,
+                            'id' => 40,
+                            'version' => 400
+                        ]
+                    ]
+                ]
+            ],
+            'licence' => [
+                'communityLics' => [],
+                'id' => 99
+            ]
+        ];
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+            ->shouldReceive('getDataForInterim')
+            ->with($applicationId)
+            ->andReturn($interimData)
+            ->shouldReceive('save')
+            ->with(
+                [
+                    'id' => $applicationId,
+                    'version' => 100,
+                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2014-01-01 00:00:00')
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\LicenceVehicle',
+            m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    [
+                        'id' => 20,
+                        'version' => 200,
+                        'specifiedDate' => '2014-01-01 00:00:00'
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\GoodsDisc',
+            m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    [
+                        'id' => 40,
+                        'version' => 400,
+                        'ceasedDate' => '2014-01-01 00:00:00'
+                    ]
+                ]
+            )
+            ->once()
+            ->shouldReceive('save')
+            ->with(
+                [
+                    [
+                        'licenceVehicle' => 20,
+                        'isInterim' => 'Y'
+                    ],
+                    '_OPTIONS_' => [
+                        'multiple' => true
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->assertEquals(null, $this->sut->grantInterim($applicationId));
+    }
+
+    /**
+     * @group interimHelper
+     */
+    public function testInterimGrantingNoLicenceVehicles()
+    {
+        $applicationId = 10;
+
+        $interimData = [
+            'id' => 10,
+            'version' => 100,
+            'licenceVehicles' => [],
+            'licence' => [
+                'communityLics' => [
+                    [
+                        'id' => 50,
+                        'version' => 500,
+                        'status' => [
+                            'id' => CommunityLicEntityService::STATUS_PENDING
+                        ]
+                    ]
+                ],
+                'id' => 99
+            ]
+        ];
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+            ->shouldReceive('getDataForInterim')
+            ->with($applicationId)
+            ->andReturn($interimData)
+            ->shouldReceive('save')
+            ->with(
+                [
+                    'id' => $applicationId,
+                    'version' => 100,
+                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2014-01-01 00:00:00')
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\CommunityLic',
+            m::mock()
+            ->shouldReceive('multiUpdate')
+            ->with(
+                [
+                    [
+                        'id' => 50,
+                        'version' => 500,
+                        'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                        'specifiedDate' => '2014-01-01 00:00:00'
+                    ]
+                ]
+            )
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\CommunityLicenceDocument',
+            m::mock()
+            ->shouldReceive('generateBatch')
+            ->with(99, [50])
+            ->once()
             ->getMock()
         );
 
