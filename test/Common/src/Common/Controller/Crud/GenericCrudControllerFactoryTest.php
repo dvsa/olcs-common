@@ -65,9 +65,15 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
 
         // Event manager
         $em = m::mock('\Zend\EventManager\EventManager');
+        $em->shouldReceive('attach')->with(
+            MvcEvent::EVENT_DISPATCH,
+            [$mockGenericController, 'setNavigationLocation'],
+            99
+        );
         $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpParams'], 100);
         $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpScripts'], 10000);
         $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpOptions'], 10001);
+        $mockGenericController->shouldReceive('setNavigationLocation')->andReturn(null);
         $mockGenericController->shouldReceive('setUpParams')->andReturn(null);
         $mockGenericController->shouldReceive('setUpScripts')->andReturn(null);
         $mockGenericController->shouldReceive('setUpOptions')->andReturn(null);

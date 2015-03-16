@@ -54,6 +54,7 @@ class GenericCrudControllerFactory implements FactoryInterface
          *
          * These happen in descending order. 1000 first 100 last
          */
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setNavigationLocation'], 99);
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpParams'], 100);
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpScripts'], 10000);
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpOptions'], 10001);

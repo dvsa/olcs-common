@@ -239,6 +239,41 @@ final class GenericCrudController extends AbstractActionController implements
     }
 
     /**
+     * Sets the route for the controller/action currently selected.
+     *
+     * @return void
+     */
+    public function setUpNavigation()
+    {
+        /**
+         * Contains the name of the route that
+         *
+         * @var string $route
+         */
+        $route = $this->getOption('route');
+
+        return;
+    }
+
+    /**
+     * Sets the navigation to the default location specified in the module.config.php.
+     *
+     * @return void
+     */
+    public function setNavigationLocation()
+    {
+        if ($navId = $this->getOption('navigation', null)) {
+
+            $navigation = $this->getServiceLocator()->get('Navigation');
+            if (!empty($navId)) {
+                $navigation->findOneBy('id', $navId)->setActive();
+            }
+        }
+
+        return;
+    }
+
+    /**
      * Add action
      *
      * @return mixed
