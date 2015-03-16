@@ -10,6 +10,7 @@ use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\CommunityLicEntityService;
 
 /**
  * Class InterimHelperService

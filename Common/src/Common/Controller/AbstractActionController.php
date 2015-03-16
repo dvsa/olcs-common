@@ -329,7 +329,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             return false;
         }
 
-        $action = strtolower($action);
+        if (!is_array($action)) {
+            $action = strtolower($action);
+        }
 
         $response = $this->checkForAlternativeCrudAction($action);
 
