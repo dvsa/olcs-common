@@ -25,7 +25,8 @@ use Common\Util\OptionTrait;
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 final class GenericCrudController extends AbstractActionController implements
-    CrudControllerInterface, TableBuilderAwareInterface
+    CrudControllerInterface,
+    TableBuilderAwareInterface
 {
     use OptionTrait,
         TableBuilderAwareTrait;
@@ -171,8 +172,6 @@ final class GenericCrudController extends AbstractActionController implements
 
             $this->setOptions($options);
         }
-
-        return;
     }
 
     /**
@@ -197,8 +196,6 @@ final class GenericCrudController extends AbstractActionController implements
 
             $this->setParams(array_filter($params));
         }
-
-        return;
     }
 
     /**
@@ -234,25 +231,6 @@ final class GenericCrudController extends AbstractActionController implements
                 $scriptService->loadFile($scriptName);
             }
         }
-
-        return;
-    }
-
-    /**
-     * Sets the route for the controller/action currently selected.
-     *
-     * @return void
-     */
-    public function setUpNavigation()
-    {
-        /**
-         * Contains the name of the route that
-         *
-         * @var string $route
-         */
-        $route = $this->getOption('route');
-
-        return;
     }
 
     /**
@@ -269,8 +247,6 @@ final class GenericCrudController extends AbstractActionController implements
                 $navigation->findOneBy('id', $navId)->setActive();
             }
         }
-
-        return;
     }
 
     /**

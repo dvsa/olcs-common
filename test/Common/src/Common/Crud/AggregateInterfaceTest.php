@@ -9,7 +9,6 @@ namespace CommonTest\Crud;
 
 use PHPUnit_Framework_TestCase;
 
-
 /**
  * Class AggregateInterfaceTest
  *

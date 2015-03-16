@@ -13,7 +13,7 @@ use PHPUnit_Framework_TestCase as TestCase;
  *
  * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
-class TableBuilderInterfaceTest extends TestCase
+class TableBuilderAwareInterfaceTest extends TestCase
 {
     /**
      * Tests the trait's get and set methods.

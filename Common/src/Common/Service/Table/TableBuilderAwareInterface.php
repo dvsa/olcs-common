@@ -2,8 +2,8 @@
 /**
  * Table Builder Aware Interface
  *
- * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  * @package Common\Service\Table
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
 namespace Common\Service\Table;
 
@@ -12,8 +12,8 @@ use Common\Service\Table\TableBuilder as CommonTableBuilder;
 /**
  * Table Builder Aware Interface
  *
- * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  * @package Common\Service\Table
+ * @author Craig Reasbeck <craig.reasbeck@valtech.co.uk>
  */
 interface TableBuilderAwareInterface
 {
