@@ -36,31 +36,27 @@ class GenericCrudControllerFactory implements FactoryInterface
         /** @var \Common\Service\Crud\AbstractCrudService $service */
         $service = $mainServiceLocator->get('CrudServiceManager')->get($crudServiceName);
 
+        /** @var \Common\Service\Table\TableBuilder $tableBuilder */
+        $tableBuilder = $mainServiceLocator->get('TableBuilder');
+
         /** @var \Common\Controller\Crud\GenericCrudController $controller */
         $controller = $serviceLocator->get('GenericCrudController');
         $controller->setCrudService($service);
         $controller->setTranslationPrefix($translationPrefix);
-
-        /**
-         * Set config options
-         *
-         * This is a the crud_controller_config array from the module.config.php file.
-         */
-        $config = $mainServiceLocator->get('Config');
-        if (isset($config['crud_controller_config'][$requestedName])) {
-            $options = $config['crud_controller_config'][$requestedName];
-
-            $controller->setOptions($options);
-        }
+        $controller->setRequestedName($requestedName);
+        $controller->setTableBuilder($tableBuilder);
 
         /**
          * Set scripts
          *
          * Sets the inline java scripts as an event just prior to dispatch.
          * Also sets up the required parameters
+         *
+         * These happen in descending order. 1000 first 100 last
          */
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpParams'], 100);
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpScripts'], 10000);
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpOptions'], 10001);
 
         return $controller;
     }

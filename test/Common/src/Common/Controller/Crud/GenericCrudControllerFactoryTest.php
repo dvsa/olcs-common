@@ -45,11 +45,19 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
         $mockGenericController = m::mock();
         $this->sm->setService('GenericCrudController', $mockGenericController);
 
+        $tableBuilder = $this->getMock(
+            '\Common\Service\Table\TableBuilder',
+            [], [], '', false, true, true, false, false
+        );
+        $this->sm->setService('TableBuilder', $tableBuilder);
+
         // Config / options
         $config = [
             'crud_controller_config' => [
                 $requestedName => [
-                    'pageLayout' => 'test',
+                    'index' => [
+                        'pageLayout' => 'test',
+                    ]
                 ]
             ]
         ];
@@ -59,8 +67,10 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
         $em = m::mock('\Zend\EventManager\EventManager');
         $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpParams'], 100);
         $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpScripts'], 10000);
+        $em->shouldReceive('attach')->with(MvcEvent::EVENT_DISPATCH, [$mockGenericController, 'setUpOptions'], 10001);
         $mockGenericController->shouldReceive('setUpParams')->andReturn(null);
         $mockGenericController->shouldReceive('setUpScripts')->andReturn(null);
+        $mockGenericController->shouldReceive('setUpOptions')->andReturn(null);
         $mockGenericController->shouldReceive('getEventManager')->andReturn($em);
 
         // Expectations
@@ -70,8 +80,10 @@ class GenericCrudControllerFactoryTest extends MockeryTestCase
 
         $mockGenericController->shouldReceive('setCrudService')->with($mockFoo);
         $mockGenericController->shouldReceive('setTranslationPrefix')->with('crud-foo');
-        $mockGenericController->shouldReceive('setOptions')->once()
-            ->with($config['crud_controller_config'][$requestedName]);
+        $mockGenericController->shouldReceive('setRequestedName')->with($requestedName);
+        $mockGenericController->shouldReceive('setTableBuilder')->with($tableBuilder);
+        //$mockGenericController->shouldReceive('setOptions')->once()
+        //    ->with($config['crud_controller_config'][$requestedName]);
 
         $this->assertSame($mockGenericController, $this->sut->createService($this->sm, $serviceName, $requestedName));
     }

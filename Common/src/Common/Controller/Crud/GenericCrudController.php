@@ -7,6 +7,8 @@
  */
 namespace Common\Controller\Crud;
 
+use Common\Service\Table\TableBuilderAwareInterface;
+use Common\Service\Table\TableBuilderAwareTrait;
 use Common\Util\Redirect;
 use Common\Service\Crud\CrudServiceInterface;
 use Common\Service\Crud\AbstractCrudService;
@@ -22,9 +24,11 @@ use Common\Util\OptionTrait;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-final class GenericCrudController extends AbstractActionController implements CrudControllerInterface
+final class GenericCrudController extends AbstractActionController implements
+    CrudControllerInterface, TableBuilderAwareInterface
 {
-    use OptionTrait;
+    use OptionTrait,
+        TableBuilderAwareTrait;
 
     /**
      * @var AbstractCrudService
@@ -37,6 +41,31 @@ final class GenericCrudController extends AbstractActionController implements Cr
      * @var array
      */
     protected $params;
+
+    /**
+     * Requested Name
+     *
+     * @var string
+     */
+    protected $requestedName;
+
+    /**
+     * @return mixed
+     */
+    public function getRequestedName()
+    {
+        return $this->requestedName;
+    }
+
+    /**
+     * @param mixed $requestedName
+     */
+    public function setRequestedName($requestedName)
+    {
+        $this->requestedName = $requestedName;
+
+        return $this;
+    }
 
     /**
      * @return array
@@ -52,6 +81,7 @@ final class GenericCrudController extends AbstractActionController implements Cr
     public function setParams($params)
     {
         $this->params = $params;
+
         return $this;
     }
 
@@ -104,12 +134,45 @@ final class GenericCrudController extends AbstractActionController implements Cr
      */
     public function indexAction()
     {
-        $params = $this->getParams();
-
-        $view = new ViewModel(['table' => $this->getCrudService()->getList($params)]);
+        $view = new ViewModel(['table' => $this->getTable()]);
         $view->setTemplate('partials/table');
 
         return $this->renderView($view, $this->getTranslationPrefix() . '-title');
+    }
+
+    /**
+     * Returns an instantiated Table builder object.
+     *
+     * @return TableBuilder
+     */
+    public function getTable()
+    {
+        $data = $this->getCrudService()->getList($this->getParams());
+
+        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data);
+    }
+
+    /**
+     * Sets up the config for this controller/action. FYI, called automatically by the event manager.
+     *
+     * @return array
+     */
+    public function setUpOptions()
+    {
+        /** @var string $requestedName contains the name of the requested controller */
+        $requestedName = $this->getRequestedName();
+
+        /** @var string $action contains current action name */
+        $action = $this->params()->fromRoute('action');
+
+        $config = $this->getServiceLocator()->get('Config');
+        if (isset($config['crud_controller_config'][$requestedName][$action])) {
+            $options = $config['crud_controller_config'][$requestedName][$action];
+
+            $this->setOptions($options);
+        }
+
+        return;
     }
 
     /**
@@ -125,14 +188,15 @@ final class GenericCrudController extends AbstractActionController implements Cr
     {
         $params = [];
 
-        $requiredParams = $this->getOption('requiredParams');
+        if ($requiredParams = $this->getOption('requiredParams')) {
 
-        foreach ($requiredParams as $paramKey) {
-            $params[$paramKey] = $this->params()->fromQuery($paramKey);
-            $params[$paramKey] = $this->params()->fromRoute($paramKey);
+            foreach ($requiredParams as $paramKey) {
+                $params[$paramKey] = $this->params()->fromQuery($paramKey);
+                $params[$paramKey] = $this->params()->fromRoute($paramKey);
+            }
+
+            $this->setParams(array_filter($params));
         }
-
-        $this->setParams(array_filter($params));
 
         return;
     }
@@ -156,16 +220,16 @@ final class GenericCrudController extends AbstractActionController implements Cr
         $scripts = $this->getOption('scripts');
 
         /** @var string $action contains current action name */
-        $action = $this->params()->fromRoute('action');
+        //$action = $this->params()->fromRoute('action');
 
         /** @var \Common\Service\Script\ScriptFactory $scriptService */
         $scriptService = $this->getServiceLocator()->get('Script');
 
-        if (isset($scripts) && isset($scripts[$action])) {
-            foreach ($scripts[$action] as $scriptName) {
+        if (isset($scripts)) {
+            foreach ($scripts as $scriptName) {
 
                 /**
-                 * Load the file that was specified in the scripts->action->array
+                 * Load the file that was specified in the action->scripts->array
                  */
                 $scriptService->loadFile($scriptName);
             }
