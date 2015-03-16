@@ -10,6 +10,7 @@ use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
+use Common\Service\Entity\CommunityLicEntityService;
 
 /**
  * Class InterimHelperService
@@ -279,5 +280,148 @@ class InterimHelperService extends AbstractHelperService
         $this->functionToDataMap = $functionToDataMap;
 
         return $this;
+    }
+
+    /**
+     * Grant interim
+     *
+     * @param int $applicationId
+     */
+    public function grantInterim($applicationId)
+    {
+        $interimData = $this->getInterimData($applicationId);
+
+        // set interim status to in-force
+        $dataToSave = [
+            'id' => $interimData['id'],
+            'version' => $interimData['version'],
+            'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+        ];
+        $this->getServiceLocator()->get('Entity\Application')->save($dataToSave);
+
+        // get all vehicles for the given application and
+        // set licence_vehicle.specified_date = current date/time
+        list($activeDiscs, $newDiscs) = $this->processLicenceVehicleSaving($interimData);
+
+        // all active discs, set goods_disc.ceased_date = current date/time wherever goods_disc.ceased_date is null
+        if ($activeDiscs) {
+            $this->processActiveDicsVoiding($activeDiscs);
+        }
+
+        if ($newDiscs) {
+            // create a new pending discs record, Set the is_interim flag to 1
+            $this->processNewDiscsAdding($newDiscs);
+        }
+
+        // activate, generate & print community licences
+        $this->processCommunityLicences($interimData);
+    }
+
+    /**
+     * Process licence vehicle saving
+     *
+     * @param array $interimData
+     * @param array
+     */
+    protected function processLicenceVehicleSaving($interimData)
+    {
+        $activeDiscs = [];
+        $newDiscs = [];
+        $licenceVehicles = [];
+        foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
+            $lv = [
+                'id' => $licenceVehicle['id'],
+                'version' => $licenceVehicle['version'],
+                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+            ];
+            $licenceVehicles[] = $lv;
+
+            // saving all active discs to void it later
+            foreach ($licenceVehicle['goodsDiscs'] as $disc) {
+                if (!$disc['ceasedDate']) {
+                    $activeDiscs[] = $disc;
+                }
+            }
+
+            // preparing to create new pending disc
+            $newDiscs[] = [
+                'licenceVehicle' => $licenceVehicle['id'],
+                'isInterim' => 'Y'
+            ];
+        }
+        if ($licenceVehicles) {
+            $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);
+        }
+
+        return [$activeDiscs, $newDiscs];
+    }
+
+    /**
+     * Process active discs voiding
+     *
+     * @param array $newDiscs
+     */
+    protected function processActiveDicsVoiding($activeDiscs)
+    {
+        $discsToVoid = [];
+        foreach ($activeDiscs as $disc) {
+            $dsc = [
+                'id' => $disc['id'],
+                'version' => $disc['version'],
+                'ceasedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+            ];
+            $discsToVoid[] = $dsc;
+        }
+        if ($discsToVoid) {
+            $this->getServiceLocator()->get('Entity\GoodsDisc')->multiUpdate($discsToVoid);
+        }
+    }
+
+    /**
+     * Process new discs adding
+     *
+     * @param array $newDiscs
+     */
+    protected function processNewDiscsAdding($newDiscs)
+    {
+        $newDiscs['_OPTIONS_'] = [
+            'multiple' => true
+        ];
+        $this->getServiceLocator()->get('Entity\GoodsDisc')->save($newDiscs);
+    }
+
+    /**
+     * Process community licences
+     *
+     * @param array $interimData
+     */
+    protected function processCommunityLicences($interimData)
+    {
+        // activate community licences, set status to active and
+        // set specified date to the current one where status = pending and licence id is current.
+        $commLicsToActivate = [];
+        $comLicsIds = [];
+        foreach ($interimData['licence']['communityLics'] as $commLic) {
+            if (isset($commLic['status']['id']) &&
+                $commLic['status']['id'] == CommunityLicEntityService::STATUS_PENDING) {
+                $cl = [
+                    'id' => $commLic['id'],
+                    'version' => $commLic['version'],
+                    'status' => CommunityLicEntityService::STATUS_ACTIVE,
+                    'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+                ];
+                $commLicsToActivate[] = $cl;
+
+                // saving community licences ids to document generation
+                $comLicsIds[] = $commLic['id'];
+            }
+        }
+        if ($commLicsToActivate) {
+            $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($commLicsToActivate);
+            // generate and print any pending community licences (take form communityLicService)
+            $this->getServiceLocator()
+                ->get('Helper\CommunityLicenceDocument')
+                ->generateBatch($interimData['licence']['id'], $comLicsIds);
+        }
     }
 }
