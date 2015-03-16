@@ -256,9 +256,47 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
             if ($form->get('data')->has('noOfTrailersRequired')) {
                 $form->get('data')->get('noOfTrailersRequired')->setAttribute('data-current', $currentTrailers);
             }
+
+            $this->disableAddressFields($form);
         }
 
         return $form;
+    }
+
+    /**
+     * Process address lookup for main form
+     *
+     * @param Form $form
+     * @param Request $request
+     * @return type
+     */
+    public function processAddressLookupForm($form, $request)
+    {
+        $action = $this->getOperatingCentreAction();
+
+        if ($action !== self::ACTION_ADDED) {
+            return false;
+        }
+
+        return parent::processAddressLookupForm($form, $request);
+    }
+
+    /**
+     * Format crud data for save
+     *
+     * @param array $data
+     */
+    protected function formatCrudDataForSave($data)
+    {
+        $data = parent::formatCrudDataForSave($data);
+
+        $action = $this->getOperatingCentreAction();
+
+        if ($action !== self::ACTION_ADDED) {
+            unset($data['operatingCentre']['addresses']);
+        }
+
+        return $data;
     }
 
     /**
