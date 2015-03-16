@@ -37,7 +37,9 @@ class ApplicationDeclarationsAndUndertakings
      *     "checked_value": "Y",
      *     "unchecked_value": "N",
      *     "must_be_value": "Y",
-     *     "label": "application.review-declarations.confirm-text"
+     *     "label": "application.review-declarations.confirm-text",
+     *     "short-label": "application.review-declarations.confirm-short-label",
+     *     "label_attributes": {"id": "label-declarationConfirmation"}
      * })
      * @Form\Attributes({"data-container-class": "confirm"})
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
