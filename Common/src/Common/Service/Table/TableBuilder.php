@@ -1281,9 +1281,9 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             $content = $this->replaceContent($column['format'], $row);
         }
 
-        if (!isset($content) || empty($content)) {
+        if (!isset($content) || (empty($content) && !in_array($content, [0, 0.0, '0']))) {
             $content =  isset($column['name']) && isset($row[$column['name']]) ?
-                $row[$column['name']] : (string) $content;
+                $row[$column['name']] : '';
         }
 
         return $this->replaceContent($wrapper, array('content' => $content));
