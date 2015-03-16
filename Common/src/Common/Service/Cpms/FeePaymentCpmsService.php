@@ -307,7 +307,7 @@ class FeePaymentCpmsService implements ServiceLocatorAwareInterface
         $this->debug('Cheque payment response', ['response' => $response]);
 
         if ($this->isSuccessfulPaymentResponse($response)) {
-             $data = [
+            $data = [
                 'feeStatus'          => FeeEntityService::STATUS_PAID,
                 'receivedDate'       => $this->formatDate($receiptDate),
                 'receiptNo'          => $response['receipt_reference'],

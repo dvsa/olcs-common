@@ -44,7 +44,7 @@ class CasesEntityServiceTest extends AbstractEntityServiceTestCase
             'GET',
             [
                 'licence' => 123,
-                'closeDate' => 'NULL',
+                'closedDate' => 'NULL',
                 'deletedDate' => 'NULL',
                 'limit' => 'all'
             ]

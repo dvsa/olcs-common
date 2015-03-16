@@ -34,6 +34,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const CODE_PSV_VAR_NO_UPGRADE = 'PSV431';
 
     const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
+    const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
 
     /**
      * Define entity for default behaviour
@@ -124,11 +125,19 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'children' => array(
             'licenceType',
             'goodsOrPsv',
-            'operatingCentres',
+            'operatingCentres' => array(
+                'children' => array(
+                    'operatingCentre'
+                )
+            ),
             'licence' => array(
                 'children' => array(
                     'licenceType',
-                    'operatingCentres'
+                    'operatingCentres' => array(
+                        'children' => array(
+                            'operatingCentre'
+                        )
+                    )
                 )
             )
         )
@@ -645,11 +654,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceVehicles' => array(
                 'children' => array(
                     'vehicle',
-                    'interimApplication'
+                    'interimApplication',
+                    'goodsDiscs'
                 )
             ),
             'interimStatus',
-            'licence'
+            'licence' => array(
+                'children' => array(
+                    'communityLics' => array(
+                        'children' => array(
+                            'status'
+                        )
+                    )
+                )
+            )
         )
     );
 

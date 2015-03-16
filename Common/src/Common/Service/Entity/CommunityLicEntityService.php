@@ -115,6 +115,23 @@ class CommunityLicEntityService extends AbstractEntityService
     }
 
     /**
+     * Get active licences
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getActiveLicences($licenceId)
+    {
+        $query = [
+            'status' => self::STATUS_ACTIVE,
+            'licence' => $licenceId,
+            'sort'  => 'issueNo',
+            'order' => 'ASC'
+        ];
+        return $this->get($query, $this->listBundle);
+    }
+
+    /**
      * Add office copy
      *
      * @param array $data
@@ -155,11 +172,48 @@ class CommunityLicEntityService extends AbstractEntityService
         return $this->save($dataToSave);
     }
 
+    /**
+     * Insert several community licences at once with specific issue numbers
+     *
+     * @param array $data
+     * @param int $licenceId
+     * @param int $issueNos
+     */
+    public function addCommunityLicencesWithIssueNos($data, $licenceId, $issueNos)
+    {
+        $data['serialNoPrefix'] = $this->getSerialNoPrefixFromTrafficArea($licenceId);
+        $data['licence'] = $licenceId;
+
+        $dataToSave = [];
+        foreach ($issueNos as $issueNo) {
+            $data['issueNo'] = $issueNo;
+            $dataToSave[] = $data;
+        }
+        $dataToSave['_OPTIONS_'] = ['multiple' => true];
+        return $this->save($dataToSave);
+    }
+
     public function getWithLicence($id)
     {
         return $this->get($id, $this->licenceBundle);
     }
-    
+
+    /**
+     * Get licences by multiple ids.
+     *
+     * @param array $ids
+     * @return array
+     */
+    public function getByIds(array $ids)
+    {
+        $data = [];
+        // Doctrine implementation won't let us do: $this->getAll(['id' => 'IN ' . json_encode($ids)]);
+        foreach ($ids as $id) {
+            $data[] = $this->get($id);
+        }
+        return $data;
+    }
+
     protected function getSerialNoPrefixFromTrafficArea($licenceId)
     {
         $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($licenceId);

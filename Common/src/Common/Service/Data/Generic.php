@@ -111,11 +111,13 @@ class Generic extends AbstractData implements
         if ($this->getData('list') === null) {
 
             $this->setData('list', false);
+            $this->setData('total', false);
             $params['bundle'] = $bundle ? json_encode($bundle) : json_encode($this->getBundle());
             $data = $this->getRestClient()->get('', $params);
 
             if (isset($data['Results'])) {
                 $this->setData('list', $data['Results']);
+                $this->setData('total', $data['Count']);
             }
         }
 

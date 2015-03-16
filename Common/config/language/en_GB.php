@@ -1102,6 +1102,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
     'internal.community_licence.form.change_status_to' => 'Change status to',
@@ -1114,11 +1115,13 @@ return array(
     'internal.community_licence.form_add.cancel' => 'Cancel',
     'internal.community_licence.form_add.ok' => 'OK',
     'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.licences_reprinted' => 'The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
+    'internal.community_licence.reprint_not_allowed' => 'You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
@@ -1126,12 +1129,15 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
+    'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
     'internal.interim.form.interim_application' => 'Interim application',
     'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
     'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
     'internal.interim.form.interim_cancel' => 'Cancel',
     'internal.interim.form.interim_end' => 'Interim end date',
     'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_granted' => 'Interim granted',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
     'internal.interim.form.interim_requested' => 'Interim requested',
@@ -1389,6 +1395,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.grant_application' => 'Grant application',
+    'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
@@ -2042,8 +2049,8 @@ return array(
     'variation-details-nav' => 'Variation details',
     'variation-grant-error-no-change' => 'Nothing has been updated',
     'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
-    'variation-message' => 'Making changes to this page will require a variation application. To start a
-        variation application <a href="%s" class="js-modal-ajax">click here</a>',
+    'variation-message' => 'Making changes to this page will require a variation application. To start a variation
+        application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-addresses-change' => 'Thank you for updating your addresses',
@@ -2095,5 +2102,12 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+    Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'bus-registrations-index-title' => 'Bus registrations',
+    'bus-registrations-index-subtitle' => 'In order to register, update or cancel a bus service you need to upload an
+     Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'register-cancel-update-service' => 'Register, update or cancel a service'
     // Potentially unused (Not found with grep)
 );

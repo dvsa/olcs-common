@@ -67,4 +67,25 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
             ->get('Helper\CommunityLicenceDocument')
             ->generateBatch($licenceId, $identifiers['id']);
     }
+
+    /**
+     * Add community licences with specific issue numbers
+     *
+     * @param int $licenceId
+     * @param int $totalLicences
+     */
+    public function addCommunityLicencesWithIssueNos($licenceId, $issueNos)
+    {
+        $data = [
+            'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'status' => CommunityLicEntityService::STATUS_ACTIVE,
+        ];
+
+        $identifiers = $this->getServiceLocator()->get('Entity\CommunityLic')
+            ->addCommunityLicencesWithIssueNos($data, $licenceId, $issueNos);
+
+        // send to print scheduler
+        return $this->getServiceLocator()->get('Helper\CommunityLicenceDocument')
+            ->generateBatch($licenceId, $identifiers['id']);
+    }
 }
