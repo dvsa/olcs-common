@@ -14,7 +14,8 @@ class Generic extends AbstractData implements
     Interfaces\DataService,
     Interfaces\Updatable,
     Interfaces\Deletable,
-    Interfaces\BundleAware
+    Interfaces\BundleAware,
+    Interfaces\Retrievable
 {
     /**
      * Default bundle to use when one isn't passed to the service
@@ -126,7 +127,7 @@ class Generic extends AbstractData implements
      * Retuns the total count (total unfiltered results) of the data set
      *
      * @param $key
-     * @return bool
+     * @return integer|bool
      */
     public function getCount($key)
     {
