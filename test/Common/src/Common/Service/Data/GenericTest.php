@@ -39,7 +39,7 @@ class GenericTest extends TestCase
         $sut->setRestClient($mockClient);
 
         $this->assertEquals('Data', $sut->fetchList());
-        $this->assertEquals(10, $sut->getData('total'));
+        $this->assertEquals(10, $sut->getCount('list'));
         //check caching
         $sut->fetchList();
     }
