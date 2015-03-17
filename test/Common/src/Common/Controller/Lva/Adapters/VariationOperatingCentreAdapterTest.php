@@ -238,6 +238,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $mockOcEntity->shouldReceive('save')
             ->with(['name' => 'foo']);
 
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
+
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
 
@@ -347,6 +351,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
                     'application' => 3
                 ]
             );
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
 
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
@@ -459,6 +467,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
                 ]
             )
             ->andReturn(['id' => 123]);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
 
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
