@@ -31,7 +31,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     const DEFAULT_LIMIT = 10;
     const DEFAULT_PAGE = 1;
 
-    const MAX_FORM_ACTIONS = 4;
+    const MAX_FORM_ACTIONS = 5;
 
     /**
      * Hold the pagination helper

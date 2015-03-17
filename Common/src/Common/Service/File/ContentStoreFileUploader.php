@@ -58,7 +58,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
     /**
      * Download the file
      */
-    public function download($identifier, $name, $namespace = null)
+    public function download($identifier, $name, $namespace = null, $download = true)
     {
         $path = $this->getPath($identifier, $namespace);
 
@@ -66,7 +66,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $file = $store->read($path);
 
-        return $this->serveFile($file, $name);
+        return $this->serveFile($file, $name, $download);
     }
 
     /**
@@ -79,7 +79,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
         return $store->remove($path);
     }
 
-    public function serveFile($file, $name)
+    public function serveFile($file, $name, $download = true)
     {
         $response = new Response();
 
@@ -91,7 +91,7 @@ class ContentStoreFileUploader extends AbstractFileUploader
 
         $fileData = $file->getContent();
 
-        if ($this->forceDownload($name)) {
+        if ($download && $this->forceDownload($name)) {
             $headers = ['Content-Disposition: attachment; filename="' . $name . '"'];
         }
 
