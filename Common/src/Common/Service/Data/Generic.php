@@ -14,7 +14,8 @@ class Generic extends AbstractData implements
     Interfaces\DataService,
     Interfaces\Updatable,
     Interfaces\Deletable,
-    Interfaces\BundleAware
+    Interfaces\BundleAware,
+    Interfaces\Retrievable
 {
     /**
      * Default bundle to use when one isn't passed to the service
@@ -111,17 +112,49 @@ class Generic extends AbstractData implements
         if ($this->getData('list') === null) {
 
             $this->setData('list', false);
-            $this->setData('total', false);
             $params['bundle'] = $bundle ? json_encode($bundle) : json_encode($this->getBundle());
             $data = $this->getRestClient()->get('', $params);
 
             if (isset($data['Results'])) {
-                $this->setData('list', $data['Results']);
-                $this->setData('total', $data['Count']);
+                $this->setData('list', $data);
             }
         }
 
-        return $this->getData('list');
+        return $this->getResults('list');
+    }
+
+    /**
+     * Retuns the total count (total unfiltered results) of the data set
+     *
+     * @param $key
+     * @return integer|bool
+     */
+    public function getCount($key)
+    {
+        $data = $this->getData($key);
+
+        if (isset($data['Count'])) {
+            return $data['Count'];
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns data set by key
+     *
+     * @param $key
+     * @return bool
+     */
+    public function getResults($key)
+    {
+        $data = $this->getData($key);
+
+        if (isset($data['Results'])) {
+            return $data['Results'];
+        }
+
+        return false;
     }
 
     /**
