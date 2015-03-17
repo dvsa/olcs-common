@@ -155,12 +155,12 @@ class LicenceProcessingServiceTest extends MockeryTestCase
                         'description' => $description,
                         'filename' => $filename,
                         'fileExtension' => 'doc_rtf',
-                        'application'   => 1,
-                        'licence'       => 1,
+                        'application' => 1,
+                        'licence' => 1,
                         'category' => 1,
                         'subCategory' => 79,
-                        'isDigital'     => false,
-                        'isScan'        => false
+                        'isDigital' => false,
+                        'isScan' => false
                     ]
                 )
                 ->getMock()
