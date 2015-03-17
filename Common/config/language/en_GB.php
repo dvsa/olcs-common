@@ -769,6 +769,7 @@ return array(
     'crud-financial-standing-form-add' => 'Add financial standing rate',
     'crud-financial-standing-form-edit' => 'Edit financial standing rate',
     'crud-financial-standing-title' => 'Financial standing rates',
+    'crud-event-history-title' => 'Event History',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
