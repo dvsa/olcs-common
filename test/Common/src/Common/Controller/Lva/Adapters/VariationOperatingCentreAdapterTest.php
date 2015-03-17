@@ -770,4 +770,67 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->assertEquals($expectedData, $this->sut->formatCrudDataForForm($data, 'edit'));
     }
+
+    public function testProcessAddressLookupForm()
+    {
+        // Don't like mocking the SUT, but mocking the extremely deep abstract methods is less evil
+        // than writing extremely tightly coupled tests with tonnes of mocked dependencies
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        // Stubbed data
+        $childId = 'L1';
+        $stubbedTableData = array(
+            'L1' => array(
+                'id' => 'L1',
+                'action' => 'E'
+            )
+        );
+
+        // Mocked dependencies
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($childId);
+
+        $this->sut->shouldReceive('getTableData')
+            ->andReturn($stubbedTableData);
+
+        $this->assertFalse($this->sut->processAddressLookupForm($mockForm, $mockRequest));
+    }
+
+    public function testProcessAddressLookupFormWithAdd()
+    {
+        // Don't like mocking the SUT, but mocking the extremely deep abstract methods is less evil
+        // than writing extremely tightly coupled tests with tonnes of mocked dependencies
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        // Stubbed data
+        $childId = null;
+
+        // Mocked dependencies
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+
+        // Mock services
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($childId);
+
+        $mockFormHelper->shouldReceive('processAddressLookupForm')
+            ->with($mockForm, $mockRequest)
+            ->andReturn(true);
+
+        $this->assertTrue($this->sut->processAddressLookupForm($mockForm, $mockRequest));
+    }
 }
