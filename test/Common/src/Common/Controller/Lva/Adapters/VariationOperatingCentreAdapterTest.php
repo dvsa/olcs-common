@@ -833,4 +833,20 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         $this->assertTrue($this->sut->processAddressLookupForm($mockForm, $mockRequest));
     }
+
+    public function testRestoreWithInvalidType()
+    {
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('E5');
+
+        try {
+            $this->sut->restore();
+        } catch (\Exception $e) {
+            $this->assertEquals('Can\'t restore this record', $e->getMessage());
+            return;
+        }
+
+        $this->fail('Expected exception not raised');
+    }
 }
