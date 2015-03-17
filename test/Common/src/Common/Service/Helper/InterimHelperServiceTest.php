@@ -563,8 +563,8 @@ class InterimHelperServiceTest extends MockeryTestCase
         $this->sm->setService(
             'Processing\Licence',
             m::mock()
-            ->shouldReceive('generateInterimDocument')
-            ->getMock()
+                ->shouldReceive('generateInterimDocument')
+                ->getMock()
         );
 
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
