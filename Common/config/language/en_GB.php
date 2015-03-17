@@ -916,6 +916,7 @@ return array(
         interim application.',
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
         authority.',
+    'internal.interim.form.interim_reprint' => 'Reprint',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
