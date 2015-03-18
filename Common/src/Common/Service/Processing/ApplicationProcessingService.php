@@ -671,6 +671,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function processWithdrawApplication($id, $reason)
     {
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+
         // Set the application status to 'Withdrawn'
         // Set the withdrawn date on the application to the current date
         // Record the withdrawal reason
@@ -679,18 +681,18 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             'withdrawnDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
             'withdrawnReason' => $reason,
         ];
-        $this->getServiceLocator()->get('Entity\Application')->forceUpdate($id, $data);
+        $applicationEntityService->forceUpdate($id, $data);
 
         // If it is a new application (as opposed to a variation), update the licence status to 'Withdrawn'
-        $applicationType = $this->getServiceLocator()->get('Entity\Application')->getApplicationType($id);
+        $applicationType = $applicationEntityService->getApplicationType($id);
         if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
-            $licenceId = $this->getLicenceId($id);
-            $status = LicenceEntityService::LICENCE_STATUS_WITHDRAWN;
-            $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus($licenceId, $status);
+            $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+                $this->getLicenceId($id),
+                LicenceEntityService::LICENCE_STATUS_WITHDRAWN
+            );
         }
 
         // Void any interim discs associated to vehicles linked to the current application
-        // (Tech note: set the goods_disc.ceased_date = current date where ceased_date is null)
-        // @TODO!
+        $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
     }
 }
