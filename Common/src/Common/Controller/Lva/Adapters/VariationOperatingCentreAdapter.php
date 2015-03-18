@@ -214,13 +214,13 @@ class VariationOperatingCentreAdapter extends AbstractOperatingCentreAdapter
 
     public function restore()
     {
-        $ref = $this->getController()->params('child_id');
-
-        list($type, $id) = $this->splitTypeAndId($ref);
 
         $action = $this->getOperatingCentreAction();
 
         if (in_array($action, [self::ACTION_DELETED, self::ACTION_CURRENT])) {
+            $ref = $this->getController()->params('child_id');
+
+            list($type, $id) = $this->splitTypeAndId($ref);
 
             if ($action === self::ACTION_CURRENT) {
                 $id = $this->getCorrespondingApplicationOperatingCentre($id);
