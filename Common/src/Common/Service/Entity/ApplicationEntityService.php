@@ -503,13 +503,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                 'children' => [
                                     'type',
                                     'tradingNames',
-                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
-                                    // many-to-many so this could change
-                                    'natureOfBusinesss' => [
-                                        'children' => [
-                                            'refData'
-                                        ]
-                                    ],
+                                    'natureOfBusinesses',
                                     'contactDetails' => [
                                         'children' => [
                                             'address'

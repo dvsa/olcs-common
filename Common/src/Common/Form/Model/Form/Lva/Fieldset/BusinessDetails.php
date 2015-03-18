@@ -45,5 +45,5 @@ class BusinessDetails
      * @Form\Type("DynamicSelect")
      * @Form\Validator({"name": "Zend\Validator\NotEmpty"})
      */
-    public $natureOfBusiness = null;
+    public $natureOfBusinesses = null;
 }

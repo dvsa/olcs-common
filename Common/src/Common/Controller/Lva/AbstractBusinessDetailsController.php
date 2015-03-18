@@ -31,24 +31,23 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
     {
         $request = $this->getRequest();
 
-        $formService = $this->getServiceLocator()->get('lva-' . $this->lva . '-' . $this->section);
+        $formService = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section);
 
         $orgId = $this->getCurrentOrganisationId();
+
+        $organisationEntity = $this->getServiceLocator()->get('Entity\Organisation');
+
         // we *always* want to get org data because we rely on it in
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
-        $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+        $orgData = $organisationEntity->getBusinessDetailsData($orgId);
 
         $form = $formService->getForm($orgData['type']['id']);
 
 
 
-
-
-
-        $natureOfBusiness = $this->getServiceLocator()
-            ->get('Entity\OrganisationNatureOfBusiness')
-            ->getAllForOrganisationForSelect($orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -63,7 +62,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             }
 
         } else {
-            $data = $this->formatDataForForm($orgData, $natureOfBusiness);
+            $data = $this->formatDataForForm($orgData, $organisationEntity->getNatureOfBusinessesForSelect($orgId));
         }
 
         $form->setData($data);
@@ -155,8 +154,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
         }
 
-        $isDirty = $isDirty ?: $adapter->hasChangedNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
-        $this->saveNatureOfBusiness($orgId, $data['data']['natureOfBusiness']);
+        $isDirty = $isDirty ?: $adapter->hasChangedNatureOfBusiness($orgId, $data['data']['natureOfBusinesses']);
 
         $saveData = $this->formatDataForSave($data);
         $saveData['id'] = $orgId;
@@ -279,6 +277,8 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             $persist['name'] = $data['name'];
         }
 
+        $persist['natureOfBusinesses'] = $data['natureOfBusinesses'];
+
         return $persist;
     }
 
@@ -307,7 +307,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
                 ),
                 'name' => $data['name'],
                 'type' => $data['type']['id'],
-                'natureOfBusiness' => $natureOfBusiness
+                'natureOfBusinesses' => $natureOfBusiness
             ),
             'registeredAddress' => $data['contactDetails']['address'],
         );
