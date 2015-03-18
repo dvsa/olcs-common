@@ -154,7 +154,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceType',
             'operatingCentres',
             'previousConvictions',
-            'previousLicences' => array(
+            'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
                 )
@@ -455,7 +455,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'licence_history' => [
                 'children' => [
-                    'previousLicences' => [
+                    'otherLicences' => [
                         'children' => [
                             'previousLicenceType'
                         ]

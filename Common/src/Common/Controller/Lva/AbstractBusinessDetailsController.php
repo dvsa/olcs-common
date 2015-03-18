@@ -7,8 +7,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Service\Entity\OrganisationEntityService;
-use Common\Service\Helper\FormHelperService;
 use Common\Controller\Lva\Traits\CrudTableTrait;
 use Common\Controller\Traits\GenericBusinessDetails;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
@@ -31,15 +29,22 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
      */
     public function indexAction()
     {
-        $adapter = $this->getAdapter();
-
         $request = $this->getRequest();
+
+        $formService = $this->getServiceLocator()->get('lva-' . $this->lva . '-' . $this->section);
 
         $orgId = $this->getCurrentOrganisationId();
         // we *always* want to get org data because we rely on it in
         // alterForm which is called irrespective of whether we're doing
         // a GET or a POST
         $orgData = $this->getServiceLocator()->get('Entity\Organisation')->getBusinessDetailsData($orgId);
+
+        $form = $formService->getForm($orgData['type']['id']);
+
+
+
+
+
 
         $natureOfBusiness = $this->getServiceLocator()
             ->get('Entity\OrganisationNatureOfBusiness')
@@ -61,13 +66,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             $data = $this->formatDataForForm($orgData, $natureOfBusiness);
         }
 
-        $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createForm('Lva\BusinessDetails');
-
-        $this->alterForm($form, $orgData)
-            ->setData($data);
-
-        $adapter->alterFormForOrganisation($form, $orgId);
+        $form->setData($data);
 
         if ($form->has('table')) {
             $this->populateTable($form, $orgId);
@@ -334,73 +333,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
     private function formatCrudDataForForm($data)
     {
         return array('data' => $data);
-    }
-
-    /**
-     * Alter form based on available data
-     *
-     * @param \Zend\Form\Form $form
-     * @param array $data
-     * @return \Zend\Form\Form
-     */
-    private function alterForm($form, $data)
-    {
-        $this->alterFormForLva($form);
-
-        $orgType = $data['type']['id'];
-
-        $fieldset = $form->get('data');
-
-        switch ($orgType) {
-            case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
-            case OrganisationEntityService::ORG_TYPE_LLP:
-                // no-op; the full form is fine
-                break;
-
-            case OrganisationEntityService::ORG_TYPE_SOLE_TRADER:
-                $this->alterFormForNonRegisteredCompany($form);
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->remove($form, 'data->name');
-                break;
-
-            case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
-                $this->alterFormForNonRegisteredCompany($form);
-                $this->appendToLabel($fieldset->get('name'), '.partnership');
-                break;
-
-            case OrganisationEntityService::ORG_TYPE_OTHER:
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->remove($form, 'data->tradingNames');
-                $this->alterFormForNonRegisteredCompany($form);
-                $this->appendToLabel($fieldset->get('name'), '.other');
-                break;
-        }
-
-        return $form;
-    }
-
-    /**
-     * Append to an element label
-     *
-     * @param \Zend\Form\Element $element
-     * @param string $append
-     */
-    private function appendToLabel($element, $append)
-    {
-        $this->getServiceLocator()->get('Helper\Form')
-            ->alterElementLabel($element, $append, FormHelperService::ALTER_LABEL_APPEND);
-    }
-
-    /**
-     * Make generic form alterations for non limited (or LLP) companies
-     *
-     * @param \Zend\Form\Form $form
-     */
-    private function alterFormForNonRegisteredCompany($form)
-    {
-        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'table')
-            ->remove($form, 'data->companyNumber')
-            ->remove($form, 'registeredAddress');
     }
 
     private function populateTable($form, $orgId)

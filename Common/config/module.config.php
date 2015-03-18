@@ -259,6 +259,7 @@ return array(
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
+            'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -559,5 +560,15 @@ return array(
     ],
     'zfcuser' => [
         'auth_identity_fields' => array('username')
-    ]
+    ],
+    'form_service_manager' => [
+        'invokables' => [
+            'lva-licence' => 'Common\FormService\Form\Lva\Licence',
+            'lva-variation' => 'Common\FormService\Form\Lva\Variation',
+            'lva-application' => 'Common\FormService\Form\Lva\Application',
+            'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
+            'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
+            'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+        ]
+    ],
 );

@@ -97,7 +97,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
     {
         $ids = explode(',', $this->params('child_id'));
 
-        $service = $this->getServiceLocator()->get('Entity\PreviousLicence');
+        $service = $this->getServiceLocator()->get('Entity\OtherLicence');
 
         foreach ($ids as $id) {
             $service->delete($id);
@@ -173,7 +173,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getTableData($which)
     {
-        return $this->getServiceLocator()->get('Entity\PreviousLicence')
+        return $this->getServiceLocator()->get('Entity\OtherLicence')
             ->getForApplicationAndType($this->getApplicationId(), $this->getLicenceTypeFromSection($which));
     }
 
@@ -439,7 +439,7 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
     protected function getLicenceFormData($id)
     {
-        return $this->getServiceLocator()->get('Entity\PreviousLicence')->getById($id);
+        return $this->getServiceLocator()->get('Entity\OtherLicence')->getById($id);
     }
 
     /**
@@ -475,6 +475,6 @@ abstract class AbstractLicenceHistoryController extends AbstractController
 
         $saveData['application'] = $this->getApplicationId();
 
-        $this->getServiceLocator()->get('Entity\PreviousLicence')->save($saveData);
+        $this->getServiceLocator()->get('Entity\OtherLicence')->save($saveData);
     }
 }
