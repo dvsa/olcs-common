@@ -763,13 +763,13 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'crud-event-history-title' => 'Event History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
     'crud-financial-standing-delete-title' => 'Remove financial standing rate(s)',
     'crud-financial-standing-form-add' => 'Add financial standing rate',
     'crud-financial-standing-form-edit' => 'Edit financial standing rate',
     'crud-financial-standing-title' => 'Financial standing rates',
-    'crud-event-history-title' => 'Event History',
     'csrf-message' => 'This page has expired due to a period of inactivity. Please try again',
     'current-authorisation-hint' => 'Current authorisation: <strong>%s</strong>',
     'current-submission' => 'Current submission',
@@ -910,13 +910,14 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim-start-date' => 'Interim start date',
+    'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
         an additional charge to apply for this',
     'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
         interim application.',
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
         authority.',
-    'internal.interim.form.interim_reprint' => 'Reprint',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
@@ -1146,6 +1147,7 @@ return array(
     'internal.interim.form.interim_granted' => 'Interim granted',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
+    'internal.interim.form.interim_reprint' => 'Reprint',
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',
     'internal.interim.form.interim_start' => 'Interim start date',
