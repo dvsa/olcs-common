@@ -635,5 +635,4 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         return $this->forceUpdate($id, ['status' => $status]);
     }
-
 }
