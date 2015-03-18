@@ -1,23 +1,24 @@
 <?php
 
 /**
- * Form Service Manager
+ * Business Service Manager
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\FormService;
+namespace Common\BusinessService;
 
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\RuntimeException;
 use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\BusinessRule\BusinessRuleAwareInterface;
 
 /**
- * Form Service Manager
+ * Business Service Manager
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormServiceManager extends AbstractPluginManager
+class BusinessServiceManager extends AbstractPluginManager
 {
     public function __construct(ConfigInterface $config = null)
     {
@@ -30,14 +31,16 @@ class FormServiceManager extends AbstractPluginManager
 
     public function initialize($instance)
     {
-        $instance->setFormServiceLocator($this);
+        if ($instance instanceof BusinessServiceAwareInterface) {
+            $instance->setBusinessServiceManager($this);
+        }
+
+        if ($instance instanceof BusinessRuleAwareInterface) {
+            $instance->setBusinessRuleManager($this->getServiceLocator()->get('BusinessRuleManager'));
+        }
 
         if ($instance instanceof ServiceLocatorAwareInterface) {
             $instance->setServiceLocator($this->getServiceLocator());
-        }
-
-        if ($instance instanceof FormHelperAwareInterface) {
-            $instance->setFormHelper($this->getServiceLocator()->get('Helper\Form'));
         }
     }
 
@@ -53,8 +56,8 @@ class FormServiceManager extends AbstractPluginManager
      */
     public function validatePlugin($plugin)
     {
-        if (!$plugin instanceof FormServiceInterface) {
-            throw new RuntimeException('Form service does not implement FormServiceInterface');
+        if (!$plugin instanceof BusinessServiceInterface) {
+            throw new RuntimeException('Business service does not implement BusinessServiceInterface');
         }
     }
 }

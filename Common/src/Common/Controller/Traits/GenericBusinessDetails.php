@@ -37,18 +37,4 @@ trait GenericBusinessDetails
             return $saved['id'];
         }
     }
-
-    /**
-     * User has pressed 'Find company' on registered company number
-     *
-     * @param array $data
-     * @param Zend\Form\Form $form
-     * @param string $fieldset
-     */
-    private function processCompanyLookup($data, $form, $fieldset)
-    {
-        $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->processCompanyNumberLookupForm($form, $data, $fieldset);
-    }
 }

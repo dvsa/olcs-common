@@ -44,10 +44,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         // a GET or a POST
         $orgData = $organisationEntity->getBusinessDetailsData($orgId);
 
-        $form = $formService->getForm($orgData['type']['id']);
-
-
-
+        $form = $formService->getForm($orgData['type']['id'], $orgId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -83,12 +80,28 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
              * still fall out of their respective branches and render the form
              */
             if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-                $this->processCompanyLookup($data, $form, 'data');
+                $this->getServiceLocator()->get('Helper\Form')
+                    ->processCompanyNumberLookupForm($form, $data, 'data');
             } elseif (isset($tradingNames['submit_add_trading_name'])) {
                 $this->processTradingNames($tradingNames, $form);
             } elseif ($form->isValid()) {
 
-                $this->processSave($tradingNames, $orgId, $data);
+                $params = [
+                    'tradingNames' => $tradingNames,
+                    'orgId' => $orgId,
+                    'data' => $data,
+                    'licenceId' => $this->getLicenceId()
+                ];
+
+                $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                    ->get('Lva\BusinessDetails')
+                    ->process($params);
+
+                var_dump($response);
+                exit;
+
+                //$this->processSave($tradingNames, $orgId, $data);
+
                 $this->postSave('business_details');
 
                 // we can't always assume this index exists; varies depending on
@@ -234,27 +247,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         return $this->render($mode . '_subsidiary_company', $form);
     }
 
-    private function formatTradingNamesDataForSave($organisationId, $data)
-    {
-        $tradingNames = [];
-
-        foreach ($data['data']['tradingNames']['trading_name'] as $tradingName) {
-            if (trim($tradingName) !== '') {
-                $tradingNames[] = [
-                    'name' => $tradingName
-                ];
-            }
-        }
-
-        $data['tradingNames'] = $tradingNames;
-
-        return array(
-            'organisation' => $organisationId,
-            'licence' => $this->getLicenceId(),
-            'tradingNames' => $tradingNames
-        );
-    }
-
     /**
      * Format data for save
      *
@@ -344,9 +336,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             ->get('Table')
             ->prepareTable('lva-subsidiaries', $tableData);
 
-        $form->get('table')
-            ->get('table')
-            ->setTable($table);
+        $form->get('table')->get('table')->setTable($table);
     }
 
     /**

@@ -18,20 +18,25 @@ use Common\Service\Helper\FormHelperService;
  */
 abstract class AbstractBusinessDetails extends AbstractFormService
 {
-    public function getForm($orgType)
+    public function getForm($orgType, $orgId)
     {
         $form = $this->getFormHelper()->createForm('Lva\BusinessDetails');
 
-        $this->alterForm($form, $orgType);
+        $params = [
+            'orgType' => $orgType,
+            'orgId' => $orgId
+        ];
+
+        $this->alterForm($form, $params);
 
         return $form;
     }
 
-    protected function alterForm($form, $orgType) {
+    protected function alterForm($form, $params) {
 
         $fieldset = $form->get('data');
 
-        switch ($orgType) {
+        switch ($params['orgType']) {
             case OrganisationEntityService::ORG_TYPE_REGISTERED_COMPANY:
             case OrganisationEntityService::ORG_TYPE_LLP:
                 // no-op; the full form is fine

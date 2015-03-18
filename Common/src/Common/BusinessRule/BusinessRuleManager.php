@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Form Service Manager
+ * Business Rule Manager
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\FormService;
+namespace Common\BusinessRule;
 
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception\RuntimeException;
@@ -13,11 +13,11 @@ use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
- * Form Service Manager
+ * Business Rule Manager
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormServiceManager extends AbstractPluginManager
+class BusinessRuleManager extends AbstractPluginManager
 {
     public function __construct(ConfigInterface $config = null)
     {
@@ -30,14 +30,8 @@ class FormServiceManager extends AbstractPluginManager
 
     public function initialize($instance)
     {
-        $instance->setFormServiceLocator($this);
-
         if ($instance instanceof ServiceLocatorAwareInterface) {
             $instance->setServiceLocator($this->getServiceLocator());
-        }
-
-        if ($instance instanceof FormHelperAwareInterface) {
-            $instance->setFormHelper($this->getServiceLocator()->get('Helper\Form'));
         }
     }
 
@@ -53,8 +47,8 @@ class FormServiceManager extends AbstractPluginManager
      */
     public function validatePlugin($plugin)
     {
-        if (!$plugin instanceof FormServiceInterface) {
-            throw new RuntimeException('Form service does not implement FormServiceInterface');
+        if (!$plugin instanceof BusinessRuleInterface) {
+            throw new RuntimeException('Business rule does not implement BusinessRuleInterface');
         }
     }
 }

@@ -260,6 +260,8 @@ return array(
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
+            'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
+            'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -569,6 +571,17 @@ return array(
             'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
             'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
             'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+        ]
+    ],
+    'business_rule_manager' => [
+        'invokables' => [
+            'TradingNames' => 'Common\BusinessRule\Rule\TradingNames'
+        ]
+    ],
+    'business_service_manager' => [
+        'invokables' => [
+            'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
+            'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames'
         ]
     ],
 );

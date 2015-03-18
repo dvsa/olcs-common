@@ -14,10 +14,10 @@ namespace Common\FormService\Form\Lva;
  */
 class ApplicationBusinessDetails extends AbstractBusinessDetails
 {
-    public function alterForm($form)
+    public function alterForm($form, $params)
     {
         $this->getFormServiceLocator()->get('lva-application')->alterForm($form);
 
-        parent::alterForm($form);
+        parent::alterForm($form, $params);
     }
 }

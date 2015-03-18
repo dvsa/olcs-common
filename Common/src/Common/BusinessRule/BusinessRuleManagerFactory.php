@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Form Service Manager Factory
+ * Business Rule Manager Factory
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-namespace Common\FormService;
+namespace Common\BusinessRule;
 
 use Zend\ServiceManager\Config;
 use Zend\Mvc\Service\AbstractPluginManagerFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Form Service Manager Factory
+ * Business Rule Manager Factory
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class FormServiceManagerFactory extends AbstractPluginManagerFactory
+class BusinessRuleManagerFactory extends AbstractPluginManagerFactory
 {
     /**
      * Create and return a plugin manager.
@@ -29,9 +29,9 @@ class FormServiceManagerFactory extends AbstractPluginManagerFactory
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
-        $configObject = new Config($config['form_service_manager']);
+        $configObject = new Config($config['business_rule_manager']);
 
-        $plugins = new FormServiceManager($configObject);
+        $plugins = new BusinessRuleManager($configObject);
         $plugins->setServiceLocator($serviceLocator);
 
         return $plugins;

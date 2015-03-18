@@ -30,11 +30,6 @@ class GenericBusinessDetailsAdapter extends AbstractAdapter implements BusinessD
         // no-op
     }
 
-    public function hasChangedTradingNames($orgId, $tradingNames)
-    {
-        // no-op
-    }
-
     public function hasChangedRegisteredAddress($orgId, $address)
     {
         // no-op
