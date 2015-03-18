@@ -33,8 +33,7 @@ abstract class AbstractUndertakingsController extends AbstractController
             $data = (array)$request->getPost();
             $form->setData($data);
             if ($form->isValid()) {
-                $saveData = $this->formatDataForSave($data);
-                $this->save($saveData);
+                $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
                 $this->handleFees($data);
                 return $this->completeSection('undertakings');
