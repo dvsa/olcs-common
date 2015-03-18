@@ -35,6 +35,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_CURTAILED = 'lsts_curtailed';
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
+    const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
 
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
@@ -625,4 +626,14 @@ class LicenceEntityService extends AbstractLvaEntityService
             return $this->typeShortCodeMap[$type];
         }
     }
+
+    /**
+     * @param int $id licence id
+     * @param string $status
+     */
+    public function setLicenceStatus($id, $status)
+    {
+        return $this->forceUpdate($id, ['status' => $status]);
+    }
+
 }
