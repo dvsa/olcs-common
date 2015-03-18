@@ -8,29 +8,6 @@ $(function() {
   var vehicles = F("data", "noOfVehiclesRequired");
   var trailers = F("data", "noOfTrailersRequired");
 
-  function hasAdvertisements() {
-    return F.isChecked("advertisements", "adPlaced");
-  }
-
-  OLCS.cascadeForm({
-    form: "#OperatingCentre",
-    cascade: false,
-    rulesets: {
-      "advertisements": {
-        "*": function() {
-          if (vehicles.data("current")) {
-            return vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current");
-          }
-
-          return true;
-        },
-        "label:adPlacedIn": hasAdvertisements,
-        "label:adPlacedDate": hasAdvertisements,
-        "selector:#file": hasAdvertisements
-      }
-    }
-  });
-
   /**
    * lo-fi mechanism to detect if we're a variation or not. No point
    * binding a load of stuff when it's totally irrelevant.
@@ -54,9 +31,37 @@ $(function() {
      * field. This won't fire if the edit/add was fullscreen but that's
      * fine because the cascadeForm will trigger and hide it anyway
      * due to the advertisements:* rule
+     *
+     * @NOTE: we get lucky here... this JS is only actually *loaded* via a
+     * modal in the situation described above. However, the JS is inlined
+     * before the show:modal event fires hence why this works, but that's
+     * flakey...
      */
     OLCS.eventEmitter.once("show:modal", function() {
       F.selectRadio("advertisements", "adPlaced", "N");
     });
   }
+
+  function hasAdvertisements() {
+    return F.isChecked("advertisements", "adPlaced");
+  }
+
+  OLCS.cascadeForm({
+    form: "#OperatingCentre",
+    cascade: false,
+    rulesets: {
+      "advertisements": {
+        "*": function() {
+          if (vehicles.data("current")) {
+            return vehicles.val() > vehicles.data("current") || trailers.val() > trailers.data("current");
+          }
+
+          return true;
+        },
+        "label:adPlacedIn": hasAdvertisements,
+        "label:adPlacedDate": hasAdvertisements,
+        "selector:#file": hasAdvertisements
+      }
+    }
+  });
 });
