@@ -315,6 +315,26 @@ class InterimHelperService extends AbstractHelperService
 
         // activate, generate & print community licences
         $this->processCommunityLicences($interimData);
+
+        // Print the interim document
+        $this->printInterimDocument($interimData);
+    }
+
+    /**
+     * Print the interim application document for an application.
+     *
+     * @param $application The application.
+     */
+    public function printInterimDocument($application = null)
+    {
+        if (is_array($application)) {
+            $application = $application['id'];
+        }
+
+        $licenceProcessingService = $this->getServiceLocator()
+            ->get('Processing\Licence');
+
+        $licenceProcessingService->generateInterimDocument($application);
     }
 
     /**
