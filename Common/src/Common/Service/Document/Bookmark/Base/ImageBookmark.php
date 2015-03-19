@@ -14,7 +14,12 @@ abstract class ImageBookmark extends DynamicBookmark implements FileStoreAwareIn
 {
     protected $fileStore;
 
-    public function setFileStore(/* FileStoreService */$fileStore)
+    /**
+     * @NOTE: FileStoreService isn't a real interface so isn't type hinted, but in the future
+     * we could implement it. It should just expose some basic read and write methods and
+     * could internally be backed by whatever storage it wants (disk, memory, JackRabbit etc)
+     */
+    public function setFileStore(/* FileStoreService */ $fileStore)
     {
         $this->fileStore = $fileStore;
     }
