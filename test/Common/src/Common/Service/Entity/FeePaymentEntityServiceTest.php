@@ -55,7 +55,7 @@ class FeePaymentEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $id = 22;
 
-        $query = ['paymentId' => $id];
+        $query = ['payment' => $id];
 
         $response = array(
             'Count' => 2,

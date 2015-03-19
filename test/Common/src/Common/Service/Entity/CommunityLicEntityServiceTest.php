@@ -187,6 +187,46 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
+     * Test add community licences with specific issue numbers
+     *
+     * @group communityLicService
+     */
+    public function testAddCommuniyLicencesWithIssueNos()
+    {
+        $licenceId = 1;
+
+        $data = ['somedata' => 'somedata'];
+
+        $dataToSave = [
+            '_OPTIONS_' => ['multiple' => true],
+            [
+                'somedata' => 'somedata',
+                'issueNo' => 5,
+                'licence' => $licenceId,
+                'serialNoPrefix' => 'UKGB'
+            ],
+            [
+                'somedata' => 'somedata',
+                'issueNo' => 6,
+                'licence' => $licenceId,
+                'serialNoPrefix' => 'UKGB'
+            ]
+        ];
+
+        $mockLicenceService = m::mock()
+            ->shouldReceive('getTrafficArea')
+            ->with($licenceId)
+            ->andReturn(['id' => 'A'])
+            ->getMock();
+
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $this->expectOneRestCall('CommunityLic', 'POST', $dataToSave);
+
+        $this->sut->addCommunityLicencesWithIssueNos($data, $licenceId, [5, 6]);
+    }
+
+    /**
      * @group communityLicService
      */
     public function testGetWithLicence()
@@ -230,5 +270,40 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue(['Results' => 'RESPONSE']));
 
         $this->assertEquals('RESPONSE', $this->sut->getPendingForLicence($licenceId));
+    }
+
+    /**
+     * @group communityLicService
+     */
+    public function testGetActiveLicences()
+    {
+        $licenceId = 1;
+        $query = [
+            'status' => 'cl_sts_active',
+            'licence' => $licenceId,
+            'sort'  => 'issueNo',
+            'order' => 'ASC'
+        ];
+        $this->expectOneRestCall('CommunityLic', 'GET', $query);
+
+        $this->sut->getActiveLicences($licenceId);
+    }
+
+    /**
+     * @group communityLicService
+     */
+    public function testGetByIds()
+    {
+        $ids = ['1', '2'];
+
+        $this->expectedRestCallInOrder('CommunityLic', 'GET', '1')
+            ->will($this->returnValue('COMMUNITYLIC1'));
+        $this->expectedRestCallInOrder('CommunityLic', 'GET', '2')
+            ->will($this->returnValue('COMMUNITYLIC2'));
+
+        $this->assertEquals(
+            ['COMMUNITYLIC1', 'COMMUNITYLIC2'],
+            $this->sut->getByIds($ids)
+        );
     }
 }

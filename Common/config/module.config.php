@@ -189,6 +189,7 @@ return array(
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
+            'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
         ),
         'invokables' => array(
             'CrudListener' => 'Common\Controller\Crud\Listener',
@@ -271,6 +272,8 @@ return array(
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
+            // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
+            'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
@@ -285,6 +288,8 @@ return array(
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
+            \Common\Service\Data\Search\SearchTypeManager::class =>
+                \Common\Service\Data\Search\SearchTypeManagerFactory::class,
         )
     ),
     'publications' => array(

@@ -81,7 +81,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
     }
 
     /**
-     * Test add commuinty licences
+     * Test add community licences
      *
      * @group licenceCommunityLicenceAdapter
      */
@@ -125,6 +125,55 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
         $this->assertEquals(
             'foo',
             $this->sut->addCommunityLicences($licenceId, 2)
+        );
+    }
+
+    /**
+     * Test add community licences with issue specific numbers
+     *
+     * @group licenceCommunityLicenceAdapter
+     */
+    public function testAddCommunityLicencesWithIssueNos()
+    {
+        $licenceId = 1;
+
+        $mockDateHelper = m::mock()
+            ->shouldReceive('getDate')
+            ->andReturn('2015-01-01')
+            ->getMock();
+
+        $this->sm->setService('Helper\Date', $mockDateHelper);
+
+        $data = [
+            'specifiedDate' => '2015-01-01',
+            'status' => 'cl_sts_active'
+        ];
+
+        $this->sm->setService(
+            'Entity\CommunityLic',
+            m::mock()
+                ->shouldReceive('addCommunityLicencesWithIssueNos')
+                ->with($data, $licenceId, [5, 6])
+                ->andReturn(
+                    [
+                        'id' => [1, 2, 3]
+                    ]
+                )
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\CommunityLicenceDocument',
+            m::mock()
+            ->shouldReceive('generateBatch')
+            ->with(1, [1, 2, 3])
+            ->andReturn('foo')
+            ->getMock()
+        );
+
+        $this->assertEquals(
+            'foo',
+            $this->sut->addCommunityLicencesWithIssueNos($licenceId, [5, 6])
         );
     }
 }

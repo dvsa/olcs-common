@@ -1418,4 +1418,125 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $this->assertEquals($fee, $this->sut->getInterimFee($applicationId));
     }
+
+    /**
+     * @group processing_services
+     */
+    public function testProcessWithdrawApplication()
+    {
+        $applicationId = 69;
+        $licenceId = 100;
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+                ->shouldReceive('getDate')
+                ->andReturn('2015-03-18 00:00:00')
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                    ->with(
+                        $applicationId,
+                        [
+                            'status' => ApplicationEntityService::APPLICATION_STATUS_WITHDRAWN,
+                            'withdrawnDate' => '2015-03-18 00:00:00',
+                            'withdrawnReason' => 'REASON',
+                        ]
+                    )
+                    ->once()
+                ->shouldReceive('getApplicationType')
+                    ->with($applicationId)
+                    ->once()
+                    ->andReturn(ApplicationEntityService::APPLICATION_TYPE_NEW)
+                ->shouldReceive('getLicenceIdForApplication')
+                    ->with($applicationId)
+                    ->once()
+                    ->andReturn($licenceId)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('setLicenceStatus')
+                    ->with($licenceId, LicenceEntityService::LICENCE_STATUS_WITHDRAWN)
+                    ->once()
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Interim',
+            m::mock()
+                ->shouldReceive('voidDiscsForApplication')
+                    ->with($applicationId)
+                    ->once()
+                ->getMock()
+        );
+
+        $this->sut->processWithdrawApplication($applicationId, 'REASON');
+    }
+
+    /**
+     * @group processing_services
+     */
+    public function testProcessRefuseApplication()
+    {
+        $applicationId = 69;
+        $licenceId = 100;
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+                ->shouldReceive('getDate')
+                ->andReturn('2015-03-19 00:00:00')
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('forceUpdate')
+                    ->with(
+                        $applicationId,
+                        [
+                            'status' => ApplicationEntityService::APPLICATION_STATUS_REFUSED,
+                            'refusedDate' => '2015-03-19 00:00:00',
+                        ]
+                    )
+                    ->once()
+                ->shouldReceive('getApplicationType')
+                    ->with($applicationId)
+                    ->once()
+                    ->andReturn(ApplicationEntityService::APPLICATION_TYPE_NEW)
+                ->shouldReceive('getLicenceIdForApplication')
+                    ->with($applicationId)
+                    ->once()
+                    ->andReturn($licenceId)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+                ->shouldReceive('setLicenceStatus')
+                    ->with($licenceId, LicenceEntityService::LICENCE_STATUS_REFUSED)
+                    ->once()
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Interim',
+            m::mock()
+                ->shouldReceive('voidDiscsForApplication')
+                    ->with($applicationId)
+                    ->once()
+                ->getMock()
+        );
+
+        $this->sut->processRefuseApplication($applicationId);
+    }
 }

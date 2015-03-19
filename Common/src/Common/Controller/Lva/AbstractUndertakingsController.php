@@ -25,10 +25,13 @@ abstract class AbstractUndertakingsController extends AbstractController
     public function indexAction()
     {
         $request = $this->getRequest();
+        $applicationData = $this->getUndertakingsData();
+        $form = $this->getForm();
+        $this->updateForm($form, $applicationData);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-            $form = $this->getForm()->setData($data);
+            $form->setData($data);
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
@@ -38,18 +41,15 @@ abstract class AbstractUndertakingsController extends AbstractController
                 // validation failed, we need to lookup application data
                 // but use the POSTed checkbox value to render the form again
                 $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $applicationData = $this->getUndertakingsData();
                 $data = $this->formatDataForForm($applicationData);
                 $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
-                $form->setData($data);
+                // don't call setData again here or we lose validation messages
+                $form->populateValues($data);
             }
         } else {
-            $applicationData = $this->getUndertakingsData();
             $data = $this->formatDataForForm($applicationData);
-            $form = $this->getForm()->setData($data);
+            $form->setData($data);
         }
-
-        $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
     }

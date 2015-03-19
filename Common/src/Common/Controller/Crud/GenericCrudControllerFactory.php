@@ -7,7 +7,9 @@
  */
 namespace Common\Controller\Crud;
 
+use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\MutableCreationOptionsInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -26,14 +28,36 @@ class GenericCrudControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator, $serviceName = null, $requestedName = null)
     {
+        $mainServiceLocator = $serviceLocator->getServiceLocator();
+
         $crudServiceName = $this->getCrudServiceName($requestedName);
         $translationPrefix = $this->getTranslationPrefix($requestedName);
 
-        $service = $serviceLocator->getServiceLocator()->get('CrudServiceManager')->get($crudServiceName);
+        /** @var \Common\Service\Crud\AbstractCrudService $service */
+        $service = $mainServiceLocator->get('CrudServiceManager')->get($crudServiceName);
 
+        /** @var \Common\Service\Table\TableBuilder $tableBuilder */
+        $tableBuilder = $mainServiceLocator->get('TableBuilder');
+
+        /** @var \Common\Controller\Crud\GenericCrudController $controller */
         $controller = $serviceLocator->get('GenericCrudController');
         $controller->setCrudService($service);
         $controller->setTranslationPrefix($translationPrefix);
+        $controller->setRequestedName($requestedName);
+        $controller->setTableBuilder($tableBuilder);
+
+        /**
+         * Set scripts
+         *
+         * Sets the inline java scripts as an event just prior to dispatch.
+         * Also sets up the required parameters
+         *
+         * These happen in descending order. 1000 first 100 last
+         */
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setNavigationLocation'], 99);
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpParams'], 100);
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpScripts'], 10000);
+        $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, [$controller, 'setUpOptions'], 10001);
 
         return $controller;
     }

@@ -46,4 +46,10 @@ OLCS.ready(function() {
     label: "Stop",
     predicate: checkStatus(["cl_sts_active"])
   });
+
+  OLCS.conditionalButton({
+    container: tableSelector,
+    label: "Reprint",
+    predicate: checkStatus(["cl_sts_active"])
+  });
 });
