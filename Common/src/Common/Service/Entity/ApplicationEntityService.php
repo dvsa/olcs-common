@@ -67,7 +67,6 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'children' => array(
             'applicationCompletions',
             'status',
-            'interimStatus'
         )
     );
 
@@ -272,7 +271,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     protected $statusBundle = array(
         'children' => array(
-            'status'
+            'status',
+            'interimStatus',
         )
     );
 
