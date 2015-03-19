@@ -27,16 +27,16 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
         $this->mockService('Script', 'loadFiles')->with(['lva-crud', 'vehicle-psv']);
 
+        // stub the mapping between type and psv type that is now in entity service
         $map = [
             'small'  => 'vhl_t_a',
             'medium' => 'vhl_t_b',
             'large'  => 'vhl_t_c',
         ];
-
         $this->mockEntity('Vehicle', 'getTypeMap')->andReturn($map);
         $this->mockEntity('Vehicle', 'getPsvTypeFromType')->andReturnUsing(
             function($type) use ($map) {
-                return $map[$type];
+                return isset($map[$type]) ? $map[$type] : null;
             }
         );
     }
@@ -44,7 +44,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
     /**
      * Common setup for testGetIndexAction and testIndexActionPostValid
      */
-    protected function indexActionSetup(&$form, $entityData)
+    protected function indexActionSetup(&$form, $id, $entityData)
     {
         $mockValidator = $this->mockService('oneRowInTablesRequired', 'setRows')
             ->with([0, 0, 0])
@@ -134,12 +134,12 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->with($form, 'data->notice');
 
         $this->sut->shouldReceive('getIdentifier')
-            ->andReturn(321)
+            ->andReturn($id)
             ->shouldReceive('getLvaEntityService')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('getDataForVehiclesPsv')
-                ->with(321)
+                ->with($id)
                 ->andReturn($entityData)
                 ->getMock()
             )
@@ -152,10 +152,6 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                     'licenceType' => 'z'
                 ]
             );
-
-        $this->adapter
-            ->shouldReceive('getVehicleCountByPsvType')->andReturn(0)
-            ->shouldReceive('warnIfAuthorityExceeded');
     }
 
     /**
@@ -165,16 +161,18 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
      */
     public function testGetIndexAction()
     {
+        $id = 69;
+
         $form = $this->createMockForm('Lva\PsvVehicles');
 
         $entityData = [
-            'id' => 69,
+            'id' => $id,
             'version' => 1,
             'hasEnteredReg' => 'N',
             'licence' => ['licenceVehicles' => []],
         ];
 
-        $this->indexActionSetup($form, $entityData);
+        $this->indexActionSetup($form, $id, $entityData);
 
         $form->shouldReceive('setData')
             ->once()
@@ -188,6 +186,12 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             )
             ->andReturnSelf();
 
+        $this->adapter
+            ->shouldReceive('getVehicleCountByPsvType')->andReturn(0)
+            ->shouldReceive('warnIfAuthorityExceeded')
+                ->with($id, m::any(), false)
+                ->once();
+
         $this->mockRender();
 
         $this->sut->indexAction();
@@ -197,16 +201,18 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
 
     public function testIndexActionPostValid()
     {
+        $id = 69;
+
         $form = $this->createMockForm('Lva\PsvVehicles');
 
         $entityData = [
-            'id' => 69,
+            'id' => $id,
             'version' => 1,
             'hasEnteredReg' => 'N',
             'licence' => ['licenceVehicles' => []],
         ];
 
-        $this->indexActionSetup($form, $entityData);
+        $this->indexActionSetup($form, $id, $entityData);
 
         $postData = ['POST'];
         $this->setPost($postData);
@@ -221,7 +227,12 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         ];
         $form->shouldReceive('getData')->andReturn($formData);
         $this->sut->shouldReceive('save')->with($formData);
-        $this->sut->shouldReceive('addWarningsIfAuthorityExceeded')->with('Y', $entityData, true);
+
+        $this->adapter
+            ->shouldReceive('getVehicleCountByPsvType')->andReturn(0)
+            ->shouldReceive('warnIfAuthorityExceeded')
+                ->with($id, m::any(), true)
+                ->once();
 
         $redirect = m::mock();
         $this->sut->shouldReceive('completeSection')->andReturn($redirect);
@@ -695,7 +706,9 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->andReturn($stubbedRawTableData)
             ->shouldReceive('getVehicleCountByPsvType')
             ->andReturn(1)
-            ->shouldReceive('warnIfAuthorityExceeded');
+            ->shouldReceive('warnIfAuthorityExceeded')
+                ->with(321, m::type('array'), false)
+                ->once();
 
         $mockTable = m::mock('\Common\Service\Table\TableBuilder');
         $mockTableBuilder = m::mock('\Common\Service\Table\TableBuilder');
@@ -1067,104 +1080,6 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('warnIfAuthorityExceeded');
 
         $this->assertSame($mockForm, $this->sut->alterForm($mockForm, $data));
-    }
-
-    /**
-     * Test that flash warning message is added when we render the page and
-     * an authority for individual vehicle type is exceeded. (This can only
-     * happen when vehicles were previously added but then the Operating Centre
-     * authority is decreased)
-     */
-    public function testAddWarningsIfAuthorityExceeded()
-    {
-        $this->markTestIncomplete('moved to adapter');
-
-        $data = [
-            'totAuthVehicles'       => 5,
-            'totAuthSmallVehicles'  => 2,
-            'totAuthMediumVehicles' => 3,
-            'totAuthLargeVehicles'  => 0,
-            'licence' => [
-                'licenceVehicles' => [
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_MEDIUM]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_MEDIUM]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
-                ],
-            ]
-        ];
-
-        $this->sm->setService(
-            'Helper\FlashMessenger',
-            m::mock()
-                ->shouldReceive('addCurrentWarningMessage')
-                    ->once()
-                    ->with('more-vehicles-than-large-authorisation')
-                ->shouldReceive('addWarningMessage')
-                    ->never()
-                ->getMock()
-        );
-
-        $this->sut->addWarningsIfAuthorityExceeded('Y', $data, false);
-    }
-
-    /**
-     * Test that flash warning messages are not added if user selects they are
-     * not submitting vehicle details
-     */
-    public function testWarnIfAuthorityExceededNotSubmitting()
-    {
-        $this->markTestIncomplete('moved to adapter');
-
-        $this->sm->setService(
-            'Helper\FlashMessenger',
-            m::mock()
-                ->shouldReceive('addWarningMessage')->never()
-                ->shouldReceive('addCurrentWarningMessage')->never()
-                ->getMock()
-        );
-
-        $this->sut->addWarningsIfAuthorityExceeded('N', [], true);
-        $this->sut->addWarningsIfAuthorityExceeded('N', [], false);
-    }
-
-    /**
-     * Test that correct flash warning message is added on save when an
-     * authority is exceeded
-     */
-    public function testAddWarningsIfAuthorityExceededRedirect()
-    {
-        $this->markTestIncomplete('moved to adapter');
-
-        $data = [
-            'totAuthVehicles'       => 5,
-            'totAuthSmallVehicles'  => 1,
-            'totAuthMediumVehicles' => 3,
-            'totAuthLargeVehicles'  => 1,
-            'licence' => [
-                'licenceVehicles' => [
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
-                ],
-            ]
-        ];
-        $this->sm->setService(
-            'Helper\FlashMessenger',
-            m::mock()
-                ->shouldReceive('addWarningMessage')
-                    ->once()
-                    ->with('more-vehicles-than-large-authorisation')
-                ->shouldReceive('addWarningMessage')
-                    ->once()
-                    ->with('more-vehicles-than-small-authorisation')
-                ->shouldReceive('addCurrentWarningMessage')->never()
-                ->getMock()
-        );
-
-        $this->sut->addWarningsIfAuthorityExceeded('Y', $data, true);
     }
 
     protected function mockRowField($form, $name, $value)
