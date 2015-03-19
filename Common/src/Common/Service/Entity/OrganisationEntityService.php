@@ -255,8 +255,7 @@ class OrganisationEntityService extends AbstractEntityService
 
     public function hasChangedNatureOfBusiness($id, $updated)
     {
-        $existing = $this->getServiceLocator()->get('Entity\Organisation')
-            ->getNatureOfBusinessesForSelect($id);
+        $existing = $this->getNatureOfBusinessesForSelect($id);
 
         $diff = array_diff($updated, $existing);
 

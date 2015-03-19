@@ -1221,11 +1221,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                     'children' => [
                                         'type',
                                         'tradingNames',
-                                        'natureOfBusinesses' => [
-                                            'children' => [
-                                                'refData'
-                                            ]
-                                        ],
+                                        'natureOfBusinesses',
                                         'contactDetails' => [
                                             'children' => [
                                                 'address'
