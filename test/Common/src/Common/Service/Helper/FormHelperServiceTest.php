@@ -106,6 +106,18 @@ class FormHelperServiceTest extends MockeryTestCase
 
         $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
 
+        // Mock the auth service to allow form test to pass through uninhibited
+        $mockAuthService = m::mock();
+
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(false);
+
+        $sm->shouldReceive('get')
+            ->once()
+            ->with('ZfcRbac\Service\AuthorizationService')
+            ->andReturn($mockAuthService);
+
         $builder = m::mock('\stdClass');
 
         $sm->shouldReceive('get')
@@ -137,6 +149,18 @@ class FormHelperServiceTest extends MockeryTestCase
         //$form->shouldReceive('add')->never();
 
         $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface');
+
+        // Mock the auth service to allow form test to pass through uninhibited
+        $mockAuthService = m::mock();
+
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(false);
+
+        $sm->shouldReceive('get')
+            ->once()
+            ->with('ZfcRbac\Service\AuthorizationService')
+            ->andReturn($mockAuthService);
 
         $builder = m::mock('\stdClass');
 
