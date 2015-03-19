@@ -23,6 +23,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const APPLICATION_STATUS_GRANTED = 'apsts_granted';
     const APPLICATION_STATUS_UNDER_CONSIDERATION = 'apsts_consideration';
     const APPLICATION_STATUS_VALID = 'apsts_valid';
+    const APPLICATION_STATUS_WITHDRAWN = 'apsts_withdrawn';
 
     const CODE_GV_APP             = 'GV79';
     const CODE_GV_VAR_UPGRADE     = 'GV80A';
@@ -35,6 +36,10 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
     const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
+    const INTERIM_STATUS_REFUSED = 'int_sts_refused';
+
+    const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
+    const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';
 
     /**
      * Define entity for default behaviour
