@@ -9,6 +9,8 @@ use CommonTest\Bootstrap;
 use Common\Service\Helper\InterimHelperService;
 use Common\Service\Entity\CommunityLicEntityService;
 use Common\Service\Entity\ApplicationEntityService;
+use Common\Service\Data\CategoryDataService as Category;
+use Common\Service\Printing\PrintSchedulerInterface;
 
 /**
  * Class InterimHelperServiceTest
