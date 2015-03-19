@@ -104,7 +104,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $this->postSave('business_details');
 
         // If we have a table, then we may have a crud action to handle
-        if(isset($data['table'])) {
+        if (isset($data['table'])) {
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
@@ -174,7 +174,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             foreach ($tradingNames['trading_name'] as $val) {
                 $trimmedVal = trim($val);
                 if (!empty($trimmedVal)) {
-                    $names[] = $val;
+                    $names[] = $trimmedVal;
                 }
             }
             $names[] = '';
@@ -187,7 +187,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
     {
         $request = $this->getRequest();
 
-        $orgId = $this->getCurrentOrganisationId();
         $id = $this->params('child_id');
 
         $data = [];
@@ -195,10 +194,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
-
-            $data = $this->formatCrudDataForForm(
-                $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)
-            );
+            $data = ['data' => $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id)];
         }
 
         // @todo Move this into a form service
@@ -258,17 +254,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             ),
             'registeredAddress' => $data['contactDetails']['address'],
         );
-    }
-
-    /**
-     * Format subsidiary data for form (This is presentation logic);
-     *
-     * @param array $data
-     * return array
-     */
-    protected function formatCrudDataForForm($data)
-    {
-        return array('data' => $data);
     }
 
     protected function populateTable($form)

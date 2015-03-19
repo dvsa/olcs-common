@@ -32,8 +32,8 @@ abstract class AbstractBusinessDetails extends AbstractFormService
         return $form;
     }
 
-    protected function alterForm($form, $params) {
-
+    protected function alterForm($form, $params)
+    {
         $fieldset = $form->get('data');
 
         switch ($params['orgType']) {
@@ -47,7 +47,7 @@ abstract class AbstractBusinessDetails extends AbstractFormService
                 break;
             case OrganisationEntityService::ORG_TYPE_PARTNERSHIP:
                 $this->alterFormForNonRegisteredCompany($form);
-                $this->appendToLabel($fieldset->get('name'), '.partnership' );
+                $this->appendToLabel($fieldset->get('name'), '.partnership');
                 break;
             case OrganisationEntityService::ORG_TYPE_OTHER:
                 $this->alterFormForNonRegisteredCompany($form);

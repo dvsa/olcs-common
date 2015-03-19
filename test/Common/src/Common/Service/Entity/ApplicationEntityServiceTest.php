@@ -828,7 +828,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get data for interim
-     * 
+     *
      * @group applicationEntity
      */
     public function testGetDataForInterim()
@@ -888,7 +888,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test save interim data
-     * 
+     *
      * @group applicationEntity
      * @dataProvider providerSaveInterimData
      */
@@ -1221,9 +1221,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                     'children' => [
                                         'type',
                                         'tradingNames',
-                                        // @NOTE I think the organisationNatureOfBusiness table should be a straight
-                                        // many-to-many so this could change
-                                        'natureOfBusinesss' => [
+                                        'natureOfBusinesses' => [
                                             'children' => [
                                                 'refData'
                                             ]
@@ -1235,11 +1233,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                         ]
                                     ]
                                 ],
-                                'companySubsidiaries' => [
-                                    'children' => [
-                                        'companySubsidiary'
-                                    ]
-                                ],
+                                'companySubsidiaries'
                             ]
                         ]
                     ]
