@@ -21,6 +21,12 @@ class VehicleEntityService extends AbstractEntityService
     const PSV_TYPE_MEDIUM = 'vhl_t_b';
     const PSV_TYPE_LARGE  = 'vhl_t_c';
 
+    protected $typeMap = [
+        'small'  => self::PSV_TYPE_SMALL,
+        'medium' => self::PSV_TYPE_MEDIUM,
+        'large'  => self::PSV_TYPE_LARGE
+    ];
+
     /**
      * Define entity for default behaviour
      *
@@ -41,6 +47,21 @@ class VehicleEntityService extends AbstractEntityService
             )
         )
     );
+
+    public function getTypeMap() {
+        return $this->typeMap;
+    }
+
+    public function getPsvTypeFromType($type)
+    {
+        return isset($this->typeMap[$type]) ? $this->typeMap[$type] : null;
+    }
+
+    public function getTypeFromPsvType($psvType)
+    {
+        $map = array_flip($this->typeMap);
+        return isset($map[$psvType]) ? $map[$psvType] : null;
+    }
 
     public function getLicencesForVrm($vrm)
     {
