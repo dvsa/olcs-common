@@ -288,6 +288,8 @@ return array(
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
+            \Common\Service\Data\Search\SearchTypeManager::class =>
+                \Common\Service\Data\Search\SearchTypeManagerFactory::class,
         )
     ),
     'publications' => array(
