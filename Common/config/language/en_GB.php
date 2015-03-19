@@ -765,6 +765,7 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'internal-crud-event-history' => 'Event History',
     'crud-event-history-title' => 'Event History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
