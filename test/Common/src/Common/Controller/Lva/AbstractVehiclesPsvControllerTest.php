@@ -26,6 +26,19 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->sut->setAdapter($this->adapter);
 
         $this->mockService('Script', 'loadFiles')->with(['lva-crud', 'vehicle-psv']);
+
+        $map = [
+            'small'  => 'vhl_t_a',
+            'medium' => 'vhl_t_b',
+            'large'  => 'vhl_t_c',
+        ];
+
+        $this->mockEntity('Vehicle', 'getTypeMap')->andReturn($map);
+        $this->mockEntity('Vehicle', 'getPsvTypeFromType')->andReturnUsing(
+            function($type) use ($map) {
+                return $map[$type];
+            }
+        );
     }
 
     /**
@@ -139,6 +152,10 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                     'licenceType' => 'z'
                 ]
             );
+
+        $this->adapter
+            ->shouldReceive('getVehicleCountByPsvType')->andReturn(0)
+            ->shouldReceive('warnIfAuthorityExceeded');
     }
 
     /**
@@ -151,6 +168,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $form = $this->createMockForm('Lva\PsvVehicles');
 
         $entityData = [
+            'id' => 69,
             'version' => 1,
             'hasEnteredReg' => 'N',
             'licence' => ['licenceVehicles' => []],
@@ -182,6 +200,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $form = $this->createMockForm('Lva\PsvVehicles');
 
         $entityData = [
+            'id' => 69,
             'version' => 1,
             'hasEnteredReg' => 'N',
             'licence' => ['licenceVehicles' => []],
@@ -652,6 +671,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->with(321)
                 ->andReturn(
                     [
+                        'id' => 69,
                         'version' => 1,
                         'hasEnteredReg' => 'N',
                         'licence' => ['licenceVehicles' => []],
@@ -672,7 +692,10 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->adapter->shouldReceive('getVehiclesData')
             ->once()
             ->with(321)
-            ->andReturn($stubbedRawTableData);
+            ->andReturn($stubbedRawTableData)
+            ->shouldReceive('getVehicleCountByPsvType')
+            ->andReturn(1)
+            ->shouldReceive('warnIfAuthorityExceeded');
 
         $mockTable = m::mock('\Common\Service\Table\TableBuilder');
         $mockTableBuilder = m::mock('\Common\Service\Table\TableBuilder');
@@ -856,6 +879,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 ->with(321)
                 ->andReturn(
                     [
+                        'id' => 69,
                         'version' => 1,
                         'hasEnteredReg' => 'N',
                         'licence' => ['licenceVehicles' => []],
@@ -876,7 +900,10 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         $this->adapter->shouldReceive('getVehiclesData')
             ->once()
             ->with(321)
-            ->andReturn($stubbedRawTableData);
+            ->andReturn($stubbedRawTableData)
+            ->shouldReceive('getVehicleCountByPsvType')
+            ->andReturn(1)
+            ->shouldReceive('warnIfAuthorityExceeded');
 
         $mockTable = m::mock('\Common\Service\Table\TableBuilder');
         $mockTableBuilder = m::mock('\Common\Service\Table\TableBuilder');
@@ -1018,21 +1045,26 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
             ]
         );
 
+        $id = 69;
         $data = [
+            'id' => $id,
             'totAuthVehicles'       => 5,
             'totAuthSmallVehicles'  => 2,
             'totAuthMediumVehicles' => 3,
             'totAuthLargeVehicles'  => 0,
-            'licence' => [
-                'licenceVehicles' => [
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_SMALL]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_MEDIUM]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_MEDIUM]]],
-                    ['vehicle' => ['psvType' => ['id' => VehicleEntityService::PSV_TYPE_LARGE]]],
-                ],
-            ]
         ];
+
+        $this->adapter
+            ->shouldReceive('getVehicleCountByPsvType')
+                ->with($id, VehicleEntityService::PSV_TYPE_SMALL)
+                ->andReturn(2)
+            ->shouldReceive('getVehicleCountByPsvType')
+                ->with($id, VehicleEntityService::PSV_TYPE_MEDIUM)
+                ->andReturn(2)
+            ->shouldReceive('getVehicleCountByPsvType')
+                ->with($id, VehicleEntityService::PSV_TYPE_LARGE)
+                ->andReturn(1)
+            ->shouldReceive('warnIfAuthorityExceeded');
 
         $this->assertSame($mockForm, $this->sut->alterForm($mockForm, $data));
     }
@@ -1045,6 +1077,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
      */
     public function testAddWarningsIfAuthorityExceeded()
     {
+        $this->markTestIncomplete('moved to adapter');
+
         $data = [
             'totAuthVehicles'       => 5,
             'totAuthSmallVehicles'  => 2,
@@ -1079,8 +1113,10 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
      * Test that flash warning messages are not added if user selects they are
      * not submitting vehicle details
      */
-    public function testAddWarningsIfAuthorityExceededNotSubmitting()
+    public function testWarnIfAuthorityExceededNotSubmitting()
     {
+        $this->markTestIncomplete('moved to adapter');
+
         $this->sm->setService(
             'Helper\FlashMessenger',
             m::mock()
@@ -1099,6 +1135,8 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
      */
     public function testAddWarningsIfAuthorityExceededRedirect()
     {
+        $this->markTestIncomplete('moved to adapter');
+
         $data = [
             'totAuthVehicles'       => 5,
             'totAuthSmallVehicles'  => 1,
