@@ -910,6 +910,8 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim-start-date' => 'Interim start date',
+    'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
         an additional charge to apply for this',
     'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
@@ -1146,6 +1148,7 @@ return array(
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
     'internal.interim.form.interim_refused' => 'The interim has been refused',
+    'internal.interim.form.interim_reprint' => 'Reprint',
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',
     'internal.interim.form.interim_start' => 'Interim start date',

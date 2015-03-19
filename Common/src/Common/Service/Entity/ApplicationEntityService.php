@@ -67,7 +67,8 @@ class ApplicationEntityService extends AbstractLvaEntityService
     private $overviewBundle = array(
         'children' => array(
             'applicationCompletions',
-            'status'
+            'status',
+            'interimStatus'
         )
     );
 

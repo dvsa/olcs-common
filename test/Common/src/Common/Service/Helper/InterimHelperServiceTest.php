@@ -562,6 +562,13 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
+        $this->sm->setService(
+            'Processing\Licence',
+            m::mock()
+                ->shouldReceive('generateInterimDocument')
+                ->getMock()
+        );
+
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
@@ -685,6 +692,13 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
+        $this->sm->setService(
+            'Processing\Licence',
+            m::mock()
+                ->shouldReceive('generateInterimDocument')
+                ->getMock()
+        );
+
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
@@ -790,6 +804,13 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->getMock()
         );
 
+        $this->sm->setService(
+            'Processing\Licence',
+            m::mock()
+                ->shouldReceive('generateInterimDocument')
+                ->getMock()
+        );
+
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
 
@@ -869,6 +890,13 @@ class InterimHelperServiceTest extends MockeryTestCase
             ->with(99, [50])
             ->once()
             ->getMock()
+        );
+
+        $this->sm->setService(
+            'Processing\Licence',
+            m::mock()
+                ->shouldReceive('generateInterimDocument')
+                ->getMock()
         );
 
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
