@@ -595,6 +595,9 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $alteredForm = $this->sut->alterForm($form);
 
         $this->assertFalse($alteredForm->get('data')->has('totCommunityLicences'));
+
+        $sm->setService('ZfcRbac\Service\AuthorizationService', null);
+
     }
 
     public function testAlterFormWithCommunityLicences()
@@ -720,6 +723,9 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $alteredForm = $this->sut->alterForm($form);
 
         $this->assertTrue($alteredForm->get('data')->has('totCommunityLicences'));
+
+        $sm->setService('ZfcRbac\Service\AuthorizationService', null);
+
     }
 
     public function testAlterFormData()
