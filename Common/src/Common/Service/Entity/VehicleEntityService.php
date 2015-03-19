@@ -48,7 +48,8 @@ class VehicleEntityService extends AbstractEntityService
         )
     );
 
-    public function getTypeMap() {
+    public function getTypeMap()
+    {
         return $this->typeMap;
     }
 

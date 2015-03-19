@@ -4,6 +4,7 @@
  * Application Vehicles Psv Adapter Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 namespace CommonTest\Controller\Lva\Adapters;
 
@@ -17,6 +18,7 @@ use Common\Service\Entity\VehicleEntityService;
  * Application Vehicles Psv Adapter Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ * @author Dan Eggleston <dan@stolenegg.com>
  */
 class ApplicationVehiclesPsvAdapterTest extends MockeryTestCase
 {
@@ -41,7 +43,7 @@ class ApplicationVehiclesPsvAdapterTest extends MockeryTestCase
             m::mock()
                 ->shouldReceive('getTypeFromPsvType')
                 ->andReturnUsing(
-                    function($type) use ($map) {
+                    function ($type) use ($map) {
                         return array_search($type, $map);
                     }
                 )

@@ -35,7 +35,7 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
         ];
         $this->mockEntity('Vehicle', 'getTypeMap')->andReturn($map);
         $this->mockEntity('Vehicle', 'getPsvTypeFromType')->andReturnUsing(
-            function($type) use ($map) {
+            function ($type) use ($map) {
                 return isset($map[$type]) ? $map[$type] : null;
             }
         );

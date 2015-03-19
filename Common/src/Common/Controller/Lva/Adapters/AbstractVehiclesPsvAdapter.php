@@ -45,5 +45,4 @@ abstract class AbstractVehiclesPsvAdapter extends AbstractAdapter implements Veh
 
         return $count;
     }
-
 }
