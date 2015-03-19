@@ -24,8 +24,7 @@ $(function() {
         "psvSmallVhlNotes": smallOperation("Y"),
         "psvSmallVhlScotland": smallOperation("N"),
         "psvSmallVhlUndertakings": smallOperation("N"),
-        "psvSmallVhlConfirmation": smallOperation("N"),
-        "selector:.js-small-vhl-label": smallOperation("N")
+        "psvSmallVhlConfirmation": smallOperation("N")
       },
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
