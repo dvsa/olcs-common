@@ -899,4 +899,77 @@ class InterimHelperServiceTest extends MockeryTestCase
 
         $this->assertEquals(null, $this->sut->grantInterim($applicationId));
     }
+
+    public function testVoidDiscsForApplication()
+    {
+        $applicationId = 69;
+
+        $interimData = [
+            'id' => $applicationId,
+            'version' => 100,
+            'licenceVehicles' => [
+                [
+                    'id' => 20,
+                    'version' => 200,
+                    'goodsDiscs' => [
+                        [
+                            'ceasedDate' => null,
+                            'id' => 40,
+                            'version' => 400
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 21,
+                    'version' => 200,
+                    'goodsDiscs' => [
+                        [
+                            'ceasedDate' => null,
+                            'id' => 41,
+                            'version' => 401
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $this->sm->setService(
+            'Entity\Application',
+            m::mock()
+                ->shouldReceive('getDataForInterim')
+                ->with($applicationId)
+                ->andReturn($interimData)
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\GoodsDisc',
+            m::mock()
+                ->shouldReceive('multiUpdate')
+                ->with(
+                    [
+                        [
+                            'id' => 40,
+                            'version' => 400,
+                            'ceasedDate' => '2015-03-18 00:00:00',
+                        ],
+                        [
+                            'id' => 41,
+                            'version' => 401,
+                            'ceasedDate' => '2015-03-18 00:00:00',
+                        ]
+                    ]
+                )
+                ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+                ->shouldReceive('getDate')
+                ->andReturn('2015-03-18 00:00:00')
+                ->getMock()
+        );
+
+        $this->sut->voidDiscsForApplication($applicationId);
+    }
 }

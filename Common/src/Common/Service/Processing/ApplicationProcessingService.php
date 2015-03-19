@@ -661,4 +661,38 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Processing\ApplicationSnapshot')
             ->storeSnapshot($id, ApplicationSnapshotProcessingService::ON_GRANT);
     }
+
+    /**
+     * Called when withdrawing an application
+     *
+     * @param int $id
+     * @param string $reason
+     *  ApplicationEntityService::WITHDRAWN_REASON_WITHDRAWN|ApplicationEntityService::WITHDRAWN_REASON_REG_IN_ERROR
+     */
+    public function processWithdrawApplication($id, $reason)
+    {
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+
+        // Set the application status to 'Withdrawn'
+        // Set the withdrawn date on the application to the current date
+        // Record the withdrawal reason
+        $data = [
+            'status' => ApplicationEntityService::APPLICATION_STATUS_WITHDRAWN,
+            'withdrawnDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+            'withdrawnReason' => $reason,
+        ];
+        $applicationEntityService->forceUpdate($id, $data);
+
+        // If it is a new application (as opposed to a variation), update the licence status to 'Withdrawn'
+        $applicationType = $applicationEntityService->getApplicationType($id);
+        if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
+            $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+                $this->getLicenceId($id),
+                LicenceEntityService::LICENCE_STATUS_WITHDRAWN
+            );
+        }
+
+        // Void any interim discs associated to vehicles linked to the current application
+        $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+    }
 }
