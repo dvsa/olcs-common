@@ -88,7 +88,7 @@ class FormHelperService extends AbstractHelperService
         $authService = $this->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService');
 
         if ($authService->isGranted('internal-user')) {
-            if (!$authService->isGranted('edit') && !$form->getOption('bypass_auth')) {
+            if (!$authService->isGranted('internal-edit') && !$form->getOption('bypass_auth')) {
                 $form->setOption('readonly', true);
             }
         }
