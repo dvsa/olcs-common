@@ -23,6 +23,11 @@ abstract class SearchAbstract
     protected $searchIndices;
 
     /**
+     * @var string
+     */
+    protected $displayGroup = 'all';
+
+    /**
      * @return mixed
      */
     public function getSearchIndices()
@@ -105,5 +110,13 @@ abstract class SearchAbstract
     public function getNavigation()
     {
         return ['label' => $this->getTitle(), 'route' => 'search', 'params' => ['index' => $this->getKey()]];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayGroup()
+    {
+        return $this->displayGroup;
     }
 }

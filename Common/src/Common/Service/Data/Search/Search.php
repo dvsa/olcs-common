@@ -133,6 +133,7 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
     }
 
     /**
+     * @TODO needs to check RBAC for permission to access the specified search index
      * @return array
      */
     public function fetchResults()
