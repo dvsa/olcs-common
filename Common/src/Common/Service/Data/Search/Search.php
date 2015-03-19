@@ -243,8 +243,6 @@ class Search extends AbstractData implements ServiceLocatorAwareInterface
                 $filterClass->setValue($post['filter'][$filterClass->getKey()]);
             }
         }
-
-        return;
     }
 
     /**
