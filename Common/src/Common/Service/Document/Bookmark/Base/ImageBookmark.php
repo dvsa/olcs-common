@@ -25,7 +25,7 @@ abstract class ImageBookmark extends DynamicBookmark implements FileStoreAwareIn
     }
 
     /**
-     * @NOTE: only jpegs with an extension of .jpeg are supported at
+     * @NOTE: only jpegs with an extension of .jpg are supported at
      * the moment. If this needs to change then feel free to alter
      * the API of this method but make sure the RTF parser can handle
      * the new format
@@ -33,8 +33,7 @@ abstract class ImageBookmark extends DynamicBookmark implements FileStoreAwareIn
     protected function getImage($name, $width = null, $height = null)
     {
         $info = [];
-        $type = 'jpeg';
-        $path = '/templates/Image/' . $name . '.' . $type;
+        $path = '/templates/Image/' . $name . '.jpg';
 
         $file = $this->getFileStore()->read($path);
 
