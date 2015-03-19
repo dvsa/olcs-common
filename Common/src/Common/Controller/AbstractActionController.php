@@ -329,7 +329,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
             return false;
         }
 
-        $action = strtolower($action);
+        if (!is_array($action)) {
+            $action = strtolower($action);
+        }
 
         $response = $this->checkForAlternativeCrudAction($action);
 
@@ -745,11 +747,9 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      */
     protected function getFormClass($type)
     {
-        try {
-            return $this->getServiceLocator()->get('Helper\Form')->createForm($this->normaliseFormName($type, true));
-        } catch (\RuntimeException $e) {
-            return $this->getServiceLocator()->get('OlcsCustomForm')->createForm($type);
-        }
+        return $this->getServiceLocator()->get('Helper\Form')->createForm(
+            $this->normaliseFormName($type, true)
+        );
     }
 
     /**
@@ -877,11 +877,6 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
     protected function getAddressesForPostcode($postcode)
     {
         return $this->sendGet('postcode\address', array('postcode' => $postcode), true);
-    }
-
-    protected function getFormGenerator()
-    {
-        return $this->getServiceLocator()->get('OlcsCustomForm');
     }
 
     protected function alterFormBeforeValidation($form)

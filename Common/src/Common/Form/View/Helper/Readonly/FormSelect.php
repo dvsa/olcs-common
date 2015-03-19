@@ -98,7 +98,7 @@ class FormSelect extends AbstractHelper
             if ($element->getAttribute('multiple')) {
                 $labels = array_intersect_key($valueOptions, array_combine($elementValue, $elementValue));
                 $value = implode(', ', $labels);
-            } else {
+            } elseif (!empty($valueOptions[$elementValue])) {
                 $value = $valueOptions[$elementValue];
             }
         }

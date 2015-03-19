@@ -35,12 +35,16 @@ abstract class AbstractDiscsController extends AbstractController
 
             $data = (array)$request->getPost();
 
+            $this->postSave('discs');
+
             $crudAction = $this->getCrudAction(array($data['table']));
 
             if ($crudAction !== null) {
 
                 return $this->handleCrudAction($crudAction);
             }
+
+            return $this->completeSection('discs');
 
         } else {
             $data = $this->getFormData();

@@ -50,6 +50,23 @@ class BusRegEntityService extends AbstractEntityService
     );
 
     /**
+     * Variation data bundle
+     *
+     * @var array
+     */
+    private $variationDataBundle = array(
+        'children' => array(
+            'licence',
+            'busNoticePeriod',
+            'busServiceTypes',
+            'otherServices',
+            'trafficAreas',
+            'localAuthoritys',
+            'subsidised'
+        )
+    );
+
+    /**
      * Get data for task processing
      *
      * @param int $id
@@ -69,6 +86,17 @@ class BusRegEntityService extends AbstractEntityService
     public function getDataForFees($id)
     {
         return $this->get($id, $this->feeDataBundle);
+    }
+
+    /**
+     * Get data for variation creation
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getDataForVariation($id)
+    {
+        return $this->get($id, $this->variationDataBundle);
     }
 
     public function findByIdentifier($identifier)
@@ -119,6 +147,30 @@ class BusRegEntityService extends AbstractEntityService
         ];
 
         $result = $this->get($params, $this->mainDataBundle);
+        if ($result['Count'] === 0) {
+            return false;
+        }
+
+        return $result['Results'][0];
+    }
+
+    /**
+     * Find the most recent Route No by Licence
+     * Assumes that Route Numbers are incremental
+     *
+     * @param $licenceId
+     * @return array
+     */
+    public function findMostRecentRouteNoByLicence($licenceId)
+    {
+        $params = [
+            'licence' => $licenceId,
+            'sort'  => 'routeNo',
+            'order' => 'DESC',
+            'limit' => 1
+        ];
+
+        $result = $this->get($params);
         if ($result['Count'] === 0) {
             return false;
         }

@@ -142,6 +142,9 @@ return array(
     'application-review-financial-history-disqualified' => 'Have you, or have any of your partners, directors, majority
         shareholders or your transport manager ever been disqualified from acting as a director of a company or from
         taking part in the management of a company?',
+    'application-review-financial-history-evidence' => 'Evidence',
+    'application-review-financial-history-evidence-send' => 'Operator to send original evidence to the Central Licensing
+        Office',
     'application-review-financial-history-insolvencyConfirmation' => 'Confirm that you are aware that you must tell the
         traffic commissioner immediately of any insolvency proceedings that occur between the submission of your
         application and a decision being made on the application',
@@ -248,6 +251,7 @@ return array(
     'application.overview.saved' => 'The overview page has been saved',
     'application.overview.title' => 'Application overview',
     'application.payment-submission' => 'Payment & submission',
+    'application.payment-submission.amount.value' => '<div>Total fee(s) <h2>&pound;%s</h2></div>',
     'application.payment-submission.payment' => 'Payment',
     'application.payment-submission.summary.subtitle' => 'Your application has been submitted successfully!',
     'application.payment-submission.summary.title' => 'Thank you',
@@ -257,6 +261,7 @@ return array(
     'application.previous-history.licence-history' => 'Licence history',
     'application.progress' => '%s of %s sections complete',
     'application.review-declarations' => 'Review & declarations',
+    'application.review-declarations.confirm-short-label' => 'Declarations',
     'application.review-declarations.confirm-text' => 'I declare that the statements made in this application are true
         and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
         offence to make a false declaration',
@@ -491,6 +496,16 @@ return array(
     'application_vehicle-safety_undertakings.limousinesNine.agreement.label' => 'If you intend to operate limousines or
         novelty vehicles which have nine passenger seats or more do you agree to the following additional undertaking to
         be specified on your licence, if granted? (if applicable)',
+    'application_vehicle-safety_undertakings.mainOccupation' => 'Business or main occupation',
+    'application_vehicle-safety_undertakings.mainOccupation.confirmation' => 'You are fully aware of, and will comply
+        with, the restrictions under the terms of the restricted licence for the use of vehicles with between nine and
+        sixteen passenger seats',
+    'application_vehicle-safety_undertakings.mainOccupation.notes' => 'Give details below of your business or main
+        occupation and how you will comply with these restrictions. If you are claiming qualification on the grounds
+        that the operation of these vehicles is not your main occupation please provide further details, including the
+        number of hours worked in your main occupation and how many hours you anticipate working on this transport
+        undertaking should the licence be granted. If your main occupation involves driving please indicate, on average,
+        how may hours per week you drive. If employed please include your employer\'s name and address',
     'application_vehicle-safety_undertakings.nineOrMore.details' => 'Please confirm that vehicles with eight passenger
         seats or less will not be operated under the licence without the prior written agreement of the traffic
         commissioner who may require you to agree to certain undertakings',
@@ -644,6 +659,9 @@ return array(
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',
+    'bus-registrations-index-subtitle' => 'In order to register, update or cancel a bus service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'bus-registrations-index-title' => 'Bus registrations',
     'bus-services-registered' => 'Local bus services registered',
     'business-details.company_number.locked' => 'Cannot change company number. Please contact Central Licensing Office
         for further advice',
@@ -745,6 +763,7 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'crud-event-history-title' => 'Event History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
     'crud-financial-standing-delete-title' => 'Remove financial standing rate(s)',
@@ -826,6 +845,9 @@ return array(
     'driver' => 'Driver',
     'driver-vehicle-standards-agency' => 'Driver &amp; Vehicle Standards Agency',
     'east-of-england' => 'East of England',
+    'ebsr-upload-subtitle' => 'To register a new service, update or cancel an existing service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'ebsr-upload-title' => 'Register, upload or cancel a service',
     'ecms-number' => 'ECMS #',
     'ecmsNo' => 'ECMS',
     'edit' => 'Edit',
@@ -850,6 +872,7 @@ return array(
     'fees' => 'Fees',
     'fees.amount_too_large' => 'The amount received cannot be greater than the fee amount',
     'fees.cheque' => 'Cheque Number',
+    'fees.cheque_date' => 'Cheque date',
     'fees.max_amount' => 'Fee amount',
     'fees.payer' => 'Payer name',
     'fees.payment_method' => 'Payment method',
@@ -887,6 +910,14 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim-start-date' => 'Interim start date',
+    'interim-status' => 'Interim status',
+    'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
+        an additional charge to apply for this',
+    'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
+        interim application.',
+    'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
+        authority.',
     'internal' => 'Internal',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
@@ -1078,6 +1109,7 @@ return array(
     'internal-vehicle-filter-include-removed' => 'Include removed',
     'internal-vehicle-filter-specified' => 'Specified',
     'internal-vehicle-filter-vrm' => 'VRM',
+    'internal.community_licence.confirm_reprint_licences' => 'Are you sure you want to reprint these licences?',
     'internal.community_licence.confirm_restore_licences' => 'Are you sure you want to restore these licences?',
     'internal.community_licence.confirm_void_licences' => 'Are you sure you want to void these licences?',
     'internal.community_licence.form.change_status_to' => 'Change status to',
@@ -1090,11 +1122,13 @@ return array(
     'internal.community_licence.form_add.cancel' => 'Cancel',
     'internal.community_licence.form_add.ok' => 'OK',
     'internal.community_licence.licences_created' => 'The community licences have been created',
+    'internal.community_licence.licences_reprinted' => 'The selected licences have been generated',
     'internal.community_licence.licences_restored' => 'The selected licences have been restored',
     'internal.community_licence.licences_suspended' => 'The licences have been suspended',
     'internal.community_licence.licences_voided' => 'The selected licences have been voided',
     'internal.community_licence.licences_withdrawn' => 'The licences have been withdrawn',
     'internal.community_licence.office_copy_created' => 'The office copy has been created',
+    'internal.community_licence.reprint_not_allowed' => 'You can only reprint \'Active\' community licences',
     'internal.community_licence.restore_not_allowed' => 'You cannot restore these licences without restoring the office
         copy',
     'internal.community_licence.stop_not_allowed' => 'Please void, withdraw or suspend the other pending/active licences
@@ -1102,6 +1136,31 @@ return array(
     'internal.community_licence.void_not_allowed' => 'You cannot void the office copy without voiding all the licences',
     'internal.documents.delete.delete_message' => 'Are you sure you want to remove the selected record(s)?',
     'internal.documents.delete.deleted_successfully' => 'Deleted successfully',
+    'internal.interim.form.grant_confirm' => 'Are you sure you want to grant this interim?',
+    'internal.interim.form.grant_not_allowed' => 'You must process the interim fee before granting this application',
+    'internal.interim.form.interim_application' => 'Interim application',
+    'internal.interim.form.interim_auth_trailers' => 'Trailer Authority',
+    'internal.interim.form.interim_auth_vehicles' => 'Vehicle Authority',
+    'internal.interim.form.interim_cancel' => 'Cancel',
+    'internal.interim.form.interim_end' => 'Interim end date',
+    'internal.interim.form.interim_grant' => 'Grant',
+    'internal.interim.form.interim_granted' => 'Interim granted',
+    'internal.interim.form.interim_reason' => 'Interim reason',
+    'internal.interim.form.interim_refuse' => 'Refuse',
+    'internal.interim.form.interim_reprint' => 'Reprint',
+    'internal.interim.form.interim_requested' => 'Interim requested',
+    'internal.interim.form.interim_save' => 'Save',
+    'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.operatingcentres.table.address' => 'Operating centre address',
+    'internal.interim.operatingcentres.table.header' => 'Operating centres',
+    'internal.interim.operatingcentres.table.listed' => 'Listed',
+    'internal.interim.operatingcentres.table.trailers' => 'Trailers',
+    'internal.interim.operatingcentres.table.vehicles' => 'Vehicles',
+    'internal.interim.vehicles.table.header' => 'Vehicles',
+    'internal.interim.vehicles.table.listed' => 'Listed',
+    'internal.interim.vehicles.table.vrm' => 'VRM',
+    'internal.interim.vehicles.table.weight' => 'Gross plated weight (Kg)',
     'internal.new_application.task_description' => 'Application Fee Due',
     'internal.transport-manager.competences.form.country' => 'Country',
     'internal.transport-manager.competences.form.date-of-issue' => 'Date of Issue',
@@ -1121,6 +1180,9 @@ return array(
     'internal.transport-manager.convictionsandpenalties.table.name-of-court' => 'Name of Court',
     'internal.transport-manager.convictionsandpenalties.table.offence' => 'Offence',
     'internal.transport-manager.convictionsandpenalties.table.penalty' => 'Penalty',
+    'internal.transport-manager.delete-question' => 'Are you sure you want to permanently delete the selected
+        record(s)?',
+    'internal.transport-manager.deleted-message' => 'Deleted successfully',
     'internal.transport-manager.employment.cancel' => 'Cancel',
     'internal.transport-manager.employment.form.address' => 'Address',
     'internal.transport-manager.employment.form.employerName' => 'Employer name',
@@ -1341,6 +1403,7 @@ return array(
     'lva.section.title.financial_evidence' => 'Financial evidence',
     'lva.section.title.financial_history' => 'Financial history',
     'lva.section.title.grant_application' => 'Grant application',
+    'lva.section.title.interim' => 'Interim application',
     'lva.section.title.licence_history' => 'Licence history',
     'lva.section.title.oc-create-variation-confirmation-title' => 'Adding an operating centre',
     'lva.section.title.operating_centres' => 'Operating centres & authorisation',
@@ -1576,6 +1639,7 @@ return array(
     'record-not-found' => 'Record not found',
     'record-saved-successfully' => 'Record saved successfully',
     'refrigerated-transport' => 'Refrigerated Transport',
+    'register-cancel-update-service' => 'Register, update or cancel a service',
     'registered-company' => 'Registered Company',
     'registered-company-details-header' => 'Registered company details',
     'registered-office-details-header' => 'Registered office details',
@@ -1989,17 +2053,13 @@ return array(
     'v-auth' => 'V-auth',
     'v-auth-t-auth' => 'V-auth/T-auth',
     'variation-application-link-text' => 'variation application',
-    'variation-application-message' => 'Making changes to some fields within this section may require a <a href="%s"
-        class="js-modal-ajax">variation application</a>',
-    'variation-application-text' => 'Making changes to some fields within this section may require a',
-    'variation-application-text2' => 'Changes within this section will require a',
-    'variation-application-text3' => 'You cannot make changes to this section',
+    'variation-application-text' => 'You cannot make changes to this section',
     'variation-application-type-of-licence-freetext' => 'The licence type has been changed from %s to %s',
     'variation-details-nav' => 'Variation details',
     'variation-grant-error-no-change' => 'Nothing has been updated',
     'variation-grant-error-sections' => 'You must update these sections before granting this application: %s',
-    'variation-people-message' => 'Making changes to this page will require a variation application. To start a
-        variation application <a href="%s" class="js-modal-ajax">click here</a>',
+    'variation-message' => 'Making changes to this page will require a variation application. To start a variation
+        application <a href="%s" class="js-modal-ajax">click here</a>',
     'variation-required-message-prefix' => 'In order to make this change on your licence you must create a <a
         href="%s">variation application</a>',
     'variation-review-addresses-change' => 'Thank you for updating your addresses',
@@ -2021,6 +2081,7 @@ return array(
     'variation.overview.application-no' => 'Application No.',
     'variation.overview.title' => 'Variation application',
     'variation.print' => 'Print application',
+    'variation.review-declarations.confirm-short-label' => 'Declarations',
     'variation.review-declarations.confirm-text' => 'I declare that the statements made in this application are true and
         that there have been no other changes that affect the licence. I understand that it is an offence to make a
         false declaration. Please see the licence undertakings below as a reminder of your obligations.',

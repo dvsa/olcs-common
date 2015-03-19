@@ -1,5 +1,7 @@
 OLCS.ready(function() {
 
+  // jshint newcap:false
+
   "use strict";
 
   // get a nicer alias for our form helper

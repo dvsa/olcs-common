@@ -16,7 +16,8 @@ return array(
                 ),
                 'void' => array('label' => 'Void', 'class' => 'secondary', 'requireRows' => true),
                 'restore' => array('label' => 'Restore', 'class' => 'secondary', 'requireRows' => true),
-                'stop' => array('label' => 'Stop', 'class' => 'secondary', 'requireRows' => true)
+                'stop' => array('label' => 'Stop', 'class' => 'secondary', 'requireRows' => true),
+                'reprint' => array('label' => 'Reprint', 'class' => 'secondary', 'requireRows' => true)
             )
         ),
         'row-disabled-callback' => function ($row) {
@@ -28,7 +29,8 @@ return array(
                     Common\Service\Entity\CommunityLicEntityService::STATUS_RETURNDED
                 ]
             );
-        }
+        },
+        'actionFormat' => Common\Service\Table\TableBuilder::ACTION_FORMAT_BUTTONS,
     ),
     'columns' => array(
         array(

@@ -38,7 +38,7 @@ class TransportManagerTest extends \PHPUnit_Framework_TestCase
 
         $mockTmData = [
             'id' => 4,
-            'workCd' => [
+            'homeCd' => [
                 'person' => $personData
             ]
         ];

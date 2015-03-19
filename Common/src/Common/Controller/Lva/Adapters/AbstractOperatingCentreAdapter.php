@@ -99,7 +99,7 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     /**
      * Add messages to the main index page
      */
-    public function addMessages()
+    public function addMessages($id)
     {
         // No-op by default
     }
@@ -908,17 +908,31 @@ abstract class AbstractOperatingCentreAdapter extends AbstractControllerAwareAda
     }
 
     /**
-     * Disabled address fields
+     * Disable and lock address fields
      *
      * @param \Zend\Form\Form $form
      */
     protected function disableAddressFields($form)
     {
-        $form->get('address')->remove('searchPostcode');
+        $addressElement = $form->get('address');
+        $addressElement->remove('searchPostcode');
 
         $formHelper = $this->getServiceLocator()->get('Helper\Form');
 
-        $formHelper->disableElements($form->get('address'));
+        $formHelper->disableElements($addressElement);
         $formHelper->disableValidation($form->getInputFilter()->get('address'));
+
+        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+
+        $lockedElements = array(
+            $addressElement->get('addressLine1'),
+            $addressElement->get('town'),
+            $addressElement->get('postcode'),
+            $addressElement->get('countryCode'),
+        );
+
+        foreach ($lockedElements as $element) {
+            $formHelper->lockElement($element, 'operating-centre-address-requires-variation');
+        }
     }
 }

@@ -22,6 +22,13 @@ class VariationVehiclesPsvReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        return $this->getServiceLocator()->get('Review\ApplicationVehiclesPsv')->getConfigFromData($data);
+        return [
+            'subSections' => [
+                [
+                    'mainItems' => $this->getServiceLocator()->get('Review\VehiclesPsv')
+                        ->getConfigFromData($data, [])
+                ]
+            ]
+        ];
     }
 }

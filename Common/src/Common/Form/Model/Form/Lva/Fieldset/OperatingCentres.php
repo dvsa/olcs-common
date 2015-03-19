@@ -81,8 +81,6 @@ class OperatingCentres
     public $totAuthTrailers = null;
 
     /**
-     * @Form\Input("\Common\InputFilter\ContinueIfEmptyInput")
-     * @Form\AllowEmpty(false)
      * @Form\Attributes({"class":"short","id":""})
      * @Form\Options({"label": "application_operating-centres_authorisation.data.totCommunityLicences"})
      * @Form\Validator({"name": "Digits"})

@@ -25,21 +25,15 @@ if (array_key_exists('numeric', $item)) {
     } else {
         $item['value'] = $item['numeric'];
     }
-
 }
 
 //convert values into yes or no
-switch ($item['value']) {
-    case 'Y':
-        $item['value'] = 'Yes';
-        break;
-    case 'N':
-        $item['value'] = 'No';
-        break;
+if ($item['value'] == 'Y') {
+    $item['value'] == 'Yes';
+} elseif ($item['value'] == 'N') {
+    $item['value'] == 'No';
 }
 
-?>
-<?php
 if (isset($item['hideIfEmpty'])
     && $item['hideIfEmpty']
     && empty($item['value'])

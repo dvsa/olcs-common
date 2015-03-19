@@ -65,7 +65,7 @@ class AbstractConditionsUndertakingsControllerTest extends MockeryTestCase
             ->shouldReceive('alterFormForLva')
             ->with($mockForm)
             ->shouldReceive('render')
-            ->with('conditions_undertakings', $mockForm)
+            ->with('conditions_undertakings', $mockForm, array())
             ->andReturn('RENDER');
 
         $request->shouldReceive('isPost')

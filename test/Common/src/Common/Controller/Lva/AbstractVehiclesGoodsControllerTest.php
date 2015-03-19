@@ -29,6 +29,8 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
         $this->adapter
             ->shouldReceive('showFilters')
             ->andReturn(true)
+            ->shouldReceive('getFilterForm')
+            ->andReturn(m::mock())
             ->getMock();
 
         $this->sut->setAdapter($this->adapter);
@@ -52,39 +54,16 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
      */
     public function testGetIndexAction()
     {
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $filterForm = m::mock()
-                ->shouldReceive('get')
-                ->with('vrm')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setValueOptions')
-                    ->with($vrmOptions)
-                    ->getMock()
-                )
-                ->getMock();
-
-        $this->getMockFormHelper()
-            ->shouldReceive('createForm')
-            ->with('Lva\VehicleFilter')
-            ->andReturn($filterForm);
+        $this->adapter
+            ->shouldReceive('getFilters')
+            ->andReturn(m::mock())
+            ->getMock();
 
         $this->sut
             ->shouldReceive('params')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('fromQuery')
-                ->with('vrm', 'All')
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('specified', 'A')
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('includeRemoved', 0)
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('disc', 'A')
-                ->andReturn('A')
                 ->getMock()
             );
 
@@ -186,39 +165,15 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
      */
     public function testIndexActionWithFilters($filters, $licenceVehicle, $rows)
     {
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $filterForm = m::mock()
-                ->shouldReceive('get')
-                ->with('vrm')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setValueOptions')
-                    ->with($vrmOptions)
-                    ->getMock()
-                )
-                ->getMock();
-
-        $this->getMockFormHelper()
-            ->shouldReceive('createForm')
-            ->with('Lva\VehicleFilter')
-            ->andReturn($filterForm);
+        $this->adapter
+            ->shouldReceive('getFilters')
+            ->andReturn($filters);
 
         $this->sut
             ->shouldReceive('params')
             ->andReturn(
                 m::mock()
                 ->shouldReceive('fromQuery')
-                ->with('vrm', 'All')
-                ->andReturn($filters['vrm'])
-                ->shouldReceive('fromQuery')
-                ->with('specified', 'A')
-                ->andReturn($filters['specified'])
-                ->shouldReceive('fromQuery')
-                ->with('includeRemoved', 0)
-                ->andReturn($filters['includeRemoved'])
-                ->shouldReceive('fromQuery')
-                ->with('disc', 'A')
-                ->andReturn($filters['disc'])
                 ->getMock()
             );
 
@@ -433,7 +388,6 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ];
     }
 
-
     /**
      * Test index action with post
      *
@@ -441,23 +395,11 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
      */
     public function testIndexActionWithPost()
     {
-        $formData = ['data' => ['hasEnteredReg' => 'Y', 'version' => 1], 'table' => ['rows' => 1]];
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $filterForm = m::mock()
-                ->shouldReceive('get')
-                ->with('vrm')
-                ->andReturn(
-                    m::mock()
-                    ->shouldReceive('setValueOptions')
-                    ->with($vrmOptions)
-                    ->getMock()
-                )
-                ->getMock();
+        $this->adapter
+            ->shouldReceive('getFilters')
+            ->andReturn([]);
 
-        $this->getMockFormHelper()
-            ->shouldReceive('createForm')
-            ->with('Lva\VehicleFilter')
-            ->andReturn($filterForm);
+        $formData = ['data' => ['hasEnteredReg' => 'Y', 'version' => 1], 'table' => ['rows' => 1]];
 
         $this->request
             ->shouldReceive('isPost')
@@ -538,17 +480,6 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->andReturn(
                 m::mock()
                 ->shouldReceive('fromQuery')
-                ->with('vrm', 'All')
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('specified', 'A')
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('includeRemoved', 0)
-                ->andReturn('A')
-                ->shouldReceive('fromQuery')
-                ->with('disc', 'A')
-                ->andReturn('A')
                 ->getMock()
             )
             ->shouldReceive('completeSection')

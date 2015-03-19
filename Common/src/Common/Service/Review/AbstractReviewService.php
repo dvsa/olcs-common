@@ -24,6 +24,19 @@ abstract class AbstractReviewService implements ReviewServiceInterface, ServiceL
 {
     use ServiceLocatorAwareTrait;
 
+    protected function findFiles($files, $category, $subCategory)
+    {
+        $foundFiles = [];
+
+        foreach ($files as $file) {
+            if ($file['category']['id'] == $category && $file['subCategory']['id'] == $subCategory) {
+                $foundFiles[] = $file;
+            }
+        }
+
+        return $foundFiles;
+    }
+
     protected function formatNumber($number)
     {
         return number_format($number);

@@ -16,6 +16,12 @@ class BusReg extends Generic
 {
     protected $serviceName = 'BusReg';
 
+    protected $bundle = [
+        'children' => [
+            'status'
+        ]
+    ];
+
     /**
      * Returns whether a bus reg may be granted
      *

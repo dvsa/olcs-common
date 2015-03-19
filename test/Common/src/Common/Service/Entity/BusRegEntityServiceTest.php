@@ -113,6 +113,50 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testFindMostRecentByLicenceWithResult()
+    {
+        $response = [
+            'Count' => 1,
+            'Results' => [
+                'RESPONSE'
+            ]
+        ];
+        $params = [
+            'licence' => 123,
+            'sort' => 'routeNo',
+            'order' => 'DESC',
+            'limit' => 1
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->findMostRecentRouteNoByLicence(123));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testFindMostRecentByLicenceWithNoResult()
+    {
+        $response = [
+            'Count' => 0,
+            'Results' => []
+        ];
+        $params = [
+            'licence' => 123,
+            'sort' => 'routeNo',
+            'order' => 'DESC',
+            'limit' => 1
+        ];
+        $this->expectOneRestCall('BusReg', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(false, $this->sut->findMostRecentRouteNoByLicence(123));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetDataForTasks()
     {
         $id = 4;
@@ -134,5 +178,18 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue('RESPONSE'));
 
         $this->assertEquals('RESPONSE', $this->sut->getDataForFees($id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetDataForVariation()
+    {
+        $id = 4;
+
+        $this->expectOneRestCall('BusReg', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getDataForVariation($id));
     }
 }

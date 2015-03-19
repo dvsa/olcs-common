@@ -131,6 +131,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             'licenceVehicles' => array(
                 'children' => array(
                     'goodsDiscs',
+                    'interimApplication',
                     'vehicle'
                 )
             )
@@ -250,7 +251,7 @@ class LicenceEntityService extends AbstractLvaEntityService
             /*
             'cases' =>   [ // DON'T do this, it's horribly slow for some reason!
                 'criteria' => [
-                    'closeDate' => 'NULL',
+                    'closedDate' => 'NULL',
                     'deletedDate' => 'NULL',
                 ],
             ],
