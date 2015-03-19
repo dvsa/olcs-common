@@ -307,7 +307,7 @@ class InterimHelperService extends AbstractHelperService
 
         // all active discs, set goods_disc.ceased_date = current date/time wherever goods_disc.ceased_date is null
         if ($activeDiscs) {
-            $this->processActiveDicsVoiding($activeDiscs);
+            $this->processActiveDiscsVoiding($activeDiscs);
         }
 
         if ($newDiscs) {
@@ -337,6 +337,25 @@ class InterimHelperService extends AbstractHelperService
             ->get('Processing\Licence');
 
         $licenceProcessingService->generateInterimDocument($application);
+    }
+
+    /**
+     * Void active discs for an application
+     */
+    public function voidDiscsForApplication($applicationId)
+    {
+        $interimData = $this->getInterimData($applicationId);
+
+        $activeDiscs = [];
+        foreach ($interimData['licenceVehicles'] as $licenceVehicle) {
+            foreach ($licenceVehicle['goodsDiscs'] as $disc) {
+                if (!$disc['ceasedDate']) {
+                    $activeDiscs[] = $disc;
+                }
+            }
+        }
+
+        return $this->processActiveDiscsVoiding($activeDiscs);
     }
 
     /**
@@ -383,7 +402,7 @@ class InterimHelperService extends AbstractHelperService
      *
      * @param array $newDiscs
      */
-    protected function processActiveDicsVoiding($activeDiscs)
+    protected function processActiveDiscsVoiding($activeDiscs)
     {
         $discsToVoid = [];
         foreach ($activeDiscs as $disc) {
