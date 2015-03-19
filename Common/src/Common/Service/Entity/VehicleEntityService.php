@@ -55,7 +55,7 @@ class VehicleEntityService extends AbstractEntityService
 
     public function getPsvTypeFromType($type)
     {
-        return isset($this->typeMap[$type]) ? $this->typeMap[$type] : null;
+        return isset($this->getTypeMap()[$type]) ? $this->getTypeMap()[$type] : null;
     }
 
     public function getTypeFromPsvType($psvType)

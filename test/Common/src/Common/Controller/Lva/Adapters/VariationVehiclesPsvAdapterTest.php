@@ -95,4 +95,21 @@ class VariationVehiclesPsvAdapterTest extends MockeryTestCase
             $this->sut->maybeUnsetSpecifiedDate(['licence-vehicle' => ['specifiedDate' => 'date']])
         );
     }
+
+    public function testWarnIfAuthorityExceeded()
+    {
+        $id = 69;
+        $types = ['foo','bar'];
+
+        $this->sm->setService(
+            'ApplicationVehiclesPsvAdapter',
+            m::mock()
+                ->shouldReceive('warnIfAuthorityExceeded')
+                ->with($id, $types, true)
+                ->once()
+                ->getMock()
+        );
+
+        $this->sut->warnIfAuthorityExceeded($id, $types, true);
+    }
 }
