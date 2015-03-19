@@ -36,7 +36,7 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
         unset($value);
 
         // This only gets used if psvOperateSmallVhl is shown
-        if (isset($context['psvOperateSmallVhl'])) {
+        if (array_key_exists('psvOperateSmallVhl', $context)) {
 
             if ($context['psvOperateSmallVhl'] === 'N' && $context['psvSmallVhlConfirmation'] !== 'Y') {
                 $this->error('required');
@@ -44,7 +44,6 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
             }
 
         } else {
-
             // Scotland
             if (isset($context['psvSmallVhlScotland'])) {
                 if ($context['psvSmallVhlConfirmation'] !== 'Y') {
