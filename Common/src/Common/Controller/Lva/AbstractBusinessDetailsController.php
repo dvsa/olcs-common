@@ -8,19 +8,16 @@
 namespace Common\Controller\Lva;
 
 use Common\Controller\Lva\Traits\CrudTableTrait;
-use Common\Controller\Traits\GenericBusinessDetails;
-use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
+use Common\BusinessService\Response;
 
 /**
  * Shared logic between Business Details Controller
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-abstract class AbstractBusinessDetailsController extends AbstractController implements AdapterAwareInterface
+abstract class AbstractBusinessDetailsController extends AbstractController
 {
-    use CrudTableTrait,
-        GenericBusinessDetails,
-        Traits\AdapterAwareTrait;
+    use CrudTableTrait;
 
     protected $section = 'business_details';
 
@@ -31,10 +28,6 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
     {
         $request = $this->getRequest();
 
-        $formService = $this->getServiceLocator()
-            ->get('FormServiceManager')
-            ->get('lva-' . $this->lva . '-' . $this->section);
-
         $orgId = $this->getCurrentOrganisationId();
 
         $organisationEntity = $this->getServiceLocator()->get('Entity\Organisation');
@@ -44,88 +37,133 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         // a GET or a POST
         $orgData = $organisationEntity->getBusinessDetailsData($orgId);
 
-        $form = $formService->getForm($orgData['type']['id'], $orgId);
-
         if ($request->isPost()) {
-            $data = (array)$request->getPost();
-
-            if (!isset($data['data']['companyNumber'])
-                || !array_key_exists('company_number', $data['data']['companyNumber'])) {
-                $data['data']['companyNumber']['company_number'] = $orgData['companyOrLlpNo'];
-            }
-
-            if (!array_key_exists('name', $data['data'])) {
-                $data['data']['name'] = $orgData['name'];
-            }
-
+            $data = $this->getFormPostData($orgData);
         } else {
             $data = $this->formatDataForForm($orgData, $organisationEntity->getNatureOfBusinessesForSelect($orgId));
         }
 
-        $form->setData($data);
+        // Get's a fully configured/altered form for any version of this section
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section)
+            ->getForm($orgData['type']['id'], $orgId)
+            ->setData($data);
 
         if ($form->has('table')) {
-            $this->populateTable($form, $orgId);
+            $this->populateTable($form);
         }
 
-        if ($request->isPost()) {
-            /**
-             * we'll re-use this in a few places, so cache the lookup
-             * just for the sake of legibility
-             */
-            $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
+        // Added an early return for non-posts to improve the readability of the code
+        if (!$request->isPost()) {
+            return $this->renderForm($form);
+        }
 
-            /**
-             * Note that we can't return early here; the first two conditions
-             * still fall out of their respective branches and render the form
-             */
-            if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
-                $this->getServiceLocator()->get('Helper\Form')
-                    ->processCompanyNumberLookupForm($form, $data, 'data');
-            } elseif (isset($tradingNames['submit_add_trading_name'])) {
-                $this->processTradingNames($tradingNames, $form);
-            } elseif ($form->isValid()) {
+        // If we are performing a company number lookup
+        if (isset($data['data']['companyNumber']['submit_lookup_company'])) {
+            $this->getServiceLocator()->get('Helper\Form')->processCompanyNumberLookupForm($form, $data, 'data');
+            return $this->renderForm($form);
+        }
 
-                $params = [
-                    'tradingNames' => $tradingNames,
+        // We'll re-use this in a few places, so cache the lookup just for the sake of legibility
+        $tradingNames = isset($data['data']['tradingNames']) ? $data['data']['tradingNames'] : array();
+
+        // If we are interacting with the trading names collection element
+        if (isset($tradingNames['submit_add_trading_name'])) {
+            $this->processTradingNames($tradingNames, $form);
+            return $this->renderForm($form);
+        }
+
+        // If our form is invalid, render the form to display the errors
+        if (!$form->isValid()) {
+            return $this->renderForm($form);
+        }
+
+        // If we have gotten to here, then we want to start persisting
+        $tradingNamesToProcess = [];
+        if (isset($tradingNames['trading_name'])) {
+            $tradingNamesToProcess = $tradingNames['trading_name'];
+        }
+
+        $response = $this->getServiceLocator()->get('BusinessServiceManager')
+            ->get('Lva\BusinessDetails')
+            ->process(
+                [
+                    'tradingNames' => $tradingNamesToProcess,
                     'orgId' => $orgId,
                     'data' => $data,
                     'licenceId' => $this->getLicenceId()
-                ];
+                ]
+            );
 
-                $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                    ->get('Lva\BusinessDetails')
-                    ->process($params);
+        if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+            return $this->renderForm($form);
+        }
 
-                var_dump($response);
-                exit;
+        $this->postSave('business_details');
 
-                //$this->processSave($tradingNames, $orgId, $data);
+        // If we have a table, then we may have a crud action to handle
+        if(isset($data['table'])) {
+            $crudAction = $this->getCrudAction(array($data['table']));
 
-                $this->postSave('business_details');
-
-                // we can't always assume this index exists; varies depending on
-                // org type
-                $crudTables = isset($data['table']) ? array($data['table']) : array();
-                $crudAction = $this->getCrudAction($crudTables);
-
-                if ($crudAction !== null) {
-                    return $this->handleCrudAction($crudAction);
-                }
-
-                return $this->completeSection('business_details');
+            if ($crudAction !== null) {
+                return $this->handleCrudAction($crudAction);
             }
         }
 
-        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
+        return $this->completeSection('business_details');
+    }
 
+    public function addAction()
+    {
+        return $this->addOrEdit('add');
+    }
+
+    public function editAction()
+    {
+        return $this->addOrEdit('edit');
+    }
+
+    /**
+     * Method used to render the indexAction form
+     *
+     * @param Zend\Form\Form $form
+     * @return Zend\View\Model\ViewModel
+     */
+    protected function renderForm($form)
+    {
+        $this->getServiceLocator()->get('Script')->loadFile('lva-crud');
         return $this->render('business_details', $form);
     }
 
     /**
-     * User has pressed 'Add another' on trading names
+     * Grabs the data from the post, and set's some defaults in-case there are disabled fields
+     *
+     * @param array $orgData
+     * @return array
      */
-    private function processTradingNames($tradingNames, $form)
+    protected function getFormPostData($orgData)
+    {
+        $data = (array)$this->getRequest()->getPost();
+
+        if (!isset($data['data']['companyNumber'])
+            || !array_key_exists('company_number', $data['data']['companyNumber'])) {
+            $data['data']['companyNumber']['company_number'] = $orgData['companyOrLlpNo'];
+        }
+
+        if (!array_key_exists('name', $data['data'])) {
+            $data['data']['name'] = $orgData['name'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * User has pressed 'Add another' on trading names
+     * So we need to duplicate the trading names field to produce another input
+     */
+    protected function processTradingNames($tradingNames, $form)
     {
         $form->setValidationGroup(array('data' => ['tradingNames']));
 
@@ -145,67 +183,14 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
         }
     }
 
-    /**
-     * Normal submission; save the form data
-     */
-    private function processSave($tradingNames, $orgId, $data)
+    protected function addOrEdit($mode)
     {
-        $adapter = $this->getAdapter();
-
-        $registeredAddressId = null;
-        $isDirty = false;
-
-        if (isset($tradingNames['trading_name']) && !empty($tradingNames['trading_name'])) {
-            $tradingNames = $this->formatTradingNamesDataForSave($orgId, $data);
-
-            $isDirty = $adapter->hasChangedTradingNames($orgId, $tradingNames['tradingNames']);
-            $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNames);
-        }
-
-        if (isset($data['registeredAddress'])) {
-            $isDirty = $isDirty ?: $adapter->hasChangedRegisteredAddress($orgId, $data['registeredAddress']);
-            $registeredAddressId = $this->saveRegisteredAddress($orgId, $data['registeredAddress']);
-        }
-
-        $isDirty = $isDirty ?: $adapter->hasChangedNatureOfBusiness($orgId, $data['data']['natureOfBusinesses']);
-
-        $saveData = $this->formatDataForSave($data);
-        $saveData['id'] = $orgId;
-
-        if ($registeredAddressId !== null) {
-            $saveData['contactDetails'] = $registeredAddressId;
-        }
-
-        if ($isDirty) {
-            $adapter->postSave(
-                [
-                    'licence' => $this->getLicenceId(),
-                    'user' => $this->getLoggedInUser()
-                ]
-            );
-        }
-
-        $this->getServiceLocator()->get('Entity\Organisation')->save($saveData);
-    }
-
-    public function addAction()
-    {
-        return $this->addOrEdit('add');
-    }
-
-    public function editAction()
-    {
-        return $this->addOrEdit('edit');
-    }
-
-    private function addOrEdit($mode)
-    {
-        $adapter = $this->getAdapter();
+        $request = $this->getRequest();
 
         $orgId = $this->getCurrentOrganisationId();
-        $request = $this->getRequest();
         $id = $this->params('child_id');
-        $data = array();
+
+        $data = [];
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -216,72 +201,42 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
             );
         }
 
+        // @todo Move this into a form service
         $form = $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $this->getRequest())
             ->setData($data);
 
+        // @todo Add this generic behaviour to a form service
         if ($mode !== 'add') {
             $form->get('form-actions')->remove('addAnother');
         }
 
         if ($request->isPost() && $form->isValid()) {
-            $data = $this->formatCrudDataForSave($data);
-            $data['organisation'] = $orgId;
 
-            if ($id === null || $adapter->hasChangedSubsidiaryCompany($id, $data)) {
-                $adapter->postCrudSave(
-                    $id === null ? 'added' : 'updated',
-                    [
-                        'licence' => $this->getLicenceId(),
-                        'user'    => $this->getLoggedInUser(),
-                        'name'    => $data['name']
-                    ]
-                );
+            $data['id'] = $id;
+            $data['licenceId'] = $this->getLicenceId();
+
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\CompanySubsidiary')->process($data);
+
+            if ($response->getType() === Response::TYPE_PERSIST_SUCCESS) {
+                return $this->handlePostSave();
             }
 
-            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
-
-            return $this->handlePostSave();
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
         }
 
         return $this->render($mode . '_subsidiary_company', $form);
     }
 
     /**
-     * Format data for save
-     *
-     * @param array $data
-     * @return array
-     */
-    private function formatDataForSave($data)
-    {
-        $persist = array(
-            'version' => $data['version']
-        );
-
-        $data = $data['data'];
-
-        if (isset($data['companyNumber']['company_number'])) {
-            $persist['companyOrLlpNo'] = $data['companyNumber']['company_number'];
-        }
-
-        if (isset($data['name'])) {
-            $persist['name'] = $data['name'];
-        }
-
-        $persist['natureOfBusinesses'] = $data['natureOfBusinesses'];
-
-        return $persist;
-    }
-
-    /**
-     * Format data for form
+     * Format data for form (This is presentation logic)
      *
      * @param array $data
      * @param array $natureOfBusiness
      * @return array
      */
-    private function formatDataForForm($data, $natureOfBusiness)
+    protected function formatDataForForm($data, $natureOfBusiness)
     {
         $tradingNames = array();
         foreach ($data['tradingNames'] as $tradingName) {
@@ -306,67 +261,43 @@ abstract class AbstractBusinessDetailsController extends AbstractController impl
     }
 
     /**
-     * Format subsidiary data for save
+     * Format subsidiary data for form (This is presentation logic);
      *
      * @param array $data
      * return array
      */
-    private function formatCrudDataForSave($data)
-    {
-        return $data['data'];
-    }
-
-    /**
-     * Format subsidiary data for form
-     *
-     * @param array $data
-     * return array
-     */
-    private function formatCrudDataForForm($data)
+    protected function formatCrudDataForForm($data)
     {
         return array('data' => $data);
     }
 
-    private function populateTable($form, $orgId)
+    protected function populateTable($form)
     {
-        $tableData = $this->getServiceLocator()->get('Entity\CompanySubsidiary')
-            ->getAllForOrganisation($orgId);
+        $tableData = $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getForLicence($this->getLicenceId());
 
-        $table = $this->getServiceLocator()
-            ->get('Table')
-            ->prepareTable('lva-subsidiaries', $tableData);
+        $table = $this->getServiceLocator()->get('Table')->prepareTable('lva-subsidiaries', $tableData);
 
-        $form->get('table')->get('table')->setTable($table);
+        $this->getServiceLocator()->get('Helper\Form')->populateFormTable($form->get('table'), $table);
     }
 
     /**
-     * Mechanism to *actually* delete a subsidiary, invoked by the
-     * underlying delete action
+     * Mechanism to *actually* delete a subsidiary, invoked by the underlying delete action
      */
     protected function delete()
     {
-        $adapter = $this->getAdapter();
-
         $id = $this->params('child_id');
         $ids = explode(',', $id);
 
-        foreach ($ids as $id) {
-            $company = $this->getServiceLocator()
-                ->get('Entity\CompanySubsidiary')
-                ->getById($id);
+        $params = [
+            'ids' => $ids,
+            'licenceId' => $this->getLicenceId()
+        ];
 
-            $this->getServiceLocator()
-                ->get('Entity\CompanySubsidiary')
-                ->delete($id);
+        $response = $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\DeleteCompanySubsidiary')
+            ->process($params);
 
-            $adapter->postCrudSave(
-                'deleted',
-                [
-                    'licence' => $this->getLicenceId(),
-                    'user'    => $this->getLoggedInUser(),
-                    'name'    => $company['name']
-                ]
-            );
+        if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+            $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
         }
     }
 }

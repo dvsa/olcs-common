@@ -56,15 +56,6 @@ return array(
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
-            'LvaApplication/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
-            'LvaLicence/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
-            'LvaVariation/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -221,10 +212,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'GenericBusinessTypeAdapter'
-                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
-            'GenericBusinessDetailsAdapter'
-                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
@@ -575,13 +562,23 @@ return array(
     ],
     'business_rule_manager' => [
         'invokables' => [
-            'TradingNames' => 'Common\BusinessRule\Rule\TradingNames'
+            'Task' => 'Common\BusinessRule\Rule\Task',
+            'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
+            'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
         ]
     ],
     'business_service_manager' => [
         'invokables' => [
+            // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
             'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
-            'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames'
+            'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
+            'Lva\RegisteredAddress' => 'Common\BusinessService\Service\Lva\RegisteredAddress',
+            'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
+            'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
+            'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
+            'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
+            'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
+            'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
         ]
     ],
 );

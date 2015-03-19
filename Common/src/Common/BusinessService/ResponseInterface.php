@@ -18,6 +18,7 @@ interface ResponseInterface
     const TYPE_PERSIST_SUCCESS = 1;
     const TYPE_PERSIST_FAILED = 2;
     const TYPE_RULE_FAILED = 3;
+    const TYPE_NO_OP = 4;
 
     public function setType($type);
 
@@ -26,4 +27,8 @@ interface ResponseInterface
     public function setData(array $data);
 
     public function getData();
+
+    public function setMessage($message);
+
+    public function getMessage();
 }

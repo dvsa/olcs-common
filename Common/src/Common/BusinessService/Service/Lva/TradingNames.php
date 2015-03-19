@@ -11,15 +11,18 @@ use Common\BusinessService\BusinessServiceInterface;
 use Common\BusinessRule\BusinessRuleAwareInterface;
 use Common\BusinessRule\BusinessRuleAwareTrait;
 use Common\BusinessService\Response;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Trading Names
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterface
+class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterface, ServiceLocatorAwareInterface
 {
-    use BusinessRuleAwareTrait;
+    use BusinessRuleAwareTrait,
+        ServiceLocatorAwareTrait;
 
     /**
      * Processes the data by passing it through a number of business rules and then persisting it
@@ -31,7 +34,7 @@ class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterfa
     {
         $orgId = $params['orgId'];
         $licenceId = $params['licenceId'];
-        $tradingNames = $params['tradingNames']['trading_name'];
+        $tradingNames = $params['tradingNames'];
 
         $tradingNamesRule = $this->getBusinessRuleManager()->get('TradingNames');
 

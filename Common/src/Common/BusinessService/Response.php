@@ -18,6 +18,8 @@ class Response implements ResponseInterface
 
     protected $data = null;
 
+    protected $message = null;
+
     public function setType($type)
     {
         $this->type = $type;
@@ -36,5 +38,15 @@ class Response implements ResponseInterface
     public function getData()
     {
         return $this->data;
+    }
+
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

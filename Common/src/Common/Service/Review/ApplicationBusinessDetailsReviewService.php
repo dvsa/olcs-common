@@ -152,11 +152,6 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
         ];
     }
 
-    /**
-     * @NOTE I think the companySubsidiaryLicence table should be a straight many-to-many so this could change
-     *
-     * @param array $data
-     */
     protected function getSubsidiaryCompaniesPartial($data)
     {
         $companySubsidiaries = $data['licence']['companySubsidiaries'];
@@ -171,15 +166,15 @@ class ApplicationBusinessDetailsReviewService extends AbstractReviewService
 
         $config['multiItems'] = [];
 
-        foreach ($companySubsidiaries as $companySubsidiaryLink) {
+        foreach ($companySubsidiaries as $companySubsidiary) {
             $item = [
                 [
                     'label' => 'application-review-business-details-subsidiary-company-name',
-                    'value' => $companySubsidiaryLink['companySubsidiary']['name']
+                    'value' => $companySubsidiary['name']
                 ],
                 [
                     'label' => 'application-review-business-details-subsidiary-company-no',
-                    'value' => $companySubsidiaryLink['companySubsidiary']['companyNo']
+                    'value' => $companySubsidiary['companyNo']
                 ]
             ];
 
