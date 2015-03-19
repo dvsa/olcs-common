@@ -1175,6 +1175,402 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
         $this->assertEquals('RESPONSE', $response);
     }
 
+    public function testAddActionGet()
+    {
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with([])
+            ->andReturnSelf();
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostInvalidForm()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(false);
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostFailedPersist()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockFlashMessenger = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\CompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'id' => null,
+                    'licenceId' => 222,
+                    'foo' => 'bar'
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->once()
+            ->andReturn(Response::TYPE_PERSIST_FAILED)
+            ->shouldReceive('getMessage')
+            ->once()
+            ->andReturn('MSG');
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->once()
+            ->with('MSG');
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostSuccessPersist()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\CompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('handlePostSave')
+            ->once()
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'id' => null,
+                    'licenceId' => 222,
+                    'foo' => 'bar'
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->once()
+            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testEditActionGet()
+    {
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockCompanySubsidiary = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('Entity\CompanySubsidiary', $mockCompanySubsidiary);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(123)
+            ->shouldReceive('render')
+            ->once()
+            ->with('edit_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockCompanySubsidiary->shouldReceive('getById')
+            ->with(123)
+            ->andReturn(['foo' => 'bar']);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with(['data' => ['foo' => 'bar']])
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('form-actions')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('remove')
+                ->with('addAnother')
+                ->getMock()
+            );
+
+        $response = $this->sut->editAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testDeleteActionWithFailedPersist()
+    {
+        // Mocks
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+        $mockFlashMessenger = m::mock();
+        $mockRequest = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\DeleteCompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('123,321')
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->with('business_details')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('foo')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(333);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'ids' => [123, 321],
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->andReturn(Response::TYPE_PERSIST_FAILED)
+            ->shouldReceive('getMessage')
+            ->andReturn('MSG');
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->with('MSG');
+
+        $response = $this->sut->deleteAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testDeleteActionWithSuccessPersist()
+    {
+        // Mocks
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+        $mockRequest = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\DeleteCompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('123,321')
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->with('business_details')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('foo')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(333);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'ids' => [123, 321],
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+
+        $response = $this->sut->deleteAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
     public function indexActionPostProvider()
     {
         return [

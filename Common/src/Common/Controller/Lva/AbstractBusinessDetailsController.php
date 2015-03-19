@@ -199,7 +199,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
 
         // @todo Move this into a form service
         $form = $this->getServiceLocator()->get('Helper\Form')
-            ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $this->getRequest())
+            ->createFormWithRequest('Lva\BusinessDetailsSubsidiaryCompany', $request)
             ->setData($data);
 
         // @todo Add this generic behaviour to a form service
