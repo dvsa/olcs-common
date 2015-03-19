@@ -11,6 +11,8 @@ use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\FeeEntityService;
 use Common\Service\Data\FeeTypeDataService;
 use Common\Service\Entity\CommunityLicEntityService;
+use Common\Service\Data\CategoryDataService as Category;
+use Common\Service\Printing\PrintSchedulerInterface;
 
 /**
  * Class InterimHelperService
@@ -462,5 +464,99 @@ class InterimHelperService extends AbstractHelperService
                 ->get('Helper\CommunityLicenceDocument')
                 ->generateBatch($interimData['licence']['id'], $comLicsIds);
         }
+    }
+
+    /**
+     * Refuse interim
+     *
+     * @param int $applicationId
+     */
+    public function refuseInterim($applicationId)
+    {
+        $interimData = $this->getInterimData($applicationId);
+
+        // set interim status to refuse
+        $dataToSave = [
+            'id' => $interimData['id'],
+            'version' => $interimData['version'],
+            'interimStatus' => ApplicationEntityService::INTERIM_STATUS_REFUSED,
+            'interimEnd' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s')
+        ];
+        $this->getServiceLocator()->get('Entity\Application')->save($dataToSave);
+
+        $fileName = $interimData['isVariation'] ? 'GV Refused Interim Direction' : 'GV Refused Interim Licence';
+
+        // generate document
+        $document = $this->generateDocument($interimData);
+
+        // upload document and save document fo JackRabbit
+        $file = $this->uploadAndSaveRefuseDocument($document, $interimData, $fileName);
+
+        // print document
+        $this->printRefuseDocument($file, $fileName);
+    }
+
+    /**
+     * Generate document
+     *
+     * @param array $interimData
+     * @return string
+     */
+    protected function generateDocument($interimData)
+    {
+        $prefix = $interimData['niFlag'] === 'Y' ? 'NI/' : 'GB/';
+        $type = $interimData['isVariation'] ? 'VAR' : 'NEW';
+        $templateName = $prefix . $type . '_APP_INT_REFUSED';
+        $queryData = [
+            'user' => $this->getServiceLocator()->get('Entity\User')->getCurrentUser()['id'],
+            'licence' => $interimData['licence']['id']
+        ];
+        return $this->getServiceLocator()
+            ->get('Helper\DocumentGeneration')
+            ->generateFromTemplate($templateName, $queryData);
+    }
+
+    /**
+     * Upload and save refuse document
+     *
+     * @param string $document
+     * @param array $interimData
+     * @param string $fileName
+     * @return string
+     */
+    protected function uploadAndSaveRefuseDocument($document, $interimData, $fileName)
+    {
+        $file = $this->getServiceLocator()
+            ->get('Helper\DocumentGeneration')
+            ->uploadGeneratedContent($document, 'documents', $fileName);
+
+        $this->getServiceLocator()->get('Entity\Document')->createFromFile(
+            $file,
+            [
+                'category' => Category::CATEGORY_LICENSING,
+                'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
+                'description' => $fileName,
+                'filename' => $fileName,
+                'fileExtension' => 'doc_rtf',
+                'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+                'isDigital' => false,
+                'isScan' => false,
+                'licence' => $interimData['licence']['id'],
+                'application' => $interimData['id']
+            ]
+        );
+        return $file;
+    }
+
+    /**
+     * Print refuse document
+     *
+     * @param string $file
+     * @param string $fileName
+     */
+    protected function printRefuseDocument($file, $fileName)
+    {
+        $this->getServiceLocator()->get('PrintScheduler')
+            ->enqueueFile($file, $fileName, [PrintSchedulerInterface::OPTION_DOUBLE_SIDED]);
     }
 }
