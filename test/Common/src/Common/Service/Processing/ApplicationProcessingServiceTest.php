@@ -173,6 +173,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $licenceType = LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL;
         $date = '2012-01-01';
 
+        $mockFeeService = m::mock();
         $mockGrantConditionUndertaking = m::mock();
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
@@ -180,6 +181,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockSnapshot = m::mock();
         $mockLicence = m::mock();
 
+        $this->sm->setService('Entity\Fee', $mockFeeService);
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
@@ -187,6 +189,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
         $this->sm->setService('Processing\Licence', $mockLicence);
 
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
@@ -238,23 +241,26 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 'action' => 'A',
                 'operatingCentre' => array(
                     'id' => 7
-                )
+                ),
+                'isInterim' => false,
             ),
             array(
                 'action' => 'D',
                 'operatingCentre' => array(
                     'id' => 6
-                )
+                ),
+                'isInterim' => false
             )
         );
 
-        // For PSV we only care about the count
         $stubbedLicenceVehicles = array(
             array(
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'specifiedDate' => null,
             ),
             array(
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'specifiedDate' => '2010-10-10'
             )
         );
 
@@ -268,14 +274,6 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'totAuthSmallVehicles' => null,
             'totAuthMediumVehicles' => null,
             'totAuthLargeVehicles' => null
-        );
-
-        $expectedPsvDiscData = array(
-            'licence' => $licenceId,
-            'ceasedDate' => null,
-            'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
         );
 
         // processGrantApplication
@@ -343,19 +341,21 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 array(
                     array(
                         'foo' => 'bar',
-                        'specifiedDate' => '2012-01-01'
+                        'specifiedDate' => '2012-01-01',
+                        'interimApplication' => null
                     ),
                     array(
                         'foo' => 'bar',
-                        'specifiedDate' => '2012-01-01'
+                        'specifiedDate' => '2010-10-10',
+                        'interimApplication' => null
                     )
                 )
             );
 
         // createPsvDiscs
         $mockPsvDiscService = m::mock();
-        $mockPsvDiscService->shouldReceive('requestDiscs')
-            ->with(2, $expectedPsvDiscData);
+        $mockPsvDiscService->shouldReceive('requestBlankDiscs')
+            ->with($licenceId, 2);
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Entity\Licence', $mockLicenceService);
@@ -378,6 +378,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $licenceType = LicenceEntityService::LICENCE_TYPE_SPECIAL_RESTRICTED;
         $date = '2012-01-01';
 
+        $mockFeeService = m::mock();
         $mockGrantConditionUndertaking = m::mock();
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
@@ -385,6 +386,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockSnapshot = m::mock();
         $mockLicence = m::mock();
 
+        $this->sm->setService('Entity\Fee', $mockFeeService);
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
@@ -392,6 +394,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
         $this->sm->setService('Processing\Licence', $mockLicence);
 
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
@@ -438,13 +441,14 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'niFlag' => 'N'
         );
 
-        // For PSV we only care about the count
         $stubbedLicenceVehicles = array(
             array(
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'specifiedDate' => null,
             ),
             array(
-                'foo' => 'bar'
+                'foo' => 'bar',
+                'specifiedDate' => '2010-10-10'
             )
         );
 
@@ -458,14 +462,6 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'totAuthSmallVehicles' => null,
             'totAuthMediumVehicles' => null,
             'totAuthLargeVehicles' => null
-        );
-
-        $expectedPsvDiscData = array(
-            'licence' => $licenceId,
-            'ceasedDate' => null,
-            'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
         );
 
         // processGrantApplication
@@ -516,19 +512,21 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 array(
                     array(
                         'foo' => 'bar',
-                        'specifiedDate' => '2012-01-01'
+                        'specifiedDate' => '2012-01-01',
+                        'interimApplication' => null
                     ),
                     array(
                         'foo' => 'bar',
-                        'specifiedDate' => '2012-01-01'
+                        'specifiedDate' => '2010-10-10',
+                        'interimApplication' => null
                     )
                 )
             );
 
         // createPsvDiscs
         $mockPsvDiscService = m::mock();
-        $mockPsvDiscService->shouldReceive('requestDiscs')
-            ->with(2, $expectedPsvDiscData);
+        $mockPsvDiscService->shouldReceive('requestBlankDiscs')
+            ->with($licenceId, 2);
 
         $this->sm->setService('Entity\Application', $mockApplicationService);
         $this->sm->setService('Entity\Licence', $mockLicenceService);
@@ -628,6 +626,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'feeDate' => '2019-05-31'
         );
 
+        $mockFeeService = m::mock();
         $mockGrantConditionUndertaking = m::mock();
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
@@ -635,6 +634,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockSnapshot = m::mock();
         $mockLicence = m::mock();
 
+        $this->sm->setService('Entity\Fee', $mockFeeService);
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
@@ -642,6 +642,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
         $this->sm->setService('Processing\Licence', $mockLicence);
 
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
@@ -697,6 +698,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'feeDate' => '2019-05-31'
         );
 
+        $mockFeeService = m::mock();
         $mockGrantConditionUndertaking = m::mock();
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
@@ -704,6 +706,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockSnapshot = m::mock();
         $mockLicence = m::mock();
 
+        $this->sm->setService('Entity\Fee', $mockFeeService);
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
@@ -711,6 +714,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
         $this->sm->setService('Processing\Licence', $mockLicence);
 
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
@@ -728,10 +732,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $mockLicenceVehicles = array(
             array(
-                'id' => 1
+                'id' => 1,
+                'specifiedDate' => null
             ),
             array(
-                'id' => 2
+                'id' => 2,
+                'specifiedDate' => null
             )
         );
         $mockLicenceVehicleService = $this->mockLicenceVehicles($licenceId, $mockLicenceVehicles);
@@ -742,11 +748,13 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 array(
                     array(
                         'id' => 1,
-                        'specifiedDate' => $date
+                        'specifiedDate' => $date,
+                        'interimApplication' => null
                     ),
                     array(
                         'id' => 2,
-                        'specifiedDate' => $date
+                        'specifiedDate' => $date,
+                        'interimApplication' => null
                     )
                 )
             );
@@ -756,29 +764,12 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with($id)
             ->will($this->returnValue(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE));
 
-        $goodsDiscMock = $this->getMock('\stdClass', ['save']);
-        $goodsDiscMock->expects($this->at(0))
-            ->method('save')
-            ->with(
-                array(
-                    'ceasedDate' => null,
-                    'issuedDate' => null,
-                    'discNo' => null,
-                    'isCopy' => 'N',
-                    'licenceVehicle' => 1
-                )
-            );
-        $goodsDiscMock->expects($this->at(1))
-            ->method('save')
-            ->with(
-                array(
-                    'ceasedDate' => null,
-                    'issuedDate' => null,
-                    'discNo' => null,
-                    'isCopy' => 'N',
-                    'licenceVehicle' => 2
-                )
-            );
+        $goodsDiscMock = m::mock()
+            ->shouldReceive('createForVehicles')
+            ->once()
+            ->with($mockLicenceVehicles)
+            ->getMock();
+
         $this->sm->setService('Entity\GoodsDisc', $goodsDiscMock);
 
         $this->expectSuccessMessage();
@@ -922,13 +913,15 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 'action' => 'A',
                 'operatingCentre' => array(
                     'id' => 4
-                )
+                ),
+                'isInterim' => false
             ),
             array(
                 'action' => 'A',
                 'operatingCentre' => array(
                     'id' => 5
-                )
+                ),
+                'isInterim' => false
             )
         );
 
@@ -1001,7 +994,8 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 'foo' => 'bar',
                 'operatingCentre' => [
                     'id' => 6
-                ]
+                ],
+                'isInterim' => false
             ]
         ];
         $stubbedLoc = [
@@ -1026,6 +1020,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             'licence' => 5
         ];
 
+        $mockFeeService = m::mock();
         $mockGrantConditionUndertaking = m::mock();
         $mockGrantCommunityLicence = m::mock();
         $mockGrantTransportManager = m::mock();
@@ -1033,6 +1028,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockSnapshot = m::mock();
         $mockLicence = m::mock();
 
+        $this->sm->setService('Entity\Fee', $mockFeeService);
         $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
         $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
         $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
@@ -1040,6 +1036,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
         $this->sm->setService('Processing\Licence', $mockLicence);
 
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
         $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
@@ -1068,11 +1065,20 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 $id,
                 ['status' => ApplicationEntityService::APPLICATION_STATUS_VALID, 'grantedDate' => '2014-01-01']
             )
-            ->shouldReceive('getCategory')
-            ->andReturn(LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE)
             ->shouldReceive('getDataForValidating')
             ->with($id)
-            ->andReturn($stubbedValidatingData);
+            ->andReturn($stubbedValidatingData)
+            ->shouldReceive('getOverview')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'goodsOrPsv' => [
+                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                    ]
+                ]
+            );
 
         // Create disc records
         $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
@@ -1080,7 +1086,18 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->andReturn([]);
 
         $mockLicenceService->shouldReceive('forceUpdate')
-            ->with($licenceId, $stubbedValidatingData);
+            ->with($licenceId, $stubbedValidatingData)
+            ->shouldReceive('getOverview')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL
+                    ],
+                    'goodsOrPsv' => [
+                        'id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE
+                    ]
+                ]
+            );
 
         $mockAocService->shouldReceive('getForApplication')
             ->with($id)

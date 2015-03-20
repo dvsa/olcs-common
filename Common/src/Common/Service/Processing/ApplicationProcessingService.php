@@ -53,6 +53,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->processApplicationOperatingCentres($id, $licenceId);
         $this->processCommonGrantData($id, $licenceId);
 
+        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+
         $this->createDiscRecords($licenceId, $category, $id);
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
@@ -89,12 +91,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
 
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+        $application = $this->getServiceLocator()->get('Entity\Application')->getOverview($id);
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
 
-        $applicationType = $this->getServiceLocator()->get('Entity\Application')->getLicenceType($id);
-        $licenceType = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
+        $category = $application['goodsOrPsv']['id'];
 
-        if ($applicationType['licenceType']['id'] !== $licenceType['licenceType']['id']) {
+        if ($application['licenceType']['id'] !== $licence['licenceType']['id']) {
             $this->updateExistingDiscs($licenceId, $id, $category);
         }
 
@@ -447,6 +449,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                     unset($aoc['createdBy']);
                     unset($aoc['modifiedOn']);
                     unset($aoc['modifiedBy']);
+                    unset($aoc['isInterim']);
 
                     $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
                     $aoc['licence'] = $licenceId;

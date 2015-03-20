@@ -73,7 +73,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'children' => array(
             'applicationCompletions',
             'status',
-            'interimStatus'
+            'interimStatus',
+            'licenceType',
+            'goodsOrPsv'
         )
     );
 
