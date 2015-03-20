@@ -14,7 +14,7 @@ use Common\Controller\Lva\Interfaces\VehiclesAdapterInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAdapterInterface
+class LicenceVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
 {
     /**
      * Get vehicles data for the given resource
@@ -89,5 +89,11 @@ class LicenceVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAdapt
     public function maybeUnsetSpecifiedDate($data)
     {
         return $data;
+
+    }
+
+    public function warnIfAuthorityExceeded($applicationId, $types, $redirecting)
+    {
+        // no-op
     }
 }
