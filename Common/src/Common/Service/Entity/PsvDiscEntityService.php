@@ -66,6 +66,22 @@ class PsvDiscEntityService extends AbstractEntityService
     }
 
     /**
+     * Thin wrapper around requestDiscs with a few more fields blanked
+     */
+    public function requestBlankDiscs($licenceId, $count)
+    {
+        $data = array(
+            'licence' => $licenceId,
+            'ceasedDate' => null,
+            'issuedDate' => null,
+            'discNo' => null,
+            'isCopy' => 'N'
+        );
+
+        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+    }
+
+    /**
      * Get active and pending discs
      *
      * @param int $licenceId
@@ -84,24 +100,15 @@ class PsvDiscEntityService extends AbstractEntityService
     public function updateExistingForLicence($licenceId)
     {
         $results = $this->getNotCeasedDiscs($licenceId);
-
-        // @TODO mark ceased date as today
-
-        // we just create (X) new discs
-
-        return $this->requestBlankDiscs($licenceId, $results['Count']);
-    }
-
-    public function requestBlankDiscs($licenceId, $count)
-    {
-        $data = array(
-            'licence' => $licenceId,
-            'ceasedDate' => null,
-            'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
+        $ids = array_map(
+            $results['Results'],
+            function ($v) {
+                return $v['id'];
+            }
         );
 
-        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+        $this->ceaseDiscs($ids);
+
+        return $this->requestBlankDiscs($licenceId, $results['Count']);
     }
 }
