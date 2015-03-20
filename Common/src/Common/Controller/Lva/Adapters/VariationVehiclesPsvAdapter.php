@@ -28,4 +28,40 @@ class VariationVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAda
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesPsvAdapter')->getVehiclesData($id);
     }
+
+    /**
+     * Disable removed and specified dates if needed
+     *
+     * @param Zend\Form\Form $form
+     * @param Common\Service\Helper\FormHelper
+     */
+    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper)
+    {
+        $dataFieldset = $form->get('licence-vehicle');
+        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
+        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
+    }
+
+    /**
+     * Format removed and specified dates if needed
+     *
+     * @param array $licenceVehicle
+     * @return array
+     */
+    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
+    {
+        return $licenceVehicle;
+    }
+
+    /**
+     * Unset specified date if needed
+     *
+     * @param array $data
+     * @return array
+     */
+    public function maybeUnsetSpecifiedDate($data)
+    {
+        unset($data['licence-vehicle']['specifiedDate']);
+        return $data;
+    }
 }

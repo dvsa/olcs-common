@@ -36,6 +36,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_GRANTED = 'lsts_granted';
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
+    const LICENCE_STATUS_REFUSED = 'lsts_refused';
 
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',

@@ -567,7 +567,14 @@ class AbstractVehiclesGoodsControllerTest extends AbstractLvaControllerTestCase
             ->shouldReceive('getIdentifier')
             ->andReturn(123)
             ->shouldReceive('getLicenceId')
-            ->andReturn(321);
+            ->andReturn(321)
+            ->shouldReceive('getAdapter')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('maybeDisableRemovedAndSpecifiedDates')
+                ->with($form, $this->getMockFormHelper())
+                ->getMock()
+            );
 
         $mockEntityService->shouldReceive('getTotalVehicleAuthorisation')
             ->with(123)
