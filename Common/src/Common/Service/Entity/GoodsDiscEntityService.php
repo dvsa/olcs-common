@@ -45,40 +45,38 @@ class GoodsDiscEntityService extends AbstractEntityService
 
     public function createForVehicles($licenceVehicles)
     {
-        $defaults = array(
+        $defaults = [
             'ceasedDate' => null,
             'issuedDate' => null,
             'discNo' => null,
-            'isCopy' => 'N'
-        );
+            'isCopy' => 'N',
+            '_OPTIONS_' => ['force' => true]
+        ];
 
+        $data = [];
         foreach ($licenceVehicles as $licenceVehicle) {
-            $data = array_merge(
+            $data[] = array_merge(
                 $defaults,
-                array(
-                    'licenceVehicle' => $licenceVehicle['id']
-                )
+                ['licenceVehicle' => $licenceVehicle['id']]
             );
-            $this->save($data);
         }
+
+        $this->multiCreate($data);
     }
 
     public function ceaseDiscs(array $ids = array())
     {
         $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
-        $postData = array();
+        $data = [];
 
         foreach ($ids as $id) {
-
-            $postData[] = array(
+            $data[] = [
                 'id' => $id,
                 'ceasedDate' => $ceasedDate,
-                '_OPTIONS_' => array('force' => true)
-            );
+                '_OPTIONS_' => ['force' => true]
+            ];
         }
 
-        $postData['_OPTIONS_']['multiple'] = true;
-
-        $this->put($postData);
+        $this->multiUpdate($data);
     }
 }
