@@ -53,12 +53,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->processApplicationOperatingCentres($id, $licenceId);
         $this->processCommonGrantData($id, $licenceId);
 
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
-
-        if ($category === LicenceEntityService::LICENCE_TYPE_GOODS_VEHICLE) {
-            $this->getServiceLocator()->get('Entity\Fee')->cancelInterimForApplication($id);
-        }
-
         $this->createDiscRecords($licenceId, $category, $id);
 
         $this->getServiceLocator()->get('Helper\FlashMessenger')->addSuccessMessage('licence-valid-confirmation');
@@ -285,7 +279,13 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function feeStatusIsValid($applicationId)
     {
-        $fees = $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId);
+        // @TODO move behind service perhaps
+        $fees = array_filter(
+            $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
+            function ($fee) {
+                return $fee['feeType']['feeType'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
+            }
+        );
         return empty($fees);
     }
 
@@ -667,6 +667,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     protected function processCommonGrantData($id, $licenceId)
     {
+        $this->getServiceLocator()->get('Entity\Fee')->cancelInterimForApplication($id);
+
         $this->getServiceLocator()->get('Processing\GrantConditionUndertaking')->grant($id, $licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantCommunityLicence')->grant($licenceId);
