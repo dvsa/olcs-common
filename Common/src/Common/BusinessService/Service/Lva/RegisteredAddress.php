@@ -38,19 +38,19 @@ class RegisteredAddress implements BusinessServiceInterface, BusinessServiceAwar
 
         $responseData = [];
 
-        $responseData['hasChanged'] = $this->getServiceLocator()->get('Entity\Organisation')
-            ->hasChangedRegisteredAddress($orgId, $address);
+        if (!isset($address['id']) || empty($address['id'])) {
+            $responseData['hasChanged'] = true;
+        } else {
+            $responseData['hasChanged'] = $this->getServiceLocator()->get('Entity\Organisation')
+                ->hasChangedRegisteredAddress($orgId, $address);
+        }
 
         $saved = $this->getServiceLocator()->get('Entity\Address')->save($address);
 
-        if (!isset($address['id']) || empty($address['id'])) {
-            $responseData['addressId'] = $saved['id'];
-        } else {
-            $responseData['addressId'] = $address['id'];
-        }
-
         // If we didn't have an address id, then we need to create a contact details record too
         if (!isset($address['id']) || empty($address['id'])) {
+            $responseData['addressId'] = $saved['id'];
+
             $contactDetailsParams = [
                 'data' => [
                     'address' => $saved['id'],
@@ -65,6 +65,8 @@ class RegisteredAddress implements BusinessServiceInterface, BusinessServiceAwar
             }
 
             $responseData['contactDetailsId'] = $response->getData()['id'];
+        } else {
+            $responseData['addressId'] = $address['id'];
         }
 
         $response = new Response();
