@@ -279,7 +279,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function feeStatusIsValid($applicationId)
     {
-        // @TODO move behind service perhaps
         $fees = array_filter(
             $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
             function ($fee) {
@@ -428,12 +427,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $applicationOperatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
             ->getForApplication($id);
 
-        $new = $updates = $deletions = $clearInterims = array();
+        $new = $updates = $deletions = $interimOcs = array();
 
         foreach ($applicationOperatingCentres as $aoc) {
 
             if ($aoc['isInterim']) {
-                $clearInterims[] = $aoc['id'];
+                $interimOcs[] = $aoc['id'];
             }
 
             switch ($aoc['action']) {
@@ -495,10 +494,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
             }
         }
 
-        if (!empty($clearInterims)) {
-            foreach ($clearInterims as $aocId) {
-                $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->forceUpdate($aocId, ['isInterim' => null]);
-            }
+        if (!empty($interimOcs)) {
+            $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->clearInterims($interimOcs);
         }
     }
 
@@ -551,8 +548,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // @NOTE passing licenceVehicle by reference
         foreach ($licenceVehicles as &$licenceVehicle) {
-            // some vehicles might have a specified date if they were
-            // interims
+            // some vehicles might already have a specified date
+            // if they were interims
             if ($licenceVehicle['specifiedDate'] === null) {
                 $licenceVehicle['specifiedDate'] = $date;
             }

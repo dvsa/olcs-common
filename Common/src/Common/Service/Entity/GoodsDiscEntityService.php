@@ -23,16 +23,21 @@ class GoodsDiscEntityService extends AbstractEntityService
 
     public function updateExistingForLicence($licenceId, $applicationId)
     {
-        $vehicleService = $this->getServiceLocator()->get('Entity\LicenceVehicle');
+        $vehicles = $this->getServiceLocator()
+            ->get('Entity\LicenceVehicle')
+            ->getExistingForLicence($licenceId, $applicationId);
 
-        $vehicles = $vehicleService->getExistingForLicence($licenceId, $applicationId);
-
-        // @TODO: multi update
-        $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $discsToCease = [];
         foreach ($vehicles as $vehicle) {
-            if (isset($vehicle['goodsVehicle']) && $vehicle['goodsVehicle']['ceasedDate'] === null) {
-                $vehicleService->forceUpdate($vehicle['goodsVehicle']['id'], ['ceasedDate' => $date]);
+            foreach ($vehicle['goodsDiscs'] as $disc) {
+                if ($disc['ceasedDate'] === null) {
+                    $discsToCease[] = $disc['id'];
+                }
             }
+        }
+
+        if (!empty($discsToCease)) {
+            $this->ceaseDiscs($discsToCease);
         }
 
         $this->createForVehicles($vehicles);
@@ -56,5 +61,24 @@ class GoodsDiscEntityService extends AbstractEntityService
             );
             $this->save($data);
         }
+    }
+
+    public function ceaseDiscs(array $ids = array())
+    {
+        $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $postData = array();
+
+        foreach ($ids as $id) {
+
+            $postData[] = array(
+                'id' => $id,
+                'ceasedDate' => $ceasedDate,
+                '_OPTIONS_' => array('force' => true)
+            );
+        }
+
+        $postData['_OPTIONS_']['multiple'] = true;
+
+        $this->put($postData);
     }
 }

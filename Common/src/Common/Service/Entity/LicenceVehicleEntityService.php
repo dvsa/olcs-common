@@ -150,6 +150,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
         return $results['Results'];
     }
 
+    /**
+     * Fetch all results against a licence which are valid and NOT related
+     * to the given application
+     */
     public function getExistingForLicence($licenceId, $applicationId)
     {
         $query = [
@@ -157,7 +161,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
             'specifiedDate' => 'NOT NULL',
             'removalDate' => 'NULL',
             'interimApplication' => 'NULL',
-            'applicationId' => '!= ' . $applicationId
+            'application' => '!= ' . $applicationId
         ];
 
         $results = $this->getAll($query, $this->discBundle);
