@@ -53,7 +53,7 @@ class Task implements
 
         $response = new Response();
         $response->setType(Response::TYPE_PERSIST_SUCCESS);
-        $response->setData(['id' => $saved]);
+        $response->setData(['id' => $saved['id']]);
 
         return $response;
     }

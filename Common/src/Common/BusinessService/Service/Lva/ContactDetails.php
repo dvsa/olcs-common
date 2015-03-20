@@ -9,14 +9,18 @@ namespace Common\BusinessService\Service\Lva;
 
 use Common\BusinessService\BusinessServiceInterface;
 use Common\BusinessService\Response;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Contact Details
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ContactDetails implements BusinessServiceInterface
+class ContactDetails implements BusinessServiceInterface, ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     /**
      * Processes the data by passing it through a number of business rules and then persisting it
      *
