@@ -12,6 +12,7 @@ class ParserFactory
     public function getParser($mime)
     {
         switch ($mime) {
+            case 'text/rtf':
             case 'application/rtf':
             case 'application/x-rtf':
                 return new RtfParser();

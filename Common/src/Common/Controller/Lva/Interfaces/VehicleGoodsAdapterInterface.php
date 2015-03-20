@@ -23,4 +23,28 @@ interface VehicleGoodsAdapterInterface extends AdapterInterface, VehiclesAdapter
     public function getFilterForm();
 
     public function getFilters($params);
+
+    /**
+     * Disable removed and specified dates if needed
+     *
+     * @param Zend\Form\Form $form
+     * @param Common\Service\Helper\FormHelper
+     */
+    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
+
+    /**
+     * Format removed and specified dates if needed
+     *
+     * @param array $licenceVehicle
+     * @return array
+     */
+    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
+
+    /**
+     * Unset specified date if needed
+     *
+     * @param array $data
+     * @return array
+     */
+    public function maybeUnsetSpecifiedDate($data);
 }

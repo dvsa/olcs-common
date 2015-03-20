@@ -187,11 +187,20 @@ final class GenericCrudController extends AbstractActionController implements
     {
         $params = [];
 
+        $aliases = $this->getOption('requiredParamsAliases');
+
         if ($requiredParams = $this->getOption('requiredParams')) {
 
-            foreach ($requiredParams as $paramKey) {
-                $params[$paramKey] = $this->params()->fromQuery($paramKey);
-                $params[$paramKey] = $this->params()->fromRoute($paramKey);
+            foreach ($requiredParams as $requiredParam) {
+
+                $paramKeyKey = $requiredParam;
+
+                if (isset($aliases[$requiredParam])) {
+                    $paramKeyKey = $aliases[$requiredParam];
+                }
+
+                $params[$paramKeyKey] = $this->params()->fromQuery($requiredParam);
+                $params[$paramKeyKey] = $this->params()->fromRoute($requiredParam);
             }
 
             $this->setParams(array_filter($params));
@@ -215,9 +224,6 @@ final class GenericCrudController extends AbstractActionController implements
          * @var array $scripts
          */
         $scripts = $this->getOption('scripts');
-
-        /** @var string $action contains current action name */
-        //$action = $this->params()->fromRoute('action');
 
         /** @var \Common\Service\Script\ScriptFactory $scriptService */
         $scriptService = $this->getServiceLocator()->get('Script');

@@ -695,4 +695,35 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         // Void any interim discs associated to vehicles linked to the current application
         $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
     }
+
+    /**
+     * Called when refusing an application
+     *
+     * @param int $id
+     */
+    public function processRefuseApplication($id)
+    {
+        $applicationEntityService = $this->getServiceLocator()->get('Entity\Application');
+
+        // Set the application status to 'Refused'
+        // Set the refused date on the application to the current date
+        // Record the withdrawal reason
+        $data = [
+            'status' => ApplicationEntityService::APPLICATION_STATUS_REFUSED,
+            'refusedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+        ];
+        $applicationEntityService->forceUpdate($id, $data);
+
+        // If it is a new application (as opposed to a variation), update the licence status to 'Refused'
+        $applicationType = $applicationEntityService->getApplicationType($id);
+        if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
+            $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+                $this->getLicenceId($id),
+                LicenceEntityService::LICENCE_STATUS_REFUSED
+            );
+        }
+
+        // Void any interim discs associated to vehicles linked to the current application
+        $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+    }
 }
