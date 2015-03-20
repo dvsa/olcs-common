@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Abstract Undertakings Controller
@@ -109,7 +110,23 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function formatDataForSave($data)
     {
-        return $data['declarationsAndUndertakings'];
+        $declarationsData = $data['declarationsAndUndertakings'];
+
+        if (isset($data['interim'])) {
+            switch ($data['interim']['goodsApplicationInterim']) {
+                case 'Y':
+                    $declarationsData['interimStatus'] = Application::INTERIM_STATUS_REQUESTED;
+                    $declarationsData['interimReason'] = $data['interim']['goodsApplicationInterimReason'];
+                    break;
+                default:
+                case 'N':
+                    $declarationsData['interimStatus'] = null;
+                    $declarationsData['interimReason'] = null;
+                    break;
+            }
+        }
+
+        return $declarationsData;
     }
 
     /**
