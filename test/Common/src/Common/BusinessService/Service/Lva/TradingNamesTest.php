@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TradingNames Test
+ * Trading Names Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -14,7 +14,7 @@ use Common\BusinessService\Response;
 use CommonTest\Bootstrap;
 
 /**
- * Cask Test
+ * Trading Names Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */

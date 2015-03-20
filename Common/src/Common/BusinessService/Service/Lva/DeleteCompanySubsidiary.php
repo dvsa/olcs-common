@@ -39,11 +39,12 @@ class DeleteCompanySubsidiary implements
         $licenceId = $params['licenceId'];
 
         $taskService = $this->getBusinessServiceManager()->get('Lva\CompanySubsidiaryChangeTask');
+        $companyEntity = $this->getServiceLocator()->get('Entity\CompanySubsidiary');
 
         foreach ($ids as $id) {
-            $company = $this->getServiceLocator()->get('Entity\CompanySubsidiary')->getById($id);
+            $company = $companyEntity->getById($id);
 
-            $this->getServiceLocator()->get('Entity\CompanySubsidiary')->delete($id);
+            $companyEntity->delete($id);
 
             $taskParams = [
                 'action' => 'deleted',
