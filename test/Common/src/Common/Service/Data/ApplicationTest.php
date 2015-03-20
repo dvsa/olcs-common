@@ -8,10 +8,10 @@ use Common\Service\Entity\ApplicationEntityService;
 use Mockery as m;
 
 /**
- * Class Application Data Service Test
+ * Class Application Test
  * @package CommonTest\Service
  */
-class ApplicationDataServiceTest extends MockeryTestCase
+class ApplicationTest extends MockeryTestCase
 {
     /**
      * Holds the SUT
@@ -31,6 +31,22 @@ class ApplicationDataServiceTest extends MockeryTestCase
     public function testGetServiceName()
     {
         $this->assertEquals('Application', $this->sut->getServiceName());
+    }
+
+    public function testGetBundle()
+    {
+        $this->assertInternalType('array', $this->sut->getBundle());
+    }
+
+    public function testSetId()
+    {
+        $this->sut->setId(78);
+        $this->assertEquals(78, $this->sut->getId());
+    }
+
+    public function testGetId()
+    {
+        $this->assertNull($this->sut->getId());
     }
 
     public function testFetchData()
@@ -57,12 +73,12 @@ class ApplicationDataServiceTest extends MockeryTestCase
      *
      * @dataProvider canHaveCasesDataProvider
      * @param array $application
-     * @param int $expectedCallsNo
+     * @param int $expectedResult
      */
-    public function testCanHaveCases($application, $expectedCallsNo)
+    public function testCanHaveCases($application, $expectedResult)
     {
         $this->sut->setData($application['id'], $application);
-        $this->sut->canHaveCases($application['id']);
+        $this->assertEquals($expectedResult, $this->sut->canHaveCases($application['id']));
     }
 
     /**
@@ -76,7 +92,7 @@ class ApplicationDataServiceTest extends MockeryTestCase
             // status / licence not set
             [
                 ['id' => 100],
-                1
+                false
             ],
             // licence without licNo
             [
@@ -84,7 +100,7 @@ class ApplicationDataServiceTest extends MockeryTestCase
                     'id' => 100,
                     'licence' => ['licNo' => null]
                 ],
-                1
+                false
             ],
             // status NOT_SUBMITTED
             [
@@ -92,7 +108,7 @@ class ApplicationDataServiceTest extends MockeryTestCase
                     'id' => 100,
                     'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED]
                 ],
-                1
+                false
             ],
             // licence with licNo and status different than NOT_SUBMITTED
             [
@@ -101,7 +117,7 @@ class ApplicationDataServiceTest extends MockeryTestCase
                     'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_GRANTED],
                     'licence' => ['licNo' => 'ABC']
                 ],
-                0
+                true
             ],
         ];
     }

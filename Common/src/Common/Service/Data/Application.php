@@ -12,16 +12,24 @@ use Common\Service\Entity\ApplicationEntityService;
  */
 class Application extends CrudAbstract
 {
+    /**
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * @var string
+     */
     protected $serviceName = 'Application';
 
     /**
      * Wrapper method to match interface.
      *
-     * @param $id
-     * @param null $bundle
+     * @param int|null $id
+     * @param array|null $bundle
      * @return array
      */
-    public function fetchData($id, $bundle = null)
+    public function fetchData($id = null, $bundle = null)
     {
         return $this->fetchApplicationData($id, $bundle);
     }
@@ -29,12 +37,14 @@ class Application extends CrudAbstract
     /**
      * Fetches application data
      *
-     * @param int $id
+     * @param int|null $id
      * @param array|null $bundle
      * @return array
      */
-    public function fetchApplicationData($id, $bundle = null)
+    public function fetchApplicationData($id = null, $bundle = null)
     {
+        $id = is_null($id) ? $this->getId() : $id;
+
         if (is_null($this->getData($id))) {
             $bundle = is_null($bundle) ? $this->getBundle() : $bundle;
             $data =  $this->getRestClient()->get(sprintf('/%d', $id), ['bundle' => json_encode($bundle)]);
@@ -75,5 +85,23 @@ class Application extends CrudAbstract
         }
 
         return true;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
