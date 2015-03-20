@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Test Abstract Undertakings Controller
@@ -169,7 +170,11 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $data = [
             'declarationsAndUndertakings' => [
                 'declarationConfirmation' => 'N'
-            ]
+            ],
+            'interim' => [
+                'goodsApplicationInterim' => 'Y',
+                'goodsApplicationInterimReason' => 'new reason',
+            ],
         ];
 
         $this->setPost($data);
@@ -190,7 +195,11 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
                 'id' => $applicationId,
                 'undertakings' => 'markup-undertakings-sample',
                 'declarations' => 'markup-declarations-sample',
-            ]
+            ],
+            'interim' => [
+                'goodsApplicationInterim' => 'Y',
+                'goodsApplicationInterimReason' => 'new reason',
+            ],
         ];
 
         $this->sut->shouldReceive('formatDataForForm')

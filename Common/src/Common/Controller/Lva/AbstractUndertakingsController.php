@@ -39,13 +39,14 @@ abstract class AbstractUndertakingsController extends AbstractController
                 $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
-                // validation failed, we need to lookup application data
-                // but use the POSTed checkbox value to render the form again
-                $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $data = $this->formatDataForForm($applicationData);
-                $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
+                // validation failed, we need to use the application data
+                // for markup but use the POSTed values to render the form again
+                $formData = array_replace_recursive(
+                    $this->formatDataForForm($applicationData),
+                    $data
+                );
                 // don't call setData again here or we lose validation messages
-                $form->populateValues($data);
+                $form->populateValues($formData);
             }
         } else {
             $data = $this->formatDataForForm($applicationData);
