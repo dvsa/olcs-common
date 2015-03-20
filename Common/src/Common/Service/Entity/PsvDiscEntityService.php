@@ -80,4 +80,28 @@ class PsvDiscEntityService extends AbstractEntityService
 
         return $this->getAll($query, $this->bundle);
     }
+
+    public function updateExistingForLicence($licenceId)
+    {
+        $results = $this->getNotCeasedDiscs($licenceId);
+
+        // @TODO mark ceased date as today
+
+        // we just create (X) new discs
+
+        return $this->requestBlankDiscs($licenceId, $results['Count']);
+    }
+
+    public function requestBlankDiscs($licenceId, $count)
+    {
+        $data = array(
+            'licence' => $licenceId,
+            'ceasedDate' => null,
+            'issuedDate' => null,
+            'discNo' => null,
+            'isCopy' => 'N'
+        );
+
+        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+    }
 }

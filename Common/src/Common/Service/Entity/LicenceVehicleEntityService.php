@@ -28,16 +28,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
-    protected $ceaseActiveDiscBundle = array(
-        'children' => array(
-            'goodsDiscs'
-        )
-    );
-
     /**
      * Disc pending bundle
      */
-    protected $discPendingBundle = array(
+    protected $discBundle = array(
         'children' => array(
             'goodsDiscs'
         )
@@ -100,7 +94,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
      */
     public function ceaseActiveDisc($id)
     {
-        $results = $this->get($id, $this->ceaseActiveDiscBundle);
+        $results = $this->get($id, $this->discBundle);
 
         if (empty($results['goodsDiscs'])) {
             return;
@@ -117,7 +111,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
     public function getDiscPendingData($id)
     {
-        return $this->get($id, $this->discPendingBundle);
+        return $this->get($id, $this->discBundle);
     }
 
     public function getVrm($id)
@@ -152,6 +146,21 @@ class LicenceVehicleEntityService extends AbstractEntityService
         );
 
         $results = $this->getAll($query);
+
+        return $results['Results'];
+    }
+
+    public function getExistingForLicence($licenceId, $applicationId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'specifiedDate' => 'NOT NULL',
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'applicationId' => '!= ' . $applicationId
+        ];
+
+        $results = $this->getAll($query, $this->discBundle);
 
         return $results['Results'];
     }

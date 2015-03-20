@@ -221,6 +221,26 @@ class FeeEntityService extends AbstractLvaEntityService
         $this->put($updates);
     }
 
+    public function cancelInterimForApplication($applicationId)
+    {
+        $results = getOutstandingFeesForApplication($applicationId);
+
+        $updates = [];
+        foreach ($results as $fee) {
+            if ($fee['feeType']['id'] === "INTERIM") {
+                $updates[] = [
+                    'id' => $fee['id'],
+                    'feeStatus' => self::STATUS_CANCELLED,
+                    '_OPTIONS_' => array('force' => true)
+                ];
+            }
+        }
+
+        $updates['_OPTIONS_']['multiple'] = true;
+
+        $this->put($updates);
+    }
+
     /**
      * Get data for overview
      *
