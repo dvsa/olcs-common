@@ -80,7 +80,7 @@ class BusinessDetailsTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -124,8 +124,8 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with(111, $data, $nob, null)
             ->andReturn($validatedData);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $mockChangeTask->shouldReceive('process')
             ->with(['licenceId' => 222])
@@ -134,7 +134,7 @@ class BusinessDetailsTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -178,8 +178,8 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with(111, $data, $nob, null)
             ->andReturn($validatedData);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $mockChangeTask->shouldReceive('process')
             ->with(['licenceId' => 222])
@@ -242,15 +242,15 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedTradingNamesParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true)
             ->shouldReceive('getData')
             ->andReturn(['hasChanged' => false]);
 
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -306,8 +306,8 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedTradingNamesParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $response = $this->sut->process($params);
 
@@ -369,13 +369,13 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedTradingNamesParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true)
             ->shouldReceive('getData')
             ->andReturn(['hasChanged' => true]);
 
-        $mockResponse2->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse2->shouldReceive('isOk')
+            ->andReturn(true);
 
         $mockChangeTask->shouldReceive('process')
             ->with(['licenceId' => 222])
@@ -384,7 +384,7 @@ class BusinessDetailsTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -441,8 +441,8 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedAddressParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $response = $this->sut->process($params);
 
@@ -506,15 +506,15 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedAddressParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true)
             ->shouldReceive('getData')
             ->andReturn($responseData);
 
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -574,15 +574,15 @@ class BusinessDetailsTest extends MockeryTestCase
             ->with($expectedAddressParams)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true)
             ->shouldReceive('getData')
             ->andReturn($responseData);
 
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 }

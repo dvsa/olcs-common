@@ -52,7 +52,7 @@ class CompanySubsidiary implements
             $response = $this->getBusinessServiceManager()->get('Lva\CompanySubsidiaryChangeTask')
                 ->process($taskParams);
 
-            if (!in_array($response->getType(), [Response::TYPE_PERSIST_SUCCESS, Response::TYPE_NO_OP])) {
+            if (!$response->isOk()) {
                 return $response;
             }
         }
@@ -60,8 +60,7 @@ class CompanySubsidiary implements
         $this->getServiceLocator()->get('Entity\CompanySubsidiary')->save($data);
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
-        $response->setData([]);
+        $response->setType(Response::TYPE_SUCCESS);
 
         return $response;
     }

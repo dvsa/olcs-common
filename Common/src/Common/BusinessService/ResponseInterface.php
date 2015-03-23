@@ -15,8 +15,8 @@ namespace Common\BusinessService;
 interface ResponseInterface
 {
     // These are currently the only response types I can think of for now, please add others if required
-    const TYPE_PERSIST_SUCCESS = 1;
-    const TYPE_PERSIST_FAILED = 2;
+    const TYPE_SUCCESS = 1;
+    const TYPE_FAILED = 2;
     const TYPE_RULE_FAILED = 3;
     const TYPE_NO_OP = 4;
 

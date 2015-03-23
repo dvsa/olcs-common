@@ -42,7 +42,7 @@ class ContactDetails implements BusinessServiceInterface, ServiceLocatorAwareInt
         }
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
+        $response->setType(Response::TYPE_SUCCESS);
         $response->setData($responseData);
 
         return $response;

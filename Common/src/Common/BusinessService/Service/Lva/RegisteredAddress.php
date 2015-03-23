@@ -60,7 +60,7 @@ class RegisteredAddress implements BusinessServiceInterface, BusinessServiceAwar
 
             $response = $this->getBusinessServiceManager()->get('Lva\ContactDetails')->process($contactDetailsParams);
 
-            if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+            if (!$response->isOk()) {
                 return $response;
             }
 
@@ -70,7 +70,7 @@ class RegisteredAddress implements BusinessServiceInterface, BusinessServiceAwar
         }
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
+        $response->setType(Response::TYPE_SUCCESS);
         $response->setData($responseData);
 
         return $response;

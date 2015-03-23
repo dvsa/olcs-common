@@ -735,8 +735,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false)
             ->shouldReceive('getMessage')
             ->andReturn('MSG');
 
@@ -879,8 +879,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $response = $this->sut->indexAction();
 
@@ -1023,8 +1023,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $response = $this->sut->indexAction();
 
@@ -1167,8 +1167,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $response = $this->sut->indexAction();
 
@@ -1323,9 +1323,9 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
+        $mockResponse->shouldReceive('isOk')
             ->once()
-            ->andReturn(Response::TYPE_PERSIST_FAILED)
+            ->andReturn(false)
             ->shouldReceive('getMessage')
             ->once()
             ->andReturn('MSG');
@@ -1399,9 +1399,9 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
+        $mockResponse->shouldReceive('isOk')
             ->once()
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+            ->andReturn(true);
 
         $response = $this->sut->addAction();
 
@@ -1506,8 +1506,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false)
             ->shouldReceive('getMessage')
             ->andReturn('MSG');
 
@@ -1563,8 +1563,8 @@ class AbstractBusinessDetailsControllerTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $response = $this->sut->deleteAction();
 

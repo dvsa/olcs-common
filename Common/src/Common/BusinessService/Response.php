@@ -16,7 +16,7 @@ class Response implements ResponseInterface
 {
     protected $type = null;
 
-    protected $data = null;
+    protected $data = [];
 
     protected $message = null;
 
@@ -48,5 +48,10 @@ class Response implements ResponseInterface
     public function getMessage()
     {
         return $this->message;
+    }
+
+    public function isOk()
+    {
+        return in_array($this->type, [self::TYPE_SUCCESS, self::TYPE_NO_OP]);
     }
 }

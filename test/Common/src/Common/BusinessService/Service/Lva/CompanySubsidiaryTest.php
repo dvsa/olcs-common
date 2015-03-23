@@ -64,8 +64,8 @@ class CompanySubsidiaryTest extends MockeryTestCase
             ->with($expectedTask)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $response = $this->sut->process($params);
 
@@ -102,8 +102,8 @@ class CompanySubsidiaryTest extends MockeryTestCase
             ->with($expectedTask)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $mockEntity->shouldReceive('save')
             ->with(
@@ -116,7 +116,7 @@ class CompanySubsidiaryTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 
@@ -154,8 +154,8 @@ class CompanySubsidiaryTest extends MockeryTestCase
             ->with($expectedTask)
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $response = $this->sut->process($params);
 
@@ -199,7 +199,7 @@ class CompanySubsidiaryTest extends MockeryTestCase
             ->andReturn($mockResponse);
 
         $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+            ->andReturn(Response::TYPE_SUCCESS);
 
         $mockEntity->shouldReceive('save')
             ->with(
@@ -212,7 +212,7 @@ class CompanySubsidiaryTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
 }

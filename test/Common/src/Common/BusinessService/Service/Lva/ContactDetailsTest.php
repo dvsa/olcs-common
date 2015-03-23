@@ -60,7 +60,7 @@ class ContactDetailsTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals(['id' => 111], $response->getData());
     }
 
@@ -89,7 +89,7 @@ class ContactDetailsTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals(['id' => 222], $response->getData());
     }
 }

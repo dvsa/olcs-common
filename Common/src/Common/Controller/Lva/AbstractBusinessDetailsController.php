@@ -96,7 +96,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
                 ]
             );
 
-        if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+        if (!$response->isOk()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
             return $this->renderForm($form);
         }
@@ -215,7 +215,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $response = $this->getServiceLocator()->get('BusinessServiceManager')
                 ->get('Lva\CompanySubsidiary')->process($data);
 
-            if ($response->getType() === Response::TYPE_PERSIST_SUCCESS) {
+            if ($response->isOk()) {
                 return $this->handlePostSave();
             }
 
@@ -281,7 +281,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
         $response = $this->getServiceLocator()->get('BusinessServiceManager')->get('Lva\DeleteCompanySubsidiary')
             ->process($params);
 
-        if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+        if (!$response->isOk()) {
             $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
         }
     }

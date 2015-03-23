@@ -54,14 +54,13 @@ class DeleteCompanySubsidiary implements
 
             $response = $taskService->process($taskParams);
 
-            if (!in_array($response->getType(), [Response::TYPE_PERSIST_SUCCESS, Response::TYPE_NO_OP])) {
+            if (!$response->isOk()) {
                 return $response;
             }
         }
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
-        $response->setData([]);
+        $response->setType(Response::TYPE_SUCCESS);
 
         return $response;
     }

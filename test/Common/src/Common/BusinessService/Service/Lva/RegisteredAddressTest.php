@@ -73,8 +73,8 @@ class RegisteredAddressTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $this->assertSame($mockResponse, $this->sut->process($params));
     }
@@ -114,15 +114,15 @@ class RegisteredAddressTest extends MockeryTestCase
             )
             ->andReturn($mockResponse);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS)
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true)
             ->shouldReceive('getData')
             ->andReturn(['id' => 333]);
 
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals(
             ['hasChanged' => true, 'addressId' => 222, 'contactDetailsId' => 333],
             $response->getData()
@@ -159,7 +159,7 @@ class RegisteredAddressTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals(
             ['hasChanged' => true, 'addressId' => 222],
             $response->getData()

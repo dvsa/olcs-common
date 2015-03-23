@@ -52,7 +52,7 @@ class Task implements
         $saved = $this->getServiceLocator()->get('Entity\Task')->save($saveData);
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
+        $response->setType(Response::TYPE_SUCCESS);
         $response->setData(['id' => $saved['id']]);
 
         return $response;

@@ -60,7 +60,7 @@ class BusinessDetails implements
             $response = $this->getBusinessServiceManager()->get('Lva\TradingNames')->process($tradingNameParams);
 
             // If there was a failure in the sub-process forward the response straight away
-            if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+            if (!$response->isOk()) {
                 return $response;
             }
 
@@ -79,7 +79,7 @@ class BusinessDetails implements
                 ->process($registeredAddressParams);
 
             // If there was a failure in the sub-process forward the response straight away
-            if ($response->getType() !== Response::TYPE_PERSIST_SUCCESS) {
+            if (!$response->isOk()) {
                 return $response;
             }
 
@@ -104,14 +104,13 @@ class BusinessDetails implements
             $response = $this->getBusinessServiceManager()->get('Lva\BusinessDetailsChangeTask')
                 ->process(['licenceId' => $licenceId]);
 
-            if (!in_array($response->getType(), [Response::TYPE_PERSIST_SUCCESS, Response::TYPE_NO_OP])) {
+            if (!$response->isOk()) {
                 return $response;
             }
         }
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
-        $response->setData([]);
+        $response->setType(Response::TYPE_SUCCESS);
 
         return $response;
     }

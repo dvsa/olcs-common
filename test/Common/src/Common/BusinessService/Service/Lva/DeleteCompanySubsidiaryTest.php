@@ -67,8 +67,8 @@ class DeleteCompanySubsidiaryTest extends MockeryTestCase
             ->shouldReceive('delete')
             ->with(111);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_FAILED);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false);
 
         $mockCompanySubsidiaryService->shouldReceive('process')
             ->with(
@@ -123,8 +123,8 @@ class DeleteCompanySubsidiaryTest extends MockeryTestCase
             ->shouldReceive('delete')
             ->with(222);
 
-        $mockResponse->shouldReceive('getType')
-            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
 
         $mockCompanySubsidiaryService->shouldReceive('process')
             ->with(
@@ -148,7 +148,7 @@ class DeleteCompanySubsidiaryTest extends MockeryTestCase
         $response = $this->sut->process($params);
 
         $this->assertInstanceOf('\Common\BusinessService\Response', $response);
-        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
         $this->assertNotSame($mockResponse, $response);
     }

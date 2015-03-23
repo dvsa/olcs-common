@@ -47,7 +47,7 @@ class TradingNames implements BusinessServiceInterface, BusinessRuleAwareInterfa
         $this->getServiceLocator()->get('Entity\TradingNames')->save($tradingNamesData);
 
         $response = new Response();
-        $response->setType(Response::TYPE_PERSIST_SUCCESS);
+        $response->setType(Response::TYPE_SUCCESS);
         $response->setData(['hasChanged' => $hasChanged]);
 
         return $response;
