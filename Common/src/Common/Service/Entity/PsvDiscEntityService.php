@@ -27,6 +27,11 @@ class PsvDiscEntityService extends AbstractEntityService
         ]
     ];
 
+    /**
+     * Void any discs for each given ID
+     *
+     * @param array $ids
+     */
     public function ceaseDiscs(array $ids = array())
     {
         $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
@@ -68,6 +73,9 @@ class PsvDiscEntityService extends AbstractEntityService
 
     /**
      * Thin wrapper around requestDiscs with a few more fields blanked
+     *
+     * @param int $licenceID
+     * @param int $count
      */
     public function requestBlankDiscs($licenceId, $count)
     {
@@ -97,6 +105,13 @@ class PsvDiscEntityService extends AbstractEntityService
         return $this->getAll($query, $this->bundle);
     }
 
+    /**
+     * Update any existing discs relating to the given licence. This
+     * will void any discs which are currently active and request
+     * blank replacements
+     *
+     * @param int $licenceId
+     */
     public function updateExistingForLicence($licenceId)
     {
         $results = $this->getNotCeasedDiscs($licenceId);

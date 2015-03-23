@@ -114,6 +114,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      * If the application type has changed we need to void all the existing
      * discs on the licence and create a load of new ones with the updated
      * type
+     *
+     * @param int $licenceId
+     * @param int $applicationId
+     * @param string $category
      */
     protected function updateExistingDiscs($licenceId, $applicationId, $category)
     {

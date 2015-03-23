@@ -21,6 +21,15 @@ class GoodsDiscEntityService extends AbstractEntityService
      */
     protected $entity = 'GoodsDisc';
 
+    /**
+     * Update any existing discs relating to the given licence but NOT
+     * related to the application in question. This will void any discs
+     * which are currently active and request blank replacements for
+     * each vehicle attached to the licence
+     *
+     * @param int $licenceId
+     * @param int $applicationId
+     */
     public function updateExistingForLicence($licenceId, $applicationId)
     {
         $vehicles = $this->getServiceLocator()
@@ -43,6 +52,11 @@ class GoodsDiscEntityService extends AbstractEntityService
         $this->createForVehicles($vehicles);
     }
 
+    /**
+     * Create a blank disc for each given licence vehicle
+     *
+     * @param array $licenceVehicles
+     */
     public function createForVehicles($licenceVehicles)
     {
         $defaults = [
@@ -64,6 +78,11 @@ class GoodsDiscEntityService extends AbstractEntityService
         $this->multiCreate($data);
     }
 
+    /**
+     * Void any discs for each given ID
+     *
+     * @param array $ids
+     */
     public function ceaseDiscs(array $ids = array())
     {
         $ceasedDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
