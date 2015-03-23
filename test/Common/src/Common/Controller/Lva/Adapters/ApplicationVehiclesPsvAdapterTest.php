@@ -287,4 +287,12 @@ class ApplicationVehiclesPsvAdapterTest extends MockeryTestCase
         ];
         $this->sut->warnIfAuthorityExceeded($id, $psvTypes, true);
     }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $this->assertEquals('form', $this->sut->maybeRemoveSpecifiedDateEmptyOption('form', 'edit'));
+    }
 }
