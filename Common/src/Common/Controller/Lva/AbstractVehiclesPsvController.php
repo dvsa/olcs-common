@@ -24,18 +24,17 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected $rawTableData;
     protected $type;
 
-    private $psvTypes = [
-        'small'  => VehicleEntityService::PSV_TYPE_SMALL,
-        'medium' => VehicleEntityService::PSV_TYPE_MEDIUM,
-        'large'  => VehicleEntityService::PSV_TYPE_LARGE
-    ];
-
     /**
      * Simple helper method to extract tables based on available types
      */
     private function getTables()
     {
-        return array_keys($this->psvTypes);
+        return array_keys($this->getPsvTypes());
+    }
+
+    private function getPsvTypes()
+    {
+        return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
     }
 
     /**
@@ -44,10 +43,10 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     public function indexAction()
     {
         $request = $this->getRequest();
+        $lvaId = $this->getIdentifier();
 
         // we always need this basic data
-        $entityData = $this->getLvaEntityService()
-            ->getDataForVehiclesPsv($this->getIdentifier());
+        $entityData = $this->getLvaEntityService()->getDataForVehiclesPsv($lvaId);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
@@ -96,8 +95,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
             $crudAction = $this->getCrudAction($data);
 
-            $hasEnteredReg = $form->getData()['data']['hasEnteredReg'];
-            $this->addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, true);
+            $this->getAdapter()->warnIfAuthorityExceeded($lvaId, $this->getPsvTypes(), true);
 
             if ($crudAction !== null) {
                 $alternativeCrudResponse = $this->checkForAlternativeCrudAction(
@@ -115,7 +113,7 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             return $this->completeSection('vehicles_psv');
         }
 
-        $this->addWarningsIfAuthorityExceeded($entityData['hasEnteredReg'], $entityData, false);
+        $this->getAdapter()->warnIfAuthorityExceeded($lvaId, $this->getPsvTypes(), false);
         return $this->render('vehicles_psv', $form);
     }
 
@@ -325,7 +323,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         foreach ($this->getTables() as $table) {
 
-            if ($this->getVehicleCountByType($table, $data) > 0) {
+            $psvType = $this->getPsvTypeFromType($table);
+            if ($this->getAdapter()->getVehicleCountByPsvType($data['id'], $psvType) > 0) {
                 // Never remove table if we have previously added vehicles
                 // (https://jira.i-env.net/browse/OLCS-7590)
                 continue;
@@ -346,39 +345,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         }
 
         return $form;
-    }
-
-    /**
-     * Get count of vehicles of a particular type
-     * @param string $type table name (small|medium|large)
-     * @param array $data
-     * @return int|null
-     */
-    protected function getVehicleCountByType($type, $data)
-    {
-        $count = 0;
-        $psvType = $this->getPsvTypeFromType($type);
-        if (isset($this->psvTypes[$type])) {
-            foreach ($data['licence']['licenceVehicles'] as $licenceVehicle) {
-                if ($licenceVehicle['vehicle']['psvType']['id'] == $psvType) {
-                    $count++;
-                }
-            }
-        }
-
-        return $count;
-    }
-
-    /**
-     * Get vehicle authorisation for a particular type
-     * @param string $type table name (small|medium|large)
-     * @param array $data
-     * @return int|null
-     */
-    protected function getVehicleAuthByType($type, $data)
-    {
-        $authField = 'totAuth' . ucwords($type) . 'Vehicles';
-        return (int) $data[$authField];
     }
 
     /**
@@ -472,7 +438,8 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
      */
     protected function getPsvTypeFromType($type)
     {
-        return isset($this->psvTypes[$type]) ? $this->psvTypes[$type] : null;
+        // logic moved to entity service
+        return $this->getServiceLocator()->get('Entity\Vehicle')->getPsvTypeFromType($type);
     }
 
     /**
@@ -554,36 +521,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         foreach ($this->getTables() as $type) {
             if (isset($data[$type]['action'])) {
                 return $type;
-            }
-        }
-    }
-
-    /**
-     * Add a flash warning message if the individual authority for a type of
-     * vehicle is exceeded. This is an edge case and should only happen when
-     * vehicles are added and then Operating Centre authority is decreased.
-     *
-     * @param string $hasEnteredReg 'Y'|'N' we only show warning if user has
-     * answered that the are submitting vehicle details
-     * @param array $entityData
-     * @param boolean $redirecting whether we are rendering or redirecting
-     * dictates which flash message method we use
-     */
-    protected function addWarningsIfAuthorityExceeded($hasEnteredReg, $entityData, $redirecting)
-    {
-        if ($hasEnteredReg !== 'Y') {
-            return;
-        }
-
-        $method = $redirecting ? 'addWarningMessage' : 'addCurrentWarningMessage';
-
-        foreach ($this->getTables() as $type) {
-            $vehicles  = (int)$this->getVehicleCountByType($type, $entityData);
-            $authority = (int)$this->getVehicleAuthByType($type, $entityData);
-            if ($vehicles>$authority) {
-                $this->getServiceLocator()->get('Helper\FlashMessenger')->$method(
-                    'more-vehicles-than-'.$type.'-authorisation'
-                );
             }
         }
     }

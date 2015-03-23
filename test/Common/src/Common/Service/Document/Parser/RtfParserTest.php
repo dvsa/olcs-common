@@ -91,4 +91,14 @@ TXT;
             $parser->replace($content, $data)
         );
     }
+
+    public function testRenderImage()
+    {
+        $parser = new RtfParser();
+        $result = $parser->renderImage('', 100, 50, 'jpeg');
+        $this->assertEquals(
+            "{\pict\jpegblip\picw100\pich50\picwgoal1500\pichgoal750 }",
+            $result
+        );
+    }
 }

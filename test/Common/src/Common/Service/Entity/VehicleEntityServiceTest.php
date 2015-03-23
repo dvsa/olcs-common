@@ -76,4 +76,42 @@ class VehicleEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals($expected, $this->sut->getLicencesForVrm($vrm));
     }
+
+    /**
+     * @dataProvider psvTypeFromTypeProvider
+     * @param string $type
+     * @param string $expectedPsvType
+     */
+    public function testGetPsvTypeFromType($type, $expectedPsvType)
+    {
+        $this->assertEquals($expectedPsvType, $this->sut->getPsvTypeFromType($type));
+    }
+
+    public function psvTypeFromTypeProvider()
+    {
+        return [
+            ['small', VehicleEntityService::PSV_TYPE_SMALL],
+            ['medium', VehicleEntityService::PSV_TYPE_MEDIUM],
+            ['large', VehicleEntityService::PSV_TYPE_LARGE],
+        ];
+    }
+
+    /**
+     * @dataProvider typeFromPsvTypeProvider
+     * @param string $psvType
+     * @param string $expectedType
+     */
+    public function testGetTypeFromPsvType($psvType, $expectedType)
+    {
+        $this->assertEquals($expectedType, $this->sut->getTypeFromPsvType($psvType));
+    }
+
+    public function typeFromPsvTypeProvider()
+    {
+        return [
+            [VehicleEntityService::PSV_TYPE_SMALL, 'small'],
+            [VehicleEntityService::PSV_TYPE_MEDIUM, 'medium'],
+            [VehicleEntityService::PSV_TYPE_LARGE, 'large'],
+        ];
+    }
 }

@@ -14,4 +14,6 @@ interface ParserInterface
     public function replace($content, $data);
 
     public function getFileExtension();
+
+    public function renderImage($binData, $width, $height, $type);
 }
