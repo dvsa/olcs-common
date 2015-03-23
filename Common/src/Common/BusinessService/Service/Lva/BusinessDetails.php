@@ -44,8 +44,8 @@ class BusinessDetails implements
         $tradingNames = $params['tradingNames'];
 
         $data = $params['data'];
-        $registeredAddress = $data['registeredAddress'];
-        $natureOfBusinesses = $data['data']['natureOfBusinesses'];
+        $registeredAddress = isset($data['registeredAddress']) ? $data['registeredAddress'] : null;
+        $natureOfBusinesses = isset($data['data']['natureOfBusinesses']) ? $data['data']['natureOfBusinesses'] : null;
 
         $isDirty = false;
 
@@ -83,9 +83,9 @@ class BusinessDetails implements
                 return $response;
             }
 
-            $isDirty = $isDirty ?: $response->getData()['hasChanged'];
-
             $addressResponseData = $response->getData();
+
+            $isDirty = $isDirty ?: $addressResponseData['hasChanged'];
 
             if (isset($addressResponseData['contactDetailsId'])) {
                 $contactDetailsId = $addressResponseData['contactDetailsId'];

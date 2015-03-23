@@ -119,4 +119,100 @@ class CompanySubsidiaryTest extends MockeryTestCase
         $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
         $this->assertEquals([], $response->getData());
     }
+
+    public function testProcessUpdateWithFail()
+    {
+        // Params
+        $params = [
+            'id' => 111,
+            'data' => [
+                'name' => 'Foo ltd'
+            ],
+            'licenceId' => 222,
+        ];
+
+        $expectedTask = [
+            'action' => 'updated',
+            'name' => 'Foo ltd',
+            'licenceId' => 222
+        ];
+
+        // Mocks
+        $mockResponse = m::mock();
+        $mockOrganisation = m::mock();
+        $mockChangeTask = m::mock('\Common\BusinessService\BusinessServiceInterface');
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->bsm->setService('Lva\CompanySubsidiaryChangeTask', $mockChangeTask);
+
+        // Expectations
+        $mockOrganisation->shouldReceive('hasChangedSubsidiaryCompany')
+            ->with(111, ['name' => 'Foo ltd', 'licence' => 222])
+            ->andReturn(true);
+
+        $mockChangeTask->shouldReceive('process')
+            ->with($expectedTask)
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->andReturn(Response::TYPE_PERSIST_FAILED);
+
+        $response = $this->sut->process($params);
+
+        $this->assertSame($mockResponse, $response);
+    }
+
+    public function testProcessEditWithSuccess()
+    {
+        // Params
+        $params = [
+            'id' => 111,
+            'data' => [
+                'name' => 'Foo ltd'
+            ],
+            'licenceId' => 222,
+        ];
+
+        $expectedTask = [
+            'action' => 'updated',
+            'name' => 'Foo ltd',
+            'licenceId' => 222
+        ];
+
+        // Mocks
+        $mockResponse = m::mock();
+        $mockOrganisation = m::mock();
+        $mockChangeTask = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockEntity = m::mock();
+
+        $this->bsm->setService('Lva\CompanySubsidiaryChangeTask', $mockChangeTask);
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('Entity\CompanySubsidiary', $mockEntity);
+
+        // Expectations
+        $mockOrganisation->shouldReceive('hasChangedSubsidiaryCompany')
+            ->with(111, ['name' => 'Foo ltd', 'licence' => 222])
+            ->andReturn(false);
+
+        $mockChangeTask->shouldReceive('process')
+            ->with($expectedTask)
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('getType')
+            ->andReturn(Response::TYPE_PERSIST_SUCCESS);
+
+        $mockEntity->shouldReceive('save')
+            ->with(
+                [
+                    'name' => 'Foo ltd',
+                    'licence' => 222
+                ]
+            );
+
+        $response = $this->sut->process($params);
+
+        $this->assertInstanceOf('\Common\BusinessService\Response', $response);
+        $this->assertEquals(Response::TYPE_PERSIST_SUCCESS, $response->getType());
+        $this->assertEquals([], $response->getData());
+    }
 }
