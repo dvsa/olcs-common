@@ -754,4 +754,29 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         // Void any interim discs associated to vehicles linked to the current application
         $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
     }
+
+    /**
+     * Called when marking an application Not Taken Up
+     *
+     * @param int $id
+     * @todo additional processing
+     */
+    public function processNotTakenUpApplication($id)
+    {
+        // Update the licence and application statuses to NTU
+        $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_NOT_TAKEN_UP);
+        $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+            $this->getLicenceId($id),
+            LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP
+        );
+
+        // Void any discs
+        // Tech note: Set goods_disc.ceased_date = current date/time OR psv_disc.ceased_date = current date/time
+
+        // Remove any vehicles
+        // Tech note: Set licence_vehicle.removed_date = current date/time
+
+        // Unlink any Transport Managers
+        // Tech note: Set transport_manager_licence.deleted_date = current date/time
+    }
 }
