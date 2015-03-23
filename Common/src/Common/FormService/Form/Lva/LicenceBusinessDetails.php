@@ -14,7 +14,7 @@ namespace Common\FormService\Form\Lva;
  */
 class LicenceBusinessDetails extends AbstractBusinessDetails
 {
-    public function alterForm($form, $params)
+    protected function alterForm($form, $params)
     {
         $this->getFormServiceLocator()->get('lva-licence')->alterForm($form);
 

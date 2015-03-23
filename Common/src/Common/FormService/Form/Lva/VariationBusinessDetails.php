@@ -14,7 +14,7 @@ namespace Common\FormService\Form\Lva;
  */
 class VariationBusinessDetails extends AbstractBusinessDetails
 {
-    public function alterForm($form, $params)
+    protected function alterForm($form, $params)
     {
         $this->getFormServiceLocator()->get('lva-variation')->alterForm($form);
 
