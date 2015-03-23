@@ -92,6 +92,9 @@ return array(
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
     'application-not-granted' => 'The application has not been granted',
+    'application-not-refused' => 'The application has not been refused',
+    'application-not-withdrawn' => 'The application has not been withdrawn',
+    'application-refused-successfully' => 'Application %s has been refused',
     'application-review-addresses-contact-details-title' => 'Contact details',
     'application-review-addresses-correspondence-address' => 'Correspondence Address',
     'application-review-addresses-correspondence-business' => 'Business telephone No.',
@@ -238,6 +241,7 @@ return array(
     'application-search-subsidiary-header' => 'Subsidiary Company',
     'application-update-person-header-director' => 'Edit Director',
     'application-update-sole-trader' => 'Edit sole trader',
+    'application-withdrawn-successfully' => 'Application %s has been withdrawn',
     'application.cancel' => 'Cancel application',
     'application.community_licence.form.total_community_licences' => 'How many additional licences are required?',
     'application.delete' => 'Delete application',
@@ -763,6 +767,7 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
+    'internal-crud-event-history' => 'Event History',
     'crud-event-history-title' => 'Event History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
@@ -910,6 +915,8 @@ return array(
     'impo_wd' => 'Application Withdrawn',
     'impt_hearing' => 'Hearing',
     'impt_paper' => 'Paperwork',
+    'interim-start-date' => 'Interim start date',
+    'interim-status' => 'Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'Do you wish to apply for an interim authority? There is
         an additional charge to apply for this',
     'interim.application.undertakings.form.textarea.error.message.empty' => 'Please provide us with a reason for your
@@ -934,6 +941,9 @@ return array(
     'internal-application-processing-tasks' => 'Tasks',
     'internal-application-processing-tasks-label' => 'Tasks',
     'internal-application-processing-tasks-title' => 'Tasks',
+    'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
+    'internal-application-refuse-title' => 'Refuse application',
+    'internal-application-withdraw-title' => 'Withdraw application',
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
     'internal-licence-bus-details' => 'Service details',
@@ -1145,10 +1155,15 @@ return array(
     'internal.interim.form.interim_granted' => 'Interim granted',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
+<<<<<<< HEAD
+=======
+    'internal.interim.form.interim_refused' => 'The interim has been refused',
+>>>>>>> 21b76b736d2b155be6818470247e3090e8890889
     'internal.interim.form.interim_reprint' => 'Reprint',
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',
     'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.form.refuse_confirm' => 'Are you sure you want to refuse this interim?',
     'internal.interim.interim_details_saved' => 'Interim details saved',
     'internal.interim.operatingcentres.table.address' => 'Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'Operating centres',

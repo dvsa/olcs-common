@@ -4,6 +4,7 @@ namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Test Abstract Undertakings Controller
@@ -19,13 +20,8 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $this->mockController('\Common\Controller\Lva\AbstractUndertakingsController');
     }
 
-    public function testGetIndexAction()
+    protected function mockGetUndertakingsData($applicationId)
     {
-        $form = m::mock('\Common\Form\Form');
-        $this->sut->shouldReceive('getForm')->andReturn($form);
-
-        $applicationId = '123';
-
         $this->sut->shouldReceive('getApplicationId')->andReturn($applicationId);
 
         $applicationData = [
@@ -36,15 +32,23 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
             'version' => 1,
             'id' => $applicationId,
         ];
-        $this->sm->shouldReceive('get')->with('Entity\Application')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getDataForUndertakings')
-                    ->once()
-                    ->with($applicationId)
-                    ->andReturn($applicationData)
-                ->getMock()
-            );
+
+        $this->mockEntity('Application', 'getDataForUndertakings')
+            ->once()
+            ->with($applicationId)
+            ->andReturn($applicationData);
+
+        return $applicationData;
+    }
+
+    public function testGetIndexAction()
+    {
+        $form = m::mock('\Common\Form\Form');
+        $this->sut->shouldReceive('getForm')->andReturn($form);
+
+        $applicationId = '123';
+
+        $applicationData = $this->mockGetUndertakingsData($applicationId);
 
         $formData = [
             'declarationsAndUndertakings' => [
@@ -74,6 +78,20 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
 
     public function testPostWithValidData()
     {
+        $applicationId = '123';
+        $this->mockGetUndertakingsData($applicationId);
+
+        $mockTranslator = m::mock();
+        $this->sm->setService('Helper\Translation', $mockTranslator);
+
+        $mockTranslator->shouldReceive('translate')
+            ->with('view-full-application')
+            ->andReturn('View full application');
+
+        $this->sut->shouldReceive('url->fromRoute')
+            ->with('lva-/review', [], [], true)
+            ->andReturn('URL');
+
         $data = [
             'declarationsAndUndertakings' => [
                 'declarationConfirmation' => 'Y'
@@ -88,14 +106,12 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $form->shouldReceive('setData')->with($data)->andReturnSelf();
         $form->shouldReceive('isValid')->andReturn(true);
 
-        $this->sm->shouldReceive('get')->with('Entity\Application')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('save')
-                    ->once()
-                    ->with(['declarationConfirmation' => 'Y'])
-                ->getMock()
-            );
+        $form->shouldReceive('get->get->setAttribute')
+            ->with('value', '<p><a href="URL" target="_blank">View full application</a></p>');
+
+        $this->mockEntity('Application', 'save')
+            ->once()
+            ->with(['declarationConfirmation' => 'Y']);
 
         $this->sut->shouldReceive('postSave')
             ->with('undertakings')
@@ -154,7 +170,11 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $data = [
             'declarationsAndUndertakings' => [
                 'declarationConfirmation' => 'N'
-            ]
+            ],
+            'interim' => [
+                'goodsApplicationInterim' => 'Y',
+                'goodsApplicationInterimReason' => 'new reason',
+            ],
         ];
 
         $this->setPost($data);
@@ -166,23 +186,7 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
         $form->shouldReceive('isValid')->andReturn(false);
 
         $applicationId = '123';
-        $this->sut->shouldReceive('getApplicationId')->andReturn($applicationId);
-        $applicationData = [
-            'licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL],
-            'goodsOrPsv' => ['id' => LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE],
-            'niFlag' => 'N',
-            'declarationConfirmation' => 'N',
-            'version' => 1,
-            'id' => $applicationId,
-        ];
-        $this->sm->shouldReceive('get')->with('Entity\Application')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('getDataForUndertakings')
-                    ->with($applicationId)
-                    ->andReturn($applicationData)
-                ->getMock()
-            );
+        $applicationData = $this->mockGetUndertakingsData($applicationId);
 
         $formData = [
             'declarationsAndUndertakings' => [
@@ -191,7 +195,11 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
                 'id' => $applicationId,
                 'undertakings' => 'markup-undertakings-sample',
                 'declarations' => 'markup-declarations-sample',
-            ]
+            ],
+            'interim' => [
+                'goodsApplicationInterim' => 'Y',
+                'goodsApplicationInterimReason' => 'new reason',
+            ],
         ];
 
         $this->sut->shouldReceive('formatDataForForm')
@@ -207,14 +215,14 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
 
         $mockTranslator->shouldReceive('translate')
             ->with('view-full-application')
-            ->andReturn('view-full-application');
+            ->andReturn('View full application');
 
         $this->sut->shouldReceive('url->fromRoute')
             ->with('lva-/review', [], [], true)
             ->andReturn('URL');
 
         $form->shouldReceive('get->get->setAttribute')
-            ->with('value', '<p><a href="URL" target="_blank">view-full-application</a></p>');
+            ->with('value', '<p><a href="URL" target="_blank">View full application</a></p>');
 
         $this->sut->indexAction();
 
@@ -225,5 +233,59 @@ class AbstractUndertakingsControllerTest extends AbstractLvaControllerTestCase
     {
         $this->assertEquals('gv', $this->sut->getPartialPrefix('lcat_gv'));
         $this->assertEquals('psv', $this->sut->getPartialPrefix('lcat_psv'));
+    }
+
+    public function formatDataForSaveProvider()
+    {
+        return array(
+            'yes with reason' => array(
+                array(
+                    'interim' => array(
+                        'goodsApplicationInterim' => 'Y',
+                        'goodsApplicationInterimReason' => 'reason'
+                    ),
+                    'declarationsAndUndertakings' => array(
+                    )
+                ),
+                array(
+                    'interimStatus' => 'int_sts_requested',
+                    'interimReason' => 'reason'
+                )
+            ),
+            'no' => array(
+                array(
+                    'interim' => array(
+                        'goodsApplicationInterim' => 'N',
+                    ),
+                    'declarationsAndUndertakings' => array(
+                    )
+                ),
+                array(
+                    'interimStatus' => null,
+                    'interimReason' => null
+                )
+            ),
+            'null' => array(
+                array(
+                    'interim' => array(
+                        'goodsApplicationInterim' => null,
+                    ),
+                    'declarationsAndUndertakings' => array(
+                    )
+                ),
+                array(
+                    'interimStatus' => null,
+                    'interimReason' => null
+                )
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider formatDataForSaveProvider
+     */
+    public function testFormatDataForSave($data, $expectedResult)
+    {
+        $this->assertEquals($this->sut->formatDataForSave($data), $expectedResult);
     }
 }

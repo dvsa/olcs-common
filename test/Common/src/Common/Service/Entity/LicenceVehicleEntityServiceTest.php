@@ -240,4 +240,31 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getForApplicationValidation($id, $applicationId));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testExistingForLicence()
+    {
+        $id = 3;
+        $applicationId = 8;
+
+        $query = array(
+            'licence' => $id,
+            'specifiedDate' => 'NOT NULL',
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => '!= ' . $applicationId,
+            'limit' => 'all'
+        );
+
+        $response = array(
+            'Results' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('LicenceVehicle', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getExistingForLicence($id, $applicationId));
+    }
 }

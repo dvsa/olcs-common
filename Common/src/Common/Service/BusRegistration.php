@@ -11,6 +11,12 @@ class BusRegistration
     const STATUS_NEW = 'breg_s_new';
     const STATUS_VAR = 'breg_s_var';
     const STATUS_CANCEL = 'breg_s_cancellation';
+    const STATUS_ADMIN = 'breg_s_admin';
+    const STATUS_REGISTERED = 'breg_s_registered';
+    const STATUS_REFUSED = 'breg_s_refused';
+    const STATUS_WITHDRAWN = 'breg_s_withdrawn';
+    const STATUS_CNS = 'breg_s_cns';
+    const STATUS_CANCELLED = 'breg_s_cancelled';
 
     /**
      * @var array
@@ -114,7 +120,7 @@ class BusRegistration
      * @param $previous
      * @return mixed
      */
-    public function createVariation($previous)
+    public function createVariation($previous, $mostRecent)
     {
         $data = $previous;
 
@@ -129,7 +135,7 @@ class BusRegistration
         //new variation reasons will be required for a new variation
         unset($data['variationReasons']);
 
-        $data['variationNo']++;
+        $data['variationNo'] = $mostRecent['variationNo'] + 1;
         $data['status'] = self::STATUS_VAR;
         $data['statusChangeDate'] = date(\DateTime::ISO8601);
         $data['revertStatus'] = self::STATUS_VAR;
@@ -152,12 +158,12 @@ class BusRegistration
     }
 
     /**
-     * @param $previous
+     * @param $parent
      * @return mixed
      */
-    public function createCancellation($previous)
+    public function createCancellation($parent, $mostRecent)
     {
-        $data = $this->createVariation($previous);
+        $data = $this->createVariation($parent, $mostRecent);
 
         $data['status'] = self::STATUS_CANCEL;
         $data['revertStatus'] = self::STATUS_CANCEL;
