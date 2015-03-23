@@ -1155,10 +1155,7 @@ return array(
     'internal.interim.form.interim_granted' => 'Interim granted',
     'internal.interim.form.interim_reason' => 'Interim reason',
     'internal.interim.form.interim_refuse' => 'Refuse',
-<<<<<<< HEAD
-=======
     'internal.interim.form.interim_refused' => 'The interim has been refused',
->>>>>>> 21b76b736d2b155be6818470247e3090e8890889
     'internal.interim.form.interim_reprint' => 'Reprint',
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',

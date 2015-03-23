@@ -14,9 +14,6 @@ namespace Common\Service\Entity;
  * @package Common\Service\Entity
  *
  * @author Josh Curtis <josh.curtis@valtech.co.uk>
- *
- * @todo possible have one delagative configuration method.
- * @todo complete commenting.
  */
 class LicenceStatusRuleEntityService extends AbstractEntityService
 {
@@ -24,8 +21,18 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     const LICENCE_STATUS_RULE_REVOKED = 'lsts_revoked';
     const LICENCE_STATUS_RULE_SUSPENDED = 'lsts_suspended';
 
+    /**
+     * The entity reference.
+     *
+     * @var string
+     */
     protected $entity = 'LicenceStatusRule';
 
+    /**
+     * Argument defaults.
+     *
+     * @var array
+     */
     protected $argumentDefaults = array(
         'data' => array(
             'licenceStatus' => null,
@@ -47,7 +54,7 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      *
      * @throws \Common\Exception\ConfigurationException
      */
-    public function createStatusForLicence($licenceId = null, array $args)
+    public function createStatusForLicence($licenceId = null, array $args = array())
     {
         $args = $this->normaliseDataArguments($licenceId, $args);
 
@@ -62,14 +69,14 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      *
      * @return array
      */
-    public function getStatusesForLicence($licenceId = null, array $args)
+    public function getStatusesForLicence($licenceId = null, array $args = array())
     {
         $args = $this->normaliseQueryArguments($licenceId, $args);
 
         return $this->getList($args);
     }
 
-    public function updateStatusesForLicence($licenceId = null, array $args)
+    public function updateStatusesForLicence($licenceId = null, array $args = array())
     {
         $args = $this->normaliseArguments($args);
     }
@@ -92,7 +99,7 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      *
      * @return array
      */
-    private function normaliseDataArguments($licenceId, array $args)
+    private function normaliseDataArguments($licenceId, array $args = array())
     {
         $args['data']['licence'] = $licenceId;
 
@@ -107,7 +114,7 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      *
      * @return array
      */
-    private function normaliseQueryArguments($licenceId, array $args)
+    private function normaliseQueryArguments($licenceId, array $args = array())
     {
         return array_merge($this->argumentDefaults['query'], $args);
     }

@@ -3,7 +3,9 @@
 /**
  * LicenceStatusHelperService.php
  */
+
 namespace Common\Service\Helper;
+
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\LicenceStatusRuleEntityService;
 
@@ -77,7 +79,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         if ($returnBool) {
             // if any of the criteria are of an array type assume that the licence is active.
             foreach ($result as $key => $criteria) {
-                if(is_array($criteria)) {
+                if (is_array($criteria)) {
                     return true;
                 }
             }
