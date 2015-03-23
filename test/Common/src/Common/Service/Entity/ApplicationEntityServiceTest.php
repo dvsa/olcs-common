@@ -889,7 +889,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * Test save interim data
      * 
-     * @group applicationEntity1
+     * @group applicationEntity
      * @dataProvider providerSaveInterimData
      */
     public function testSaveInterimData($formData, $saveData, $saveOcData, $saveLicenceVehicleData, $type)

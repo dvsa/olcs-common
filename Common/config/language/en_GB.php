@@ -1159,8 +1159,11 @@ return array(
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',
     'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.form.interim_status' => 'Interim status',
     'internal.interim.form.refuse_confirm' => 'Are you sure you want to refuse this interim?',
+    'internal.interim.generation_success' => 'The interim document has been generated',
     'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.interim_updated' => 'Interim updated',
     'internal.interim.operatingcentres.table.address' => 'Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'Operating centres',
     'internal.interim.operatingcentres.table.listed' => 'Listed',
@@ -2121,8 +2124,5 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
-    'internal.interim.form.interim_status' => 'Interim status',
-    'internal.interim.generation_success' => 'The interim document has been generated',
-    'internal.interim.interim_updated' => 'Interim updated'
     // Potentially unused (Not found with grep)
 );
