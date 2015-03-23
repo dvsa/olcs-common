@@ -81,4 +81,89 @@ class BusRegDataServiceTest extends MockeryTestCase
 
         $this->assertEquals($mockData, $result);
     }
+
+    /**
+     * @group data_service
+     * @group bus_reg_data_service
+     */
+    public function testFetchLatestActiveVariation()
+    {
+        $regNo = '123';
+
+        $mockRestClient = m::mock('Common\Util\RestClient');
+        $mockData = [ 0 => ['id' => 99]];
+
+        $mockRestClient
+            ->shouldReceive('get')
+            ->once()
+            ->with('', m::type('array'))
+            ->andReturn(['Results' => $mockData, 'Count' => count($mockData)]);
+
+        $this->sut->setRestClient($mockRestClient);
+
+        $result = $this->sut->fetchLatestActiveVariation($regNo);
+
+        $this->assertEquals($mockData[0], $result);
+    }
+
+    /**
+     * @dataProvider isLatestVariationDataProvider
+     * @param array $data
+     * @param array $latestActiveVariationData
+     * @param bool $expectedResult
+     * @group data_service
+     * @group bus_reg_data_service
+     */
+    public function testIsLatestVariation($data, $latestActiveVariationData, $expectedResult)
+    {
+        $this->sut->setData($data['id'], $data);
+
+        $mockRestClient = m::mock('Common\Util\RestClient');
+
+        $mockRestClient
+            ->shouldReceive('get')
+            ->with('', m::type('array'))
+            ->andReturn(['Results' => [$latestActiveVariationData], 'Count' => 1]);
+
+        $this->sut->setRestClient($mockRestClient);
+
+        $result = $this->sut->isLatestVariation($data['id']);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    /**
+     * Data provider for isLatestVariation.
+     *
+     * @return array
+     */
+    public function isLatestVariationDataProvider()
+    {
+        return [
+            // bus reg without regNo
+            [
+                ['id' => 10],
+                [],
+                true
+            ],
+            // no active variation for the regNo
+            [
+                ['id' => 10, 'regNo' => '123'],
+                [],
+                true
+            ],
+            // active variation for the regNo matches the one to be checked
+            [
+                ['id' => 10, 'regNo' => '123'],
+                ['id' => 10],
+                true
+            ],
+            // active variation for the regNo does not match the one to be checked
+            [
+                ['id' => 10, 'regNo' => '123'],
+                ['id' => 9],
+                false
+            ],
+        ];
+    }
 }
