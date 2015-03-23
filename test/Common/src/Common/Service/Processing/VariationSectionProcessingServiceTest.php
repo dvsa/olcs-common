@@ -1755,4 +1755,23 @@ class VariationSectionProcessingServiceTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testClearCache()
+    {
+        $applicationId = 69;
+
+        $this->sut->setApplicationId($applicationId);
+
+        $this->applicationEntity->shouldReceive('getVariationCompletionStatusData')
+            ->with($applicationId)
+            ->twice()
+            ->andReturn(
+                ['declarationConfirmation' => 'N'],
+                ['declarationConfirmation' => 'Y']
+            );
+
+        $this->assertFalse($this->sut->hasUpdatedUndertakings());
+        $this->sut->clearCache();
+        $this->assertTrue($this->sut->hasUpdatedUndertakings());
+    }
 }
