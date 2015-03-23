@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Abstract Undertakings Controller
@@ -38,13 +39,14 @@ abstract class AbstractUndertakingsController extends AbstractController
                 $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
-                // validation failed, we need to lookup application data
-                // but use the POSTed checkbox value to render the form again
-                $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $data = $this->formatDataForForm($applicationData);
-                $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
+                // validation failed, we need to use the application data
+                // for markup but use the POSTed values to render the form again
+                $formData = array_replace_recursive(
+                    $this->formatDataForForm($applicationData),
+                    $data
+                );
                 // don't call setData again here or we lose validation messages
-                $form->populateValues($data);
+                $form->populateValues($formData);
             }
         } else {
             $data = $this->formatDataForForm($applicationData);
@@ -109,7 +111,23 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function formatDataForSave($data)
     {
-        return $data['declarationsAndUndertakings'];
+        $declarationsData = $data['declarationsAndUndertakings'];
+
+        if (isset($data['interim'])) {
+            switch ($data['interim']['goodsApplicationInterim']) {
+                case 'Y':
+                    $declarationsData['interimStatus'] = Application::INTERIM_STATUS_REQUESTED;
+                    $declarationsData['interimReason'] = $data['interim']['goodsApplicationInterimReason'];
+                    break;
+                default:
+                case 'N':
+                    $declarationsData['interimStatus'] = null;
+                    $declarationsData['interimReason'] = null;
+                    break;
+            }
+        }
+
+        return $declarationsData;
     }
 
     /**

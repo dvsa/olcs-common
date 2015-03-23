@@ -32,6 +32,7 @@ trait CommonVariationControllerTrait
     {
         $this->getServiceLocator()->get('Processing\VariationSection')
             ->setApplicationId($this->getApplicationId())
+            ->clearCache()
             ->completeSection($section);
     }
 

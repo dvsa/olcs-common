@@ -486,13 +486,10 @@ class InterimHelperService extends AbstractHelperService
 
         $fileName = $interimData['isVariation'] ? 'GV Refused Interim Direction' : 'GV Refused Interim Licence';
 
-        // generate document
         $document = $this->generateDocument($interimData);
 
-        // upload document and save document fo JackRabbit
         $file = $this->uploadAndSaveRefuseDocument($document, $interimData, $fileName);
 
-        // print document
         $this->printRefuseDocument($file, $fileName);
     }
 

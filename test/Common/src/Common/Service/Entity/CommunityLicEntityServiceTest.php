@@ -292,6 +292,21 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group communityLicService
      */
+    public function testGetActivePendingLicences()
+    {
+        $licenceId = 1;
+        $query = [
+            'status' => ['cl_sts_active', 'cl_sts_pending'],
+            'licence' => $licenceId,
+        ];
+        $this->expectOneRestCall('CommunityLic', 'GET', $query);
+
+        $this->sut->getActivePendingLicences($licenceId);
+    }
+
+    /**
+     * @group communityLicService
+     */
     public function testGetByIds()
     {
         $ids = ['1', '2'];
