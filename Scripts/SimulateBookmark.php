@@ -83,4 +83,4 @@ $rendered = $serviceManager->get('Document')->populateBookmarks($file, $result);
 
 // Dump the bookmark output.
 echo "\n\n\033[0;32mRendered data:\033[0m\n";
-echo $rendered;
+echo $rendered. "\n";
