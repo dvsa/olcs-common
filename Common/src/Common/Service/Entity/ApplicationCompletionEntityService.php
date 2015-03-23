@@ -123,6 +123,14 @@ class ApplicationCompletionEntityService extends AbstractEntityService
     }
 
     /**
+     * @todo Need to actually add some logic to this method
+     */
+    protected function getCommunityLicencesStatus($applicationData)
+    {
+        return self::STATUS_COMPLETE;
+    }
+
+    /**
      * Get type of licence status
      *
      * @param array $applicationData

@@ -132,6 +132,21 @@ class CommunityLicEntityService extends AbstractEntityService
     }
 
     /**
+     * Get Active and Pending community licences
+     * 
+     * @param int $licenceId licence ID
+     * @return array
+     */
+    public function getActivePendingLicences($licenceId)
+    {
+        $query = [
+            'status' => [self::STATUS_ACTIVE, self::STATUS_PENDING],
+            'licence' => $licenceId,
+        ];
+        return $this->get($query, $this->listBundle)['Results'];
+    }
+
+    /**
      * Add office copy
      *
      * @param array $data

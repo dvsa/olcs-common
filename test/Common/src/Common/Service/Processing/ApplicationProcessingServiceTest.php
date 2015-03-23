@@ -188,7 +188,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
-        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
         $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
@@ -393,7 +393,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
-        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
         $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
@@ -643,7 +643,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
-        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
         $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
@@ -712,7 +712,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
-        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
         $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
@@ -1041,7 +1041,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Processing\Licence', $mockLicence);
 
         $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
-        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantCommunityLicence->shouldReceive('voidOrGrant')->with($licenceId);
         $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
         $mockPeople->shouldReceive('grant')->with($id);
         $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
