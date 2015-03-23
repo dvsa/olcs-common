@@ -44,6 +44,13 @@ class FormDateSelect extends AbstractHelper
             return '';
         }
 
+        if (empty($element->getYearElement()->getValue())
+            || empty($element->getMonthElement()->getValue())
+            || empty($element->getDayElement()->getValue())
+        ) {
+            return '';
+        }
+
         $dateTime = new \DateTime();
         $dateTime->setDate(
             (int) $element->getYearElement()->getValue(),

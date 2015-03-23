@@ -34,8 +34,12 @@ class FormDateSelectTest extends TestCase
         $mockDs->shouldReceive('getMonthElement->getValue')->andReturn('11');
         $mockDs->shouldReceive('getDayElement->getValue')->andReturn('28');
 
+        $mockDsEmpty = m::mock('Zend\Form\Element\DateSelect');
+        $mockDsEmpty->shouldReceive('getYearElement->getValue')->andReturn(null);
+
         return [
             [$mockDs, '28/11/2014'],
+            [$mockDsEmpty, ''],
             [null, null],
             [m::mock('Zend\Form\ElementInterface'), '']
         ];
