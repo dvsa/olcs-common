@@ -9,6 +9,8 @@ namespace Common\Service\Document\Parser;
  */
 class RtfParser implements ParserInterface
 {
+    const PIXELS_TO_TWIPS = 15;
+
     public function getFileExtension()
     {
         return 'rtf';
@@ -54,6 +56,19 @@ class RtfParser implements ParserInterface
         }
 
         return str_replace($search, $replace, $content);
+    }
+
+    public function renderImage($binData, $width, $height, $type)
+    {
+        return sprintf(
+            "{\pict\%sblip\picw%d\pich%d\picwgoal%d\pichgoal%d %s}",
+            $type,
+            $width,
+            $height,
+            $width * self::PIXELS_TO_TWIPS,
+            $height * self::PIXELS_TO_TWIPS,
+            bin2hex($binData)
+        );
     }
 
     private function getMatches($content)

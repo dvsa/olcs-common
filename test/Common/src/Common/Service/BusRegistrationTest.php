@@ -42,10 +42,13 @@ class BusRegistrationTest extends TestCase
         $new['trcConditionChecked'] = 'Y';
         $new['id'] = 17;
 
-        $sut = new BusRegistration();
-        $result = $sut->createVariation($new);
+        $mostRecent = [];
+        $mostRecent['variationNo'] = 3;
 
-        $this->assertEquals(1, $result['variationNo']);
+        $sut = new BusRegistration();
+        $result = $sut->createVariation($new, $mostRecent);
+
+        $this->assertEquals(4, $result['variationNo']);
         $this->assertEquals(BusRegistration::STATUS_VAR, $result['status']);
         $this->assertEquals(BusRegistration::STATUS_VAR, $result['revertStatus']);
 
@@ -65,11 +68,13 @@ class BusRegistrationTest extends TestCase
      */
     public function testCreateCancellation($variation)
     {
+        $mostRecent = ['variationNo' => $variation['variationNo']];
+
         $variation['id'] = 18;
         $sut = new BusRegistration();
-        $result = $sut->createCancellation($variation);
+        $result = $sut->createCancellation($variation, $mostRecent);
 
-        $this->assertEquals(2, $result['variationNo']);
+        $this->assertEquals(5, $result['variationNo']);
         $this->assertEquals(BusRegistration::STATUS_CANCEL, $result['status']);
         $this->assertEquals(BusRegistration::STATUS_CANCEL, $result['revertStatus']);
     }

@@ -154,7 +154,7 @@ abstract class AbstractVehiclesController extends AbstractController implements 
 
         if ($mode !== 'add') {
             // We don't want these updating
-            unset($data['licence-vehicle']['specifiedDate']);
+            $data = $this->getAdapter()->maybeUnsetSpecifiedDate($data);
             unset($data['licence-vehicle']['deletedDate']);
             unset($data['licence-vehicle']['discNo']);
             unset($data['vrm']);
@@ -181,6 +181,8 @@ abstract class AbstractVehiclesController extends AbstractController implements 
                 unset($licenceVehicle['receivedDate']);
             }
         }
+
+        $licenceVehicle = $this->getAdapter()->maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
 
         // persist the vehicle first...
         $saved = $this->getServiceLocator()->get('Entity\Vehicle')->save($data);
@@ -221,8 +223,8 @@ abstract class AbstractVehiclesController extends AbstractController implements 
 
         $dataFieldset = $form->get('licence-vehicle');
 
-        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
-        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
+        $this->getAdapter()->maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
+        $this->getAdapter()->maybeRemoveSpecifiedDateEmptyOption($form, $mode);
 
         $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
 

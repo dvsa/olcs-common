@@ -56,15 +56,6 @@ return array(
             'LvaVariation/BusinessType' => array(
                 'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessTypeDelegator'
             ),
-            'LvaApplication/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
-            'LvaLicence/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
-            'LvaVariation/BusinessDetails' => array(
-                'delegator' => 'Common\Controller\Lva\Delegators\GenericBusinessDetailsDelegator'
-            ),
             'LvaApplication/Vehicles' => array(
                 'Common\Controller\Lva\Delegators\ApplicationVehiclesGoodsDelegator'
             ),
@@ -189,6 +180,7 @@ return array(
             'translator' => 'MvcTranslator',
             'Zend\Log' => 'Logger',
             'ContentStore' => 'Dvsa\Jackrabbit\Service\Client',
+            'TableBuilder' => 'Common\Service\Table\TableBuilderFactory',
         ),
         'invokables' => array(
             'CrudListener' => 'Common\Controller\Crud\Listener',
@@ -220,10 +212,6 @@ return array(
                 => 'Common\Controller\Lva\Adapters\VariationFinancialEvidenceAdapter',
             'ApplicationFinancialEvidenceAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationFinancialEvidenceAdapter',
-            'GenericBusinessTypeAdapter'
-                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
-            'GenericBusinessDetailsAdapter'
-                => 'Common\Controller\Lva\Adapters\GenericBusinessDetailsAdapter',
             'ApplicationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\ApplicationVehiclesGoodsAdapter',
             'LicenceVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\LicenceVehiclesGoodsAdapter',
             'VariationVehiclesGoodsAdapter' => 'Common\Controller\Lva\Adapters\VariationVehiclesGoodsAdapter',
@@ -258,6 +246,9 @@ return array(
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
+            'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
+            'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
+            'BusinessRuleManager' => 'Common\BusinessRule\BusinessRuleManagerFactory',
             'ApplicationLvaAdapter' => 'Common\Controller\Lva\Factories\ApplicationLvaAdapterFactory',
             'LicenceLvaAdapter' => 'Common\Controller\Lva\Factories\LicenceLvaAdapterFactory',
             'VariationLvaAdapter' => 'Common\Controller\Lva\Factories\VariationLvaAdapterFactory',
@@ -271,6 +262,8 @@ return array(
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
+            // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
+            'Common\Service\Table\TableBuilderFactory' => 'Common\Service\Table\TableBuilderFactory',
             'FileUploader' => '\Common\Service\File\FileUploaderFactory',
             'ServiceApiResolver' => 'Common\Service\Api\ResolverFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
@@ -285,6 +278,8 @@ return array(
             'Cpms\IdentityProvider' => 'Common\Service\Cpms\IdentityProviderFactory',
             'Zend\Cache\Storage\StorageInterface' => 'Zend\Cache\Service\StorageCacheFactory',
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
+            \Common\Service\Data\Search\SearchTypeManager::class =>
+                \Common\Service\Data\Search\SearchTypeManagerFactory::class,
         )
     ),
     'publications' => array(
@@ -556,5 +551,36 @@ return array(
     ],
     'zfcuser' => [
         'auth_identity_fields' => array('username')
-    ]
+    ],
+    'form_service_manager' => [
+        'invokables' => [
+            'lva-licence' => 'Common\FormService\Form\Lva\Licence',
+            'lva-variation' => 'Common\FormService\Form\Lva\Variation',
+            'lva-application' => 'Common\FormService\Form\Lva\Application',
+            'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
+            'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
+            'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+        ]
+    ],
+    'business_rule_manager' => [
+        'invokables' => [
+            'Task' => 'Common\BusinessRule\Rule\Task',
+            'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
+            'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
+        ]
+    ],
+    'business_service_manager' => [
+        'invokables' => [
+            // Some of these LVA services may be re-usable outside of LVA, if so please move them from the LVA namespace
+            'Lva\BusinessDetails' => 'Common\BusinessService\Service\Lva\BusinessDetails',
+            'Lva\TradingNames' => 'Common\BusinessService\Service\Lva\TradingNames',
+            'Lva\RegisteredAddress' => 'Common\BusinessService\Service\Lva\RegisteredAddress',
+            'Lva\ContactDetails' => 'Common\BusinessService\Service\Lva\ContactDetails',
+            'Lva\BusinessDetailsChangeTask' => 'Common\BusinessService\Service\Lva\BusinessDetailsChangeTask',
+            'Lva\CompanySubsidiaryChangeTask' => 'Common\BusinessService\Service\Lva\CompanySubsidiaryChangeTask',
+            'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
+            'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
+            'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
+        ]
+    ],
 );

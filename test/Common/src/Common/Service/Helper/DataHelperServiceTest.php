@@ -186,4 +186,20 @@ class DataHelperServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedData, $this->sut->replaceIds($data));
     }
+
+    public function testFetchNestedData()
+    {
+        $data = [
+            'foo' => [
+                'bar' => [
+                    'baz' => 'hi!'
+                ]
+            ]
+        ];
+
+        $this->assertEquals(
+            'hi!',
+            $this->sut->fetchNestedData($data, 'foo->bar->baz')
+        );
+    }
 }

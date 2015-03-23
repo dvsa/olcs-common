@@ -10,6 +10,7 @@ namespace Common\Controller\Lva;
 
 use Zend\Form\Form;
 use Common\Service\Entity\LicenceEntityService as Licence;
+use Common\Service\Entity\ApplicationEntityService as Application;
 
 /**
  * Abstract Undertakings Controller
@@ -25,31 +26,32 @@ abstract class AbstractUndertakingsController extends AbstractController
     public function indexAction()
     {
         $request = $this->getRequest();
+        $applicationData = $this->getUndertakingsData();
+        $form = $this->getForm();
+        $this->updateForm($form, $applicationData);
 
         if ($request->isPost()) {
             $data = (array)$request->getPost();
-            $form = $this->getForm()->setData($data);
+            $form->setData($data);
             if ($form->isValid()) {
                 $this->save($this->formatDataForSave($data));
                 $this->postSave('undertakings');
                 $this->handleFees($data);
                 return $this->completeSection('undertakings');
             } else {
-                // validation failed, we need to lookup application data
-                // but use the POSTed checkbox value to render the form again
-                $confirmed = $data['declarationsAndUndertakings']['declarationConfirmation'];
-                $applicationData = $this->getUndertakingsData();
-                $data = $this->formatDataForForm($applicationData);
-                $data['declarationsAndUndertakings']['declarationConfirmation'] = $confirmed;
-                $form->setData($data);
+                // validation failed, we need to use the application data
+                // for markup but use the POSTed values to render the form again
+                $formData = array_replace_recursive(
+                    $this->formatDataForForm($applicationData),
+                    $data
+                );
+                // don't call setData again here or we lose validation messages
+                $form->populateValues($formData);
             }
         } else {
-            $applicationData = $this->getUndertakingsData();
             $data = $this->formatDataForForm($applicationData);
-            $form = $this->getForm()->setData($data);
+            $form->setData($data);
         }
-
-        $this->updateForm($form, $applicationData);
 
         return $this->render('undertakings', $form);
     }
@@ -109,7 +111,23 @@ abstract class AbstractUndertakingsController extends AbstractController
 
     protected function formatDataForSave($data)
     {
-        return $data['declarationsAndUndertakings'];
+        $declarationsData = $data['declarationsAndUndertakings'];
+
+        if (isset($data['interim'])) {
+            switch ($data['interim']['goodsApplicationInterim']) {
+                case 'Y':
+                    $declarationsData['interimStatus'] = Application::INTERIM_STATUS_REQUESTED;
+                    $declarationsData['interimReason'] = $data['interim']['goodsApplicationInterimReason'];
+                    break;
+                default:
+                case 'N':
+                    $declarationsData['interimStatus'] = null;
+                    $declarationsData['interimReason'] = null;
+                    break;
+            }
+        }
+
+        return $declarationsData;
     }
 
     /**

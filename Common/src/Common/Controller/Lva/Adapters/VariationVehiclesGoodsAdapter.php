@@ -65,4 +65,52 @@ class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGo
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilters($params);
     }
+
+    /**
+     * Disable removed and specified dates if needed
+     *
+     * @param Zend\Form\Form $form
+     * @param Common\Service\Helper\FormHelper
+     */
+    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper)
+    {
+        $dataFieldset = $form->get('licence-vehicle');
+        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
+        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
+    }
+
+    /**
+     * Format removed and specified dates if needed
+     *
+     * @param array $licenceVehicle
+     * @return array
+     */
+    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
+    {
+        return $licenceVehicle;
+    }
+
+    /**
+     * Unset specified date if needed
+     *
+     * @param array $data
+     * @return array
+     */
+    public function maybeUnsetSpecifiedDate($data)
+    {
+        unset($data['licence-vehicle']['specifiedDate']);
+        return $data;
+    }
+
+    /**
+     * Don't create an empty option in edit mode for specified date
+     *
+     * @param Zend\Form\Form $form
+     * @param string $mode
+     * @return Zend\Form\Form
+     */
+    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
+    {
+        return $form;
+    }
 }
