@@ -41,9 +41,7 @@ class PsvDiscEntityService extends AbstractEntityService
             );
         }
 
-        $postData['_OPTIONS_']['multiple'] = true;
-
-        $this->put($postData);
+        $this->multiUpdate($postData);
     }
 
     /**
@@ -58,11 +56,14 @@ class PsvDiscEntityService extends AbstractEntityService
             'isCopy' => 'N'
         );
 
-        $postData = $this->getServiceLocator()->get('Helper\Data')->arrayRepeat(array_merge($defaults, $data), $count);
+        $postData = $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->arrayRepeat(
+                array_merge($defaults, $data),
+                $count
+            );
 
-        $postData['_OPTIONS_'] = array('multiple' => true);
-
-        $this->save($postData);
+        $this->multiCreate($postData);
     }
 
     /**
@@ -74,11 +75,10 @@ class PsvDiscEntityService extends AbstractEntityService
             'licence' => $licenceId,
             'ceasedDate' => null,
             'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
+            'discNo' => null
         );
 
-        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+        $this->requestDiscs($count, $data);
     }
 
     /**
@@ -101,10 +101,10 @@ class PsvDiscEntityService extends AbstractEntityService
     {
         $results = $this->getNotCeasedDiscs($licenceId);
         $ids = array_map(
-            $results['Results'],
             function ($v) {
                 return $v['id'];
-            }
+            },
+            $results['Results']
         );
 
         $this->ceaseDiscs($ids);

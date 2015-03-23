@@ -911,6 +911,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $aocData = array(
             array(
                 'action' => 'A',
+                'id' => 10,
                 'operatingCentre' => array(
                     'id' => 4
                 ),
@@ -918,18 +919,24 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ),
             array(
                 'action' => 'A',
+                'id' => 12,
                 'operatingCentre' => array(
                     'id' => 5
                 ),
-                'isInterim' => false
+                'isInterim' => true
             )
         );
 
-        $mockApplicationOperatingCentre = $this->getMock('\stdClass', ['getForApplication']);
+        $mockApplicationOperatingCentre = $this->getMock('\stdClass', ['getForApplication', 'clearInterims']);
         $mockApplicationOperatingCentre->expects($this->once())
             ->method('getForApplication')
             ->with($id)
             ->will($this->returnValue($aocData));
+
+        $mockApplicationOperatingCentre->expects($this->once())
+            ->method('clearInterims')
+            ->with([12]);
+
         $this->sm->setService('Entity\ApplicationOperatingCentre', $mockApplicationOperatingCentre);
     }
 
@@ -976,7 +983,209 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
     }
 
-    public function testProcessGrantVariation()
+    /**
+     * @dataProvider variationLicenceTypesProvider
+     */
+    public function testProcessGrantVariation($licenceType, $applicationType, $category, $expectation)
+    {
+        // Params
+        $id = 2;
+
+        // Stubbed data
+        $licenceId = 5;
+        $this->mockDate('2014-01-01');
+        $stubbedValidatingData = [
+            'foo' => 'bar'
+        ];
+        $stubbedAoc = [
+            [
+                'id' => 5,
+                'action' => 'U',
+                'foo' => 'bar',
+                'operatingCentre' => [
+                    'id' => 6
+                ],
+                'isInterim' => false
+            ]
+        ];
+        $stubbedLoc = [
+            'Results' => [
+                [
+                    'id' => 6,
+                    'operatingCentre' => [
+                        'id' => 7
+                    ]
+                ],
+                [
+                    'id' => 5,
+                    'operatingCentre' => [
+                        'id' => 6
+                    ]
+                ]
+            ]
+        ];
+        $expectedLocData = [
+            'foo' => 'bar',
+            'operatingCentre' => 6,
+            'licence' => 5
+        ];
+
+        $mockFeeService = m::mock();
+        $mockGrantConditionUndertaking = m::mock();
+        $mockGrantCommunityLicence = m::mock();
+        $mockGrantTransportManager = m::mock();
+        $mockPeople = m::mock();
+        $mockSnapshot = m::mock();
+        $mockLicence = m::mock();
+
+        $this->sm->setService('Entity\Fee', $mockFeeService);
+        $this->sm->setService('Processing\GrantConditionUndertaking', $mockGrantConditionUndertaking);
+        $this->sm->setService('Processing\GrantCommunityLicence', $mockGrantCommunityLicence);
+        $this->sm->setService('Processing\GrantTransportManager', $mockGrantTransportManager);
+        $this->sm->setService('Processing\GrantPeople', $mockPeople);
+        $this->sm->setService('Processing\ApplicationSnapshot', $mockSnapshot);
+        $this->sm->setService('Processing\Licence', $mockLicence);
+
+        $mockFeeService->shouldReceive('cancelInterimForApplication')->with($id);
+        $mockGrantConditionUndertaking->shouldReceive('grant')->with($id, $licenceId);
+        $mockGrantCommunityLicence->shouldReceive('grant')->with($licenceId);
+        $mockGrantTransportManager->shouldReceive('grant')->with($id, $licenceId);
+        $mockPeople->shouldReceive('grant')->with($id);
+        $mockSnapshot->shouldReceive('storeSnapshot')->with($id, ApplicationSnapshotProcessingService::ON_GRANT);
+        $mockLicence->shouldReceive('generateDocument')->with($licenceId);
+
+        // Mocked services
+        $mockApplicationService = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationService);
+
+        $mockLicenceService = m::mock();
+        $this->sm->setService('Entity\Licence', $mockLicenceService);
+
+        $mockLicenceVehicleService = m::mock();
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleService);
+
+        $mockAocService = m::mock();
+        $this->sm->setService('Entity\ApplicationOperatingCentre', $mockAocService);
+
+        $mockLocService = m::mock();
+        $this->sm->setService('Entity\LicenceOperatingCentre', $mockLocService);
+
+        $mockGoodsService = m::mock();
+        $this->sm->setService('Entity\GoodsDisc', $mockGoodsService);
+
+        $mockPsvService = m::mock();
+        $this->sm->setService('Entity\PsvDisc', $mockPsvService);
+
+        // Expectations
+        $mockApplicationService->shouldReceive('getLicenceIdForApplication')
+            ->with($id)
+            ->andReturn($licenceId)
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $id,
+                ['status' => ApplicationEntityService::APPLICATION_STATUS_VALID, 'grantedDate' => '2014-01-01']
+            )
+            ->shouldReceive('getDataForValidating')
+            ->with($id)
+            ->andReturn($stubbedValidatingData)
+            ->shouldReceive('getOverview')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => $applicationType,
+                    ],
+                    'goodsOrPsv' => [
+                        'id' => $category
+                    ]
+                ]
+            )
+            ->shouldReceive('getById')
+            ->andReturn(
+                [
+                    'totAuthLargeVehicles' => 0,
+                    'totAuthMediumVehicles' => 0,
+                    'totAuthSmallVehicles' => 0
+                ]
+            );
+
+        // Create disc records
+        $mockLicenceVehicleService->shouldReceive('getForApplicationValidation')
+            ->with($licenceId, $id)
+            ->andReturn([]);
+
+        $mockLicenceService->shouldReceive('forceUpdate')
+            ->with($licenceId, $stubbedValidatingData)
+            ->shouldReceive('getOverview')
+            ->andReturn(
+                [
+                    'licenceType' => [
+                        'id' => $licenceType
+                    ],
+                    'goodsOrPsv' => [
+                        'id' => $category
+                    ]
+                ]
+            )
+            ->shouldReceive('getById')
+            ->andReturn(
+                [
+                    'totAuthLargeVehicles' => 0,
+                    'totAuthMediumVehicles' => 0,
+                    'totAuthSmallVehicles' => 0
+                ]
+            );
+
+        $mockAocService->shouldReceive('getForApplication')
+            ->with($id)
+            ->andReturn($stubbedAoc);
+
+        $mockLocService->shouldReceive('getListForLva')
+            ->with($licenceId)
+            ->andReturn($stubbedLoc)
+            ->shouldReceive('forceUpdate')
+            ->with(5, $expectedLocData);
+
+        $expectation($mockGoodsService, $mockPsvService);
+
+        $this->sut->processGrantVariation($id);
+    }
+
+    public function variationLicenceTypesProvider()
+    {
+        return [
+            [
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                function ($goodsService, $psvService) {
+                    $goodsService->shouldReceive('updateExistingForLicence')->never();
+                    $psvService->shouldReceive('updateExistingForLicence')->never();
+                }
+            ], [
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                function ($goodsService, $psvService) {
+                    $goodsService->shouldReceive('updateExistingForLicence')
+                        ->once()
+                        ->with(5, 2);
+                    $psvService->shouldReceive('updateExistingForLicence')->never();
+                }
+            ], [
+                LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL,
+                LicenceEntityService::LICENCE_CATEGORY_PSV,
+                function ($goodsService, $psvService) {
+                    $goodsService->shouldReceive('updateExistingForLicence')->never();
+                    $psvService->shouldReceive('updateExistingForLicence')
+                        ->once()
+                        ->with(5);
+                }
+            ]
+        ];
+    }
+
+    public function testProcessGrantVariationDifferentLicenceTypeGoods()
     {
         // Params
         $id = 2;
@@ -1110,6 +1319,10 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->with(5, $expectedLocData);
 
         $this->sut->processGrantVariation($id);
+    }
+
+    public function testProcessGrantVariationDifferentLicenceTypePsv()
+    {
     }
 
     /**
@@ -1284,7 +1497,7 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         ];
     }
 
-    public function testFeeStatusIsValid()
+    public function testFeeStatusIsValidWithNoOutstandingFees()
     {
         $applicationId = 123;
         $this->sm->setService(
@@ -1296,6 +1509,50 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
                 ->getMock()
         );
         $this->assertTrue($this->sut->feeStatusIsValid($applicationId));
+    }
+
+    public function testFeeStatusIsValidWithOutstandingInterimFees()
+    {
+        $applicationId = 123;
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getOutstandingFeesForApplication')
+                ->with($applicationId)
+                ->andReturn(
+                    [
+                        [
+                            'feeType' => [
+                                'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                            ]
+                        ]
+                    ]
+                )
+                ->getMock()
+        );
+        $this->assertTrue($this->sut->feeStatusIsValid($applicationId));
+    }
+
+    public function testFeeStatusIsValidWithOutstandingNonInterimFees()
+    {
+        $applicationId = 123;
+        $this->sm->setService(
+            'Entity\Fee',
+            m::mock()
+                ->shouldReceive('getOutstandingFeesForApplication')
+                ->with($applicationId)
+                ->andReturn(
+                    [
+                        [
+                            'feeType' => [
+                                'feeType' => FeeTypeDataService::FEE_TYPE_GRANT
+                            ]
+                        ]
+                    ]
+                )
+                ->getMock()
+        );
+        $this->assertFalse($this->sut->feeStatusIsValid($applicationId));
     }
 
     /**

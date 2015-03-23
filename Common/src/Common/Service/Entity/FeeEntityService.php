@@ -186,8 +186,7 @@ class FeeEntityService extends AbstractLvaEntityService
             }
         }
 
-        $updates['_OPTIONS_']['multiple'] = true;
-        $this->put($updates);
+        $this->multiUpdate($updates);
         if ($tasks) {
             $this->getServiceLocator()->get('Entity\Task')->multiUpdate($tasks);
         }
@@ -219,9 +218,7 @@ class FeeEntityService extends AbstractLvaEntityService
             );
         }
 
-        $updates['_OPTIONS_']['multiple'] = true;
-
-        $this->put($updates);
+        $this->multiUpdate($updates);
     }
 
     public function cancelInterimForApplication($applicationId)
@@ -239,9 +236,7 @@ class FeeEntityService extends AbstractLvaEntityService
             }
         }
 
-        $updates['_OPTIONS_']['multiple'] = true;
-
-        $this->put($updates);
+        $this->multiUpdate($updates);
     }
 
     /**
