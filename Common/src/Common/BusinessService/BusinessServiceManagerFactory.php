@@ -18,14 +18,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class BusinessServiceManagerFactory extends AbstractPluginManagerFactory
 {
-    /**
-     * Create and return a plugin manager.
-     * Classes that extend this should provide a valid class for
-     * the PLUGIN_MANGER_CLASS constant.
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return AbstractPluginManager
-     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
