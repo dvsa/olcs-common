@@ -14,7 +14,7 @@ use Common\Controller\Lva\Interfaces\VehiclesAdapterInterface;
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAdapterInterface
+class VariationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
 {
     /**
      * Get vehicles data for the given resource
@@ -63,5 +63,11 @@ class VariationVehiclesPsvAdapter extends AbstractAdapter implements VehiclesAda
     {
         unset($data['licence-vehicle']['specifiedDate']);
         return $data;
+    }
+
+    public function warnIfAuthorityExceeded($applicationId, $types, $redirecting)
+    {
+        return $this->getServiceLocator()->get('ApplicationVehiclesPsvAdapter')
+            ->warnIfAuthorityExceeded($applicationId, $types, $redirecting);
     }
 }

@@ -14,6 +14,8 @@ use ZfcRbac\Role\RoleProviderInterface;
 class RoleProvider implements RoleProviderInterface, FactoryInterface
 {
     const CACHE_KEY = 'rbac.roles';
+    const MAX_ROLES = 50;
+
     /**
      * @var \Zend\Cache\Storage\StorageInterface
      */
@@ -84,7 +86,7 @@ class RoleProvider implements RoleProviderInterface, FactoryInterface
         if (!$success) {
 
             $result = [];
-            $data = $this->getDataService()->fetchList();
+            $data = $this->getDataService()->fetchList(['limit' => self::MAX_ROLES]);
 
             foreach ($data as $roleData) {
                 $role = new Role($roleData['role']);

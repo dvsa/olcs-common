@@ -14,9 +14,14 @@ namespace Common\Service\Entity;
  */
 class TrafficAreaEntityService extends AbstractEntityService
 {
-    /**
-     * Northern Ireland Traffic Area Code
-     */
+    const NORTH_EASTERN_TRAFFIC_AREA_CODE    = 'B';
+    const NORTH_WESTERN_TRAFFIC_AREA_CODE    = 'C';
+    const WEST_MIDLANDS_TRAFFIC_AREA_CODE    = 'D';
+    const EASTERN_TRAFFIC_AREA_CODE          = 'F';
+    const WELSH_TRAFFIC_AREA_CODE            = 'G';
+    const WESTERN_TRAFFIC_AREA_CODE          = 'H';
+    const SE_MET_TRAFFIC_AREA_CODE           = 'K';
+    const SCOTTISH_TRAFFIC_AREA_CODE         = 'M';
     const NORTHERN_IRELAND_TRAFFIC_AREA_CODE = 'N';
 
     protected $entity = 'TrafficArea';

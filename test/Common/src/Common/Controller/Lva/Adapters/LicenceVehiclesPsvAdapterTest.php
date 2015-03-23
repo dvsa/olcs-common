@@ -100,4 +100,10 @@ class LicenceVehiclesPsvAdapterTest extends MockeryTestCase
     {
         $this->assertEquals('data', $this->sut->maybeUnsetSpecifiedDate('data'));
     }
+
+    public function testWarnIfAuthorityExceeded()
+    {
+        // this is a no-op on the licence adapter
+        $this->assertNull($this->sut->warnIfAuthorityExceeded(1, [], true));
+    }
 }
