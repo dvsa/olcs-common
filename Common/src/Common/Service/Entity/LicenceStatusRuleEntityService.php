@@ -118,4 +118,27 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     {
         return array_merge($this->argumentDefaults['query'], $args);
     }
+
+    /**
+     * @param int $licenceId
+     * @return array|null
+     */
+    public function getPendingChangesForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'deletedDate' => null,
+            'endProcessedDate' => null,
+        ];
+
+        $bundle = [
+            'children' => [
+                'licenceStatus',
+            ],
+        ];
+
+        $data = $this->getAll($query, $bundle);
+
+        return $data['Count']>0 ? $data['Results'] : null;
+    }
 }
