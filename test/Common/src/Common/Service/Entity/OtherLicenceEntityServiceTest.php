@@ -80,4 +80,27 @@ class OtherLicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getByTmLicenceId($id));
     }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetForApplicationAndType()
+    {
+        $id = 7;
+        $prevLicType = 3;
+
+        $data = array(
+            'application' => $id,
+            'previousLicenceType' => $prevLicType,
+            'limit' => 'all'
+        );
+
+        $expected = array('foo');
+        $response = array('Results' => $expected);
+
+        $this->expectOneRestCall('OtherLicence', 'GET', $data)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($expected, $this->sut->getForApplicationAndType($id, $prevLicType));
+    }
 }

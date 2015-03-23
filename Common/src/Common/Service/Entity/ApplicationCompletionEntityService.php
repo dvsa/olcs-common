@@ -610,7 +610,7 @@ class ApplicationCompletionEntityService extends AbstractEntityService
 
                 $hasLicences = false;
 
-                foreach ($applicationData['previousLicences'] as $licence) {
+                foreach ($applicationData['otherLicences'] as $licence) {
 
                     if ($licence['previousLicenceType']['id'] === $licenceType) {
                         $hasLicences = true;

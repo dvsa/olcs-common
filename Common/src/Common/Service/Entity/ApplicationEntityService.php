@@ -163,7 +163,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceType',
             'operatingCentres',
             'previousConvictions',
-            'previousLicences' => array(
+            'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
                 )
@@ -465,7 +465,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'licence_history' => [
                 'children' => [
-                    'previousLicences' => [
+                    'otherLicences' => [
                         'children' => [
                             'previousLicenceType'
                         ]
@@ -501,24 +501,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => [
                     'licence' => [
                         'children' => [
-                            // @NOTE I think the companySubsidiaryLicence table should be a straight
-                            // many-to-many so this could change
-                            'companySubsidiaries' => [
-                                'children' => [
-                                    'companySubsidiary'
-                                ]
-                            ],
+                            'companySubsidiaries',
                             'organisation' => [
                                 'children' => [
                                     'type',
                                     'tradingNames',
-                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
-                                    // many-to-many so this could change
-                                    'natureOfBusinesss' => [
-                                        'children' => [
-                                            'refData'
-                                        ]
-                                    ],
+                                    'natureOfBusinesses',
                                     'contactDetails' => [
                                         'children' => [
                                             'address'
