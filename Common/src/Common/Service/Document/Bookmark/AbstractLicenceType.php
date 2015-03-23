@@ -17,7 +17,7 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
  */
 abstract class AbstractLicenceType extends DynamicBookmark
 {
-    const SERVICE = 'Licence';
+    const SERVICE  = 'Licence';
     const DATA_KEY = 'licence';
 
     /**
