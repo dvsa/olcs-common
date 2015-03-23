@@ -838,6 +838,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
         return $this->licenceIds[$id];
     }
 
+    public function getApplicationsForLicence($licenceId)
+    {
+        return $this->get(['licenceId' => $licenceId]);
+    }
+
     /**
      * Get data for completion status
      * @param int $id
