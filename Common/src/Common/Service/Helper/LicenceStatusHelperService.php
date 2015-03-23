@@ -5,6 +5,7 @@
  */
 namespace Common\Service\Helper;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\LicenceStatusRuleEntityService;
 
 /**
  * Class LicenceStatusHelperService
@@ -188,7 +189,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $currentLicenceCurtailments = $licenceStatusEntityService->getStatusesForLicence(
             $licenceId,
             array(
-                'code' => 'CURT'
+                'licenceStatus' => LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED
             )
         );
 

@@ -26,21 +26,17 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
 
     protected $entity = 'LicenceStatusRule';
 
-    private $licenceStatus = array(
-        'CURT' => self::LICENCE_STATUS_RULE_CURTAILED,
-        'REVO' => self::LICENCE_STATUS_RULE_REVOKED,
-        'SUSP' => self::LICENCE_STATUS_RULE_SUSPENDED
-    );
-
     protected $argumentDefaults = array(
-        'code' => null,
         'data' => array(
+            'licenceStatus' => null,
             'startDate' => null,
             'endDate' => null,
             'startProcessedDate' => null,
             'endProcessedDate' => null,
         ),
-        'query' => array()
+        'query' => array(
+            'licenceStatus' => array()
+        )
     );
 
     /**
@@ -89,24 +85,6 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     }
 
     /**
-     * Get the full status code from the short code.
-     *
-     * @param null $statusShortCode The status short code.
-     *
-     * @throws \InvalidArgumentException If the short code cannot be mapped.
-     *
-     * @return string The full status code.
-     */
-    protected function getLicenceStatusFromShortCode($statusShortCode = null)
-    {
-        if (is_null($statusShortCode) || !isset($this->licenceStatus[$statusShortCode])) {
-            throw new \InvalidArgumentException(__METHOD__ . ' shortcode not recognised.');
-        }
-
-        return $this->licenceStatus[$statusShortCode];
-    }
-
-    /**
      * Normalise data arguments specifically.
      *
      * @param $licenceId The licence id.
@@ -117,7 +95,6 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     private function normaliseDataArguments($licenceId, array $args)
     {
         $args['data']['licence'] = $licenceId;
-        $args['data']['licenceStatus'] = $this->getLicenceStatusFromShortCode($args['code']);
 
         return array_merge($this->argumentDefaults['data'], $args['data']);
     }
@@ -132,8 +109,6 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      */
     private function normaliseQueryArguments($licenceId, array $args)
     {
-        $args['query']['code'] = $this->getLicenceStatusFromShortCode($args['code']);
-
-        return array_merge($this->argumentDefaults['query'], $args['query']);
+        return array_merge($this->argumentDefaults['query'], $args);
     }
 }
