@@ -63,8 +63,7 @@ class GoodsDiscEntityService extends AbstractEntityService
             'ceasedDate' => null,
             'issuedDate' => null,
             'discNo' => null,
-            'isCopy' => 'N',
-            '_OPTIONS_' => ['force' => true]
+            'isCopy' => 'N'
         ];
 
         $data = [];

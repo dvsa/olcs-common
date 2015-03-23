@@ -70,16 +70,14 @@ class GoodsDiscEntityServiceTest extends AbstractEntityServiceTestCase
                 'ceasedDate' => null,
                 'issuedDate' => null,
                 'discNo' => null,
-                'isCopy' => 'N',
-                '_OPTIONS_' => ['force' => true]
+                'isCopy' => 'N'
             ],
             [
                 'licenceVehicle' => 5,
                 'ceasedDate' => null,
                 'issuedDate' => null,
                 'discNo' => null,
-                'isCopy' => 'N',
-                '_OPTIONS_' => ['force' => true]
+                'isCopy' => 'N'
             ],
             '_OPTIONS_' => [
                 'multiple' => true
@@ -144,16 +142,14 @@ class GoodsDiscEntityServiceTest extends AbstractEntityServiceTestCase
                 'ceasedDate' => null,
                 'issuedDate' => null,
                 'discNo' => null,
-                'isCopy' => 'N',
-                '_OPTIONS_' => ['force' => true]
+                'isCopy' => 'N'
             ],
             [
                 'licenceVehicle' => 60,
                 'ceasedDate' => null,
                 'issuedDate' => null,
                 'discNo' => null,
-                'isCopy' => 'N',
-                '_OPTIONS_' => ['force' => true]
+                'isCopy' => 'N'
             ],
             '_OPTIONS_' => [
                 'multiple' => true
