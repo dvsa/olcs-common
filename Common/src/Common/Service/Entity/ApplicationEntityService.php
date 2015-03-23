@@ -1225,6 +1225,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
         $data = [];
         $newDiscs = [];
+        $specifiedDate = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
         // preparing data to set interim flag
         foreach ($recordsToSet as $recordId) {
             $record = [
@@ -1233,7 +1234,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'interimApplication' => $id
             ];
             if ($processInForce) {
-                $record['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
+                $record['specifiedDate'] = $specifiedDate;
                 $newDiscs[] = [
                     'licenceVehicle' => $recordId,
                     'isInterim' => 'Y'
@@ -1249,7 +1250,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'interimApplication' => 'NULL'
             ];
             if ($processInForce) {
-                $record['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
+                $record['specifiedDate'] = $specifiedDate;
             }
             $data[] = $record;
         }

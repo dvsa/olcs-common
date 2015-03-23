@@ -998,15 +998,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->getMock();
         $this->sm->setService('Entity\LicenceVehicle', $mocklicenceVehicleService);
 
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->with('Y-m-d H:i:s')
+            ->andReturn('2015-01-01')
+            ->getMock()
+        );
         if ($formData['data']['interimCurrentStatus'] == ApplicationEntityService::INTERIM_STATUS_INFORCE) {
-            $this->sm->setService(
-                'Helper\Date',
-                m::mock()
-                ->shouldReceive('getDate')
-                ->with('Y-m-d H:i:s')
-                ->andReturn('2015-01-01')
-                ->getMock()
-            );
 
             $this->sm->setService(
                 'Helper\Interim',
