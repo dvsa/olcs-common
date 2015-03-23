@@ -44,4 +44,35 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $this->sut->getMessage());
     }
+
+    /**
+     * @dataProvider isOkProvider
+     */
+    public function testIsOk($type, $expected)
+    {
+        $this->sut->setType($type);
+        $this->assertEquals($expected, $this->sut->isOk());
+    }
+
+    public function isOkProvider()
+    {
+        return [
+            [
+                Response::TYPE_SUCCESS,
+                true
+            ],
+            [
+                Response::TYPE_NO_OP,
+                true
+            ],
+            [
+                Response::TYPE_FAILED,
+                false
+            ],
+            [
+                Response::TYPE_RULE_FAILED,
+                false
+            ]
+        ];
+    }
 }
