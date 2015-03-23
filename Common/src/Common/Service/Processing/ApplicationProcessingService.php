@@ -91,7 +91,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->grantApplication($id, ApplicationEntityService::APPLICATION_STATUS_VALID);
 
-        $category = $this->getServiceLocator()->get('Entity\Application')->getCategory($id);
+        $application = $this->getServiceLocator()->get('Entity\Application')->getOverview($id);
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
+
+        $category = $application['goodsOrPsv']['id'];
+
+        if ($application['licenceType']['id'] !== $licence['licenceType']['id']) {
+            $this->updateExistingDiscs($licenceId, $id, $category);
+        }
 
         // @NOTE This MUST happen before updating the licence record
         $this->createDiscRecords($licenceId, $category, $id);
@@ -101,6 +108,28 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         $this->processApplicationOperatingCentres($id, $licenceId);
         $this->processCommonGrantData($id, $licenceId);
+    }
+
+    /**
+     * If the application type has changed we need to void all the existing
+     * discs on the licence and create a load of new ones with the updated
+     * type
+     *
+     * @param int $licenceId
+     * @param int $applicationId
+     * @param string $category
+     */
+    protected function updateExistingDiscs($licenceId, $applicationId, $category)
+    {
+        if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
+            $this->getServiceLocator()
+                ->get('Entity\GoodsDisc')
+                ->updateExistingForLicence($licenceId, $applicationId);
+        } else {
+            $this->getServiceLocator()
+                ->get('Entity\PsvDisc')
+                ->updateExistingForLicence($licenceId);
+        }
     }
 
     /**
@@ -256,7 +285,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     public function feeStatusIsValid($applicationId)
     {
-        $fees = $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId);
+        $fees = array_filter(
+            $this->getServiceLocator()->get('Entity\Fee')->getOutstandingFeesForApplication($applicationId),
+            function ($fee) {
+                return $fee['feeType']['feeType'] !== FeeTypeDataService::FEE_TYPE_GRANTINT;
+            }
+        );
         return empty($fees);
     }
 
@@ -399,9 +433,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $applicationOperatingCentres = $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')
             ->getForApplication($id);
 
-        $new = $updates = $deletions = array();
+        $new = $updates = $deletions = $interimOcs = array();
 
         foreach ($applicationOperatingCentres as $aoc) {
+
+            if ($aoc['isInterim']) {
+                $interimOcs[] = $aoc['id'];
+            }
+
             switch ($aoc['action']) {
                 case 'A':
                 case 'U':
@@ -414,6 +453,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                     unset($aoc['createdBy']);
                     unset($aoc['modifiedOn']);
                     unset($aoc['modifiedBy']);
+                    unset($aoc['isInterim']);
 
                     $aoc['operatingCentre'] = $aoc['operatingCentre']['id'];
                     $aoc['licence'] = $licenceId;
@@ -460,6 +500,10 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
                 }
             }
         }
+
+        if (!empty($interimOcs)) {
+            $this->getServiceLocator()->get('Entity\ApplicationOperatingCentre')->clearInterims($interimOcs);
+        }
     }
 
     protected function getDifferenceInTotalAuth($licenceId, $applicationId)
@@ -494,7 +538,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
 
         $licenceVehicles = $this->getServiceLocator()->get('Entity\LicenceVehicle')
-                ->getForApplicationValidation($licenceId, $applicationId);
+            ->getForApplicationValidation($licenceId, $applicationId);
 
         if (!empty($licenceVehicles)) {
             if ($category === LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE) {
@@ -511,7 +555,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // @NOTE passing licenceVehicle by reference
         foreach ($licenceVehicles as &$licenceVehicle) {
-            $licenceVehicle['specifiedDate'] = $date;
+            // some vehicles might already have a specified date
+            // if they were interims
+            if ($licenceVehicle['specifiedDate'] === null) {
+                $licenceVehicle['specifiedDate'] = $date;
+            }
+            $licenceVehicle['interimApplication'] = null;
         }
 
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($licenceVehicles);
@@ -519,37 +568,14 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
     protected function createGoodsDiscs($licenceVehicles)
     {
-        $defaults = array(
-            'ceasedDate' => null,
-            'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
-        );
-
-        $goodsDiscService = $this->getServiceLocator()->get('Entity\GoodsDisc');
-
-        foreach ($licenceVehicles as $licenceVehicle) {
-            $data = array_merge(
-                $defaults,
-                array(
-                    'licenceVehicle' => $licenceVehicle['id']
-                )
-            );
-            $goodsDiscService->save($data);
-        }
+        $this->getServiceLocator()->get('Entity\GoodsDisc')
+            ->createForVehicles($licenceVehicles);
     }
 
     protected function createPsvDiscs($licenceId, $count)
     {
-        $data = array(
-            'licence' => $licenceId,
-            'ceasedDate' => null,
-            'issuedDate' => null,
-            'discNo' => null,
-            'isCopy' => 'N'
-        );
-
-        $this->getServiceLocator()->get('Entity\PsvDisc')->requestDiscs($count, $data);
+        $this->getServiceLocator()->get('Entity\PsvDisc')
+            ->requestBlankDiscs($licenceId, $count);
     }
 
     protected function copyApplicationDataToLicence($id, $licenceId)
@@ -645,6 +671,8 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      */
     protected function processCommonGrantData($id, $licenceId)
     {
+        $this->getServiceLocator()->get('Entity\Fee')->cancelInterimForApplication($id);
+
         $this->getServiceLocator()->get('Processing\GrantConditionUndertaking')->grant($id, $licenceId);
 
         $this->getServiceLocator()->get('Processing\GrantCommunityLicence')->voidOrGrant($licenceId);
