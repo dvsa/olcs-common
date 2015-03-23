@@ -1,9 +1,5 @@
 <?php
 
-/**
- * LicenceType.php
- */
-
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
@@ -16,10 +12,14 @@ use Common\Service\Document\Bookmark\Base\DynamicBookmark;
  *
  * @package Common\Service\Document\Bookmark
  *
- * @author Josh Curtis <josh.curtis@valtech.com>
+ * @author Josh Curtis <josh.curtis@valtech.co.uk>
+ * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class LicenceType extends DynamicBookmark
+abstract class AbstractLicenceType extends DynamicBookmark
 {
+    const SERVICE = 'Licence';
+    const DATA_KEY = 'licence';
+
     /**
      * Returns the bundle query to be used in the REST call to the backend.
      *
@@ -30,9 +30,9 @@ class LicenceType extends DynamicBookmark
     public function getQuery(array $data)
     {
         $query = [
-            'service' => 'Licence',
+            'service' => static::SERVICE,
             'data' => [
-                'id' => $data['licence']
+                'id' => $data[static::DATA_KEY]
             ],
             'bundle' => [
                 'children' => [
@@ -47,7 +47,7 @@ class LicenceType extends DynamicBookmark
 
     /**
      * The render method to be used for this bookmark. This method returns the
-     * types and categories as one stri
+     * types and categories as one string
      *
      * @return string
      */
