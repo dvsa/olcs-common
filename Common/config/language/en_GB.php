@@ -2121,5 +2121,8 @@ return array(
     'west-midlands' => 'West Midlands',
     'west-of-england' => 'West of England',
     'your-business' => 'Your business',
+    'internal.interim.form.interim_status' => 'Interim status',
+    'internal.interim.generation_success' => 'The interim document has been generated',
+    'internal.interim.interim_updated' => 'Interim updated'
     // Potentially unused (Not found with grep)
 );
