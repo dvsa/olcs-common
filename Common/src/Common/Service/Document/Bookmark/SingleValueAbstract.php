@@ -22,6 +22,7 @@ abstract class SingleValueAbstract extends DynamicBookmark
     const SERVICE = 'BusReg'; // example
     const SRCH_FLD_KEY = 'id'; // example
     const SRCH_VAL_KEY = 'busRegId'; // example
+    const DEFAULT_VALUE = null;
 
     public function getQuery(array $data)
     {
@@ -48,6 +49,10 @@ abstract class SingleValueAbstract extends DynamicBookmark
             $class = __NAMESPACE__ . '\Formatter\\' . $formatter;
 
             $value = $class::format((array)$value);
+        }
+
+        if (empty($value) && static::DEFAULT_VALUE !== null) {
+            $value = static::DEFAULT_VALUE;
         }
 
         return $value;

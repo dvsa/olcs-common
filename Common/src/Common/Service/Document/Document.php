@@ -83,7 +83,11 @@ class Document implements ServiceLocatorAwareInterface
                 $result = null;
             }
 
-            if ($result) {
+            // @TODO this check means bookmarks we did find but couldn't replace with
+            // data are left in tact in the document, which can appear confusing. We
+            // do this for now because of course *every* token has a bookmark, even if
+            // it's a fallback TextBlock. Could modify the below to check the bookmark type...
+            if ($result !== null) {
                 $populatedData[$token] = [
                     'content' => $result,
                     'preformatted' => $bookmark->isPreformatted()
