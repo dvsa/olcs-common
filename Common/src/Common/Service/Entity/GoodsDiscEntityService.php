@@ -101,7 +101,6 @@ class GoodsDiscEntityService extends AbstractEntityService
     /**
      * Void any existing discs relating to the given application
      *
-     * @param int $licenceId
      * @param int $applicationId
      */
     public function voidExistingForApplication($applicationId)

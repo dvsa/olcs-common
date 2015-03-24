@@ -626,7 +626,6 @@ class LicenceEntityService extends AbstractLvaEntityService
      * Get community licences by licence id
      *
      * @param int $licenceId
-     * @param array $ids
      * @return array
      */
     public function getCommunityLicencesByLicenceId($licenceId)
