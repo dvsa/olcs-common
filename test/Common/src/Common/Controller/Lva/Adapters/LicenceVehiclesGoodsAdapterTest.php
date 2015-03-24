@@ -139,7 +139,18 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
                 'year' => 2015
             ]
         ];
-        $this->assertEquals([], $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle));
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->with('Y-m-d')
+            ->andReturn('2015-01-01')
+            ->getMock()
+        );
+        $this->assertEquals(
+            ['specifiedDate' => '2015-01-01'],
+            $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
+        );
     }
 
     /**
