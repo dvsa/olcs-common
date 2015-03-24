@@ -1080,6 +1080,7 @@ return array(
     'internal-navigation-operator-licences_applications' => 'Licences & Applications',
     'internal-navigation-operator-people' => 'People',
     'internal-navigation-operator-profile' => 'Operator profile',
+    'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-transport-manager' => 'Transport manager',
     'internal-navigation-transport-manager-cases' => 'Cases',
