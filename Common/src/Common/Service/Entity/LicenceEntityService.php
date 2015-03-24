@@ -37,6 +37,11 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
     const LICENCE_STATUS_REFUSED = 'lsts_refused';
+    const LICENCE_STATUS_REVOKED = 'lsts_revoked';
+    const LICENCE_STATUS_NOT_TAKEN_UP = 'lsts_ntu';
+    const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
+    const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
+    // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
 
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
@@ -612,6 +617,22 @@ class LicenceEntityService extends AbstractLvaEntityService
                         'id' => 'IN ' . json_encode($ids)
                     ]
                 ]
+            ]
+        ];
+        return $this->get($licenceId, $bundle)['communityLics'];
+    }
+
+    /**
+     * Get community licences by licence id
+     *
+     * @param int $licenceId
+     * @return array
+     */
+    public function getCommunityLicencesByLicenceId($licenceId)
+    {
+        $bundle = [
+            'children' => [
+                'communityLics'
             ]
         ];
         return $this->get($licenceId, $bundle)['communityLics'];
