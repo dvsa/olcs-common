@@ -99,15 +99,13 @@ class InterimOperatingCentres extends DynamicBookmark
 
     private function filterConditionsUndertakings($input, $applicationId, $licenceId)
     {
-        $licenceConditions = $this->getIndexedData($input, 'licence');
-        $applicationConditions = $this->getIndexedData($input, 'application');
+        $combinedConditions = array_merge(
+            $this->getIndexedData($input, 'licence'),
+            $this->getIndexedData($input, 'application')
+        );
 
         $conditions = [];
-        foreach ($licenceConditions as $id => $condition) {
-            if (isset($applicationConditions[$id])) {
-                $condition = $applicationConditions[$id];
-            }
-
+        foreach ($combinedConditions as $condition) {
             /**
              * We can't do this filtering at the DB level; if we did we'd miss delta updates
              * which could be relevant, i.e. a record which was fulfilled but isn't in the delta
@@ -149,7 +147,7 @@ class InterimOperatingCentres extends DynamicBookmark
             } else {
                 $key = $condition['id'];
             }
-            $final[$key] = $condition;
+            $final["index:" . $key] = $condition;
         }
         return $final;
     }

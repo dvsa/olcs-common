@@ -70,15 +70,13 @@ abstract class AbstractInterimConditionsUndertakings extends DynamicBookmark
 
     public function render()
     {
-        $licenceConditions = $this->getIndexedData($this->data['licence']['conditionUndertakings']);
-        $applicationConditions = $this->getIndexedData($this->data['conditionUndertakings']);
+        $combinedConditions = array_merge(
+            $this->getIndexedData($this->data['licence']['conditionUndertakings']),
+            $this->getIndexedData($this->data['conditionUndertakings'])
+        );
 
         $conditions = [];
-        foreach ($licenceConditions as $id => $condition) {
-            if (isset($applicationConditions[$id])) {
-                $condition = $applicationConditions[$id];
-            }
-
+        foreach ($combinedConditions as $condition) {
             if (
                 $condition['isFulfilled'] === 'N'
                 && $condition['conditionType']['id'] === static::CONDITION_TYPE
@@ -101,7 +99,7 @@ abstract class AbstractInterimConditionsUndertakings extends DynamicBookmark
             } else {
                 $key = $condition['id'];
             }
-            $final[$key] = $condition;
+            $final["index:" . $key] = $condition;
         }
 
         return $final;
