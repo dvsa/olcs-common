@@ -760,7 +760,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
      * Called when marking an application Not Taken Up
      *
      * @param int $id
-     * @todo additional processing
      */
     public function processNotTakenUpApplication($id)
     {
@@ -774,15 +773,12 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         );
 
         // Void any discs
-        // Tech note: Set goods_disc.ceased_date = current date/time OR psv_disc.ceased_date = current date/time
         $this->getServiceLocator()->get('Entity\GoodsDisc')->voidExistingForApplication($id);
 
         // Remove any vehicles
-        // Tech note: Set licence_vehicle.removed_date = current date/time
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->removeForApplication($id);
 
         // Unlink any Transport Managers
-        // Tech note: Set transport_manager_licence.deleted_date = current date/time
         $this->getServiceLocator()->get('Entity\TransportManagerApplication')->deleteForApplication($id);
 
         // Void any community licences
