@@ -24,10 +24,12 @@ class ApplicationVehiclesDeclarationsReviewService extends AbstractReviewService
      */
     public function getConfigFromData(array $data = array())
     {
-        $multiItems = [];
+        $subSections = [];
 
         // All options relating to having small vehicles
         if ($data['totAuthSmallVehicles'] > 0) {
+
+            $multiItems = [];
 
             // 15b[i]
             if ($data['licence']['trafficArea']['isScotland'] == false) {
@@ -38,26 +40,61 @@ class ApplicationVehiclesDeclarationsReviewService extends AbstractReviewService
                     $multiItems['15b'][] = $this->addSection15b2($data);
                 } else {
                     // 15c/d
-                    $multiItems['15cd'] = $this->addSection15cd($data);
+                    $multiItems = array_merge($multiItems, $this->addSection15cd($data));
                 }
             } else {
                 // 15c/d
-                $multiItems['15cd'] = $this->addSection15cd($data);
+                $multiItems = array_merge($multiItems, $this->addSection15cd($data));
             }
+
+            $subSections[] = [
+                'title' => 'application-review-vehicles-declarations-small-title',
+                'mainItems' => [
+                    [
+                        'multiItems' => $multiItems
+                    ]
+                ]
+            ];
         }
 
         if ($data['totAuthSmallVehicles'] == 0
             && ($data['totAuthMediumVehicles'] > 0 || $data['totAuthLargeVehicles'] > 0)) {
 
-            $multiItems['15e'][] = $this->addSection15e($data);
+            $subSections[] = [
+                'title' => 'application-review-vehicles-declarations-medium-title',
+                'mainItems' => [
+                    [
+                        'multiItems' => [
+                            [
+                                $this->addSection15e($data)
+                            ]
+                        ]
+                    ]
+                ]
+            ];
         }
 
         if ($data['licenceType']['id'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED
             && $data['totAuthMediumVehicles'] > 0) {
 
-            $multiItems['8b'][] = $this->addSection8b1($data);
-            $multiItems['8b'][] = $this->addSection8b2($data);
+            $subSections[] = [
+                'title' => 'application-review-vehicles-declarations-business-title',
+                'mainItems' => [
+                    [
+                        'multiItems' => [
+                            [
+                                $this->addSection8b1($data)
+                            ],
+                            [
+                                $this->addSection8b2($data)
+                            ]
+                        ]
+                    ]
+                ]
+            ];
         }
+
+        $multiItems = [];
 
         $multiItems['15f'][] = $this->addSection15f1($data);
 
@@ -67,8 +104,17 @@ class ApplicationVehiclesDeclarationsReviewService extends AbstractReviewService
             $multiItems['15f'][] = $this->addSection15f2();
         }
 
+        $subSections[] = [
+            'title' => 'application-review-vehicles-declarations-novelty-title',
+            'mainItems' => [
+                [
+                    'multiItems' => $multiItems
+                ]
+            ]
+        ];
+
         return [
-            'multiItems' => $multiItems
+            'subSections' => $subSections
         ];
     }
 
@@ -93,14 +139,24 @@ class ApplicationVehiclesDeclarationsReviewService extends AbstractReviewService
     {
         return [
             [
-                'label' => 'application-review-vehicles-declarations-15cd',
-                'value' => $this->formatConfirmed($data['psvSmallVhlConfirmation'])
+                [
+                    'label' => 'application-review-vehicles-declarations-15cd',
+                    'value' => $this->formatConfirmed($data['psvSmallVhlConfirmation'])
+                ]
             ],
             [
-                'label' => 'markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland',
-                'noEscape' => true,
-                'value' => '<h4>Undertakings</h4>'
-                    . $this->translate('markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings')
+                [
+                    'full-content' => $this->translate(
+                        'markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland'
+                    )
+                ],
+            ],
+            [
+                [
+                    'full-content' => '<h4>Undertakings</h4>' . $this->translate(
+                        'markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings'
+                    )
+                ]
             ]
         ];
     }

@@ -45,7 +45,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             $data = $this->getFormData();
         }
 
-        $form = $this->getForm();
+        $form = $this->getForm()->setData($data);
 
         $this->alterForm($form);
 

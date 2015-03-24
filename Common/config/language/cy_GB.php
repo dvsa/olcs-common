@@ -250,6 +250,10 @@ return array(
         seats',
     'application-review-vehicles-declarations-8b2' => 'W Details below of your business or main occupation and how you
         will comply with these restrictions',
+    'application-review-vehicles-declarations-business-title' => 'W Business or main occupation',
+    'application-review-vehicles-declarations-medium-title' => 'W Vehicles with nine or more passengers',
+    'application-review-vehicles-declarations-novelty-title' => 'W Limousines and novelty vehicles',
+    'application-review-vehicles-declarations-small-title' => 'W Small vehicle undertakings',
     'application-review-vehicles-hasEnteredReg' => 'W Vehicle details submitted?',
     'application-review-vehicles-is-novelty' => 'W Limousine or novelty vehicle',
     'application-review-vehicles-make' => 'W Make / model',
