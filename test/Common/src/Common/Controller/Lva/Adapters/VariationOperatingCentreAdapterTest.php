@@ -238,6 +238,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $mockOcEntity->shouldReceive('save')
             ->with(['name' => 'foo']);
 
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
+
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
 
@@ -347,6 +351,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
                     'application' => 3
                 ]
             );
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
 
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
@@ -460,6 +468,10 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
             )
             ->andReturn(['id' => 123]);
 
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null);
+
         $this->sut->saveActionFormData($mode, $data, $formData);
     }
 
@@ -490,6 +502,14 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
         $sm = Bootstrap::getRealServiceManager();
+
+        // Mock the auth service to allow form test to pass through uninhibited
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(false);
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
@@ -575,6 +595,9 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $alteredForm = $this->sut->alterForm($form);
 
         $this->assertFalse($alteredForm->get('data')->has('totCommunityLicences'));
+
+        $sm->setService('ZfcRbac\Service\AuthorizationService', null);
+
     }
 
     public function testAlterFormWithCommunityLicences()
@@ -604,6 +627,14 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
 
         // Going to use a real form here to component test this code, as UNIT testing it will be expensive
         $sm = Bootstrap::getRealServiceManager();
+
+        // Mock the auth service to allow form test to pass through uninhibited
+        $mockAuthService = m::mock();
+        $mockAuthService->shouldReceive('isGranted')
+            ->with('internal-user')
+            ->andReturn(false);
+        $sm->setService('ZfcRbac\Service\AuthorizationService', $mockAuthService);
+
         $form = $sm->get('Helper\Form')->createForm('Lva\OperatingCentres');
         // As it's a component test, we will be better off not mocking the form helper
         $this->sm->setService('Helper\Form', $sm->get('Helper\Form'));
@@ -692,6 +723,9 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $alteredForm = $this->sut->alterForm($form);
 
         $this->assertTrue($alteredForm->get('data')->has('totCommunityLicences'));
+
+        $sm->setService('ZfcRbac\Service\AuthorizationService', null);
+
     }
 
     public function testAlterFormData()
@@ -757,5 +791,263 @@ class VariationOperatingCentreAdapterTest extends MockeryTestCase
         $this->sut->shouldReceive('getTrafficArea')->andReturn('T');
 
         $this->assertEquals($expectedData, $this->sut->formatCrudDataForForm($data, 'edit'));
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testProcessAddressLookupForm()
+    {
+        // Don't like mocking the SUT, but mocking the extremely deep abstract methods is less evil
+        // than writing extremely tightly coupled tests with tonnes of mocked dependencies
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        // Stubbed data
+        $childId = 'L1';
+        $stubbedTableData = array(
+            'L1' => array(
+                'id' => 'L1',
+                'action' => 'E'
+            )
+        );
+
+        // Mocked dependencies
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($childId);
+
+        $this->sut->shouldReceive('getTableData')
+            ->andReturn($stubbedTableData);
+
+        $this->assertFalse($this->sut->processAddressLookupForm($mockForm, $mockRequest));
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testProcessAddressLookupFormWithAdd()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        // Stubbed data
+        $childId = null;
+
+        // Mocked dependencies
+        $mockForm = m::mock();
+        $mockRequest = m::mock();
+
+        // Mock services
+        $mockFormHelper = m::mock();
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn($childId);
+
+        $mockFormHelper->shouldReceive('processAddressLookupForm')
+            ->with($mockForm, $mockRequest)
+            ->andReturn(true);
+
+        $this->assertTrue($this->sut->processAddressLookupForm($mockForm, $mockRequest));
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testRestoreWithInvalidType()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->sut->shouldReceive('getOperatingCentreAction')
+            ->andReturn('E');
+
+        try {
+            $this->sut->restore();
+        } catch (\Exception $e) {
+            $this->assertEquals('Can\'t restore this record', $e->getMessage());
+            return;
+        }
+
+        $this->fail('Expected exception not raised');
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testRestoreWithValidType()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->sut->shouldReceive('getOperatingCentreAction')
+            ->andReturn('D');
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('L5');
+
+        $this->sm->setService(
+            'Entity\ApplicationOperatingCentre',
+            m::mock()
+            ->shouldReceive('delete')
+            ->once()
+            ->with('5')
+            ->getMock()
+        );
+
+        $this->controller->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['action' => null, 'child_id' => null], [], true);
+
+        $this->sut->restore();
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testRestoreWithValidCurrentType()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->sut->shouldReceive('getOperatingCentreAction')
+            ->andReturn('C')
+            ->shouldReceive('getCorrespondingApplicationOperatingCentre')
+            ->with('5')
+            ->andReturn('10');
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('L5');
+
+        $this->sm->setService(
+            'Entity\ApplicationOperatingCentre',
+            m::mock()
+            ->shouldReceive('delete')
+            ->once()
+            ->with('10')
+            ->getMock()
+        );
+
+        $this->controller->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['action' => null, 'child_id' => null], [], true);
+
+        $this->sut->restore();
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testDeleteWithUndeletableRecord()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('L5');
+
+        $this->sut->shouldReceive('canDeleteRecord')
+            ->with('L5')
+            ->andReturn(false);
+
+        $this->sm->setService(
+            'Helper\FlashMessenger',
+            m::mock()
+            ->shouldReceive('addErrorMessage')
+            ->once()
+            ->with('could-not-remove-message')
+            ->getMock()
+        );
+
+        $this->controller->shouldReceive('redirect->toRouteAjax')
+            ->with(null, ['child_id' => null], [], true);
+
+        $this->sut->delete();
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testDeleteWithLicenceRecord()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('L5');
+
+        $this->sut->shouldReceive('canDeleteRecord')
+            ->with('L5')
+            ->andReturn(true)
+            ->shouldReceive('getIdentifier')
+            ->andReturn(10);
+
+        $this->sm->setService(
+            'Entity\LicenceOperatingCentre',
+            m::mock()
+            ->shouldReceive('variationDelete')
+            ->once()
+            ->with('5', 10)
+            ->getMock()
+        );
+
+        $this->sut->delete();
+    }
+
+    /**
+     * @group mockedSUT
+     */
+    public function testDeleteWithApplicationRecord()
+    {
+        $this->sut = m::mock('Common\Controller\Lva\Adapters\VariationOperatingCentreAdapter')
+            ->makePartial()->shouldAllowMockingProtectedMethods();
+
+        $this->sut->setController($this->controller);
+        $this->sut->setServiceLocator($this->sm);
+
+        $this->controller->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('A5');
+
+        $this->sut->shouldReceive('canDeleteRecord')
+            ->with('A5')
+            ->andReturn(true);
+
+        $this->sm->setService(
+            'Entity\ApplicationOperatingCentre',
+            m::mock()
+            ->shouldReceive('delete')
+            ->once()
+            ->with('5')
+            ->getMock()
+        );
+
+        $this->sut->delete();
     }
 }

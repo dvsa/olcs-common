@@ -42,7 +42,7 @@ class CasesEntityService extends AbstractEntityService
     {
         $query = [
             'licence' => $licenceId,
-            'closeDate' => 'NULL',
+            'closedDate' => 'NULL',
             'deletedDate' => 'NULL',
         ];
 

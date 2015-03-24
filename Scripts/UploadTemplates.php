@@ -56,44 +56,61 @@ class TemplateWorker
 
     public function uploadFolder($name, $source)
     {
-        if ($handle = opendir($source)) {
+        $handle = opendir($source);
 
-            while (false !== ($entry = readdir($handle))) {
+        if (!$handle) {
+            echo "Could not open directory: " . $source . "\n";
+            return;
+        }
 
-                if (substr($entry, 0, 1) !== ".") {
-                    if (is_dir($source.'/'.$entry)) {
-                        $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
-                    } else {
-                        $file = new \Dvsa\Jackrabbit\Data\Object\File();
-                        $file->setContent(
-                            file_get_contents($source . '/' . $entry)
-                        );
-                        $file->setMimeType('application/rtf');
+        while (false !== ($entry = readdir($handle))) {
 
-                        $path = $name . '/' . str_replace(" ", "_", $entry);
-
-                        echo "Uploading $path\n";
-
-                        $r = $this->client->write($path, $file);
-                        if ($r->isSuccess()) {
-                            echo "OK\n";
-                        } else {
-                            echo "ERROR: " . $r->getStatusCode() . "\n";
-                        }
-                    }
-                }
+            if (substr($entry, 0, 1) === ".") {
+                continue;
             }
 
-            closedir($handle);
+            if (is_dir($source.'/'.$entry)) {
+                $this->uploadFolder('templates/' . $entry, $source . '/' . $entry);
+            } else {
+                $data = file_get_contents($source . '/' . $entry);
+
+                $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                $mimeType = $finfo->buffer($data);
+
+                $file = new \Dvsa\Jackrabbit\Data\Object\File();
+                $file->setContent($data);
+                $file->setMimeType($mimeType);
+
+                $path = $name . '/' . str_replace(" ", "_", $entry);
+
+                echo "Uploading $path... ";
+
+                $result = $this->client->write($path, $file);
+                if ($result->isSuccess()) {
+                    echo "OK\n";
+                } else {
+                    echo "ERROR: " . $result->getStatusCode() . "\n";
+                }
+            }
         }
+
+        closedir($handle);
     }
+}
+
+$baseDir = 'templates';
+if (isset($argv[2])) {
+    $baseDir = $argv[2];
 }
 
 $worker = new TemplateWorker($argv);
 
+echo "Reading remote workspace...\n";
 $data = $worker->readWorkspace();
 
+// always clear out tmp; it can get a bit cluttered
 $worker->deleteFolder('/tmp', $data);
-$worker->deleteFolder('/templates', $data);
 
-$worker->uploadFolder('templates', $argv[1]);
+// then mirror whatever our directory was
+$worker->deleteFolder('/' . $baseDir, $data);
+$worker->uploadFolder($baseDir, $argv[1]);

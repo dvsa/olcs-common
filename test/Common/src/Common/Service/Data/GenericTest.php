@@ -29,11 +29,17 @@ class GenericTest extends TestCase
     public function testFetchList()
     {
         $mockClient = m::mock('Common\Util\RestClient');
-        $mockClient->shouldReceive('get')->once()->with('', m::type('array'))->andReturn(['Results' => 'Data']);
+        $mockClient->shouldReceive('get')->once()->with('', m::type('array'))->andReturn(
+            [
+                'Results' => 'Data',
+                'Count' => 10
+            ]
+        );
         $sut = new Generic();
         $sut->setRestClient($mockClient);
 
         $this->assertEquals('Data', $sut->fetchList());
+        $this->assertEquals(10, $sut->getCount('list'));
         //check caching
         $sut->fetchList();
     }
@@ -46,6 +52,8 @@ class GenericTest extends TestCase
         $sut->setRestClient($mockClient);
 
         $this->assertEquals(false, $sut->fetchList());
+        $this->assertEquals(false, $sut->getCount('list'));
+
         //check caching
         $sut->fetchList();
     }

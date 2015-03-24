@@ -19,12 +19,24 @@ use Common\Controller\Crud\GenericCrudController;
  */
 class GenericCrudControllerTest extends MockeryTestCase
 {
+    /**
+     * @var \Common\Controller\Crud\GenericCrudController
+     */
     protected $sut;
 
+    /**
+     * @var \Zend\ServiceManager\ServiceManager
+     */
     protected $sm;
 
+    /**
+     * @var \Common\Service\Crud\CrudServiceInterface
+     */
     protected $crudService;
 
+    /**
+     * @var \Zend\Http\Request
+     */
     protected $request;
 
     public function setUp()
@@ -48,24 +60,36 @@ class GenericCrudControllerTest extends MockeryTestCase
         $this->sut->setServiceLocator($this->sm);
         $this->sut->setCrudService($this->crudService);
         $this->sut->setTranslationPrefix('crud-foo');
-        $this->sut->setPageLayout('custom-layout');
+
+        // Set options
+        $this->sut->setOption('pageLayout', 'custom-layout');
+
+        // Tests the params - required for every method so acceptable to assert here.
+        $params = ['a' => uniqid(), 'b' => uniqid()];
+        $this->assertSame($params, $this->sut->setParams($params)->getParams());
+        $tableName = 'my-table';
+        $this->assertSame($tableName, $this->sut->setOption('table', $tableName)->getOption('table'));
     }
 
     public function testIndexAction()
     {
-        // Mocks
-        $mockScript = m::mock();
-        $this->sm->setService('Script', $mockScript);
+        $this->request->shouldReceive('isXmlHttpRequest')->andReturn(false);
 
-        // Expectations
-        $mockScript->shouldReceive('loadFile')
-            ->with('table-actions');
+        $data = [
+            [
+                'id' => 1,
+                'descr' => 'this is a description',
+            ]
+        ];
 
-        $this->request->shouldReceive('isXmlHttpRequest')
-            ->andReturn(false);
+        $renderedTable = serialize($data);
 
-        $this->crudService->shouldReceive('getList')
-            ->andReturn('TABLE');
+        $this->crudService->shouldReceive('getList')->with($this->sut->getParams())->andReturn($data);
+
+        $tableBuilder = m::mock('\Common\Service\Table\TableBuilder');
+        $tableBuilder->shouldReceive('buildTable')->with($this->sut->getOption('table'), $data)
+            ->andReturn($renderedTable);
+        $this->sut->setTableBuilder($tableBuilder);
 
         // Assertions
         $view = $this->sut->indexAction();
@@ -73,7 +97,7 @@ class GenericCrudControllerTest extends MockeryTestCase
         $this->assertInstanceOf('\Zend\View\Model\ViewModel', $view);
         $this->assertEquals('layout/base', $view->getTemplate());
         $this->assertEquals(
-            ['table' => 'TABLE', 'pageTitle' => 'crud-foo-title', 'pageSubTitle' => null],
+            ['table' => $renderedTable, 'pageTitle' => 'crud-foo-title', 'pageSubTitle' => null],
             $view->getVariables()
         );
 

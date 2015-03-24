@@ -110,6 +110,12 @@ class OrganisationEntityService extends AbstractEntityService
         )
     );
 
+    protected $natureOfBusinessDataBundle = array(
+        'children' => array(
+            'natureOfBusinesses'
+        )
+    );
+
     public function getApplications($id)
     {
         return $this->get($id, $this->applicationsBundle);
@@ -249,9 +255,7 @@ class OrganisationEntityService extends AbstractEntityService
 
     public function hasChangedNatureOfBusiness($id, $updated)
     {
-        $existing = $this->getServiceLocator()
-            ->get('Entity\OrganisationNatureOfBusiness')
-            ->getAllForOrganisationForSelect($id);
+        $existing = $this->getNatureOfBusinessesForSelect($id);
 
         $diff = array_diff($updated, $existing);
 
@@ -298,5 +302,23 @@ class OrganisationEntityService extends AbstractEntityService
             'status' => 'IN ' . json_encode($licenceStatuses)
         ];
         return $this->get($id, $bundle)['licences'];
+    }
+
+    public function getNatureOfBusinesses($id)
+    {
+        return $this->getAll($id, $this->natureOfBusinessDataBundle)['natureOfBusinesses'];
+    }
+
+    public function getNatureOfBusinessesForSelect($id)
+    {
+        $naturesOfBusiness = $this->getNatureOfBusinesses($id);
+
+        $normalized = [];
+
+        foreach ($naturesOfBusiness as $value) {
+            $normalized[] = $value['id'];
+        }
+
+        return $normalized;
     }
 }

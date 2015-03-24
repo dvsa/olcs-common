@@ -92,6 +92,9 @@ return array(
     'application-granted-successfully' => 'W The application has been granted',
     'application-no-access' => 'W You do not have access to this application',
     'application-not-granted' => 'W The application has not been granted',
+    'application-not-refused' => 'W The application has not been refused',
+    'application-not-withdrawn' => 'W The application has not been withdrawn',
+    'application-refused-successfully' => 'W Application %s has been refused',
     'application-review-addresses-contact-details-title' => 'W Contact details',
     'application-review-addresses-correspondence-address' => 'W Correspondence Address',
     'application-review-addresses-correspondence-business' => 'W Business telephone No.',
@@ -239,6 +242,7 @@ return array(
     'application-search-subsidiary-header' => 'W Subsidiary Company',
     'application-update-person-header-director' => 'W Edit Director',
     'application-update-sole-trader' => 'W Edit sole trader',
+    'application-withdrawn-successfully' => 'W Application %s has been withdrawn',
     'application.cancel' => 'W Cancel application',
     'application.community_licence.form.total_community_licences' => 'W How many additional licences are required?',
     'application.delete' => 'W Delete application',
@@ -262,6 +266,7 @@ return array(
     'application.previous-history.licence-history' => 'W Licence history',
     'application.progress' => 'W %s of %s sections complete',
     'application.review-declarations' => 'W Review & declarations',
+    'application.review-declarations.confirm-short-label' => 'W Declarations',
     'application.review-declarations.confirm-text' => 'W I declare that the statements made in this application are true
         and that all supporting evidence supplied with regard to my application is correct. I understand that it is an
         offence to make a false declaration',
@@ -661,6 +666,9 @@ return array(
     'both' => 'W Both',
     'built-by' => 'W Built by',
     'bus-compliance-issues' => 'W Bus compliance issues',
+    'bus-registrations-index-subtitle' => 'W In order to register, update or cancel a bus service you need to upload an
+        Electronic Bus Service Registration pack (EBSR) in .ZIP format.',
+    'bus-registrations-index-title' => 'W Bus registrations',
     'bus-services-registered' => 'W Local bus services registered',
     'business-details.company_number.locked' => 'W Cannot change company number. Please contact Central Licensing Office
         for further advice',
@@ -762,6 +770,7 @@ return array(
     'created-on' => 'W Created on',
     'credit-debit-card' => 'W Credit /Debit card',
     'crown-copyright' => 'W Crown Copyright',
+    'crud-event-history-title' => 'W Event History',
     'crud-financial-standing-delete-message' => 'W Are you sure you want to remove the selected financial standing
         rate(s)?',
     'crud-financial-standing-delete-title' => 'W Remove financial standing rate(s)',
@@ -908,6 +917,8 @@ return array(
     'impo_wd' => 'W Application Withdrawn',
     'impt_hearing' => 'W Hearing',
     'impt_paper' => 'W Paperwork',
+    'interim-start-date' => 'W Interim start date',
+    'interim-status' => 'W Interim status',
     'interim.application.undertakings.form.checkbox.label' => 'W Do you wish to apply for an interim authority? There is
         an additional charge to apply for this',
     'interim.application.undertakings.form.textarea.error.message.empty' => 'W Please provide us with a reason for your
@@ -932,6 +943,9 @@ return array(
     'internal-application-processing-tasks' => 'W Tasks',
     'internal-application-processing-tasks-label' => 'W Tasks',
     'internal-application-processing-tasks-title' => 'W Tasks',
+    'internal-application-refuse-confirm' => 'W Are you sure you want to refuse this application?',
+    'internal-application-refuse-title' => 'W Refuse application',
+    'internal-application-withdraw-title' => 'W Withdraw application',
     'internal-external' => 'W Internal/External',
     'internal-licence-bus' => 'W Bus registration',
     'internal-licence-bus-details' => 'W Service details',
@@ -1144,10 +1158,16 @@ return array(
     'internal.interim.form.interim_granted' => 'W Interim granted',
     'internal.interim.form.interim_reason' => 'W Interim reason',
     'internal.interim.form.interim_refuse' => 'W Refuse',
+    'internal.interim.form.interim_refused' => 'W The interim has been refused',
+    'internal.interim.form.interim_reprint' => 'W Reprint',
     'internal.interim.form.interim_requested' => 'W Interim requested',
     'internal.interim.form.interim_save' => 'W Save',
     'internal.interim.form.interim_start' => 'W Interim start date',
+    'internal.interim.form.interim_status' => 'W Interim status',
+    'internal.interim.form.refuse_confirm' => 'W Are you sure you want to refuse this interim?',
+    'internal.interim.generation_success' => 'W The interim document has been generated',
     'internal.interim.interim_details_saved' => 'W Interim details saved',
+    'internal.interim.interim_updated' => 'W Interim updated',
     'internal.interim.operatingcentres.table.address' => 'W Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'W Operating centres',
     'internal.interim.operatingcentres.table.listed' => 'W Listed',
@@ -1636,6 +1656,7 @@ return array(
     'record-not-found' => 'W Record not found',
     'record-saved-successfully' => 'W Record saved successfully',
     'refrigerated-transport' => 'W Refrigerated Transport',
+    'register-cancel-update-service' => 'W Register, update or cancel a service',
     'registered-company' => 'W Registered Company',
     'registered-company-details-header' => 'W Registered company details',
     'registered-office-details-header' => 'W Registered office details',
@@ -2078,6 +2099,7 @@ return array(
     'variation.overview.application-no' => 'W Application No.',
     'variation.overview.title' => 'W Variation application',
     'variation.print' => 'W Print application',
+    'variation.review-declarations.confirm-short-label' => 'W Declarations',
     'variation.review-declarations.confirm-text' => 'W I declare that the statements made in this application are true
         and that there have been no other changes that affect the licence. I understand that it is an offence to make a
         false declaration. Please see the licence undertakings below as a reminder of your obligations.',

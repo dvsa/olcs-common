@@ -7,22 +7,25 @@ $(function() {
     };
   }
 
+  function smallOperation(answer) {
+    return function() {
+      var elem = OLCS.formHelper("smallVehiclesIntention", "psvOperateSmallVhl");
+      if (elem.length === 0) {
+        return true;
+      }
+      return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl", answer);
+    };
+  }
+
   OLCS.cascadeForm({
     cascade: false,
     rulesets: {
-      /**
-       * @TODO as part of https://jira.i-env.net/browse/OLCS-4319
-       *
-       * This isn't as simple as you'd think because the fields which need
-       * hiding all live in the same fieldset, whereas cascadeForm was built
-       * to satisfy the use case where related inputs are grouped into related fieldsets
-       *
       "smallVehiclesIntention": {
-        "psvSmallVhlNotes": function() {
-          return OLCS.formHelper.isChecked("smallVehiclesIntention", "psvOperateSmallVhl");
-        }
+        "psvSmallVhlNotes": smallOperation("Y"),
+        "psvSmallVhlScotland": smallOperation("N"),
+        "psvSmallVhlUndertakings": smallOperation("N"),
+        "psvSmallVhlConfirmation": smallOperation("N")
       },
-      */
       "limousinesNoveltyVehicles": {
         "label:limousinesNoveltyVehicles\\[psvNoLimousineConfirmationLabel\\]": limoChecked("N"),
         "parent:.js-no-confirmation": limoChecked("N"),

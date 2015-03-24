@@ -41,4 +41,94 @@ class LicenceVehiclesPsvAdapterTest extends MockeryTestCase
 
         $this->assertEquals('RESPONSE', $this->sut->getVehiclesData(3));
     }
+
+    /**
+     * Disable maybeFormatRemovedAndSpecifiedDates method
+     */
+    public function testMaybeFormatRemovedAndSpecifiedDates()
+    {
+        $licenceVehicle = [
+            'removalDate' => [
+                'month' => 1,
+                'day' => 2,
+                'year' => 2014
+            ],
+            'specifiedDate' => [
+                'month' => 3,
+                'day' => 4,
+                'year' => 2015
+            ]
+        ];
+        $this->assertEquals(
+            ['removalDate' => '2014-1-2', 'specifiedDate' => '2015-3-4'],
+            $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
+        );
+    }
+
+    /**
+     * Disable maybeFormatRemovedAndSpecifiedDates method with wrong dates
+     */
+    public function testMaybeFormatRemovedAndSpecifiedDatesWrong()
+    {
+        $licenceVehicle = [
+            'removalDate' => [
+                'month' => 2,
+                'day' => 30,
+                'year' => 2014
+            ],
+            'specifiedDate' => [
+                'month' => 2,
+                'day' => 30,
+                'year' => 2015
+            ]
+        ];
+        $this->assertEquals([], $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle));
+    }
+
+    /**
+     * Disable maybeDisableRemovedAndSpecifiedDates method
+     */
+    public function testMaybeDisableRemovedAndSpecifiedDates()
+    {
+        $this->assertEquals(null, $this->sut->maybeDisableRemovedAndSpecifiedDates('form', 'formHelper'));
+    }
+
+    /**
+     * Disable maybeUnsetSpecifiedDate method
+     */
+    public function testMaybeUnsetSpecifiedDate()
+    {
+        $this->assertEquals('data', $this->sut->maybeUnsetSpecifiedDate('data'));
+    }
+
+    public function testWarnIfAuthorityExceeded()
+    {
+        // this is a no-op on the licence adapter
+        $this->assertNull($this->sut->warnIfAuthorityExceeded(1, [], true));
+    }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setShouldCreateEmptyOption')
+                    ->with(false)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->assertEquals($mockForm, $this->sut->maybeRemoveSpecifiedDateEmptyOption($mockForm, 'edit'));
+    }
 }

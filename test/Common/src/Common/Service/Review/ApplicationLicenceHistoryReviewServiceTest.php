@@ -9,7 +9,7 @@ namespace CommonTest\Service\Review;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Service\Review\ApplicationLicenceHistoryReviewService;
-use Common\Service\Entity\PreviousLicenceEntityService;
+use Common\Service\Entity\OtherLicenceEntityService;
 
 /**
  * Application LicenceHistory Review Service Test
@@ -45,7 +45,7 @@ class ApplicationLicenceHistoryReviewServiceTest extends MockeryTestCase
                     'prevBeenAtPi' => 'N',
                     'prevBeenDisqualifiedTc' => 'N',
                     'prevPurchasedAssets' => 'N',
-                    'previousLicences' => []
+                    'otherLicences' => []
                 ],
                 [
                     'subSections' => [
@@ -142,45 +142,45 @@ class ApplicationLicenceHistoryReviewServiceTest extends MockeryTestCase
                     'prevBeenAtPi' => 'Y',
                     'prevBeenDisqualifiedTc' => 'Y',
                     'prevPurchasedAssets' => 'Y',
-                    'previousLicences' => [
+                    'otherLicences' => [
                         [
                             'licNo' => '123456789',
                             'holderName' => 'Foo bar',
                             'willSurrender' => 'Y',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_CURRENT],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_CURRENT],
                         ],
                         [
                             'licNo' => '223456789',
                             'holderName' => 'Foo bar 2',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_APPLIED],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_APPLIED],
                         ],
                         [
                             'licNo' => '323456789',
                             'holderName' => 'Foo bar 3',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_REFUSED],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_REFUSED],
                         ],
                         [
                             'licNo' => '423456789',
                             'holderName' => 'Foo bar 4',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_REVOKED],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_REVOKED],
                         ],
                         [
                             'licNo' => '523456789',
                             'holderName' => 'Foo bar 5',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_PUBLIC_INQUIRY],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_PUBLIC_INQUIRY],
                         ],
                         [
                             'licNo' => '623456789',
                             'holderName' => 'Foo bar 6',
                             'disqualificationDate' => '2013-06-20',
                             'disqualificationLength' => '2 Days',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_DISQUALIFIED],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_DISQUALIFIED],
                         ],
                         [
                             'licNo' => '623456789',
                             'holderName' => 'Foo bar 6',
                             'purchaseDate' => '2013-06-20',
-                            'previousLicenceType' => ['id' => PreviousLicenceEntityService::TYPE_HELD],
+                            'previousLicenceType' => ['id' => OtherLicenceEntityService::TYPE_HELD],
                         ]
                     ]
                 ],

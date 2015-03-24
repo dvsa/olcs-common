@@ -1012,4 +1012,22 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
             [null, 'something_invalid'],
         ];
     }
+
+    public function testSetLicenceStatus()
+    {
+        $id = 69;
+        $status = 'lsts_withdrawn';
+
+        $data = array(
+            'id' => $id,
+            'status' => $status,
+            '_OPTIONS_' => array(
+                'force' => true
+            )
+        );
+
+        $this->expectOneRestCall('Licence', 'PUT', $data);
+
+        $this->sut->setLicenceStatus($id, $status);
+    }
 }

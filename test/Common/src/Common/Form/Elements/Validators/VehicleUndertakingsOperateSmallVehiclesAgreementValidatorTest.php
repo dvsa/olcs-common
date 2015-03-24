@@ -62,6 +62,9 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidatorTest extends \PHP
             // psvSmallVehicles = Y, confirmation = Y - comes back true
             [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => 'Y', 'psvSmallVhlConfirmation' => 'Y'], true],
 
+            // psvSmallVehicles = set but empty, confirmation = blank - comes back true
+            [0, ['psvSmallVhlScotland' => 'txt', 'psvOperateSmallVhl' => null, 'psvSmallVhlConfirmation' => ''], true],
+
             /**
              * if user answers 'no' in radio control, textarea is optional and
              * checkbox is mandatory

@@ -180,4 +180,28 @@ TXT;
             []
         );
     }
+
+    public function testPopulateBookmarksWithDynamicBookmarksImplementingFileStoreAwareInterface()
+    {
+        $content = "Bookmark 1: {\*\bkmkstart TC_SIGNATURE} {\*\bkmkend TC_SIGNATURE}.";
+
+        $file = new File();
+        $file->setMimeType('application/rtf');
+        $file->setContent($content);
+
+        $helperMock = $this->getMock('\stdClass');
+
+        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $serviceLocator->expects($this->once())
+            ->method('get')
+            ->with('ContentStore')
+            ->willReturn($helperMock);
+
+        $this->service->setServiceLocator($serviceLocator);
+
+        $this->service->populateBookmarks(
+            $file,
+            []
+        );
+    }
 }

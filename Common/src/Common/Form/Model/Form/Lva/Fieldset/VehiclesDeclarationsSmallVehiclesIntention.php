@@ -34,24 +34,12 @@ class VehiclesDeclarationsSmallVehiclesIntention
      *     "label_attributes": {
      *         "class": "col-sm-2"
      *     },
-     *     "column-size": "sm-6",
-     *     "help-block": "You can type anything in this box."
+     *     "column-size": "sm-6"
      * })
      * @Form\Validator({"name": "Common\Form\Elements\Validators\VehicleUndertakingsOperateSmallVehiclesValidator"})
      * @Form\Type("Textarea")
      */
     public $psvSmallVhlNotes = null;
-
-    /**
-     * @Form\Attributes({"value":"<legend>%s</legend>"})
-     * @Form\Options({
-     *     "tokens": {
-     *        0: "application_vehicle-safety_undertakings-smallVehiclesUndertakings"
-     *     }
-     * })
-     * @Form\Type("\Common\Form\Elements\Types\HtmlTranslated")
-     */
-    public $dummyLegend = null;
 
     /**
      * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
@@ -87,9 +75,7 @@ class VehiclesDeclarationsSmallVehiclesIntention
      * @Form\Options({
      *     "label": "application_vehicle-safety_undertakings.smallVehiclesConfirmation",
      *     "checked_value": "Y",
-     *     "unchecked_value": "N",
-     *     "help-block": "Please choose",
-     *     "must_be_value": "Y"
+     *     "unchecked_value": "N"
      * })
      * @Form\Type("\Common\Form\Elements\InputFilters\SingleCheckbox")
      * @Form\Validator({
