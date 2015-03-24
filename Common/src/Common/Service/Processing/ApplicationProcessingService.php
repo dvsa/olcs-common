@@ -18,6 +18,7 @@ use Common\Service\Entity\TrafficAreaEntityService;
 use Common\Service\Processing\ApplicationSnapshotProcessingService;
 use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
 use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
+use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 
 /**
  * Application Processing Service
@@ -753,5 +754,53 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // Void any interim discs associated to vehicles linked to the current application
         $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+    }
+
+    /**
+     * Called when marking an application Not Taken Up
+     *
+     * @param int $id
+     */
+    public function processNotTakenUpApplication($id)
+    {
+        $licenceId = $this->getLicenceId($id);
+
+        // Update the licence and application statuses to NTU
+        $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_NOT_TAKEN_UP);
+        $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+            $licenceId,
+            LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP
+        );
+
+        // Void any discs
+        $this->getServiceLocator()->get('Entity\GoodsDisc')->voidExistingForApplication($id);
+
+        // Remove any vehicles
+        $this->getServiceLocator()->get('Entity\LicenceVehicle')->removeForApplication($id);
+
+        // Unlink any Transport Managers
+        $this->getServiceLocator()->get('Entity\TransportManagerApplication')->deleteForApplication($id);
+
+        // Void any community licences
+        $this->voidCommunityLicencesForLicence($licenceId);
+
+    }
+
+    protected function voidCommunityLicencesForLicence($licenceId)
+    {
+        $licences = $this->getServiceLocator()->get('Entity\Licence')
+            ->getCommunityLicencesByLicenceId($licenceId);
+
+        $data = [
+            'status' => CommunityLic::STATUS_VOID,
+            'expiredDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
+        ];
+        $dataToVoid = [];
+        foreach ($licences as $licence) {
+            $dataToVoid[] = array_merge($licence, $data);
+        }
+
+        $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
+        $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
     }
 }
