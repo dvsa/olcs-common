@@ -129,7 +129,7 @@ class LicenceProcessingServiceTest extends MockeryTestCase
             'Helper\DocumentGeneration',
             m::mock()
                 ->shouldReceive('generateFromTemplate')
-                ->with($template, ['application' => 1])
+                ->with($template, ['application' => 1, 'licence' => 10])
                 ->andReturn($content)
                 ->shouldReceive('uploadGeneratedContent')
                 ->with($content, 'documents', $description)
