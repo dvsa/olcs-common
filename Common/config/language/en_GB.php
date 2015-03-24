@@ -767,7 +767,6 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
-    'internal-crud-event-history' => 'History',
     'crud-event-history-title' => 'History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
@@ -944,6 +943,7 @@ return array(
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
     'internal-application-withdraw-title' => 'Withdraw application',
+    'internal-crud-event-history' => 'History',
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
     'internal-licence-bus-details' => 'Service details',
