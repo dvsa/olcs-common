@@ -198,7 +198,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
             ];
         }
 
-        $this->multiUpdate($data);
+        return $this->multiUpdate($data);
     }
 
     public function removeForApplication($applicationId)
@@ -208,6 +208,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
         foreach ($licenceVehicles as $lv) {
             $ids[] = $lv['id'];
         }
-        $this->removeVehicles($ids);
+        return $this->removeVehicles($ids);
     }
 }
