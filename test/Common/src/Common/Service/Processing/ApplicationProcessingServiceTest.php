@@ -1691,14 +1691,14 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $mockLicenceEntityService = m::mock();
         $mockGoodsDiscEntityService = m::mock();
         $mockLicenceVehicleEntityService = m::mock();
-        $mockTmLicenceEntityService = m::mock();
+        $mockTmApplicationEntityService = m::mock();
         $mockCommunityLicEntityService = m::mock();
 
         $this->sm->setService('Entity\Application', $mockApplicationEntityService);
         $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
         $this->sm->setService('Entity\GoodsDisc', $mockGoodsDiscEntityService);
         $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleEntityService);
-        $this->sm->setService('Entity\TransportManagerLicence', $mockTmLicenceEntityService);
+        $this->sm->setService('Entity\TransportManagerApplication', $mockTmApplicationEntityService);
         $this->sm->setService('Entity\CommunityLic', $mockCommunityLicEntityService);
 
         // expectations
@@ -1726,9 +1726,9 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
             ->once()
             ->with($applicationId);
 
-        $mockTmLicenceEntityService->shouldReceive('deleteForLicence')
+        $mockTmApplicationEntityService->shouldReceive('deleteForApplication')
             ->once()
-            ->with($licenceId);
+            ->with($applicationId);
 
         $mockLicenceEntityService->shouldReceive('getCommunityLicencesByLicenceId')
             ->once()

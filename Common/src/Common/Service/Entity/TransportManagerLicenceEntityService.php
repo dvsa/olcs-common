@@ -84,10 +84,4 @@ class TransportManagerLicenceEntityService extends AbstractEntityService
 
         return $this->get($query)['Results'];
     }
-
-    public function deleteForLicence($licenceId)
-    {
-        $query = ['licence' => $licenceId];
-        return $this->deleteList($query);
-    }
 }

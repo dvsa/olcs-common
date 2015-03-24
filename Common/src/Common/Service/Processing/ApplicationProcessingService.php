@@ -783,7 +783,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
 
         // Unlink any Transport Managers
         // Tech note: Set transport_manager_licence.deleted_date = current date/time
-        $this->getServiceLocator()->get('Entity\TransportManagerLicence')->deleteForLicence($licenceId);
+        $this->getServiceLocator()->get('Entity\TransportManagerApplication')->deleteForApplication($id);
 
         // Void any community licences
         $this->voidCommunityLicencesForLicence($licenceId);
