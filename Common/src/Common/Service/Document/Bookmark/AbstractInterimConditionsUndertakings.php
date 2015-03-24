@@ -13,18 +13,6 @@ abstract class AbstractInterimConditionsUndertakings extends DynamicBookmark
 {
     const CONDITION_TYPE = null;
 
-    protected $childBundle = [
-        'criteria' => [
-            'isDraft' => false,
-            'isFulfilled' => false,
-            'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE,
-        ],
-        'children' => [
-            'attachedTo',
-            'conditionType'
-        ]
-    ];
-
     public function getQuery(array $data)
     {
         $query = [
@@ -34,43 +22,89 @@ abstract class AbstractInterimConditionsUndertakings extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
-                    'licence' => [
+                    /**
+                     * Get the conditions and undertakings against the app. These
+                     * could be new ones or delta records against those in the licence
+                     *
+                     * We can't filter these at the query level because we might then
+                     * miss a delta record which was for example fulfilled but now is not,
+                     * or even worse one which was attached to the licence but is now attached
+                     * to an OC instead
+                     */
+                    'conditionUndertakings' => [
                         'children' => [
-                            'conditionUndertakings' => []
+                            'attachedTo',
+                            'conditionType',
+                            'licConditionVariation'
                         ]
                     ],
-                    'conditionUndertakings' => []
+                    'licence' => [
+                        'children' => [
+                            /**
+                             * We have the luxury of being able to filter the C&Us against the
+                             * licence since if they're not in a relevant state we aren't interested
+                             * and if they HAVE been updated via an app delta, we'll get that in the
+                             * application's child bundle instead
+                             */
+                            'conditionUndertakings' => [
+                                'criteria' => [
+                                    'isDraft' => false,
+                                    'isFulfilled' => false,
+                                    'conditionType' => static::CONDITION_TYPE,
+                                    'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
+                                ],
+                                'children' => [
+                                    'attachedTo',
+                                    'conditionType',
+                                    'licConditionVariation'
+                                ]
+                            ]
+                        ]
+                    ],
                 ]
             ]
         ];
-
-        // @TODO the below is seriously ugly
-        $this->childBundle['criteria']['conditionType'] = static::CONDITION_TYPE;
-
-        $query['bundle']['children']['conditionUndertakings'] = $this->childBundle;
-        $query['bundle']['children']['licence']['children']['conditionUndertakings'] = $this->childBundle;
 
         return $query;
     }
 
     public function render()
     {
-        $licenceConditions = $this->data['licence']['conditionUndertakings'];
-        $applicationConditions = $this->data['conditionUndertakings'];
+        $licenceConditions = $this->getIndexedData($this->data['licence']['conditionUndertakings']);
+        $applicationConditions = $this->getIndexedData($this->data['conditionUndertakings']);
 
-        // @TODO iterate through the licence conditions and key them based
-        // on their ID
-        // then iterate through application conditions and override any rows
-        // based on the keyed ID
-        // then array_filter out where action === D
-        return implode(
-            "\n\n",
-            array_map(
-                function ($v) {
-                    return $v['notes'];
-                },
-                $this->data['conditionUndertakings']
-            )
-        );
+        $conditions = [];
+        foreach ($licenceConditions as $id => $condition) {
+            if (isset($applicationConditions[$id])) {
+                $condition = $applicationConditions[$id];
+            }
+
+            if (
+                $condition['isDraft'] === 'N'
+                && $condition['isFulfilled'] === 'N'
+                && $condition['conditionType']['id'] === static::CONDITION_TYPE
+                && $condition['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
+                && $condition['action'] !== 'D'
+            ) {
+                $conditions[] = $condition['notes'];
+            }
+        }
+
+        return implode("\n\n", $conditions);
+    }
+
+    protected function getIndexedData($conditions)
+    {
+        $final = [];
+        foreach ($conditions as $condition) {
+            if (isset($condition['licConditionVariation']['id'])) {
+                $key = $condition['licConditionVariation']['id'];
+            } else {
+                $key = $condition['id'];
+            }
+            $final[$key] = $condition;
+        }
+
+        return $final;
     }
 }

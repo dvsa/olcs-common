@@ -28,6 +28,8 @@ class InterimOperatingCentres extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
+                    'goodsOrPsv',
+                    'licence',
                     'operatingCentres' => [
                         'criteria' => [
                             'isInterim' => true
@@ -37,11 +39,6 @@ class InterimOperatingCentres extends DynamicBookmark
                                 'children' => [
                                     'address',
                                     'conditionUndertakings' => [
-                                        'criteria' => [
-                                            'isDraft' => false,
-                                            'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE,
-                                            'isFulfilled' => false
-                                        ],
                                         'children' => [
                                             'conditionType',
                                             'attachedTo',
@@ -53,9 +50,7 @@ class InterimOperatingCentres extends DynamicBookmark
                                 ]
                             ]
                         ]
-                    ],
-                    'goodsOrPsv',
-                    'licence'
+                    ]
                 ]
             ]
         ];
@@ -105,29 +100,54 @@ class InterimOperatingCentres extends DynamicBookmark
 
     private function filterConditionsUndertakings($input, $applicationId, $licenceId)
     {
+        $licenceConditions = $this->getIndexedData($input, 'licence');
+        $applicationConditions = $this->getIndexedData($input, 'application');
+
         $conditions = [];
+        foreach ($licenceConditions as $id => $condition) {
+            if (isset($applicationConditions[$id])) {
+                $condition = $applicationConditions[$id];
+            }
+
+            if (
+                $condition['isFulfilled'] === 'N'
+                && $condition['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
+                && $condition['action'] !== 'D'
+                && (
+                    /**
+                     * We can't filter by (licence = ? OR application = ?) in our query since
+                     * we don't know the licence ID ahead of time; we only know it
+                     * based on the application we get back
+                     */
+                    (isset($condition['licence']['id']) && $condition['licence']['id'] === $licenceId)
+                    || (isset($condition['application']['id']) && $condition['application']['id'] === $applicationId)
+                )
+            ) {
+                $conditions[] = $condition;
+            }
+        }
+
+        return $conditions;
+    }
+
+    private function getIndexedData($input, $type)
+    {
+        $final = [];
         foreach ($input as $condition) {
+            /**
+             * Wrong type; bail early
+             */
+            if (!isset($condition[$type]['id'])) {
+                continue;
+            }
+
             if (isset($condition['licConditionVariation']['id'])) {
                 $key = $condition['licConditionVariation']['id'];
             } else {
                 $key = $condition['id'];
             }
-            $conditions[$key] = $condition;
+            $final[$key] = $condition;
         }
-
-        return array_filter(
-            $conditions,
-            function ($val) use ($applicationId, $licenceId) {
-                return (
-                    // @NOTE: we can't add this to our criteria because otherwise we could
-                    // get the original undeleted item back
-                    $val['action'] !== 'D'
-                    && (
-                        (isset($val['licence']['id']) && $val['licence']['id'] === $licenceId)
-                        || (isset($val['application']['id']) && $val['application']['id'] === $applicationId)
-                    )
-                );
-            }
-        );
+        return $final;
     }
 }
