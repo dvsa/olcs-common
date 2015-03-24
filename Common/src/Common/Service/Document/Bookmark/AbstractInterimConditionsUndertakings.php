@@ -80,8 +80,7 @@ abstract class AbstractInterimConditionsUndertakings extends DynamicBookmark
             }
 
             if (
-                $condition['isDraft'] === 'N'
-                && $condition['isFulfilled'] === 'N'
+                $condition['isFulfilled'] === 'N'
                 && $condition['conditionType']['id'] === static::CONDITION_TYPE
                 && $condition['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
                 && $condition['action'] !== 'D'

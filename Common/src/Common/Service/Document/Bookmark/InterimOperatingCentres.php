@@ -70,7 +70,6 @@ class InterimOperatingCentres extends DynamicBookmark
         foreach ($this->data['operatingCentres'] as $childOc) {
             $oc = $childOc['operatingCentre'];
 
-
             $conditionsUndertakings = Formatter\ConditionsUndertakings::format(
                 $this->filterConditionsUndertakings(
                     $oc['conditionUndertakings'],
@@ -109,6 +108,10 @@ class InterimOperatingCentres extends DynamicBookmark
                 $condition = $applicationConditions[$id];
             }
 
+            /**
+             * We can't do this filtering at the DB level; if we did we'd miss delta updates
+             * which could be relevant, i.e. a record which was fulfilled but isn't in the delta
+             */
             if (
                 $condition['isFulfilled'] === 'N'
                 && $condition['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_OPERATING_CENTRE
