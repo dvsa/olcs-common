@@ -9,19 +9,19 @@ OLCS.ready(function() {
       maxLength = Infinity;
     }
 
-    return function (length, disable, selectedInputs) {
+    return function (length, enable, selectedInputs) {
 
       if (length < 1 || length > maxLength) {
-        return disable(true);
+        return enable(false);
       }
 
       var actions = $.map(selectedInputs, function(input) {
         return $(input).data("action");
       });
 
-      disable(
-        // if we have any actions NOT in our allowed list; disable
-        $(actions).not(allowedActions).length > 0
+      enable(
+        // as long as we don't have any actions NOT in the allowed list; go for it
+        $(actions).not(allowedActions).length === 0
       );
     };
   }
