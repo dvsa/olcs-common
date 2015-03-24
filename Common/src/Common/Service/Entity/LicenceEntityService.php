@@ -37,6 +37,7 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_SURRENDERED = 'lsts_surrendered';
     const LICENCE_STATUS_WITHDRAWN = 'lsts_withdrawn';
     const LICENCE_STATUS_REFUSED = 'lsts_refused';
+    const LICENCE_STATUS_REVOKED = 'lsts_revoked';
     const LICENCE_STATUS_NOT_TAKEN_UP = 'lsts_ntu';
 
     private $typeShortCodeMap =[
