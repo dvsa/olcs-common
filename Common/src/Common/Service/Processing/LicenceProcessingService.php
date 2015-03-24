@@ -71,12 +71,12 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
 
         switch ($application['isVariation']) {
             case true:
-                $template = $prefix . '/' . 'GV_Interim_Direction';
+                $template = $prefix . '/' . 'GV_INT_DIRECTION_V1';
                 $description = "GV Interim Direction";
                 break;
 
             case false:
-                $template = $prefix . '/' . 'GV_Interim_Licence';
+                $template = $prefix . '/' . 'GV_INT_LICENCE_V1';
                 $description = "GV Interim Licence";
                 break;
         }
