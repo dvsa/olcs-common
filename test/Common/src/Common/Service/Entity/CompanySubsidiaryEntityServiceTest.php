@@ -26,26 +26,13 @@ class CompanySubsidiaryEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testGetAllForOrganisation()
+    public function testGetForLicence()
     {
         $id = 3;
 
-        $this->expectOneRestCall('CompanySubsidiary', 'GET', ['organisation' => $id])
+        $this->expectOneRestCall('CompanySubsidiary', 'GET', ['licence' => $id, 'limit' => 'all'])
             ->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getAllForOrganisation($id));
-    }
-
-    /**
-     * @group entity_services
-     */
-    public function testGetById()
-    {
-        $id = 3;
-
-        $this->expectOneRestCall('CompanySubsidiary', 'GET', $id)
-            ->will($this->returnValue('RESPONSE'));
-
-        $this->assertEquals('RESPONSE', $this->sut->getById($id));
+        $this->assertEquals('RESPONSE', $this->sut->getForLicence($id));
     }
 }

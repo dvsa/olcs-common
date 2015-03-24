@@ -133,4 +133,16 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
         unset($data['licence-vehicle']['specifiedDate']);
         return $data;
     }
+
+    /**
+     * Don't create an empty option in edit mode for specified date
+     *
+     * @param Zend\Form\Form $form
+     * @param string $mode
+     * @return Zend\Form\Form
+     */
+    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
+    {
+        return $form;
+    }
 }

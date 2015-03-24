@@ -70,4 +70,16 @@ class VariationVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
         return $this->getServiceLocator()->get('ApplicationVehiclesPsvAdapter')
             ->warnIfAuthorityExceeded($applicationId, $types, $redirecting);
     }
+
+    /**
+     * Don't create an empty option in edit mode for specified date
+     *
+     * @param Zend\Form\Form $form
+     * @param string $mode
+     * @return Zend\Form\Form
+     */
+    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
+    {
+        return $form;
+    }
 }

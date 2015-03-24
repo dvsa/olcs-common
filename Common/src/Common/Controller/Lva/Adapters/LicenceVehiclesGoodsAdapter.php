@@ -81,7 +81,7 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
      */
     public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
     {
-        if (isset($licenceVehicle['specifiedDate'])) {
+        if (isset($licenceVehicle['specifiedDate']) && is_array($licenceVehicle['specifiedDate'])) {
             if (checkdate(
                 (int)$licenceVehicle['specifiedDate']['month'],
                 (int)$licenceVehicle['specifiedDate']['day'],
@@ -97,7 +97,7 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
                 unset($licenceVehicle['specifiedDate']);
             }
         }
-        if (isset($licenceVehicle['removalDate'])) {
+        if (isset($licenceVehicle['removalDate']) && is_array($licenceVehicle['removalDate'])) {
             if (checkdate(
                 (int)$licenceVehicle['removalDate']['month'],
                 (int)$licenceVehicle['removalDate']['day'],
@@ -135,5 +135,20 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     public function maybeUnsetSpecifiedDate($data)
     {
         return $data;
+    }
+
+    /**
+     * Don't create an empty option in edit mode for specified date
+     *
+     * @param Zend\Form\Form $form
+     * @param string $mode
+     * @return Zend\Form\Form
+     */
+    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
+    {
+        if ($mode == 'edit') {
+            $form->get('licence-vehicle')->get('specifiedDate')->setShouldCreateEmptyOption(false);
+        }
+        return $form;
     }
 }
