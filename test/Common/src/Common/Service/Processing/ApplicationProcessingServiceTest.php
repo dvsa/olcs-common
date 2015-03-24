@@ -20,6 +20,7 @@ use Mockery as m;
 use Common\Service\Processing\ApplicationSnapshotProcessingService;
 use Common\Service\Entity\ApplicationTrackingEntityService as Tracking;
 use Common\Service\Entity\ApplicationCompletionEntityService as Completion;
+use Common\Service\Entity\CommunityLicEntityService as CommunityLic;
 
 /**
  * Application Processing Service Test
@@ -1682,38 +1683,81 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
         $applicationId = 69;
         $licenceId = 100;
 
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
-                ->shouldReceive('getDate')
-                ->andReturn('2015-03-23 00:00:00')
-                ->getMock()
-        );
+        $date = '2015-03-23 00:00:00';
+        $this->mockDate($date);
 
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-                ->shouldReceive('forceUpdate')
-                    ->with(
-                        $applicationId,
-                        ['status' => ApplicationEntityService::APPLICATION_STATUS_NOT_TAKEN_UP]
-                    )
-                    ->once()
-                ->shouldReceive('getLicenceIdForApplication')
-                    ->with($applicationId)
-                    ->once()
-                    ->andReturn($licenceId)
-                ->getMock()
-        );
+        // mock service dependencies
+        $mockApplicationEntityService = m::mock();
+        $mockLicenceEntityService = m::mock();
+        $mockGoodsDiscEntityService = m::mock();
+        $mockLicenceVehicleEntityService = m::mock();
+        $mockTmLicenceEntityService = m::mock();
+        $mockCommunityLicEntityService = m::mock();
 
-        $this->sm->setService(
-            'Entity\Licence',
-            m::mock()
-                ->shouldReceive('setLicenceStatus')
-                    ->with($licenceId, LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP)
-                    ->once()
-                ->getMock()
-        );
+        $this->sm->setService('Entity\Application', $mockApplicationEntityService);
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+        $this->sm->setService('Entity\GoodsDisc', $mockGoodsDiscEntityService);
+        $this->sm->setService('Entity\LicenceVehicle', $mockLicenceVehicleEntityService);
+        $this->sm->setService('Entity\TransportManagerLicence', $mockTmLicenceEntityService);
+        $this->sm->setService('Entity\CommunityLic', $mockCommunityLicEntityService);
+
+        // expectations
+        $mockApplicationEntityService
+            ->shouldReceive('forceUpdate')
+                ->once()
+                ->with(
+                    $applicationId,
+                    ['status' => ApplicationEntityService::APPLICATION_STATUS_NOT_TAKEN_UP]
+                )
+            ->shouldReceive('getLicenceIdForApplication')
+                ->once()
+                ->with($applicationId)
+                ->andReturn($licenceId);
+
+        $mockLicenceEntityService->shouldReceive('setLicenceStatus')
+            ->once()
+            ->with($licenceId, LicenceEntityService::LICENCE_STATUS_NOT_TAKEN_UP);
+
+        $mockGoodsDiscEntityService->shouldReceive('voidExistingForApplication')
+            ->once()
+            ->with($applicationId);
+
+        $mockLicenceVehicleEntityService->shouldReceive('removeForApplication')
+            ->once()
+            ->with($applicationId);
+
+        $mockTmLicenceEntityService->shouldReceive('deleteForLicence')
+            ->once()
+            ->with($licenceId);
+
+        $mockLicenceEntityService->shouldReceive('getCommunityLicencesByLicenceId')
+            ->once()
+            ->with($licenceId)
+            ->andReturn(
+                [
+                    ['id' => 69],
+                    ['id' => 70],
+                ]
+            );
+        $expectedCommunityLicData = [
+            [
+                'id' => 69,
+                'status' => CommunityLic::STATUS_VOID,
+                'expiredDate' => $date,
+            ],
+            [
+                'id' => 70,
+                'status' => CommunityLic::STATUS_VOID,
+                'expiredDate' => $date,
+            ],
+        ];
+        $mockCommunityLicEntityService->shouldReceive('multiUpdate')
+            ->once()
+            ->with($expectedCommunityLicData);
+
+        $mockLicenceEntityService->shouldReceive('updateCommunityLicencesCount')
+            ->once()
+            ->with($licenceId);
 
         $this->sut->processNotTakenUpApplication($applicationId);
     }

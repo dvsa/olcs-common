@@ -97,4 +97,30 @@ class GoodsDiscEntityService extends AbstractEntityService
 
         $this->multiUpdate($data);
     }
+
+    /**
+     * Void any existing discs relating to the given application
+     *
+     * @param int $licenceId
+     * @param int $applicationId
+     */
+    public function voidExistingForApplication($applicationId)
+    {
+        $vehicles = $this->getServiceLocator()
+            ->get('Entity\LicenceVehicle')
+            ->getExistingForApplication($applicationId);
+
+        $discsToCease = [];
+        foreach ($vehicles as $vehicle) {
+            foreach ($vehicle['goodsDiscs'] as $disc) {
+                if ($disc['ceasedDate'] === null) {
+                    $discsToCease[] = $disc['id'];
+                }
+            }
+        }
+
+        if (!empty($discsToCease)) {
+            $this->ceaseDiscs($discsToCease);
+        }
+    }
 }
