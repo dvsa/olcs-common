@@ -236,8 +236,10 @@ return array(
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
             'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
+
         ),
         'factories' => array(
+            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',

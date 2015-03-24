@@ -30,18 +30,12 @@ class UserTypesListDataService implements FactoryInterface, ListDataInterface
     public function fetchListOptions($context = null, $useGroups = false)
     {
         $options = [
-            'internal-limited-read-only' => 'Internal - Limited Read only',
-            'internal-read-only' => 'Internal - Read only',
-            'internal-case-worker' => 'Internal - Case worker',
-            'internal-admin' => 'Internal - Admin',
-            'operator-admin' => 'External - Admin',
-            'operator-user' => 'Internal - Case worker',
-            'operator-tm' => 'Internal - Case worker',
-            'operator-ebsr' => 'Internal - Case worker',
-            'partner-admin' => 'Internal - Case worker',
-            'partner-user' => 'Internal - Case worker',
-            'local-authority-admin' => 'Internal - Case worker',
-            'local-authority-user' => 'Internal - Case worker'
+            'internal' => 'Internal',
+            'transport-manager' => 'Transport manager',
+            'partner' => 'Partner',
+            'local-authority' => 'Local authority',
+            'self-service' => 'Self service',
+            'self-service-no-licence' => 'Self service no licence',
         ];
         return $options;
     }
