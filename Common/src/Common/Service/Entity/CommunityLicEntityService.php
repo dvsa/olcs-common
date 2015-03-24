@@ -159,7 +159,7 @@ class CommunityLicEntityService extends AbstractEntityService
             'serialNoPrefix' => $this->getSerialNoPrefixFromTrafficArea($licenceId),
             'issueNo' => 0
         ];
-        $this->save(array_merge($data, $additionalData));
+        return $this->save(array_merge($data, $additionalData));
     }
 
     /**

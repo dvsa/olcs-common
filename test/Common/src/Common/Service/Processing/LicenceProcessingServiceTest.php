@@ -211,25 +211,25 @@ class LicenceProcessingServiceTest extends MockeryTestCase
             [
                 'N',
                 true,
-                'GB/GV_Interim_Direction',
+                'GB/GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
                 'N',
                 false,
-                'GB/GV_Interim_Licence',
+                'GB/GV_INT_LICENCE',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ], [
                 'Y',
                 true,
-                'NI/GV_Interim_Direction',
+                'NI/GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
                 'Y',
                 false,
-                'NI/GV_Interim_Licence',
+                'NI/GV_INT_LICENCE',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ]

@@ -462,7 +462,7 @@ class InterimHelperService extends AbstractHelperService
             // generate and print any pending community licences (take form communityLicService)
             $this->getServiceLocator()
                 ->get('Helper\CommunityLicenceDocument')
-                ->generateBatch($interimData['licence']['id'], $comLicsIds);
+                ->generateBatch($interimData['licence']['id'], $comLicsIds, $interimData['id']);
         }
     }
 

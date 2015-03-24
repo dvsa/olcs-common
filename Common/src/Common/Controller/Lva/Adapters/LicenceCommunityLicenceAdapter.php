@@ -25,14 +25,18 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
      * Add office copy
      *
      * @param int $licenceId
+     * @param int $identifier
      */
-    public function addOfficeCopy($licenceId)
+    public function addOfficeCopy($licenceId, $identifier)
     {
         $data = [
             'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
             'status' => CommunityLicEntityService::STATUS_ACTIVE
         ];
-        $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
+        $id = $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
+        $this->getServiceLocator()
+            ->get('Helper\CommunityLicenceDocument')
+            ->generateBatch($licenceId, [$id['id']]);
     }
 
     /**
@@ -51,8 +55,9 @@ class LicenceCommunityLicenceAdapter extends AbstractControllerAwareAdapter impl
      *
      * @param int $licenceId
      * @param int $totalLicences
+     * @param int $identifier
      */
-    public function addCommunityLicences($licenceId, $totalLicences)
+    public function addCommunityLicences($licenceId, $totalLicences, $identifier)
     {
         $data = [
             'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate(),
