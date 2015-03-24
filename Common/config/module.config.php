@@ -188,6 +188,8 @@ return array(
             'ApplicationReviewAdapter' => 'Common\Controller\Lva\Adapters\ApplicationReviewAdapter',
             'VariationReviewAdapter' => 'Common\Controller\Lva\Adapters\VariationReviewAdapter',
             'CantIncreaseValidator' => 'Common\Form\Elements\Validators\CantIncreaseValidator',
+            'GenericBusinessTypeAdapter'
+                => 'Common\Controller\Lva\Adapters\GenericBusinessTypeAdapter',
             'ApplicationConditionsUndertakingsAdapter'
                 => 'Common\Controller\Lva\Adapters\ApplicationConditionsUndertakingsAdapter',
             'VariationConditionsUndertakingsAdapter'
@@ -242,7 +244,7 @@ return array(
             'totalVehicleAuthorityValidator' => 'Common\Form\Elements\Validators\Lva\TotalVehicleAuthorityValidator',
             'section.vehicle-safety.vehicle.formatter.vrm' =>
                 'Common\Service\Section\VehicleSafety\Vehicle\Formatter\Vrm',
-            'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider'
+            'Common\Rbac\UserProvider' => 'Common\Rbac\UserProvider',
         ),
         'factories' => array(
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
