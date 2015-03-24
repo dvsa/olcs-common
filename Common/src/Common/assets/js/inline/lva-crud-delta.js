@@ -15,17 +15,14 @@ OLCS.ready(function() {
         return disable(true);
       }
 
-      // @TODO: this only takes into account the first input's
-      // action which may well differ to the rest
-      var action = $(selectedInputs[0]).data("action");
+      var actions = $.map(selectedInputs, function(input) {
+        return $(input).data("action");
+      });
 
-      // if there's no action attribute then we've already passed
-      // the test because it's only based on length
-      if (!action) {
-        return disable(false);
-      }
-
-      disable($.inArray(action, allowedActions) === -1);
+      disable(
+        // if we have any actions NOT in our allowed list; disable
+        $(actions).not(allowedActions).length > 0
+      );
     };
   }
 
