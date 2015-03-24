@@ -83,7 +83,13 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
 
         $content = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate($template, ['application' => $applicationId]);
+            ->generateFromTemplate(
+                $template,
+                [
+                    'application' => $applicationId,
+                    'licence' => $licenceId
+                ]
+            );
 
         $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
