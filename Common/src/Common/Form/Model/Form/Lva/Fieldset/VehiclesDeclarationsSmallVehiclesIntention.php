@@ -42,28 +42,28 @@ class VehiclesDeclarationsSmallVehiclesIntention
     public $psvSmallVhlNotes = null;
 
     /**
-     * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6"
+     * @Form\Attributes({
+     *     "id":"",
+     *     "class":"long",
+     *      "value":"markup-application_vehicle-safety_undertakings-smallVehiclesUndertakingsScotland"
      * })
-     * @Form\Type("\Zend\Form\Element\Textarea")
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title"
+     * })
+     * @Form\Type("Common\Form\Elements\Types\TermsBox")
      */
     public $psvSmallVhlScotland = null;
 
     /**
-     * @Form\Attributes({"id":"","class":"long","disabled":"disabled"})
-     * @Form\Options({
-     *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakings.title",
-     *     "label_attributes": {
-     *         "class": "col-sm-2"
-     *     },
-     *     "column-size": "sm-6"
+     * @Form\Attributes({
+     *     "id":"",
+     *     "class":"long",
+     *     "value": "markup-application_vehicle-safety_undertakings-smallVehiclesUndertakings"
      * })
-     * @Form\Type("\Zend\Form\Element\Textarea")
+     * @Form\Options({
+     *     "label": "application_vehicle-safety_undertakings.smallVehiclesUndertakings.title"
+     * })
+     * @Form\Type("Common\Form\Elements\Types\TermsBox")
      */
     public $psvSmallVhlUndertakings = null;
 
