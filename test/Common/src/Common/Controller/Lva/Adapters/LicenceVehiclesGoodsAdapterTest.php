@@ -157,4 +157,29 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
     {
         $this->assertEquals('data', $this->sut->maybeUnsetSpecifiedDate('data'));
     }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setShouldCreateEmptyOption')
+                    ->with(false)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->assertEquals($mockForm, $this->sut->maybeRemoveSpecifiedDateEmptyOption($mockForm, 'edit'));
+    }
 }

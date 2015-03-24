@@ -76,11 +76,14 @@ class CommonVariationControllerTraitTest extends MockeryTestCase
         $this->sut->shouldReceive('getApplicationId')
             ->andReturn($appId);
 
-        $mockProcessor->shouldReceive('setApplicationId')
-            ->with($appId)
-            ->andReturnSelf()
+        $mockProcessor
+            ->shouldReceive('setApplicationId')
+                ->with($appId)
+                ->andReturnSelf()
+            ->shouldReceive('clearCache')
+                ->andReturnSelf()
             ->shouldReceive('completeSection')
-            ->with($section);
+                ->with($section);
 
         $this->sut->callPostSave($section);
     }

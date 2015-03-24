@@ -228,4 +228,12 @@ class ApplicationVehiclesGoodsAdapterTest extends MockeryTestCase
             $this->sut->maybeUnsetSpecifiedDate(['licence-vehicle' => ['specifiedDate' => 'date']])
         );
     }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $this->assertEquals('form', $this->sut->maybeRemoveSpecifiedDateEmptyOption('form', 'edit'));
+    }
 }

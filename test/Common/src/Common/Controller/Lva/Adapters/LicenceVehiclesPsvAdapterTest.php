@@ -106,4 +106,29 @@ class LicenceVehiclesPsvAdapterTest extends MockeryTestCase
         // this is a no-op on the licence adapter
         $this->assertNull($this->sut->warnIfAuthorityExceeded(1, [], true));
     }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setShouldCreateEmptyOption')
+                    ->with(false)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->assertEquals($mockForm, $this->sut->maybeRemoveSpecifiedDateEmptyOption($mockForm, 'edit'));
+    }
 }

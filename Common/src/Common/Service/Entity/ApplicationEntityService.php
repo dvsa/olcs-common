@@ -38,6 +38,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
     const INTERIM_STATUS_REQUESTED = 'int_sts_requested';
     const INTERIM_STATUS_INFORCE = 'int_sts_in_force';
     const INTERIM_STATUS_REFUSED = 'int_sts_refused';
+    const INTERIM_STATUS_REVOKED = 'int_sts_revoked';
 
     const WITHDRAWN_REASON_WITHDRAWN    = 'withdrawn';
     const WITHDRAWN_REASON_REG_IN_ERROR = 'reg_in_error';
@@ -73,6 +74,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
         'children' => array(
             'applicationCompletions',
             'status',
+            'interimStatus',
+            'licenceType',
+            'goodsOrPsv'
         )
     );
 
@@ -160,7 +164,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'licenceType',
             'operatingCentres',
             'previousConvictions',
-            'previousLicences' => array(
+            'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
                 )
@@ -462,7 +466,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'licence_history' => [
                 'children' => [
-                    'previousLicences' => [
+                    'otherLicences' => [
                         'children' => [
                             'previousLicenceType'
                         ]
@@ -498,24 +502,12 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'children' => [
                     'licence' => [
                         'children' => [
-                            // @NOTE I think the companySubsidiaryLicence table should be a straight
-                            // many-to-many so this could change
-                            'companySubsidiaries' => [
-                                'children' => [
-                                    'companySubsidiary'
-                                ]
-                            ],
+                            'companySubsidiaries',
                             'organisation' => [
                                 'children' => [
                                     'type',
                                     'tradingNames',
-                                    // @NOTE I think the organisationNatureOfBusiness table should be a straight
-                                    // many-to-many so this could change
-                                    'natureOfBusinesss' => [
-                                        'children' => [
-                                            'refData'
-                                        ]
-                                    ],
+                                    'natureOfBusinesses',
                                     'contactDetails' => [
                                         'children' => [
                                             'address'
@@ -1114,6 +1106,20 @@ class ApplicationEntityService extends AbstractLvaEntityService
     public function saveInterimData($formData = [], $type = true)
     {
         $data = $formData['data'];
+        /*
+         * if the current status is INFORCE we allow users to change
+         * status to any available, otherwise status is always REQUESTED.
+         * Status can be changed to any if current status is REFUSED or REVOKED
+         * but in this case we just use save() method, not the current one.
+         */
+        if ($data['interimCurrentStatus'] == self::INTERIM_STATUS_INFORCE) {
+            $status = $formData['interimStatus']['status'];
+            $processInForce = true;
+        } else {
+            $status = self::INTERIM_STATUS_REQUESTED;
+            $processInForce = false;
+        }
+
         if ($type) {
             $dataToSave = [
                 'interimReason' => $data['interimReason'],
@@ -1121,7 +1127,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'interimEnd' => $data['interimEnd'],
                 'interimAuthVehicles' => $data['interimAuthVehicles'],
                 'interimAuthTrailers' => $data['interimAuthTrailers'],
-                'interimStatus' => self::INTERIM_STATUS_REQUESTED,
+                'interimStatus' => $status,
                 'id' => $data['id'],
                 'version' => $data['version']
             ];
@@ -1145,7 +1151,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
         $this->save($dataToSave);
         $this->saveApplictionOperatingCentresForInterim($newOcs, $data['id']);
-        $this->saveVehiclesForInterim($newVehicles, $data['id']);
+        $this->saveVehiclesForInterim($newVehicles, $data['id'], $processInForce);
     }
 
     /**
@@ -1192,8 +1198,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
      *
      * @param array $vehcileData
      * @param int $id
+     * @param bool $processInForce
      */
-    protected function saveVehiclesForInterim($vehcileData, $id)
+    protected function saveVehiclesForInterim($vehcileData, $id, $processInForce)
     {
         $interimData = $this->getDataForInterim($id);
         $existingVehicles = [];
@@ -1208,21 +1215,39 @@ class ApplicationEntityService extends AbstractLvaEntityService
         $recordsToUnset = array_diff($existingVehicles, $vehcileData);
 
         $data = [];
+        $newDiscs = [];
+        $specifiedDate = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s');
         // preparing data to set interim flag
         foreach ($recordsToSet as $recordId) {
-            $data[] = [
+            $record = [
                 'id' => $recordId,
                 'version' => $versions[$recordId],
                 'interimApplication' => $id
             ];
+            if ($processInForce) {
+                $record['specifiedDate'] = $specifiedDate;
+                $newDiscs[] = [
+                    'licenceVehicle' => $recordId,
+                    'isInterim' => 'Y'
+                ];
+            }
+            $data[] = $record;
         }
         // preparing data to unset interim flag
         foreach ($recordsToUnset as $recordId) {
-            $data[] = [
+            $record = [
                 'id' => $recordId,
                 'version' => $versions[$recordId],
                 'interimApplication' => 'NULL'
             ];
+            if ($processInForce) {
+                $record['specifiedDate'] = $specifiedDate;
+            }
+            $data[] = $record;
+        }
+        if ($processInForce) {
+            $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+            $this->getServiceLocator()->get('Helper\Interim')->processNewDiscsAdding($newDiscs);
         }
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($data);
     }
