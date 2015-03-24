@@ -39,6 +39,9 @@ class LicenceEntityService extends AbstractLvaEntityService
     const LICENCE_STATUS_REFUSED = 'lsts_refused';
     const LICENCE_STATUS_REVOKED = 'lsts_revoked';
     const LICENCE_STATUS_NOT_TAKEN_UP = 'lsts_ntu';
+    const LICENCE_STATUS_TERMINATED = 'lsts_terminated';
+    const LICENCE_STATUS_CONTINUATION_NOT_SOUGHT = 'lsts_cns';
+    // 'lsts_unlicenced', 'Unlicenced' is in rollout data but not used
 
     private $typeShortCodeMap =[
         self::LICENCE_TYPE_RESTRICTED             => 'R',
