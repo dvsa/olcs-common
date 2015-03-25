@@ -62,4 +62,32 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(null, $this->sut->removeStatusesForLicence());
     }
+
+    public function testGetLicencesToRevokeCurtailSuspend()
+    {
+        $mockDate = \Mockery::mock('StdClass');
+        $mockDate->shouldReceive('getDate')->andReturn('2015-03-25');
+        $this->sm->setService('Helper\Date', $mockDate);
+
+        $this->restHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->will($this->returnValue(['Results' => [1,2,3]]));
+
+        $results = $this->sut->getLicencesToRevokeCurtailSuspend();
+        $this->assertEquals([1,2,3], $results);
+    }
+
+    public function testGetLicencesToValid()
+    {
+        $mockDate = \Mockery::mock('StdClass');
+        $mockDate->shouldReceive('getDate')->andReturn('2015-03-25');
+        $this->sm->setService('Helper\Date', $mockDate);
+
+        $this->restHelper->expects($this->once())
+            ->method('makeRestCall')
+            ->will($this->returnValue(['Results' => [1,2,3]]));
+
+        $results = $this->sut->getLicencesToValid();
+        $this->assertEquals([1,2,3], $results);
+    }
 }
