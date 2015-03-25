@@ -828,7 +828,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test get data for interim
-     * 
+     *
      * @group applicationEntity
      */
     public function testGetDataForInterim()
@@ -888,7 +888,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
 
     /**
      * Test save interim data
-     * 
+     *
      * @group applicationEntity
      * @dataProvider providerSaveInterimData
      */
@@ -998,6 +998,34 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ->getMock();
         $this->sm->setService('Entity\LicenceVehicle', $mocklicenceVehicleService);
 
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->with('Y-m-d H:i:s')
+            ->andReturn('2015-01-01')
+            ->getMock()
+        );
+        if ($formData['data']['interimCurrentStatus'] == ApplicationEntityService::INTERIM_STATUS_INFORCE) {
+
+            $this->sm->setService(
+                'Helper\Interim',
+                m::mock()
+                ->shouldReceive('voidDiscsForApplication')
+                ->with(1)
+                ->once()
+                ->shouldReceive('processNewDiscsAdding')
+                ->with(
+                    [
+                        ['licenceVehicle' => 1, 'isInterim' => 'Y'],
+                        ['licenceVehicle' => 2, 'isInterim' => 'Y'],
+                    ]
+                )
+                ->once()
+                ->getMock()
+            );
+        }
+
         $this->sut->saveInterimData($formData, $type);
     }
 
@@ -1016,7 +1044,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'interimEnd' => '2015/01/01',
                         'interimAuthVehicles' => 10,
                         'interimAuthTrailers' => 20,
-                        'interimStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
+                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED,
                         'id' => 1,
                         'version' => 2
                     ],
@@ -1092,7 +1120,8 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 [
                     'data' => [
                         'id' => 1,
-                        'version' => 2
+                        'version' => 2,
+                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_REQUESTED
                      ]
                 ],
                 // save application data
@@ -1134,6 +1163,93 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 ],
                 // type
                 false
+            ],
+            'set_inforce' => [
+                // form data
+                [
+                    'data' => [
+                        'interimReason' => 'reason',
+                        'interimStart' => '2014/01/01',
+                        'interimEnd' => '2015/01/01',
+                        'interimAuthVehicles' => 10,
+                        'interimAuthTrailers' => 20,
+                        'interimCurrentStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE,
+                        'id' => 1,
+                        'version' => 2
+                    ],
+                    'operatingCentres' => [
+                        'id' => [1, 2]
+                    ],
+                    'vehicles' => [
+                        'id' => [1, 2]
+                    ],
+                    'interimStatus' => [
+                        'status' => ApplicationEntityService::INTERIM_STATUS_INFORCE
+                    ]
+                ],
+                // save application data
+                [
+                    'interimReason' => 'reason',
+                    'interimStart' => '2014/01/01',
+                    'interimEnd' => '2015/01/01',
+                    'interimAuthVehicles' => 10,
+                    'interimAuthTrailers' => 20,
+                    'interimStatus' => ApplicationEntityService::INTERIM_STATUS_INFORCE,
+                    'id' => 1,
+                    'version' => 2
+                ],
+                // save application operating centre data
+                [
+                    [
+                        'id' => 1,
+                        'version' => 1,
+                        'isInterim' => 'Y'
+                    ],
+                    [
+                        'id' => 2,
+                        'version' => 1,
+                        'isInterim' => 'Y'
+                    ],
+                    [
+                        'id' => 3,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 1,
+                        'isInterim' => 'N'
+                    ],
+                ],
+                // save licence vehicle data
+                [
+                    [
+                        'id' => 1,
+                        'version' => 2,
+                        'interimApplication' => 1,
+                        'specifiedDate' => '2015-01-01'
+                    ],
+                    [
+                        'id' => 2,
+                        'version' => 2,
+                        'interimApplication' => 1,
+                        'specifiedDate' => '2015-01-01'
+                    ],
+                    [
+                        'id' => 3,
+                        'version' => 2,
+                        'interimApplication' => 'NULL',
+                        'specifiedDate' => '2015-01-01'
+                    ],
+                    [
+                        'id' => 4,
+                        'version' => 2,
+                        'interimApplication' => 'NULL',
+                        'specifiedDate' => '2015-01-01'
+                    ]
+                ],
+                // type
+                true
             ]
         ];
     }
@@ -1221,13 +1337,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                     'children' => [
                                         'type',
                                         'tradingNames',
-                                        // @NOTE I think the organisationNatureOfBusiness table should be a straight
-                                        // many-to-many so this could change
-                                        'natureOfBusinesss' => [
-                                            'children' => [
-                                                'refData'
-                                            ]
-                                        ],
+                                        'natureOfBusinesses',
                                         'contactDetails' => [
                                             'children' => [
                                                 'address'
@@ -1235,11 +1345,7 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                                         ]
                                     ]
                                 ],
-                                'companySubsidiaries' => [
-                                    'children' => [
-                                        'companySubsidiary'
-                                    ]
-                                ],
+                                'companySubsidiaries'
                             ]
                         ]
                     ]

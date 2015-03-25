@@ -423,7 +423,7 @@ class InterimHelperService extends AbstractHelperService
      *
      * @param array $newDiscs
      */
-    protected function processNewDiscsAdding($newDiscs)
+    public function processNewDiscsAdding($newDiscs)
     {
         $newDiscs['_OPTIONS_'] = [
             'multiple' => true
@@ -462,7 +462,7 @@ class InterimHelperService extends AbstractHelperService
             // generate and print any pending community licences (take form communityLicService)
             $this->getServiceLocator()
                 ->get('Helper\CommunityLicenceDocument')
-                ->generateBatch($interimData['licence']['id'], $comLicsIds);
+                ->generateBatch($interimData['licence']['id'], $comLicsIds, $interimData['id']);
         }
     }
 
@@ -486,13 +486,10 @@ class InterimHelperService extends AbstractHelperService
 
         $fileName = $interimData['isVariation'] ? 'GV Refused Interim Direction' : 'GV Refused Interim Licence';
 
-        // generate document
         $document = $this->generateDocument($interimData);
 
-        // upload document and save document fo JackRabbit
         $file = $this->uploadAndSaveRefuseDocument($document, $interimData, $fileName);
 
-        // print document
         $this->printRefuseDocument($file, $fileName);
     }
 
@@ -536,7 +533,7 @@ class InterimHelperService extends AbstractHelperService
                 'category' => Category::CATEGORY_LICENSING,
                 'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
                 'description' => $fileName,
-                'filename' => $fileName,
+                'filename' => $fileName . '.rtf',
                 'fileExtension' => 'doc_rtf',
                 'issuedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
                 'isDigital' => false,

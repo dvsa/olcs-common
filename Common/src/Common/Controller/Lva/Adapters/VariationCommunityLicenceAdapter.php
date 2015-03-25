@@ -10,6 +10,7 @@ namespace Common\Controller\Lva\Adapters;
 use Common\Controller\Lva\Adapters\AbstractControllerAwareAdapter;
 use Common\Controller\Lva\Interfaces\CommunityLicenceAdapterInterface;
 use Common\Service\Entity\CommunityLicEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Variation Community Licence Adapter
@@ -25,13 +26,13 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
      * Create office copy
      *
      * @param int $licenceId
+     * @param int $identifier
      */
-    public function addOfficeCopy($licenceId)
+    public function addOfficeCopy($licenceId, $identifier)
     {
-        $data = [
-            'status' => CommunityLicEntityService::STATUS_PENDING
-        ];
-        $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
+        return $this->getServiceLocator()
+            ->get('ApplicationCommunityLicenceAdapter')
+            ->addOfficeCopy($licenceId, $identifier);
     }
 
     /**
@@ -50,12 +51,12 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
      *
      * @param int $licenceId
      * @param int $totalLicences
+     * @param int $identifier
      */
-    public function addCommunityLicences($licenceId, $totalLicences)
+    public function addCommunityLicences($licenceId, $totalLicences, $identifier)
     {
-        $data = [
-            'status' => CommunityLicEntityService::STATUS_PENDING,
-        ];
-        $this->getServiceLocator()->get('Entity\CommunityLic')->addCommunityLicences($data, $licenceId, $totalLicences);
+        return $this->getServiceLocator()
+            ->get('ApplicationCommunityLicenceAdapter')
+            ->addCommunityLicences($licenceId, $totalLicences, $identifier);
     }
 }

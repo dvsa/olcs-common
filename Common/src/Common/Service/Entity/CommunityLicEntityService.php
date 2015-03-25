@@ -99,6 +99,29 @@ class CommunityLicEntityService extends AbstractEntityService
     }
 
     /**
+     * Get community licences where the status is pending, active or suspended.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return array
+     */
+    public function getValidLicencesForLicenceStatus($licenceId)
+    {
+        $valid = array(
+            self::STATUS_PENDING,
+            self::STATUS_ACTIVE,
+            self::STATUS_SUSPENDED
+        );
+
+        $query = [
+            'status' => $valid,
+            'licence' => $licenceId,
+        ];
+
+        return $this->get($query, $this->listBundle);
+    }
+
+    /**
      * Get valid statuses for query
      *
      * @return string
@@ -132,6 +155,21 @@ class CommunityLicEntityService extends AbstractEntityService
     }
 
     /**
+     * Get Active and Pending community licences
+     * 
+     * @param int $licenceId licence ID
+     * @return array
+     */
+    public function getActivePendingLicences($licenceId)
+    {
+        $query = [
+            'status' => [self::STATUS_ACTIVE, self::STATUS_PENDING],
+            'licence' => $licenceId,
+        ];
+        return $this->get($query, $this->listBundle)['Results'];
+    }
+
+    /**
      * Add office copy
      *
      * @param array $data
@@ -144,7 +182,7 @@ class CommunityLicEntityService extends AbstractEntityService
             'serialNoPrefix' => $this->getSerialNoPrefixFromTrafficArea($licenceId),
             'issueNo' => 0
         ];
-        $this->save(array_merge($data, $additionalData));
+        return $this->save(array_merge($data, $additionalData));
     }
 
     /**

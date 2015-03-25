@@ -558,7 +558,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->getMock()
         );
 
@@ -687,7 +687,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->once()
             ->getMock()
         );
@@ -887,7 +887,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->once()
             ->getMock()
         );
@@ -976,7 +976,7 @@ class InterimHelperServiceTest extends MockeryTestCase
     }
 
     /**
-     * @group interimHelper1
+     * @group interimHelper
      */
     public function testInterimRefusing()
     {
@@ -1053,7 +1053,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'category' => Category::CATEGORY_LICENSING,
             'subCategory' => Category::DOC_SUB_CATEGORY_OTHER_DOCUMENTS,
             'description' => 'GV Refused Interim Licence',
-            'filename' => 'GV Refused Interim Licence',
+            'filename' => 'GV Refused Interim Licence.rtf',
             'fileExtension' => 'doc_rtf',
             'issuedDate' => '2015-01-01 10:10:10',
             'isDigital' => false,

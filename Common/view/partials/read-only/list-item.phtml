@@ -27,11 +27,13 @@ if (array_key_exists('numeric', $item)) {
     }
 }
 
-//convert values into yes or no
-if ($item['value'] == 'Y') {
-    $item['value'] == 'Yes';
-} elseif ($item['value'] == 'N') {
-    $item['value'] == 'No';
+if (isset($item['value'])) {
+    //convert values into yes or no
+    if ($item['value'] == 'Y') {
+        $item['value'] == 'Yes';
+    } elseif ($item['value'] == 'N') {
+        $item['value'] == 'No';
+    }
 }
 
 if (isset($item['hideIfEmpty'])
@@ -41,15 +43,24 @@ if (isset($item['hideIfEmpty'])
 ):
  // no-op, don't render
 else: ?>
-<div class="definition-list__item<?php echo (isset($item['class']) ? ' ' . $item['class'] : ''); ?>">
-    <dt><?php echo $this->translate($item['label']); ?></dt>
-    <dd>
-        <?php if (isset($item['url']) && $item['url'] != ''): ?>
-        <a href="<?php echo $item['url']; ?>"><?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?></a>
-        <?php else: ?>
-        <?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?>
-        <?php endif; ?>
-        <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
-    </dd>
-</div>
-<?php endif; ?>
+<li class="definition-list__item<?php echo (isset($item['class']) ? ' ' . $item['class'] : ''); ?>">
+    <?php
+    if (isset($item['full-content'])) {
+        echo $item['full-content'];
+    } else {
+        ?>
+        <dt><?php echo $this->translate($item['label']); ?></dt>
+        <dd>
+            <?php if (isset($item['url']) && $item['url'] != ''): ?>
+            <a href="<?php echo $item['url']; ?>"><?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?></a>
+            <?php else: ?>
+            <?php echo (isset($item['noEscape']) ? $item['value'] : $this->escapeHtml($item['value'])); ?>
+            <?php endif; ?>
+            <?php echo !empty($item['suffix']) ? $item['suffix'] : '';?>
+        </dd>
+        <?php
+    }
+    ?>
+</li>
+<?php endif;
+

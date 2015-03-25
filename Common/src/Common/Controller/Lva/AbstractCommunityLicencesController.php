@@ -222,7 +222,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
      */
     public function officeLicenceAddAction()
     {
-        $this->getAdapter()->addOfficeCopy($this->getLicenceId());
+        $identifier = $this->getIdentifier();
+        $this->getAdapter()->addOfficeCopy($this->getLicenceId(), $identifier);
         $this->addSuccessMessage('internal.community_licence.office_copy_created');
         return $this->redirectToIndex();
     }
@@ -262,6 +263,8 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
         if ($request->isPost()) {
 
+            $identifier = $this->getIdentifier();
+
             $this->attachVehicleAuthorityValidator($form);
 
             $data = (array)$request->getPost();
@@ -270,10 +273,10 @@ abstract class AbstractCommunityLicencesController extends AbstractController im
 
                 $officeCopy = $this->getServiceLocator()->get('Entity\CommunityLic')->getOfficeCopy($licenceId);
                 if (!$officeCopy) {
-                    $this->getAdapter()->addOfficeCopy($licenceId);
+                    $this->getAdapter()->addOfficeCopy($licenceId, $identifier);
                 }
 
-                $this->getAdapter()->addCommunityLicences($licenceId, $data['data']['total']);
+                $this->getAdapter()->addCommunityLicences($licenceId, $data['data']['total'], $identifier);
                 $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
 
                 $this->addSuccessMessage('internal.community_licence.licences_created');

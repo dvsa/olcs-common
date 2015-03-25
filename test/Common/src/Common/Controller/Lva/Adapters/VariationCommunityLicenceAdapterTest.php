@@ -10,6 +10,7 @@ namespace CommonTest\Controller\Lva\Adapters;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Common\Controller\Lva\Adapters\VariationCommunityLicenceAdapter;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Variation Community Licence Adapter Test
@@ -40,24 +41,17 @@ class VariationCommunityLicenceAdapterTest extends MockeryTestCase
     public function testAddOfficeCopy()
     {
         $licenceId = 1;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_pending'
-        ];
-
-        $mockAddOfficeCopy = m::mock()
+        $applicationId = 2;
+        $this->sm->setService(
+            'ApplicationCommunityLicenceAdapter',
+            m::mock()
             ->shouldReceive('addOfficeCopy')
-            ->with($data, $licenceId)
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddOfficeCopy);
+            ->with($licenceId, $applicationId)
+            ->once()
+            ->getMock()
+        );
 
-        $this->sut->addOfficeCopy($licenceId);
+        $this->sut->addOfficeCopy($licenceId, $applicationId);
     }
 
     /**
@@ -87,23 +81,15 @@ class VariationCommunityLicenceAdapterTest extends MockeryTestCase
     public function testAddCommunityLicences()
     {
         $licenceId = 1;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_pending'
-        ];
-
-        $mockAddCommunityLicences = m::mock()
+        $applicationId = 2;
+        $this->sm->setService(
+            'ApplicationCommunityLicenceAdapter',
+            m::mock()
             ->shouldReceive('addCommunityLicences')
-            ->with($data, $licenceId, 2)
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddCommunityLicences);
-
-        $this->sut->addCommunityLicences($licenceId, 2);
+            ->with($licenceId, 2, $applicationId)
+            ->once()
+            ->getMock()
+        );
+        $this->sut->addCommunityLicences($licenceId, 2, $applicationId);
     }
 }

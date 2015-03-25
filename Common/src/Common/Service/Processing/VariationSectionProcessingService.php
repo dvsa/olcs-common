@@ -766,4 +766,13 @@ class VariationSectionProcessingService implements ServiceLocatorAwareInterface
 
         return false;
     }
+
+    /**
+     * Clear cached completion data
+     */
+    public function clearCache()
+    {
+        $this->variationCompletionData = [];
+        return $this;
+    }
 }
