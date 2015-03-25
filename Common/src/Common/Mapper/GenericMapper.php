@@ -57,10 +57,10 @@ class GenericMapper
         $formData = [];
         $fieldMap = $fieldMap ?: $this->getFieldMap();
 
-        //first we'll populate the keys that aren't from child entities
+        //first we'll populate the keys that aren't from child entities and aren't within a fieldset
         //this avoids us having to write config for these
         foreach ($data as $key => $value) {
-            if (!is_array($value)) {
+            if (!is_array($value) && !isset($fieldMap[$key])) {
                 $formData[$key] = $value;
                 unset($data[$key]);
             }
@@ -70,12 +70,6 @@ class GenericMapper
             $explodedKey = explode('||', $fieldKey);
             $levelsDeep = count($explodedKey);
             $keyData = null;
-
-            //shouldn't be necessary as these keys wouldn't be needed in config,
-            //but makes the code a bit more robust nonetheless
-            if ($levelsDeep == 1) {
-                continue;
-            }
 
             $keyData = $data[$explodedKey[0]];
 
