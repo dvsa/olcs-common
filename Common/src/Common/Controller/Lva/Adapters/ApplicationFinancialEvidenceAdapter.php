@@ -80,7 +80,7 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
             $otherApplicationVehicles += (int)$application['totAuthVehicles'];
         }
 
-        return $appVehicles + $otherLicenceVehicles;
+        return $appVehicles + $otherLicenceVehicles + $otherApplicationVehicles;
     }
 
     /**
