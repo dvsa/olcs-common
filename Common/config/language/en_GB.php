@@ -1,6 +1,22 @@
 <?php
 
 return array(
+    'application-review-conditions-undertakings-licence-conditions-added' => 'Licence conditions',
+    'application-review-conditions-undertakings-licence-undertakings-added' => 'Licence undertakings',
+    'application-review-conditions-undertakings-oc-conditions-added' => 'Operating centre conditions',
+    'application-review-conditions-undertakings-oc-undertakings-added' => 'Operating centre undertakings',
+    'variation-review-conditions-undertakings-licence-conditions-added' => 'Licence conditions added',
+    'variation-review-conditions-undertakings-licence-undertakings-added' => 'Licence undertakings added',
+    'variation-review-conditions-undertakings-oc-conditions-added' => 'Operating centre conditions added',
+    'variation-review-conditions-undertakings-oc-undertakings-added' => 'Operating centre undertakings added',
+    'variation-review-conditions-undertakings-licence-conditions-updated' => 'Licence conditions updated',
+    'variation-review-conditions-undertakings-licence-undertakings-updated' => 'Licence undertakings updated',
+    'variation-review-conditions-undertakings-oc-conditions-updated' => 'Operating centre conditions updated',
+    'variation-review-conditions-undertakings-oc-undertakings-updated' => 'Operating centre undertakings updated',
+    'variation-review-conditions-undertakings-licence-conditions-deleted' => 'Licence conditions deleted',
+    'variation-review-conditions-undertakings-licence-undertakings-deleted' => 'Licence undertakings deleted',
+    'variation-review-conditions-undertakings-oc-conditions-deleted' => 'Operating centre conditions deleted',
+    'variation-review-conditions-undertakings-oc-undertakings-deleted' => 'Operating centre undertakings deleted',
     'Authorisation' => 'Authorisation',
     'Confirm' => 'Confirm',
     'Continue' => 'Continue',

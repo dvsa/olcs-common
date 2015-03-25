@@ -7,8 +7,6 @@
  */
 namespace Common\Service\Review;
 
-use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
-
 /**
  * Application Conditions Undertakings Review Service
  *
@@ -16,6 +14,8 @@ use Common\Service\Entity\ConditionUndertakingEntityService as Condition;
  */
 class ApplicationConditionsUndertakingsReviewService extends AbstractReviewService
 {
+    protected $helper;
+
     /**
      * Format the readonly config from the given data
      *
@@ -24,79 +24,50 @@ class ApplicationConditionsUndertakingsReviewService extends AbstractReviewServi
      */
     public function getConfigFromData(array $data = array())
     {
-        list($licConds, $licUnds, $ocConds, $ocUnds) = $this->splitUpConditionsAndUndertakings($data);
+        $this->helper = $this->getServiceLocator()->get('Review\ConditionsUndertakings');
 
+        list($licConds, $licUnds, $ocConds, $ocUnds) = $this->helper->splitUpConditionsAndUndertakings($data);
+
+        $subSections = array_merge(
+            [],
+            $this->processLicenceSections($licConds, $licUnds),
+            $this->processOcSections($ocConds, $ocUnds)
+        );
+
+        if (empty($subSections)) {
+            return ['freetext' => $this->translate('review-none-added')];
+        }
+
+        return ['subSections' => $subSections];
+    }
+
+    private function processLicenceSections($licConds, $licUnds)
+    {
         $subSections = [];
 
-        if (!empty($licConds)) {
-
-            $subSection = [
-                'header' => 'Licence conditions',
-                'mainItems' => [
-                    [
-                        'multiItems' => [
-                            [
-                                [
-                                    'label' => '',
-                                    'value' => 'foo'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
+        if (!empty($licConds['A'])) {
+            $subSections[] = $this->helper->formatLicenceSubSection($licConds['A'], 'application', 'conditions', 'added');
         }
 
-        return [
-            'subSections' => $subSections
-        ];
-    }
-
-    protected function splitUpConditionsAndUndertakings($data)
-    {
-        $licConds = $licUnds = $ocConds = $ocUnds = [];
-
-        foreach ($data['conditionUndertakings'] as $condition) {
-            switch (true) {
-                case $this->isLicenceCondition($condition):
-                    $licConds[$condition['action']][] = $condition;
-                    break;
-                case $this->isLicenceUndertaking($condition):
-                    $licUnds[$condition['action']][] = $condition;
-                    break;
-                case $this->isOcCondition($condition):
-                    $ocConds[$condition['action']][$condition['operatingCentre']['id']][] = $condition;
-                    break;
-                case $this->isOcUndertaking($condition):
-                    $ocUnds[$condition['action']][$condition['operatingCentre']['id']][] = $condition;
-                    break;
-            }
+        if (!empty($licUnds['A'])) {
+            $subSections[] = $this->helper->formatLicenceSubSection($licUnds['A'], 'application', 'undertakings', 'added');
         }
 
-        return [$licConds, $licUnds, $ocConds, $ocUnds];
+        return $subSections;
     }
 
-    protected function isLicenceCondition($condition)
+    private function processOcSections($ocConds, $ocUnds)
     {
-        return $condition['conditionType']['id'] === Condition::TYPE_CONDITION
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_LICENCE;
-    }
+        $subSections = [];
 
-    protected function isLicenceUndertaking($condition)
-    {
-        return $condition['conditionType']['id'] === Condition::TYPE_UNDERTAKING
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_LICENCE;
-    }
+        if (!empty($ocConds['A'])) {
+            $subSections[] = $this->helper->formatOcSubSection($ocConds['A'], 'application', 'conditions', 'added');
+        }
 
-    protected function isOcCondition($condition)
-    {
-        return $condition['conditionType']['id'] === Condition::TYPE_CONDITION
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_OPERATING_CENTRE;
-    }
+        if (!empty($ocUnds['A'])) {
+            $subSections[] = $this->helper->formatOcSubSection($ocUnds['A'], 'application', 'undertakings', 'added');
+        }
 
-    protected function isOcUndertaking($condition)
-    {
-        return $condition['conditionType']['id'] === Condition::TYPE_UNDERTAKING
-            && $condition['attachedTo']['id'] === Condition::ATTACHED_TO_OPERATING_CENTRE;
+        return $subSections;
     }
 }
