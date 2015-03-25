@@ -46,11 +46,13 @@ class ApplicationConditionsUndertakingsReviewService extends AbstractReviewServi
         $subSections = [];
 
         if (!empty($licConds['A'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licConds['A'], 'application', 'conditions', 'added');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licConds['A'], 'application', 'conditions', 'added');
         }
 
         if (!empty($licUnds['A'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licUnds['A'], 'application', 'undertakings', 'added');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licUnds['A'], 'application', 'undertakings', 'added');
         }
 
         return $subSections;

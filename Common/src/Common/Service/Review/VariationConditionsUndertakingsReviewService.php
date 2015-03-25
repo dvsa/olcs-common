@@ -52,11 +52,13 @@ class VariationConditionsUndertakingsReviewService extends AbstractReviewService
         }
 
         if (!empty($licConds['U'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licConds['U'], 'variation', 'conditions', 'updated');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licConds['U'], 'variation', 'conditions', 'updated');
         }
 
         if (!empty($licConds['D'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licConds['D'], 'variation', 'conditions', 'deleted');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licConds['D'], 'variation', 'conditions', 'deleted');
         }
 
         return $subSections;
@@ -67,15 +69,18 @@ class VariationConditionsUndertakingsReviewService extends AbstractReviewService
         $subSections = [];
 
         if (!empty($licUnds['A'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licUnds['A'], 'variation', 'undertakings', 'added');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licUnds['A'], 'variation', 'undertakings', 'added');
         }
 
         if (!empty($licUnds['U'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licUnds['U'], 'variation', 'undertakings', 'updated');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licUnds['U'], 'variation', 'undertakings', 'updated');
         }
 
         if (!empty($licUnds['D'])) {
-            $subSections[] = $this->helper->formatLicenceSubSection($licUnds['D'], 'variation', 'undertakings', 'deleted');
+            $subSections[] = $this->helper
+                ->formatLicenceSubSection($licUnds['D'], 'variation', 'undertakings', 'deleted');
         }
 
         return $subSections;
