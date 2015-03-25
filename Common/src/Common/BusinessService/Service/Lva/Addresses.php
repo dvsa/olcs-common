@@ -55,7 +55,12 @@ class Addresses implements
         $data = $params['data'];
         $licenceId = $params['licenceId'];
 
-        $correspondenceDetails = $this->saveCorrespondenceDetails($licenceId, $data);
+        $response = $this->saveCorrespondenceDetails($licenceId, $data);
+        if (!$response->isOk()) {
+            return $response;
+        }
+
+        $correspondenceDetails = $response->getData();
 
         $correspondenceId = isset($correspondenceDetails['id'])
             ? $correspondenceDetails['id']
@@ -146,16 +151,28 @@ class Addresses implements
 
         $address = array_merge($address, $additionalData);
 
-        $saved = $this->getServiceLocator()->get('Entity\ContactDetails')->save($address);
+        $response = $this->getServiceLocator()
+            ->get('BusinessServiceManager')
+            ->get('Lva\ContactDetails')
+            ->process(
+                [
+                    'data' => $address
+                ]
+            );
+
+        if (!$response->isOk()) {
+            return $response;
+        }
 
         // If we are creating a new contactDetails item, we need to link it to the licence
         if (!isset($data[$type]['id']) || empty($data[$type]['id'])) {
+            $saved = $response->getData();
 
             $licenceData = [$type . 'Cd' => $saved['id']];
 
             $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
         }
 
-        return $saved;
+        return $response;
     }
 }
