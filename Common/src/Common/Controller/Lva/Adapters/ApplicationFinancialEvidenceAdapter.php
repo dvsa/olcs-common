@@ -315,8 +315,10 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     protected function getOtherLicences($applicationId)
     {
         if (is_null($this->otherLicences)) {
+
+            // get all licences for the organisation
             $organisationId = $this->getOrganisationId($applicationId);
-            $this->otherLicences = $this->getServiceLocator()->get('Entity\Organisation')
+            $licences = $this->getServiceLocator()->get('Entity\Organisation')
                 ->getLicencesByStatus(
                     $organisationId,
                     [
@@ -325,7 +327,17 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
                         Licence::LICENCE_STATUS_CURTAILED,
                     ]
                 );
+
+            // don't include the current licence, to avoid double-counting
+            $currentLicenceId = $this->getLicenceId($applicationId);
+            $this->otherLicences = array_filter(
+                $licences,
+                function ($licence) use ($currentLicenceId) {
+                    return $licence['id'] != $currentLicenceId;
+                }
+            );
         }
+
         return $this->otherLicences;
     }
 
@@ -336,6 +348,15 @@ class ApplicationFinancialEvidenceAdapter extends AbstractFinancialEvidenceAdapt
     protected function getOrganisationId($applicationId)
     {
         return $this->getApplicationData($applicationId)['licence']['organisation']['id'];
+    }
+
+    /**
+     * @param int $applicationId
+     * @return int
+     */
+    protected function getLicenceId($applicationId)
+    {
+        return $this->getApplicationData($applicationId)['licence']['id'];
     }
 
     /**
