@@ -43,7 +43,7 @@ abstract class AbstractBusinessDetailsController extends AbstractController
             $data = $this->formatDataForForm($orgData, $organisationEntity->getNatureOfBusinessesForSelect($orgId));
         }
 
-        // Get's a fully configured/altered form for any version of this section
+        // Gets a fully configured/altered form for any version of this section
         $form = $this->getServiceLocator()
             ->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-' . $this->section)

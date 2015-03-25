@@ -562,6 +562,9 @@ return array(
             'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
             'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
             'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+            'lva-licence-addresses' => 'Common\FormService\Form\Lva\Addresses',
+            'lva-variation-addresses' => 'Common\FormService\Form\Lva\Addresses',
+            'lva-application-addresses' => 'Common\FormService\Form\Lva\Addresses',
         ]
     ],
     'business_rule_manager' => [
@@ -583,6 +586,7 @@ return array(
             'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
+            'Lva\Addresses' => 'Common\BusinessService\Service\Lva\Addresses',
         ]
     ],
 );
