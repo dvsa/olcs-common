@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Application Declarations Review Service
+ * Application Vehicles Declarations Review Service
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
