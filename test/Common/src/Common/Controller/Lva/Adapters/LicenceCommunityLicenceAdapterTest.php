@@ -55,10 +55,20 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
         $mockAddOfficeCopy = m::mock()
             ->shouldReceive('addOfficeCopy')
             ->with($data, $licenceId)
+            ->andReturn(['id' => 25])
             ->getMock();
         $this->sm->setService('Entity\CommunityLic', $mockAddOfficeCopy);
 
-        $this->sut->addOfficeCopy($licenceId);
+        $this->sm->setService(
+            'Helper\CommunityLicenceDocument',
+            m::mock()
+            ->shouldReceive('generateBatch')
+            ->with($licenceId, [25])
+            ->once()
+            ->getMock()
+        );
+
+        $this->sut->addOfficeCopy($licenceId, null);
     }
 
     /**
@@ -124,7 +134,7 @@ class LicenceCommunityLicenceAdapterTest extends MockeryTestCase
 
         $this->assertEquals(
             'foo',
-            $this->sut->addCommunityLicences($licenceId, 2)
+            $this->sut->addCommunityLicences($licenceId, 2, null)
         );
     }
 
