@@ -483,6 +483,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'conditions_undertakings' => [
+                'children' => [
+                    'conditionUndertakings' => [
+                        'children' => [
+                            'conditionType',
+                            'attachedTo',
+                            'operatingCentre' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
@@ -637,6 +652,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'applicationOrganisationPersons' => [
                         'children' => [
                             'person'
+                        ]
+                    ]
+                ]
+            ],
+            'conditions_undertakings' => [
+                'children' => [
+                    'conditionUndertakings' => [
+                        'children' => [
+                            'licConditionVariation'
                         ]
                     ]
                 ]

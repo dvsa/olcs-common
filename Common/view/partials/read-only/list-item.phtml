@@ -47,6 +47,14 @@ else: ?>
     <?php
     if (isset($item['full-content'])) {
         echo $item['full-content'];
+    } elseif(isset($item['list'])) {
+        ?>
+    <ul>
+        <?php foreach ($item['list'] as $item) { ?>
+        <li><?php echo $item; ?></li>
+        <?php } ?>
+    </ul>
+        <?php
     } else {
         ?>
         <dt><?php echo $this->translate($item['label']); ?></dt>
