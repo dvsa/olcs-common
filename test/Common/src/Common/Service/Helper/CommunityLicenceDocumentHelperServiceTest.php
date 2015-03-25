@@ -43,7 +43,7 @@ class CommunityLicenceDocumentHelperServiceTest extends MockeryTestCase
             ->andReturn(
                 m::mock()
                 ->shouldReceive('generateFromTemplate')
-                ->with($template, ['licence' => 123, 'communityLic' => 10])
+                ->with($template, ['licence' => 123, 'communityLic' => 10, 'application' => null])
                 ->andReturn($mockDocument)
                 ->shouldReceive('uploadGeneratedContent')
                 ->with($mockDocument, 'documents', 'Community Licence')

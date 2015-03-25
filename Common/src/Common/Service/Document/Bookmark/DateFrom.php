@@ -2,6 +2,7 @@
 namespace Common\Service\Document\Bookmark;
 
 use Common\Service\Document\Bookmark\Base\DynamicBookmark;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Community Licence - Valid From
@@ -13,11 +14,24 @@ class DateFrom extends DynamicBookmark
     public function getQuery(array $data)
     {
         $query = [
-            'service' => 'CommunityLic',
-            'data' => [
-                'id' => $data['communityLic']
+            [
+                'service' => 'CommunityLic',
+                'data' => [
+                    'id' => $data['communityLic']
+                ],
+                'bundle' => []
             ],
-            'bundle' => []
+            [
+                'service' => 'Application',
+                'data' => [
+                    'id' => $data['application']
+                ],
+                'bundle' => [
+                    'children' => [
+                        'interimStatus'
+                    ]
+                ]
+            ]
         ];
 
         return $query;
@@ -25,6 +39,12 @@ class DateFrom extends DynamicBookmark
 
     public function render()
     {
-        return date("d/m/Y", strtotime($this->data['specifiedDate']));
+        if (isset($this->data[1]['interimStatus']['id']) &&
+            $this->data[1]['interimStatus']['id'] == ApplicationEntityService::INTERIM_STATUS_INFORCE) {
+            $dateFrom = date('d/m/Y', strtotime($this->data[1]['interimStart']));
+        } else {
+            $dateFrom = date("d/m/Y", strtotime($this->data[0]['specifiedDate']));
+        }
+        return $dateFrom;
     }
 }
