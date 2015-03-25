@@ -99,6 +99,30 @@ class BusRegEntityService extends AbstractEntityService
         return $this->get($id, $this->variationDataBundle);
     }
 
+    /**
+     * Find all bus routes by licence identifier.
+     *
+     * @param $identifier The licence id.
+     *
+     * @return array|bool
+     */
+    public function findByLicenceId($identifier)
+    {
+        $params = [
+            'licId' => $identifier
+        ];
+
+        $result = $this->getServiceLocator()
+            ->get('Helper\Rest')
+            ->makeRestCall('BusRegSearchView', 'GET', $params);
+
+        if ($result['Count'] === 0) {
+            return false;
+        }
+
+        return $result;
+    }
+
     public function findByIdentifier($identifier)
     {
         $params = [

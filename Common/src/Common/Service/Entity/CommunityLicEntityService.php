@@ -99,6 +99,29 @@ class CommunityLicEntityService extends AbstractEntityService
     }
 
     /**
+     * Get community licences where the status is pending, active or suspended.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return array
+     */
+    public function getValidLicencesForLicenceStatus($licenceId)
+    {
+        $valid = array(
+            self::STATUS_PENDING,
+            self::STATUS_ACTIVE,
+            self::STATUS_SUSPENDED
+        );
+
+        $query = [
+            'status' => $valid,
+            'licence' => $licenceId,
+        ];
+
+        return $this->get($query, $this->listBundle);
+    }
+
+    /**
      * Get valid statuses for query
      *
      * @return string
