@@ -71,6 +71,10 @@ class GenericMapper
             $levelsDeep = count($explodedKey);
             $keyData = null;
 
+            if (!isset($data[$explodedKey[0]])) {
+                continue;
+            }
+
             $keyData = $data[$explodedKey[0]];
 
             for ($i = 1; $i < $levelsDeep; $i ++) {
