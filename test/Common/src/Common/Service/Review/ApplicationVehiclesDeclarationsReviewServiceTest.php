@@ -53,6 +53,7 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
     public function providerGetConfigFromData()
     {
         return [
+            // Non Scottish, Non restricted licence, with small vehicles, with novelty vehicles
             [
                 [
                     'psvSmallVhlNotes' => "Foo\nBar",
@@ -116,6 +117,7 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Non Scottish, Non restricted licence, with small vehicles, without novelty vehicles
             [
                 [
                     'psvSmallVhlNotes' => "Foo\nBar",
@@ -177,6 +179,8 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Non Scottish, Non restricted licence, with small vehicles, without novelty vehicles, with conditions
+            // and undertakings
             [
                 [
                     'psvSmallVhlConfirmation' => 'Y',
@@ -253,6 +257,8 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Scottish, Non restricted licence, with small vehicles, without novelty vehicles, with conditions
+            // and undertakings
             [
                 [
                     'psvSmallVhlConfirmation' => 'Y',
@@ -323,6 +329,7 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Scottish, Non restricted licence, without small vehicles, with large vehicles, without novelty vehicles
             [
                 [
                     'psvNoSmallVhlConfirmation' => 'Y',
@@ -381,6 +388,7 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Scottish, Non restricted licence, without small vehicles, with medium vehicles, without novelty vehicles
             [
                 [
                     'psvNoSmallVhlConfirmation' => 'Y',
@@ -439,6 +447,8 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Scottish, Non restricted licence, without small vehicles, with large + medium vehicles, without novelty
+            // vehicles
             [
                 [
                     'psvNoSmallVhlConfirmation' => 'Y',
@@ -497,6 +507,8 @@ class ApplicationVehiclesDeclarationsReviewServiceTest extends MockeryTestCase
                     ]
                 ]
             ],
+            // Scottish, Restricted licence, without small vehicles, with large + medium vehicles, without novelty
+            // vehicles
             [
                 [
                     'psvMediumVhlConfirmation' => 'Y',
