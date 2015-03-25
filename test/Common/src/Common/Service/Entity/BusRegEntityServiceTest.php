@@ -26,7 +26,7 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
-    public function testFindByLicenceIdentifierWithNoResult()
+    public function testFindByLicenceIdWithNoResult()
     {
         $response = [
             'Count' => 0,
@@ -38,13 +38,13 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('BusRegSearchView', 'GET', $params)
             ->will($this->returnValue($response));
 
-        $this->assertEquals(false, $this->sut->findByLicenceIdentifier(123));
+        $this->assertEquals(false, $this->sut->findByLicenceId(123));
     }
 
     /**
      * @group entity_services
      */
-    public function testFindByLicenceIdentifierWithResult()
+    public function testFindByLicenceIdWithResult()
     {
         $response = [
             'Count' => 1,
@@ -60,7 +60,7 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('BusRegSearchView', 'GET', $params)
             ->will($this->returnValue($response));
 
-        $this->assertEquals($response, $this->sut->findByLicenceIdentifier(123));
+        $this->assertEquals($response, $this->sut->findByLicenceId(123));
     }
 
     /**
