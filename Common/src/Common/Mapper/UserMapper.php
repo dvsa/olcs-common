@@ -64,6 +64,13 @@ class UserMapper extends GenericMapper
             ];
         }
 
+        $user = [
+            'id' => $existingData['id'],
+            'version' => $existingData['version'],
+            'team' => $formData['userDetails']['team'],
+            'loginId' => $formData['userDetails']['loginId']
+        ];
+
         //contact details - userContact fieldset
         $contact['id'] = $existingData['contactDetails']['id'];
         $contact['version'] = $existingData['contactDetails']['version'];
@@ -97,7 +104,8 @@ class UserMapper extends GenericMapper
 
         return [
             'contact' => $contact,
-            'newPhoneContacts' => $newPhoneContacts
+            'newPhoneContacts' => $newPhoneContacts,
+            'user' => $user
         ];
     }
 
@@ -145,7 +153,9 @@ class UserMapper extends GenericMapper
     public function getMyDetailsFieldMap()
     {
         return [
-            'contactDetails||person||title' => 'userDetails',
+            'team||id' => 'userDetails',
+            'loginId' => 'userDetails',
+            'contactDetails||person||title||id' => 'userDetails',
             'contactDetails||person||otherTitle' => 'userDetails',
             'contactDetails||person||forename' => 'userDetails',
             'contactDetails||person||familyName' => 'userDetails',
