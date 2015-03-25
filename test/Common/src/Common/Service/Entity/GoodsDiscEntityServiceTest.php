@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\GoodsDiscEntityService;
+use Mockery as m;
 
 /**
  * Goods Disc Entity Service
@@ -159,5 +160,64 @@ class GoodsDiscEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectedRestCallInOrder('GoodsDisc', 'POST', $createData);
 
         $this->sut->updateExistingForLicence(10, 20);
+    }
+
+    public function testVoidExistingForApplication()
+    {
+        $applicationId = 69;
+        $date = '2015-03-24';
+
+        $this->mockDate($date);
+
+        $this->sm->setService(
+            'Entity\LicenceVehicle',
+            m::mock()
+                ->shouldReceive('getExistingForApplication')
+                ->once()
+                ->andReturn(
+                    [
+                        [
+                            'id' => 1,
+                            'goodsDiscs' => [
+                                ['id' => 9, 'ceasedDate' => null],
+                                ['id' => 10, 'ceasedDate' => null],
+                            ],
+                        ],
+                        [
+                            'id' => 2,
+                            'goodsDiscs' => [
+                                ['id' => 11, 'ceasedDate' => '2015-03-01'],
+                                ['id' => 12, 'ceasedDate' => null],
+                            ],
+                        ],
+                    ]
+                )
+                ->getMock()
+        );
+
+        $expectedData = [
+            [
+                'id' => 9,
+                'ceasedDate' => $date,
+                '_OPTIONS_' => ['force' => true]
+            ],
+            [
+                'id' => 10,
+                'ceasedDate' => $date,
+                '_OPTIONS_' => ['force' => true]
+            ],
+            [
+                'id' => 12,
+                'ceasedDate' => $date,
+                '_OPTIONS_' => ['force' => true]
+            ],
+            '_OPTIONS_' => [
+                'multiple' => true
+            ]
+        ];
+
+        $this->expectOneRestCall('GoodsDisc', 'PUT', $expectedData);
+
+        $this->sut->voidExistingForApplication($applicationId);
     }
 }

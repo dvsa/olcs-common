@@ -9,23 +9,20 @@ OLCS.ready(function() {
       maxLength = Infinity;
     }
 
-    return function (length, disable, selectedInputs) {
+    return function (length, enable, selectedInputs) {
 
       if (length < 1 || length > maxLength) {
-        return disable(true);
+        return enable(false);
       }
 
-      // @TODO: this only takes into account the first input's
-      // action which may well differ to the rest
-      var action = $(selectedInputs[0]).data("action");
+      var actions = $.map(selectedInputs, function(input) {
+        return $(input).data("action");
+      });
 
-      // if there's no action attribute then we've already passed
-      // the test because it's only based on length
-      if (!action) {
-        return disable(false);
-      }
-
-      disable($.inArray(action, allowedActions) === -1);
+      enable(
+        // as long as we don't have any actions NOT in the allowed list; go for it
+        $(actions).not(allowedActions).length === 0
+      );
     };
   }
 

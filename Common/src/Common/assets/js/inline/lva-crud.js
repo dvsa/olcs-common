@@ -18,7 +18,7 @@ OLCS.ready(function() {
     container: tableSelector,
     label: "Edit",
     predicate: function (length, callback) {
-      callback(length !== 1);
+      callback(length === 1);
     }
   });
 
@@ -26,7 +26,7 @@ OLCS.ready(function() {
     container: tableSelector,
     label: "Delete",
     predicate: function (length, callback) {
-      callback(length < 1);
+      callback(length >= 1);
     }
   });
 

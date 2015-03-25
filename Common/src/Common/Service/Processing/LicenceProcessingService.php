@@ -69,20 +69,27 @@ class LicenceProcessingService implements ServiceLocatorAwareInterface
 
         $prefix = $this->getPrefix($application);
 
-        switch($application['isVariation']) {
+        switch ($application['isVariation']) {
             case true:
                 $template = $prefix . '/' . 'GV_INT_DIRECTION_V1';
                 $description = "GV Interim Direction";
                 break;
+
             case false:
-                $template = $prefix . '/' . 'GV_INT_LICENCE';
+                $template = $prefix . '/' . 'GV_INT_LICENCE_V1';
                 $description = "GV Interim Licence";
                 break;
         }
 
         $content = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
-            ->generateFromTemplate($template, ['licence' => $licenceId]);
+            ->generateFromTemplate(
+                $template,
+                [
+                    'application' => $applicationId,
+                    'licence' => $licenceId
+                ]
+            );
 
         $storedFile = $this->getServiceLocator()
             ->get('Helper\DocumentGeneration')
