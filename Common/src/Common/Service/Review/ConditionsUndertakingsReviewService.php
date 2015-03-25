@@ -44,14 +44,12 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
         $mainItems = [];
 
         foreach ($list as $conditions) {
-            $mainItems = [
-                [
-                    'header' => $this->formatShortAddress($conditions[0]['operatingCentre']['address']),
-                    'multiItems' => [
+            $mainItems[] = [
+                'header' => $this->formatShortAddress($conditions[0]['operatingCentre']['address']),
+                'multiItems' => [
+                    [
                         [
-                            [
-                                'list' => $this->formatConditionsList($conditions)
-                            ]
+                            'list' => $this->formatConditionsList($conditions)
                         ]
                     ]
                 ]
@@ -109,7 +107,6 @@ class ConditionsUndertakingsReviewService extends AbstractReviewService
                     break;
                 case $this->isOcUndertaking($condition):
                     $ocUnds[$condition['action']][$condition['operatingCentre']['id']][] = $condition;
-                    break;
             }
         }
 
