@@ -803,4 +803,21 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->getServiceLocator()->get('Entity\CommunityLic')->multiUpdate($dataToVoid);
         $this->getServiceLocator()->get('Entity\Licence')->updateCommunityLicencesCount($licenceId);
     }
+
+    /**
+     * Called when resetting an application from Not Taken Up to Granted
+     *
+     * @param int $id
+     */
+    public function processUndoNotTakenUpApplication($id)
+    {
+        $licenceId = $this->getLicenceId($id);
+
+        // Update the licence and application statuses to Granted
+        $this->setApplicationStatus($id, ApplicationEntityService::APPLICATION_STATUS_GRANTED);
+        $this->getServiceLocator()->get('Entity\Licence')->setLicenceStatus(
+            $licenceId,
+            LicenceEntityService::LICENCE_STATUS_GRANTED
+        );
+    }
 }
