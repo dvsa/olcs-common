@@ -156,7 +156,6 @@ class UserMapper extends GenericMapper
             'team||id' => 'userDetails',
             'loginId' => 'userDetails',
             'contactDetails||person||title||id' => 'userDetails',
-            'contactDetails||person||otherTitle' => 'userDetails',
             'contactDetails||person||forename' => 'userDetails',
             'contactDetails||person||familyName' => 'userDetails',
             'contactDetails||person||birthDate' => 'userDetails',
