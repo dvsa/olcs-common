@@ -947,11 +947,7 @@ return array(
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
     'internal-application-withdraw-title' => 'Withdraw application',
-<<<<<<< HEAD
     'internal-crud-event-history' => 'History',
-=======
-    'internal-crud-event-history' => 'Event History',
->>>>>>> 1e309919b9ce28746010075a4f6a97a59d38fc98
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
     'internal-licence-bus-details' => 'Service details',
