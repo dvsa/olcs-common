@@ -74,7 +74,7 @@ abstract class AbstractAddressesController extends AbstractController
                 return $this->renderForm($form);
             }
 
-            $this->postSave('addresses');
+            $this->postChange($response->getData());
 
             return $this->completeSection('addresses');
         }
@@ -146,5 +146,10 @@ abstract class AbstractAddressesController extends AbstractController
     protected function renderForm($form)
     {
         return $this->render('addresses', $form);
+    }
+
+    protected function postChange(array $data)
+    {
+        $this->postSave('addresses');
     }
 }
