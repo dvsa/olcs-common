@@ -79,8 +79,8 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
             'GET',
             array(
                 'licence' => $licenceId,
-                'deletedDate' => null,
-                'endProcessedDate' => null,
+                'deletedDate' => 'NULL',
+                'endProcessedDate' => 'NULL',
                 'licenceStatus' => array(), // this gets added as default arg
             )
         )->will($this->returnValue(['Count' => 1, 'Results' => 'RESPONSE']));

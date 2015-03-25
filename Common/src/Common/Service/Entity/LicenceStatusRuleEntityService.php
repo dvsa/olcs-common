@@ -143,8 +143,8 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
             $licenceId,
             array(
                 'query' => array(
-                    'deletedDate' => null,
-                    'endProcessedDate' => null,
+                    'deletedDate' => 'NULL',
+                    'endProcessedDate' => 'NULL',
                 ),
             )
         );
