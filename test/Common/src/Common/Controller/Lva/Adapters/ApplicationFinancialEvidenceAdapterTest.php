@@ -61,6 +61,14 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 
         $licences = [
             [
+                'id' => 234,
+                'status' => [ 'id' => Licence::LICENCE_STATUS_VALID ],
+                'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_GOODS_VEHICLE ],
+                'licenceType' => [ 'id' => Licence::LICENCE_TYPE_STANDARD_INTERNATIONAL ],
+                'totAuthVehicles' => 3,
+
+            ],
+            [
                 'id' => 235,
                 'status' => [ 'id' => Licence::LICENCE_STATUS_VALID ],
                 'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_GOODS_VEHICLE ],
