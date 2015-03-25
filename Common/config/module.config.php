@@ -239,7 +239,6 @@ return array(
 
         ),
         'factories' => array(
-            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'CrudServiceManager' => 'Common\Service\Crud\CrudServiceManagerFactory',
             'FormServiceManager' => 'Common\FormService\FormServiceManagerFactory',
             'BusinessServiceManager' => 'Common\BusinessService\BusinessServiceManagerFactory',
@@ -276,6 +275,8 @@ return array(
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
+            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
+            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
         )
     ),
     'publications' => array(

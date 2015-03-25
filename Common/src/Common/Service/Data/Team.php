@@ -3,31 +3,15 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\Interfaces\ListData;
+use Common\Util\RestClient;
 
 /**
  * Class Team
- * @author Ian Lindsay <ian@hemera-business-services.co.uk>
+ * @package Common\Service
  */
 class Team extends AbstractData implements ListData
 {
     protected $serviceName = 'Team';
-
-    /**
-     * Format data!
-     *
-     * @param array $data
-     * @return array
-     */
-    public function formatData(array $data)
-    {
-        $optionData = [];
-
-        foreach ($data as $datum) {
-            $optionData[$datum['id']] = $datum['name'];
-        }
-
-        return $optionData;
-    }
 
     /**
      * @param $category
@@ -36,13 +20,14 @@ class Team extends AbstractData implements ListData
      */
     public function fetchListOptions($category, $useGroups = false)
     {
+        $optionData = [];
         $data = $this->fetchListData();
 
-        if (!$data) {
-            return [];
+        foreach ($data as $datum) {
+            $optionData[$datum['id']] = $datum['name'];
         }
 
-        return $this->formatData($data);
+        return $optionData;
     }
 
     /**
@@ -53,17 +38,17 @@ class Team extends AbstractData implements ListData
      */
     public function fetchListData()
     {
-        if (is_null($this->getData('Team'))) {
+        if (is_null($this->getData($this->serviceName))) {
 
-            $data = $this->getRestClient()->get('', ['limit' => 1000]);
+            $data = $this->getRestClient()->get('', ['limit' => 1000,]);
 
-            $this->setData('Team', false);
+            $this->setData($this->serviceName, false);
 
             if (isset($data['Results'])) {
-                $this->setData('Team', $data['Results']);
+                $this->setData($this->serviceName, $data['Results']);
             }
         }
 
-        return $this->getData('Team');
+        return $this->getData($this->serviceName);
     }
 }
