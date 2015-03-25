@@ -9,8 +9,6 @@ namespace Common\BusinessService\Service\Lva;
 
 use Common\Service\Entity\ContactDetailsEntityService;
 use Common\BusinessService\BusinessServiceInterface;
-use Common\BusinessRule\BusinessRuleAwareInterface;
-use Common\BusinessRule\BusinessRuleAwareTrait;
 use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 use Common\BusinessService\Response;
@@ -24,25 +22,11 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  */
 class Addresses implements
     BusinessServiceInterface,
-    BusinessRuleAwareInterface,
     BusinessServiceAwareInterface,
     ServiceLocatorAwareInterface
 {
-    use BusinessRuleAwareTrait,
-        ServiceLocatorAwareTrait,
+    use ServiceLocatorAwareTrait,
         BusinessServiceAwareTrait;
-
-    /**
-     * Phone types
-     *
-     * @var array
-     */
-    protected $phoneTypes = array(
-        'business' => 'phone_t_tel',
-        'home' => 'phone_t_home',
-        'mobile' => 'phone_t_mobile',
-        'fax' => 'phone_t_fax'
-    );
 
     /**
      * Processes the data by passing it through a number of business rules and then persisting it
@@ -56,6 +40,7 @@ class Addresses implements
         $licenceId = $params['licenceId'];
 
         $response = $this->saveCorrespondenceDetails($licenceId, $data);
+
         if (!$response->isOk()) {
             return $response;
         }
@@ -66,43 +51,36 @@ class Addresses implements
             ? $correspondenceDetails['id']
             : $data['correspondence']['id'];
 
-        $this->savePhoneNumbers($data, $correspondenceId);
+        $response = $this->getBusinessServiceManager()
+            ->get('Lva\PhoneContact')
+            ->process(
+                [
+                    'data' => $data,
+                    'correspondenceId' => $correspondenceId
+                ]
+            );
 
-        $this->maybeSaveEstablishmentAddress($licenceId, $data, 'establishment');
+        if (!$response->isOk()) {
+            return $response;
+        }
+
+        if (!empty($data['establishment'])) {
+            $response = $this->saveAddressToLicence(
+                $licenceId,
+                $data,
+                ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT,
+                'establishment'
+            );
+
+            if (!$response->isOk()) {
+                return $response;
+            }
+        }
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
 
         return $response;
-    }
-
-    /**
-     * Save phone numbers
-     *
-     * @param array $data
-     * @param int $correspondenceId
-     */
-    protected function savePhoneNumbers($data, $correspondenceId)
-    {
-        foreach ($this->phoneTypes as $phoneType => $phoneRefName) {
-
-            $phone = array(
-                'id' => $data['contact']['phone_' . $phoneType . '_id'],
-                'version' => $data['contact']['phone_' . $phoneType . '_version'],
-            );
-
-            if (!empty($data['contact']['phone_' . $phoneType])) {
-
-                $phone['phoneNumber'] = $data['contact']['phone_' . $phoneType];
-                $phone['phoneContactType'] = $phoneRefName;
-                $phone['contactDetails'] = $correspondenceId;
-
-                $this->getServiceLocator()->get('Entity\PhoneContact')->save($phone);
-
-            } elseif ((int)$phone['id'] > 0) {
-                $this->getServiceLocator()->get('Entity\PhoneContact')->delete($phone['id']);
-            }
-        }
     }
 
     /**
@@ -123,19 +101,6 @@ class Addresses implements
                 'emailAddress' => $data['contact']['email'],
             ]
         );
-    }
-
-    protected function maybeSaveEstablishmentAddress($licenceId, $data)
-    {
-        if (!empty($data['establishment'])) {
-
-            return $this->saveAddressToLicence(
-                $licenceId,
-                $data,
-                ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT,
-                'establishment'
-            );
-        }
     }
 
     protected function saveAddressToLicence($licenceId, $data, $contactType, $type, $additionalData = array())

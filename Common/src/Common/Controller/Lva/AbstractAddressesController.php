@@ -35,14 +35,16 @@ abstract class AbstractAddressesController extends AbstractController
     {
         $request = $this->getRequest();
 
+        $addressData = $this->formatDataForForm(
+            $this->getServiceLocator()->get('Entity\Licence')->getAddressesData(
+                $this->getLicenceId()
+            )
+        );
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
-            $addressData = $this->getServiceLocator()->get('Entity\Licence')->getAddressesData(
-                $this->getLicenceId()
-            );
-
-            $data = $this->formatDataForForm($addressData);
+            $data = $addressData;
         }
 
         $typeOfLicence = $this->getTypeOfLicenceData();
@@ -58,11 +60,12 @@ abstract class AbstractAddressesController extends AbstractController
         if (!$hasProcessed && $request->isPost() && $form->isValid()) {
 
             $response = $this->getServiceLocator()->get('BusinessServiceManager')
-                ->get('Lva\Addresses')
+                ->get('Lva\\' . ucfirst($this->lva) . 'Addresses')
                 ->process(
                     [
-                        'licenceId' => $this->getLicenceId(),
-                        'data' => $data
+                        'licenceId'    => $this->getLicenceId(),
+                        'data'         => $data,
+                        'originalData' => $addressData
                     ]
                 );
 

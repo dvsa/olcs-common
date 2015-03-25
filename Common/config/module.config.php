@@ -586,7 +586,12 @@ return array(
             'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
-            'Lva\Addresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\VariationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\ApplicationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
+            'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
+            'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
         ]
     ],
 );

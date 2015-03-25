@@ -125,4 +125,23 @@ class DataHelperService extends AbstractHelperService
 
         return $data[$search];
     }
+
+    /**
+     * Compare a subset of two arrays, $keys specifying
+     * the keys we care about during comparison
+     *
+     * @param array $from
+     * @param array $to
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function compareKeys($from, $to, $keys)
+    {
+        $keys = array_flip($keys);
+        $from = array_intersect_key($from, $keys);
+        $to   = array_intersect_key($to, $keys);
+
+        return array_diff_assoc($to, $from);
+    }
 }
