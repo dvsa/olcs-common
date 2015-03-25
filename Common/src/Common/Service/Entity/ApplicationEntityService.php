@@ -603,6 +603,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
+            'vehicles_declarations' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea'
+                        ]
+                    ]
+                ]
+            ]
         ],
         'variation' => [
             'type_of_licence' => [

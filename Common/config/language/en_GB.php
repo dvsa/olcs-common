@@ -230,6 +230,31 @@ return array(
     'application-review-type-of-licence-licence-type' => 'What type of licence do you want to apply for?',
     'application-review-type-of-licence-operator-location' => 'Where do you operate from?',
     'application-review-type-of-licence-operator-type' => 'What type of operator are you?',
+    'application-review-vehicles-declarations-15b1' => 'Do you intend to operate small vehicles as a small part of a
+        large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of
+        the Transport Act 2000)?',
+    'application-review-vehicles-declarations-15b2' => 'Give details of how you will comply with the \'small part of the
+        business\' requirements',
+    'application-review-vehicles-declarations-15cd' => 'Confirm that you agree to the below conditions and undertakings
+        being specified on your licence (if granted) ',
+    'application-review-vehicles-declarations-15e' => 'Vehicles with eight passenger seats or less will not be operated
+        under the licence without the prior written agreement of the traffic commissioner who may require you to agree
+        to certain undertakings',
+    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as Limousines
+        or novelty type vehicles?',
+    'application-review-vehicles-declarations-15f2' => 'Limousines and novelty type vehicles are not to be operated
+        under this operator\'s licence',
+    'application-review-vehicles-declarations-15g' => 'Only limousines and novelty type vehicles with nine passenger
+        seats or more and issued with a valid Certificate will be used under the licence',
+    'application-review-vehicles-declarations-8b1' => 'You are fully aware of, and will comply with, the restrictions
+        under the terms of the restricted licence for the use of vehicles with between nine and sixteen passenger
+        seats',
+    'application-review-vehicles-declarations-8b2' => 'Details below of your business or main occupation and how you
+        will comply with these restrictions',
+    'application-review-vehicles-declarations-business-title' => 'Business or main occupation',
+    'application-review-vehicles-declarations-medium-title' => 'Vehicles with nine or more passengers',
+    'application-review-vehicles-declarations-novelty-title' => 'Limousines and novelty vehicles',
+    'application-review-vehicles-declarations-small-title' => 'Small vehicle undertakings',
     'application-review-vehicles-hasEnteredReg' => 'Vehicle details submitted?',
     'application-review-vehicles-is-novelty' => 'Limousine or novelty vehicle',
     'application-review-vehicles-make' => 'Make / model',
@@ -525,37 +550,7 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => '(a) The operator will advise the
-        traffic commissioner of the make, model and registration number of vehicles used under that licence, and will
-        advise of any changes. (b) In respect of any vehicle with eight or less passengers seats used under the licence,
-        the operator will provide an audit trail to the traffic commissioner or any enforcement body on request, that
-        demonstrates compliance with PSV requirements. This includes paperwork as to how in respect of any service
-        separate fares were paid and one of the two conditions set out in Question 1 were met. Note this undertaking
-        does not apply when the vehicle is being used under the provisions of Section 79A. (c) Each small vehicle to be
-        used under the licence will have a V5C registration certificate, and the operator must possess and produce, when
-        asked to do so, a document confirming this. (d) Each small vehicle will receive a full safety inspection
-        (maximum every 10 weeks) in premises suitable for the vehicle to ensure that its roadworthiness is maintained.
-        Records of all inspections must be kept in accordance with the Guide to Maintaining Roadworthiness. (e) At no
-        time will the small vehicle carry more than eight passengers. (f) The operator will at all times comply with the
-        legislation in respect of the charging of separate fares and retain 12 months’ evidence of this compliance for
-        each journey. (g) Drivers of small vehicles will carry with them documentary evidence that separate fares have
-        been charged for the current journey. (h) The operator will not use a vehicle that does not meet the ECWVTA
-        standards, British construction and use requirements or the Road Vehicles Approval Regulations 2009 (as
-        amended). (i) The operator or driver will not break the alcohol laws.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Condition 1: The passengers
-        must have been brought together for the purposes of making the journey by the driver or owner of the vehicle or
-        by some other intermediary who is paid for. In addition each journey must have been advertised to the public, so
-        as to create a genuine opportunity for members of the public to be carried on the particular journey in
-        question, i.e. the journey is not an exclusive hiring for an individual or group, notwithstanding that separate
-        fares are paid. Advertisement at a place of worship, a place of work, a club or other voluntary association for
-        the information of people present at those places, or in periodicals circulated wholly or mainly among such
-        persons, does not count as advertisement to the general public. Finally, in the event that there are multiple
-        destinations, there should be differentiation of fares for the journey based on distance or time. Condition 2:
-        The making of the agreement for the payment of separate fares must have been initiated by the driver or owner of
-        the vehicle, or by some other intermediary who is paid for doing so – not by the passengers themselves, or any
-        other party. In addition, as in condition 1, each journey must be advertised to the public beforehand as being
-        open to passengers to be carried at separate fares.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-delete' => 'Remove vehicle(s)',
