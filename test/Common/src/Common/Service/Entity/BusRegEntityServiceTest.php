@@ -23,7 +23,6 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
-
     /**
      * @group entity_services
      */
@@ -41,7 +40,6 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(false, $this->sut->findByLicenceIdentifier(123));
     }
-
 
     /**
      * @group entity_services
