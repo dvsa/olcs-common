@@ -114,7 +114,7 @@ class CommunityLicEntityService extends AbstractEntityService
         );
 
         $query = [
-            'status' => 'IN ["' . implode('","', $valid) . '"]',
+            'status' => $valid,
             'licence' => $licenceId,
         ];
 

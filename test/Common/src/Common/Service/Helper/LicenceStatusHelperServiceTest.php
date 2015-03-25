@@ -32,7 +32,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $busRegEntity = m::mock()->shouldReceive('findByLicenceIdentifier')
+        $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
             ->with(1)
             ->andReturn(
                 array(
@@ -107,7 +107,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         )
         ->getMock();
 
-        $busRegEntity = m::mock()->shouldReceive('findByLicenceIdentifier')
+        $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
             ->with(1)
             ->andReturn(
                 array(

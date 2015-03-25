@@ -123,7 +123,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $busRegEntityService = $this->getServiceLocator()
             ->get('Entity\BusReg');
 
-        $busRoutes = $busRegEntityService->findByLicenceIdentifier($licenceId);
+        $busRoutes = $busRegEntityService->findByLicenceId($licenceId);
 
         foreach ($busRoutes['Results'] as $route) {
             switch($route['busRegStatus']) {

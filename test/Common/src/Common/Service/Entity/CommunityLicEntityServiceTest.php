@@ -109,7 +109,11 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $licenceId = 1;
         $query = [
-            'status' => 'IN ["cl_sts_pending","cl_sts_active","cl_sts_suspended"]',
+            'status' => array(
+                CommunityLicEntityService::STATUS_PENDING,
+                CommunityLicEntityService::STATUS_ACTIVE,
+                CommunityLicEntityService::STATUS_SUSPENDED
+            ),
             'licence' => 1
         ];
         $this->expectOneRestCall('CommunityLic', 'GET', $query);

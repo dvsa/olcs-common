@@ -106,7 +106,7 @@ class BusRegEntityService extends AbstractEntityService
      *
      * @return array|bool
      */
-    public function findByLicenceIdentifier($identifier)
+    public function findByLicenceId($identifier)
     {
         $params = [
             'licId' => $identifier
