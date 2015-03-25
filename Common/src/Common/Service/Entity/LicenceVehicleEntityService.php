@@ -168,4 +168,46 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
         return $results['Results'];
     }
+
+    /**
+     * Fetch all results related to the given application
+     */
+    public function getExistingForApplication($applicationId)
+    {
+        $query = [
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => $applicationId
+        ];
+
+        $results = $this->getAll($query, $this->discBundle);
+
+        return $results['Results'];
+    }
+
+    public function removeVehicles(array $ids = array())
+    {
+        $removalDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $data = [];
+
+        foreach ($ids as $id) {
+            $data[] = [
+                'id' => $id,
+                'removalDate' => $removalDate,
+                '_OPTIONS_' => ['force' => true]
+            ];
+        }
+
+        return $this->multiUpdate($data);
+    }
+
+    public function removeForApplication($applicationId)
+    {
+        $licenceVehicles = $this->getExistingForApplication($applicationId);
+        $ids = [];
+        foreach ($licenceVehicles as $lv) {
+            $ids[] = $lv['id'];
+        }
+        return $this->removeVehicles($ids);
+    }
 }

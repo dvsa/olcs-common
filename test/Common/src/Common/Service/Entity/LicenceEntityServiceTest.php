@@ -949,6 +949,23 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
+     * @group licenceEntity
+     */
+    public function testGetCommunityLicencesByLicenceId()
+    {
+        $licenceId = 1;
+        $bundle = [
+            'children' => [
+                'communityLics'
+            ]
+        ];
+        $this->expectOneRestCall('Licence', 'GET', $licenceId, $bundle)
+            ->will($this->returnValue(['communityLics' => 'RESPONSE']));
+
+        $this->assertEquals('RESPONSE', $this->sut->getCommunityLicencesByLicenceId($licenceId));
+    }
+
+    /**
      * @group entity_services
      */
     public function testGetExtendedOverview()

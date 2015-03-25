@@ -92,8 +92,10 @@ return array(
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
     'application-not-granted' => 'The application has not been granted',
+    'application-not-ntu' => 'The application has not been marked \'Not taken up\'',
     'application-not-refused' => 'The application has not been refused',
     'application-not-withdrawn' => 'The application has not been withdrawn',
+    'application-ntu-successfully' => 'The application has been marked \'Not taken up\'',
     'application-refused-successfully' => 'Application %s has been refused',
     'application-review-addresses-contact-details-title' => 'Contact details',
     'application-review-addresses-correspondence-address' => 'Correspondence Address',
@@ -923,6 +925,8 @@ return array(
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
         authority.',
     'internal' => 'Internal',
+    'internal-application-ntu-confirm' => 'Are you sure you want to set this application to Not taken up?',
+    'internal-application-ntu-title' => 'Not taken up',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
     'internal-application-processing-notes-add' => 'Add note',
@@ -943,7 +947,11 @@ return array(
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
     'internal-application-withdraw-title' => 'Withdraw application',
+<<<<<<< HEAD
     'internal-crud-event-history' => 'History',
+=======
+    'internal-crud-event-history' => 'Event History',
+>>>>>>> 1e309919b9ce28746010075a4f6a97a59d38fc98
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
     'internal-licence-bus-details' => 'Service details',
@@ -1080,6 +1088,7 @@ return array(
     'internal-navigation-operator-licences_applications' => 'Licences & Applications',
     'internal-navigation-operator-people' => 'People',
     'internal-navigation-operator-profile' => 'Operator profile',
+    'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-responsibilities' => 'Responsibilities',
     'internal-navigation-transport-manager' => 'Transport manager',
     'internal-navigation-transport-manager-cases' => 'Cases',
