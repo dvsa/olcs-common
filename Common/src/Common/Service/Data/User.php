@@ -33,6 +33,7 @@ class User extends Generic implements ServiceLocatorAwareInterface
     {
         return [
             'children' => [
+                'team' => [],
                 'contactDetails' => [
                     'children' => [
                         'address' => [
@@ -40,7 +41,11 @@ class User extends Generic implements ServiceLocatorAwareInterface
                                 'countryCode'
                             ]
                         ],
-                        'person' => [],
+                        'person' => [
+                            'children' => [
+                                'title' => []
+                            ]
+                        ],
                         'phoneContacts' => [
                             'children' => [
                                 'phoneContactType'
@@ -97,6 +102,8 @@ class User extends Generic implements ServiceLocatorAwareInterface
             foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
                 $this->getPhoneContactService()->save($newPhoneContact);
             }
+
+            parent::save($mapped['user']);
 
             return $data['id'];
         }
