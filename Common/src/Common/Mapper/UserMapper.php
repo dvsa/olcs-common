@@ -12,7 +12,8 @@ namespace Common\Mapper;
  *
  * @author Ian Lindsay <ian@hemera-business-services.co.uk>
  */
-class UserMapper extends GenericMapper {
+class UserMapper extends GenericMapper
+{
 
     /**
      * This is effectively contact details that are being formatted,
@@ -159,5 +160,4 @@ class UserMapper extends GenericMapper {
             'contactDetails||address||countryCode||id' => 'officeAddress'
         ];
     }
-
 }
