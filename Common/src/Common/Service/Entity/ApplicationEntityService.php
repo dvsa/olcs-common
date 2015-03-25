@@ -483,6 +483,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'conditions_undertakings' => [
+                'children' => [
+                    'conditionUndertakings'
+                ]
             ]
         ],
         'application' => [
