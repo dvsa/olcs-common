@@ -120,7 +120,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -138,7 +140,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('getAttribute')
             ->with('id')
-            ->andReturn(null);
+            ->andReturn(null)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -174,7 +178,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -192,7 +198,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('getAttribute')
             ->with('id')
-            ->andReturn('foo-id');
+            ->andReturn('foo-id')
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -228,7 +236,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -243,7 +253,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('getOption')
             ->with('label_attributes')
-            ->andReturn(['id' => 'foo-id']);
+            ->andReturn(['id' => 'foo-id'])
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -279,7 +291,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -291,7 +305,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('getOption')
             ->with('fieldset-attributes')
-            ->andReturn(['id' => 'foo-id']);
+            ->andReturn(['id' => 'foo-id'])
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -331,7 +347,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -343,7 +361,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn('foo-label')
             ->shouldReceive('getOption')
             ->with('fieldset-attributes')
-            ->andReturn(['id' => 'foo-id']);
+            ->andReturn(['id' => 'foo-id'])
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -381,7 +401,9 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $form->shouldReceive('get')
             ->with('foo')
@@ -399,7 +421,9 @@ class FormErrorsTest extends MockeryTestCase
             ->andReturn(null)
             ->shouldReceive('getAttribute')
             ->with('id')
-            ->andReturn(null);
+            ->andReturn(null)
+            ->shouldReceive('has')
+            ->andReturn(true);
 
         $this->assertRegExp($expected, $sut($form));
     }
@@ -440,7 +464,75 @@ class FormErrorsTest extends MockeryTestCase
             ->shouldReceive('isValid')
             ->andReturn(false)
             ->shouldReceive('getMessages')
-            ->andReturn($messages);
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(true);
+
+        $form->shouldReceive('get')
+            ->with('foo')
+            ->andReturn($mockFoo);
+
+        $mockFoo
+            ->shouldReceive('getOption')
+            ->with('short-label')
+            ->andReturn('foo-label')
+            ->shouldReceive('getOption')
+            ->with('fieldset-attributes')
+            ->andReturn(null)
+            ->shouldReceive('getOption')
+            ->with('label_attributes')
+            ->andReturn(null)
+            ->shouldReceive('getAttribute')
+            ->with('id')
+            ->andReturn(null)
+            ->shouldReceive('has')
+            ->andReturn(true);
+
+        $this->assertRegExp($expected, $sut($form));
+    }
+
+    /**
+     * Test when a form element has been setup as a fieldset
+     */
+    public function testInvokeRenderWithMessageObjectElementAsFieldset()
+    {
+        $mockValidationMessage = m::mock('\Common\Form\Elements\Validators\Messages\ValidationMessageInterface');
+        $mockValidationMessage->shouldReceive('getMessage')
+            ->andReturn('bar')
+            ->shouldReceive('shouldTranslate')
+            ->andReturn(true);
+
+        $messages = [
+            'foo' => [
+                $mockValidationMessage
+            ]
+        ];
+        $expected = '/(\s+)?<div class="validation-summary">(\s+)?'
+            . '<h3>form-errors-translated<\/h3>(\s+)?'
+            . '<ol class="validation-summary__list">(\s+)?'
+            . '<li class="validation-summary__item">(\s+)?bar-translated(\s+)?'
+            . '<\/li>(\s+)?'
+            . '<\/ol>(\s+)?'
+            . '<\/div>/';
+
+        $sut = $this->sut;
+
+        // Mocks
+        $form = m::mock('\Zend\Form\Form');
+        $mockFoo = m::mock('\Zend\Form\Element');
+
+        // Expectations
+        $this->view->shouldReceive('translate')
+            ->andReturnUsing(array($this, 'mockTranslate'));
+
+        $form->shouldReceive('hasValidated')
+            ->andReturn(true)
+            ->shouldReceive('isValid')
+            ->andReturn(false)
+            ->shouldReceive('getMessages')
+            ->andReturn($messages)
+            ->shouldReceive('has')
+            ->andReturn(false);
 
         $form->shouldReceive('get')
             ->with('foo')
