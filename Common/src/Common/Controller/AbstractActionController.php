@@ -1185,12 +1185,16 @@ abstract class AbstractActionController extends \Zend\Mvc\Controller\AbstractAct
      * Check if a button was pressed
      *
      * @param string $button
+     * @param array $data
      * @return bool
      */
-    public function isButtonPressed($button)
+    public function isButtonPressed($button, $data = null)
     {
         $request = $this->getRequest();
-        $data = (array)$request->getPost();
+
+        if (is_null($data)) {
+            $data = (array)$request->getPost();
+        }
 
         return $request->isPost() && isset($data['form-actions'][$button]);
     }

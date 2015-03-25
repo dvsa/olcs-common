@@ -101,6 +101,23 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     }
 
     /**
+     * Test get valid licences for licence status.
+     *
+     * @group communityLicService
+     */
+    public function testGetValidLicencesForLicenceStatus()
+    {
+        $licenceId = 1;
+        $query = [
+            'status' => 'IN ["cl_sts_pending","cl_sts_active","cl_sts_suspended"]',
+            'licence' => 1
+        ];
+        $this->expectOneRestCall('CommunityLic', 'GET', $query);
+
+        $this->sut->getValidLicencesForLicenceStatus($licenceId);
+    }
+
+    /**
      * Test add office copy
      *
      * @group communityLicService

@@ -23,6 +23,48 @@ class BusRegEntityServiceTest extends AbstractEntityServiceTestCase
         parent::setUp();
     }
 
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByLicenceIdentifierWithNoResult()
+    {
+        $response = [
+            'Count' => 0,
+            'Results' => []
+        ];
+        $params = [
+            'licId' => 123
+        ];
+        $this->expectOneRestCall('BusRegSearchView', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals(false, $this->sut->findByLicenceIdentifier(123));
+    }
+
+
+    /**
+     * @group entity_services
+     */
+    public function testFindByLicenceIdentifierWithResult()
+    {
+        $response = [
+            'Count' => 1,
+            'Results' => [
+                [
+                    'id' => 100
+                ]
+            ]
+        ];
+        $params = [
+            'licId' => 123
+        ];
+        $this->expectedRestCallInOrder('BusRegSearchView', 'GET', $params)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals($response, $this->sut->findByLicenceIdentifier(123));
+    }
+
     /**
      * @group entity_services
      */
