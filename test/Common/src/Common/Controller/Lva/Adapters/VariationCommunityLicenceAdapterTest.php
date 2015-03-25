@@ -182,7 +182,7 @@ class VariationCommunityLicenceAdapterTest extends MockeryTestCase
     }
 
     /**
-     * Test add commuinty licences when status is inforce
+     * Test add community licences when status is inforce
      * 
      * @group variationCommunityLicenceAdapter
      */
