@@ -30,26 +30,9 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
      */
     public function addOfficeCopy($licenceId, $identifier)
     {
-        $interimData = $this->getServiceLocator()
-            ->get('Entity\Application')
-            ->getDataForInterim($identifier);
-        $interimStatus = isset($interimData['interimStatus']['id']) ? $interimData['interimStatus']['id'] : '';
-        if ($interimStatus !== ApplicationEntityService::INTERIM_STATUS_INFORCE) {
-            $data = [
-                'status' => CommunityLicEntityService::STATUS_PENDING,
-            ];
-        } else {
-            $data = [
-                'status' => CommunityLicEntityService::STATUS_ACTIVE,
-                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
-            ];
-        }
-        $id = $this->getServiceLocator()->get('Entity\CommunityLic')->addOfficeCopy($data, $licenceId);
-        if ($interimStatus == ApplicationEntityService::INTERIM_STATUS_INFORCE) {
-            $this->getServiceLocator()
-                ->get('Helper\CommunityLicenceDocument')
-                ->generateBatch($licenceId, [$id['id']], $identifier);
-        }
+        return $this->getServiceLocator()
+            ->get('ApplicationCommunityLicenceAdapter')
+            ->addOfficeCopy($licenceId, $identifier);
     }
 
     /**
@@ -72,30 +55,8 @@ class VariationCommunityLicenceAdapter extends AbstractControllerAwareAdapter im
      */
     public function addCommunityLicences($licenceId, $totalLicences, $identifier)
     {
-        $interimData = $this->getServiceLocator()
-            ->get('Entity\Application')
-            ->getDataForInterim($identifier);
-
-        $interimStatus = isset($interimData['interimStatus']['id']) ? $interimData['interimStatus']['id'] : '';
-        if ($interimStatus !== ApplicationEntityService::INTERIM_STATUS_INFORCE) {
-            $data = [
-                'status' => CommunityLicEntityService::STATUS_PENDING,
-            ];
-        } else {
-            $data = [
-                'status' => CommunityLicEntityService::STATUS_ACTIVE,
-                'specifiedDate' => $this->getServiceLocator()->get('Helper\Date')->getDate()
-            ];
-        }
-
-        $identifiers = $this->getServiceLocator()
-            ->get('Entity\CommunityLic')
-            ->addCommunityLicences($data, $licenceId, $totalLicences);
-
-        if ($interimStatus == ApplicationEntityService::INTERIM_STATUS_INFORCE) {
-            $this->getServiceLocator()
-                ->get('Helper\CommunityLicenceDocument')
-                ->generateBatch($licenceId, $identifiers['id'], $identifier);
-        }
+        return $this->getServiceLocator()
+            ->get('ApplicationCommunityLicenceAdapter')
+            ->addCommunityLicences($licenceId, $totalLicences, $identifier);
     }
 }

@@ -42,83 +42,12 @@ class VariationCommunityLicenceAdapterTest extends MockeryTestCase
     {
         $licenceId = 1;
         $applicationId = 2;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_pending'
-        ];
-
-        $mockAddOfficeCopy = m::mock()
+        $this->sm->setService(
+            'ApplicationCommunityLicenceAdapter',
+            m::mock()
             ->shouldReceive('addOfficeCopy')
-            ->with($data, $licenceId)
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddOfficeCopy);
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getDataForInterim')
-            ->andReturn(['interimStatus' => ['id' => ApplicationEntityService::INTERIM_STATUS_REQUESTED]])
-            ->getMock()
-        );
-
-        $this->sut->addOfficeCopy($licenceId, $applicationId);
-    }
-
-    /**
-     * Test add office copy when status is inforce
-     * 
-     * @group variationCommunityLicenceAdapter
-     */
-    public function testAddOfficeCopyWhenInForce()
-    {
-        $licenceId = 1;
-        $applicationId = 2;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_active',
-            'specifiedDate' => '2015-01-01'
-        ];
-
-        $mockAddOfficeCopy = m::mock()
-            ->shouldReceive('addOfficeCopy')
-            ->with($data, $licenceId)
-            ->andReturn(['id' => 25])
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddOfficeCopy);
-
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getDataForInterim')
-            ->andReturn(['interimStatus' => ['id' => ApplicationEntityService::INTERIM_STATUS_INFORCE]])
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Helper\CommunityLicenceDocument',
-            m::mock()
-            ->shouldReceive('generateBatch')
-            ->with($licenceId, [25], $applicationId)
+            ->with($licenceId, $applicationId)
+            ->once()
             ->getMock()
         );
 
@@ -153,86 +82,14 @@ class VariationCommunityLicenceAdapterTest extends MockeryTestCase
     {
         $licenceId = 1;
         $applicationId = 2;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_pending'
-        ];
-
-        $mockAddCommunityLicences = m::mock()
+        $this->sm->setService(
+            'ApplicationCommunityLicenceAdapter',
+            m::mock()
             ->shouldReceive('addCommunityLicences')
-            ->with($data, $licenceId, 2)
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddCommunityLicences);
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getDataForInterim')
-            ->andReturn(['interimStatus' => ['id' => ApplicationEntityService::INTERIM_STATUS_REQUESTED]])
+            ->with($licenceId, 2, $applicationId)
+            ->once()
             ->getMock()
         );
-
-        $this->sut->addCommunityLicences($licenceId, 2, $applicationId);
-    }
-
-    /**
-     * Test add community licences when status is inforce
-     * 
-     * @group variationCommunityLicenceAdapter
-     */
-    public function testAddCommunityLicencesWhenInForce()
-    {
-        $licenceId = 1;
-        $applicationId = 2;
-
-        $mockDateHelper = m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock();
-        $this->sm->setService('Helper\Date', $mockDateHelper);
-
-        $data = [
-            'status' => 'cl_sts_active',
-            'specifiedDate' => '2015-01-01'
-        ];
-
-        $mockAddCommunityLicences = m::mock()
-            ->shouldReceive('addCommunityLicences')
-            ->with($data, $licenceId, 2)
-            ->andReturn(['id' => [25, 26]])
-            ->getMock();
-        $this->sm->setService('Entity\CommunityLic', $mockAddCommunityLicences);
-
-        $this->sm->setService(
-            'Entity\Application',
-            m::mock()
-            ->shouldReceive('getDataForInterim')
-            ->andReturn(['interimStatus' => ['id' => ApplicationEntityService::INTERIM_STATUS_INFORCE]])
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Helper\Date',
-            m::mock()
-            ->shouldReceive('getDate')
-            ->andReturn('2015-01-01')
-            ->getMock()
-        );
-
-        $this->sm->setService(
-            'Helper\CommunityLicenceDocument',
-            m::mock()
-            ->shouldReceive('generateBatch')
-            ->with($licenceId, [25, 26], $applicationId)
-            ->getMock()
-        );
-
         $this->sut->addCommunityLicences($licenceId, 2, $applicationId);
     }
 }
