@@ -64,7 +64,8 @@ class DiscList extends AbstractDiscList
                     ],
                     'vehicle' => [
                         'properties' => ['vrm']
-                    ]
+                    ],
+                    'interimApplication'
                 ]
             ]
         ]
@@ -92,15 +93,28 @@ class DiscList extends AbstractDiscList
 
             $prefix = $this->getPrefix($key);
 
+            if (isset($disc['licenceVehicle']['interimApplication']['id']) &&
+                !is_null($disc['licenceVehicle']['interimApplication']['id'])) {
+                $discTitle = 'INTERIM';
+            } elseif ($disc['isCopy'] === 'Y') {
+                $discTitle = 'COPY';
+            } else {
+                $discTitle = '';
+            }
+            $discLicenceId = $licence['licNo'];
+            if (isset($disc['licenceVehicle']['interimApplication']['id']) &&
+                !is_null($disc['licenceVehicle']['interimApplication']['id'])) {
+                $discLicenceId .= ' START ' . $disc['licenceVehicle']['interimApplication']['interimStart'];
+            }
             $discs[] = [
-                $prefix . 'TITLE'       => $disc['isCopy'] === 'Y' ? 'COPY' : '',
+                $prefix . 'TITLE'       => $discTitle,
                 $prefix . 'DISC_NO'     => $disc['discNo'],
                 $prefix . 'LINE1'       => isset($orgParts[0]) ? $orgParts[0] : '',
                 $prefix . 'LINE2'       => isset($orgParts[1]) ? $orgParts[1] : '',
                 $prefix . 'LINE3'       => isset($orgParts[2]) ? $orgParts[2] : '',
                 $prefix . 'LINE4'       => isset($tradingParts[0]) ? $tradingParts[0] : '',
                 $prefix . 'LINE5'       => isset($tradingParts[1]) ? $tradingParts[1] : '',
-                $prefix . 'LICENCE_ID'  => $licence['licNo'],
+                $prefix . 'LICENCE_ID'  => $discLicenceId,
                 $prefix . 'VEHICLE_REG' => $vehicle['vrm'],
                 $prefix . 'EXPIRY_DATE' => isset($licence['expiryDate']) ? $licence['expiryDate'] : 'N/A'
             ];
