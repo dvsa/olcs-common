@@ -1242,14 +1242,33 @@ class ApplicationEntityService extends AbstractLvaEntityService
                 'interimApplication' => 'NULL'
             ];
             if ($processInForce) {
-                $record['specifiedDate'] = $specifiedDate;
+                $record['specifiedDate'] = null;
             }
             $data[] = $record;
         }
         if ($processInForce) {
-            $this->getServiceLocator()->get('Helper\Interim')->voidDiscsForApplication($id);
+            $discsToVoid = $this->getActiveDiscsForVehicles($interimData, $recordsToUnset);
+            $this->getServiceLocator()->get('Helper\Interim')->processActiveDiscsVoiding($discsToVoid);
             $this->getServiceLocator()->get('Helper\Interim')->processNewDiscsAdding($newDiscs);
         }
         $this->getServiceLocator()->get('Entity\LicenceVehicle')->multiUpdate($data);
+    }
+
+    protected function getActiveDiscsForVehicles($interimData, $ids)
+    {
+        $activeDiscs = [];
+        foreach ($interimData['licenceVehicles'] as $lv) {
+            if (in_array($lv['id'], $ids)) {
+                foreach ($lv['goodsDiscs'] as $disc) {
+                    if (!$disc['ceasedDate']) {
+                        $activeDiscs[] = [
+                            'id' => $disc['id'],
+                            'version' => $disc['version']
+                        ];
+                    }
+                }
+            }
+        }
+        return $activeDiscs;
     }
 }

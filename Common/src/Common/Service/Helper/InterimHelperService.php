@@ -402,7 +402,7 @@ class InterimHelperService extends AbstractHelperService
      *
      * @param array $newDiscs
      */
-    protected function processActiveDiscsVoiding($activeDiscs)
+    public function processActiveDiscsVoiding($activeDiscs)
     {
         $discsToVoid = [];
         foreach ($activeDiscs as $disc) {
