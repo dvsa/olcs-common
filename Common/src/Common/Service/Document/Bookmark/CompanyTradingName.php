@@ -20,13 +20,13 @@ class CompanyTradingName extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
+                    'correspondenceCd' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ],
                     'organisation' => [
                         'children' => [
-                            'contactDetails' => [
-                                'children' => [
-                                    'address'
-                                ]
-                            ],
                             'tradingNames'
                         ]
                     ]
@@ -38,7 +38,7 @@ class CompanyTradingName extends DynamicBookmark
     public function render()
     {
         $organisation = $this->data['organisation'];
-        $address = isset($organisation['contactDetails']['address']) ? $organisation['contactDetails']['address'] : [];
+        $address = isset($this->data['correspondenceCd']['address']) ? $this->data['correspondenceCd']['address'] : [];
 
         if (count($organisation['tradingNames'])) {
             $tradingAs = 'T/A ' . $this->getFirstTradingName($organisation['tradingNames']);
