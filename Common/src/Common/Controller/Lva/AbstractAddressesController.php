@@ -61,6 +61,7 @@ abstract class AbstractAddressesController extends AbstractController
                 ->get('Lva\Addresses')
                 ->process(
                     [
+                        'licenceId' => $this->getLicenceId(),
                         'data' => $data
                     ]
                 );

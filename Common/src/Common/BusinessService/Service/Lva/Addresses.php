@@ -53,8 +53,9 @@ class Addresses implements
     public function process(array $params)
     {
         $data = $params['data'];
+        $licenceId = $params['licenceId'];
 
-        $correspondenceDetails = $this->saveCorrespondenceDetails($data);
+        $correspondenceDetails = $this->saveCorrespondenceDetails($licenceId, $data);
 
         $correspondenceId = isset($correspondenceDetails['id'])
             ? $correspondenceDetails['id']
@@ -62,7 +63,7 @@ class Addresses implements
 
         $this->savePhoneNumbers($data, $correspondenceId);
 
-        $this->maybeSaveEstablishmentAddress($data, 'establishment');
+        $this->maybeSaveEstablishmentAddress($licenceId, $data, 'establishment');
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
@@ -105,9 +106,10 @@ class Addresses implements
      * @param array $data
      * @return array
      */
-    protected function saveCorrespondenceDetails($data)
+    protected function saveCorrespondenceDetails($licenceId, $data)
     {
         return $this->saveAddressToLicence(
+            $licenceId,
             $data,
             ContactDetailsEntityService::CONTACT_TYPE_CORRESPONDENCE,
             'correspondence',
@@ -118,11 +120,12 @@ class Addresses implements
         );
     }
 
-    protected function maybeSaveEstablishmentAddress($data)
+    protected function maybeSaveEstablishmentAddress($licenceId, $data)
     {
         if (!empty($data['establishment'])) {
 
             return $this->saveAddressToLicence(
+                $licenceId,
                 $data,
                 ContactDetailsEntityService::CONTACT_TYPE_ESTABLISHMENT,
                 'establishment'
@@ -130,7 +133,7 @@ class Addresses implements
         }
     }
 
-    protected function saveAddressToLicence($data, $contactType, $type, $additionalData = array())
+    protected function saveAddressToLicence($licenceId, $data, $contactType, $type, $additionalData = array())
     {
         $address = array(
             'id' => $data[$type]['id'],
@@ -150,7 +153,7 @@ class Addresses implements
 
             $licenceData = [$type . 'Cd' => $saved['id']];
 
-            $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($this->getLicenceId(), $licenceData);
+            $this->getServiceLocator()->get('Entity\Licence')->forceUpdate($licenceId, $licenceData);
         }
 
         return $saved;

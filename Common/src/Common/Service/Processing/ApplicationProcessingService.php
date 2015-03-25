@@ -37,7 +37,7 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
     protected $applicationValidatingData = array();
 
     /**
-     * Called when an application is validated (When GV fee is paid, or when PSV is granted)
+     * Called when an application is validated (When GV fee is paid)
      *
      * @param int $id
      */
