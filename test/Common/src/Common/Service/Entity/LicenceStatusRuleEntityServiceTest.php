@@ -21,11 +21,13 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testCreateStatusForLicence()
     {
+        $licenceId = 99;
+
         $this->expectOneRestCall(
             'LicenceStatusRule',
             'POST',
             array(
-                'licence' => 1,
+                'licence' => $licenceId,
                 'licenceStatus' => null,
                 'startDate' => null,
                 'endDate' => null,
@@ -34,32 +36,37 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
             )
         )->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->createStatusForLicence(1));
+        $this->assertEquals('RESPONSE', $this->sut->createStatusForLicence($licenceId));
     }
 
     public function testGetStatusesForLicence()
     {
+        $licenceId = 99;
+
         $this->expectOneRestCall(
             'LicenceStatusRule',
             'GET',
             array(
+                'licence' => $licenceId,
                 'licenceStatus' => array()
             )
         )->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getStatusesForLicence());
+        $this->assertEquals('RESPONSE', $this->sut->getStatusesForLicence($licenceId));
     }
 
     public function testRemoveStatusesForLicence()
     {
+        $licenceStatusId = 101;
+
         $this->expectOneRestCall(
             'LicenceStatusRule',
             'DELETE',
             array(
-                'id' => null
+                'id' => $licenceStatusId
             )
         )->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals(null, $this->sut->removeStatusesForLicence());
+        $this->assertEquals(null, $this->sut->removeStatusesForLicence($licenceStatusId));
     }
 }

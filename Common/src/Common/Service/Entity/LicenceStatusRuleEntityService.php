@@ -127,6 +127,28 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      */
     private function normaliseQueryArguments($licenceId, array $args = array())
     {
-        return array_merge($this->argumentDefaults['query'], $args);
+        $args['query']['licence'] = $licenceId;
+
+        return array_merge($this->argumentDefaults['query'], $args['query']);
+    }
+
+    /**
+     * @param int $licenceId
+     * @return array|null
+     */
+    public function getPendingChangesForLicence($licenceId)
+    {
+        // defer to generic method
+        $data = $this->getStatusesForLicence(
+            $licenceId,
+            array(
+                'query' => array(
+                    'deletedDate' => null,
+                    'endProcessedDate' => null,
+                ),
+            )
+        );
+
+        return $data['Count']>0 ? $data['Results'] : null;
     }
 }
