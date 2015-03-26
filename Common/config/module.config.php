@@ -92,15 +92,6 @@ return array(
             'LvaLicence/CommunityLicences' => array(
                 'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
-            'LvaApplication/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
-            ),
-            'LvaVariation/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
-            ),
-            'LvaLicence/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
