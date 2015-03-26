@@ -663,6 +663,7 @@ return array(
     'apsts_refused' => 'Refused',
     'apsts_valid' => 'Valid',
     'apsts_withdrawn' => 'Withdrawn',
+    'back-to-licence-overview' => 'Back to licence overview',
     'both' => 'Both',
     'built-by' => 'Built by',
     'bus-compliance-issues' => 'Bus compliance issues',

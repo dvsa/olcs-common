@@ -401,6 +401,27 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'trailers',
+                    'safety'
+                )
+            ),
+            'External Licence Goods Standard National With Conditions' => array(
+                array(
+                    'external',
+                    'licence',
+                    LicenceEntityService::LICENCE_CATEGORY_GOODS_VEHICLE,
+                    LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
+                    'hasConditions'
+                ),
+                array(
+                    'type_of_licence',
+                    'business_type',
+                    'business_details',
+                    'addresses',
+                    'people',
+                    'operating_centres',
+                    'transport_managers',
+                    'vehicles',
+                    'trailers',
                     'safety',
                     'conditions_undertakings'
                 )
@@ -422,8 +443,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'trailers',
-                    'safety',
-                    'conditions_undertakings'
+                    'safety'
                 )
             ),
             'External Licence Goods Restricted' => array(
@@ -442,8 +462,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles',
                     'trailers',
-                    'safety',
-                    'conditions_undertakings'
+                    'safety'
                 )
             ),
             'External Licence PSV Standard National' => array(
@@ -463,8 +482,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles_psv',
                     'discs',
-                    'safety',
-                    'conditions_undertakings'
+                    'safety'
                 )
             ),
             'External Licence PSV Standard International' => array(
@@ -484,8 +502,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles_psv',
                     'discs',
-                    'safety',
-                    'conditions_undertakings'
+                    'safety'
                 )
             ),
             'External Licence PSV Restricted' => array(
@@ -504,8 +521,7 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles_psv',
                     'discs',
-                    'safety',
-                    'conditions_undertakings'
+                    'safety'
                 )
             ),
             'External Licence PSV Special Restricted' => array(
@@ -683,7 +699,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
@@ -704,7 +719,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'transport_managers',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
@@ -724,7 +738,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'operating_centres',
                     'vehicles',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
@@ -746,7 +759,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles_psv',
                     'discs',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
@@ -768,7 +780,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles_psv',
                     'discs',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
@@ -789,7 +800,6 @@ class SectionAccessTest extends PHPUnit_Framework_TestCase
                     'vehicles_psv',
                     'discs',
                     'safety',
-                    'conditions_undertakings',
                     'undertakings'
                 )
             ),
