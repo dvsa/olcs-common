@@ -32,7 +32,7 @@ class PeopleReviewService extends AbstractReviewService
                 [
                     [
                         'label' => 'application-review-people-person-title',
-                        'value' => $data['person']['title']['description']
+                        'value' => $this->formatRefData($data['person']['title'])
                     ],
                     [
                         'label' => 'application-review-people-person-firstname',
