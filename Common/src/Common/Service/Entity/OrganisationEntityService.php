@@ -282,11 +282,7 @@ class OrganisationEntityService extends AbstractEntityService
 
     private function compareKeys($from, $to, $keys = [])
     {
-        $keys = array_flip($keys);
-        $from = array_intersect_key($from, $keys);
-        $to   = array_intersect_key($to, $keys);
-
-        return array_diff_assoc($to, $from);
+        return $this->getServiceLocator()->get('Helper\Data')->compareKeys($from, $to, $keys);
     }
 
     /**
