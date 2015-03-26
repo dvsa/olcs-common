@@ -55,7 +55,8 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
                     ],
                     'vehicle' => [
                         'vrm' => 'VRM123'
-                    ]
+                    ],
+                    'interimApplication' => null
                 ],
             ],
             /**
@@ -75,9 +76,35 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
                     ],
                     'vehicle' => [
                         'vrm' => 'VRM321'
+                    ],
+                    'interimApplication' => null
+                ],
+            ],
+            [
+                'isCopy' => 'N',
+                'discNo' => 3,
+                'licenceVehicle' => [
+                    'licence' => [
+                        'organisation' => [
+                            'name' => 'A short org name',
+                            'tradingNames' => [
+                                ['name' => 'org'],
+                                ['name' => 'trading'],
+                                ['name' => 'names']
+                            ],
+                        ],
+                        'licNo' => 'L1234',
+                        'expiryDate' => '2014-10-03'
+                    ],
+                    'vehicle' => [
+                        'vrm' => 'VRM123'
+                    ],
+                    'interimApplication' => [
+                        'id' => 1,
+                        'interimStart' => '2014-01-01'
                     ]
                 ],
-            ]
+            ],
         ];
 
         $parser = $this->getMock('Common\Service\Document\Parser\RtfParser', ['replace']);
@@ -109,16 +136,16 @@ class DiscListTest extends \PHPUnit_Framework_TestCase
         ];
 
         $expectedRowTwo = [
-            'DISC1_TITLE' => 'XXXXXXXXXX',
-            'DISC1_DISC_NO' => 'XXXXXXXXXX',
-            'DISC1_LINE1' => 'XXXXXXXXXX',
-            'DISC1_LINE2' => 'XXXXXXXXXX',
-            'DISC1_LINE3' => 'XXXXXXXXXX',
-            'DISC1_LINE4' => 'XXXXXXXXXX',
-            'DISC1_LINE5' => 'XXXXXXXXXX',
-            'DISC1_LICENCE_ID' => 'XXXXXXXXXX',
-            'DISC1_VEHICLE_REG' => 'XXXXXXXXXX',
-            'DISC1_EXPIRY_DATE' => 'XXXXXXXXXX',
+            'DISC1_TITLE' => 'INTERIM',
+            'DISC1_DISC_NO' => 3,
+            'DISC1_LINE1' => 'A short org name',
+            'DISC1_LINE2' => '',
+            'DISC1_LINE3' => '',
+            'DISC1_LINE4' => 'org, trading, names',
+            'DISC1_LINE5' => '',
+            'DISC1_LICENCE_ID' => 'L1234 START 2014-01-01',
+            'DISC1_VEHICLE_REG' => 'VRM123',
+            'DISC1_EXPIRY_DATE' => '2014-10-03',
 
             'DISC2_TITLE' => 'XXXXXXXXXX',
             'DISC2_DISC_NO' => 'XXXXXXXXXX',
