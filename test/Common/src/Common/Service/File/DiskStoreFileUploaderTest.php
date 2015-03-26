@@ -30,6 +30,7 @@ class DiskStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->continue = copy($this->config['location'] . 'TestFile.txt', $this->config['location'] . 'TmpFile.txt');
+        $this->continue = copy($this->config['location'] . 'TestFile.html', $this->config['location'] . 'TmpFile.html');
 
         if (!$this->continue) {
             $this->markTestSkipped('Unable to test file system');
@@ -44,6 +45,10 @@ class DiskStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
     {
         if (file_exists($this->config['location'] . 'TmpFile.txt')) {
             unlink($this->config['location'] . 'TmpFile.txt');
+        }
+
+        if (file_exists($this->config['location'] . 'TmpFile.html')) {
+            unlink($this->config['location'] . 'TmpFile.html');
         }
     }
 
@@ -123,5 +128,110 @@ class DiskStoreFileUploaderTest extends \PHPUnit_Framework_TestCase
                 $this->config['location'] . 'TmpFile.txt'
             )
         );
+    }
+
+    public function testDownloadTextFile()
+    {
+        $data = array(
+            'name' => 'TestFile.txt',
+            'type' => 'text/plain',
+            'tmp_name' => $this->config['location'] . 'TmpFile.txt',
+            'size' => 123
+        );
+
+        $uploader = $this->getMock('\Common\Service\File\DiskStoreFileUploader', array('moveFile'));
+        $uploader->expects($this->once())
+            ->method('moveFile')
+            ->will(
+                $this->returnCallback(
+                    function ($oldPath, $newPath) {
+                        return rename($oldPath, $newPath);
+                    }
+                )
+            );
+
+        $uploader->setConfig($this->config);
+        $uploader->setFile($data);
+        $uploader->upload();
+
+        $id = $uploader->getFile()->getIdentifier();
+
+        $response = $uploader->download($id, $data['name']);
+        $this->assertInstanceOf('Zend\Http\Response\Stream', $response);
+        $headers = $response->getHeaders();
+
+        $this->assertTrue($headers->has('Content-Disposition'));
+
+        $uploader->remove($id);
+    }
+
+    public function testDownloadHtmlFile()
+    {
+        $data = array(
+            'name' => 'TestFile.html',
+            'type' => 'text/plain',
+            'tmp_name' => $this->config['location'] . 'TmpFile.html',
+            'size' => 123
+        );
+
+        $uploader = $this->getMock('\Common\Service\File\DiskStoreFileUploader', array('moveFile'));
+        $uploader->expects($this->once())
+            ->method('moveFile')
+            ->will(
+                $this->returnCallback(
+                    function ($oldPath, $newPath) {
+                        return rename($oldPath, $newPath);
+                    }
+                )
+            );
+
+        $uploader->setConfig($this->config);
+        $uploader->setFile($data);
+        $uploader->upload();
+
+        $id = $uploader->getFile()->getIdentifier();
+
+        $response = $uploader->download($id, $data['name']);
+        $this->assertInstanceOf('Zend\Http\Response\Stream', $response);
+        $headers = $response->getHeaders();
+
+        $this->assertFalse($headers->has('Content-Disposition'));
+
+        $uploader->remove($id);
+    }
+
+    public function testDownloadTextFileDownloadFalse()
+    {
+        $data = array(
+            'name' => 'TestFile.txt',
+            'type' => 'text/plain',
+            'tmp_name' => $this->config['location'] . 'TmpFile.txt',
+            'size' => 123
+        );
+
+        $uploader = $this->getMock('\Common\Service\File\DiskStoreFileUploader', array('moveFile'));
+        $uploader->expects($this->once())
+            ->method('moveFile')
+            ->will(
+                $this->returnCallback(
+                    function ($oldPath, $newPath) {
+                        return rename($oldPath, $newPath);
+                    }
+                )
+            );
+
+        $uploader->setConfig($this->config);
+        $uploader->setFile($data);
+        $uploader->upload();
+
+        $id = $uploader->getFile()->getIdentifier();
+
+        $response = $uploader->download($id, $data['name'], null, false);
+        $this->assertInstanceOf('Zend\Http\Response\Stream', $response);
+        $headers = $response->getHeaders();
+
+        $this->assertFalse($headers->has('Content-Disposition'));
+
+        $uploader->remove($id);
     }
 }

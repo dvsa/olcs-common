@@ -57,7 +57,7 @@ class DiskStoreFileUploader extends AbstractFileUploader
     /**
      * Download the file
      */
-    public function download($identifier, $name, $namespace = null)
+    public function download($identifier, $name, $namespace = null, $download = true)
     {
         $path = $this->getPath($identifier, $namespace);
 
@@ -74,17 +74,28 @@ class DiskStoreFileUploader extends AbstractFileUploader
         $response->setStreamName($name);
 
         $headers = new Headers();
+        $headersArray = [];
 
-        $headers->addHeaders(
-            array(
-                'Content-Disposition' => 'attachment; filename="' . $name . '"',
-                'Content-Type' => 'application/octet-stream',
-                'Content-Length' => filesize($path)
-            )
-        );
+        if ($download && $this->forceDownload($name)) {
+            $headersArray['Content-Disposition'] = 'attachment; filename="' . $name . '"';
+        }
+
+        $headersArray['Content-Type'] = 'application/octet-stream';
+        $headersArray['Content-Length'] = filesize($path);
+
+        $headers->addHeaders($headersArray);
 
         $response->setHeaders($headers);
         return $response;
+    }
+
+    protected function forceDownload($name)
+    {
+        if (preg_match('/\.html$/', $name)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

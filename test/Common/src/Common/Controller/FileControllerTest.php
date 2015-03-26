@@ -88,7 +88,7 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
 
     private function getMockParams()
     {
-        $mockParams = $this->getMock('\stdClass', array('fromRoute'));
+        $mockParams = $this->getMock('\stdClass', array('fromRoute', 'fromQuery'));
         $mockParams->expects($this->any())
             ->method('fromRoute')
             ->will(
@@ -96,6 +96,16 @@ class FileControllerTest extends \PHPUnit_Framework_TestCase
                     array(
                         array('file', $this->file),
                         array('name', $this->name)
+                    )
+                )
+            );
+
+        $mockParams->expects($this->any())
+            ->method('fromQuery')
+            ->will(
+                $this->returnValueMap(
+                    array(
+                        array('inline', false)
                     )
                 )
             );
