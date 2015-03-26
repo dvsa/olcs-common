@@ -666,6 +666,7 @@ return array(
     'apsts_refused' => 'W Refused',
     'apsts_valid' => 'W Valid',
     'apsts_withdrawn' => 'W Withdrawn',
+    'back-to-licence-overview' => 'W Back to licence overview',
     'both' => 'W Both',
     'built-by' => 'W Built by',
     'bus-compliance-issues' => 'W Bus compliance issues',

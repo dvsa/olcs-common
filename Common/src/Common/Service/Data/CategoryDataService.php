@@ -38,6 +38,7 @@ class CategoryDataService implements FactoryInterface, ServiceLocatorAwareInterf
 
     // @NOTE create constants for all sub categories as required. Only a subset
     // will ever be needed programatically so this list should be manageable
+    const TASK_SUB_CATEGORY_APPLICATION_ADDRESS_CHANGE_DIGITAL = 3;
     const TASK_SUB_CATEGORY_APPLICATION_GRANT_FEE_DUE = 11;
     const TASK_SUB_CATEGORY_APPLICATION_FORMS_ASSISTED_DIGITAL = 14;
     const TASK_SUB_CATEGORY_APPLICATION_FORMS_DIGITAL = 15;

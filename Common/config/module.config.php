@@ -92,15 +92,6 @@ return array(
             'LvaLicence/CommunityLicences' => array(
                 'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
-            'LvaApplication/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
-            ),
-            'LvaVariation/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
-            ),
-            'LvaLicence/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -562,6 +553,9 @@ return array(
             'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
             'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
             'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+            'lva-licence-addresses' => 'Common\FormService\Form\Lva\Addresses',
+            'lva-variation-addresses' => 'Common\FormService\Form\Lva\Addresses',
+            'lva-application-addresses' => 'Common\FormService\Form\Lva\Addresses',
         ]
     ],
     'business_rule_manager' => [
@@ -583,6 +577,12 @@ return array(
             'Lva\Task' => 'Common\BusinessService\Service\Lva\Task',
             'Lva\CompanySubsidiary' => 'Common\BusinessService\Service\Lva\CompanySubsidiary',
             'Lva\DeleteCompanySubsidiary' => 'Common\BusinessService\Service\Lva\DeleteCompanySubsidiary',
+            'Lva\LicenceAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\VariationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\ApplicationAddresses' => 'Common\BusinessService\Service\Lva\Addresses',
+            'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
+            'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
+            'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
         ]
     ],
 );

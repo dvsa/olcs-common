@@ -52,7 +52,7 @@ interface FileUploaderInterface extends ServiceLocatorAwareInterface
     /**
      * Process the file download
      */
-    public function download($identifier, $name, $namespace = null);
+    public function download($identifier, $name, $namespace = null, $download = true);
 
     /**
      * Process the file removal
