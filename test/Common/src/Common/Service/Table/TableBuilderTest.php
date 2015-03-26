@@ -1484,13 +1484,17 @@ class TableBuilderTest extends MockeryTestCase
             ->method('replaceContent')
             ->with('{{[elements/limitOption]}}', array('class' => '', 'option' => '30'));
 
-        $mockQuery = $this->getMock('\stdClass', array('toArray'));
-
-        $mockQuery->expects($this->any())
-            ->method('toArray')
-            ->will($this->returnValue(array('foo' => 'bar')));
+        //$mockQuery = $this->getMock('\stdClass', array('toArray'));
+        $mockQuery = [
+            'foo' => 'bar',
+            'page' => '1',
+            'limit' => '30'
+        ];
 
         $mockUrl = $this->getMock('\stdClass', array('fromRoute'));
+        $mockUrl->expects($this->any())
+            ->method('fromRoute')
+            ->will($this->returnValue('?' . http_build_query($mockQuery)));
 
         $table = $this->getMockTableBuilder(array('getContentHelper', 'getQuery', 'getUrl'));
 
