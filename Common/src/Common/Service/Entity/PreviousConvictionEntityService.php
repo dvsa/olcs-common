@@ -21,14 +21,20 @@ class PreviousConvictionEntityService extends AbstractEntityService
      */
     protected $entity = 'PreviousConviction';
 
+    protected $bundle = [
+        'children' => [
+            'title'
+        ]
+    ];
+
     public function getDataForApplication($applicationId)
     {
-        return $this->get(array('application' => $applicationId))['Results'];
+        return $this->get(array('application' => $applicationId), $this->bundle)['Results'];
     }
 
     public function getData($id)
     {
-        return $this->get($id);
+        return $this->get($id, $this->bundle);
     }
 
     /**
@@ -39,6 +45,6 @@ class PreviousConvictionEntityService extends AbstractEntityService
      */
     public function getDataForTransportManager($transportManagerId)
     {
-        return $this->get(array('transportManager' => $transportManagerId))['Results'];
+        return $this->get(array('transportManager' => $transportManagerId), $this->bundle)['Results'];
     }
 }

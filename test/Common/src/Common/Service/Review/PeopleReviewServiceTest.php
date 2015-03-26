@@ -86,7 +86,9 @@ class PeopleReviewServiceTest extends MockeryTestCase
                     'person' => [
                         'forename' => 'Bob',
                         'familyName' => 'Smith',
-                        'title' => 'Mr',
+                        'title' => [
+                            'description' => 'Mr'
+                        ],
                         'otherName' => 'Robert',
                         'birthDate' => '1989-08-23'
                     ]
@@ -126,7 +128,9 @@ class PeopleReviewServiceTest extends MockeryTestCase
                     'person' => [
                         'forename' => 'Bob',
                         'familyName' => 'Smith',
-                        'title' => 'Mr',
+                        'title' => [
+                            'description' => 'Mr'
+                        ],
                         'otherName' => 'Robert',
                         'birthDate' => '1989-08-23'
                     ]

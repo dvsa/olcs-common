@@ -164,7 +164,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'goodsOrPsv',
             'licenceType',
             'operatingCentres',
-            'previousConvictions',
+            'previousConvictions' => array(
+                'children' => array('title')
+            ),
             'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
@@ -462,7 +464,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'convictions_penalties' => [
                 'children' => [
-                    'previousConvictions'
+                    'previousConvictions' => [
+                        'children' => ['title']
+                    ]
                 ]
             ],
             'licence_history' => [
@@ -603,7 +607,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                     'type',
                                     'organisationPersons' => [
                                         'children' => [
-                                            'person'
+                                            'person' => [
+                                                'children' => ['title']
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -613,7 +619,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'applicationOrganisationPersons' => [
                         'children' => [
                             'originalPerson',
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]
@@ -651,7 +659,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'applicationOrganisationPersons' => [
                         'children' => [
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]

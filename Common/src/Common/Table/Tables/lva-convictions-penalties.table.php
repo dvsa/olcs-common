@@ -18,7 +18,7 @@ return array(
     'columns' => array(
         array(
             'title' => 'selfserve-app-subSection-previous-history-criminal-conviction-columnName',
-            'value_format' => '{{title}} {{forename}} {{familyName}}',
+            'formatter' => 'Name',
             'type' => 'Action',
             'action' => 'edit'
         ),
