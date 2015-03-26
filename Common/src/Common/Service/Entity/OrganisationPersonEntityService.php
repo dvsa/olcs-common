@@ -33,7 +33,11 @@ class OrganisationPersonEntityService extends AbstractEntityService
      */
     private $peopleBundle = array(
         'children' => array(
-            'person'
+            'person' => array(
+                'children' => array(
+                    'title'
+                )
+            )
         )
     );
 
