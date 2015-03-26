@@ -29,7 +29,8 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     {
         $this->helper = $this->getServiceLocator()->get('Review\ConditionsUndertakings');
 
-        list($licConds, $licUnds, $ocConds, $ocUnds) = $this->helper->splitUpConditionsAndUndertakings($data);
+        list($licConds, $licUnds, $ocConds, $ocUnds) = $this->helper
+            ->splitUpConditionsAndUndertakings($data, false);
 
         $subSections = array_merge(
             [],
@@ -44,14 +45,14 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     {
         $subSections = [];
 
-        if (!empty($licConds[''])) {
+        if (!empty($licConds['list'])) {
             $subSections[] = $this->helper
-                ->formatLicenceSubSection($licConds[''], 'application', 'conditions', 'added');
+                ->formatLicenceSubSection($licConds['list'], 'application', 'conditions', 'added');
         }
 
-        if (!empty($licUnds[''])) {
+        if (!empty($licUnds['list'])) {
             $subSections[] = $this->helper
-                ->formatLicenceSubSection($licUnds[''], 'application', 'undertakings', 'added');
+                ->formatLicenceSubSection($licUnds['list'], 'application', 'undertakings', 'added');
         }
 
         return $subSections;
@@ -61,12 +62,12 @@ class LicenceConditionsUndertakingsReviewService extends AbstractReviewService
     {
         $subSections = [];
 
-        if (!empty($ocConds[''])) {
-            $subSections[] = $this->helper->formatOcSubSection($ocConds[''], 'application', 'conditions', 'added');
+        if (!empty($ocConds['list'])) {
+            $subSections[] = $this->helper->formatOcSubSection($ocConds['list'], 'application', 'conditions', 'added');
         }
 
-        if (!empty($ocUnds[''])) {
-            $subSections[] = $this->helper->formatOcSubSection($ocUnds[''], 'application', 'undertakings', 'added');
+        if (!empty($ocUnds['list'])) {
+            $subSections[] = $this->helper->formatOcSubSection($ocUnds['list'], 'application', 'undertakings', 'added');
         }
 
         return $subSections;

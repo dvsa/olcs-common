@@ -36,22 +36,22 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
         // Params
         $data = [
             [
-                '' => [
+                'list' => [
                     'foo' => 'bar1'
                 ]
             ],
             [
-                '' => [
+                'list' => [
                     'foo' => 'bar2'
                 ]
             ],
             [
-                '' => [
+                'list' => [
                     'foo' => 'bar3'
                 ]
             ],
             [
-                '' => [
+                'list' => [
                     'foo' => 'bar4'
                 ]
             ]
@@ -75,7 +75,7 @@ class LicenceConditionsUndertakingsReviewServiceTest extends MockeryTestCase
 
         // Expectations
         $mockConditionsUndertakings->shouldReceive('splitUpConditionsAndUndertakings')
-            ->with($inputData)
+            ->with($inputData, false)
             ->andReturn($data)
             ->shouldReceive('formatLicenceSubSection')
             ->with(['foo' => 'bar1'], 'application', 'conditions', 'added')
