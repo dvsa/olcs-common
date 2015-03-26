@@ -18,14 +18,18 @@ abstract class AbstractStandardConditions extends DynamicBookmark
      */
     const PREFORMATTED = true;
 
+    const SERVICE = 'Licence';
+
+    const DATA_KEY = 'licence';
+
     protected $prefix = '';
 
     public function getQuery(array $data)
     {
         $query = [
-            'service' => 'Licence',
+            'service' => static::SERVICE,
             'data' => [
-                'id' => $data['licence']
+                'id' => $data[static::DATA_KEY]
             ],
             'bundle' => [
                 'children' => [

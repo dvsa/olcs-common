@@ -87,12 +87,12 @@ class BusReg extends Generic
     }
 
     /**
-     * Fetches variation history from busReg table by route number
+     * Fetches variation history from busReg table by reg number
      *
-     * @param int $routeNo
+     * @param string $regNo
      * @return array
      */
-    public function fetchVariationHistory($routeNo)
+    public function fetchVariationHistory($regNo)
     {
         $variationBundle = [
             'children' => [
@@ -100,7 +100,7 @@ class BusReg extends Generic
             ]
         ];
 
-        $params['routeNo'] = $routeNo;
+        $params['regNo'] = $regNo;
         $params['sort'] = 'variationNo';
         $params['order'] = 'DESC';
 

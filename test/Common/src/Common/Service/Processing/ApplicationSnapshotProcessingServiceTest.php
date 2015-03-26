@@ -64,6 +64,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
         $mockControllerPluginManager = m::mock();
         $mockApplication = m::mock();
         $mockMvcEvent = m::mock();
+        $mockRouteMatch = m::mock();
         $mockAdapter = m::mock();
         $mockControllerManager = m::mock();
         $mockController = m::mock();
@@ -97,6 +98,13 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
 
         $mockApplication->shouldReceive('getMvcEvent')
             ->andReturn($mockMvcEvent);
+
+        $mockMvcEvent->shouldReceive('getRouteMatch')
+            ->andReturn($mockRouteMatch);
+
+        $mockRouteMatch->shouldReceive('getParam')
+            ->with('application')
+            ->andReturn($applicationId);
 
         $mockControllerManager->shouldReceive('get')
             ->with('LvaApplication/Review')
@@ -164,6 +172,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
         $mockControllerPluginManager = m::mock();
         $mockApplication = m::mock();
         $mockMvcEvent = m::mock();
+        $mockRouteMatch = m::mock();
         $mockAdapter = m::mock();
         $mockControllerManager = m::mock();
         $mockController = m::mock();
@@ -197,6 +206,16 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
 
         $mockApplication->shouldReceive('getMvcEvent')
             ->andReturn($mockMvcEvent);
+
+        $mockMvcEvent->shouldReceive('getRouteMatch')
+            ->andReturn($mockRouteMatch);
+
+        $mockRouteMatch
+            ->shouldReceive('getParam')
+                ->with('application')
+                ->andReturn(null)
+            ->shouldReceive('setParam')
+                ->with('application', $applicationId);
 
         $mockControllerManager->shouldReceive('get')
             ->with('LvaApplication/Review')
@@ -264,6 +283,7 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
         $mockControllerPluginManager = m::mock();
         $mockApplication = m::mock();
         $mockMvcEvent = m::mock();
+        $mockRouteMatch = m::mock();
         $mockAdapter = m::mock();
         $mockControllerManager = m::mock();
         $mockController = m::mock();
@@ -299,6 +319,13 @@ class ApplicationSnapshotProcessingServiceTest extends MockeryTestCase
 
         $mockApplication->shouldReceive('getMvcEvent')
             ->andReturn($mockMvcEvent);
+
+        $mockMvcEvent->shouldReceive('getRouteMatch')
+            ->andReturn($mockRouteMatch);
+
+        $mockRouteMatch->shouldReceive('getParam')
+            ->with('application')
+            ->andReturn($applicationId);
 
         $mockControllerManager->shouldReceive('get')
             ->with('LvaVariation/Review')

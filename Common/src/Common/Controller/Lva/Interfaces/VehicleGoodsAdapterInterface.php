@@ -47,4 +47,13 @@ interface VehicleGoodsAdapterInterface extends AdapterInterface, VehiclesAdapter
      * @return array
      */
     public function maybeUnsetSpecifiedDate($data);
+
+    /**
+     * Don't create an empty option in edit mode for specified date
+     *
+     * @param Zend\Form\Form $form
+     * @param string $mode
+     * @return Zend\Form\Form
+     */
+    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode);
 }

@@ -18,12 +18,12 @@ OLCS.ready(function() {
     return function (length, callback, selectedInputs) {
 
       if (length < 1 || length > maxLength) {
-        return callback(true);
+        return callback(false);
       }
 
       var action = $(selectedInputs[0]).data("status");
 
-      callback($.inArray(action, allowedStatuses) === -1);
+      callback($.inArray(action, allowedStatuses) !== -1);
     };
   }
 
@@ -31,7 +31,7 @@ OLCS.ready(function() {
     container: tableSelector,
     label: "Void",
     predicate: function(length, callback) {
-      callback(length < 1);
+      callback(length >= 1);
     }
   });
 

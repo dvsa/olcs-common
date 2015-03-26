@@ -64,4 +64,26 @@ class ApplicationOperatingCentreEntityServiceTest extends AbstractEntityServiceT
 
         $this->assertEquals('RESPONSE', $this->sut->getByApplicationAndOperatingCentre($id, $ocId));
     }
+
+    public function testClearInterims()
+    {
+        $data = [
+            [
+                'id' => 1,
+                'isInterim' => false,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            [
+                'id' => 2,
+                'isInterim' => false,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            '_OPTIONS_' => [
+                'multiple' => true
+            ]
+        ];
+        $this->expectOneRestCall('ApplicationOperatingCentre', 'PUT', $data);
+
+        $this->sut->clearInterims([1, 2]);
+    }
 }

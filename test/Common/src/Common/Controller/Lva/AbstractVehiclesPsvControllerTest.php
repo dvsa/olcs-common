@@ -314,6 +314,9 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 m::mock()
                 ->shouldReceive('maybeDisableRemovedAndSpecifiedDates')
                 ->with($form, $this->getMockFormHelper())
+                ->shouldReceive('maybeRemoveSpecifiedDateEmptyOption')
+                ->with($form, 'add')
+                ->andReturn($form)
                 ->getMock()
             );
 
@@ -404,6 +407,9 @@ class AbstractVehiclesPsvControllerTest extends AbstractLvaControllerTestCase
                 m::mock()
                 ->shouldReceive('maybeDisableRemovedAndSpecifiedDates')
                 ->with($form, $this->getMockFormHelper())
+                ->shouldReceive('maybeRemoveSpecifiedDateEmptyOption')
+                ->with($form, 'add')
+                ->andReturn($form)
                 ->getMock()
             );
 

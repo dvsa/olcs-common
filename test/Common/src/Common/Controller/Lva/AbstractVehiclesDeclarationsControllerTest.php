@@ -41,10 +41,6 @@ class AbstractVehiclesDeclarationsControllerTest extends AbstractLvaControllerTe
                         'psvOperateSmallVhl' => 'x',
                         'psvSmallVhlNotes' => '',
                         'psvSmallVhlConfirmation' => 'y',
-                        'psvSmallVhlUndertakings' =>
-                            'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text',
-                        'psvSmallVhlScotland' =>
-                            'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
                     ],
                     'nineOrMore' => [
                         'psvNoSmallVhlConfirmation' => 'y',

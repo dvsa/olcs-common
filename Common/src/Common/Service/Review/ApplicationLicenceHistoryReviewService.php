@@ -8,7 +8,7 @@
 
 namespace Common\Service\Review;
 
-use Common\Service\Entity\PreviousLicenceEntityService;
+use Common\Service\Entity\OtherLicenceEntityService;
 
 /**
  * Application Licence History Review Service
@@ -28,36 +28,36 @@ class ApplicationLicenceHistoryReviewService extends AbstractReviewService
     {
         $mainItems = [];
 
-        $previousLicences = $this->splitLicencesUp($data['previousLicences']);
+        $previousLicences = $this->splitLicencesUp($data['otherLicences']);
 
         $mainItems[] = $this->formatCurrentLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_CURRENT], $data['prevHasLicence']
+            $previousLicences[OtherLicenceEntityService::TYPE_CURRENT], $data['prevHasLicence']
         );
 
         $mainItems[] = $this->formatLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_APPLIED], $data['prevHadLicence'], 'applied'
+            $previousLicences[OtherLicenceEntityService::TYPE_APPLIED], $data['prevHadLicence'], 'applied'
         );
 
         $mainItems[] = $this->formatLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_REFUSED], $data['prevBeenRefused'], 'refused'
+            $previousLicences[OtherLicenceEntityService::TYPE_REFUSED], $data['prevBeenRefused'], 'refused'
         );
 
         $mainItems[] = $this->formatLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_REVOKED], $data['prevBeenRevoked'], 'revoked'
+            $previousLicences[OtherLicenceEntityService::TYPE_REVOKED], $data['prevBeenRevoked'], 'revoked'
         );
 
         $mainItems[] = $this->formatLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_PUBLIC_INQUIRY],
+            $previousLicences[OtherLicenceEntityService::TYPE_PUBLIC_INQUIRY],
             $data['prevBeenAtPi'],
             'public-inquiry'
         );
 
         $mainItems[] = $this->formatDisqualifiedLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_DISQUALIFIED], $data['prevBeenDisqualifiedTc']
+            $previousLicences[OtherLicenceEntityService::TYPE_DISQUALIFIED], $data['prevBeenDisqualifiedTc']
         );
 
         $mainItems[] = $this->formatHeldLicences(
-            $previousLicences[PreviousLicenceEntityService::TYPE_HELD], $data['prevPurchasedAssets']
+            $previousLicences[OtherLicenceEntityService::TYPE_HELD], $data['prevPurchasedAssets']
         );
 
         return [
@@ -72,13 +72,13 @@ class ApplicationLicenceHistoryReviewService extends AbstractReviewService
     private function splitLicencesUp($previousLicences)
     {
         $previousLicenceList = [
-            PreviousLicenceEntityService::TYPE_CURRENT => [],
-            PreviousLicenceEntityService::TYPE_APPLIED => [],
-            PreviousLicenceEntityService::TYPE_REFUSED => [],
-            PreviousLicenceEntityService::TYPE_REVOKED => [],
-            PreviousLicenceEntityService::TYPE_PUBLIC_INQUIRY => [],
-            PreviousLicenceEntityService::TYPE_DISQUALIFIED => [],
-            PreviousLicenceEntityService::TYPE_HELD => []
+            OtherLicenceEntityService::TYPE_CURRENT => [],
+            OtherLicenceEntityService::TYPE_APPLIED => [],
+            OtherLicenceEntityService::TYPE_REFUSED => [],
+            OtherLicenceEntityService::TYPE_REVOKED => [],
+            OtherLicenceEntityService::TYPE_PUBLIC_INQUIRY => [],
+            OtherLicenceEntityService::TYPE_DISQUALIFIED => [],
+            OtherLicenceEntityService::TYPE_HELD => []
         ];
 
         foreach (array_keys($previousLicenceList) as $type) {

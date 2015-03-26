@@ -45,7 +45,7 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
             $data = $this->getFormData();
         }
 
-        $form = $this->getForm()->setData($this->formatTextareas($data));
+        $form = $this->getForm()->setData($data);
 
         $this->alterForm($form);
 
@@ -83,20 +83,6 @@ abstract class AbstractVehiclesDeclarationsController extends AbstractController
         }
 
         return $this->data;
-    }
-
-    protected function formatTextareas($data)
-    {
-        $translator = $this->getServiceLocator()->get('Helper\Translation');
-
-        $data['smallVehiclesIntention']['psvSmallVhlUndertakings'] = $translator->translate(
-            'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text'
-        );
-        $data['smallVehiclesIntention']['psvSmallVhlScotland'] = $translator->translate(
-            'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text'
-        );
-
-        return $data;
     }
 
     /**

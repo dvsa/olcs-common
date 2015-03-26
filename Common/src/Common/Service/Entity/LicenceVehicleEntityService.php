@@ -28,16 +28,10 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
-    protected $ceaseActiveDiscBundle = array(
-        'children' => array(
-            'goodsDiscs'
-        )
-    );
-
     /**
      * Disc pending bundle
      */
-    protected $discPendingBundle = array(
+    protected $discBundle = array(
         'children' => array(
             'goodsDiscs'
         )
@@ -100,7 +94,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
      */
     public function ceaseActiveDisc($id)
     {
-        $results = $this->get($id, $this->ceaseActiveDiscBundle);
+        $results = $this->get($id, $this->discBundle);
 
         if (empty($results['goodsDiscs'])) {
             return;
@@ -117,7 +111,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
     public function getDiscPendingData($id)
     {
-        return $this->get($id, $this->discPendingBundle);
+        return $this->get($id, $this->discBundle);
     }
 
     public function getVrm($id)
@@ -154,5 +148,66 @@ class LicenceVehicleEntityService extends AbstractEntityService
         $results = $this->getAll($query);
 
         return $results['Results'];
+    }
+
+    /**
+     * Fetch all results against a licence which are valid and NOT related
+     * to the given application
+     */
+    public function getExistingForLicence($licenceId, $applicationId)
+    {
+        $query = [
+            'licence' => $licenceId,
+            'specifiedDate' => 'NOT NULL',
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => '!= ' . $applicationId
+        ];
+
+        $results = $this->getAll($query, $this->discBundle);
+
+        return $results['Results'];
+    }
+
+    /**
+     * Fetch all results related to the given application
+     */
+    public function getExistingForApplication($applicationId)
+    {
+        $query = [
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => $applicationId
+        ];
+
+        $results = $this->getAll($query, $this->discBundle);
+
+        return $results['Results'];
+    }
+
+    public function removeVehicles(array $ids = array())
+    {
+        $removalDate = $this->getServiceLocator()->get('Helper\Date')->getDate();
+        $data = [];
+
+        foreach ($ids as $id) {
+            $data[] = [
+                'id' => $id,
+                'removalDate' => $removalDate,
+                '_OPTIONS_' => ['force' => true]
+            ];
+        }
+
+        return $this->multiUpdate($data);
+    }
+
+    public function removeForApplication($applicationId)
+    {
+        $licenceVehicles = $this->getExistingForApplication($applicationId);
+        $ids = [];
+        foreach ($licenceVehicles as $lv) {
+            $ids[] = $lv['id'];
+        }
+        return $this->removeVehicles($ids);
     }
 }

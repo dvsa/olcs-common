@@ -8,6 +8,8 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\LicenceVehicleEntityService;
+use CommonTest\Bootstrap;
+use Mockery as m;
 
 /**
  * LicenceVehicle Entity Service Test
@@ -239,5 +241,134 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
             ->will($this->returnValue($response));
 
         $this->assertEquals('RESPONSE', $this->sut->getForApplicationValidation($id, $applicationId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testExistingForLicence()
+    {
+        $id = 3;
+        $applicationId = 8;
+
+        $query = array(
+            'licence' => $id,
+            'specifiedDate' => 'NOT NULL',
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => '!= ' . $applicationId,
+            'limit' => 'all'
+        );
+
+        $response = array(
+            'Results' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('LicenceVehicle', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getExistingForLicence($id, $applicationId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testGetExistingForApplication()
+    {
+        $applicationId = 69;
+
+        $query = array(
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => $applicationId,
+            'limit' => 'all'
+        );
+
+        $response = array(
+            'Results' => 'RESPONSE'
+        );
+
+        $this->expectOneRestCall('LicenceVehicle', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $this->assertEquals('RESPONSE', $this->sut->getExistingForApplication($applicationId));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testRemoveVehicles()
+    {
+        $ids = [1, 2];
+        $date = '2015-03-24';
+
+        $this->mockDate($date);
+
+        $expectedData = [
+            0 => [
+                'id' => 1,
+                'removalDate' => $date,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            1 => [
+                'id' => 2,
+                'removalDate' => $date,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            '_OPTIONS_' => ['multiple' => true],
+        ];
+
+        $this->expectOneRestCall('LicenceVehicle', 'PUT', $expectedData)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->removeVehicles($ids));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testRemoveForApplication()
+    {
+
+        $applicationId = 69;
+        $date = '2015-03-24';
+
+        $this->mockDate($date);
+
+        $query = array(
+            'removalDate' => 'NULL',
+            'interimApplication' => 'NULL',
+            'application' => $applicationId,
+            'limit' => 'all'
+        );
+        $response = array(
+            'Results' => [
+                ['id' => 1],
+                ['id' => 2],
+            ]
+        );
+
+        $this->expectedRestCallInOrder('LicenceVehicle', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $ids = [1, 2];
+        $expectedData = [
+            0 => [
+                'id' => 1,
+                'removalDate' => $date,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            1 => [
+                'id' => 2,
+                'removalDate' => $date,
+                '_OPTIONS_' => ['force' => true],
+            ],
+            '_OPTIONS_' => ['multiple' => true],
+        ];
+
+        $this->expectedRestCallInOrder('LicenceVehicle', 'PUT', $expectedData)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->removeForApplication($applicationId));
     }
 }

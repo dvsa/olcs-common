@@ -92,8 +92,11 @@ return array(
     'application-granted-successfully' => 'The application has been granted',
     'application-no-access' => 'You do not have access to this application',
     'application-not-granted' => 'The application has not been granted',
+    'application-not-ntu' => 'The application has not been marked \'Not taken up\'',
     'application-not-refused' => 'The application has not been refused',
+    'application-not-undo-ntu' => 'The application status has not been set to Granted',
     'application-not-withdrawn' => 'The application has not been withdrawn',
+    'application-ntu-successfully' => 'The application has been marked \'Not taken up\'',
     'application-refused-successfully' => 'Application %s has been refused',
     'application-review-addresses-contact-details-title' => 'Contact details',
     'application-review-addresses-correspondence-address' => 'Correspondence Address',
@@ -117,6 +120,10 @@ return array(
     'application-review-business-details-subsidiary-company-no' => 'Company number',
     'application-review-business-details-trading-names' => 'Trading names',
     'application-review-business-type' => 'What type of business are you?',
+    'application-review-conditions-undertakings-licence-conditions-added' => 'Licence conditions',
+    'application-review-conditions-undertakings-licence-undertakings-added' => 'Licence undertakings',
+    'application-review-conditions-undertakings-oc-conditions-added' => 'Operating centre conditions',
+    'application-review-conditions-undertakings-oc-undertakings-added' => 'Operating centre undertakings',
     'application-review-convictions-penalties-confirmation' => 'Confirm that you are aware that you must tell the
         traffic commissioner immediately of any relevant convictions that occur between the submission of your
         application and a decision being made on this application',
@@ -228,6 +235,31 @@ return array(
     'application-review-type-of-licence-licence-type' => 'What type of licence do you want to apply for?',
     'application-review-type-of-licence-operator-location' => 'Where do you operate from?',
     'application-review-type-of-licence-operator-type' => 'What type of operator are you?',
+    'application-review-vehicles-declarations-15b1' => 'Do you intend to operate small vehicles as a small part of a
+        large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of
+        the Transport Act 2000)?',
+    'application-review-vehicles-declarations-15b2' => 'Give details of how you will comply with the \'small part of the
+        business\' requirements',
+    'application-review-vehicles-declarations-15cd' => 'Confirm that you agree to the below conditions and undertakings
+        being specified on your licence (if granted) ',
+    'application-review-vehicles-declarations-15e' => 'Vehicles with eight passenger seats or less will not be operated
+        under the licence without the prior written agreement of the traffic commissioner who may require you to agree
+        to certain undertakings',
+    'application-review-vehicles-declarations-15f1' => 'Are the vehicles you are applying for to be used as Limousines
+        or novelty type vehicles?',
+    'application-review-vehicles-declarations-15f2' => 'Limousines and novelty type vehicles are not to be operated
+        under this operator\'s licence',
+    'application-review-vehicles-declarations-15g' => 'Only limousines and novelty type vehicles with nine passenger
+        seats or more and issued with a valid Certificate will be used under the licence',
+    'application-review-vehicles-declarations-8b1' => 'You are fully aware of, and will comply with, the restrictions
+        under the terms of the restricted licence for the use of vehicles with between nine and sixteen passenger
+        seats',
+    'application-review-vehicles-declarations-8b2' => 'Details below of your business or main occupation and how you
+        will comply with these restrictions',
+    'application-review-vehicles-declarations-business-title' => 'Business or main occupation',
+    'application-review-vehicles-declarations-medium-title' => 'Vehicles with nine or more passengers',
+    'application-review-vehicles-declarations-novelty-title' => 'Limousines and novelty vehicles',
+    'application-review-vehicles-declarations-small-title' => 'Small vehicle undertakings',
     'application-review-vehicles-hasEnteredReg' => 'Vehicle details submitted?',
     'application-review-vehicles-is-novelty' => 'Limousine or novelty vehicle',
     'application-review-vehicles-make' => 'Make / model',
@@ -239,6 +271,7 @@ return array(
     'application-search-person-header-partner' => 'Add new partner',
     'application-search-person-header-person' => 'Add new responsible person',
     'application-search-subsidiary-header' => 'Subsidiary Company',
+    'application-undo-ntu-successfully' => 'The application status has been set to Granted',
     'application-update-person-header-director' => 'Edit Director',
     'application-update-sole-trader' => 'Edit sole trader',
     'application-withdrawn-successfully' => 'Application %s has been withdrawn',
@@ -523,37 +556,7 @@ return array(
         amended by Section 265 of the Transport Act 2000)?',
     'application_vehicle-safety_undertakings.smallVehiclesIntentionDetails.title' => 'Give details of how you will
         comply with the \'small part of the business\' requirements (if applicable)',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakings.text' => '(a) The operator will advise the
-        traffic commissioner of the make, model and registration number of vehicles used under that licence, and will
-        advise of any changes. (b) In respect of any vehicle with eight or less passengers seats used under the licence,
-        the operator will provide an audit trail to the traffic commissioner or any enforcement body on request, that
-        demonstrates compliance with PSV requirements. This includes paperwork as to how in respect of any service
-        separate fares were paid and one of the two conditions set out in Question 1 were met. Note this undertaking
-        does not apply when the vehicle is being used under the provisions of Section 79A. (c) Each small vehicle to be
-        used under the licence will have a V5C registration certificate, and the operator must possess and produce, when
-        asked to do so, a document confirming this. (d) Each small vehicle will receive a full safety inspection
-        (maximum every 10 weeks) in premises suitable for the vehicle to ensure that its roadworthiness is maintained.
-        Records of all inspections must be kept in accordance with the Guide to Maintaining Roadworthiness. (e) At no
-        time will the small vehicle carry more than eight passengers. (f) The operator will at all times comply with the
-        legislation in respect of the charging of separate fares and retain 12 months’ evidence of this compliance for
-        each journey. (g) Drivers of small vehicles will carry with them documentary evidence that separate fares have
-        been charged for the current journey. (h) The operator will not use a vehicle that does not meet the ECWVTA
-        standards, British construction and use requirements or the Road Vehicles Approval Regulations 2009 (as
-        amended). (i) The operator or driver will not break the alcohol laws.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakings.title' => 'Small vehicles undertakings',
-    'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.text' => 'Condition 1: The passengers
-        must have been brought together for the purposes of making the journey by the driver or owner of the vehicle or
-        by some other intermediary who is paid for. In addition each journey must have been advertised to the public, so
-        as to create a genuine opportunity for members of the public to be carried on the particular journey in
-        question, i.e. the journey is not an exclusive hiring for an individual or group, notwithstanding that separate
-        fares are paid. Advertisement at a place of worship, a place of work, a club or other voluntary association for
-        the information of people present at those places, or in periodicals circulated wholly or mainly among such
-        persons, does not count as advertisement to the general public. Finally, in the event that there are multiple
-        destinations, there should be differentiation of fares for the journey based on distance or time. Condition 2:
-        The making of the agreement for the payment of separate fares must have been initiated by the driver or owner of
-        the vehicle, or by some other intermediary who is paid for doing so – not by the passengers themselves, or any
-        other party. In addition, as in condition 1, each journey must be advertised to the public beforehand as being
-        open to passengers to be carried at separate fares.',
     'application_vehicle-safety_undertakings.smallVehiclesUndertakingsScotland.title' => 'Scottish operators and English
         and Welsh operators not claiming the exemption under 79A of the Public Passenger Vehicles Act 1981',
     'application_vehicle-safety_vehicle-delete' => 'Remove vehicle(s)',
@@ -767,8 +770,7 @@ return array(
     'created-on' => 'Created on',
     'credit-debit-card' => 'Credit /Debit card',
     'crown-copyright' => 'Crown Copyright',
-    'internal-crud-event-history' => 'Event History',
-    'crud-event-history-title' => 'Event History',
+    'crud-event-history-title' => 'History',
     'crud-financial-standing-delete-message' => 'Are you sure you want to remove the selected financial standing
         rate(s)?',
     'crud-financial-standing-delete-title' => 'Remove financial standing rate(s)',
@@ -924,6 +926,8 @@ return array(
     'interim.application.undertakings.form.textarea.placeholder' => 'Enter the reason you are requesting an interim
         authority.',
     'internal' => 'Internal',
+    'internal-application-ntu-confirm' => 'Are you sure you want to set this application to Not taken up?',
+    'internal-application-ntu-title' => 'Not taken up',
     'internal-application-processing' => 'Processing',
     'internal-application-processing-notes' => 'Notes',
     'internal-application-processing-notes-add' => 'Add note',
@@ -943,7 +947,10 @@ return array(
     'internal-application-processing-tasks-title' => 'Tasks',
     'internal-application-refuse-confirm' => 'Are you sure you want to refuse this application?',
     'internal-application-refuse-title' => 'Refuse application',
+    'internal-application-undo-ntu-confirm' => 'Are you sure you want to set this application back to granted?',
+    'internal-application-undo-ntu-title' => 'Reset to granted ',
     'internal-application-withdraw-title' => 'Withdraw application',
+    'internal-crud-event-history' => 'History',
     'internal-external' => 'Internal/External',
     'internal-licence-bus' => 'Bus registration',
     'internal-licence-bus-details' => 'Service details',
@@ -1077,6 +1084,7 @@ return array(
     'internal-licence-register-service' => 'Register service',
     'internal-navigation-operator' => 'Operator',
     'internal-navigation-operator-business_details' => 'Business details',
+    'internal-navigation-operator-history' => 'History',
     'internal-navigation-operator-licences_applications' => 'Licences & Applications',
     'internal-navigation-operator-people' => 'People',
     'internal-navigation-operator-profile' => 'Operator profile',
@@ -1160,8 +1168,11 @@ return array(
     'internal.interim.form.interim_requested' => 'Interim requested',
     'internal.interim.form.interim_save' => 'Save',
     'internal.interim.form.interim_start' => 'Interim start date',
+    'internal.interim.form.interim_status' => 'Interim status',
     'internal.interim.form.refuse_confirm' => 'Are you sure you want to refuse this interim?',
+    'internal.interim.generation_success' => 'The interim document has been generated',
     'internal.interim.interim_details_saved' => 'Interim details saved',
+    'internal.interim.interim_updated' => 'Interim updated',
     'internal.interim.operatingcentres.table.address' => 'Operating centre address',
     'internal.interim.operatingcentres.table.header' => 'Operating centres',
     'internal.interim.operatingcentres.table.listed' => 'Listed',
@@ -1260,6 +1271,9 @@ return array(
     'licence-number-status' => 'Lic # / Status',
     'licence-start-date' => 'Licence start date',
     'licence-status' => 'Licence status',
+    'licence-status.curtailment.from' => 'Curtail from',
+    'licence-status.curtailment.immediate-affect' => 'Affect now',
+    'licence-status.curtailment.to' => 'Curtail to',
     'licence-type' => 'Licence type',
     'licence-type-lock-message' => 'You cannot change the licence type',
     'licence-valid-confirmation' => 'The licence is now valid',
@@ -2075,6 +2089,18 @@ return array(
     'variation-review-addresses-change' => 'Thank you for updating your addresses',
     'variation-review-business-details-change' => 'Thank you for updating your business details',
     'variation-review-business-type-change' => 'Thank you for updating your business type',
+    'variation-review-conditions-undertakings-licence-conditions-added' => 'Licence conditions added',
+    'variation-review-conditions-undertakings-licence-conditions-deleted' => 'Licence conditions deleted',
+    'variation-review-conditions-undertakings-licence-conditions-updated' => 'Licence conditions updated',
+    'variation-review-conditions-undertakings-licence-undertakings-added' => 'Licence undertakings added',
+    'variation-review-conditions-undertakings-licence-undertakings-deleted' => 'Licence undertakings deleted',
+    'variation-review-conditions-undertakings-licence-undertakings-updated' => 'Licence undertakings updated',
+    'variation-review-conditions-undertakings-oc-conditions-added' => 'Operating centre conditions added',
+    'variation-review-conditions-undertakings-oc-conditions-deleted' => 'Operating centre conditions deleted',
+    'variation-review-conditions-undertakings-oc-conditions-updated' => 'Operating centre conditions updated',
+    'variation-review-conditions-undertakings-oc-undertakings-added' => 'Operating centre undertakings added',
+    'variation-review-conditions-undertakings-oc-undertakings-deleted' => 'Operating centre undertakings deleted',
+    'variation-review-conditions-undertakings-oc-undertakings-updated' => 'Operating centre undertakings updated',
     'variation-review-discs-change' => 'Thank you for updating your vehicle discs',
     'variation-review-operating-centres-added-title' => 'New operating centres',
     'variation-review-operating-centres-deleted-title' => 'Removed operating centres',

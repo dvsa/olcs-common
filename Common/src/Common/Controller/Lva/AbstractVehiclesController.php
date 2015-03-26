@@ -224,6 +224,7 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         $dataFieldset = $form->get('licence-vehicle');
 
         $this->getAdapter()->maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
+        $this->getAdapter()->maybeRemoveSpecifiedDateEmptyOption($form, $mode);
 
         $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
 

@@ -316,7 +316,10 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testChangedNatureOfBusinessWithNoDiffs()
     {
         $existing = [
-            'foo', 'bar'
+            'natureOfBusinesses' => [
+                ['id' => 'foo'],
+                ['id' => 'bar']
+            ]
         ];
 
         $updated = [
@@ -325,14 +328,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $id = 1;
 
-        $this->sm->setService(
-            'Entity\OrganisationNatureOfBusiness',
-            m::mock()
-            ->shouldReceive('getAllForOrganisationForSelect')
-            ->with($id)
-            ->andReturn($existing)
-            ->getMock()
-        );
+        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
+            ->will($this->returnValue($existing));
 
         $this->assertFalse($this->sut->hasChangedNatureOfBusiness($id, $updated));
     }
@@ -340,7 +337,10 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testChangedNatureOfBusinessWithDifferentValues()
     {
         $existing = [
-            'foo', 'baz'
+            'natureOfBusinesses' => [
+                ['id' => 'foo'],
+                ['id' => 'baz']
+            ]
         ];
 
         $updated = [
@@ -349,14 +349,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $id = 1;
 
-        $this->sm->setService(
-            'Entity\OrganisationNatureOfBusiness',
-            m::mock()
-            ->shouldReceive('getAllForOrganisationForSelect')
-            ->with($id)
-            ->andReturn($existing)
-            ->getMock()
-        );
+        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
+            ->will($this->returnValue($existing));
 
         $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
     }
@@ -364,7 +358,10 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testChangedNatureOfBusinessWithAdded()
     {
         $existing = [
-            'foo', 'bar'
+            'natureOfBusinesses' => [
+                ['id' => 'foo'],
+                ['id' => 'bar']
+            ]
         ];
 
         $updated = [
@@ -373,14 +370,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $id = 1;
 
-        $this->sm->setService(
-            'Entity\OrganisationNatureOfBusiness',
-            m::mock()
-            ->shouldReceive('getAllForOrganisationForSelect')
-            ->with($id)
-            ->andReturn($existing)
-            ->getMock()
-        );
+        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
+            ->will($this->returnValue($existing));
 
         $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
     }
@@ -388,7 +379,11 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
     public function testChangedNatureOfBusinessWithRemoved()
     {
         $existing = [
-            'foo', 'bar', 'baz'
+            'natureOfBusinesses' => [
+                ['id' => 'foo'],
+                ['id' => 'bar'],
+                ['id' => 'baz']
+            ]
         ];
 
         $updated = [
@@ -397,14 +392,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
         $id = 1;
 
-        $this->sm->setService(
-            'Entity\OrganisationNatureOfBusiness',
-            m::mock()
-            ->shouldReceive('getAllForOrganisationForSelect')
-            ->with($id)
-            ->andReturn($existing)
-            ->getMock()
-        );
+        $this->expectOneRestCall('Organisation', 'GET', ['id' => $id, 'limit' => 'all'])
+            ->will($this->returnValue($existing));
 
         $this->assertTrue($this->sut->hasChangedNatureOfBusiness($id, $updated));
     }

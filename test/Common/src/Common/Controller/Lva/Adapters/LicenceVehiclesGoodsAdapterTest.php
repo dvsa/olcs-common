@@ -139,7 +139,18 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
                 'year' => 2015
             ]
         ];
-        $this->assertEquals([], $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle));
+        $this->sm->setService(
+            'Helper\Date',
+            m::mock()
+            ->shouldReceive('getDate')
+            ->with('Y-m-d')
+            ->andReturn('2015-01-01')
+            ->getMock()
+        );
+        $this->assertEquals(
+            ['specifiedDate' => '2015-01-01'],
+            $this->sut->maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
+        );
     }
 
     /**
@@ -156,5 +167,30 @@ class LicenceVehiclesGoodsAdapterTest extends MockeryTestCase
     public function testMaybeUnsetSpecifiedDate()
     {
         $this->assertEquals('data', $this->sut->maybeUnsetSpecifiedDate('data'));
+    }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $mockForm = m::mock()
+            ->shouldReceive('get')
+            ->with('licence-vehicle')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('get')
+                ->with('specifiedDate')
+                ->andReturn(
+                    m::mock()
+                    ->shouldReceive('setShouldCreateEmptyOption')
+                    ->with(false)
+                    ->getMock()
+                )
+                ->getMock()
+            )
+            ->getMock();
+
+        $this->assertEquals($mockForm, $this->sut->maybeRemoveSpecifiedDateEmptyOption($mockForm, 'edit'));
     }
 }

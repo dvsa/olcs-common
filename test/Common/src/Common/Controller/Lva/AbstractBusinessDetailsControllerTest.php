@@ -1,970 +1,1757 @@
 <?php
 
+/**
+ * Test Abstract Business Details Controller
+ *
+ * @author Rob Caiger <rob@clocal.co.uk>
+ */
 namespace CommonTest\Controller\Lva;
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
+use Common\Service\Entity\OrganisationEntityService;
+use Common\BusinessService\Response;
 
 /**
  * Test Abstract Business Details Controller
  *
- * @author Nick Payne <nick.payne@valtech.co.uk>
+ * @author Rob Caiger <rob@clocal.co.uk>
  */
-class AbstractBusinessDetailsControllerTest extends AbstractLvaControllerTestCase
+class AbstractBusinessDetailsControllerTest extends MockeryTestCase
 {
+    protected $sut;
+
+    protected $sm;
+
     public function setUp()
     {
-        parent::setUp();
+        $this->sm = Bootstrap::getServiceManager();
 
-        $this->mockController('\Common\Controller\Lva\AbstractBusinessDetailsController');
+        $this->sut = m::mock('\Common\Controller\Lva\AbstractBusinessDetailsController')
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods();
 
-        $this->mockService('Script', 'loadFile')->with('lva-crud');
+        $this->sut->setServiceLocator($this->sm);
     }
 
-    public function testGetIndexActionForSoleTraderOrganisation()
+    /**
+     * @dataProvider indexActionGetProvider
+     */
+    public function testIndexActionGet($withTable, $extraExpectations)
     {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockRender();
-
-        $this->mockOrgData('org_t_st');
-
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'version' => 1,
-                    'data' => [
-                        'companyNumber' => [
-                            'company_number' => '12345678'
-                        ],
-                        'tradingNames' => [
-                            'trading_name' => ['tn 1']
-                        ],
-                        'name' => 'An Org',
-                        'type' => 'org_t_st',
-                        'natureOfBusiness' => [1]
-                    ],
-                    'registeredAddress' => ['foo' => 'bar']
+        // Stubbed Data
+        $stubbedBusinessDetails = [
+            'tradingNames' => [
+                ['name' => 'foo'],
+                ['name' => 'bar'],
+            ],
+            'version' => 1,
+            'companyOrLlpNo' => '12345678',
+            'name' => 'Foo ltd',
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ],
+            'contactDetails' => [
+                'address' => [
+                    'addressLine1' => 'Foo street'
                 ]
-            );
-
-        $this->shouldRemoveElements(
-            $form,
-            [
-                'table',
-                'data->companyNumber',
-                'registeredAddress',
-                'data->name'
-            ]
-        );
-
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
-
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_st')
-            ->getMock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $form->shouldReceive('has')
-            ->with('table')
-            ->andReturn(false);
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('business_details', $this->view);
-    }
-
-    public function testGetIndexActionForLimitedCompanyOrganisation()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockRender();
-
-        $this->mockOrgData('org_t_rc');
-
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'version' => 1,
-                    'data' => [
-                        'companyNumber' => [
-                            'company_number' => '12345678'
-                        ],
-                        'tradingNames' => [
-                            'trading_name' => ['tn 1']
-                        ],
-                        'name' => 'An Org',
-                        'type' => 'org_t_rc',
-                        'natureOfBusiness' => [1]
-                    ],
-                    'registeredAddress' => ['foo' => 'bar']
-                ]
-            );
-
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
-
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_rc')
-            ->getMock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $form->shouldReceive('has')
-            ->with('table')
-            ->andReturn(true);
-
-        $this->mockEntity('CompanySubsidiary', 'getAllForOrganisation')
-            ->with(12)
-            ->andReturn([]);
-
-        $mockTable = m::mock();
-
-        $this->mockService('Table', 'prepareTable')
-            ->with('lva-subsidiaries', [])
-            ->andReturn($mockTable);
-
-        $tableElement = m::mock()
-            ->shouldReceive('setTable')
-            ->with($mockTable)
-            ->getMock();
-
-        $tableFieldset = m::mock()
-            ->shouldReceive('get')
-            ->with('table')
-            ->andReturn($tableElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('table')
-            ->andReturn($tableFieldset);
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('business_details', $this->view);
-    }
-
-    public function testGetIndexActionForPartnershipOrganisation()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockRender();
-
-        $this->mockOrgData('org_t_p');
-
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'version' => 1,
-                    'data' => [
-                        'companyNumber' => [
-                            'company_number' => '12345678'
-                        ],
-                        'tradingNames' => [
-                            'trading_name' => ['tn 1']
-                        ],
-                        'name' => 'An Org',
-                        'type' => 'org_t_p',
-                        'natureOfBusiness' => [1]
-                    ],
-                    'registeredAddress' => ['foo' => 'bar']
-                ]
-            );
-
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
-
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_p')
-            ->getMock();
-
-        $nameFieldset = m::mock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->shouldReceive('get')
-            ->with('name')
-            ->andReturn($nameFieldset)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $formHelper = $this->getMockFormHelper();
-        $formHelper->shouldReceive('alterElementLabel')
-            ->with($nameFieldset, '.partnership', 1);
-
-        $form->shouldReceive('has')
-            ->with('table')
-            ->andReturn(false);
-
-        $this->shouldRemoveElements(
-            $form,
-            [
-                'table',
-                'data->companyNumber',
-                'registeredAddress',
-                'data->name',
-                'data->tradingNames'
-            ]
-        );
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('business_details', $this->view);
-    }
-
-    public function testGetIndexActionForOtherOrganisation()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockRender();
-
-        $this->mockOrgData('org_t_pa');
-
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'version' => 1,
-                    'data' => [
-                        'companyNumber' => [
-                            'company_number' => '12345678'
-                        ],
-                        'tradingNames' => [
-                            'trading_name' => ['tn 1']
-                        ],
-                        'name' => 'An Org',
-                        'type' => 'org_t_pa',
-                        'natureOfBusiness' => [1]
-                    ],
-                    'registeredAddress' => ['foo' => 'bar']
-                ]
-            );
-
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
-
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_pa')
-            ->getMock();
-
-        $nameFieldset = m::mock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->shouldReceive('get')
-            ->with('name')
-            ->andReturn($nameFieldset)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $formHelper = $this->getMockFormHelper();
-        $formHelper->shouldReceive('alterElementLabel')
-            ->with($nameFieldset, '.other', 1);
-
-        $form->shouldReceive('has')
-            ->with('table')
-            ->andReturn(false);
-
-        $this->shouldRemoveElements(
-            $form,
-            [
-                'table',
-                'data->companyNumber',
-                'registeredAddress',
-                'data->name',
-                'data->tradingNames'
-            ]
-        );
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
-
-        $this->sut->indexAction();
-
-        $this->assertEquals('business_details', $this->view);
-    }
-
-    public function testPostWithCompanyNumberLookup()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockOrgData('org_t_rc');
-
-        $postData = [
-            'data' => [
-                'companyNumber' => [
-                    'company_number' => '12345678',
-                    'submit_lookup_company' => true
-                ],
-                'name' => 'Foo Ltd'
             ]
         ];
-        $this->setPost($postData);
+        $stubbedNoB = [
+            'sic1',
+            'sic2'
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
 
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
 
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_rc')
-            ->getMock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
 
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->getMock();
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
 
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->once()
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails)
+            ->shouldReceive('getNatureOfBusinessesForSelect')
+            ->once()
+            ->with(111)
+            ->andReturn($stubbedNoB);
 
-        $form->shouldReceive('has')
-            ->with('table')
+        $mockRequest->shouldReceive('isPost')
             ->andReturn(false);
 
-        $form->shouldReceive('setData');
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
 
-        $formHelper = $this->getMockFormHelper();
-        $formHelper->shouldReceive('processCompanyNumberLookupForm')
-            ->with($form, $postData, 'data');
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
 
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn($withTable)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf();
 
-        $this->mockRender();
+        // @NOTE rather than duplicate 90% of this test, we conditionally add expectations based on whether or
+        // not the form has a table
+        $extraExpectations($mockForm, $this->sm);
 
-        $this->sut->indexAction();
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    public function testPostWithTradingNames()
+    /**
+     * @dataProvider indexActionPostProvider
+     */
+    public function testIndexActionPostWithInvalidTradingNames($stubbedPost, $stubbedBusinessDetails)
     {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockOrgData('org_t_rc');
-
-        $postData = [
+        $expectedFormData = [
+            'version' => 1,
             'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
                 'tradingNames' => [
                     'submit_add_trading_name' => true,
                     'trading_name' => [
-                        '  ', 'tn 1', 'tn 2'
+                        'foo',
+                        'bar ',
+                        '',
+                        ''
                     ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
                 ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
             ]
         ];
-        $this->setPost($postData);
 
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
 
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_rc')
-            ->getMock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
 
-        $tnElem = m::mock()->shouldReceive('populateValues')
-            ->with(['tn 1', 'tn 2', ''])
-            ->getMock();
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
 
-        $tnFieldset = m::mock()->shouldReceive('get')
-            ->with('trading_name')
-            ->andReturn($tnElem)
-            ->getMock();
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->once()
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
 
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->shouldReceive('get')
-            ->with('tradingNames')
-            ->andReturn($tnFieldset)
-            ->getMock();
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
 
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
 
-        $form->shouldReceive('has')
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
             ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('setValidationGroup')
+            ->once()
+            ->with(['data' => ['tradingNames']])
+            ->shouldReceive('isValid')
+            ->once()
             ->andReturn(false);
 
-        $form->shouldReceive('setData')
-            ->shouldReceive('isValid')
-            ->andReturn(true)
-            ->shouldReceive('setValidationGroup')
-            ->with(['data' => ['tradingNames']]);
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
 
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->getMock()
-            );
+        $response = $this->sut->indexAction();
 
-        $this->mockRender();
-
-        $this->sut->indexAction();
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    public function testPostWithValidData()
+    /**
+     * @dataProvider indexActionPostProvider
+     */
+    public function testIndexActionPostWithValidTradingNames($stubbedPost, $stubbedBusinessDetails)
     {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockOrgData('org_t_rc');
-
-        $postData = [
+        $expectedFormData = [
             'version' => 1,
             'data' => [
                 'companyNumber' => [
                     'company_number' => '12345678'
                 ],
-                'name' => 'Company Name',
+                'tradingNames' => [
+                    'submit_add_trading_name' => true,
+                    'trading_name' => [
+                        'foo',
+                        'bar ',
+                        '',
+                        ''
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('setValidationGroup')
+            ->once()
+            ->with(['data' => ['tradingNames']])
+            ->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true)
+            ->shouldReceive('get->get->get->populateValues')
+            ->once()
+            ->with(['foo', 'bar', '']);
+
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostWithCompanyLookup()
+    {
+        $stubbedPost = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'submit_lookup_company' => true,
+                    'company_number' => '12345678'
+                ],
                 'tradingNames' => [
                     'trading_name' => [
-                        'tn 1'
+                        'foo',
+                        'bar',
                     ]
                 ],
-                'natureOfBusiness' => [1,2]
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
             ],
-            'registeredAddress' => ['foo' => 'bar']
-        ];
-        $this->setPost($postData);
-
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
-
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_rc')
-            ->getMock();
-
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->getMock();
-
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
-
-        $form->shouldReceive('has')
-            ->with('table')
-            ->andReturn(false);
-
-        $form->shouldReceive('setData')
-            ->shouldReceive('isValid')
-            ->andReturn(true);
-
-        $this->sut
-            ->shouldReceive('getLicenceId')
-            ->andReturn(7);
-
-        $this->mockEntity('TradingNames', 'save')
-            ->with(
-                [
-                    'organisation' => 12,
-                    'licence' => 7,
-                    'tradingNames' => [
-                        ['name' => 'tn 1']
-                    ]
-                ]
-            );
-
-        $this->mockEntity('Address', 'save')
-            ->with(['foo' => 'bar'])
-            ->andReturn(['id' => 4321]);
-
-        $this->mockEntity('ContactDetails', 'save')
-            ->with(
-                [
-                    'address' => 4321,
-                    'contactType' => 'ct_reg'
-                ]
-            )
-            ->andReturn(['id' => 3]);
-
-        $this->mockEntity('Organisation', 'save')
-            ->with(
-                [
-                    'version' => 1,
-                    'companyOrLlpNo' => '12345678',
-                    'name' => 'Company Name',
-                    'id' => 12,
-                    'contactDetails' => 3
-                ]
-            );
-
-        $this->mockEntity('OrganisationNatureOfBusiness', 'save')
-            ->with(['foo' => 'bar'])
-            ->andReturn(['id' => 4321]);
-
-        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisation')
-            ->with(12)
-            ->andReturn(
-                [
-                    [
-                    'id' => 1,
-                    'version' => 1,
-                    'organisation' => ['id' => 1],
-                    'refData' => ['id' => '1', 'description' => 'desc1']
-                    ]
-                ]
-            );
-
-        $this->mockEntity('OrganisationNatureOfBusiness', 'deleteByOrganisationAndIds')
-            ->with(12, [])
-            ->andReturn();
-
-        $this->mockEntity('OrganisationNatureOfBusiness', 'save')->with(
-            [
-                    'organisation' => 12,
-                    'refData' => 2,
-                    'createdBy' => ''
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
             ]
-        )
-        ->andReturn();
-
-        $this->sut->shouldReceive('getCrudAction')
-            ->andReturn('add');
-
-        $this->sut
-            ->shouldReceive('handleCrudAction')
-            ->with('add')
-            ->andReturn('crud');
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->with($form, 12)
-                ->shouldReceive('hasChangedTradingNames')
-                ->with(12, [['name' => 'tn 1']])
-                ->andReturn(false)
-                ->shouldReceive('hasChangedRegisteredAddress')
-                ->with(12, ['foo' => 'bar'])
-                ->andReturn(false)
-                ->shouldReceive('hasChangedNatureOfBusiness')
-                ->with(12, [1, 2])
-                ->andReturn(true)
-                ->shouldReceive('postSave')
-                ->with(
-                    [
-                        'licence' => 7,
-                        'user' => ''
+        ];
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'submit_lookup_company' => true,
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
                     ]
-                )
-                ->getMock()
-            );
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
 
-        $this->assertEquals(
-            'crud',
-            $this->sut->indexAction()
-        );
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
+        $mockFormHelper = m::mock();
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf();
+
+        $mockFormHelper->shouldReceive('processCompanyNumberLookupForm')
+            ->once()
+            ->with($mockForm, $expectedFormData, 'data');
+
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    public function testPostWithValidDataAndCrudAction()
+    public function testIndexActionPostWithInvalidForm()
     {
-        $form = $this->createMockForm('Lva\BusinessDetails');
-
-        $this->mockOrgData('org_t_rc');
-
-        $postData = [
+        $stubbedPost = [
             'version' => 1,
             'data' => [
                 'companyNumber' => [
                     'company_number' => '12345678'
                 ],
-                'name' => 'Company Name',
-                'natureOfBusiness' => [1]
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar',
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
             ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
         ];
-        $this->setPost($postData);
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
 
-        $element = m::mock()->shouldReceive('setOptions')
-            ->shouldReceive('getOptions')
-            ->andReturn([])
-            ->getMock();
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
+        $mockFormHelper = m::mock();
 
-        $typeElement = m::mock()->shouldReceive('setValue')
-            ->with('org_t_rc')
-            ->getMock();
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
 
-        $fieldset = m::mock()->shouldReceive('get')
-            ->with('editBusinessType')
-            ->andReturn($element)
-            ->shouldReceive('get')
-            ->with('type')
-            ->andReturn($typeElement)
-            ->getMock();
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
 
-        $form->shouldReceive('get')
-            ->with('data')
-            ->andReturn($fieldset);
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
 
-        $form->shouldReceive('has')
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
             ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
             ->andReturn(false);
 
-        $form->shouldReceive('setData')
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostWithValidFormWithFailedPersist()
+    {
+        $stubbedPost = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar',
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockScript = m::mock();
+        $mockFormHelper = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+        $mockFlashMessenger = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\BusinessDetails', $mockBusinessService);
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Script', $mockScript);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('business_details', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
             ->shouldReceive('isValid')
             ->andReturn(true);
 
-        $this->mockEntity('Organisation', 'save')
+        $mockScript->shouldReceive('loadFile')
+            ->once()
+            ->with('lva-crud');
+
+        $mockBusinessService->shouldReceive('process')
             ->with(
                 [
-                    'version' => 1,
-                    'companyOrLlpNo' => '12345678',
-                    'name' => 'Company Name',
-                    'id' => 12
+                    'tradingNames' => [
+                        'foo',
+                        'bar'
+                    ],
+                    'orgId' => 111,
+                    'data' => $expectedFormData,
+                    'licenceId' => 222
                 ]
-            );
+            )
+            ->andReturn($mockResponse);
 
-        $this->mockEntity('OrganisationNatureOfBusiness', 'save')
-            ->with(['foo' => 'bar'])
-            ->andReturn(['id' => 4321]);
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false)
+            ->shouldReceive('getMessage')
+            ->andReturn('MSG');
 
-        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisation')
-            ->with(12)
-            ->andReturn(
-                [
-                    [
-                    'id' => 1,
-                    'version' => 1,
-                    'organisation' => ['id' => 1],
-                    'refData' => ['id' => '1', 'description' => 'desc1']
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->with('MSG');
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostWithValidFormWithSuccessPersist()
+    {
+        $stubbedPost = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar',
                     ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
                 ]
-            );
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
 
-        $this->mockEntity('OrganisationNatureOfBusiness', 'deleteByOrganisationAndIds')
-            ->with(12, [])
-            ->andReturn();
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockFormHelper = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
 
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('alterFormForOrganisation')
-                ->shouldReceive('hasChangedTradingNames')
-                ->andReturn(false)
-                ->shouldReceive('hasChangedRegisteredAddress')
-                ->andReturn(false)
-                ->shouldReceive('hasChangedNatureOfBusiness')
-                ->andReturn(false)
-                ->getMock()
-            );
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\BusinessDetails', $mockBusinessService);
 
-        $this->sut
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
             ->shouldReceive('postSave')
+            ->once()
             ->with('business_details')
             ->shouldReceive('completeSection')
+            ->once()
             ->with('business_details')
-            ->andReturn('complete');
+            ->andReturn('RESPONSE');
 
-        $this->assertEquals(
-            'complete',
-            $this->sut->indexAction()
-        );
-    }
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
 
-    public function testGetAdd()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetailsSubsidiaryCompany');
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
 
-        $this->sut->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn(null);
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
 
-        $form->shouldReceive('setData')
-            ->with([]);
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
 
-        $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
-
-        $this->mockRender();
-
-        $this->sut->addAction();
-    }
-
-    public function testPostAdd()
-    {
-        $form = $this->createMockForm('Lva\BusinessDetailsSubsidiaryCompany');
-
-        $postData = [
-            'data' => ['name' => 'bar']
-        ];
-        $this->setPost($postData);
-
-        $this->sut->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn(null);
-
-        $form->shouldReceive('setData')
-            ->with($postData)
-            ->andReturn($form)
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
             ->shouldReceive('isValid')
             ->andReturn(true);
 
-        $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
-
-        $this->setService(
-            'Entity\CompanySubsidiary',
-            m::mock()
-            ->shouldReceive('save')
+        $mockBusinessService->shouldReceive('process')
             ->with(
                 [
-                    'name' => 'bar',
-                    'organisation' => 12
+                    'tradingNames' => [
+                        'foo',
+                        'bar'
+                    ],
+                    'orgId' => 111,
+                    'data' => $expectedFormData,
+                    'licenceId' => 222
                 ]
             )
-            ->getMock()
-        );
+            ->andReturn($mockResponse);
 
-        $this->sut
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostWithValidFormWithSuccessPersistWithTableWithoutCrudAction()
+    {
+        $stubbedPost = [
+            'version' => 1,
+            'table' => 'TABLE',
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar',
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'table' => 'TABLE',
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockFormHelper = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\BusinessDetails', $mockBusinessService);
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
             ->shouldReceive('getLicenceId')
-            ->andReturn(7);
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->once()
+            ->with('business_details')
+            ->shouldReceive('getCrudAction')
+            ->with(['TABLE'])
+            ->andReturn(null)
+            ->shouldReceive('completeSection')
+            ->once()
+            ->with('business_details')
+            ->andReturn('RESPONSE');
 
-        $this->sut->shouldReceive('getAdapter')
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->with(
+                [
+                    'tradingNames' => [
+                        'foo',
+                        'bar'
+                    ],
+                    'orgId' => 111,
+                    'data' => $expectedFormData,
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testIndexActionPostWithValidFormWithSuccessPersistWithCrudAction()
+    {
+        $stubbedPost = [
+            'version' => 1,
+            'table' => 'TABLE',
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar',
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+        $stubbedBusinessDetails = [
+            'type' => [
+                'id' => OrganisationEntityService::ORG_TYPE_LLP
+            ]
+        ];
+        $expectedFormData = [
+            'version' => 1,
+            'table' => 'TABLE',
+            'data' => [
+                'companyNumber' => [
+                    'company_number' => '12345678'
+                ],
+                'tradingNames' => [
+                    'trading_name' => [
+                        'foo',
+                        'bar'
+                    ]
+                ],
+                'name' => 'Foo ltd',
+                'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                'natureOfBusinesses' => [
+                    'sic1',
+                    'sic2'
+                ]
+            ],
+            'registeredAddress' => [
+                'addressLine1' => 'Foo street'
+            ]
+        ];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockOrganisation = m::mock();
+        $mockFormServiceManager = m::mock();
+        $mockFormService = m::mock();
+        $mockForm = m::mock();
+        $mockFormHelper = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\BusinessDetails', $mockBusinessService);
+
+        $this->sm->setService('Entity\Organisation', $mockOrganisation);
+        $this->sm->setService('FormServiceManager', $mockFormServiceManager);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('getCurrentOrganisationId')
+            ->andReturn(111)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->once()
+            ->with('business_details')
+            ->shouldReceive('getCrudAction')
+            ->with(['TABLE'])
+            ->andReturn('CRUDACTION')
+            ->shouldReceive('handleCrudAction')
+            ->once()
+            ->with('CRUDACTION')
+            ->andReturn('RESPONSE');
+
+        $mockOrganisation->shouldReceive('getBusinessDetailsData')
+            ->with(111)
+            ->andReturn($stubbedBusinessDetails);
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormServiceManager->shouldReceive('get')
+            ->once()
+            ->with('lva--business_details')
+            ->andReturn($mockFormService);
+
+        $mockFormService->shouldReceive('getForm')
+            ->once()
+            ->with(OrganisationEntityService::ORG_TYPE_LLP, 111)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('has')
+            ->once()
+            ->with('table')
+            ->andReturn(false)
+            ->shouldReceive('setData')
+            ->once()
+            ->with($expectedFormData)
+            ->andReturnSelf()
+            ->shouldReceive('isValid')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->with(
+                [
+                    'tradingNames' => [
+                        'foo',
+                        'bar'
+                    ],
+                    'orgId' => 111,
+                    'data' => $expectedFormData,
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        $response = $this->sut->indexAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionGet()
+    {
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with([])
+            ->andReturnSelf();
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostInvalidForm()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(false);
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostFailedPersist()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockFlashMessenger = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\CompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('render')
+            ->once()
+            ->with('add_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'id' => null,
+                    'licenceId' => 222,
+                    'foo' => 'bar'
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->once()
+            ->andReturn(false)
+            ->shouldReceive('getMessage')
+            ->once()
+            ->andReturn('MSG');
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->once()
+            ->with('MSG');
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testAddActionPostSuccessPersist()
+    {
+        // Stubbed data
+        $stubbedPost = ['foo' => 'bar'];
+
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\CompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(null)
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('handlePostSave')
+            ->once()
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true)
+            ->shouldReceive('getPost')
+            ->andReturn($stubbedPost);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with($stubbedPost)
+            ->andReturnSelf();
+
+        $mockForm->shouldReceive('isValid')
+            ->once()
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'id' => null,
+                    'licenceId' => 222,
+                    'foo' => 'bar'
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->once()
+            ->andReturn(true);
+
+        $response = $this->sut->addAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function testEditActionGet()
+    {
+        // Mocks
+        $mockRequest = m::mock();
+        $mockFormHelper = m::mock();
+        $mockForm = m::mock();
+        $mockCompanySubsidiary = m::mock();
+
+        $this->sm->setService('Helper\Form', $mockFormHelper);
+        $this->sm->setService('Entity\CompanySubsidiary', $mockCompanySubsidiary);
+
+        // Expectations
+        $this->sut->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn(123)
+            ->shouldReceive('render')
+            ->once()
+            ->with('edit_subsidiary_company', $mockForm)
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(false);
+
+        $mockFormHelper->shouldReceive('createFormWithRequest')
+            ->once()
+            ->with('Lva\BusinessDetailsSubsidiaryCompany', $mockRequest)
+            ->andReturn($mockForm);
+
+        $mockCompanySubsidiary->shouldReceive('getById')
+            ->with(123)
+            ->andReturn(['foo' => 'bar']);
+
+        $mockForm->shouldReceive('setData')
+            ->once()
+            ->with(['data' => ['foo' => 'bar']])
+            ->andReturnSelf()
+            ->shouldReceive('get')
+            ->with('form-actions')
             ->andReturn(
                 m::mock()
-                ->shouldReceive('postCrudSave')
-                ->with(
-                    'added',
-                    [
-                        'licence' => 7,
-                        'user' => '',
-                        'name' => 'bar'
-                    ]
-                )
+                ->shouldReceive('remove')
+                ->with('addAnother')
                 ->getMock()
             );
 
-        $this->sut->shouldReceive('handlePostSave')
-            ->andReturn('post-save');
+        $response = $this->sut->editAction();
 
-        $this->assertEquals(
-            'post-save',
-            $this->sut->addAction()
-        );
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    public function testGetEdit()
+    public function testDeleteActionWithFailedPersist()
     {
-        $form = $this->createMockForm('Lva\BusinessDetailsSubsidiaryCompany');
+        // Mocks
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+        $mockFlashMessenger = m::mock();
+        $mockRequest = m::mock();
 
-        $form->shouldReceive('setData')
-            ->with(
-                [
-                    'data' => ['bar' => 'foo']
-                ]
-            )
-            ->andReturn($form);
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\DeleteCompanySubsidiary', $mockBusinessService);
 
-        $form->shouldReceive('get->remove')->with('addAnother');
+        $this->sm->setService('BusinessServiceManager', $bsm);
+        $this->sm->setService('Helper\FlashMessenger', $mockFlashMessenger);
 
+        // Expectations
         $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
-
-        $this->mockRender();
-
-        $this->sut->shouldReceive('params')
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
             ->with('child_id')
-            ->andReturn(5050);
-
-        $this->setService(
-            'Entity\CompanySubsidiary',
-            m::mock()
-            ->shouldReceive('getById')
-            ->with(5050)
-            ->andReturn(['bar' => 'foo'])
-            ->getMock()
-        );
-
-        $this->sut->editAction();
-    }
-
-    public function testPostDelete()
-    {
-        $this->setPost([]);
-
-        $this->mockEntity('CompanySubsidiary', 'getById')
-            ->with(5050)
-            ->andReturn(
-                [
-                    'name' => 'mysub'
-                ]
-            );
-
-        $this->mockEntity('CompanySubsidiary', 'delete')
-            ->with(5050);
-
-        $this->sut
+            ->andReturn('123,321')
             ->shouldReceive('getLicenceId')
-            ->andReturn(7);
-
-        $this->sut->shouldReceive('params')
-            ->with('child_id')
-            ->andReturn(5050);
-
-        $this->sut->shouldReceive('getAdapter')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('postCrudSave')
-                ->with(
-                    'deleted',
-                    [
-                        'licence' => 7,
-                        'user' => '',
-                        'name' => 'mysub'
-                    ]
-                )
-                ->getMock()
-            );
-
-        $this->sut->shouldReceive('getIdentifierIndex')
-            ->andReturn('application')
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->with('business_details')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('foo')
             ->shouldReceive('getIdentifier')
-            ->andReturn(4040);
+            ->andReturn(333);
 
-        $this->sut->shouldReceive('redirect')
-            ->andReturn(
-                m::mock()
-                ->shouldReceive('toRouteAjax')
-                ->with(null, ['application' => 4040])
-                ->andReturn('redirect')
-                ->getMock()
-            );
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->andReturn('RESPONSE');
 
-        $this->assertEquals(
-            'redirect',
-            $this->sut->deleteAction()
-        );
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'ids' => [123, 321],
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(false)
+            ->shouldReceive('getMessage')
+            ->andReturn('MSG');
+
+        $mockFlashMessenger->shouldReceive('addErrorMessage')
+            ->with('MSG');
+
+        $response = $this->sut->deleteAction();
+
+        $this->assertEquals('RESPONSE', $response);
     }
 
-    private function mockOrgData($type)
+    public function testDeleteActionWithSuccessPersist()
     {
-        $this->sut
-            ->shouldReceive('getCurrentOrganisationId')
-            ->andReturn(12);
+        // Mocks
+        $mockBusinessService = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $mockResponse = m::mock();
+        $mockRequest = m::mock();
 
-        $this->mockEntity('Organisation', 'getBusinessDetailsData')
-            ->with(12)
-            ->andReturn(
+        $bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
+        $bsm->setService('Lva\DeleteCompanySubsidiary', $mockBusinessService);
+
+        $this->sm->setService('BusinessServiceManager', $bsm);
+
+        // Expectations
+        $this->sut
+            ->shouldReceive('getRequest')
+            ->andReturn($mockRequest)
+            ->shouldReceive('params')
+            ->with('child_id')
+            ->andReturn('123,321')
+            ->shouldReceive('getLicenceId')
+            ->andReturn(222)
+            ->shouldReceive('postSave')
+            ->with('business_details')
+            ->shouldReceive('getIdentifierIndex')
+            ->andReturn('foo')
+            ->shouldReceive('getIdentifier')
+            ->andReturn(333);
+
+        $this->sut->shouldReceive('redirect->toRouteAjax')
+            ->andReturn('RESPONSE');
+
+        $mockRequest->shouldReceive('isPost')
+            ->andReturn(true);
+
+        $mockBusinessService->shouldReceive('process')
+            ->once()
+            ->with(
+                [
+                    'ids' => [123, 321],
+                    'licenceId' => 222
+                ]
+            )
+            ->andReturn($mockResponse);
+
+        $mockResponse->shouldReceive('isOk')
+            ->andReturn(true);
+
+        $response = $this->sut->deleteAction();
+
+        $this->assertEquals('RESPONSE', $response);
+    }
+
+    public function indexActionPostProvider()
+    {
+        return [
+            [
                 [
                     'version' => 1,
-                    'tradingNames' => [
-                        ['name' => 'tn 1']
-                    ],
-                    'companyOrLlpNo' => '12345678',
-                    'name' => 'An Org',
-                    'type' => [
-                        'id' => $type
-                    ],
-                    'contactDetails' => [
-                        'contactType' => [
-                            'id' => 'ct_reg'
+                    'data' => [
+                        'companyNumber' => [
+                            'company_number' => '12345678'
                         ],
-                        'address' => [
-                            'foo' => 'bar'
+                        'tradingNames' => [
+                            'submit_add_trading_name' => true,
+                            'trading_name' => [
+                                'foo',
+                                'bar ',
+                                '',
+                                ''
+                            ]
+                        ],
+                        'name' => 'Foo ltd',
+                        'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                        'natureOfBusinesses' => [
+                            'sic1',
+                            'sic2'
                         ]
+                    ],
+                    'registeredAddress' => [
+                        'addressLine1' => 'Foo street'
+                    ]
+                ],
+                [
+                    'type' => [
+                        'id' => OrganisationEntityService::ORG_TYPE_LLP
                     ]
                 ]
-            );
+            ],
+            [
+                [
+                    'version' => 1,
+                    'data' => [
+                        'tradingNames' => [
+                            'submit_add_trading_name' => true,
+                            'trading_name' => [
+                                'foo',
+                                'bar ',
+                                '',
+                                ''
+                            ]
+                        ],
+                        'name' => 'Foo ltd',
+                        'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                        'natureOfBusinesses' => [
+                            'sic1',
+                            'sic2'
+                        ]
+                    ],
+                    'registeredAddress' => [
+                        'addressLine1' => 'Foo street'
+                    ]
+                ],
+                [
+                    'type' => [
+                        'id' => OrganisationEntityService::ORG_TYPE_LLP
+                    ],
+                    'companyOrLlpNo' => '12345678',
+                ]
+            ],
+            [
+                [
+                    'version' => 1,
+                    'data' => [
+                        'companyNumber' => [],
+                        'tradingNames' => [
+                            'submit_add_trading_name' => true,
+                            'trading_name' => [
+                                'foo',
+                                'bar ',
+                                '',
+                                ''
+                            ]
+                        ],
+                        'name' => 'Foo ltd',
+                        'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                        'natureOfBusinesses' => [
+                            'sic1',
+                            'sic2'
+                        ]
+                    ],
+                    'registeredAddress' => [
+                        'addressLine1' => 'Foo street'
+                    ]
+                ],
+                [
+                    'type' => [
+                        'id' => OrganisationEntityService::ORG_TYPE_LLP
+                    ],
+                    'companyOrLlpNo' => '12345678',
+                ]
+            ],
+            [
+                [
+                    'version' => 1,
+                    'data' => [
+                        'companyNumber' => [
+                            'company_number' => '12345678'
+                        ],
+                        'tradingNames' => [
+                            'submit_add_trading_name' => true,
+                            'trading_name' => [
+                                'foo',
+                                'bar ',
+                                '',
+                                ''
+                            ]
+                        ],
+                        'type' => OrganisationEntityService::ORG_TYPE_LLP,
+                        'natureOfBusinesses' => [
+                            'sic1',
+                            'sic2'
+                        ]
+                    ],
+                    'registeredAddress' => [
+                        'addressLine1' => 'Foo street'
+                    ]
+                ],
+                [
+                    'type' => [
+                        'id' => OrganisationEntityService::ORG_TYPE_LLP
+                    ],
+                    'name' => 'Foo ltd',
+                ]
+            ],
+        ];
+    }
 
-        $this->mockEntity('OrganisationNatureOfBusiness', 'getAllForOrganisationForSelect')
-            ->with(12)
-            ->andReturn([1]);
+    public function indexActionGetProvider()
+    {
+        return [
+            'withTable' => [
+                true,
+                function ($mockForm, $sm) {
+                    $stubbedSubsidiaries = [
+                        'foo',
+                        'cake'
+                    ];
+
+                    $mockCompanySubsidiary = m::mock();
+                    $mockTableBuilder = m::mock();
+                    $mockTable = m::mock();
+                    $mockFormHelper = m::mock();
+                    $mockTableFieldset = m::mock();
+
+                    $sm->setService('Entity\CompanySubsidiary', $mockCompanySubsidiary);
+                    $sm->setService('Table', $mockTableBuilder);
+                    $sm->setService('Helper\Form', $mockFormHelper);
+
+                    $mockCompanySubsidiary->shouldReceive('getForLicence')
+                        ->once()
+                        ->with(222)
+                        ->andReturn($stubbedSubsidiaries);
+
+                    $mockTableBuilder->shouldReceive('prepareTable')
+                        ->once()
+                        ->with('lva-subsidiaries', $stubbedSubsidiaries)
+                        ->andReturn($mockTable);
+
+                    $mockForm->shouldReceive('get')
+                        ->once()
+                        ->with('table')
+                        ->andReturn($mockTableFieldset);
+
+                    $mockFormHelper->shouldReceive('populateFormTable')
+                        ->once()
+                        ->with($mockTableFieldset, $mockTable);
+                }
+            ],
+            'withoutTable' => [
+                false,
+                function ($mockForm, $sm) {
+                }
+            ]
+        ];
     }
 }

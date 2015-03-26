@@ -112,4 +112,12 @@ class VariationVehiclesPsvAdapterTest extends MockeryTestCase
 
         $this->sut->warnIfAuthorityExceeded($id, $types, true);
     }
+
+    /**
+     * Test maybeRemoveSpecifiedDateEmptyOption method
+     */
+    public function testMaybeRemoveSpecifiedDateEmptyOption()
+    {
+        $this->assertEquals('form', $this->sut->maybeRemoveSpecifiedDateEmptyOption('form', 'edit'));
+    }
 }

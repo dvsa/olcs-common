@@ -33,25 +33,9 @@ class VehicleUndertakingsOperateSmallVehiclesAgreementValidator extends Abstract
      */
     public function isValid($value, $context = null)
     {
-        unset($value);
-
-        // This only gets used if psvOperateSmallVhl is shown
-        if (array_key_exists('psvOperateSmallVhl', $context)) {
-
-            if ($context['psvOperateSmallVhl'] === 'N' && $context['psvSmallVhlConfirmation'] !== 'Y') {
-                $this->error('required');
-                return false;
-            }
-
-        } else {
-            // Scotland
-            if (isset($context['psvSmallVhlScotland'])) {
-                if ($context['psvSmallVhlConfirmation'] !== 'Y') {
-                    $this->error('required');
-                    return false;
-                }
-            }
-
+        if ($value !== 'Y' && isset($context['psvOperateSmallVhl']) && $context['psvOperateSmallVhl'] === 'N') {
+            $this->error('required');
+            return false;
         }
 
         return true;

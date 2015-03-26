@@ -22,24 +22,13 @@ class CompanySubsidiaryEntityService extends AbstractEntityService
     protected $entity = 'CompanySubsidiary';
 
     /**
-     * Retrieve all company subs by organisation ID
+     * Retrieve all company subs for a given licence
      *
      * @param int $id
      * @return array
      */
-    public function getAllForOrganisation($id)
+    public function getForLicence($id)
     {
-        return $this->get(array('organisation' => $id));
-    }
-
-    /**
-     * Retrieve a company subsidiary by ID
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getById($id)
-    {
-        return $this->get($id);
+        return $this->getAll(['licence' => $id]);
     }
 }

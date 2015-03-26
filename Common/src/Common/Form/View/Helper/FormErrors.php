@@ -91,7 +91,11 @@ class FormErrors extends AbstractHelper
         foreach ($messages as $field => $message) {
 
             if ($fieldset instanceof Fieldset) {
-                $element = $fieldset->get($field);
+                if ($fieldset->has($field)) {
+                    $element = $fieldset->get($field);
+                } else {
+                    $element = $fieldset;
+                }
             } else {
                 $element = $fieldset;
             }

@@ -50,16 +50,6 @@ class UndertakingsTest extends \PHPUnit_Framework_TestCase
                         'conditionType' => [
                             'id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING
                         ],
-                        'isFulfilled' => 'Y',
-                        'isDraft' => 'N',
-                        'notes' => 'another note'
-                    ], [
-                        'attachedTo' => [
-                            'id' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
-                        ],
-                        'conditionType' => [
-                            'id' => ConditionUndertakingEntityService::TYPE_UNDERTAKING
-                        ],
                         'isFulfilled' => 'N',
                         'isDraft' => 'N',
                         'notes' => 'a third note'

@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\FeeEntityService;
+use Common\Service\Data\FeeTypeDataService;
 use Mockery as m;
 
 /**
@@ -412,5 +413,52 @@ class FeeEntityServiceTest extends AbstractEntityServiceTestCase
         $this->expectOneRestCall('Fee', 'GET', $query)->will($this->returnValue($response));
 
         $this->assertEquals('fee1', $this->sut->getLatestFeeByTypeStatusesAndApplicationId(1, $statuses, $id));
+    }
+
+    /**
+     * @group entity_services
+     */
+    public function testCancelInterimForApplication()
+    {
+        $query = [
+            'application' => 3,
+            'feeStatus' => [
+                FeeEntityService::STATUS_OUTSTANDING,
+                FeeEntityService::STATUS_WAIVE_RECOMMENDED
+            ],
+            'limit' => 'all'
+        ];
+
+        $response = [
+            'Results' => [
+                [
+                    'id' => 10,
+                    'feeType' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_GRANTINT
+                    ]
+                ], [
+                    'id' => 20,
+                    'feeType' => [
+                        'feeType' => FeeTypeDataService::FEE_TYPE_APP
+                    ]
+                ]
+            ]
+        ];
+
+        $this->expectedRestCallInOrder('Fee', 'GET', $query)
+            ->will($this->returnValue($response));
+
+        $data = [
+            '_OPTIONS_' => ['multiple' => true],
+            [
+                'id' => 10,
+                'feeStatus' => FeeEntityService::STATUS_CANCELLED,
+                '_OPTIONS_' => ['force' => true]
+            ]
+        ];
+
+        $this->expectedRestCallInOrder('Fee', 'PUT', $data);
+
+        $this->sut->cancelInterimForApplication(3);
     }
 }

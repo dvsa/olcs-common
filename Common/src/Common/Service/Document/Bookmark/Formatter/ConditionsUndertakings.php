@@ -31,6 +31,7 @@ class ConditionsUndertakings implements FormatterInterface
                 $results[] = implode("\n\n", $data);
             }
         }
+
         return implode("\n\n", $results);
     }
 }

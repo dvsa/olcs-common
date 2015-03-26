@@ -63,14 +63,10 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         }
 
         if (isset($data['id']) && !empty($data['id'])) {
-            $method = 'PUT';
-        } else {
-            $method = 'POST';
+            return $this->put($data);
         }
 
-        $this->clearCache();
-
-        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($entity, $method, $data);
+        return $this->post($data);
     }
 
     public function update($id, $data)
@@ -92,6 +88,13 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
         $data['_OPTIONS_']['multiple'] = true;
 
         return $this->put($data);
+    }
+
+    public function multiCreate($data)
+    {
+        $data['_OPTIONS_']['multiple'] = true;
+
+        return $this->post($data);
     }
 
     /**
@@ -148,9 +151,29 @@ abstract class AbstractEntityService implements ServiceLocatorAwareInterface
      */
     protected function put(array $data)
     {
+        return $this->write('PUT', $data);
+    }
+
+    /**
+     * POST data
+     *
+     * @param array $data
+     */
+    protected function post(array $data)
+    {
+        return $this->write('POST', $data);
+    }
+
+    /**
+     * Write with a PUT or a POST
+     *
+     * @param array $data
+     */
+    protected function write($method, array $data)
+    {
         $this->clearCache();
 
-        $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, 'PUT', $data);
+        return $this->getServiceLocator()->get('Helper\Rest')->makeRestCall($this->entity, $method, $data);
     }
 
     /**

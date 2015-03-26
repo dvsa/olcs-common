@@ -31,17 +31,17 @@ class CompanyTradingNameTest extends \PHPUnit_Framework_TestCase
         $bookmark = new CompanyTradingName();
         $bookmark->setData(
             [
+                'correspondenceCd' => [
+                    'address' => [
+                        'addressLine1' => 'Line 1',
+                        'addressLine2' => 'Line 2',
+                        'addressLine3' => 'Line 3',
+                        'addressLine4' => 'Line 4',
+                        'postcode' => 'LS1 1BC'
+                    ]
+                ],
                 'organisation' => [
                     'name' => 'An Org',
-                    'contactDetails' => [
-                        'address' => [
-                            'addressLine1' => 'Line 1',
-                            'addressLine2' => 'Line 2',
-                            'addressLine3' => 'Line 3',
-                            'addressLine4' => 'Line 4',
-                            'postcode' => 'LS1 1BC'
-                        ]
-                    ],
                     'tradingNames' => [
                         [
                             'name' => 'TN 1',
@@ -66,17 +66,17 @@ class CompanyTradingNameTest extends \PHPUnit_Framework_TestCase
         $bookmark = new CompanyTradingName();
         $bookmark->setData(
             [
+                'correspondenceCd' => [
+                    'address' => [
+                        'addressLine1' => 'Line 1',
+                        'addressLine2' => 'Line 2',
+                        'addressLine3' => 'Line 3',
+                        'addressLine4' => 'Line 4',
+                        'postcode' => 'LS1 1BC'
+                    ]
+                ],
                 'organisation' => [
                     'name' => 'An Org',
-                    'contactDetails' => [
-                        'address' => [
-                            'addressLine1' => 'Line 1',
-                            'addressLine2' => 'Line 2',
-                            'addressLine3' => 'Line 3',
-                            'addressLine4' => 'Line 4',
-                            'postcode' => 'LS1 1BC'
-                        ]
-                    ],
                     'tradingNames' => []
                 ]
             ]

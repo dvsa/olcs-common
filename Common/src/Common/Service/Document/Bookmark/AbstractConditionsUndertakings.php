@@ -23,6 +23,12 @@ abstract class AbstractConditionsUndertakings extends DynamicBookmark
             'bundle' => [
                 'children' => [
                     'conditionUndertakings' => [
+                        'criteria' => [
+                            'isDraft' => false,
+                            'isFulfilled' => false,
+                            'attachedTo' => ConditionUndertakingEntityService::ATTACHED_TO_LICENCE,
+                            'conditionType' => static::CONDITION_TYPE
+                        ],
                         'children' => [
                             'attachedTo',
                             'conditionType'
@@ -37,17 +43,14 @@ abstract class AbstractConditionsUndertakings extends DynamicBookmark
 
     public function render()
     {
-        $rows = [];
-        foreach ($this->data['conditionUndertakings'] as $row) {
-
-            if ($row['attachedTo']['id'] === ConditionUndertakingEntityService::ATTACHED_TO_LICENCE
-                && $row['conditionType']['id'] === static::CONDITION_TYPE
-                && $row['isFulfilled'] === 'N'
-                && $row['isDraft'] === 'N'
-            ) {
-                $rows[] = $row['notes'];
-            }
-        }
-        return implode("\n\n", $rows);
+        return implode(
+            "\n\n",
+            array_map(
+                function ($v) {
+                    return $v['notes'];
+                },
+                $this->data['conditionUndertakings']
+            )
+        );
     }
 }

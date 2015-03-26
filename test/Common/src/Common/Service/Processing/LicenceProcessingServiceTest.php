@@ -109,7 +109,7 @@ class LicenceProcessingServiceTest extends MockeryTestCase
             'niFlag' => $niFlag,
             'isVariation' => $isVariation,
             'licence' => [
-                'id' => 1
+                'id' => 10
             ]
         ];
 
@@ -129,7 +129,7 @@ class LicenceProcessingServiceTest extends MockeryTestCase
             'Helper\DocumentGeneration',
             m::mock()
                 ->shouldReceive('generateFromTemplate')
-                ->with($template, ['licence' => 1])
+                ->with($template, ['application' => 1, 'licence' => 10])
                 ->andReturn($content)
                 ->shouldReceive('uploadGeneratedContent')
                 ->with($content, 'documents', $description)
@@ -156,7 +156,7 @@ class LicenceProcessingServiceTest extends MockeryTestCase
                         'filename' => $filename,
                         'fileExtension' => 'doc_rtf',
                         'application' => 1,
-                        'licence' => 1,
+                        'licence' => 10,
                         'category' => 1,
                         'subCategory' => 79,
                         'isDigital' => false,
@@ -211,25 +211,25 @@ class LicenceProcessingServiceTest extends MockeryTestCase
             [
                 'N',
                 true,
-                'GB/GV_Interim_Direction',
+                'GB/GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
                 'N',
                 false,
-                'GB/GV_Interim_Licence',
+                'GB/GV_INT_LICENCE_V1',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ], [
                 'Y',
                 true,
-                'NI/GV_Interim_Direction',
+                'NI/GV_INT_DIRECTION_V1',
                 'GV Interim Direction',
                 'GV_Interim_Direction.rtf'
             ], [
                 'Y',
                 false,
-                'NI/GV_Interim_Licence',
+                'NI/GV_INT_LICENCE_V1',
                 'GV Interim Licence',
                 'GV_Interim_Licence.rtf'
             ]

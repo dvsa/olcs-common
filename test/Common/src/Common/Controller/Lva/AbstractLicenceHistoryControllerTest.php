@@ -85,7 +85,7 @@ class AbstractLicenceHistoryControllerTest extends AbstractLvaControllerTestCase
                 ]
             );
 
-        $this->mockEntity('PreviousLicence', 'getForApplicationAndType')
+        $this->mockEntity('OtherLicence', 'getForApplicationAndType')
             ->andReturn([]);
 
         $this->mockService('Table', 'prepareTable')

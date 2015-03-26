@@ -7,6 +7,8 @@
  */
 namespace Common\Service\Entity;
 
+use Common\Service\Data\FeeTypeDataService;
+
 /**
  * Fee Entity Service
  *
@@ -55,6 +57,7 @@ class FeeEntityService extends AbstractLvaEntityService
                 )
             ),
             'paymentMethod',
+            'feeType'
         )
     );
 
@@ -112,7 +115,7 @@ class FeeEntityService extends AbstractLvaEntityService
             )
         );
 
-        $data = $this->getAll($query, array('properties' => array('id')));
+        $data = $this->getAll($query, $this->overviewBundle);
 
         return $data['Results'];
     }
@@ -183,8 +186,7 @@ class FeeEntityService extends AbstractLvaEntityService
             }
         }
 
-        $updates['_OPTIONS_']['multiple'] = true;
-        $this->put($updates);
+        $this->multiUpdate($updates);
         if ($tasks) {
             $this->getServiceLocator()->get('Entity\Task')->multiUpdate($tasks);
         }
@@ -216,9 +218,25 @@ class FeeEntityService extends AbstractLvaEntityService
             );
         }
 
-        $updates['_OPTIONS_']['multiple'] = true;
+        $this->multiUpdate($updates);
+    }
 
-        $this->put($updates);
+    public function cancelInterimForApplication($applicationId)
+    {
+        $results = $this->getOutstandingFeesForApplication($applicationId);
+
+        $updates = [];
+        foreach ($results as $fee) {
+            if ($fee['feeType']['feeType'] === FeeTypeDataService::FEE_TYPE_GRANTINT) {
+                $updates[] = [
+                    'id' => $fee['id'],
+                    'feeStatus' => self::STATUS_CANCELLED,
+                    '_OPTIONS_' => array('force' => true)
+                ];
+            }
+        }
+
+        $this->multiUpdate($updates);
     }
 
     /**

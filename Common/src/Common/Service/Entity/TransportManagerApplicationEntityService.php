@@ -93,4 +93,10 @@ class TransportManagerApplicationEntityService extends AbstractEntityService
     {
         return $this->get(['application' => $applicationId]);
     }
+
+    public function deleteForApplication($applicationId)
+    {
+        $query = ['application' => $applicationId];
+        return $this->deleteList($query);
+    }
 }

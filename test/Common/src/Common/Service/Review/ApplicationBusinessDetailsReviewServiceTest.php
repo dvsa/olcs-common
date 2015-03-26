@@ -61,16 +61,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                 'id' => OrganisationEntityService::ORG_TYPE_SOLE_TRADER
                             ],
                             'tradingNames' => [],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ]
                         ]
@@ -123,16 +119,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                     'name' => 'My bar'
                                 ]
                             ],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ]
                         ]
@@ -184,16 +176,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                             ],
                             'name' => 'Our company',
                             'tradingNames' => [],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ]
                         ]
@@ -252,16 +240,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                     'name' => 'Our bar'
                                 ]
                             ],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ]
                         ]
@@ -319,16 +303,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
                             'tradingNames' => [],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ],
                             'contactDetails' => [
@@ -396,16 +376,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                     'licence' => [
                         'companySubsidiaries' => [
                             [
-                                'companySubsidiary' => [
-                                    'name' => 'Foosub Ltd',
-                                    'companyNo' => '23456789'
-                                ]
+                                'name' => 'Foosub Ltd',
+                                'companyNo' => '23456789'
                             ],
                             [
-                                'companySubsidiary' => [
-                                    'name' => 'Barsub Ltd',
-                                    'companyNo' => '34567891'
-                                ]
+                                'name' => 'Barsub Ltd',
+                                'companyNo' => '34567891'
                             ]
                         ],
                         'organisation' => [
@@ -422,16 +398,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                     'name' => 'Barfoo Ltd'
                                 ]
                             ],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ],
                             'contactDetails' => [
@@ -534,16 +506,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                             'companyOrLlpNo' => '12345678',
                             'name' => 'Foo Ltd',
                             'tradingNames' => [],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ],
                             'contactDetails' => [
@@ -611,16 +579,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                     'licence' => [
                         'companySubsidiaries' => [
                             [
-                                'companySubsidiary' => [
-                                    'name' => 'Foosub Ltd',
-                                    'companyNo' => '23456789'
-                                ]
+                                'name' => 'Foosub Ltd',
+                                'companyNo' => '23456789'
                             ],
                             [
-                                'companySubsidiary' => [
-                                    'name' => 'Barsub Ltd',
-                                    'companyNo' => '34567891'
-                                ]
+                                'name' => 'Barsub Ltd',
+                                'companyNo' => '34567891'
                             ]
                         ],
                         'organisation' => [
@@ -637,16 +601,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                                     'name' => 'Barfoo Ltd'
                                 ]
                             ],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ],
                             'contactDetails' => [
@@ -747,16 +707,12 @@ class ApplicationBusinessDetailsReviewServiceTest extends MockeryTestCase
                             ],
                             'name' => 'My other business',
                             'tradingNames' => [],
-                            'natureOfBusinesss' => [
+                            'natureOfBusinesses' => [
                                 [
-                                    'refData' => [
-                                        'description' => 'Foobar'
-                                    ]
+                                    'description' => 'Foobar'
                                 ],
                                 [
-                                    'refData' => [
-                                        'description' => 'Barfoo'
-                                    ]
+                                    'description' => 'Barfoo'
                                 ]
                             ]
                         ]

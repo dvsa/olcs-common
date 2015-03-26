@@ -511,7 +511,7 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->andReturn(
                 m::mock()
                 ->shouldReceive('addOfficeCopy')
-                ->with($licenceId)
+                ->with($licenceId, $licenceId)
                 ->getMock()
             )
             ->shouldReceive('getLicenceId')
@@ -627,9 +627,9 @@ class AbstractCommunityLicencesControllerTest extends AbstractLvaControllerTestC
             ->with('licence')
             ->andReturn($totalVehicleAuthority)
             ->shouldReceive('addOfficeCopy')
-            ->with($licenceId)
+            ->with($licenceId, 'licence')
             ->shouldReceive('addCommunityLicences')
-            ->with($licenceId, $totalLicences)
+            ->with($licenceId, $totalLicences, 'licence')
             ->getMock();
 
         $mockLicenceService = m::mock()

@@ -2507,7 +2507,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'prevBeenDisqualifiedTc' => null,
                     'prevBeenAtPi' => null,
                     'prevPurchasedAssets' => null,
-                    'previousLicences' => array()
+                    'otherLicences' => array()
                 ),
                 // Expected completion data
                 array(
@@ -2551,7 +2551,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'prevBeenDisqualifiedTc' => null,
                     'prevBeenAtPi' => null,
                     'prevPurchasedAssets' => null,
-                    'previousLicences' => array()
+                    'otherLicences' => array()
                 ),
                 // Expected completion data
                 array(
@@ -2595,7 +2595,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'prevBeenDisqualifiedTc' => null,
                     'prevBeenAtPi' => null,
                     'prevPurchasedAssets' => null,
-                    'previousLicences' => array(
+                    'otherLicences' => array(
                         array(
                             'previousLicenceType' => array(
                                 'id' => 'prev_had_licence'
@@ -2645,7 +2645,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'prevBeenDisqualifiedTc' => 'N',
                     'prevBeenAtPi' => 'N',
                     'prevPurchasedAssets' => 'N',
-                    'previousLicences' => array(
+                    'otherLicences' => array(
                         array(
                             'previousLicenceType' => array(
                                 'id' => 'prev_had_licence'
@@ -2695,7 +2695,7 @@ class ApplicationCompletionEntityServiceTest extends AbstractEntityServiceTestCa
                     'prevBeenDisqualifiedTc' => 'N',
                     'prevBeenAtPi' => 'N',
                     'prevPurchasedAssets' => 'N',
-                    'previousLicences' => array(
+                    'otherLicences' => array(
                         array(
                             'previousLicenceType' => array(
                                 'id' => 'prev_has_licence'

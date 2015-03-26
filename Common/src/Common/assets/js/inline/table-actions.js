@@ -1,8 +1,11 @@
 OLCS.ready(function() {
   "use strict";
 
-  OLCS.tableHandler({
-    table: ".table__form"
+  OLCS.formHandler({
+    form: ".table__form",
+    isModal: true,
+    onChange: false,
+    success: OLCS.modalResponse(".js-body")
   });
 
   OLCS.tableSorter({
