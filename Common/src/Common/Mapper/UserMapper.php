@@ -169,4 +169,95 @@ class UserMapper extends GenericMapper
             'contactDetails||address||countryCode||id' => 'officeAddress'
         ];
     }
+
+    /**
+     * Format data on form submission
+     *
+     * @param array $data
+     * @param array $params
+     * @return array
+     */
+    protected function formatSave(array $data, $params = array())
+    {
+        $dataToSave = array();
+        // set up user table data
+        //$dataToSave['id'] = ;
+        //$dataToSave['version'] = $data['fields']['version'];
+        $dataToSave['loginId'] = $data['userLoginSecurity']['loginId'];
+        $dataToSave['memorableWord'] = $data['userLoginSecurity']['memorableWord'];
+        $dataToSave['hintQuestion1'] = $data['userLoginSecurity']['hintQuestion1'];
+        $dataToSave['hintAnswer1'] = $data['userLoginSecurity']['hintAnswer1'];
+        $dataToSave['hintQuestion2'] = $data['userLoginSecurity']['hintQuestion2'];
+        $dataToSave['hintAnswer2'] = $data['userLoginSecurity']['hintAnswer2'];
+        $dataToSave['hintQuestion3'] = $data['userLoginSecurity']['hintQuestion3'];
+        $dataToSave['hintAnswer3'] = $data['userLoginSecurity']['hintAnswer3'];
+        $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
+        $dataToSave['disableAccount'] = $data['userLoginSecurity']['disableAccount'];
+
+        foreach ($data['userType']['roles'] as $role) {
+            $dataToSave['userRoles'] = [
+                'role' => $role,
+                'user' => $userId
+            ];
+        }
+        $dataToSave['userRoles'] = $data['userType']['roles'];
+
+        // set up contact data
+        //if (!(empty($data['fields']['contactDetailsId'])) && !(empty($data['fields']['contactDetailsVersion']))) {
+            //$dataToSave['contactDetails']['id'] = $data['fields']['contactDetailsId'];
+            //$dataToSave['contactDetails']['version'] = $data['fields']['contactDetailsVersion'];
+        //}
+        $dataToSave['contactDetails']['address'] = $data['userContactDetails']['address'];
+        $dataToSave['contactDetails']['emailAddress'] = $data['userContactDetails']['emailAddress'];
+        $dataToSave['contactDetails']['contactType'] = 'ct_team_user';
+
+        // set up person
+        //$dataToSave['contactDetails']['person']['id'] = $data['fields']['personId'];
+        //$dataToSave['contactDetails']['person']['version'] = $data['fields']['personVersion'];
+        $dataToSave['contactDetails']['person']['forename'] = $data['userPersonal']['forename'];
+        $dataToSave['contactDetails']['person']['familyName'] = $data['userPersonal']['familyName'];
+        $dataToSave['contactDetails']['person']['birthDate'] = $data['userPersonal']['birthDate'];
+
+        $phoneContact = [];
+        //if (!(empty($data['fields']['phoneContactId'])) && !(empty($data['fields']['phoneContactVersion']))) {
+        //    $phoneContact['id'] = $data['fields']['phoneContactId'];
+        //    $phoneContact['version'] = $data['fields']['phoneContactVersion'];
+        //}
+        //if (!(empty($data['fields']['contactDetailsId'])) && !(empty($data['fields']['contactDetailsId']))) {
+        //    $phoneContact['contactDetails'] = $data['fields']['contactDetailsId'];
+        //}
+
+        //$phoneContact['contactDetails'] = $data['fields']['contactDetailsId'];
+        $phoneContact['phoneNumber'] = $data['userContactDetails']['phone'];
+        $phoneContact['phoneContactType'] = 'phone_t_tel';
+
+        $faxContact['phoneNumber'] = $data['userContactDetails']['fax'];
+        $faxContact['phoneContactType'] = 'phone_t_fax';
+
+        $dataToSave['contactDetails']['phoneContacts'][] = $phoneContact;
+        $dataToSave['contactDetails']['phoneContacts'][] = $faxContact;
+
+        $dataToSave['_OPTIONS_'] = array(
+            'cascade' => array(
+                'single' => array(
+                    'contactDetails' => array(
+                        'entity' => 'ContactDetails'
+                    )
+                )
+            )
+        );
+
+        $dataToSave['contactDetails']['_OPTIONS_'] = array(
+            'cascade' => array(
+                'list' => array(
+                    'phoneContacts' => array(
+                        'entity' => 'PhoneContact',
+                        'parent' => 'contactDetails'
+                    )
+                )
+            )
+        );
+
+        return ['fields' => $dataToSave];
+    }
 }

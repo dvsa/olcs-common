@@ -115,7 +115,7 @@ class User extends Generic implements ServiceLocatorAwareInterface
 
     protected function createUser($data)
     {
-        $mapped = $this->getDataMapper()->formatLoad($data);
+        $mapped = $this->getDataMapper()->formatSave($data);
         echo 'here';
         var_dump($mapped);
         exit;
