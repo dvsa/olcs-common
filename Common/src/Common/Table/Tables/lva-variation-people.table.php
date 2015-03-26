@@ -25,7 +25,7 @@ return array(
             'title' => 'selfserve-app-subSection-your-business-people-columnName',
             'type' => 'VariationRecordAction',
             'action' => 'edit',
-            'value_format' => '{{title}} {{forename}} {{familyName}}'
+            'formatter' => 'Name'
         ),
         array(
             'title' => 'selfserve-app-subSection-your-business-people-columnHasOtherNames',

@@ -24,19 +24,11 @@ class SoleTrader
     /**
      * @Form\Attributes({"id":"","placeholder":""})
      * @Form\Options({
-     *     "label": "application_your-business_people-sub-action-formTitle",
-     *     "value_options": {
-     *         "Mr": "application_your-business_people-sub-action-formTitleValueMr",
-     *         "Mrs": "application_your-business_people-sub-action-formTitleValueMrs",
-     *         "Miss":
-     * "application_your-business_people-sub-action-formTitleValueMiss",
-     *         "Ms": "application_your-business_people-sub-action-formTitleValueMs"
-     *     },
      *     "empty_option": "Please Select",
-     *     "disable_inarray_validator": false,
-     *     "help-block": "Please select a category"
+     *     "label": "application_your-business_people-sub-action-formTitle",
+     *     "category":"person_title",
      * })
-     * @Form\Type("\Zend\Form\Element\Select")
+     * @Form\Type("DynamicSelect")
      */
     public $title = null;
 

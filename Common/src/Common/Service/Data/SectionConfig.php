@@ -187,15 +187,25 @@ class SectionConfig implements ServiceLocatorAwareInterface
         'conditions_undertakings' => array(
             'restricted' => array(
                 array(
+                    // Must be one of these licence types
                     array(
                         LicenceEntityService::LICENCE_TYPE_RESTRICTED,
                         LicenceEntityService::LICENCE_TYPE_STANDARD_NATIONAL,
                         LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL
                     ),
+                    // and...
                     array(
+                        // either internal
                         'internal',
-                        'licence',
-                        'variation'
+                        // or...
+                        array(
+                            // external
+                            'external',
+                            // with conditions to show
+                            'hasConditions',
+                            // for licences
+                            'licence',
+                        )
                     )
                 )
             )

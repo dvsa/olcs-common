@@ -57,7 +57,10 @@ class GrantPeopleProcessingServiceTest extends MockeryTestCase
                         'createdOn' => '2014-01-01',
                         'lastModifiedOn' => '2014-01-01',
                         'forename' => 'Test',
-                        'familyName' => 'Person'
+                        'familyName' => 'Person',
+                        'title' => [
+                            'id' => 'title_mr'
+                        ]
                     ],
                     'originalPerson' => null,
                     'organisation' => [
@@ -84,6 +87,7 @@ class GrantPeopleProcessingServiceTest extends MockeryTestCase
             ->shouldReceive('save')
             ->with(
                 [
+                    'title' => 'title_mr',
                     'forename' => 'Test',
                     'familyName' => 'Person'
                 ]

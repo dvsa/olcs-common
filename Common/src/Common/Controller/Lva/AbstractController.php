@@ -127,7 +127,8 @@ abstract class AbstractController extends AbstractActionController
             $this->location,
             $this->lva,
             $licenceType['goodsOrPsv'],
-            $licenceType['licenceType']
+            $licenceType['licenceType'],
+            $this->hasConditions() ? 'hasConditions' : 'noConditions'
         );
 
         if ($this->lva === 'variation') {
@@ -147,6 +148,12 @@ abstract class AbstractController extends AbstractActionController
         }
 
         return $sections;
+    }
+
+    protected function hasConditions()
+    {
+        return $this->getServiceLocator()->get('Entity\Licence')
+            ->hasApprovedUnfulfilledConditions($this->getLicenceId());
     }
 
     /**
