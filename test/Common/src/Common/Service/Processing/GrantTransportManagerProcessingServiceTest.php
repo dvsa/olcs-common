@@ -11,6 +11,7 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use CommonTest\Bootstrap;
 use Common\Service\Processing\GrantTransportManagerProcessingService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Grant Transport Manager Process Service Test
@@ -49,6 +50,15 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
             ->with($id)
             ->andReturn($stubbedData);
 
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL]])
+            ->getMock()
+        );
+
         $this->assertNull($this->sut->grant($id, $licenceId));
     }
 
@@ -57,14 +67,50 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
         // Params
         $id = 123;
         $licenceId = 321;
+        $tmId = 987;
 
         // Data
         $stubbedRecord = [
-            'transportManager' => ['id' => 987],
-            'action' => 'A'
+            'id' => 1010,
+            'action' => 'A',
+            'version' => 1,
+            'application' => 234,
+            'tmApplicationStatus' => 'foo',
+            'transportManager' => ['id' => $tmId],
+            'operatingCentres' => [
+                [
+                    'id' => 2020
+                ],
+                [
+                    'id' => 3030
+                ]
+            ],
+            'otherLicences' => []
+        ];
+        $stubbedFlatRecord = [
+            'id' => 1010,
+            'action' => 'A',
+            'version' => 1,
+            'application' => 234,
+            'tmApplicationStatus' => 'foo',
+            'transportManager' => 987,
+            'operatingCentres' => [
+                [
+                    'id' => 2020
+                ],
+                [
+                    'id' => 3030
+                ]
+            ],
+            'otherLicences' => []
         ];
         $stubbedData = [
             $stubbedRecord
+        ];
+        $expectedSaveData = [
+            'licence' => $licenceId,
+            'transportManager' => 987,
+            'operatingCentres' => [2020, 3030]
         ];
 
         // Mocks
@@ -80,7 +126,31 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
 
         $mockTml->shouldReceive('getByTransportManagerAndLicence')
             ->with(987, $licenceId)
-            ->andReturn(['foo' => 'bar']);
+            ->andReturn(['foo' => 'bar'])
+            ->shouldReceive('deleteList')
+            ->with(['licence' => $licenceId, 'transportManager' => $tmId])
+            ->shouldReceive('save')
+            ->with($expectedSaveData)
+            ->andReturn(654)
+            ->getMock();
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL]])
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Helper\Data',
+            m::mock()
+            ->shouldReceive('replaceIds')
+            ->with($stubbedRecord)
+            ->andReturn($stubbedFlatRecord)
+            ->getMock()
+        );
 
         $this->sut->grant($id, $licenceId);
     }
@@ -158,6 +228,15 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
         $mockDataHelper->shouldReceive('replaceIds')
             ->with($stubbedRecord)
             ->andReturn($stubbedFlatRecord);
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL]])
+            ->getMock()
+        );
 
         $this->sut->grant($id, $licenceId);
     }
@@ -258,6 +337,15 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
         $mockOtherLicence->shouldReceive('save')
             ->with($expectedOtherLicenceSaveData);
 
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL]])
+            ->getMock()
+        );
+
         $this->sut->grant($id, $licenceId);
     }
 
@@ -291,6 +379,42 @@ class GrantTransportManagerProcessingServiceTest extends MockeryTestCase
 
         $mockTml->shouldReceive('deleteList')
             ->with(['transportManager' => 654, 'licence' => $licenceId]);
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_STANDARD_INTERNATIONAL]])
+            ->getMock()
+        );
+
+        $this->sut->grant($id, $licenceId);
+    }
+
+    public function testGrantWithRestrictedLicence()
+    {
+        $id = 123;
+        $licenceId = 321;
+
+        $this->sm->setService(
+            'Entity\Licence',
+            m::mock()
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->andReturn(['licenceType' => ['id' => LicenceEntityService::LICENCE_TYPE_RESTRICTED]])
+            ->once()
+            ->getMock()
+        );
+
+        $this->sm->setService(
+            'Entity\TransportManagerLicence',
+            m::mock()
+            ->shouldReceive('deleteList')
+            ->with(['licence' => $licenceId])
+            ->once()
+            ->getMock()
+        );
 
         $this->sut->grant($id, $licenceId);
     }
