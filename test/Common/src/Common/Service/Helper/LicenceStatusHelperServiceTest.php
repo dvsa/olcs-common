@@ -18,10 +18,10 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $this->setExpectedException('InvalidArgumentException');
 
         $helperService = new LicenceStatusHelperService();
-        $helperService->isLicenceCurtailable();
+        $helperService->isLicenceActive();
     }
 
-    public function testIsLicenceCurtailableTrue()
+    public function testIsLicenceActiveTrue()
     {
         $comLicEntity = m::mock()->shouldReceive('getValidLicencesForLicenceStatus')
             ->with(1)
@@ -75,7 +75,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService = new LicenceStatusHelperService();
         $helperService->setServiceLocator($sm);
 
-        $helperService->isLicenceCurtailable(1);
+        $helperService->isLicenceActive(1);
 
         $this->assertEquals(
             array(
@@ -96,7 +96,10 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testIsLicenceCurtailableFalse()
+    /**
+     * @dataProvider busRegDataProvider
+     */
+    public function testIsActiveFalse($busRegData)
     {
         $comLicEntity = m::mock()->shouldReceive('getValidLicencesForLicenceStatus')
         ->with(1)
@@ -109,11 +112,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
 
         $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
             ->with(1)
-            ->andReturn(
-                array(
-                    'Results' => array()
-                )
-            )
+            ->andReturn($busRegData)
             ->getMock();
 
         $applicationEntity = m::mock()->shouldReceive('getApplicationsForLicence')
@@ -140,7 +139,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService = new LicenceStatusHelperService();
         $helperService->setServiceLocator($sm);
 
-        $helperService->isLicenceCurtailable(1);
+        $helperService->isLicenceActive(1);
 
         $this->assertEquals(
             array(
@@ -154,47 +153,256 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
 
     public function testCurtailNowWithStatuses()
     {
-        $licenceStatusRuleEntity = m::mock()
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $licenceId,
+                array('status' => 'lsts_curtailed')
+            )
+            ->andReturnNull()
+            ->getMock();
+
+        $statusRuleService = m::mock()
             ->shouldReceive('getStatusesForLicence')
             ->with(
-                1,
                 array(
-                    'licenceStatus' => 'lsts_curtailed'
+                    'query' => array(
+                        'licence' => $licenceId,
+                        'licenceStatus' => 'lsts_curtailed'
+                    )
                 )
-            )
-            ->andReturn(
+            )->andReturn(
                 array(
-                'Count' => 1,
+                    'Count' => 1,
                     'Results' => array(
-                        'id' => 1
+                        array(
+                            'id' => 1
+                        )
                     )
                 )
             )
             ->shouldReceive('removeStatusesForLicence')
+            ->with(1)
+            ->andReturnNull()
             ->getMock();
 
-        $licenceEntity = m::mock()
-            ->shouldReceive('forceUpdate')
-            ->with(
-                1,
-                array(
-                    'status' => 'lsts_curtailed'
-                )
-            )
+        m::mock()->shouldReceive('forceUpdate')
+            ->with(1, array('status' => 'lsts_curtailed'))
+            ->andReturnNull()
             ->getMock();
 
         $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
             ->shouldReceive('get')
-            ->with('Entity\LicenceStatusRule')
-            ->andReturn($licenceStatusRuleEntity)
-            ->shouldReceive('get')
             ->with('Entity\Licence')
-            ->andReturn($licenceEntity)
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($statusRuleService)
             ->getMock();
 
         $helperService = new LicenceStatusHelperService();
         $helperService->setServiceLocator($sm);
 
         $helperService->curtailNow(1);
+    }
+
+    /**
+     * @dataProvider revocationDataProvider
+     */
+    public function testRevokeNowWithStatuses($revocationData)
+    {
+        $licenceId = 1;
+
+        $statusRuleService = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->shouldReceive('removeStatusesForLicence')
+            ->with($licenceId)
+            ->andReturnNull()
+            ->getMock();
+
+        $licenceService = m::mock()
+            ->shouldReceive('getRevocationDataForLicence')
+            ->with($licenceId)
+            ->andReturn($revocationData)
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $licenceId,
+                array('status' => 'lsts_revoked')
+            )
+            ->andReturnNull()
+            ->getMock();
+
+        $discService = m::mock()
+            ->shouldReceive('ceaseDiscs')
+            ->with(array(1))
+            ->getMock();
+
+        $licenceVehicleService = m::mock()
+            ->shouldReceive('removeVehicles')
+            ->with(array(1))
+            ->getMock();
+
+        $tmService = m::mock()
+            ->shouldReceive('deleteForLicence')
+            ->with(array(1))
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($statusRuleService)
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\GoodsDisc')
+            ->andReturn($discService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceVehicle')
+            ->andReturn($licenceVehicleService)
+            ->shouldReceive('get')
+            ->with('Entity\TransportManagerLicence')
+            ->andReturn($tmService)
+            ->getMock();
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->setServiceLocator($sm);
+
+        $helperService->revokeNow(1);
+    }
+
+    public function testSuspendNowWithStatuses()
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('forceUpdate')
+            ->with(
+                $licenceId,
+                array('status' => 'lsts_suspended')
+            )
+            ->andReturnNull()
+            ->getMock();
+
+        $statusRuleService = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                array(
+                    'query' => array(
+                        'licence' => $licenceId,
+                        'licenceStatus' => 'lsts_suspended'
+                    )
+                )
+            )->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array(
+                            'id' => 1
+                        )
+                    )
+                )
+            )
+            ->shouldReceive('removeStatusesForLicence')
+            ->with(1)
+            ->andReturnNull()
+            ->getMock();
+
+        m::mock()->shouldReceive('forceUpdate')
+            ->with(1, array('status' => 'lsts_suspended'))
+            ->andReturnNull()
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($statusRuleService)
+            ->getMock();
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->setServiceLocator($sm);
+
+        $helperService->suspendNow(1);
+    }
+
+    public function testRemoveStatusRulesByLicenceAndTypeThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->removeStatusRulesByLicenceAndType();
+    }
+
+    // PROVIDERS
+
+    public function busRegDataProvider()
+    {
+        return array(
+            array(
+                false
+            ),
+            array(
+                array(
+                    'Results' => array(
+                        array(
+                            'busRegStatus' => 'INVALID'
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    public function revocationDataProvider()
+    {
+        return array(
+            array(
+                array(
+                    'goodsOrPsv' => array(
+                        'id' => 'lcat_gv',
+                    ),
+                    'licenceVehicles' => array(
+                        array(
+                            'id' => 1,
+                            'goodsDiscs' => array(
+                                array('id' => 1)
+                            )
+                        )
+                    ),
+                    'tmLicences' => array(
+                        array(
+                            'id' => 1
+                        )
+                    )
+                )
+            ),
+            array(
+                array(
+                    'goodsOrPsv' => array(
+                        'id' => 'lcat_psv',
+                    ),
+                    'psvDiscs' => array(
+                        array(
+                            'id' => 1
+                        )
+                    ),
+                    'licenceVehicles' => array(
+                        array(
+                            'id' => 1,
+                        )
+                    ),
+                    'tmLicences' => array(
+                        array(
+                            'id' => 1
+                        )
+                    )
+                )
+            )
+        );
     }
 }

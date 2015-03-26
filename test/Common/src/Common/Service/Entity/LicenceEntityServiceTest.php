@@ -40,6 +40,19 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetRevocationDataForLicence()
+    {
+        $id = 7;
+
+        $this->expectOneRestCall('Licence', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getRevocationDataForLicence($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testGetTypeOfLicenceData()
     {
         $id = 7;
