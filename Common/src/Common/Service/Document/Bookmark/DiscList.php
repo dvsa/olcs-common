@@ -93,8 +93,7 @@ class DiscList extends AbstractDiscList
 
             $prefix = $this->getPrefix($key);
 
-            if (isset($disc['licenceVehicle']['interimApplication']['id']) &&
-                !is_null($disc['licenceVehicle']['interimApplication']['id'])) {
+            if (isset($disc['licenceVehicle']['interimApplication']['id'])) {
                 $discTitle = 'INTERIM';
             } elseif ($disc['isCopy'] === 'Y') {
                 $discTitle = 'COPY';
@@ -102,8 +101,7 @@ class DiscList extends AbstractDiscList
                 $discTitle = '';
             }
             $discLicenceId = $licence['licNo'];
-            if (isset($disc['licenceVehicle']['interimApplication']['id']) &&
-                !is_null($disc['licenceVehicle']['interimApplication']['id'])) {
+            if (isset($disc['licenceVehicle']['interimApplication']['id'])) {
                 $discLicenceId .= ' START ' . $disc['licenceVehicle']['interimApplication']['interimStart'];
             }
             $discs[] = [
