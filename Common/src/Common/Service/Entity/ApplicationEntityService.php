@@ -603,7 +603,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                                     'type',
                                     'organisationPersons' => [
                                         'children' => [
-                                            'person'
+                                            'person' => [
+                                                'children' => ['title']
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -613,7 +615,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'applicationOrganisationPersons' => [
                         'children' => [
                             'originalPerson',
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]
@@ -651,7 +655,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ],
                     'applicationOrganisationPersons' => [
                         'children' => [
-                            'person'
+                            'person' => [
+                                'children' => ['title']
+                            ]
                         ]
                     ]
                 ]
