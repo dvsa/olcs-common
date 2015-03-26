@@ -252,7 +252,6 @@ abstract class AbstractPeopleController extends AbstractController implements Ad
         if ($request->isPost() && $form->isValid()) {
             $data = $this->formatCrudDataForSave($form->getData());
 
-
             $adapter->save($orgId, $data);
 
             return $this->handlePostSave();
