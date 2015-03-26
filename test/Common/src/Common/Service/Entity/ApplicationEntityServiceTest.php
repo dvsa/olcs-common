@@ -961,22 +961,32 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                 array(
                     'interimApplication' => null,
                     'id' => 1,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => []
                 ),
                 array(
                     'interimApplication' => null,
                     'id' => 2,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => []
                 ),
                 array(
                     'interimApplication' => 1,
                     'id' => 3,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => [
+                        [
+                            'id' => 1,
+                            'version' => 1,
+                            'ceasedDate' => null
+                        ]
+                    ]
                 ),
                 array(
                     'interimApplication' => 1,
                     'id' => 4,
-                    'version' => 2
+                    'version' => 2,
+                    'goodsDiscs' => []
                 )
             )
         );
@@ -1011,8 +1021,15 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             $this->sm->setService(
                 'Helper\Interim',
                 m::mock()
-                ->shouldReceive('voidDiscsForApplication')
-                ->with(1)
+                ->shouldReceive('processActiveDiscsVoiding')
+                ->with(
+                    [
+                        [
+                            'id' => 1,
+                            'version' => 1
+                        ],
+                    ]
+                )
                 ->once()
                 ->shouldReceive('processNewDiscsAdding')
                 ->with(
@@ -1239,13 +1256,13 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
                         'id' => 3,
                         'version' => 2,
                         'interimApplication' => 'NULL',
-                        'specifiedDate' => '2015-01-01'
+                        'specifiedDate' => null
                     ],
                     [
                         'id' => 4,
                         'version' => 2,
                         'interimApplication' => 'NULL',
-                        'specifiedDate' => '2015-01-01'
+                        'specifiedDate' => null
                     ]
                 ],
                 // type
