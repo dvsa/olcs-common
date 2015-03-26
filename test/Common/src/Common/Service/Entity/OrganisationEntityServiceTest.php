@@ -8,6 +8,7 @@
 namespace CommonTest\Service\Entity;
 
 use Common\Service\Entity\OrganisationEntityService;
+use Common\Service\Helper\DataHelperService;
 use Mockery as m;
 
 /**
@@ -137,6 +138,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testChangedTradingNamesWithNoDiffs()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'tradingNames' => [
                 [
@@ -221,6 +224,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testChangedTradingNamesWithDifferentValues()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'tradingNames' => [
                 [
@@ -251,6 +256,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testHasChangedRegisteredAddressWithNoDiffs()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'contactDetails' => [
                 'address' => [
@@ -283,6 +290,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testHasChangedRegisteredAddressWithDifferentData()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'contactDetails' => [
                 'address' => [
@@ -315,6 +324,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testChangedNatureOfBusinessWithNoDiffs()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'natureOfBusinesses' => [
                 ['id' => 'foo'],
@@ -336,6 +347,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testChangedNatureOfBusinessWithDifferentValues()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'natureOfBusinesses' => [
                 ['id' => 'foo'],
@@ -400,6 +413,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testHasChangedSubsidiaryCompanyWithNoDiffs()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'companyNo' => '1234',
             'name' => 'foo'
@@ -426,6 +441,8 @@ class OrganisationEntityServiceTest extends AbstractEntityServiceTestCase
 
     public function testHasChangedSubsidiaryCompanyWithDifferentData()
     {
+        $this->sm->setService('Helper\Data', new DataHelperService());
+
         $existing = [
             'companyNo' => '1234',
             'name' => 'foo'
