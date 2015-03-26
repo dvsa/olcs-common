@@ -296,7 +296,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      * @param int $licenceId
      * @return array|null
      */
-    public function getPendingChangesForLicence($licenceId)
+    public function getCurrentOrPendingRulesForLicence($licenceId)
     {
         // defer to generic entity service method
         $data = $this->getServiceLocator()->get('Entity\LicenceStatusRule')->getStatusesForLicence(
@@ -304,7 +304,7 @@ class LicenceStatusHelperService extends AbstractHelperService
             array(
                 'query' => array(
                     'deletedDate' => 'NULL',
-                    'startProcessedDate' => 'NULL',
+                    'endProcessedDate' => 'NULL',
                 ),
             )
         );

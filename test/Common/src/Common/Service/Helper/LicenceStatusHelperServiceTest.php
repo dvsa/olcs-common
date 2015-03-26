@@ -404,7 +404,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         );
     }
 
-    public function testGetPendingChangesForLicence()
+    public function testGetCurrentOrPendingRulesForLicence()
     {
         $licenceId = 99;
 
@@ -415,7 +415,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 array(
                     'query' => array(
                         'deletedDate' => 'NULL',
-                        'startProcessedDate' => 'NULL',
+                        'endProcessedDate' => 'NULL',
                     ),
                 )
             )
@@ -438,7 +438,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $sut = new LicenceStatusHelperService();
         $sut->setServiceLocator($sm);
 
-        $this->assertEquals([['id' => 1]], $sut->getPendingChangesForLicence($licenceId));
+        $this->assertEquals([['id' => 1]], $sut->getCurrentOrPendingRulesForLicence($licenceId));
     }
 
     public function testHasQueuedRevocationCurtailmentSuspension()
