@@ -239,6 +239,26 @@ class LicenceStatusHelperService extends AbstractHelperService
         );
     }
 
+
+    /**
+     * Enables the abstraction of curtailing a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function suspendNow($licenceId)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $this->removeStatusRulesByLicenceAndType($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED);
+
+        $licenceEntityService->forceUpdate(
+            $licenceId,
+            array('status' => LicenceEntityService::LICENCE_STATUS_SUSPENDED)
+        );
+    }
+
     /**
      * Remove statuses by a specific type.
      *
