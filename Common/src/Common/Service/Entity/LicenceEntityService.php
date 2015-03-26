@@ -266,6 +266,24 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $revocationDataBundle = [
+        'children' => [
+            'goodsOrPsv',
+            'licenceVehicles' => [
+                'children' => [
+                    'goodsDiscs'
+                ]
+            ],
+            'psvDiscs',
+            'tmLicences'
+        ]
+    ];
+
+    public function getRevocationDataForLicence($id)
+    {
+        return $this->get($id, $this->revocationDataBundle);
+    }
+
     /**
      * Get data for overview
      *
