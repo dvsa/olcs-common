@@ -20,13 +20,9 @@ class LicenceHolderAddress extends DynamicBookmark
             ],
             'bundle' => [
                 'children' => [
-                    'organisation' => [
+                    'correspondenceCd' => [
                         'children' => [
-                            'contactDetails' => [
-                                'children' => [
-                                    'address'
-                                ]
-                            ]
+                            'address'
                         ]
                     ]
                 ]
@@ -36,8 +32,9 @@ class LicenceHolderAddress extends DynamicBookmark
 
     public function render()
     {
-        if (isset($this->data['organisation']['contactDetails']['address'])) {
-            return Formatter\Address::format($this->data['organisation']['contactDetails']['address']);
+        if (isset($this->data['correspondenceCd']['address'])) {
+            return Formatter\Address::format($this->data['correspondenceCd']['address']);
         }
+        return '';
     }
 }
