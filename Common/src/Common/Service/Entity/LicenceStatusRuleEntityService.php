@@ -129,7 +129,7 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
         $query = [
             'startProcessedDate' => 'NULL',
             'deletedDate' => 'NULL',
-            'startDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+            'startDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
         $bundle = [
             'children' => [
@@ -155,7 +155,7 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
             'endProcessedDate' => 'NULL',
             'endDate' => 'NOT NULL',
             'deletedDate' => 'NULL',
-            'endDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d H:i:s'),
+            'endDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
         ];
         $bundle = [
             'children' => [
