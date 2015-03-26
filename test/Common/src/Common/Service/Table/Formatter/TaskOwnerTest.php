@@ -55,7 +55,14 @@ class TaskOwnerTest extends PHPUnit_Framework_TestCase
                     'ownerName' => 'Bar'
                 ],
                 'Foo (Bar)'
-            ]
+            ],
+            [
+                [
+                    'teamName' => 'Footeam',
+                    'ownerName' => ','
+                ],
+                'Footeam (Unassigned)'
+            ],
         ];
     }
 }

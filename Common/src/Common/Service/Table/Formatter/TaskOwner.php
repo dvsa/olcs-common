@@ -30,7 +30,8 @@ class TaskOwner implements FormatterInterface
             $owner = $data['teamName'] . ' ';
         }
 
-        $data['ownerName'] = trim($data['ownerName']);
+        // trim leading/trailing spaces and commas
+        $data['ownerName'] = trim($data['ownerName'], ' ,');
 
         if (empty($data['ownerName'])) {
             $user = 'Unassigned';
