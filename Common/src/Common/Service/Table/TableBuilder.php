@@ -146,7 +146,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      *
      * @var object
      */
-    private $query;
+    private $query = [];
 
     /**
      * Current sort column
@@ -545,7 +545,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
     /**
      * Getter for url
      *
-     * @return object
+     * @return \Zend\Mvc\Controller\Plugin\Url
      */
     public function getUrl()
     {
@@ -792,6 +792,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
                 $this->variables['action'] = $this->generateUrl(
                     $params,
                     $route,
+                    [],
                     true
                 );
             } else {
@@ -1379,9 +1380,14 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      * @param array $data
      * @return string
      */
-    private function generateUrl($data = array(), $route = null, $extendParams = true)
+    private function generateUrl($data = array(), $route = null, $options = [], $reuseMatchedParams = true)
     {
-        return $this->getUrl()->fromRoute($route, $data, array(), $extendParams);
+        if (is_bool($options)) {
+            $reuseMatchedParams = $options;
+            $options = [];
+        }
+
+        return $this->getUrl()->fromRoute($route, $data, $options, $reuseMatchedParams);
     }
 
     /**
@@ -1395,33 +1401,39 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     private function generatePaginationUrl($data = array(), $route = null, $extendParams = true)
     {
-        $returnUrl = $this->generateUrl($data, $route, $extendParams);
 
-        // in query mode we want to manually append a query string to the base route
-        if ($this->getQuery()) {
-            $queryString = array_merge($this->getQuery()->toArray(), $data);
+        /** @var \Zend\Mvc\Controller\Plugin\Url $url */
+        $url = $this->getUrl();
 
-            /*
-             * This should handle sorting for multiple tables.
-             * Currently this functionality is not tested yet.
-             *
-            // adding table name if we have more than one table
-            $multipleTables = $this->getSetting('multipleTables') ? $this->getSetting('multipleTables') : false;
-            if ($multipleTables) {
-                $tableName = $this->getSetting('name');
-                foreach ($queryString as $key => $part) {
-                    if ($key == 'sort' || $key == 'order') {
-                        $queryString[$tableName . '[' . $key . ']' ] = $part;
-                        unset($queryString[$key]);
-                    }
-                }
-            }
-             */
+        /** @var \Zend\Mvc\MvcEvent $event */
+        //$event = $url->getController()->getEvent();
 
-            $returnUrl .= "?" . http_build_query($queryString);
+        /** @var \Zend\Mvc\Router\Http\TreeRouteStack $router */
+        //$router = $event->getRouter();
+
+        /** @var \Zend\Mvc\Router\Http\RouteMatch $routeMatch */
+        //$routeMatch = $event->getRouteMatch();
+
+        //$currentRouteName = $routeMatch->getMatchedRouteName();
+
+        /**
+         * This is the query information to add to the existing route/url.
+         */
+        $query = $this->getQuery();
+        if ($query && !is_array($query)) {
+            $query = $query->toArray();
         }
 
-        // strip out controller and action params
+        $params = array_merge($query, $data);
+
+        $params = array_diff_key($params, array_flip(['controller', 'action']));
+
+        $options = [];
+        $options['query'] = $params;
+
+        $returnUrl = $url->fromRoute($route, [], $options, true);
+
+        // strip out controller and action params - not sure if this is still needed.
         $returnUrl = preg_replace('/\/controller\/[a-zA-Z0-9\-_]+\/action\/[a-zA-Z0-9\-_]+/', '', $returnUrl);
 
         return $returnUrl;
