@@ -1047,4 +1047,28 @@ class LicenceEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->sut->setLicenceStatus($id, $status);
     }
+
+    public function testHasApprovedUnfulfilledConditionsFalse()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue(['conditionUndertakings' => []]));
+
+        $this->assertFalse($this->sut->hasApprovedUnfulfilledConditions(111));
+    }
+
+    public function testHasApprovedUnfulfilledConditionsTrue()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue(['conditionUndertakings' => ['foo']]));
+
+        $this->assertTrue($this->sut->hasApprovedUnfulfilledConditions(111));
+    }
+
+    public function testGetConditionsAndUndertakings()
+    {
+        $this->expectOneRestCall('Licence', 'GET', 111)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getConditionsAndUndertakings(111));
+    }
 }
