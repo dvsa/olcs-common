@@ -4,8 +4,8 @@ namespace CommonTest\Service\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-
 use Common\Service\Helper\LicenceStatusHelperService;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Class LicenceStatusHelperServiceTest
@@ -177,9 +177,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 array(
                     'Count' => 1,
                     'Results' => array(
-                        array(
-                            'id' => 1
-                        )
+                        array('id' => 1)
                     )
                 )
             )
@@ -404,5 +402,84 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 )
             )
         );
+    }
+
+    public function testGetPendingChangesForLicence()
+    {
+        $licenceId = 99;
+
+        $licenceStatusRuleEntity = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                $licenceId,
+                array(
+                    'query' => array(
+                        'deletedDate' => 'NULL',
+                        'startProcessedDate' => 'NULL',
+                    ),
+                )
+            )
+            ->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array('id' => 1)
+                    ),
+                )
+            )
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($licenceStatusRuleEntity)
+            ->getMock();
+
+        $sut = new LicenceStatusHelperService();
+        $sut->setServiceLocator($sm);
+
+        $this->assertEquals([['id' => 1]], $sut->getPendingChangesForLicence($licenceId));
+    }
+
+    public function testHasQueuedRevocationCurtailmentSuspension()
+    {
+        $licenceId = 99;
+
+        $licenceStatusRuleEntity = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                $licenceId,
+                [
+                    'query' => [
+                        'deletedDate' => 'NULL',
+                        'startProcessedDate' => 'NULL',
+                        'licenceStatus' => [
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                            LicenceEntityService::LICENCE_STATUS_REVOKED,
+                        ],
+                    ],
+                ]
+            )
+            ->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array('id' => 1)
+                    ),
+                )
+            )
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($licenceStatusRuleEntity)
+            ->getMock();
+
+        $sut = new LicenceStatusHelperService();
+        $sut->setServiceLocator($sm);
+
+        $this->assertEquals(true, $sut->hasQueuedRevocationCurtailmentSuspension($licenceId));
     }
 }

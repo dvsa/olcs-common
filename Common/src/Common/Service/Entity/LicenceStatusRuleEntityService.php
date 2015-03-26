@@ -129,26 +129,6 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     }
 
     /**
-     * @param int $licenceId
-     * @return array|null
-     */
-    public function getPendingChangesForLicence($licenceId)
-    {
-        // defer to generic method
-        $data = $this->getStatusesForLicence(
-            array(
-                'query' => array(
-                    'licence' => $licenceId,
-                    'deletedDate' => 'NULL',
-                    'endProcessedDate' => 'NULL',
-                ),
-            )
-        );
-
-        return $data['Count']>0 ? $data['Results'] : null;
-    }
-
-    /**
      * Get Licence rules to be actioned for revocation, curtailment and suspension
      *
      * @return array

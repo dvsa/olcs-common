@@ -291,4 +291,50 @@ class LicenceStatusHelperService extends AbstractHelperService
             }
         }
     }
+
+    /**
+     * @param int $licenceId
+     * @return array|null
+     */
+    public function getPendingChangesForLicence($licenceId)
+    {
+        // defer to generic entity service method
+        $data = $this->getServiceLocator()->get('Entity\LicenceStatusRule')->getStatusesForLicence(
+            $licenceId,
+            array(
+                'query' => array(
+                    'deletedDate' => 'NULL',
+                    'startProcessedDate' => 'NULL',
+                ),
+            )
+        );
+
+        return $data['Count']>0 ? $data['Results'] : null;
+    }
+
+    /**
+     * @param int $licenceId
+     * @return boolean
+     */
+    public function hasQueuedRevocationCurtailmentSuspension($licenceId)
+    {
+        $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
+
+        $data = $licenceStatusEntityService->getStatusesForLicence(
+            $licenceId,
+            [
+                'query' => [
+                    'deletedDate' => 'NULL',
+                    'startProcessedDate' => 'NULL',
+                    'licenceStatus' => [
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED,
+                    ],
+                ],
+            ]
+        );
+
+        return ((int)$data['Count'] > 0);
+    }
 }
