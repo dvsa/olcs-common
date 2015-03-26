@@ -147,4 +147,60 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
 
         return $data['Count']>0 ? $data['Results'] : null;
     }
+
+    /**
+     * Get Licence rules to be actioned for revocation, curtailment and suspension
+     *
+     * @return array
+     */
+    public function getLicencesToRevokeCurtailSuspend()
+    {
+        $query = [
+            'startProcessedDate' => 'NULL',
+            'deletedDate' => 'NULL',
+            'startDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+        $bundle = [
+            'children' => [
+                'licenceStatus',
+                'licence' => [
+                    'children' => ['status']
+                ],
+
+            ],
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
+    }
+
+    /**
+     * Get Licence rules to reset licence status back to vaild
+     *
+     * @return array
+     */
+    public function getLicencesToValid()
+    {
+        $query = [
+            'endProcessedDate' => 'NULL',
+            'endDate' => 'NOT NULL',
+            'deletedDate' => 'NULL',
+            'endDate' => '<='. $this->getServiceLocator()->get('Helper\Date')->getDate(\DateTime::W3C),
+        ];
+        $bundle = [
+            'children' => [
+                'licenceStatus',
+                'licence' => [
+                    'children' => [
+                        'status',
+                        'licenceVehicles' => [
+                            'children' => ['vehicle']
+                        ]
+                    ]
+                ],
+
+            ],
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
+    }
 }

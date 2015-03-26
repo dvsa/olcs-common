@@ -20,7 +20,21 @@ class AbstractAddressesControllerTest extends AbstractLvaControllerTestCase
 
     public function testGetIndexAction()
     {
-        $form = $this->createMockForm('Lva\Addresses');
+        $form = m::mock('\Common\Form\Form');
+
+        $this->setService(
+            'FormServiceManager',
+            m::mock()
+            ->shouldReceive('get')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('getForm')
+                ->with('ltyp_sn')
+                ->andReturn($form)
+                ->getMock()
+            )
+            ->getMock()
+        );
 
         $form->shouldReceive('setData')
             ->andReturn($form);

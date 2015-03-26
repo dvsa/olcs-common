@@ -35,7 +35,7 @@ class ContactDetails implements BusinessServiceInterface, ServiceLocatorAwareInt
 
         $saved = $this->getServiceLocator()->get('Entity\ContactDetails')->save($data);
 
-        if (isset($data['id'])) {
+        if (!empty($data['id'])) {
             $responseData['id'] = $data['id'];
         } else {
             $responseData['id'] = $saved['id'];

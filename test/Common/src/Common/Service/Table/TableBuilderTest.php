@@ -1028,7 +1028,8 @@ class TableBuilderTest extends MockeryTestCase
                     'edit' => array(),
                     'foo' => array(),
                     'bar' => array(),
-                    'cake' => array()
+                    'cake' => array(),
+                    'baz' => array()
                 )
             )
         );

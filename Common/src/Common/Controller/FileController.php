@@ -21,10 +21,14 @@ class FileController extends ZendAbstractActionController
      */
     public function downloadAction()
     {
+        $download = !$this->params()->fromQuery('inline', false);
+
         $fileUploader = $this->getServiceLocator()->get('FileUploader')->getUploader();
         return $fileUploader->download(
             $this->params()->fromRoute('file'),
-            $this->params()->fromRoute('name')
+            $this->params()->fromRoute('name'),
+            null,
+            $download
         );
     }
 }
