@@ -51,7 +51,7 @@ class ApplicationConvictionsPenaltiesReviewService extends AbstractReviewService
                     [
                         [
                             'label' => 'application-review-convictions-penalties-conviction-title',
-                            'value' => $conviction['title']
+                            'value' => $conviction['title']['description']
                         ],
                         [
                             'label' => 'application-review-convictions-penalties-conviction-forename',

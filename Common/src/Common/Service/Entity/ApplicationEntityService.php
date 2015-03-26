@@ -164,7 +164,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             'goodsOrPsv',
             'licenceType',
             'operatingCentres',
-            'previousConvictions',
+            'previousConvictions' => array(
+                'children' => array('title')
+            ),
             'otherLicences' => array(
                 'children' => array(
                     'previousLicenceType'
@@ -462,7 +464,9 @@ class ApplicationEntityService extends AbstractLvaEntityService
             ],
             'convictions_penalties' => [
                 'children' => [
-                    'previousConvictions'
+                    'previousConvictions' => [
+                        'children' => ['title']
+                    ]
                 ]
             ],
             'licence_history' => [

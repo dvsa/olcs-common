@@ -59,11 +59,15 @@ class GrantPeopleProcessingService implements ServiceLocatorAwareInterface
      */
     private function createOrganisationPerson($data)
     {
-        $person = $this->getServiceLocator()
-            ->get('Entity\Person')
-            ->save(
+        $personData = $this->getServiceLocator()
+            ->get('Helper\Data')
+            ->replaceIds(
                 $this->cleanData($data['person'])
             );
+
+        $person = $this->getServiceLocator()
+            ->get('Entity\Person')
+            ->save($personData);
 
         $orgData = $this->getServiceLocator()
             ->get('Helper\Data')
