@@ -33,6 +33,7 @@ class User extends Generic implements ServiceLocatorAwareInterface
     {
         return [
             'children' => [
+                'team' => [],
                 'contactDetails' => [
                     'children' => [
                         'address' => [
@@ -40,7 +41,11 @@ class User extends Generic implements ServiceLocatorAwareInterface
                                 'countryCode'
                             ]
                         ],
-                        'person' => [],
+                        'person' => [
+                            'children' => [
+                                'title' => []
+                            ]
+                        ],
                         'phoneContacts' => [
                             'children' => [
                                 'phoneContactType'
@@ -85,25 +90,27 @@ class User extends Generic implements ServiceLocatorAwareInterface
     {
         if (!isset($data['id'])) {
             return $this->createUser($data);
+        } else {
+            $existingData = $this->fetchOne($data['id'], $this->getBundle());
+
+            //check user exists exists
+            if (!isset($existingData['id'])) {
+                throw new ResourceNotFoundException('User not found');
+            }
+
+            $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
+
+            $this->getContactDetailsService()->save($mapped['contact']);
+
+            //any new phone contacts need adding separately
+            foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
+                $this->getPhoneContactService()->save($newPhoneContact);
+            }
+
+            parent::save($mapped['user']);
+
+            return $data['id'];
         }
-
-        $existingData = $this->fetchOne($data['id'], $this->getBundle());
-
-        //check user exists exists
-        if (!isset($existingData['id'])) {
-            throw new ResourceNotFoundException('User not found');
-        }
-
-        $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
-
-        $this->getContactDetailsService()->save($mapped['contact']);
-
-        //any new phone contacts need adding separately
-        foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
-            $this->getPhoneContactService()->save($newPhoneContact);
-        }
-
-        return $data['id'];
     }
 
     protected function createUser($data)
