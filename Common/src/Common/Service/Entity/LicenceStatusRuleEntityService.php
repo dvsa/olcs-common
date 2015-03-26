@@ -29,6 +29,17 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     protected $entity = 'LicenceStatusRule';
 
     /**
+     * Bundle used for getList method
+     *
+     * @var array
+     */
+    protected $listBundle = [
+        'children' => [
+            'licenceStatus',
+        ],
+    ];
+
+    /**
      * Argument defaults.
      *
      * @var array
@@ -114,6 +125,28 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
      */
     private function normaliseQueryArguments(array $args = array())
     {
-        return array_merge($this->argumentDefaults['query'], $args);
+        $args['query']['licence'] = $licenceId;
+
+        return array_merge($this->argumentDefaults['query'], $args['query']);
+    }
+
+    /**
+     * @param int $licenceId
+     * @return array|null
+     */
+    public function getPendingChangesForLicence($licenceId)
+    {
+        // defer to generic method
+        $data = $this->getStatusesForLicence(
+            $licenceId,
+            array(
+                'query' => array(
+                    'deletedDate' => 'NULL',
+                    'endProcessedDate' => 'NULL',
+                ),
+            )
+        );
+
+        return $data['Count']>0 ? $data['Results'] : null;
     }
 }

@@ -48,7 +48,7 @@ class LicenceVehiclesPsvAdapter extends AbstractVehiclesPsvAdapter
                     $licenceVehicle['specifiedDate']['day']
                 );
             } else {
-                unset($licenceVehicle['specifiedDate']);
+                $licenceVehicle['specifiedDate'] = $this->getServiceLocator()->get('Helper\Date')->getDate('Y-m-d');
             }
         }
         if (isset($licenceVehicle['removalDate']) && is_array($licenceVehicle['removalDate'])) {

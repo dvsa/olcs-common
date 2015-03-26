@@ -1764,4 +1764,40 @@ class ApplicationProcessingServiceTest extends MockeryTestCase
 
         $this->sut->processNotTakenUpApplication($applicationId);
     }
+
+    /**
+     * @group processing_services
+     */
+    public function testProcessUndoNotTakenUpApplication()
+    {
+        $applicationId = 69;
+        $licenceId     = 100;
+
+        // mock service dependencies
+        $mockApplicationEntityService    = m::mock();
+        $mockLicenceEntityService        = m::mock();
+        $this->sm->setService('Entity\Application', $mockApplicationEntityService);
+        $this->sm->setService('Entity\Licence', $mockLicenceEntityService);
+
+        // Expectations...
+
+        // application status should be updated
+        $mockApplicationEntityService->shouldReceive('forceUpdate')
+            ->once()
+            ->with(
+                $applicationId,
+                ['status' => ApplicationEntityService::APPLICATION_STATUS_GRANTED]
+            );
+
+        // licence status should be updated
+        $mockApplicationEntityService->shouldReceive('getLicenceIdForApplication')
+            ->once()
+            ->with($applicationId)
+            ->andReturn($licenceId);
+        $mockLicenceEntityService->shouldReceive('setLicenceStatus')
+            ->once()
+            ->with($licenceId, LicenceEntityService::LICENCE_STATUS_GRANTED);
+
+        $this->sut->processUndoNotTakenUpApplication($applicationId);
+    }
 }
