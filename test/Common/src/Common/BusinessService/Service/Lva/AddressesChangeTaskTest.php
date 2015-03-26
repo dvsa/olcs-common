@@ -17,13 +17,9 @@ use Common\BusinessService\Response;
  *
  * @author Nick Payne <nick.payne@valtech.co.uk>
  */
-class AddressChangeTaskTest extends MockeryTestCase
+class AddressesChangeTaskTest extends MockeryTestCase
 {
     protected $sut;
-
-    protected $sm;
-
-    protected $bsm;
 
     public function setUp()
     {
