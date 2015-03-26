@@ -116,8 +116,7 @@ class Addresses implements
 
         $address = array_merge($address, $additionalData);
 
-        $response = $this->getServiceLocator()
-            ->get('BusinessServiceManager')
+        $response = $this->getBusinessServiceManager()
             ->get('Lva\ContactDetails')
             ->process(
                 [
