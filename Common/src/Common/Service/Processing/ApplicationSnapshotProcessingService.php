@@ -30,7 +30,7 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         $applicationType = $this->getServiceLocator()->get('Entity\Application')
             ->getApplicationType($applicationId);
 
-        $html = $this->getHtml($applicationType);
+        $html = $this->getHtml($applicationType, $applicationId);
         $file = $this->uploadFile($html);
         $this->createDocumentRecord($applicationId, $event, $applicationType, $file);
     }
@@ -123,8 +123,9 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
      * Here we physically setup the review controller and catch the HTML so we can persist the snapshot
      *
      * @param type $applicationType
+     * @param int $applicationId
      */
-    protected function getHtml($applicationType)
+    protected function getHtml($applicationType, $applicationId)
     {
         // Applications and Variations use a different controller and adapter
         if ($applicationType == ApplicationEntityService::APPLICATION_TYPE_NEW) {
@@ -136,6 +137,14 @@ class ApplicationSnapshotProcessingService implements ServiceLocatorAwareInterfa
         // Setup the controller dependencies
         $controllerPluginManager = $this->getServiceLocator()->get('ControllerPluginManager');
         $event = $this->getServiceLocator()->get('Application')->getMvcEvent();
+
+        // Inject the 'application' route param if it is not present (this can
+        // happen if we grant via a licence fee route, for example)
+        $routeMatch = $event->getRouteMatch();
+        if (empty($routeMatch->getParam('application'))) {
+            $routeMatch->setParam('application', $applicationId);
+        }
+
         $adapter = $this->getServiceLocator()->get(sprintf('%sReviewAdapter', $appType));
 
         // Format the controller name

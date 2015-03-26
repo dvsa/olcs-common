@@ -558,7 +558,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->getMock()
         );
 
@@ -687,7 +687,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->once()
             ->getMock()
         );
@@ -887,7 +887,7 @@ class InterimHelperServiceTest extends MockeryTestCase
             'Helper\CommunityLicenceDocument',
             m::mock()
             ->shouldReceive('generateBatch')
-            ->with(99, [50])
+            ->with(99, [50], $applicationId)
             ->once()
             ->getMock()
         );

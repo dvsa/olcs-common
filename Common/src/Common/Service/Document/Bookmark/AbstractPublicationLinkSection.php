@@ -47,10 +47,10 @@ abstract class AbstractPublicationLinkSection extends DynamicBookmark
         'Section36' => [self::TABLE_ROW_1],
         'Section41' => [self::TABLE_ROW_1],
         'Section42' => [self::TABLE_ROW_1],
-        'Section51' => [self::TABLE_ROW_1], //needs to be table row 2 eventually?
-        'Section52' => [self::TABLE_ROW_1], //needs to be table row 2 eventually?
-        'Section53' => [self::TABLE_ROW_1], //needs to be table row 2 eventually?
-        'Section54' => [self::TABLE_ROW_1], //needs to be table row 2 eventually?
+        'Section51' => [self::TABLE_ROW_2],
+        'Section52' => [self::TABLE_ROW_2],
+        'Section53' => [self::TABLE_ROW_2],
+        'Section54' => [self::TABLE_ROW_2],
         'Section61' => [self::TABLE_ROW_1],
         'Section71' => [self::TABLE_ROW_1],
         'Section72' => [self::TABLE_ROW_1],

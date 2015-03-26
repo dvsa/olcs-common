@@ -483,6 +483,21 @@ class ApplicationEntityService extends AbstractLvaEntityService
                         ]
                     ]
                 ]
+            ],
+            'conditions_undertakings' => [
+                'children' => [
+                    'conditionUndertakings' => [
+                        'children' => [
+                            'conditionType',
+                            'attachedTo',
+                            'operatingCentre' => [
+                                'children' => [
+                                    'address'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ],
         'application' => [
@@ -603,6 +618,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     ]
                 ]
             ],
+            'vehicles_declarations' => [
+                'children' => [
+                    'licence' => [
+                        'children' => [
+                            'trafficArea'
+                        ]
+                    ]
+                ]
+            ]
         ],
         'variation' => [
             'type_of_licence' => [
@@ -628,6 +652,15 @@ class ApplicationEntityService extends AbstractLvaEntityService
                     'applicationOrganisationPersons' => [
                         'children' => [
                             'person'
+                        ]
+                    ]
+                ]
+            ],
+            'conditions_undertakings' => [
+                'children' => [
+                    'conditionUndertakings' => [
+                        'children' => [
+                            'licConditionVariation'
                         ]
                     ]
                 ]
@@ -836,6 +869,11 @@ class ApplicationEntityService extends AbstractLvaEntityService
         }
 
         return $this->licenceIds[$id];
+    }
+
+    public function getApplicationsForLicence($licenceId)
+    {
+        return $this->get(['licenceId' => $licenceId]);
     }
 
     /**

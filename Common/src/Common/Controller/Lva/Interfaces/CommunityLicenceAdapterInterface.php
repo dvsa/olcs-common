@@ -17,7 +17,7 @@ interface CommunityLicenceAdapterInterface extends AdapterInterface
     /**
      * Add office copy
      */
-    public function addOfficeCopy($licenceId);
+    public function addOfficeCopy($licenceId, $identifier);
 
     /**
      * Get total authority
@@ -27,5 +27,5 @@ interface CommunityLicenceAdapterInterface extends AdapterInterface
     /**
      * Add community licences
      */
-    public function addCommunityLicences($licenceId, $totalLicences);
+    public function addCommunityLicences($licenceId, $totalLicences, $identifier);
 }

@@ -138,6 +138,21 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
     /**
      * @outputBuffering disabled
      */
+    public function testRenderForTermsBoxElement()
+    {
+        $this->prepareElement('\Common\Form\Elements\Types\TermsBox');
+        $this->element->setValue('foo');
+
+        $viewHelper = $this->prepareViewHelper();
+
+        echo $viewHelper($this->element, 'formCollection', '/');
+
+        $this->expectOutputRegex('/^<div class="terms--box">foo<\/div>$/');
+    }
+
+    /**
+     * @outputBuffering disabled
+     */
     public function testRenderForHtmlTranslatedElement()
     {
         $this->prepareElement('\Common\Form\Elements\Types\HtmlTranslated');

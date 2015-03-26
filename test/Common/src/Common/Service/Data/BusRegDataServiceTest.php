@@ -62,9 +62,7 @@ class BusRegDataServiceTest extends MockeryTestCase
      */
     public function testFetchVariatonHistory()
     {
-        $params['routeNo'] = '123';
-        $params['sort'] = 'variationNo';
-        $params['order'] = 'DESC';
+        $regNo = '123';
 
         $mockRestClient = m::mock('Common\Util\RestClient');
         $mockData = [ 0 => ['id' => 99]];
@@ -77,7 +75,7 @@ class BusRegDataServiceTest extends MockeryTestCase
 
         $this->sut->setRestClient($mockRestClient);
 
-        $result = $this->sut->fetchVariationHistory($params);
+        $result = $this->sut->fetchVariationHistory($regNo);
 
         $this->assertEquals($mockData, $result);
     }

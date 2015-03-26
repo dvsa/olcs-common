@@ -61,6 +61,14 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 
         $licences = [
             [
+                'id' => 234,
+                'status' => [ 'id' => Licence::LICENCE_STATUS_VALID ],
+                'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_GOODS_VEHICLE ],
+                'licenceType' => [ 'id' => Licence::LICENCE_TYPE_STANDARD_INTERNATIONAL ],
+                'totAuthVehicles' => 3,
+
+            ],
+            [
                 'id' => 235,
                 'status' => [ 'id' => Licence::LICENCE_STATUS_VALID ],
                 'goodsOrPsv' => [ 'id' => Licence::LICENCE_CATEGORY_GOODS_VEHICLE ],
@@ -94,7 +102,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
 
         $anotherApplication = [
             'id' => 124,
-            'totAuthVehicles' => 0,
+            'totAuthVehicles' => 2,
             'status' => [ 'id' => Application::APPLICATION_STATUS_UNDER_CONSIDERATION ],
             'licence' => [
                 'id' => 237,
@@ -131,8 +139,9 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
         //    the finance is £7000 + (2 x £3900) = £14,800
         //  * plus a goods restricted licence with 3 vehicles, the finance is (3 x £1700) = £5,100
         //  * plus a psv restricted licence with 1 vehicle, the finance is £2,700
-        //  * The total required finance is £14,800 + £5,100 + £2,700 = £22,600
-        $expected = 22600;
+        //  * plus another goods app with 2 vehicles (2 x 3900) = £7,800
+        //  * The total required finance is £14,800 + £5,100 + £2,700 + £7,800 = £30,400
+        $expected = 30400;
 
         $this->setUpData();
 
@@ -150,7 +159,7 @@ class ApplicationFinancialEvidenceAdapterTest extends MockeryTestCase
     public function testGetTotalNumberOfAuthorisedVehicles()
     {
         $this->setUpData();
-        $this->assertEquals(7, $this->sut->getTotalNumberOfAuthorisedVehicles(123));
+        $this->assertEquals(9, $this->sut->getTotalNumberOfAuthorisedVehicles(123));
     }
 
     public function testAlterFormForLva()

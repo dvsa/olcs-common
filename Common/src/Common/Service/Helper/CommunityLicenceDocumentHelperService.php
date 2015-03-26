@@ -21,9 +21,11 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
      * Helper method to generate a document for an array of community licences
      *
      * @param array $licenceIds
+     * @param array $communityLicenceIds
+     * @param array $applicationId
      *
      */
-    public function generateBatch($licenceId, $communityLicenceIds = [])
+    public function generateBatch($licenceId, $communityLicenceIds = [], $applicationId = null)
     {
         // we need this because we're interested in its category & type
         $licence = $this->getServiceLocator()
@@ -35,7 +37,8 @@ class CommunityLicenceDocumentHelperService extends AbstractHelperService
 
             $query = [
                 'licence' => $licenceId,
-                'communityLic' => $id
+                'communityLic' => $id,
+                'application' => $applicationId
             ];
 
             $documentService = $this->getServiceLocator()

@@ -24,7 +24,7 @@ class BusRegText2 extends AbstractPublicationFilter
     {
         $licenceData = $publication->offsetGet('licenceData');
 
-        $licence = sprintf('%s %s', $licenceData['licNo'], $licenceData['organisation']['name']);
+        $licence = $licenceData['organisation']['name'];
 
         if (!empty($licenceData['organisation']['tradingNames'])) {
             $latestTradingName = end($licenceData['organisation']['tradingNames']);

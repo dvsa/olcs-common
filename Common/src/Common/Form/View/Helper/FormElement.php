@@ -13,6 +13,7 @@ use Zend\Form\View\Helper\FormElement as ZendFormElement;
 use Zend\Form\ElementInterface as ZendElementInterface;
 use Common\Form\Elements\Types\Html;
 use Common\Form\Elements\Types\HtmlTranslated;
+use Common\Form\Elements\Types\TermsBox;
 use Common\Form\Elements\Types\Table;
 use Common\Form\Elements\Types\PlainText;
 use Common\Form\Elements\InputFilters\ActionLink;
@@ -26,6 +27,7 @@ use Common\Form\Elements\Types\TrafficAreaSet;
  */
 class FormElement extends ZendFormElement
 {
+    const TERMS_BOX_WRAPPER = '<div class="terms--box">%s</div>';
 
     /**
      * The form row output format.
@@ -113,6 +115,10 @@ class FormElement extends ZendFormElement
             }
 
             return $this->getView()->translate($element->getValue());
+        }
+
+        if ($element instanceof TermsBox) {
+            return sprintf(self::TERMS_BOX_WRAPPER, $this->getView()->translate($element->getValue()));
         }
 
         if ($element instanceof Html) {
