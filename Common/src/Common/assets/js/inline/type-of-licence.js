@@ -73,7 +73,7 @@ OLCS.ready(function() {
 
         return;
       }
-      OLCS.formModal(data);
+      OLCS.modalForm(data);
     })
   });
 });
