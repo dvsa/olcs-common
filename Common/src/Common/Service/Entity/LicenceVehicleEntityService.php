@@ -176,7 +176,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
     {
         $query = [
             'removalDate' => 'NULL',
-            'interimApplication' => 'NULL',
             'application' => $applicationId
         ];
 

@@ -279,7 +279,6 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
 
         $query = array(
             'removalDate' => 'NULL',
-            'interimApplication' => 'NULL',
             'application' => $applicationId,
             'limit' => 'all'
         );
@@ -337,7 +336,6 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
 
         $query = array(
             'removalDate' => 'NULL',
-            'interimApplication' => 'NULL',
             'application' => $applicationId,
             'limit' => 'all'
         );
