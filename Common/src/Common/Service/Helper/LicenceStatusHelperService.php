@@ -124,6 +124,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         foreach ($variantApplications['Results'] as $key => $application) {
             if ($application['isVariation']) {
+                // @todo check for under consideration status
                 return $this->createMessage('There are applications still under consideration');
             }
         }
