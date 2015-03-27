@@ -411,9 +411,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $licenceStatusRuleEntity = m::mock()
             ->shouldReceive('getStatusesForLicence')
             ->with(
-                $licenceId,
                 array(
                     'query' => array(
+                        'licence' => $licenceId,
                         'deletedDate' => 'NULL',
                         'endProcessedDate' => 'NULL',
                     ),
@@ -448,9 +448,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $licenceStatusRuleEntity = m::mock()
             ->shouldReceive('getStatusesForLicence')
             ->with(
-                $licenceId,
                 [
                     'query' => [
+                        'licence' => $licenceId,
                         'deletedDate' => 'NULL',
                         'startProcessedDate' => 'NULL',
                         'licenceStatus' => [

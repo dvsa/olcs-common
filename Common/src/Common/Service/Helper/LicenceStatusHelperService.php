@@ -300,13 +300,13 @@ class LicenceStatusHelperService extends AbstractHelperService
     {
         // defer to generic entity service method
         $data = $this->getServiceLocator()->get('Entity\LicenceStatusRule')->getStatusesForLicence(
-            $licenceId,
-            array(
-                'query' => array(
+            [
+                'query' => [
+                    'licence' => $licenceId,
                     'deletedDate' => 'NULL',
                     'endProcessedDate' => 'NULL',
-                ),
-            )
+                ],
+            ]
         );
 
         return $data['Count']>0 ? $data['Results'] : null;
@@ -321,9 +321,9 @@ class LicenceStatusHelperService extends AbstractHelperService
         $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
 
         $data = $licenceStatusEntityService->getStatusesForLicence(
-            $licenceId,
             [
                 'query' => [
+                    'licence' => $licenceId,
                     'deletedDate' => 'NULL',
                     'startProcessedDate' => 'NULL',
                     'licenceStatus' => [
