@@ -680,6 +680,8 @@ return array(
         advice.',
     'cancel' => 'Cancel',
     'cancel.button' => 'Cancel',
+    'cannot-change-conditions-undertakings-guidance' => 'Cannot change conditions and undertakings. Please contact
+        Central Licensing Office for further advice',
     'cannot-perform-action' => 'You cannot perform this action',
     'cant-edit-removed-vehicle' => 'You cannot edit a removed vehicle',
     'cant-increase-total-trailers' => 'In order to increase the total number of trailers on the licence you must <a
