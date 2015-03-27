@@ -73,7 +73,9 @@ class User extends Generic implements ServiceLocatorAwareInterface
             throw new ResourceNotFoundException('User not found');
         }
 
-        return $this->getDataMapper()->formatMyDetailsDataForForm($data);
+        $dataMapper = $this->getDataMapper();
+
+        return $dataMapper->formatMyDetailsDataForForm($data, $dataMapper->getMyDetailsFieldMap());
     }
 
     /**
