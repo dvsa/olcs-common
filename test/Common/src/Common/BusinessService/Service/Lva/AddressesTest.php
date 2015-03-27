@@ -36,6 +36,39 @@ class AddressesTest extends MockeryTestCase
         $this->sut->setBusinessServiceManager($this->bsm);
     }
 
+    public function testProcessWithBadDirtyAddressResponse()
+    {
+        $data = [
+            'originalData' => 'foo',
+            'data' => 'bar'
+        ];
+
+        $dirtyData = [
+            'original' => 'foo',
+            'updated' => 'bar'
+        ];
+
+        $badResponse = new Response();
+        $badResponse->setType(Response::TYPE_FAILED);
+
+        $this->bsm->shouldReceive('get')
+            ->with('Lva\DirtyAddresses')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('process')
+                ->with($dirtyData)
+                ->andReturn($badResponse)
+                ->getMock()
+            );
+
+        $response = $this->sut->process($data);
+
+        // make sure the sub response is proxied straight through
+        $this->assertEquals($response, $badResponse);
+        $this->assertEquals(Response::TYPE_FAILED, $response->getType());
+        $this->assertEquals([], $response->getData());
+    }
+
     public function testProcessWithBadCorrespondenceData()
     {
         $data = [
@@ -65,10 +98,29 @@ class AddressesTest extends MockeryTestCase
             'emailAddress' => 'test@user.com'
         ];
 
+        $dirtyData = [
+            'original' => 'foo',
+            'updated' => $data
+        ];
+
+        $dirtyResponse = new Response();
+        $dirtyResponse->setType(Response::TYPE_SUCCESS);
+        $dirtyResponse->setData(['dirtyFieldsets' => 1]);
+
         $badResponse = new Response();
         $badResponse->setType(Response::TYPE_FAILED);
 
         $this->bsm->shouldReceive('get')
+            ->with('Lva\DirtyAddresses')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('process')
+                ->once()
+                ->with($dirtyData)
+                ->andReturn($dirtyResponse)
+                ->getMock()
+            )
+            ->shouldReceive('get')
             ->with('Lva\ContactDetails')
             ->andReturn(
                 m::mock()
@@ -85,7 +137,8 @@ class AddressesTest extends MockeryTestCase
         $response = $this->sut->process(
             [
                 'data' => $data,
-                'licenceId' => 123
+                'licenceId' => 123,
+                'originalData' => 'foo'
             ]
         );
 
@@ -124,6 +177,15 @@ class AddressesTest extends MockeryTestCase
             'emailAddress' => 'test@user.com'
         ];
 
+        $dirtyData = [
+            'original' => 'foo',
+            'updated' => $data
+        ];
+
+        $dirtyResponse = new Response();
+        $dirtyResponse->setType(Response::TYPE_SUCCESS);
+        $dirtyResponse->setData(['dirtyFieldsets' => 1]);
+
         $subResponse = new Response();
         $subResponse->setType(Response::TYPE_SUCCESS);
         $subResponse->setData(
@@ -133,6 +195,16 @@ class AddressesTest extends MockeryTestCase
         );
 
         $this->bsm->shouldReceive('get')
+            ->with('Lva\DirtyAddresses')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('process')
+                ->once()
+                ->with($dirtyData)
+                ->andReturn($dirtyResponse)
+                ->getMock()
+            )
+            ->shouldReceive('get')
             ->with('Lva\ContactDetails')
             ->andReturn(
                 m::mock()
@@ -175,7 +247,8 @@ class AddressesTest extends MockeryTestCase
         $response = $this->sut->process(
             [
                 'data' => $data,
-                'licenceId' => 123
+                'licenceId' => 123,
+                'originalData' => 'foo'
             ]
         );
 
@@ -232,6 +305,15 @@ class AddressesTest extends MockeryTestCase
             ]
         ];
 
+        $dirtyData = [
+            'original' => 'foo',
+            'updated' => $data
+        ];
+
+        $dirtyResponse = new Response();
+        $dirtyResponse->setType(Response::TYPE_SUCCESS);
+        $dirtyResponse->setData(['dirtyFieldsets' => 1]);
+
         $subResponse = new Response();
         $subResponse->setType(Response::TYPE_SUCCESS);
         $subResponse->setData(
@@ -244,6 +326,16 @@ class AddressesTest extends MockeryTestCase
         $badResponse->setType(Response::TYPE_FAILED);
 
         $this->bsm->shouldReceive('get')
+            ->with('Lva\DirtyAddresses')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('process')
+                ->once()
+                ->with($dirtyData)
+                ->andReturn($dirtyResponse)
+                ->getMock()
+            )
+            ->shouldReceive('get')
             ->with('Lva\ContactDetails')
             ->andReturn(
                 m::mock()
@@ -285,7 +377,8 @@ class AddressesTest extends MockeryTestCase
         $response = $this->sut->process(
             [
                 'data' => $data,
-                'licenceId' => 123
+                'licenceId' => 123,
+                'originalData' => 'foo'
             ]
         );
 
@@ -342,6 +435,15 @@ class AddressesTest extends MockeryTestCase
             ]
         ];
 
+        $dirtyData = [
+            'original' => 'foo',
+            'updated' => $data
+        ];
+
+        $dirtyResponse = new Response();
+        $dirtyResponse->setType(Response::TYPE_SUCCESS);
+        $dirtyResponse->setData(['dirtyFieldsets' => 1]);
+
         $subResponse = new Response();
         $subResponse->setType(Response::TYPE_SUCCESS);
         $subResponse->setData(
@@ -383,6 +485,16 @@ class AddressesTest extends MockeryTestCase
         ];
 
         $this->bsm->shouldReceive('get')
+            ->with('Lva\DirtyAddresses')
+            ->andReturn(
+                m::mock()
+                ->shouldReceive('process')
+                ->once()
+                ->with($dirtyData)
+                ->andReturn($dirtyResponse)
+                ->getMock()
+            )
+            ->shouldReceive('get')
             ->with('Lva\PhoneContact')
             ->andReturn(
                 m::mock()
@@ -395,13 +507,12 @@ class AddressesTest extends MockeryTestCase
         $response = $this->sut->process(
             [
                 'data' => $data,
-                'licenceId' => 123
+                'licenceId' => 123,
+                'originalData' => 'foo'
             ]
         );
 
-        // make sure the sub response is proxied straight through
-        $this->assertEquals($response, $estResponse);
         $this->assertEquals(Response::TYPE_SUCCESS, $response->getType());
-        $this->assertEquals([], $response->getData());
+        $this->assertEquals(['hasChanged' => true], $response->getData());
     }
 }

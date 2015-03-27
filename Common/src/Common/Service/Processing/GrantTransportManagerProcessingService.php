@@ -9,6 +9,7 @@ namespace Common\Service\Processing;
 
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Common\Service\Entity\LicenceEntityService;
 
 /**
  * Grant Transport Manager Processing Service
@@ -21,50 +22,57 @@ class GrantTransportManagerProcessingService implements ServiceLocatorAwareInter
 
     public function grant($id, $licenceId)
     {
-        $entityService = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
+        $licence = $this->getServiceLocator()->get('Entity\Licence')->getOverview($licenceId);
+        if ($licence['licenceType']['id'] == LicenceEntityService::LICENCE_TYPE_RESTRICTED) {
+            $this->deleteAllTransportManagersForLicence($licenceId);
+        } else {
+            $entityService = $this->getServiceLocator()->get('Entity\TransportManagerApplication');
 
-        $results = $entityService->getGrantDataForApplication($id);
+            $results = $entityService->getGrantDataForApplication($id);
 
-        foreach ($results as $row) {
+            foreach ($results as $row) {
 
-            switch ($row['action']) {
-                case 'A':
-                    $this->createTransportManager($row, $licenceId);
-                    break;
-                case 'D':
-                    $this->deleteTransportManager($row, $licenceId);
-                    break;
+                switch ($row['action']) {
+                    case 'A':
+                    case 'U':
+                        $this->createTransportManager($row, $licenceId);
+                        break;
+                    case 'D':
+                        $this->deleteTransportManager($row, $licenceId);
+                        break;
+                }
             }
         }
     }
 
     protected function createTransportManager($data, $licenceId)
     {
-        if (!$this->licenceHasTransportManager($data['transportManager']['id'], $licenceId)) {
+        if ($this->licenceHasTransportManager($data['transportManager']['id'], $licenceId)) {
+            $this->deleteTransportManager($data, $licenceId);
+        }
 
-            $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($data);
+        $data = $this->getServiceLocator()->get('Helper\Data')->replaceIds($data);
 
-            $otherLicences = $data['otherLicences'];
-            unset($data['otherLicences']);
+        $otherLicences = $data['otherLicences'];
+        unset($data['otherLicences']);
 
-            unset($data['id']);
-            unset($data['action']);
-            unset($data['version']);
-            unset($data['application']);
-            unset($data['tmApplicationStatus']);
+        unset($data['id']);
+        unset($data['action']);
+        unset($data['version']);
+        unset($data['application']);
+        unset($data['tmApplicationStatus']);
 
-            $data['licence'] = $licenceId;
+        $data['licence'] = $licenceId;
 
-            foreach ($data['operatingCentres'] as $key => $row) {
-                $data['operatingCentres'][$key] = $row['id'];
-            }
+        foreach ($data['operatingCentres'] as $key => $row) {
+            $data['operatingCentres'][$key] = $row['id'];
+        }
 
-            $entityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
-            $id = $entityService->save($data);
+        $entityService = $this->getServiceLocator()->get('Entity\TransportManagerLicence');
+        $id = $entityService->save($data);
 
-            foreach ($otherLicences as $otherLicence) {
-                $this->createOtherLicence($otherLicence, $id);
-            }
+        foreach ($otherLicences as $otherLicence) {
+            $this->createOtherLicence($otherLicence, $id);
         }
     }
 
@@ -81,7 +89,7 @@ class GrantTransportManagerProcessingService implements ServiceLocatorAwareInter
         $this->getServiceLocator()->get('Entity\OtherLicence')->save($data);
     }
 
-    protected function licenceHasTransportManager($transportManagerId, $licenceId)
+    public function licenceHasTransportManager($transportManagerId, $licenceId)
     {
         $results = $this->getServiceLocator()->get('Entity\TransportManagerLicence')
             ->getByTransportManagerAndLicence($transportManagerId, $licenceId);
@@ -95,6 +103,16 @@ class GrantTransportManagerProcessingService implements ServiceLocatorAwareInter
             ->deleteList(
                 [
                     'transportManager' => $data['transportManager']['id'],
+                    'licence' => $licenceId
+                ]
+            );
+    }
+
+    protected function deleteAllTransportManagersForLicence($licenceId)
+    {
+        $this->getServiceLocator()->get('Entity\TransportManagerLicence')
+            ->deleteList(
+                [
                     'licence' => $licenceId
                 ]
             );
