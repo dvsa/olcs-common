@@ -66,4 +66,18 @@ class CasesEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(['CASES'], $this->sut->getComplaintsForApplication(1971));
     }
+
+    /**
+     * Test getComplaintsForLicence
+     */
+    public function testGetComplaintsForLicence()
+    {
+        $this->expectOneRestCall(
+            'Cases',
+            'GET',
+            ['licence' => 1971, 'limit' => 'all']
+        )->will($this->returnValue(['Results' => ['CASES']]));
+
+        $this->assertEquals(['CASES'], $this->sut->getComplaintsForLicence(1971));
+    }
 }

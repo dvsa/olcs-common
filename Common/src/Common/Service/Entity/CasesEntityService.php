@@ -32,6 +32,31 @@ class CasesEntityService extends AbstractEntityService
         'children' => ['publicInquirys']
     ];
 
+    private $tableBundle = [
+        'children' => [
+            'complaints' => [
+                'criteria' => [
+                    'isCompliance' => 0
+                ],
+                'children' => [
+                    'complainantContactDetails' => [
+                        'children' => [
+                            'person'
+                        ]
+                    ],
+                    'ocComplaints' => [
+                        'children' => [
+                            'operatingCentre' => [
+                                'children' => ['address']
+                            ]
+                        ]
+                    ],
+                    'status'
+                ]
+            ]
+        ]
+    ];
+
     public function findByIdentifier($identifier)
     {
         // a case's identifier is also its primary key...
@@ -63,31 +88,23 @@ class CasesEntityService extends AbstractEntityService
         $query = [
             'application' => $applicationId,
         ];
-        $bundle = [
-            'children' => [
-                'complaints' => [
-                    'criteria' => [
-                        'isCompliance' => 0
-                    ],
-                    'children' => [
-                        'complainantContactDetails' => [
-                            'children' => [
-                                'person'
-                            ]
-                        ],
-                        'ocComplaints' => [
-                            'children' => [
-                                'operatingCentre' => [
-                                    'children' => ['address']
-                                ]
-                            ]
-                        ],
-                        'status'
-                    ]
-                ]
-            ]
+
+        return $this->getAll($query, $this->tableBundle)['Results'];
+    }
+
+    /**
+     * Get cases with complaints for a licence
+     *
+     * @param int $licenceId Licence Id
+     *
+     * @return array
+     */
+    public function getComplaintsForLicence($licenceId)
+    {
+        $query = [
+            'licence' => $licenceId,
         ];
 
-        return $this->getAll($query, $bundle)['Results'];
+        return $this->getAll($query, $this->tableBundle)['Results'];
     }
 }

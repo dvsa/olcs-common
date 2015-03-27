@@ -41,4 +41,23 @@ class OppositionEntityServiceTest extends AbstractEntityServiceTestCase
 
         $this->assertEquals(['CASES'], $this->sut->getForApplication(1971));
     }
+
+    /**
+     * Test getForLicence
+     */
+    public function testGetForLicence()
+    {
+        $this->expectOneRestCall(
+            'Opposition',
+            'GET',
+            [
+                'licence' => 1971,
+                'sort' => 'createdOn',
+                'order' => 'DESC',
+                'limit' => 'all'
+            ]
+        )->will($this->returnValue(['Results' => ['CASES']]));
+
+        $this->assertEquals(['CASES'], $this->sut->getForLicence(1971));
+    }
 }
