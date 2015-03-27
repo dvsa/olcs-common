@@ -156,10 +156,10 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $licenceId = 1;
 
         $licenceService = m::mock()
-            ->shouldReceive('forceUpdate')
+            ->shouldReceive('setLicenceStatus')
             ->with(
                 $licenceId,
-                array('status' => 'lsts_curtailed')
+                'lsts_curtailed'
             )
             ->andReturnNull()
             ->getMock();
@@ -188,8 +188,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        m::mock()->shouldReceive('forceUpdate')
-            ->with(1, array('status' => 'lsts_curtailed'))
+        m::mock()->shouldReceive('setLicenceStatus')
+            ->with(1, 'lsts_curtailed')
             ->andReturnNull()
             ->getMock();
 
@@ -226,10 +226,10 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->shouldReceive('getRevocationDataForLicence')
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('forceUpdate')
+            ->shouldReceive('setLicenceStatus')
             ->with(
                 $licenceId,
-                array('status' => 'lsts_revoked')
+                'lsts_revoked'
             )
             ->andReturnNull()
             ->getMock();
@@ -278,10 +278,10 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $licenceId = 1;
 
         $licenceService = m::mock()
-            ->shouldReceive('forceUpdate')
+            ->shouldReceive('setLicenceStatus')
             ->with(
                 $licenceId,
-                array('status' => 'lsts_suspended')
+                'lsts_suspended'
             )
             ->andReturnNull()
             ->getMock();
@@ -310,8 +310,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        m::mock()->shouldReceive('forceUpdate')
-            ->with(1, array('status' => 'lsts_suspended'))
+        m::mock()->shouldReceive('setLicenceStatus')
+            ->with(1, 'lsts_suspended')
             ->andReturnNull()
             ->getMock();
 

@@ -162,10 +162,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
-        $licenceEntityService->forceUpdate(
-            $licenceId,
-            array('status' => LicenceEntityService::LICENCE_STATUS_CURTAILED)
-        );
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_CURTAILED);
     }
 
     /**
@@ -185,7 +182,6 @@ class LicenceStatusHelperService extends AbstractHelperService
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
         $revocationData = $licenceEntityService->getRevocationDataForLicence($licenceId);
 
-        // Too complicated.
         $discs = array();
         if ($revocationData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
             array_map(
@@ -209,10 +205,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
-        $licenceEntityService->forceUpdate(
-            $licenceId,
-            array('status' => LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED)
-        );
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
     }
 
     /**
@@ -220,7 +213,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null|array $licenceVehicles The licence vehicles.
      */
-    private function removeLicenceVehicles($licenceVehicles = null)
+    private function removeLicenceVehicles($licenceVehicles = array())
     {
         $vehicles = array_map(
             function ($licenceVehicle) {
@@ -237,7 +230,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null|array $transportManagers The TM's
      */
-    private function removeTransportManagers($transportManagers = null)
+    private function removeTransportManagers($transportManagers = array())
     {
         $transportManagers = array_map(
             function ($transportManager) {
@@ -265,10 +258,7 @@ class LicenceStatusHelperService extends AbstractHelperService
             LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED
         );
 
-        $licenceEntityService->forceUpdate(
-            $licenceId,
-            array('status' => LicenceEntityService::LICENCE_STATUS_SUSPENDED)
-        );
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_SUSPENDED);
     }
 
     /**

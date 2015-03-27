@@ -327,7 +327,7 @@ class LicenceEntityService extends AbstractLvaEntityService
         return $this->get($id, $this->revocationDataBundle);
     }
 
-    
+
     /**
      * Check whether the licence belongs to the organisation
      *
