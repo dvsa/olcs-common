@@ -67,7 +67,7 @@ class DirtyAddresses implements
 
         $helper = $this->getServiceLocator()->get('Helper\Data');
         foreach ($this->fieldsets as $fieldset => $keys) {
-            if (!isset($original[$fieldset])) {
+            if (!isset($original[$fieldset]) || !isset($updated[$fieldset])) {
                 // some fieldsets are conditionally removed. It's
                 // safe enough to check their existance as even
                 // a totally empty fieldset will still be set
