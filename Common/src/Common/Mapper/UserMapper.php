@@ -177,71 +177,81 @@ class UserMapper extends GenericMapper
      * @param array $params
      * @return array
      */
-    protected function formatSave(array $data, $params = array())
+    public function formatSave(array $data, $existingData = array())
     {
         $dataToSave = array();
         // set up user table data
-        //$dataToSave['id'] = ;
-        //$dataToSave['version'] = $data['fields']['version'];
+        if (isset($existingData['id']) && isset($existingData['version'])) {
+            $dataToSave['id'] = $existingData['id'];
+            $dataToSave['version'] = $existingData['version'];
+        }
         $dataToSave['loginId'] = $data['userLoginSecurity']['loginId'];
         $dataToSave['memorableWord'] = $data['userLoginSecurity']['memorableWord'];
         $dataToSave['hintQuestion1'] = $data['userLoginSecurity']['hintQuestion1'];
         $dataToSave['hintAnswer1'] = $data['userLoginSecurity']['hintAnswer1'];
         $dataToSave['hintQuestion2'] = $data['userLoginSecurity']['hintQuestion2'];
         $dataToSave['hintAnswer2'] = $data['userLoginSecurity']['hintAnswer2'];
-        $dataToSave['hintQuestion3'] = $data['userLoginSecurity']['hintQuestion3'];
-        $dataToSave['hintAnswer3'] = $data['userLoginSecurity']['hintAnswer3'];
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
         $dataToSave['disableAccount'] = $data['userLoginSecurity']['disableAccount'];
+        $dataToSave['team'] = $data['userType']['team'];
 
         foreach ($data['userType']['roles'] as $role) {
-            $dataToSave['userRoles'] = [
+            $dataToSave['userRoles'][] = [
                 'role' => $role,
-                'user' => $userId
             ];
         }
-        $dataToSave['userRoles'] = $data['userType']['roles'];
 
         // set up contact data
-        //if (!(empty($data['fields']['contactDetailsId'])) && !(empty($data['fields']['contactDetailsVersion']))) {
-            //$dataToSave['contactDetails']['id'] = $data['fields']['contactDetailsId'];
-            //$dataToSave['contactDetails']['version'] = $data['fields']['contactDetailsVersion'];
-        //}
+        if (isset($existingData['contactDetails']['id']) && isset($existingData['contactDetails']['version'])) {
+            $dataToSave['contactDetails']['id'] = $existingData['contactDetails']['id'];
+            $dataToSave['contactDetails']['version'] = $existingData['contactDetails']['version'];
+        }
         $dataToSave['contactDetails']['address'] = $data['userContactDetails']['address'];
         $dataToSave['contactDetails']['emailAddress'] = $data['userContactDetails']['emailAddress'];
         $dataToSave['contactDetails']['contactType'] = 'ct_team_user';
 
         // set up person
-        //$dataToSave['contactDetails']['person']['id'] = $data['fields']['personId'];
-        //$dataToSave['contactDetails']['person']['version'] = $data['fields']['personVersion'];
+        if (isset($existingData['contactDetails']['person']['id']) &&
+            isset($existingData['contactDetails']['person']['version'])) {
+            $dataToSave['contactDetails']['person']['id'] = $existingData['contactDetails']['person']['id'];
+            $dataToSave['contactDetails']['person']['version'] = $existingData['contactDetails']['person']['version'];
+        }
         $dataToSave['contactDetails']['person']['forename'] = $data['userPersonal']['forename'];
         $dataToSave['contactDetails']['person']['familyName'] = $data['userPersonal']['familyName'];
         $dataToSave['contactDetails']['person']['birthDate'] = $data['userPersonal']['birthDate'];
 
-        $phoneContact = [];
-        //if (!(empty($data['fields']['phoneContactId'])) && !(empty($data['fields']['phoneContactVersion']))) {
-        //    $phoneContact['id'] = $data['fields']['phoneContactId'];
-        //    $phoneContact['version'] = $data['fields']['phoneContactVersion'];
-        //}
-        //if (!(empty($data['fields']['contactDetailsId'])) && !(empty($data['fields']['contactDetailsId']))) {
-        //    $phoneContact['contactDetails'] = $data['fields']['contactDetailsId'];
-        //}
+        if (isset($existingData['contactDetails']['phoneContacts'])) {
+            foreach ($existingData['contactDetails']['phoneContacts'] as $phoneContact) {
+                if ($phoneContact['phoneContactType'] == 'phone_t_tel') {
+                    $phoneContact['phoneNumber'] = $data['userContactDetails']['phone'];
+                } elseif ($phoneContact['phoneContactType'] == 'phone_t_fax') {
+                    $phoneContact['phoneNumber'] = $data['userContactDetails']['fax'];
+                }
+            }
+            $dataToSave['contactDetails']['phoneContacts'] = $existingData['contactDetails']['phoneContacts'];
+        } else {
+            $phoneContact = [];
+            $phoneContact['phoneNumber'] = $data['userContactDetails']['phone'];
+            $phoneContact['phoneContactType'] = 'phone_t_tel';
 
-        //$phoneContact['contactDetails'] = $data['fields']['contactDetailsId'];
-        $phoneContact['phoneNumber'] = $data['userContactDetails']['phone'];
-        $phoneContact['phoneContactType'] = 'phone_t_tel';
+            $faxContact['phoneNumber'] = $data['userContactDetails']['fax'];
+            $faxContact['phoneContactType'] = 'phone_t_fax';
 
-        $faxContact['phoneNumber'] = $data['userContactDetails']['fax'];
-        $faxContact['phoneContactType'] = 'phone_t_fax';
-
-        $dataToSave['contactDetails']['phoneContacts'][] = $phoneContact;
-        $dataToSave['contactDetails']['phoneContacts'][] = $faxContact;
+            $dataToSave['contactDetails']['phoneContacts'][] = $phoneContact;
+            $dataToSave['contactDetails']['phoneContacts'][] = $faxContact;
+        }
 
         $dataToSave['_OPTIONS_'] = array(
             'cascade' => array(
                 'single' => array(
                     'contactDetails' => array(
                         'entity' => 'ContactDetails'
+                    )
+                ),
+                'list' => array(
+                    'userRoles' => array(
+                        'entity' => 'UserRole',
+                        'parent' => 'user'
                     )
                 )
             )
@@ -257,7 +267,7 @@ class UserMapper extends GenericMapper
                 )
             )
         );
-
-        return ['fields' => $dataToSave];
+//var_dump($dataToSave);exit;
+        return $dataToSave;
     }
 }

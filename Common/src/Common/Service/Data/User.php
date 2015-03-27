@@ -88,38 +88,51 @@ class User extends Generic implements ServiceLocatorAwareInterface
      */
     public function save($data)
     {
-        if (!isset($data['id'])) {
-            return $this->createUser($data);
-        } else {
+        $existingData = $this->fetchOne($data['id'], $this->getBundle());
+
+        //check user exists exists
+        if (!isset($existingData['id'])) {
+            throw new ResourceNotFoundException('User not found');
+        }
+
+        $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
+
+        $this->getContactDetailsService()->save($mapped['contact']);
+
+        //any new phone contacts need adding separately
+        foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
+            $this->getPhoneContactService()->save($newPhoneContact);
+        }
+
+        parent::save($mapped['user']);
+
+        return $data['id'];
+    }
+
+    /**
+     * Saves a user and role form
+     *
+     * @param array $data
+     * @return mixed
+     * @throws \Common\Exception\BadRequestException
+     * @throws \Common\Exception\ResourceNotFoundException
+     */
+    public function saveUserRole($data)
+    {
+        $existingData = [];
+        if (isset($data['id'])) {
             $existingData = $this->fetchOne($data['id'], $this->getBundle());
 
             //check user exists exists
             if (!isset($existingData['id'])) {
                 throw new ResourceNotFoundException('User not found');
             }
-
-            $mapped = $this->getDataMapper()->saveMyDetailsFormMapper($existingData, $data);
-
-            $this->getContactDetailsService()->save($mapped['contact']);
-
-            //any new phone contacts need adding separately
-            foreach ($mapped['newPhoneContacts'] as $newPhoneContact) {
-                $this->getPhoneContactService()->save($newPhoneContact);
-            }
-
-            parent::save($mapped['user']);
-
-            return $data['id'];
         }
+
+        $mapped = $this->getDataMapper()->formatSave($data, $existingData);
+        return parent::save($mapped);
     }
 
-    protected function createUser($data)
-    {
-        $mapped = $this->getDataMapper()->formatSave($data);
-        echo 'here';
-        var_dump($mapped);
-        exit;
-    }
 
     /**
      * Gets the contact details service
