@@ -133,6 +133,10 @@ class User extends Generic implements ServiceLocatorAwareInterface
         return parent::save($mapped);
     }
 
+    public function formatDataForUserRoleForm($data)
+    {
+        return $this->getDataMapper()->formatLoad($data);
+    }
 
     /**
      * Gets the contact details service

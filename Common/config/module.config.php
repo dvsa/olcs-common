@@ -277,6 +277,7 @@ return array(
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
             'Common\Service\Data\Role' => 'Common\Service\Data\Role',
             'Common\Service\Data\Team' => 'Common\Service\Data\Team',
+            'Common\Service\Data\HintQuestion' => 'Common\Service\Data\HintQuestion',
         )
     ),
     'publications' => array(

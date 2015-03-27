@@ -174,7 +174,7 @@ class UserMapper extends GenericMapper
      * Format data on form submission
      *
      * @param array $data
-     * @param array $params
+     * @param array $existingData
      * @return array
      */
     public function formatSave(array $data, $existingData = array())
@@ -267,7 +267,45 @@ class UserMapper extends GenericMapper
                 )
             )
         );
-//var_dump($dataToSave);exit;
+
         return $dataToSave;
+    }
+
+    /**
+     * Format data on form submission
+     *
+     * @param array $data
+     * @param array $existingData
+     * @return array
+     */
+    public function formatLoad(array $existingData)
+    {
+        $formData = array();
+        $formData['id'] = $existingData['id'];
+        $formData['version'] = $existingData['version'];
+        $formData['userLoginSecurity']['loginId'] = $existingData['loginId'];
+        $formData['userLoginSecurity']['memorableWord'] = $existingData['memorableWord'];
+        $formData['userLoginSecurity']['hintQuestion1'] = $existingData['hintQuestion1'];
+        $formData['userLoginSecurity']['hintAnswer1'] = $existingData['hintAnswer1'];
+        $formData['userLoginSecurity']['hintQuestion2'] = $existingData['hintQuestion2'];
+        $formData['userLoginSecurity']['hintAnswer2'] = $existingData['hintAnswer2'];
+        $formData['userLoginSecurity']['mustResetPassword'] = $existingData['mustResetPassword'];
+        $formData['userLoginSecurity']['disableAccount'] = $existingData['disableAccount'];
+        $formData['userType']['team'] = $existingData['team'];
+        $formData['userType']['roles'] = $existingData['roles'];
+
+        // set up contact data
+        $formData['userContactDetails'] = $data['contactDetails'];
+
+        if (isset($existingData['contactDetails']['phoneContacts'])) {
+            foreach ($existingData['contactDetails']['phoneContacts'] as $phoneContact) {
+                if ($phoneContact['phoneContactType'] == 'phone_t_tel') {
+                    $formData['userContactDetails']['phone'] = $data['contactDetails']['phone'];
+                } elseif ($phoneContact['phoneContactType'] == 'phone_t_fax') {
+                    $formData['userContactDetails']['fax']= $data['contactDetails']['fax'];
+                }
+            }
+        }
+        return $formData;
     }
 }
