@@ -50,4 +50,44 @@ class CasesEntityService extends AbstractEntityService
 
         return $data['Results'];
     }
+
+    /**
+     * Get cases with complaints for an application
+     *
+     * @param int $applicationId Application Id
+     *
+     * @return array
+     */
+    public function getComplaintsForApplication($applicationId)
+    {
+        $query = [
+            'application' => $applicationId,
+        ];
+        $bundle = [
+            'children' => [
+                'complaints' => [
+                    'criteria' => [
+                        'isCompliance' => 0
+                    ],
+                    'children' => [
+                        'complainantContactDetails' => [
+                            'children' => [
+                                'person'
+                            ]
+                        ],
+                        'ocComplaints' => [
+                            'children' => [
+                                'operatingCentre' => [
+                                    'children' => ['address']
+                                ]
+                            ]
+                        ],
+                        'status'
+                    ]
+                ]
+            ]
+        ];
+
+        return $this->getAll($query, $bundle)['Results'];
+    }
 }
