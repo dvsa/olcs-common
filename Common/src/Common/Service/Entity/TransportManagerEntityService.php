@@ -29,7 +29,9 @@ class TransportManagerEntityService extends AbstractEntityService
         'children' => [
             'homeCd' => [
                 'children' => [
-                    'person',
+                    'person' => [
+                        'children' => ['title']
+                    ],
                     'address',
                     'contactType'
                 ]

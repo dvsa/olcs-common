@@ -27,7 +27,7 @@ use Common\Form\Elements\Types\TrafficAreaSet;
  */
 class FormElement extends ZendFormElement
 {
-    const TERMS_BOX_WRAPPER = '<div class="terms--box">%s</div>';
+    const TERMS_BOX_WRAPPER = '<div %s>%s</div>';
 
     /**
      * The form row output format.
@@ -118,7 +118,18 @@ class FormElement extends ZendFormElement
         }
 
         if ($element instanceof TermsBox) {
-            return sprintf(self::TERMS_BOX_WRAPPER, $this->getView()->translate($element->getValue()));
+
+            $attributes = $element->getAttributes();
+
+            if (!isset($attributes['class'])) {
+                $attributes['class'] = '';
+            }
+
+            $attributes['class'] .= ' terms--box';
+
+            $attr = $renderer->form()->createAttributesString($attributes);
+
+            return sprintf(self::TERMS_BOX_WRAPPER, $attr, $this->getView()->translate($element->getValue()));
         }
 
         if ($element instanceof Html) {

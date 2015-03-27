@@ -52,7 +52,16 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
             )
         )->will($this->returnValue('RESPONSE'));
 
-        $this->assertEquals('RESPONSE', $this->sut->getStatusesForLicence($licenceId));
+        $this->assertEquals(
+            'RESPONSE',
+            $this->sut->getStatusesForLicence(
+                array(
+                    'query' => array(
+                        'licence' => $licenceId
+                    )
+                )
+            )
+        );
     }
 
     public function testRemoveStatusesForLicence()

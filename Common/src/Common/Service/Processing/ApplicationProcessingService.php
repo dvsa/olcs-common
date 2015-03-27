@@ -639,6 +639,9 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         $this->grantApplication($id, $appStatus);
         $this->grantLicence($licenceId, $licStatus);
 
+        // @NOTE: as with variations, order matters here because we diff total auth
+        // creating PSV discs
+        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id); 
         $this->copyApplicationDataToLicence($id, $licenceId);
 
         $dataForValidating = $this->getApplicationDataForValidating($id);
@@ -648,8 +651,6 @@ class ApplicationProcessingService implements ServiceLocatorAwareInterface
         }
 
         $this->processCommonGrantData($id, $licenceId);
-
-        $this->createDiscRecords($licenceId, LicenceEntityService::LICENCE_CATEGORY_PSV, $id);
     }
 
     protected function processGrantGoodsApplication($id, $licenceId)

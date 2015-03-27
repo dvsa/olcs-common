@@ -92,15 +92,6 @@ return array(
             'LvaLicence/CommunityLicences' => array(
                 'Common\Controller\Lva\Delegators\LicenceCommunityLicenceDelegator'
             ),
-            'LvaApplication/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\ApplicationConditionsUndertakingsDelegator'
-            ),
-            'LvaVariation/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\VariationConditionsUndertakingsDelegator'
-            ),
-            'LvaLicence/ConditionsUndertakings' => array(
-                'Common\Controller\Lva\Delegators\LicenceConditionsUndertakingsDelegator'
-            ),
             'LvaApplication/FinancialEvidence' => array(
                 'Common\Controller\Lva\Delegators\ApplicationFinancialEvidenceDelegator'
             ),
@@ -492,7 +483,6 @@ return array(
             'Common\Service\Data\PublicHoliday' => 'Common\Service\Data\PublicHoliday',
             'Common\Service\Data\PiVenue' => 'Common\Service\Data\PiVenue',
             'Common\Service\Data\PiHearing' => 'Common\Service\Data\PiHearing',
-            'Common\Service\Data\VariationReason' => 'Common\Service\Data\VariationReason',
             'Common\Service\Data\PublicationLink' => 'Common\Service\Data\PublicationLink',
             'Common\Service\Data\LicenceListDataService' => 'Common\Service\Data\LicenceListDataService',
             'Common\Service\Data\LicenceOperatingCentre' =>
@@ -548,7 +538,8 @@ return array(
     ],
     'cache' => [
         'adapter' => [
-            'name' => 'apc',
+            // @todo this is temporary as apc_cli is not currently enabled in environments
+            'name' => (PHP_SAPI === 'cli') ? 'memory' : 'apc',
         ]
     ],
     'zfcuser' => [

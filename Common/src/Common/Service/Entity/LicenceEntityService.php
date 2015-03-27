@@ -266,6 +266,50 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $revocationDataBundle = [
+        'children' => [
+            'goodsOrPsv',
+            'licenceVehicles' => [
+                'children' => [
+                    'goodsDiscs'
+                ]
+            ],
+            'psvDiscs',
+            'tmLicences'
+        ]
+    ];
+
+    protected $hasApprovedUnfulfilledConditionsBundle = [
+        'children' => [
+            'conditionUndertakings' => [
+                'criteria' => [
+                    'isDraft' => '0',
+                    'isFulfilled' => '0'
+                ]
+            ]
+        ]
+    ];
+
+    protected $conditionsUndertakingsBundle = [
+        'children' => [
+            'conditionUndertakings' => [
+                'criteria' => [
+                    'isDraft' => '0',
+                    'isFulfilled' => '0'
+                ],
+                'children' => [
+                    'conditionType',
+                    'attachedTo',
+                    'operatingCentre' => [
+                        'children' => [
+                            'address'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
     /**
      * Get data for overview
      *
@@ -276,6 +320,13 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         return $this->get($id, $this->overviewBundle);
     }
+
+
+    public function getRevocationDataForLicence($id)
+    {
+        return $this->get($id, $this->revocationDataBundle);
+    }
+
 
     /**
      * Check whether the licence belongs to the organisation
@@ -656,5 +707,17 @@ class LicenceEntityService extends AbstractLvaEntityService
     public function setLicenceStatus($id, $status)
     {
         return $this->forceUpdate($id, ['status' => $status]);
+    }
+
+    public function hasApprovedUnfulfilledConditions($id)
+    {
+        $data = $this->get($id, $this->hasApprovedUnfulfilledConditionsBundle);
+
+        return !empty($data['conditionUndertakings']);
+    }
+
+    public function getConditionsAndUndertakings($id)
+    {
+        return $this->get($id, $this->conditionsUndertakingsBundle);
     }
 }
