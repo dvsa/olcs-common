@@ -147,7 +147,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
 
         echo $viewHelper($this->element, 'formCollection', '/');
 
-        $this->expectOutputRegex('/^<div class="terms--box">foo<\/div>$/');
+        $this->expectOutputRegex('/^<div name="test" class="class&#x20;terms--box" id="test">foo<\/div>$/');
     }
 
     /**
@@ -269,6 +269,7 @@ class FormElementTest extends \PHPUnit_Framework_TestCase
         $helpers->setService('form_input', new Helper\FormInput());
         $helpers->setService('translate', $translateHelper);
         $helpers->setService('form_plain_text', $plainTextService);
+        $helpers->setService('form', new Helper\Form());
 
         $view->setHelperPluginManager($helpers);
 

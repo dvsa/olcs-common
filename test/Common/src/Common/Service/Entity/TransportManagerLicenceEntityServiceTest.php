@@ -155,4 +155,16 @@ class TransportManagerLicenceEntityServiceTest extends AbstractEntityServiceTest
 
         $this->assertEquals('RESPONSE', $this->sut->getByTransportManagerAndLicence($tmId, $licenceId));
     }
+
+    public function testDeleteForLicence()
+    {
+        $licenceId = 123;
+
+        $query = ['licence' => $licenceId];
+
+        $this->expectOneRestCall('TransportManagerLicence', 'DELETE', $query)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->deleteForLicence($licenceId));
+    }
 }
