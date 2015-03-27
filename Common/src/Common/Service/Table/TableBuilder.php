@@ -690,7 +690,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     private function setPaginationDefaults()
     {
-        if (isset($this->settings['paginate']) && !isset($this->settings['paginate']['limit'])) {
+        if ($this->shouldPaginate() && !isset($this->settings['paginate']['limit'])) {
             $this->settings['paginate']['limit'] = array(
                 'default' => 10,
                 'options' => array(10, 25, 50)
@@ -754,7 +754,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $defaults = array(
             'limit' => isset($this->settings['paginate']['limit']['default'])
                 ? $this->settings['paginate']['limit']['default']
-                : null,
+                : 10,
             'page' => self::DEFAULT_PAGE,
             'sort' => '',
             'order' => 'ASC'
@@ -969,7 +969,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return self::TYPE_FORM_TABLE;
         }
 
-        if (isset($this->settings['crud']) && isset($this->settings['paginate'])) {
+        if (isset($this->settings['crud']) && $this->shouldPaginate()) {
 
             return self::TYPE_HYBRID;
         }
@@ -979,7 +979,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
             return self::TYPE_CRUD;
         }
 
-        if (isset($this->settings['paginate'])) {
+        if ($this->shouldPaginate()) {
 
             return self::TYPE_PAGINATE;
         }
@@ -1100,7 +1100,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderFooter()
     {
-        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
+        if (!$this->shouldPaginate()) {
             return '';
         }
 
@@ -1542,5 +1542,10 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
         $callback = $this->settings['row-disabled-callback'];
 
         return $callback($row);
+    }
+
+    protected function shouldPaginate()
+    {
+        return isset($this->settings['paginate']);
     }
 }
