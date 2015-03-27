@@ -33,37 +33,14 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Is the licence curtailable.
-     *
-     * @param null $licenceId The licence id.
-     *
-     * @return bool
-     */
-    public function isLicenceCurtailable($licenceId = null)
-    {
-        return !($this->isLicenceActive($licenceId, true));
-    }
-
-    public function isLicenceSuspendable($licenceId = null)
-    {
-        return !($this->isLicenceActive($licenceId, true));
-    }
-
-    public function isLicenceRevokeable($licenceId = null)
-    {
-        return !($this->isLicenceActive($licenceId, true));
-    }
-
-    /**
      * Is the licence currently 'active' as defined by OLCS-8071
      * (https://jira.i-env.net/browse/OLCS-8071)
      *
      * @param null $licenceId The licence id.
-     * @param bool $returnBool Whether the answer the question true or false.
      *
      * @return array|bool
      */
-    private function isLicenceActive($licenceId = null, $returnBool = false)
+    public function isLicenceActive($licenceId = null)
     {
         if (is_null($licenceId)) {
             throw new \InvalidArgumentException(__METHOD__ . ' expects a valid licence id.');
@@ -76,18 +53,7 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $this->messages = $result;
 
-        if ($returnBool) {
-            // if any of the criteria are of an array type assume that the licence is active.
-            foreach ($result as $key => $criteria) {
-                if (is_array($criteria)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return $result;
+        return $this->getMessages();
     }
 
     /**
@@ -124,6 +90,10 @@ class LicenceStatusHelperService extends AbstractHelperService
             ->get('Entity\BusReg');
 
         $busRoutes = $busRegEntityService->findByLicenceId($licenceId);
+
+        if (!$busRoutes) {
+            return false;
+        }
 
         foreach ($busRoutes['Results'] as $route) {
             switch($route['busRegStatus']) {
@@ -177,7 +147,7 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Alias function to enable to abstraction of curtailing a licence with immediate effect.
+     * Enables the abstraction of curtailing a licence with immediate effect.
      *
      * @param $licenceId The licence id.
      *
@@ -185,13 +155,133 @@ class LicenceStatusHelperService extends AbstractHelperService
      */
     public function curtailNow($licenceId)
     {
-        $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
+        $this->removeStatusRulesByLicenceAndType(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED
+        );
+
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
-        $currentLicenceCurtailments = $licenceStatusEntityService->getStatusesForLicence(
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_CURTAILED);
+    }
+
+    /**
+     * Enables the abstraction of revoking a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function revokeNow($licenceId)
+    {
+        $this->removeStatusRulesByLicenceAndType(
             $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+        );
+
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+        $revocationData = $licenceEntityService->getRevocationDataForLicence($licenceId);
+
+        $discs = array();
+        if ($revocationData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
+            array_map(
+                function ($disc) use (&$discs) {
+                    $discs[] = $disc['id'];
+                },
+                $revocationData['psvDiscs']
+            );
+        } else {
+            foreach ($revocationData['licenceVehicles'] as $licenceVehicle) {
+                array_map(
+                    function ($disc) use (&$discs) {
+                        $discs[] = $disc['id'];
+                    },
+                    $licenceVehicle['goodsDiscs']
+                );
+            }
+        }
+        $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
+
+        $this->removeLicenceVehicles($revocationData['licenceVehicles']);
+        $this->removeTransportManagers($revocationData['tmLicences']);
+
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
+    }
+
+    /**
+     * Remove the licence vehicles for a licence.
+     *
+     * @param null|array $licenceVehicles The licence vehicles.
+     */
+    private function removeLicenceVehicles($licenceVehicles = array())
+    {
+        $vehicles = array_map(
+            function ($licenceVehicle) {
+                return $licenceVehicle['id'];
+            },
+            $licenceVehicles
+        );
+
+        $this->getServiceLocator()->get('Entity\LicenceVehicle')->removeVehicles($vehicles);
+    }
+
+    /**
+     * Remove the transport managers for a licence.
+     *
+     * @param null|array $transportManagers The TM's
+     */
+    private function removeTransportManagers($transportManagers = array())
+    {
+        $transportManagers = array_map(
+            function ($transportManager) {
+                return $transportManager['id'];
+            },
+            $transportManagers
+        );
+
+        $this->getServiceLocator()->get('Entity\TransportManagerLicence')->deleteForLicence($transportManagers);
+    }
+
+    /**
+     * Enables the abstraction of curtailing a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function suspendNow($licenceId)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $this->removeStatusRulesByLicenceAndType(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED
+        );
+
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_SUSPENDED);
+    }
+
+    /**
+     * Remove statuses by a specific type.
+     *
+     * @param $licenceId The licence id
+     * @param null $type The type of status to remove.
+     *
+     * @throws \InvalidArgumentException If licence or type aren't passed.
+     */
+    public function removeStatusRulesByLicenceAndType($licenceId = null, $type = null)
+    {
+        if (is_null($type) || is_null($licenceId)) {
+            throw new \InvalidArgumentException(__METHOD__ . ' requires a licence and type.');
+        }
+
+        $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
+        $currentLicenceCurtailments = $licenceStatusEntityService->getStatusesForLicence(
             array(
-                'licenceStatus' => LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED
+                'query' => array(
+                    'licence' => $licenceId,
+                    'licenceStatus' => $type
+                )
             )
         );
 
@@ -200,10 +290,5 @@ class LicenceStatusHelperService extends AbstractHelperService
                 $licenceStatusEntityService->removeStatusesForLicence($curtailment['id']);
             }
         }
-
-        $licenceEntityService->forceUpdate(
-            $licenceId,
-            array('status' => LicenceEntityService::LICENCE_STATUS_CURTAILED)
-        );
     }
 }

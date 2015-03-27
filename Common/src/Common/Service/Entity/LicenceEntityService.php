@@ -266,6 +266,19 @@ class LicenceEntityService extends AbstractLvaEntityService
         )
     );
 
+    protected $revocationDataBundle = [
+        'children' => [
+            'goodsOrPsv',
+            'licenceVehicles' => [
+                'children' => [
+                    'goodsDiscs'
+                ]
+            ],
+            'psvDiscs',
+            'tmLicences'
+        ]
+    ];
+
     protected $hasApprovedUnfulfilledConditionsBundle = [
         'children' => [
             'conditionUndertakings' => [
@@ -307,6 +320,13 @@ class LicenceEntityService extends AbstractLvaEntityService
     {
         return $this->get($id, $this->overviewBundle);
     }
+
+
+    public function getRevocationDataForLicence($id)
+    {
+        return $this->get($id, $this->revocationDataBundle);
+    }
+
 
     /**
      * Check whether the licence belongs to the organisation
