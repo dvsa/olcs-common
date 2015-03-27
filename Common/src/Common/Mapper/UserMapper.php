@@ -192,7 +192,12 @@ class UserMapper extends GenericMapper
         $dataToSave['hintQuestion2'] = $data['userLoginSecurity']['hintQuestion2'];
         $dataToSave['hintAnswer2'] = $data['userLoginSecurity']['hintAnswer2'];
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
-        $dataToSave['disableAccount'] = $data['userLoginSecurity']['disableAccount'];
+        $dataToSave['accountDisabled'] = $data['userLoginSecurity']['accountDisabled'];
+        if ($dataToSave['accountDisabled']) {
+            $dataToSave['lockedDate'] = date('d/m/Y H:i:s');
+        } else {
+            $dataToSave['lockedDate'] = null;
+        }
         $dataToSave['team'] = $data['userType']['team'];
 
         foreach ($data['userType']['roles'] as $role) {
@@ -290,21 +295,44 @@ class UserMapper extends GenericMapper
         $formData['userLoginSecurity']['hintQuestion2'] = $existingData['hintQuestion2'];
         $formData['userLoginSecurity']['hintAnswer2'] = $existingData['hintAnswer2'];
         $formData['userLoginSecurity']['mustResetPassword'] = $existingData['mustResetPassword'];
-        $formData['userLoginSecurity']['disableAccount'] = $existingData['disableAccount'];
+        $formData['userLoginSecurity']['accountDisabled'] = $existingData['accountDisabled'];
+        $formData['userLoginSecurity']['lockedDate'] = $existingData['lockedDate'];
+        $formData['userType']['userType'] = $existingData['team'];
         $formData['userType']['team'] = $existingData['team'];
-        $formData['userType']['roles'] = $existingData['roles'];
+        $formData['userType']['roles'] = $existingData['userRoles'];
 
         // set up contact data
-        $formData['userContactDetails'] = $data['contactDetails'];
+        $formData['userPersonal']['forename'] = $existingData['contactDetails']['person']['forename'];
+        $formData['userPersonal']['familyName'] = $existingData['contactDetails']['person']['familyName'];
+        $formData['userPersonal']['birthDate'] = $existingData['contactDetails']['person']['birthDate'];
+        $formData['userContactDetails']['emailAddress'] = $existingData['contactDetails']['emailAddress'];
+        $formData['userContactDetails']['emailConfirm'] = $existingData['contactDetails']['emailAddress'];
 
         if (isset($existingData['contactDetails']['phoneContacts'])) {
             foreach ($existingData['contactDetails']['phoneContacts'] as $phoneContact) {
-                if ($phoneContact['phoneContactType'] == 'phone_t_tel') {
-                    $formData['userContactDetails']['phone'] = $data['contactDetails']['phone'];
-                } elseif ($phoneContact['phoneContactType'] == 'phone_t_fax') {
-                    $formData['userContactDetails']['fax']= $data['contactDetails']['fax'];
+                if ($phoneContact['phoneContactType']['id'] == 'phone_t_tel') {
+                    $formData['userContactDetails']['phone'] = $phoneContact['phoneNumber'];
+                } elseif ($phoneContact['phoneContactType']['id'] == 'phone_t_fax') {
+                    $formData['userContactDetails']['fax']= $phoneContact['phoneNumber'];
                 }
             }
+        }
+
+        if (isset($existingData['lastSuccessfulLoginDate'])) {
+            $formData['userLoginSecurity']['lastSuccessfulLogin'] = date('d/m/Y H:i:s',
+                strtotime($existingData['lastSuccessfulLoginDate']));
+        }
+
+        $formData['userLoginSecurity']['attempts'] = $existingData['attempts'];
+
+        if (isset($existingData['lockedDate'])) {
+            $formData['userLoginSecurity']['lockedDate'] = date('d/m/Y H:i:s',
+                strtotime($existingData['lockedDate']));
+        }
+
+        if (isset($existingData['resetPasswordExpiryDate'])) {
+            $formData['userLoginSecurity']['resetPasswordExpiryDate'] = date('d/m/Y H:i:s',
+                strtotime($existingData['resetPasswordExpiryDate']));
         }
         return $formData;
     }
