@@ -538,7 +538,8 @@ return array(
     ],
     'cache' => [
         'adapter' => [
-            'name' => 'apc',
+            // @todo this is temporary as apc_cli is not currently enabled in environments
+            'name' => (PHP_SAPI === 'cli') ? 'memory' : 'apc',
         ]
     ],
     'zfcuser' => [
