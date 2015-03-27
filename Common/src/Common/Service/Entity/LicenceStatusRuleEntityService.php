@@ -75,14 +75,13 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     /**
      * Get all licence statuses by a set of criteria.
      *
-     * @param null $licenceId The licence id.
      * @param array $args The arguments
      *
      * @return array
      */
-    public function getStatusesForLicence($licenceId = null, array $args = array())
+    public function getStatusesForLicence(array $args = array())
     {
-        $args = $this->normaliseQueryArguments($licenceId, $args);
+        $args = $this->normaliseQueryArguments($args);
 
         return $this->getList($args);
     }
@@ -120,15 +119,12 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     /**
      * Normalise query arguments specifically.
      *
-     * @param $licenceId The licence id.
      * @param array $args The query arguments.
      *
      * @return array
      */
-    private function normaliseQueryArguments($licenceId, array $args = array())
+    private function normaliseQueryArguments(array $args = array())
     {
-        $args['query']['licence'] = $licenceId;
-
         return array_merge($this->argumentDefaults['query'], $args['query']);
     }
 
@@ -140,9 +136,9 @@ class LicenceStatusRuleEntityService extends AbstractEntityService
     {
         // defer to generic method
         $data = $this->getStatusesForLicence(
-            $licenceId,
             array(
                 'query' => array(
+                    'licence' => $licenceId,
                     'deletedDate' => 'NULL',
                     'endProcessedDate' => 'NULL',
                 ),
