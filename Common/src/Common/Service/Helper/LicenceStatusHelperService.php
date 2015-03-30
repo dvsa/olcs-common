@@ -189,30 +189,31 @@ class LicenceStatusHelperService extends AbstractHelperService
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
         $revocationData = $licenceEntityService->getRevocationDataForLicence($licenceId);
 
-        $discs = array();
-        if ($revocationData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
-            array_map(
-                function ($disc) use (&$discs) {
-                    $discs[] = $disc['id'];
-                },
-                $revocationData['psvDiscs']
-            );
-        } else {
-            foreach ($revocationData['licenceVehicles'] as $licenceVehicle) {
-                array_map(
-                    function ($disc) use (&$discs) {
-                        $discs[] = $disc['id'];
-                    },
-                    $licenceVehicle['goodsDiscs']
-                );
-            }
-        }
-        $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
-
+        $this->ceaseDiscs($revocationData);
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
         $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
+    }
+
+    /**
+     * Surrender a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function surrenderNow($licenceId)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $surrenderData = $licenceEntityService->getRevocationDataForLicence($licenceId);
+
+        $this->ceaseDiscs($surrenderData);
+        $this->removeLicenceVehicles($surrenderData['licenceVehicles']);
+        $this->removeTransportManagers($surrenderData['tmLicences']);
+
+        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_SURRENDERED);
     }
 
     /**
@@ -250,7 +251,35 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Enables the abstraction of curtailing a licence with immediate effect.
+     * Helper method to cease discs based on licence data
+     *
+     * @param array $licenceData
+     */
+    private function ceaseDiscs($licenceData)
+    {
+        $discs = array();
+        if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
+            array_map(
+                function ($disc) use (&$discs) {
+                    $discs[] = $disc['id'];
+                },
+                $licenceData['psvDiscs']
+            );
+        } else {
+            foreach ($licenceData['licenceVehicles'] as $licenceVehicle) {
+                array_map(
+                    function ($disc) use (&$discs) {
+                        $discs[] = $disc['id'];
+                    },
+                    $licenceVehicle['goodsDiscs']
+                );
+            }
+        }
+        return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
+    }
+
+    /**
+     * Enables the abstraction of suspending a licence with immediate effect.
      *
      * @param $licenceId The licence id.
      *
