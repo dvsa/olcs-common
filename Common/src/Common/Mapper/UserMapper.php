@@ -225,6 +225,7 @@ class UserMapper extends GenericMapper
         $dataToSave['contactDetails']['person']['familyName'] = $data['userPersonal']['familyName'];
         $dataToSave['contactDetails']['person']['birthDate'] = $data['userPersonal']['birthDate'];
 
+        // set up phoneContacts
         if (isset($existingData['contactDetails']['phoneContacts'])) {
             foreach ($existingData['contactDetails']['phoneContacts'] as $phoneContact) {
                 if ($phoneContact['phoneContactType'] == 'phone_t_tel') {
@@ -246,6 +247,9 @@ class UserMapper extends GenericMapper
             $dataToSave['contactDetails']['phoneContacts'][] = $faxContact;
         }
 
+        $dataToSave['transportManager'] = $data['userType']['transportManager'];
+
+        // set up cascading entities
         $dataToSave['_OPTIONS_'] = array(
             'cascade' => array(
                 'single' => array(
@@ -286,6 +290,7 @@ class UserMapper extends GenericMapper
     public function formatLoad(array $existingData)
     {
         $formData = array();
+
         $formData['id'] = $existingData['id'];
         $formData['version'] = $existingData['version'];
         $formData['userLoginSecurity']['loginId'] = $existingData['loginId'];
@@ -297,9 +302,11 @@ class UserMapper extends GenericMapper
         $formData['userLoginSecurity']['mustResetPassword'] = $existingData['mustResetPassword'];
         $formData['userLoginSecurity']['accountDisabled'] = $existingData['accountDisabled'];
         $formData['userLoginSecurity']['lockedDate'] = $existingData['lockedDate'];
-        $formData['userType']['userType'] = $existingData['team'];
+        $formData['userType']['userType'] = $this->determineUserType($existingData);
         $formData['userType']['team'] = $existingData['team'];
         $formData['userType']['roles'] = $existingData['userRoles'];
+
+        $formData['userType']['transportManager'] = $existingData['transportManager'];
 
         // set up contact data
         $formData['userPersonal']['forename'] = $existingData['contactDetails']['person']['forename'];
@@ -313,10 +320,11 @@ class UserMapper extends GenericMapper
                 if ($phoneContact['phoneContactType']['id'] == 'phone_t_tel') {
                     $formData['userContactDetails']['phone'] = $phoneContact['phoneNumber'];
                 } elseif ($phoneContact['phoneContactType']['id'] == 'phone_t_fax') {
-                    $formData['userContactDetails']['fax']= $phoneContact['phoneNumber'];
+                    $formData['userContactDetails']['fax'] = $phoneContact['phoneNumber'];
                 }
             }
         }
+        $formData['userContactDetails']['address'] = $existingData['contactDetails']['address'];
 
         if (isset($existingData['lastSuccessfulLoginDate'])) {
             $formData['userLoginSecurity']['lastSuccessfulLogin'] = date('d/m/Y H:i:s',
@@ -335,5 +343,15 @@ class UserMapper extends GenericMapper
                 strtotime($existingData['resetPasswordExpiryDate']));
         }
         return $formData;
+    }
+
+    private function determineUserType($existingData)
+    {
+        if (isset($existingData['transportManager'])) {
+            return 'transport-manager';
+        }
+        if (isset($existingData['localAuthority'])) {
+            return 'local-authority';
+        }
     }
 }
