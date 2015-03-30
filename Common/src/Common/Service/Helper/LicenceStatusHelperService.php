@@ -193,7 +193,10 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
+        $licenceEntityService->setLicenceStatus(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+        );
     }
 
     /**
@@ -203,7 +206,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @return void
      */
-    public function surrenderNow($licenceId)
+    public function surrenderNow($licenceId, $surrenderDate)
     {
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
@@ -213,7 +216,40 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeLicenceVehicles($surrenderData['licenceVehicles']);
         $this->removeTransportManagers($surrenderData['tmLicences']);
 
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_SURRENDERED);
+        $saveData = [
+            'id' => $surrenderData['id'],
+            'version' => $surrenderData['version'],
+            'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+            'surrenderedDate' => $surrenderDate,
+        ];
+        return $licenceEntityService->save($saveData);
+    }
+
+
+    /**
+     * Terminate a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     *
+     * @return void
+     */
+    public function terminateNow($licenceId, $terminateDate)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $terminateData = $licenceEntityService->getRevocationDataForLicence($licenceId);
+
+        $this->ceaseDiscs($terminateData);
+        $this->removeLicenceVehicles($terminateData['licenceVehicles']);
+        $this->removeTransportManagers($terminateData['tmLicences']);
+
+        $saveData = [
+            'id' => $terminateData['id'],
+            'version' => $terminateData['version'],
+            'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+            'surrenderedDate' => $terminateDate,
+        ];
+        return $licenceEntityService->save($saveData);
     }
 
     /**

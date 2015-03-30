@@ -1289,6 +1289,8 @@ return array(
     'licence-status.suspension.message.save.success' => 'The suspension details have been saved',
     'licence-status.suspension.now' => 'Curtail now',
     'licence-status.suspension.to' => 'Curtail to',
+    'licence-status.terminate.date.label' => 'Terminate date',
+    'licence-status.terminate.message.save.success' => 'The licence has been terminateed',
     'licence-type' => 'Licence type',
     'licence-type-lock-message' => 'You cannot change the licence type',
     'licence-valid-confirmation' => 'The licence is now valid',
