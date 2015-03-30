@@ -194,7 +194,7 @@ class UserMapper extends GenericMapper
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
         $dataToSave['accountDisabled'] = $data['userLoginSecurity']['accountDisabled'];
         if ($dataToSave['accountDisabled']) {
-            $dataToSave['lockedDate'] = date('d/m/Y H:i:s');
+//            $dataToSave['lockedDate'] = date('d/m/Y H:i:s');
         } else {
             $dataToSave['lockedDate'] = null;
         }
@@ -211,7 +211,7 @@ class UserMapper extends GenericMapper
             $dataToSave['contactDetails']['id'] = $existingData['contactDetails']['id'];
             $dataToSave['contactDetails']['version'] = $existingData['contactDetails']['version'];
         }
-        $dataToSave['contactDetails']['address'] = $data['userContactDetails']['address'];
+        $dataToSave['contactDetails']['address'] = $data['address'];
         $dataToSave['contactDetails']['emailAddress'] = $data['userContactDetails']['emailAddress'];
         $dataToSave['contactDetails']['contactType'] = 'ct_team_user';
 
@@ -276,7 +276,6 @@ class UserMapper extends GenericMapper
                 )
             )
         );
-
         return $dataToSave;
     }
 
@@ -304,7 +303,14 @@ class UserMapper extends GenericMapper
         $formData['userLoginSecurity']['lockedDate'] = $existingData['lockedDate'];
         $formData['userType']['userType'] = $this->determineUserType($existingData);
         $formData['userType']['team'] = $existingData['team'];
-        $formData['userType']['roles'] = $existingData['userRoles'];
+
+        $formData['userType']['roles'] = [];
+
+        if (isset($existingData['userRoles'])) {
+            foreach ($existingData['userRoles'] as $userRole) {
+                $formData['userType']['roles'][] = $userRole['role']['id'];
+            }
+        }
 
         $formData['userType']['transportManager'] = $existingData['transportManager'];
 
@@ -324,7 +330,7 @@ class UserMapper extends GenericMapper
                 }
             }
         }
-        $formData['userContactDetails']['address'] = $existingData['contactDetails']['address'];
+        $formData['address'] = $existingData['contactDetails']['address'];
 
         if (isset($existingData['lastSuccessfulLoginDate'])) {
             $formData['userLoginSecurity']['lastSuccessfulLogin'] = date('d/m/Y H:i:s',
