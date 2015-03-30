@@ -338,6 +338,62 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService->removeStatusRulesByLicenceAndType();
     }
 
+    public function testResetToValid()
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('setLicenceStatus')
+            ->with(
+                $licenceId,
+                'lsts_valid'
+            )
+            ->andReturnNull()
+            ->getMock();
+
+        $statusRuleService = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                array(
+                    'query' => array(
+                        'licence' => $licenceId,
+                        'licenceStatus' => array(
+                            'lsts_curtailed',
+                            'lsts_suspended',
+                            'lsts_revoked',
+                        )
+                    )
+                )
+            )->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array(
+                            'id' => 1
+                        )
+                    )
+                )
+            )
+            ->shouldReceive('removeStatusesForLicence')
+            ->with(1)
+            ->andReturnNull()
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($statusRuleService)
+            ->getMock();
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->setServiceLocator($sm);
+
+        $helperService->resetToValid($licenceId);
+    }
+
     // PROVIDERS
 
     public function busRegDataProvider()
