@@ -14,7 +14,7 @@ return array(
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/file/:file/:name',
+                    'route' => '/file/:file[/:namespace]/:name',
                     'defaults' => array(
                         'controller' => 'Common\Controller\File',
                         'action' => 'download'
