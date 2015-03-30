@@ -6,6 +6,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
 use Common\Service\Helper\LicenceStatusHelperService;
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 
 /**
  * Class LicenceStatusHelperServiceTest
@@ -52,8 +53,14 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 array(
                     'Results' => array(
                         0 => array('isVariation' => false),
-                        1 => array('isVariation' => true),
-                        2 => array('isVariation' => false),
+                        1 => array(
+                            'isVariation' => true,
+                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION)
+                        ),
+                        2 => array(
+                            'isVariation' => false,
+                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
+                        ),
                         3 => array('isVariation' => true),
                     )
                 )

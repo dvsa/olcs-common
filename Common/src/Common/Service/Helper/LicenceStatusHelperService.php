@@ -7,6 +7,7 @@
 namespace Common\Service\Helper;
 
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceStatusRuleEntityService;
 
 /**
@@ -129,8 +130,9 @@ class LicenceStatusHelperService extends AbstractHelperService
         $variantApplications = $applicationEntityService->getApplicationsForLicence($licenceId);
 
         foreach ($variantApplications['Results'] as $key => $application) {
-            if ($application['isVariation']) {
-                // @todo check for under consideration status
+            if ($application['isVariation']
+                && $application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION
+            ) {
                 return $this->createMessage('There are applications still under consideration');
             }
         }
