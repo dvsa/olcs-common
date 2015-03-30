@@ -205,7 +205,10 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
+        $licenceEntityService->setLicenceStatus(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+        );
     }
 
     /**
