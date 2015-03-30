@@ -36,6 +36,21 @@ class Addresses implements
      */
     public function process(array $params)
     {
+        $response = $this->getBusinessServiceManager()
+            ->get('Lva\DirtyAddresses')
+            ->process(
+                [
+                    'original' => $params['originalData'],
+                    'updated'  => $params['data']
+                ]
+            );
+
+        if (!$response->isOk()) {
+            return $response;
+        }
+
+        $hasChanged = $response->getData()['dirtyFieldsets'] > 0;
+
         $data = $params['data'];
         $licenceId = $params['licenceId'];
 
@@ -79,6 +94,11 @@ class Addresses implements
 
         $response = new Response();
         $response->setType(Response::TYPE_SUCCESS);
+        $response->setData(
+            [
+                'hasChanged' => $hasChanged
+            ]
+        );
 
         return $response;
     }

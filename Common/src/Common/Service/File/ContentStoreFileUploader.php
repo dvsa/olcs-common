@@ -10,6 +10,12 @@ namespace Common\Service\File;
 use Zend\Http\Response;
 use Dvsa\Jackrabbit\Data\Object\File as ContentStoreFile;
 
+if (!class_exists('Dvsa\Jackrabbit\Data\Object\File')) {
+    //@TODO remove this when all applications use version 2.
+    //handle BC break in jackrabbit v2.0.0 library
+    class_alias('Dvsa\Jackrabbit\Client\Data\Object\File', 'Dvsa\Jackrabbit\Data\Object\File');
+}
+
 /**
  * Content store (jackrabbit) file uploader
  *

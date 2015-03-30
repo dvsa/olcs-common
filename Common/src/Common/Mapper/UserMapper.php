@@ -115,10 +115,10 @@ class UserMapper extends GenericMapper
      * @param $data
      * @return array
      */
-    public function formatMyDetailsDataForForm($data)
+    public function formatMyDetailsDataForForm($data, $fieldMap)
     {
         //set the fieldmap
-        $this->setFieldMap($this->getMyDetailsFieldMap());
+        $this->setFieldMap($fieldMap);
 
         //format most of the data using the generic function
         $formData = parent::formatDataForForm($data);
