@@ -58,4 +58,48 @@ class NameTest extends MockeryTestCase
             )
         );
     }
+
+    /**
+     *
+     */
+    public function testFormatNestedData()
+    {
+        $data = [
+            'foo' => [
+                'forename' => 'John',
+                'familyName' => 'Smith',
+            ]
+        ];
+        $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo']));
+    }
+
+    /**
+     *
+     */
+    public function testFormatDeepNestedData()
+    {
+        $data = [
+            'foo' => [
+                'name' => [
+                    'forename' => 'John',
+                    'familyName' => 'Smith',
+                ]
+            ]
+        ];
+
+        $mockHelper = $this->getMock('\stdClass', array('fetchNestedData'));
+
+        $mockHelper->expects($this->once())
+            ->method('fetchNestedData')
+            ->with($data, 'foo->name')
+            ->willReturn($data['foo']['name']);
+
+        $sm = $this->getMock('\stdClass', array('get'));
+        $sm->expects($this->any())
+            ->method('get')
+            ->with('Helper\Data')
+            ->will($this->returnValue($mockHelper));
+
+        $this->assertEquals('John Smith', Name::format($data, ['name' => 'foo->name'], $sm));
+    }
 }
