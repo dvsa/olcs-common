@@ -150,7 +150,7 @@ final class GenericCrudController extends AbstractActionController implements
     {
         $data = $this->getCrudService()->getList($this->getParams());
 
-        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data);
+        return $this->getTableBuilder()->buildTable($this->getOption('table'), $data, [], false);
     }
 
     /**
