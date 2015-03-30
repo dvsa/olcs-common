@@ -1282,6 +1282,8 @@ return array(
     'licence-status.revocation.from' => 'Revoke from',
     'licence-status.revocation.message.save.success' => 'The revocation details have been saved',
     'licence-status.revocation.now' => 'Revoke now',
+    'licence-status.surrender.date.label' => 'Surrender date',
+    'licence-status.surrender.message.save.success' => 'The licence has been surrendered',
     'licence-status.suspension.from' => 'Curtail from',
     'licence-status.suspension.immediate-affect' => 'Affect now',
     'licence-status.suspension.message.save.success' => 'The suspension details have been saved',

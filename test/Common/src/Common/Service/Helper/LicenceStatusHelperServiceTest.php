@@ -75,7 +75,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService = new LicenceStatusHelperService();
         $helperService->setServiceLocator($sm);
 
-        $helperService->isLicenceActive(1);
+        $this->assertTrue($helperService->isLicenceActive(1));
 
         $this->assertEquals(
             array(
@@ -139,7 +139,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService = new LicenceStatusHelperService();
         $helperService->setServiceLocator($sm);
 
-        $helperService->isLicenceActive(1);
+        $this->assertFalse($helperService->isLicenceActive(1));
 
         $this->assertEquals(
             array(

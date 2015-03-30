@@ -38,7 +38,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null $licenceId The licence id.
      *
-     * @return array|bool
+     * @return boolean
      */
     public function isLicenceActive($licenceId = null)
     {
@@ -53,7 +53,13 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $this->messages = $result;
 
-        return $this->getMessages();
+        // return true or false, messages can be retrieved later via getMessages()
+        return array_reduce(
+            $result,
+            function ($carry, $value) {
+                return $value !== false;
+            }
+        );
     }
 
     /**
