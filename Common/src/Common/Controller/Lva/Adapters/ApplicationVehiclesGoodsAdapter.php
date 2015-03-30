@@ -28,21 +28,6 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     }
 
     /**
-     * Save data
-     *
-     * @NOTE Possibly sharable between PSV too
-     *
-     * @param array $data
-     * @return mixed
-     */
-    public function save($data, $id)
-    {
-        $data['data']['id'] = $id;
-
-        return $this->getServiceLocator()->get('Entity\Application')->save($data['data']);
-    }
-
-    /**
      * Populate form with data
      */
     public function getFormData($id)
@@ -66,26 +51,6 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     }
 
     /**
-     * Do we need to show filters for vehciles
-     */
-    public function showFilters()
-    {
-        return true;
-    }
-
-    /**
-     * Retrieve the filter form
-     */
-    public function getFilterForm()
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-        $form = $formHelper->createForm('Lva\VehicleFilter');
-        $vrmOptions = array_merge(['All' => 'All'], array_combine(range('A', 'Z'), range('A', 'Z')));
-        $form->get('vrm')->setValueOptions($vrmOptions);
-        return $form;
-    }
-
-    /**
      * Get all relevant form filters
      */
     public function getFilters($params)
@@ -96,19 +61,6 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
         $filters['includeRemoved'] = isset($params['includeRemoved']) ? $params['includeRemoved'] : 0;
         $filters['disc'] = isset($params['disc']) ? $params['disc'] : 'A';
         return $filters;
-    }
-
-    /**
-     * Disable removed and specified dates if needed
-     *
-     * @param Zend\Form\Form $form
-     * @param Common\Service\Helper\FormHelper
-     */
-    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper)
-    {
-        $dataFieldset = $form->get('licence-vehicle');
-        $formHelper->disableDateElement($dataFieldset->get('specifiedDate'));
-        $formHelper->disableDateElement($dataFieldset->get('removalDate'));
     }
 
     /**
@@ -132,17 +84,5 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
     {
         unset($data['licence-vehicle']['specifiedDate']);
         return $data;
-    }
-
-    /**
-     * Don't create an empty option in edit mode for specified date
-     *
-     * @param Zend\Form\Form $form
-     * @param string $mode
-     * @return Zend\Form\Form
-     */
-    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
-    {
-        return $form;
     }
 }

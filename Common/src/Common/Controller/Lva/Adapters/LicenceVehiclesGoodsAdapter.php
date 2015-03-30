@@ -16,10 +16,6 @@ use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
  */
 class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGoodsAdapterInterface
 {
-    public function save($data, $id)
-    {
-    }
-
     public function getFormData($id)
     {
         return [];
@@ -34,29 +30,6 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     public function getVehiclesData($id)
     {
         return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($id);
-    }
-
-    /**
-     * Do we need to show filters for vehciles
-     */
-    public function showFilters()
-    {
-        return true;
-    }
-
-    /**
-     * Retrieve the filter form
-     *
-     * Here we wrap the application version before removing
-     * the irrelevant specified date field
-     */
-    public function getFilterForm()
-    {
-        $form = $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilterForm();
-
-        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'specified');
-
-        return $form;
     }
 
     /**
@@ -117,16 +90,6 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     }
 
     /**
-     * Disable removed and specified dates if needed
-     *
-     * @param Zend\Form\Form $form
-     * @param Common\Service\Helper\FormHelper
-     */
-    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper)
-    {
-    }
-
-    /**
      * Unset specified date if needed
      *
      * @param array $data
@@ -135,20 +98,5 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
     public function maybeUnsetSpecifiedDate($data)
     {
         return $data;
-    }
-
-    /**
-     * Don't create an empty option in edit mode for specified date
-     *
-     * @param Zend\Form\Form $form
-     * @param string $mode
-     * @return Zend\Form\Form
-     */
-    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode)
-    {
-        if ($mode == 'edit') {
-            $form->get('licence-vehicle')->get('specifiedDate')->setShouldCreateEmptyOption(false);
-        }
-        return $form;
     }
 }

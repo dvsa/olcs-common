@@ -66,11 +66,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
      */
     abstract protected function showVehicle(array $licenceVehicle, array $filters = []);
 
-    protected function alterVehicleFormForLocation($form, $mode)
-    {
-        return $form;
-    }
-
     /**
      * Hijack the crud action check so we can validate the add button
      *
@@ -413,26 +408,5 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             }
         }
         return $form;
-    }
-
-    /**
-     * Save data
-     *
-     * @param array $data
-     * @return mixed
-     */
-    protected function save($data)
-    {
-        $data = $this->formatDataForSave($data);
-        $data['id'] = $this->getIdentifier();
-        return $this->getLvaEntityService()->save($data);
-    }
-
-    /**
-     * Format data for save on the main form
-     */
-    protected function formatDataForSave($data)
-    {
-        return $data['data'];
     }
 }

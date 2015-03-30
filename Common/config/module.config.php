@@ -547,15 +547,33 @@ return array(
     ],
     'form_service_manager' => [
         'invokables' => [
+            // Lva form services
             'lva-licence' => 'Common\FormService\Form\Lva\Licence',
             'lva-variation' => 'Common\FormService\Form\Lva\Variation',
             'lva-application' => 'Common\FormService\Form\Lva\Application',
+            // Business details form services
             'lva-licence-business_details' => 'Common\FormService\Form\Lva\LicenceBusinessDetails',
             'lva-variation-business_details' => 'Common\FormService\Form\Lva\VariationBusinessDetails',
             'lva-application-business_details' => 'Common\FormService\Form\Lva\ApplicationBusinessDetails',
+            // Addresses form services
             'lva-licence-addresses' => 'Common\FormService\Form\Lva\Addresses',
             'lva-variation-addresses' => 'Common\FormService\Form\Lva\Addresses',
             'lva-application-addresses' => 'Common\FormService\Form\Lva\Addresses',
+            // Goods vehicle form services
+            'lva-licence-goods-vehicles' => 'Common\FormService\Form\Lva\LicenceGoodsVehicles',
+            'lva-variation-goods-vehicles' => 'Common\FormService\Form\Lva\VariationGoodsVehicles',
+            'lva-application-goods-vehicles' => 'Common\FormService\Form\Lva\ApplicationGoodsVehicles',
+            // Goods vehicles vehicle form services
+            'lva-licence-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesVehicle',
+            'lva-variation-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\VariationGoodsVehiclesVehicle',
+            'lva-application-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\ApplicationGoodsVehiclesVehicle',
+            // Goods vehicle filter form services
+            'lva-licence-goods-vehicles-filters' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesFilters',
+            'lva-variation-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
+            'lva-application-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
+            // Common vehicle services
+            // @todo Don't forget to put this in the PSV versions too
+            'lva-licence-variation-vehicles' => 'Common\FormService\Form\Lva\LicenceVariationVehicles',
         ]
     ],
     'business_rule_manager' => [
@@ -583,6 +601,10 @@ return array(
             'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
             'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
+            // Goods Vehicles business services
+            'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
+            'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
+            'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
         ]
     ],
 );

@@ -20,6 +20,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     /**
      * Index action
+     * - Forms moved to Form Services
+     * - Business logic moved to Business Services
      *
      * @return Response
      */
@@ -27,33 +29,42 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
 
-        $showFilters = $this->getAdapter()->showFilters();
-        if ($showFilters) {
-            $filterForm = $this->getFilterForm();
-        }
-
-        $form = $this->alterForm($this->getForm());
-
-        $this->alterFormForLva($form);
-
         if ($request->isPost()) {
-            $form->setData((array)$request->getPost());
+            $formData = (array)$request->getPost();
+            $crudAction = $this->getCrudAction(array($formData['table']));
+            $haveCrudAction = $crudAction !== null;
         } else {
-            $form->setData(
-                $this->getAdapter()->getFormData($this->getIdentifier())
-            );
+            $formData = $this->getAdapter()->getFormData($this->getIdentifier());
+            $haveCrudAction = false;
         }
+
+        // Get preconfigured form
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-' . $this->section)
+            ->getForm($this->getTable(), $haveCrudAction)
+            ->setData($formData);
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->getAdapter()->save($form->getData(), $this->getIdentifier());
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\\' . ucfirst($this->lva) . 'GoodsVehicles')
+                ->process(
+                    [
+                        'id' => $this->getIdentifier(),
+                        'data' => $form->getData()
+                    ]
+                );
+
+            if (!$response->isOk()) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                return $this->renderForm($form);
+            }
 
             $this->postSave('vehicles');
 
-            $data = (array)$request->getPost();
-            $crudAction = $this->getCrudAction(array($data['table']));
-
-            if ($crudAction !== null) {
+            if ($haveCrudAction) {
 
                 $action = $this->getActionFromCrudAction($crudAction);
 
@@ -69,21 +80,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             return $this->completeSection('vehicles');
         }
 
-        $files = ['lva-crud', 'vehicle-goods'];
-        if ($showFilters) {
-            $files[] = 'forms/filter';
-        }
-        $this->getServiceLocator()->get('Script')->loadFiles($files);
-
-        // *always* check if the user has exceeded their authority
-        // as a nice little addition; they may have changed their OC totals
-        if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
-            $this->getServiceLocator()->get('Helper\FlashMessenger')->addWarningMessage(
-                'more-vehicles-than-authorisation'
-            );
-        }
-        $params = $showFilters ? ['filterForm' => $filterForm] : [];
-        return $this->render('vehicles', $form, $params);
+        return $this->renderForm($form);
     }
 
     /**
@@ -102,23 +99,30 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         return $this->addOrEdit('edit');
     }
 
-    protected function alterForm($form)
+    protected function renderForm($form)
     {
-        $post   = $this->getRequest()->getPost();
+        // *always* check if the user has exceeded their authority
+        // as a nice little addition; they may have changed their OC totals
+        if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
 
-        $isCrudPressed = (isset($post['table']['action']) && !empty($post['table']['action']));
+            $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
+        }
 
-        $rows = [
-            $form->get('table')->get('rows')->getValue()
-        ];
-        $oneRowInTablesRequiredValidator = $this->getServiceLocator()->get('oneRowInTablesRequired');
-        $oneRowInTablesRequiredValidator->setRows($rows);
-        $oneRowInTablesRequiredValidator->setCrud($isCrudPressed);
+        $files = ['lva-crud', 'vehicle-goods'];
+        $params = [];
 
-        $form->getInputFilter()->get('data')->get('hasEnteredReg')
-            ->getValidatorChain()->attach($oneRowInTablesRequiredValidator);
+        $filterForm = $this->getServiceLocator()->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-' . $this->section . '-filters')
+            ->getForm();
 
-        return $form;
+        if ($filterForm !== null) {
+            $files[] = 'forms/filter';
+            $params['filterForm'] = $filterForm;
+        }
+
+        $this->getServiceLocator()->get('Script')->loadFiles($files);
+
+        return $this->render('vehicles', $form, $params);
     }
 
     /**
@@ -128,8 +132,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $request = $this->getRequest();
         $id = $this->params('child_id');
-        $data = array();
 
+        // Check if the user is attempting to edit a removed vehicle, and bail early if so
         if ($mode === 'edit' && $request->isPost()) {
 
             $vehicleData = $this->getVehicleFormData($id);
@@ -142,6 +146,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
         }
 
+        $data = array();
+
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } elseif ($mode === 'edit') {
@@ -149,33 +155,33 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             $data = $this->formatVehicleDataForForm($vehicleData);
         }
 
-        $form = $this->alterVehicleForm(
-            $this->getVehicleForm()->setData($data),
-            $mode
-        );
+        $params = [
+            'mode' => $mode,
+            'isRemoved' => isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate']),
+            'id' => $id,
+            'canAddAnother' => $this->canAddAnother(),
+            'isPost' => $request->isPost(),
+            'currentVrms' => $this->getVrmsForCurrentLicence()
+        ];
 
-        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
-            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
-        }
-
-        if (isset($vehicleData['removalDate']) && !empty($vehicleData['removalDate'])) {
-            $formHelper = $this->getServiceLocator()->get('Helper\Form');
-            $formHelper->disableElements($form);
-            $form->get('form-actions')->remove('submit');
-            $form->get('form-actions')->get('cancel')->setAttribute('disabled', false);
-        }
+        $form = $this->getServiceLocator()
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-goods-' . $this->section . '-vehicle')
+            ->getForm($this->getRequest(), $params)
+            ->setData($data);
 
         if ($request->isPost() && $form->isValid()) {
 
-            // If we are in edit mode, we can save
-            // If we are in add mode, and we have confirmed add, we can save
-            // If we are in add mode, and haven't confirmed add, but the VRM is new we can save
+            // We can save if
+            // - we are in edit mode
+            // - we are in add mode, and we have confirmed add
+            // - we are in add mode, and haven't confirmed add, but the VRM is new
             if ($mode === 'edit'
                 || (isset($data['licence-vehicle']['confirm-add']) && !empty($data['licence-vehicle']['confirm-add']))
                 || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
             ) {
 
-                $data = $data = $this->getServiceLocator()->get('Helper\Data')
+                $data = $this->getServiceLocator()->get('Helper\Data')
                     ->processDataMap($form->getData(), $this->vehicleDataMap);
 
                 $this->saveVehicle($data, $mode);
@@ -184,7 +190,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             }
         }
 
-        if (!$this->getServiceLocator()->has('VehicleFormAdapter')) {
+        if ($this->location === 'internal') {
             // set default date values prior to render
             $today = $this->getServiceLocator()->get('Helper\Date')->getDateObject();
             $form = $this->setDefaultDates($form, $today);
@@ -211,24 +217,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
             'licence-vehicle' => $licenceVehicle,
             'data' => $data['vehicle']
         );
-    }
-
-    protected function getVehicleForm()
-    {
-        return $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createFormWithRequest('Lva\GoodsVehiclesVehicle', $this->getRequest());
-    }
-
-    protected function getForm()
-    {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $form = $formHelper->createForm('Lva\GoodsVehicles');
-
-        $formHelper->populateFormTable($form->get('table'), $this->getTable());
-
-        return $form;
     }
 
     protected function getTable()
@@ -444,16 +432,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         }
 
         return $this->totalVehicles;
-    }
-
-    /**
-     * Get filter vehicle form
-     *
-     * @return Zend\Form\Form
-     */
-    protected function getFilterForm()
-    {
-        return $this->getAdapter()->getFilterForm();
     }
 
     /**

@@ -23,14 +23,6 @@ interface VehiclesAdapterInterface
     public function getVehiclesData($id);
 
     /**
-     * Disable removed and specified dates if needed
-     *
-     * @param Zend\Form\Form $form
-     * @param Common\Service\Helper\FormHelper
-     */
-    public function maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
-
-    /**
      * Format removed and specified dates if needed
      *
      * @param array $licenceVehicle
@@ -45,13 +37,4 @@ interface VehiclesAdapterInterface
      * @return array
      */
     public function maybeUnsetSpecifiedDate($data);
-
-    /**
-     * Don't create an empty option in edit mode for specified date
-     *
-     * @param Zend\Form\Form $form
-     * @param string $mode
-     * @return Zend\Form\Form
-     */
-    public function maybeRemoveSpecifiedDateEmptyOption($form, $mode);
 }
