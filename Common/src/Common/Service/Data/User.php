@@ -120,7 +120,7 @@ class User extends Generic implements ServiceLocatorAwareInterface
     public function saveUserRole($data)
     {
         $existingData = [];
-        if (isset($data['id'])) {
+        if (isset($data['id']) && !empty($data['id'])) {
             $existingData = $this->fetchOne($data['id'], $this->getBundle());
 
             //check user exists exists
