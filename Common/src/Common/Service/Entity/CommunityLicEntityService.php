@@ -156,7 +156,7 @@ class CommunityLicEntityService extends AbstractEntityService
 
     /**
      * Get Active and Pending community licences
-     * 
+     *
      * @param int $licenceId licence ID
      * @return array
      */
@@ -257,5 +257,10 @@ class CommunityLicEntityService extends AbstractEntityService
         $trafficArea = $this->getServiceLocator()->get('Entity\Licence')->getTrafficArea($licenceId);
         return ($trafficArea['id'] === TrafficAreaEntityService::NORTHERN_IRELAND_TRAFFIC_AREA_CODE)
             ? self::PREFIX_NI : self::PREFIX_GB;
+    }
+
+    public function getList($query)
+    {
+        return $this->getAll($query, $this->listBundle);
     }
 }

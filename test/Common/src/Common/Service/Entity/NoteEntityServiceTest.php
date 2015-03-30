@@ -46,11 +46,9 @@ class NoteEntityServiceTest extends AbstractEntityServiceTestCase
     {
         $filters = ['noteType' => 'foo'];
 
-        $response = array('RESPONSE');
-
         $this->expectOneRestCall('Note', 'GET', $filters)
             ->will($this->returnValue(['Results' => ['NOTES']]));
 
-        $this->assertEquals(['NOTES'], $this->sut->getNotesList($filters));
+        $this->assertEquals(['Results' => ['NOTES']], $this->sut->getNotesList($filters));
     }
 }
