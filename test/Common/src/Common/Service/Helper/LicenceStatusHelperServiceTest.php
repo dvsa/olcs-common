@@ -368,6 +368,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         return array(
             array(
                 array(
+                    'id' => 1,
+                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_gv',
                     ),
@@ -388,6 +390,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ),
             array(
                 array(
+                    'id' => 1,
+                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_psv',
                     ),
@@ -488,5 +492,131 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $sut->setServiceLocator($sm);
 
         $this->assertEquals(true, $sut->hasQueuedRevocationCurtailmentSuspension($licenceId));
+    }
+
+    /**
+     * @dataProvider revocationDataProvider
+     */
+    public function testSurrenderNow($revocationData)
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('getRevocationDataForLicence')
+            ->once()
+            ->with($licenceId)
+            ->andReturn($revocationData)
+            ->shouldReceive('save')
+            ->once()
+            ->with(
+                [
+                    'id' => $licenceId,
+                    'version' => 1,
+                    'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+                    'surrenderedDate' => '2015-03-30',
+                ]
+            )
+            ->getMock();
+
+        $discService = m::mock()
+            ->shouldReceive('ceaseDiscs')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $licenceVehicleService = m::mock()
+            ->shouldReceive('removeVehicles')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $tmService = m::mock()
+            ->shouldReceive('deleteForLicence')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\GoodsDisc')
+            ->andReturn($discService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceVehicle')
+            ->andReturn($licenceVehicleService)
+            ->shouldReceive('get')
+            ->with('Entity\TransportManagerLicence')
+            ->andReturn($tmService)
+            ->getMock();
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->setServiceLocator($sm);
+
+        $helperService->surrenderNow(1, '2015-03-30');
+    }
+
+    /**
+     * @dataProvider revocationDataProvider
+     */
+    public function testTerminateNow($revocationData)
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('getRevocationDataForLicence')
+            ->once()
+            ->with($licenceId)
+            ->andReturn($revocationData)
+            ->shouldReceive('save')
+            ->once()
+            ->with(
+                [
+                    'id' => $licenceId,
+                    'version' => 1,
+                    'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+                    'surrenderedDate' => '2015-03-30',
+                ]
+            )
+            ->getMock();
+
+        $discService = m::mock()
+            ->shouldReceive('ceaseDiscs')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $licenceVehicleService = m::mock()
+            ->shouldReceive('removeVehicles')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $tmService = m::mock()
+            ->shouldReceive('deleteForLicence')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\GoodsDisc')
+            ->andReturn($discService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceVehicle')
+            ->andReturn($licenceVehicleService)
+            ->shouldReceive('get')
+            ->with('Entity\TransportManagerLicence')
+            ->andReturn($tmService)
+            ->getMock();
+
+        $helperService = new LicenceStatusHelperService();
+        $helperService->setServiceLocator($sm);
+
+        $helperService->terminateNow(1, '2015-03-30');
     }
 }
