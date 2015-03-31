@@ -187,10 +187,14 @@ class UserMapper extends GenericMapper
         }
         $dataToSave['loginId'] = $data['userLoginSecurity']['loginId'];
         $dataToSave['memorableWord'] = $data['userLoginSecurity']['memorableWord'];
-        $dataToSave['hintQuestion1'] = $data['userLoginSecurity']['hintQuestion1'];
-        $dataToSave['hintAnswer1'] = $data['userLoginSecurity']['hintAnswer1'];
-        $dataToSave['hintQuestion2'] = $data['userLoginSecurity']['hintQuestion2'];
-        $dataToSave['hintAnswer2'] = $data['userLoginSecurity']['hintAnswer2'];
+        $dataToSave['hintQuestion1'] = isset($data['userLoginSecurity']['hintQuestion1']) ?
+            $data['userLoginSecurity']['hintQuestion1'] : null;
+        $dataToSave['hintAnswer1'] = isset($data['userLoginSecurity']['hintAnswer1']) ?
+            $data['userLoginSecurity']['hintAnswer1'] : null;
+        $dataToSave['hintQuestion2'] = isset($data['userLoginSecurity']['hintQuestion2']) ?
+            $data['userLoginSecurity']['hintQuestion2'] : null;
+        $dataToSave['hintAnswer2'] = isset($data['userLoginSecurity']['hintAnswer2']) ?
+            $data['userLoginSecurity']['hintAnswer2'] : null;
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
         $dataToSave['accountDisabled'] = $data['userLoginSecurity']['accountDisabled'];
         if ($dataToSave['accountDisabled']) {
@@ -276,6 +280,7 @@ class UserMapper extends GenericMapper
                 )
             )
         );
+
         return $dataToSave;
     }
 

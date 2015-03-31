@@ -14,11 +14,11 @@ class Role extends AbstractData implements ListData
     protected $serviceName = 'Role';
 
     /**
-     * @param $category
+     * @param $context
      * @param bool $useGroups
      * @return array
      */
-    public function fetchListOptions($category, $useGroups = false)
+    public function fetchListOptions($context, $useGroups = false)
     {
         $optionData = [];
         $data = $this->fetchListData();
