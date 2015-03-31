@@ -7,6 +7,7 @@ use Mockery as m;
 use Common\Service\Helper\LicenceStatusHelperService;
 use Common\Service\Entity\LicenceEntityService;
 use Common\Service\Entity\ApplicationEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Class LicenceStatusHelperServiceTest
@@ -14,6 +15,23 @@ use Common\Service\Entity\ApplicationEntityService;
  */
 class LicenceStatusHelperServiceTest extends MockeryTestCase
 {
+    /**
+     * @var LicenceStatusHelperService subject under test
+     */
+    protected $sut;
+
+    /**
+     * @var Mockery\Mock partially mocked service locator
+     */
+    protected $sm;
+
+    public function setUp()
+    {
+        $this->sut = new LicenceStatusHelperService();
+        $this->sm = Bootstrap::getServiceManager();
+        $this->sut->setServiceLocator($this->sm);
+    }
+
     public function testIsLicenceActiveThrowsException()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -67,7 +85,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\CommunityLic')
             ->andReturn($comLicEntity)
@@ -76,13 +94,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($busRegEntity)
             ->shouldReceive('get')
             ->with('Entity\Application')
-            ->andReturn($applicationEntity)
-            ->getMock();
+            ->andReturn($applicationEntity);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $this->assertTrue($helperService->isLicenceActive(1));
+        $this->assertTrue($this->sut->isLicenceActive(1));
 
         $this->assertEquals(
             array(
@@ -99,7 +113,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                     'result' => true
                 )
             ),
-            $helperService->getMessages()
+            $this->sut->getMessages()
         );
     }
 
@@ -131,7 +145,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\CommunityLic')
             ->andReturn($comLicEntity)
@@ -140,13 +154,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($busRegEntity)
             ->shouldReceive('get')
             ->with('Entity\Application')
-            ->andReturn($applicationEntity)
-            ->getMock();
+            ->andReturn($applicationEntity);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $this->assertFalse($helperService->isLicenceActive(1));
+        $this->assertFalse($this->sut->isLicenceActive(1));
 
         $this->assertEquals(
             array(
@@ -154,7 +164,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 'busRoutes' => false,
                 'consideringVariations' => false
             ),
-            $helperService->getMessages()
+            $this->sut->getMessages()
         );
     }
 
@@ -198,19 +208,15 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($statusRuleService)
-            ->getMock();
+            ->andReturn($statusRuleService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->curtailNow(1);
+        $this->sut->curtailNow(1);
     }
 
     /**
@@ -254,7 +260,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(array(1))
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
             ->andReturn($statusRuleService)
@@ -269,13 +275,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
-            ->andReturn($tmService)
-            ->getMock();
+            ->andReturn($tmService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->revokeNow(1);
+        $this->sut->revokeNow(1);
     }
 
     public function testSuspendNowWithStatuses()
@@ -320,27 +322,22 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($statusRuleService)
-            ->getMock();
+            ->andReturn($statusRuleService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->suspendNow(1);
+        $this->sut->suspendNow(1);
     }
 
     public function testRemoveStatusRulesByLicenceAndTypeThrowsException()
     {
         $this->setExpectedException('InvalidArgumentException');
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->removeStatusRulesByLicenceAndType();
+        $this->sut->removeStatusRulesByLicenceAndType();
     }
 
     // PROVIDERS
@@ -440,16 +437,12 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($licenceStatusRuleEntity)
-            ->getMock();
+            ->andReturn($licenceStatusRuleEntity);
 
-        $sut = new LicenceStatusHelperService();
-        $sut->setServiceLocator($sm);
-
-        $this->assertEquals([['id' => 1]], $sut->getCurrentOrPendingRulesForLicence($licenceId));
+        $this->assertEquals([['id' => 1]], $this->sut->getCurrentOrPendingRulesForLicence($licenceId));
     }
 
     public function testHasQueuedRevocationCurtailmentSuspension()
@@ -482,16 +475,12 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($licenceStatusRuleEntity)
-            ->getMock();
+            ->andReturn($licenceStatusRuleEntity);
 
-        $sut = new LicenceStatusHelperService();
-        $sut->setServiceLocator($sm);
-
-        $this->assertEquals(true, $sut->hasQueuedRevocationCurtailmentSuspension($licenceId));
+        $this->assertEquals(true, $this->sut->hasQueuedRevocationCurtailmentSuspension($licenceId));
     }
 
     /**
@@ -536,7 +525,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(array(1))
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
@@ -548,13 +537,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
-            ->andReturn($tmService)
-            ->getMock();
+            ->andReturn($tmService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->surrenderNow(1, '2015-03-30');
+        $this->sut->surrenderNow(1, '2015-03-30');
     }
 
     /**
@@ -599,7 +584,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(array(1))
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
@@ -611,12 +596,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
-            ->andReturn($tmService)
-            ->getMock();
+            ->andReturn($tmService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->terminateNow(1, '2015-03-30');
+        $this->sut->terminateNow(1, '2015-03-30');
     }
 }

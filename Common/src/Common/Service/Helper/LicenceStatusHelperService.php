@@ -204,7 +204,8 @@ class LicenceStatusHelperService extends AbstractHelperService
     /**
      * Surrender a licence with immediate effect.
      *
-     * @param $licenceId The licence id.
+     * @param int $licenceId The licence id.
+     * @param string $surrenderDate surrendered date, usually YYYY-mm-dd
      *
      * @return void
      */
@@ -232,6 +233,8 @@ class LicenceStatusHelperService extends AbstractHelperService
      * Terminate a licence with immediate effect.
      *
      * @param $licenceId The licence id.
+     * @param string $terminate terminated date, usually YYYY-mm-dd
+     * (note this is actually stored as surrendered_date)
      *
      * @return void
      */
