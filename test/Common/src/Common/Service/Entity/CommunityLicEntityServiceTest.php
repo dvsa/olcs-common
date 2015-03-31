@@ -37,7 +37,8 @@ class CommunityLicEntityServiceTest extends AbstractEntityServiceTestCase
     public function testGetList()
     {
         $query = [
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'limit' => 'all'
         ];
 
         $this->expectOneRestCall('CommunityLic', 'GET', $query, ['children' => ['status']])

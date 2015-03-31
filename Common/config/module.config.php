@@ -14,7 +14,7 @@ return array(
             'getfile' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/file/:file/:name',
+                    'route' => '/file/:file[/:namespace]/:name',
                     'defaults' => array(
                         'controller' => 'Common\Controller\File',
                         'action' => 'download'
@@ -538,8 +538,7 @@ return array(
     ],
     'cache' => [
         'adapter' => [
-            // @todo this is temporary as apc_cli is not currently enabled in environments
-            'name' => (PHP_SAPI === 'cli') ? 'memory' : 'apc',
+            'name' => 'apc',
         ]
     ],
     'zfcuser' => [

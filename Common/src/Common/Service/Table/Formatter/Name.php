@@ -19,13 +19,23 @@ class Name implements FormatterInterface
     /**
      * Format a name
      *
-     * @param array $data
-     * @param array $column
+     * @param array $data   data row
+     * @param array $column column specification
      * @param \Zend\ServiceManager\ServiceManager $sm
      * @return string
      */
     public static function format($data, $column = array(), $sm = null)
     {
+        // if column[name] is specified, look within that index for the data
+        if (isset($column['name'])) {
+            // if column[name] contains "->" look deeper
+            if (strpos($column['name'], '->')) {
+                $data = $sm->get('Helper\Data')->fetchNestedData($data, $column['name']);
+            } elseif (isset($data[$column['name']])) {
+                $data = $data[$column['name']];
+            }
+        }
+
         $title = !empty($data['title']['description']) ? $data['title']['description'] . ' ' : '';
         return $title . $data['forename'] . ' ' . $data['familyName'];
     }
