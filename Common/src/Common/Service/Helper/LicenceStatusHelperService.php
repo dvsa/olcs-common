@@ -55,12 +55,13 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->messages = $result;
 
         // return true or false, messages can be retrieved later via getMessages()
-        return array_reduce(
-            $result,
-            function ($carry, $value) {
-                return $value !== false;
+        foreach ($result as $value) {
+            if ($value !== false) {
+                return true;
             }
-        );
+        }
+
+        return false;
     }
 
     /**
@@ -254,6 +255,7 @@ class LicenceStatusHelperService extends AbstractHelperService
             'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
             'surrenderedDate' => $terminateDate,
         ];
+
         return $licenceEntityService->save($saveData);
     }
 
