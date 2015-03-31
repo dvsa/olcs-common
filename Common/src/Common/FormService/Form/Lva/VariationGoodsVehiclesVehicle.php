@@ -10,19 +10,11 @@ namespace Common\FormService\Form\Lva;
 /**
  * Variation Goods Vehicles Vehicle Form
  *
+ * @NOTE At this moment in time, the variation version of the form is identical to the application version
+ *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationGoodsVehiclesVehicle extends AbstractGoodsVehiclesVehicle
+class VariationGoodsVehiclesVehicle extends ApplicationGoodsVehiclesVehicle
 {
-    protected $lva = 'variation';
 
-    protected function alterForm($form, $params)
-    {
-        // Common with applications
-        $dataFieldset = $form->get('licence-vehicle');
-        $this->getFormHelper()->disableDateElement($dataFieldset->get('specifiedDate'));
-        $this->getFormHelper()->disableDateElement($dataFieldset->get('removalDate'));
-
-        parent::alterForm($form, $params);
-    }
 }

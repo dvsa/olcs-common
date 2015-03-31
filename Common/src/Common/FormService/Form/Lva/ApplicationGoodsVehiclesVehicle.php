@@ -18,7 +18,6 @@ class ApplicationGoodsVehiclesVehicle extends AbstractGoodsVehiclesVehicle
 
     protected function alterForm($form, $params)
     {
-        // Common with applications
         $dataFieldset = $form->get('licence-vehicle');
         $this->getFormHelper()->disableDateElement($dataFieldset->get('specifiedDate'));
         $this->getFormHelper()->disableDateElement($dataFieldset->get('removalDate'));

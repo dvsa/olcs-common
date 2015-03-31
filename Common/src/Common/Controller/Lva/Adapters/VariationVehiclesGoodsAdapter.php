@@ -43,27 +43,4 @@ class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGo
     {
         return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilters($params);
     }
-
-    /**
-     * Format removed and specified dates if needed
-     *
-     * @param array $licenceVehicle
-     * @return array
-     */
-    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
-    {
-        return $licenceVehicle;
-    }
-
-    /**
-     * Unset specified date if needed
-     *
-     * @param array $data
-     * @return array
-     */
-    public function maybeUnsetSpecifiedDate($data)
-    {
-        unset($data['licence-vehicle']['specifiedDate']);
-        return $data;
-    }
 }

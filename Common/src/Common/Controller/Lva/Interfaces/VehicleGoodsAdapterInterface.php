@@ -17,20 +17,4 @@ interface VehicleGoodsAdapterInterface extends AdapterInterface, VehiclesAdapter
     public function getFormData($id);
 
     public function getFilters($params);
-
-    /**
-     * Format removed and specified dates if needed
-     *
-     * @param array $licenceVehicle
-     * @return array
-     */
-    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
-
-    /**
-     * Unset specified date if needed
-     *
-     * @param array $data
-     * @return array
-     */
-    public function maybeUnsetSpecifiedDate($data);
 }

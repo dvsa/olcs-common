@@ -18,13 +18,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected $section = 'vehicles';
 
-    /**
-     * Index action
-     * - Forms moved to Form Services
-     * - Business logic moved to Business Services
-     *
-     * @return Response
-     */
     public function indexAction()
     {
         $request = $this->getRequest();
@@ -83,20 +76,54 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         return $this->renderForm($form);
     }
 
-    /**
-     * Add vehicle
-     */
     public function addAction()
     {
         return $this->addOrEdit('add');
     }
 
-    /**
-     * Edit vehicle
-     */
     public function editAction()
     {
         return $this->addOrEdit('edit');
+    }
+
+    public function reprintAction()
+    {
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $ids = explode(',', $this->params('child_id'));
+
+            $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\\ReprintDisc')
+                ->process(
+                    [
+                        'ids' => $ids
+                    ]
+                );
+
+            return $this->redirect()->toRouteAjax(
+                null,
+                array($this->getIdentifierIndex() => $this->getIdentifier())
+            );
+        }
+
+        $form = $this->getConfirmationForm($request);
+
+        return $this->render('reprint_vehicles', $form);
+    }
+
+    protected function delete()
+    {
+        $ids = explode(',', $this->params('child_id'));
+
+        $this->getServiceLocator()->get('BusinessServiceManager')
+            ->get('Lva\\DeleteGoodsVehicle')
+            ->process(
+                [
+                    'ids' => $ids
+                ]
+            );
     }
 
     protected function renderForm($form)
@@ -104,7 +131,6 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         // *always* check if the user has exceeded their authority
         // as a nice little addition; they may have changed their OC totals
         if ($this->getTotalNumberOfVehicles() > $this->getTotalNumberOfAuthorisedVehicles()) {
-
             $this->getServiceLocator()->get('Helper\Guidance')->append('more-vehicles-than-authorisation');
         }
 
@@ -172,19 +198,30 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         if ($request->isPost() && $form->isValid()) {
 
-            // We can save if
-            // - we are in edit mode
-            // - we are in add mode, and we have confirmed add
-            // - we are in add mode, and haven't confirmed add, but the VRM is new
+            // We can save if we are in
+            // - edit mode
+            // - add mode, and we have confirmed add
+            // - add mode, and haven't confirmed add, but the VRM is new
             if ($mode === 'edit'
                 || (isset($data['licence-vehicle']['confirm-add']) && !empty($data['licence-vehicle']['confirm-add']))
                 || !$this->checkIfVehicleExistsOnOtherLicences($data, $form)
             ) {
 
-                $data = $this->getServiceLocator()->get('Helper\Data')
-                    ->processDataMap($form->getData(), $this->vehicleDataMap);
+                $params = [
+                    'data' => $form->getData(),
+                    'mode' => $mode,
+                    'id' => $this->getIdentifier(),
+                    'licenceId' => $this->getLicenceId()
+                ];
 
-                $this->saveVehicle($data, $mode);
+                $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                    ->get('Lva\\' . ucfirst($this->lva) . 'GoodsVehiclesVehicle')
+                    ->process($params);
+
+                if (!$response->isOk()) {
+                    $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                    return $this->renderForm($form);
+                }
 
                 return $this->handlePostSave();
             }
@@ -296,107 +333,10 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
         return '';
     }
 
-    /**
-     * Delete vehicles
-     */
-    protected function delete()
-    {
-        $licenceVehicleIds = explode(',', $this->params('child_id'));
-
-        foreach ($licenceVehicleIds as $id) {
-
-            $this->ceaseActiveDisc($id);
-
-            $this->getServiceLocator()->get('Entity\LicenceVehicle')->delete($id);
-        }
-    }
-
-    /**
-     * If the latest disc is not active, cease it
-     *
-     * @param int $id
-     */
-    protected function ceaseActiveDisc($id)
-    {
-        $results = $this->getServiceLocator()->get('Entity\LicenceVehicle')->ceaseActiveDisc($id);
-
-        if (!empty($results['goodsDiscs'])) {
-            $activeDisc = $results['goodsDiscs'][0];
-
-            if (empty($activeDisc['ceasedDate'])) {
-                $activeDisc['ceasedDate'] = date('Y-m-d H:i:s');
-                $this->getServiceLocator()->get('Entity\GoodsDisc')->save($activeDisc);
-            }
-        }
-    }
-
-    /**
-     * Reprint action
-     */
-    public function reprintAction()
-    {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $this->reprintSave();
-
-            return $this->redirect()->toRouteAjax(
-                null,
-                array($this->getIdentifierIndex() => $this->getIdentifier())
-            );
-        }
-
-        $form = $this->getConfirmationForm($request);
-
-        return $this->render('reprint_vehicles', $form);
-    }
-
     protected function getConfirmationForm($request)
     {
         return $this->getServiceLocator()->get('Helper\Form')
             ->createFormWithRequest('GenericConfirmation', $request);
-    }
-
-    /**
-     * Request a new disc
-     *
-     * @param array $data
-     */
-    protected function reprintSave()
-    {
-        $ids = explode(',', $this->params('child_id'));
-
-        foreach ($ids as $id) {
-            $this->reprintDisc($id);
-        }
-    }
-
-    /**
-     * Reprint a single disc
-     *
-     * @NOTE I have put this logic into its own method (rather in the reprintSave method), as we will soon be able to
-     * reprint multiple discs at once
-     *
-     * @param int $id
-     */
-    protected function reprintDisc($id)
-    {
-        $this->ceaseActiveDisc($id);
-
-        $this->requestDisc($id, 'Y');
-    }
-
-    /**
-     * Request disc
-     *
-     * @param int $licenceVehicleId
-     */
-    protected function requestDisc($licenceVehicleId, $isCopy = 'N')
-    {
-        $data = array('licenceVehicle' => $licenceVehicleId, 'isCopy' => $isCopy);
-
-        $this->getServiceLocator()->get('Entity\GoodsDisc')->save($data);
     }
 
     protected function getVehicleFormData($id)
@@ -474,13 +414,12 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
      */
     public function hasActiveDisc($licenceVehicle = [])
     {
-        $hasDisc = false;
         foreach ($licenceVehicle['goodsDiscs'] as $goodsDisc) {
             if (!empty($goodsDisc['discNo'])) {
-                $hasDisc = true;
-                break;
+                return true;
             }
         }
-        return $hasDisc;
+
+        return false;
     }
 }

@@ -62,27 +62,4 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
         $filters['disc'] = isset($params['disc']) ? $params['disc'] : 'A';
         return $filters;
     }
-
-    /**
-     * Format removed and specified dates if needed
-     *
-     * @param array $licenceVehicle
-     * @return array
-     */
-    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle)
-    {
-        return $licenceVehicle;
-    }
-
-    /**
-     * Unset specified date if needed
-     *
-     * @param array $data
-     * @return array
-     */
-    public function maybeUnsetSpecifiedDate($data)
-    {
-        unset($data['licence-vehicle']['specifiedDate']);
-        return $data;
-    }
 }

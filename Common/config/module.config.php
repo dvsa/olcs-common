@@ -581,6 +581,11 @@ return array(
             'Task' => 'Common\BusinessRule\Rule\Task',
             'TradingNames' => 'Common\BusinessRule\Rule\TradingNames',
             'BusinessDetails' => 'Common\BusinessRule\Rule\BusinessDetails',
+            'CheckDate' => 'Common\BusinessRule\Rule\CheckDate',
+            'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
+            'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
+            'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
+            'ApplicationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
         ]
     ],
     'business_service_manager' => [
@@ -605,6 +610,15 @@ return array(
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
             'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
             'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
+            // Goods vehicles vehicle business service
+            'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
+            'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',
+            'Lva\ApplicationGoodsVehiclesVehicle'
+                => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehiclesVehicle',
+            'Lva\RequestDisc' => 'Common\BusinessService\Service\Lva\RequestDisc',
+            'Lva\ReprintDisc' => 'Common\BusinessService\Service\Lva\ReprintDisc',
+            'Lva\CeaseActiveDisc' => 'Common\BusinessService\Service\Lva\CeaseActiveDisc',
+            'Lva\DeleteGoodsVehicle' => 'Common\BusinessService\Service\Lva\DeleteGoodsVehicle',
         ]
     ],
 );

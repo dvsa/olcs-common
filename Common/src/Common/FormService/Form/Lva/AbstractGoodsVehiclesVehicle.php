@@ -25,8 +25,7 @@ abstract class AbstractGoodsVehiclesVehicle extends AbstractFormService implemen
 
     public function getForm($request, $params)
     {
-        $form = $this->getFormHelper()
-            ->createFormWithRequest('Lva\GoodsVehiclesVehicle', $request);
+        $form = $this->getFormHelper()->createFormWithRequest('Lva\GoodsVehiclesVehicle', $request);
 
         $this->alterForm($form, $params);
 
@@ -39,8 +38,6 @@ abstract class AbstractGoodsVehiclesVehicle extends AbstractFormService implemen
         // any logic that is split across internal or external should be placed in the
         // appropriate service
         $this->getFormServiceLocator()->get('lva-goods-vehicles-vehicle')->alterForm($form, $params);
-
-        //$form->get('licence-vehicle')->get('discNo')->setAttribute('disabled', 'disabled');
 
         // disable the vrm field on edit
         if ($params['mode'] === 'edit') {

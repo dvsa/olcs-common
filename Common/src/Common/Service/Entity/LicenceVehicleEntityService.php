@@ -92,21 +92,9 @@ class LicenceVehicleEntityService extends AbstractEntityService
      *
      * @param int $id
      */
-    public function ceaseActiveDisc($id)
+    public function getActiveDiscs($id)
     {
-        $results = $this->get($id, $this->discBundle);
-
-        if (empty($results['goodsDiscs'])) {
-            return;
-        }
-
-        $activeDisc = $results['goodsDiscs'][0];
-
-        if (empty($activeDisc['ceasedDate'])) {
-            $date = $this->getServiceLocator()->get('Helper\Date')->getDate();
-            $activeDisc['ceasedDate'] = $date;
-            $this->getServiceLocator()->get('Entity\GoodsDisc')->save($activeDisc);
-        }
+        return $this->get($id, $this->discBundle);
     }
 
     public function getDiscPendingData($id)

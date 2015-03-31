@@ -21,20 +21,4 @@ interface VehiclesAdapterInterface
      * @return array
      */
     public function getVehiclesData($id);
-
-    /**
-     * Format removed and specified dates if needed
-     *
-     * @param array $licenceVehicle
-     * @return array
-     */
-    public function maybeFormatRemovedAndSpecifiedDates($licenceVehicle);
-
-    /**
-     * Unset specified date if needed
-     *
-     * @param array $data
-     * @return array
-     */
-    public function maybeUnsetSpecifiedDate($data);
 }
