@@ -4,8 +4,10 @@ namespace CommonTest\Service\Helper;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery as m;
-
 use Common\Service\Helper\LicenceStatusHelperService;
+use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
+use CommonTest\Bootstrap;
 
 /**
  * Class LicenceStatusHelperServiceTest
@@ -13,6 +15,23 @@ use Common\Service\Helper\LicenceStatusHelperService;
  */
 class LicenceStatusHelperServiceTest extends MockeryTestCase
 {
+    /**
+     * @var LicenceStatusHelperService subject under test
+     */
+    protected $sut;
+
+    /**
+     * @var Mockery\Mock partially mocked service locator
+     */
+    protected $sm;
+
+    public function setUp()
+    {
+        $this->sut = new LicenceStatusHelperService();
+        $this->sm = Bootstrap::getServiceManager();
+        $this->sut->setServiceLocator($this->sm);
+    }
+
     public function testIsLicenceActiveThrowsException()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -52,15 +71,21 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 array(
                     'Results' => array(
                         0 => array('isVariation' => false),
-                        1 => array('isVariation' => true),
-                        2 => array('isVariation' => false),
+                        1 => array(
+                            'isVariation' => true,
+                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION)
+                        ),
+                        2 => array(
+                            'isVariation' => false,
+                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
+                        ),
                         3 => array('isVariation' => true),
                     )
                 )
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\CommunityLic')
             ->andReturn($comLicEntity)
@@ -69,13 +94,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($busRegEntity)
             ->shouldReceive('get')
             ->with('Entity\Application')
-            ->andReturn($applicationEntity)
-            ->getMock();
+            ->andReturn($applicationEntity);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->isLicenceActive(1);
+        $this->assertTrue($this->sut->isLicenceActive(1));
 
         $this->assertEquals(
             array(
@@ -92,7 +113,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                     'result' => true
                 )
             ),
-            $helperService->getMessages()
+            $this->sut->getMessages()
         );
     }
 
@@ -124,7 +145,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             )
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\CommunityLic')
             ->andReturn($comLicEntity)
@@ -133,13 +154,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($busRegEntity)
             ->shouldReceive('get')
             ->with('Entity\Application')
-            ->andReturn($applicationEntity)
-            ->getMock();
+            ->andReturn($applicationEntity);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->isLicenceActive(1);
+        $this->assertFalse($this->sut->isLicenceActive(1));
 
         $this->assertEquals(
             array(
@@ -147,7 +164,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 'busRoutes' => false,
                 'consideringVariations' => false
             ),
-            $helperService->getMessages()
+            $this->sut->getMessages()
         );
     }
 
@@ -177,9 +194,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 array(
                     'Count' => 1,
                     'Results' => array(
-                        array(
-                            'id' => 1
-                        )
+                        array('id' => 1)
                     )
                 )
             )
@@ -193,19 +208,15 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($statusRuleService)
-            ->getMock();
+            ->andReturn($statusRuleService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->curtailNow(1);
+        $this->sut->curtailNow(1);
     }
 
     /**
@@ -249,7 +260,7 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with(array(1))
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
             ->andReturn($statusRuleService)
@@ -264,13 +275,9 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturn($licenceVehicleService)
             ->shouldReceive('get')
             ->with('Entity\TransportManagerLicence')
-            ->andReturn($tmService)
-            ->getMock();
+            ->andReturn($tmService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->revokeNow(1);
+        $this->sut->revokeNow(1);
     }
 
     public function testSuspendNowWithStatuses()
@@ -315,27 +322,22 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->andReturnNull()
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($statusRuleService)
-            ->getMock();
+            ->andReturn($statusRuleService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->suspendNow(1);
+        $this->sut->suspendNow(1);
     }
 
     public function testRemoveStatusRulesByLicenceAndTypeThrowsException()
     {
         $this->setExpectedException('InvalidArgumentException');
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->removeStatusRulesByLicenceAndType();
+        $this->sut->removeStatusRulesByLicenceAndType();
     }
 
     // PROVIDERS
@@ -363,6 +365,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         return array(
             array(
                 array(
+                    'id' => 1,
+                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_gv',
                     ),
@@ -383,6 +387,8 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ),
             array(
                 array(
+                    'id' => 1,
+                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_psv',
                     ),
@@ -404,5 +410,194 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 )
             )
         );
+    }
+
+    public function testGetCurrentOrPendingRulesForLicence()
+    {
+        $licenceId = 99;
+
+        $licenceStatusRuleEntity = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                array(
+                    'query' => array(
+                        'licence' => $licenceId,
+                        'deletedDate' => 'NULL',
+                        'endProcessedDate' => 'NULL',
+                    ),
+                )
+            )
+            ->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array('id' => 1)
+                    ),
+                )
+            )
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($licenceStatusRuleEntity);
+
+        $this->assertEquals([['id' => 1]], $this->sut->getCurrentOrPendingRulesForLicence($licenceId));
+    }
+
+    public function testHasQueuedRevocationCurtailmentSuspension()
+    {
+        $licenceId = 99;
+
+        $licenceStatusRuleEntity = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->with(
+                [
+                    'query' => [
+                        'licence' => $licenceId,
+                        'deletedDate' => 'NULL',
+                        'startProcessedDate' => 'NULL',
+                        'licenceStatus' => [
+                            LicenceEntityService::LICENCE_STATUS_CURTAILED,
+                            LicenceEntityService::LICENCE_STATUS_SUSPENDED,
+                            LicenceEntityService::LICENCE_STATUS_REVOKED,
+                        ],
+                    ],
+                ]
+            )
+            ->andReturn(
+                array(
+                    'Count' => 1,
+                    'Results' => array(
+                        array('id' => 1)
+                    ),
+                )
+            )
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($licenceStatusRuleEntity);
+
+        $this->assertEquals(true, $this->sut->hasQueuedRevocationCurtailmentSuspension($licenceId));
+    }
+
+    /**
+     * @dataProvider revocationDataProvider
+     */
+    public function testSurrenderNow($revocationData)
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('getRevocationDataForLicence')
+            ->once()
+            ->with($licenceId)
+            ->andReturn($revocationData)
+            ->shouldReceive('save')
+            ->once()
+            ->with(
+                [
+                    'id' => $licenceId,
+                    'version' => 1,
+                    'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+                    'surrenderedDate' => '2015-03-30',
+                ]
+            )
+            ->getMock();
+
+        $discService = m::mock()
+            ->shouldReceive('ceaseDiscs')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $licenceVehicleService = m::mock()
+            ->shouldReceive('removeVehicles')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $tmService = m::mock()
+            ->shouldReceive('deleteForLicence')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\GoodsDisc')
+            ->andReturn($discService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceVehicle')
+            ->andReturn($licenceVehicleService)
+            ->shouldReceive('get')
+            ->with('Entity\TransportManagerLicence')
+            ->andReturn($tmService);
+
+        $this->sut->surrenderNow(1, '2015-03-30');
+    }
+
+    /**
+     * @dataProvider revocationDataProvider
+     */
+    public function testTerminateNow($revocationData)
+    {
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('getRevocationDataForLicence')
+            ->once()
+            ->with($licenceId)
+            ->andReturn($revocationData)
+            ->shouldReceive('save')
+            ->once()
+            ->with(
+                [
+                    'id' => $licenceId,
+                    'version' => 1,
+                    'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+                    'surrenderedDate' => '2015-03-30',
+                ]
+            )
+            ->getMock();
+
+        $discService = m::mock()
+            ->shouldReceive('ceaseDiscs')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $licenceVehicleService = m::mock()
+            ->shouldReceive('removeVehicles')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $tmService = m::mock()
+            ->shouldReceive('deleteForLicence')
+            ->once()
+            ->with(array(1))
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\GoodsDisc')
+            ->andReturn($discService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceVehicle')
+            ->andReturn($licenceVehicleService)
+            ->shouldReceive('get')
+            ->with('Entity\TransportManagerLicence')
+            ->andReturn($tmService);
+
+        $this->sut->terminateNow(1, '2015-03-30');
     }
 }

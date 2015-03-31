@@ -883,7 +883,7 @@ class ApplicationEntityService extends AbstractLvaEntityService
 
     public function getApplicationsForLicence($licenceId)
     {
-        return $this->get(['licenceId' => $licenceId]);
+        return $this->get(['licence' => $licenceId], $this->statusBundle);
     }
 
     /**

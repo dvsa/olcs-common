@@ -1465,4 +1465,24 @@ class ApplicationEntityServiceTest extends AbstractEntityServiceTestCase
             ]
         ];
     }
+
+    public function testGetApplicationsForLicence()
+    {
+        $licenceId = 69;
+
+        $this->expectOneRestCall(
+            'Application',
+            'GET',
+            ['licence' => $licenceId],
+            [
+                'children' => [
+                    'status',
+                    'interimStatus',
+                ]
+            ]
+        )
+        ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getApplicationsForLicence($licenceId));
+    }
 }
