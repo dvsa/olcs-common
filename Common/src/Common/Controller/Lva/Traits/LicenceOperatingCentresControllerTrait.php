@@ -4,6 +4,8 @@
  * Common licence OC controller logic
  *
  * @author Rob Caiger <rob@clocal.co.uk>
+ *
+ * @TODO NP: move this to selfserve; only used externally now
  */
 namespace Common\Controller\Lva\Traits;
 
@@ -53,14 +55,15 @@ trait LicenceOperatingCentresControllerTrait
 
             $translator = $this->getServiceLocator()->get('Helper\Translation');
 
+            $link = $this->getServiceLocator()->get('Helper\Url')
+                ->fromRoute('lva-licence/variation', ['licence' => $this->getLicenceId()]);
             return $this->render(
                 'create-variation-confirmation',
                 $form,
                 [
                     'sectionText' => $translator->translateReplace(
                         'variation-required-message-prefix',
-                        // @todo replace with real link
-                        array('#coming-soon')
+                        [$link]
                     )
                 ]
             );
