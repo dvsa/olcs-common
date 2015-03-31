@@ -55,12 +55,13 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->messages = $result;
 
         // return true or false, messages can be retrieved later via getMessages()
-        return array_reduce(
-            $result,
-            function ($carry, $value) {
-                return $value !== false;
+        foreach ($result as $value) {
+            if ($value !== false) {
+                return true;
             }
-        );
+        }
+
+        return false;
     }
 
     /**
@@ -254,6 +255,7 @@ class LicenceStatusHelperService extends AbstractHelperService
             'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
             'surrenderedDate' => $terminateDate,
         ];
+
         return $licenceEntityService->save($saveData);
     }
 
@@ -339,10 +341,31 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
+     * Set the licence status to be valid and remove any licence status changes that would
+     * regress it.
+     *
+     * @param $licenceId The licence id
+     */
+    public function resetToValid($licenceId)
+    {
+        $this->removeStatusRulesByLicenceAndType(
+            $licenceId,
+            array(
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+            )
+        );
+
+        $this->getServiceLocator()->get('Entity\Licence')
+            ->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_VALID);
+    }
+
+    /**
      * Remove statuses by a specific type.
      *
      * @param $licenceId The licence id
-     * @param null $type The type of status to remove.
+     * @param null|array|string $type The type of status to remove.
      *
      * @throws \InvalidArgumentException If licence or type aren't passed.
      */
@@ -353,7 +376,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         }
 
         $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
-        $currentLicenceCurtailments = $licenceStatusEntityService->getStatusesForLicence(
+        $currentLicenceStatuses = $licenceStatusEntityService->getStatusesForLicence(
             array(
                 'query' => array(
                     'licence' => $licenceId,
@@ -362,9 +385,9 @@ class LicenceStatusHelperService extends AbstractHelperService
             )
         );
 
-        if ((int)$currentLicenceCurtailments['Count'] > 0) {
-            foreach ($currentLicenceCurtailments['Results'] as $curtailment) {
-                $licenceStatusEntityService->removeStatusesForLicence($curtailment['id']);
+        if ((int)$currentLicenceStatuses['Count'] > 0) {
+            foreach ($currentLicenceStatuses['Results'] as $status) {
+                $licenceStatusEntityService->removeStatusesForLicence($status['id']);
             }
         }
     }
