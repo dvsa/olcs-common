@@ -168,6 +168,145 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         );
     }
 
+    /**
+     * @dataProvider isActiveProvider
+     */
+    public function testIsActive(
+        $busRegData,
+        $communityLicenceCount,
+        $applicationData,
+        $expectedResult,
+        $expectedMessages
+    ) {
+
+        $licenceId = 69;
+
+        $comLicEntity = m::mock()->shouldReceive('getValidLicencesForLicenceStatus')
+            ->with($licenceId)
+            ->andReturn(['Count' => $communityLicenceCount])
+            ->getMock();
+
+        $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
+            ->with($licenceId)
+            ->andReturn($busRegData)
+            ->getMock();
+
+        $applicationEntity = m::mock()->shouldReceive('getApplicationsForLicence')
+            ->with($licenceId)
+            ->andReturn($applicationData)
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\CommunityLic')
+            ->andReturn($comLicEntity)
+            ->shouldReceive('get')
+            ->with('Entity\BusReg')
+            ->andReturn($busRegEntity)
+            ->shouldReceive('get')
+            ->with('Entity\Application')
+            ->andReturn($applicationEntity);
+
+        $this->assertEquals($expectedResult, $this->sut->isLicenceActive($licenceId));
+
+        $this->assertEquals($expectedMessages, $this->sut->getMessages());
+    }
+
+    /**
+     * @return array [$busRegData, $communityLicenceCount, $applicationData, $expectedResult, $expectedMessages]
+     */
+    public function isActiveProvider()
+    {
+        return [
+            [
+                [
+                    'Results' => [
+                        ['busRegStatus' => 'New'],
+                        ['busRegStatus' => 'Registered'],
+                        ['busRegStatus' => 'Variation'],
+                        ['busRegStatus' => 'Cancellation'],
+                    ],
+                ],
+                2,
+                [
+                    'Results' => [
+                        ['isVariation' => false],
+                        [
+                            'isVariation' => true,
+                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION],
+                        ],
+                        [
+                            'isVariation' => false,
+                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED],
+                        ],
+                        ['isVariation' => true],
+                    ],
+                ],
+                true,
+                [
+                    'communityLicences' => [
+                        'message' => 'There are active, pending or suspended community licences',
+                        'result' => true,
+                    ],
+                    'busRoutes' => [
+                        'message' => 'There are active bus routes on this licence',
+                        'result' => true,
+                    ],
+                    'consideringVariations' => [
+                        'message' => 'There are applications still under consideration',
+                        'result' => true,
+                    ],
+                ],
+            ],
+            [
+                false,
+                2,
+                [
+                    'Results' => [],
+                ],
+                true,
+                [
+                    'communityLicences' => [
+                        'message' => 'There are active, pending or suspended community licences',
+                        'result' => true,
+                    ],
+                    'busRoutes' => false,
+                    'consideringVariations' => false,
+                ],
+            ],
+            [
+                [
+                    'Results' => [
+                        ['busRegStatus' => 'INVALID']
+                    ],
+                ],
+                0,
+                [
+                    'Results' => []
+                ],
+                false,
+                [
+                    'communityLicences' => false,
+                    'busRoutes' => false,
+                    'consideringVariations' => false
+                ],
+            ],
+            [
+                false,
+                0,
+                [
+                    'Results' => []
+                ],
+                false,
+                [
+                    'communityLicences' => false,
+                    'busRoutes' => false,
+                    'consideringVariations' => false,
+                ],
+            ],
+        ];
+    }
+
     public function testCurtailNowWithStatuses()
     {
         $licenceId = 1;
