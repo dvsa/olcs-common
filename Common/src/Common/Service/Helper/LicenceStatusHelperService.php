@@ -357,8 +357,18 @@ class LicenceStatusHelperService extends AbstractHelperService
             )
         );
 
-        $this->getServiceLocator()->get('Entity\Licence')
-            ->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_VALID);
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $licenceData = $licenceEntityService->getOverview($licenceId);
+
+        $saveData = [
+            'id'              => $licenceData['id'],
+            'version'         => $licenceData['version'],
+            'status'          => LicenceEntityService::LICENCE_STATUS_VALID,
+            'surrenderedDate' => null,
+        ];
+
+        return $licenceEntityService->save($saveData);
     }
 
     /**

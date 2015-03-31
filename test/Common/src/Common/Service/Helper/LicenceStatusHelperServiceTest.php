@@ -482,18 +482,29 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
     public function testResetToValid()
     {
         $licenceId = 1;
+        $licenceData = ['id' => $licenceId, 'version' => 1];
 
         $licenceService = m::mock()
-            ->shouldReceive('setLicenceStatus')
+            ->shouldReceive('getOverview')
+            ->with($licenceId)
+            ->once()
+            ->andReturn($licenceData)
+            ->shouldReceive('save')
+            ->once()
             ->with(
-                $licenceId,
-                'lsts_valid'
+                [
+                    'id' => $licenceId,
+                    'version' => 1,
+                    'status' => LicenceEntityService::LICENCE_STATUS_VALID,
+                    'surrenderedDate' => null,
+                ]
             )
             ->andReturnNull()
             ->getMock();
 
         $statusRuleService = m::mock()
             ->shouldReceive('getStatusesForLicence')
+            ->once()
             ->with(
                 array(
                     'query' => array(
@@ -516,23 +527,20 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
                 )
             )
             ->shouldReceive('removeStatusesForLicence')
+            ->once()
             ->with(1)
             ->andReturnNull()
             ->getMock();
 
-        $sm = m::mock('Zend\ServiceManager\ServiceLocatorInterface')
+        $this->sm
             ->shouldReceive('get')
             ->with('Entity\Licence')
             ->andReturn($licenceService)
             ->shouldReceive('get')
             ->with('Entity\LicenceStatusRule')
-            ->andReturn($statusRuleService)
-            ->getMock();
+            ->andReturn($statusRuleService);
 
-        $helperService = new LicenceStatusHelperService();
-        $helperService->setServiceLocator($sm);
-
-        $helperService->resetToValid($licenceId);
+        $this->sut->resetToValid($licenceId);
     }
 
     // PROVIDERS
