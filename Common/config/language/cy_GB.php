@@ -2061,6 +2061,9 @@ return array(
     'tm-previous-history-revoked-curtailed-suspended-licences' => 'W Revoked, Curtailed or Suspended Licences',
     'tm-responsibilities-applications' => 'W Applications',
     'tm-responsibilities-licences' => 'W Licences',
+    'tm_application.table.status.new' => 'W  (New)',
+    'tm_application.table.status.removed' => 'W  (Removed)',
+    'tm_application.table.status.updated' => 'W  (Updated)',
     'tol-no-changes-message' => 'W No changes to the type of licence detected',
     'traffic-area' => 'W Traffic area',
     'trafficAreaSet.hint-operating-centres' => 'W Your traffic area is determined by the location of your operating
