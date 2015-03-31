@@ -194,7 +194,7 @@ class UserMapper extends GenericMapper
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
         $dataToSave['accountDisabled'] = $data['userLoginSecurity']['accountDisabled'];
         if ($dataToSave['accountDisabled']) {
-//            $dataToSave['lockedDate'] = date('d/m/Y H:i:s');
+            $dataToSave['lockedDate'] = date('Y-m-d H:i:s');
         } else {
             $dataToSave['lockedDate'] = null;
         }
@@ -333,24 +333,36 @@ class UserMapper extends GenericMapper
         $formData['address'] = $existingData['contactDetails']['address'];
 
         if (isset($existingData['lastSuccessfulLoginDate'])) {
-            $formData['userLoginSecurity']['lastSuccessfulLogin'] = date('d/m/Y H:i:s',
-                strtotime($existingData['lastSuccessfulLoginDate']));
+            $formData['userLoginSecurity']['lastSuccessfulLogin'] = date(
+                'd/m/Y H:i:s',
+                strtotime($existingData['lastSuccessfulLoginDate'])
+            );
         }
 
         $formData['userLoginSecurity']['attempts'] = $existingData['attempts'];
 
         if (isset($existingData['lockedDate'])) {
-            $formData['userLoginSecurity']['lockedDate'] = date('d/m/Y H:i:s',
-                strtotime($existingData['lockedDate']));
+            $formData['userLoginSecurity']['lockedDate'] = date(
+                'd/m/Y H:i:s',
+                strtotime($existingData['lockedDate'])
+            );
         }
 
         if (isset($existingData['resetPasswordExpiryDate'])) {
-            $formData['userLoginSecurity']['resetPasswordExpiryDate'] = date('d/m/Y H:i:s',
-                strtotime($existingData['resetPasswordExpiryDate']));
+            $formData['userLoginSecurity']['resetPasswordExpiryDate'] = date(
+                'd/m/Y H:i:s',
+                strtotime($existingData['resetPasswordExpiryDate'])
+            );
         }
         return $formData;
     }
 
+    /**
+     * Uses existing data to determine the user type
+     *
+     * @param $existingData
+     * @return string
+     */
     private function determineUserType($existingData)
     {
         if (isset($existingData['transportManager'])) {
