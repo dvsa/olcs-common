@@ -338,6 +338,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegServiceTypes',
             'Common\Filter\Publication\BusRegText1',
@@ -352,6 +353,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegVarReason',
             'Common\Filter\Publication\BusRegText1',
@@ -366,6 +368,7 @@ return array(
             'Common\Filter\Publication\Publication',
             'Common\Filter\Publication\BusReg',
             'Common\Filter\Publication\BusRegPublicationSection',
+            'Common\Filter\Publication\PreviousUnpublishedBus',
             'Common\Filter\Publication\BusRegServiceDesignation',
             'Common\Filter\Publication\BusRegText1',
             'Common\Filter\Publication\BusRegText2',
@@ -538,8 +541,7 @@ return array(
     ],
     'cache' => [
         'adapter' => [
-            // @todo this is temporary as apc_cli is not currently enabled in environments
-            'name' => (PHP_SAPI === 'cli') ? 'memory' : 'apc',
+            'name' => 'apc',
         ]
     ],
     'zfcuser' => [

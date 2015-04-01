@@ -7,6 +7,7 @@
 namespace Common\Service\Helper;
 
 use Common\Service\Entity\LicenceEntityService;
+use Common\Service\Entity\ApplicationEntityService;
 use Common\Service\Entity\LicenceStatusRuleEntityService;
 
 /**
@@ -38,7 +39,7 @@ class LicenceStatusHelperService extends AbstractHelperService
      *
      * @param null $licenceId The licence id.
      *
-     * @return array|bool
+     * @return boolean
      */
     public function isLicenceActive($licenceId = null)
     {
@@ -53,7 +54,14 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $this->messages = $result;
 
-        return $this->getMessages();
+        // return true or false, messages can be retrieved later via getMessages()
+        foreach ($result as $value) {
+            if ($value !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -123,7 +131,9 @@ class LicenceStatusHelperService extends AbstractHelperService
         $variantApplications = $applicationEntityService->getApplicationsForLicence($licenceId);
 
         foreach ($variantApplications['Results'] as $key => $application) {
-            if ($application['isVariation']) {
+            if ($application['isVariation']
+                && $application['status']['id'] == ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION
+            ) {
                 return $this->createMessage('There are applications still under consideration');
             }
         }
@@ -182,30 +192,71 @@ class LicenceStatusHelperService extends AbstractHelperService
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
         $revocationData = $licenceEntityService->getRevocationDataForLicence($licenceId);
 
-        $discs = array();
-        if ($revocationData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
-            array_map(
-                function ($disc) use (&$discs) {
-                    $discs[] = $disc['id'];
-                },
-                $revocationData['psvDiscs']
-            );
-        } else {
-            foreach ($revocationData['licenceVehicles'] as $licenceVehicle) {
-                array_map(
-                    function ($disc) use (&$discs) {
-                        $discs[] = $disc['id'];
-                    },
-                    $licenceVehicle['goodsDiscs']
-                );
-            }
-        }
-        $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
-
+        $this->ceaseDiscs($revocationData);
         $this->removeLicenceVehicles($revocationData['licenceVehicles']);
         $this->removeTransportManagers($revocationData['tmLicences']);
 
-        $licenceEntityService->setLicenceStatus($licenceId, LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED);
+        $licenceEntityService->setLicenceStatus(
+            $licenceId,
+            LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+        );
+    }
+
+    /**
+     * Surrender a licence with immediate effect.
+     *
+     * @param int $licenceId The licence id.
+     * @param string $surrenderDate surrendered date, usually YYYY-mm-dd
+     *
+     * @return void
+     */
+    public function surrenderNow($licenceId, $surrenderDate)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $surrenderData = $licenceEntityService->getRevocationDataForLicence($licenceId);
+
+        $this->ceaseDiscs($surrenderData);
+        $this->removeLicenceVehicles($surrenderData['licenceVehicles']);
+        $this->removeTransportManagers($surrenderData['tmLicences']);
+
+        $saveData = [
+            'id' => $surrenderData['id'],
+            'version' => $surrenderData['version'],
+            'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
+            'surrenderedDate' => $surrenderDate,
+        ];
+        return $licenceEntityService->save($saveData);
+    }
+
+
+    /**
+     * Terminate a licence with immediate effect.
+     *
+     * @param $licenceId The licence id.
+     * @param string $terminate terminated date, usually YYYY-mm-dd
+     * (note this is actually stored as surrendered_date)
+     *
+     * @return void
+     */
+    public function terminateNow($licenceId, $terminateDate)
+    {
+        $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
+
+        $terminateData = $licenceEntityService->getRevocationDataForLicence($licenceId);
+
+        $this->ceaseDiscs($terminateData);
+        $this->removeLicenceVehicles($terminateData['licenceVehicles']);
+        $this->removeTransportManagers($terminateData['tmLicences']);
+
+        $saveData = [
+            'id' => $terminateData['id'],
+            'version' => $terminateData['version'],
+            'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
+            'surrenderedDate' => $terminateDate,
+        ];
+
+        return $licenceEntityService->save($saveData);
     }
 
     /**
@@ -243,7 +294,35 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
-     * Enables the abstraction of curtailing a licence with immediate effect.
+     * Helper method to cease discs based on licence data
+     *
+     * @param array $licenceData
+     */
+    private function ceaseDiscs($licenceData)
+    {
+        $discs = array();
+        if ($licenceData['goodsOrPsv']['id'] == LicenceEntityService::LICENCE_CATEGORY_PSV) {
+            array_map(
+                function ($disc) use (&$discs) {
+                    $discs[] = $disc['id'];
+                },
+                $licenceData['psvDiscs']
+            );
+        } else {
+            foreach ($licenceData['licenceVehicles'] as $licenceVehicle) {
+                array_map(
+                    function ($disc) use (&$discs) {
+                        $discs[] = $disc['id'];
+                    },
+                    $licenceVehicle['goodsDiscs']
+                );
+            }
+        }
+        return $this->getServiceLocator()->get('Entity\GoodsDisc')->ceaseDiscs($discs);
+    }
+
+    /**
+     * Enables the abstraction of suspending a licence with immediate effect.
      *
      * @param $licenceId The licence id.
      *
@@ -262,10 +341,31 @@ class LicenceStatusHelperService extends AbstractHelperService
     }
 
     /**
+     * Set the licence status to be valid and remove any licence status changes that would
+     * regress it.
+     *
+     * @param $licenceId The licence id
+     */
+    public function resetToValid($licenceId)
+    {
+        $this->removeStatusRulesByLicenceAndType(
+            $licenceId,
+            array(
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
+                LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED
+            )
+        );
+
+        $this->getServiceLocator()->get('Entity\Licence')
+            ->setLicenceStatus($licenceId, LicenceEntityService::LICENCE_STATUS_VALID);
+    }
+
+    /**
      * Remove statuses by a specific type.
      *
      * @param $licenceId The licence id
-     * @param null $type The type of status to remove.
+     * @param null|array|string $type The type of status to remove.
      *
      * @throws \InvalidArgumentException If licence or type aren't passed.
      */
@@ -276,7 +376,7 @@ class LicenceStatusHelperService extends AbstractHelperService
         }
 
         $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
-        $currentLicenceCurtailments = $licenceStatusEntityService->getStatusesForLicence(
+        $currentLicenceStatuses = $licenceStatusEntityService->getStatusesForLicence(
             array(
                 'query' => array(
                     'licence' => $licenceId,
@@ -285,10 +385,56 @@ class LicenceStatusHelperService extends AbstractHelperService
             )
         );
 
-        if ((int)$currentLicenceCurtailments['Count'] > 0) {
-            foreach ($currentLicenceCurtailments['Results'] as $curtailment) {
-                $licenceStatusEntityService->removeStatusesForLicence($curtailment['id']);
+        if ((int)$currentLicenceStatuses['Count'] > 0) {
+            foreach ($currentLicenceStatuses['Results'] as $status) {
+                $licenceStatusEntityService->removeStatusesForLicence($status['id']);
             }
         }
+    }
+
+    /**
+     * @param int $licenceId
+     * @return array|null
+     */
+    public function getCurrentOrPendingRulesForLicence($licenceId)
+    {
+        // defer to generic entity service method
+        $data = $this->getServiceLocator()->get('Entity\LicenceStatusRule')->getStatusesForLicence(
+            [
+                'query' => [
+                    'licence' => $licenceId,
+                    'deletedDate' => 'NULL',
+                    'endProcessedDate' => 'NULL',
+                ],
+            ]
+        );
+
+        return $data['Count']>0 ? $data['Results'] : null;
+    }
+
+    /**
+     * @param int $licenceId
+     * @return boolean
+     */
+    public function hasQueuedRevocationCurtailmentSuspension($licenceId)
+    {
+        $licenceStatusEntityService = $this->getServiceLocator()->get('Entity\LicenceStatusRule');
+
+        $data = $licenceStatusEntityService->getStatusesForLicence(
+            [
+                'query' => [
+                    'licence' => $licenceId,
+                    'deletedDate' => 'NULL',
+                    'startProcessedDate' => 'NULL',
+                    'licenceStatus' => [
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_CURTAILED,
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_SUSPENDED,
+                        LicenceStatusRuleEntityService::LICENCE_STATUS_RULE_REVOKED,
+                    ],
+                ],
+            ]
+        );
+
+        return ((int)$data['Count'] > 0);
     }
 }

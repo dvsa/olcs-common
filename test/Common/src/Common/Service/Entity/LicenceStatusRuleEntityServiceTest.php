@@ -79,24 +79,6 @@ class LicenceStatusRuleEntityServiceTest extends AbstractEntityServiceTestCase
         $this->assertEquals(null, $this->sut->removeStatusesForLicence($licenceStatusId));
     }
 
-    public function testGetPendingChangesForLicence()
-    {
-        $licenceId = 99;
-
-        $this->expectOneRestCall(
-            'LicenceStatusRule',
-            'GET',
-            array(
-                'licence' => $licenceId,
-                'deletedDate' => 'NULL',
-                'endProcessedDate' => 'NULL',
-                'licenceStatus' => array(), // this gets added as default arg
-            )
-        )->will($this->returnValue(['Count' => 1, 'Results' => 'RESPONSE']));
-
-        $this->assertEquals('RESPONSE', $this->sut->getPendingChangesForLicence($licenceId));
-    }
-
     public function testGetLicencesToRevokeCurtailSuspend()
     {
         $mockDate = \Mockery::mock('StdClass');
