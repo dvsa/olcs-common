@@ -53,6 +53,19 @@ class LicenceVehicleEntityServiceTest extends AbstractEntityServiceTestCase
     /**
      * @group entity_services
      */
+    public function testGetActiveDiscs()
+    {
+        $id = 3;
+
+        $this->expectOneRestCall('LicenceVehicle', 'GET', $id)
+            ->will($this->returnValue('RESPONSE'));
+
+        $this->assertEquals('RESPONSE', $this->sut->getActiveDiscs($id));
+    }
+
+    /**
+     * @group entity_services
+     */
     public function testDelete()
     {
         $id = 3;

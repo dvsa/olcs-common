@@ -1,47 +1,35 @@
 <?php
 
 /**
- * Application Goods Vehicles Test
+ * Goods Vehicles Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace CommonTest\BusinessService\Service\Lva;
 
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\BusinessService\Service\Lva\ApplicationGoodsVehicles;
+use PHPUnit_Framework_TestCase;
+use Common\BusinessService\Service\Lva\GoodsVehicles;
+use Common\BusinessService\Response;
 
 /**
- * Applications Goods Vehicles Test
+ * Goods Vehicles Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationGoodsVehiclesTest extends MockeryTestCase
+class GoodsVehiclesTest extends PHPUnit_Framework_TestCase
 {
     protected $sut;
 
-    protected $bsm;
-
     public function setUp()
     {
-        $this->sut = new ApplicationGoodsVehicles();
-
-        $this->bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
-
-        $this->sut->setBusinessServiceManager($this->bsm);
+        $this->sut = new GoodsVehicles();
     }
 
     public function testProcess()
     {
-        $data = ['foo' => 'bar'];
+        $response = $this->sut->process([]);
 
-        $mockApplication = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $this->bsm->setService('Lva\Application', $mockApplication);
-
-        $mockApplication->shouldReceive('process')
-            ->with($data)
-            ->andReturn('RESPONSE');
-
-        $this->assertEquals('RESPONSE', $this->sut->process($data));
+        $this->assertEquals(Response::TYPE_NO_OP, $response->getType());
+        $this->assertEquals([], $response->getData());
     }
 }

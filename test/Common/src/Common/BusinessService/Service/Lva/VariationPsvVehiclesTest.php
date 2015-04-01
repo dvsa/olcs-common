@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Application Psv Vehicles Test
+ * Variation Psv Vehicles Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -9,14 +9,14 @@ namespace CommonTest\BusinessService\Service\Lva;
 
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Common\BusinessService\Service\Lva\ApplicationPsvVehicles;
+use Common\BusinessService\Service\Lva\VariationPsvVehicles;
 
 /**
- * Application Psv Vehicles Test
+ * Variation Psv Vehicles Test
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationPsvVehiclesTest extends MockeryTestCase
+class VariationPsvVehiclesTest extends MockeryTestCase
 {
     protected $sut;
 
@@ -24,7 +24,7 @@ class ApplicationPsvVehiclesTest extends MockeryTestCase
 
     public function setUp()
     {
-        $this->sut = new ApplicationPsvVehicles();
+        $this->sut = new VariationPsvVehicles();
 
         $this->bsm = m::mock('\Common\BusinessService\BusinessServiceManager')->makePartial();
 
@@ -35,10 +35,10 @@ class ApplicationPsvVehiclesTest extends MockeryTestCase
     {
         $data = ['foo' => 'bar'];
 
-        $mockApplication = m::mock('\Common\BusinessService\BusinessServiceInterface');
-        $this->bsm->setService('Lva\Application', $mockApplication);
+        $mockVariation = m::mock('\Common\BusinessService\BusinessServiceInterface');
+        $this->bsm->setService('Lva\Application', $mockVariation);
 
-        $mockApplication->shouldReceive('process')
+        $mockVariation->shouldReceive('process')
             ->with($data)
             ->andReturn('RESPONSE');
 
