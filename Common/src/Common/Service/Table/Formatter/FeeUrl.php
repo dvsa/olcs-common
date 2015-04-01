@@ -34,7 +34,7 @@ class FeeUrl implements FormatterInterface
             case 'licence/bus-fees':
                 $url = $urlHelper->fromRoute(
                     'licence/bus-fees/fee_action',
-                    array('fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'BusFeesController'),
+                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'BusFeesController'],
                     [],
                     true
                 );
@@ -42,7 +42,7 @@ class FeeUrl implements FormatterInterface
             case 'licence/fees':
                 $url = $urlHelper->fromRoute(
                     'licence/fees/fee_action',
-                    array('fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'LicenceController'),
+                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'LicenceController'],
                     [],
                     true
                 );
@@ -50,7 +50,7 @@ class FeeUrl implements FormatterInterface
             case 'lva-application/fees':
                 $url = $urlHelper->fromRoute(
                     'lva-application/fees/fee_action',
-                    array('fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'ApplicationController'),
+                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'ApplicationController'],
                     [],
                     true
                 );
@@ -58,7 +58,7 @@ class FeeUrl implements FormatterInterface
             default:
                 $url = $urlHelper->fromRoute(
                     'admin-dashboard/admin-payment-processing/misc-fees/fee_action',
-                    array('fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'),
+                    ['fee' => $row['id'], 'action' => 'edit-fee', 'controller' => 'Admin\PaymentProcessingController'],
                     [],
                     true
                 );
