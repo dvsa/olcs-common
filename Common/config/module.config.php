@@ -591,7 +591,8 @@ return array(
             'GoodsVehiclesVehicle' => 'Common\BusinessRule\Rule\GoodsVehiclesVehicle',
             'LicenceGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\LicenceGoodsVehiclesLicenceVehicle',
             'VariationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\VariationGoodsVehiclesLicenceVehicle',
-            'ApplicationGoodsVehiclesLicenceVehicle' => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
+            'ApplicationGoodsVehiclesLicenceVehicle'
+                => 'Common\BusinessRule\Rule\ApplicationGoodsVehiclesLicenceVehicle',
         ]
     ],
     'business_service_manager' => [

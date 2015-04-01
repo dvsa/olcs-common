@@ -284,7 +284,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
                 $bundle['children']['goodsDiscs']['critieria']['issuedDate'] = 'NOT NULL';
             }
 
-            // @todo Actually need to say where NO discs have a discNo, rather than if any disc has no disc no
             if ($filters['disc'] === 'N') {
 
                 $bundle['children']['goodsDiscs']['requireNone'] = true;

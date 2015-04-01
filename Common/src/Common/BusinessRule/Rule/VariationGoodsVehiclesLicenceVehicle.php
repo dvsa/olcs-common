@@ -10,6 +10,7 @@ namespace Common\BusinessRule\Rule;
 use Common\BusinessRule\BusinessRuleInterface;
 use Common\BusinessRule\BusinessRuleAwareInterface;
 use Common\BusinessRule\BusinessRuleAwareTrait;
+
 /**
  * Variation Goods Vehicles Licence Vehicle Rule
  *
