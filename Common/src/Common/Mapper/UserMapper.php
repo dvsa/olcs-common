@@ -197,7 +197,7 @@ class UserMapper extends GenericMapper
             $data['userLoginSecurity']['hintAnswer2'] : null;
         $dataToSave['mustResetPassword'] = $data['userLoginSecurity']['mustResetPassword'];
         $dataToSave['accountDisabled'] = $data['userLoginSecurity']['accountDisabled'];
-        if ($dataToSave['accountDisabled']) {
+        if ($dataToSave['accountDisabled'] == 'Y') {
             $dataToSave['lockedDate'] = date('Y-m-d H:i:s');
         } else {
             $dataToSave['lockedDate'] = null;

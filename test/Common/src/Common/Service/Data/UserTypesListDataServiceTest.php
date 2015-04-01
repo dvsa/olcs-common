@@ -34,6 +34,6 @@ class UserTypesListDataServiceTest extends MockeryTestCase
         $sut = new UserTypesListDataService();
 
         $options = $sut->fetchListOptions();
-        $this->assertArrayHasKey('internal',$options);
+        $this->assertArrayHasKey('internal', $options);
     }
 }
