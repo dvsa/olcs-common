@@ -16,31 +16,13 @@ use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
  */
 class VariationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGoodsAdapterInterface
 {
+    public function getFilteredVehiclesData($id, $query)
+    {
+        return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilteredVehiclesData($id, $query);
+    }
+
     public function getFormData($id)
     {
         return [];
-    }
-
-    /**
-     * Get vehicles data for the given resource
-     *
-     * Here we can just wrap the application version
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getVehiclesData($id)
-    {
-        return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getVehiclesData($id);
-    }
-
-    /**
-     * Get all relevant form filters
-     *
-     * Here we can just wrap the application version
-     */
-    public function getFilters($params)
-    {
-        return $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilters($params);
     }
 }

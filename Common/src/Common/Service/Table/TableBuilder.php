@@ -1010,8 +1010,7 @@ class TableBuilder implements ServiceManager\ServiceLocatorAwareInterface
      */
     public function renderTotal()
     {
-        if ($this->type !== self::TYPE_PAGINATE && $this->type !== self::TYPE_HYBRID) {
-
+        if (!$this->shouldPaginate()) {
             return '';
         }
 

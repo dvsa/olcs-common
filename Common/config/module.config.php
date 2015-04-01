@@ -567,13 +567,17 @@ return array(
             'lva-licence-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesVehicle',
             'lva-variation-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\VariationGoodsVehiclesVehicle',
             'lva-application-goods-vehicles-vehicle' => 'Common\FormService\Form\Lva\ApplicationGoodsVehiclesVehicle',
+            // Psv vehicles vehicle form services
+            'lva-licence-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\LicencePsvVehiclesVehicle',
+            'lva-variation-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\VariationPsvVehiclesVehicle',
+            'lva-application-vehicles_psv-vehicle' => 'Common\FormService\Form\Lva\ApplicationPsvVehiclesVehicle',
             // Goods vehicle filter form services
             'lva-licence-goods-vehicles-filters' => 'Common\FormService\Form\Lva\LicenceGoodsVehiclesFilters',
             'lva-variation-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
             'lva-application-goods-vehicles-filters' => 'Common\FormService\Form\Lva\CommonGoodsVehiclesFilters',
             // Common vehicle services
-            // @todo Don't forget to put this in the PSV versions too
             'lva-licence-variation-vehicles' => 'Common\FormService\Form\Lva\LicenceVariationVehicles',
+            'lva-generic-vehicles-vehicle' => 'Common\FormService\Form\Lva\GenericVehiclesVehicle',
         ]
     ],
     'business_rule_manager' => [
@@ -606,10 +610,17 @@ return array(
             'Lva\DirtyAddresses' => 'Common\BusinessService\Service\Lva\DirtyAddresses',
             'Lva\PhoneContact' => 'Common\BusinessService\Service\Lva\PhoneContact',
             'Lva\AddressesChangeTask' => 'Common\BusinessService\Service\Lva\AddressesChangeTask',
+            // Lva
+            'Lva\Application' => 'Common\BusinessService\Service\Lva\Application',
+            'Lva\Licence' => 'Common\BusinessService\Service\Lva\Licence',
             // Goods Vehicles business services
             'Lva\LicenceGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
             'Lva\VariationGoodsVehicles' => 'Common\BusinessService\Service\Lva\GoodsVehicles',
             'Lva\ApplicationGoodsVehicles' => 'Common\BusinessService\Service\Lva\ApplicationGoodsVehicles',
+            // Psv Vehicles business services
+            'Lva\LicencePsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
+            'Lva\VariationPsvVehicles' => 'Common\BusinessService\Service\Lva\PsvVehicles',
+            'Lva\ApplicationPsvVehicles' => 'Common\BusinessService\Service\Lva\ApplicationPsvVehicles',
             // Goods vehicles vehicle business service
             'Lva\LicenceGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\LicenceGoodsVehiclesVehicle',
             'Lva\VariationGoodsVehiclesVehicle' => 'Common\BusinessService\Service\Lva\VariationGoodsVehiclesVehicle',

@@ -8,7 +8,6 @@
 namespace Common\Controller\Lva;
 
 use Common\Service\Entity\LicenceEntityService;
-use Common\Service\Entity\VehicleEntityService;
 use Zend\Form\Form;
 
 /**
@@ -23,19 +22,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     protected $section = 'vehicles_psv';
     protected $rawTableData;
     protected $type;
-
-    /**
-     * Simple helper method to extract tables based on available types
-     */
-    private function getTables()
-    {
-        return array_keys($this->getPsvTypes());
-    }
-
-    private function getPsvTypes()
-    {
-        return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
-    }
 
     /**
      * Index action
@@ -90,7 +76,21 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         if ($request->isPost() && $form->isValid()) {
 
-            $this->save($form->getData());
+            $response = $this->getServiceLocator()->get('BusinessServiceManager')
+                ->get('Lva\\' . ucfirst($this->lva) . 'PsvVehicles')
+                ->process(
+                    [
+                        'id' => $this->getIdentifier(),
+                        'data' => $form->getData()
+                    ]
+                );
+
+            if (!$response->isOk()) {
+
+                $this->getServiceLocator()->get('Helper\FlashMessenger')->addErrorMessage($response->getMessage());
+                return $this->renderForm($form);
+            }
+
             $this->postSave('vehicles_psv');
 
             $crudAction = $this->getCrudAction($data);
@@ -115,46 +115,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
 
         $this->getAdapter()->warnIfAuthorityExceeded($lvaId, $this->getPsvTypes(), false);
         return $this->render('vehicles_psv', $form);
-    }
-
-    /**
-     * Format data for the main form; not a lot to it
-     */
-    protected function formatDataForForm($data)
-    {
-        return array(
-            'data' => array(
-                'version'       => $data['version'],
-                // @NOTE: licences don't have this flag, but we haven't defined their behaviour
-                // on PSV pages yet. As such, this just prevents a PHP error
-                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : 'Y'
-            )
-        );
-    }
-
-    /**
-     * Override the get crud action method
-     *
-     * @param array $formTables
-     * @return array
-     */
-    protected function getCrudAction(array $formTables = array())
-    {
-        $data = $formTables;
-
-        foreach ($this->getTables() as $section) {
-
-            if (isset($data[$section]['action'])) {
-
-                $action = $this->getActionFromCrudAction($data[$section]);
-
-                $data[$section]['routeAction'] = $section . '-' . strtolower($action);
-
-                return $data[$section];
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -230,16 +190,54 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     }
 
     /**
+     * Format data for the main form; not a lot to it
+     */
+    protected function formatDataForForm($data)
+    {
+        return array(
+            'data' => array(
+                'version'       => $data['version'],
+                // @NOTE: licences don't have this flag, but we haven't defined their behaviour
+                // on PSV pages yet. As such, this just prevents a PHP error
+                'hasEnteredReg' => isset($data['hasEnteredReg']) ? $data['hasEnteredReg'] : 'Y'
+            )
+        );
+    }
+
+    /**
+     * Override the get crud action method
+     *
+     * @param array $formTables
+     * @return array
+     */
+    protected function getCrudAction(array $formTables = array())
+    {
+        $data = $formTables;
+
+        foreach ($this->getTables() as $section) {
+
+            if (isset($data[$section]['action'])) {
+
+                $action = $this->getActionFromCrudAction($data[$section]);
+
+                $data[$section]['routeAction'] = $section . '-' . strtolower($action);
+
+                return $data[$section];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Helper method to add or edit a vehicle
      * of any size
      */
     protected function addOrEdit($mode, $type)
     {
         $this->type = $type;
-
         $request = $this->getRequest();
 
-        $data = array();
         if ($request->isPost()) {
             $data = (array)$request->getPost();
         } else {
@@ -251,16 +249,20 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
             );
         }
 
+        $params = [
+            'mode' => $mode,
+            'canAddAnother' => $this->canAddAnother(),
+            'currentVrms' => $this->getVrmsForCurrentLicence(),
+            'isPost' => $request->isPost(),
+            'action' => $this->params('action'),
+            'lva' => $this->lva
+        ];
+
         $form = $this->getServiceLocator()
-            ->get('Helper\Form')
-            ->createFormWithRequest('Lva\PsvVehiclesVehicle', $request);
-
-        $form = $this->alterVehicleForm($form, $mode)
+            ->get('FormServiceManager')
+            ->get('lva-' . $this->lva . '-' . $this->section . '-vehicle')
+            ->getForm($this->getRequest(), $params)
             ->setData($data);
-
-        if ($this->getServiceLocator()->has('VehicleFormAdapter')) {
-            $form = $this->getServiceLocator()->get('VehicleFormAdapter')->alterForm($form);
-        }
 
         if ($request->isPost() && $form->isValid()) {
 
@@ -343,28 +345,6 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
         if ($licenceData['licenceType'] === LicenceEntityService::LICENCE_TYPE_RESTRICTED && $form->has('large')) {
             $formHelper->remove($form, 'large');
         }
-
-        return $form;
-    }
-
-    /**
-     * Alter action form
-     *
-     * @param \Zend\Form\Form $form
-     * @return Form
-     */
-    protected function alterVehicleForm($form, $mode)
-    {
-        $form = parent::alterVehicleForm($form, $mode);
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        if (!in_array($this->params('action'), array('small-add', 'small-edit'))) {
-            $formHelper->remove($form, 'data->isNovelty');
-            $formHelper->remove($form, 'data->makeModel');
-        }
-
-        $formHelper->remove($form, 'licence-vehicle->discNo');
 
         return $form;
     }
@@ -526,23 +506,15 @@ abstract class AbstractVehiclesPsvController extends AbstractVehiclesController
     }
 
     /**
-     * Save data
-     *
-     * @param array $data
-     * @return mixed
+     * Simple helper method to extract tables based on available types
      */
-    protected function save($data)
+    private function getTables()
     {
-        $data = $this->formatDataForSave($data);
-        $data['id'] = $this->getIdentifier();
-        return $this->getLvaEntityService()->save($data);
+        return array_keys($this->getPsvTypes());
     }
 
-    /**
-     * Format data for save on the main form
-     */
-    protected function formatDataForSave($data)
+    private function getPsvTypes()
     {
-        return $data['data'];
+        return $this->getServiceLocator()->get('Entity\Vehicle')->getTypeMap();
     }
 }

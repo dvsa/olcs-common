@@ -16,15 +16,48 @@ use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
  */
 class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGoodsAdapterInterface
 {
-    /**
-     * Get vehicles data for the given resource
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getVehiclesData($id)
+    public function getFilteredVehiclesData($id, $query)
     {
-        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesDataForApplication($id);
+        $filters = [
+            'page' => isset($query['page']) ? $query['page'] : 1,
+            'limit' => isset($query['limit']) && is_numeric($query['limit']) ? $query['limit'] : 10,
+        ];
+
+        if (isset($query['vrm']) && $query['vrm'] !== 'All') {
+            // Where the VRM starts with the 'vrm' string
+            $filters['vrm'] = '~' . $query['vrm'] . '%';
+        }
+
+        if (isset($query['specified'])) {
+
+            if ($query['specified'] === 'Y') {
+                $filters['specifiedDate'] = 'NOT NULL';
+            }
+
+            if ($query['specified'] === 'N') {
+                $filters['specifiedDate'] = 'NULL';
+            }
+        }
+
+        if (isset($query['includeRemoved']) && $query['includeRemoved'] == '1') {
+            $filters['removalDate'] = 'NOT NULL';
+        } else {
+            $filters['removalDate'] = 'NULL';
+        }
+
+        if (isset($query['disc'])) {
+            // Has active discs
+            if ($query['disc'] === 'Y') {
+                $filters['disc'] = 'Y';
+            }
+
+            // Has no active discs
+            if ($query['disc'] === 'N') {
+                $filters['disc'] = 'N';
+            }
+        }
+
+        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclesDataForApplication($id, $filters);
     }
 
     /**
@@ -48,18 +81,5 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
                 'hasEnteredReg' => $data['hasEnteredReg'] === 'N' ? 'N' : 'Y'
             )
         );
-    }
-
-    /**
-     * Get all relevant form filters
-     */
-    public function getFilters($params)
-    {
-        $filters = [];
-        $filters['vrm'] = isset($params['vrm']) ? $params['vrm'] : 'All';
-        $filters['specified'] = isset($params['specified']) ? $params['specified'] : 'A';
-        $filters['includeRemoved'] = isset($params['includeRemoved']) ? $params['includeRemoved'] : 0;
-        $filters['disc'] = isset($params['disc']) ? $params['disc'] : 'A';
-        return $filters;
     }
 }

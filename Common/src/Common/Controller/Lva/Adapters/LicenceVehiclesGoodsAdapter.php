@@ -16,33 +16,40 @@ use Common\Controller\Lva\Interfaces\VehicleGoodsAdapterInterface;
  */
 class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGoodsAdapterInterface
 {
+    public function getFilteredVehiclesData($id, $query)
+    {
+        $filters = [];
+
+        if (isset($query['vrm'])) {
+            // Where the VRM starts with the 'vrm' string
+            $filters['vrm'] = '~' . $query['vrm'] . '%';
+        }
+
+        $filters['specified'] = 'NOT NULL';
+
+        if (isset($query['includeRemoved']) && $query['includeRemoved'] == 1) {
+            $filters['removalDate'] = 'NOT NULL';
+        } else {
+            $filters['removalDate'] = 'NULL';
+        }
+
+        if (isset($query['disc'])) {
+            // Has active discs
+            if ($query['disc'] === 'Y') {
+                $filters['disc'] = '';
+            }
+
+            // Has no active discs
+            if ($query['disc'] === 'N') {
+                $filters['disc'] = '';
+            }
+        }
+
+        $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($id);
+    }
+
     public function getFormData($id)
     {
         return [];
-    }
-
-    /**
-     * Get vehicles data for the given resource
-     *
-     * @param int $id
-     * @return array
-     */
-    public function getVehiclesData($id)
-    {
-        return $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($id);
-    }
-
-    /**
-     * Get all relevant form filters
-     *
-     * Here we wrap the application version and override
-     * the specified date
-     */
-    public function getFilters($params)
-    {
-        return array_merge(
-            $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->getFilters($params),
-            ['specified' => 'Y']
-        );
     }
 }

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Vehicles Adapter Interface
+ * Vehicles Psv Adapter Interface
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
 namespace Common\Controller\Lva\Interfaces;
 
 /**
- * Vehicles Adapter Interface
+ * Vehicles Psv Adapter Interface
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-interface VehiclesAdapterInterface
+interface VehiclesPsvAdapterInterface
 {
     /**
      * Get vehicles data for the given resource

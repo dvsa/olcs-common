@@ -8,14 +8,17 @@
 namespace Common\BusinessRule\Rule;
 
 use Common\BusinessRule\BusinessRuleInterface;
-
+use Common\BusinessRule\BusinessRuleAwareInterface;
+use Common\BusinessRule\BusinessRuleAwareTrait;
 /**
  * Variation Goods Vehicles Licence Vehicle Rule
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class VariationGoodsVehiclesLicenceVehicle implements BusinessRuleInterface
+class VariationGoodsVehiclesLicenceVehicle implements BusinessRuleInterface, BusinessRuleAwareInterface
 {
+    use BusinessRuleAwareTrait;
+
     public function validate($data, $mode, $vehicleId, $licenceId, $applicationId)
     {
         $data['application'] = $applicationId;

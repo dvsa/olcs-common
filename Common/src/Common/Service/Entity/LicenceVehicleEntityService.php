@@ -65,6 +65,18 @@ class LicenceVehicleEntityService extends AbstractEntityService
         )
     );
 
+    protected $vehicleDataBundle = array(
+        'children' => array(
+            'goodsDiscs' => [
+
+            ],
+            'interimApplication',
+            'vehicle' => [
+
+            ]
+        )
+    );
+
     public function getVehicle($id)
     {
         return $this->get($id, $this->vehicleBundle);
@@ -196,5 +208,76 @@ class LicenceVehicleEntityService extends AbstractEntityService
             $ids[] = $lv['id'];
         }
         return $this->removeVehicles($ids);
+    }
+
+    public function getVehiclesDataForApplication($applicationId, array $filters = array())
+    {
+        // We optionally alter the bundle, so we need a local var
+        $bundle = $this->vehicleDataBundle;
+
+        // If we want to show specified vehicles, then we need to widen our search to included the licence too
+        if (isset($filters['specifiedDate']) && $filters['specifiedDate'] === 'NOT NULL') {
+
+            // then our query needs to be where...
+            $query = [
+                // either ...
+                [
+                    // application id matches...
+                    'application' => $applicationId,
+                    // OR licence id matches...
+                    'licence' => $this->getServiceLocator()->get('Entity\Application')
+                        ->getLicenceIdForApplication($applicationId),
+                ]
+            ];
+
+        } else {
+            // Otherwise just filter by application
+            $query = [
+                'application' => $applicationId
+            ];
+        }
+
+        if (isset($filters['specifiedDate'])) {
+            $query['specifiedDate'] = $filters['specifiedDate'];
+        }
+
+        if (isset($filters['vrm'])) {
+            $bundle['children']['vehicle']['required'] = true;
+            $bundle['children']['vehicle']['criteria']['vrm'] = $filters['vrm'];
+        }
+
+        if (isset($filters['removalDate'])) {
+            $query[] = ['removalDate' => $filters['removalDate']];
+        }
+
+        // If we want to have active discs
+        // Where goodsDisc->discNo NOT NULL
+        // AND there are some goodsDiscRecords
+
+        // Apply a method of filtering by discs
+        if (isset($filters['disc'])) {
+            if ($filters['disc'] === 'Y') {
+                $bundle['children']['goodsDiscs']['required'] = true;
+                $bundle['children']['goodsDiscs']['critieria']['ceasedDate'] = 'NULL';
+                $bundle['children']['goodsDiscs']['critieria']['issuedDate'] = 'NOT NULL';
+            }
+
+            // @todo Actually need to say where NO discs have a discNo, rather than if any disc has no disc no
+            if ($filters['disc'] === 'N') {
+
+                $bundle['children']['goodsDiscs']['requireNone'] = true;
+                $bundle['children']['goodsDiscs']['critieria']['ceasedDate'] = 'NULL';
+                $bundle['children']['goodsDiscs']['critieria']['issuedDate'] = 'NOT NULL';
+            }
+        }
+
+        $pagination = [
+            'page' => isset($filters['page']) ? $filters['page'] : 1,
+            'limit' => isset($filters['limit']) ? $filters['limit'] : 10,
+        ];
+
+        $query = array_merge($query, $pagination);
+
+        return $this->get($query, $bundle);
     }
 }

@@ -21,7 +21,6 @@ trait PsvApplicationControllerTrait
      * @param array $filters
      * @return boolean
      */
-
     protected function showVehicle(array $licenceVehicle, array $filters = [])
     {
         return empty($licenceVehicle['removalDate']);

@@ -77,17 +77,5 @@ class VehicleFilter
      * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
-    public $sort = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
-    public $order = null;
-
-    /**
-     * @Form\Attributes({"value":""})
-     * @Form\Type("Hidden")
-     */
     public $limit = null;
 }

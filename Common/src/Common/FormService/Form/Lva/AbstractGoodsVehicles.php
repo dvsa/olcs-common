@@ -22,11 +22,9 @@ abstract class AbstractGoodsVehicles extends AbstractFormService implements Serv
 
     public function getForm($table, $isCrudPressed)
     {
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
+        $form = $this->getFormHelper()->createForm('Lva\GoodsVehicles');
 
-        $form = $formHelper->createForm('Lva\GoodsVehicles');
-
-        $formHelper->populateFormTable($form->get('table'), $table);
+        $this->getFormHelper()->populateFormTable($form->get('table'), $table);
 
         $this->alterForm($form, $isCrudPressed);
 

@@ -7,7 +7,6 @@
  */
 namespace Common\Controller\Lva;
 
-use Common\Form\Elements\Validators\NewVrm;
 use Zend\Form\Element\Checkbox;
 use Common\Controller\Lva\Interfaces\AdapterAwareInterface;
 
@@ -22,20 +21,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
 
     protected $totalAuthorisedVehicles = array();
     protected $totalVehicles = array();
-
-    /**
-     * Get the total vehicle authorisations
-     *
-     * @return int
-     */
-    abstract protected function getTotalNumberOfAuthorisedVehicles();
-
-    /**
-     * Get total number of vehicles
-     *
-     * @return int
-     */
-    abstract protected function getTotalNumberOfVehicles();
 
     /**
      * Action data map
@@ -56,6 +41,20 @@ abstract class AbstractVehiclesController extends AbstractController implements 
             )
         )
     );
+
+    /**
+     * Get the total vehicle authorisations
+     *
+     * @return int
+     */
+    abstract protected function getTotalNumberOfAuthorisedVehicles();
+
+    /**
+     * Get total number of vehicles
+     *
+     * @return int
+     */
+    abstract protected function getTotalNumberOfVehicles();
 
     /**
      * We need to know which vehicles to show
@@ -201,53 +200,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
         $this->postSaveVehicle($licenceVehicleId, $mode);
 
         return $licenceVehicleId;
-    }
-
-    /**
-     * Generic form alterations
-     *
-     * @param \Zend\Form\Form $form
-     * @param string $mode
-     * @return \Zend\Form\Form
-     */
-    protected function alterVehicleForm($form, $mode)
-    {
-        $this->alterVehicleFormForLocation($form, $mode);
-
-        $formHelper = $this->getServiceLocator()->get('Helper\Form');
-
-        $dataFieldset = $form->get('licence-vehicle');
-
-        $this->getAdapter()->maybeDisableRemovedAndSpecifiedDates($form, $formHelper);
-        $this->getAdapter()->maybeRemoveSpecifiedDateEmptyOption($form, $mode);
-
-        $dataFieldset->get('discNo')->setAttribute('disabled', 'disabled');
-
-        // disable the vrm field on edit
-        if ($mode === 'edit') {
-            $formHelper->disableElement($form, 'data->vrm');
-        }
-
-        // Attach a validator to check the VRM doesn't already exist
-        // We only really need to do this when posting
-        if ($mode === 'add' && $this->getRequest()->isPost()) {
-
-            $filter = $form->getInputFilter();
-            $validators = $filter->get('data')->get('vrm')->getValidatorChain();
-
-            $validator = new NewVrm();
-
-            $validator->setType(ucwords($this->lva));
-            $validator->setVrms($this->getVrmsForCurrentLicence());
-
-            $validators->attach($validator);
-        }
-
-        if ($mode === 'edit' || !$this->canAddAnother()) {
-            $form->get('form-actions')->remove('addAnother');
-        }
-
-        return $form;
     }
 
     protected function canAddAnother()

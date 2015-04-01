@@ -18,7 +18,7 @@ class LicenceGoodsVehiclesFilters extends CommonGoodsVehiclesFilters
     {
         $form = parent::getForm();
 
-        $this->getServiceLocator()->get('Helper\Form')->remove($form, 'specified');
+        $this->getFormHelper()->remove($form, 'specified');
 
         return $form;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Application Goods Vehicles
+ * Application Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -12,11 +12,11 @@ use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 
 /**
- * Application Goods Vehicles
+ * Application Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationGoodsVehicles implements BusinessServiceInterface, BusinessServiceAwareInterface
+class ApplicationPsvVehicles implements BusinessServiceInterface, BusinessServiceAwareInterface
 {
     use BusinessServiceAwareTrait;
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Application Goods Vehicles
+ * Licence Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
@@ -12,11 +12,11 @@ use Common\BusinessService\BusinessServiceAwareInterface;
 use Common\BusinessService\BusinessServiceAwareTrait;
 
 /**
- * Application Goods Vehicles
+ * Licence Psv Vehicles
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class ApplicationGoodsVehicles implements BusinessServiceInterface, BusinessServiceAwareInterface
+class LicencePsvVehicles implements BusinessServiceInterface, BusinessServiceAwareInterface
 {
     use BusinessServiceAwareTrait;
 
@@ -28,6 +28,6 @@ class ApplicationGoodsVehicles implements BusinessServiceInterface, BusinessServ
      */
     public function process(array $params)
     {
-        return $this->getBusinessServiceManager()->get('Lva\Application')->process($params);
+        return $this->getBusinessServiceManager()->get('Lva\Licence')->process($params);
     }
 }
