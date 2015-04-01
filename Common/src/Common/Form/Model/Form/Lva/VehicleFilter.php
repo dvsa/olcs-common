@@ -74,7 +74,6 @@ class VehicleFilter
     public $filter = null;
 
     /**
-     * @Form\Attributes({"value":""})
      * @Form\Type("Hidden")
      */
     public $limit = null;

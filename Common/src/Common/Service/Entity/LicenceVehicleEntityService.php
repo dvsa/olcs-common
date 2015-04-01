@@ -257,7 +257,7 @@ class LicenceVehicleEntityService extends AbstractEntityService
     protected function buildVehiclesDataQuery($query, $filters)
     {
         if (isset($filters['removalDate'])) {
-            $query[] = ['removalDate' => $filters['removalDate']];
+            $query['removalDate'] = $filters['removalDate'];
         }
 
         $pagination = [
@@ -277,18 +277,17 @@ class LicenceVehicleEntityService extends AbstractEntityService
             $bundle['children']['vehicle']['criteria']['vrm'] = $filters['vrm'];
         }
 
-        if (isset($filters['disc'])) {
+        if (isset($filters['disc']) && in_array($filters['disc'], ['Y', 'N'])) {
+
+            $bundle['children']['goodsDiscs']['criteria']['ceasedDate'] = 'NULL';
+            $bundle['children']['goodsDiscs']['criteria']['issuedDate'] = 'NOT NULL';
+
             if ($filters['disc'] === 'Y') {
                 $bundle['children']['goodsDiscs']['required'] = true;
-                $bundle['children']['goodsDiscs']['critieria']['ceasedDate'] = 'NULL';
-                $bundle['children']['goodsDiscs']['critieria']['issuedDate'] = 'NOT NULL';
             }
 
             if ($filters['disc'] === 'N') {
-
                 $bundle['children']['goodsDiscs']['requireNone'] = true;
-                $bundle['children']['goodsDiscs']['critieria']['ceasedDate'] = 'NULL';
-                $bundle['children']['goodsDiscs']['critieria']['issuedDate'] = 'NOT NULL';
             }
         }
 

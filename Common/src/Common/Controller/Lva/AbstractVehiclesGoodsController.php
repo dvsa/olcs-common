@@ -139,12 +139,19 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
         $filterForm = $this->getServiceLocator()->get('FormServiceManager')
             ->get('lva-' . $this->lva . '-goods-' . $this->section . '-filters')
-            ->getForm()
-            ->setData((array)$this->getRequest()->getQuery());
+            ->getForm();
 
         if ($filterForm !== null) {
             $files[] = 'forms/filter';
             $params['filterForm'] = $filterForm;
+
+            $query = (array)$this->getRequest()->getQuery();
+
+            if (!isset($query['limit']) || !is_numeric($query['limit'])) {
+                $query['limit'] = 10;
+            }
+
+            $filterForm->setData($query);
         }
 
         $this->getServiceLocator()->get('Script')->loadFiles($files);
