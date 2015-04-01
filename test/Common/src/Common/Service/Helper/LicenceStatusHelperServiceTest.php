@@ -354,19 +354,13 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
     public function testResetToValid()
     {
         $licenceId = 1;
-        $licenceData = ['id' => $licenceId, 'version' => 1];
 
         $licenceService = m::mock()
-            ->shouldReceive('getOverview')
-            ->with($licenceId)
-            ->once()
-            ->andReturn($licenceData)
-            ->shouldReceive('save')
+            ->shouldReceive('forceUpdate')
             ->once()
             ->with(
+                $licenceId,
                 [
-                    'id' => $licenceId,
-                    'version' => 1,
                     'status' => LicenceEntityService::LICENCE_STATUS_VALID,
                     'surrenderedDate' => null,
                 ]
@@ -421,7 +415,6 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             array(
                 array(
                     'id' => 1,
-                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_gv',
                     ),
@@ -443,7 +436,6 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             array(
                 array(
                     'id' => 1,
-                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_psv',
                     ),
@@ -550,12 +542,11 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->once()
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('save')
+            ->shouldReceive('forceUpdate')
             ->once()
             ->with(
+                $licenceId,
                 [
-                    'id' => $licenceId,
-                    'version' => 1,
                     'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
                     'surrenderedDate' => '2015-03-30',
                 ]
@@ -609,12 +600,11 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->once()
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('save')
+            ->shouldReceive('forceUpdate')
             ->once()
             ->with(
+                $licenceId,
                 [
-                    'id' => $licenceId,
-                    'version' => 1,
                     'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
                     'surrenderedDate' => '2015-03-30',
                 ]

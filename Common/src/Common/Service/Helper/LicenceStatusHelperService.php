@@ -221,12 +221,10 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeTransportManagers($surrenderData['tmLicences']);
 
         $saveData = [
-            'id' => $surrenderData['id'],
-            'version' => $surrenderData['version'],
             'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
             'surrenderedDate' => $surrenderDate,
         ];
-        return $licenceEntityService->save($saveData);
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
     }
 
 
@@ -250,13 +248,11 @@ class LicenceStatusHelperService extends AbstractHelperService
         $this->removeTransportManagers($terminateData['tmLicences']);
 
         $saveData = [
-            'id' => $terminateData['id'],
-            'version' => $terminateData['version'],
             'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
             'surrenderedDate' => $terminateDate,
         ];
 
-        return $licenceEntityService->save($saveData);
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
     }
 
     /**
@@ -359,16 +355,12 @@ class LicenceStatusHelperService extends AbstractHelperService
 
         $licenceEntityService = $this->getServiceLocator()->get('Entity\Licence');
 
-        $licenceData = $licenceEntityService->getOverview($licenceId);
-
         $saveData = [
-            'id'              => $licenceData['id'],
-            'version'         => $licenceData['version'],
             'status'          => LicenceEntityService::LICENCE_STATUS_VALID,
             'surrenderedDate' => null,
         ];
 
-        return $licenceEntityService->save($saveData);
+        return $licenceEntityService->forceUpdate($licenceId, $saveData);
     }
 
     /**
