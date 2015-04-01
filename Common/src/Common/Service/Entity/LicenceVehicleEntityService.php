@@ -212,9 +212,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
 
     public function getVehiclesDataForApplication($applicationId, array $filters = array())
     {
-        // We optionally alter the bundle, so we need a local var
-        $bundle = $this->vehicleDataBundle;
-
         // If we want to show specified vehicles, then we need to widen our search to included the licence too
         if (isset($filters['specifiedDate']) && $filters['specifiedDate'] === 'NOT NULL') {
 
@@ -237,24 +234,49 @@ class LicenceVehicleEntityService extends AbstractEntityService
             ];
         }
 
+        $query = $this->buildVehiclesDataQuery($query, $filters);
+        $bundle = $this->buildVehiclesDataBundle($filters);
+
         if (isset($filters['specifiedDate'])) {
             $query['specifiedDate'] = $filters['specifiedDate'];
         }
+
+        return $this->get($query, $bundle);
+    }
+
+    public function getVehiclesDataForLicence($licenceId, array $filters = array())
+    {
+        $query = ['licence' => $licenceId, 'specifiedDate' => 'NOT NULL'];
+
+        $query = $this->buildVehiclesDataQuery($query, $filters);
+        $bundle = $this->buildVehiclesDataBundle($filters);
+
+        return $this->get($query, $bundle);
+    }
+
+    protected function buildVehiclesDataQuery($query, $filters)
+    {
+        if (isset($filters['removalDate'])) {
+            $query[] = ['removalDate' => $filters['removalDate']];
+        }
+
+        $pagination = [
+            'page' => isset($filters['page']) ? $filters['page'] : 1,
+            'limit' => isset($filters['limit']) ? $filters['limit'] : 10,
+        ];
+
+        return array_merge($query, $pagination);
+    }
+
+    protected function buildVehiclesDataBundle($filters)
+    {
+        $bundle = $this->vehicleDataBundle;
 
         if (isset($filters['vrm'])) {
             $bundle['children']['vehicle']['required'] = true;
             $bundle['children']['vehicle']['criteria']['vrm'] = $filters['vrm'];
         }
 
-        if (isset($filters['removalDate'])) {
-            $query[] = ['removalDate' => $filters['removalDate']];
-        }
-
-        // If we want to have active discs
-        // Where goodsDisc->discNo NOT NULL
-        // AND there are some goodsDiscRecords
-
-        // Apply a method of filtering by discs
         if (isset($filters['disc'])) {
             if ($filters['disc'] === 'Y') {
                 $bundle['children']['goodsDiscs']['required'] = true;
@@ -271,13 +293,6 @@ class LicenceVehicleEntityService extends AbstractEntityService
             }
         }
 
-        $pagination = [
-            'page' => isset($filters['page']) ? $filters['page'] : 1,
-            'limit' => isset($filters['limit']) ? $filters['limit'] : 10,
-        ];
-
-        $query = array_merge($query, $pagination);
-
-        return $this->get($query, $bundle);
+        return $bundle;
     }
 }

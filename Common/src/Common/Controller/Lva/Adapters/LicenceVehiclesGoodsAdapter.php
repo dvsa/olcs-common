@@ -18,34 +18,9 @@ class LicenceVehiclesGoodsAdapter extends AbstractAdapter implements VehicleGood
 {
     public function getFilteredVehiclesData($id, $query)
     {
-        $filters = [];
+        $filters = $this->getServiceLocator()->get('ApplicationVehiclesGoodsAdapter')->formatFilters($query);
 
-        if (isset($query['vrm'])) {
-            // Where the VRM starts with the 'vrm' string
-            $filters['vrm'] = '~' . $query['vrm'] . '%';
-        }
-
-        $filters['specified'] = 'NOT NULL';
-
-        if (isset($query['includeRemoved']) && $query['includeRemoved'] == 1) {
-            $filters['removalDate'] = 'NOT NULL';
-        } else {
-            $filters['removalDate'] = 'NULL';
-        }
-
-        if (isset($query['disc'])) {
-            // Has active discs
-            if ($query['disc'] === 'Y') {
-                $filters['disc'] = '';
-            }
-
-            // Has no active discs
-            if ($query['disc'] === 'N') {
-                $filters['disc'] = '';
-            }
-        }
-
-        $this->getServiceLocator()->get('Entity\Licence')->getVehiclesData($id);
+        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclesDataForLicence($id, $filters);
     }
 
     public function getFormData($id)

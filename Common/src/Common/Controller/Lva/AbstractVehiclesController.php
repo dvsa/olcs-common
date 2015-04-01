@@ -57,15 +57,6 @@ abstract class AbstractVehiclesController extends AbstractController implements 
     abstract protected function getTotalNumberOfVehicles();
 
     /**
-     * We need to know which vehicles to show
-     *
-     * @param array $licenceVehicle
-     * @param array $filters
-     * @return boolean
-     */
-    abstract protected function showVehicle(array $licenceVehicle, array $filters = []);
-
-    /**
      * Hijack the crud action check so we can validate the add button
      *
      * @param string $action

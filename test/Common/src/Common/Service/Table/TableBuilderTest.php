@@ -876,13 +876,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 
@@ -905,13 +907,15 @@ class TableBuilderTest extends MockeryTestCase
             ->with(' {{[elements/total]}}', array('total' => $expectedTotal))
             ->will($this->returnValue($expectedTotal));
 
-        $table = $this->getMockTableBuilder(array('getContentHelper'));
+        $table = $this->getMockTableBuilder(array('getContentHelper', 'shouldPaginate'));
 
         $table->expects($this->once())
             ->method('getContentHelper')
             ->will($this->returnValue($mockContentHelper));
 
-        $table->setType(TableBuilder::TYPE_PAGINATE);
+        $table->expects($this->once())
+            ->method('shouldPaginate')
+            ->will($this->returnValue(true));
 
         $table->setTotal($total);
 

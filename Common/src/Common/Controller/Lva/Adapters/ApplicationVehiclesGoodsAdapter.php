@@ -18,6 +18,13 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
 {
     public function getFilteredVehiclesData($id, $query)
     {
+        $filters = $this->formatFilters($query);
+
+        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclesDataForApplication($id, $filters);
+    }
+
+    public function formatFilters($query)
+    {
         $filters = [
             'page' => isset($query['page']) ? $query['page'] : 1,
             'limit' => isset($query['limit']) && is_numeric($query['limit']) ? $query['limit'] : 10,
@@ -57,7 +64,7 @@ class ApplicationVehiclesGoodsAdapter extends AbstractAdapter implements Vehicle
             }
         }
 
-        return $this->getServiceLocator()->get('Entity\LicenceVehicle')->getVehiclesDataForApplication($id, $filters);
+        return $filters;
     }
 
     /**
