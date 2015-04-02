@@ -40,109 +40,32 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $helperService->isLicenceActive();
     }
 
-    public function testIsLicenceActiveTrue()
-    {
-        $comLicEntity = m::mock()->shouldReceive('getValidLicencesForLicenceStatus')
-            ->with(1)
-            ->andReturn(
-                array(
-                    'Count' => 2
-                )
-            )
-            ->getMock();
-
-        $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
-            ->with(1)
-            ->andReturn(
-                array(
-                    'Results' => array(
-                        array('busRegStatus' => 'New'),
-                        array('busRegStatus' => 'Registered'),
-                        array('busRegStatus' => 'Variation'),
-                        array('busRegStatus' => 'Cancellation')
-                    )
-                )
-            )
-            ->getMock();
-
-        $applicationEntity = m::mock()->shouldReceive('getApplicationsForLicence')
-            ->with(1)
-            ->andReturn(
-                array(
-                    'Results' => array(
-                        0 => array('isVariation' => false),
-                        1 => array(
-                            'isVariation' => true,
-                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION)
-                        ),
-                        2 => array(
-                            'isVariation' => false,
-                            'status' => array('id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED)
-                        ),
-                        3 => array('isVariation' => true),
-                    )
-                )
-            )
-            ->getMock();
-
-        $this->sm
-            ->shouldReceive('get')
-            ->with('Entity\CommunityLic')
-            ->andReturn($comLicEntity)
-            ->shouldReceive('get')
-            ->with('Entity\BusReg')
-            ->andReturn($busRegEntity)
-            ->shouldReceive('get')
-            ->with('Entity\Application')
-            ->andReturn($applicationEntity);
-
-        $this->assertTrue($this->sut->isLicenceActive(1));
-
-        $this->assertEquals(
-            array(
-                'communityLicences' => array(
-                    'message' => 'There are active, pending or suspended community licences',
-                    'result' => true
-                ),
-                'busRoutes' => array(
-                    'message' => 'There are active bus routes on this licence',
-                    'result' => true
-                ),
-                'consideringVariations' => array(
-                    'message' => 'There are applications still under consideration',
-                    'result' => true
-                )
-            ),
-            $this->sut->getMessages()
-        );
-    }
-
     /**
-     * @dataProvider busRegDataProvider
+     * @dataProvider isActiveProvider
      */
-    public function testIsActiveFalse($busRegData)
-    {
+    public function testIsActive(
+        $busRegData,
+        $communityLicenceCount,
+        $applicationData,
+        $expectedResult,
+        $expectedMessages
+    ) {
+
+        $licenceId = 69;
+
         $comLicEntity = m::mock()->shouldReceive('getValidLicencesForLicenceStatus')
-        ->with(1)
-        ->andReturn(
-            array(
-                'Count' => 0
-            )
-        )
-        ->getMock();
+            ->with($licenceId)
+            ->andReturn(['Count' => $communityLicenceCount])
+            ->getMock();
 
         $busRegEntity = m::mock()->shouldReceive('findByLicenceId')
-            ->with(1)
+            ->with($licenceId)
             ->andReturn($busRegData)
             ->getMock();
 
         $applicationEntity = m::mock()->shouldReceive('getApplicationsForLicence')
-            ->with(1)
-            ->andReturn(
-                array(
-                    'Results' => array()
-                )
-            )
+            ->with($licenceId)
+            ->andReturn($applicationData)
             ->getMock();
 
         $this->sm
@@ -156,16 +79,104 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->with('Entity\Application')
             ->andReturn($applicationEntity);
 
-        $this->assertFalse($this->sut->isLicenceActive(1));
+        $this->assertEquals($expectedResult, $this->sut->isLicenceActive($licenceId));
 
-        $this->assertEquals(
-            array(
-                'communityLicences' => false,
-                'busRoutes' => false,
-                'consideringVariations' => false
-            ),
-            $this->sut->getMessages()
-        );
+        $this->assertEquals($expectedMessages, $this->sut->getMessages());
+    }
+
+    /**
+     * @return array [$busRegData, $communityLicenceCount, $applicationData, $expectedResult, $expectedMessages]
+     */
+    public function isActiveProvider()
+    {
+        return [
+            [
+                [
+                    'Results' => [
+                        ['busRegStatus' => 'New'],
+                        ['busRegStatus' => 'Registered'],
+                        ['busRegStatus' => 'Variation'],
+                        ['busRegStatus' => 'Cancellation'],
+                    ],
+                ],
+                2,
+                [
+                    'Results' => [
+                        ['isVariation' => false],
+                        [
+                            'isVariation' => true,
+                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_UNDER_CONSIDERATION],
+                        ],
+                        [
+                            'isVariation' => false,
+                            'status' => ['id' => ApplicationEntityService::APPLICATION_STATUS_NOT_SUBMITTED],
+                        ],
+                        ['isVariation' => true],
+                    ],
+                ],
+                true,
+                [
+                    'communityLicences' => [
+                        'message' => 'There are active, pending or suspended community licences',
+                        'result' => true,
+                    ],
+                    'busRoutes' => [
+                        'message' => 'There are active bus routes on this licence',
+                        'result' => true,
+                    ],
+                    'consideringVariations' => [
+                        'message' => 'There are applications still under consideration',
+                        'result' => true,
+                    ],
+                ],
+            ],
+            [
+                false,
+                2,
+                [
+                    'Results' => [],
+                ],
+                true,
+                [
+                    'communityLicences' => [
+                        'message' => 'There are active, pending or suspended community licences',
+                        'result' => true,
+                    ],
+                    'busRoutes' => false,
+                    'consideringVariations' => false,
+                ],
+            ],
+            [
+                [
+                    'Results' => [
+                        ['busRegStatus' => 'INVALID']
+                    ],
+                ],
+                0,
+                [
+                    'Results' => []
+                ],
+                false,
+                [
+                    'communityLicences' => false,
+                    'busRoutes' => false,
+                    'consideringVariations' => false
+                ],
+            ],
+            [
+                false,
+                0,
+                [
+                    'Results' => []
+                ],
+                false,
+                [
+                    'communityLicences' => false,
+                    'busRoutes' => false,
+                    'consideringVariations' => false,
+                ],
+            ],
+        ];
     }
 
     public function testCurtailNowWithStatuses()
@@ -340,24 +351,62 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
         $this->sut->removeStatusRulesByLicenceAndType();
     }
 
-    // PROVIDERS
-
-    public function busRegDataProvider()
+    public function testResetToValid()
     {
-        return array(
-            array(
-                false
-            ),
-            array(
+        $licenceId = 1;
+
+        $licenceService = m::mock()
+            ->shouldReceive('forceUpdate')
+            ->once()
+            ->with(
+                $licenceId,
+                [
+                    'status' => LicenceEntityService::LICENCE_STATUS_VALID,
+                    'surrenderedDate' => null,
+                ]
+            )
+            ->andReturnNull()
+            ->getMock();
+
+        $statusRuleService = m::mock()
+            ->shouldReceive('getStatusesForLicence')
+            ->once()
+            ->with(
                 array(
+                    'query' => array(
+                        'licence' => $licenceId,
+                        'licenceStatus' => array(
+                            'lsts_curtailed',
+                            'lsts_suspended',
+                            'lsts_revoked',
+                        )
+                    )
+                )
+            )->andReturn(
+                array(
+                    'Count' => 1,
                     'Results' => array(
                         array(
-                            'busRegStatus' => 'INVALID'
+                            'id' => 1
                         )
                     )
                 )
             )
-        );
+            ->shouldReceive('removeStatusesForLicence')
+            ->once()
+            ->with(1)
+            ->andReturnNull()
+            ->getMock();
+
+        $this->sm
+            ->shouldReceive('get')
+            ->with('Entity\Licence')
+            ->andReturn($licenceService)
+            ->shouldReceive('get')
+            ->with('Entity\LicenceStatusRule')
+            ->andReturn($statusRuleService);
+
+        $this->sut->resetToValid($licenceId);
     }
 
     public function revocationDataProvider()
@@ -366,7 +415,6 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             array(
                 array(
                     'id' => 1,
-                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_gv',
                     ),
@@ -388,7 +436,6 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             array(
                 array(
                     'id' => 1,
-                    'version' => 1,
                     'goodsOrPsv' => array(
                         'id' => 'lcat_psv',
                     ),
@@ -495,12 +542,11 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->once()
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('save')
+            ->shouldReceive('forceUpdate')
             ->once()
             ->with(
+                $licenceId,
                 [
-                    'id' => $licenceId,
-                    'version' => 1,
                     'status' => LicenceEntityService::LICENCE_STATUS_SURRENDERED,
                     'surrenderedDate' => '2015-03-30',
                 ]
@@ -554,12 +600,11 @@ class LicenceStatusHelperServiceTest extends MockeryTestCase
             ->once()
             ->with($licenceId)
             ->andReturn($revocationData)
-            ->shouldReceive('save')
+            ->shouldReceive('forceUpdate')
             ->once()
             ->with(
+                $licenceId,
                 [
-                    'id' => $licenceId,
-                    'version' => 1,
                     'status' => LicenceEntityService::LICENCE_STATUS_TERMINATED,
                     'surrenderedDate' => '2015-03-30',
                 ]

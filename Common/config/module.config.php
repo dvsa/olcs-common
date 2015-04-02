@@ -269,6 +269,7 @@ return array(
             'Common\Service\Data\LicenceOperatingCentre' => 'Common\Service\Data\LicenceOperatingCentre',
             'Common\Service\ShortNotice' => 'Common\Service\ShortNotice',
             'Common\Service\Data\EbsrSubTypeListDataService' => 'Common\Service\Data\EbsrSubTypeListDataService',
+            'Common\Service\Data\UserTypesListDataService' => 'Common\Service\Data\UserTypesListDataService',
             'Script' => '\Common\Service\Script\ScriptFactory',
             'Table' => '\Common\Service\Table\TableFactory',
             // Added in a true Zend Framework V2 compatible factory for TableBuilder, eventually to replace Table above.
@@ -289,6 +290,9 @@ return array(
             'Common\Rbac\Navigation\IsAllowedListener' => 'Common\Rbac\Navigation\IsAllowedListener',
             \Common\Service\Data\Search\SearchTypeManager::class =>
                 \Common\Service\Data\Search\SearchTypeManagerFactory::class,
+            'Common\Service\Data\Role' => 'Common\Service\Data\Role',
+            'Common\Service\Data\Team' => 'Common\Service\Data\Team',
+            'Common\Service\Data\HintQuestion' => 'Common\Service\Data\HintQuestion',
         )
     ),
     'publications' => array(
