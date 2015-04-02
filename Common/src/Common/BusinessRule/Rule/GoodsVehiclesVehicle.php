@@ -25,20 +25,20 @@ class GoodsVehiclesVehicle implements BusinessRuleInterface, ServiceLocatorAware
      *
      * @var array
      */
-    protected $vehicleDataMap = array(
-        'main' => array(
-            'mapFrom' => array(
+    protected $vehicleDataMap = [
+        'main' => [
+            'mapFrom' => [
                 'data'
-            ),
-            'children' => array(
-                'licence-vehicle' => array(
-                    'mapFrom' => array(
+            ],
+            'children' => [
+                'licence-vehicle' => [
+                    'mapFrom' => [
                         'licence-vehicle'
-                    )
-                )
-            )
-        )
-    );
+                    ]
+                ]
+            ]
+        ]
+    ];
 
     public function validate($data, $mode)
     {

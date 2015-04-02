@@ -61,6 +61,16 @@ class BusinessRuleManagerTest extends MockeryTestCase
         $this->sut->initialize($instance);
     }
 
+    public function testInitializeWithBusinessRuleAwareInterface()
+    {
+        $instance = m::mock('\Common\BusinessRule\BusinessRuleAwareInterface');
+        $instance->shouldReceive('setBusinessRuleManager')
+            ->once()
+            ->with($this->sut);
+
+        $this->sut->initialize($instance);
+    }
+
     public function testValidatePluginInvalid()
     {
         $this->setExpectedException('\Zend\ServiceManager\Exception\RuntimeException');

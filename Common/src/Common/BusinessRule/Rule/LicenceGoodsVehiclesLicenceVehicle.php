@@ -10,15 +10,21 @@ namespace Common\BusinessRule\Rule;
 use Common\BusinessRule\BusinessRuleInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Common\BusinessRule\BusinessRuleAwareInterface;
+use Common\BusinessRule\BusinessRuleAwareTrait;
 
 /**
  * Licence Goods Vehicles Licence Vehicle Rule
  *
  * @author Rob Caiger <rob@clocal.co.uk>
  */
-class LicenceGoodsVehiclesLicenceVehicle implements BusinessRuleInterface, ServiceLocatorAwareInterface
+class LicenceGoodsVehiclesLicenceVehicle implements
+    BusinessRuleInterface,
+    BusinessRuleAwareInterface,
+    ServiceLocatorAwareInterface
 {
-    use ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait,
+        BusinessRuleAwareTrait;
 
     public function validate($data, $mode, $vehicleId, $licenceId, $id)
     {
