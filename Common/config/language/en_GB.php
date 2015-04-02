@@ -1298,6 +1298,8 @@ return array(
     'licence-status.terminate.date.label' => 'Terminate date',
     'licence-status.terminate.message.save.success' => 'The licence has been terminated',
     'licence-status.remove' => 'Remove',
+    'licence-status.undo-surrender.title' => 'Undo surrender',
+    'licence-status.undo-terminate.title' => 'Undo termination',
     'licence-type' => 'Licence type',
     'licence-type-lock-message' => 'You cannot change the licence type',
     'licence-valid-confirmation' => 'The licence is now valid',

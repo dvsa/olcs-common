@@ -111,4 +111,97 @@ class UserMapperTest extends MockeryTestCase
 
         $this->assertEquals($expectedOutput, $this->sut->formatMyDetailsDataForForm($input, $fieldMap));
     }
+
+    public function testFormatSave()
+    {
+        $result = $this->sut->formatSave($this->getFormData(), $this->getExpectedData());
+        $this->assertEquals(99, $result['id']);
+        $this->assertEquals(3, $result['version']);
+        $this->assertNotEmpty($result['userRoles']);
+        $this->assertNotEmpty($result['lockedDate']);
+    }
+
+    private function getFormData()
+    {
+        return [
+            'userType' => [
+                'userType' => 'internal',
+                'team' => '2',
+                'application' => '',
+                'transportManager' => '',
+                'localAuthority' => '',
+                'licenceNumber' => '',
+                'roles' => [
+                    0 => '2',
+                ],
+            ],
+            'userPersonal' => [
+                    'forename' => 'John',
+                    'familyName' => 'Smith',
+                    'birthDate' => '2012-03-02',
+            ],
+            'userContactDetails' => [
+                'emailAddress' => 'test@foobar.com',
+                'emailConfirm' => 'test@foobar.com',
+                'phone' => '01234567890',
+                'fax' => '1234',
+            ],
+            'address' => [
+                'searchPostcode' => [
+                    'postcode' => 'AB12DGE',
+                ],
+                'addressLine1' => 'a1',
+                'addressLine2' => 'a2',
+                'addressLine3' => 'a3',
+                'addressLine4' => 'a4',
+                'town' => 'Anytown',
+                'postcode' => 'AB12DGE',
+                'countryCode' => 'GB',
+                'id' => '',
+                'version' => '',
+            ],
+            'userLoginSecurity' => [
+                'loginId' => 'testuser1',
+                'memorableWord' => 'mem1',
+                'lastSuccessfulLogin' => null,
+                'attempts' => null,
+                'resetPasswordExpiryDate' => null,
+                'lockedDate' => null,
+                'mustResetPassword' => 'N',
+                'accountDisabled' => 'Y',
+            ],
+            'contactDetailsType' => 'ct_obj',
+            'id' => '',
+            'version' => '',
+            'form-actions[continue]' => null,
+            'form-actions' => [
+                'submit' => '',
+                'cancel' => null,
+            ]
+        ];
+    }
+
+    private function getExpectedData()
+    {
+        return [
+            'id' => 99,
+            'version' => 3,
+            'contactDetails' => [
+                'id' => 100,
+                'version' => 4,
+                'person' => [
+                    'id' => 5,
+                    'version' => 6
+                ],
+                'phoneContacts' => [
+                    0 => [
+                        'phoneContactType' => 'phone_t_tel'
+                    ],
+                    1 => [
+                        'phoneContactType' => 'phone_t_fax'
+                    ]
+                ]
+            ]
+        ];
+    }
 }
