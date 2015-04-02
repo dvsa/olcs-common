@@ -3,13 +3,15 @@
 namespace Common\Service\Data;
 
 use Common\Service\Data\CrudAbstract;
+use Common\Service\Data\Interfaces\ListData;
+use Common\Util\RestClient;
 
 /**
  * Service Class Task
  *
  * @package Common\Service\Data
  */
-class TransportManager extends AbstractData
+class TransportManager extends AbstractData implements ListData
 {
     /**
      * @var integer
@@ -36,6 +38,47 @@ class TransportManager extends AbstractData
             $this->setData($id, $data);
         }
         return $this->getData($id);
+    }
+
+    /**
+     * Fetches a list of Transport Managers by application Id
+     * @param $category
+     * @param bool $useGroups
+     * @return array
+     */
+    public function fetchListOptions($category, $useGroups = false)
+    {
+        $optionData = [];
+        $data = $this->fetchListData();
+
+        foreach ($data as $datum) {
+            $optionData[$datum['id']] = $datum['homeCd']['person']['forename'] .
+                ' ' . $datum['homeCd']['person']['familyName'];
+        }
+
+        return $optionData;
+    }
+
+    /**
+     * Ensures only a single call is made to the backend for each dataset
+     *
+     * @internal param $category
+     * @return array
+     */
+    public function fetchListData()
+    {
+        if (is_null($this->getData($this->serviceName))) {
+
+            $data = $this->getRestClient()->get('', ['bundle' => json_encode($this->getBundle()), 'limit' => 100]);
+
+            $this->setData($this->serviceName, false);
+
+            if (isset($data['Results'])) {
+                $this->setData($this->serviceName, $data['Results']);
+            }
+        }
+
+        return $this->getData($this->serviceName);
     }
 
     /**
