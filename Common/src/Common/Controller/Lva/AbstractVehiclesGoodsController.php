@@ -267,7 +267,8 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
 
     protected function getTable()
     {
-        $params = array_merge((array)$this->getRequest()->getQuery(), ['query' => $this->getRequest()->getQuery()]);
+        $query = $this->getRequest()->getQuery();
+        $params = array_merge((array)$query, ['query' => $query]);
 
         return $this->alterTable(
             $this->getServiceLocator()->get('Table')
@@ -287,7 +288,7 @@ abstract class AbstractVehiclesGoodsController extends AbstractVehiclesControlle
     {
         $licenceVehicles = $this->getAdapter()->getFilteredVehiclesData(
             $this->getIdentifier(),
-            $this->params()->fromQuery()
+            (array)$this->getRequest()->getQuery()
         );
 
         $results = array();
