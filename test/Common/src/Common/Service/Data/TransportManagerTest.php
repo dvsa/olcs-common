@@ -46,4 +46,23 @@ class TransportManagerTest extends \PHPUnit_Framework_TestCase
         //test data is cached
         $this->assertEquals($tmData, $sut->fetchTmData(78));
     }
+
+    public function testFetchListData()
+    {
+        $tmData = ['id' => 78];
+
+        $mockRestClient = $this->getMock('\Common\Util\RestClient', [], [], '', false);
+        $mockRestClient->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/78'), $this->isType('array'))
+            ->willReturn($tmData);
+
+        $sut = new TransportManager();
+        $sut->setRestClient($mockRestClient);
+
+        $this->assertEquals($tmData, $sut->fetchTmData(78));
+
+        //test data is cached
+        $this->assertEquals($tmData, $sut->fetchTmData(78));
+    }
 }
